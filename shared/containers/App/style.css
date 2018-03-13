@@ -1,0 +1,148 @@
+@import 'resources/styles/variables.css';
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "Avenir Next", "Helvetica Neue", Helvetica, Arial, "微软雅黑", "Microsoft YaHei", "Hiragino Sans GB", "华文细黑", "STHeiti", SimHei, sans-serif;
+  font-size: 16px;
+  line-height: normal;
+}
+
+body {
+  position: relative;
+  font-size: 0.875rem;
+  background-color: #fff;
+}
+
+a, button {
+  font-family: "Avenir Next", "Helvetica Neue", Helvetica, Arial, "微软雅黑", "Microsoft YaHei", "Hiragino Sans GB", "华文细黑", "STHeiti", SimHei, sans-serif;
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  color: #005eda;
+
+  &:hover, &:focus {
+    text-decoration: none;
+    color: var(--primary-button-background-hovered-color);
+  }
+
+  &[disabled] {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+label {
+  margin-bottom: 0;
+}
+
+input {
+  font-family: "Avenir Next", "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB","华文细黑","STHeiti","微软雅黑","Microsoft YaHei", SimHei, sans-serif;
+  outline: none;
+
+  &[type="text"], &[type="password"] {
+    -webkit-appearance: none;
+  }
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+table {
+  border-spacing: 0;
+}
+
+.app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: center;
+  color: var(--primary-text-color);
+
+  .appContainer {
+    width: 100%;
+
+    .transitionContext {
+      position: absolute;
+      left: 0;
+      right: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background-color: #f3f5f8;
+
+      .content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      @media only screen and (max-width : 768px) {
+        transition: left 0.5s ease;
+
+        &.showMobileMenu {
+          left: calc(3.375rem - 100%);
+          transition: left 0.5s ease;
+        }
+      }
+    }
+  }
+
+  :global(.iebrowser){
+
+    .iebrowserTips{
+      text-align: center;
+      position: fixed;
+      top:0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      height: 50px;
+      line-height: 50px;
+      background-color: #fff;
+
+      span.close{
+        position: absolute;
+        right: 5px;
+        top: 5px;
+      }
+    }
+  }
+}
+
+:global {
+  body {
+    @media only screen and (max-width : 768px) {
+      &.showMobileMenu {
+        overflow: hidden;
+      }
+    }
+  }
+
+  .container {
+    width: 100%;
+    max-width: 80rem;
+    padding: 0 3.125rem;
+    margin: 0 auto;
+
+    @media only screen and (max-width : 768px) {
+      padding: 0 1.25rem;
+    }
+
+    @media only screen and (max-width : 425px) {
+      padding: 0;
+      width: 100%;
+    }
+  }
+
+  .innerContent {
+    padding: 1.25rem 0;
+  }
+}

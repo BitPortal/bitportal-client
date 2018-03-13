@@ -1,0 +1,21 @@
+@import 'resources/styles/variables.css';
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  animation-duration: 0.5s;
+  animation-name: spin;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}

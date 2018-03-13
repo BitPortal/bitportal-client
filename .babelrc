@@ -1,0 +1,19 @@
+{
+  "presets": ["react-native", "stage-2"],
+  "plugins": [
+    "transform-decorators-legacy",
+    ["transform-rename-import", {
+      original: "./production",
+      replacement: "./production",
+      env: "APP_ENV"
+    }]
+  ],
+  "env": {
+    "test": {
+      "presets": ["env", "react"],
+      "plugins": [
+        ["module-resolver", { "root": ["./shared"] }]
+      ]
+    }
+  }
+}

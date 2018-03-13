@@ -1,0 +1,5 @@
+{
+  "ENV": "test",
+  "GATEWAY_API_URL": "http://testing-api.bitportal.com",
+  "WEBSOCKET_API_URL": "ws://testing-api.bitportal.com"
+}

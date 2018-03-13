@@ -1,0 +1,2 @@
+shared/resources/scripts/*.js
+shared/resources/charting_library/**/*.js

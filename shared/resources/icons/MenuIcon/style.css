@@ -1,0 +1,72 @@
+.menuIcon {
+  height: 1.875rem;
+  width: 1.25rem;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+
+  span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background-color: #333;
+    opacity: 1;
+    transition: all 0.5s ease;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: calc(50% - 1px);
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: #333;
+    transform-origin: 50% 50%;
+    transform: translate3d(0, -5px, 0);
+    transition: all 0.5s ease;
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: calc(50% - 1px);
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: #333;
+    transform-origin: 50% 50%;
+    transform: translate3d(0, 5px, 0);
+    transition: all 0.5s ease;
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+
+  &:hover {
+    &:before {
+      transform: translate3d(0, -6px, 0);
+    }
+
+    &:after {
+      transform: translate3d(0, 6px, 0);
+    }
+  }
+
+  &.isOpen {
+    span {
+      opacity: 0;
+    }
+
+    &:before {
+      transform: rotate3d(0, 0, 1, 45deg) translateZ(0) scale(1.0, 1.0);
+    }
+
+    &:after {
+      transform: rotate3d(0, 0, 1, -45deg) translateZ(0) scale(1.0, 1.0);
+    }
+  }
+}

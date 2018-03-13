@@ -1,0 +1,16 @@
+general:
+  branches:
+    only:
+      - develop
+
+machine:
+  node:
+    version: 6.6.0
+
+dependencies:
+  override:
+    - npm install -g mocha && npm install -g full-icu && npm install
+
+test:
+  override:
+    - NODE_ENV=test mocha --icu-data-dir=/opt/circleci/nodejs/v6.6.0/lib/node_modules/full-icu --require babel-register --require babel-polyfill --require test/helpers/setup.js --recursive

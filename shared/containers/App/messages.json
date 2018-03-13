@@ -1,0 +1,10 @@
+{
+  "zh": {
+    "header_title": "比特币中国",
+    "browser_tip": "使用当前浏览器将极大影响您的用户体验，请切换至其他浏览器登录"
+  },
+  "en": {
+    "header_title": "BTCChina",
+    "browser_tip": "Using this browser will impact your user experience. Please login with another browser."
+  }
+}

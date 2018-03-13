@@ -1,0 +1,149 @@
+:root {
+  --black: #000;
+  --translucent-black-8: rgba(0,0,0,0.8);
+  --translucent-black: rgba(0,0,0,0.5);
+  --translucent-black-3: rgba(0,0,0,0.3);
+  --mine-shaft: #333;
+  --dove-gray: #666;
+  --dusty-gray: #999;
+  --silver: #ccc;
+  --alto: #ddd;
+  --mercury: #e4e4e4;
+  --white: #fff;
+  --translucent-white: rgba(255,255,255,0.5);
+  --translucent-white-2: rgba(255,255,255,0.2);
+
+  --lochmara: #007bbd;
+  --allports: #0069a2;
+  --orient: #005a8b;
+
+  --crusta: #fa7a34;
+  --seashell-peach: #fff2eb;
+
+  --alizarin-crimson: #eb2923;
+  --azalea: #fbe0e0;
+
+  --emerald: #5cd396;
+  --aqua-spring: #eefaf4;
+  --translucent-emerald: rgba(92, 211, 150, 0.5);
+  --translucent-emerald-1: rgba(92, 211, 150, 0.1);
+
+  --athens-gray-1: #f8f9fb;
+  --athens-gray-2: #ebedf2;
+
+  --botticelli: #d5dfe9;
+  --outer-space: #30383d;
+  --limed-spruce: #3a444b;
+
+  --header-logo-color: var(--black);
+
+  --primary-button-background-color: var(--lochmara);
+  --primary-button-background-hovered-color: var(--allports);
+  --primary-button-background-focused-color: var(--orient);
+
+  --form-input-background-color: var(--white);
+
+  --primary-text-color: var(--mine-shaft);
+  --secondary-text-color: var(--dusty-gray);
+  --default-text-color: var(--dove-gray);
+  --reverse-text-color: var(--white);
+
+  --primary-background-color: var(--white);
+  --secondary-background-color: var(--athens-gray-1);
+  --active-background-color: var(--athens-gray-2);
+
+  --primary-border-color: var(--alto);
+  --secondary-border-color: var(--silver);
+  --reserve-border-color: var(--white);
+
+  --primary-table-background-color: var(--botticelli);
+
+  --triangle-color: var(--black);
+  --text-shadow-color: var(--translucent-black);
+  --box-shadow-color: var(--translucent-black-3);
+
+  --notice-text-color: var(--crusta);
+  --notice-background-color: var(--seashell-peach);
+
+  --error-text-color: var(--alizarin-crimson);
+  --error-background-color: var(--azalea);
+
+  --success-text-color: var(--emerald);
+  --success-background-color: var(--aqua-spring);
+  --success-border-color: var(--translucent-emerald);
+
+  --header-background-color: var(--translucent-white);
+
+  --footer-text-color: var(--mercury);
+  --footer-line-color: var(--limed-spruce);
+  --footer-background-color: var(--outer-space);
+  --footer-button-background-color: var(--translucent-black);
+
+  --banner-navigation-background-color: var(--translucent-black);
+  --banner-navigation-dots-background-color: var(--translucent-white);
+  --banner-navigation-hovered-background-color: var(--translucent-black-8);
+  --banner-element-background-color: var(--translucent-black-3);
+  --banner-button-background-color: var(--translucent-white-2);
+  --banner-text-highlight-text-color: var(--mine-shaft);
+  --banner-text-highlight-background-color: var(--white);
+
+  --modal-background-color: var(--translucent-black);
+
+
+  /* black theme */
+
+  /* --header-logo-color: var(--white); */
+
+  /* --primary-button-background-color: #2b90c5; */
+  /* --primary-button-background-hovered-color: #1d82b7; */
+  /* --primary-button-background-focused-color: #176b97; */
+
+  /* --form-input-background-color: #212121; */
+
+  /* --primary-text-color: white; */
+  /* --secondary-text-color: #d7d7d7; */
+  /* --default-text-color: #999; */
+  /* --reverse-text-color: var(--white); */
+
+  /* --primary-background-color: #333; */
+  /* --secondary-background-color: #212121; */
+  /* --active-background-color: #2c2c2c; */
+
+  /* --primary-border-color: #727272; */
+  /* --secondary-border-color: #cccccc; */
+  /* --reserve-border-color: var(--white); */
+
+  /* --primary-table-background-color: #494949; */
+
+  /* --triangle-color: white; */
+  /* --text-shadow-color: var(--translucent-black); */
+  /* --box-shadow-color: var(--translucent-black-3); */
+
+  /* --notice-text-color: var(--crusta); */
+  /* --notice-background-color: var(--seashell-peach); */
+
+  /* --error-text-color: var(--alizarin-crimson); */
+  /* --error-background-color: var(--azalea); */
+
+  /* --success-text-color: var(--emerald); */
+  /* --success-background-color: var(--aqua-spring); */
+  /* --success-border-color: var(--translucent-emerald); */
+
+  /* --header-background-color: var(--translucent-white); */
+
+  /* --footer-text-color: var(--mercury); */
+  /* --footer-line-color: var(--limed-spruce); */
+  /* --footer-background-color: var(--outer-space); */
+  /* --footer-button-background-color: var(--translucent-black); */
+
+  /* --banner-navigation-background-color: var(--translucent-black); */
+  /* --banner-navigation-dots-background-color: var(--translucent-white); */
+  /* --banner-navigation-hovered-background-color: var(--translucent-black-8); */
+  /* --banner-element-background-color: var(--translucent-black-3); */
+  /* --banner-button-background-color: var(--translucent-white-2); */
+  /* --banner-text-highlight-text-color: var(--mine-shaft); */
+  /* --banner-text-highlight-background-color: var(--white); */
+
+  /* --modal-background-color: var(--translucent-black); */
+
+}
