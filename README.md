@@ -27,8 +27,8 @@ npm install -g full-icu
 yarn install
 ```
 
-## start website
-It's served in http://dev.btcchina.com:3009 .
+## start website locally
+It's served in http://dev.bitportal.com:3009 .
 ```sh
 yarn start
 ```
@@ -60,12 +60,12 @@ yarn run client
 yarn run server
 ```
 
-## run ios
+## run ios locally
 ```sh
 yarn run ios
 ```
 
-## start mobile
+## start mobile locally
 ```sh
 yarn run mobile
 ```
