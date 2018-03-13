@@ -1,6 +1,6 @@
 const webpack = require('webpack')
 const fs = require('fs')
-const {resolve, join} = require('path')
+const { resolve, join } = require('path')
 const GitVersionWebpackPlugin = require('git-revision-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
