@@ -11,8 +11,7 @@ import 'resources/fonts/fonts.css'
 import * as routerActions from 'actions/router'
 import Title from 'components/DocumentTitle'
 import style from './style.css'
-
-const messages = require('./messages.json')
+import messages from './messages'
 
 interface RouteComponent {
   key?: number
@@ -26,7 +25,7 @@ export interface Props extends RouteComponentProps<void> {
   actions: any
   router: any
   route: any,
-  locale?: string
+  locale: string
 }
 
 interface State {
@@ -78,7 +77,7 @@ export default class App extends Component<Props, State> {
     const { route, location, locale } = this.props
 
     return (
-      <IntlProvider messages={messages[locale as string]}>
+      <IntlProvider messages={messages[locale]}>
         <div className={style.app}>
           <Title render="" />
           <div className={style.appContainer}>

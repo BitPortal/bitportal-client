@@ -1,5 +1,6 @@
 /* @tsx */
 
+import 'intl'
 import React, { Component } from 'react'
 import { AppRegistry } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'

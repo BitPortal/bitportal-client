@@ -160,3 +160,13 @@ declare module 'react-native-extended-stylesheet' {
   const file: any
   export = file
 }
+
+declare module 'components/*' {
+  const file: any
+  export = file
+}
+
+declare module 'resources/icons/*' {
+  const file: any
+  export = file
+}
