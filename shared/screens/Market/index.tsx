@@ -48,7 +48,7 @@ export default class Market extends Component<Props, State> {
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
         <Text style={styles.header}>
-          Bitportal
+          Bitporta
         </Text>
         <View style={styles.options}>
           <View style={styles.searchBar}>

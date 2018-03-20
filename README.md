@@ -28,7 +28,7 @@ yarn install
 ```
 
 ## start website locally
-It's served in http://dev.bitportal.com:3009 .
+It's served in http://dev.bitportal.io:3009 .
 ```sh
 yarn start
 ```
