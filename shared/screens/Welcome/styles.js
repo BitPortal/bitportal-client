@@ -3,6 +3,10 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH, FontScale } from 'utils/dimens'
 import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
+  wrapper: {
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT
+  },
   container: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,

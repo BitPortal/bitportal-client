@@ -7318,6 +7318,12 @@ react-native-svg@^5.5.1:
     color "^0.11.1"
     lodash "^4.16.6"
 
+react-native-swiper@^1.5.13:
+  version "1.5.13"
+  resolved "http://registry.npm.taobao.org/react-native-swiper/download/react-native-swiper-1.5.13.tgz#fa695cd4ab77b9a9df2d2bfee38ea7274dd07a2e"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-typescript-transformer@TerenceGe/react-native-typescript-transformer:
   version "1.1.4"
   resolved "https://codeload.github.com/TerenceGe/react-native-typescript-transformer/tar.gz/71053f00673bc96b24fc77fa499e5c13cf5368fd"
