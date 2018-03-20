@@ -8,9 +8,5 @@ function* logger(action: Action<object>) {
 }
 
 export default function* loggerSaga() {
-  if (process.env.APP_ENV === 'pre' || process.env.APP_ENV === 'production') {
-    console.log('Welcome DAE')
-    return
-  }
   yield takeEvery('*', logger)
 }
