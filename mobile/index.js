@@ -1,3 +1,4 @@
+import 'intl'
 import { AsyncStorage } from 'react-native';
 import { registerScreens } from 'screens';
 import { startSingleApp, startTabBasedApp } from 'navigators';
