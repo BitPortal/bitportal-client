@@ -1,6 +1,5 @@
-import EStyleSheet from 'react-native-extended-stylesheet'
-
-const styles = EStyleSheet.create({
+import { StyleSheet } from 'react-native';
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#2C2C2C'

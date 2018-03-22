@@ -5,6 +5,8 @@ import { View, Text, TouchableOpacity, FlatList } from 'react-native'
 import styles from './styles'
 import { connect } from 'react-redux'
 import Colors from 'resources/colors';
+import { bindActionCreators } from 'redux';
+import { selectMarket } from 'actions/drawer'
 
 const Title = () => (
   <View style={styles.title}>
@@ -32,7 +34,10 @@ const Segment = () => (
 
 @connect(
   (state) => ({
-    
+    selectedMarket: state.drawer.get('selectedMarket')
+  }),
+  (dispatch) => ({
+    actions: bindActionCreators({ selectMarket }, dispatch)
   })
 )
 export default class SideMenu extends Component {
@@ -51,19 +56,21 @@ export default class SideMenu extends Component {
       animated: true, 
       to: 'close'
     });
+    this.props.actions.selectMarket(item.key);
   }
 
   renderItem = ({ item }) => {
+    const { selectedMarket } = this.props
     return (
       <TouchableOpacity onPress={() => this.selectMarket(item)} style={styles.listItem}>
-        <Text style={styles.text16}>
+        <Text style={[styles.text16, { color: item.key == selectedMarket ? 'red' : Colors.textColor_FFFFEE }]}>
           {item.key}
         </Text>
       </TouchableOpacity>
     )
   }
 
-  render() {
+  render() {  
     return (
       <View style={[styles.container]}>
         <Title />
@@ -72,6 +79,7 @@ export default class SideMenu extends Component {
           <FlatList
             showsVerticalScrollIndicator={false}
             data={this.state.markets}
+            extraData={this.props.selectedMarket}
             renderItem={this.renderItem}
           />
         </View> 

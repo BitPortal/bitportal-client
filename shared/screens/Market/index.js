@@ -4,18 +4,12 @@ import React, { Component } from 'react'
 import { ScrollView, Text, View, StatusBar, TextInput, FlatList, TouchableHighlight } from 'react-native'
 import BTCIcon from 'resources/icons/BTCIcon'
 import styles from './styles'
+import NavigationBar from 'components/NavigationBar'
+import { connect } from 'react-redux';
 
-interface Props {
-  navigation: any
-}
-
-interface State {
-  text: any
-}
-
-const ListItem = ({ navigation }: any) => (
+const ListItem = ({ navigator }) => (
   <TouchableHighlight
-    onPress={() => navigation.navigate('Profile')}
+    onPress={() => navigator.push('BitPortal.Profile')}
   >
     <View style={styles.listItem}>
       <View style={styles.listItemSide}>
@@ -35,18 +29,24 @@ const ListItem = ({ navigation }: any) => (
   </TouchableHighlight>
 )
 
-export default class Market extends Component<Props, State> {
-  constructor(props: Props, context?: any) {
+@connect(
+  (state) => ({
+    market: state.drawer.get('selectedMarket')
+  })
+)
+
+export default class Market extends Component {
+  constructor(props, context) {
     super(props, context)
     this.state = { text: null }
   }
 
   render() {
-    const { navigation } = this.props
+    const { navigator } = this.props
 
     return (
       <View style={styles.container}>
-        <StatusBar barStyle="light-content" />
+        <NavigationBar title={this.props.market} />
         <Text style={styles.header}>
           Bitportal
         </Text>
@@ -66,7 +66,7 @@ export default class Market extends Component<Props, State> {
           <FlatList
             style={styles.list}
             data={[{ key: 'a' }, { key: 'b' }, { key: 'c' }, { key: 'd' }, { key: 'e' }, { key: 'f' }]}
-            renderItem={() => <ListItem navigation={navigation} />}
+            renderItem={() => <ListItem navigator={navigator} />}
           />
         </ScrollView>
       </View>
