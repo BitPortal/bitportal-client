@@ -6,4 +6,4 @@ const Images = {
   account_press: require('./icon_account_press.png')
 }
 
-export default Images;
+export default Images
