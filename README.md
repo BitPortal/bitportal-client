@@ -3,6 +3,7 @@
 ## Tech Stack
 - [x] [React](https://facebook.github.io/react/)
 - [x] [React Native](https://facebook.github.io/react-native/)
+- [x] [Electron](https://electronjs.org/)
 - [x] [Typescript](https://www.typescriptlang.org/)
 - [x] [Redux](https://github.com/reactjs/redux)
 - [x] [Immutable](http://facebook.github.io/immutable-js)
@@ -15,9 +16,8 @@
 - [x] [Reselect](https://github.com/reactjs/reselect)
 - [x] [PostCSS](https://github.com/postcss/postcss)
 - [x] [CSS modules](https://github.com/outpunk/postcss-modules)
-- [x] [Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
 - [x] [Enzyme](https://github.com/airbnb/enzyme)
-- [x] [Webpack 3](https://webpack.js.org)
+- [x] [Webpack 4](https://webpack.js.org)
 - [x] [Babel](https://babeljs.io/)
 - [x] [Express](https://github.com/expressjs/express)
 

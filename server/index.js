@@ -48,13 +48,13 @@ if (cluster.isMaster) {
     <title>${title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
     <link rel="shortcut icon" href="/images/favicon.png">
-    <link href="/styles/bundle.css?v=${__webpack_hash__}" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/bundle.css?v=${__webpack_hash__}">
+    ${chunks.map(chunk => `<link rel="stylesheet" href="/styles/${chunk}.chunk.css?v=${__webpack_hash__}">`)}
   </head>
   <body>
     <div id="app">${root}</div>
     <script>window.__PRELOADED_STATE__ = ${serialize(Transit.toJSON(state), { isJSON: true })}</script>
     <script>window.__PRELOADED_CHUNKS__ = ${JSON.stringify(chunks)}</script>
-    <script src="/scripts/vendor.bundle.js?v=${__webpack_hash__}"></script>
     <script src="/scripts/bundle.js?v=${__webpack_hash__}"></script>
   </body>
   </html>
@@ -70,6 +70,7 @@ if (cluster.isMaster) {
   app.use('/styles', Express.static(path.join(__dirname, '/styles')))
   app.use('/scripts', Express.static(path.join(__dirname, '/scripts')))
   app.use('/charting_library', Express.static(path.join(__dirname, '/charting_library')))
+  Express.static.mime.types.wasm = 'application/wasm'
 
   app.get('/robots.txt', (req, res) => {
     res.type('text/plain')

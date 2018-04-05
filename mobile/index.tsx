@@ -13,7 +13,7 @@ EStyleSheet.build({})
 const store = configure()
 store.runSaga(sagas)
 
-export default class App extends Component<object, object> {
+export default class App extends Component<{}, {}> {
   render() {
     return (
       <Provider store={store}>
