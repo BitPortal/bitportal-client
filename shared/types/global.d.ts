@@ -32,6 +32,20 @@ declare interface FetchOptions {
   body?: string | FormData
 }
 
+declare interface SuccessResponse {
+  status: string
+  code: number
+  data?: string
+  server_time: number
+}
+
+declare interface ErrorResponse {
+  status: string
+  error_code: number
+  error_msg: string
+  server_time: number
+}
+
 declare interface Window {
   __PRELOADED_STATE__?: string
   __PRELOADED_CHUNKS__?: string[]

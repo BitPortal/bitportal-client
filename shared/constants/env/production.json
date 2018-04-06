@@ -1,5 +1,5 @@
 {
   "ENV": "production",
-  "GATEWAY_API_URL": "https://api.bitportal.io",
+  "GATEWAY_API_URL": "https://api.bitportal.io/api/v1",
   "WEBSOCKET_API_URL": "wss://api.bitportal.io"
 }
