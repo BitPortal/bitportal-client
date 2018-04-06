@@ -1,4 +1,5 @@
 static*
+bundle*
 .eslintcache
 coverage
 .nyc_output

@@ -18,7 +18,6 @@ fs.readdirSync('node_modules')
 const baseConfig = {
   mode: ifProduction('production', 'development'),
   output: {
-    path: resolve('static'),
     webassemblyModuleFilename: ifProduction('scripts/[modulehash].module.wasm?v=[modulehash]', 'scripts/[modulehash].module.wasm'),
     chunkFilename: ifProduction('scripts/[name].chunk.js?v=[chunkhash]', 'scripts/[name].chunk.js')
   },
@@ -174,6 +173,7 @@ const browserConfig = {
   ], './index.tsx'),
   output: {
     ...baseConfig.output,
+    path: resolve('static'),
     filename: ifProduction('scripts/bundle.js?v=[hash]', 'scripts/bundle.js'),
     publicPath: '/'
   },
@@ -204,6 +204,7 @@ const serverConfig = {
   entry: './index.js',
   output: {
     ...baseConfig.output,
+    path: resolve('static'),
     filename: 'app.js',
     libraryTarget: 'commonjs2',
     publicPath: '/'
@@ -231,6 +232,10 @@ const desktopConfig = {
     'react-hot-loader/patch',
     './index.tsx'
   ], './index.tsx'),
+  output: {
+    ...baseConfig.output,
+    path: resolve('bundle')
+  },
   plugins: removeEmpty([
     ...baseConfig.plugins,
     ifNotProduction(new webpack.HotModuleReplacementPlugin()),

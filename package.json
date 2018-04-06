@@ -35,8 +35,8 @@
     "ios": "cross-env NODE_ENV=production APP_ENV=production node node_modules/react-native/local-cli/cli.js run-ios",
     "bundle:ios": "cross-env NODE_ENV=production APP_ENV=production node node_modules/react-native/local-cli/cli.js bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios",
     "android": "cross-env NODE_ENV=production APP_ENV=production node node_modules/react-native/local-cli/cli.js run-android",
-    "bundle:desktop": "rimraf static && cross-env NODE_ENV=production APP_ENV=development TARGET=\"electron-renderer\" webpack --progress --colors",
-    "serve:desktop": "electron static/index.html",
+    "bundle:desktop": "rimraf bundle && cross-env NODE_ENV=production APP_ENV=development TARGET=\"electron-renderer\" webpack --progress --colors",
+    "desktop": "electron bundle/index.html",
     "tsc": "tsc --watch"
   },
   "dependencies": {
