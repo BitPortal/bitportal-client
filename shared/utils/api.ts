@@ -1,12 +1,12 @@
-import cookie from 'react-cookie'
 import { GATEWAY_API_URL } from 'constants/env'
+import storage from 'utils/storage'
 import { isMobile } from 'utils/platform'
 
 if (!isMobile) require('isomorphic-fetch')
 
 export const fetchBase = (method: FetchMethod = 'GET', endPoint: string = '/hello', params: object = {}, customeHeaders: object = {}) => {
   let url = GATEWAY_API_URL + endPoint
-  const token = (!isMobile && cookie.load('dae_t')) ? `Bearer ${cookie.load('dae_t')}` : null
+  const token = storage.getItem('bitportal_t') && `Bearer ${storage.getItem('bitportal_t')}`
 
   const headers = {
     Accept: 'application/json',
