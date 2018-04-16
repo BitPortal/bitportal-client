@@ -14,6 +14,7 @@ import { CookiesProvider } from 'react-cookie'
 import cookiesMiddleware from 'universal-cookie-express'
 import serialize from 'serialize-javascript'
 import Transit from 'transit-immutable-js'
+import storage from 'utils/storage'
 import { getInitialLang } from 'selectors/intl'
 import { flushTitle } from 'components/DocumentTitle'
 import Provider from 'components/Provider'
@@ -80,7 +81,8 @@ if (cluster.isMaster) {
   app.get('*', async (req, res) => {
     try {
       const history = createMemoryHistory({ initialEntries: [req.url] })
-      const store = configure({ intl: getInitialLang() }, history)
+      const lang = storage.getItem('bitportal_lang')
+      const store = configure({ intl: getInitialLang(lang) }, history)
       const rootTask = store.runSaga(sagas)
       store.close()
       await rootTask.done
