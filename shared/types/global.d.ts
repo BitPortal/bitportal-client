@@ -193,6 +193,11 @@ declare module 'components/*' {
   export = file
 }
 
+declare module 'utils/*' {
+  const file: any
+  export = file
+}
+
 declare module 'resources/icons/*' {
   const file: any
   export = file
