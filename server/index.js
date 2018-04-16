@@ -6,14 +6,15 @@ import os from 'os'
 import path from 'path'
 import Express from 'express'
 import compression from 'compression'
-import cookieParser from 'cookie-parser'
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import { createMemoryHistory } from 'history'
 import { renderRoutes } from 'react-router-config'
-import cookie from 'react-cookie'
+import { CookiesProvider } from 'react-cookie'
+import cookiesMiddleware from 'universal-cookie-express'
 import serialize from 'serialize-javascript'
 import Transit from 'transit-immutable-js'
+import storage from 'utils/storage'
 import { getInitialLang } from 'selectors/intl'
 import { flushTitle } from 'components/DocumentTitle'
 import Provider from 'components/Provider'
@@ -63,7 +64,7 @@ if (cluster.isMaster) {
   const port = 9090
   const app = new Express()
 
-  app.use(cookieParser())
+  app.use(cookiesMiddleware())
   app.use(compression())
   app.use('/fonts', Express.static(path.join(__dirname, '/fonts')))
   app.use('/images', Express.static(path.join(__dirname, '/images')))
@@ -79,20 +80,23 @@ if (cluster.isMaster) {
 
   app.get('*', async (req, res) => {
     try {
-      cookie.plugToRequest(req, res)
       const history = createMemoryHistory({ initialEntries: [req.url] })
-      const store = configure({ intl: getInitialLang() }, history)
+      storage.plugToRequest(req)
+      const lang = storage.getItemSync('bitportal_lang')
+      const store = configure({ intl: getInitialLang(lang) }, history)
       const rootTask = store.runSaga(sagas)
       store.close()
       await rootTask.done
 
       const context = { preloadedChunks: [] }
       const html = ReactDOMServer.renderToString(
-        <Provider store={store}>
-          <ConnectedRouter history={history} location={req.url} context={context}>
-            {renderRoutes(routes)}
-          </ConnectedRouter>
-        </Provider>
+        <CookiesProvider cookies={req.universalCookies}>
+          <Provider store={store}>
+            <ConnectedRouter history={history} location={req.url} context={context}>
+              {renderRoutes(routes)}
+            </ConnectedRouter>
+          </Provider>
+        </CookiesProvider>
       )
 
       if (context.url) {
