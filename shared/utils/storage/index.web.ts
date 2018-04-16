@@ -1,10 +1,12 @@
 import { Cookies } from 'react-cookie'
 
-const getItem = (name: string, options: {} = {}) => Cookies.get(name, options)
+const cookies = new Cookies()
 
-const setItem = (name: string, value: any, options: {} = {}) => Cookies.set(name, value, options)
+const getItem = (name: string, options: {} = {}) => cookies.get(name, options)
 
-const removeItem = (name: string, options: {} = {}) => Cookies.remove(name, options)
+const setItem = (name: string, value: any, options: {} = {}) => cookies.set(name, value, options)
+
+const removeItem = (name: string, options: {} = {}) => cookies.remove(name, options)
 
 const storage = { getItem, setItem, removeItem }
 

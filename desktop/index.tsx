@@ -8,6 +8,8 @@ import { ConnectedRouter } from 'react-router-redux'
 import { CookiesProvider } from 'react-cookie'
 import { renderRoutes, RouteConfig } from 'react-router-config'
 import { createBrowserHistory } from 'history'
+import storage from 'utils/storage'
+import { getInitialLang } from 'selectors/intl'
 import Transit from 'transit-immutable-js'
 import Provider from 'components/Provider'
 import * as bundles from 'routes/async'
@@ -19,7 +21,7 @@ import sagas from 'sagas'
 const preloadedState = window.__PRELOADED_STATE__ && Transit.fromJSON(window.__PRELOADED_STATE__)
 const preloadedChunks = window.__PRELOADED_CHUNKS__ || []
 const browserHistory = createBrowserHistory()
-const store = configure(preloadedState, browserHistory)
+const store = configure({ ...preloadedState, intl: getInitialLang(lang) }, browserHistory)
 store.runSaga(sagas)
 
 const renderApp = (routes: RouteConfig[]) => {
