@@ -5,6 +5,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import { ConnectedRouter } from 'react-router-redux'
+import { CookiesProvider } from 'react-cookie'
 import { renderRoutes, RouteConfig } from 'react-router-config'
 import { createBrowserHistory } from 'history'
 import Transit from 'transit-immutable-js'
@@ -24,11 +25,13 @@ store.runSaga(sagas)
 const renderApp = (routes: RouteConfig[]) => {
   (preloadedState ? ReactDOM.hydrate : ReactDOM.render)(
     <AppContainer warnings={false}>
-      <Provider store={store}>
-        <ConnectedRouter history={browserHistory}>
-          {renderRoutes(routes)}
-        </ConnectedRouter>
-      </Provider>
+      <CookiesProvider>
+        <Provider store={store}>
+          <ConnectedRouter history={browserHistory}>
+            {renderRoutes(routes)}
+          </ConnectedRouter>
+        </Provider>
+      </CookiesProvider>
     </AppContainer>,
     document.getElementById('app')
   )

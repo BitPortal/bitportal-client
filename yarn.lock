@@ -8600,6 +8600,14 @@ promise@~1.3.0:
   dependencies:
     is-promise "~1"
 
+prop-types@^15.0.0:
+  version "15.6.1"
+  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.3.1"
+    object-assign "^4.1.1"
+
 prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0:
   version "15.6.0"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
@@ -8851,11 +8859,13 @@ react-clone-referenced-element@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-clone-referenced-element/-/react-clone-referenced-element-1.0.1.tgz#2bba8c69404c5e4a944398600bcc4c941f860682"
 
-react-cookie@^0.4.8:
-  version "0.4.9"
-  resolved "https://registry.yarnpkg.com/react-cookie/-/react-cookie-0.4.9.tgz#21a0fcc9c6265aa86bba6d174122acb3851b8736"
+react-cookie@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/react-cookie/-/react-cookie-2.1.4.tgz#7ccb5d2a8e837098c119a0edba8e4a09ac3ffcad"
   dependencies:
-    cookie "^0.3.1"
+    hoist-non-react-statics "^2.3.1"
+    prop-types "^15.0.0"
+    universal-cookie "^2.1.2"
 
 react-copy-to-clipboard@^5.0.1:
   version "5.0.1"
@@ -11061,6 +11071,19 @@ unique-string@^1.0.0:
   dependencies:
     crypto-random-string "^1.0.0"
 
+universal-cookie-express@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/universal-cookie-express/-/universal-cookie-express-2.1.2.tgz#f40729bfc7d828f1b650073585b5fefcd49e1052"
+  dependencies:
+    universal-cookie "^2.1.2"
+
+universal-cookie@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/universal-cookie/-/universal-cookie-2.1.2.tgz#7c0824c0e027f572789538932f066315611c2836"
+  dependencies:
+    cookie "^0.3.1"
+    object-assign "^4.1.0"
+
 universalify@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.1.tgz#fa71badd4437af4c148841e3b3b165f9e9e590b7"
@@ -11805,7 +11828,7 @@ yargs@^6.0.0:
 
 yargs@^8.0.2:
   version "8.0.2"
-  resolved "http://registry.npm.taobao.org/yargs/download/yargs-8.0.2.tgz#6299a9055b1cefc969ff7e79c1d918dceb22c360"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-8.0.2.tgz#6299a9055b1cefc969ff7e79c1d918dceb22c360"
   dependencies:
     camelcase "^4.1.0"
     cliui "^3.2.0"
