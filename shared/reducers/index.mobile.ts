@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux'
-import navigator from './navigator'
+
 import intl from './intl'
+import drawer from './drawer'
 
 export default combineReducers({
-  navigator,
-  intl
+  intl,
+  drawer
 })

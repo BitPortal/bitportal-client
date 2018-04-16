@@ -11,7 +11,7 @@ export const fetchBase = (method: FetchMethod = 'GET', endPoint: string = '/hell
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: token,
+    Authorization: token || null,
     ...customeHeaders
   }
 
