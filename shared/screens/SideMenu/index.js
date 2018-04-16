@@ -4,8 +4,8 @@ import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, FlatList } from 'react-native'
 import styles from './styles'
 import { connect } from 'react-redux'
-import Colors from 'resources/colors';
-import { bindActionCreators } from 'redux';
+import Colors from 'resources/colors'
+import { bindActionCreators } from 'redux'
 import { selectMarket } from 'actions/drawer'
 
 const Title = () => (
@@ -51,12 +51,8 @@ export default class SideMenu extends Component {
   }
 
   selectMarket = (item) => {
-    this.props.navigator.toggleDrawer({
-      side: 'left', 
-      animated: true, 
-      to: 'close'
-    });
-    this.props.actions.selectMarket(item.key);
+    this.props.navigator.toggleDrawer({ side: 'left', animated: true, to: 'close' })
+    this.props.actions.selectMarket(item.key)
   }
 
   renderItem = ({ item }) => {

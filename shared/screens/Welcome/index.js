@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import { View, Text, AsyncStorage, TouchableOpacity } from 'react-native'
 import Swiper from 'react-native-swiper'
-import { startTabBasedApp } from 'navigators';
+import { startTabBasedApp } from 'navigators'
 import styles from './styles'
 
 const Page1 = () => (

@@ -7,8 +7,8 @@ import {
   View,
   TouchableHighlight
 } from 'react-native'
-import { FontScale } from 'utils/dimens';
-import Colors from 'resources/colors';
+import { FontScale } from 'utils/dimens'
+import Colors from 'resources/colors'
 
 export default SearchItem = ({ onPress }) => (
   <TouchableHighlight 
