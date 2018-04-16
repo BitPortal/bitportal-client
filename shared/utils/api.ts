@@ -1,17 +1,27 @@
 import cookie from 'react-cookie'
 import { GATEWAY_API_URL } from 'constants/env'
 import { isMobile } from 'utils/platform'
+import { AsyncStorage } from 'react-native'
 
 if (!isMobile) require('isomorphic-fetch')
 
-export const fetchBase = (method: FetchMethod = 'GET', endPoint: string = '/hello', params: object = {}, customeHeaders: object = {}) => {
+const loadToken = async () => {
+  if (isMobile) {
+    const result = await AsyncStorage.getItem('dae_t')
+    return result
+  } else {
+    return cookie.load('dae_t') && `Bearer ${cookie.load('dae_t')}`
+  }
+}
+
+export const fetchBase = async (method: FetchMethod = 'GET', endPoint: string = '/hello', params: object = {}, customeHeaders: object = {}) => {
   let url = GATEWAY_API_URL + endPoint
-  const token = (!isMobile && cookie.load('dae_t')) ? `Bearer ${cookie.load('dae_t')}` : null
+  const token = await loadToken()
 
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: token,
+    Authorization: token || null,
     ...customeHeaders
   }
 

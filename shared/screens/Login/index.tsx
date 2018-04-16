@@ -1,8 +1,7 @@
 /* @tsx */
 
 import React, { Component } from 'react'
-import { View, Button, ScrollView, Text, FlatList } from 'react-native'
-import { NavigationActions } from 'react-navigation'
+import { View, ScrollView, Text, FlatList } from 'react-native'
 import styles from './styles'
 
 interface Props {
@@ -10,19 +9,6 @@ interface Props {
 }
 
 export default class Login extends Component<Props, object> {
-  static navigationOptions = ({ navigation }: { navigation: any }) => ({
-    title: 'Login',
-    gesturesEnabled: false,
-    headerLeft: (
-      <Button
-        title="Cancel"
-        onPress={() => navigation.dispatch(NavigationActions.back())}
-      />
-    ),
-    headerRight: (
-      (navigation.state.params && !navigation.state.params.disabled) ? <Button title="Submit" onPress={() => {}} /> : <Text style={{ fontSize: 18, paddingRight: 8, color: '#C8C7CC' }}>Submit</Text>
-    )
-  })
 
   state = { text: '' }
 
