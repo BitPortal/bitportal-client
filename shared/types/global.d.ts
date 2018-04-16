@@ -113,7 +113,20 @@ declare module 'redux-form/es/immutable' {
 }
 
 declare module 'react-cookie' {
-  const cookie: any
+  interface Cookies {
+    get: any
+    set: any
+    getAll: any
+    remove: any
+  }
+
+  interface Cookie {
+    CookiesProvider: any
+    withCookies: any
+    Cookies: Cookies
+  }
+
+  const cookie: Cookie
   export = cookie
 }
 
@@ -176,6 +189,11 @@ declare module 'react-native-extended-stylesheet' {
 }
 
 declare module 'components/*' {
+  const file: any
+  export = file
+}
+
+declare module 'utils/*' {
   const file: any
   export = file
 }
