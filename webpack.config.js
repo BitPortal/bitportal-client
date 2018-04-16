@@ -1,11 +1,10 @@
 const webpack = require('webpack')
 const fs = require('fs')
 const { resolve, join } = require('path')
-const GitVersionWebpackPlugin = require('git-revision-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
+const ManifestPlugin = require('webpack-manifest-plugin')
 const { getIfUtils, removeEmpty } = require('webpack-config-utils')
 const { ifProduction, ifNotProduction } = getIfUtils(process.env.NODE_ENV)
 const nodeModules = {}
@@ -17,17 +16,18 @@ fs.readdirSync('node_modules')
   })
 
 const baseConfig = {
-  devtool: 'inline-source-map',
+  mode: ifProduction('production', 'development'),
   output: {
-    path: resolve('static'),
-    chunkFilename: ifProduction('scripts/[id].chunk.js?v=[chunkhash]', 'scripts/[id].chunk.js'),
-    publicPath: '/'
+    webassemblyModuleFilename: ifProduction('scripts/[modulehash].module.wasm?v=[modulehash]', 'scripts/[modulehash].module.wasm'),
+    chunkFilename: ifProduction('scripts/[name].chunk.js?v=[chunkhash]', 'scripts/[name].chunk.js')
   },
   resolve: {
     modules: [
       resolve('shared'),
       resolve('browser'),
+      resolve('desktop'),
       resolve('server'),
+      resolve('core'),
       'node_modules'
     ],
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
@@ -52,6 +52,10 @@ const baseConfig = {
         enforce: 'pre',
         exclude: resolve(__dirname, 'node_modules')
       },
+      {
+		test: /\.wasm$/,
+		type: 'webassembly/experimental'
+	  },
       {
         test: /\.(t|j)sx?$/,
         exclude: [
@@ -88,44 +92,40 @@ const baseConfig = {
       {
         test: /\.css$/,
         include: resolve(__dirname, 'shared'),
-        loader: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              query: {
-                modules: true,
-                sourceMap: true,
-                importLoaders: 1,
-                localIdentName: '[local]_[hash:base64:5]'
-              }
-            },
-            {
-              loader: 'postcss-loader'
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            query: {
+              minimize: true,
+              modules: true,
+              sourceMap: true,
+              importLoaders: 1,
+              localIdentName: '[local]_[hash:base64:5]'
             }
-          ]
-        })
+          },
+          {
+            loader: 'postcss-loader'
+          }
+        ]
       },
       {
         test: /\.css$/,
         exclude: resolve(__dirname, 'shared'),
-        loader: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: {
-            loader: 'css-loader'
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            query: { minimize: true }
           }
-        })
-      },
-      {
-        test: /\.json$/,
-        loader: 'json-loader'
+        ]
       },
       {
         test: /\.(ttf|eot|otf|svg|woff(2)?)(\?[a-z0-9]+)?$/,
         include: resolve(__dirname, 'shared', 'resources', 'fonts'),
         loader: 'url-loader',
         options: {
-          limit: 1024,
+          ...(process.env.TARGET !== 'electron-renderer' ? { limit: 1024 } : null),
           name: 'fonts/[name].[ext]'
         }
       },
@@ -134,19 +134,16 @@ const baseConfig = {
         include: resolve(__dirname, 'shared', 'resources', 'images'),
         loader: 'url-loader',
         options: {
-          limit: 10240,
+          ...(process.env.TARGET !== 'electron-renderer' ? { limit: 10240 } : null),
           name: 'images/[name].[ext]?v=[hash:base64:5]'
         }
       }
     ]
   },
+  optimization: {
+	occurrenceOrder: true
+  },
   plugins: removeEmpty([
-    new GitVersionWebpackPlugin(),
-    new LodashModuleReplacementPlugin(),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true,
-      debug: false
-    }),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'production'),
@@ -154,26 +151,9 @@ const baseConfig = {
       }
     }),
     new webpack.NormalModuleReplacementPlugin(/.\/production/, `./${process.env.APP_ENV}.json`),
-    ifProduction(new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-        screw_ie8: true,
-        conditionals: true,
-        unused: true,
-        comparisons: true,
-        sequences: true,
-        dead_code: true,
-        evaluate: true,
-        if_return: true,
-        join_vars: true
-      },
-      mangle: process.env.TARGET !== 'node',
-      output: { comments: false }
-    })),
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       filename: ifProduction('styles/bundle.css?v=[hash]', 'styles/bundle.css'),
-      disable: process.env.NODE_ENV === 'development',
-      allChunks: true
+      chunkFilename: ifProduction('styles/[name].chunk.css?v=[chunkhash]', 'styles/[name].chunk.css')
     }),
     new CopyWebpackPlugin([
       {
@@ -184,67 +164,51 @@ const baseConfig = {
   ])
 }
 
-const browserConfig = Object.assign({}, baseConfig, {
+const browserConfig = {
+  ...baseConfig,
   context: resolve('browser'),
-  entry: {
-    jsx: ifNotProduction([
-      'react-hot-loader/patch',
-      './index.tsx'
-    ], './index.tsx'),
-    vendor: ifNotProduction([
-      'react-hot-loader/patch',
-      './index.tsx'
-    ], []).concat([
-      'core-js/es6',
-      'react',
-      'react-dom',
-      'redux',
-      'immutable',
-      'react-router',
-      'react-router-redux',
-      'redux-actions',
-      'redux-form',
-      'redux-saga',
-      'react-intl'
-    ])
+  entry: ifNotProduction([
+    'react-hot-loader/patch',
+    './index.tsx'
+  ], './index.tsx'),
+  output: {
+    ...baseConfig.output,
+    path: resolve('static'),
+    filename: ifProduction('scripts/bundle.js?v=[hash]', 'scripts/bundle.js'),
+    publicPath: '/'
   },
-  output: Object.assign({}, baseConfig.output, {
-    filename: ifProduction('scripts/bundle.js?v=[hash]', 'scripts/bundle.js')
-  }),
-  plugins: baseConfig.plugins.concat(removeEmpty([
+  plugins: removeEmpty([
+    ...baseConfig.plugins,
     ifNotProduction(new webpack.HotModuleReplacementPlugin()),
-    ifNotProduction(new webpack.NamedModulesPlugin()),
-    ifNotProduction(new webpack.NoEmitOnErrorsPlugin()),
     ifProduction(new webpack.NormalModuleReplacementPlugin(/routes\/sync/, 'routes/async')),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: ifProduction('scripts/vendor.bundle.js?v=[hash]', 'scripts/vendor.bundle.js')
-    }),
+    ifProduction(new ManifestPlugin({ isChunk: true })),
     new HtmlWebpackPlugin({
       inject: false,
-      minify: {
-        collapseWhitespace: true
-      },
+      minify: { collapseWhitespace: true },
       template: 'index.html',
       appMountId: 'app',
       mobile: true
     })
-  ])),
+  ]),
   devServer: {
     contentBase: './browser',
     hot: true
   }
-})
+}
 
-const serverConfig = Object.assign({}, baseConfig, {
+const serverConfig = {
+  ...baseConfig,
   target: 'node',
   context: resolve('server'),
   devtool: false,
   entry: './index.js',
-  output: Object.assign({}, baseConfig.output, {
+  output: {
+    ...baseConfig.output,
+    path: resolve('static'),
     filename: 'app.js',
-    libraryTarget: 'commonjs2'
-  }),
+    libraryTarget: 'commonjs2',
+    publicPath: '/'
+  },
   externals: nodeModules,
   node: {
     console: false,
@@ -254,14 +218,43 @@ const serverConfig = Object.assign({}, baseConfig, {
     __filename: false,
     __dirname: false
   },
-  plugins: baseConfig.plugins.concat([
+  plugins: [
+    ...baseConfig.plugins,
     new webpack.ExtendedAPIPlugin()
+  ]
+}
+
+const desktopConfig = {
+  ...baseConfig,
+  target: 'electron-renderer',
+  context: resolve('desktop'),
+  entry: ifNotProduction([
+    'react-hot-loader/patch',
+    './index.tsx'
+  ], './index.tsx'),
+  output: {
+    ...baseConfig.output,
+    path: resolve('bundle')
+  },
+  plugins: removeEmpty([
+    ...baseConfig.plugins,
+    ifNotProduction(new webpack.HotModuleReplacementPlugin()),
+    ifProduction(new ManifestPlugin({ isChunk: true })),
+    new HtmlWebpackPlugin({
+      inject: false,
+      minify: { collapseWhitespace: true },
+      template: 'index.html',
+      appMountId: 'app',
+      mobile: true,
+      baseHref: './'
+    })
   ])
-})
+}
 
 const configs = {
   web: browserConfig,
-  node: serverConfig
+  node: serverConfig,
+  "electron-renderer": desktopConfig
 }
 
 module.exports = configs[process.env.TARGET]

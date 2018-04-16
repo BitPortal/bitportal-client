@@ -45,7 +45,7 @@ export const fetchBase = async (method: FetchMethod = 'GET', endPoint: string = 
 
   return fetch(url, options).then((res: any) => {
     if (!res.ok) {
-      return res.json().then((e: any) => Promise.reject({ message: e.error }))
+      return res.json().then((e: any) => Promise.reject({ message: e.error_msg }))
     }
 
     const contentType = res.headers.get('content-type')
@@ -53,14 +53,20 @@ export const fetchBase = async (method: FetchMethod = 'GET', endPoint: string = 
     if (/json/.test(contentType)) {
       return res.json()
     }
-    if (/text/.test(contentType)) {
-      return res.text()
-    }
-    if (/image\/png/.test(contentType)) {
-      return res.blob().then((blob: string) => URL.createObjectURL(blob))
-    }
+
     return null
   })
 }
 
-export const register = (params: object) => fetchBase('POST', '/register', params)
+export const sendSMS = (params: SendSMSParams) => fetchBase('POST', '/auth/sms', params)
+export const sendEmail = (params: SendEmailParams) => fetchBase('POST', '/auth/email', params)
+export const smsLogin = (params: SMSLoginParams) => fetchBase('POST', '/auth/smslogin', params)
+export const login = () => fetchBase('POST', '/auth/login')
+export const emailCallback = (params: EmailCallbackParams) => fetchBase('GET', `/auth/email/callback/${params.id}`)
+export const generateTwoFactor = () => fetchBase('GET', '/auth/two-factor')
+export const getUserById = (params: UserIdParams) => fetchBase('GET', `/user/${params.id}`)
+export const getUserByToken = () => fetchBase('GET', '/user/getUserByToken')
+export const createUser = (params: CreateUserParams) => fetchBase('POST', '/user', params)
+export const updateUser = (params: UserIdParams) => fetchBase('PUT', `/user/${params.id}`, params)
+export const deleteUser = (params: UserIdParams) => fetchBase('DELETE', `/user/${params.id}`, params)
+export const bindUserTwoFactor = (params: BindUserTwoFactorParams) => fetchBase('DELETE', `/user/two-factor/${params.id}`, params)

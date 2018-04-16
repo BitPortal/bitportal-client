@@ -1,9 +1,11 @@
 static*
+bundle*
 .eslintcache
 coverage
 .nyc_output
 .DS_Store
 .idea
+.vscode
 .#*.js
 tools/csvInput/*
 tools/csvOutput/*
@@ -61,3 +63,9 @@ buck-out/
 */fastlane/report.xml
 */fastlane/Preview.html
 */fastlane/screenshots
+
+core/compiler/build/
+core/compiler/src/
+core/compiler/dist/
+core/compiler/sysroot/
+core/compiler/wasmception-*-bin.tar.gz

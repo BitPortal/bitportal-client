@@ -38,7 +38,8 @@
     "strict-boolean-expressions": false,
     "no-boolean-literal-compare": false,
     "jsx-no-lambda": false,
-    "no-implicit-dependencies": false
+    "no-implicit-dependencies": false,
+    "space-in-parens": false
   },
   "rulesDirectory": []
 }

@@ -1,5 +1,5 @@
 {
   "ENV": "demo",
-  "GATEWAY_API_URL": "https://demo-api.bitportal.com",
-  "WEBSOCKET_API_URL": "wss://demo-api.bitportal.com"
+  "GATEWAY_API_URL": "https://demo-api.bitportal.io/api/v1",
+  "WEBSOCKET_API_URL": "wss://demo-api.bitportal.io"
 }
