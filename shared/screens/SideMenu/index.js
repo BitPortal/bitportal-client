@@ -44,7 +44,7 @@ export default class SideMenu extends Component {
 
   state = {
     markets: [
-      { key: 'OKey' },   { key: '币安' }, { key: 'Gate.io' }, { key: 'Huobi Pro' }, { key: 'BTCC' }, 
+      { key: 'OKex' },   { key: '币安' }, { key: 'Gate.io' }, { key: 'Huobi Pro' }, { key: 'BTCC' }, 
       { key: 'ZB' },     { key: '币赢' }, { key: 'Bittrex' }, { key: 'Bitfinex' },  { key: 'CEO' },
       { key: 'HitBTC' }
     ]

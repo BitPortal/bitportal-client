@@ -1,33 +1,16 @@
 /* @tsx */
 
 import React, { Component } from 'react'
-import { ScrollView, Text, View, StatusBar, TextInput, FlatList, TouchableHighlight } from 'react-native'
 import BTCIcon from 'resources/icons/BTCIcon'
 import styles from './styles'
 import NavigationBar from 'components/NavigationBar'
-import { connect } from 'react-redux';
-
-const ListItem = ({ navigator }) => (
-  <TouchableHighlight
-    onPress={() => navigator.push('BitPortal.Profile')}
-  >
-    <View style={styles.listItem}>
-      <View style={styles.listItemSide}>
-        <BTCIcon />
-      </View>
-      <View style={styles.listItemMain}>
-        <View style={styles.listItemMainLeft}>
-          <Text style={styles.listItemMainCoin}>Bitcoin</Text>
-          <Text style={styles.listItemMainMarketSize}>量/额 100.08万/469.31亿</Text>
-        </View>
-        <View style={styles.listItemRight}>
-          <Text style={styles.listItemMainPrice}>$8889.00</Text>
-          <Text style={styles.listItemMainChange}>(+23.09%)</Text>
-        </View>
-      </View>
-    </View>
-  </TouchableHighlight>
-)
+import { connect } from 'react-redux'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { FontScale } from 'utils/dimens'
+import Colors from 'resources/colors'
+import SearchItem from 'screens/Market/SearchItem'
+import TableView from 'screens/Market/TableView'
+import { Text, View, TouchableOpacity } from 'react-native'
 
 @connect(
   (state) => ({
@@ -36,39 +19,58 @@ const ListItem = ({ navigator }) => (
 )
 
 export default class Market extends Component {
-  constructor(props, context) {
-    super(props, context)
-    this.state = { text: null }
+  
+  state = { 
+    text: null 
+  }
+
+  searchCoin = () => {
+
   }
 
   render() {
     const { navigator } = this.props
-
     return (
       <View style={styles.container}>
-        <NavigationBar title={this.props.market} />
-        <Text style={styles.header}>
-          Bitportal
-        </Text>
-        <View style={styles.options}>
-          <View style={styles.searchBar}>
-            <TextInput
-              style={styles.textInput}
-              onChangeText={(text) => this.setState({ text })}
-              value={this.state.text}
-              placeholder="Search"
-              placeholderTextColor="#959499"
-            />
-          </View>
-          <Text style={styles.filter}>Price</Text>
-        </View>
-        <ScrollView>
-          <FlatList
-            style={styles.list}
-            data={[{ key: 'a' }, { key: 'b' }, { key: 'c' }, { key: 'd' }, { key: 'e' }, { key: 'f' }]}
-            renderItem={() => <ListItem navigator={navigator} />}
-          />
-        </ScrollView>
+        <NavigationBar 
+          leftButton={(
+            <TouchableOpacity
+              onPress={() => {this.props.navigator.toggleDrawer({
+                side: 'left', 
+                animated: true, 
+                to: 'open'
+              })}}
+              style={styles.navButton}
+            >
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Ionicons name="md-menu" size={22} color={Colors.bgColor_FFFFFF} />
+                <Text style={[styles.text20, {marginLeft: 10}]}>
+                  {this.props.market}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )}
+          rightButton={(
+            <TouchableOpacity
+              onPress={() => {}}
+              style={styles.navButton}
+            >
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text style={[styles.text13, {marginTop: -FontScale(13), marginLeft: -FontScale(13)}]}>
+                  BTC
+                </Text>
+                <Text style={[styles.text13, {marginBottom: -FontScale(8), marginRight: -FontScale(8)}]}>
+                  ETH
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )}
+        />
+        <SearchItem onPress={() => this.searchCoin} />
+        <TableView 
+          data={[{ key: 'a' }, { key: 'b' }, { key: 'c' }, { key: 'd' }, { key: 'e' }, { key: 'f' }]}
+        />
+        
       </View>
     )
   }

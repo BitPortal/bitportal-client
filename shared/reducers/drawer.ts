@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import * as actions from 'actions/drawer'
 
 const initialState = Immutable.fromJS({
-  selectedMarket: 'OKey'
+  selectedMarket: 'OKex'
 })
 
 export default handleActions({

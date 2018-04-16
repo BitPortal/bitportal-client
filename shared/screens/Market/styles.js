@@ -1,79 +1,61 @@
 import { StyleSheet } from 'react-native';
+import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, WidthPercent } from 'utils/dimens';
+import Colors from 'resources/colors';
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#2C2C2C'
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+    backgroundColor: Colors.bgColor_27_27_26
   },
-  header: {
-    fontSize: 24,
-    fontWeight: '600',
-    marginTop: 40,
-    marginLeft: 20,
-    marginRight: 20,
-    color: '#d7d7d7',
-    textAlign: 'left'
+  navButton: {
+    minWidth: 80, 
+    height: 40, 
+    paddingTop: 6, 
+    marginLeft: 10, 
+    alignItems: 'center', 
+    justifyContent: 'center'
   },
-  options: {
-    margin: 20,
-    marginBottom: 10,
+  text20: {
+    fontSize: FontScale(20),
+    color: Colors.textColor_FFFFEE
+  },
+  text13: {
+    fontSize: FontScale(13),
+    color: Colors.textColor_FFFFEE
+  },
+  text17: {
+    fontSize: FontScale(17),
+    color: Colors.textColor_142_142_147
+  },
+  searchContainer: {
+    width: SCREEN_WIDTH - 30,
+    height: 44,
+    marginVertical: 10,
+    marginLeft: 15,
+    paddingVertical: 2,
+    borderRadius: 3,
+    borderWidth: 1,
+    borderColor: Colors.borderColor_41_41_38,
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
+    alignItems: 'center'
   },
-  searchBar: {
-    backgroundColor: '#373739',
-    padding: 10,
-    borderRadius: 8,
-    width: '50%'
-  },
-  textInput: {
-    color: '#959499',
-    fontSize: 18
-  },
-  filter: {
-    color: '#959499',
-    fontSize: 16
+  scrollContainer: {
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - TAB_BAR_HEIGHT - 44 - 20
   },
   listItem: {
     borderBottomWidth: 1,
-    borderBottomColor: '#484848',
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingTop: 10,
-    paddingBottom: 10,
+    borderBottomColor: Colors.borderColor_41_41_38,
     flexDirection: 'row',
-    justifyContent: 'flex-start'
+    width: SCREEN_WIDTH,
+    height: 42
   },
-  listItemSide: {
-    marginRight: 20,
-    paddingTop: 4,
-    flex: 1
-  },
-  listItemMain: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    flex: 15
-  },
-  listItemMainCoin: {
-    color: 'white',
-    fontSize: 18,
-    marginBottom: 5
-  },
-  listItemMainMarketSize: {
-    fontSize: 12,
-    color: '#a2a29f'
-  },
-  listItemMainPrice: {
-    color: '#61be79',
-    fontSize: 18,
-    marginBottom: 5
-  },
-  listItemMainChange: {
-    fontSize: 12,
-    color: '#5bab3a'
-  },
-  listItemRight: {
-    alignItems: 'flex-end'
+  coin: {
+    width: WidthPercent(30),
+    height: 42,
+    backgroundColor: Colors.bgColor_343434,
+    alignItems: 'center',
+    flexDirection: 'row'
   }
 })
 
