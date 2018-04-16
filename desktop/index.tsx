@@ -21,7 +21,7 @@ import sagas from 'sagas'
 const preloadedState = window.__PRELOADED_STATE__ && Transit.fromJSON(window.__PRELOADED_STATE__)
 const preloadedChunks = window.__PRELOADED_CHUNKS__ || []
 const browserHistory = createBrowserHistory()
-const lang = storage.getItem('bitportal_lang')
+const lang = storage.getItemSync('bitportal_lang')
 const store = configure({ ...preloadedState, intl: getInitialLang(lang) }, browserHistory)
 store.runSaga(sagas)
 

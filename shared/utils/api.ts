@@ -4,14 +4,15 @@ import { isMobile } from 'utils/platform'
 
 if (!isMobile) require('isomorphic-fetch')
 
-export const fetchBase = (method: FetchMethod = 'GET', endPoint: string = '/hello', params: object = {}, customeHeaders: object = {}) => {
+export const fetchBase = async (method: FetchMethod = 'GET', endPoint: string = '/hello', params: object = {}, customeHeaders: object = {}) => {
   let url = GATEWAY_API_URL + endPoint
-  const token = storage.getItem('bitportal_t') && `Bearer ${storage.getItem('bitportal_t')}`
+  const token = await storage.getItem('bitportal_t')
+  const authorization = token && `Bearer ${token}`
 
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: token || null,
+    Authorization: authorization || null,
     ...customeHeaders
   }
 

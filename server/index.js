@@ -82,7 +82,7 @@ if (cluster.isMaster) {
     try {
       const history = createMemoryHistory({ initialEntries: [req.url] })
       storage.plugToRequest(req)
-      const lang = storage.getItem('bitportal_lang')
+      const lang = storage.getItemSync('bitportal_lang')
       const store = configure({ intl: getInitialLang(lang) }, history)
       const rootTask = store.runSaga(sagas)
       store.close()
