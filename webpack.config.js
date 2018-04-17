@@ -244,9 +244,7 @@ const desktopConfig = {
       inject: false,
       minify: { collapseWhitespace: true },
       template: 'index.html',
-      appMountId: 'app',
-      mobile: true,
-      baseHref: './'
+      appMountId: 'app'
     })
   ])
 }

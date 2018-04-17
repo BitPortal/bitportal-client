@@ -18,10 +18,10 @@ interface Props extends RouteComponentProps<void> {
 )
 
 export default class Home extends Component<Props, {}> {
-  async componentDidMount() {
-    const { fib } = await import('sample/hello.wasm')
-    console.log(fib(0))
-  }
+  // async componentDidMount() {
+  //   const hello = await import('sample/add.wasm'/* webpackChunkName: 'add' */)
+  //   console.log(hello)
+  // }
 
   render() {
     const { locale } = this.props

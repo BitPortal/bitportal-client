@@ -2,7 +2,7 @@
   "name": "bitportal",
   "version": "1.5.1",
   "description": "bitportal client",
-  "main": "desktop/main.js",
+  "main": "main.js",
   "engines": {
     "node": ">=8.0.0",
     "npm": "^3.0.0"
