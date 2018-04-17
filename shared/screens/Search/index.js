@@ -1,12 +1,13 @@
 /* @tsx */
-import React, { Component } from 'react'
+import React, { Component, Children } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { Text, View, TouchableOpacity } from 'react-native'
-import NavigationBar from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import styles from './styles'
 import Colors from 'resources/colors'
 import SearchItem from 'screens/Search/SearchItem'
+import NavigationBar, { LeftButton, CommonButton } from 'components/NavigationBar'
+import { Text, View, TouchableOpacity } from 'react-native'
+import BaseScreen from 'components/BaseScreen'
 
 @connect(
   (state) => ({
@@ -14,7 +15,11 @@ import SearchItem from 'screens/Search/SearchItem'
   })
 )
 
-export default class Search extends Component {
+export default class Search extends BaseScreen {
+
+  static navigatorStyle = {
+    tabBarHidden: true
+  }
 
   state ={ 
     coinName: ''
@@ -25,6 +30,10 @@ export default class Search extends Component {
     this.props.navigator.toggleDrawer({ side: 'left', animated: true, to: 'open' })
   } 
 
+  dismissModal = () => {
+    this.props.navigator.pop({ animationType: 'fade' })
+  }
+
   onChangeText = (text) => {
     this.setState({ coinName: text })
   }
@@ -33,29 +42,17 @@ export default class Search extends Component {
     return (
       <View style={styles.container}>
         <NavigationBar 
-          leftButton={(
-            <TouchableOpacity
-              onPress={() => this.openDrawer()}
-              style={styles.navButton}
-            >
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Ionicons name="md-menu" size={22} color={Colors.bgColor_FFFFFF} />
-                <Text style={[styles.text20, {marginLeft: 10}]}>
-                  {this.props.market}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          )}
-          rightButton={(
-            <TouchableOpacity
-              onPress={() => { this.props.navigator.dismissModal({ animationType: 'fade' }) }}
-              style={styles.navButton}
-            >
-              <Text style={[styles.text14]}>
-                Cancel
-              </Text>
-            </TouchableOpacity>
-          )}
+          leftButton={
+            <LeftButton iconName="md-menu" title={this.props.market} onPress={() => this.openDrawer()} />
+          }
+          rightButton={
+            <CommonButton 
+              onPress={() => this.dismissModal()} 
+              Children={
+                <Text style={[styles.text14]}> Cancel</Text>
+              }
+            />
+          }
         />
 
         <SearchItem 

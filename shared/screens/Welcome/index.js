@@ -5,6 +5,7 @@ import { View, Text, AsyncStorage, TouchableOpacity } from 'react-native'
 import Swiper from 'react-native-swiper'
 import { startTabBasedApp } from 'navigators'
 import styles from './styles'
+import BaseScreen from 'components/BaseScreen';
 
 const Page1 = () => (
   <View style={[styles.container, styles.center]}>
@@ -35,7 +36,7 @@ const Page3 = ({ goToHomePage }) => (
   </View>
 )
 
-export default class Welcome extends Component {
+export default class Welcome extends BaseScreen {
 
   goToHomePage = () => {
     AsyncStorage.setItem('Welcome', JSON.stringify({ isFirst: true }),() => {
