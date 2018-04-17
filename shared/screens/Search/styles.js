@@ -20,9 +20,9 @@ const styles = StyleSheet.create({
     fontSize: FontScale(20),
     color: Colors.textColor_FFFFEE
   },
-  text13: {
-    fontSize: FontScale(13),
-    color: Colors.textColor_FFFFEE
+  text14: {
+    fontSize: FontScale(14),
+    color: Colors.textColor_93_207_242
   },
   text17: {
     fontSize: FontScale(17),
@@ -38,25 +38,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.borderColor_41_41_38,
     flexDirection: 'row',
-    alignItems: 'center'
-  },
-  scrollContainer: {
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - TAB_BAR_HEIGHT - 44 - 20
-  },
-  listItem: {
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.borderColor_41_41_38,
-    flexDirection: 'row',
-    width: SCREEN_WIDTH,
-    height: 42
-  },
-  coin: {
-    width: WidthPercent(30),
-    height: 42,
-    backgroundColor: Colors.bgColor_343434,
     alignItems: 'center',
-    flexDirection: 'row'
+    paddingLeft: 19
+  },
+  textInputStyle: {
+    width: SCREEN_WIDTH-44-30,
+    height: 40,
+    marginTop: 4,
+    marginLeft: 7,
+    color: Colors.textColor_FFFFEE,
+    fontSize: FontScale(17)
   }
 })
 

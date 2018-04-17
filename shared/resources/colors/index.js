@@ -12,6 +12,7 @@ const Colors = {
   textColor_FFFFEE: '#FFFFEE',
   textColor_6A6A6A: '#6A6A6A',
   textColor_142_142_147: 'rgb(142,142,147)',
+  textColor_93_207_242: 'rgb(93,207,242)',
   bgColor_343434:   'rgb(34,34,34)'
 }
 
