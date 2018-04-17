@@ -80,6 +80,11 @@ declare module '*.png' {
   export = file
 }
 
+declare module '*.wasm' {
+  const file: any
+  export = file
+}
+
 declare module '*messages' {
   const file: any
   export = file

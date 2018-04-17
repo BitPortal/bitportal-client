@@ -2,7 +2,7 @@
   "name": "bitportal",
   "version": "1.5.1",
   "description": "bitportal client",
-  "main": "desktop/main.js",
+  "main": "main.js",
   "engines": {
     "node": ">=8.0.0",
     "npm": "^3.0.0"
@@ -22,8 +22,6 @@
     "build:server:test": "cross-env NODE_ENV=production APP_ENV=test TARGET=node webpack --progress --colors",
     "build:client:pre": "cross-env NODE_ENV=production APP_ENV=pre TARGET=web webpack --progress --colors",
     "build:server:pre": "cross-env NODE_ENV=production APP_ENV=pre TARGET=node webpack --progress --colors",
-    "build:client:demo": "cross-env NODE_ENV=production APP_ENV=demo TARGET=web webpack --progress --colors",
-    "build:server:demo": "cross-env NODE_ENV=production APP_ENV=demo TARGET=node webpack --progress --colors",
     "client": "cross-env NODE_ENV=production http-server static",
     "server": "cross-env NODE_ENV=production nodemon --icu-data-dir=/usr/local/lib/node_modules/full-icu static/app.js",
     "start": "cross-env NODE_ENV=development APP_ENV=development TARGET=web webpack-dev-server -d --history-api-fallback --inline --progress --port 3009 --host dev.bitportal.io",

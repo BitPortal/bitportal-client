@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     height: 44,
     marginVertical: 10,
     marginLeft: 15,
-    paddingVertical: 2,
     borderRadius: 3,
     borderWidth: 1,
     borderColor: Colors.borderColor_41_41_38,
@@ -43,9 +42,8 @@ const styles = StyleSheet.create({
   },
   textInputStyle: {
     width: SCREEN_WIDTH-44-30,
-    height: 40,
-    marginTop: 4,
-    marginLeft: 7,
+    height: 44,
+    marginLeft: 9,
     color: Colors.textColor_FFFFEE,
     fontSize: FontScale(17)
   }

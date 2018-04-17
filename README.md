@@ -1,83 +1,53 @@
-# Bitportal-Client
+# Bitportal Client
 
-## Tech Stack
-- [x] [React](https://facebook.github.io/react/)
-- [x] [React Native](https://facebook.github.io/react-native/)
-- [x] [Electron](https://electronjs.org/)
-- [x] [Typescript](https://www.typescriptlang.org/)
-- [x] [Redux](https://github.com/reactjs/redux)
-- [x] [Immutable](http://facebook.github.io/immutable-js)
-- [x] [React Router 4](https://reacttraining.com/react-router/)
-- [x] [React Navigation](https://reactnavigation.org/)
-- [x] [React Intl](https://github.com/yahoo/react-intl)
-- [x] [Redux Actions](https://github.com/acdlite/redux-actions)
-- [x] [Redux Saga](https://github.com/yelouafi/redux-saga)
-- [x] [Redux Form](http://redux-form.com)
-- [x] [Reselect](https://github.com/reactjs/reselect)
-- [x] [PostCSS](https://github.com/postcss/postcss)
-- [x] [CSS modules](https://github.com/outpunk/postcss-modules)
-- [x] [Enzyme](https://github.com/airbnb/enzyme)
-- [x] [Webpack 4](https://webpack.js.org)
-- [x] [Babel](https://babeljs.io/)
-- [x] [Express](https://github.com/expressjs/express)
+BitPortal client for web, ios, android, windows and macOS
 
-## Install Dependencies
+## install dependencies
 ```sh
-npm install -g full-icu
-yarn install
+$ npm install -g full-icu
+$ yarn install
 ```
 
-## start website locally
-It's served in http://dev.bitportal.io:3009 .
+## setup website
 ```sh
-yarn start
+# run website (http://dev.bitportal.io:3009)
+$ yarn start
+
+# build website for production (it's served in ./static folder)
+$ yarn run build
+
+# build website for staging
+$ yarn run build:staging
+
+# run website with client rendering after build
+$ yarn run client
+
+# run website with server rendering after build
+$ yarn run server
+
+# run website test
+$ yarn test
 ```
 
-## test
+## setup mobile
 ```sh
-yarn test
+# build and run ios
+$ yarn run ios
+
+# build and run android
+$ yarn run android
+
+# run mobile after build
+$ yarn run mobile
 ```
 
-## build website
-It's served in ./static folder.
+## setup desktop
 ```sh
-yarn run build
-```
-```sh
-yarn run build:staging
-```
-```sh
-yarn run build:dev
-```
+# build desktop, it's served in ./bundle folder
+$ yarn run bundle:desktop
 
-## bundle desktop
-```sh
-yarn run bundle:desktop
-```
-
-## client rendering after build
-```sh
-yarn run client
-```
-
-## server rendering after build
-```sh
-yarn run server
-```
-
-## run ios locally
-```sh
-yarn run ios
-```
-
-## start mobile locally
-```sh
-yarn run mobile
-```
-
-## run desktop locally
-```sh
-yarn run desktop
+# run desktop after build
+$ yarn run desktop
 ```
 
 ## typescript compile
