@@ -1,6 +1,6 @@
-# Bitportal-Client
+# Bitportal Client
 
-## Install Dependencies
+## install dependencies
 ```sh
 npm install -g full-icu
 yarn install
