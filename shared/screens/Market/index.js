@@ -3,14 +3,15 @@
 import React, { Component } from 'react'
 import BTCIcon from 'resources/icons/BTCIcon'
 import styles from './styles'
-import NavigationBar from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { FontScale } from 'utils/dimens'
 import Colors from 'resources/colors'
 import SearchItem from 'screens/Market/SearchItem'
 import TableView from 'screens/Market/TableView'
+import NavigationBar, { LeftButton, RightButton } from 'components/NavigationBar'
 import { Text, View, TouchableOpacity } from 'react-native'
+import BaseScreen from 'components/BaseScreen'
 
 @connect(
   (state) => ({
@@ -18,17 +19,19 @@ import { Text, View, TouchableOpacity } from 'react-native'
   })
 )
 
-export default class Market extends Component {
+export default class Market extends BaseScreen {
   
   state = { 
     text: null 
   }
 
   searchCoin = () => {
-    this.props.navigator.showModal({ 
+    this.props.navigator.push({ 
       screen: 'BitPortal.Search', 
       animationType: 'fade', 
-      navigatorStyle: { navBarHidden: true } 
+      navigatorStyle: { 
+        navBarHidden: true
+      } 
     })
   }
 
@@ -36,43 +39,25 @@ export default class Market extends Component {
     this.props.navigator.toggleDrawer({ side: 'left', animated: true, to: 'open' })
   }
 
+  pressListItem = (item) => {
+    this.props.navigator.push({ screen: 'BitPortal.Welcome', animationType: 'fade' })
+  }
+
   render() {
-    const { navigator } = this.props
     return (
       <View style={styles.container}>
         <NavigationBar 
-          leftButton={(
-            <TouchableOpacity
-              onPress={() => this.openDrawer()}
-              style={styles.navButton}
-            >
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Ionicons name="md-menu" size={22} color={Colors.bgColor_FFFFFF} />
-                <Text style={[styles.text20, {marginLeft: 10}]}>
-                  {this.props.market}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          )}
+          leftButton={
+            <LeftButton iconName="md-menu" title={this.props.market} onPress={() => this.openDrawer()}/>
+          }
           rightButton={(
-            <TouchableOpacity
-              onPress={() => {}}
-              style={styles.navButton}
-            >
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={[styles.text13, {marginTop: -FontScale(13), marginLeft: -FontScale(13)}]}>
-                  BTC
-                </Text>
-                <Text style={[styles.text13, {marginBottom: -FontScale(8), marginRight: -FontScale(8)}]}>
-                  ETH
-                </Text>
-              </View>
-            </TouchableOpacity>
+            <RightButton onPress={() => {}} />
           )}
         />
         <SearchItem onPress={() => this.searchCoin()} />
         <TableView 
           data={[{ key: 'a' }, { key: 'b' }, { key: 'c' }, { key: 'd' }, { key: 'e' }, { key: 'f' }]}
+          onPress={(e) => this.pressListItem(e)}
         />
         
       </View>
