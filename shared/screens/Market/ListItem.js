@@ -7,9 +7,9 @@ import {
   View,
   TouchableHighlight,
   ScrollView
-} from 'react-native';
-import { FontScale } from 'utils/dimens';
-import Colors from 'resources/colors';
+} from 'react-native'
+import { FontScale } from 'utils/dimens'
+import Colors from 'resources/colors'
 
 export default ListItem = ({ data, style }) => (
   <TouchableHighlight 

@@ -25,7 +25,15 @@ export default class Market extends Component {
   }
 
   searchCoin = () => {
+    this.props.navigator.showModal({ 
+      screen: 'BitPortal.Search', 
+      animationType: 'fade', 
+      navigatorStyle: { navBarHidden: true } 
+    })
+  }
 
+  openDrawer = () => {
+    this.props.navigator.toggleDrawer({ side: 'left', animated: true, to: 'open' })
   }
 
   render() {
@@ -35,11 +43,7 @@ export default class Market extends Component {
         <NavigationBar 
           leftButton={(
             <TouchableOpacity
-              onPress={() => {this.props.navigator.toggleDrawer({
-                side: 'left', 
-                animated: true, 
-                to: 'open'
-              })}}
+              onPress={() => this.openDrawer()}
               style={styles.navButton}
             >
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -66,7 +70,7 @@ export default class Market extends Component {
             </TouchableOpacity>
           )}
         />
-        <SearchItem onPress={() => this.searchCoin} />
+        <SearchItem onPress={() => this.searchCoin()} />
         <TableView 
           data={[{ key: 'a' }, { key: 'b' }, { key: 'c' }, { key: 'd' }, { key: 'e' }, { key: 'f' }]}
         />
