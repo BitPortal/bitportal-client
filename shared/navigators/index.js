@@ -1,7 +1,7 @@
-import { Navigation } from 'react-native-navigation';
+import { Navigation } from 'react-native-navigation'
 import Images from 'resources/images'
 import { SCREEN_WIDTH } from 'utils/dimens'
-import { PixelRatio } from 'react-native';
+import { PixelRatio } from 'react-native'
 import Colors from 'resources/colors'
 
 export const startSingleApp = () => {
@@ -21,30 +21,25 @@ export const startTabBasedApp = () => {
         label: 'Market', // tab label as appears under the icon in iOS (optional)
         screen: 'BitPortal.Market', // unique ID registered with Navigation.registerScreen
         icon: Images.home, // local image asset for the tab icon unselected state (optional on iOS)
-        selectedIcon: Images.home_press, // local image asset for the tab icon selected state (optional, iOS only. On Android, Use `tabBarSelectedButtonColor` instead)
-        navigatorStyle: { navBarHidden: true }, // override the navigator style for the tab screen, see "Styling the navigator" below (optional),
-        navigatorButtons: {} // override the nav buttons for the tab screen, see "Adding buttons to the navigator" below (optional)
+        selectedIcon: Images.home_press // local image asset for the tab icon selected state (optional, iOS only. On Android, Use `tabBarSelectedButtonColor` instead)
       },
       {
         label: 'Portfolio',
         screen: 'BitPortal.Market',
         icon: Images.home,
-        selectedIcon: Images.home_press,
-        navigatorStyle: { navBarHidden: true }
+        selectedIcon: Images.home_press
       },
       {
         label: 'Community',
         screen: 'BitPortal.Market',
         icon: Images.home,
-        selectedIcon: Images.home_press,
-        navigatorStyle: { navBarHidden: true }
+        selectedIcon: Images.home_press
       },
       {
         label: 'Setting',
         screen: 'BitPortal.Market',
         icon: Images.account,
-        selectedIcon: Images.account_press,
-        navigatorStyle: { navBarHidden: true }
+        selectedIcon: Images.account_press
       }
     ],
     tabsStyle: { // optional, add this if you want to style the tab bar beyond the defaults
@@ -55,6 +50,7 @@ export const startTabBasedApp = () => {
       tabBarHideShadow: false
     },
     appStyle: {
+      screenBackgroundColor: Colors.mainThemeColor,
       orientation: 'portrait', // Sets a specific orientation to the entire app. Default: 'auto'. Supported values: 'auto', 'landscape', 'portrait'
       bottomTabBadgeTextColor: 'red', // Optional, change badge text color. Android only
       bottomTabBadgeBackgroundColor: 'green', // Optional, change badge background color. Android only
