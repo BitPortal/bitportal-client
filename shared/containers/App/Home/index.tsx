@@ -24,7 +24,7 @@ export default class Home extends Component<Props, {}> {
     return (
       <IntlProvider messages={messages[locale]}>
         <div className={style.home}>
-          BitPortal
+          BitPortal {locale}
         </div>
       </IntlProvider>
     )

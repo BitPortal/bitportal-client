@@ -113,17 +113,10 @@ declare module 'redux-form/es/immutable' {
 }
 
 declare module 'react-cookie' {
-  interface Cookies {
-    get: any
-    set: any
-    getAll: any
-    remove: any
-  }
-
   interface Cookie {
     CookiesProvider: any
     withCookies: any
-    Cookies: Cookies
+    Cookies: any
   }
 
   const cookie: Cookie

@@ -2,8 +2,8 @@ import { AsyncStorage } from 'react-native'
 
 const getItem = async (key: string) => {
   try {
-    const item = await AsyncStorage.getItem(key)
-    return item
+    const value = await AsyncStorage.getItem(key)
+    return value
   } catch (error) {
     console.error(`AsyncStorage getItem Error: ${error.message}`)
   }
