@@ -7,7 +7,7 @@ import { AppContainer } from 'react-hot-loader'
 import { ConnectedRouter } from 'react-router-redux'
 import { CookiesProvider } from 'react-cookie'
 import { renderRoutes, RouteConfig } from 'react-router-config'
-import { createBrowserHistory } from 'history'
+import { createHashHistory } from 'history'
 import storage from 'utils/storage'
 import { getInitialLang } from 'selectors/intl'
 import Transit from 'transit-immutable-js'
@@ -20,9 +20,9 @@ import sagas from 'sagas'
 
 const preloadedState = window.__PRELOADED_STATE__ && Transit.fromJSON(window.__PRELOADED_STATE__)
 const preloadedChunks = window.__PRELOADED_CHUNKS__ || []
-const browserHistory = createBrowserHistory()
+const hashHistory = createHashHistory()
 const lang = storage.getItemSync('bitportal_lang')
-const store = configure({ ...preloadedState, intl: getInitialLang(lang) }, browserHistory)
+const store = configure({ ...preloadedState, intl: getInitialLang(lang) }, hashHistory)
 store.runSaga(sagas)
 
 const renderApp = (routes: RouteConfig[]) => {
@@ -30,7 +30,7 @@ const renderApp = (routes: RouteConfig[]) => {
     <AppContainer warnings={false}>
       <CookiesProvider>
         <Provider store={store}>
-          <ConnectedRouter history={browserHistory}>
+          <ConnectedRouter history={hashHistory}>
             {renderRoutes(routes)}
           </ConnectedRouter>
         </Provider>
