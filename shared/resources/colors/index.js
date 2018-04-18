@@ -19,6 +19,7 @@ const Colors = {
   textColor_142_142_147: 'rgb(142,142,147)',
   textColor_149_149_149: 'rgb(149,149,149)',
   textColor_93_207_242:  'rgb(93,207,242)',
+  textColor_80_201_109:  'rgb(80,201,109)',
   textColor_255_255_238: 'rgb(255,255,238)',
   textColor_255_76_118:  'rgb(255,76,118)'
 }

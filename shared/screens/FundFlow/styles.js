@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     width: SCREEN_WIDTH,
-    minHeight: 100,
+    minHeight: 60,
     paddingVertical: 10,
     paddingHorizontal: 15,
   },
@@ -22,6 +22,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
+  },
+  text12: {
+    fontSize: FontScale(12),
+    color: Colors.textColor_142_142_147
+  },
+  text13: {
+    fontSize: FontScale(13),
+    color: Colors.textColor_149_149_149
   },
   text14: {
     fontSize: FontScale(14),

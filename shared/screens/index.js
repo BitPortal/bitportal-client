@@ -7,6 +7,7 @@ import Search   from 'screens/Search'
 import Market   from 'screens/Market'
 import MarketDetails from 'screens/MarketDetails'
 import TokenDetails  from 'screens/TokenDetails'
+import FundFlow from 'screens/FundFlow'
 
 export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.Welcome',  () => Welcome,  store, provider)
@@ -16,4 +17,5 @@ export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.Market',   () => Market,   store, provider)
   Navigation.registerComponent('BitPortal.MarketDetails', () => MarketDetails, store, provider)
   Navigation.registerComponent('BitPortal.TokenDetails',  () => TokenDetails,  store, provider)
+  Navigation.registerComponent('BitPortal.FundFlow', () => FundFlow, store, provider)
 }
