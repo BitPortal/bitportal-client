@@ -40,8 +40,8 @@ export const LeftButton = ({ iconName, title, onPress }) => (
     style={styles.navButton}
   >
     <View style={{flexDirection: 'row', alignItems: 'center'}}>
-      <Ionicons name={iconName} size={22} color={Colors.bgColor_FFFFFF} />
-      <Text style={[styles.text20, {marginLeft: 10}]}>
+      <Ionicons name={iconName} size={24} color={Colors.bgColor_FFFFFF} />
+      <Text style={[styles.text20, {marginLeft: 10, marginTop: -3}]}>
         {title}
       </Text>
     </View>
