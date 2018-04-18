@@ -1,6 +1,5 @@
 /* @tsx */
 import React, { Component, Children } from 'react'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import { connect } from 'react-redux'
 import styles from './styles'
 import Colors from 'resources/colors'

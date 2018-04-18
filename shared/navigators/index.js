@@ -24,18 +24,6 @@ export const startTabBasedApp = () => {
         selectedIcon: Images.home_press // local image asset for the tab icon selected state (optional, iOS only. On Android, Use `tabBarSelectedButtonColor` instead)
       },
       {
-        label: 'Portfolio',
-        screen: 'BitPortal.Market',
-        icon: Images.home,
-        selectedIcon: Images.home_press
-      },
-      {
-        label: 'Community',
-        screen: 'BitPortal.Market',
-        icon: Images.home,
-        selectedIcon: Images.home_press
-      },
-      {
         label: 'Setting',
         screen: 'BitPortal.Market',
         icon: Images.account,

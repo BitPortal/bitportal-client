@@ -1,10 +1,8 @@
-/* @tsx */
+/* @jsx */
 import React, { Component, Children } from 'react'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import { connect } from 'react-redux'
 import styles from './styles'
 import Colors from 'resources/colors'
-import SearchItem from 'screens/Search/SearchItem'
 import NavigationBar, { LeftButton, RightButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
@@ -33,12 +31,20 @@ export default class MarketDetails extends BaseScreen {
     navBarHidden: true
   }
 
+  componentWillUnmount() {
+    this.props.navigator.setDrawerEnabled({ side: 'left', enabled: true })
+  }
+
   goBack = () => {
     this.props.navigator.pop()
   }
 
   changeMarket = (data) => {
     alert(JSON.stringify(data))
+  }
+
+  changeRoute = (screen) => {
+    this.props.navigator.push({ screen: `BitPortal.${screen}` })
   }
 
   render() {
@@ -66,9 +72,9 @@ export default class MarketDetails extends BaseScreen {
         </View>
 
         <View style={[styles.btnContainer, styles.spaceAround]}>
-          <ButtonElement Title="Token Details" onPress={() => {}} />
-          <ButtonElement Title="Fund Flow" onPress={() => {}} />
-          <ButtonElement Title="Alerts" onPress={() => {}} />
+          <ButtonElement Title="Token Details" onPress={() => this.changeRoute('TokenDetails')} />
+          <ButtonElement Title="Fund Flow" onPress={() => this.changeRoute('FundFlow')} />
+          <ButtonElement Title="Alerts" onPress={() => this.changeRoute('Alerts')} />
         </View>
 
       </View>
