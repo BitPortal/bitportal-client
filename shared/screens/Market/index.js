@@ -3,7 +3,6 @@
 import React, { Component } from 'react'
 import styles from './styles'
 import { connect } from 'react-redux'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import { FontScale } from 'utils/dimens'
 import Colors from 'resources/colors'
 import SearchItem from 'screens/Market/SearchItem'
@@ -45,6 +44,7 @@ export default class Market extends BaseScreen {
 
   pressListItem = (item) => {
     this.props.actions.selectCoin(item.key)
+    this.props.navigator.setDrawerEnabled({ side: 'left', enabled: false })
     this.props.navigator.push({ screen: 'BitPortal.MarketDetails' })
   }
 

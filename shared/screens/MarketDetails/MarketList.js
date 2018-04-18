@@ -1,7 +1,6 @@
 
 import React, { Component } from 'react'
 import styles from './styles'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import { 
   Text,
   View,
