@@ -38,6 +38,7 @@
     "tsc": "tsc --watch"
   },
   "dependencies": {
+    "bitcoinjs-lib": "^3.3.2",
     "classnames": "^2.2.5",
     "compression": "^1.6.2",
     "cookie-parser": "^1.4.3",
@@ -84,6 +85,7 @@
     "uuid": "^3.0.1"
   },
   "devDependencies": {
+    "@types/bitcoinjs-lib": "^3.3.3",
     "@types/classnames": "^2.2.3",
     "@types/history": "^4.6.1",
     "@types/node": "^8.0.49",

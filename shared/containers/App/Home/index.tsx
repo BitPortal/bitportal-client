@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { IntlProvider } from 'react-intl'
 import { connect } from 'react-redux'
 import { RouteComponentProps } from 'react-router'
+import { generateBIP44Address } from 'bitcoin'
 import messages from './messages'
 import style from './style.css'
 
@@ -18,6 +19,10 @@ interface Props extends RouteComponentProps<void> {
 )
 
 export default class Home extends Component<Props, {}> {
+  componentDidMount() {
+    console.log(generateBIP44Address())
+  }
+
   render() {
     const { locale } = this.props
 
