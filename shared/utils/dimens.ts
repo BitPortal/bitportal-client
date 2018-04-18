@@ -1,7 +1,7 @@
 import { Platform, Dimensions } from 'react-native'
 
 export const SCREEN_WIDTH   = Dimensions.get('window').width
-export const SCREEN_HEIGHT  = Dimensions.get('window').height
+export const SCREEN_HEIGHT  = Platform.OS == 'ios' ? Dimensions.get('window').height : Dimensions.get('window').height - 20
 export const NAV_BAR_HEIGHT = Platform.OS == 'ios' ? 64 : 48
 export const TAB_BAR_HEIGHT = Platform.OS == 'ios' ? 49 : 56
 export const FontScale      = (size: number)    => { return Math.round(size * SCREEN_WIDTH / 375) }

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, WidthPercent } from 'utils/dimens'
 import Colors from 'resources/colors'
 
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   textInputStyle: {
     width: SCREEN_WIDTH-44-30,
     height: 44,
-    marginLeft: 9,
+    marginLeft: Platform.OS === 'ios' ? 11 : 7,
     color: Colors.textColor_FFFFEE,
     fontSize: FontScale(17)
   }
