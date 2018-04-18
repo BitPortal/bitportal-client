@@ -1,6 +1,5 @@
 
 import React, { Component } from 'react'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import { FontScale } from 'utils/dimens'
 import Colors from 'resources/colors'
 import styles from './styles'
