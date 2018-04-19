@@ -1,50 +1,46 @@
-import EStyleSheet from 'react-native-extended-stylesheet'
-import { Dimensions } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
+import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, WidthPercent } from 'utils/dimens'
+import Colors from 'resources/colors'
 
-const { width } = Dimensions.get('window')
-
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#EFEFF4'
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+    backgroundColor: Colors.bgColor_27_27_26
   },
-  profile: {
-    flex: 1,
-    backgroundColor: 'white',
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 15,
-    paddingRight: 15,
-    borderBottomWidth: 0.5,
-    borderBottomColor: 'rgba(0, 0, 0, 0.16)',
-    borderTopWidth: 0.5,
-    borderTopColor: 'rgba(0, 0, 0, 0.16)',
+  headContaner: {
+    width: SCREEN_WIDTH,
+    height: 102 + NAV_BAR_HEIGHT,
+    paddingHorizontal: 20,
+    paddingVertical: Platform.OS == 'ios' ? 20 : 0
+  },
+  accountContainer: {
+    marginTop: 20,
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%'
+    alignItems: 'center'
   },
-  main: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: width - 140
-  },
-  info: {
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    height: '100%'
-  },
-  username: {
-    fontSize: 22
-  },
-  email: {
-    fontSize: 16,
-    color: '#8A8A8F'
-  },
-  avatar: {
-    height: 60,
+  image: {
     width: 60,
-    borderRadius: 30,
-    marginRight: 15
+    height: 60,
+    borderRadius: 30
+  },
+  accountInfo: {
+    flex: 1,
+    marginLeft: 20,
+    justifyContent: 'space-between'
+  },
+  scrollContainer: {
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT - 102 - NAV_BAR_HEIGHT
+  },
+  text12: {
+    fontSize: FontScale(12),
+    color: Colors.textColor_149_149_149
+  },
+  text20: {
+    fontSize: FontScale(20),
+    color: Colors.textColor_216_216_216
   }
 })
+
+export default styles
