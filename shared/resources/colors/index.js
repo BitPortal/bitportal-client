@@ -2,6 +2,7 @@
 const Colors = {
   mainThemeColor:   '#1B1B1A',
   minorThemeColor:  '#313036',
+  keyboardTheme:    'dark',
   bgColor_27_27_26: 'rgb(27,27,26)',
   bgColor_000000:   '#000000',
   bgColor_FFFFFF:   '#FFFFFF',
@@ -13,6 +14,7 @@ const Colors = {
   borderColor_41_41_38: 'rgb(41,41,38)',
   borderColor_48_48_46: 'rgb(48,48,46)',
   borderColor_36_68_78: 'rgb(36,68,78)',
+  borderColor_76_76_80: 'rgb(76,76,80)',
   bgColor_474746:   '#474746',
   textColor_FFFFEE: '#FFFFEE',
   textColor_6A6A6A: '#6A6A6A',

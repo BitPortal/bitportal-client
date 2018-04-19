@@ -20,5 +20,6 @@ export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.MarketDetails', () => MarketDetails, store, provider)
   Navigation.registerComponent('BitPortal.TokenDetails',  () => TokenDetails,  store, provider)
   Navigation.registerComponent('BitPortal.FundFlow', () => FundFlow, store, provider)
+  Navigation.registerComponent('BitPortal.Alerts',   () => Alerts,   store, provider)
   Navigation.registerComponent('BitPortal.Settings', () => Settings, store, provider)
 }
