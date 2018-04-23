@@ -1,11 +1,13 @@
-import { GATEWAY_API_URL } from 'constants/env'
+import {
+  BITPORTAL_API_REST_URL
+} from 'constants/env'
 import storage from 'utils/storage'
 import { isMobile } from 'utils/platform'
 
 if (!isMobile) require('isomorphic-fetch')
 
 export const fetchBase = async (method: FetchMethod = 'GET', endPoint: string = '/hello', params: object = {}, customeHeaders: object = {}) => {
-  let url = GATEWAY_API_URL + endPoint
+  let url = BITPORTAL_API_REST_URL + endPoint
   const token = await storage.getItem('bitportal_t')
   const authorization = token && `Bearer ${token}`
 
@@ -61,3 +63,5 @@ export const createUser = (params: CreateUserParams) => fetchBase('POST', '/user
 export const updateUser = (params: UserIdParams) => fetchBase('PUT', `/user/${params.id}`, params)
 export const deleteUser = (params: UserIdParams) => fetchBase('DELETE', `/user/${params.id}`, params)
 export const bindUserTwoFactor = (params: BindUserTwoFactorParams) => fetchBase('DELETE', `/user/two-factor/${params.id}`, params)
+
+export const getTickers = () => fetchBase('GET', '/binance/24hrTicker')
