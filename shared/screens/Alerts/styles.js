@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     fontSize: FontScale(14),
     color: Colors.textColor_216_216_216
   },
-  text16: {
+  text16: { 
     fontSize: FontScale(16),
     color: Colors.textColor_149_149_149
   },
@@ -52,6 +52,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 25
+  },
+  betweenStyle: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row'
+  },
+  listHeader: {
+    width: SCREEN_WIDTH-30,
+    height: 40
+  },
+  listItemContainer: {
+    width: SCREEN_WIDTH-30,
+    minHeight: 45,
+    borderTopColor: Colors.borderColor_55_55_55,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    paddingVertical: 10
   }
 })
 

@@ -15,6 +15,7 @@ const Colors = {
   borderColor_48_48_46: 'rgb(48,48,46)',
   borderColor_36_68_78: 'rgb(36,68,78)',
   borderColor_76_76_80: 'rgb(76,76,80)',
+  borderColor_55_55_55: 'rgb(55,55,55)',
   bgColor_474746:   '#474746',
   textColor_FFFFEE: '#FFFFEE',
   textColor_6A6A6A: '#6A6A6A',

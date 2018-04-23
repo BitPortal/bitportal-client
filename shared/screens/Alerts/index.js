@@ -6,6 +6,7 @@ import NavigationBar, { LeftButton, RightButton, CommonButton } from 'components
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import AlertInput from './AlertInput'
+import AlertList from './AlertList'
 import Colors from 'resources/colors'
 
 @connect(
@@ -24,7 +25,12 @@ export default class Alerts extends BaseScreen {
   state = {
     high: '',
     low: '',
-    change: ''
+    change: '',
+    isEdited: false,
+    dataArr: [
+      { high: '5,049.09 USD', low: '3,030.00 USD', change: '32%' },
+      { change: '45%' }
+    ]
   }
 
   goBack = () => {
@@ -41,6 +47,15 @@ export default class Alerts extends BaseScreen {
 
   changeLow = (low) => {
     this.setState({ low })
+  }
+  
+  changeMode = () => {
+    this.setState({ isEdited: !this.state.isEdited })
+  }
+
+  deleteAlert = (index) => {
+    this.state.dataArr.splice(index, 1)
+    this.setState({ dataArr: this.state.dataArr })
   }
 
   render() {
@@ -72,7 +87,8 @@ export default class Alerts extends BaseScreen {
             <TouchableOpacity onPress={() => {}} style={styles.btn} >
               <Text style={[styles.text14, { color: Colors.textColor_93_207_242 }]}> Add</Text>
             </TouchableOpacity>
-          </ScrollView>
+            <AlertList isEdited={this.state.isEdited} dataArr={this.state.dataArr} deleteAlert={(index) => this.deleteAlert(index)} changeMode={() => this.changeMode()} />
+          </ScrollView> 
         </View>
 
       </View>
