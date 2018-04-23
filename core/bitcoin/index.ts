@@ -1,7 +1,9 @@
 import { HDNode } from 'bitcoinjs-lib'
 
-export const generateBIP44Address = () => {
+export const generateBIP44Address = ({ coin_type, account, change, address_index }: BIP32Path) => {
+  const purpose = 44
   const root = HDNode.fromSeedHex('dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd')
-
-  return root.derivePath('m/44\'/0\'/0\'/0/0').getAddress()
+  const child = root.derivePath(`m/${purpose}'/${coin_type}'/${account}'/${change}/${address_index}`)
+  const address = child.getAddress()
+  return address
 }
