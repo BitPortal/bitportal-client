@@ -234,7 +234,8 @@ const desktopConfig = {
   ], './index.tsx'),
   output: {
     ...baseConfig.output,
-    path: resolve('bundle')
+    path: resolve('bundle'),
+    filename: ifProduction('scripts/bundle.js?v=[hash]', 'scripts/bundle.js')
   },
   plugins: removeEmpty([
     ...baseConfig.plugins,
@@ -244,7 +245,8 @@ const desktopConfig = {
       inject: false,
       minify: { collapseWhitespace: true },
       template: 'index.html',
-      appMountId: 'app'
+      appMountId: 'app',
+      mobile: true
     })
   ])
 }

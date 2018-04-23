@@ -1,26 +1,29 @@
 /* @tsx */
 
 import React, { Component } from 'react'
-import BTCIcon from 'resources/icons/BTCIcon'
 import styles from './styles'
 import { connect } from 'react-redux'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import { FontScale } from 'utils/dimens'
 import Colors from 'resources/colors'
 import SearchItem from 'screens/Market/SearchItem'
 import TableView from 'screens/Market/TableView'
+import BaseScreen from 'components/BaseScreen'
+import { selectCoin } from 'actions/drawer'
+import { bindActionCreators } from 'redux'
 import NavigationBar, { LeftButton, RightButton } from 'components/NavigationBar'
 import { Text, View, TouchableOpacity } from 'react-native'
-import BaseScreen from 'components/BaseScreen'
 
 @connect(
   (state) => ({
     market: state.drawer.get('selectedMarket')
+  }),
+  (dispatch) => ({
+    actions: bindActionCreators({ selectCoin }, dispatch)
   })
 )
 
 export default class Market extends BaseScreen {
-  
+
   state = { 
     text: null 
   }
@@ -40,7 +43,9 @@ export default class Market extends BaseScreen {
   }
 
   pressListItem = (item) => {
-    this.props.navigator.push({ screen: 'BitPortal.Welcome', animationType: 'fade' })
+    this.props.actions.selectCoin(item.key)
+    this.props.navigator.setDrawerEnabled({ side: 'left', enabled: false })
+    this.props.navigator.push({ screen: 'BitPortal.MarketDetails' })
   }
 
   render() {
