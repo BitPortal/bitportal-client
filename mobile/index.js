@@ -7,6 +7,7 @@ import { getInitialLang } from 'selectors/intl'
 import configure from 'store'
 import Provider from 'components/Provider'
 import sagas from 'sagas'
+import SplashScreen from 'react-native-splash-screen'
 
 const runApp = async () => {
   const lang = await storage.getItem('bitportal_lang')
@@ -18,6 +19,9 @@ const runApp = async () => {
     let data = JSON.parse(result);
     if (data && data.isFirst) startTabBasedApp();
     else startSingleApp();
+
+    // hide the splash screens
+    SplashScreen.hide()
   })
 }
 
