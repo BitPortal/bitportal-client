@@ -19,8 +19,10 @@ const runApp = async () => {
     let data = JSON.parse(result);
     if (data && data.isFirst) startTabBasedApp();
     else startSingleApp();
+
+    // hide the splash screens
+    SplashScreen.hide()
   })
 }
 
-SplashScreen.hide()
 runApp()

@@ -8951,9 +8951,9 @@ react-native-navigation@^1.1.409:
   dependencies:
     lodash "4.x.x"
 
-react-native-splash-screen@^3.0.6:
-  version "3.0.6"
-  resolved "http://registry.npm.taobao.org/react-native-splash-screen/download/react-native-splash-screen-3.0.6.tgz#c0bbf2c8ae40a313c4c7044f55e569414ff68332"
+react-native-splash-screen@3.0.1:
+  version "3.0.1"
+  resolved "http://registry.npm.taobao.org/react-native-splash-screen/download/react-native-splash-screen-3.0.1.tgz#178b29b7d848e6ee5a41fbb9c1299eb2b5aaa600"
 
 react-native-svg@^5.5.1:
   version "5.5.1"
