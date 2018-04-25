@@ -7,7 +7,7 @@ const initialState = Immutable.fromJS({
   loading: false,
   loaded: false,
   error: null,
-  exchangeFilter: 'OKEX',
+  exchangeFilter: 'BINANCE',
   currencyFilter: null
 })
 

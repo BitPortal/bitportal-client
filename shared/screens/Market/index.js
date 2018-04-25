@@ -17,6 +17,7 @@ import { Text, View, TouchableOpacity } from 'react-native'
 
 @connect(
   (state) => ({
+    locale: state.intl.get('locale'),
     market: state.drawer.get('selectedMarket'),
     ticker: exchangeTickerSelector(state)
   }),
@@ -30,8 +31,12 @@ import { Text, View, TouchableOpacity } from 'react-native'
 
 export default class Market extends BaseScreen {
 
-  state = {
-    text: null
+  constructor(props, context) {
+    super(props, context)
+    this.state = {
+      text: null
+    }
+    this.interval = null
   }
 
   searchCoin = () => {
@@ -55,12 +60,18 @@ export default class Market extends BaseScreen {
   }
 
   componentDidMount() {
-    this.props.actions.getTickersRequested({
-      exchange: 'OKEX',
-      quote_asset: 'USDT',
-      sort: 'quote_volume_24h',
-      limit: 10
-    })
+    this.interval = setInterval(() => {
+      this.props.actions.getTickersRequested({
+        exchange: 'BINANCE',
+        quote_asset: 'USDT',
+        sort: 'quote_volume_24h',
+        limit: 20
+      })
+    }, 1000)
+  }
+
+  componentWillUnMount() {
+    clearInterval(this.interval)
   }
 
   render() {
@@ -69,17 +80,16 @@ export default class Market extends BaseScreen {
         <NavigationBar
           leftButton={
             <LeftButton iconName="md-menu" title={this.props.market} onPress={() => this.openDrawer()}/>
-          }
+                     }
           rightButton={(
-            <RightButton onPress={() => {}} />
-          )}
+              <RightButton onPress={() => {}} />
+            )}
         />
         <SearchItem onPress={() => this.searchCoin()} />
         <TableView
           data={this.props.ticker.get('data')}
           onPress={(e) => this.pressListItem(e)}
         />
-
       </View>
     )
   }

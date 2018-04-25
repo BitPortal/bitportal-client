@@ -10,9 +10,9 @@ const sagas = {
   loggerSaga: fork(loggerSaga)
 }
 
-if (ENV === 'production') {
-  delete sagas.loggerSaga
-}
+// if (ENV === 'production') {
+//   delete sagas.loggerSaga
+// }
 
 export default function* rootSaga() {
   yield all(sagas)

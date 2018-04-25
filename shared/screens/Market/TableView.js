@@ -1,5 +1,6 @@
 
 import React, { Component } from 'react'
+import { FormattedNumber } from 'react-intl'
 import { FontScale } from 'utils/dimens'
 import Colors from 'resources/colors'
 import styles from './styles'
@@ -48,13 +49,21 @@ const ListItem = ({ data, index, itemExtraStyle, onPress }) => (
         </Text>
       </View>
       <View style={{ alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
-        <Text style={[styles.text16, {marginHorizontal: 10}]}>
-          {data.get('quote_volume_24h')}
+        <Text style={[styles.text16, { marginHorizontal: 10 }]}>
+          <FormattedNumber
+            value={data.get('quote_volume_24h')}
+            maximumFractionDigits={2}
+            minimumFractionDigits={2}
+          />
         </Text>
       </View>
       <View style={{ paddingRight: 15 }}>
         <Text style={[styles.text16, { color: Colors.textColor_80_201_109 }]}>
-          $ {data.get('price_last')}
+          $<FormattedNumber
+             value={data.get('price_last')}
+             maximumFractionDigits={2}
+             minimumFractionDigits={2}
+           />
         </Text>
       </View>
     </View>
