@@ -8,6 +8,7 @@ import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import CoinInfoCard from './CoinInfoCard'
 import MarketList from './MarketList'
+import ChartWrapper from 'components/ChartWrapper'
 import { SCREEN_WIDTH, FontScale } from 'utils/dimens'
 
 const ButtonElement = ({ Title, onPress }) => (
@@ -63,7 +64,7 @@ export default class MarketDetails extends BaseScreen {
             showsVerticalScrollIndicator={false}
           >
             <CoinInfoCard />
-            <View style={{ width: SCREEN_WIDTH, height: 160, backgroundColor: Colors.bgColor_59_59_59 }}/>
+            <ChartWrapper />
             <View style={styles.viewAllContainer}>
               <Text style={{ fontSize: FontScale(14), color: Colors.textColor_93_207_242 }}> View All </Text>
             </View>
