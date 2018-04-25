@@ -3,6 +3,8 @@ package com.bitportal;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.github.wuxudong.rncharts.MPAndroidChartPackage;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.horcrux.svg.SvgPackage;
 import com.facebook.react.ReactNativeHost;
@@ -13,6 +15,7 @@ import com.reactnativenavigation.NavigationApplication;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Vector;
 
 public class MainApplication extends NavigationApplication {
 
@@ -24,7 +27,10 @@ public class MainApplication extends NavigationApplication {
 
   protected List<ReactPackage> getPackages() {
     return Arrays.<ReactPackage>asList(   
-      new SvgPackage()
+      new SvgPackage(),
+      new SplashScreenReactPackage(),
+      new VectorIconsPackage(),
+      new MPAndroidChartPackage()
     );
   }
 

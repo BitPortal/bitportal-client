@@ -1,5 +1,5 @@
 {
   "ENV": "staging",
-  "GATEWAY_API_URL": "http://staging-api.bitportal.io/api/v1",
-  "WEBSOCKET_API_URL": "ws://staging-api.bitportal.io"
+  "BITPORTAL_API_REST_URL": "http://staging-api.bitportal.io/api/v1",
+  "BITPORTAL_API_WEBSOCKET_URL": "ws://staging-api.bitportal.io"
 }
