@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect'
+import { List } from 'immutable'
 
 const tickerSelector = (state: RootState) => state.ticker
 const exchangeFilterSelector = (state: RootState) => state.ticker.get('exchangeFilter')
@@ -8,7 +9,7 @@ export const exchangeTickerSelector = createSelector(
   tickerSelector,
   exchangeFilterSelector,
   (ticker: any, exchange: any) => ticker.set(
-    'data', ticker.get('data').valueSeq().filter((item: any) => item.get('exchange') === exchange)
+    'data', List(ticker.get('data').valueSeq().filter((item: any) => item.get('exchange') === exchange))
   )
 )
 
