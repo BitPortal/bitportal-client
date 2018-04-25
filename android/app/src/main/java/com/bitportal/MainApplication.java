@@ -3,6 +3,7 @@ package com.bitportal;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.github.wuxudong.rncharts.MPAndroidChartPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.horcrux.svg.SvgPackage;
@@ -28,7 +29,8 @@ public class MainApplication extends NavigationApplication {
     return Arrays.<ReactPackage>asList(   
       new SvgPackage(),
       new SplashScreenReactPackage(),
-      new VectorIconsPackage()
+      new VectorIconsPackage(),
+      new MPAndroidChartPackage()
     );
   }
 
