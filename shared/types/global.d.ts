@@ -29,6 +29,7 @@ declare interface RootState {
   modal?: any
   ui?: any
   intl: any
+  ticker: any
 }
 
 declare interface FetchOptions {

@@ -64,4 +64,4 @@ export const updateUser = (params: UserIdParams) => fetchBase('PUT', `/user/${pa
 export const deleteUser = (params: UserIdParams) => fetchBase('DELETE', `/user/${params.id}`, params)
 export const bindUserTwoFactor = (params: BindUserTwoFactorParams) => fetchBase('DELETE', `/user/two-factor/${params.id}`, params)
 
-export const getTickers = () => fetchBase('GET', '/binance/24hrTicker')
+export const getTickers = (params?: TickerParams) => fetchBase('GET', '/tickers', params)
