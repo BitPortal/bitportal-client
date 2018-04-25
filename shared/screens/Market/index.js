@@ -61,7 +61,7 @@ export default class Market extends BaseScreen {
         />
         <SearchItem onPress={() => this.searchCoin()} />
         <TableView 
-          data={[{ key: 'a' }, { key: 'b' }, { key: 'c' }, { key: 'd' }, { key: 'e' }, { key: 'f' }]}
+          data={[{ key: 'BTC' }, { key: 'ETH' }, { key: 'VEN' }, { key: 'BCH' }, { key: 'ETC' }, { key: 'ULA' }]}
           onPress={(e) => this.pressListItem(e)}
         />
         
