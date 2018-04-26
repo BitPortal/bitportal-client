@@ -1,5 +1,5 @@
 import 'intl'
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, StatusBar } from 'react-native';
 import { registerScreens } from 'screens';
 import { startSingleApp, startTabBasedApp } from 'navigators';
 import storage from 'utils/storage'
@@ -25,4 +25,12 @@ const runApp = async () => {
   })
 }
 
+const setStatusBarStyle = async () => {
+  const mode = await storage.getItem('bitprotal_status_bar') || 'light-content'
+  // mode: 'light-content'/'default'
+  StatusBar.setHidden(false, 'fade');
+  StatusBar.setBarStyle(mode, true);
+}
+ 
 runApp()
+setStatusBarStyle()

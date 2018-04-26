@@ -63,7 +63,7 @@ export const startTabBasedApp = () => {
       type: 'MMDrawer', // optional, iOS only, types: 'TheSideBar', 'MMDrawer' default: 'MMDrawer'
       animationType: 'parallax', //optional, iOS only, for MMDrawer: 'door', 'parallax', 'slide', 'slide-and-scale'
                                           // for TheSideBar: 'airbnb', 'facebook', 'luvocracy','wunder-list'
-      disableOpenGesture: false // optional, can the drawer be opened with a swipe instead of button
+      disableOpenGesture: true // optional, can the drawer be opened with a swipe instead of button
     },
     animationType: 'fade' // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
   });

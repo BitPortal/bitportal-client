@@ -73,7 +73,6 @@ const ListItem = ({ data, index, itemExtraStyle, onPress }) => (
 export default TableView = ({ data, itemExtraStyle, onPress }) => {
   return (
     <View style={styles.scrollContainer}>
-      <HeaderTitle />
       <VirtualizedList
         style={styles.list}
         data={data}
