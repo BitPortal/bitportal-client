@@ -84,6 +84,7 @@
     "serialize-javascript": "^1.3.0",
     "transit-immutable-js": "^0.6.0",
     "transit-js": "^0.8.846",
+    "uglifyjs-webpack-plugin": "^1.2.5",
     "universal-cookie-express": "^2.1.2",
     "uuid": "^3.0.1"
   },
@@ -180,6 +181,7 @@
     "typescript-formatter": "^6.0.0",
     "url-loader": "^1.0.1",
     "webpack": "^4.5.0",
+    "webpack-bundle-analyzer": "^2.11.1",
     "webpack-cli": "^2.0.13",
     "webpack-config-utils": "^2.1.0",
     "webpack-dev-middleware": "^3.0.1",
