@@ -27,7 +27,7 @@ const HeaderTitle = ({ }) => (
       </View>
       <View style={{ paddingRight: 15 }}>
         <Text style={[styles.text12]}>
-          Price
+          Price (BTC)
         </Text>
       </View>
     </View>
@@ -59,10 +59,10 @@ const ListItem = ({ data, index, itemExtraStyle, onPress }) => (
       </View>
       <View style={{ paddingRight: 15 }}>
         <Text style={[styles.text16, { color: Colors.textColor_80_201_109 }]}>
-          $<FormattedNumber
+          <FormattedNumber
              value={data.get('price_last')}
-             maximumFractionDigits={2}
-             minimumFractionDigits={2}
+             maximumFractionDigits={8}
+             minimumFractionDigits={8}
            />
         </Text>
       </View>

@@ -62,9 +62,8 @@ export default class Market extends BaseScreen {
   componentDidMount() {
     this.interval = setInterval(() => {
       this.props.actions.getTickersRequested({
-        exchange: 'BINANCE',
-        quote_asset: 'USDT',
-        sort: 'quote_volume_24h',
+        exchange: 'BITTREX',
+        quote_asset: 'BTC',
         limit: 20
       })
     }, 1000)
