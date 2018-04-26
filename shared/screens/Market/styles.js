@@ -16,13 +16,25 @@ const styles = StyleSheet.create({
     alignItems: 'center', 
     justifyContent: 'center'
   },
+  center: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   text20: {
     fontSize: FontScale(20),
     color: Colors.textColor_FFFFEE
   },
+  text12: {
+    fontSize: FontScale(12),
+    color: Colors.textColor_142_142_147
+  },
   text13: {
     fontSize: FontScale(13),
     color: Colors.textColor_FFFFEE
+  },
+  text16: {
+    fontSize: FontScale(16),
+    color: Colors.textColor_255_255_238
   },
   text17: {
     fontSize: FontScale(17),
@@ -47,6 +59,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: Colors.borderColor_41_41_38,
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     width: SCREEN_WIDTH,
     height: 42
   },
@@ -55,7 +69,14 @@ const styles = StyleSheet.create({
     height: 42,
     backgroundColor: Colors.bgColor_343434,
     alignItems: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.borderColor_41_41_38,
+  },
+  headerTitle: {
+    borderTopWidth: 1,
+    borderTopColor: Colors.borderColor_41_41_38,
+    height: 25
   }
 })
 

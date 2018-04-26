@@ -1,5 +1,0 @@
-{
-  "ENV": "pre",
-  "GATEWAY_API_URL": "https://pre-api.bitportal.io/api/v1",
-  "WEBSOCKET_API_URL": "wss://pre-api.bitportal.io"
-}

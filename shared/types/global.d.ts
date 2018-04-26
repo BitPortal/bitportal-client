@@ -14,8 +14,13 @@ declare const Datafeeds: any
 
 declare interface Config {
   ENV: string
-  GATEWAY_API_URL: string
-  WEBSOCKET_API_URL: string
+  BITPORTAL_API_REST_URL: string
+  BITPORTAL_API_WEBSOCKET_URL: string
+  COIN_API_REST_URL?: string
+  COIN_API_WEBSOCKET_URL?: string
+  COIN_API_KEY?: string
+  CRYPTO_COMPARE_REST_URL?: string
+  CRYPTO_COMPARE_WEBSOCKET_URL?: string
 }
 
 declare interface RootState {
@@ -24,6 +29,7 @@ declare interface RootState {
   modal?: any
   ui?: any
   intl: any
+  ticker: any
 }
 
 declare interface FetchOptions {
@@ -46,12 +52,17 @@ declare interface ErrorResponse {
   server_time: number
 }
 
+declare interface Process {
+  type?: any
+}
+
 declare interface Window {
   __PRELOADED_STATE__?: string
   __PRELOADED_CHUNKS__?: string[]
   Intl?: any
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: any
   tvWidget?: any
+  process?: Process
 }
 
 declare interface Process extends NodeJS.Process {

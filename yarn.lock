@@ -97,6 +97,17 @@
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
 
+"@types/bigi@*":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@types/bigi/-/bigi-1.4.1.tgz#d2a75ad76b76bb53c38e1a6670c8a08d457edef7"
+
+"@types/bitcoinjs-lib@^3.3.3":
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/@types/bitcoinjs-lib/-/bitcoinjs-lib-3.3.3.tgz#1a39b8e7907e02ba5057a24409117907e6668eed"
+  dependencies:
+    "@types/bigi" "*"
+    "@types/node" "*"
+
 "@types/classnames@^2.2.3":
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/@types/classnames/-/classnames-2.2.3.tgz#3f0ff6873da793870e20a260cada55982f38a9e5"
@@ -116,8 +127,8 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.50.tgz#dc545448e128c88c4eec7cd64025fcc3b7604541"
 
 "@types/node@^8.0.24":
-  version "8.10.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.2.tgz#f1fb9c73414832c5b00ee954c4bbf68394e2e526"
+  version "8.10.8"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.8.tgz#794cba23cc9f8d9715f6543fa8827433b5f5cd3b"
 
 "@types/query-string@^5.0.1":
   version "5.0.1"
@@ -298,7 +309,7 @@ acorn@^5.0.0:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.2.1.tgz#317ac7821826c22c702d66189ab8359675f135d7"
 
-acorn@^5.5.0:
+acorn@^5.3.0, acorn@^5.5.0:
   version "5.5.3"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.5.3.tgz#f473dd47e0277a08e28e9bec5aeeb04751f0b8c9"
 
@@ -622,6 +633,10 @@ ast-types@0.11.3:
 async-each@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/async-each/-/async-each-1.0.1.tgz#19d386a1d9edc6e7c1c85d388aedbcc56d33602d"
+
+async-limiter@~1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.0.tgz#78faed8c3d074ab81f22b4e985d79e8738f720f8"
 
 async@^1.4.0, async@^1.5.0, async@^1.5.2:
   version "1.5.2"
@@ -1678,6 +1693,12 @@ balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
 
+base-x@^3.0.2:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/base-x/-/base-x-3.0.4.tgz#94c1788736da065edb1d68808869e357c977fa77"
+  dependencies:
+    safe-buffer "^5.0.1"
+
 base64-js@0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-0.0.8.tgz#1101e9544f4a76b1bc3b26d452ca96d7a35e7978"
@@ -1732,9 +1753,21 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
+bech32@^1.1.2:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/bech32/-/bech32-1.1.3.tgz#bd47a8986bbb3eec34a56a097a84b8d3e9a2dfcd"
+
 beeper@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/beeper/-/beeper-1.1.1.tgz#e6d5ea8c5dad001304a70b22638447f69cb2f809"
+
+bfj-node4@^5.2.0:
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/bfj-node4/-/bfj-node4-5.3.1.tgz#e23d8b27057f1d0214fc561142ad9db998f26830"
+  dependencies:
+    bluebird "^3.5.1"
+    check-types "^7.3.0"
+    tryer "^1.0.0"
 
 big-integer@^1.6.7:
   version "1.6.26"
@@ -1743,6 +1776,10 @@ big-integer@^1.6.7:
 big.js@^3.1.3:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/big.js/-/big.js-3.2.0.tgz#a5fc298b81b9e0dca2e458824784b65c52ba588e"
+
+bigi@^1.1.0, bigi@^1.4.0:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/bigi/-/bigi-1.4.2.tgz#9c665a95f88b8b08fc05cfd731f561859d725825"
 
 binary-extensions@^1.0.0:
   version "1.10.0"
@@ -1758,6 +1795,36 @@ binary@^0.3.0:
 binaryextensions@2:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/binaryextensions/-/binaryextensions-2.1.1.tgz#3209a51ca4a4ad541a3b8d3d6a6d5b83a2485935"
+
+bip66@^1.1.0:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/bip66/-/bip66-1.1.5.tgz#01fa8748785ca70955d5011217d1b3139969ca22"
+  dependencies:
+    safe-buffer "^5.0.1"
+
+bitcoin-ops@^1.3.0:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/bitcoin-ops/-/bitcoin-ops-1.4.1.tgz#e45de620398e22fd4ca6023de43974ff42240278"
+
+bitcoinjs-lib@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/bitcoinjs-lib/-/bitcoinjs-lib-3.3.2.tgz#780c9c53ecb1222adb463b58bef26386067b609a"
+  dependencies:
+    bech32 "^1.1.2"
+    bigi "^1.4.0"
+    bip66 "^1.1.0"
+    bitcoin-ops "^1.3.0"
+    bs58check "^2.0.0"
+    create-hash "^1.1.0"
+    create-hmac "^1.1.3"
+    ecurve "^1.0.0"
+    merkle-lib "^2.0.10"
+    pushdata-bitcoin "^1.0.1"
+    randombytes "^2.0.1"
+    safe-buffer "^5.0.1"
+    typeforce "^1.11.3"
+    varuint-bitcoin "^1.0.4"
+    wif "^2.0.1"
 
 block-stream@*:
   version "0.0.9"
@@ -1995,6 +2062,19 @@ browserslist@^3.2.0:
   dependencies:
     caniuse-lite "^1.0.30000821"
     electron-to-chromium "^1.3.41"
+
+bs58@^4.0.0:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/bs58/-/bs58-4.0.1.tgz#be161e76c354f6f788ae4071f63f34e8c4f0a42a"
+  dependencies:
+    base-x "^3.0.2"
+
+bs58check@<3.0.0, bs58check@^2.0.0:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/bs58check/-/bs58check-2.1.1.tgz#8a5d0e587af97b784bf9cbf1b29f454d82bc0222"
+  dependencies:
+    bs58 "^4.0.0"
+    create-hash "^1.1.0"
 
 bser@^2.0.0:
   version "2.0.0"
@@ -2238,6 +2318,10 @@ chardet@^0.4.0:
 check-error@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/check-error/-/check-error-1.0.2.tgz#574d312edd88bb5dd8912e9286dd6c0aed4aac82"
+
+check-types@^7.3.0:
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/check-types/-/check-types-7.3.0.tgz#468f571a4435c24248f5fd0cb0e8d87c3c341e7d"
 
 cheerio@^1.0.0-rc.2:
   version "1.0.0-rc.2"
@@ -2526,7 +2610,7 @@ commander@2.9.0:
   dependencies:
     graceful-readlink ">= 1.0.0"
 
-commander@^2.12.1:
+commander@^2.12.1, commander@^2.13.0:
   version "2.15.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.15.1.tgz#df46e867d0fc2aec66a34662b406a9ccafff5b0f"
 
@@ -2819,6 +2903,17 @@ create-hash@^1.1.0, create-hash@^1.1.2:
 create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/create-hmac/-/create-hmac-1.1.6.tgz#acb9e221a4e17bdb076e90657c42b93e3726cf06"
+  dependencies:
+    cipher-base "^1.0.3"
+    create-hash "^1.1.0"
+    inherits "^2.0.1"
+    ripemd160 "^2.0.0"
+    safe-buffer "^5.0.1"
+    sha.js "^2.4.8"
+
+create-hmac@^1.1.3:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/create-hmac/-/create-hmac-1.1.7.tgz#69170c78b3ab957147b2b8b04572e47ead2243ff"
   dependencies:
     cipher-base "^1.0.3"
     create-hash "^1.1.0"
@@ -3426,7 +3521,7 @@ duplexer3@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/duplexer3/-/duplexer3-0.1.4.tgz#ee01dd1cac0ed3cbc7fdbea37dc0a8f1ce002ce2"
 
-duplexer@~0.1.1:
+duplexer@^0.1.1, duplexer@~0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.1.1.tgz#ace6ff808c1ce66b57d1ebf97977acb02334cfc1"
 
@@ -3454,6 +3549,13 @@ ecstatic@^3.0.0:
     minimist "^1.1.0"
     url-join "^2.0.2"
 
+ecurve@^1.0.0:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/ecurve/-/ecurve-1.0.6.tgz#dfdabbb7149f8d8b78816be5a7d5b83fcf6de797"
+  dependencies:
+    bigi "^1.1.0"
+    safe-buffer "^5.0.1"
+
 editions@^1.3.3:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/editions/-/editions-1.3.4.tgz#3662cb592347c3168eb8e498a0ff73271d67f50b"
@@ -3476,6 +3578,10 @@ ee-first@1.1.1:
 ejs@^2.3.1:
   version "2.5.8"
   resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.5.8.tgz#2ab6954619f225e6193b7ac5f7c39c48fefe4380"
+
+ejs@^2.5.7:
+  version "2.5.9"
+  resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.5.9.tgz#7ba254582a560d267437109a68354112475b0ce5"
 
 electron-download@^3.0.1:
   version "3.3.0"
@@ -3553,7 +3659,7 @@ electron-to-chromium@^1.3.30, electron-to-chromium@^1.3.41:
   version "1.3.42"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.42.tgz#95c33bf01d0cc405556aec899fe61fd4d76ea0f9"
 
-electron@^1.8.2:
+electron@^1.8.4:
   version "1.8.4"
   resolved "https://registry.yarnpkg.com/electron/-/electron-1.8.4.tgz#cca8d0e6889f238f55b414ad224f03e03b226a38"
   dependencies:
@@ -4315,6 +4421,10 @@ filename-regex@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/filename-regex/-/filename-regex-2.0.1.tgz#c1c4b9bee3e09725ddb106b75c1e301fe2f18b26"
 
+filesize@^3.5.11:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/filesize/-/filesize-3.6.1.tgz#090bb3ee01b6f801a8a8be99d31710b3422bb317"
+
 fill-range@^2.1.0:
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/fill-range/-/fill-range-2.2.3.tgz#50b77dfd7e469bc7492470963699fe7a8485a723"
@@ -4959,6 +5069,13 @@ gulplog@^1.0.0:
   dependencies:
     glogg "^1.0.0"
 
+gzip-size@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/gzip-size/-/gzip-size-4.1.0.tgz#8ae096257eabe7d69c45be2b67c448124ffb517c"
+  dependencies:
+    duplexer "^0.1.1"
+    pify "^3.0.0"
+
 handle-thing@^1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/handle-thing/-/handle-thing-1.2.5.tgz#fd7aad726bf1a5fd16dfc29b2f7a6601d27139c4"
@@ -5369,6 +5486,12 @@ ignore@^3.3.3, ignore@^3.3.5:
 image-size@^0.6.0:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/image-size/-/image-size-0.6.1.tgz#98122a562d59dcc097ef1b2c8191866eb8f5d663"
+
+immutability-helper@^2.6.6:
+  version "2.6.6"
+  resolved "http://registry.npm.taobao.org/immutability-helper/download/immutability-helper-2.6.6.tgz#9b384c240d65257133c155086e16f678ca563b05"
+  dependencies:
+    invariant "^2.2.0"
 
 immutable@^3.8.1, immutable@^3.8.2:
   version "3.8.2"
@@ -6703,6 +6826,10 @@ merge@^1.1.3:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.0.tgz#7531e39d4949c281a66b8c5a6e0265e8b05894da"
 
+merkle-lib@^2.0.10:
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/merkle-lib/-/merkle-lib-2.0.10.tgz#82b8dbae75e27a7785388b73f9d7725d0f6f3326"
+
 method-override@~2.3.5:
   version "2.3.10"
   resolved "https://registry.yarnpkg.com/method-override/-/method-override-2.3.10.tgz#e3daf8d5dee10dd2dce7d4ae88d62bbee77476b4"
@@ -7517,7 +7644,7 @@ onetime@^2.0.0:
   dependencies:
     mimic-fn "^1.0.0"
 
-opener@~1.4.0:
+opener@^1.4.3, opener@~1.4.0:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/opener/-/opener-1.4.3.tgz#5c6da2c5d7e5831e8ffa3964950f8d6674ac90b8"
 
@@ -8697,6 +8824,12 @@ punycode@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.0.tgz#5f863edc89b96db09074bad7947bf09056ca4e7d"
 
+pushdata-bitcoin@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/pushdata-bitcoin/-/pushdata-bitcoin-1.0.1.tgz#15931d3cd967ade52206f523aa7331aef7d43af7"
+  dependencies:
+    bitcoin-ops "^1.3.0"
+
 q@^1.1.2:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
@@ -8932,6 +9065,13 @@ react-intl@^2.4.0:
     intl-relativeformat "^2.0.0"
     invariant "^2.1.1"
 
+react-native-charts-wrapper@^0.4.3:
+  version "0.4.3"
+  resolved "http://registry.npm.taobao.org/react-native-charts-wrapper/download/react-native-charts-wrapper-0.4.3.tgz#a7423fe210f753fd8934566b16fba1172bcfa981"
+  dependencies:
+    prop-types "^15.5.10"
+    react "16.1.1"
+
 react-native-extended-stylesheet@^0.8.0:
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/react-native-extended-stylesheet/-/react-native-extended-stylesheet-0.8.0.tgz#28a59d3bd3f51131fcfb08a27d645e1d60b427e9"
@@ -8950,6 +9090,10 @@ react-native-navigation@^1.1.409:
   resolved "http://registry.npm.taobao.org/react-native-navigation/download/react-native-navigation-1.1.409.tgz#fbb37e0810845e751ad1543f1399897086d8afd5"
   dependencies:
     lodash "4.x.x"
+
+react-native-splash-screen@3.0.1:
+  version "3.0.1"
+  resolved "http://registry.npm.taobao.org/react-native-splash-screen/download/react-native-splash-screen-3.0.1.tgz#178b29b7d848e6ee5a41fbb9c1299eb2b5aaa600"
 
 react-native-svg@^5.5.1:
   version "5.5.1"
@@ -9114,6 +9258,15 @@ react-transform-hmr@^1.0.4:
   dependencies:
     global "^4.3.0"
     react-proxy "^1.1.7"
+
+react@16.1.1:
+  version "16.1.1"
+  resolved "http://registry.npm.taobao.org/react/download/react-16.1.1.tgz#d5c4ef795507e3012282dd51261ff9c0e824fe1f"
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
 
 react@^16.2.0:
   version "16.3.1"
@@ -10767,6 +10920,10 @@ truncate-utf8-bytes@^1.0.0:
   dependencies:
     utf8-byte-length "^1.0.1"
 
+tryer@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/tryer/-/tryer-1.0.0.tgz#027b69fa823225e551cace3ef03b11f6ab37c1d7"
+
 tryit@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/tryit/-/tryit-1.0.3.tgz#393be730a9446fd1ead6da59a014308f36c289cb"
@@ -10924,6 +11081,10 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
+typeforce@^1.11.3:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/typeforce/-/typeforce-1.12.0.tgz#ca40899919f1466d7819e37be039406beb912a2e"
+
 typescript-formatter@^6.0.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/typescript-formatter/-/typescript-formatter-6.1.0.tgz#4425ac2bab8aaea9a04251c078f47ab7a0202f13"
@@ -10976,6 +11137,19 @@ uglify-to-browserify@~1.0.0:
 uglifyjs-webpack-plugin@^1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/uglifyjs-webpack-plugin/-/uglifyjs-webpack-plugin-1.2.4.tgz#5eec941b2e9b8538be0a20fc6eda25b14c7c1043"
+  dependencies:
+    cacache "^10.0.4"
+    find-cache-dir "^1.0.0"
+    schema-utils "^0.4.5"
+    serialize-javascript "^1.4.0"
+    source-map "^0.6.1"
+    uglify-es "^3.3.4"
+    webpack-sources "^1.1.0"
+    worker-farm "^1.5.2"
+
+uglifyjs-webpack-plugin@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/uglifyjs-webpack-plugin/-/uglifyjs-webpack-plugin-1.2.5.tgz#2ef8387c8f1a903ec5e44fa36f9f3cbdcea67641"
   dependencies:
     cacache "^10.0.4"
     find-cache-dir "^1.0.0"
@@ -11261,6 +11435,12 @@ value-equal@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/value-equal/-/value-equal-0.4.0.tgz#c5bdd2f54ee093c04839d71ce2e4758a6890abc7"
 
+varuint-bitcoin@^1.0.4:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/varuint-bitcoin/-/varuint-bitcoin-1.1.0.tgz#7a343f50537607af6a3059312b9782a170894540"
+  dependencies:
+    safe-buffer "^5.1.1"
+
 vary@~1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.0.1.tgz#99e4981566a286118dfb2b817357df7993376d10"
@@ -11381,6 +11561,23 @@ webpack-addons@^1.1.5:
   resolved "https://registry.yarnpkg.com/webpack-addons/-/webpack-addons-1.1.5.tgz#2b178dfe873fb6e75e40a819fa5c26e4a9bc837a"
   dependencies:
     jscodeshift "^0.4.0"
+
+webpack-bundle-analyzer@^2.11.1:
+  version "2.11.1"
+  resolved "https://registry.yarnpkg.com/webpack-bundle-analyzer/-/webpack-bundle-analyzer-2.11.1.tgz#b9fbfb6a32c0a8c1c3237223e90890796b950ab9"
+  dependencies:
+    acorn "^5.3.0"
+    bfj-node4 "^5.2.0"
+    chalk "^2.3.0"
+    commander "^2.13.0"
+    ejs "^2.5.7"
+    express "^4.16.2"
+    filesize "^3.5.11"
+    gzip-size "^4.1.0"
+    lodash "^4.17.4"
+    mkdirp "^0.5.1"
+    opener "^1.4.3"
+    ws "^4.0.0"
 
 webpack-cli@^2.0.13:
   version "2.0.14"
@@ -11521,7 +11718,7 @@ webpack-sources@^1.1.0:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@^4.2.0:
+webpack@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.5.0.tgz#1e6f71e148ead02be265ff2879c9cd6bb30b8848"
   dependencies:
@@ -11607,6 +11804,12 @@ widest-line@^1.0.0:
   dependencies:
     string-width "^1.0.1"
 
+wif@^2.0.1:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/wif/-/wif-2.0.6.tgz#08d3f52056c66679299726fade0d432ae74b4704"
+  dependencies:
+    bs58check "<3.0.0"
+
 win-release@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/win-release/-/win-release-1.1.1.tgz#5fa55e02be7ca934edfc12665632e849b72e5209"
@@ -11688,6 +11891,13 @@ ws@^2.0.3:
   dependencies:
     safe-buffer "~5.0.1"
     ultron "~1.1.0"
+
+ws@^4.0.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-4.1.0.tgz#a979b5d7d4da68bf54efe0408967c324869a7289"
+  dependencies:
+    async-limiter "~1.0.0"
+    safe-buffer "~5.1.0"
 
 xcode@^0.9.1:
   version "0.9.3"

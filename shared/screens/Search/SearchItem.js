@@ -19,7 +19,7 @@ export default SearchItem = ({ coinName,onChangeText }) => (
       underlineColorAndroid="transparent"
       style={styles.textInputStyle}
       selectionColor={Colors.textColor_FFFFEE}
-      keyboardAppearance={"dark"}
+      keyboardAppearance={Colors.keyboardTheme}
       placeholder={'Search'}
       placeholderTextColor={'#999999'}
       onChangeText={(text) => {onChangeText(text)}}

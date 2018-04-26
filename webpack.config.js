@@ -5,6 +5,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const { getIfUtils, removeEmpty } = require('webpack-config-utils')
 const { ifProduction, ifNotProduction } = getIfUtils(process.env.NODE_ENV)
 const nodeModules = {}
@@ -140,9 +142,6 @@ const baseConfig = {
       }
     ]
   },
-  optimization: {
-	occurrenceOrder: true
-  },
   plugins: removeEmpty([
     new webpack.DefinePlugin({
       'process.env': {
@@ -188,7 +187,8 @@ const browserConfig = {
       template: 'index.html',
       appMountId: 'app',
       mobile: true
-    })
+    }),
+    // new BundleAnalyzerPlugin()
   ]),
   devServer: {
     contentBase: './browser',
@@ -234,7 +234,8 @@ const desktopConfig = {
   ], './index.tsx'),
   output: {
     ...baseConfig.output,
-    path: resolve('bundle')
+    path: resolve('bundle'),
+    filename: ifProduction('scripts/bundle.js?v=[hash]', 'scripts/bundle.js')
   },
   plugins: removeEmpty([
     ...baseConfig.plugins,
@@ -244,9 +245,22 @@ const desktopConfig = {
       inject: false,
       minify: { collapseWhitespace: true },
       template: 'index.html',
-      appMountId: 'app'
+      appMountId: 'app',
+      mobile: true
     })
-  ])
+  ]),
+  optimization: {
+    minimizer: [
+      // we specify a custom UglifyJsPlugin here to get source maps in production
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        uglifyOptions: {
+          mangle: false
+        }
+      })
+    ]
+  }
 }
 
 const configs = {

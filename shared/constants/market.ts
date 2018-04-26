@@ -1,0 +1,1 @@
+export const EXCHANGES = ['BINANCE', 'BITTREX', 'OKEX', 'HUOBIPRO', 'POLONIEX']
