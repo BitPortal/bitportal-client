@@ -44,7 +44,7 @@ export default class Home extends Component<Props, State> {
   componentDidMount() {
     console.log(generateBIP44Address({ coin_type: 194, account: 0, change: 0, address_index: 0 }))
     setInterval(() => {
-      this.props.actions.getTickersRequested({ exchange: 'BINANCE', quote_asset: 'USDT' })
+      this.props.actions.getTickersRequested({ exchange: 'BINANCE', quote_asset: 'USDT', sort: 'quote_volume' })
     }, 1000)
   }
 
@@ -57,7 +57,7 @@ export default class Home extends Component<Props, State> {
         <div className={style.home}>
           {ticker.get('data').map((item: any) =>
             <div key={`${item.get('exchange')}_${item.get('market')}`}>
-              {`${item.get('market')}: ${item.get('price_last')} | ${item.get('quote_volume_24h')}`}
+              {`${item.get('market')}: ${item.get('price_last')} | ${item.get('quote_volume')}`}
             </div>
            )}
         </div>

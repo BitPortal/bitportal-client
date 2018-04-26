@@ -25,8 +25,8 @@ declare interface Ticker {
   price_bid: number,
   price_change: number,
   price_change_percent: number,
-  quote_volume_24h: number,
-  base_volume_24h: number
+  quote_volume: number,
+  base_volume: number
 }
 
 declare type TickerResult = Ticker[]
