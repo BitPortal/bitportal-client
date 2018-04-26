@@ -1,5 +1,5 @@
 {
   "ENV": "production",
-  "BITPORTAL_API_REST_URL": "http://market-dev.bitportal.io:4040/api",
+  "BITPORTAL_API_REST_URL": "http://market-api.corp.bitportal.io/api",
   "BITPORTAL_API_WEBSOCKET_URL": "wss://api.bitportal.io"
 }

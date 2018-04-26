@@ -51,7 +51,7 @@ const ListItem = ({ data, index, itemExtraStyle, onPress }) => (
       <View style={{ alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
         <Text style={[styles.text16, { marginHorizontal: 10 }]}>
           <FormattedNumber
-            value={data.get('quote_volume')}
+            value={data.get('base_volume')}
             maximumFractionDigits={2}
             minimumFractionDigits={2}
           />

@@ -64,7 +64,8 @@ export default class Market extends BaseScreen {
       this.props.actions.getTickersRequested({
         exchange: 'BITTREX',
         quote_asset: 'BTC',
-        limit: 20
+        limit: 20,
+        sort: 'quote_volume'
       })
     }, 1000)
   }
