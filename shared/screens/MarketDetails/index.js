@@ -21,7 +21,7 @@ const ButtonElement = ({ Title, onPress }) => (
 
 @connect(
   (state) => ({
-    market: state.drawer.get('selectedMarket')
+    market: state.drawer.get('selectedExchange')
   })
 )
 

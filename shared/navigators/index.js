@@ -48,23 +48,6 @@ export const startTabBasedApp = () => {
       tabBarBackgroundColor: Colors.mainThemeColor, // optional, change the background color of the tab bar
       initialTabIndex: 0
     },
-    drawer: { // optional, add this if you want a side menu drawer in your app
-      left: { // optional, define if you want a drawer from the left
-        screen: 'BitPortal.SideMenu', // unique ID registered with Navigation.registerScreen
-        passProps: {}, // simple serializable object that will pass as props to all top screens (optional),
-        fixedWidth: SCREEN_WIDTH*PixelRatio.get()*0.8, // a fixed width you want your left drawer to have (optional)
-      },
-      style: { // ( iOS only )
-        drawerShadow: false, // optional, add this if you want a side menu drawer shadow
-        contentOverlayColor: Colors.overLayColor, // optional, add this if you want a overlay color when drawer is open
-        leftDrawerWidth: 80, // optional, add this if you want a define left drawer width (50=percent)
-        shouldStretchDrawer: true // optional, iOS only with 'MMDrawer' type, whether or not the panning gesture will “hard-stop” at the maximum width for a given drawer side, default : true
-      },
-      type: 'MMDrawer', // optional, iOS only, types: 'TheSideBar', 'MMDrawer' default: 'MMDrawer'
-      animationType: 'parallax', //optional, iOS only, for MMDrawer: 'door', 'parallax', 'slide', 'slide-and-scale'
-                                          // for TheSideBar: 'airbnb', 'facebook', 'luvocracy','wunder-list'
-      disableOpenGesture: false // optional, can the drawer be opened with a swipe instead of button
-    },
     animationType: 'fade' // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
   });
 }

@@ -11,7 +11,7 @@ import Colors from 'resources/colors'
 
 @connect(
   state => ({
-    market: state.drawer.get('selectedMarket')
+    market: state.drawer.get('selectedExchange')
   })
 )
 

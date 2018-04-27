@@ -5,19 +5,24 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { 
   Text,
   View,
-  TouchableHighlight
+  TextInput
 } from 'react-native'
 import { FontScale } from 'utils/dimens'
 import Colors from 'resources/colors'
 
-export default SearchItem = ({ onPress }) => (
-  <TouchableHighlight 
-    onPress={() => onPress()}
-    style={styles.searchContainer}
-  >
-    <View style={{justifyContent: 'center', flexDirection: 'row', paddingLeft: 19}}>
-      <Ionicons name="md-search" size={FontScale(22)} color={Colors.textColor_142_142_147} />
-      <Text style={[styles.text17, {marginLeft: 7}]}> Search </Text>
-    </View>
-  </TouchableHighlight>
+export default SearchItem = ({ value, onChangeText }) => (
+  <View style={styles.searchContainer}>
+    <Ionicons name="md-search" size={FontScale(22)} color={Colors.textColor_142_142_147} />
+    <TextInput
+      autoCorrect={false}
+      underlineColorAndroid="transparent"
+      style={styles.textInputStyle}
+      selectionColor={Colors.textColor_FFFFEE}
+      keyboardAppearance={Colors.keyboardTheme}
+      placeholder={'Search'}
+      placeholderTextColor={'#999999'}
+      onChangeText={(text) => {onChangeText(text)}}
+      value={value}
+    />
+  </View>
 )
