@@ -7,6 +7,7 @@ const Colors = {
   bgColor_000000:   '#000000',
   bgColor_FFFFFF:   '#FFFFFF',
   bgColor_F3F4F9:   '#F3F4F9',
+  bgColor_FAFAFA:   '#FAFAFA',
   bgColor_343434:   'rgb(34,34,34)',
   bgColor_59_59_59: 'rgb(59,59,59)',
   bgColor_41_41_44: 'rgb(41,41,44)',
@@ -16,9 +17,11 @@ const Colors = {
   borderColor_36_68_78: 'rgb(36,68,78)',
   borderColor_76_76_80: 'rgb(76,76,80)',
   borderColor_55_55_55: 'rgb(55,55,55)',
-  bgColor_474746:   '#474746',
-  textColor_FFFFEE: '#FFFFEE',
-  textColor_6A6A6A: '#6A6A6A',
+  borderColor_89_185_226:  'rgb(89,185,226)',
+  borderColor_242_242_242: 'rgb(242,242,242)',
+  bgColor_474746:       '#474746',
+  textColor_FFFFEE:     '#FFFFEE',
+  textColor_6A6A6A:     '#6A6A6A',
   textColor_142_142_147: 'rgb(142,142,147)',
   textColor_149_149_149: 'rgb(149,149,149)',
   textColor_93_207_242:  'rgb(93,207,242)',
@@ -27,7 +30,8 @@ const Colors = {
   textColor_255_76_118:  'rgb(255,76,118)',
   textColor_216_216_216: 'rgb(216,216,216)',
   textColor_80_80_80:    'rgb(80,80,80)',
-  textColor_80_201_109:  'rgb(80,201,109)'
+  textColor_80_201_109:  'rgb(80,201,109)',
+  textColor_74_74_74:    'rgb(74,74,74)'
 }
 
 export default Colors

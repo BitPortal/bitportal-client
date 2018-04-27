@@ -12,22 +12,22 @@ import {
   ScrollView
 } from 'react-native'
 
-const HeaderTitle = ({ }) => (
+export const HeaderTitle = ({ }) => (
   <View>
-    <View style={[styles.listItem, styles.headerTitle]}>
+    <View style={[styles.headerTitle]}>
       <View style={[styles.coin, styles.center, {height: 25}]}>
-        <Text style={[styles.text12]}>
-          Code
+        <Text style={[[styles.text16, { color: Colors.textColor_142_142_147 }]]}>
+          MarketCap
         </Text>
       </View>
       <View style={{ alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }}>
-        <Text style={[styles.text12, {marginHorizontal: 10}]}>
-          Volume
+        <Text style={[styles.text16, {marginHorizontal: 10}]}>
+          Price
         </Text>
       </View>
       <View style={{ paddingRight: 15 }}>
-        <Text style={[styles.text12]}>
-          Price (BTC)
+        <Text style={[styles.text16]}>
+          Change
         </Text>
       </View>
     </View>
@@ -37,6 +37,7 @@ const HeaderTitle = ({ }) => (
 const ListItem = ({ data, index, itemExtraStyle, onPress }) => (
   <TouchableHighlight
     key={index}
+    underlayColor={Colors.bgColor_F3F4F9}
     onPress={() => onPress(data)}
   >
     <View style={[styles.listItem, { ...itemExtraStyle }]}>
@@ -51,18 +52,18 @@ const ListItem = ({ data, index, itemExtraStyle, onPress }) => (
       <View style={[styles.price, { alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }]}>
         <Text style={[styles.text16, { marginHorizontal: 10 }]}>
           <FormattedNumber
-            value={data.get('base_volume')}
-            maximumFractionDigits={2}
-            minimumFractionDigits={2}
+            value={data.get('price_last')}
+            maximumFractionDigits={8} 
+            minimumFractionDigits={8}
           />
         </Text>
       </View>
       <View style={[styles.price, { alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row', paddingRight: 15 }]}>
         <Text style={[styles.text16, { color: Colors.textColor_80_201_109 }]}>
           <FormattedNumber
-             value={data.get('price_last')}
-             maximumFractionDigits={8}
-             minimumFractionDigits={8}
+             value={data.get('price_change_percent')}
+             maximumFractionDigits={2}
+             minimumFractionDigits={2}
            />
         </Text>
       </View>

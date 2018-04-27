@@ -3,8 +3,8 @@ import Immutable from 'immutable'
 import * as actions from 'actions/drawer'
 
 /*
-  * support exchanges: Bittrex,OKex,Huobipro,Poloniex,Gdax
-  * support sortType:  quote_volume,quote_
+  * support exchanges: Binance,Bittrex,OKex,Huobipro,Poloniex,Gdax
+  * support sortType:  quote_volume
   * support quotes: 
   *   -- binance: btc, eth, usdt, bnb
   *   -- okex   : btc, eth, usdt

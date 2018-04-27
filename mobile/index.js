@@ -28,7 +28,7 @@ const runApp = async () => {
 }
 
 const setStatusBarStyle = async () => {
-  const mode = await storage.getItem('bitprotal_status_bar') || 'light-content'
+  const mode = await storage.getItem('bitprotal_status_bar') || 'default'
   // mode: 'light-content'/'default'
   StatusBar.setHidden(false, 'fade');
   StatusBar.setBarStyle(mode, true);
