@@ -1,5 +1,5 @@
 declare type TickerSort = 'quote_volume' | 'base_volume' | 'price_last' | 'price_change' | 'price_change_percent'
-declare type TickerExchange = 'BINANCE' | 'HUOBIPRO' | 'OKEX' | 'BITTREX' | 'POLONIEX'
+declare type TickerExchange = 'BINANCE' | 'HUOBIPRO' | 'OKEX' | 'BITTREX' | 'POLONIEX' | 'GDAX'
 
 declare interface TickerParams {
   limit?: number

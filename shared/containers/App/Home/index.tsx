@@ -7,13 +7,14 @@ import { connect } from 'react-redux'
 import { RouteComponentProps } from 'react-router'
 import { generateBIP44Address } from 'bitcoin'
 import * as tickerActions from 'actions/ticker'
+import * as intlActions from 'actions/intl'
 import { exchangeTickerSelector } from 'selectors/ticker'
 import messages from './messages'
 import style from './style.css'
 
 interface Props extends RouteComponentProps<void> {
   locale: Locale
-  actions: any
+  actions: typeof tickerActions & typeof intlActions
   ticker: any
 }
 
@@ -28,7 +29,8 @@ interface State {
   }),
   dispatch => ({
     actions: bindActionCreators({
-      ...tickerActions
+      ...tickerActions,
+      ...intlActions
     }, dispatch)
   })
 )

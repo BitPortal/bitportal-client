@@ -1,6 +1,6 @@
 import { createAction } from 'redux-actions'
 
-export const getTickersRequested = createAction('ticker/GET_REQUESTED')
+export const getTickersRequested = createAction<TickerParams>('ticker/GET_REQUESTED')
 export const getTickersSucceeded = createAction<TickerResult>('ticker/GET_SUCCEEDED')
 export const getTickersFailed = createAction<ErrorMessage>('ticker/GET_FAILED')
 
