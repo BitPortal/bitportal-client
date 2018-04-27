@@ -5,10 +5,7 @@ import Colors from 'resources/colors'
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    paddingTop: NAV_BAR_HEIGHT
+    height: SCREEN_HEIGHT
   },
 
 })

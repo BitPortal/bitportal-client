@@ -13,6 +13,8 @@ import { exchangeTickerSelector } from 'selectors/ticker'
 import { bindActionCreators } from 'redux'
 import { Text, View, TouchableOpacity } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import Modal from 'react-native-modal'
+import Exchange from 'screens/Exchange'
 
 @connect(
   (state) => ({
@@ -34,7 +36,8 @@ export default class Market extends BaseScreen {
     super(props, context)
     this.state = {
       text: null,
-      coinName: ''
+      coinName: '',
+      isVisible: false
     }
     this.interval = null
   }
@@ -44,14 +47,7 @@ export default class Market extends BaseScreen {
   }
 
   selectMarket = () => {
-    this.props.navigator.showLightBox({
-      screen: "BitPortal.Exchange",
-      style: {
-        backgroundColor: "rgba(0,0,0,1)", 
-        tapBackgroundToDismiss: true 
-      },
-      adjustSoftInput: "resize"
-     });
+    this.setState({ isVisible: true })
   }
 
   pressListItem = (item) => {
@@ -89,10 +85,13 @@ export default class Market extends BaseScreen {
           </TouchableOpacity>
         </View>
         <SearchItem value={this.state.coinName} onChangeText={(e) => this.searchCoin(e)} />
-        <TableView
+        {/* {<TableView
           data={this.props.ticker.get('data')}
           onPress={(e) => this.pressListItem(e)}
-        />
+        />} */}
+        <Modal isVisible={this.state.isVisible} backdropOpacity={0.1}>
+          <Exchange onPress={() => this.setState({ isVisible: false })} />
+        </Modal>
       </View>
     )
   }
