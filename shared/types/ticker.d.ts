@@ -1,9 +1,12 @@
+declare type TickerSort = 'quote_volume' | 'base_volume' | 'price_last' | 'price_change' | 'price_change_percent'
+declare type TickerExchange = 'BINANCE' | 'HUOBIPRO' | 'OKEX' | 'BITTREX' | 'POLONIEX' | 'GDAX'
+
 declare interface TickerParams {
   limit?: number
   skip?: number
-  sort?: string
+  sort?: TickerSort
   symbol?: string
-  exchange?: string
+  exchange?: TickerExchange
   market?: string
   base_asset?: string
   quote_asset?: string
