@@ -1,7 +1,9 @@
+declare type Sort = 'quote_volume' | 'base_volume' | 'price_last' | 'price_change' | 'price_change_percent'
+
 declare interface TickerParams {
   limit?: number
   skip?: number
-  sort?: string
+  sort?: Sort
   symbol?: string
   exchange?: string
   market?: string
