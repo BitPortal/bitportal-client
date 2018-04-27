@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'ios' ? 20 : 0
   },
   navButton: {
-    width: 100, 
+    minWidth: 100, 
     height: 40, 
     paddingTop: 6, 
     marginLeft: 10, 
@@ -91,6 +91,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderBottomColor: Colors.borderColor_41_41_38,
+  },
+  price: {
+    width: (SCREEN_WIDTH-WidthPercent(30))/2  
   },
   headerTitle: {
     borderTopWidth: 1,

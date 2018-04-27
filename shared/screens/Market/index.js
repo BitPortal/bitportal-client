@@ -7,7 +7,7 @@ import Colors from 'resources/colors'
 import SearchItem from 'screens/Market/SearchItem'
 import TableView from 'screens/Market/TableView'
 import BaseScreen from 'components/BaseScreen'
-import { selectCoin } from 'actions/drawer'
+import * as marketActions from 'actions/drawer'
 import * as tickerActions from 'actions/ticker'
 import { exchangeTickerSelector } from 'selectors/ticker'
 import { bindActionCreators } from 'redux'
@@ -19,13 +19,15 @@ import Exchange from 'screens/Exchange'
 @connect(
   (state) => ({
     locale: state.intl.get('locale'),
-    market: state.drawer.get('selectedMarket'),
+    market: state.drawer.get('selectedExchange'),
+    quote:  state.drawer.get('selectedQuote'),
+    sortType: state.drawer.get('sortType'),
     ticker: exchangeTickerSelector(state)
   }),
   (dispatch) => ({
     actions: bindActionCreators({
       ...tickerActions,
-      selectCoin
+      ...marketActions
     }, dispatch)
   })
 )
@@ -37,7 +39,9 @@ export default class Market extends BaseScreen {
     this.state = {
       text: null,
       coinName: '',
-      isVisible: false
+      isVisible: false,
+      refreshing: false,
+      exchangeList: ['Bittrex','OKex','Huobipro','Poloniex','Gdax']
     }
     this.interval = null
   }
@@ -50,6 +54,12 @@ export default class Market extends BaseScreen {
     this.setState({ isVisible: true })
   }
 
+  changeExchange = (exchange) => {
+    this.setState({ isVisible: false }, () => {
+      this.props.actions.selectExchange(exchange)
+    })
+  }
+
   pressListItem = (item) => {
     this.props.actions.selectCoin(item.key)
     this.props.navigator.setDrawerEnabled({ side: 'left', enabled: false })
@@ -59,12 +69,12 @@ export default class Market extends BaseScreen {
   componentDidMount() {
     this.interval = setInterval(() => {
       this.props.actions.getTickersRequested({
-        exchange: 'BITTREX',
-        quote_asset: 'BTC',
+        exchange: this.props.market.toLocaleUpperCase(),
+        quote_asset: this.props.quote,
         limit: 20,
-        sort: 'quote_volume'
+        sort: this.props.sortType
       })
-    }, 1000)
+    }, 3000)
   }
 
   componentWillUnMount() {
@@ -85,12 +95,13 @@ export default class Market extends BaseScreen {
           </TouchableOpacity>
         </View>
         <SearchItem value={this.state.coinName} onChangeText={(e) => this.searchCoin(e)} />
-        {/* {<TableView
+        <TableView
+          refreshing={this.state.refreshing}
           data={this.props.ticker.get('data')}
           onPress={(e) => this.pressListItem(e)}
-        />} */}
-        <Modal isVisible={this.state.isVisible} backdropOpacity={0.1}>
-          <Exchange onPress={() => this.setState({ isVisible: false })} />
+        />
+        <Modal animationIn="slideInLeft" animationOut="slideOutLeft" isVisible={this.state.isVisible} backdropOpacity={0.3}>
+          <Exchange exchangeList={this.state.exchangeList} changeExchange={(e) => this.changeExchange(e)} onPress={() => this.setState({ isVisible: false })} />
         </Modal>
       </View>
     )

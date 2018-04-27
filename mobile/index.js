@@ -1,7 +1,9 @@
 import 'intl'
-import { AsyncStorage, StatusBar } from 'react-native';
-import { registerScreens } from 'screens';
-import { startSingleApp, startTabBasedApp } from 'navigators';
+import 'intl/locale-data/jsonp/en.js'
+import 'intl/locale-data/jsonp/zh.js'
+import { AsyncStorage, StatusBar } from 'react-native'
+import { registerScreens } from 'screens'
+import { startSingleApp, startTabBasedApp } from 'navigators'
 import storage from 'utils/storage'
 import { getInitialLang } from 'selectors/intl'
 import configure from 'store'
@@ -13,12 +15,12 @@ const runApp = async () => {
   const lang = await storage.getItem('bitportal_lang')
   const store = configure({ intl: getInitialLang(lang) })
   store.runSaga(sagas)
-  registerScreens(store, Provider); // this is where you register all of your app's screens
+  registerScreens(store, Provider) // this is where you register all of your app's screens
 
   AsyncStorage.getItem('Welcome', (err, result) => {
-    let data = JSON.parse(result);
-    if (data && data.isFirst) startTabBasedApp();
-    else startSingleApp();
+    let data = JSON.parse(result)
+    if (data && data.isFirst) startTabBasedApp()
+    else startSingleApp()
 
     // hide the splash screens
     SplashScreen.hide()
