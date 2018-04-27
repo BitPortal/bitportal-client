@@ -64,6 +64,7 @@
     "react-native": "^0.50.3",
     "react-native-charts-wrapper": "^0.4.3",
     "react-native-extended-stylesheet": "^0.8.0",
+    "react-native-modal": "^5.4.0",
     "react-native-navbar": "^2.1.0",
     "react-native-navigation": "^1.1.409",
     "react-native-splash-screen": "3.0.1",

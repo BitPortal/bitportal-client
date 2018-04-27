@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, WidthPercent } from 'utils/dimens'
 import Colors from 'resources/colors'
 
@@ -8,17 +8,28 @@ const styles = StyleSheet.create({
     height: SCREEN_HEIGHT,
     backgroundColor: Colors.bgColor_27_27_26
   },
+  headerContainer: {
+    width: SCREEN_WIDTH,
+    height: NAV_BAR_HEIGHT,
+    backgroundColor: Colors.bgColor_27_27_26,
+    paddingTop: Platform.OS === 'ios' ? 20 : 0
+  },
   navButton: {
-    minWidth: 80, 
+    minWidth: 100, 
     height: 40, 
     paddingTop: 6, 
     marginLeft: 10, 
-    alignItems: 'center', 
+    alignItems: 'flex-start', 
     justifyContent: 'center'
   },
   center: {
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  text24: {
+    fontSize: FontScale(24),
+    color: Colors.textColor_255_255_238,
+    fontWeight: 'bold'
   },
   text20: {
     fontSize: FontScale(20),
@@ -41,15 +52,23 @@ const styles = StyleSheet.create({
     color: Colors.textColor_142_142_147
   },
   searchContainer: {
-    width: SCREEN_WIDTH - 30,
-    height: 44,
+    width: (SCREEN_WIDTH - 30)*2/3,
+    height: 40,
     marginVertical: 10,
     marginLeft: 15,
+    paddingLeft: 6,
     borderRadius: 3,
     borderWidth: 1,
     borderColor: Colors.borderColor_41_41_38,
     flexDirection: 'row',
     alignItems: 'center'
+  },
+  textInputStyle: {
+    width: (SCREEN_WIDTH-30)*2/3-40,
+    height: 40,
+    marginLeft: Platform.OS === 'ios' ? 11 : 7,
+    color: Colors.textColor_FFFFEE,
+    fontSize: FontScale(17)
   },
   scrollContainer: {
     width: SCREEN_WIDTH,
@@ -72,6 +91,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderBottomColor: Colors.borderColor_41_41_38,
+  },
+  price: {
+    width: (SCREEN_WIDTH-WidthPercent(30))/2  
   },
   headerTitle: {
     borderTopWidth: 1,
