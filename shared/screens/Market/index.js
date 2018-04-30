@@ -40,34 +40,46 @@ export default class Market extends BaseScreen {
     this.state = {
       text: null,
       coinName: '',
-      isVisible: false,
-      refreshing: false
+      isVisible: false
     }
     this.interval = null
   }
+
   // 搜索币种
   searchCoin = (coinName) => {
     this.setState({ coinName })
   }
+
   // 弹出交易所列表
   selectMarket = () => {
     this.setState({ isVisible: true })
   }
+
   // 选择交易所
   changeExchange = (exchange) => {
     this.setState({ isVisible: false }, () => {
+      this.props.actions.startToRefreshTicker()
       this.props.actions.selectExchange(exchange)
     })
   }
+
   // 选择货币单位
   changeQuote = (quote) => {
+    this.props.actions.startToRefreshTicker()
     this.props.actions.selectQuote(quote)
   }
+
   // 点击查看币种行情
   pressListItem = (item) => {
     this.props.actions.selectCoin(item.key)
     this.props.navigator.push({ screen: 'BitPortal.MarketDetails' })
   }
+
+  // 等待拉取数据中
+  onRefresh = () => {
+
+  }
+
   // 定时拉取行情
   componentDidMount() {
     this.interval = setInterval(() => {
@@ -85,7 +97,8 @@ export default class Market extends BaseScreen {
   }
 
   render() {
-    console.log('### ---- 88', this.props.ticker.get('data'))
+    // console.log('### ---- 88', this.props.ticker.get('data'))
+    const { ticker } = this.props
     return (
       <View style={styles.container}>
         <Header 
@@ -100,7 +113,8 @@ export default class Market extends BaseScreen {
         />
         <HeaderTitle />
         <TableView
-          refreshing={this.state.refreshing}
+          isRefreshing={ticker.get('isRefreshing')}
+          onRefresh={() => this.onRefresh()}
           data={this.props.ticker.get('data')}
           onPress={(e) => this.pressListItem(e)}
         />

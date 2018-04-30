@@ -16,6 +16,7 @@ export default class NavigationBar extends Component {
         leftButton={leftButton}
         rightButton={rightButton}
         title={titleElement}
+        statusBar={{ style: Colors.statusBarMode }}
         containerStyle={styles.containerStyle}
       />
     )

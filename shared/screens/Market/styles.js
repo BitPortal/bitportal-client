@@ -6,12 +6,12 @@ const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
-    backgroundColor: Colors.bgColor_27_27_26
+    backgroundColor: Colors.mainThemeColor
   },
   headerContainer: {
     width: SCREEN_WIDTH,
     height: NAV_BAR_HEIGHT,
-    backgroundColor: Colors.bgColor_FFFFFF,
+    backgroundColor: Colors.mainThemeColor,
     paddingTop: Platform.OS === 'ios' ? 20 : 0
   },
   navButton: {
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT-NAV_BAR_HEIGHT-TAB_BAR_HEIGHT-40-30,
-    backgroundColor: Colors.bgColor_FAFAFA
+    backgroundColor: Colors.mainThemeColor
   },
   listItem: {
     borderBottomWidth: 1,
@@ -87,12 +87,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   price: {
-    width: (SCREEN_WIDTH-WidthPercent(30))/2  
+    width: WidthPercent(40)
+  },
+  change: {
+    maxWidth: WidthPercent(30)
   },
   headerTitle: {
     width: SCREEN_WIDTH,
     height: 30,
-    backgroundColor: Colors.bgColor_FAFAFA,
+    backgroundColor: Colors.mainThemeColor,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -103,7 +106,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: 40,
     flexDirection: 'row',
-    backgroundColor: Colors.bgColor_FFFFFF
+    backgroundColor: Colors.mainThemeColor
   }
 })
 

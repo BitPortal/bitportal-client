@@ -10,6 +10,7 @@ import configure from 'store'
 import Provider from 'components/Provider'
 import sagas from 'sagas'
 import SplashScreen from 'react-native-splash-screen'
+import Colors from 'resources/colors'
 
 const runApp = async () => {
   const lang = await storage.getItem('bitportal_lang')
@@ -28,10 +29,10 @@ const runApp = async () => {
 }
 
 const setStatusBarStyle = async () => {
-  const mode = await storage.getItem('bitprotal_status_bar') || 'default'
+  const statusBarMode = await storage.getItem('bitprotal_status_bar') || Colors.statusBarMode
   // mode: 'light-content'/'default'
-  StatusBar.setHidden(false, 'fade');
-  StatusBar.setBarStyle(mode, true);
+  StatusBar.setHidden(false, 'fade')
+  StatusBar.setBarStyle(statusBarMode, true)
 }
  
 runApp()
