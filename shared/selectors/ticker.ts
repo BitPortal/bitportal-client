@@ -15,7 +15,7 @@ export const exchangeTickerSelector = createSelector(
     'data', ticker.get('data').valueSeq()
       .filter((item: any) => item.get('exchange') === exchange)
       .sortBy((item: any) => -+item.get(sortfilter))
-  )
+    )
   }
 )
 

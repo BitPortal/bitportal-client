@@ -22,15 +22,16 @@ export default handleActions({
     return state.set('loading', false).set('loaded', true)
       .update(
         'data',
-        (v: any) => {
+        () => {
           const tickers = action.payload
-          let newData = v
+          console.log('### - 28', tickers)
+          let newData = Immutable.Map({})
 
           for (const ticker of tickers) {
             const { symbol, ...data } = ticker
             newData = newData.set(symbol, Immutable.fromJS(data))
           }
-
+          console.log('### - 34', newData)
           return newData
         }
       )

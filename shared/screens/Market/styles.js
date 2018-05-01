@@ -6,12 +6,12 @@ const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
-    backgroundColor: Colors.bgColor_27_27_26
+    backgroundColor: Colors.mainThemeColor
   },
   headerContainer: {
     width: SCREEN_WIDTH,
     height: NAV_BAR_HEIGHT,
-    backgroundColor: Colors.bgColor_27_27_26,
+    backgroundColor: Colors.mainThemeColor,
     paddingTop: Platform.OS === 'ios' ? 20 : 0
   },
   navButton: {
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     height: 40, 
     paddingTop: 6, 
     marginLeft: 10, 
-    alignItems: 'flex-start', 
+    alignItems: 'center', 
     justifyContent: 'center'
   },
   center: {
@@ -28,16 +28,12 @@ const styles = StyleSheet.create({
   },
   text24: {
     fontSize: FontScale(24),
-    color: Colors.textColor_255_255_238,
+    color: Colors.textColor_74_74_74,
     fontWeight: 'bold'
   },
   text20: {
     fontSize: FontScale(20),
     color: Colors.textColor_FFFFEE
-  },
-  text12: {
-    fontSize: FontScale(12),
-    color: Colors.textColor_142_142_147
   },
   text13: {
     fontSize: FontScale(13),
@@ -45,7 +41,7 @@ const styles = StyleSheet.create({
   },
   text16: {
     fontSize: FontScale(16),
-    color: Colors.textColor_255_255_238
+    color: Colors.textColor_142_142_147
   },
   text17: {
     fontSize: FontScale(17),
@@ -72,7 +68,8 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - TAB_BAR_HEIGHT - 44 - 20
+    height: SCREEN_HEIGHT-NAV_BAR_HEIGHT-TAB_BAR_HEIGHT-40-30,
+    backgroundColor: Colors.mainThemeColor
   },
   listItem: {
     borderBottomWidth: 1,
@@ -86,19 +83,30 @@ const styles = StyleSheet.create({
   coin: {
     width: WidthPercent(30),
     height: 42,
-    backgroundColor: Colors.bgColor_343434,
     alignItems: 'center',
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.borderColor_41_41_38,
+    flexDirection: 'row'
   },
   price: {
-    width: (SCREEN_WIDTH-WidthPercent(30))/2  
+    width: WidthPercent(40)
+  },
+  change: {
+    maxWidth: WidthPercent(30)
   },
   headerTitle: {
-    borderTopWidth: 1,
-    borderTopColor: Colors.borderColor_41_41_38,
-    height: 25
+    width: SCREEN_WIDTH,
+    height: 30,
+    backgroundColor: Colors.mainThemeColor,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: Colors.borderColor_242_242_242
+  },
+  quoteContainer: {
+    width: SCREEN_WIDTH,
+    height: 40,
+    flexDirection: 'row',
+    backgroundColor: Colors.mainThemeColor
   }
 })
 
