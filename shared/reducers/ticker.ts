@@ -6,7 +6,6 @@ const initialState = Immutable.fromJS({
   data: {},
   loading: false,
   loaded: false,
-  isRefreshing: false,
   error: null,
   exchangeFilter: 'BITTREX',
   sortFilter: {
@@ -25,14 +24,14 @@ export default handleActions({
         'data',
         () => {
           const tickers = action.payload
-          
+          console.log('### - 28', tickers)
           let newData = Immutable.Map({})
 
           for (const ticker of tickers) {
             const { symbol, ...data } = ticker
             newData = newData.set(symbol, Immutable.fromJS(data))
           }
-
+          console.log('### - 34', newData)
           return newData
         }
       )
@@ -45,8 +44,5 @@ export default handleActions({
   },
   [actions.selectTickersByCurrency] (state, action) {
     return state.set('currencyFilter', action.payload)
-  },
-  [actions.startToRefreshTicker] (state) {
-    return state.set('isRefreshing', true)
   }
 }, initialState)
