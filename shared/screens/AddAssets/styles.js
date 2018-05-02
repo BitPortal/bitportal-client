@@ -12,29 +12,29 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT - NAV_BAR_HEIGHT
   },
-  cardContainer: {
-    width: SCREEN_WIDTH,
-    minHeight: 100,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-  },
-  spaceBetween: {
+  between: {
     alignItems: 'center',
     justifyContent: 'space-between',
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   text14: {
     fontSize: FontScale(14),
+    color: Colors.textColor_89_185_226
+  },
+  text20: {
+    fontSize: FontScale(20),
     color: Colors.textColor_255_255_238
   },
-  text18: {
-    fontSize: FontScale(18),
+  text24: {
+    fontSize: FontScale(24),
     color: Colors.textColor_255_255_238
   },
-  text16: {
-    fontSize: FontScale(16),
-    color: Colors.textColor_149_149_149
+  listContainer: {
+    width: SCREEN_WIDTH,
+    height: 70,
+    marginTop: 1
   }
+  
 })
 
 export default styles

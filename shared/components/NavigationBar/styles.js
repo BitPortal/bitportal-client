@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   containerStyle: {
     width: SCREEN_WIDTH,
     height: NAV_BAR_HEIGHT,
-    backgroundColor: Colors.bgColor_27_27_26
+    backgroundColor: Colors.minorThemeColor
   },
   textTitle: {
     fontSize: FontScale(18),

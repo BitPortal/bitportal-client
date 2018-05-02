@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
-    backgroundColor: Colors.bgColor_27_27_26
+    backgroundColor: Colors.mainThemeColor
   },
   scrollContainer: {
     width: SCREEN_WIDTH,

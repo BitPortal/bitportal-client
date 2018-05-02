@@ -1,10 +1,13 @@
 
 const Images = {
-  home:          require('./icon_home.png'),
-  home_press:    require('./icon_home_press.png'),
-  account:       require('./icon_account.png'),
-  account_press: require('./icon_account_press.png'),
-  car:           require('./car.png')
+  car:           require('./car.png'),
+  qrCode:        require('./qrCode.png'),
+  asset:         require('./Asset.png'),
+  asset_press:   require('./Asset_Press.png'),
+  market:        require('./Market.png'),
+  market_press:  require('./Market_Press.png'),
+  profile:       require('./Profile.png'),
+  profile_press: require('./Profile_Press.png'),
 }
 
 export default Images
