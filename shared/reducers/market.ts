@@ -5,13 +5,13 @@ import * as actions from 'actions/market'
 /*
   * support exchanges: Binance,Bittrex,OKex,Huobipro,Poloniex,Gdax
   * support sortType:  quote_volume
-  * support quotes: 
+  * support quotes:
   *   -- binance: btc, eth, usdt, bnb
   *   -- okex   : btc, eth, usdt
-**/ 
+**/
 
 const initialState = Immutable.fromJS({
-  selectedExchange: 'Bittrex', 
+  selectedExchange: 'Bittrex',
   selectedQuote: 'BTC',
   sortType: 'quote_volume',
   isRefreshing: true
