@@ -21,8 +21,8 @@ export const QUOTE_ASSETS = {
 export const ASSET_FRACTION = {
   BTC: 8,
   ETH: 8,
-  BNB: 8,
   XMR: 8,
+  BNB: 5,
   USDT: 2,
   USD: 2,
   EUR: 2,
