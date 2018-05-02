@@ -65,3 +65,4 @@ export const deleteUser = (params: UserIdParams) => fetchBase('DELETE', `/user/$
 export const bindUserTwoFactor = (params: BindUserTwoFactorParams) => fetchBase('DELETE', `/user/two-factor/${params.id}`, params)
 
 export const getTickers = (params?: TickerParams) => fetchBase('GET', '/tickers', params)
+export const getChart = (params?: ChartParams) => fetchBase('GET', '/chart', params)

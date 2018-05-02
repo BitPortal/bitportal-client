@@ -51,12 +51,16 @@ export default class Market extends BaseScreen {
   // 选择交易所
   changeExchange = (exchange) => {
     this.setState({ isVisible: false }, () => {
+      this.list.list.scrollToOffset({ offset: 0, animated: false })
+      this.list.list.scrollToOffset({ offset: -60, animated: true })
       this.props.actions.selectTickersByExchange(exchange)
     })
   }
 
   // 选择货币单位
   changeQuote = (quote) => {
+    this.list.list.scrollToOffset({ offset: 0, animated: false })
+    this.list.list.scrollToOffset({ offset: -60, animated: true })
     this.props.actions.selectTickersByQuoteAsset(quote)
   }
 
@@ -107,6 +111,7 @@ export default class Market extends BaseScreen {
           onRefresh={() => this.onRefresh()}
           data={this.props.ticker.get('data')}
           onPress={(e) => this.pressListItem(e)}
+          ref={(list) => this.list = list}
         />
         <Modal
           animationIn="fadeIn"

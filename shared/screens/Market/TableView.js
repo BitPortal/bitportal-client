@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react'
 import { FormattedNumber } from 'react-intl'
+import Immutable from 'immutable'
 import { FontScale, SCREEN_WIDTH } from 'utils/dimens'
 import Colors from 'resources/colors'
 import styles from './styles'
@@ -64,7 +65,7 @@ const ListItem = ({ data, index, itemExtraStyle, onPress }) => (
         <Text style={[styles.text16, { marginHorizontal: 10 }]}>
           <FormattedNumber
             value={data.get('price_last')}
-            maximumFractionDigits={8} 
+            maximumFractionDigits={8}
             minimumFractionDigits={8}
           />
         </Text>
@@ -85,19 +86,29 @@ const ListItem = ({ data, index, itemExtraStyle, onPress }) => (
   </TouchableHighlight>
 )
 
-export default TableView = ({ data, isRefreshing, onRefresh, itemExtraStyle, onPress }) => {
-  return (
-    <View style={styles.scrollContainer}>
-      <VirtualizedList
-        data={data}
-        style={styles.list}
-        onRefresh={() => onRefresh()}
-        refreshing={isRefreshing}
-        getItem={(items, index) => items.get ? items.get(index) : items[index]}
-        getItemCount={(items) => (items.count() || 0)}
-        keyExtractor={(item, index) => String(index)}
-        renderItem={({ item, index }) => <ListItem key={index} data={item} index={index} onPress={(e) => onPress(e)} />}
-      />
-    </View>
-  )
+export default class TableView extends Component {
+  constructor() {
+    super()
+    this.list = null
+  }
+
+  render() {
+    const { data, isRefreshing, onRefresh, itemExtraStyle, onPress } = this.props
+
+    return (
+      <View style={styles.scrollContainer}>
+        <VirtualizedList
+          data={data}
+          style={styles.list}
+          onRefresh={() => onRefresh()}
+          refreshing={isRefreshing}
+          getItem={(items, index) => items.get ? items.get(index) : items[index]}
+          getItemCount={(items) => (items.count() || 0)}
+          keyExtractor={(item, index) => String(index)}
+          renderItem={({ item, index }) => <ListItem key={index} data={item} index={index} onPress={(e) => onPress(e)} />}
+          ref={ref => this.list = ref}
+        />
+      </View>
+    )
+  }
 }

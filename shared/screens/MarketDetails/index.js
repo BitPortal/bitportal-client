@@ -1,5 +1,6 @@
 /* @jsx */
 import React, { Component, Children } from 'react'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import styles from './styles'
 import Colors from 'resources/colors'
@@ -10,6 +11,7 @@ import CoinInfoCard from './CoinInfoCard'
 import MarketList from './MarketList'
 import ChartWrapper from 'components/ChartWrapper'
 import { SCREEN_WIDTH, FontScale } from 'utils/dimens'
+import * as chartActions from 'actions/chart'
 
 const ButtonElement = ({ Title, onPress }) => (
   <TouchableOpacity style={[styles.btn, styles.center]} onPress={() => onPress()}>
@@ -22,6 +24,11 @@ const ButtonElement = ({ Title, onPress }) => (
 @connect(
   (state) => ({
     exchange: state.market.get('selectedExchange'),
+  }),
+  (dispatch) => ({
+    actions: bindActionCreators({
+      ...chartActions
+    }, dispatch)
   })
 )
 
@@ -44,10 +51,18 @@ export default class MarketDetails extends BaseScreen {
     this.props.navigator.push({ screen: `BitPortal.${screen}` })
   }
 
+  componentDidMount() {
+    this.props.actions.getChartRequested({
+      symbol_id: 'BITSTAMP_SPOT_BTC_USD',
+      period_id: '1HRS',
+      limit: 24
+    })
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <NavigationBar 
+        <NavigationBar
           leftButton={
             <LeftButton iconName="md-arrow-back" title={this.props.exchange} onPress={() => this.goBack()} />
           }
