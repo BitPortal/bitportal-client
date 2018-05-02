@@ -80,7 +80,7 @@ export default class Market extends BaseScreen {
     })
   }
 
-  componentDidMount() {
+  didAppear() {
     this.props.actions.getTickersRequested({
       exchange: this.props.ticker.get('exchangeFilter'),
       quote_asset: this.props.ticker.get('quoteAssetFilter'),
