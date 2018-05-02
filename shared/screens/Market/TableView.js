@@ -13,6 +13,7 @@ import {
   ScrollView,
   RefreshControl
 } from 'react-native'
+import { ASSET_FRACTION } from 'constants/market'
 
 export const HeaderTitle = ({ }) => (
   <View>
@@ -54,10 +55,10 @@ const ListItem = ({ data, index, itemExtraStyle, onPress }) => (
   >
     <View style={[styles.listItem, { ...itemExtraStyle }]}>
       <View style={styles.coin}>
-        <Text style={[styles.text16, { width: 20, marginHorizontal: 10,  }]}>
+        <Text style={[styles.text16, { width: 30, marginLeft: 10,  }]}>
           {index + 1}
         </Text>
-        <Text style={[styles.text16, { marginHorizontal: 10 }]}>
+        <Text style={[styles.text16, { marginRight: 10 }]}>
           {data.get('base_asset')}
         </Text>
       </View>
@@ -65,8 +66,8 @@ const ListItem = ({ data, index, itemExtraStyle, onPress }) => (
         <Text style={[styles.text16, { marginHorizontal: 10 }]}>
           <FormattedNumber
             value={data.get('price_last')}
-            maximumFractionDigits={8}
-            minimumFractionDigits={8}
+            maximumFractionDigits={ASSET_FRACTION[data.get('quote_asset')]}
+            minimumFractionDigits={ASSET_FRACTION[data.get('quote_asset')]}
           />
         </Text>
       </View>
