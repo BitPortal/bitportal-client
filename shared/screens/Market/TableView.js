@@ -53,7 +53,7 @@ const ListItem = ({ data, index, itemExtraStyle, onPress }) => (
   >
     <View style={[styles.listItem, { ...itemExtraStyle }]}>
       <View style={styles.coin}>
-        <Text style={[styles.text16, { width: 20, marginHorizontal: 10, color: Colors.textColor_80_80_80 }]}>
+        <Text style={[styles.text16, { width: 20, marginHorizontal: 10,  }]}>
           {index + 1}
         </Text>
         <Text style={[styles.text16, { marginHorizontal: 10 }]}>

@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   text24: {
     fontSize: FontScale(24),
-    color: Colors.textColor_74_74_74,
+    color: Colors.textColor_FFFFEE,
     fontWeight: 'bold'
   },
   text20: {
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
   text16: {
     fontSize: FontScale(16),
-    color: Colors.textColor_142_142_147
+    color: Colors.textColor_255_255_238
   },
   text17: {
     fontSize: FontScale(17),
@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     width: SCREEN_WIDTH,
-    height: 42
+    height: 70,
+    backgroundColor: Colors.bgColor_48_49_59
   },
   coin: {
     width: WidthPercent(30),
@@ -95,12 +96,12 @@ const styles = StyleSheet.create({
   headerTitle: {
     width: SCREEN_WIDTH,
     height: 30,
-    backgroundColor: Colors.mainThemeColor,
+    backgroundColor: Colors.bgColor_48_49_59,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.borderColor_242_242_242
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.borderColor_41_41_38
   },
   quoteContainer: {
     width: SCREEN_WIDTH,

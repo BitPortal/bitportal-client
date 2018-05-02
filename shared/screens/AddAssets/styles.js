@@ -8,19 +8,9 @@ const styles = StyleSheet.create({
     height: SCREEN_HEIGHT,
     backgroundColor: Colors.mainThemeColor
   },
-  headerContainer: {
+  scrollContainer: {
     width: SCREEN_WIDTH,
-    height: NAV_BAR_HEIGHT,
-    backgroundColor: Colors.minorThemeColor,
-    paddingTop: Platform.OS === 'ios' ? 20 : 0
-  },
-  navButton: {
-    minWidth: 100, 
-    height: 40, 
-    paddingTop: 6, 
-    marginLeft: 10, 
-    alignItems: 'center', 
-    justifyContent: 'center'
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT
   },
   between: {
     alignItems: 'center',
@@ -39,19 +29,12 @@ const styles = StyleSheet.create({
     fontSize: FontScale(24),
     color: Colors.textColor_255_255_238
   },
-  addAssetsContainer: {
-    width: SCREEN_WIDTH,
-    height: 50
-  },
-  scrollContainer: {
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT-NAV_BAR_HEIGHT-TAB_BAR_HEIGHT-220 
-  },
   listContainer: {
     width: SCREEN_WIDTH,
     height: 70,
     marginTop: 1
   }
+  
 })
 
 export default styles

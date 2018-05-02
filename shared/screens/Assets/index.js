@@ -33,7 +33,9 @@ export default class Wallet extends BaseScreen {
 
   // 添加钱包信息
   addAssets = () => {
-
+    this.props.navigator.push({
+      screen: "BitPortal.AddAssets"
+    })
   }
 
   // 查看资产情况

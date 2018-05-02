@@ -12,7 +12,7 @@ const ListItem = ({ item, onPress }) => (
       <View style={{ flexDirection: 'row' }}>
         <Text style={styles.text20}> { item.assetName } </Text>
       </View>
-      <View style={{}}>
+      <View>
         <Text style={styles.text20}> 
           <FormattedNumber
             value={item.assetValue}
