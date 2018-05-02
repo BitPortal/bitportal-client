@@ -59,9 +59,11 @@ export default class Market extends BaseScreen {
   // 选择交易所
   changeExchange = (exchange) => {
     this.setState({ isVisible: false }, () => {
-      this.props.actions.selectQuote(quotes[exchange.toLocaleUpperCase()][0])
-      this.props.actions.selectExchange(exchange)
-      this.onRefresh()
+      if (exchange != this.props.exchange) {
+        this.props.actions.selectQuote(quotes[exchange.toLocaleUpperCase()][0])
+        this.props.actions.selectExchange(exchange)
+        this.onRefresh()
+      }
     })
   }
 
