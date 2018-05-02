@@ -11,7 +11,7 @@ import Colors from 'resources/colors'
 
 @connect(
   state => ({
-    market: state.drawer.get('selectedExchange')
+    exchange: state.market.get('selectedExchange'),
   })
 )
 
@@ -64,7 +64,7 @@ export default class Alerts extends BaseScreen {
         <NavigationBar 
           leftButton={<LeftButton iconName="md-arrow-back" title="Alerts" onPress={() => this.goBack()} />}
           rightButton={
-            <CommonButton onPress={() => {}} Children={<Text style={styles.text14}>{this.props.market} {`\u25BC`} </Text>} />  
+            <CommonButton onPress={() => {}} Children={<Text style={styles.text14}>{this.props.exchange} {`\u25BC`} </Text>} />  
           }
         />
         <View style={styles.scrollContainer}>

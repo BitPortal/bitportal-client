@@ -21,7 +21,7 @@ const ButtonElement = ({ Title, onPress }) => (
 
 @connect(
   (state) => ({
-    market: state.drawer.get('selectedExchange')
+    exchange: state.market.get('selectedExchange'),
   })
 )
 
@@ -30,10 +30,6 @@ export default class MarketDetails extends BaseScreen {
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
-  }
-
-  componentWillUnmount() {
-    this.props.navigator.setDrawerEnabled({ side: 'left', enabled: true })
   }
 
   goBack = () => {
@@ -53,7 +49,7 @@ export default class MarketDetails extends BaseScreen {
       <View style={styles.container}>
         <NavigationBar 
           leftButton={
-            <LeftButton iconName="md-arrow-back" title={this.props.market} onPress={() => this.goBack()} />
+            <LeftButton iconName="md-arrow-back" title={this.props.exchange} onPress={() => this.goBack()} />
           }
           rightButton={
             <RightButton onPress={() => {}} />
