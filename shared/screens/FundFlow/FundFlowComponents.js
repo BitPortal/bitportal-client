@@ -8,7 +8,7 @@ import {
   TouchableHighlight
 } from 'react-native'
 import Colors from 'resources/colors'
-import { SCREEN_WIDTH } from 'utils/dimens';
+import { SCREEN_WIDTH } from 'utils/dimens'
 
 export const Logo = ({  }) => (
   <View style={styles.cardContainer}>

@@ -9,6 +9,7 @@ import { generateBIP44Address } from 'bitcoin'
 import * as tickerActions from 'actions/ticker'
 import * as intlActions from 'actions/intl'
 import { exchangeTickerSelector } from 'selectors/ticker'
+import Eos from 'eosjs'
 import messages from './messages'
 import style from './style.css'
 
@@ -45,9 +46,9 @@ export default class Home extends Component<Props, State> {
 
   componentDidMount() {
     console.log(generateBIP44Address({ coin_type: 194, account: 0, change: 0, address_index: 0 }))
-    setInterval(() => {
-      this.props.actions.getTickersRequested({ exchange: 'BITTREX', quote_asset: 'BTC', limit: 20, sort: 'quote_volume' })
-    }, 1000)
+    // this.props.actions.getTickersRequested({ exchange: 'BITTREX', quote_asset: 'BTC', limit: 20, sort: 'quote_volume' })
+    const eos = Eos.Localnet()
+    eos.getBlock(1).then((result: any) => { console.log(result) })
   }
 
   render() {

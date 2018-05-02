@@ -7,7 +7,7 @@ import NavigationBar, { LeftButton, RightButton } from 'components/NavigationBar
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import { Logo, FlowInfo, ListedExchange } from './FundFlowComponents'
-import { SCREEN_WIDTH } from 'utils/dimens';
+import { SCREEN_WIDTH } from 'utils/dimens'
 
 export default class TokenDetails extends BaseScreen {
 

@@ -9,6 +9,7 @@ import FundFlow from 'screens/FundFlow'
 import Alerts   from 'screens/Alerts'
 import Settings from 'screens/Settings' 
 import Exchange from 'screens/Exchange'
+import Assets   from 'screens/Assets'
 
 export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.Welcome',  () => Welcome,  store, provider)
@@ -20,4 +21,5 @@ export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.FundFlow', () => FundFlow, store, provider)
   Navigation.registerComponent('BitPortal.Alerts',   () => Alerts,   store, provider)
   Navigation.registerComponent('BitPortal.Settings', () => Settings, store, provider)
+  Navigation.registerComponent('BitPortal.Assets',   () => Assets,   store, provider)
 }

@@ -211,3 +211,18 @@ declare module 'resources/icons/*' {
   const file: any
   export = file
 }
+
+declare module 'eosjs' {
+  const file: any
+  export = file
+}
+
+declare module 'bip39' {
+  const file: any
+  export = file
+}
+
+declare module 'ethereumjs-wallet*' {
+  const file: any
+  export = file
+}
