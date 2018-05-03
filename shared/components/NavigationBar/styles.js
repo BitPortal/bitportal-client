@@ -1,15 +1,20 @@
 import { StyleSheet } from 'react-native'
-import { SCREEN_HEIGHT, SCREEN_WIDTH, FontScale, NAV_BAR_HEIGHT } from 'utils/dimens'
+import { SCREEN_HEIGHT, SCREEN_WIDTH, FontScale, NAV_BAR_HEIGHT, ifIphoneX } from 'utils/dimens'
 import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
   containerStyle: {
     width: SCREEN_WIDTH,
     height: NAV_BAR_HEIGHT,
-    backgroundColor: Colors.minorThemeColor
+    backgroundColor: Colors.minorThemeColor,
+    ...ifIphoneX({
+      paddingTop: 24
+    },{
+      paddingTop: 0
+    })
   },
   textTitle: {
-    fontSize: FontScale(18),
+    fontSize: FontScale(20),
     color: Colors.textColor_FFFFEE
   },
   navButton: {

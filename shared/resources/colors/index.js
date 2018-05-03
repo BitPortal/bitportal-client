@@ -6,6 +6,8 @@ const Colors = {
   statusBarMode:    'light-content',
   gradientColors:   ['rgb(24,79,174)', 'rgb(0,157,255)'],
   linearUnderlayColor: 'rgb(24,79,174)',
+  chartIncreaseColor: 'rgb(140, 255, 75)',
+  chartDecreaseColor: 'rgb(255, 129, 129)',
   bgColor_27_27_26: 'rgb(27,27,26)',
   bgColor_000000:   '#000000',
   bgColor_FFFFFF:   '#FFFFFF',
@@ -39,7 +41,8 @@ const Colors = {
   textColor_80_80_80:    'rgb(80,80,80)',
   textColor_89_185_226:  'rgb(89,185,226)',
   textColor_80_201_109:  'rgb(80,201,109)',
-  textColor_74_74_74:    'rgb(74,74,74)'
+  textColor_74_74_74:    'rgb(74,74,74)',
+  textColor_181_181_181: 'rgb(181,181,181)'
 }
 
 export default Colors
