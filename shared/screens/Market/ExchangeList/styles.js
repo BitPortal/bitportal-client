@@ -5,8 +5,7 @@ import Colors from 'resources/colors'
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT,
-    backgroundColor: Colors.bgColor_FFFFFF
+    height: SCREEN_HEIGHT
   },
   exchangeListContainer: {
     width: 100,

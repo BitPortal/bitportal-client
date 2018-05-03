@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
   input: {
     width: screen_width-40-30,
-    height: 30,
+    height: 42,
     fontSize: FontScale(20), 
     color: Colors.minorThemeColor,
   },
