@@ -5,6 +5,7 @@ import * as actions from 'actions/ticker'
 
 function* getTickers(action: Action<TickerParams>) {
   if (!action.payload) return
+
   try {
     const data = yield call(api.getTickers, action.payload)
     yield put(actions.getTickersSucceeded(data))
@@ -13,7 +14,7 @@ function* getTickers(action: Action<TickerParams>) {
   }
 }
 
-function* selectTickersByExchange(action: Action<string>) {
+function* selectTickersByExchange(action: Action<TickerExchange>) {
   if (!action.payload) return
 
   const ticker = yield select((state: RootState) => state.ticker)
