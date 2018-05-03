@@ -34,7 +34,8 @@ public class MainApplication extends NavigationApplication {
       new SplashScreenReactPackage(),
       new VectorIconsPackage(),
       new MPAndroidChartPackage(),
-      new LinearGradientPackage()
+      new LinearGradientPackage(),
+      new ReactNativeConfigPackage()
     );
   }
 
