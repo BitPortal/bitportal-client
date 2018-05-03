@@ -15,7 +15,7 @@ export default handleActions({
   },
   [actions.getChartSucceeded] (state, action) {
     return state.set('loaded', true).set('loading', false)
-      .set(data, Immutable.fromJS(action.payload))
+      .set('data', Immutable.fromJS(action.payload))
   },
   [actions.getChartFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)

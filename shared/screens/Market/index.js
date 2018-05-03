@@ -32,7 +32,6 @@ export default class Market extends BaseScreen {
   constructor(props, context) {
     super(props, context)
     this.state = {
-      text: null,
       coinName: '',
       isVisible: false
     }
@@ -66,11 +65,11 @@ export default class Market extends BaseScreen {
 
   // 点击查看币种行情
   pressListItem = (item) => {
-    // this.props.actions.selectCoin(item.get('base_asset'))
+    this.props.actions.selectBaseAsset(item.get('base_asset'))
     this.props.navigator.push({ screen: 'BitPortal.MarketDetails' })
   }
 
-  // 下拉刷新拉取数据中
+  // 刷新数据
   onRefresh = () => {
     this.props.actions.getTickersRequested({
       exchange: this.props.ticker.get('exchangeFilter'),
@@ -81,18 +80,12 @@ export default class Market extends BaseScreen {
   }
 
   didAppear() {
-    this.props.actions.getTickersRequested({
-      exchange: this.props.ticker.get('exchangeFilter'),
-      quote_asset: this.props.ticker.get('quoteAssetFilter'),
-      sort: this.props.ticker.get('sortFilter'),
-      limit: 20
-    })
+    this.onRefresh()
   }
 
   render() {
     const { ticker } = this.props
     const loading = ticker.get('loading')
-
     return (
       <View style={styles.container}>
         <Header

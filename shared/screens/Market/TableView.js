@@ -19,17 +19,17 @@ export const HeaderTitle = ({ }) => (
   <View>
     <View style={[styles.headerTitle]}>
       <View style={[styles.coin, styles.center, {height: 25}]}>
-        <Text style={[[styles.text16, { color: Colors.textColor_142_142_147 }]]}>
+        <Text style={[[styles.text14]]}>
           MarketCap
         </Text>
       </View>
       <View style={[styles.price, { alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }]}>
-        <Text style={[styles.text16, { marginRight: 20 }]}>
+        <Text style={[styles.text14, { marginRight: 20 }]}>
           Price
         </Text>
       </View>
       <View style={[styles.change, { alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row', paddingRight: 15 }]}>
-        <Text style={[styles.text16]}>
+        <Text style={[styles.text14]}>
           Change
         </Text>
       </View>
