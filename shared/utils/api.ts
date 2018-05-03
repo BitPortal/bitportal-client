@@ -1,6 +1,4 @@
-import {
-  BITPORTAL_API_REST_URL
-} from 'constants/env'
+import { BITPORTAL_API_REST_URL } from 'constants/env'
 import storage from 'utils/storage'
 import { isMobile } from 'utils/platform'
 

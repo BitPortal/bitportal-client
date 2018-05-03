@@ -9,7 +9,7 @@ const initialState = Immutable.fromJS({
   loaded: false,
   error: null,
   exchangeFilter: 'BINANCE',
-  quoteAssetFilter: QUOTE_ASSETS['BINANCE'][0],
+  quoteAssetFilter: QUOTE_ASSETS.BINANCE[0],
   sortFilter: {
     BINANCE: 'quote_volume',
     BITTREX: 'quote_volume',

@@ -226,3 +226,8 @@ declare module 'ethereumjs-wallet*' {
   const file: any
   export = file
 }
+
+declare module 'react-native-sensitive-info' {
+  const file: any
+  export = file
+}
