@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     width: SCREEN_WIDTH,
     height: NAV_BAR_HEIGHT,
-    backgroundColor: Colors.mainThemeColor,
+    backgroundColor: Colors.minorThemeColor,
     ...ifIphoneX({
       paddingTop: 24
     },{
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: 40,
     flexDirection: 'row',
-    backgroundColor: Colors.mainThemeColor
+    backgroundColor: Colors.minorThemeColor
   }
 })
 

@@ -12,7 +12,7 @@ import { bindActionCreators } from 'redux'
 import { Text, View, TouchableOpacity } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Modal from 'react-native-modal'
-import Exchange from 'screens/Exchange'
+import ExchangeList from './ExchangeList'
 import { Header, Quotes } from './Header'
 import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from 'constants/market'
 
@@ -112,7 +112,7 @@ export default class Market extends BaseScreen {
           isVisible={this.state.isVisible}
           backdropOpacity={0.3}
         >
-          <Exchange
+          <ExchangeList
             exchangeList={EXCHANGES}
             changeExchange={(e) => this.changeExchange(e)}
             onPress={() => this.setState({ isVisible: false })}

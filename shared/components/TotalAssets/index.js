@@ -5,7 +5,6 @@ import Colors from 'resources/colors'
 import LinearGradientContainer from 'components/LinearGradientContainer'
 import { FormattedNumber } from 'react-intl'
 import { SCREEN_HEIGHT, SCREEN_WIDTH, FontScale } from 'utils/dimens'
-import QRCode from 'react-native-qrcode'
 import Images from 'resources/images'
 
 const styles = StyleSheet.create({
@@ -37,11 +36,11 @@ const styles = StyleSheet.create({
 export default class TotalAssets extends Component {
 
   render() {
-    const { totalAssets, userName } = this.props
+    const { totalAssets, assetName, onPress } = this.props
     return (  
       <View style={{ backgroundColor: Colors.minorThemeColor }}>
         <LinearGradientContainer type="right" style={[styles.linearContainer, { marginHorizontal: 32, marginVertical: 10 }]}>
-          <TouchableHighlight style={styles.linearContainer} underlayColor={Colors.linearUnderlayColor} onPress={() => {alert('fdafs')}} >
+          <TouchableHighlight style={styles.linearContainer} underlayColor={Colors.linearUnderlayColor} onPress={() => onPress()} >
             <View style={[styles.linearContainer, styles.paddingStyle]}>
               <Text style={styles.text15}> Total Assets</Text>
               <Text style={styles.text24}> 
@@ -53,7 +52,7 @@ export default class TotalAssets extends Component {
                 />
               </Text>
               <View style={styles.between}>
-                <Text style={styles.text15}> { userName }</Text>
+                <Text style={styles.text15}> { assetName }</Text>
                 <Image style={{ width: 16, height: 16 }} source={Images.qrCode} />
               </View>
             </View>

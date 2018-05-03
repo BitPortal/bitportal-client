@@ -4,7 +4,7 @@ import styles from './styles'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { FontScale } from 'utils/dimens'
-import { Text, View, TextInput, TouchableOpacity } from 'react-native'
+import { Text, View, TouchableOpacity } from 'react-native'
 
 export default AlertList = ({ isEdited, dataArr, changeMode, deleteAlert }) => (
   <View style={{ paddingHorizontal: 15, marginTop: 25 }}>

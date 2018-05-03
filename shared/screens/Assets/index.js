@@ -8,13 +8,22 @@ import AddAssets from './AddAssets'
 import AssetsList from './AssetsList'
 import styles from './styles'
 import Colors from 'resources/colors'
+import Modal from 'react-native-modal'
+import AssetQRCode from './AssetQRCode'
 
-export default class Wallet extends BaseScreen {
+export default class Assets extends BaseScreen {
 
   state = {
+    isVisible: false,
     assetsList: [
       { assetName: 'EOS', assetValue: 1.02, assetValueEqual: 4213.21 },
       { assetName: 'UIP', assetValue: 1.02, assetValueEqual: 4213.21 }, 
+      { assetName: 'OCT', assetValue: 1.02, assetValueEqual: 4213.21 }, 
+      { assetName: 'PRA', assetValue: 1.02, assetValueEqual: 4213.21 }, 
+      { assetName: 'DEW', assetValue: 1.02, assetValueEqual: 4213.21 },
+      { assetName: 'OCT', assetValue: 1.02, assetValueEqual: 4213.21 }, 
+      { assetName: 'PRA', assetValue: 1.02, assetValueEqual: 4213.21 }, 
+      { assetName: 'DEW', assetValue: 1.02, assetValueEqual: 4213.21 },
       { assetName: 'OCT', assetValue: 1.02, assetValueEqual: 4213.21 }, 
       { assetName: 'PRA', assetValue: 1.02, assetValueEqual: 4213.21 }, 
       { assetName: 'DEW', assetValue: 1.02, assetValueEqual: 4213.21 }
@@ -43,13 +52,34 @@ export default class Wallet extends BaseScreen {
 
   }
 
+  // 钱包二维码
+  operateAssetQRCode = (isVisible) => {
+    this.setState({ isVisible })
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Header Title="Account" displayAccount={() => this.displayAccount()} scanQR={() => this.scanQR()} />
-        <TotalAssets totalAssets={425321132.21} userName={'Meon'} />
-        <AddAssets Title="Asset" addAssets={() => this.addAssets()} />
-        <AssetsList data={this.state.assetsList} onPress={(e) => this.checkAsset(e)} />
+        
+        <View style={styles.scrollContainer}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <TotalAssets totalAssets={425321132.21} assetName={'Meon'} onPress={() => this.operateAssetQRCode(true)} />
+            <AddAssets Title="Asset" addAssets={() => this.addAssets()} />
+            <AssetsList data={this.state.assetsList} onPress={(e) => this.checkAsset(e)} />
+          </ScrollView>
+        </View>
+        <Modal
+          animationIn="fadeIn"
+          animationOut="fadeOut"
+          isVisible={this.state.isVisible}
+          backdropOpacity={0.9}
+        >
+          <AssetQRCode 
+            assetName={'Meon'}
+            dismissModal={() => this.operateAssetQRCode(false)} 
+          />
+        </Modal>
       </View>
     )
   }
