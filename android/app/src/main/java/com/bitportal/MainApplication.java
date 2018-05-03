@@ -33,7 +33,8 @@ public class MainApplication extends NavigationApplication {
       new SvgPackage(),
       new SplashScreenReactPackage(),
       new VectorIconsPackage(),
-      new MPAndroidChartPackage()
+      new MPAndroidChartPackage(),
+      new LinearGradientPackage()
     );
   }
 

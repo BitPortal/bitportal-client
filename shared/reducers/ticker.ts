@@ -17,7 +17,8 @@ const initialState = Immutable.fromJS({
     HUOBIPRO: 'quote_volume',
     POLONIEX: 'quote_volume',
   },
-  currencyFilter: null
+  currencyFilter: null,
+  baseAsset: null
 })
 
 export default handleActions({
@@ -53,5 +54,8 @@ export default handleActions({
   },
   [actions.selectTickersByCurrency] (state, action) {
     return state.set('currencyFilter', action.payload)
+  },
+  [actions.selectBaseAsset] (state, action) {
+    return state.set('baseAsset', action.payload)
   }
 }, initialState)

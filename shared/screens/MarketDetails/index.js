@@ -6,12 +6,14 @@ import styles from './styles'
 import Colors from 'resources/colors'
 import NavigationBar, { LeftButton, RightButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
+import { exchangeTickerSelector } from 'selectors/ticker'
 import BaseScreen from 'components/BaseScreen'
 import CoinInfoCard from './CoinInfoCard'
 import MarketList from './MarketList'
-import ChartWrapper from 'components/ChartWrapper'
+import ChartWrapper from './ChartWrapper'
 import { SCREEN_WIDTH, FontScale } from 'utils/dimens'
 import * as chartActions from 'actions/chart'
+import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from 'constants/market'
 
 const ButtonElement = ({ Title, onPress }) => (
   <TouchableOpacity style={[styles.btn, styles.center]} onPress={() => onPress()}>
@@ -23,7 +25,7 @@ const ButtonElement = ({ Title, onPress }) => (
 
 @connect(
   (state) => ({
-    exchange: state.market.get('selectedExchange'),
+    ticker: exchangeTickerSelector(state)
   }),
   (dispatch) => ({
     actions: bindActionCreators({
@@ -60,15 +62,12 @@ export default class MarketDetails extends BaseScreen {
   }
 
   render() {
+    const { ticker } = this.props
     return (
       <View style={styles.container}>
         <NavigationBar
-          leftButton={
-            <LeftButton iconName="md-arrow-back" title={this.props.exchange} onPress={() => this.goBack()} />
-          }
-          rightButton={
-            <RightButton onPress={() => {}} />
-          }
+          leftButton={<LeftButton iconName="md-arrow-back" onPress={() => this.goBack()} />}
+          title={`${EXCHANGE_NAMES[ticker.get('exchangeFilter')]} / ${ticker.get('baseAsset')}`}
         />
         <View style={styles.scrollContainer}>
           <ScrollView
@@ -76,9 +75,6 @@ export default class MarketDetails extends BaseScreen {
           >
             <CoinInfoCard />
             <ChartWrapper />
-            <View style={styles.viewAllContainer}>
-              <Text style={{ fontSize: FontScale(14), color: Colors.textColor_93_207_242 }}> View All </Text>
-            </View>
             <MarketList changeMarket={(e) => this.changeMarket(e)} />
           </ScrollView>
         </View>

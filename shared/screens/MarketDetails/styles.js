@@ -57,13 +57,16 @@ const styles = StyleSheet.create({
     fontSize: FontScale(16),
     color: Colors.textColor_255_255_238
   },
-  viewAllContainer: { 
-    width: SCREEN_WIDTH, 
-    height: 30, 
-    alignItems: 'center', 
-    flexDirection: 'row', 
-    justifyContent: 'flex-end',
-    paddingRight: 15
+  chartContainer: {
+    width: SCREEN_WIDTH,
+    height: 350,
+    paddingVertical: 20,
+    marginVertical: 20,
+    backgroundColor: Colors.minorThemeColor
+  },
+  chart: {
+    width: SCREEN_WIDTH,
+    height: 230
   },
   marketElementContainer: {
     width: SCREEN_WIDTH,

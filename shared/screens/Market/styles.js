@@ -1,6 +1,14 @@
 import { StyleSheet, Platform } from 'react-native'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, WidthPercent } from 'utils/dimens'
 import Colors from 'resources/colors'
+import { 
+  FontScale, 
+  SCREEN_WIDTH, 
+  SCREEN_HEIGHT, 
+  NAV_BAR_HEIGHT, 
+  TAB_BAR_HEIGHT, 
+  WidthPercent, 
+  ifIphoneX 
+} from 'utils/dimens'
 
 const styles = StyleSheet.create({
   container: {
@@ -12,7 +20,11 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: NAV_BAR_HEIGHT,
     backgroundColor: Colors.mainThemeColor,
-    paddingTop: Platform.OS === 'ios' ? 20 : 0
+    ...ifIphoneX({
+      paddingTop: 24
+    },{
+      paddingTop: 0
+    })
   },
   navButton: {
     minWidth: 100, 
@@ -38,6 +50,10 @@ const styles = StyleSheet.create({
   text13: {
     fontSize: FontScale(13),
     color: Colors.textColor_FFFFEE
+  },
+  text14: {
+    fontSize: FontScale(14),
+    color: Colors.textColor_181_181_181
   },
   text16: {
     fontSize: FontScale(16),
@@ -73,7 +89,7 @@ const styles = StyleSheet.create({
   },
   listItem: {
     borderBottomWidth: 1,
-    borderBottomColor: Colors.borderColor_41_41_38,
+    borderBottomColor: Colors.minorThemeColor,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -101,7 +117,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     borderBottomWidth: 1,
-    borderBottomColor: Colors.borderColor_41_41_38
+    borderBottomColor: Colors.minorThemeColor
   },
   quoteContainer: {
     width: SCREEN_WIDTH,
