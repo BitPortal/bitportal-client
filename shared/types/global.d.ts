@@ -30,6 +30,7 @@ declare interface RootState {
   ui?: any
   intl: any
   ticker: any
+  assets: any
 }
 
 declare interface FetchOptions {

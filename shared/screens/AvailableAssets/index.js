@@ -3,7 +3,7 @@ import React, { Component, Children } from 'react'
 import { connect } from 'react-redux'
 import styles from './styles'
 import Colors from 'resources/colors'
-import NavigationBar, { LeftButton, RightButton } from 'components/NavigationBar'
+import NavigationBar, { LeftButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, TouchableOpacity, Switch } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import { SCREEN_WIDTH, FontScale } from 'utils/dimens'
@@ -17,7 +17,7 @@ const AssetElement = ({ item, onValueChange }) => (
   </View>
 )
 
-export default class AddAssets extends BaseScreen {
+export default class AvailableAssets extends BaseScreen {
 
   static navigatorStyle = {
     tabBarHidden: true,

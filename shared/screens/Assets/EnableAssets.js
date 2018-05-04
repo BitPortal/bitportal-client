@@ -5,8 +5,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Text, View, TouchableHighlight, StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
 
-export default AddAssets = ({ Title, addAssets }) => (
-  <TouchableHighlight style={styles.addAssetsContainer} onPress={() => addAssets()}>
+export default EnableAssets = ({ Title, enableAssets }) => (
+  <TouchableHighlight style={styles.addAssetsContainer} onPress={() => enableAssets()}>
     <View style={[styles.addAssetsContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.minorThemeColor }]}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Text style={styles.text14}> { Title } </Text>

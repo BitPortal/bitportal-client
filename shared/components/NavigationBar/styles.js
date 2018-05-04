@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     })
   },
   textTitle: {
-    fontSize: FontScale(20),
+    fontSize: FontScale(18),
     color: Colors.textColor_FFFFEE
   },
   navButton: {
