@@ -54,6 +54,10 @@ const styles = StyleSheet.create({
     width: screen_width-40,
     height: 10
   },
+  seperator2: {
+    width: screen_width-80,
+    height: 2
+  },
   semicircle: {
     width: 10,
     height: 10,

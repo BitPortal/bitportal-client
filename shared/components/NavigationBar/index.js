@@ -48,18 +48,3 @@ export const LeftButton = ({ iconName, title, onPress }) => (
   </TouchableOpacity>
 )
 
-export const RightButton = ({ onPress }) => (
-  <TouchableOpacity
-    onPress={() => onPress()}
-    style={styles.navButton}
-  >
-    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-      <Text style={[styles.text13, {marginTop: -FontScale(13), marginLeft: -FontScale(13)}]}>
-        BTC
-      </Text>
-      <Text style={[styles.text13, {marginBottom: -FontScale(8), marginRight: -FontScale(8), color: Colors.textColor_6A6A6A}]}>
-        ETH
-      </Text>
-    </View>
-  </TouchableOpacity>
-)

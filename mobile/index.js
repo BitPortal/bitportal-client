@@ -1,7 +1,7 @@
 import 'intl'
 import 'intl/locale-data/jsonp/en.js'
 import 'intl/locale-data/jsonp/zh.js'
-import { AsyncStorage, StatusBar } from 'react-native'
+import { StatusBar } from 'react-native'
 import { registerScreens } from 'screens'
 import { startSingleApp, startTabBasedApp } from 'navigators'
 import storage from 'utils/storage'
@@ -18,18 +18,16 @@ const runApp = async () => {
   store.runSaga(sagas)
   registerScreens(store, Provider) // this is where you register all of your app's screens
 
-  AsyncStorage.getItem('Welcome', (err, result) => {
-    let data = JSON.parse(result)
-    if (data && data.isFirst) startTabBasedApp()
-    else startSingleApp()
+  const result = await storage.getItem('bitportal_welcome')
+  if (result && JSON.parse(result).isFirst) startTabBasedApp()
+  else startSingleApp()
 
-    // hide the splash screens
-    SplashScreen.hide()
-  })
+  // hide the splash screens
+  SplashScreen.hide()
 }
 
 const setStatusBarStyle = async () => {
-  const statusBarMode = await storage.getItem('bitprotal_status_bar') || Colors.statusBarMode
+  const statusBarMode = await storage.getItem('bitportal_status_bar') || Colors.statusBarMode
   // mode: 'light-content'/'default'
   StatusBar.setHidden(false, 'fade')
   StatusBar.setBarStyle(statusBarMode, true)

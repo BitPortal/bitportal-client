@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
-    backgroundColor: Colors.mainThemeColor
+    backgroundColor: Colors.minorThemeColor
   },
   headerContainer: {
     width: SCREEN_WIDTH,
@@ -20,6 +20,10 @@ const styles = StyleSheet.create({
     paddingTop: 6, 
     marginLeft: 10, 
     alignItems: 'center', 
+    justifyContent: 'center'
+  },
+  center: {
+    alignItems: 'center',
     justifyContent: 'center'
   },
   between: {
@@ -45,12 +49,21 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT-NAV_BAR_HEIGHT-TAB_BAR_HEIGHT 
+    height: SCREEN_HEIGHT-NAV_BAR_HEIGHT-TAB_BAR_HEIGHT,
+    backgroundColor: Colors.mainThemeColor
   },
   listContainer: {
     width: SCREEN_WIDTH,
     height: 70,
     marginTop: 1
+  },
+  createAccountContainer: {
+    width: SCREEN_WIDTH - 64,
+    height: SCREEN_WIDTH/2 - 32,
+    borderRadius: 12,
+    marginHorizontal: 32,
+    marginVertical: 20,
+    backgroundColor: Colors.mainThemeColor
   }
 })
 

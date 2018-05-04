@@ -10,7 +10,6 @@ import * as tickerActions from 'actions/ticker'
 import { exchangeTickerSelector } from 'selectors/ticker'
 import { bindActionCreators } from 'redux'
 import { Text, View, TouchableOpacity } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import Modal from 'react-native-modal'
 import ExchangeList from './ExchangeList'
 import { Header, Quotes } from './Header'
@@ -18,7 +17,7 @@ import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from 'constants/market'
 
 @connect(
   (state) => ({
-    locale:   state.intl.get('locale'),
+    locale: state.intl.get('locale'),
     ticker: exchangeTickerSelector(state)
   }),
   (dispatch) => ({

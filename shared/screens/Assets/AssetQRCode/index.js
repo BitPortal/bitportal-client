@@ -1,11 +1,23 @@
 
 import React, { Component } from 'react'
-import { Text, View, ScrollView, TouchableOpacity, TouchableHighlight, TextInput, Clipboard, Share } from 'react-native'
 import styles from './styles'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import QRCode from 'react-native-qrcode'
 import { SCREEN_WIDTH, isIphoneX } from 'utils/dimens'
+import { 
+  Text, 
+  View, 
+  Image,
+  Share,
+  TextInput,
+  Clipboard,
+  ScrollView, 
+  TouchableOpacity, 
+  TouchableHighlight,
+  ActivityIndicator
+} from 'react-native'
+import Images from 'resources/images'
 
 const screen_width = isIphoneX ? SCREEN_WIDTH - 40 : SCREEN_WIDTH
 const qrCodeSize = screen_width/2
@@ -15,7 +27,8 @@ export default class AssetQRCode extends Component {
   state = {
     value: '',
     isCopied: false,
-    qrCodeValue: '@$!@$@$!%#Dfalkjfj@%$rfaklfa'
+    enableQRCode: false,
+    qrCodeValue: 'rfaklfa'
   }
 
   // 输入框输入中
@@ -44,6 +57,14 @@ export default class AssetQRCode extends Component {
     })
   }
 
+  componentDidMount() {
+    // 优化Android modal体验
+    this.timer = setTimeout(() => {
+      this.setState({ enableQRCode: true })
+      clearTimeout(this.timer)
+    }, 1000) 
+  }
+
   componentWillUnmount() {
     // 清除定时器
     this.timer && clearTimeout(this.timer)
@@ -51,7 +72,7 @@ export default class AssetQRCode extends Component {
 
   render() {
     const { dismissModal, assetName } = this.props
-    const { isCopied } = this.state
+    const { isCopied, enableQRCode } = this.state
     return (
       <View style={styles.container}>
 
@@ -79,19 +100,22 @@ export default class AssetQRCode extends Component {
 
           <View style={[styles.separator, styles.between]}>
             <View style={[styles.semicircle, { marginLeft: -5 }]} />
-            <Text numberOfLines={1} style={styles.text10}> 
-              ------------------------------------------------------------------
-            </Text>
+            <Image source={Images.seperator} style={styles.seperator2} resizeMode="stretch" />
             <View style={[styles.semicircle, { marginRight: -5 }]} />
           </View>
 
           <View style={[styles.qrCode, styles.center]}>
-            <QRCode
-              value={this.state.qrCodeValue}
-              size={qrCodeSize}
-              bgColor='black'
-              fgColor='white'
-            />
+            {
+              enableQRCode ?
+              <QRCode
+                value={this.state.qrCodeValue}
+                size={qrCodeSize}
+                bgColor='black'
+                fgColor='white'
+              />
+              :
+              <ActivityIndicator />
+            }
           </View>
         </View>
 

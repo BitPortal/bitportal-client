@@ -2,7 +2,7 @@
 import React, { Component, Children } from 'react'
 import { connect } from 'react-redux'
 import styles from './styles'
-import NavigationBar, { LeftButton, RightButton, CommonButton } from 'components/NavigationBar'
+import NavigationBar, { LeftButton, CommonButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import AlertInput from './AlertInput'
