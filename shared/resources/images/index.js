@@ -8,6 +8,7 @@ const Images = {
   market_press:  require('./Market_Press.png'),
   profile:       require('./Profile.png'),
   profile_press: require('./Profile_Press.png'),
+  seperator:     require('./seperator.png')
 }
 
 export default Images

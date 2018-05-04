@@ -1,9 +1,9 @@
 /* @jsx */
-import React, { Component, Children } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styles from './styles'
 import Colors from 'resources/colors'
-import NavigationBar, { LeftButton, RightButton } from 'components/NavigationBar'
+import NavigationBar, { BackButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import { Logo, Description, Details, ListedExchange } from './TokenComponents'
@@ -24,7 +24,7 @@ export default class TokenDetails extends BaseScreen {
       <View style={styles.container}>
         <NavigationBar 
           leftButton={
-            <LeftButton iconName="md-arrow-back" title="Token Details" onPress={() => this.goBack()} />
+            <BackButton iconName="md-arrow-back" title="Token Details" onPress={() => this.goBack()} />
           }
         />
         <View style={styles.scrollContainer}>

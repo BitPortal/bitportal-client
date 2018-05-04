@@ -1,9 +1,9 @@
 /* @jsx */
-import React, { Component, Children } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styles from './styles'
 import Colors from 'resources/colors'
-import NavigationBar, { LeftButton, RightButton } from 'components/NavigationBar'
+import NavigationBar, { BackButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, TouchableOpacity, Switch } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import { SCREEN_WIDTH, FontScale } from 'utils/dimens'
@@ -17,7 +17,7 @@ const AssetElement = ({ item, onValueChange }) => (
   </View>
 )
 
-export default class AddAssets extends BaseScreen {
+export default class AvailableAssets extends BaseScreen {
 
   static navigatorStyle = {
     tabBarHidden: true,
@@ -51,7 +51,7 @@ export default class AddAssets extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar 
-          leftButton={<LeftButton iconName="md-arrow-back" onPress={() => this.goBack()}/>}
+          leftButton={<BackButton iconName="md-arrow-back" onPress={() => this.goBack()}/>}
           title={"Assets List"}
         />
         <View style={styles.scrollContainer}>

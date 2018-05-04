@@ -1,11 +1,12 @@
 /* @tsx */
 
 import React, { Component } from 'react'
-import { View, Text, AsyncStorage, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import Swiper from 'react-native-swiper'
 import { startTabBasedApp } from 'navigators'
 import styles from './styles'
 import BaseScreen from 'components/BaseScreen'
+import storage from 'utils/storage'
 
 const Page1 = () => (
   <View style={[styles.container, styles.center]}>
@@ -38,10 +39,9 @@ const Page3 = ({ goToHomePage }) => (
 
 export default class Welcome extends BaseScreen {
 
-  goToHomePage = () => {
-    AsyncStorage.setItem('Welcome', JSON.stringify({ isFirst: true }),() => {
-      startTabBasedApp()
-    })
+  goToHomePage = async () => {
+    await storage.setItem('bitportal_welcome', JSON.stringify({ isFirst: true }))
+    startTabBasedApp()
   }
 
   render() {

@@ -5,7 +5,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import {
   Text,
   View,
-  TextInput,
   TouchableOpacity,
   StyleSheet
 } from 'react-native'
@@ -13,7 +12,7 @@ import { FontScale, NAV_BAR_HEIGHT, SCREEN_HEIGHT } from 'utils/dimens'
 import Colors from 'resources/colors'
 import { EXCHANGE_NAMES } from 'constants/market'
 
-export default Exchange = ({ onPress, exchangeList, changeExchange }) => (
+export default ExchangeList = ({ onPress, exchangeList, changeExchange }) => (
   <View style={styles.container}>
     <TouchableOpacity onPress={() => onPress()} style={styles.container} />
     <View style={[styles.exchangeListContainer, { marginTop: NAV_BAR_HEIGHT-SCREEN_HEIGHT }]}>
