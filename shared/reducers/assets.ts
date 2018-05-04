@@ -6,22 +6,22 @@ import * as actions from 'actions/assets'
  * data: [
  *  { 
  *    enable: true, // 是否是当前使用钱包 同级只有一个能为true
- *    assetName: 'MyEOSWallet', // 钱包名
+ *    accountName: 'MyEOSWallet', // 钱包名
  *    assetsList: [
- *      { coinName: 'EOS', amount: 25.20,    enable: true }, // enable 表示是否激活 EOS钱包中EOS不能删  
- *      { coinName: 'UIP', amount: 12321.90, enable: true },
- *      { coinName: 'OTC', amount: 2552.50,  enable: true },
+ *      { assetName: 'EOS', amount: 25.20,    enable: true }, // enable 表示是否激活 EOS钱包中EOS不能删  
+ *      { assetName: 'UIP', amount: 12321.90, enable: true },
+ *      { assetName: 'OTC', amount: 2552.50,  enable: true },
  *      ...
  *    ] 
  *  },
  *  { 
  *    enable: false,
- *    assetName: 'MyBTCWallet', 
+ *    accountName: 'MyBTCWallet', 
  *    assetsList: [...] 
  *  },
  *  { 
  *    enable: false,
- *    assetName: 'MyETHWallet', 
+ *    accountName: 'MyETHWallet', 
  *    assetsList: [...] 
  *  }
  *  ...

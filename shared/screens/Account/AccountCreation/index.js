@@ -1,11 +1,12 @@
 /* @jsx */
-import React, { Component, Children } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styles from './styles'
-import NavigationBar, { LeftButton, CommonButton } from 'components/NavigationBar'
+import NavigationBar, { BackButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import Colors from 'resources/colors'
+import Tips from './Tips'
 
 export default class AccountCreation extends BaseScreen {
 
@@ -22,10 +23,16 @@ export default class AccountCreation extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar 
-          leftButton={<LeftButton iconName="md-arrow-back" onPress={() => this.goBack()} />}
+          leftButton={<BackButton iconName="md-arrow-back" onPress={() => this.goBack()} />}
           title="Create Account"
         />
-
+        <View style={styles.scrollContainer}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <Tips />
+            
+          </ScrollView>
+        </View>
+        
       </View>
     )
   }
