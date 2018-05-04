@@ -2932,9 +2932,13 @@ core-js@^1.0.0:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
 
-core-js@^2.2.2, core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.0:
+core-js@^2.2.2, core-js@^2.4.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.1.tgz#ae6874dc66937789b80754ff5428df66819ca50b"
+
+core-js@^2.4.0, core-js@^2.5.0:
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.5.tgz#b14dde936c640c0579a6b50cabcc132dd6127e3b"
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -3889,14 +3893,6 @@ eosjs-api@^3.0.2:
   dependencies:
     camel-case "^3.0.0"
     eosjs-json "^2.0.3"
-    is-browser "^2.0.1"
-    isomorphic-fetch "^2.2.1"
-
-eosjs-api@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/eosjs-api/-/eosjs-api-5.0.0.tgz#7e4389c748420a88f3fff902c404cce03ae476b1"
-  dependencies:
-    camel-case "^3.0.0"
     is-browser "^2.0.1"
     isomorphic-fetch "^2.2.1"
 
@@ -9353,8 +9349,8 @@ react-native-animatable@^1.2.4:
     prop-types "^15.5.10"
 
 "react-native-bip39@git+https://github.com/TerenceGe/bip39.git":
-  version "2.5.0"
-  resolved "git+https://github.com/TerenceGe/bip39.git#62740cfba19b8163c21cdc3518cd6a4a617c223b"
+  version "2.5.1"
+  resolved "git+https://github.com/TerenceGe/bip39.git#d23963ac62b50f27dc6b872645b76a6270261ae8"
   dependencies:
     create-hash "^1.1.0"
     pbkdf2 "^3.0.16"
@@ -9387,9 +9383,16 @@ react-native-crypto@^2.0.1, react-native-crypto@^2.1.2:
     pbkdf2 "3.0.8"
     public-encrypt "^4.0.0"
 
+"react-native-eosjs-api@git+https://github.com/TerenceGe/eosjs-api.git":
+  version "5.0.1"
+  resolved "git+https://github.com/TerenceGe/eosjs-api.git#42d671874eb491b441c4476b8a8a20393b6fae34"
+  dependencies:
+    camel-case "^3.0.0"
+    is-browser "^2.0.1"
+
 "react-native-eosjs-ecc@git+https://github.com/TerenceGe/eosjs-ecc.git":
-  version "3.1.2"
-  resolved "git+https://github.com/TerenceGe/eosjs-ecc.git#4bea52f85893a88c92469e9d672bc9ad673e02f8"
+  version "3.1.4"
+  resolved "git+https://github.com/TerenceGe/eosjs-ecc.git#9e28d190d9fb2d6bfaef65e32391c38d28d488a3"
   dependencies:
     bigi "^1.4.2"
     browserify-aes "^1.0.6"
@@ -9401,14 +9404,14 @@ react-native-crypto@^2.0.1, react-native-crypto@^2.1.2:
     react-native-randombytes "^3.1.0"
 
 "react-native-eosjs@git+https://github.com/TerenceGe/eosjs.git":
-  version "9.0.1"
-  resolved "git+https://github.com/TerenceGe/eosjs.git#9be8f5f9f12513adfaf8d0d7ffb95328d5615707"
+  version "9.0.3"
+  resolved "git+https://github.com/TerenceGe/eosjs.git#b6fa132ef7680d4cccdaf87f209254fcdf043a75"
   dependencies:
     babel-polyfill "^6.26.0"
     binaryen "^37.0.0"
     create-hash "^1.1.3"
-    eosjs-api "^5.0.0"
     fcbuffer "^2.1.5"
+    react-native-eosjs-api "git+https://github.com/TerenceGe/eosjs-api.git"
     react-native-eosjs-ecc "git+https://github.com/TerenceGe/eosjs-ecc.git"
 
 react-native-extended-stylesheet@^0.8.0:
@@ -9873,8 +9876,8 @@ regenerator-runtime@^0.10.5:
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.10.5.tgz#336c3efc1220adcedda2c9fab67b5a7955a33658"
 
 regenerator-runtime@^0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.0.tgz#7e54fe5b5ccd5d6624ea6255c3473be090b802e1"
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
 
 regenerator-runtime@^0.9.5:
   version "0.9.6"
@@ -11948,6 +11951,10 @@ vm-browserify@0.0.4:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-0.0.4.tgz#5d7ea45bbef9e4a6ff65f95438e0a87c357d5a73"
   dependencies:
     indexof "0.0.1"
+
+vm-browserify@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.0.1.tgz#a15d7762c4c48fa6bf9f3309a21340f00ed23063"
 
 vrsource-tslint-rules@^5.1.0:
   version "5.8.0"

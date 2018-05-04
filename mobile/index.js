@@ -1,4 +1,5 @@
 import 'node-libs-react-native/globals'
+import 'crypto'
 import 'intl'
 import 'intl/locale-data/jsonp/en.js'
 import 'intl/locale-data/jsonp/zh.js'

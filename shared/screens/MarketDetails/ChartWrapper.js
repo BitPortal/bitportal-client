@@ -141,7 +141,7 @@ export default class ChartWrapper extends React.Component {
       zoomXValue: {
         $set: 99999
       }
-    }
+    })
   }
 
   handleSelect(event) {

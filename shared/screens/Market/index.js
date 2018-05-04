@@ -15,13 +15,7 @@ import Modal from 'react-native-modal'
 import Exchange from 'screens/Exchange'
 import { Header, Quotes } from './Header'
 import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from 'constants/market'
-import { generateBIP44Address } from 'bitcoin'
-// import Eos from 'eosjs'
-import crypto from 'crypto'
-import bip39 from 'bip39'
-import RNBip39 from 'react-native-bip39'
-import ecc from 'react-native-eosjs-ecc'
-// import ethwallet from 'ethereumjs-wallet'
+import Eos from 'react-native-eosjs'
 
 @connect(
   (state) => ({
@@ -88,16 +82,8 @@ export default class Market extends BaseScreen {
 
   async didAppear() {
     this.onRefresh()
-    const address = generateBIP44Address({ coin_type: 194, account: 0, change: 0, address_index: 0 })
-    console.log(address)
-    // console.log(Eos)
-    console.log(crypto)
-    console.log(bip39.generateMnemonic())
-    console.log(await RNBip39.generateMnemonic())
-    const privateKey = await ecc.randomKey()
-    console.log(privateKey)
-    console.log(ecc.privateToPublic(privateKey))
-    // console.log(ethwallet)
+    eos = Eos.Localnet({ httpEndpoint: 'http://13.58.45.36:8888' })
+    console.log(await eos.getBlock(1))
   }
 
   render() {

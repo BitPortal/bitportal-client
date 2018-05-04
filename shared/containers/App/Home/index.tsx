@@ -47,7 +47,7 @@ export default class Home extends Component<Props, State> {
   componentDidMount() {
     console.log(generateBIP44Address({ coin_type: 194, account: 0, change: 0, address_index: 0 }))
     // this.props.actions.getTickersRequested({ exchange: 'BITTREX', quote_asset: 'BTC', limit: 20, sort: 'quote_volume' })
-    const eos = Eos.Localnet()
+    const eos = Eos.Localnet({ httpEndpoint: 'http://13.58.45.36:8888' })
     eos.getBlock(1).then((result: any) => { console.log(result) })
   }
 
