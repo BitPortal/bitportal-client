@@ -1,3 +1,4 @@
+import 'node-libs-react-native/globals'
 import 'intl'
 import 'intl/locale-data/jsonp/en.js'
 import 'intl/locale-data/jsonp/zh.js'
@@ -34,6 +35,6 @@ const setStatusBarStyle = async () => {
   StatusBar.setHidden(false, 'fade')
   StatusBar.setBarStyle(statusBarMode, true)
 }
- 
+
 runApp()
 setStatusBarStyle()

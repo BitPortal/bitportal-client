@@ -10,9 +10,6 @@ import {
 import { connect } from 'react-redux'
 import styles from './styles'
 import Colors from 'resources/colors'
-import update from 'immutability-helper'
-
-import _ from 'lodash'
 import { SCREEN_WIDTH } from 'utils/dimens'
 import { CandleStickChart } from 'react-native-charts-wrapper'
 
@@ -115,37 +112,36 @@ export default class ChartWrapper extends React.Component {
   }
 
   componentDidMount() {
-    this.setState(
-      update(this.state, {
-          xAxis: {
-            $set: {
-              drawLabels: true,
-              drawGridLines: false,
-              axisLineColor: processColor(Colors.textColor_181_181_181),
-              position: 'BOTTOM',
-              textColor: processColor(Colors.textColor_181_181_181),  
-              textSize: 12
-            }
+    this.setState({
+      ...this.state,
+      xAxis: {
+        $set: {
+          drawLabels: true,
+          drawGridLines: false,
+          axisLineColor: processColor(Colors.textColor_181_181_181),
+          position: 'BOTTOM',
+          textColor: processColor(Colors.textColor_181_181_181),
+          textSize: 12
+        }
+      },
+      yAxis: {
+        $set: {
+          left: {
+            enabled: false
           },
-          yAxis: {
-            $set: {
-              left: {
-                enabled: false
-              },
-              right: {
-                valueFormatter: '',
-                axisLineColor: processColor(Colors.textColor_181_181_181),
-                gridLineWidth: 0,
-                textColor: processColor(Colors.textColor_181_181_181),
-                textSize: 12,
-              }
-            }
-          },
-          zoomXValue: {
-            $set: 99999
+          right: {
+            valueFormatter: '',
+            axisLineColor: processColor(Colors.textColor_181_181_181),
+            gridLineWidth: 0,
+            textColor: processColor(Colors.textColor_181_181_181),
+            textSize: 12,
           }
         }
-      ));
+      },
+      zoomXValue: {
+        $set: 99999
+      }
+    }
   }
 
   handleSelect(event) {
