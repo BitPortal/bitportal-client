@@ -1,12 +1,7 @@
 {
   "presets": ["react-native", "stage-2"],
   "plugins": [
-    "transform-decorators-legacy",
-    ["transform-rename-import", {
-      original: "./production",
-      replacement: "./production",
-      env: "APP_ENV"
-    }]
+    "transform-decorators-legacy"
   ],
   "env": {
     "test": {

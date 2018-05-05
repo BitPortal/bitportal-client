@@ -14,6 +14,7 @@ import Modal from 'react-native-modal'
 import ExchangeList from './ExchangeList'
 import { Header, Quotes } from './Header'
 import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from 'constants/market'
+import Eos from 'react-native-eosjs'
 
 @connect(
   (state) => ({
@@ -78,8 +79,10 @@ export default class Market extends BaseScreen {
     })
   }
 
-  didAppear() {
+  async didAppear() {
     this.onRefresh()
+    eos = Eos.Localnet({ httpEndpoint: 'http://13.58.45.36:8888' })
+    console.log(await eos.getBlock(1))
   }
 
   render() {
