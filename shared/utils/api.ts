@@ -1,6 +1,4 @@
-import {
-  BITPORTAL_API_REST_URL
-} from 'constants/env'
+import { BITPORTAL_API_REST_URL } from 'constants/env'
 import storage from 'utils/storage'
 import { isMobile } from 'utils/platform'
 
@@ -65,3 +63,4 @@ export const deleteUser = (params: UserIdParams) => fetchBase('DELETE', `/user/$
 export const bindUserTwoFactor = (params: BindUserTwoFactorParams) => fetchBase('DELETE', `/user/two-factor/${params.id}`, params)
 
 export const getTickers = (params?: TickerParams) => fetchBase('GET', '/tickers', params)
+export const getChart = (params?: ChartParams) => fetchBase('GET', '/chart', params)

@@ -1,4 +1,4 @@
-import React, { Component, Children } from 'react'
+import React, { Component } from 'react'
 import { SCREEN_WIDTH, SCREEN_HEIGHT, FontScale, NAV_BAR_HEIGHT} from 'utils/dimens'
 import NavBar from 'react-native-navbar'
 import styles from './styles'
@@ -23,18 +23,7 @@ export default class NavigationBar extends Component {
   }
 }
 
-export const CommonButton = ({ onPress, Children }) => (
-  <TouchableOpacity
-    onPress={() => onPress()}
-    style={styles.navButton}
-  >
-    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-      {Children}
-    </View>
-  </TouchableOpacity>
-)
-
-export const LeftButton = ({ iconName, title, onPress }) => (
+export const BackButton = ({ iconName, title, onPress }) => (
   <TouchableOpacity
     onPress={() => onPress()}
     style={styles.navButton}
@@ -48,18 +37,3 @@ export const LeftButton = ({ iconName, title, onPress }) => (
   </TouchableOpacity>
 )
 
-export const RightButton = ({ onPress }) => (
-  <TouchableOpacity
-    onPress={() => onPress()}
-    style={styles.navButton}
-  >
-    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-      <Text style={[styles.text13, {marginTop: -FontScale(13), marginLeft: -FontScale(13)}]}>
-        BTC
-      </Text>
-      <Text style={[styles.text13, {marginBottom: -FontScale(8), marginRight: -FontScale(8), color: Colors.textColor_6A6A6A}]}>
-        ETH
-      </Text>
-    </View>
-  </TouchableOpacity>
-)

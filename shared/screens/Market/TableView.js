@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react'
 import { FormattedNumber } from 'react-intl'
+import Immutable from 'immutable'
 import { FontScale, SCREEN_WIDTH } from 'utils/dimens'
 import Colors from 'resources/colors'
 import styles from './styles'
@@ -12,22 +13,23 @@ import {
   ScrollView,
   RefreshControl
 } from 'react-native'
+import { ASSET_FRACTION } from 'constants/market'
 
 export const HeaderTitle = ({ }) => (
   <View>
     <View style={[styles.headerTitle]}>
       <View style={[styles.coin, styles.center, {height: 25}]}>
-        <Text style={[[styles.text16, { color: Colors.textColor_142_142_147 }]]}>
+        <Text style={[[styles.text14]]}>
           MarketCap
         </Text>
       </View>
       <View style={[styles.price, { alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }]}>
-        <Text style={[styles.text16, { marginRight: 20 }]}>
+        <Text style={[styles.text14, { marginRight: 20 }]}>
           Price
         </Text>
       </View>
       <View style={[styles.change, { alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row', paddingRight: 15 }]}>
-        <Text style={[styles.text16]}>
+        <Text style={[styles.text14]}>
           Change
         </Text>
       </View>
@@ -53,10 +55,10 @@ const ListItem = ({ data, index, itemExtraStyle, onPress }) => (
   >
     <View style={[styles.listItem, { ...itemExtraStyle }]}>
       <View style={styles.coin}>
-        <Text style={[styles.text16, { width: 20, marginHorizontal: 10, color: Colors.textColor_80_80_80 }]}>
+        <Text style={[styles.text16, { width: 30, marginLeft: 10,  }]}>
           {index + 1}
         </Text>
-        <Text style={[styles.text16, { marginHorizontal: 10 }]}>
+        <Text style={[styles.text16, { marginRight: 10 }]}>
           {data.get('base_asset')}
         </Text>
       </View>
@@ -64,8 +66,8 @@ const ListItem = ({ data, index, itemExtraStyle, onPress }) => (
         <Text style={[styles.text16, { marginHorizontal: 10 }]}>
           <FormattedNumber
             value={data.get('price_last')}
-            maximumFractionDigits={8} 
-            minimumFractionDigits={8}
+            maximumFractionDigits={ASSET_FRACTION[data.get('quote_asset')]}
+            minimumFractionDigits={ASSET_FRACTION[data.get('quote_asset')]}
           />
         </Text>
       </View>
@@ -85,19 +87,29 @@ const ListItem = ({ data, index, itemExtraStyle, onPress }) => (
   </TouchableHighlight>
 )
 
-export default TableView = ({ data, isRefreshing, onRefresh, itemExtraStyle, onPress }) => {
-  return (
-    <View style={styles.scrollContainer}>
-      <VirtualizedList
-        data={data}
-        style={styles.list}
-        onRefresh={() => onRefresh()}
-        refreshing={isRefreshing}
-        getItem={(items, index) => items.get ? items.get(index) : items[index]}
-        getItemCount={(items) => (items.count() || 0)}
-        keyExtractor={(item, index) => String(index)}
-        renderItem={({ item, index }) => <ListItem key={index} data={item} index={index} onPress={(e) => onPress(e)} />}
-      />
-    </View>
-  )
+export default class TableView extends Component {
+  constructor() {
+    super()
+    this.list = null
+  }
+
+  render() {
+    const { data, isRefreshing, onRefresh, itemExtraStyle, onPress } = this.props
+
+    return (
+      <View style={styles.scrollContainer}>
+        <VirtualizedList
+          data={data}
+          style={styles.list}
+          onRefresh={() => onRefresh()}
+          refreshing={isRefreshing}
+          getItem={(items, index) => items.get ? items.get(index) : items[index]}
+          getItemCount={(items) => (items.count() || 0)}
+          keyExtractor={(item, index) => String(index)}
+          renderItem={({ item, index }) => <ListItem key={index} data={item} index={index} onPress={(e) => onPress(e)} />}
+          ref={ref => this.list = ref}
+        />
+      </View>
+    )
+  }
 }

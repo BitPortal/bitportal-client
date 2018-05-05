@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
 import { handleActions } from 'redux-actions'
+import { QUOTE_ASSETS } from 'constants/market'
 import * as actions from 'actions/ticker'
 
 const initialState = Immutable.fromJS({
@@ -7,11 +8,17 @@ const initialState = Immutable.fromJS({
   loading: false,
   loaded: false,
   error: null,
-  exchangeFilter: 'BITTREX',
+  exchangeFilter: 'BINANCE',
+  quoteAssetFilter: QUOTE_ASSETS.BINANCE[0],
   sortFilter: {
-    BITTREX: 'quote_volume'
+    BINANCE: 'quote_volume',
+    BITTREX: 'quote_volume',
+    OKEX: 'quote_volume',
+    HUOBIPRO: 'quote_volume',
+    POLONIEX: 'quote_volume',
   },
-  currencyFilter: null
+  currencyFilter: null,
+  baseAsset: null
 })
 
 export default handleActions({
@@ -19,30 +26,36 @@ export default handleActions({
     return state.set('loading', true)
   },
   [actions.getTickersSucceeded] (state, action) {
-    return state.set('loading', false).set('loaded', true)
+    return state.set('loaded', true).set('loading', false)
       .update(
         'data',
-        () => {
+        (v: any) => {
           const tickers = action.payload
-          console.log('### - 28', tickers)
-          let newData = Immutable.Map({})
+          let newData = v
 
           for (const ticker of tickers) {
             const { symbol, ...data } = ticker
             newData = newData.set(symbol, Immutable.fromJS(data))
           }
-          console.log('### - 34', newData)
+
           return newData
         }
       )
   },
   [actions.getTickersFailed] (state, action) {
-    return state.set('loading', false).set('error', action.payload)
+    return state.set('error', action.payload).set('loading', false)
   },
   [actions.selectTickersByExchange] (state, action) {
     return state.set('exchangeFilter', action.payload)
+      .set('quoteAssetFilter', QUOTE_ASSETS[action.payload][0])
+  },
+  [actions.selectTickersByQuoteAsset] (state, action) {
+    return state .set('quoteAssetFilter', action.payload)
   },
   [actions.selectTickersByCurrency] (state, action) {
     return state.set('currencyFilter', action.payload)
+  },
+  [actions.selectBaseAsset] (state, action) {
+    return state.set('baseAsset', action.payload)
   }
 }, initialState)

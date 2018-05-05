@@ -6,44 +6,35 @@ import { connect } from 'react-redux'
 import SearchItem from 'screens/Market/SearchItem'
 import TableView, { HeaderTitle } from 'screens/Market/TableView'
 import BaseScreen from 'components/BaseScreen'
-import * as marketActions from 'actions/market'
 import * as tickerActions from 'actions/ticker'
 import { exchangeTickerSelector } from 'selectors/ticker'
 import { bindActionCreators } from 'redux'
 import { Text, View, TouchableOpacity } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import Modal from 'react-native-modal'
-import Exchange from 'screens/Exchange'
+import ExchangeList from './ExchangeList'
 import { Header, Quotes } from './Header'
-import { exchanges, quotes } from 'utils/exchanges'
+import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from 'constants/market'
+import Eos from 'react-native-eosjs'
 
 @connect(
   (state) => ({
-    locale:   state.intl.get('locale'),
-    isRefreshing: state.market.get('isRefreshing'),
-    exchange: state.market.get('selectedExchange'),
-    quote:    state.market.get('selectedQuote'),
-    sortType: state.market.get('sortType'),
+    locale: state.intl.get('locale'),
     ticker: exchangeTickerSelector(state)
   }),
   (dispatch) => ({
     actions: bindActionCreators({
-      ...tickerActions,
-      ...marketActions
+      ...tickerActions
     }, dispatch)
   })
 )
 
 export default class Market extends BaseScreen {
-
   constructor(props, context) {
     super(props, context)
     this.state = {
-      text: null,
       coinName: '',
       isVisible: false
     }
-    this.interval = null
   }
 
   // 搜索币种
@@ -59,83 +50,74 @@ export default class Market extends BaseScreen {
   // 选择交易所
   changeExchange = (exchange) => {
     this.setState({ isVisible: false }, () => {
-      if (exchange != this.props.exchange) {
-        this.props.actions.selectQuote(quotes[exchange.toLocaleUpperCase()][0])
-        this.props.actions.selectExchange(exchange)
-        this.onRefresh()
-      }
+      this.list.list.scrollToOffset({ offset: 0, animated: false })
+      this.list.list.scrollToOffset({ offset: -60, animated: true })
+      this.props.actions.selectTickersByExchange(exchange)
     })
   }
 
   // 选择货币单位
   changeQuote = (quote) => {
-    this.props.actions.selectQuote(quote)
+    this.list.list.scrollToOffset({ offset: 0, animated: false })
+    this.list.list.scrollToOffset({ offset: -60, animated: true })
+    this.props.actions.selectTickersByQuoteAsset(quote)
   }
 
   // 点击查看币种行情
   pressListItem = (item) => {
-    this.props.actions.selectCoin(item.key)
+    this.props.actions.selectBaseAsset(item.get('base_asset'))
     this.props.navigator.push({ screen: 'BitPortal.MarketDetails' })
   }
 
-  // 下拉刷新拉取数据中
+  // 刷新数据
   onRefresh = () => {
-    clearInterval(this.interval)
-    this.timerToFetchData()
+    this.props.actions.getTickersRequested({
+      exchange: this.props.ticker.get('exchangeFilter'),
+      quote_asset: this.props.ticker.get('quoteAssetFilter'),
+      sort: this.props.ticker.get('sortFilter'),
+      limit: 20
+    })
   }
 
-  // 定时拉取行情
-  timerToFetchData = () => {
-    this.interval = setInterval(() => {
-      this.props.actions.getTickersRequested({
-        exchange: this.props.exchange.toLocaleUpperCase(),
-        quote_asset: this.props.quote,
-        limit: 20,
-        sort: this.props.sortType
-      })
-    }, 3000)
-  }
-
-  componentDidMount() {
-    this.timerToFetchData()
-  }
-
-  componentWillUnMount() {
-    clearInterval(this.interval)
+  async didAppear() {
+    this.onRefresh()
+    eos = Eos.Localnet({ httpEndpoint: 'http://13.58.45.36:8888' })
+    console.log(await eos.getBlock(1))
   }
 
   render() {
-    console.log('### ---- 88', this.props.ticker.get('data'))
-    const { isRefreshing } = this.props
+    const { ticker } = this.props
+    const loading = ticker.get('loading')
     return (
       <View style={styles.container}>
-        <Header 
-          exchange={this.props.exchange} 
-          selectMarket={() => this.selectMarket()} 
-          searchCoin={() => this.searchCoin()} 
+        <Header
+          exchange={EXCHANGE_NAMES[ticker.get('exchangeFilter')]}
+          selectMarket={() => this.selectMarket()}
+          searchCoin={() => this.searchCoin()}
         />
-        <Quotes 
-          onPress={(e) => this.changeQuote(e)} 
-          quote={this.props.quote} 
-          quoteList={quotes[this.props.exchange.toLocaleUpperCase()]} 
+        <Quotes
+          onPress={(e) => this.changeQuote(e)}
+          quote={ticker.get('quoteAssetFilter')}
+          quoteList={QUOTE_ASSETS[ticker.get('exchangeFilter')]}
         />
         <HeaderTitle />
         <TableView
-          isRefreshing={isRefreshing}
+          isRefreshing={loading}
           onRefresh={() => this.onRefresh()}
           data={this.props.ticker.get('data')}
           onPress={(e) => this.pressListItem(e)}
+          ref={(list) => this.list = list}
         />
-        <Modal 
-          animationIn="fadeIn" 
-          animationOut="fadeOut" 
-          isVisible={this.state.isVisible} 
+        <Modal
+          animationIn="fadeIn"
+          animationOut="fadeOut"
+          isVisible={this.state.isVisible}
           backdropOpacity={0.3}
         >
-          <Exchange 
-            exchangeList={exchanges} 
-            changeExchange={(e) => this.changeExchange(e)} 
-            onPress={() => this.setState({ isVisible: false })} 
+          <ExchangeList
+            exchangeList={EXCHANGES}
+            changeExchange={(e) => this.changeExchange(e)}
+            onPress={() => this.setState({ isVisible: false })}
           />
         </Modal>
       </View>

@@ -1,6 +1,14 @@
 import { StyleSheet, Platform } from 'react-native'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, WidthPercent } from 'utils/dimens'
 import Colors from 'resources/colors'
+import { 
+  FontScale, 
+  SCREEN_WIDTH, 
+  SCREEN_HEIGHT, 
+  NAV_BAR_HEIGHT, 
+  TAB_BAR_HEIGHT, 
+  WidthPercent, 
+  ifIphoneX 
+} from 'utils/dimens'
 
 const styles = StyleSheet.create({
   container: {
@@ -11,8 +19,12 @@ const styles = StyleSheet.create({
   headerContainer: {
     width: SCREEN_WIDTH,
     height: NAV_BAR_HEIGHT,
-    backgroundColor: Colors.mainThemeColor,
-    paddingTop: Platform.OS === 'ios' ? 20 : 0
+    backgroundColor: Colors.minorThemeColor,
+    ...ifIphoneX({
+      paddingTop: 24
+    },{
+      paddingTop: 0
+    })
   },
   navButton: {
     minWidth: 100, 
@@ -28,7 +40,7 @@ const styles = StyleSheet.create({
   },
   text24: {
     fontSize: FontScale(24),
-    color: Colors.textColor_74_74_74,
+    color: Colors.textColor_FFFFEE,
     fontWeight: 'bold'
   },
   text20: {
@@ -39,9 +51,13 @@ const styles = StyleSheet.create({
     fontSize: FontScale(13),
     color: Colors.textColor_FFFFEE
   },
+  text14: {
+    fontSize: FontScale(14),
+    color: Colors.textColor_181_181_181
+  },
   text16: {
     fontSize: FontScale(16),
-    color: Colors.textColor_142_142_147
+    color: Colors.textColor_255_255_238
   },
   text17: {
     fontSize: FontScale(17),
@@ -73,12 +89,13 @@ const styles = StyleSheet.create({
   },
   listItem: {
     borderBottomWidth: 1,
-    borderBottomColor: Colors.borderColor_41_41_38,
+    borderBottomColor: Colors.minorThemeColor,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     width: SCREEN_WIDTH,
-    height: 42
+    height: 70,
+    backgroundColor: Colors.bgColor_48_49_59
   },
   coin: {
     width: WidthPercent(30),
@@ -95,18 +112,18 @@ const styles = StyleSheet.create({
   headerTitle: {
     width: SCREEN_WIDTH,
     height: 30,
-    backgroundColor: Colors.mainThemeColor,
+    backgroundColor: Colors.bgColor_48_49_59,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.borderColor_242_242_242
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.minorThemeColor
   },
   quoteContainer: {
     width: SCREEN_WIDTH,
     height: 40,
     flexDirection: 'row',
-    backgroundColor: Colors.mainThemeColor
+    backgroundColor: Colors.minorThemeColor
   }
 })
 

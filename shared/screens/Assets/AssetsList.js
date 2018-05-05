@@ -12,7 +12,7 @@ const ListItem = ({ item, onPress }) => (
       <View style={{ flexDirection: 'row' }}>
         <Text style={styles.text20}> { item.assetName } </Text>
       </View>
-      <View style={{}}>
+      <View>
         <Text style={styles.text20}> 
           <FormattedNumber
             value={item.assetValue}
@@ -34,12 +34,10 @@ const ListItem = ({ item, onPress }) => (
 )
 
 export default AssetsList = ({ data, onPress }) => (
-  <View style={styles.scrollContainer}>
-    <ScrollView showsVerticalScrollIndicator={false}>
-      {
-        data.map((item, index) => (<ListItem key={index} item={item} onPress={(e) => onPress(e)} />))
-      }
-    </ScrollView>
+  <View>
+    {
+      data.map((item, index) => (<ListItem key={index} item={item} onPress={(e) => onPress(e)} />))
+    }
   </View>
 )
 
