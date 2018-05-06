@@ -42,7 +42,9 @@ export default class Assets extends BaseScreen {
 
   // 前往扫描
   scanQR = () => {
-    
+    this.props.navigator.push({
+      screen: 'BitPortal.QRCodeScanner'
+   })
   }
 
   // 激活钱包信息
