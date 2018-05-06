@@ -5682,9 +5682,9 @@ image-size@^0.6.0:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/image-size/-/image-size-0.6.1.tgz#98122a562d59dcc097ef1b2c8191866eb8f5d663"
 
-immutability-helper@^2.6.6:
-  version "2.6.6"
-  resolved "http://registry.npm.taobao.org/immutability-helper/download/immutability-helper-2.6.6.tgz#9b384c240d65257133c155086e16f678ca563b05"
+immutability-helper@^2.7.0:
+  version "2.7.0"
+  resolved "http://registry.npm.taobao.org/immutability-helper/download/immutability-helper-2.7.0.tgz#4ea9916cc8f45142ec3e3f0fce75fa5d66fa1b38"
   dependencies:
     invariant "^2.2.0"
 
