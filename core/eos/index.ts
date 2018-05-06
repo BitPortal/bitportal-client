@@ -1,4 +1,3 @@
-// import { Keygen } from 'eosjs-keygen'
 import Eos from 'eosjs'
 
 export const generateMasterKeys = async () => {

@@ -30,13 +30,14 @@ public class MainApplication extends NavigationApplication {
   }
 
   protected List<ReactPackage> getPackages() {
-    return Arrays.<ReactPackage>asList(   
+    return Arrays.<ReactPackage>asList(
       new SvgPackage(),
       new SplashScreenReactPackage(),
       new VectorIconsPackage(),
       new MPAndroidChartPackage(),
       new LinearGradientPackage(),
-      new ReactNativeConfigPackage()
+      new ReactNativeConfigPackage(),
+      new RandomBytesPackage()
     );
   }
 
