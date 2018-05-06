@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react'
-import { Text, View, ScrollView, TouchableHighlight, Image, TouchableOpacity } from 'react-native'
+import { Text, View, ScrollView, Image, TouchableOpacity } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import TotalAssets from 'components/TotalAssets'
 import Ionicons from 'react-native-vector-icons/Ionicons'
