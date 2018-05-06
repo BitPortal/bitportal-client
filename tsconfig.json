@@ -8,7 +8,9 @@
         "shared/*",
         "browser/*",
         "mobile/*",
-        "server/*"
+        "desktop/*",
+        "server/*",
+        "core/*"
       ]
     },
     "outDir": "build",
@@ -33,7 +35,9 @@
     "shared",
     "browser",
     "mobile",
-    "server"
+    "desktop",
+    "server",
+    "core"
   ],
   "exclude": [
     "static",
