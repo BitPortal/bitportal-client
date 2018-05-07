@@ -1,6 +1,7 @@
 package com.bitportal;
 import android.os.Bundle;
 import org.devio.rn.splashscreen.SplashScreen;
+import com.bitgo.randombytes.RandomBytesPackage;
 import com.reactnativenavigation.controllers.SplashActivity;
 
 public class MainActivity extends SplashActivity {

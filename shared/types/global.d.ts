@@ -218,6 +218,11 @@ declare module 'eosjs' {
   export = file
 }
 
+declare module 'eosjs-ecc' {
+  const file: any
+  export = file
+}
+
 declare module 'bip39' {
   const file: any
   export = file
@@ -231,4 +236,31 @@ declare module 'ethereumjs-wallet*' {
 declare module 'react-native-sensitive-info' {
   const file: any
   export = file
+}
+
+declare module 'eos' {
+  interface EOS {
+    generateMasterKeys: any
+  }
+
+  const eos: EOS
+  export = eos
+}
+
+declare module 'bitcoin' {
+  interface Bitcoin {
+    generateBIP44Address: any
+  }
+
+  const bitcoin: Bitcoin
+  export = bitcoin
+}
+
+declare module 'ethereum' {
+  interface Ethereum {
+    generateBIP44Address: any
+  }
+
+  const ethereum: Ethereum
+  export = ethereum
 }
