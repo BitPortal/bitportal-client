@@ -15,6 +15,7 @@ import AccountImport   from 'screens/Account/AccountImport'
 import PasswordSetting from 'screens/Account/PasswordSetting'
 import QRCodeScanner   from 'screens/QRCodeScanner'
 import AssetsTransfer  from 'screens/AssetsTransfer'
+import TransactionRecord from 'screens/TransactionRecord'
 
 export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.Welcome',  () => Welcome,  store, provider)
@@ -32,4 +33,5 @@ export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.PasswordSetting',() => PasswordSetting,store, provider)
   Navigation.registerComponent('BitPortal.AvailableAssets',() => AvailableAssets,store, provider)
   Navigation.registerComponent('BitPortal.AccountCreation',() => AccountCreation,store, provider)
+  Navigation.registerComponent('BitPortal.TransactionRecord',() => TransactionRecord, store, provider)
 }

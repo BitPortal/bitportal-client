@@ -40,6 +40,7 @@ const Colors = {
   textColor_255_98_92:   'rgb(255,98,92)',
   textColor_216_216_216: 'rgb(216,216,216)',
   textColor_80_80_80:    'rgb(80,80,80)',
+  textColor_107_107_107: 'rgb(107,107,107)',
   textColor_89_185_226:  'rgb(89,185,226)',
   textColor_80_201_109:  'rgb(80,201,109)',
   textColor_74_74_74:    'rgb(74,74,74)',
