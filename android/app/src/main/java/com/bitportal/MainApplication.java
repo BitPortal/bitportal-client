@@ -38,7 +38,8 @@ public class MainApplication extends NavigationApplication {
       new MPAndroidChartPackage(),
       new LinearGradientPackage(),
       new ReactNativeConfigPackage(),
-      new RandomBytesPackage()
+      new RandomBytesPackage(),
+      new RNCameraPackage()
     );
   }
 
