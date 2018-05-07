@@ -46,7 +46,11 @@ export default class AssetsTransfer extends BaseScreen {
   }
 
   transferAsset = () => {
-
+    this.setState({ isVisible: false }, () => {
+      this.props.navigator.push({
+        screen: 'BitPortal.TransactionRecord'
+      })
+    })
   }
 
   render() {
