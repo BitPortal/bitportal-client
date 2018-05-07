@@ -7,13 +7,16 @@ import styles from './styles'
 import Colors from 'resources/colors'
 import NavigationBar, { BackButton } from 'components/NavigationBar'
 import InputItem from './InputItem'
+import Modal from 'react-native-modal'
+import TransferCard from './TransferCard'
 
 export default class AssetsTransfer extends BaseScreen {
 
   state = {
-    accountName: '',
+    destination: '',
     amount: '',
-    memo: ''
+    memo: '',
+    isVisible: false
   }
 
   goBack = () => {
@@ -30,20 +33,24 @@ export default class AssetsTransfer extends BaseScreen {
     }
   }
 
-  changeAccountName = (accountName) => {
-    this.setState({ accountName })
+  changeDestination = (destination) => {
+    this.setState({ destination })
   }
 
   changeAmount = (amount) => {
     this.setState({ amount })
   }
 
-  onChangeMemo = (memo) => {
+  changeMemo = (memo) => {
     this.setState({ memo })
   }
 
+  transferAsset = () => {
+
+  }
+
   render() {
-    const { accountName, amount, memo } = this.state
+    const { destination, amount, memo } = this.state
     return (
       <View style={styles.container}>
         <NavigationBar 
@@ -63,7 +70,7 @@ export default class AssetsTransfer extends BaseScreen {
               <InputItem 
                 title="Account Name" 
                 placeholder="Up to 12 characters" 
-                changeInputContent={(e) => this.changeAccountName(e)} 
+                changeInputContent={(e) => this.changeDestination(e)} 
               />
               <InputItem 
                 title="Amount" 
@@ -88,7 +95,7 @@ export default class AssetsTransfer extends BaseScreen {
               </View>
 
               <TouchableHighlight 
-                onPress={() => {}} 
+                onPress={() => { this.setState({ isVisible: true }) }} 
                 underlayColor={Colors.textColor_89_185_226}
                 style={[styles.btn, styles.center, { marginTop: 20, backgroundColor: Colors.textColor_89_185_226 }]}
               >
@@ -99,7 +106,25 @@ export default class AssetsTransfer extends BaseScreen {
             </View>
           </ScrollView>
         </View>
-        
+
+        <Modal
+          animationIn="slideInUp"
+          animationOut="slideOutDown"
+          useNativeDriver={true}
+          style = {{  margin: 0 }}
+          isVisible={this.state.isVisible}
+          backdropOpacity={0.9}
+        >
+          <TransferCard 
+            amount={amount}
+            quote="EOS"
+            destination={destination}
+            memo={memo}
+            onPress={() => { this.setState({ isVisible: false }) }}
+            transferAsset={() => this.transferAsset()}
+          />
+        </Modal>
+
       </View>
     )
   }
