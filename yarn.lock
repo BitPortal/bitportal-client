@@ -9328,6 +9328,12 @@ react-native-animatable@^1.2.4:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-camera@^1.1.2:
+  version "1.1.2"
+  resolved "http://registry.npm.taobao.org/react-native-camera/download/react-native-camera-1.1.2.tgz#a93c389c522c8909c564f04c4a86072909259d07"
+  dependencies:
+    lodash "^4.17.4"
+    prop-types "^15.5.10"
 "react-native-bip39@git+https://github.com/TerenceGe/bip39.git":
   version "2.5.1"
   resolved "git+https://github.com/TerenceGe/bip39.git#d23963ac62b50f27dc6b872645b76a6270261ae8"
@@ -9425,6 +9431,17 @@ react-native-navigation@^1.1.409:
   resolved "http://registry.npm.taobao.org/react-native-navigation/download/react-native-navigation-1.1.409.tgz#fbb37e0810845e751ad1543f1399897086d8afd5"
   dependencies:
     lodash "4.x.x"
+
+react-native-permissions@^1.1.1:
+  version "1.1.1"
+  resolved "http://registry.npm.taobao.org/react-native-permissions/download/react-native-permissions-1.1.1.tgz#4876004681ff8556454613d85249b01baff9b35b"
+
+react-native-qrcode-scanner@^1.0.1:
+  version "1.0.1"
+  resolved "http://registry.npm.taobao.org/react-native-qrcode-scanner/download/react-native-qrcode-scanner-1.0.1.tgz#96b18d8058f4b472bda4b34f8a08fddbc33d50eb"
+  dependencies:
+    prop-types "^15.5.10"
+    react-native-permissions "^1.1.1"
 
 react-native-qrcode@^0.2.6:
   version "0.2.6"
