@@ -3,6 +3,7 @@ package com.bitportal;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.reactnative.camera.RNCameraPackage;
 import com.bitgo.randombytes.RandomBytesPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
@@ -30,13 +31,16 @@ public class MainApplication extends NavigationApplication {
   }
 
   protected List<ReactPackage> getPackages() {
-    return Arrays.<ReactPackage>asList(   
+    return Arrays.<ReactPackage>asList(
       new SvgPackage(),
       new SplashScreenReactPackage(),
       new VectorIconsPackage(),
       new MPAndroidChartPackage(),
       new LinearGradientPackage(),
-      new ReactNativeConfigPackage()
+      new ReactNativeConfigPackage(),
+      new RandomBytesPackage(),
+      new RNSensitiveInfoPackage(),
+      new RNCameraPackage()
     );
   }
 

@@ -35,6 +35,23 @@ const removeItem = async (key: string) => {
   }
 }
 
-const secureStorage = { getItem, setItem, removeItem }
+const getAllItems = async () => {
+  try {
+    let items = await SensitiveInfo.getAllItems({
+      sharedPreferencesName: 'BitportalSharedPrefs',
+      keychainService: 'BitportalKeychain'
+    })
+
+    if (toString.call(items).slice(8, -1) === 'Array') {
+      return items[0].reduce((o: any, i: any) => ({ ...o, [i.key]: i.value }), {})
+    }
+
+    return items
+  } catch (error) {
+    console.error(`SecureStorage getAllItems Error: ${error.message}`)
+  }
+}
+
+const secureStorage = { getItem, setItem, removeItem, getAllItems }
 
 export default secureStorage

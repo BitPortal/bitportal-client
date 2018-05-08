@@ -145,6 +145,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-camera')
     compile project(':react-native-randombytes')
     compile project(':react-native-linear-gradient')
     compile project(':react-native-config')

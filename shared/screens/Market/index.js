@@ -15,6 +15,9 @@ import ExchangeList from './ExchangeList'
 import { Header, Quotes } from './Header'
 import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from 'constants/market'
 import Eos from 'react-native-eosjs'
+import keygen from 'eos/keygen'
+import Keystore from 'eos/keystore'
+import secureStorage from 'utils/secureStorage'
 
 @connect(
   (state) => ({
@@ -81,8 +84,34 @@ export default class Market extends BaseScreen {
 
   async didAppear() {
     this.onRefresh()
-    eos = Eos.Localnet({ httpEndpoint: 'http://13.58.45.36:8888' })
-    console.log(await eos.getBlock(1))
+    try {
+      const sessionConfig = {
+        timeoutInMin: 30,
+        uriRules: {
+          owner: '/account_recovery',
+          active: '/(transfer|contracts)',
+          'active/**': '/producers'
+        }
+      }
+      const keystore = await Keystore('myaccount', sessionConfig)
+      const eos = Eos.Localnet({
+        httpEndpoint: 'http://13.58.45.36:8888',
+        keyProvider: keystore.keyProvider
+      })
+      const keys = await keygen.generateMasterKeys()
+      console.log(keys)
+      const account = await eos.getAccount('myaccount')
+      console.log(account)
+      await keystore.deriveKeys({
+        parent: keys.masterPrivateKey,
+        accountPermissions: account.permissions
+      })
+    } catch (error) {
+      console.error(error)
+    }
+
+    const items = await secureStorage.getAllItems()
+    console.log(items)
   }
 
   render() {
@@ -111,6 +140,7 @@ export default class Market extends BaseScreen {
         <Modal
           animationIn="fadeIn"
           animationOut="fadeOut"
+          style = {{  margin: 0 }}
           isVisible={this.state.isVisible}
           backdropOpacity={0.3}
         >
