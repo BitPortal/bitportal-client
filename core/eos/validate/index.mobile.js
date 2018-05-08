@@ -1,11 +1,11 @@
 import assert from 'assert'
 import { PrivateKey, PublicKey } from 'react-native-eosjs-ecc'
 
-export function isMasterKey(key) {
+function isMasterKey(key) {
   return /^PW/.test(key) && PrivateKey.isWif(key.substring(2))
 }
 
-export function keyType(key) {
+function keyType(key) {
   return isMasterKey(key) ? 'master' :
     PrivateKey.isWif(key) ? 'wif' :
     PrivateKey.isValid(key) ? 'privateKey' :
@@ -13,7 +13,7 @@ export function keyType(key) {
     null
 }
 
-export function isPath(txt) {
+function isPath(txt) {
   try {
     path(txt)
     return true
@@ -30,7 +30,7 @@ export function isPath(txt) {
    @example path('active')
    @example path('active/mypermission')
 */
-export function path(path) {
+function path(path) {
   assert.equal(typeof path, 'string', 'path')
   assert(path !== '', 'path should not be empty')
   assert(path.indexOf(' ') === -1, 'remove spaces')
@@ -46,4 +46,11 @@ export function path(path) {
   assert(el[0] === 'owner' || el[0] === 'active', 'path should start with owner or active')
   assert(!el.includes('owner') || el.indexOf('owner') === 0, 'owner is always first')
   assert(!el.includes('active') || el.indexOf('active') === 0, 'active is always first')
+}
+
+export default {
+  isMasterKey,
+  keyType,
+  isPath,
+  path
 }

@@ -39,6 +39,7 @@ public class MainApplication extends NavigationApplication {
       new LinearGradientPackage(),
       new ReactNativeConfigPackage(),
       new RandomBytesPackage(),
+      new RNSensitiveInfoPackage(),
       new RNCameraPackage()
     );
   }
