@@ -27,7 +27,7 @@ export default globalConfig = {
     if(localStorageInstance) {
       return localStorageInstance
     }
-    localStorageInstance = require('localStorage')
+    localStorageInstance = require('utils/secureStorage').default
     return localStorageInstance
   }
 }

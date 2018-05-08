@@ -20,10 +20,10 @@ masterKeys = {
   publicKeys: {owner, active} // <= derived from masterPrivateKey
 }
 */
-export function generateMasterKeys(masterPrivateKey = null) {
+async function generateMasterKeys(masterPrivateKey = null) {
   let master
   if(masterPrivateKey == null) {
-    master = PrivateKey.randomKey()
+    master = await PrivateKey.randomKey()
   } else {
     assert(validate.isMasterKey(masterPrivateKey), 'masterPrivateKey')
     master = PrivateKey(masterPrivateKey.substring('PW'.length))
@@ -57,7 +57,7 @@ export function generateMasterKeys(masterPrivateKey = null) {
   @arg {accountPermissions}
   @return {object<keyPathAuth>}
 */
-export function authsByPath(accountPermissions) {
+function authsByPath(accountPermissions) {
   assert(Array.isArray(accountPermissions), 'accountPermissions is an array')
   accountPermissions.forEach(perm => assert.equal(typeof perm, 'object',
     'accountPermissions is an array of objects'))
@@ -106,7 +106,7 @@ export function authsByPath(accountPermissions) {
   @return {Array} [{path, privateKey}] newly derived keys or empty array (keys already
   exist or can't be derived).
 */
-export function deriveKeys(path, wifsByPath) {
+function deriveKeys(path, wifsByPath) {
   validate.path(path)
   assert.equal(typeof wifsByPath, 'object', 'wifsByPath')
 
@@ -146,4 +146,10 @@ export function deriveKeys(path, wifsByPath) {
   }
 
   return newKeys
+}
+
+export default {
+  generateMasterKeys,
+  authsByPath,
+  deriveKeys
 }

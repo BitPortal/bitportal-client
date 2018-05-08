@@ -4,9 +4,10 @@ import minimatch from 'minimatch'
 import Keygen from '../keygen'
 import UriRules from '../uriRules'
 import validate from '../validate'
-import globalConfig, { localStorage } from '../config'
+import globalConfig, {  } from '../config'
 import Storage from '../keypathUtils'
 
+const localStorage = globalConfig.localStorage
 const userStorage = Storage('kstor')
 
 /**
@@ -48,7 +49,7 @@ const userStorage = Storage('kstor')
   keepPublicKeys: true
 }
 */
-function Keystore(accountName, config = {}) {
+async function Keystore(accountName, config = {}) {
   assert.equal(typeof accountName, 'string', 'accountName')
   assert.equal(typeof config, 'object', 'config')
 
@@ -76,7 +77,7 @@ function Keystore(accountName, config = {}) {
   let unlistenHistory
 
   // Initialize state from localStorage
-  userStorage.query(localStorage, [accountName, 'kpath'], ([path, pubkey], wif) => {
+  await userStorage.queryAsync(localStorage, [accountName, 'kpath'], ([path, pubkey], wif) => {
     const storageKey = userStorage.createKey(accountName, 'kpath', path, pubkey)
     state[storageKey] = wif
   })
@@ -97,7 +98,7 @@ function Keystore(accountName, config = {}) {
     See Chain API `get_account => account.permissions`.
     @throws {Error} 'invalid login'
   */
-  function deriveKeys({
+  async function deriveKeys({
     parent,
     saveKeyMatches = [],
     accountPermissions
@@ -154,7 +155,7 @@ function Keystore(accountName, config = {}) {
     // cache
     if(!accountPermissions) {
       const permissions =
-        userStorage.get(localStorage, [accountName, 'permissions'])
+        await userStorage.get(localStorage, [accountName, 'permissions'])
 
       if(permissions) {
         accountPermissions = JSON.parse(permissions)
@@ -226,7 +227,7 @@ function Keystore(accountName, config = {}) {
 
     if(!isPermissionStub) {
       // cache
-      userStorage.save(
+      await userStorage.saveAsync(
         localStorage,
         [accountName, 'permissions'],
         JSON.stringify(accountPermissions),
@@ -246,6 +247,7 @@ function Keystore(accountName, config = {}) {
         }
       }
     }
+
 
     if(keyUpdates.length === 0) {
       throw new Error('invalid login')
@@ -332,7 +334,7 @@ function Keystore(accountName, config = {}) {
     @throws {AssertionError} path error or active, owner/* toDisk save attempted
     @return {object} {[wif], pubkey, dirty} or null (denied by uriRules)
   */
-  function addKey(path, key, toDisk = false) {
+  async function addKey(path, key, toDisk = false) {
     validate.path(path)
     keepAlive()
 
@@ -370,7 +372,7 @@ function Keystore(accountName, config = {}) {
     let dirty = userStorage.save(state, storageKey, wif, { clobber: false })
 
     if(toDisk) {
-      const saved = userStorage.save(localStorage, storageKey, wif, {clobber: false})
+      const saved = await userStorage.saveAsync(localStorage, storageKey, wif, {clobber: false})
       dirty = dirty || saved
     }
 
@@ -382,7 +384,7 @@ function Keystore(accountName, config = {}) {
     no keys.
     @return {object} {pubkey: Array<pubkey>, wif: Array<wif>}
   */
-  function getKeyPaths() {
+  async function getKeyPaths() {
     keepAlive()
 
     const pubs = new Set()
@@ -396,8 +398,18 @@ function Keystore(accountName, config = {}) {
         }
       })
     }
+
+    async function queryAsync(store) {
+      await userStorage.query(store, [accountName, 'kpath'], ([path, pubkey], wif) => {
+        pubs.add(path)
+        if(wif != null) {
+          wifs.add(path)
+        }
+      })
+    }
+
     query(state)
-    query(localStorage)
+    await queryAsync(localStorage)
 
     return {pubkey: Array.from(pubs).sort(), wif: Array.from(wifs).sort()}
   }
@@ -407,9 +419,9 @@ function Keystore(accountName, config = {}) {
     @arg {keyPath}
     @return {pubkey} or null
   */
-  function getPublicKey(path) {
+  async function getPublicKey(path) {
     validate.path(path)
-    const [key] = getKeys(path)
+    const [key] = await getKeys(path)
     return key ? key.pubkey : null
   }
 
@@ -427,9 +439,9 @@ function Keystore(accountName, config = {}) {
     @arg {keyPath} path
     @return {wif} or null (missing or not available for location)
   */
-  function getPrivateKey(path) {
+  async function getPrivateKey(path) {
     validate.path(path)
-    const [key] = getKeys(path)
+    const [key] = await getKeys(path)
     return key ? key.wif : undefined
   }
 
@@ -482,7 +494,7 @@ function Keystore(accountName, config = {}) {
     Based on the Uri rules and current location, the deny could be set to true
     and the wif will be null.
   */
-  function getKeys(keyPathMatcher = '**') {
+  async function getKeys(keyPathMatcher = '**') {
     keepAlive()
 
     const keys = new Map()
@@ -511,13 +523,32 @@ function Keystore(accountName, config = {}) {
       })
     }
 
-    query(state)
+    async function queryAsync(store) {
+      await userStorage.query(store, [accountName, 'kpath'], ([path, pubkey], wif) => {
+        if(wif == null) {
+          wif = wifsByPath[path]
+        } else {
+          wifsByPath[path] = wif
+        }
+        if(minimatch(path, keyPathMatcher)) {
+          const result = {path, pubkey}
+          result.deny = uriRules.deny(currentUriPath(), path).length !== 0
+          result.wif = result.deny ? null : wif
+          keys.set(path, result)
+          if(isPath) {
+            return false // break
+          }
+        }
+      })
+    }
+
+    await query(state)
     if(isPath && keys.size) {
       // A path can match only one, found so no need to query localStorage
       return Array.from(keys.values())
     }
 
-    query(localStorage)
+    await queryAsync(localStorage)
     if(!isPath) {
       // keyPathMatcher can not derive keys
       // .. the search is complete (found or not)
@@ -555,7 +586,7 @@ function Keystore(accountName, config = {}) {
     @arg {keyPathMatcher|Array<keyPathMatcher>|Set<keyPathMatcher>}
     @arg {boolean} keepPublicKeys
   */
-  function removeKeys(paths, keepPublicKeys = config.keepPublicKeys) {
+  async function removeKeys(paths, keepPublicKeys = config.keepPublicKeys) {
     assert(paths != null, 'paths')
     if(typeof paths === 'string') {
       paths = [paths]
@@ -577,10 +608,23 @@ function Keystore(accountName, config = {}) {
       }
     }
 
+    async function cleanAsync(store, prefix) {
+      const allItems = store.getAllItems()
+      for(const key in allItems) {
+        if(key.indexOf(prefix) === 0) {
+          if(keepPublicKeys) {
+            await store.setItem(key, null)
+          } else {
+            await store.removeItem(key)
+          }
+        }
+      }
+    }
+
     for(const path of paths) {
       const prefix = userStorage.createKey(accountName, 'kpath', path)
       clean(state, prefix)
-      clean(localStorage, prefix)
+      await cleanAsync(localStorage, prefix)
     }
   }
 
@@ -616,15 +660,16 @@ function Keystore(accountName, config = {}) {
     the user chooses "logout."  Do not call when the application exits.
     Forgets everything allowing the user to use a new password next time.
   */
-  function logout() {
+  async function logout() {
     for(const key in state) {
       delete state[key]
     }
 
     const prefix = userStorage.createKey(accountName)
-    for(const key in localStorage) {
+    const allItems = await localStorage.getAllItems()
+    for(const key in allItems) {
       if(key.indexOf(prefix) === 0) {
-        delete localStorage[key]
+        await localStorage.removeItem(key)
       }
     }
 
@@ -716,14 +761,17 @@ function currentUriPath() {
 }
 
 /** Erase all traces of this keystore (for all users). */
-Keystore.wipeAll = function() {
+Keystore.wipeAll = async function() {
   const prefix = userStorage.createKey()
-  for(const key in localStorage) {
+  const allItems = await localStorage.getAllItems()
+  for(const key in allItems) {
     if(key.indexOf(prefix) === 0) {
-      delete localStorage[key]
+      await localStorage.removeItem(key)
     }
   }
 }
 
 // used to convert milliseconds
 const sec = 1000, min = 60 * sec
+
+export default Keystore
