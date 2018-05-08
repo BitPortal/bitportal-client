@@ -18,7 +18,7 @@ export default class TransactionRecord extends BaseScreen {
   }
 
   goBack = () => {
-    this.props.navigator.pop()
+    this.props.navigator.popToRoot()
   }
 
   clipboard = () => {
@@ -27,7 +27,7 @@ export default class TransactionRecord extends BaseScreen {
   }
 
   render() {
-    const { qrCodeValue, isCopied } = this.props
+    const { qrCodeValue, isCopied } = this.state
     return (
       <View style={styles.container}>
         <NavigationBar 
@@ -104,7 +104,11 @@ export default class TransactionRecord extends BaseScreen {
                         fgColor='white'
                       />
                     </View>
-                    <TouchableOpacity onPress={() => this.clipboard()} style={[styles.btn, styles.center]}>
+                    <TouchableOpacity 
+                      disabled={isCopied}
+                      onPress={() => this.clipboard()} 
+                      style={[styles.btn, styles.center]}
+                    >
                       <Text style={[styles.text14, { color: Colors.textColor_107_107_107 }]}> 
                         {isCopied ? 'Copied' : 'Copy'} 
                       </Text>
