@@ -46,6 +46,32 @@ export default function Storage(namespace) {
     return dirty
   }
 
+  async function saveAsync(state, key, value, { immutable = true, clobber = true } = {}) {
+    assert.equal(typeof state, 'object', 'state')
+
+    key = Array.isArray(key) ? createKey(...key) : key
+    assert.equal(typeof key, 'string', 'key')
+
+    assert(value == null || typeof value === 'string' || typeof value === 'object',
+           'value should be null, a string, or a serializable object')
+
+    const existing = deNull(await state.getItem(key)) // convert 'null' string back into null
+
+    if(value == null && existing != null && !clobber) {
+      // don't erase it, keep the existing value
+      value = existing
+    }
+
+    const dirty = existing !== value
+    assert(existing == null || !(dirty && immutable), 'immutable')
+
+    if(dirty) {
+      await state.setItem(key, value)
+    }
+
+    return dirty
+  }
+
   /**
      @arg {object} state
      @arg {string|Array} key
@@ -59,6 +85,15 @@ export default function Storage(namespace) {
     assert.equal(typeof key, 'string', 'key')
 
     return deNull(state[key])
+  }
+
+  async function getAsync(state, key) {
+    assert.equal(typeof state, 'object', 'state')
+
+    key = Array.isArray(key) ? createKey(...key) : key
+    assert.equal(typeof key, 'string', 'key')
+
+    return deNull(await state.getItem(key))
   }
 
   /**
@@ -85,11 +120,33 @@ export default function Storage(namespace) {
     }
   }
 
+  async function queryAsync(state, keyPrefix, callback) {
+    assert.equal(typeof state, 'object', 'state')
+    assert(Array.isArray(keyPrefix), 'keyPrefix is an array')
+    assert.equal(typeof callback, 'function', 'callback')
+
+    const prefix = createKey(...keyPrefix)
+    const allItems = await state.getAllItems()
+    for(const key of Object.keys(allItems)) {
+      if(key.indexOf(prefix) !== 0) {
+        continue
+      }
+      const decodedKeys = JSON.parse('[' + Buffer.from(key, 'hex') + ']')
+      const ret = callback(decodedKeys.slice(keyPrefix.length + 1), deNull(await state.get(key)))
+      if(ret === false) {
+        break
+      }
+    }
+  }
+
   return {
     createKey,
     save,
     get,
-    query
+    query,
+    saveAsync,
+    getAsync,
+    queryAsync
   }
 }
 

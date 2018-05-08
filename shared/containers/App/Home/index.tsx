@@ -5,11 +5,11 @@ import { bindActionCreators } from 'redux'
 import { IntlProvider, FormattedNumber } from 'react-intl'
 import { connect } from 'react-redux'
 import { RouteComponentProps } from 'react-router'
-import { generateBIP44Address } from 'bitcoin'
 import * as tickerActions from 'actions/ticker'
 import * as intlActions from 'actions/intl'
 import { exchangeTickerSelector } from 'selectors/ticker'
 import Eos from 'eosjs'
+import { Keystore, Keygen } from 'eosjs-keygen'
 import messages from './messages'
 import style from './style.css'
 
@@ -45,10 +45,45 @@ export default class Home extends Component<Props, State> {
   }
 
   componentDidMount() {
-    console.log(generateBIP44Address({ coin_type: 194, account: 0, change: 0, address_index: 0 }))
-    // this.props.actions.getTickersRequested({ exchange: 'BITTREX', quote_asset: 'BTC', limit: 20, sort: 'quote_volume' })
-    const eos = Eos.Localnet({ httpEndpoint: 'http://13.58.45.36:8888' })
-    eos.getBlock(1).then((result: any) => { console.log(result) })
+    const sessionConfig = {
+      timeoutInMin: 30,
+      uriRules: {
+        owner: '/account_recovery',
+        active: '/(transfer|contracts)',
+        'active/**': '/producers'
+      }
+    }
+
+    const keystore = Keystore('myaccount1', sessionConfig)
+    console.log(keystore)
+
+    const ecc = Eos.modules.ecc
+
+    Keygen.generateMasterKeys().then(async (keys: any) => {
+      console.log(keys)
+
+      const eos = Eos.Localnet({
+        httpEndpoint: 'http://35.229.209.212:8888',
+        keyProvider: ecc.seedPrivate(keys.masterPrivateKey)
+      })
+
+      console.log(eos)
+      await eos.newaccount({
+        creator: 'eosio',
+        name: 'myaccount1',
+        owner: ecc.privateToPublic(ecc.seedPrivate(keys.masterPrivateKey)),
+        active: ecc.privateToPublic(ecc.seedPrivate(keys.masterPrivateKey)),
+        recovery: 'eosio'
+      })
+
+      /* eos.getAccount('eosio').then((account: any) => {
+       *   keystore.deriveKeys({
+       *     parent: '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3',
+       *     accountPermissions: account.permissions
+       *   })
+       *   console.log(account)
+       * })*/
+    })
   }
 
   render() {
