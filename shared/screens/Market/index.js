@@ -140,6 +140,7 @@ export default class Market extends BaseScreen {
         <Modal
           animationIn="fadeIn"
           animationOut="fadeOut"
+          style = {{  margin: 0 }}
           isVisible={this.state.isVisible}
           backdropOpacity={0.3}
         >
