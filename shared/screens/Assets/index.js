@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react'
-import { Text, View, ScrollView, TouchableHighlight, Image, TouchableOpacity } from 'react-native'
+import { Text, View, ScrollView, Image, TouchableOpacity } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import TotalAssets from 'components/TotalAssets'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -42,7 +42,9 @@ export default class Assets extends BaseScreen {
 
   // 前往扫描
   scanQR = () => {
-    
+    this.props.navigator.push({
+      screen: 'BitPortal.QRCodeScanner'
+   })
   }
 
   // 激活钱包信息
@@ -114,6 +116,7 @@ export default class Assets extends BaseScreen {
           animationIn="fadeIn"
           animationOut="fadeOut"
           useNativeDriver={true}
+          style = {{  margin: 0 }}
           isVisible={this.state.isVisible}
           backdropOpacity={0.9}
         >
