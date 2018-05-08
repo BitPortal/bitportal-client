@@ -16,6 +16,7 @@ import { bindActionCreators } from 'redux'
 import * as assetsActions from 'actions/assets'
 import storage from 'utils/storage'
 import _ from 'lodash'
+import AccountList from './AccountList'
 
 @connect(
   (state) => ({
@@ -32,12 +33,13 @@ import _ from 'lodash'
 export default class Assets extends BaseScreen {
 
   state = {
-    isVisible: false
+    isVisible: false,
+    isVisible2: false
   }
 
   // 展示账户列表
   displayAccountList = () => {
-
+    this.setState({ isVisible2: true })
   }
 
   // 前往扫描
@@ -76,6 +78,7 @@ export default class Assets extends BaseScreen {
     }
   }
 
+  // 创建新账户
   createNewAccount = () => {
     this.props.navigator.push({
       screen: "BitPortal.AccountCreation"
@@ -123,6 +126,21 @@ export default class Assets extends BaseScreen {
           <AssetQRCode 
             assetName={'Meon'}
             dismissModal={() => this.operateAssetQRCode(false)} 
+          />
+        </Modal>
+        <Modal
+          animationIn="fadeIn"
+          animationOut="fadeOut"
+          useNativeDriver={true}
+          style = {{  margin: 0 }}
+          isVisible={this.state.isVisible2}
+          backdropOpacity={0}
+        >
+          <AccountList 
+            data={this.props.assetsInfo}
+            onPress={() => {}}
+            createNewAccount={() => this.createNewAccount()}
+            dismissModal={() => this.setState({ isVisible2: false })} 
           />
         </Modal>
       </View>
