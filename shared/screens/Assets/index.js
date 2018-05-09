@@ -57,8 +57,11 @@ export default class Assets extends BaseScreen {
   }
 
   // 查看资产情况
-  checkAsset = () => {
-
+  checkAsset = (assetInfo) => {
+    this.props.navigator.push({
+      screen: 'BitPortal.AssetChart',
+      passProps: { assetInfo }
+    })
   }
 
   // 钱包二维码
@@ -90,7 +93,8 @@ export default class Assets extends BaseScreen {
   }
 
   render() {
-    let enabledAssetInfo = _.find(this.props.assetsInfo, _.matchesProperty('enabled', true))
+    const { assetsInfo } = this.props
+    let enabledAssetInfo = assetsInfo.find((item) => item.get('enable') === true ) 
     return (
       <View style={styles.container}>
         <Header Title="Account" displayAccount={() => this.displayAccountList()} scanQR={() => this.scanQR()} />
@@ -111,7 +115,7 @@ export default class Assets extends BaseScreen {
             <ScrollView showsVerticalScrollIndicator={false}>
               <TotalAssets totalAssets={425321132.21} assetName={'Meon'} onPress={() => this.operateAssetQRCode(true)} />
               <EnableAssets Title="Asset" enableAssets={() => this.enableAssets()} />
-              {/* <AssetsList data={this.state.assetsList} onPress={(e) => this.checkAsset(e)} /> */}
+              <AssetsList data={enabledAssetInfo.get('assetsList')} onPress={(e) => this.checkAsset(e)} />
             </ScrollView>
           </View>
         }
@@ -119,7 +123,6 @@ export default class Assets extends BaseScreen {
           animationIn="fadeIn"
           animationOut="fadeOut"
           useNativeDriver={true}
-          style = {{  margin: 0 }}
           isVisible={this.state.isVisible}
           backdropOpacity={0.9}
         >
@@ -138,7 +141,7 @@ export default class Assets extends BaseScreen {
         >
           <AccountList 
             data={this.props.assetsInfo}
-            onPress={() => {}}
+            onPress={(e) => this.checkAsset(e)}
             createNewAccount={() => this.createNewAccount()}
             dismissModal={() => this.setState({ isVisible2: false })} 
           />
