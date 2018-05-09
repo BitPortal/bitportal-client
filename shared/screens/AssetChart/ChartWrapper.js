@@ -37,7 +37,7 @@ export default class ChartWrapper extends Component {
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.chartContainer}>
-          <LineChart
+        <LineChart
             style={styles.chartContainer}
             data={{
               dataSets: [
