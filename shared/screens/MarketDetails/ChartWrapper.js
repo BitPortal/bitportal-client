@@ -106,9 +106,9 @@ export default class ChartWrapper extends React.Component {
         textColor: processColor('white'),
       },
       zoomXValue : 0
-    };
+    }
 
-    this.x = 0;
+    this.x = 0
   }
 
   componentDidMount() {
@@ -175,6 +175,8 @@ export default class ChartWrapper extends React.Component {
           xAxis={this.state.xAxis}
           yAxis={this.state.yAxis}
           maxVisibleValueCount={16}
+          pinchZoom={false}
+          doubleTapToZoomEnabled={false}
           autoScaleMinMaxEnabled={true}
           zoom={{scaleX: 2, scaleY: 1, xValue:  400000, yValue: 1}}
           // zoom={{scaleX: 15.41, scaleY: 1, xValue:  40, yValue: 916, axisDependency: 'RIGHT'}}
@@ -184,6 +186,6 @@ export default class ChartWrapper extends React.Component {
         />
 
       </View>
-    );
+    )
   }
 }

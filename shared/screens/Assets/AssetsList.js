@@ -10,12 +10,12 @@ const ListItem = ({ item, onPress }) => (
   <TouchableHighlight style={styles.listContainer} onPress={() => onPress(item)} >
     <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.minorThemeColor }]}>
       <View style={{ flexDirection: 'row' }}>
-        <Text style={styles.text20}> { item.assetName } </Text>
+        <Text style={styles.text20}> { item.get('assetName') } </Text>
       </View>
       <View>
         <Text style={styles.text20}> 
           <FormattedNumber
-            value={item.assetValue}
+            value={item.get('amount')}
             maximumFractionDigits={2}
             minimumFractionDigits={2}
           />
@@ -23,7 +23,7 @@ const ListItem = ({ item, onPress }) => (
         <Text style={[styles.text14, { color: Colors.textColor_149_149_149 }]}> 
           ≈ ¥ 
           <FormattedNumber
-            value={item.assetValueEqual} 
+            value={item.get('amount')*6.5} 
             maximumFractionDigits={2}
             minimumFractionDigits={2}
           />
