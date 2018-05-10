@@ -14,19 +14,6 @@ const styles = StyleSheet.create({
     height: SCREEN_HEIGHT,
     backgroundColor: Colors.mainThemeColor
   },
-  tips: {
-    width:SCREEN_WIDTH,
-    height: 60,
-    paddingHorizontal: 32,
-    backgroundColor: Colors.textColor_89_185_226
-  },
-  dot: {
-    width: 5,
-    height: 5,
-    borderRadius: 2.5,
-    marginRight: 10,
-    backgroundColor: Colors.bgColor_FFFFFF
-  },
   between: {
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -45,7 +32,6 @@ const styles = StyleSheet.create({
     minHeight: 300,
     paddingHorizontal: 32,
     paddingVertical: 20,
-    alignItems: 'center',
     backgroundColor: Colors.bgColor_48_49_59
   },
   text12: {
@@ -64,6 +50,21 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH-64,
     height: 40,
     borderRadius: 3
+  },
+  inputContainer: {
+    width: SCREEN_WIDTH-64,
+    height: SCREEN_WIDTH/4-16,
+    flexDirection: 'row',
+    borderRadius: 2,
+    borderWidth: 1,
+    borderColor: Colors.textColor_181_181_181
+  },
+  input: {
+    width: SCREEN_WIDTH-64,
+    height: SCREEN_WIDTH/4-16,
+    padding: 10,
+    color: Colors.textColor_255_255_238,
+    fontSize: FontScale(14)
   }
 })
 

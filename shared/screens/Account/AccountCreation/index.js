@@ -7,7 +7,6 @@ import { Text, View, ScrollView, TouchableOpacity, TouchableHighlight } from 're
 import BaseScreen from 'components/BaseScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
-import Tips from './Tips'
 import InputItem from 'components/InputItem'
 import PasswordStrength from 'components/PasswordStrength'
 
@@ -31,9 +30,8 @@ export default class AccountCreation extends BaseScreen {
   }
 
   setPassword = () => {
-    this.checkInputInfo()
     this.props.navigator.push({
-      screen: 'BitPortal.PasswordSetting'
+      screen: 'BitPortal.PrivateKeyCreation'
     })
   }
 
@@ -41,7 +39,6 @@ export default class AccountCreation extends BaseScreen {
   changeAccountName = (accountName) => {
     if (accountName == 'meon') this.setState({ isAccountVaild: false })
     else this.setState({ isAccountVaild: true })
-    this.accountName = accountName
     this.checkInputInfo()
   }
 
@@ -53,7 +50,6 @@ export default class AccountCreation extends BaseScreen {
 
   // 确认密码
   changeConfirmPassword = (confirmPassword) => {
-    this.confirmPassword = confirmPassword
     if (confirmPassword != this.state.password) 
       this.setState({ isSamePassword: false }, () => { this.checkInputInfo() })
     else 
