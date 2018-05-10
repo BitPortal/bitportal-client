@@ -16,6 +16,7 @@ import { bindActionCreators } from 'redux'
 import * as assetsActions from 'actions/assets'
 import storage from 'utils/storage'
 import _ from 'lodash'
+import AccountList from './AccountList'
 import Eos from 'react-native-eosjs'
 import keygen from 'eos/keygen'
 import Keystore from 'eos/keystore'
@@ -36,12 +37,13 @@ import secureStorage from 'utils/secureStorage'
 export default class Assets extends BaseScreen {
 
   state = {
-    isVisible: false
+    isVisible: false,
+    isVisible2: false
   }
 
   // 展示账户列表
   displayAccountList = () => {
-
+    this.setState({ isVisible2: true })
   }
 
   // 前往扫描
@@ -59,8 +61,11 @@ export default class Assets extends BaseScreen {
   }
 
   // 查看资产情况
-  checkAsset = () => {
-
+  checkAsset = (assetInfo) => {
+    this.props.navigator.push({
+      screen: 'BitPortal.AssetChart',
+      passProps: { assetInfo }
+    })
   }
 
   // 钱包二维码
@@ -80,6 +85,7 @@ export default class Assets extends BaseScreen {
     }
   }
 
+  // 创建新账户
   createNewAccount = () => {
     this.props.navigator.push({
       screen: "BitPortal.AccountCreation"
@@ -126,7 +132,8 @@ export default class Assets extends BaseScreen {
   }
 
   render() {
-    let enabledAssetInfo = _.find(this.props.assetsInfo, _.matchesProperty('enabled', true))
+    const { assetsInfo } = this.props
+    let enabledAssetInfo = assetsInfo.find((item) => item.get('enable') === true ) 
     return (
       <View style={styles.container}>
         <Header Title="Account" displayAccount={() => this.displayAccountList()} scanQR={() => this.scanQR()} />
@@ -147,7 +154,7 @@ export default class Assets extends BaseScreen {
             <ScrollView showsVerticalScrollIndicator={false}>
               <TotalAssets totalAssets={425321132.21} assetName={'Meon'} onPress={() => this.operateAssetQRCode(true)} />
               <EnableAssets Title="Asset" enableAssets={() => this.enableAssets()} />
-              {/* <AssetsList data={this.state.assetsList} onPress={(e) => this.checkAsset(e)} /> */}
+              <AssetsList data={enabledAssetInfo.get('assetsList')} onPress={(e) => this.checkAsset(e)} />
             </ScrollView>
           </View>
         }
@@ -155,13 +162,27 @@ export default class Assets extends BaseScreen {
           animationIn="fadeIn"
           animationOut="fadeOut"
           useNativeDriver={true}
-          style = {{  margin: 0 }}
           isVisible={this.state.isVisible}
           backdropOpacity={0.9}
         >
           <AssetQRCode
             assetName={'Meon'}
             dismissModal={() => this.operateAssetQRCode(false)}
+          />
+        </Modal>
+        <Modal
+          animationIn="fadeIn"
+          animationOut="fadeOut"
+          useNativeDriver={true}
+          style = {{  margin: 0 }}
+          isVisible={this.state.isVisible2}
+          backdropOpacity={0}
+        >
+          <AccountList 
+            data={this.props.assetsInfo}
+            onPress={(e) => this.checkAsset(e)}
+            createNewAccount={() => this.createNewAccount()}
+            dismissModal={() => this.setState({ isVisible2: false })} 
           />
         </Modal>
       </View>

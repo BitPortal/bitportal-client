@@ -30,6 +30,12 @@ export const startTabBasedApp = () => {
         selectedIcon: Images.market_press
       },
       {
+        label: 'Discovery',
+        screen: 'BitPortal.Discovery',
+        icon: Images.discovery,
+        selectedIcon: Images.discovery_press
+      },
+      {
         label: 'Setting',
         screen: 'BitPortal.Settings',
         icon: Images.profile,
