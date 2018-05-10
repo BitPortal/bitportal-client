@@ -3,6 +3,7 @@ package com.bitportal;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.cmcewen.blurview.BlurViewPackage;
 import org.reactnative.camera.RNCameraPackage;
 import com.bitgo.randombytes.RandomBytesPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
@@ -40,7 +41,8 @@ public class MainApplication extends NavigationApplication {
       new ReactNativeConfigPackage(),
       new RandomBytesPackage(),
       new RNSensitiveInfoPackage(),
-      new RNCameraPackage()
+      new RNCameraPackage(),
+      new BlurViewPackage()
     );
   }
 

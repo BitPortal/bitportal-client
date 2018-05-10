@@ -53,7 +53,7 @@ export default class Assets extends BaseScreen {
    })
   }
 
-  // 激活钱包信息
+  // 激活钱包
   enableAssets = () => {
     this.props.navigator.push({
       screen: "BitPortal.AvailableAssets"
