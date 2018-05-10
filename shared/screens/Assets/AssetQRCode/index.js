@@ -15,7 +15,8 @@ import {
   ScrollView, 
   TouchableOpacity, 
   TouchableHighlight,
-  ActivityIndicator
+  ActivityIndicator,
+  LayoutAnimation
 } from 'react-native'
 import Images from 'resources/images'
 
@@ -47,7 +48,7 @@ export default class AssetQRCode extends Component {
   startTimer = () => {
     this.timer = setTimeout(() => {
       this.setState({ isCopied: false })
-    }, 3000)
+    }, 2000)
   }
 
   shareQrcodeContent = () => {
@@ -61,6 +62,7 @@ export default class AssetQRCode extends Component {
     // 优化Android modal体验
     this.timer = setTimeout(() => {
       this.setState({ enableQRCode: true })
+      LayoutAnimation.spring()
       clearTimeout(this.timer)
     }, 1000) 
   }
