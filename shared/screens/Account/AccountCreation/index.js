@@ -8,8 +8,8 @@ import BaseScreen from 'components/BaseScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import Tips from './Tips'
-import InputItem from './InputItem'
-import PrivateKey from './PrivateKey'
+import InputItem from 'components/InputItem'
+import PasswordStrength from 'components/PasswordStrength'
 
 export default class AccountCreation extends BaseScreen {
 
@@ -21,6 +21,9 @@ export default class AccountCreation extends BaseScreen {
   state = {
     hasAccepted: false,
     canGoNext: false,
+    password: '',
+    isAccountVaild: true,
+    isSamePassword: true
   }
 
   goBack = () => {
@@ -28,21 +31,33 @@ export default class AccountCreation extends BaseScreen {
   }
 
   setPassword = () => {
+    this.checkInputInfo()
     this.props.navigator.push({
       screen: 'BitPortal.PasswordSetting'
     })
   }
 
-  // 获取账户名
+  // 输入账户名
   changeAccountName = (accountName) => {
+    if (accountName == 'meon') this.setState({ isAccountVaild: false })
+    else this.setState({ isAccountVaild: true })
     this.accountName = accountName
     this.checkInputInfo()
   }
 
-  // 获取私钥
-  changePrivateKey = (privateKey) => {
-    this.privateKey = privateKey
+  // 输入密码
+  changePassword = (password) => {
+    this.setState({ password })
     this.checkInputInfo()
+  }
+
+  // 确认密码
+  changeConfirmPassword = (confirmPassword) => {
+    this.confirmPassword = confirmPassword
+    if (confirmPassword != this.state.password) 
+      this.setState({ isSamePassword: false }, () => { this.checkInputInfo() })
+    else 
+      this.setState({ isSamePassword: true }, () => { this.checkInputInfo() })
   }
 
   // 同意协议
@@ -50,12 +65,12 @@ export default class AccountCreation extends BaseScreen {
     this.setState({ hasAccepted: !this.state.hasAccepted }, () => {
       this.checkInputInfo()
     })
-    
   }
 
   // 检测信息是否填完
   checkInputInfo = () => {
-    if (this.accountName && this.state.hasAccepted) {
+    const { isAccountVaild, isSamePassword, isPasswordVaild, hasAccepted } = this.state
+    if (isAccountVaild && hasAccepted && isSamePassword) {
       this.setState({ canGoNext: true })
     } else {
       this.setState({ canGoNext: false })
@@ -63,40 +78,65 @@ export default class AccountCreation extends BaseScreen {
   }
 
   render() {
-    const { hasAccepted, canGoNext } = this.state
+    const { hasAccepted, canGoNext, isAccountVaild, isSamePassword, password } = this.state
     return (
       <View style={styles.container}>
         <NavigationBar 
           leftButton={<BackButton iconName="md-arrow-back" onPress={() => this.goBack()} />}
-          title="Create Account"
+          title="Create New Account"
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <Tips />
             <View style={styles.content}>
 
               <InputItem 
-                title="Account Name" 
+                title="Name Your Bitportal" 
                 placeholder="Up to 12 characters" 
-                changeAccountName={(e) => this.changeAccountName(e)} 
+                isContentVaild={isAccountVaild}
+                textFilter={(text) => (text.substring(0, 12))}
+                onChangeText={(e) => this.changeAccountName(e)} 
+                TipsComponent={() => (
+                  !isAccountVaild &&
+                  <Text style={[styles.text14, { color: Colors.textColor_255_98_92 }]}> 
+                    Occupied Name 
+                  </Text>
+                )}
               />
 
-              <PrivateKey  
-                title="Already have a private key?"
-                placeholder="Please fill your private key..."
-                changePrivateKey={(e) => this.changePrivateKey(e)}
+              <InputItem 
+                title="Set Password" 
+                placeholder="Example: 'Tvdsa12321'" 
+                extraStyle={{ marginTop: 25 }}
+                secureTextEntry={true}
+                onChangeText={(e) => this.changePassword(e)} 
+                TipsComponent={() => ( <PasswordStrength password={password} /> )}
+              />
+
+              <InputItem 
+                title="Confirm Password" 
+                placeholder="Enter the same password" 
+                isContentVaild={isSamePassword}
+                extraStyle={{ marginTop: 25 }}
+                secureTextEntry={true}
+                onChangeText={(e) => this.changeConfirmPassword(e)} 
+                TipsComponent={() => (
+                  !isSamePassword &&
+                  <Text style={[styles.text14, { color: Colors.textColor_255_98_92 }]}> 
+                    Not Same Password
+                  </Text>
+                )}
               />
 
               <View style={[styles.between, { marginVertical: 20 }]}>
                 <TouchableOpacity onPress={() => this.acceptAgreement()} style={{ marginTop: 2 }}>
                   <Ionicons 
                     name="ios-checkmark-circle-outline" 
-                    size={20} 
+                    size={18} 
                     color={ !hasAccepted ? Colors.textColor_181_181_181 : Colors.textColor_89_185_226 } 
                   />
                 </TouchableOpacity>
-                <Text style={[styles.text14, { marginLeft: 5 }]}> 
-                  Agree on  {' '}
+                <Text numberOfLines={1} style={[styles.text14, { color: Colors.textColor_181_181_181, marginLeft: 5 }]}> 
+                  Agree on {''}
                   <Text onPress={() => {alert('hey guy!')}} style={styles.decorator}> 
                     Terms of Service and Privacy policy 
                   </Text> 
@@ -111,21 +151,10 @@ export default class AccountCreation extends BaseScreen {
                   backgroundColor: canGoNext ? Colors.textColor_89_185_226 : Colors.textColor_181_181_181
                 }]}
               >
-                <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}> 
+                <Text style={styles.text14}> 
                   Next 
                 </Text>
               </TouchableHighlight>
-
-              <TouchableOpacity 
-                onPress={() => {}} 
-                style={[styles.btn, styles.center, { marginTop: 10, backgroundColor: 'transparent' }]}
-              >
-                <Text style={[styles.text14, { color: Colors.textColor_89_185_226 }]}> 
-                  import 
-                </Text>
-              </TouchableOpacity>
-
-              <View style={styles.foot}/>
 
             </View>
           </ScrollView>

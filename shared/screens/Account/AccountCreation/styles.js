@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   },
   text14: {
     fontSize: FontScale(14),
-    color: Colors.textColor_181_181_181
+    color: Colors.textColor_255_255_238
   },
   decorator: {
     color: Colors.textColor_89_185_226,
