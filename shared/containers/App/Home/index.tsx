@@ -9,7 +9,8 @@ import * as tickerActions from 'actions/ticker'
 import * as intlActions from 'actions/intl'
 import { exchangeTickerSelector } from 'selectors/ticker'
 import Eos from 'eosjs'
-import { Keystore, Keygen } from 'eosjs-keygen'
+import keygen from 'eos/keygen'
+import Keystore from 'eos/keystore'
 import messages from './messages'
 import style from './style.css'
 
@@ -44,46 +45,43 @@ export default class Home extends Component<Props, State> {
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const sessionConfig = {
       timeoutInMin: 30,
       uriRules: {
-        owner: '/account_recovery',
-        active: '/(transfer|contracts)',
-        'active/**': '/producers'
+        owner: '.*',
+        active: '.*',
+        'active/**': '.*'
       }
     }
 
-    const keystore = Keystore('myaccount1', sessionConfig)
-    console.log(keystore)
+    console.log(keygen)
+    const keystore = Keystore('eosio.token', sessionConfig)
 
-    const ecc = Eos.modules.ecc
-
-    Keygen.generateMasterKeys().then(async (keys: any) => {
-      console.log(keys)
-
-      const eos = Eos.Localnet({
-        httpEndpoint: 'http://35.229.209.212:8888',
-        keyProvider: ecc.seedPrivate(keys.masterPrivateKey)
-      })
-
-      console.log(eos)
-      await eos.newaccount({
-        creator: 'eosio',
-        name: 'myaccount1',
-        owner: ecc.privateToPublic(ecc.seedPrivate(keys.masterPrivateKey)),
-        active: ecc.privateToPublic(ecc.seedPrivate(keys.masterPrivateKey)),
-        recovery: 'eosio'
-      })
-
-      /* eos.getAccount('eosio').then((account: any) => {
-       *   keystore.deriveKeys({
-       *     parent: '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3',
-       *     accountPermissions: account.permissions
-       *   })
-       *   console.log(account)
-       * })*/
+    const eos = Eos.Localnet({
+      keyProvider: '5JiJdyqw1iwNN3vZ1mHyYz1M4bZUiDEC6p1N7NDtwiEDc2bxzua',
+      httpEndpoint: 'http://localhost:8888'
     })
+    const account = await eos.getAccount('eosio.token')
+    keystore.deriveKeys({
+      parent: '5JiJdyqw1iwNN3vZ1mHyYz1M4bZUiDEC6p1N7NDtwiEDc2bxzua',
+      saveKeyMatches: ['owner', 'active'],
+      accountPermissions: account.permissions
+    })
+    console.log(keystore.getKeyPaths())
+    console.log(keystore.getPublicKeys())
+    console.log(keystore.getPrivateKeys())
+    console.log(keystore.getKeys())
+    /* eos.newaccount({
+     *   creator: 'eosio',
+     *   name: 'account1',
+     *   owner: initaPublic,
+     *   active: initaPublic,
+     *   recovery: 'eosio'
+     * })*/
+
+    /* const account = await eos.getCurrencyBalance({ code: 'eosiox.token', account: 'eosio.token' })
+     * console.log(account)*/
   }
 
   render() {
