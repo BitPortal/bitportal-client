@@ -13,7 +13,7 @@ export default {
     if (historyInstance) {
       return historyInstance
     }
-    const createHistory = require('history').createMemoryHistory
+    const createHistory = require('history').createBrowserHistory
     historyInstance = createHistory()
     return historyInstance
   },
@@ -28,7 +28,7 @@ export default {
     if (localStorageInstance) {
       return localStorageInstance
     }
-    localStorageInstance = require('utils/secureStorage').default
+    localStorageInstance = require('localStorage')
     return localStorageInstance
   }
 }
