@@ -82,6 +82,7 @@ export default AccountList = ({ data, dismissModal, onPress, createNewAccount })
       </TouchableHighlight>
 
       <TouchableHighlight 
+        underlayColor={Colors.mainThemeColor}
         style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.7)' }} 
         onPress={() => dismissModal()} 
       >

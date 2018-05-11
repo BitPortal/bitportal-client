@@ -2,8 +2,8 @@
 import React, { Component } from 'react'
 import { Text, View, ScrollView, Image, TouchableOpacity } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
-import TotalAssets from 'components/TotalAssets'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import TotalAssets from './TotalAssets'
 import Header from './Header'
 import EnableAssets from './EnableAssets'
 import AssetsList from './AssetsList'
@@ -21,6 +21,7 @@ import Eos from 'react-native-eosjs'
 import keygen from 'eos/keygen'
 import Keystore from 'eos/keystore'
 import secureStorage from 'utils/secureStorage'
+import * as walletActions from 'actions/wallet'
 
 @connect(
   (state) => ({
@@ -29,7 +30,8 @@ import secureStorage from 'utils/secureStorage'
   }),
   (dispatch) => ({
     actions: bindActionCreators({
-      ...assetsActions
+      ...assetsActions,
+      ...walletActions
     }, dispatch)
   })
 )
@@ -53,7 +55,7 @@ export default class Assets extends BaseScreen {
    })
   }
 
-  // 激活钱包信息
+  // 激活钱包
   enableAssets = () => {
     this.props.navigator.push({
       screen: "BitPortal.AvailableAssets"
@@ -96,44 +98,9 @@ export default class Assets extends BaseScreen {
     this.getAssetsInfo()
   }
 
-  async didAppear() {
-    try {
-      const sessionConfig = {
-        timeoutInMin: 30,
-        uriRules: {
-          owner: '.*',
-          active: '.*',
-          'active/**': '.*'
-        }
-      }
-      const keystore = await Keystore('hello', sessionConfig)
-      const eos = Eos.Localnet({
-        httpEndpoint: 'http://localhost:8888',
-        keyProvider: 'PW5KgjDJLsfxwLxcDuAu4GfwHVo7Ls4z58uek83PkMnSuVfndvrKg'
-      })
-      console.log(eos)
-      const account = await eos.getAccount('hello')
-      await keystore.deriveKeys({
-        parent: 'PW5KgjDJLsfxwLxcDuAu4GfwHVo7Ls4z58uek83PkMnSuVfndvrKg',
-        accountPermissions: account.permissions
-      })
-      console.log(await keystore.getKeyPaths())
-      console.log(await keystore.getPublicKey('active'))
-      console.log(await keystore.getPublicKey('owner'))
-      console.log(await keystore.getPublicKeys())
-      console.log(await keystore.getPrivateKeys())
-      console.log(await keystore.getKeys())
-    } catch (error) {
-      console.error(error)
-    }
-
-    const items = await secureStorage.getAllItems()
-    console.log(items)
-  }
-
   render() {
     const { assetsInfo } = this.props
-    let enabledAssetInfo = assetsInfo.find((item) => item.get('enable') === true ) 
+    let enabledAssetInfo = assetsInfo.find((item) => item.get('enable') === true )
     return (
       <View style={styles.container}>
         <Header Title="Account" displayAccount={() => this.displayAccountList()} scanQR={() => this.scanQR()} />
@@ -178,11 +145,11 @@ export default class Assets extends BaseScreen {
           isVisible={this.state.isVisible2}
           backdropOpacity={0}
         >
-          <AccountList 
+          <AccountList
             data={this.props.assetsInfo}
             onPress={(e) => this.checkAsset(e)}
             createNewAccount={() => this.createNewAccount()}
-            dismissModal={() => this.setState({ isVisible2: false })} 
+            dismissModal={() => this.setState({ isVisible2: false })}
           />
         </Modal>
       </View>

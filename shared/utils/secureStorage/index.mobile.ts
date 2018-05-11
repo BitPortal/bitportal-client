@@ -1,20 +1,21 @@
 import SensitiveInfo from 'react-native-sensitive-info'
 
-const getItem = async (key: string) => {
+const getItem = async (key: string, json?: boolean) => {
   try {
     const value = await SensitiveInfo.getItem(key, {
       sharedPreferencesName: 'BitportalSharedPrefs',
       keychainService: 'BitportalKeychain'
     })
-    return value
+    return (json && !!value) ? JSON.parse(value) : value
   } catch (error) {
     console.error(`SecureStorage getItem Error: ${error.message}`)
   }
 }
 
-const setItem = async (key: string, value: any) => {
+const setItem = async (key: string, value: any, json?: boolean) => {
   try {
-    await SensitiveInfo.setItem(key, value, {
+    const stringValue = (json && !!value) ? JSON.stringify(value) : value
+    await SensitiveInfo.setItem(key, stringValue, {
       sharedPreferencesName: 'BitportalSharedPrefs',
       keychainService: 'BitportalKeychain',
       encrypt: true

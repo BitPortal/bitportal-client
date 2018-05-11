@@ -5,19 +5,18 @@ import { bindActionCreators } from 'redux'
 import { IntlProvider, FormattedNumber } from 'react-intl'
 import { connect } from 'react-redux'
 import { RouteComponentProps } from 'react-router'
+import * as walletActions from 'actions/wallet'
 import * as tickerActions from 'actions/ticker'
 import * as intlActions from 'actions/intl'
 import { exchangeTickerSelector } from 'selectors/ticker'
-import Eos from 'eosjs'
-import keygen from 'eos/keygen'
-import Keystore from 'eos/keystore'
 import messages from './messages'
 import style from './style.css'
 
 interface Props extends RouteComponentProps<void> {
   locale: Locale
-  actions: typeof tickerActions & typeof intlActions
+  actions: typeof tickerActions & typeof intlActions & typeof walletActions
   ticker: any
+  wallet: any
 }
 
 interface State {
@@ -27,10 +26,12 @@ interface State {
 @connect(
   (state: any) => ({
     locale: state.intl.get('locale'),
-    ticker: exchangeTickerSelector(state)
+    ticker: exchangeTickerSelector(state),
+    wallet: state.wallet
   }),
   dispatch => ({
     actions: bindActionCreators({
+      ...walletActions,
       ...tickerActions,
       ...intlActions
     }, dispatch)
@@ -45,43 +46,16 @@ export default class Home extends Component<Props, State> {
     }
   }
 
-  async componentDidMount() {
-    const sessionConfig = {
-      timeoutInMin: 30,
-      uriRules: {
-        owner: '.*',
-        active: '.*',
-        'active/**': '.*'
-      }
-    }
-
-    console.log(keygen)
-    const keystore = Keystore('eosio.token', sessionConfig)
-
-    const eos = Eos.Localnet({
-      keyProvider: '5JiJdyqw1iwNN3vZ1mHyYz1M4bZUiDEC6p1N7NDtwiEDc2bxzua',
-      httpEndpoint: 'http://localhost:8888'
-    })
-    const account = await eos.getAccount('eosio.token')
-    keystore.deriveKeys({
-      parent: '5JiJdyqw1iwNN3vZ1mHyYz1M4bZUiDEC6p1N7NDtwiEDc2bxzua',
-      saveKeyMatches: ['owner', 'active'],
-      accountPermissions: account.permissions
-    })
-    console.log(keystore.getKeyPaths())
-    console.log(keystore.getPublicKeys())
-    console.log(keystore.getPrivateKeys())
-    console.log(keystore.getKeys())
-    /* eos.newaccount({
+  componentDidMount() {
+    /* this.props.actions.createEOSAccountRequested({
      *   creator: 'eosio',
-     *   name: 'account1',
-     *   owner: initaPublic,
-     *   active: initaPublic,
-     *   recovery: 'eosio'
+     *   name: 'lkohodn',
+     *   recovery: 'eosio',
+     *   keyProvider: '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
      * })*/
-
-    /* const account = await eos.getCurrencyBalance({ code: 'eosiox.token', account: 'eosio.token' })
-     * console.log(account)*/
+    this.props.actions.switchEOSAccount({
+      name: 'lkohodn'
+    })
   }
 
   render() {

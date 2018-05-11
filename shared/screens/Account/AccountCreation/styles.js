@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   },
   text14: {
     fontSize: FontScale(14),
-    color: Colors.textColor_181_181_181
+    color: Colors.textColor_255_255_238
   },
   decorator: {
     color: Colors.textColor_89_185_226,
@@ -64,11 +64,6 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH-64,
     height: 40,
     borderRadius: 3
-  },
-  foot: {
-    width: SCREEN_WIDTH,
-    height: 300,
-    backgroundColor: Colors.bgColor_48_49_59
   }
 })
 
