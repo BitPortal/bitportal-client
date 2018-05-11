@@ -4,9 +4,11 @@ import market from './market'
 import ticker from './ticker'
 import chart  from './chart'
 import assets from './assets'
+import wallet from './wallet'
 
 export default combineReducers({
   intl,
+  wallet,
   market,
   ticker,
   chart,

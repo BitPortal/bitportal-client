@@ -2937,8 +2937,8 @@ core-js@^2.2.2, core-js@^2.4.1:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.1.tgz#ae6874dc66937789b80754ff5428df66819ca50b"
 
 core-js@^2.4.0, core-js@^2.5.0:
-  version "2.5.5"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.5.tgz#b14dde936c640c0579a6b50cabcc132dd6127e3b"
+  version "2.5.6"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.6.tgz#0fe6d45bf3cac3ac364a9d72de7576f4eb221b9d"
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -3930,7 +3930,7 @@ eosjs-keygen@^1.3.1:
     localStorage "^1.0.3"
     minimatch "^3.0.4"
 
-eosjs@^10.0.0:
+eosjs@10.0.0:
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/eosjs/-/eosjs-10.0.0.tgz#182e309b67841d70f7e51d3103ac73844a66c851"
   dependencies:
@@ -9389,6 +9389,10 @@ react-native-crypto@^2.0.1, react-native-crypto@^2.1.2:
     pbkdf2 "3.0.8"
     public-encrypt "^4.0.0"
 
+react-native-device-info@^0.21.5:
+  version "0.21.5"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.21.5.tgz#99478a2d68182e012297f2d63f2bd1b788106dee"
+
 "react-native-eosjs-api@git+https://github.com/TerenceGe/eosjs-api.git":
   version "5.0.1"
   resolved "git+https://github.com/TerenceGe/eosjs-api.git#42d671874eb491b441c4476b8a8a20393b6fae34"
@@ -9397,8 +9401,8 @@ react-native-crypto@^2.0.1, react-native-crypto@^2.1.2:
     is-browser "^2.0.1"
 
 "react-native-eosjs-ecc@git+https://github.com/TerenceGe/eosjs-ecc.git":
-  version "3.1.4"
-  resolved "git+https://github.com/TerenceGe/eosjs-ecc.git#9e28d190d9fb2d6bfaef65e32391c38d28d488a3"
+  version "4.0.1"
+  resolved "git+https://github.com/TerenceGe/eosjs-ecc.git#08572f0789e98d50b2483c8d961bb838c43f853b"
   dependencies:
     bigi "^1.4.2"
     browserify-aes "^1.0.6"
@@ -9410,8 +9414,8 @@ react-native-crypto@^2.0.1, react-native-crypto@^2.1.2:
     react-native-randombytes "^3.1.0"
 
 "react-native-eosjs@git+https://github.com/TerenceGe/eosjs.git":
-  version "9.0.3"
-  resolved "git+https://github.com/TerenceGe/eosjs.git#b6fa132ef7680d4cccdaf87f209254fcdf043a75"
+  version "10.0.0"
+  resolved "git+https://github.com/TerenceGe/eosjs.git#8079d4518f3c6c5acdab05cb36fe2065a79c99fe"
   dependencies:
     babel-polyfill "^6.26.0"
     binaryen "^37.0.0"

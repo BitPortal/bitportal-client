@@ -244,8 +244,7 @@ export default function Keystore(accountName, config = {}) {
     const wifs = new Set()
 
     function query(store) {
-      userStorage.query(store, [accountName, 'kpath'], ([path, pubkey], wif) => {
-        console.log(pubkey)
+      userStorage.query(store, [accountName, 'kpath'], ([path], wif) => {
         pubs.add(path)
         if (wif != null) {
           wifs.add(path)
@@ -324,6 +323,8 @@ export default function Keystore(accountName, config = {}) {
 
     if (typeof saveKeyMatches === 'string') {
       saveKeyMatches = [saveKeyMatches]
+    } else if (!saveKeyMatches) {
+      saveKeyMatches = []
     }
 
     // saveKeyMatches.forEach((m) => {

@@ -11,7 +11,6 @@ export default function Storage(namespace) {
   function createKey(...elements) {
     const key = JSON.stringify([namespace, ...elements])
     // remove [ and ] so key is prefix-friendly for searching
-    console.log(key)
     const keyTrim = key.substring(1, key.length - 1)
     return Buffer.from(keyTrim).toString('hex')
   }
@@ -133,7 +132,7 @@ export default function Storage(namespace) {
         continue
       }
       const decodedKeys = JSON.parse('[' + Buffer.from(key, 'hex') + ']')
-      const ret = callback(decodedKeys.slice(keyPrefix.length + 1), deNull(await state.get(key)))
+      const ret = callback(decodedKeys.slice(keyPrefix.length + 1), deNull(await state.getItem(key)))
       if(ret === false) {
         break
       }
