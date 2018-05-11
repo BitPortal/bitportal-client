@@ -23,7 +23,9 @@ import AccountCreation    from 'screens/Account/AccountCreation'
 import PrivateKeyCreation from 'screens/Account/PrivateKeyCreation'
 
 import Discovery from 'screens/Discovery'
-import Settings  from 'screens/Settings' 
+
+import Profile   from 'screens/Profile'
+import Settings  from 'screens/Profile/Settings' 
 
 export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.Welcome',  () => Welcome,  store, provider)
@@ -32,6 +34,7 @@ export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.Alerts',   () => Alerts,   store, provider)
   Navigation.registerComponent('BitPortal.Assets',   () => Assets,   store, provider)
   Navigation.registerComponent('BitPortal.FundFlow', () => FundFlow, store, provider)
+  Navigation.registerComponent('BitPortal.Profile',  () => Profile,  store, provider)
   Navigation.registerComponent('BitPortal.Settings', () => Settings, store, provider)
   Navigation.registerComponent('BitPortal.BackupTips',     () => BackupTips,     store, provider)
   Navigation.registerComponent('BitPortal.Discovery',      () => Discovery,      store, provider)
