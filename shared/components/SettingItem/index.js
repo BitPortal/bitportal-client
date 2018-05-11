@@ -25,12 +25,12 @@ export default class SettingItem extends Component {
     let rightTextStyle = rightItemStyle ? rightItemStyle : styles.rightItemStyle
     if (!rightItemTitle) {
       return (
-        <Ionicons name={iconName} size={24} color={Colors.textColor_255_255_238} />
+        <Ionicons name={iconName} size={24} color={Colors.textColor_181_181_181} />
       )
     }else {
       return (
         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-          <Text style={[text14]}>
+          <Text style={[text16]}>
             {rightItemTitle}
           </Text>
         </View>
@@ -43,7 +43,7 @@ export default class SettingItem extends Component {
     return (
       <View style={[{flexDirection: 'row'}, styles.center]}>
         { leftImage &&  <Image source={leftImage} style={styles.leftImageStyle} /> }
-        <Text style={styles.text14}>
+        <Text style={styles.text16}>
           {leftItemTitle}
         </Text>
       </View>
@@ -54,7 +54,7 @@ export default class SettingItem extends Component {
     const { disabled, leftItemTitle, rightItemTitle, extraStyle } = this.props
     return (
       <TouchableHighlight
-        underlayColor={Colors.bgColor_000000}
+        underlayColor={Colors.bgColor_27_27_26}
         style={[styles.container, extraStyle]}
         disabled={disabled === undefined ? false : disabled}
         onPress={() => this.onPress()}
@@ -70,8 +70,8 @@ export default class SettingItem extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.bgColor_41_41_44,
-    borderBottomColor: Colors.borderColor_48_48_46,
+    backgroundColor: Colors.bgColor_48_49_59,
+    borderBottomColor: Colors.minorThemeColor,
     borderBottomWidth: StyleSheet.hairlineWidth
   },
   viewContainer: {
@@ -79,9 +79,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     width: SCREEN_WIDTH,
-    height: 44,
-    paddingLeft: 15,
-    paddingRight: 15
+    height: 50,
+    paddingHorizontal: 25
   },
   center: {
     alignItems: 'center',
@@ -91,8 +90,8 @@ const styles = StyleSheet.create({
     width: 16,
     height: 16,
   },
-  text14: {
-    fontSize: FontScale(14),
+  text16: {
+    fontSize: FontScale(16),
     color: Colors.textColor_255_255_238
   },
   leftImageStyle: {
