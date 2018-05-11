@@ -12,10 +12,28 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 export default class Profile extends BaseScreen {
 
-
   checkHistory = () => {
 
   } 
+
+  changePage = (page) => {
+    let pageName = ''
+    switch (page) {
+      case 'Account':
+        pageName = 'AccountManager'
+        break
+      case 'Vote':
+      case 'About':
+      case 'Contacts':
+      case 'Settings':
+      case 'ContactUs':
+        pageName = page
+        break
+      default:
+        return
+    }
+    this.props.navigator.push({ screen: `BitPortal.${pageName}` })
+  }
 
   render() {
     const { navigation } = this.props
@@ -37,12 +55,12 @@ export default class Profile extends BaseScreen {
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center' }} >
-            <SettingItem leftItemTitle={'Vote'} onPress={() => {}} extraStyle={{ marginTop: 10 }} />
-            <SettingItem leftItemTitle={'Contacts'} onPress={() => {}} />
-            <SettingItem leftItemTitle={'Account'} onPress={() => {}} extraStyle={{ marginTop: 10 }} />
-            <SettingItem leftItemTitle={'Settings'} onPress={() => {}} />
-            <SettingItem leftItemTitle={'About'} onPress={() => {}} />
-            <SettingItem leftItemTitle={'Contact Us'} onPress={() => {}} />
+            <SettingItem leftItemTitle={'Vote'}       onPress={() => this.changePage('Vote')} extraStyle={{ marginTop: 10 }} />
+            <SettingItem leftItemTitle={'Contacts'}   onPress={() => this.changePage('Contacts')} />
+            <SettingItem leftItemTitle={'Account'}    onPress={() => this.changePage('Account')}  />
+            <SettingItem leftItemTitle={'Settings'}   onPress={() => this.changePage('Settings')} extraStyle={{ marginTop: 10 }} />
+            <SettingItem leftItemTitle={'About'}      onPress={() => this.changePage('About')} />
+            <SettingItem leftItemTitle={'Contact Us'} onPress={() => this.changePage('ContactUs')} />
 
             <Text style={[styles.text14, { marginTop: 25 }]}> Version 0.1.0 </Text>
             <Text style={[styles.text14, { marginTop: 5 }]}> Copyright @2018 Patricia.ltd </Text>

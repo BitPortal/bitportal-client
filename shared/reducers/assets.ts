@@ -34,7 +34,7 @@ const initialState = Immutable.fromJS({
       enable: true, // 是否是当前使用钱包 同级只有一个能为true
       accountName: 'EOS-1', // 钱包名
       assetsList: [
-        { assetName: 'EOS', amount: 223425.20,    enable: true }, // enable 表示是否激活 EOS钱包中EOS不能删  
+        { assetName: 'EOS', amount: 22.20,    enable: true }, // enable 表示是否激活 EOS钱包中EOS不能删  
         { assetName: 'UIP', amount: 12321.90, enable: true },
         { assetName: 'OTC', amount: 2552.50,  enable: true },
       ] 
