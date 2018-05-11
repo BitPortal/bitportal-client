@@ -18,15 +18,19 @@ import TransactionRecord from 'screens/TransactionRecord'
 import AssetChart from 'screens/AssetChart'
 import Discovery from 'screens/Discovery'
 import PrivateKeyCreation from 'screens/Account/PrivateKeyCreation'
+import Backup from 'screens/Account/Backup'
+import BackupTips from 'screens/Account/BackupTips'
 
 export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.Welcome',  () => Welcome,  store, provider)
   Navigation.registerComponent('BitPortal.Login',    () => Login,    store, provider)
+  Navigation.registerComponent('BitPortal.Backup',   () => Backup,   store, provider)
   Navigation.registerComponent('BitPortal.Market',   () => Market,   store, provider)
-  Navigation.registerComponent('BitPortal.FundFlow', () => FundFlow, store, provider)
   Navigation.registerComponent('BitPortal.Alerts',   () => Alerts,   store, provider)
-  Navigation.registerComponent('BitPortal.Settings', () => Settings, store, provider)
   Navigation.registerComponent('BitPortal.Assets',   () => Assets,   store, provider)
+  Navigation.registerComponent('BitPortal.FundFlow', () => FundFlow, store, provider)
+  Navigation.registerComponent('BitPortal.Settings', () => Settings, store, provider)
+  Navigation.registerComponent('BitPortal.BackupTips',     () => BackupTips,     store, provider)
   Navigation.registerComponent('BitPortal.Discovery',      () => Discovery,      store, provider)
   Navigation.registerComponent('BitPortal.AssetChart',     () => AssetChart,     store, provider)
   Navigation.registerComponent('BitPortal.TokenDetails',   () => TokenDetails,   store, provider)

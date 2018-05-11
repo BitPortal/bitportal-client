@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     height: SCREEN_WIDTH/4-16,
     flexDirection: 'row',
     borderRadius: 2,
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: Colors.textColor_181_181_181
   },
   input: {

@@ -96,40 +96,40 @@ export default class Assets extends BaseScreen {
     this.getAssetsInfo()
   }
 
-  async didAppear() {
-    try {
-      const sessionConfig = {
-        timeoutInMin: 30,
-        uriRules: {
-          owner: '.*',
-          active: '.*',
-          'active/**': '.*'
-        }
-      }
-      const keystore = await Keystore('hello', sessionConfig)
-      const eos = Eos.Localnet({
-        httpEndpoint: 'http://localhost:8888',
-        keyProvider: 'PW5KgjDJLsfxwLxcDuAu4GfwHVo7Ls4z58uek83PkMnSuVfndvrKg'
-      })
-      console.log(eos)
-      const account = await eos.getAccount('hello')
-      await keystore.deriveKeys({
-        parent: 'PW5KgjDJLsfxwLxcDuAu4GfwHVo7Ls4z58uek83PkMnSuVfndvrKg',
-        accountPermissions: account.permissions
-      })
-      console.log(await keystore.getKeyPaths())
-      console.log(await keystore.getPublicKey('active'))
-      console.log(await keystore.getPublicKey('owner'))
-      console.log(await keystore.getPublicKeys())
-      console.log(await keystore.getPrivateKeys())
-      console.log(await keystore.getKeys())
-    } catch (error) {
-      console.error(error)
-    }
+  // async didAppear() {
+  //   try {
+  //     const sessionConfig = {
+  //       timeoutInMin: 30,
+  //       uriRules: {
+  //         owner: '.*',
+  //         active: '.*',
+  //         'active/**': '.*'
+  //       }
+  //     }
+  //     const keystore = await Keystore('hello', sessionConfig)
+  //     const eos = Eos.Localnet({
+  //       httpEndpoint: 'http://localhost:8888',
+  //       keyProvider: 'PW5KgjDJLsfxwLxcDuAu4GfwHVo7Ls4z58uek83PkMnSuVfndvrKg'
+  //     })
+  //     console.log(eos)
+  //     const account = await eos.getAccount('hello')
+  //     await keystore.deriveKeys({
+  //       parent: 'PW5KgjDJLsfxwLxcDuAu4GfwHVo7Ls4z58uek83PkMnSuVfndvrKg',
+  //       accountPermissions: account.permissions
+  //     })
+  //     console.log(await keystore.getKeyPaths())
+  //     console.log(await keystore.getPublicKey('active'))
+  //     console.log(await keystore.getPublicKey('owner'))
+  //     console.log(await keystore.getPublicKeys())
+  //     console.log(await keystore.getPrivateKeys())
+  //     console.log(await keystore.getKeys())
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
 
-    const items = await secureStorage.getAllItems()
-    console.log(items)
-  }
+  //   const items = await secureStorage.getAllItems()
+  //   console.log(items)
+  // }
 
   render() {
     const { assetsInfo } = this.props
