@@ -10,17 +10,15 @@ declare const TradingView: any
 
 declare const Datafeeds: any
 
+declare const String: any
+
 // interfaces
 
 declare interface Config {
   ENV: string
   BITPORTAL_API_REST_URL: string
   BITPORTAL_API_WEBSOCKET_URL: string
-  COIN_API_REST_URL?: string
-  COIN_API_WEBSOCKET_URL?: string
-  COIN_API_KEY?: string
-  CRYPTO_COMPARE_REST_URL?: string
-  CRYPTO_COMPARE_WEBSOCKET_URL?: string
+  EOS_API_URL: string
 }
 
 declare interface RootState {
@@ -218,7 +216,17 @@ declare module 'eosjs' {
   export = file
 }
 
+declare module 'react-native-eosjs' {
+  const file: any
+  export = file
+}
+
 declare module 'eosjs-ecc' {
+  const file: any
+  export = file
+}
+
+declare module 'react-native-eosjs-ecc' {
   const file: any
   export = file
 }
@@ -241,6 +249,11 @@ declare module 'react-native-sensitive-info' {
 declare module 'eos' {
   interface EOS {
     generateMasterKeys: any
+    initAccount: any
+    privateToPublic: any
+    deriveKeys: any
+    getLocalAccounts: any
+    getEOS: any
   }
 
   const eos: EOS

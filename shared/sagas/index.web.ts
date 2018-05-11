@@ -3,12 +3,14 @@ import { ENV } from 'constants/env'
 import intlSaga from './intl'
 import tickerSaga from './ticker'
 import chartSaga from './chart'
+import walletSaga from './wallet'
 import loggerSaga from './logger'
 
 const sagas = {
   intlSaga: fork(intlSaga),
   tickerSaga: fork(tickerSaga),
   chartSaga: fork(chartSaga),
+  walletSaga: fork(walletSaga),
   loggerSaga: fork(loggerSaga)
 }
 
