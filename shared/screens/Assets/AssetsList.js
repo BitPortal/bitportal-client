@@ -13,14 +13,14 @@ const ListItem = ({ item, onPress }) => (
         <Text style={styles.text20}> { item.get('assetName') } </Text>
       </View>
       <View>
-        <Text style={styles.text20}> 
+        <Text style={[styles.text20, { alignSelf: 'flex-end' }]}> 
           <FormattedNumber
             value={item.get('amount')}
             maximumFractionDigits={2}
             minimumFractionDigits={2}
           />
         </Text>
-        <Text style={[styles.text14, { color: Colors.textColor_149_149_149 }]}> 
+        <Text style={[styles.text14, { alignSelf: 'flex-end', color: Colors.textColor_149_149_149 }]}> 
           ≈ ¥ 
           <FormattedNumber
             value={item.get('amount')*6.5} 
