@@ -1,29 +1,32 @@
 import { Navigation } from 'react-native-navigation'
 
-import Welcome  from 'screens/Welcome'
-import Login    from 'screens/Login'
-import Market   from 'screens/Market'
-import MarketDetails from 'screens/MarketDetails'
-import TokenDetails  from 'screens/TokenDetails'
-import FundFlow from 'screens/FundFlow'
 import Alerts   from 'screens/Alerts'
-import Settings from 'screens/Settings' 
-import Assets   from 'screens/Assets'
-import AvailableAssets from 'screens/AvailableAssets'
-import AccountCreation from 'screens/Account/AccountCreation'
-import AccountImport   from 'screens/Account/AccountImport'
-import QRCodeScanner   from 'screens/QRCodeScanner'
-import AssetsTransfer  from 'screens/AssetsTransfer'
-import TransactionRecord from 'screens/TransactionRecord'
-import AssetChart from 'screens/AssetChart'
-import Discovery from 'screens/Discovery'
+
+import Market             from 'screens/Market'
+import FundFlow           from 'screens/Market/FundFlow'
+import TokenDetails       from 'screens/Market/TokenDetails'
+import MarketDetails      from 'screens/Market/MarketDetails'
+
+import Welcome            from 'screens/Welcome'
+import QRCodeScanner      from 'screens/QRCodeScanner'
+import TransactionRecord  from 'screens/TransactionRecord'
+
+import Assets             from 'screens/Assets'
+import AssetChart         from 'screens/Assets/AssetChart'
+import AssetsTransfer     from 'screens/Assets/AssetsTransfer'
+import AvailableAssets    from 'screens/Assets/AvailableAssets'
+
+import Backup             from 'screens/Account/Backup'
+import BackupTips         from 'screens/Account/BackupTips'
+import AccountImport      from 'screens/Account/AccountImport'
+import AccountCreation    from 'screens/Account/AccountCreation'
 import PrivateKeyCreation from 'screens/Account/PrivateKeyCreation'
-import Backup from 'screens/Account/Backup'
-import BackupTips from 'screens/Account/BackupTips'
+
+import Discovery from 'screens/Discovery'
+import Settings  from 'screens/Settings' 
 
 export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.Welcome',  () => Welcome,  store, provider)
-  Navigation.registerComponent('BitPortal.Login',    () => Login,    store, provider)
   Navigation.registerComponent('BitPortal.Backup',   () => Backup,   store, provider)
   Navigation.registerComponent('BitPortal.Market',   () => Market,   store, provider)
   Navigation.registerComponent('BitPortal.Alerts',   () => Alerts,   store, provider)
