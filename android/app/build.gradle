@@ -109,6 +109,8 @@ android {
         applicationId "com.bitportal"
         minSdkVersion 16
         targetSdkVersion 27
+        renderscriptTargetApi 27
+        renderscriptSupportModeEnabled true
         versionCode 1
         versionName "1.0"
         ndk {
@@ -145,6 +147,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-blur')
     compile project(':react-native-camera')
     compile project(':react-native-randombytes')
     compile project(':react-native-linear-gradient')

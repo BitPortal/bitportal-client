@@ -2,8 +2,8 @@
 import React, { Component } from 'react'
 import { Text, View, ScrollView, Image, TouchableOpacity } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
-import TotalAssets from 'components/TotalAssets'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import TotalAssets from './TotalAssets'
 import Header from './Header'
 import EnableAssets from './EnableAssets'
 import AssetsList from './AssetsList'
@@ -55,7 +55,7 @@ export default class Assets extends BaseScreen {
    })
   }
 
-  // 激活钱包信息
+  // 激活钱包
   enableAssets = () => {
     this.props.navigator.push({
       screen: "BitPortal.AvailableAssets"
@@ -96,18 +96,6 @@ export default class Assets extends BaseScreen {
 
   componentDidMount() {
     this.getAssetsInfo()
-  }
-
-  didAppear() {
-    /* this.props.actions.createEOSAccountRequested({
-     *   creator: 'eosio',
-     *   name: 'kkieonf',
-     *   recovery: 'eosio',
-     *   keyProvider: '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
-     * })*/
-    this.props.actions.switchEOSAccount({
-      name: 'kkieonf'
-    })
   }
 
   render() {

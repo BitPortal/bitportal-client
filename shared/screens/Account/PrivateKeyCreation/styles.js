@@ -14,6 +14,11 @@ const styles = StyleSheet.create({
     height: SCREEN_HEIGHT,
     backgroundColor: Colors.mainThemeColor
   },
+  between: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row'
+  },
   center: {
     alignItems: 'center',
     justifyContent: 'center'
@@ -37,6 +42,10 @@ const styles = StyleSheet.create({
     fontSize: FontScale(14),
     color: Colors.textColor_255_255_238
   },
+  decorator: {
+    color: Colors.textColor_89_185_226,
+    textDecorationLine: 'underline'
+  },
   btn: {
     width: SCREEN_WIDTH-64,
     height: 40,
@@ -44,15 +53,15 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: SCREEN_WIDTH-64,
-    height: SCREEN_WIDTH/2-32,
+    height: SCREEN_WIDTH/4-16,
     flexDirection: 'row',
     borderRadius: 2,
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: Colors.textColor_181_181_181
   },
   input: {
     width: SCREEN_WIDTH-64,
-    height: SCREEN_WIDTH/2-32,
+    height: SCREEN_WIDTH/4-16,
     padding: 10,
     color: Colors.textColor_255_255_238,
     fontSize: FontScale(14)

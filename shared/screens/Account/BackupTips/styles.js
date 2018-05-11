@@ -41,21 +41,6 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH-64,
     height: 40,
     borderRadius: 3
-  },
-  inputContainer: {
-    width: SCREEN_WIDTH-64,
-    height: SCREEN_WIDTH/2-32,
-    flexDirection: 'row',
-    borderRadius: 2,
-    borderWidth: 1,
-    borderColor: Colors.textColor_181_181_181
-  },
-  input: {
-    width: SCREEN_WIDTH-64,
-    height: SCREEN_WIDTH/2-32,
-    padding: 10,
-    color: Colors.textColor_255_255_238,
-    fontSize: FontScale(14)
   }
 })
 
