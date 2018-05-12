@@ -57,7 +57,9 @@ const getLocalAccounts = async () => {
   const allItems = await secureStorage.getAllItems()
   const accounts = Object.keys(allItems)
     .filter((account => account.indexOf(storagePrefix) !== -1))
-    .map(account => decodeKey(account)[1])
+    .map(account => decodeKey(account))
+    .filter(account => account.indexOf('kpath') !== -1)
+    .map(account => account[1])
     .filter((item, position, self) => self.indexOf(item) === position)
   return accounts
 }

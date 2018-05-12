@@ -4,6 +4,7 @@ import intlSaga from './intl'
 import tickerSaga from './ticker'
 import chartSaga from './chart'
 import walletSaga from './wallet'
+import balanceSaga from './balance'
 import loggerSaga from './logger'
 
 const sagas = {
@@ -11,6 +12,7 @@ const sagas = {
   tickerSaga: fork(tickerSaga),
   chartSaga: fork(chartSaga),
   walletSaga: fork(walletSaga),
+  balanceSaga: fork(balanceSaga),
   loggerSaga: fork(loggerSaga)
 }
 
