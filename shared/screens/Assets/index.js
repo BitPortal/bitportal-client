@@ -26,7 +26,8 @@ import * as walletActions from 'actions/wallet'
 @connect(
   (state) => ({
     locale: state.intl.get('locale'),
-    assetsInfo: state.assets.get('data')
+    assetsInfo: state.assets.get('data'),
+    wallet: state.wallet
   }),
   (dispatch) => ({
     actions: bindActionCreators({
@@ -37,10 +38,15 @@ import * as walletActions from 'actions/wallet'
 )
 
 export default class Assets extends BaseScreen {
+  constructor(props, context) {
+    super(props, context)
 
-  state = {
-    isVisible: false,
-    isVisible2: false
+    this.state = {
+      isVisible: false,
+      isVisible2: false
+    }
+
+    this.switchEOSAccount = this.switchEOSAccount.bind(this)
   }
 
   // 展示账户列表
@@ -94,12 +100,24 @@ export default class Assets extends BaseScreen {
     })
   }
 
+  switchEOSAccount = (name) => {
+    this.props.actions.switchEOSAccount({ name })
+  }
+
   componentDidMount() {
-    this.getAssetsInfo()
+    /* this.props.actions.createEOSAccountRequested({
+     *   creator: 'eosio',
+     *   name: 'hellotg',
+     *   recovery: 'eosio',
+     *   keyProvider: '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
+     * })*/
   }
 
   render() {
-    const { assetsInfo } = this.props
+    const { assetsInfo, wallet } = this.props
+    const accountName = wallet.get('account').get('account_name')
+    const accountList = wallet.get('accounts')
+
     let enabledAssetInfo = assetsInfo.find((item) => item.get('enable') === true )
     return (
       <View style={styles.container}>
@@ -119,7 +137,7 @@ export default class Assets extends BaseScreen {
           enabledAssetInfo &&
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <TotalAssets totalAssets={425321132.21} assetName={'Meon'} onPress={() => this.operateAssetQRCode(true)} />
+              <TotalAssets totalAssets={425321132.21} accountName={accountName} onPress={() => this.operateAssetQRCode(true)} />
               <EnableAssets Title="Asset" enableAssets={() => this.enableAssets()} />
               <AssetsList data={enabledAssetInfo.get('assetsList')} onPress={(e) => this.checkAsset(e)} />
             </ScrollView>
@@ -128,7 +146,6 @@ export default class Assets extends BaseScreen {
         <Modal
           animationIn="fadeIn"
           animationOut="fadeOut"
-          useNativeDriver={true}
           isVisible={this.state.isVisible}
           backdropOpacity={0.9}
         >
@@ -140,14 +157,14 @@ export default class Assets extends BaseScreen {
         <Modal
           animationIn="fadeIn"
           animationOut="fadeOut"
-          useNativeDriver={true}
           style = {{  margin: 0 }}
           isVisible={this.state.isVisible2}
           backdropOpacity={0}
         >
           <AccountList
-            data={this.props.assetsInfo}
-            onPress={(e) => this.checkAsset(e)}
+            data={accountList}
+            activeAccount={accountName}
+            onPress={this.switchEOSAccount}
             createNewAccount={() => this.createNewAccount()}
             dismissModal={() => this.setState({ isVisible2: false })}
           />

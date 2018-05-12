@@ -45,6 +45,12 @@ export const getErrorMessage = (error: any) => {
 }
 
 export const encodeKey = (...elements: any[]) => {
+  const key = JSON.stringify(['info', ...elements])
+  const keyTrim = key.substring(1, key.length - 1)
+  return Buffer.from(keyTrim).toString('hex')
+}
+
+export const encodeKeyStoreKey = (...elements: any[]) => {
   const key = JSON.stringify(['kstor', ...elements])
   const keyTrim = key.substring(1, key.length - 1)
   return Buffer.from(keyTrim).toString('hex')

@@ -21,6 +21,16 @@ export default handleActions({
     return state.set('error', action.payload).set('loading', false)
   },
   [actions.switchEOSAccount] (state, action) {
-    return state.set('account', Immutable.fromJS({ account_name: action.payload }))
+    return state.set('account', Immutable.fromJS({ account_name: action.payload.name }))
+  },
+  [actions.authEOSAccountSucceeded] (state, action) {
+    return state.set('account', Immutable.fromJS(action.payload))
+  },
+  [actions.syncEOSAccountSucceeded] (state, action) {
+    return state.set('account', Immutable.fromJS({ account_name: action.payload.activeAccount }))
+    .set('accounts', Immutable.fromJS(action.payload.accountList))
+  },
+  [actions.clearAccount] () {
+    return initialState
   }
 }, initialState)

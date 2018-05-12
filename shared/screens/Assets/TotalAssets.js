@@ -36,14 +36,14 @@ const styles = StyleSheet.create({
 export default class TotalAssets extends Component {
 
   render() {
-    const { totalAssets, assetName, onPress } = this.props
-    return (  
+    const { totalAssets, accountName, onPress } = this.props
+    return (
       <View style={{ backgroundColor: Colors.minorThemeColor }}>
         <LinearGradientContainer type="right" style={[styles.linearContainer, { marginHorizontal: 32, marginVertical: 10 }]}>
           <TouchableHighlight style={styles.linearContainer} underlayColor={Colors.linearUnderlayColor} onPress={() => onPress()} >
             <View style={[styles.linearContainer, styles.paddingStyle]}>
               <Text style={styles.text15}> Total Assets</Text>
-              <Text style={styles.text24}> 
+              <Text style={styles.text24}>
                 ≈¥ {' '}
                 <FormattedNumber
                   value={totalAssets}
@@ -52,7 +52,7 @@ export default class TotalAssets extends Component {
                 />
               </Text>
               <View style={styles.between}>
-                <Text style={styles.text15}> { assetName }</Text>
+                <Text style={styles.text15}> { accountName }</Text>
                 <Image style={{ width: 16, height: 16 }} source={Images.qrCode} />
               </View>
             </View>
@@ -63,7 +63,3 @@ export default class TotalAssets extends Component {
   }
 
 }
-
-
-
-
