@@ -2,7 +2,7 @@ import Eos from 'react-native-eosjs'
 import Keystore from 'eos/keystore'
 import Keygen from 'eos/keygen'
 import { EOS_API_URL } from 'constants/env'
-import { encodeKey, decodeKey } from 'utils'
+import { encodeKeyStoreKey, decodeKey } from 'utils'
 import secureStorage from 'utils/secureStorage'
 
 const ecc = Eos.modules.ecc
@@ -53,7 +53,7 @@ const deriveKeys = async (options: {}) => {
 }
 
 const getLocalAccounts = async () => {
-  const storagePrefix = encodeKey()
+  const storagePrefix = encodeKeyStoreKey()
   const allItems = await secureStorage.getAllItems()
   const accounts = Object.keys(allItems)
     .filter((account => account.indexOf(storagePrefix) !== -1))

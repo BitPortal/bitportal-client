@@ -1,7 +1,7 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/wallet'
-import { getErrorMessage, encodeKey } from 'utils'
+import { getErrorMessage, encodeKey, encodeKeyStoreKey } from 'utils'
 import secureStorage from 'utils/secureStorage'
 import {
   initAccount,
@@ -26,8 +26,9 @@ function* saveEOSAccountToDisk(name: string, key: string) {
   }
 
   accountList.push(name)
+  yield call(secureStorage.setItem, encodeKey('activeAccount'), name)
   yield call(secureStorage.setItem, encodeKey('accountList'), accountList, true)
-  yield call(secureStorage.setItem, encodeKey(name, 'auth'), key)
+  yield call(secureStorage.setItem, encodeKeyStoreKey(name, 'auth'), key)
 }
 
 function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
@@ -70,7 +71,7 @@ function* createEOSAccountSucceeded(action: Action<CreateEOSAccountResult>) {
   const name = action.payload.name
   const key = action.payload.key
   yield call(saveEOSAccountToDisk, name, key)
-  yield put(actions.switchEOSAccount({ name }))
+  yield put(actions.syncEOSAccount())
 }
 
 function* switchEOSAccount(action: Action<SwitchEOSAccountParams>) {
@@ -78,6 +79,7 @@ function* switchEOSAccount(action: Action<SwitchEOSAccountParams>) {
 
   const name = action.payload.name
   yield call(initAccount, { name })
+  yield call(secureStorage.setItem, encodeKey('activeAccount'), name)
   yield put(actions.getEOSAccountRequested({ name }))
 }
 
@@ -97,9 +99,8 @@ function* getEOSAccountSucceeded(action: Action<GetEOSAccountResult>) {
   if (!action.payload) return
 
   const name = action.payload.account_name
-  const permissions = action.payload.permissions
-  const key = yield call(secureStorage.getItem, encodeKey(name, 'auth'))
-  yield put(actions.authEOSAccountRequested({ key, permissions }))
+  const key = yield call(secureStorage.getItem, encodeKeyStoreKey(name, 'auth'))
+  yield put(actions.authEOSAccountRequested({ key, account: action.payload }))
 }
 
 function* authEOSAccountRequested(action: Action<AuthEOSAccountParams>) {
@@ -107,16 +108,53 @@ function* authEOSAccountRequested(action: Action<AuthEOSAccountParams>) {
 
   try {
     const key = action.payload.key
-    const permissions = action.payload.permissions
+    const account = action.payload.account
+    const permissions = account.permissions
 
     yield call(deriveKeys, {
       parent: key,
       saveKeyMatches: ['owner', 'active'],
       accountPermissions: permissions
     })
-    yield put(actions.authEOSAccountSucceeded())
+    yield put(actions.authEOSAccountSucceeded(account))
   } catch (e) {
     yield put(actions.authEOSAccountFailed(getErrorMessage(e)))
+  }
+}
+
+function* setEOSAccountPassword(action: Action<SetEOSAccountPasswordParams>) {
+  if (!action.payload) return
+
+  const name = action.payload.name
+  const password = action.payload.password
+  yield call(secureStorage.setItem, encodeKey(name), password)
+}
+
+function* syncEOSAccount() {
+  let activeAccount = yield call(secureStorage.getItem, encodeKey('activeAccount'))
+  const accountList = yield call(getLocalAccounts)
+
+  if (!accountList || !accountList.length) return
+  if (!activeAccount) activeAccount = accountList[0]
+
+  yield put(actions.syncEOSAccountSucceeded({ activeAccount, accountList }))
+}
+
+function* syncEOSAccountSucceeded(action: Action<SyncEOSAccountResult>) {
+  if (!action.payload) return
+
+  const name = action.payload.activeAccount
+  yield put(actions.switchEOSAccount({ name }))
+}
+
+function* clearAccount() {
+  const prefix = encodeKey()
+  const allItems = yield call(secureStorage.getAllItems)
+
+  for (const key of Object.keys(allItems)) {
+    if (key.indexOf(prefix) === 0) {
+      yield call(secureStorage.removeItem, key)
+    }
   }
 }
 
@@ -127,4 +165,8 @@ export default function* walletSaga() {
   yield takeEvery(String(actions.getEOSAccountSucceeded), getEOSAccountSucceeded)
   yield takeEvery(String(actions.authEOSAccountRequested), authEOSAccountRequested)
   yield takeEvery(String(actions.switchEOSAccount), switchEOSAccount)
+  yield takeEvery(String(actions.setEOSAccountPassword), setEOSAccountPassword)
+  yield takeEvery(String(actions.syncEOSAccount), syncEOSAccount)
+  yield takeEvery(String(actions.syncEOSAccountSucceeded), syncEOSAccountSucceeded)
+  yield takeEvery(String(actions.clearAccount), clearAccount)
 }

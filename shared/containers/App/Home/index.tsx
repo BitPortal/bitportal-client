@@ -49,17 +49,16 @@ export default class Home extends Component<Props, State> {
   componentDidMount() {
     /* this.props.actions.createEOSAccountRequested({
      *   creator: 'eosio',
-     *   name: 'lkohodn',
+     *   name: 'lkohopdn',
      *   recovery: 'eosio',
      *   keyProvider: '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
      * })*/
-    this.props.actions.switchEOSAccount({
-      name: 'lkohodn'
-    })
+    this.props.actions.syncEOSAccount()
   }
 
   render() {
-    const { locale, ticker } = this.props
+    const { locale, ticker, wallet } = this.props
+    console.log(wallet.toJS())
 
     return (
       <IntlProvider messages={messages[locale]}>

@@ -108,5 +108,20 @@ declare interface GetEOSAccountResult {
 
 declare interface AuthEOSAccountParams {
   key: string
+  account: GetEOSAccountResult
+}
+
+declare interface AuthEOSAccountResult {
+  account_name: string
   permissions: Permission[]
+}
+
+declare interface SetEOSAccountPasswordParams {
+  name: string
+  password: string
+}
+
+declare interface SyncEOSAccountResult {
+  activeAccount: string
+  accountList: string[]
 }
