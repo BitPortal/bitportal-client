@@ -92,6 +92,16 @@ declare interface CreateEOSAccountResult {
   permissions?: Permission[]
 }
 
+declare interface ImportEOSAccountParams {
+  name: string
+  key: string
+}
+
+declare interface ImportEOSAccountResult {
+  name: string
+  permissions?: Permission[]
+}
+
 declare interface SwitchEOSAccountParams {
   name: string
   key?: string

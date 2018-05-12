@@ -12,6 +12,10 @@ export const authEOSAccountRequested = createAction<AuthEOSAccountParams>('walle
 export const authEOSAccountSucceeded = createAction<AuthEOSAccountResult>('wallet/AUTH_EOS_ACCOUNT_SUCCEEDED')
 export const authEOSAccountFailed = createAction<ErrorMessage>('wallet/AUTH_EOS_ACCOUNT_FAILED')
 
+export const importEOSAccountRequested = createAction<ImportEOSAccountParams>('wallet/IMPORT_EOS_ACCOUNT_REQUESTED')
+export const importEOSAccountSucceeded = createAction<ImportEOSAccountResult>('wallet/IMPORT_EOS_ACCOUNT_SUCCEEDED')
+export const importEOSAccountFailed = createAction<ErrorMessage>('wallet/IMPORT_EOS_ACCOUNT_FAILED')
+
 export const switchEOSAccount = createAction<SwitchEOSAccountParams>('wallet/SWITCH_EOS_ACCOUNT')
 
 export const setEOSAccountPassword = createAction<SetEOSAccountPasswordParams>('wallet/SET_EOS_ACCOUNT_PASSWORD')
