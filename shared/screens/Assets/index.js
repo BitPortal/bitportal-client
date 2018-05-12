@@ -128,7 +128,6 @@ export default class Assets extends BaseScreen {
         <Modal
           animationIn="fadeIn"
           animationOut="fadeOut"
-          useNativeDriver={true}
           isVisible={this.state.isVisible}
           backdropOpacity={0.9}
         >
@@ -140,7 +139,6 @@ export default class Assets extends BaseScreen {
         <Modal
           animationIn="fadeIn"
           animationOut="fadeOut"
-          useNativeDriver={true}
           style = {{  margin: 0 }}
           isVisible={this.state.isVisible2}
           backdropOpacity={0}
