@@ -2,5 +2,6 @@
   "ENV": "development",
   "BITPORTAL_API_REST_URL": "http://market-api.corp.bitportal.io/api",
   "BITPORTAL_API_WEBSOCKET_URL": "ws://staging-api.bitportal.io",
-  "EOS_API_URL": "http://localhost:8888"
+  "EOS_API_URL": "http://localhost:8888",
+  "BITPORTAL_API_CMS_URL": "http://strapi.corp.bitportal.io"
 }

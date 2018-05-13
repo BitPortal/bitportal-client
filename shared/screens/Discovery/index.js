@@ -1,19 +1,52 @@
-/* @tsx */
-
-import React, { Component } from 'react'
-import styles from './styles'
+import React from 'react'
 import { connect } from 'react-redux'
 import BaseScreen from 'components/BaseScreen'
-import { Text, View, TouchableOpacity } from 'react-native'
+import { View } from 'react-native'
+import * as newsActions from 'actions/news'
+import NewsList from 'components/NewsList'
+import styles from './styles'
 
+class Discovery extends BaseScreen {
+  componentDidMount() {
+    this.props.getNews(0, 10)
+  }
 
-export default class Discovery extends BaseScreen {
+  getNewsListData = () => {
+    try {
+      const data = this.props.newsData.toJS()
+      return data.map(item => ({
+        previewImage: item.img_url,
+        // TODO: the api key is 'tittle' and should be corrected
+        title: item.title || item.tittle,
+        // TODO: get some raw text from markdown ?
+        subTitle: item.content.substr(0, 30),
+        author: item.publisher,
+        date: new Date(item.createdAt).toLocaleDateString(),
+        onRowPress: item.onRowPress,
+        id: item.id
+      }))
+    } catch (e) {
+      return []
+    }
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        
+        <NewsList
+          data={this.getNewsListData()}
+        />
       </View>
     )
   }
 }
+
+const mapStateToProps = state => ({
+  newsData: state.news.get('data')
+})
+
+const mapDispatchToProps = dispatch => ({
+  getNews: (startAt, limit) => dispatch(newsActions.getNewsRequested({ startAt, limit }))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Discovery)
