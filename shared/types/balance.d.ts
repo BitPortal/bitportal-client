@@ -3,3 +3,8 @@ declare interface BalanceParams {
   account: string
   symbol?: string
 }
+
+declare interface GetEOSBalanceResult {
+  name: string
+  balance: []
+}

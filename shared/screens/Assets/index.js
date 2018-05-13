@@ -22,12 +22,14 @@ import keygen from 'eos/keygen'
 import Keystore from 'eos/keystore'
 import secureStorage from 'utils/secureStorage'
 import * as walletActions from 'actions/wallet'
+import { accountBalanceSelector } from 'selectors/balance'
 
 @connect(
   (state) => ({
     locale: state.intl.get('locale'),
     assetsInfo: state.assets.get('data'),
-    wallet: state.wallet
+    wallet: state.wallet,
+    balance: accountBalanceSelector(state)
   }),
   (dispatch) => ({
     actions: bindActionCreators({
@@ -111,12 +113,18 @@ export default class Assets extends BaseScreen {
      *   recovery: 'eosio',
      *   keyProvider: '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
      * })*/
+    this.props.actions.syncEOSAccount()
+    /* this.props.actions.importEOSAccountRequested({
+     *   name: 'eosio',
+     *   key: 'PW5KfRDq5g6F8LqkSRa3KhZABHhFkyqGa3oXc9fEqgX8hBQNJbuv6'
+     * })*/
   }
 
   render() {
-    const { assetsInfo, wallet } = this.props
+    const { assetsInfo, wallet, balance } = this.props
     const accountName = wallet.get('account').get('account_name')
     const accountList = wallet.get('accounts')
+    const balanceList = balance.get('data').get('eosAccountBalance')
 
     let enabledAssetInfo = assetsInfo.find((item) => item.get('enable') === true )
     return (
@@ -139,7 +147,7 @@ export default class Assets extends BaseScreen {
             <ScrollView showsVerticalScrollIndicator={false}>
               <TotalAssets totalAssets={425321132.21} accountName={accountName} onPress={() => this.operateAssetQRCode(true)} />
               <EnableAssets Title="Asset" enableAssets={() => this.enableAssets()} />
-              <AssetsList data={enabledAssetInfo.get('assetsList')} onPress={(e) => this.checkAsset(e)} />
+              {balanceList && <AssetsList data={balanceList} onPress={(e) => this.checkAsset(e)} />}
             </ScrollView>
           </View>
         }

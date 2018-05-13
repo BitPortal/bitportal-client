@@ -5,6 +5,7 @@ import intl from './intl'
 import ticker from './ticker'
 import wallet from './wallet'
 import news from './news'
+import balance from './balance'
 
 export default combineReducers({
   router,
@@ -12,5 +13,6 @@ export default combineReducers({
   intl,
   wallet,
   ticker,
-  news
+  news,
+  balance
 })
