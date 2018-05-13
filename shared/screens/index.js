@@ -1,12 +1,12 @@
+/* eslint-disable no-multi-spaces */
 import { Navigation } from 'react-native-navigation'
-
 
 import Market             from 'screens/Market'
 import FundFlow           from 'screens/Market/FundFlow'
 import TokenDetails       from 'screens/Market/TokenDetails'
 import MarketDetails      from 'screens/Market/MarketDetails'
 
-import Alerts   from 'screens/Alerts'
+import Alerts             from 'screens/Alerts'
 import Welcome            from 'screens/Welcome'
 import QRCodeScanner      from 'screens/QRCodeScanner'
 import TransactionRecord  from 'screens/TransactionRecord'
@@ -25,7 +25,7 @@ import PrivateKeyCreation from 'screens/Account/PrivateKeyCreation'
 import Discovery          from 'screens/Discovery'
 
 import Profile            from 'screens/Profile'
-import Settings           from 'screens/Profile/Settings' 
+import Settings           from 'screens/Profile/Settings'
 import AccountManager     from 'screens/Profile/AccountManager'
 
 export const registerScreens = (store, provider) => {

@@ -1,11 +1,17 @@
-import { BITPORTAL_API_REST_URL } from 'constants/env'
+import { BITPORTAL_API_REST_URL, BITPORTAL_API_CMS_URL } from 'constants/env'
 import storage from 'utils/storage'
 import { isMobile } from 'utils/platform'
 
 if (!isMobile) require('isomorphic-fetch')
 
-export const fetchBase = async (method: FetchMethod = 'GET', endPoint: string = '/hello', params: object = {}, customeHeaders: object = {}) => {
-  let url = BITPORTAL_API_REST_URL + endPoint
+export const fetchBase = async (
+  method: FetchMethod = 'GET',
+  endPoint: string = '/hello',
+  params: object = {},
+  customeHeaders: object = {},
+  baseUrl = BITPORTAL_API_REST_URL
+) => {
+  let url = baseUrl + endPoint
   const token = await storage.getItem('bitportal_t')
   const authorization = token && `Bearer ${token}`
 
@@ -34,7 +40,7 @@ export const fetchBase = async (method: FetchMethod = 'GET', endPoint: string = 
     }
   }
 
-  return fetch(url, options).then((res: any) => {
+  return fetch(url, baseUrl === BITPORTAL_API_CMS_URL ? {} : options).then((res: any) => {
     if (!res.ok) {
       return res.json().then((e: any) => Promise.reject({ message: e.error_msg }))
     }
@@ -64,3 +70,4 @@ export const bindUserTwoFactor = (params: BindUserTwoFactorParams) => fetchBase(
 
 export const getTickers = (params?: TickerParams) => fetchBase('GET', '/tickers', params)
 export const getChart = (params?: ChartParams) => fetchBase('GET', '/chart', params)
+export const getNews = (params?: NewsParams) => fetchBase('GET', '/article', params, {}, BITPORTAL_API_CMS_URL)
