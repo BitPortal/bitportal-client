@@ -10,7 +10,7 @@ export default class NavigationBar extends Component {
 
   render() {
     const { title, titleButton, leftButton, rightButton } = this.props
-    const titleElement = titleButton || { title: title || "", style: styles.textTitle }
+    const titleElement = titleButton || { title: title || "", style: styles.textTitle, numberOfLines: 1 }
     return (
       <NavBar
         leftButton={leftButton}

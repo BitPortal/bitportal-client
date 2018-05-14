@@ -9,41 +9,35 @@ import SettingItem from 'components/SettingItem'
 import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
 import TotalAssetsCard from 'components/TotalAssetsCard'
 
-export default class AccountList extends BaseScreen {
+export default class ExportEntrance extends BaseScreen {
 
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
   }
 
-  deleteAccount = () => {
-
+  exportPrivateKey = () => {
+    this.props.navigator.push({ screen: 'BitPortal.ExportPrivateKey' })
   }
 
-  resetPassword = () => {
-
-  }
-
-  exportAccount = () => {
-    this.props.navigator.push({ screen: 'BitPortal.ExportEntrance' })
+  exportKeystore = () => {
+    this.props.navigator.push({ screen: 'BitPortal.ExportKeystore' })
   }
 
   render() {
     return (
       <View style={styles.container}>
         <NavigationBar 
-          title="EOS-1"
+          title="Export"
           leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
-          rightButton={ <CommonRightButton iconName="ios-trash" onPress={() => this.deleteAccount()} /> }
         />
         <View style={styles.scrollContainer}>
           <ScrollView 
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }} 
           >
-            <TotalAssetsCard totalAssets={425321132.21} accountName={'meon'} disabled={true} />
-            <SettingItem leftItemTitle={'Reset Password'} onPress={() => this.resetPassword()} extraStyle={{ marginTop: 10 }} />
-            <SettingItem leftItemTitle={'Export'} onPress={() => this.exportAccount()} extraStyle={{ marginTop: 10 }} />
+            <SettingItem leftItemTitle={'Export Private Key'} onPress={() => this.exportPrivateKey()} extraStyle={{ marginTop: 10 }} />
+            <SettingItem leftItemTitle={'Export Keystore'} onPress={() => this.exportKeystore()} />
           </ScrollView>
         </View>
       </View>
