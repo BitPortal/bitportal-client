@@ -15,16 +15,12 @@ export default class TokenDetails extends BaseScreen {
     navBarHidden: true
   }
 
-  goBack = () => {
-    this.props.navigator.pop()
-  }
-
   render() {
     return (
       <View style={styles.container}>
         <NavigationBar 
           leftButton={
-            <CommonButton iconName="md-arrow-back" title="Token Details" onPress={() => this.goBack()} />
+            <CommonButton iconName="md-arrow-back" title="Token Details" onPress={() => this.pop()} />
           }
         />
         <View style={styles.scrollContainer}>

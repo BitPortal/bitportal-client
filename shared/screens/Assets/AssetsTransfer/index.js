@@ -19,13 +19,9 @@ export default class AssetsTransfer extends BaseScreen {
     isVisible: false
   }
 
-  goBack = () => {
-    this.props.navigator.pop()
-  }
-
   scanner = () => {
     if (this.props.entry && this.props.entry == 'scanner') {
-      this.goBack()
+      this.pop()
     } else {
       this.props.navigator.push({
         screen: 'BitPortal.QRCodeScanner'
@@ -59,7 +55,7 @@ export default class AssetsTransfer extends BaseScreen {
       <View style={styles.container}>
         <NavigationBar 
           title={"Send"}
-          leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.goBack()}/> }
+          leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()}/> }
           rightButton={ <CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanner()} /> }
         />
         <View style={styles.scrollContainer}>

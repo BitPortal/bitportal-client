@@ -16,10 +16,6 @@ export default class Scanner extends BaseScreen {
     navBarHidden: true
   }
 
-  goBack = () => {
-    this.props.navigator.pop()
-  }
-
   onSuccess(e) {
     this.props.navigator.push({
       screen: 'BitPortal.AssetsTransfer',
@@ -33,7 +29,7 @@ export default class Scanner extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar 
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.goBack()} />}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           title="QRCode Scanner"
         />
        
