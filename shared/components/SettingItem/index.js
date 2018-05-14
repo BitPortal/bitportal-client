@@ -20,17 +20,18 @@ export default class SettingItem extends Component {
   }
 
   renderRightItem(rightItemTitle) {
-    const {rightImageName, rightItemStyle} = this.props
-    let iconName = rightImageName ? rightImageName : "ios-arrow-forward"
-    let rightTextStyle = rightItemStyle ? rightItemStyle : styles.rightItemStyle
+    const { rightImageName, rightItemStyle, iconColor } = this.props
+    const iconName = rightImageName ? rightImageName : "ios-arrow-forward"
+    const imageColor = iconColor ? iconColor : Colors.textColor_181_181_181
+    const rightTextStyle = rightItemStyle ? rightItemStyle : styles.rightItemStyle
     if (!rightItemTitle) {
       return (
-        <Ionicons name={iconName} size={24} color={Colors.textColor_181_181_181} />
+        <Ionicons name={iconName} size={24} color={imageColor} />
       )
     }else {
       return (
         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-          <Text style={[text16]}>
+          <Text style={[styles.text16]}>
             {rightItemTitle}
           </Text>
         </View>
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: SCREEN_WIDTH,
     height: 50,
-    paddingHorizontal: 25
+    paddingHorizontal: 32
   },
   center: {
     alignItems: 'center',
