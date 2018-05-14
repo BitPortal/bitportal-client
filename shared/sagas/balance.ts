@@ -10,7 +10,7 @@ function* getBalanceRequested(action: Action<BalanceParams>) {
     const eos = getEOS()
     const data = yield call(eos.getCurrencyBalance, action.payload)
     const name = action.payload.account
-    const balances = data.map(item => {
+    const balances = data.map((item: any) => {
       const symbol = item.split(' ')[1]
       const balance = item.split(' ')[0]
       const type = symbol === 'EOS' ? 'coin' : 'token'

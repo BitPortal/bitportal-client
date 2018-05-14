@@ -4,6 +4,7 @@ import 'intl'
 import 'intl/locale-data/jsonp/en.js'
 import 'intl/locale-data/jsonp/zh.js'
 import { StatusBar } from 'react-native'
+import EStyleSheet from 'react-native-extended-stylesheet'
 import { registerScreens } from 'screens'
 import { startSingleApp, startTabBasedApp } from 'navigators'
 import storage from 'utils/storage'
@@ -13,6 +14,8 @@ import Provider from 'components/Provider'
 import sagas from 'sagas'
 import SplashScreen from 'react-native-splash-screen'
 import Colors from 'resources/colors'
+
+EStyleSheet.build({})
 
 const runApp = async () => {
   const lang = await storage.getItem('bitportal_lang')
