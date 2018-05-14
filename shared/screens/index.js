@@ -1,12 +1,12 @@
+/* eslint-disable no-multi-spaces */
 import { Navigation } from 'react-native-navigation'
-
 
 import Market             from 'screens/Market'
 import FundFlow           from 'screens/Market/FundFlow'
 import TokenDetails       from 'screens/Market/TokenDetails'
 import MarketDetails      from 'screens/Market/MarketDetails'
 
-import Alerts   from 'screens/Alerts'
+import Alerts             from 'screens/Alerts'
 import Welcome            from 'screens/Welcome'
 import QRCodeScanner      from 'screens/QRCodeScanner'
 import TransactionRecord  from 'screens/TransactionRecord'
@@ -25,8 +25,14 @@ import PrivateKeyCreation from 'screens/Account/PrivateKeyCreation'
 import Discovery          from 'screens/Discovery'
 
 import Profile            from 'screens/Profile'
-import Settings           from 'screens/Profile/Settings' 
+import Settings           from 'screens/Profile/Settings'
+import Languages          from 'screens/Profile/Languages'
+import Currencies         from 'screens/Profile/Currencies'
+import AccountList        from 'screens/Profile/AccountList'
 import AccountManager     from 'screens/Profile/AccountManager'
+import ExportEntrance     from 'screens/Profile/ExportEntrance'
+import ExportKeystore     from 'screens/Profile/ExportKeystore'
+import ExportPrivateKey   from 'screens/Profile/ExportPrivateKey'
 
 export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.Alerts',             () => Alerts,             store, provider)
@@ -48,7 +54,13 @@ export const registerScreens = (store, provider) => {
 
   Navigation.registerComponent('BitPortal.Profile',            () => Profile,            store, provider)
   Navigation.registerComponent('BitPortal.Settings',           () => Settings,           store, provider)
+  Navigation.registerComponent('BitPortal.Languages',          () => Languages,           store, provider)
+  Navigation.registerComponent('BitPortal.Currencies',         () => Currencies,           store, provider)
+  Navigation.registerComponent('BitPortal.AccountList',        () => AccountList,        store, provider)
   Navigation.registerComponent('BitPortal.AccountManager',     () => AccountManager,     store, provider)
+  Navigation.registerComponent('BitPortal.ExportEntrance',     () => ExportEntrance,     store, provider)
+  Navigation.registerComponent('BitPortal.ExportKeystore',     () => ExportKeystore,     store, provider)
+  Navigation.registerComponent('BitPortal.ExportPrivateKey',   () => ExportPrivateKey,   store, provider)
 
   Navigation.registerComponent('BitPortal.Backup',             () => Backup,             store, provider)
   Navigation.registerComponent('BitPortal.BackupTips',         () => BackupTips,         store, provider)

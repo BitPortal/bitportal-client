@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styles from './styles'
-import NavigationBar, { BackButton } from 'components/NavigationBar'
+import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import BaseScreen from 'components/BaseScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
@@ -32,13 +32,9 @@ export default class Backup extends BaseScreen {
     privateKey: '(function(i,s,o,g,r,a,m){i[`GoogleAnalyticsObject`]=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,`script`,`//www.google-analytics.com/analytics.js`,`ga`);'
   }
 
-  goBack = () => {
-    this.props.navigator.pop()
-  }
-
   copyPrivateKey = () => {
     Clipboard.setString(this.state.privateKey)
-    this.setState({ isCopied: true })
+    this.setState({ isCopied: true }) 
   }
 
   render() {
@@ -46,7 +42,7 @@ export default class Backup extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar 
-          leftButton={<BackButton iconName="md-arrow-back" onPress={() => this.goBack()} />}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           title="Backup"
         />
         <View style={styles.scrollContainer}>
@@ -61,7 +57,7 @@ export default class Backup extends BaseScreen {
                 Private Key 
               </Text>
 
-              <View ref={e => this.viewRef = e} style={[styles.inputContainer]}>
+              <View style={[styles.inputContainer]}>
                 <TextInput
                   editable={false}
                   multiline={true}

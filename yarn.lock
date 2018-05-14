@@ -151,15 +151,15 @@
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/@types/react-intl/-/react-intl-2.3.2.tgz#a57433871dedf2f12ba8eeca645e5ce5a37d102a"
 
-"@types/react-native@TerenceGe/types-react-native":
-  version "0.50.2"
-  resolved "https://codeload.github.com/TerenceGe/types-react-native/tar.gz/a0fa053e0f92500cf2e851df9d673fef22b727dc"
+"@types/react-native-navigation@^1.1.10":
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/@types/react-native-navigation/-/react-native-navigation-1.1.10.tgz#063717010aaacc9ad39912530e680b4f86a7db51"
   dependencies:
     "@types/react" "*"
 
-"@types/react-navigation@TerenceGe/types-react-navigation":
-  version "1.0.22"
-  resolved "https://codeload.github.com/TerenceGe/types-react-navigation/tar.gz/48f1df06ed71b4fb0d2fff00ef390ee4577f8907"
+"@types/react-native@TerenceGe/types-react-native":
+  version "0.50.2"
+  resolved "https://codeload.github.com/TerenceGe/types-react-native/tar.gz/34f22a25b71363f538132ef34eb56bd17360880e"
   dependencies:
     "@types/react" "*"
 
@@ -209,9 +209,9 @@
   version "2.2.2"
   resolved "https://codeload.github.com/TerenceGe/types-redux-actions/tar.gz/d12cc441aee72273d498c44c8805c75fb42cb5a2"
 
-"@types/redux-form@^7.0.9":
-  version "7.0.9"
-  resolved "https://registry.yarnpkg.com/@types/redux-form/-/redux-form-7.0.9.tgz#2afafa8795a8aa0190ad6101b7df226d829821bc"
+"@types/redux-form@^7.2.5":
+  version "7.2.5"
+  resolved "https://registry.yarnpkg.com/@types/redux-form/-/redux-form-7.2.5.tgz#26faf46106805fc4601395420f1d5bbab7469c4b"
   dependencies:
     "@types/react" "*"
     redux "^3.6.0"
@@ -3017,7 +3017,7 @@ create-react-class@^15.5.2:
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
 
-create-react-class@^15.6.0:
+create-react-class@^15.6.0, create-react-class@^15.6.2:
   version "15.6.3"
   resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.6.3.tgz#2d73237fb3f970ae6ebe011a9e66f46dbca80036"
   dependencies:
@@ -9489,6 +9489,14 @@ react-native-randombytes@^3.1.0:
     buffer "^4.9.1"
     sjcl "^1.0.3"
 
+react-native-scrollable-tab-view@^0.8.0:
+  version "0.8.0"
+  resolved "http://registry.npm.taobao.org/react-native-scrollable-tab-view/download/react-native-scrollable-tab-view-0.8.0.tgz#5cb1fcfce07bf530a3c81ab51fc5071144edac5c"
+  dependencies:
+    create-react-class "^15.6.2"
+    prop-types "^15.6.0"
+    react-timer-mixin "^0.13.3"
+
 "react-native-sensitive-info@git://github.com/mCodex/react-native-sensitive-info#keystore":
   version "5.0.0"
   resolved "git://github.com/mCodex/react-native-sensitive-info#55856ba062e233751cc7c995e8491038ae7811b6"
@@ -9650,7 +9658,7 @@ react-test-renderer@^16.0.0-0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-timer-mixin@^0.13.2:
+react-timer-mixin@^0.13.2, react-timer-mixin@^0.13.3:
   version "0.13.3"
   resolved "https://registry.yarnpkg.com/react-timer-mixin/-/react-timer-mixin-0.13.3.tgz#0da8b9f807ec07dc3e854d082c737c65605b3d22"
 
@@ -11544,9 +11552,9 @@ typescript-formatter@^6.0.0:
     commandpost "^1.0.0"
     editorconfig "^0.15.0"
 
-typescript@^2.7.2:
-  version "2.7.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.7.2.tgz#2d615a1ef4aee4f574425cdff7026edf81919836"
+typescript@^2.8.3:
+  version "2.8.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.8.3.tgz#5d817f9b6f31bb871835f4edf0089f21abe6c170"
 
 ua-parser-js@^0.7.9:
   version "0.7.17"

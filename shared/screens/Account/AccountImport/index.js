@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styles from './styles'
-import NavigationBar, { BackButton } from 'components/NavigationBar'
+import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, TouchableOpacity, TextInput, TouchableHighlight } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import Colors from 'resources/colors'
@@ -17,10 +17,6 @@ export default class AccountImport extends BaseScreen {
 
   state = {
     isAccountVaild: true
-  }
-
-  goBack = () => {
-    this.props.navigator.pop()
   }
 
   changeAccountName = () => {
@@ -42,7 +38,7 @@ export default class AccountImport extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar 
-          leftButton={<BackButton iconName="md-arrow-back" onPress={() => this.goBack()} />}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           title="Import"
         />
         <View style={styles.scrollContainer}>

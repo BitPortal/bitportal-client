@@ -2,8 +2,8 @@
 import React, { Component } from 'react'
 import { Text, View, ScrollView, Image, TouchableOpacity } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
+import TotalAssetsCard from 'components/TotalAssetsCard'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import TotalAssets from './TotalAssets'
 import Header from './Header'
 import EnableAssets from './EnableAssets'
 import AssetsList from './AssetsList'
@@ -13,9 +13,7 @@ import Modal from 'react-native-modal'
 import AssetQRCode from './AssetQRCode'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import * as assetsActions from 'actions/assets'
 import storage from 'utils/storage'
-import _ from 'lodash'
 import AccountList from './AccountList'
 import Eos from 'react-native-eosjs'
 import keygen from 'eos/keygen'
@@ -27,13 +25,11 @@ import { accountBalanceSelector } from 'selectors/balance'
 @connect(
   (state) => ({
     locale: state.intl.get('locale'),
-    assetsInfo: state.assets.get('data'),
     wallet: state.wallet,
     balance: accountBalanceSelector(state)
   }),
   (dispatch) => ({
     actions: bindActionCreators({
-      ...assetsActions,
       ...walletActions
     }, dispatch)
   })
@@ -83,18 +79,6 @@ export default class Assets extends BaseScreen {
     this.setState({ isVisible })
   }
 
-  // 从本地获取全部资产信息
-  getAssetsInfo = async () => {
-    try {
-      const assetsInfo = await storage.getItem('bitportal_assets_info')
-      if (assetsInfo) {
-        this.props.actions.getAssetsInfo(JSON.parse(assetsInfo).data)
-      }
-    } catch (error) {
-      console.error(`AsyncStorage getItem Error: ${error.message}`)
-    }
-  }
-
   // 创建新账户
   createNewAccount = () => {
     this.props.navigator.push({
@@ -102,6 +86,7 @@ export default class Assets extends BaseScreen {
     })
   }
 
+  // 切换EOS账户
   switchEOSAccount = (name) => {
     this.props.actions.switchEOSAccount({ name })
   }
@@ -109,9 +94,9 @@ export default class Assets extends BaseScreen {
   componentDidMount() {
     /* this.props.actions.createEOSAccountRequested({
      *   creator: 'eosio',
-     *   name: 'hellotg',
+     *   name: 'asddas',
      *   recovery: 'eosio',
-     *   keyProvider: '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
+     *   keyProvider: '5KD4Xdbsp4vJPNiRVhLAbx35jbx7bgWj79GiQDqD6dYyvBSPf4r'
      * })*/
     this.props.actions.syncEOSAccount()
     /* this.props.actions.importEOSAccountRequested({
@@ -121,17 +106,15 @@ export default class Assets extends BaseScreen {
   }
 
   render() {
-    const { assetsInfo, wallet, balance } = this.props
+    const { wallet, balance } = this.props
     const accountName = wallet.get('account').get('account_name')
     const accountList = wallet.get('accounts')
     const balanceList = balance.get('data').get('eosAccountBalance')
-
-    let enabledAssetInfo = assetsInfo.find((item) => item.get('enable') === true )
     return (
       <View style={styles.container}>
         <Header Title="Account" displayAccount={() => this.displayAccountList()} scanQR={() => this.scanQR()} />
         {
-          !enabledAssetInfo &&
+          !balanceList &&
           <TouchableOpacity onPress={() => this.createNewAccount()} style={[styles.createAccountContainer, styles.center]}>
             <View style={{ alignItems: 'center' }}>
               <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF} />
@@ -142,10 +125,10 @@ export default class Assets extends BaseScreen {
           </TouchableOpacity>
         }
         {
-          enabledAssetInfo &&
+          balanceList &&
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <TotalAssets totalAssets={425321132.21} accountName={accountName} onPress={() => this.operateAssetQRCode(true)} />
+              <TotalAssetsCard totalAssets={425321132.21} accountName={accountName} onPress={() => this.operateAssetQRCode(true)} />
               <EnableAssets Title="Asset" enableAssets={() => this.enableAssets()} />
               {balanceList && <AssetsList data={balanceList} onPress={(e) => this.checkAsset(e)} />}
             </ScrollView>

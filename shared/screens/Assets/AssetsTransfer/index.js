@@ -5,7 +5,7 @@ import BaseScreen from 'components/BaseScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import styles from './styles'
 import Colors from 'resources/colors'
-import NavigationBar, { BackButton } from 'components/NavigationBar'
+import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
 import InputItem from './InputItem'
 import Modal from 'react-native-modal'
 import TransferCard from './TransferCard'
@@ -19,13 +19,9 @@ export default class AssetsTransfer extends BaseScreen {
     isVisible: false
   }
 
-  goBack = () => {
-    this.props.navigator.pop()
-  }
-
   scanner = () => {
     if (this.props.entry && this.props.entry == 'scanner') {
-      this.goBack()
+      this.pop()
     } else {
       this.props.navigator.push({
         screen: 'BitPortal.QRCodeScanner'
@@ -58,15 +54,9 @@ export default class AssetsTransfer extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar 
-          leftButton={<BackButton iconName="md-arrow-back" onPress={() => this.goBack()}/>}
           title={"Send"}
-          rightButton={
-            <TouchableOpacity onPress={() => this.scanner()} style={styles.navButton}>
-              <View style={{ marginLeft: 40 }}>
-                <Ionicons name="md-qr-scanner" size={20} color={Colors.textColor_255_255_238} />
-              </View>
-            </TouchableOpacity>
-          }
+          leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()}/> }
+          rightButton={ <CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanner()} /> }
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>

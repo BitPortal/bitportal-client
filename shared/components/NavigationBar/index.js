@@ -10,7 +10,7 @@ export default class NavigationBar extends Component {
 
   render() {
     const { title, titleButton, leftButton, rightButton } = this.props
-    const titleElement = titleButton || { title: title || "", style: styles.textTitle }
+    const titleElement = titleButton || { title: title || "", style: styles.textTitle, numberOfLines: 1 }
     return (
       <NavBar
         leftButton={leftButton}
@@ -23,10 +23,10 @@ export default class NavigationBar extends Component {
   }
 }
 
-export const BackButton = ({ iconName, title, onPress }) => (
+export const CommonButton = ({ iconName, title, onPress }) => (
   <TouchableOpacity
-    onPress={() => onPress()}
     style={styles.navButton}
+    onPress={() => onPress()}
   >
     <View style={{flexDirection: 'row', alignItems: 'center'}}>
       <Ionicons name={iconName} size={24} color={Colors.bgColor_FFFFFF} />
@@ -37,3 +37,19 @@ export const BackButton = ({ iconName, title, onPress }) => (
   </TouchableOpacity>
 )
 
+export const CommonTitle = ({ title }) => (
+  <View style={styles.navButton}>
+    <Text style={styles.text24}>{title}</Text>
+  </View>
+)
+
+export const CommonRightButton = ({ iconName, title, onPress }) => (
+  <TouchableOpacity
+    style={styles.navButton}
+    onPress={() => onPress()}
+  >
+    <View style={{ alignSelf: 'flex-end', marginRight: 32 }}>
+      <Ionicons name={iconName} size={24} color={Colors.bgColor_FFFFFF} />
+    </View>
+  </TouchableOpacity>
+)

@@ -23,12 +23,14 @@ declare interface Config {
 
 declare interface RootState {
   router?: any
-  form?: any
   modal?: any
   ui?: any
+  form: any
   intl: any
   ticker: any
   assets: any
+  balance: any
+  wallet: any
 }
 
 declare interface FetchOptions {
@@ -242,6 +244,11 @@ declare module 'ethereumjs-wallet*' {
 }
 
 declare module 'react-native-sensitive-info' {
+  const file: any
+  export = file
+}
+
+declare module 'eos/*' {
   const file: any
   export = file
 }
