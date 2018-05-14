@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import { SCREEN_HEIGHT, SCREEN_WIDTH, FontScale, NAV_BAR_HEIGHT, ifIphoneX } from 'utils/dimens'
 import Colors from 'resources/colors'
 
@@ -18,16 +18,21 @@ const styles = StyleSheet.create({
     color: Colors.textColor_FFFFEE
   },
   navButton: {
-    minWidth: 80, 
+    minWidth: 100, 
     height: 40, 
-    paddingTop: 6, 
-    marginLeft: 10, 
-    alignItems: 'center', 
+    paddingTop: Platform.OS === 'ios' ? 0 : 4,
+    paddingLeft: 32, 
+    alignItems: 'center',
     justifyContent: 'center'
   },
   text20: {
     fontSize: FontScale(20),
     color: Colors.textColor_FFFFEE
+  },
+  text24: {
+    fontSize: FontScale(24),
+    color: Colors.textColor_FFFFEE,
+    fontWeight: 'bold'
   },
   text13: {
     fontSize: FontScale(13),
@@ -35,4 +40,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default styles;
+export default styles

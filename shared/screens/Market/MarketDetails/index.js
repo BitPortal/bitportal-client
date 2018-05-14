@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import styles from './styles'
 import Colors from 'resources/colors'
-import NavigationBar, { BackButton } from 'components/NavigationBar'
+import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import { exchangeTickerSelector } from 'selectors/ticker'
 import BaseScreen from 'components/BaseScreen'
@@ -66,7 +66,7 @@ export default class MarketDetails extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar
-          leftButton={<BackButton iconName="md-arrow-back" onPress={() => this.goBack()} />}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.goBack()} />}
           title={`${EXCHANGE_NAMES[ticker.get('exchangeFilter')]} / ${ticker.get('baseAsset')}`}
         />
         <View style={styles.scrollContainer}>

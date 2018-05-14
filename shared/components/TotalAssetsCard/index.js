@@ -6,6 +6,7 @@ import LinearGradientContainer from 'components/LinearGradientContainer'
 import { FormattedNumber } from 'react-intl'
 import { SCREEN_HEIGHT, SCREEN_WIDTH, FontScale } from 'utils/dimens'
 import Images from 'resources/images'
+import PropTypes from 'prop-types'
 
 const styles = StyleSheet.create({
   linearContainer: {
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
   }
 })
 
-export default class TotalAssets extends Component {
+class TotalAssetsCard extends Component {
 
   render() {
     const { totalAssets, accountName, onPress } = this.props
@@ -61,5 +62,12 @@ export default class TotalAssets extends Component {
       </View>
     )
   }
-
 }
+
+TotalAssetsCard.propTypes = {
+  totalAssets: PropTypes.number.isRequired, 
+  accountName: PropTypes.string.isRequired, 
+  onPress: PropTypes.func.isRequired
+}
+
+export default TotalAssetsCard

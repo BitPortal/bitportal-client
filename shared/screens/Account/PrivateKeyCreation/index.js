@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styles from './styles'
-import NavigationBar, { BackButton } from 'components/NavigationBar'
+import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import BaseScreen from 'components/BaseScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
@@ -61,7 +61,7 @@ export default class PrivateKeyCreation extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar 
-          leftButton={<BackButton iconName="md-arrow-back" onPress={() => this.goBack()} />}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.goBack()} />}
           title="Create New Account"
         />
         <View style={styles.scrollContainer}>

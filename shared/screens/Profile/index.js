@@ -7,7 +7,7 @@ import styles from './styles'
 import Images from 'resources/images'
 import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
-import NavigationBar from 'components/NavigationBar'
+import NavigationBar, { CommonTitle, CommonRightButton } from 'components/NavigationBar'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 export default class Profile extends BaseScreen {
@@ -20,7 +20,7 @@ export default class Profile extends BaseScreen {
     let pageName = ''
     switch (page) {
       case 'Account':
-        pageName = 'AccountManager'
+        pageName = 'AccountList'
         break
       case 'Vote':
       case 'About':
@@ -39,19 +39,9 @@ export default class Profile extends BaseScreen {
     const { navigation } = this.props
     return (
       <View style={styles.container}>
-       <NavigationBar 
-          leftButton={
-            <View style={[styles.navButton, styles.center]}>
-              <Text style={styles.text24}>Profile</Text>
-            </View>
-          }
-          rightButton={
-            <TouchableOpacity onPress={() => this.checkHistory()} style={[styles.navButton, styles.center]}>
-              <View style={{ marginLeft: 40 }}>
-                <Ionicons name="md-timer" size={20} color={Colors.textColor_255_255_238} />
-              </View>
-            </TouchableOpacity>
-          }
+        <NavigationBar 
+          leftButton={ <CommonTitle title="Profile" /> }
+          rightButton={ <CommonRightButton iconName="md-timer" onPress={() => this.checkHistory()} /> }
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center' }} >

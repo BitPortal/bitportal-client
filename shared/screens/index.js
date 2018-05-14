@@ -26,7 +26,9 @@ import Discovery          from 'screens/Discovery'
 
 import Profile            from 'screens/Profile'
 import Settings           from 'screens/Profile/Settings'
+import AccountList        from 'screens/Profile/AccountList'
 import AccountManager     from 'screens/Profile/AccountManager'
+
 
 export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.Alerts',             () => Alerts,             store, provider)
@@ -48,6 +50,7 @@ export const registerScreens = (store, provider) => {
 
   Navigation.registerComponent('BitPortal.Profile',            () => Profile,            store, provider)
   Navigation.registerComponent('BitPortal.Settings',           () => Settings,           store, provider)
+  Navigation.registerComponent('BitPortal.AccountList',        () => AccountList,        store, provider)
   Navigation.registerComponent('BitPortal.AccountManager',     () => AccountManager,     store, provider)
 
   Navigation.registerComponent('BitPortal.Backup',             () => Backup,             store, provider)
