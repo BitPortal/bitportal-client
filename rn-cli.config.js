@@ -9,3 +9,4 @@ module.exports = {
   getSourceExts() {
     return ['js', 'mobile.js', 'jsx', 'mobile.jsx', 'ts', 'mobile.ts', 'tsx', 'mobile.tsx']
   }
+}

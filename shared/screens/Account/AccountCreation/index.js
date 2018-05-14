@@ -1,7 +1,7 @@
 /* @jsx */
 import React, { Component } from 'react'
-import NavigationBar, { BackButton } from 'components/NavigationBar'
 import { View, ScrollView } from 'react-native'
+import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import BaseScreen from 'components/BaseScreen'
 import CreateEOSAccountForm from 'components/Form/CreateEOSAccountForm'
 import styles from './styles'
@@ -25,7 +25,7 @@ export default class AccountCreation extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar
-          leftButton={<BackButton iconName="md-arrow-back" onPress={this.goBack} />}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={this.goBack} />}
           title="Create New Account"
         />
         <View style={styles.scrollContainer}>
