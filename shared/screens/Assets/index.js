@@ -94,9 +94,9 @@ export default class Assets extends BaseScreen {
   componentDidMount() {
     /* this.props.actions.createEOSAccountRequested({
      *   creator: 'eosio',
-     *   name: 'hellotg',
+     *   name: 'asddas',
      *   recovery: 'eosio',
-     *   keyProvider: '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
+     *   keyProvider: '5KD4Xdbsp4vJPNiRVhLAbx35jbx7bgWj79GiQDqD6dYyvBSPf4r'
      * })*/
     this.props.actions.syncEOSAccount()
     /* this.props.actions.importEOSAccountRequested({

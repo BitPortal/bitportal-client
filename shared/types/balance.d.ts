@@ -6,5 +6,5 @@ declare interface BalanceParams {
 
 declare interface GetEOSBalanceResult {
   name: string
-  balance: []
+  balances: any[]
 }

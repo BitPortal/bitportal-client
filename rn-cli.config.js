@@ -7,6 +7,5 @@ module.exports = {
     return require.resolve('react-native-typescript-transformer')
   },
   getSourceExts() {
-    return ['js', 'mobile.js', 'ts', 'mobile.ts', 'tsx', 'mobile.tsx']
+    return ['js', 'mobile.js', 'jsx', 'mobile.jsx', 'ts', 'mobile.ts', 'tsx', 'mobile.tsx']
   }
-}

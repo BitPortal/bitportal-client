@@ -12,7 +12,7 @@ declare interface EOSAction {
 
 declare interface EOSTransaction {
   actions: EOSAction[]
-  context_free_actions: []
+  context_free_actions: any[]
   delay_sec: number
   expiration: string
   max_kcpu_usage: number
@@ -28,7 +28,7 @@ declare interface EOSAccountKey {
 }
 
 declare interface EOSAccountRequiredAuth {
-  accounts: []
+  accounts: any[]
   keys: EOSAccountKey[]
 }
 
@@ -56,13 +56,13 @@ declare interface GetEOSBlockResult {
   block_mroot: string
   block_num: number
   id: string
-  input_transactions: []
+  input_transactions: any[]
   new_producers: any
   previous: string
   producer: string
   producer_signature: string
   ref_block_prefix: number
-  regions: []
+  regions: any[]
   schedule_version: number
   timestamp: string
   transaction_mroot: string
