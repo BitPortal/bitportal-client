@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styles from './styles'
 import Colors from 'resources/colors'
-import NavigationBar, { BackButton } from 'components/NavigationBar'
+import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, TouchableOpacity, Switch } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import { SCREEN_WIDTH, FontScale } from 'utils/dimens'
@@ -37,10 +37,6 @@ export default class AvailableAssets extends BaseScreen {
     ]
   }
 
-  goBack = () => {
-    this.props.navigator.pop()
-  }
-
   // 激活或隐藏钱包
   onValueChange = (value, item) => {
     item.value = value
@@ -51,7 +47,7 @@ export default class AvailableAssets extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar 
-          leftButton={<BackButton iconName="md-arrow-back" onPress={() => this.goBack()}/>}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()}/>}
           title={"Assets List"}
         />
         <View style={styles.scrollContainer}>

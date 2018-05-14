@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styles from './styles'
 import Colors from 'resources/colors'
-import NavigationBar, { BackButton } from 'components/NavigationBar'
+import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import { Logo, Description, Details, ListedExchange } from './TokenComponents'
@@ -15,16 +15,12 @@ export default class TokenDetails extends BaseScreen {
     navBarHidden: true
   }
 
-  goBack = () => {
-    this.props.navigator.pop()
-  }
-
   render() {
     return (
       <View style={styles.container}>
         <NavigationBar 
           leftButton={
-            <BackButton iconName="md-arrow-back" title="Token Details" onPress={() => this.goBack()} />
+            <CommonButton iconName="md-arrow-back" title="Token Details" onPress={() => this.pop()} />
           }
         />
         <View style={styles.scrollContainer}>

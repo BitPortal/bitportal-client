@@ -6,6 +6,7 @@ import LinearGradientContainer from 'components/LinearGradientContainer'
 import { FormattedNumber } from 'react-intl'
 import { SCREEN_HEIGHT, SCREEN_WIDTH, FontScale } from 'utils/dimens'
 import Images from 'resources/images'
+import PropTypes from 'prop-types'
 
 const styles = StyleSheet.create({
   linearContainer: {
@@ -33,14 +34,14 @@ const styles = StyleSheet.create({
   }
 })
 
-export default class TotalAssets extends Component {
+class TotalAssetsCard extends Component {
 
   render() {
-    const { totalAssets, accountName, onPress } = this.props
+    const { totalAssets, accountName, disabled, onPress } = this.props
     return (
       <View style={{ backgroundColor: Colors.minorThemeColor }}>
         <LinearGradientContainer type="right" style={[styles.linearContainer, { marginHorizontal: 32, marginVertical: 10 }]}>
-          <TouchableHighlight style={styles.linearContainer} underlayColor={Colors.linearUnderlayColor} onPress={() => onPress()} >
+          <TouchableHighlight disabled={disabled} style={styles.linearContainer} underlayColor={Colors.linearUnderlayColor} onPress={() => onPress()} >
             <View style={[styles.linearContainer, styles.paddingStyle]}>
               <Text style={styles.text15}> Total Assets</Text>
               <Text style={styles.text24}>
@@ -61,5 +62,12 @@ export default class TotalAssets extends Component {
       </View>
     )
   }
-
 }
+
+TotalAssetsCard.propTypes = {
+  totalAssets: PropTypes.number.isRequired, 
+  accountName: PropTypes.string.isRequired, 
+  onPress: PropTypes.func
+}
+
+export default TotalAssetsCard

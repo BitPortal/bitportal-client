@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styles from './styles'
-import NavigationBar, { BackButton } from 'components/NavigationBar'
+import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, TouchableOpacity, TouchableHighlight } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -25,10 +25,6 @@ export default class AssetChart extends BaseScreen {
     ]
   }
 
-  goBack = () => {
-    this.props.navigator.pop()
-  }
-
   checkTransactionRecord = () => {
     this.props.navigator.push({
       screen: 'BitPortal.TransactionRecord'
@@ -40,7 +36,7 @@ export default class AssetChart extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar 
-          leftButton={<BackButton iconName="md-arrow-back" onPress={() => this.goBack()} />}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           title={assetInfo.get('assetName')}
         />
         <View style={styles.scrollContainer}>

@@ -5,7 +5,7 @@ import BaseScreen from 'components/BaseScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import styles from './styles'
 import Colors from 'resources/colors'
-import NavigationBar, { BackButton } from 'components/NavigationBar'
+import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { FormattedNumber } from 'react-intl'
 import Images from 'resources/images'
 import QRCode from 'react-native-qrcode'
@@ -31,7 +31,7 @@ export default class TransactionRecord extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar 
-          leftButton={<BackButton iconName="md-arrow-back" onPress={() => this.goBack()}/>}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.goBack()}/>}
           title={"Transaction Record"}
         />
         <View style={styles.scrollContainer}>
