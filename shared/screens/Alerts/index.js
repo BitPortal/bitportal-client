@@ -33,10 +33,6 @@ export default class Alerts extends BaseScreen {
     ]
   }
 
-  goBack = () => {
-    this.props.navigator.pop()
-  }
-
   changeHigh = (high) => {
     this.setState({ high })
   }
@@ -62,7 +58,7 @@ export default class Alerts extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar 
-          leftButton={<CommonButton iconName="md-arrow-back" title="Alerts" onPress={() => this.goBack()} />}
+          leftButton={<CommonButton iconName="md-arrow-back" title="Alerts" onPress={() => this.pop()} />}
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>

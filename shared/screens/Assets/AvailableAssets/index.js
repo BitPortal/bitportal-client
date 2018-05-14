@@ -37,10 +37,6 @@ export default class AvailableAssets extends BaseScreen {
     ]
   }
 
-  goBack = () => {
-    this.props.navigator.pop()
-  }
-
   // 激活或隐藏钱包
   onValueChange = (value, item) => {
     item.value = value
@@ -51,7 +47,7 @@ export default class AvailableAssets extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar 
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.goBack()}/>}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()}/>}
           title={"Assets List"}
         />
         <View style={styles.scrollContainer}>

@@ -19,10 +19,6 @@ export default class AccountImport extends BaseScreen {
     isAccountVaild: true
   }
 
-  goBack = () => {
-    this.props.navigator.pop()
-  }
-
   changeAccountName = () => {
 
   }
@@ -42,7 +38,7 @@ export default class AccountImport extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar 
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.goBack()} />}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           title="Import"
         />
         <View style={styles.scrollContainer}>

@@ -25,10 +25,6 @@ export default class AssetChart extends BaseScreen {
     ]
   }
 
-  goBack = () => {
-    this.props.navigator.pop()
-  }
-
   checkTransactionRecord = () => {
     this.props.navigator.push({
       screen: 'BitPortal.TransactionRecord'
@@ -40,7 +36,7 @@ export default class AssetChart extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar 
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.goBack()} />}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           title={assetInfo.get('assetName')}
         />
         <View style={styles.scrollContainer}>

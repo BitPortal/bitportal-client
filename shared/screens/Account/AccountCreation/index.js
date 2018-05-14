@@ -25,10 +25,6 @@ export default class AccountCreation extends BaseScreen {
     isSamePassword: true
   }
 
-  goBack = () => {
-    this.props.navigator.pop()
-  }
-
   setPassword = () => {
     this.props.navigator.push({
       screen: 'BitPortal.PrivateKeyCreation'
@@ -78,7 +74,7 @@ export default class AccountCreation extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar 
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.goBack()} />}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           title="Create New Account"
         />
         <View style={styles.scrollContainer}>

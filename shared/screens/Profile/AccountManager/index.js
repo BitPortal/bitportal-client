@@ -15,28 +15,12 @@ export default class AccountList extends BaseScreen {
     navBarHidden: true
   }
 
-  goBack = () => {
-    this.props.navigator.pop()
-  }
-
-  createNewAccount = () => {
-    this.props.navigator.push({ screen: 'BitPortal.AccountCreation' })
-  }
-  
-  importAccount = () => {
-
-  }
-
-  checkAsset = () => {
-    
-  }
-
   render() {
     return (
       <View style={styles.container}>
         <NavigationBar 
           title="EOS-1"
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.goBack()} />}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           rightButtom={
             <View />
           }

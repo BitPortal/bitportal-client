@@ -41,10 +41,6 @@ export default class MarketDetails extends BaseScreen {
     navBarHidden: true
   }
 
-  goBack = () => {
-    this.props.navigator.pop()
-  }
-
   changeMarket = (data) => {
     alert(JSON.stringify(data))
   }
@@ -66,7 +62,7 @@ export default class MarketDetails extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.goBack()} />}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           title={`${EXCHANGE_NAMES[ticker.get('exchangeFilter')]} / ${ticker.get('baseAsset')}`}
         />
         <View style={styles.scrollContainer}>

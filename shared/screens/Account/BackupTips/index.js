@@ -15,10 +15,6 @@ export default class BackupTips extends BaseScreen {
     navBarHidden: true
   }
 
-  goBack = () => {
-    this.props.navigator.pop()
-  }
-
   goToBackup = () => {
     this.props.navigator.push({
       screen: 'BitPortal.Backup'
@@ -33,7 +29,7 @@ export default class BackupTips extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar 
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.goBack()} />}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           title="Backup"
         />
         <View style={styles.scrollContainer}>
