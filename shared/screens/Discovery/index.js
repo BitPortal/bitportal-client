@@ -59,7 +59,7 @@ class Discovery extends BaseScreen {
           leftButton={<CommonTitle title="Discovery" />}
           rightButton={<CommonRightButton iconName="md-search" onPress={() => {}} />}
         />
-        <NewsBanner style={{ paddingVertical: 20 }}>
+        <NewsBanner autoplay={false} style={{ paddingVertical: 20 }}>
           {this.getBanner()}
         </NewsBanner>
         <NewsList
