@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: NAV_BAR_HEIGHT,
     backgroundColor: Colors.minorThemeColor,
+    justifyContent: 'center',
     ...ifIphoneX({
       paddingTop: 24
     },{
@@ -20,9 +21,9 @@ const styles = StyleSheet.create({
   navButton: {
     minWidth: 100, 
     height: 40, 
-    paddingTop: Platform.OS === 'ios' ? 0 : 4,
+    paddingTop: Platform.OS === 'ios' ? 6 : 4,
     paddingLeft: 32, 
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center'
   },
   text20: {

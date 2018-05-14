@@ -38,7 +38,7 @@ class Discovery extends BaseScreen {
       <View style={styles.container}>
         <NavigationBar 
           leftButton={ <CommonTitle title="Discovery" /> }
-          rightButton={ <CommonRightButton iconName="md-search" /> }
+          rightButton={ <CommonRightButton iconName="md-search" onPress={() => {}} /> }
         />
         <NewsList
           data={this.getNewsListData()}
