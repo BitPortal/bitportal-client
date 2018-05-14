@@ -45,12 +45,12 @@ export default class Profile extends BaseScreen {
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center' }} >
-            <SettingItem leftItemTitle={'Vote'}       onPress={() => this.changePage('Vote')} extraStyle={{ marginTop: 10 }} />
-            <SettingItem leftItemTitle={'Contacts'}   onPress={() => this.changePage('Contacts')} />
+            {/* <SettingItem leftItemTitle={'Vote'}       onPress={() => this.changePage('Vote')} extraStyle={{ marginTop: 10 }} /> */}
+            {/* <SettingItem leftItemTitle={'Contacts'}   onPress={() => this.changePage('Contacts')} /> */}
             <SettingItem leftItemTitle={'Account'}    onPress={() => this.changePage('Account')}  />
             <SettingItem leftItemTitle={'Settings'}   onPress={() => this.changePage('Settings')} extraStyle={{ marginTop: 10 }} />
             <SettingItem leftItemTitle={'About'}      onPress={() => this.changePage('About')} />
-            <SettingItem leftItemTitle={'Contact Us'} onPress={() => this.changePage('ContactUs')} />
+            {/* <SettingItem leftItemTitle={'Contact Us'} onPress={() => this.changePage('ContactUs')} /> */}
 
             <Text style={[styles.text14, { marginTop: 25 }]}> Version 0.1.0 </Text>
             <Text style={[styles.text14, { marginTop: 5 }]}> Copyright @2018 Patricia.ltd </Text>

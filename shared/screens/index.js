@@ -26,6 +26,8 @@ import Discovery          from 'screens/Discovery'
 
 import Profile            from 'screens/Profile'
 import Settings           from 'screens/Profile/Settings'
+import Languages          from 'screens/Profile/Languages'
+import Currencies         from 'screens/Profile/Currencies'
 import AccountList        from 'screens/Profile/AccountList'
 import AccountManager     from 'screens/Profile/AccountManager'
 import ExportEntrance     from 'screens/Profile/ExportEntrance'
@@ -52,6 +54,8 @@ export const registerScreens = (store, provider) => {
 
   Navigation.registerComponent('BitPortal.Profile',            () => Profile,            store, provider)
   Navigation.registerComponent('BitPortal.Settings',           () => Settings,           store, provider)
+  Navigation.registerComponent('BitPortal.Languages',          () => Languages,           store, provider)
+  Navigation.registerComponent('BitPortal.Currencies',         () => Currencies,           store, provider)
   Navigation.registerComponent('BitPortal.AccountList',        () => AccountList,        store, provider)
   Navigation.registerComponent('BitPortal.AccountManager',     () => AccountManager,     store, provider)
   Navigation.registerComponent('BitPortal.ExportEntrance',     () => ExportEntrance,     store, provider)
