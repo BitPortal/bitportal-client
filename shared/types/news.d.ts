@@ -11,8 +11,7 @@ declare interface NewsRow = {
   language: string,
   publisher: string,
   status: string,
-  // TODO: wrong spelling in API
-  tittle: string,
+  title: string,
   updatedAt: string,
 }
 

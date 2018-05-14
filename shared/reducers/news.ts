@@ -3,21 +3,37 @@ import Immutable from 'immutable'
 import * as actions from 'actions/news'
 
 const initialState = Immutable.fromJS({
-  data: [],
-  loading: false,
-  error: null
+  listData: [],
+  listLoading: false,
+  listError: null,
+
+  bannerData: [],
+  bannerLoading: false,
+  bannerError: null,
 })
 
 export default handleActions({
-  [actions.getNewsRequested] (state, action) {
-    return state.set('loading', true)
+  [actions.getNewsListRequested] (state, action) {
+    return state.set('listLoading', true)
   },
-  [actions.getNewsSucceeded] (state, action) {
+  [actions.getNewsListSucceeded] (state, action) {
     return state
-      .update('data', data => data.concat(Immutable.fromJS(action.payload)))
-      .set('loading', false)
+      .update('listData', data => data.concat(Immutable.fromJS(action.payload)))
+      .set('listLoading', false)
   },
-  [actions.getNewsFailed] (state, action) {
-    return state.set('error', action.payload)
+  [actions.getNewsListFailed] (state, action) {
+    return state.set('listError', action.payload)
+  },
+
+  [actions.getNewsBannerRequested] (state, action) {
+    return state.set('bannerLoading', true)
+  },
+  [actions.getNewsBannerSucceeded] (state, action) {
+    return state
+      .set('bannerData', Immutable.fromJS(action.payload))
+      .set('bannerLoading', false)
+  },
+  [actions.getNewsBannerError] (state, action) {
+    return state.set('bannerError', action.payload)
   }
 }, initialState)
