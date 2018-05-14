@@ -1,26 +1,14 @@
-/* @jsx */
+/* @tsx */
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import styles from './styles'
-import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import BaseScreen from 'components/BaseScreen'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import styles from './styles'
+import Images from 'resources/images'
 import Colors from 'resources/colors'
-import InputItem from 'components/InputItem'
-import { BlurView } from 'react-native-blur'
-import { SCREEN_WIDTH } from 'utils/dimens'
-import { 
-  Text, 
-  View, 
-  Clipboard,
-  TextInput,
-  ScrollView,
-  findNodeHandle,
-  TouchableOpacity, 
-  TouchableHighlight
-} from 'react-native'
+import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
+import TotalAssetsCard from 'components/TotalAssetsCard'
+import { Text, View, ScrollView, TextInput, TouchableOpacity, TouchableHighlight, Clipboard } from 'react-native'
 
-export default class Backup extends BaseScreen {
+export default class ExportPrivateKey extends BaseScreen {
 
   static navigatorStyle = {
     tabBarHidden: true,
@@ -42,21 +30,26 @@ export default class Backup extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar 
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
-          title="Backup"
+          title="Export Private Key"
+          leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
         />
-        <View style={styles.scrollContainer}>
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.scrollContainer}>
+            <ScrollView 
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }} 
+            >
             <View style={styles.content}>
 
-              <Text style={[styles.text14, { marginLeft: -1 }]}> 
-                Please store the private key safely. Make sure no one or other device is monitring your screen 
+              <Text style={[styles.text16, { marginLeft: -1 }]}> 
+                Caution
+              </Text>
+              <Text style={[styles.text14, { marginTop: 15 }]} multiline={true}> 
+                The private key has not been encrypt, please don't spill it out, or it will caused asset loss
               </Text>
 
-              <Text style={[styles.text14, { color: Colors.textColor_89_185_226, marginLeft: -1, marginTop: 25, marginBottom: 15 }]}> 
+              <Text style={[styles.text16, { marginLeft: -1, marginTop: 30, marginBottom: 10 }]}> 
                 Private Key 
               </Text>
-
               <View style={[styles.inputContainer]}>
                 <TextInput
                   editable={false}
@@ -87,7 +80,6 @@ export default class Backup extends BaseScreen {
             </View>
           </ScrollView>
         </View>
-        
       </View>
     )
   }

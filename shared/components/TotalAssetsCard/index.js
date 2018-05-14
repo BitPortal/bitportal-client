@@ -37,11 +37,11 @@ const styles = StyleSheet.create({
 class TotalAssetsCard extends Component {
 
   render() {
-    const { totalAssets, accountName, onPress } = this.props
+    const { totalAssets, accountName, disabled, onPress } = this.props
     return (
       <View style={{ backgroundColor: Colors.minorThemeColor }}>
         <LinearGradientContainer type="right" style={[styles.linearContainer, { marginHorizontal: 32, marginVertical: 10 }]}>
-          <TouchableHighlight style={styles.linearContainer} underlayColor={Colors.linearUnderlayColor} onPress={() => onPress()} >
+          <TouchableHighlight disabled={disabled} style={styles.linearContainer} underlayColor={Colors.linearUnderlayColor} onPress={() => onPress()} >
             <View style={[styles.linearContainer, styles.paddingStyle]}>
               <Text style={styles.text15}> Total Assets</Text>
               <Text style={styles.text24}>
@@ -67,7 +67,7 @@ class TotalAssetsCard extends Component {
 TotalAssetsCard.propTypes = {
   totalAssets: PropTypes.number.isRequired, 
   accountName: PropTypes.string.isRequired, 
-  onPress: PropTypes.func.isRequired
+  onPress: PropTypes.func
 }
 
 export default TotalAssetsCard

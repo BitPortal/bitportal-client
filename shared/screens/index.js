@@ -28,7 +28,9 @@ import Profile            from 'screens/Profile'
 import Settings           from 'screens/Profile/Settings'
 import AccountList        from 'screens/Profile/AccountList'
 import AccountManager     from 'screens/Profile/AccountManager'
-
+import ExportEntrance     from 'screens/Profile/ExportEntrance'
+import ExportKeystore     from 'screens/Profile/ExportKeystore'
+import ExportPrivateKey   from 'screens/Profile/ExportPrivateKey'
 
 export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.Alerts',             () => Alerts,             store, provider)
@@ -52,6 +54,9 @@ export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.Settings',           () => Settings,           store, provider)
   Navigation.registerComponent('BitPortal.AccountList',        () => AccountList,        store, provider)
   Navigation.registerComponent('BitPortal.AccountManager',     () => AccountManager,     store, provider)
+  Navigation.registerComponent('BitPortal.ExportEntrance',     () => ExportEntrance,     store, provider)
+  Navigation.registerComponent('BitPortal.ExportKeystore',     () => ExportKeystore,     store, provider)
+  Navigation.registerComponent('BitPortal.ExportPrivateKey',   () => ExportPrivateKey,   store, provider)
 
   Navigation.registerComponent('BitPortal.Backup',             () => Backup,             store, provider)
   Navigation.registerComponent('BitPortal.BackupTips',         () => BackupTips,         store, provider)
