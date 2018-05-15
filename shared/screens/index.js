@@ -25,6 +25,7 @@ import PrivateKeyCreation from 'screens/Account/PrivateKeyCreation'
 import Discovery          from 'screens/Discovery'
 
 import Profile            from 'screens/Profile'
+import About              from 'screens/Profile/About'
 import Settings           from 'screens/Profile/Settings'
 import Languages          from 'screens/Profile/Languages'
 import Currencies         from 'screens/Profile/Currencies'
@@ -51,11 +52,12 @@ export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.MarketDetails',      () => MarketDetails,      store, provider)
 
   Navigation.registerComponent('BitPortal.Discovery',          () => Discovery,          store, provider)
-
+  
+  Navigation.registerComponent('BitPortal.About',              () => About,              store, provider)
   Navigation.registerComponent('BitPortal.Profile',            () => Profile,            store, provider)
   Navigation.registerComponent('BitPortal.Settings',           () => Settings,           store, provider)
-  Navigation.registerComponent('BitPortal.Languages',          () => Languages,           store, provider)
-  Navigation.registerComponent('BitPortal.Currencies',         () => Currencies,           store, provider)
+  Navigation.registerComponent('BitPortal.Languages',          () => Languages,          store, provider)
+  Navigation.registerComponent('BitPortal.Currencies',         () => Currencies,         store, provider)
   Navigation.registerComponent('BitPortal.AccountList',        () => AccountList,        store, provider)
   Navigation.registerComponent('BitPortal.AccountManager',     () => AccountManager,     store, provider)
   Navigation.registerComponent('BitPortal.ExportEntrance',     () => ExportEntrance,     store, provider)
