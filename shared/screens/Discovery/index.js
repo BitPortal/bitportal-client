@@ -10,10 +10,11 @@ import NavigationBar, { CommonRightButton, CommonTitle } from 'components/Naviga
 // import Ionicons from 'react-native-vector-icons/Ionicons'
 // import Colors from 'resources/colors'
 import styles from './styles'
+const PAGE_LENGTH = 10
 
 class Discovery extends BaseScreen {
   componentDidMount() {
-    this.props.getNews(0, 10)
+    this.props.getNews(0, PAGE_LENGTH)
     this.props.getBanner()
   }
 
@@ -52,6 +53,18 @@ class Discovery extends BaseScreen {
     }
   }
 
+  onRefresh = () => {
+    this.props.getNews(0, PAGE_LENGTH, true)
+  }
+
+  onEndReached = () => {
+    if (this.props.nomore || this.props.listDataRefreshing) {
+      return
+    }
+    const length = this.props.listData.toJS().length
+    this.props.getNews(length, PAGE_LENGTH)
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -64,6 +77,9 @@ class Discovery extends BaseScreen {
         </NewsBanner>
         <NewsList
           data={this.getNewsListData()}
+          onRefresh={this.onRefresh}
+          onEndReached={this.onEndReached}
+          refreshing={this.props.listDataRefreshing}
         />
       </View>
     )
@@ -72,11 +88,15 @@ class Discovery extends BaseScreen {
 
 const mapStateToProps = state => ({
   listData: state.news.get('listData'),
+  listDataRefreshing: state.news.get('listLoading'),
   bannerData: state.news.get('bannerData'),
+  nomore: state.news.get('nomore'),
 })
 
 const mapDispatchToProps = dispatch => ({
-  getNews: (startAt, limit) => dispatch(newsActions.getNewsListRequested({ startAt, limit })),
+  getNews: (startAt, limit, isRefresh = false) => {
+    dispatch(newsActions.getNewsListRequested({ startAt, limit, isRefresh }))
+  },
   getBanner: () => dispatch(newsActions.getNewsBannerRequested())
 })
 

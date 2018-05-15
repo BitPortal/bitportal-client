@@ -6,6 +6,8 @@ const initialState = Immutable.fromJS({
   listData: [],
   listLoading: false,
   listError: null,
+  nomore: false,
+  isRefreshing: false,
 
   bannerData: [],
   bannerLoading: false,
@@ -17,8 +19,21 @@ export default handleActions({
     return state.set('listLoading', true)
   },
   [actions.getNewsListSucceeded] (state, action) {
+    if (action.payload.data.length === 0) {
+      return state
+        .set('nomore', true)
+        .set('listLoading', false)
+    }
+    if (action.payload.isRefresh) {
+      return state
+        .set('listData', Immutable.fromJS(action.payload.data))
+        .set('nomore', false)
+        .set('listLoading', false)
+    }
     return state
-      .update('listData', data => data.concat(Immutable.fromJS(action.payload)))
+      .update('listData', data => {
+        return data.concat(Immutable.fromJS(action.payload.data))
+      })
       .set('listLoading', false)
   },
   [actions.getNewsListFailed] (state, action) {

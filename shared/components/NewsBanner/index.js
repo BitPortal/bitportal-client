@@ -59,23 +59,25 @@ class CardSilder extends React.PureComponent{
 
   render() {
     return (
-      <ScrollView
-        {...this.props}
-        ref={(i) => { this.slider = i }}
-        style={[styles.scroll, this.props.style]}
-        onScroll={this.onScroll}
-        horizontal={true}
-        pagingEnabled={true}
-        showsHorizontalScrollIndicator={false}
-        scrollEventThrottle={20}
-      >
-        {
-          this.props.children.map((item, index) =>
-            <View style={styles.card} key={index}>
-              {item}
-            </View>)
-        }
-      </ScrollView>
+      <View style={{ height: 180 }}>
+        <ScrollView
+          {...this.props}
+          ref={(i) => { this.slider = i }}
+          style={[styles.scroll, this.props.style]}
+          onScroll={this.onScroll}
+          horizontal={true}
+          pagingEnabled={true}
+          showsHorizontalScrollIndicator={false}
+          scrollEventThrottle={20}
+        >
+          {
+            this.props.children.map((item, index) =>
+              <View style={styles.card} key={index}>
+                {item}
+              </View>)
+          }
+        </ScrollView>
+      </View>
     )
   }
 }
