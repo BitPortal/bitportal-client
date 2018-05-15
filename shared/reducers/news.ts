@@ -1,6 +1,7 @@
 import { handleActions } from 'redux-actions'
 import Immutable from 'immutable'
 import * as actions from 'actions/news'
+const PAGE_LENGTH = 10
 
 const initialState = Immutable.fromJS({
   listData: [],
@@ -19,7 +20,8 @@ export default handleActions({
     return state.set('listLoading', true)
   },
   [actions.getNewsListSucceeded] (state, action) {
-    if (Immutable.fromJS(action.payload.data).length === 0) {
+    const length = Immutable.fromJS(action.payload.data).length;
+    if (length === 0) {
       return state
         .set('nomore', true)
         .set('listLoading', false)
@@ -27,13 +29,14 @@ export default handleActions({
     if (action.payload.isRefresh) {
       return state
         .set('listData', Immutable.fromJS(action.payload.data))
-        .set('nomore', false)
+        .set('nomore', length < PAGE_LENGTH)
         .set('listLoading', false)
     }
     return state
       .update('listData', data => {
         return data.concat(Immutable.fromJS(action.payload.data))
       })
+      .set('nomore', length < PAGE_LENGTH)
       .set('listLoading', false)
   },
   [actions.getNewsListFailed] (state, action) {
