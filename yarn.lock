@@ -9512,6 +9512,10 @@ react-native-svg@^5.5.1:
     color "^0.11.1"
     lodash "^4.16.6"
 
+react-native-swipe-list-view@^1.1.1:
+  version "1.1.1"
+  resolved "http://registry.npm.taobao.org/react-native-swipe-list-view/download/react-native-swipe-list-view-1.1.1.tgz#4d8f97549a413b1621edc12ec750c0742603a80d"
+
 react-native-swiper@^1.5.13:
   version "1.5.13"
   resolved "http://registry.npm.taobao.org/react-native-swiper/download/react-native-swiper-1.5.13.tgz#fa695cd4ab77b9a9df2d2bfee38ea7274dd07a2e"
