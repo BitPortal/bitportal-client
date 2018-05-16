@@ -23,17 +23,26 @@ class NewsList extends React.PureComponent {
         keyExtractor={this.keyExtractor}
         ItemSeparatorComponent={this.renderSeparator}
         renderItem={this.renderItem}
+        onRefresh={this.props.onRefresh}
+        onEndReached={this.props.onEndReached}
+        refreshing={this.props.refreshing}
       />
     )
   }
 }
 
 NewsList.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(NewsRowTypes))
+  data: PropTypes.arrayOf(PropTypes.shape(NewsRowTypes)),
+  onRefresh: PropTypes.func,
+  onEndReached: PropTypes.func,
+  refreshing: PropTypes.bool,
 }
 
 NewsList.defaultProps = {
-  data: []
+  data: [],
+  onRefresh: null,
+  onEndReached: null,
+  refreshing: false,
 }
 
 export default NewsList
