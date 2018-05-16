@@ -13,7 +13,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 export default class Profile extends BaseScreen {
 
   checkHistory = () => {
-
+    this.push({ screen: "BitPortal.TransactionHistory" })
   } 
 
   changePage = (page) => {
@@ -45,8 +45,8 @@ export default class Profile extends BaseScreen {
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center' }} >
-            {/* <SettingItem leftItemTitle={'Vote'}       onPress={() => this.changePage('Vote')} extraStyle={{ marginTop: 10 }} /> */}
-            {/* <SettingItem leftItemTitle={'Contacts'}   onPress={() => this.changePage('Contacts')} /> */}
+            {/* <SettingItem leftItemTitle={'Vote'}       onPress={() => this.changePage('Vote')} /> */}
+            <SettingItem leftItemTitle={'Contacts'}   onPress={() => this.changePage('Contacts')} extraStyle={{ marginTop: 10 }} />
             <SettingItem leftItemTitle={'Account'}    onPress={() => this.changePage('Account')}  />
             <SettingItem leftItemTitle={'Settings'}   onPress={() => this.changePage('Settings')} extraStyle={{ marginTop: 10 }} />
             <SettingItem leftItemTitle={'About'}      onPress={() => this.changePage('About')} />

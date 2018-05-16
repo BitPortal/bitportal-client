@@ -25,7 +25,7 @@ export const TextField = ({ input: { onChange, ...restInput }, meta: { touched, 
   <FieldItem>
     <Text style={styles.text14}>{label}</Text>
     <FieldInput>
-      <TextInput style={styles.input} style={styles.input} onChangeText={onChange} {...restInput} />
+      <TextInput style={styles.input} onChangeText={onChange} {...restInput} />
     </FieldInput>
     <FieldError>{touched && error}</FieldError>
   </FieldItem>
@@ -35,7 +35,7 @@ export const PasswordField = ({ input: { onChange, ...restInput }, meta: { touch
   <FieldItem>
     <Text style={styles.text14}>{label}</Text>
     <FieldInput>
-      <TextInput style={styles.input} style={styles.input} onChangeText={onChange} {...restInput} secureTextEntry={true} />
+      <TextInput style={styles.input} onChangeText={onChange} {...restInput} secureTextEntry={true} />
     </FieldInput>
     <FieldError>{touched && error}</FieldError>
   </FieldItem>
@@ -44,10 +44,10 @@ export const PasswordField = ({ input: { onChange, ...restInput }, meta: { touch
 export const SubmitButton = ({ disabled, onPress, text }) => (
   <FieldItem>
     <TouchableHighlight
-      disabled={disabled}
-      style={[styles.submitButton, disabled ? styles.disabled : {}]}
       onPress={onPress}
+      disabled={disabled}
       underlayColor={Colors.textColor_89_185_226}
+      style={[styles.submitButton, disabled ? styles.disabled : {}]}
     >
       <Text style={styles.submitButtonText}>{text}</Text>
     </TouchableHighlight>

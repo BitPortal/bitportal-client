@@ -74,6 +74,7 @@
     "react-native-qrcode": "^0.2.6",
     "react-native-qrcode-scanner": "^1.0.1",
     "react-native-scrollable-tab-view": "^0.8.0",
+    "react-native-swipe-list-view": "^1.1.1",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-config": "^1.0.0-beta.4",

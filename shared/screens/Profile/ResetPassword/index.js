@@ -3,18 +3,14 @@ import React, { Component } from 'react'
 import { View, ScrollView } from 'react-native'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import BaseScreen from 'components/BaseScreen'
-import CreateEOSAccountForm from 'components/Form/CreateEOSAccountForm'
+import ResetPasswordForm from 'components/Form/ResetPasswordForm'
 import styles from './styles'
 
-export default class AccountCreation extends BaseScreen {
+export default class ResetPassword extends BaseScreen {
 
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
-  }
-
-  constructor(props, context) {
-    super(props, context)
   }
 
   render() {
@@ -22,11 +18,11 @@ export default class AccountCreation extends BaseScreen {
       <View style={styles.container}>
         <NavigationBar
           leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
-          title="Create New Account"
+          title="Reset Password"
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <CreateEOSAccountForm />
+            <ResetPasswordForm />
           </ScrollView>
         </View>
       </View>

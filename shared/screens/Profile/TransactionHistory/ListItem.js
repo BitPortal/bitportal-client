@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   }
 })
 
-export default RecordItem = ({ item, onPress }) => {
+export default ListItem = ({ item, onPress }) => {
   const isReceiver = item.amount > 0
   const iconName = isReceiver ? "ios-arrow-round-down" : "ios-arrow-round-up"
   const diffColor = isReceiver ? Colors.textColor_89_185_226 : Colors.textColor_255_98_92
@@ -55,9 +55,9 @@ export default RecordItem = ({ item, onPress }) => {
     >
       <View style={[styles.container, styles.between, { paddingHorizontal: 32 }]}>
         <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-          <Ionicons name={iconName} size={50} color={diffColor} />
+          <Ionicons name={iconName} size={44} color={diffColor} />
           <View style={{ marginLeft: 10 }}>
-            <Text style={styles.text14}> Meon </Text>
+            <Text style={styles.text14}> 0x47f7e…c37ba42 </Text>
             <Text style={styles.text12}> 1 day ago </Text>
           </View>
         </View>
