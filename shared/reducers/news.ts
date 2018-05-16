@@ -20,7 +20,9 @@ export default handleActions({
     return state.set('listLoading', true)
   },
   [actions.getNewsListSucceeded] (state, action) {
-    const length = Immutable.fromJS(action.payload.data).length;
+    const length = Immutable.fromJS(action.payload.data).size;
+    console.log('length: ', length)
+
     if (length === 0) {
       return state
         .set('nomore', true)

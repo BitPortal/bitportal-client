@@ -9,7 +9,13 @@ class NewsList extends React.PureComponent {
 
   renderItem = ({ item }) =>
     <NewsRow
-      {...item}
+      previewImage={item.previewImage}
+      title={item.title}
+      subTitle={item.subTitle}
+      author={item.author}
+      date={item.date}
+      id={item.id}
+      onRowPress={() => this.props.onRowPress(item)}
       key={item.id}
     />
 
@@ -35,6 +41,7 @@ NewsList.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape(NewsRowTypes)),
   onRefresh: PropTypes.func,
   onEndReached: PropTypes.func,
+  onRowPress: PropTypes.func,
   refreshing: PropTypes.bool,
 }
 
@@ -42,6 +49,7 @@ NewsList.defaultProps = {
   data: [],
   onRefresh: null,
   onEndReached: null,
+  onRowPress: null,
   refreshing: false,
 }
 
