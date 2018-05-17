@@ -6,7 +6,7 @@ import * as newsActions from 'actions/news'
 import NewsList from 'components/NewsList'
 import NewsBanner from 'components/NewsBanner'
 import NewsBannerCard from 'components/NewsBannerCard'
-import NavigationBar, { CommonRightButton, CommonTitle } from 'components/NavigationBar'
+import NavigationBar, { CommonTitle } from 'components/NavigationBar'
 // import Ionicons from 'react-native-vector-icons/Ionicons'
 // import Colors from 'resources/colors'
 import styles from './styles'
@@ -28,8 +28,9 @@ class Discovery extends BaseScreen {
         subTitle: item.content.substr(0, 30),
         author: item.publisher,
         date: new Date(item.createdAt).toLocaleDateString(),
-        onRowPress: item.onRowPress,
-        id: item.id
+        id: item.id,
+        type: item.type,
+        jumpUrl: item.jump_url,
       }))
     } catch (e) {
       return []
@@ -46,6 +47,7 @@ class Discovery extends BaseScreen {
           // api don't have subtitle
           subTitle={item.subTitle || ''}
           key={item.id}
+          onPress={() => this.onBannerPress(item)}
         />
       )
     } catch (e) {
@@ -55,6 +57,28 @@ class Discovery extends BaseScreen {
 
   onRefresh = () => {
     this.props.getNews(0, PAGE_LENGTH, true)
+  }
+
+  onRowPress = (item) => {
+    if (item.type === 'link' && item.jumpUrl && item.jumpUrl.length > 0) {
+      this.push({
+        screen: 'BitPortal.DiscoveryArticle',
+        passProps: {
+          url: item.jumpUrl,
+          title: item.title,
+        }
+      })
+    }
+  }
+
+  onBannerPress = (item) => {
+    this.push({
+      screen: 'BitPortal.DiscoveryArticle',
+      passProps: {
+        url: item.jump_url,
+        title: item.tittle || item.title,
+      }
+    })
   }
 
   onEndReached = () => {
@@ -70,7 +94,6 @@ class Discovery extends BaseScreen {
       <View style={styles.container}>
         <NavigationBar
           leftButton={<CommonTitle title="Discovery" />}
-          rightButton={<CommonRightButton iconName="md-search" onPress={() => {}} />}
         />
         <NewsBanner autoplay={false} style={{ paddingVertical: 20 }}>
           {this.getBanner()}
@@ -80,6 +103,7 @@ class Discovery extends BaseScreen {
           onRefresh={this.onRefresh}
           onEndReached={this.onEndReached}
           refreshing={this.props.listDataRefreshing}
+          onRowPress={this.onRowPress}
         />
       </View>
     )
