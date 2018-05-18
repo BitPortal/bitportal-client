@@ -21,7 +21,7 @@ function* selectTickersByExchange(action: Action<TickerExchange>) {
   const exchange = action.payload
   const quote_asset = ticker.get('quoteAssetFilter')
   const sort = ticker.get('sortFilter').get(exchange)
-  yield put(actions.getTickersRequested({ exchange, quote_asset, sort, limit: 20 }))
+  yield put(actions.getTickersRequested({ exchange, quote_asset, sort, limit: 200 }))
 }
 
 function* selectTickersByQuoteAsset(action: Action<string>) {
@@ -31,7 +31,7 @@ function* selectTickersByQuoteAsset(action: Action<string>) {
   const exchange = ticker.get('exchangeFilter')
   const quote_asset = action.payload
   const sort = ticker.get('sortFilter').get(exchange)
-  yield put(actions.getTickersRequested({ exchange, quote_asset, sort, limit: 20 }))
+  yield put(actions.getTickersRequested({ exchange, quote_asset, sort, limit: 200 }))
 }
 
 export default function* tickerSaga() {
