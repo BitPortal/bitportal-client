@@ -1,5 +1,9 @@
 import { createAction } from 'redux-actions'
 
+export const createAccountRequested = createAction<CreateAccountParams>('wallet/CREATE_ACCOUNT_REQUESTED')
+export const createAccountSucceeded = createAction<CreateAccountResult>('wallet/CREATE_ACCOUNT_SUCCEEDED')
+export const createAccountFailed = createAction<ErrorMessage>('wallet/CREATE_ACCOUNT_FAILED')
+
 export const createEOSAccountRequested = createAction<CreateEOSAccountParams>('wallet/CREATE_EOS_ACCOUNT_REQUESTED')
 export const createEOSAccountSucceeded = createAction<CreateEOSAccountResult>('wallet/CREATE_EOS_ACCOUNT_SUCCEEDED')
 export const createEOSAccountFailed = createAction<ErrorMessage>('wallet/CREATE_EOS_ACCOUNT_FAILED')

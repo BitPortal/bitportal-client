@@ -1,8 +1,6 @@
 {
   "presets": ["react-native", "stage-2"],
-  "plugins": [
-    "transform-decorators-legacy"
-  ],
+  "plugins": ["transform-decorators-legacy"],
   "env": {
     "test": {
       "presets": ["env", "react"],

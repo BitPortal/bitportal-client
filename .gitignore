@@ -33,6 +33,8 @@ DerivedData
 *.ipa
 *.xcuserstate
 project.xcworkspace
+*jsbundle*
+assets
 
 # Android/IntelliJ
 #
