@@ -13,8 +13,12 @@ export const FieldItem = ({ children }) => (
   <View style={styles.fieldItem}>{children}</View>
 )
 
-export const FieldInput = ({ children }) => (
-  <View style={styles.fieldInput}>{children}</View>
+export const FieldInput = ({ children, rightContent, leftContent }) => (
+  <View style={styles.fieldInput}>
+    {leftContent && <View>{leftContent}</View>}
+    {children}
+    {rightContent && <View>{rightContent}</View>}
+  </View>
 )
 
 export const FieldError = ({ children }) => (
@@ -25,17 +29,45 @@ export const TextField = ({ input: { onChange, ...restInput }, meta: { touched, 
   <FieldItem>
     <Text style={styles.text14}>{label}</Text>
     <FieldInput>
-      <TextInput style={styles.input} style={styles.input} onChangeText={onChange} {...restInput} />
+      <TextInput
+        style={styles.input}
+        style={styles.input}
+        onChangeText={onChange}
+        {...restInput}
+      />
     </FieldInput>
     <FieldError>{touched && error}</FieldError>
   </FieldItem>
 )
 
-export const PasswordField = ({ input: { onChange, ...restInput }, meta: { touched, error }, label }) => (
+export const TextAreaField = ({ input: { onChange, ...restInput }, meta: { touched, error }, label }) => (
   <FieldItem>
     <Text style={styles.text14}>{label}</Text>
     <FieldInput>
-      <TextInput style={styles.input} style={styles.input} onChangeText={onChange} {...restInput} secureTextEntry={true} />
+      <TextInput
+        multiline={true}
+        numberOfLines={4}
+        style={styles.input}
+        style={styles.input}
+        onChangeText={onChange}
+        {...restInput}
+      />
+    </FieldInput>
+    <FieldError>{touched && error}</FieldError>
+  </FieldItem>
+)
+
+export const PasswordField = ({ input: { onChange, ...restInput }, meta: { touched, error }, label, rightContent }) => (
+  <FieldItem>
+    <Text style={styles.text14}>{label}</Text>
+    <FieldInput rightContent={rightContent}>
+      <TextInput
+        style={styles.input}
+        style={styles.input}
+        onChangeText={onChange}
+        {...restInput}
+        secureTextEntry={true}
+      />
     </FieldInput>
     <FieldError>{touched && error}</FieldError>
   </FieldItem>

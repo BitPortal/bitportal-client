@@ -116,9 +116,9 @@ async function Keystore(accountName, config = {}) {
     }
 
     saveKeyMatches.forEach(m => {
-      // if(minimatch('owner', m)) {
-      //   throw new Error('do not save owner key to disk')
-      // }
+      if(minimatch('owner', m)) {
+        throw new Error('do not save owner key to disk')
+      }
       // if(minimatch('active', m)) {
       //   throw new Error('do not save active key to disk')
       // }
@@ -345,8 +345,8 @@ async function Keystore(accountName, config = {}) {
       'key should be a wif, public key string, or privateKey object')
 
     if(toDisk) {
-      // assert(path !== 'owner', 'owner key should not be stored on disk')
-      // assert(path.indexOf('owner/') !== 0, 'owner derived keys should not be stored on disk')
+      assert(path !== 'owner', 'owner key should not be stored on disk')
+      assert(path.indexOf('owner/') !== 0, 'owner derived keys should not be stored on disk')
 
       // assert(path !== 'active', 'active key should not be stored on disk')
     }
