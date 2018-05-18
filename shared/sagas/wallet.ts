@@ -114,7 +114,7 @@ function* authEOSAccountRequested(action: Action<AuthEOSAccountParams>) {
 
     yield call(deriveKeys, {
       parent: key,
-      saveKeyMatches: ['owner', 'active'],
+      saveKeyMatches: ['active'],
       accountPermissions: permissions
     })
     yield put(actions.authEOSAccountSucceeded(account))

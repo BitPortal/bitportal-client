@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		04733F521D92E6ED002E3A99 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04733F511D92E6ED002E3A99 /* SwiftyJSON.framework */; };
 		04733F531D92E6ED002E3A99 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04733F511D92E6ED002E3A99 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -123,13 +122,13 @@
 		A82A1C1119D926B8009A653D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0930;
+				LastSwiftUpdateCheck = 700;
+				LastUpgradeCheck = 930;
 				ORGANIZATIONNAME = swiftyjson;
 				TargetAttributes = {
 					A82A1C1819D926B8009A653D = {
 						CreatedOnToolsVersion = 6.0.1;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 820;
 						ProvisioningStyle = Manual;
 					};
 				};

@@ -20,7 +20,10 @@ export default EStyleSheet.create({
   fieldInput: {
     borderBottomWidth: 0.5,
     borderBottomColor: '#b5b5b5',
-    marginBottom: 1
+    marginBottom: 1,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   text14: {
     fontSize: FontScale(14),
@@ -28,7 +31,6 @@ export default EStyleSheet.create({
   },
   input: {
     flex: 1,
-    marginRight: 10,
     height: 30,
     color: Colors.textColor_255_255_238,
     fontSize: FontScale(14)
@@ -48,7 +50,7 @@ export default EStyleSheet.create({
     fontSize: FontScale(14)
   },
   fieldError: {
-    color: 'red',
+    color: '#ff4740',
     minHeight: 20,
     fontSize: FontScale(14)
   }
