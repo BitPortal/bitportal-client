@@ -31,7 +31,6 @@ export const TextField = ({ input: { onChange, ...restInput }, meta: { touched, 
     <FieldInput>
       <TextInput
         style={styles.input}
-        style={styles.input}
         onChangeText={onChange}
         {...restInput}
       />
@@ -48,7 +47,6 @@ export const TextAreaField = ({ input: { onChange, ...restInput }, meta: { touch
         multiline={true}
         numberOfLines={4}
         style={styles.input}
-        style={styles.input}
         onChangeText={onChange}
         {...restInput}
       />
@@ -63,7 +61,6 @@ export const PasswordField = ({ input: { onChange, ...restInput }, meta: { touch
     <FieldInput rightContent={rightContent}>
       <TextInput
         style={styles.input}
-        style={styles.input}
         onChangeText={onChange}
         {...restInput}
         secureTextEntry={true}
@@ -76,10 +73,10 @@ export const PasswordField = ({ input: { onChange, ...restInput }, meta: { touch
 export const SubmitButton = ({ disabled, onPress, text }) => (
   <FieldItem>
     <TouchableHighlight
-      disabled={disabled}
-      style={[styles.submitButton, disabled ? styles.disabled : {}]}
       onPress={onPress}
+      disabled={disabled}
       underlayColor={Colors.textColor_89_185_226}
+      style={[styles.submitButton, disabled ? styles.disabled : {}]}
     >
       <Text style={styles.submitButtonText}>{text}</Text>
     </TouchableHighlight>

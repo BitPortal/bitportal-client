@@ -1,6 +1,5 @@
 
 const Images = {
-  car:             require('./car.png'),
   qrCode:          require('./qrCode.png'),
   asset:           require('./Asset.png'),
   asset_press:     require('./Asset_Press.png'),
@@ -10,7 +9,8 @@ const Images = {
   profile_press:   require('./Profile_Press.png'),
   discovery:       require('./Discovery.png'),
   discovery_press: require('./Discovery_Press.png'),
-  seperator:       require('./seperator.png')
+  seperator:       require('./seperator.png'),
+  logo:            require('./logo.png')
 }
 
 export default Images

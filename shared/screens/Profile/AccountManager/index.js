@@ -21,11 +21,11 @@ export default class AccountList extends BaseScreen {
   }
 
   resetPassword = () => {
-
+    this.push({ screen: 'BitPortal.ResetPassword' })
   }
 
   exportAccount = () => {
-    this.props.navigator.push({ screen: 'BitPortal.ExportEntrance' })
+    this.push({ screen: 'BitPortal.ExportEntrance' })
   }
 
   render() {
