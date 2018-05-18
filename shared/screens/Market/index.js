@@ -74,7 +74,7 @@ export default class Market extends BaseScreen {
       exchange: this.props.ticker.get('exchangeFilter'),
       quote_asset: this.props.ticker.get('quoteAssetFilter'),
       sort: this.props.ticker.get('sortFilter'),
-      limit: 20
+      limit: 200
     })
   }
 
