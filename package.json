@@ -196,7 +196,7 @@
     "react-native-splash-screen": "3.0.1",
     "react-native-svg": "^5.5.1",
     "react-native-swiper": "^1.5.13",
-    "react-native-typescript-transformer": "TerenceGe/react-native-typescript-transformer",
+    "react-native-typescript-transformer": "git+https://github.com/TerenceGe/react-native-typescript-transformer.git",
     "react-native-vector-icons": "^4.5.0",
     "redbox-react": "^1.5.0",
     "rimraf": "^2.5.4",
