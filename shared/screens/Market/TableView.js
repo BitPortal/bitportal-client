@@ -15,7 +15,7 @@ import {
 } from 'react-native'
 import { ASSET_FRACTION } from 'constants/market'
 
-export const HeaderTitle = ({ }) => (
+export const HeaderTitle = () => (
   <View>
     <View style={[styles.headerTitle]}>
       <View style={[styles.coin, styles.center, {height: 25}]}>
