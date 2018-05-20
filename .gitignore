@@ -34,7 +34,7 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 *jsbundle*
-assets
+ios/assets
 
 # Android/IntelliJ
 #
