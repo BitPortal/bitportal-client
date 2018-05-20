@@ -38,8 +38,8 @@ const getEOS = () => {
   return eos
 }
 
-const generateMasterKeys = async () => {
-  const keys = await Keygen.generateMasterKeys()
+const generateMasterKeys = async (master: any) => {
+  const keys = await Keygen.generateMasterKeys(master)
   return keys
 }
 
@@ -64,6 +64,8 @@ const getLocalAccounts = async () => {
   return accounts
 }
 
+const isValidPrivate = (privateKey: string) => ecc.isValidPrivate(privateKey)
+
 export {
   getEOS,
   getKeystore,
@@ -71,5 +73,6 @@ export {
   generateMasterKeys,
   privateToPublic,
   deriveKeys,
-  getLocalAccounts
+  getLocalAccounts,
+  isValidPrivate
 }

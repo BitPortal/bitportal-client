@@ -79,6 +79,12 @@ declare interface EOSPushTransactionResult {
   transaction_id: string
 }
 
+declare interface CreateAccountParams {
+  bitportalAccountName: string
+  password: string
+  eosAccountName: string
+}
+
 declare interface CreateEOSAccountParams {
   creator: string
   name: string

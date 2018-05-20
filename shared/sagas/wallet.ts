@@ -10,8 +10,15 @@ import {
   generateMasterKeys,
   deriveKeys,
   getEOS,
-  getLocalAccounts
+  getLocalAccounts,
+  isValidPrivate
 } from 'eos'
+import * as bip32 from 'bip32'
+import bip38 from 'bip38'
+import * as bip39 from 'bip39'
+import * as bip44 from 'bip44'
+import * as wif from 'wif'
+import { createHash, createHmac } from 'crypto'
 
 function* saveEOSAccountToDisk(name: string, key: string) {
   let accountList
@@ -32,6 +39,59 @@ function* saveEOSAccountToDisk(name: string, key: string) {
   yield call(secureStorage.setItem, encodeKeyStoreKey(name, 'auth'), key)
 }
 
+function* createAccountRequested(action: Action<CreateAccountParams>) {
+  if (!action.payload) return
+
+  try {
+    const bitportalAccountName = action.payload.bitportalAccountName
+    const password = action.payload.password
+    const eosAccountName = action.payload.eosAccountName
+
+    console.log(bitportalAccountName)
+    console.log(password)
+    console.log(eosAccountName)
+
+    const phrase = await bip39.generateMnemonic()
+    console.log(phrase)
+    const seed = bip39.mnemonicToSeedHex(phrase)
+    console.log(seed)
+
+    const root = bip32.fromMasterSeed(new Buffer(seed, 'hex'))
+    const path = bip44.getBIP44Path({ symbol: 'EOS' })
+    console.log(path)
+
+    const eosPrivateKey = root.derive(path).privateKey
+    console.log(eosPrivateKey.toString('hex'))
+    const eosWIF = wif.encode(0x80, eosPrivateKey)
+    console.log('master', eosWIF)
+    console.log(isValidPrivate(eosWIF))
+
+    // const eosEncrypted = bip38.encrypt(eosPrivateKey, false, password)
+    // console.log(eosEncrypted)
+
+    const eosOwnerPrivateKey = createHash('sha256').update(eosPrivateKey).update('owner').digest()
+    console.log(eosOwnerPrivateKey.toString('hex'))
+    const eosOwnerWIF = wif.encode(0x80, eosOwnerPrivateKey)
+    console.log('onwer', eosOwnerWIF)
+    console.log(isValidPrivate(eosOwnerWIF))
+    const eosOwnerPublicKey = await privateToPublic(eosOwnerPrivateKey)
+    console.log(eosOwnerPublicKey)
+
+    const eosActivePrivateKey = createHash('sha256').update(eosOwnerPrivateKey).update('active').digest()
+    console.log(eosActivePrivateKey.toString('hex'))
+    const eosActiveWIF = wif.encode(0x80, eosActivePrivateKey)
+    console.log('active', eosActiveWIF)
+    console.log(isValidPrivate(eosActiveWIF))
+    const eosActivePublicKey = await privateToPublic(eosActivePrivateKey)
+    console.log(eosActivePublicKey)
+
+    // yield put(actions.createAccountSucceeded())
+  } catch (e) {
+    console.log(e)
+    yield put(actions.createAccountFailed(getErrorMessage(e)))
+  }
+}
+
 function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
   if (!action.payload) return
 
@@ -39,22 +99,17 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
     const creator = action.payload.creator
     const name = action.payload.name
     const recovery = action.payload.recovery
-    let keyProvider = action.payload.keyProvider
+    let keyProvider
     let owner
     let active
     let importedPrivateKey
 
-    if (keyProvider) {
-      importedPrivateKey = keyProvider
-      owner = yield call(privateToPublic, importedPrivateKey)
-      active = yield call(privateToPublic, importedPrivateKey)
-    } else {
-      const keys = yield call(generateMasterKeys)
-      importedPrivateKey = keys.masterPrivateKey
-      owner = keys.publicKeys.owner
-      active = keys.publicKeys.active
-      keyProvider = keys.privateKeys.active
-    }
+    const keys = yield call(generateMasterKeys, 'PW5J8iaJZ8u42Jdcti9mfbeJwp3uRJbb3a8jaQKNd4GbiSrC1HLou')
+    console.log(keys)
+    importedPrivateKey = keys.masterPrivateKey
+    owner = keys.publicKeys.owner
+    active = keys.publicKeys.active
+    keyProvider = keys.privateKeys.active
 
     const { eos } = yield call(initAccount, { name, keyProvider })
 
@@ -62,6 +117,7 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
 
     yield put(actions.createEOSAccountSucceeded({ name, key: importedPrivateKey }))
   } catch (e) {
+    console.log(e)
     yield put(actions.createEOSAccountFailed(getErrorMessage(e)))
   }
 }
@@ -198,6 +254,7 @@ function* clearAccount() {
 }
 
 export default function* walletSaga() {
+  yield takeEvery(String(actions.createAccountRequested), createAccountRequested)
   yield takeEvery(String(actions.createEOSAccountRequested), createEOSAccountRequested)
   yield takeEvery(String(actions.createEOSAccountSucceeded), createEOSAccountSucceeded)
   yield takeEvery(String(actions.importEOSAccountRequested), importEOSAccountRequested)

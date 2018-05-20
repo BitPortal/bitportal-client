@@ -15,10 +15,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import storage from 'utils/storage'
 import AccountList from './AccountList'
-import Eos from 'react-native-eosjs'
-import keygen from 'eos/keygen'
-import Keystore from 'eos/keystore'
-import secureStorage from 'utils/secureStorage'
 import * as walletActions from 'actions/wallet'
 import { accountBalanceSelector } from 'selectors/balance'
 
@@ -94,14 +90,21 @@ export default class Assets extends BaseScreen {
   componentDidMount() {
     /* this.props.actions.createEOSAccountRequested({
      *   creator: 'eosio',
-     *   name: 'asddas',
-     *   recovery: 'eosio',
-     *   keyProvider: '5KD4Xdbsp4vJPNiRVhLAbx35jbx7bgWj79GiQDqD6dYyvBSPf4r'
+     *   name: 'fsdfsdfsdf',
+     *   recovery: 'eosio'
      * })*/
-    this.props.actions.syncEOSAccount()
+    // this.props.actions.syncEOSAccount()
     /* this.props.actions.importEOSAccountRequested({
      *   name: 'eosio',
      *   key: 'PW5KfRDq5g6F8LqkSRa3KhZABHhFkyqGa3oXc9fEqgX8hBQNJbuv6'
+     * })*/
+  }
+
+  didAppear() {
+    /* this.props.actions.createAccountRequested({
+     *   bitportalAccountName: 'EOS-1',
+     *   password: 'asddas',
+     *   eosAccountName: 'sfdfio'
      * })*/
   }
 

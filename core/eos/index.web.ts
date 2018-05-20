@@ -62,12 +62,15 @@ const getLocalAccounts = async () => {
   return accounts
 }
 
-export {
+const isValidPrivate = (privateKey: string) => ecc.isValidPrivate(privateKey)
+
+export default {
   getEOS,
   getKeystore,
   initAccount,
   generateMasterKeys,
   privateToPublic,
   deriveKeys,
-  getLocalAccounts
+  getLocalAccounts,
+  isValidPrivate
 }

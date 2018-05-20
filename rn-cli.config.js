@@ -1,6 +1,9 @@
+const blacklist = require('metro/src/blacklist')
+const nodeLibs = require('node-libs-react-native')
+
 module.exports = {
   extraNodeModules: {
-    ...require('node-libs-react-native'),
+    ...nodeLibs,
     vm: require.resolve('vm-browserify')
   },
   getTransformModulePath() {
@@ -8,5 +11,8 @@ module.exports = {
   },
   getSourceExts() {
     return ['js', 'mobile.js', 'jsx', 'mobile.jsx', 'ts', 'mobile.ts', 'tsx', 'mobile.tsx']
+  },
+  getBlacklistRE () {
+    return blacklist([/react-native\/local-cli\/core\/__fixtures__.*/])
   }
 }
