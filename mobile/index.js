@@ -14,17 +14,19 @@ import Provider from 'components/Provider'
 import sagas from 'sagas'
 import SplashScreen from 'react-native-splash-screen'
 import Colors from 'resources/colors'
+import messages from 'navigators/messages'
 
 EStyleSheet.build({})
 
 const runApp = async () => {
   const lang = await storage.getItem('bitportal_lang')
   const store = configure({ intl: getInitialLang(lang) })
+  const tabLabels = messages[getInitialLang(lang).get('locale')]
   store.runSaga(sagas)
   registerScreens(store, Provider) // this is where you register all of your app's screens
 
   const result = await storage.getItem('bitportal_welcome')
-  if (result && JSON.parse(result).isFirst) startTabBasedApp()
+  if (result && JSON.parse(result).isFirst) startTabBasedApp(tabLabels)
   else startSingleApp()
 
   // hide the splash screens
