@@ -70,7 +70,6 @@ class Discovery extends BaseScreen {
         }
       })
     } else {
-      console.log(item)
       this.push({
         screen: 'BitPortal.Markdown',
         passProps: {
