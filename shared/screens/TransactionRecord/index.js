@@ -21,6 +21,11 @@ import messages from './messages'
 
 export default class TransactionRecord extends BaseScreen {
 
+  static navigatorStyle = {
+    tabBarHidden: true,
+    navBarHidden: true
+  }
+
   state = {
     qrCodeValue: 'fdsafs',
     isCopied: false
