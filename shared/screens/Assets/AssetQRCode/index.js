@@ -19,9 +19,18 @@ import {
   LayoutAnimation
 } from 'react-native'
 import Images from 'resources/images'
+import { connect } from 'react-redux'
+import { FormattedMessage, IntlProvider } from 'react-intl'
+import messages from './messages'
 
 const screen_width = isIphoneX ? SCREEN_WIDTH - 40 : SCREEN_WIDTH
 const qrCodeSize = screen_width/2
+
+@connect(
+  (state) => ({
+    locale: state.intl.get('locale')
+  })
+)
 
 export default class AssetQRCode extends Component {
 
@@ -64,7 +73,7 @@ export default class AssetQRCode extends Component {
       this.setState({ enableQRCode: true })
       LayoutAnimation.spring()
       clearTimeout(this.timer)
-    }, 1000) 
+    }, 3000) 
   }
 
   componentWillUnmount() {
@@ -73,80 +82,82 @@ export default class AssetQRCode extends Component {
   }
 
   render() {
-    const { dismissModal, assetName } = this.props
+    const { dismissModal, assetName, locale } = this.props
     const { isCopied, enableQRCode } = this.state
     return (
-      <View style={styles.container}>
+      <IntlProvider messages={messages[locale]}>
+        <View style={styles.container}>
 
-        <TouchableOpacity style={[styles.close, styles.center]} onPress={() => dismissModal()}>
-          <Ionicons name="ios-close-outline" size={50} color={Colors.bgColor_FFFFFF} />
-        </TouchableOpacity>
+          <TouchableOpacity style={[styles.close, styles.center]} onPress={() => dismissModal()}>
+            <Ionicons name="ios-close-outline" size={50} color={Colors.bgColor_FFFFFF} />
+          </TouchableOpacity>
 
-        <View style={styles.qrCodeContainer}>
-          <View style={[styles.head, styles.center]}>
-            <Text style={styles.text24}> { assetName }  </Text>
-          </View>
+          <View style={styles.qrCodeContainer}>
+            <View style={[styles.head, styles.center]}>
+              <Text style={styles.text24}> { assetName }  </Text>
+            </View>
 
-          <View style={styles.inputContainer}>
-            <TextInput
-              autoCorrect={false}
-              underlineColorAndroid="transparent"
-              style={styles.input}
-              selectionColor={Colors.minorThemeColor}
-              keyboardAppearance={Colors.keyboardTheme}
-              placeholder={'0'}
-              onChangeText={(e) => this.onChangeText(e)}
-              value={this.state.value}
-            />
-          </View>
-
-          <View style={[styles.separator, styles.between]}>
-            <View style={[styles.semicircle, { marginLeft: -5 }]} />
-            <Image source={Images.seperator} style={styles.seperator2} resizeMode="stretch" />
-            <View style={[styles.semicircle, { marginRight: -5 }]} />
-          </View>
-
-          <View style={[styles.qrCode, styles.center]}>
-            {
-              enableQRCode ?
-              <QRCode
-                value={this.state.qrCodeValue}
-                size={qrCodeSize}
-                bgColor='black'
-                fgColor='white'
+            <View style={styles.inputContainer}>
+              <TextInput
+                autoCorrect={false}
+                underlineColorAndroid="transparent"
+                style={styles.input}
+                selectionColor={Colors.minorThemeColor}
+                keyboardAppearance={Colors.keyboardTheme}
+                placeholder={'0'}
+                onChangeText={(e) => this.onChangeText(e)}
+                value={this.state.value}
               />
-              :
-              <ActivityIndicator />
-            }
+            </View>
+
+            <View style={[styles.separator, styles.between]}>
+              <View style={[styles.semicircle, { marginLeft: -5 }]} />
+              <Image source={Images.seperator} style={styles.seperator2} resizeMode="stretch" />
+              <View style={[styles.semicircle, { marginRight: -5 }]} />
+            </View>
+
+            <View style={[styles.qrCode, styles.center]}>
+              {
+                enableQRCode ?
+                <QRCode
+                  value={this.state.qrCodeValue}
+                  size={qrCodeSize}
+                  bgColor='black'
+                  fgColor='white'
+                />
+                :
+                <ActivityIndicator />
+              }
+            </View>
           </View>
-        </View>
 
-        <View style={[styles.btnContainer, styles.between]}>
-          <TouchableHighlight 
-            underlayColor={Colors.textColor_89_185_226} 
-            onPress={() => this.copyQrcodeValue()} 
-            disabled={isCopied}
-            style={[styles.btn, styles.center, { 
-              backgroundColor: isCopied ? Colors.textColor_216_216_216 : Colors.textColor_89_185_226
-            }]}
-          >
-            <Text style={[styles.text14, {
-              color: isCopied ? Colors.textColor_181_181_181 : Colors.textColor_255_255_238
-            }]}>
-              {isCopied ? 'Copied' : 'Copy'}
-            </Text>
-          </TouchableHighlight>
-          <TouchableHighlight 
-            underlayColor={Colors.textColor_89_185_226} 
-            onPress={() => this.shareQrcodeContent()} style={[styles.btn, styles.center]}
-          >
-            <Text style={styles.text14}>
-              Share
-            </Text>
-          </TouchableHighlight>
-        </View>
+          <View style={[styles.btnContainer, styles.between]}>
+            <TouchableHighlight 
+              underlayColor={Colors.textColor_89_185_226} 
+              onPress={() => this.copyQrcodeValue()} 
+              disabled={isCopied}
+              style={[styles.btn, styles.center, { 
+                backgroundColor: isCopied ? Colors.textColor_216_216_216 : Colors.textColor_89_185_226
+              }]}
+            >
+              <Text style={[styles.text14, {
+                color: isCopied ? Colors.textColor_181_181_181 : Colors.textColor_255_255_238
+              }]}>
+                {isCopied ? <FormattedMessage id="qrcode_button_name_copied" /> : <FormattedMessage id="qrcode_button_name_copy" />}
+              </Text>
+            </TouchableHighlight>
+            <TouchableHighlight 
+              underlayColor={Colors.textColor_89_185_226} 
+              onPress={() => this.shareQrcodeContent()} style={[styles.btn, styles.center]}
+            >
+              <Text style={styles.text14}>
+                <FormattedMessage id="qrcode_button_name_share" />
+              </Text>
+            </TouchableHighlight>
+          </View>
 
-      </View>
+        </View>
+      </IntlProvider>
     )
   }
 }

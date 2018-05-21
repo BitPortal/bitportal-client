@@ -1,12 +1,14 @@
 /* @jsx */
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import styles from './styles'
 import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, TouchableOpacity, Switch } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import { SCREEN_WIDTH, FontScale } from 'utils/dimens'
+import { connect } from 'react-redux'
+import { FormattedMessage, IntlProvider } from 'react-intl'
+import messages from './messages'
 
 const AssetElement = ({ item, onValueChange }) => (
   <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.bgColor_48_49_59 }]}>
@@ -15,6 +17,12 @@ const AssetElement = ({ item, onValueChange }) => (
     </View>
     <Switch value={item.value} onValueChange={(e) => onValueChange(e, item)} />
   </View>
+)
+
+@connect(
+  (state) => ({
+    locale: state.intl.get('locale')
+  })
 )
 
 export default class AvailableAssets extends BaseScreen {
@@ -44,22 +52,25 @@ export default class AvailableAssets extends BaseScreen {
   }
 
   render() {
+    const { locale } = this.props
     return (
-      <View style={styles.container}>
-        <NavigationBar 
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()}/>}
-          title={"Assets List"}
-        />
-        <View style={styles.scrollContainer}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            {
-              this.state.assetsList.map((item, index) => (
-                <AssetElement key={index} item={item} onValueChange={(e, item) => this.onValueChange(e, item)} />
-              ))
-            }
-          </ScrollView>  
+      <IntlProvider messages={messages[locale]}>
+        <View style={styles.container}>
+          <NavigationBar 
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()}/>}
+            title={messages[locale]["astlist_title_name_astlst"]}
+          />
+          <View style={styles.scrollContainer}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              {
+                this.state.assetsList.map((item, index) => (
+                  <AssetElement key={index} item={item} onValueChange={(e, item) => this.onValueChange(e, item)} />
+                ))
+              }
+            </ScrollView>  
+          </View>
         </View>
-      </View>
+      </IntlProvider>
     )
   }
 

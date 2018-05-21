@@ -6,7 +6,7 @@ import TotalAssetsCard from 'components/TotalAssetsCard'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Header from './Header'
 import EnableAssets from './EnableAssets'
-import AssetsList from './AssetsList'
+import BalanceList from './BalanceList'
 import styles from './styles'
 import Colors from 'resources/colors'
 import Modal from 'react-native-modal'
@@ -118,14 +118,14 @@ export default class Assets extends BaseScreen {
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-          <Header Title={<FormattedMessage id="Account" />} displayAccount={() => this.displayAccountList()} scanQR={() => this.scanQR()} />
+          <Header Title={<FormattedMessage id="addpage_title_name_act" />} displayAccount={() => this.displayAccountList()} scanQR={() => this.scanQR()} />
           {
             !balanceList &&
             <TouchableOpacity onPress={() => this.createNewAccount()} style={[styles.createAccountContainer, styles.center]}>
               <View style={{ alignItems: 'center' }}>
                 <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF} />
                 <Text style={[styles.text14, { color: Colors.textColor_255_255_238, marginTop: 20 }]}>
-                  <FormattedMessage id="Create_New_Account" />
+                  <FormattedMessage id="addpage_button_name_crt" />
                 </Text>
               </View>
             </TouchableOpacity>
@@ -135,8 +135,8 @@ export default class Assets extends BaseScreen {
             <View style={styles.scrollContainer}>
               <ScrollView showsVerticalScrollIndicator={false}>
                 <TotalAssetsCard totalAssets={425321132.21} accountName={accountName} onPress={() => this.operateAssetQRCode(true)} />
-                <EnableAssets Title="Asset" enableAssets={() => this.enableAssets()} />
-                {balanceList && <AssetsList data={balanceList} onPress={(e) => this.checkAsset(e)} />}
+                <EnableAssets Title={<FormattedMessage id="asset_title_name_ast" />} enableAssets={() => this.enableAssets()} />
+                {balanceList && <BalanceList data={balanceList} onPress={(e) => this.checkAsset(e)} />}
               </ScrollView>
             </View>
           }

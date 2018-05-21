@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, WebView, Share } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
-import NavigationBar, { CommonButton } from 'components/NavigationBar'
+import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
 import styles from './styles'
 
 class Article extends BaseScreen {
@@ -19,7 +19,7 @@ class Article extends BaseScreen {
         <NavigationBar
           title={this.props.title || 'Details'}
           leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
-          rightButton={<CommonButton iconName="md-more" onPress={() => this.share()} />}
+          rightButton={<CommonRightButton iconName="md-more" onPress={() => this.share()} />}
         />
         <WebView source={{ uri: this.props.url }} />
       </View>
