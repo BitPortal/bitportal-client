@@ -36,6 +36,7 @@
     "android": "ENVFILE=.env.development react-native run-android",
     "android:staging": "ENVFILE=.env.staging react-native run-android",
     "android:production": "ENVFILE=.env.production react-native run-android",
+    "archive:android": "cd android && ./gradlew assembleRelease",
     "bundle:ios": "react-native bundle --entry-file mobile/index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios",
     "bundle:desktop": "rimraf bundle && cross-env NODE_ENV=production APP_ENV=development TARGET=\"electron-renderer\" webpack --progress --colors",
     "desktop": "electron bundle/index.html",

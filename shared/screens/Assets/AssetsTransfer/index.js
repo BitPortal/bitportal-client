@@ -21,6 +21,11 @@ import messages from './messages'
 
 export default class AssetsTransfer extends BaseScreen {
 
+  static navigatorStyle = {
+    tabBarHidden: true,
+    navBarHidden: true
+  }
+
   state = {
     destination: '',
     amount: '',
