@@ -28,7 +28,12 @@ const styles = StyleSheet.create({
     fontSize: FontScale(24),
     color: Colors.textColor_255_255_238,
     fontWeight: 'bold'
-  }
+  },
+  markdownContainer: {
+    paddingHorizontal: 16,
+    marginTop: 24,
+    paddingBottom: TAB_BAR_HEIGHT,
+  },
 })
 
 export default styles

@@ -31,6 +31,7 @@ class Discovery extends BaseScreen {
         id: item.id,
         type: item.type,
         jumpUrl: item.jump_url,
+        content: item.content,
       }))
     } catch (e) {
       return []
@@ -65,6 +66,15 @@ class Discovery extends BaseScreen {
         screen: 'BitPortal.DiscoveryArticle',
         passProps: {
           url: item.jumpUrl,
+          title: item.title,
+        }
+      })
+    } else {
+      console.log(item)
+      this.push({
+        screen: 'BitPortal.Markdown',
+        passProps: {
+          markdown: item.content,
           title: item.title,
         }
       })
