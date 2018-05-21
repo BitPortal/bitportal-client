@@ -1,7 +1,6 @@
 /* @jsx */
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
 import { Text, View, TextInput } from 'react-native'
 import { Field, reduxForm } from 'redux-form/immutable'
 import {
@@ -13,6 +12,9 @@ import {
   SubmitButton
 } from 'components/Form'
 import { normalizeText } from 'utils/normalize'
+import { connect } from 'react-redux'
+import { FormattedMessage, IntlProvider } from 'react-intl'
+import messages from './messages'
 
 const validate = (values) => {
   const errors = {}
@@ -63,33 +65,35 @@ export default class ResetPasswordForm extends Component {
   }
 
   render() {
-    const { handleSubmit, invalid, pristine } = this.props
+    const { handleSubmit, invalid, pristine, locale } = this.props
     const disabled = invalid || pristine
 
     return (
-      <FormContainer>
-        <Field
-          label="Current Password"
-          name="currentPassword"
-          component={TextField}
-          normalize={normalizeText}
-        />
-        <Field
-          label="New password"
-          name="newPassword"
-          component={PasswordField}
-        />
-        <Field
-          label="Confirm Password"
-          name="confirmedPassword"
-          component={PasswordField}
-        />
-        <SubmitButton
-          disabled={disabled}
-          onPress={handleSubmit(this.submit)}
-          text="Reset"
-        />
-      </FormContainer>
+      <IntlProvider messages={messages[locale]}>
+        <FormContainer>
+          <Field
+            label={<FormattedMessage id="cpwd_txtbox_title_current" />}
+            name="currentPassword"
+            component={TextField}
+            normalize={normalizeText}
+          />
+          <Field
+            label={<FormattedMessage id="cpwd_txtbox_title_new" />}
+            name="newPassword"
+            component={PasswordField}
+          />
+          <Field
+            label={<FormattedMessage id="cpwd_txtbox_title_repeat" />}
+            name="confirmedPassword"
+            component={PasswordField}
+          />
+          <SubmitButton
+            disabled={disabled}
+            onPress={handleSubmit(this.submit)}
+            text={<FormattedMessage id="cpwd_button_name_change" />}
+          />
+        </FormContainer>
+      </IntlProvider>
     )
   }
 }

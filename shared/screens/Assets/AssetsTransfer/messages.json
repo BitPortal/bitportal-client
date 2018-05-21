@@ -2,7 +2,7 @@
   "zh": {
     "snd_title_name_snd" : "发送",
     "snd_title_name_accnm" : "账户名称",
-    "snd_title_name_acclmt" : "请输入1~12位数的用户名",
+    "snd_title_name_acclmt" : "最多支持12位字符",
     "snd_txtbox_txt_warning" : "无效的名称",
     "snd_title_name_amt" : "数量",
     "snd_txtbox_txt_rmk" : "附言",

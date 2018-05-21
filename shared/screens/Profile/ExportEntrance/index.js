@@ -8,6 +8,15 @@ import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
 import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
 import TotalAssetsCard from 'components/TotalAssetsCard'
+import { connect } from 'react-redux'
+import { FormattedMessage, IntlProvider } from 'react-intl'
+import messages from './messages'
+
+@connect(
+  (state) => ({
+    locale: state.intl.get('locale')
+  })
+)
 
 export default class ExportEntrance extends BaseScreen {
 
@@ -25,22 +34,25 @@ export default class ExportEntrance extends BaseScreen {
   }
 
   render() {
+    const { locale } = this.props
     return (
-      <View style={styles.container}>
-        <NavigationBar 
-          title="Export"
-          leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
-        />
-        <View style={styles.scrollContainer}>
-          <ScrollView 
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }} 
-          >
-            <SettingItem leftItemTitle={'Export Private Key'} onPress={() => this.exportPrivateKey()} extraStyle={{ marginTop: 10 }} />
-            <SettingItem leftItemTitle={'Export Keystore'} onPress={() => this.exportKeystore()} />
-          </ScrollView>
+      <IntlProvider messages={messages[locale]}>
+        <View style={styles.container}>
+          <NavigationBar 
+            title={messages[locale]['export_title_name_export']}
+            leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
+          />
+          <View style={styles.scrollContainer}>
+            <ScrollView 
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }} 
+            >
+              <SettingItem leftItemTitle={<FormattedMessage id="exp_sec_title_expks" />} onPress={() => this.exportKeystore()} extraStyle={{ marginTop: 10 }} />
+              <SettingItem leftItemTitle={<FormattedMessage id="exp_sec_title_expvk" />} onPress={() => this.exportPrivateKey()} />
+            </ScrollView>
+          </View>
         </View>
-      </View>
+      </IntlProvider>
     )
   }
 

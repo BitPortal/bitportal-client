@@ -5,14 +5,16 @@ import BaseScreen from 'components/BaseScreen'
 import styles from './styles'
 import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
-import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as intlActions from 'actions/intl'
 import storage from 'utils/storage'
 import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, TouchableHighlight, Switch } from 'react-native'
 import { startTabBasedApp } from 'navigators'
-import messages from 'navigators/messages'
+import tabMessages from 'navigators/messages'
+import { connect } from 'react-redux'
+import { FormattedMessage, IntlProvider } from 'react-intl'
+import messages from './messages'
 
 @connect(
   (state) => ({
@@ -42,38 +44,40 @@ export default class Languages extends BaseScreen {
   switchLanguage = async (language) => {
     await storage.setItem('bitportal_lang', language)
     this.props.actions.setLocale(language)
-    const tabLabels = messages[language]
+    const tabLabels = tabMessages[language]
     this.changeTabLabels(tabLabels)
   }
 
   render() {
     const { locale } = this.props
     return (
-      <View style={styles.container}>
-        <NavigationBar 
-          title="Languages"
-          leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
-        />
-        <View style={styles.scrollContainer}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <SettingItem 
-              leftItemTitle={'EN'} 
-              onPress={() => this.switchLanguage('en')} 
-              extraStyle={{ marginTop: 10 }} 
-              iconColor={Colors.bgColor_0_122_255}
-              rightItemTitle={locale == 'en' ? null : ' '}
-              rightImageName={locale == 'en' && 'md-checkmark'}
-            />
-            <SettingItem 
-              leftItemTitle={'简体中文'} 
-              iconColor={Colors.bgColor_0_122_255}
-              rightItemTitle={locale == 'zh' ? null : ' '}
-              rightImageName={locale == 'zh' && 'md-checkmark'}
-              onPress={() => this.switchLanguage('zh')} 
-            />
-          </ScrollView>
+      <IntlProvider messages={messages[locale]}>
+        <View style={styles.container}>
+          <NavigationBar 
+            title={messages[locale]['lan_title_name_language']}
+            leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
+          />
+          <View style={styles.scrollContainer}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <SettingItem 
+                leftItemTitle={'English'} 
+                onPress={() => this.switchLanguage('en')} 
+                extraStyle={{ marginTop: 10 }} 
+                iconColor={Colors.bgColor_0_122_255}
+                rightItemTitle={locale == 'en' ? null : ' '}
+                rightImageName={locale == 'en' && 'md-checkmark'}
+              />
+              <SettingItem 
+                leftItemTitle={'简体中文'} 
+                iconColor={Colors.bgColor_0_122_255}
+                rightItemTitle={locale == 'zh' ? null : ' '}
+                rightImageName={locale == 'zh' && 'md-checkmark'}
+                onPress={() => this.switchLanguage('zh')} 
+              />
+            </ScrollView>
+          </View>
         </View>
-      </View>
+      </IntlProvider>
     )
   }
 
