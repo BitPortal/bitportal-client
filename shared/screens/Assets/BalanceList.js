@@ -33,6 +33,6 @@ const ListItem = ({ item, onPress }) => (
   </TouchableHighlight>
 )
 
-export default AssetsList = ({ data, onPress }) => (
+export default BalanceList = ({ data, onPress }) => (
   <View>{data.map((item, index) => (<ListItem key={index} item={item} onPress={(e) => onPress(e)} />))}</View>
 )

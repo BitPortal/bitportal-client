@@ -6,7 +6,7 @@ import TotalAssetsCard from 'components/TotalAssetsCard'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Header from './Header'
 import EnableAssets from './EnableAssets'
-import AssetsList from './AssetsList'
+import BalanceList from './BalanceList'
 import styles from './styles'
 import Colors from 'resources/colors'
 import Modal from 'react-native-modal'
@@ -17,6 +17,8 @@ import storage from 'utils/storage'
 import AccountList from './AccountList'
 import * as walletActions from 'actions/wallet'
 import { accountBalanceSelector } from 'selectors/balance'
+import { IntlProvider, FormattedMessage } from 'react-intl'
+import messages from './messages'
 
 @connect(
   (state) => ({
@@ -109,61 +111,63 @@ export default class Assets extends BaseScreen {
   }
 
   render() {
-    const { wallet, balance } = this.props
+    const { wallet, balance, locale } = this.props
     const accountName = wallet.get('account').get('account_name')
     const accountList = wallet.get('accounts')
     const balanceList = balance.get('data').get('eosAccountBalance')
     return (
-      <View style={styles.container}>
-        <Header Title="Account" displayAccount={() => this.displayAccountList()} scanQR={() => this.scanQR()} />
-        {
-          !balanceList &&
-          <TouchableOpacity onPress={() => this.createNewAccount()} style={[styles.createAccountContainer, styles.center]}>
-            <View style={{ alignItems: 'center' }}>
-              <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF} />
-              <Text style={[styles.text14, { color: Colors.textColor_255_255_238, marginTop: 20 }]}>
-                Create New Account
-              </Text>
+      <IntlProvider messages={messages[locale]}>
+        <View style={styles.container}>
+          <Header Title={<FormattedMessage id="addpage_title_name_act" />} displayAccount={() => this.displayAccountList()} scanQR={() => this.scanQR()} />
+          {
+            !balanceList &&
+            <TouchableOpacity onPress={() => this.createNewAccount()} style={[styles.createAccountContainer, styles.center]}>
+              <View style={{ alignItems: 'center' }}>
+                <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF} />
+                <Text style={[styles.text14, { color: Colors.textColor_255_255_238, marginTop: 20 }]}>
+                  <FormattedMessage id="addpage_button_name_crt" />
+                </Text>
+              </View>
+            </TouchableOpacity>
+          }
+          {
+            balanceList &&
+            <View style={styles.scrollContainer}>
+              <ScrollView showsVerticalScrollIndicator={false}>
+                <TotalAssetsCard totalAssets={425321132.21} accountName={accountName} onPress={() => this.operateAssetQRCode(true)} />
+                <EnableAssets Title={<FormattedMessage id="asset_title_name_ast" />} enableAssets={() => this.enableAssets()} />
+                {balanceList && <BalanceList data={balanceList} onPress={(e) => this.checkAsset(e)} />}
+              </ScrollView>
             </View>
-          </TouchableOpacity>
-        }
-        {
-          balanceList &&
-          <View style={styles.scrollContainer}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-              <TotalAssetsCard totalAssets={425321132.21} accountName={accountName} onPress={() => this.operateAssetQRCode(true)} />
-              <EnableAssets Title="Asset" enableAssets={() => this.enableAssets()} />
-              {balanceList && <AssetsList data={balanceList} onPress={(e) => this.checkAsset(e)} />}
-            </ScrollView>
-          </View>
-        }
-        <Modal
-          animationIn="fadeIn"
-          animationOut="fadeOut"
-          isVisible={this.state.isVisible}
-          backdropOpacity={0.9}
-        >
-          <AssetQRCode
-            assetName={'Meon'}
-            dismissModal={() => this.operateAssetQRCode(false)}
-          />
-        </Modal>
-        <Modal
-          animationIn="fadeIn"
-          animationOut="fadeOut"
-          style = {{  margin: 0 }}
-          isVisible={this.state.isVisible2}
-          backdropOpacity={0}
-        >
-          <AccountList
-            data={accountList}
-            activeAccount={accountName}
-            onPress={this.switchEOSAccount}
-            createNewAccount={() => this.createNewAccount()}
-            dismissModal={() => this.setState({ isVisible2: false })}
-          />
-        </Modal>
-      </View>
+          }
+          <Modal
+            animationIn="fadeIn"
+            animationOut="fadeOut"
+            isVisible={this.state.isVisible}
+            backdropOpacity={0.9}
+          >
+            <AssetQRCode
+              assetName={'Meon'}
+              dismissModal={() => this.operateAssetQRCode(false)}
+            />
+          </Modal>
+          <Modal
+            animationIn="fadeIn"
+            animationOut="fadeOut"
+            style = {{  margin: 0 }}
+            isVisible={this.state.isVisible2}
+            backdropOpacity={0}
+          >
+            <AccountList
+              data={accountList}
+              activeAccount={accountName}
+              onPress={this.switchEOSAccount}
+              createNewAccount={() => this.createNewAccount()}
+              dismissModal={() => this.setState({ isVisible2: false })}
+            />
+          </Modal>
+        </View>
+      </IntlProvider>
     )
   }
 }

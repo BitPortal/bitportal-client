@@ -37,10 +37,7 @@ const styles = StyleSheet.create({
   },
   text20: {
     fontSize: FontScale(20),
-    color: Colors.textColor_255_255_238
-  },
-  text24: {
-    fontSize: FontScale(24),
+    fontWeight: 'bold',
     color: Colors.textColor_255_255_238
   },
   addAssetsContainer: {

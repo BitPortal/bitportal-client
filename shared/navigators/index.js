@@ -1,8 +1,7 @@
 import { Navigation } from 'react-native-navigation'
 import Images from 'resources/images'
-import { SCREEN_WIDTH } from 'utils/dimens'
-import { PixelRatio } from 'react-native'
 import Colors from 'resources/colors'
+import { FormattedMessage } from 'react-intl'
 
 export const startSingleApp = () => {
   Navigation.startSingleScreenApp({
@@ -14,29 +13,29 @@ export const startSingleApp = () => {
   });
 }
 
-export const startTabBasedApp = () => {
+export const startTabBasedApp = (tabLabels) => {
   Navigation.startTabBasedApp({
     tabs: [
       {
-        label: 'Assets', // tab label as appears under the icon in iOS (optional)
+        label: `${tabLabels['general_tab_name_ast']}`, // tab label as appears under the icon in iOS (optional)
         screen: 'BitPortal.Assets', // unique ID registered with Navigation.registerScreen
         icon: Images.asset, // local image asset for the tab icon unselected state (optional on iOS)
         selectedIcon: Images.asset_press // local image asset for the tab icon selected state (optional, iOS only. On Android, Use `tabBarSelectedButtonColor` instead)
       },
       {
-        label: 'Market',
+        label: `${tabLabels['general_tab_name_mkt']}`,
         screen: 'BitPortal.Market',
         icon: Images.market,
         selectedIcon: Images.market_press
       },
       {
-        label: 'Discovery',
+        label: `${tabLabels['general_tab_name_dscv']}`,
         screen: 'BitPortal.Discovery',
         icon: Images.discovery,
         selectedIcon: Images.discovery_press
       },
       {
-        label: 'Profile',
+        label: `${tabLabels['general_tab_name_prf']}`,
         screen: 'BitPortal.Profile',
         icon: Images.profile,
         selectedIcon: Images.profile_press
@@ -50,7 +49,7 @@ export const startTabBasedApp = () => {
       tabBarHideShadow: false
     },
     appStyle: {
-      screenBackgroundColor: Colors.minorThemeColor,
+      screenBackgroundColor: Colors.mainThemeColor,
       orientation: 'portrait', // Sets a specific orientation to the entire app. Default: 'auto'. Supported values: 'auto', 'landscape', 'portrait'
       bottomTabBadgeTextColor: 'red', // Optional, change badge text color. Android only
       bottomTabBadgeBackgroundColor: 'green', // Optional, change badge background color. Android only

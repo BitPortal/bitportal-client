@@ -1,0 +1,14 @@
+{
+  "zh": {
+    "sts_title_name_settings" : "系统设置",
+    "sts_sec_title_language" : "语言",
+    "sts_sec_title_currency" : "货币",
+    "sts_sec_title_theme" : "主题"
+  },
+  "en": {
+    "sts_title_name_settings" : "Settings",
+    "sts_sec_title_language" : "Languages",
+    "sts_sec_title_currency" : "Currencies",
+    "sts_sec_title_theme" : "Themes"
+  }
+}

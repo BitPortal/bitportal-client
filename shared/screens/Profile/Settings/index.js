@@ -7,6 +7,15 @@ import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
 import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, TouchableHighlight, Switch } from 'react-native'
+import { connect } from 'react-redux'
+import { FormattedMessage, IntlProvider } from 'react-intl'
+import messages from './messages'
+
+@connect(
+  (state) => ({
+    locale: state.intl.get('locale')
+  })
+)
 
 export default class Setting extends BaseScreen {
 
@@ -29,24 +38,27 @@ export default class Setting extends BaseScreen {
 
   render() {
     const { enableTouchID } = this.state
+    const { locale } = this.props
     return (
-      <View style={styles.container}>
-        <NavigationBar 
-          title="Settings"
-          leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
-        />
-        <View style={styles.scrollContainer}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <SettingItem leftItemTitle={'Languages'} onPress={() => this.changeSettings('Languages')} extraStyle={{ marginTop: 10 }} />
-            <SettingItem leftItemTitle={'Currencies'} onPress={() => this.changeSettings('Currencies')} />
-            <SettingItem leftItemTitle={'Themes'} onPress={() => {}} />
-            <View style={[styles.itemContainer, styles.between, { marginTop: 10 }]}>
-              <Text style={[styles.text16, { marginLeft: -2 }]}> Touch ID </Text>
-              <Switch value={enableTouchID} onValueChange={(e) => this.switchTouchID()} />
-            </View>
-          </ScrollView>
+      <IntlProvider messages={messages[locale]}>
+        <View style={styles.container}>
+          <NavigationBar 
+            title={messages[locale]['sts_title_name_settings']}
+            leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
+          />
+          <View style={styles.scrollContainer}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <SettingItem leftItemTitle={<FormattedMessage id="sts_sec_title_language" />} onPress={() => this.changeSettings('Languages')} extraStyle={{ marginTop: 10 }} />
+              <SettingItem leftItemTitle={<FormattedMessage id="sts_sec_title_currency" />} onPress={() => this.changeSettings('Currencies')} />
+              <SettingItem leftItemTitle={<FormattedMessage id="sts_sec_title_theme" />} onPress={() => {}} />
+              {/* <View style={[styles.itemContainer, styles.between, { marginTop: 10 }]}>
+                <Text style={[styles.text16, { marginLeft: -2 }]}> Touch ID </Text>
+                <Switch value={enableTouchID} onValueChange={(e) => this.switchTouchID()} />
+              </View> */}
+            </ScrollView>
+          </View>
         </View>
-      </View>
+      </IntlProvider>
     )
   }
 

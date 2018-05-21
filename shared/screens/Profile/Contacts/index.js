@@ -7,6 +7,15 @@ import { Text, View, ListView } from 'react-native'
 import DeleteButton from './DeleteButton'
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view'
 import Colors from 'resources/colors'
+import { connect } from 'react-redux'
+import { FormattedMessage, IntlProvider } from 'react-intl'
+import messages from './messages'
+
+@connect(
+  (state) => ({
+    locale: state.intl.get('locale')
+  })
+)
 
 export default class Contacts extends BaseScreen {
 
@@ -59,23 +68,26 @@ export default class Contacts extends BaseScreen {
 
   render() {
     const { contacts } = this.state
+    const { locale } = this.props
     return (
-      <View style={styles.container}>
-        <NavigationBar
-          title="Contacts"
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
-          rightButton={ <CommonRightButton iconName="md-add" onPress={() => this.addContacts()} /> }
-        />
-        <View style={styles.scrollContainer}>
-          <SwipeListView
-            contentContainerStyle={{ paddingTop: 10  }}
-            enableEmptySections={true}
-            showsVerticalScrollIndicator={false}
-            dataSource={this.ds.cloneWithRows(this.state.contacts)}
-            renderRow={this.renderRow.bind(this)}
+      <IntlProvider messages={messages[locale]}>
+        <View style={styles.container}>
+          <NavigationBar
+            title={messages[locale]['ctct_title_name_contacts']}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+            rightButton={ <CommonRightButton iconName="md-add" onPress={() => this.addContacts()} /> }
           />
+          <View style={styles.scrollContainer}>
+            <SwipeListView
+              contentContainerStyle={{ paddingTop: 10  }}
+              enableEmptySections={true}
+              showsVerticalScrollIndicator={false}
+              dataSource={this.ds.cloneWithRows(this.state.contacts)}
+              renderRow={this.renderRow.bind(this)}
+            />
+          </View>
         </View>
-      </View>
+      </IntlProvider>
     )
   }
 }

@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center'
   },
-  text24: {
-    fontSize: FontScale(24),
+  text20: {
+    fontSize: FontScale(20),
     color: Colors.textColor_FFFFEE,
     fontWeight: 'bold'
   },

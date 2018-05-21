@@ -9,7 +9,7 @@ export default Header = ({ Title, displayAccount, scanQR }) => (
   <View style={[styles.headerContainer, styles.between]}>
     <TouchableOpacity onPress={() => displayAccount()} style={styles.navButton}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Text style={styles.text24}> { Title } </Text>
+        <Text style={styles.text20}> { Title } </Text>
         <View style={{ transform: [{ rotateZ: '90deg' }], marginLeft: 5, marginTop: 3 }}>
           <Ionicons name="md-play" size={10} color={Colors.textColor_255_255_238} />
         </View>
