@@ -1,6 +1,5 @@
 import Eos from 'react-native-eosjs'
 import Keystore from 'eos/keystore'
-import Keygen from 'eos/keygen'
 import { EOS_API_URL } from 'constants/env'
 import { encodeKeyStoreKey, decodeKey } from 'utils'
 import secureStorage from 'utils/secureStorage'
@@ -38,18 +37,9 @@ const getEOS = () => {
   return eos
 }
 
-const generateMasterKeys = async (master: any) => {
-  const keys = await Keygen.generateMasterKeys(master)
-  return keys
-}
-
 const privateToPublic = async (privateKey: string) => {
   const keys = await ecc.privateToPublic(privateKey)
   return keys
-}
-
-const deriveKeys = async (options: {}) => {
-  await keystore.deriveKeys(options)
 }
 
 const getLocalAccounts = async () => {
@@ -70,9 +60,7 @@ export {
   getEOS,
   getKeystore,
   initAccount,
-  generateMasterKeys,
   privateToPublic,
-  deriveKeys,
   getLocalAccounts,
   isValidPrivate
 }

@@ -42,7 +42,7 @@ const ListItem = ({ item, onPress, active }) => (
     onPress={() => onPress(item)}
   >
     <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32 }]}>
-      <Text style={styles.text16}>{item}</Text>
+      <Text style={styles.text16}>{item.get('name')}</Text>
       {active && <Ionicons name="ios-checkmark" size={26} color={Colors.bgColor_0_122_255} />}
     </View>
   </TouchableHighlight>
@@ -57,9 +57,9 @@ export default AccountList = ({ data, activeAccount, dismissModal, onPress, crea
             <ListItem
               key={index}
               item={item}
-              active={item === activeAccount}
+              active={item.get('id') === activeAccount.get('id')}
               onPress={() => {
-                onPress(item)
+                onPress({ name: item.get('name'), id: item.get('id') })
                 dismissModal()
               }}
             />
