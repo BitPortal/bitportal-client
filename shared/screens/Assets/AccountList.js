@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react'
-import { Text, View, ScrollView, TouchableHighlight, StyleSheet } from 'react-native'
+import { Text, View, ScrollView, TouchableHighlight, TouchableOpacity, StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { connect } from 'react-redux'
@@ -17,8 +17,7 @@ import {
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT-NAV_BAR_HEIGHT,
-    marginTop: NAV_BAR_HEIGHT
+    height: SCREEN_HEIGHT
   },
   listContainer: {
     width: SCREEN_WIDTH,
@@ -26,6 +25,11 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.minorThemeColor,
     borderBottomWidth: StyleSheet.hairlineWidth,
     backgroundColor: Colors.bgColor_48_49_59
+  },
+  bgContainer: {
+    width: SCREEN_WIDTH,
+    maxHeight: 200,
+    marginTop: NAV_BAR_HEIGHT-SCREEN_HEIGHT
   },
   between: {
     alignItems: 'center',
@@ -69,13 +73,19 @@ export default class AccountList extends Component {
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-          {
-            data.map((item, index) => (
-                <ListItem key={index} item={item} active={item === activeAccount} onPress={() => this.switchAccount(item)}/>
-              )
-            )
-          }
+        <TouchableOpacity style={[styles.container, { backgroundColor: 'rgba(0,0,0,0.1)' }]} onPress={() => dismissModal()} />
+          <View style={styles.bgContainer}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              {
+                data.map((item, index) => (
+                    <ListItem key={index} item={item} active={item === activeAccount} onPress={() => this.switchAccount(item)}/>
+                  )
+                )
+              }
+            </ScrollView>
+          </View>
           
+            
           <TouchableHighlight
             underlayColor={Colors.bgColor_000000}
             style={styles.listContainer}
@@ -92,13 +102,6 @@ export default class AccountList extends Component {
             </View>
           </TouchableHighlight>
 
-          <TouchableHighlight
-            underlayColor={Colors.mainThemeColor}
-            style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.7)' }}
-            onPress={() => dismissModal()}
-          >
-            <View />
-          </TouchableHighlight>
         </View>
       </IntlProvider>  
     )

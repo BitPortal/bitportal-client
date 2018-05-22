@@ -4,7 +4,6 @@ import { Text, View, ScrollView, Image, TouchableOpacity } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import TotalAssetsCard from 'components/TotalAssetsCard'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import Header from './Header'
 import EnableAssets from './EnableAssets'
 import BalanceList from './BalanceList'
 import styles from './styles'
@@ -19,6 +18,7 @@ import * as walletActions from 'actions/wallet'
 import { accountBalanceSelector } from 'selectors/balance'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import messages from './messages'
+import NavigationBar, { ListButton, CommonRightButton } from 'components/NavigationBar'
 
 @connect(
   (state) => ({
@@ -118,7 +118,10 @@ export default class Assets extends BaseScreen {
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-          <Header Title={<FormattedMessage id="addpage_title_name_act" />} displayAccount={() => this.displayAccountList()} scanQR={() => this.scanQR()} />
+          <NavigationBar 
+            leftButton={<ListButton label={<FormattedMessage id="addpage_title_name_act" />} onPress={() => this.displayAccountList()} />}
+            rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanQR()} />}
+          />
           {
             !balanceList &&
             <TouchableOpacity onPress={() => this.createNewAccount()} style={[styles.createAccountContainer, styles.center]}>
