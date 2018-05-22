@@ -20,6 +20,8 @@ import { IntlProvider, FormattedMessage } from 'react-intl'
 import messages from './messages'
 import NavigationBar, { ListButton, CommonRightButton } from 'components/NavigationBar'
 
+import Loading from 'components/Loading'
+
 @connect(
   (state) => ({
     locale: state.intl.get('locale'),
@@ -143,6 +145,9 @@ export default class Assets extends BaseScreen {
               </ScrollView>
             </View>
           }
+
+          <Loading />
+
           <Modal
             animationIn="fadeIn"
             animationOut="fadeOut"
