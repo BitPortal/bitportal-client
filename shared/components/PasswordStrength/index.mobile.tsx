@@ -5,7 +5,7 @@ import React from 'react'
 import { View } from 'react-native'
 import styles from './styles'
 
-const getLevel = (strength) => {
+const getLevel = (strength: number) => {
   if (strength === 1) return 'weak'
   if (strength === 2) return 'middle'
   if (strength >= 3) return 'strong'

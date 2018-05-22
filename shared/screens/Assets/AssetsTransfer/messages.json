@@ -1,0 +1,30 @@
+{
+  "zh": {
+    "snd_title_name_snd" : "发送",
+    "snd_title_name_accnm" : "账户名称",
+    "snd_title_name_acclmt" : "最多支持12位字符",
+    "snd_txtbox_txt_warning" : "无效的名称",
+    "snd_title_name_amt" : "数量",
+    "snd_txtbox_txt_rmk" : "附言",
+    "snd_button_name_nxt" : "下一步",
+    "sndcfm_title_name_cfm" : "交易确认",
+    "sndcfm_title_name_send" : "发送",
+    "sndcfm_title_name_to" : "至",
+    "sndcfm_title_name_rmk" : "附言",
+    "sndcfm_button_name_ok" : "确认"
+  },
+  "en": {
+    "snd_title_name_snd" : "Send",
+    "snd_title_name_accnm" : "Account Name",
+    "snd_title_name_acclmt" : "Up to 12 characters",
+    "snd_txtbox_txt_warning" : "Invalid Name",
+    "snd_title_name_amt" : "Amount",
+    "snd_txtbox_txt_rmk" : "Remark",
+    "snd_button_name_nxt" : "Next",
+    "sndcfm_title_name_cfm" : "Confirm",
+    "sndcfm_title_name_send" : "Send",
+    "sndcfm_title_name_to" : "to",
+    "sndcfm_title_name_rmk" : "Memo",
+    "sndcfm_button_name_ok" : "OK"
+  }
+}

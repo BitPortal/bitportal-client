@@ -5,8 +5,27 @@ import BaseScreen from 'components/BaseScreen'
 import styles from './styles'
 import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
+import { bindActionCreators } from 'redux'
+import * as intlActions from 'actions/intl'
+import storage from 'utils/storage'
 import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, TouchableHighlight, Switch } from 'react-native'
+import { startTabBasedApp } from 'navigators'
+import tabMessages from 'navigators/messages'
+import { connect } from 'react-redux'
+import { FormattedMessage, IntlProvider } from 'react-intl'
+import messages from './messages'
+
+@connect(
+  (state) => ({
+    locale: state.intl.get('locale'),
+  }),
+  (dispatch) => ({
+    actions: bindActionCreators({
+      ...intlActions
+    }, dispatch)
+  })
+)
 
 export default class Languages extends BaseScreen {
 
@@ -15,42 +34,50 @@ export default class Languages extends BaseScreen {
     navBarHidden: true
   }
 
-  state = {
-    currentLanguage: 'EN'
+  changeTabLabels = (tabLabels) => {
+    this.props.navigator.setTabButton({ tabIndex: 0, label: tabLabels['general_tab_name_ast'] })
+    this.props.navigator.setTabButton({ tabIndex: 1, label: tabLabels['general_tab_name_mkt'] })
+    this.props.navigator.setTabButton({ tabIndex: 2, label: tabLabels['general_tab_name_dscv'] })
+    this.props.navigator.setTabButton({ tabIndex: 3, label: tabLabels['general_tab_name_prf'] })
   }
 
-  switchLanguage = (language) => {
-    this.setState({ currentLanguage: language })
+  switchLanguage = async (language) => {
+    await storage.setItem('bitportal_lang', language)
+    this.props.actions.setLocale(language)
+    const tabLabels = tabMessages[language]
+    this.changeTabLabels(tabLabels)
   }
 
   render() {
-    const { currentLanguage } = this.state
+    const { locale } = this.props
     return (
-      <View style={styles.container}>
-        <NavigationBar 
-          title="Languages"
-          leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
-        />
-        <View style={styles.scrollContainer}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <SettingItem 
-              leftItemTitle={'EN'} 
-              onPress={() => this.switchLanguage('EN')} 
-              extraStyle={{ marginTop: 10 }} 
-              iconColor={Colors.bgColor_0_122_255}
-              rightItemTitle={currentLanguage == 'EN' ? null : ' '}
-              rightImageName={currentLanguage == 'EN' && 'md-checkmark'}
-            />
-            <SettingItem 
-              leftItemTitle={'中文'} 
-              iconColor={Colors.bgColor_0_122_255}
-              rightItemTitle={currentLanguage == 'ZH' ? null : ' '}
-              rightImageName={currentLanguage == 'ZH' && 'md-checkmark'}
-              onPress={() => this.switchLanguage('ZH')} 
-            />
-          </ScrollView>
+      <IntlProvider messages={messages[locale]}>
+        <View style={styles.container}>
+          <NavigationBar 
+            title={messages[locale]['lan_title_name_language']}
+            leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
+          />
+          <View style={styles.scrollContainer}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <SettingItem 
+                leftItemTitle={'English'} 
+                onPress={() => this.switchLanguage('en')} 
+                extraStyle={{ marginTop: 10 }} 
+                iconColor={Colors.bgColor_0_122_255}
+                rightItemTitle={locale == 'en' ? null : ' '}
+                rightImageName={locale == 'en' && 'md-checkmark'}
+              />
+              <SettingItem 
+                leftItemTitle={'简体中文'} 
+                iconColor={Colors.bgColor_0_122_255}
+                rightItemTitle={locale == 'zh' ? null : ' '}
+                rightImageName={locale == 'zh' && 'md-checkmark'}
+                onPress={() => this.switchLanguage('zh')} 
+              />
+            </ScrollView>
+          </View>
         </View>
-      </View>
+      </IntlProvider>
     )
   }
 

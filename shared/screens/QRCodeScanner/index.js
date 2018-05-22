@@ -1,6 +1,5 @@
 /* @jsx */
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import styles from './styles'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, TouchableOpacity, TouchableHighlight } from 'react-native'
@@ -8,7 +7,15 @@ import BaseScreen from 'components/BaseScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import QRCodeScanner from 'react-native-qrcode-scanner';
+import { connect } from 'react-redux'
+import { FormattedMessage, IntlProvider } from 'react-intl'
+import messages from './messages'
 
+@connect(
+  (state) => ({
+    locale: state.intl.get('locale')
+  })
+)
 export default class Scanner extends BaseScreen {
 
   static navigatorStyle = {
@@ -26,24 +33,27 @@ export default class Scanner extends BaseScreen {
   }
 
   render() {
+    const { locale } = this.props
     return (
-      <View style={styles.container}>
-        <NavigationBar 
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
-          title="QRCode Scanner"
+      <IntlProvider messages={messages[locale]}>
+        <View style={styles.container}>
+          <NavigationBar 
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+            title={messages[locale]['qrscn_title_name_qrscanner']}
+          />
+        
+        <QRCodeScanner
+          onRead={this.onSuccess.bind(this)}
+          showMarker={true}
+          bottomContent={
+            <TouchableOpacity onPress={() => this.onSuccess()} style={styles.buttonTouchable}>
+              <Text style={styles.buttonText}>Go To Send</Text>
+            </TouchableOpacity>
+          }
         />
-       
-       <QRCodeScanner
-        onRead={this.onSuccess.bind(this)}
-        showMarker={true}
-        bottomContent={
-          <TouchableOpacity onPress={() => this.onSuccess()} style={styles.buttonTouchable}>
-            <Text style={styles.buttonText}>Go To Send</Text>
-          </TouchableOpacity>
-        }
-      />
 
-      </View>
+        </View>
+      </IntlProvider>
     )
   }
 

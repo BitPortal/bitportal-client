@@ -39,7 +39,7 @@ export const CommonButton = ({ iconName, title, onPress }) => (
 
 export const CommonTitle = ({ title }) => (
   <View style={styles.navButton}>
-    <Text style={styles.text24}>{title}</Text>
+    <Text style={styles.text20}>{title}</Text>
   </View>
 )
 

@@ -4,6 +4,15 @@ import styles from './styles'
 import Colors from 'resources/colors'
 import { Text, View, ScrollView, TextInput, TouchableOpacity, TouchableHighlight } from 'react-native'
 import QRCodeModule from 'react-native-qrcode'
+import { connect } from 'react-redux'
+import { FormattedMessage, IntlProvider } from 'react-intl'
+import messages from './messages'
+
+@connect(
+  (state) => ({
+    locale: state.intl.get('locale')
+  })
+)
 
 export default class QRCode extends Component {
 
@@ -18,53 +27,56 @@ export default class QRCode extends Component {
 
   render() {
     const { showQRCode, qrCodeValue } = this.state
+    const { locale } = this.props
     return (
-      <View style={styles.scrollContainer}>
-        <ScrollView 
-          showsVerticalScrollIndicator={false}
-        >
-          <View style={styles.content}>
-            <Text style={[styles.text16, { marginLeft: -1 }]}> 
-              Caution
-            </Text>
-            <Text style={[styles.text14, { marginTop: 15 }]} multiline={true}> 
-              Please confirm no one or device is monitoring your screen.          
-            </Text>
+      <IntlProvider messsage={messages[locale]}>
+        <View style={styles.scrollContainer}>
+          <ScrollView 
+            showsVerticalScrollIndicator={false}
+          >
+            <View style={styles.content}>
+              <Text style={[styles.text16, { marginLeft: -1 }]}> 
+                <FormattedMessage id="expksqrc_hint_title_point1" />
+              </Text>
+              <Text style={[styles.text14, { marginTop: 15 }]} multiline={true}> 
+                <FormattedMessage id="expksqrc_hint_txt_point1" />          
+              </Text>
 
-            {
-              !showQRCode &&
-              <View style={[styles.qrCodeContainer, styles.center]}>
-                <Text multiline={true} style={[styles.text14, { marginBottom: 45 }]}>
-                  Please confirm no one or device is monitoring your screen.
-                </Text>
-  
-                <TouchableHighlight 
-                  onPress={() => this.showQRCode()} 
-                  underlayColor={Colors.textColor_89_185_226}
-                  style={[styles.btn, styles.center, { width: 140, backgroundColor: Colors.textColor_89_185_226 }]}
-                >
-                  <Text style={styles.text14}> 
-                    Show QRcode
+              {
+                !showQRCode &&
+                <View style={[styles.qrCodeContainer, styles.center]}>
+                  <Text multiline={true} style={[styles.text14, { marginBottom: 45 }]}>
+                    <FormattedMessage id="expksqrc_txtbox_txt_content" />
                   </Text>
-                </TouchableHighlight>
-              </View>  
-            }
-            {
-              showQRCode && 
-              <View style={[styles.qrCodeContainer, styles.center, { backgroundColor: Colors.bgColor_48_49_59 }]}>
-                <View style={{ padding: 2, maxWidth: 144, backgroundColor: Colors.bgColor_FFFFFF }}>
-                  <QRCodeModule
-                    value={qrCodeValue}
-                    size={140}
-                    bgColor='black'
-                    fgColor='white'
-                  />
+    
+                  <TouchableHighlight 
+                    onPress={() => this.showQRCode()} 
+                    underlayColor={Colors.textColor_89_185_226}
+                    style={[styles.btn, styles.center, { width: 140, backgroundColor: Colors.textColor_89_185_226 }]}
+                  >
+                    <Text style={styles.text14}> 
+                      <FormattedMessage id="expksqrc_button_name_show" />
+                    </Text>
+                  </TouchableHighlight>
+                </View>  
+              }
+              {
+                showQRCode && 
+                <View style={[styles.qrCodeContainer, styles.center, { backgroundColor: Colors.bgColor_48_49_59 }]}>
+                  <View style={{ padding: 2, maxWidth: 144, backgroundColor: Colors.bgColor_FFFFFF }}>
+                    <QRCodeModule
+                      value={qrCodeValue}
+                      size={140}
+                      bgColor='black'
+                      fgColor='white'
+                    />
+                  </View>
                 </View>
-              </View>
-            }
-          </View>
-       </ScrollView>
-      </View>
+              }
+            </View>
+          </ScrollView>
+        </View>
+      </IntlProvider>
     )
   }
 

@@ -1,0 +1,14 @@
+{
+  "zh": {
+    "general_tab_name_ast": "资产",
+    "general_tab_name_mkt": "行情",
+    "general_tab_name_dscv": "发现",
+    "general_tab_name_prf": "我的"
+  },
+  "en": {
+    "general_tab_name_ast": "Assets",
+    "general_tab_name_mkt": "Market",
+    "general_tab_name_dscv": "Discovery",
+    "general_tab_name_prf": "Profile"
+  }
+}
