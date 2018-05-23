@@ -1,5 +1,5 @@
 import { StyleSheet, Platform } from 'react-native'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, WidthPercent } from 'utils/dimens'
+import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT } from 'utils/dimens'
 import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
@@ -37,10 +37,7 @@ const styles = StyleSheet.create({
   },
   text20: {
     fontSize: FontScale(20),
-    color: Colors.textColor_255_255_238
-  },
-  text24: {
-    fontSize: FontScale(24),
+    fontWeight: 'bold',
     color: Colors.textColor_255_255_238
   },
   addAssetsContainer: {

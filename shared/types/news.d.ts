@@ -1,6 +1,7 @@
 declare interface NewsParams = {
   startAt: number,
   limit: number,
+  isRefresh: boolean,
 }
 
 declare interface NewsRow = {

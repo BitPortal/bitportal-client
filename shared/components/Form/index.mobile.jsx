@@ -1,7 +1,7 @@
 /* @jsx */
 
 import React from 'react'
-import { View, Text, TextInput, TouchableHighlight } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import Colors from 'resources/colors'
 import styles from './styles'
 
@@ -13,8 +13,12 @@ export const FieldItem = ({ children }) => (
   <View style={styles.fieldItem}>{children}</View>
 )
 
-export const FieldInput = ({ children }) => (
-  <View style={styles.fieldInput}>{children}</View>
+export const FieldInput = ({ children, rightContent, leftContent }) => (
+  <View style={styles.fieldInput}>
+    {leftContent && <View>{leftContent}</View>}
+    {children}
+    {rightContent && <View>{rightContent}</View>}
+  </View>
 )
 
 export const FieldError = ({ children }) => (
@@ -25,17 +29,56 @@ export const TextField = ({ input: { onChange, ...restInput }, meta: { touched, 
   <FieldItem>
     <Text style={styles.text14}>{label}</Text>
     <FieldInput>
-      <TextInput style={styles.input} style={styles.input} onChangeText={onChange} {...restInput} />
+      <TextInput
+        style={styles.input}
+        autoCorrect={false}
+        underlineColorAndroid="transparent"
+        selectionColor={Colors.textColor_181_181_181}
+        keyboardAppearance={Colors.keyboardTheme}
+        onChangeText={onChange}
+        {...restInput}
+      />
     </FieldInput>
     <FieldError>{touched && error}</FieldError>
   </FieldItem>
 )
 
-export const PasswordField = ({ input: { onChange, ...restInput }, meta: { touched, error }, label }) => (
+export const TextAreaField = ({ input: { onChange, ...restInput }, meta: { touched, error }, label, placeholder }) => (
   <FieldItem>
     <Text style={styles.text14}>{label}</Text>
     <FieldInput>
-      <TextInput style={styles.input} style={styles.input} onChangeText={onChange} {...restInput} secureTextEntry={true} />
+      <TextInput
+        multiline={true}
+        numberOfLines={4}
+        style={styles.areaInput}
+        autoCorrect={false}
+        placeholder={placeholder}
+        placeholderTextColor={Colors.textColor_181_181_181}
+        underlineColorAndroid="transparent"
+        selectionColor={Colors.textColor_181_181_181}
+        keyboardAppearance={Colors.keyboardTheme}
+        onChangeText={onChange}
+        {...restInput}
+      />
+    </FieldInput>
+    <FieldError>{touched && error}</FieldError>
+  </FieldItem>
+)
+
+export const PasswordField = ({ input: { onChange, ...restInput }, meta: { touched, error }, label, rightContent }) => (
+  <FieldItem>
+    <Text style={styles.text14}>{label}</Text>
+    <FieldInput rightContent={rightContent}>
+      <TextInput
+        style={styles.input}
+        autoCorrect={false}
+        underlineColorAndroid="transparent"
+        selectionColor={Colors.textColor_181_181_181}
+        keyboardAppearance={Colors.keyboardTheme}
+        onChangeText={onChange}
+        {...restInput}
+        secureTextEntry={true}
+      />
     </FieldInput>
     <FieldError>{touched && error}</FieldError>
   </FieldItem>
@@ -43,13 +86,12 @@ export const PasswordField = ({ input: { onChange, ...restInput }, meta: { touch
 
 export const SubmitButton = ({ disabled, onPress, text }) => (
   <FieldItem>
-    <TouchableHighlight
+    <TouchableOpacity
+      onPress={onPress}
       disabled={disabled}
       style={[styles.submitButton, disabled ? styles.disabled : {}]}
-      onPress={onPress}
-      underlayColor={Colors.textColor_89_185_226}
     >
       <Text style={styles.submitButtonText}>{text}</Text>
-    </TouchableHighlight>
+    </TouchableOpacity>
   </FieldItem>
 )

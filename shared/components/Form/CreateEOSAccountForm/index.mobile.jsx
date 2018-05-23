@@ -1,29 +1,26 @@
 /* @jsx */
+
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Text, View, TextInput } from 'react-native'
-import { Field, reduxForm } from 'redux-form/immutable'
-import {
-  FormContainer,
-  FieldItem,
-  FieldInput,
-  TextField,
-  PasswordField,
-  SubmitButton
-} from 'components/Form'
+import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
+import { FormContainer, FieldItem, FieldInput, TextField, PasswordField, SubmitButton } from 'components/Form'
+import PasswordStrength from 'components/PasswordStrength'
 import { normalizeText } from 'utils/normalize'
+import { getPasswordStrength } from 'utils'
 import * as walletActions from 'actions/wallet'
 
-const validate = (values) => {
+const validate = (values, props) => {
   const errors = {}
-
-  if (!values.get('name')) {
-    errors.name = 'Please input bitportal wallet name'
+  
+  if (!values.get('eosName')) {
+    errors.eosName = 'Please input bitportal wallet name'
   }
 
   if (!values.get('password')) {
     errors.password = 'Please input password'
+  } else if (!!values.get('password') && values.get('password').length < 6) {
+    errors.password = 'Password must be at least 6 characters'
   }
 
   if (!values.get('confirmedPassword')) {
@@ -33,18 +30,13 @@ const validate = (values) => {
   if (values.get('confirmedPassword') !== values.get('password')) {
     errors.confirmedPassword = 'Passwords don\'t macth'
   }
-
   return errors
 }
-
-@reduxForm({
-  form: 'createEOSAccountForm',
-  validate
-})
 
 @connect(
   state => ({
     locale: state.intl.get('locale'),
+    password: formValueSelector('createEOSAccountForm')(state, 'password'),
     wallet: state.wallet
   }),
   dispatch => ({
@@ -54,6 +46,8 @@ const validate = (values) => {
   })
 )
 
+@reduxForm({ form: 'createEOSAccountForm', validate })
+
 export default class CreateEOSAccountForm extends Component {
   constructor(props, context) {
     super(props, context)
@@ -61,18 +55,18 @@ export default class CreateEOSAccountForm extends Component {
   }
 
   submit(data) {
+    this.props.onPress()
     console.log(data.toJS())
   }
 
   render() {
-    const { handleSubmit, invalid, pristine } = this.props
+    const { handleSubmit, invalid, pristine, password } = this.props
     const disabled = invalid || pristine
-
     return (
       <FormContainer>
         <Field
-          label="Name Your Bitportal"
-          name="name"
+          label="EOS Account Name"
+          name="eosName"
           component={TextField}
           normalize={normalizeText}
         />
@@ -80,17 +74,14 @@ export default class CreateEOSAccountForm extends Component {
           label="Set a password"
           name="password"
           component={PasswordField}
+          rightContent={<PasswordStrength strength={getPasswordStrength(password)} />}
         />
         <Field
           label="Confirm Your Password"
           name="confirmedPassword"
           component={PasswordField}
         />
-        <SubmitButton
-          disabled={disabled}
-          onPress={handleSubmit(this.submit)}
-          text="Next"
-        />
+        <SubmitButton disabled={disabled} onPress={handleSubmit(this.submit)} text="Create" />
       </FormContainer>
     )
   }

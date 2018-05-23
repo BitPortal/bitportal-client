@@ -7,6 +7,9 @@ import { FormattedNumber } from 'react-intl'
 import { SCREEN_HEIGHT, SCREEN_WIDTH, FontScale } from 'utils/dimens'
 import Images from 'resources/images'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import messages from './messages'
+import { FormattedMessage, IntlProvider } from 'react-intl'
 
 const styles = StyleSheet.create({
   linearContainer: {
@@ -34,39 +37,49 @@ const styles = StyleSheet.create({
   }
 })
 
+@connect(
+  (state) => ({
+    locale: state.intl.get('locale')
+  })
+)
+
 class TotalAssetsCard extends Component {
 
   render() {
-    const { totalAssets, accountName, disabled, onPress } = this.props
+    const { totalAssets, accountName, disabled, onPress, locale } = this.props
     return (
-      <View style={{ backgroundColor: Colors.minorThemeColor }}>
-        <LinearGradientContainer type="right" style={[styles.linearContainer, { marginHorizontal: 32, marginVertical: 10 }]}>
-          <TouchableHighlight disabled={disabled} style={styles.linearContainer} underlayColor={Colors.linearUnderlayColor} onPress={() => onPress()} >
-            <View style={[styles.linearContainer, styles.paddingStyle]}>
-              <Text style={styles.text15}> Total Assets</Text>
-              <Text style={styles.text24}>
-                ≈¥ {' '}
-                <FormattedNumber
-                  value={totalAssets}
-                  maximumFractionDigits={2}
-                  minimumFractionDigits={2}
-                />
-              </Text>
-              <View style={styles.between}>
-                <Text style={styles.text15}> { accountName }</Text>
-                <Image style={{ width: 16, height: 16 }} source={Images.qrCode} />
+      <IntlProvider messages={messages[locale]}>
+        <View style={{ backgroundColor: Colors.minorThemeColor }}>
+          <LinearGradientContainer type="right" style={[styles.linearContainer, { marginHorizontal: 32, marginVertical: 10 }]}>
+            <TouchableHighlight disabled={disabled} style={styles.linearContainer} underlayColor={Colors.linearUnderlayColor} onPress={() => onPress()} >
+              <View style={[styles.linearContainer, styles.paddingStyle]}>
+                <Text style={styles.text15}>
+                  <FormattedMessage id="asset_card_title_ttlast" />
+                </Text>
+                <Text style={styles.text24}>
+                  ≈ ¥
+                  <FormattedNumber
+                    value={totalAssets}
+                    maximumFractionDigits={2}
+                    minimumFractionDigits={2}
+                  />
+                </Text>
+                <View style={styles.between}>
+                  <Text style={styles.text15}> { accountName }</Text>
+                  <Image style={{ width: 16, height: 16 }} source={Images.qrCode} />
+                </View>
               </View>
-            </View>
-          </TouchableHighlight>
-        </LinearGradientContainer>
-      </View>
+            </TouchableHighlight>
+          </LinearGradientContainer>
+        </View>
+      </IntlProvider>
     )
   }
 }
 
 TotalAssetsCard.propTypes = {
-  totalAssets: PropTypes.number.isRequired, 
-  accountName: PropTypes.string.isRequired, 
+  totalAssets: PropTypes.number.isRequired,
+  accountName: PropTypes.string.isRequired,
   onPress: PropTypes.func
 }
 

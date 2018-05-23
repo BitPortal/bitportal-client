@@ -1,0 +1,22 @@
+{
+  "zh": {
+    "abt_title_name_about" : "关于",
+    "abt_subttl_txt_product" : "",
+    "abt_subttl_txt_version" : "当前版本",
+    "abt_describe_txt_des" : "Join us at the Adobe 99U Conference for inspiring talks, stimulating workshops, and unexpected connections that will supercharge your creative career.",
+
+    "abt_sec_title_tou" : "用户服务协议",
+    "abt_sec_title_update" : "更新日志",
+    "abt_sec_title_check" : "版本检查"
+  },
+  "en": {
+    "abt_title_name_about" : "About",
+    "abt_subttl_txt_product" : "",
+    "abt_subttl_txt_version" : "Version",
+    "abt_describe_txt_des" : "Join us at the Adobe 99U Conference for inspiring talks, stimulating workshops, and unexpected connections that will supercharge your creative career.",
+
+    "abt_sec_title_tou" : "Terms of Service",
+    "abt_sec_title_update" : "Update dairy",
+    "abt_sec_title_check" : "Check for updates"
+  }
+}

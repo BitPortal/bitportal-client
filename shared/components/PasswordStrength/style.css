@@ -1,0 +1,44 @@
+.passwordStrength {
+  display: flex;
+
+  .label {
+    font-size: 0.75rem;
+    color: #3d444d;
+  }
+
+  .level {
+    display: flex;
+    align-items: center;
+    margin-left: 0.625rem;
+
+    span {
+      width: 3rem;
+      height: 0.5rem;
+      background-color: blue;
+      margin-left: 2px;
+      background-color: #005eda;
+
+      &:first-of-type {
+        opacity: 0.33;
+      }
+
+      &:nth-of-type(2) {
+        opacity: 0.66;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 593px) {
+    width: 100%;
+    padding-top: 1rem;
+    padding-bottom: 0.25rem;
+
+    .level {
+      flex-grow: 1;
+
+      span {
+        width: calc(33% - 2px);
+      }
+    }
+  }
+}

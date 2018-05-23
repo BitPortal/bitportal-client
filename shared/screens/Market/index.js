@@ -12,8 +12,9 @@ import { bindActionCreators } from 'redux'
 import { Text, View, TouchableOpacity } from 'react-native'
 import Modal from 'react-native-modal'
 import ExchangeList from './ExchangeList'
-import { Header, Quotes } from './Header'
+import { Quotes } from './Quotes'
 import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from 'constants/market'
+import NavigationBar, { ListButton, CommonRightButton } from 'components/NavigationBar'
 
 @connect(
   (state) => ({
@@ -42,7 +43,7 @@ export default class Market extends BaseScreen {
   }
 
   // 弹出交易所列表
-  selectMarket = () => {
+  selectExchange = () => {
     this.setState({ isVisible: true })
   }
 
@@ -74,7 +75,7 @@ export default class Market extends BaseScreen {
       exchange: this.props.ticker.get('exchangeFilter'),
       quote_asset: this.props.ticker.get('quoteAssetFilter'),
       sort: this.props.ticker.get('sortFilter'),
-      limit: 20
+      limit: 200
     })
   }
 
@@ -87,10 +88,9 @@ export default class Market extends BaseScreen {
     const loading = ticker.get('loading')
     return (
       <View style={styles.container}>
-        <Header
-          exchange={EXCHANGE_NAMES[ticker.get('exchangeFilter')]}
-          selectMarket={() => this.selectMarket()}
-          searchCoin={() => this.searchCoin()}
+        <NavigationBar 
+          leftButton={<ListButton label={EXCHANGE_NAMES[ticker.get('exchangeFilter')]} onPress={() => this.selectExchange()} />}
+          rightButton={<CommonRightButton iconName="md-search" onPress={() => this.searchCoin()} />}
         />
         <Quotes
           onPress={(e) => this.changeQuote(e)}
@@ -109,6 +109,7 @@ export default class Market extends BaseScreen {
           animationIn="fadeIn"
           animationOut="fadeOut"
           style = {{  margin: 0 }}
+          useNativeDriver={true}
           isVisible={this.state.isVisible}
           backdropOpacity={0.3}
         >

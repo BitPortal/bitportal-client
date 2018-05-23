@@ -45,7 +45,7 @@ export const getErrorMessage = (error: any) => {
 }
 
 export const encodeKey = (...elements: any[]) => {
-  const key = JSON.stringify(['info', ...elements])
+  const key = JSON.stringify([...elements])
   const keyTrim = key.substring(1, key.length - 1)
   return Buffer.from(keyTrim).toString('hex')
 }
@@ -57,3 +57,21 @@ export const encodeKeyStoreKey = (...elements: any[]) => {
 }
 
 export const decodeKey = (key: string) => JSON.parse(`[${Buffer.from(key, 'hex').toString('utf8')}]`)
+
+export const getPasswordStrength = (password: any) => {
+  let passwordStrength = 0
+
+  const hasUppercase = (value: string) => (/[A-Z]/.test(value))
+  const hasLowercase = (value: string) => (/[a-z]/.test(value))
+  const hasNumber = (value: string) => (/[0-9]/.test(value))
+  const hasSymbol = (value: string) => (/[$&+,:;=?@#|'<>.^*()%!-]/.test(value))
+
+  if (password && typeof password === 'string' && password.length >= 6) {
+    if (hasLowercase(password)) passwordStrength += 1
+    if (hasUppercase(password)) passwordStrength += 1
+    if (hasNumber(password)) passwordStrength += 1
+    if (hasSymbol(password)) passwordStrength += 1
+  }
+
+  return passwordStrength
+}

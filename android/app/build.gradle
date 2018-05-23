@@ -117,6 +117,16 @@ android {
             abiFilters "armeabi-v7a", "x86"
         }
     }
+
+    signingConfigs {
+        release {
+            storeFile file(MYAPP_RELEASE_STORE_FILE)
+            storePassword MYAPP_RELEASE_STORE_PASSWORD
+            keyAlias MYAPP_RELEASE_KEY_ALIAS
+            keyPassword MYAPP_RELEASE_KEY_PASSWORD
+        }
+    }
+
     splits {
         abi {
             reset()
@@ -127,6 +137,7 @@ android {
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
@@ -163,7 +174,7 @@ dependencies {
     compile "com.android.support:support-v4:27.1.1"
     compile "com.android.support:animated-vector-drawable:27.1.1"
     compile "com.android.support:design:27.1.1"
-    compile "com.facebook.react:react-native:+"  // From node_modules
+    compile "com.facebook.react:react-native:0.20.1+"  // From node_modules
 }
 
 // Run this once to be able to run the application with BUCK

@@ -1,10 +1,18 @@
 /* @jsx */
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { View, ScrollView } from 'react-native'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import BaseScreen from 'components/BaseScreen'
-import CreateEOSAccountForm from 'components/Form/CreateEOSAccountForm'
+import CreateWalletForm from 'components/Form/CreateWalletForm'
 import styles from './styles'
+import messages from './messages'
+
+@connect(
+  state => ({
+    locale: state.intl.get('locale')
+  })
+)
 
 export default class AccountCreation extends BaseScreen {
   static navigatorStyle = {
@@ -14,23 +22,30 @@ export default class AccountCreation extends BaseScreen {
 
   constructor(props, context) {
     super(props, context)
-    this.goBack = this.goBack.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
-  goBack() {
-    this.props.navigator.pop()
+  onSubmit() {
+    this.props.navigator.push({
+      screen: "BitPortal.EOSAccountCreation"
+    })
+  }
+
+  createPrivateKey = () => {
+    this.props.navigator.push({ screen: 'BitPortal.PrivateKeyCreation' })
   }
 
   render() {
     return (
       <View style={styles.container}>
         <NavigationBar
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={this.goBack} />}
-          title="Create New Account"
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+          title="Create New Wallet"
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <CreateEOSAccountForm />
+            <CreateWalletForm onSubmit={this.onSubmit} />
+            <View style={styles.keyboard} />
           </ScrollView>
         </View>
       </View>

@@ -39,7 +39,7 @@ export const CommonButton = ({ iconName, title, onPress }) => (
 
 export const CommonTitle = ({ title }) => (
   <View style={styles.navButton}>
-    <Text style={styles.text24}>{title}</Text>
+    <Text style={styles.text20}>{title}</Text>
   </View>
 )
 
@@ -53,3 +53,16 @@ export const CommonRightButton = ({ iconName, title, onPress }) => (
     </View>
   </TouchableOpacity>
 )
+
+export const ListButton = ({ label, onPress }) => (
+  <TouchableOpacity onPress={() => onPress()} style={styles.navButton}>
+    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <Text style={styles.text20}>{label}</Text>
+      <View style={{ transform: [{ rotateZ: '90deg' }], marginLeft: 5, marginTop: 3 }}>
+        <Ionicons name="md-play" size={10} color={Colors.textColor_255_255_238} />
+      </View>
+    </View>
+  </TouchableOpacity>
+)
+
+

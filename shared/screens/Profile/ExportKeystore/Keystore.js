@@ -3,6 +3,15 @@ import React, { Component } from 'react'
 import styles from './styles'
 import Colors from 'resources/colors'
 import { Text, View, ScrollView, TextInput, TouchableOpacity, TouchableHighlight, Clipboard } from 'react-native'
+import { connect } from 'react-redux'
+import { FormattedMessage, IntlProvider } from 'react-intl'
+import messages from './messages'
+
+@connect(
+  (state) => ({
+    locale: state.intl.get('locale')
+  })
+)
 
 export default class Keystore extends Component {
 
@@ -18,65 +27,68 @@ export default class Keystore extends Component {
 
   render() {
     const { isCopied } = this.state
+    const { locale } = this.props
     return (
-      <View style={styles.scrollContainer}>
-        <ScrollView 
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }} 
-        >
-        <View style={styles.content}>
-
-          <Text style={[styles.text16, { marginLeft: -1 }]}> 
-            Do not share with others
-          </Text>
-          <Text style={[styles.text14, { marginTop: 15 }]} multiline={true}> 
-            The Keystore is the access to your account, please don't share it with others, or you could lose all your assets          
-          </Text>
-
-          <Text style={[styles.text16, { marginTop: 15, marginLeft: -1 }]}> 
-            Do not transfer online
-          </Text>
-          <Text style={[styles.text14, { marginTop: 15 }]} multiline={true}> 
-            Don't transfer the unencrypted Keystore online, it easily gets hacked and result in asset loss.
-          </Text>
-
-          <Text style={[styles.text16, { marginTop: 15, marginLeft: -1 }]}> 
-            Store it offline
-          </Text>
-          <Text style={[styles.text14, { marginTop: 15, marginBottom: 15 }]} multiline={true}> 
-            Please store the Keystore in a safe hardware, and keep it offline when unused
-          </Text>
-
-          <View style={[styles.inputContainer]}>
-            <TextInput
-              editable={false}
-              multiline={true}
-              autoCorrect={false}
-              style={styles.input}
-              underlineColorAndroid="transparent"
-              selectionColor={Colors.textColor_181_181_181}
-              placeholder={'private key'}
-              placeholderTextColor={Colors.textColor_181_181_181}
-              value={this.state.privateKey}
-            />
-          </View>
-
-          <TouchableHighlight 
-            onPress={() => this.copyPrivateKey()} 
-            underlayColor={Colors.textColor_89_185_226}
-            style={[styles.btn, styles.center, { 
-              marginTop: 25, 
-              backgroundColor: isCopied ? Colors.textColor_181_181_181 : Colors.textColor_89_185_226 }]
-            }
+      <IntlProvider messages={messages[locale]}>
+        <View style={styles.scrollContainer}>
+          <ScrollView 
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }} 
           >
-            <Text style={styles.text14}> 
-              {isCopied ? 'Copied' : 'Copy Keystore'}
-            </Text>
-          </TouchableHighlight>
+            <View style={styles.content}>
 
+              <Text style={[styles.text16, { marginLeft: -1 }]}> 
+                <FormattedMessage id="expks_hint_title_point1" />
+              </Text>
+              <Text style={[styles.text14, { marginTop: 15 }]} multiline={true}> 
+                <FormattedMessage id="expks_hint_txt_point1" />              
+              </Text>
+
+              <Text style={[styles.text16, { marginTop: 15, marginLeft: -1 }]}> 
+                <FormattedMessage id="expks_hint_title_point2" />
+              </Text>
+              <Text style={[styles.text14, { marginTop: 15 }]} multiline={true}> 
+                <FormattedMessage id="expks_hint_txt_point2" /> 
+              </Text>
+
+              <Text style={[styles.text16, { marginTop: 15, marginLeft: -1 }]}> 
+                <FormattedMessage id="expks_hint_title_point3" />
+              </Text>
+              <Text style={[styles.text14, { marginTop: 15, marginBottom: 15 }]} multiline={true}> 
+                <FormattedMessage id="expks_hint_txt_point3" /> 
+              </Text>
+
+              <View style={[styles.inputContainer]}>
+                <TextInput
+                  editable={false}
+                  multiline={true}
+                  autoCorrect={false}
+                  style={styles.input}
+                  underlineColorAndroid="transparent"
+                  selectionColor={Colors.textColor_181_181_181}
+                  placeholder={'private key'}
+                  placeholderTextColor={Colors.textColor_181_181_181}
+                  value={this.state.privateKey}
+                />
+              </View>
+
+              <TouchableHighlight 
+                onPress={() => this.copyPrivateKey()} 
+                underlayColor={Colors.textColor_89_185_226}
+                style={[styles.btn, styles.center, { 
+                  marginTop: 25, 
+                  backgroundColor: isCopied ? Colors.textColor_181_181_181 : Colors.textColor_89_185_226 }]
+                }
+              >
+                <Text style={styles.text14}> 
+                  { isCopied ? <FormattedMessage id="expks_button_name_copied" /> : <FormattedMessage id="expks_button_name_copy" />}
+                </Text>
+              </TouchableHighlight>
+
+            </View>
+          </ScrollView>
         </View>
-      </ScrollView>
-    </View>
+      </IntlProvider>
     )
   }
 

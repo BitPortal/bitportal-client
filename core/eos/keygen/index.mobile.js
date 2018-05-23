@@ -22,6 +22,7 @@ masterKeys = {
 */
 async function generateMasterKeys(masterPrivateKey = null) {
   let master
+
   if(masterPrivateKey == null) {
     master = await PrivateKey.randomKey()
   } else {

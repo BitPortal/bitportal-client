@@ -20,6 +20,7 @@ const Colors = {
   bgColor_0_122_255:  'rgb(0,122,255)',
   bgColor_104_189_57: 'rgb(104,189,57)',
   bgColor_255_50_50: 'rgb(255,50,50)',
+  bgColor_255_71_64: 'rgb(255,71,64)',
   bgColor_0_122_255: 'rgb(0,122,255)',
   overLayColor:     'rgba(0,0,0,0.7)',
   borderColor_41_41_38: 'rgb(41,41,38)',

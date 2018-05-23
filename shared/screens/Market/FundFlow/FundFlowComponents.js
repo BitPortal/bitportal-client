@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import styles from './styles'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { 
+import {
   Text,
   View,
   TouchableHighlight
@@ -10,7 +10,7 @@ import {
 import Colors from 'resources/colors'
 import { SCREEN_WIDTH } from 'utils/dimens'
 
-export const Logo = ({  }) => (
+export const Logo = () => (
   <View style={styles.cardContainer}>
     <View style={styles.spaceBetween}>
       <Ionicons name="logo-bitcoin" size={44} color={Colors.textColor_142_142_147} />
@@ -30,7 +30,7 @@ export const Logo = ({  }) => (
   </View>
 )
 
-export const FlowInfo = ({  }) => (
+export const FlowInfo = () => (
   <View style={styles.cardContainer}>
     <View style={{ flexDirection: 'row' }}>
       <View style={[styles.spaceBetween, { flex: 1 }]}>
@@ -68,14 +68,14 @@ export const ListedExchange = ({ dataArr }) => (
         <Text style={[styles.text12, { textAlign: 'right' }]}>Occupy</Text>
       </View>
     </View>
-    
+
     {dataArr.map((item, index) => (
       <View  key={index} style={[styles.spaceBetween, { marginTop: 10 }]}>
         <View style={{ flex: 1 }}>
           <Text style={styles.text14}> {item.market} </Text>
         </View>
         <View style={{ flex: 1 }}>
-          <Text style={[styles.text14, 
+          <Text style={[styles.text14,
             { color: item.fundFlow.split('+').length > 1 ? Colors.textColor_80_201_109 : Colors.textColor_255_76_118, textAlign: 'right' }
           ]}>
             {item.fundFlow}

@@ -1,0 +1,16 @@
+{
+  "zh": {
+    "newct_title_name_newct" : "新增联系人",
+    "newct_sec_title_nick" : "昵称",
+    "newct_txtbox_txt_hint" : "最多支持12位字符",
+    "newct_txtbox_txt_warning" : "无效的名称",
+    "newct_button_name_txt" : "保存"
+  },
+  "en": {
+    "newct_title_name_newct" : "New Contact",
+    "newct_sec_title_nick" : "Nickname",
+    "newct_txtbox_txt_hint" : "Up to 12 characters",
+    "newct_txtbox_txt_warning" : "Invalid Name",
+    "newct_button_name_txt" : "Save"
+  }
+}

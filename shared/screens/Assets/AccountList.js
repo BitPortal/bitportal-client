@@ -1,8 +1,11 @@
 
 import React, { Component } from 'react'
-import { Text, View, ScrollView, TouchableHighlight, StyleSheet } from 'react-native'
+import { Text, View, ScrollView, TouchableHighlight, TouchableOpacity, StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import { connect } from 'react-redux'
+import { FormattedMessage, IntlProvider } from 'react-intl'
+import messages from './messages'
 import {
   FontScale,
   SCREEN_WIDTH,
@@ -14,8 +17,7 @@ import {
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT-NAV_BAR_HEIGHT,
-    marginTop: NAV_BAR_HEIGHT
+    height: SCREEN_HEIGHT
   },
   listContainer: {
     width: SCREEN_WIDTH,
@@ -23,6 +25,11 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.minorThemeColor,
     borderBottomWidth: StyleSheet.hairlineWidth,
     backgroundColor: Colors.bgColor_48_49_59
+  },
+  bgContainer: {
+    width: SCREEN_WIDTH,
+    maxHeight: 200,
+    marginTop: NAV_BAR_HEIGHT-SCREEN_HEIGHT
   },
   between: {
     alignItems: 'center',
@@ -42,53 +49,60 @@ const ListItem = ({ item, onPress, active }) => (
     onPress={() => onPress(item)}
   >
     <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32 }]}>
-      <Text style={styles.text16}>{item}</Text>
+      <Text style={styles.text16}>{item.get('name')}</Text>
       {active && <Ionicons name="ios-checkmark" size={26} color={Colors.bgColor_0_122_255} />}
     </View>
   </TouchableHighlight>
 )
 
-export default AccountList = ({ data, activeAccount, dismissModal, onPress, createNewAccount }) => {
-  return (
-    <View style={styles.container}>
-      {
-        data.map((item, index) => {
-          return (
-            <ListItem
-              key={index}
-              item={item}
-              active={item === activeAccount}
-              onPress={() => {
-                onPress(item)
-                dismissModal()
-              }}
-            />
-          )
-        })
-      }
-      <TouchableHighlight
-        underlayColor={Colors.bgColor_000000}
-        style={styles.listContainer}
-        onPress={() => {
-          createNewAccount()
-          dismissModal()
-        }}
-      >
-        <View style={[styles.listContainer, styles.between, { backgroundColor: Colors.minorThemeColor, justifyContent: 'flex-start' , paddingHorizontal: 32 }]}>
-          <Ionicons name="ios-add-outline" size={26} color={Colors.textColor_89_185_226} />
-          <Text style={[styles.text16, { marginLeft: 10, color: Colors.textColor_89_185_226 }]}>
-            Create New Account
-          </Text>
-        </View>
-      </TouchableHighlight>
+@connect(
+  (state) => ({
+    locale: state.intl.get('locale')
+  })
+)
 
-      <TouchableHighlight
-        underlayColor={Colors.mainThemeColor}
-        style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.7)' }}
-        onPress={() => dismissModal()}
-      >
-        <View />
-      </TouchableHighlight>
-    </View>
-  )
-}
+export default class AccountList extends Component {
+
+  switchAccount = (item) => {
+    this.props.onPress({ name: item.get('name'), id: item.get('id') })
+    this.props.dismissModal()
+  }
+
+  render() {
+    const { data, activeAccount, dismissModal, onPress, createNewAccount, locale } = this.props
+    return (
+      <IntlProvider messages={messages[locale]}>
+        <View style={styles.container}>
+        <TouchableOpacity style={[styles.container, { backgroundColor: 'rgba(0,0,0,0.1)' }]} onPress={() => dismissModal()} />
+          <View style={styles.bgContainer}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              {
+                data.map((item, index) => (
+                    <ListItem key={index} item={item} active={item === activeAccount} onPress={() => this.switchAccount(item)}/>
+                  )
+                )
+              }
+            </ScrollView>
+          </View>
+          
+            
+          <TouchableHighlight
+            underlayColor={Colors.bgColor_000000}
+            style={styles.listContainer}
+            onPress={() => {
+              createNewAccount()
+              dismissModal()
+            }}
+          >
+            <View style={[styles.listContainer, styles.between, { backgroundColor: Colors.minorThemeColor, justifyContent: 'flex-start' , paddingHorizontal: 32 }]}>
+              <Ionicons name="ios-add-outline" size={26} color={Colors.textColor_89_185_226} />
+              <Text style={[styles.text16, { marginLeft: 10, color: Colors.textColor_89_185_226 }]}>
+                <FormattedMessage id="asset_droplist_button_add" />
+              </Text>
+            </View>
+          </TouchableHighlight>
+        </View>
+      </IntlProvider>  
+    )
+  }
+} 

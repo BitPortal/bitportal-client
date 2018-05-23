@@ -2,14 +2,14 @@
 import React, { Component } from 'react'
 import styles from './styles'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { 
+import {
   Text,
   View,
   TouchableHighlight
 } from 'react-native'
 import Colors from 'resources/colors'
 
-export const Logo = ({  }) => (
+export const Logo = () => (
   <View style={styles.cardContainer}>
     <View style={styles.spaceBetween}>
       <Ionicons name="logo-bitcoin" size={44} color={Colors.textColor_142_142_147} />
@@ -29,17 +29,17 @@ export const Logo = ({  }) => (
   </View>
 )
 
-export const Description = ({  }) => (
+export const Description = () => (
   <View style={[styles.cardContainer, { backgroundColor: Colors.bgColor_41_41_44, marginTop: 10 }]}>
     <Text style={[styles.text16, { color: Colors.textColor_149_149_149 }]}> Description </Text>
-    <Text style={[styles.text14, { marginTop: 10, marginLeft: 4 }]}> 
+    <Text style={[styles.text14, { marginTop: 10, marginLeft: 4 }]}>
       Bytom is an interactive protocol of multiple byte assets.
       Heterogeneous byte-assets (indigenous digital currency, digital assets) that operate in different fo...
     </Text>
   </View>
 )
 
-export const Details = ({  }) => (
+export const Details = () => (
   <View style={[styles.cardContainer, { backgroundColor: Colors.bgColor_41_41_44, marginTop: 10 }]}>
     <Text style={styles.text16}> Details </Text>
     <View style={[styles.spaceBetween, { marginTop: 10 }]}>
@@ -69,7 +69,7 @@ export const Details = ({  }) => (
   </View>
 )
 
-export const ListedExchange = ({  }) => (
+export const ListedExchange = () => (
   <View style={[styles.cardContainer, { backgroundColor: Colors.bgColor_41_41_44, marginTop: 10 }]}>
     <Text style={styles.text16}> Listed Exchange </Text>
     <View style={[styles.spaceBetween, { marginTop: 10 }]}>

@@ -1,0 +1,18 @@
+{
+  "zh": {
+    "snd_title_name_accnm" : "账户名称",
+    "snd_title_name_acclmt" : "最多支持12位字符",
+    "snd_txtbox_txt_warning" : "无效的名称",
+    "snd_title_name_amt" : "数量",
+    "snd_txtbox_txt_rmk" : "附言",
+    "snd_button_name_nxt" : "下一步"
+  },
+  "en": {
+    "snd_title_name_accnm" : "Account Name",
+    "snd_title_name_acclmt" : "Up to 12 characters",
+    "snd_txtbox_txt_warning" : "Invalid Name",
+    "snd_title_name_amt" : "Amount",
+    "snd_txtbox_txt_rmk" : "Remark",
+    "snd_button_name_nxt" : "Next"
+  }
+}

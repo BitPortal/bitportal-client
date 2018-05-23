@@ -44,9 +44,9 @@ const styles = StyleSheet.create({
 })
 
 export default RecordItem = ({ item, onPress }) => {
-  const isReceicer = item.amount > 0
-  const iconName = isReceicer ? "ios-arrow-round-down" : "ios-arrow-round-up"
-  const diffColor = isReceicer ? Colors.textColor_89_185_226 : Colors.textColor_255_98_92
+  const isReceiver = item.amount > 0
+  const iconName = isReceiver ? "ios-arrow-round-down" : "ios-arrow-round-up"
+  const diffColor = isReceiver ? Colors.textColor_89_185_226 : Colors.textColor_255_98_92
   return (
     <TouchableHighlight  
       style={styles.container}
@@ -62,7 +62,7 @@ export default RecordItem = ({ item, onPress }) => {
           </View>
         </View>
         <Text style={[styles.text20, { color: diffColor }]}> 
-          { isReceicer ? '+' : '' }
+          { isReceiver ? '+' : '' }
           <FormattedNumber 
             value={item.amount}
             maximumFractionDigits={4}
