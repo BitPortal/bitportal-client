@@ -1,12 +1,13 @@
 /* @tsx */
 
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { View, Text, TouchableOpacity } from 'react-native'
 import Swiper from 'react-native-swiper'
 import { startTabBasedApp } from 'navigators'
 import styles from './styles'
 import BaseScreen from 'components/BaseScreen'
-import storage from 'utils/storage'
+import messages from 'navigators/messages'
 
 const Page1 = () => (
   <View style={[styles.container, styles.center]}>
@@ -37,15 +38,21 @@ const Page3 = ({ goToHomePage }) => (
   </View>
 )
 
+@connect(
+  state => ({
+    locale: state.intl.get('locale')
+  })
+)
+
 export default class Welcome extends BaseScreen {
   constructor(props, context) {
     super(props, context)
     this.goToHomePage = this.goToHomePage.bind(this)
   }
 
-  async goToHomePage() {
-    await storage.setItem('bitportal_welcome', JSON.stringify({ isFirst: true }))
-    startTabBasedApp()
+  goToHomePage() {
+    const tabLabels = messages[this.props.locale]
+    startTabBasedApp(tabLabels)
   }
 
   render() {
