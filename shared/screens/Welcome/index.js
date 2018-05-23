@@ -6,7 +6,6 @@ import Swiper from 'react-native-swiper'
 import { startTabBasedApp } from 'navigators'
 import styles from './styles'
 import BaseScreen from 'components/BaseScreen'
-import storage from 'utils/storage'
 
 const Page1 = () => (
   <View style={[styles.container, styles.center]}>
@@ -43,8 +42,7 @@ export default class Welcome extends BaseScreen {
     this.goToHomePage = this.goToHomePage.bind(this)
   }
 
-  async goToHomePage() {
-    await storage.setItem('bitportal_welcome', JSON.stringify({ isFirst: true }))
+  goToHomePage() {
     startTabBasedApp()
   }
 
