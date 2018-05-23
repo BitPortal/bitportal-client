@@ -15,6 +15,7 @@ import { bindActionCreators } from 'redux'
 import storage from 'utils/storage'
 import AccountList from './AccountList'
 import * as walletActions from 'actions/wallet'
+import * as keystoreActions from 'actions/keystore'
 import { accountBalanceSelector } from 'selectors/balance'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import messages from './messages'
@@ -26,11 +27,13 @@ import Loading from 'components/Loading'
   (state) => ({
     locale: state.intl.get('locale'),
     wallet: state.wallet,
-    balance: accountBalanceSelector(state)
+    balance: accountBalanceSelector(state),
+    keystore: state.keystore
   }),
   (dispatch) => ({
     actions: bindActionCreators({
-      ...walletActions
+      ...walletActions,
+      ...keystoreActions
     }, dispatch)
   })
 )
@@ -44,7 +47,7 @@ export default class Assets extends BaseScreen {
       isVisible2: false
     }
 
-    this.switchEOSAccount = this.switchEOSAccount.bind(this)
+    this.switchWallet = this.switchWallet.bind(this)
   }
 
   // 展示账户列表
@@ -56,7 +59,7 @@ export default class Assets extends BaseScreen {
   scanQR = () => {
     this.props.navigator.push({
       screen: 'BitPortal.QRCodeScanner'
-   })
+    })
   }
 
   // 激活钱包
@@ -87,8 +90,8 @@ export default class Assets extends BaseScreen {
   }
 
   // 切换EOS账户
-  switchEOSAccount = (name) => {
-    this.props.actions.switchEOSAccount({ name })
+  switchWallet({ name, id }) {
+    this.props.actions.switchWallet({ name, id })
   }
 
   componentDidMount() {
@@ -110,13 +113,22 @@ export default class Assets extends BaseScreen {
      *   password: 'asddas',
      *   eosAccountName: 'sfdfio'
      * })*/
+    // this.props.actions.createWalletRequested({ name: 'TG-1' })
+    this.props.actions.syncWalletRequested()
+    // this.props.actions.createWalletRequested({ name: 'TG-2' })
+    /* this.props.actions.importEOSKeyRequested({
+     *   hdWalletName: 'EOS-1',
+     *   key: '5Hpchj7rC5rLKRMVv6vTg8W3vXPU5VGzBRAg8x2n7P1pyAniZ5i',
+     *   coin: 'EOS'
+     * })*/
   }
 
   render() {
     const { wallet, balance, locale } = this.props
     const loading = wallet.get('loading')
     const accountName = wallet.get('account').get('account_name')
-    const accountList = wallet.get('accounts')
+    const active = wallet.get('active')
+    const accountList = wallet.get('data')
     const balanceList = balance.get('data').get('eosAccountBalance')
     return (
       <IntlProvider messages={messages[locale]}>
@@ -126,7 +138,7 @@ export default class Assets extends BaseScreen {
             rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanQR()} />}
           />
           {
-            !balanceList &&
+            !accountList.size &&
             <TouchableOpacity onPress={() => this.createNewAccount()} style={[styles.createAccountContainer, styles.center]}>
               <View style={{ alignItems: 'center' }}>
                 <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF} />
@@ -137,7 +149,7 @@ export default class Assets extends BaseScreen {
             </TouchableOpacity>
           }
           {
-            balanceList &&
+            !!accountList.size &&
             <View style={styles.scrollContainer}>
               <ScrollView showsVerticalScrollIndicator={false}>
                 <TotalAssetsCard totalAssets={425321132.21} accountName={accountName} onPress={() => this.operateAssetQRCode(true)} />
@@ -169,8 +181,8 @@ export default class Assets extends BaseScreen {
           >
             <AccountList
               data={accountList}
-              activeAccount={accountName}
-              onPress={this.switchEOSAccount}
+              activeAccount={active}
+              onPress={this.switchWallet}
               createNewAccount={() => this.createNewAccount()}
               dismissModal={() => this.setState({ isVisible2: false })}
             />

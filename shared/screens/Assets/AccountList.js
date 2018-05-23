@@ -49,7 +49,7 @@ const ListItem = ({ item, onPress, active }) => (
     onPress={() => onPress(item)}
   >
     <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32 }]}>
-      <Text style={styles.text16}>{item}</Text>
+      <Text style={styles.text16}>{item.get('name')}</Text>
       {active && <Ionicons name="ios-checkmark" size={26} color={Colors.bgColor_0_122_255} />}
     </View>
   </TouchableHighlight>
@@ -64,7 +64,7 @@ const ListItem = ({ item, onPress, active }) => (
 export default class AccountList extends Component {
 
   switchAccount = (item) => {
-    this.props.onPress(item)
+    this.props.onPress({ name: item.get('name'), id: item.get('id') })
     this.props.dismissModal()
   }
 
@@ -101,10 +101,8 @@ export default class AccountList extends Component {
               </Text>
             </View>
           </TouchableHighlight>
-
         </View>
       </IntlProvider>  
     )
   }
-
 } 

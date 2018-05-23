@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 import { Map } from 'immutable'
 
-const accountSelector = (state: RootState) => state.wallet.get('account').get('account_name')
+const accountSelector = (state: RootState) => state.wallet.get('active').get('name')
 const balancerSelector = (state: RootState) => state.balance
 
 export const accountBalanceSelector = createSelector(
