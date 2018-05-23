@@ -12,4 +12,6 @@ export const syncWalletRequested = createAction('wallet/SYNC_REQUESTED')
 export const syncWalletSucceeded = createAction<SyncWalletResult>('wallet/SYNC_SUCCEEDED')
 export const syncWalletFailed = createAction<ErrorMessage>('wallet/SYNC_FAILED')
 
-export const switchWallet = createAction<HDWallet>('wallet/SWITCH')
+export const switchWalletRequested = createAction('wallet/SYNC_REQUESTED')
+export const switchWalletSucceeded = createAction<HDWallet>('wallet/SYNC_SUCCEEDED')
+export const switchWalletFailed = createAction<ErrorMessage>('wallet/SYNC_FAILED')

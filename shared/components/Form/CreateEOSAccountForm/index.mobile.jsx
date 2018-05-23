@@ -12,8 +12,9 @@ import * as walletActions from 'actions/wallet'
 
 const validate = (values, props) => {
   const errors = {}
-  if (!values.get('name')) {
-    errors.name = 'Please input bitportal wallet name'
+  
+  if (!values.get('eosName')) {
+    errors.eosName = 'Please input bitportal wallet name'
   }
 
   if (!values.get('password')) {
@@ -63,12 +64,6 @@ export default class CreateEOSAccountForm extends Component {
     const disabled = invalid || pristine
     return (
       <FormContainer>
-        <Field
-          label="Name Your Bitportal"
-          name="name"
-          component={TextField}
-          normalize={normalizeText}
-        />
         <Field
           label="EOS Account Name"
           name="eosName"

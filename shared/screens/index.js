@@ -20,6 +20,7 @@ import Backup             from 'screens/Account/Backup'
 import BackupTips         from 'screens/Account/BackupTips'
 import AccountImport      from 'screens/Account/AccountImport'
 import AccountCreation    from 'screens/Account/AccountCreation'
+import EOSAccountCreation    from 'screens/Account/EOSAccountCreation'
 import PrivateKeyCreation from 'screens/Account/PrivateKeyCreation'
 
 import Discovery          from 'screens/Discovery'
@@ -80,5 +81,6 @@ export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.BackupTips',         () => BackupTips,         store, provider)
   Navigation.registerComponent('BitPortal.AccountImport',      () => AccountImport,      store, provider)
   Navigation.registerComponent('BitPortal.AccountCreation',    () => AccountCreation,    store, provider)
+  Navigation.registerComponent('BitPortal.EOSAccountCreation',    () => EOSAccountCreation,    store, provider)
   Navigation.registerComponent('BitPortal.PrivateKeyCreation', () => PrivateKeyCreation, store, provider)
 }

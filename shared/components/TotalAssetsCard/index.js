@@ -53,11 +53,11 @@ class TotalAssetsCard extends Component {
           <LinearGradientContainer type="right" style={[styles.linearContainer, { marginHorizontal: 32, marginVertical: 10 }]}>
             <TouchableHighlight disabled={disabled} style={styles.linearContainer} underlayColor={Colors.linearUnderlayColor} onPress={() => onPress()} >
               <View style={[styles.linearContainer, styles.paddingStyle]}>
-                <Text style={styles.text15}> 
+                <Text style={styles.text15}>
                   <FormattedMessage id="asset_card_title_ttlast" />
                 </Text>
                 <Text style={styles.text24}>
-                  ≈¥ {' '}
+                  ≈ ¥
                   <FormattedNumber
                     value={totalAssets}
                     maximumFractionDigits={2}
@@ -78,8 +78,8 @@ class TotalAssetsCard extends Component {
 }
 
 TotalAssetsCard.propTypes = {
-  totalAssets: PropTypes.number.isRequired, 
-  accountName: PropTypes.string.isRequired, 
+  totalAssets: PropTypes.number.isRequired,
+  accountName: PropTypes.string.isRequired,
   onPress: PropTypes.func
 }
 
