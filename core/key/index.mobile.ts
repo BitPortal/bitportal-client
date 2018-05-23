@@ -16,7 +16,7 @@ export const getIdFromSeed = (seed: string) => {
   const check = [publicKey]
   const checksum = createHash('rmd160').update(Buffer.concat(check)).digest().slice(0, 4)
   const address = base58.encode(Buffer.concat([publicKey, checksum]))
-  const id = 'BP' + address
+  const id = 'BP1' + address
   return id
 }
 
