@@ -31,6 +31,10 @@ export default class AccountCreation extends BaseScreen {
     })
   }
 
+  createPrivateKey = () => {
+    this.props.navigator.push({ screen: 'BitPortal.PrivateKeyCreation' })
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -41,6 +45,7 @@ export default class AccountCreation extends BaseScreen {
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <CreateWalletForm onSubmit={this.onSubmit} />
+            <View style={styles.keyboard} />
           </ScrollView>
         </View>
       </View>

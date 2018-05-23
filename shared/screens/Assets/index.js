@@ -4,7 +4,6 @@ import { Text, View, ScrollView, Image, TouchableOpacity } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import TotalAssetsCard from 'components/TotalAssetsCard'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import Header from './Header'
 import EnableAssets from './EnableAssets'
 import BalanceList from './BalanceList'
 import styles from './styles'
@@ -20,6 +19,9 @@ import * as keystoreActions from 'actions/keystore'
 import { accountBalanceSelector } from 'selectors/balance'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import messages from './messages'
+import NavigationBar, { ListButton, CommonRightButton } from 'components/NavigationBar'
+
+import Loading from 'components/Loading'
 
 @connect(
   (state) => ({
@@ -123,13 +125,17 @@ export default class Assets extends BaseScreen {
 
   render() {
     const { wallet, balance, locale } = this.props
+    const loading = wallet.get('loading')
     const active = wallet.get('active')
     const accountList = wallet.get('data')
     const balanceList = balance.get('data').get('eosAccountBalance')
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-          <Header Title={<FormattedMessage id="addpage_title_name_act" />} displayAccount={() => this.displayAccountList()} scanQR={() => this.scanQR()} />
+          <NavigationBar 
+            leftButton={<ListButton label={<FormattedMessage id="addpage_title_name_act" />} onPress={() => this.displayAccountList()} />}
+            rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanQR()} />}
+          />
           {
             !accountList.size &&
             <TouchableOpacity onPress={() => this.createNewAccount()} style={[styles.createAccountContainer, styles.center]}>
@@ -151,6 +157,9 @@ export default class Assets extends BaseScreen {
               </ScrollView>
             </View>
           }
+
+          <Loading isVisible={loading}/>
+          
           <Modal
             animationIn="fadeIn"
             animationOut="fadeOut"
