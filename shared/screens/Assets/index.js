@@ -89,7 +89,7 @@ export default class Assets extends BaseScreen {
 
   // 切换EOS账户
   switchWallet({ name, id }) {
-    this.props.actions.switchWallet({ name, id })
+    this.props.actions.switchWalletRequested({ name, id })
   }
 
   componentDidMount() {

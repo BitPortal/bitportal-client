@@ -26,9 +26,9 @@ const Page2= () => (
 
 const Page3 = ({ goToHomePage }) => (
   <View style={[styles.container, styles.center]}>
-    <TouchableOpacity 
-      style={styles.center} 
-      onPress={() => goToHomePage()} 
+    <TouchableOpacity
+      style={styles.center}
+      onPress={goToHomePage}
     >
       <Text style={styles.text}>
         前往体验
@@ -38,16 +38,20 @@ const Page3 = ({ goToHomePage }) => (
 )
 
 export default class Welcome extends BaseScreen {
+  constructor(props, context) {
+    super(props, context)
+    this.goToHomePage = this.goToHomePage.bind(this)
+  }
 
-  goToHomePage = async () => {
+  async goToHomePage() {
     await storage.setItem('bitportal_welcome', JSON.stringify({ isFirst: true }))
     startTabBasedApp()
   }
 
   render() {
     return (
-      <Swiper 
-        containerStyle={styles.wrapper} 
+      <Swiper
+        containerStyle={styles.wrapper}
         index={0}
         loop={false}
         pagingEnabled={true}

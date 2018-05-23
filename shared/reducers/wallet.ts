@@ -33,7 +33,7 @@ export default handleActions({
   [actions.syncWalletFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)
   },
-  [actions.switchWallet] (state, action) {
+  [actions.switchWalletSucceeded] (state, action) {
     return state.set('active', Immutable.fromJS(action.payload))
   }
 }, initialState)

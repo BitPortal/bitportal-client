@@ -7,7 +7,7 @@ import secureStorage from 'utils/secureStorage'
 import { isValidPrivate, privateToPublic } from 'eos'
 import { getMasterSeed } from 'key'
 
-function* createWalletRequested(action: Action<ImportEOSKeyParams>) {
+function* createWalletRequested(action: Action<CreateWalletParams>) {
   if (!action.payload) return
 
   try {
@@ -59,7 +59,22 @@ function* syncWalletRequested() {
   }
 }
 
+function* switchWalletRequested(action: Action<HDWallet>) {
+  if (!action.payload) return
+
+  try {
+    const name = action.payload.name
+    const id = action.payload.id
+
+    yield call(secureStorage.setItem, encodeKey('active wallet'), { name, id }, true)
+    yield put(actions.switchWalletSucceeded({ name, id }))
+  } catch (e) {
+    yield put(actions.switchWalletFailed(getErrorMessage(e)))
+  }
+}
+
 export default function* walletSaga() {
   yield takeEvery(String(actions.createWalletRequested), createWalletRequested)
   yield takeEvery(String(actions.syncWalletRequested), syncWalletRequested)
+  yield takeEvery(String(actions.switchWalletRequested), switchWalletRequested)
 }

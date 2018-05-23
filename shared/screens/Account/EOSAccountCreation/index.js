@@ -1,20 +1,13 @@
 /* @jsx */
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { View, ScrollView } from 'react-native'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import BaseScreen from 'components/BaseScreen'
-import CreateWalletForm from 'components/Form/CreateWalletForm'
+import CreateEOSAccountForm from 'components/Form/CreateEOSAccountForm'
 import styles from './styles'
-import messages from './messages'
-
-@connect(
-  state => ({
-    locale: state.intl.get('locale')
-  })
-)
 
 export default class AccountCreation extends BaseScreen {
+
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -22,13 +15,6 @@ export default class AccountCreation extends BaseScreen {
 
   constructor(props, context) {
     super(props, context)
-    this.onSubmit = this.onSubmit.bind(this)
-  }
-
-  onSubmit() {
-    this.props.navigator.push({
-      screen: "BitPortal.EOSAccountCreation"
-    })
   }
 
   render() {
@@ -36,11 +22,11 @@ export default class AccountCreation extends BaseScreen {
       <View style={styles.container}>
         <NavigationBar
           leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
-          title="Create New Wallet"
+          title="Create EOS Account"
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <CreateWalletForm onSubmit={this.onSubmit} />
+            <CreateEOSAccountForm />
           </ScrollView>
         </View>
       </View>
