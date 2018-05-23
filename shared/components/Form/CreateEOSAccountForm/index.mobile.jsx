@@ -10,9 +10,8 @@ import { normalizeText } from 'utils/normalize'
 import { getPasswordStrength } from 'utils'
 import * as walletActions from 'actions/wallet'
 
-const validate = (values) => {
+const validate = (values, props) => {
   const errors = {}
-
   if (!values.get('name')) {
     errors.name = 'Please input bitportal wallet name'
   }
@@ -30,11 +29,8 @@ const validate = (values) => {
   if (values.get('confirmedPassword') !== values.get('password')) {
     errors.confirmedPassword = 'Passwords don\'t macth'
   }
-
   return errors
 }
-
-@reduxForm({ form: 'createEOSAccountForm', validate })
 
 @connect(
   state => ({
@@ -49,6 +45,8 @@ const validate = (values) => {
   })
 )
 
+@reduxForm({ form: 'createEOSAccountForm', validate })
+
 export default class CreateEOSAccountForm extends Component {
   constructor(props, context) {
     super(props, context)
@@ -56,13 +54,13 @@ export default class CreateEOSAccountForm extends Component {
   }
 
   submit(data) {
+    this.props.onPress()
     console.log(data.toJS())
   }
 
   render() {
     const { handleSubmit, invalid, pristine, password } = this.props
     const disabled = invalid || pristine
-
     return (
       <FormContainer>
         <Field

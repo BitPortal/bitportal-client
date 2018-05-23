@@ -174,7 +174,7 @@ dependencies {
     compile "com.android.support:support-v4:27.1.1"
     compile "com.android.support:animated-vector-drawable:27.1.1"
     compile "com.android.support:design:27.1.1"
-    compile "com.facebook.react:react-native:+"  // From node_modules
+    compile "com.facebook.react:react-native:0.20.1+"  // From node_modules
 }
 
 // Run this once to be able to run the application with BUCK

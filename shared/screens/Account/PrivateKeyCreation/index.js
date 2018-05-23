@@ -42,6 +42,14 @@ export default class PrivateKeyCreation extends BaseScreen {
 
   }
 
+  goToBackup = () => {
+    if (!this.state.showPrivateKey) {
+      this.setState({ showPrivateKey: !this.state.showPrivateKey })
+    } else {
+      this.props.navigator.push({ screen: 'BitPortal.BackupTips' })
+    }
+  }
+
   importPrivateKey = () => {
     this.props.navigator.push({ 
       screen: 'BitPortal.AccountImport'
@@ -110,7 +118,7 @@ export default class PrivateKeyCreation extends BaseScreen {
               }
 
               <TouchableHighlight 
-                onPress={() => { this.setState({ showPrivateKey: !this.state.showPrivateKey }) }} 
+                onPress={() => this.goToBackup()} 
                 underlayColor={Colors.textColor_89_185_226}
                 style={[styles.btn, styles.center, {
                   marginTop: 25,

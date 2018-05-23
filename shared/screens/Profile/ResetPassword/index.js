@@ -34,6 +34,7 @@ export default class ResetPassword extends BaseScreen {
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <ResetPasswordForm />
+              <View style={styles.keyboard} />
             </ScrollView>
           </View>
         </View>
