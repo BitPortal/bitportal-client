@@ -10,13 +10,13 @@ import { normalizeText } from 'utils/normalize'
 const validate = (values, props) => {
   const errors = {}
   if (!values.get('name')) {
-    errors.name = 'Please input bitportal EOS wallet name'
+    errors.name = 'Please input account name'
   }
 
-  if (!values.get('privateKey')) {
-    errors.privateKey = 'Please input privateKey'
-  } else if (!!values.get('privateKey') && values.get('privateKey').length < 24) {
-    errors.privateKey = 'privateKey must be at least 24 characters'
+  if (!values.get('amount')) {
+    errors.amount = 'Please input amount'
+  } else if (!!values.get('amount') && values.get('amount') <= 0) {
+    errors.amount = 'Amount must be more than 0'
   }
 
   return errors
@@ -32,15 +32,16 @@ const validate = (values, props) => {
   })
 )
 
-@reduxForm({ form: 'importPrivateKeyForm', validate })
+@reduxForm({ form: 'transferAssetsForm', validate })
 
-export default class ImportPrivateKeyForm extends Component {
+export default class TransferAssetsForm extends Component {
   constructor(props, context) {
     super(props, context)
     this.submit = this.submit.bind(this)
   }
 
   submit(data) {
+    this.props.onPress()
     console.log(data.toJS())
   }
 
@@ -50,17 +51,22 @@ export default class ImportPrivateKeyForm extends Component {
     return (
       <FormContainer>
         <Field
-          label="Name Your EOS Account"
+          label="Account Name"
           name="name"
           component={TextField}
           normalize={normalizeText}
         />
         <Field
-          label="Import Your Private Key"
-          name="privateKey"
+          label="Amount"
+          name="amount"
+          component={TextField}
+        />
+        <Field
+          name="memo"
+          placeholder={'Memo...'}
           component={TextAreaField}
         />
-        <SubmitButton disabled={disabled} onPress={handleSubmit(this.submit)} text="Done" />
+        <SubmitButton disabled={disabled} onPress={handleSubmit(this.submit)} text="Next" />
       </FormContainer>
     )
   }

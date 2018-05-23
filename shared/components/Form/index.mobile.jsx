@@ -43,7 +43,7 @@ export const TextField = ({ input: { onChange, ...restInput }, meta: { touched, 
   </FieldItem>
 )
 
-export const TextAreaField = ({ input: { onChange, ...restInput }, meta: { touched, error }, label }) => (
+export const TextAreaField = ({ input: { onChange, ...restInput }, meta: { touched, error }, label, placeholder }) => (
   <FieldItem>
     <Text style={styles.text14}>{label}</Text>
     <FieldInput>
@@ -52,6 +52,8 @@ export const TextAreaField = ({ input: { onChange, ...restInput }, meta: { touch
         numberOfLines={4}
         style={styles.areaInput}
         autoCorrect={false}
+        placeholder={placeholder}
+        placeholderTextColor={Colors.textColor_181_181_181}
         underlineColorAndroid="transparent"
         selectionColor={Colors.textColor_181_181_181}
         keyboardAppearance={Colors.keyboardTheme}

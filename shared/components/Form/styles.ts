@@ -15,7 +15,8 @@ export default EStyleSheet.create({
   },
   fieldInput: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.borderColor_242_242_242,
+    borderBottomColor: Colors.textColor_181_181_181,
+    borderRadius: 2,
     flex: 1,
     minHeight: 40,
     flexDirection: 'row',
@@ -30,13 +31,15 @@ export default EStyleSheet.create({
   areaInput: {
     width: SCREEN_WIDTH-64,
     height: SCREEN_WIDTH/4-16,
+    paddingHorizontal: 5,
     marginTop: 10,
     flexDirection: 'row',
     color: Colors.textColor_255_255_238,
     fontSize: FontScale(14),
-    borderRadius: 4,
+    borderRadius: 2,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: Colors.textColor_181_181_181
+    borderColor: Colors.textColor_181_181_181,
+    borderBottomWidth: 0
   },
   fieldItem: {
     flexDirection: 'column',
