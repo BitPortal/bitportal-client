@@ -31,6 +31,10 @@ export const TextField = ({ input: { onChange, ...restInput }, meta: { touched, 
     <FieldInput>
       <TextInput
         style={styles.input}
+        autoCorrect={false}
+        underlineColorAndroid="transparent"
+        selectionColor={Colors.textColor_181_181_181}
+        keyboardAppearance={Colors.keyboardTheme}
         onChangeText={onChange}
         {...restInput}
       />
@@ -46,7 +50,11 @@ export const TextAreaField = ({ input: { onChange, ...restInput }, meta: { touch
       <TextInput
         multiline={true}
         numberOfLines={4}
-        style={styles.input}
+        style={styles.areaInput}
+        autoCorrect={false}
+        underlineColorAndroid="transparent"
+        selectionColor={Colors.textColor_181_181_181}
+        keyboardAppearance={Colors.keyboardTheme}
         onChangeText={onChange}
         {...restInput}
       />
@@ -61,6 +69,10 @@ export const PasswordField = ({ input: { onChange, ...restInput }, meta: { touch
     <FieldInput rightContent={rightContent}>
       <TextInput
         style={styles.input}
+        autoCorrect={false}
+        underlineColorAndroid="transparent"
+        selectionColor={Colors.textColor_181_181_181}
+        keyboardAppearance={Colors.keyboardTheme}
         onChangeText={onChange}
         {...restInput}
         secureTextEntry={true}

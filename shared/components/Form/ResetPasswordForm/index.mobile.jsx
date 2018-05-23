@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { Text, View, TextInput } from 'react-native'
-import { Field, reduxForm } from 'redux-form/immutable'
+import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
 import {
   FormContainer,
   FieldItem,
@@ -15,20 +15,24 @@ import { normalizeText } from 'utils/normalize'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import messages from './messages'
+import PasswordStrength from 'components/PasswordStrength'
+import { getPasswordStrength } from 'utils'
 
-const validate = (values) => {
+const validate = (values, props) => {
   const errors = {}
-  console.log('#####---', values.toJS())
   if (!values.get('currentPassword')) {
-    errors.name = 'Please input bitportal wallet name'
+    errors.currentPassword = <FormattedMessage id="cpwd_txtbox_title_current" />
+    // 'Please input current password'
   }
 
   if (!values.get('newPassword')) {
-    errors.password = 'Please input password'
+    errors.newPassword = 'Please input password'
+  } else if (!!values.get('newPassword') && values.get('newPassword').length < 6) {
+    errors.newPassword = 'Password must be at least 6 characters'
   }
 
   if (!values.get('confirmedPassword')) {
-    errors.confirmedPassword = 'Please confirm password'
+    errors.confirmedPassword = 'Please confirm the new password'
   }
 
   if (values.get('confirmedPassword') !== values.get('newPassword')) {
@@ -38,20 +42,18 @@ const validate = (values) => {
   return errors
 }
 
-@reduxForm({
-  form: 'resetPasswordForm',
-  validate
-})
-
 @connect(
   state => ({
     locale: state.intl.get('locale'),
+    password: formValueSelector('resetPasswordForm')(state, 'newPassword')
   }),
   dispatch => ({
     actions: bindActionCreators({
     }, dispatch)
   })
 )
+
+@reduxForm({ form: 'resetPasswordForm', validate })
 
 export default class ResetPasswordForm extends Component {
 
@@ -61,11 +63,12 @@ export default class ResetPasswordForm extends Component {
   }
 
   submit(data) {
+    this.props.onPress()
     console.log(data.toJS())
   }
 
   render() {
-    const { handleSubmit, invalid, pristine, locale } = this.props
+    const { handleSubmit, invalid, pristine, locale, password } = this.props
     const disabled = invalid || pristine
 
     return (
@@ -81,6 +84,7 @@ export default class ResetPasswordForm extends Component {
             label={<FormattedMessage id="cpwd_txtbox_title_new" />}
             name="newPassword"
             component={PasswordField}
+            rightContent={<PasswordStrength strength={getPasswordStrength(password)} />}
           />
           <Field
             label={<FormattedMessage id="cpwd_txtbox_title_repeat" />}

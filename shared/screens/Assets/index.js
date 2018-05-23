@@ -126,7 +126,6 @@ export default class Assets extends BaseScreen {
   render() {
     const { wallet, balance, locale } = this.props
     const loading = wallet.get('loading')
-    const accountName = wallet.get('account').get('account_name')
     const active = wallet.get('active')
     const accountList = wallet.get('data')
     const balanceList = balance.get('data').get('eosAccountBalance')
@@ -152,14 +151,14 @@ export default class Assets extends BaseScreen {
             !!accountList.size &&
             <View style={styles.scrollContainer}>
               <ScrollView showsVerticalScrollIndicator={false}>
-                <TotalAssetsCard totalAssets={425321132.21} accountName={accountName} onPress={() => this.operateAssetQRCode(true)} />
+                <TotalAssetsCard totalAssets={425321132.21} onPress={() => this.operateAssetQRCode(true)} />
                 <EnableAssets Title={<FormattedMessage id="asset_title_name_ast" />} enableAssets={() => this.enableAssets()} />
                 {balanceList && <BalanceList data={balanceList} onPress={(e) => this.checkAsset(e)} />}
               </ScrollView>
             </View>
           }
 
-          <Loading isVisible={loading} backdropOpacity={0.3} />
+          <Loading isVisible={loading}/>
           
           <Modal
             animationIn="fadeIn"
