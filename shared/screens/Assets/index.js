@@ -94,7 +94,8 @@ export default class Assets extends BaseScreen {
     this.props.actions.switchWalletRequested({ name, id })
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    await storage.setItem('bitportal_welcome', JSON.stringify({ isFirst: true }))
     /* this.props.actions.createEOSAccountRequested({
      *   creator: 'eosio',
      *   name: 'fsdfsdfsdf',
@@ -132,7 +133,7 @@ export default class Assets extends BaseScreen {
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-          <NavigationBar 
+          <NavigationBar
             leftButton={<ListButton label={<FormattedMessage id="addpage_title_name_act" />} onPress={() => this.displayAccountList()} />}
             rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanQR()} />}
           />
@@ -159,7 +160,7 @@ export default class Assets extends BaseScreen {
           }
 
           <Loading isVisible={loading}/>
-          
+
           <Modal
             animationIn="fadeIn"
             animationOut="fadeOut"
