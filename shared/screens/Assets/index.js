@@ -114,6 +114,7 @@ export default class Assets extends BaseScreen {
 
   render() {
     const { wallet, balance, locale } = this.props
+    const loading = wallet.get('loading')
     const accountName = wallet.get('account').get('account_name')
     const accountList = wallet.get('accounts')
     const balanceList = balance.get('data').get('eosAccountBalance')
@@ -146,8 +147,8 @@ export default class Assets extends BaseScreen {
             </View>
           }
 
-          <Loading />
-
+          <Loading isVisible={loading} backdropOpacity={0.3} />
+          
           <Modal
             animationIn="fadeIn"
             animationOut="fadeOut"

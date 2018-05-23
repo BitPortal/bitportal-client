@@ -6,7 +6,8 @@ import {
   View,
   StyleSheet
 } from 'react-native'
-import { SCREEN_WDITH, SCREEN_HEIGHT } from 'utils/dimens'
+import { SCREEN_WDITH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
+import Modal from 'react-native-modal'
 
 const styles = StyleSheet.create({
   container: {
@@ -64,14 +65,21 @@ export default class Loading extends Component {
   }
 
   render () {
-    const { disabledBorder } = this.props
+    const { disabledBorder, extraStyle, isVisible, backdropOpacity } = this.props
     const borderStyle = disabledBorder ? {} : styles.border
     return (
-      <View style={[styles.container, styles.center]}>
-        <View style={borderStyle}>
-          <Image source={imageArr[this.state.imageIndex]} style={styles.image}/>
-        </View>
-      </View>
+      <Modal
+        animationIn="fadeIn"
+        animationOut="fadeOut"
+        isVisible={isVisible}
+        backdropOpacity={backdropOpacity ? backdropOpacity : 0.3}
+      >
+          <View style={[styles.container, styles.center, extraStyle]}>
+            <View style={borderStyle}>
+              <Image source={imageArr[this.state.imageIndex]} style={styles.image}/>
+            </View>
+          </View>
+      </Modal>
     )
   }
 

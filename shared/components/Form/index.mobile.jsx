@@ -1,7 +1,7 @@
 /* @jsx */
 
 import React from 'react'
-import { View, Text, TextInput, TouchableHighlight } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import Colors from 'resources/colors'
 import styles from './styles'
 
@@ -72,13 +72,12 @@ export const PasswordField = ({ input: { onChange, ...restInput }, meta: { touch
 
 export const SubmitButton = ({ disabled, onPress, text }) => (
   <FieldItem>
-    <TouchableHighlight
+    <TouchableOpacity
       onPress={onPress}
       disabled={disabled}
-      underlayColor={Colors.textColor_89_185_226}
       style={[styles.submitButton, disabled ? styles.disabled : {}]}
     >
       <Text style={styles.submitButtonText}>{text}</Text>
-    </TouchableHighlight>
+    </TouchableOpacity>
   </FieldItem>
 )

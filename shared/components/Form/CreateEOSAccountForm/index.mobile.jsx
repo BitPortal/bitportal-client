@@ -62,7 +62,7 @@ export default class CreateEOSAccountForm extends Component {
   render() {
     const { handleSubmit, invalid, pristine, password } = this.props
     const disabled = invalid || pristine
-
+    console.log('####', this.props)
     return (
       <FormContainer>
         <Field
