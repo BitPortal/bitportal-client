@@ -34,8 +34,28 @@ const getRandomBytes = async (length) => {
   })
 }
 
-export const encrypt = async (seed, password, opts) => {
-  assert(seed, 'Invalid seed!')
+export const getIdFromEntropy = (entropy: string) => {
+  const phrase = bip39.entropyToMnemonic(entropy)
+  const seed = bip39.mnemonicToSeed(phrase)
+  return getIdFromSeed(seed)
+}
+
+export const getIdFromSeed = (seed: Buffer) => {
+  const MASTER_SALT = Buffer.from('Bitportal seed', 'utf8')
+  const privateKey = createHmac('sha256', MASTER_SALT).update(seed).digest()
+  assert(secp256k1.privateKeyVerify(privateKey), 'Invalid private key!')
+  const publicKey = secp256k1.publicKeyCreate(privateKey)
+  const check = [publicKey]
+  const checksum = createHash('rmd160').update(Buffer.concat(check)).digest().slice(0, 4)
+  const address = base58.encode(Buffer.concat([publicKey, checksum]))
+  const version = '1'
+  const id = 'BP' + version + address
+  return id
+}
+
+export const encrypt = async (input: string, password: string, opts: object) => {
+  assert(input, 'Invalid entropy!')
+  const entropy = Buffer.from(input, 'hex')
 
   opts = opts || {}
 
@@ -57,7 +77,6 @@ export const encrypt = async (seed, password, opts) => {
     kdfparams.prf = 'hmac-sha512'
     derivedKey = await pbkdf2.deriveAsync(Buffer.from(password), salt, kdfparams.c, kdfparams.dklen, 'sha512')
   } else if (kdf === 'scrypt') {
-    // FIXME: support progress reporting callback
     kdfparams.n = opts.n || 262144
     kdfparams.r = opts.r || 8
     kdfparams.p = opts.p || 1
@@ -71,7 +90,7 @@ export const encrypt = async (seed, password, opts) => {
     throw new Error('Unsupported cipher')
   }
 
-  const ciphertext = Buffer.concat([cipher.update(seed), cipher.final()])
+  const ciphertext = Buffer.concat([cipher.update(entropy), cipher.final()])
 
   const mac = keccak(Buffer.concat([derivedKey.slice(16, 32), Buffer.from(ciphertext, 'hex')]))
 
@@ -81,7 +100,7 @@ export const encrypt = async (seed, password, opts) => {
   return {
     version: 1,
     id: uuidv4({ random }),
-    bpid: getIdFromSeed(seed),
+    bpid: getIdFromEntropy(entropy),
     crypto: {
       ciphertext: ciphertext.toString('hex'),
       cipherparams: {
@@ -95,7 +114,7 @@ export const encrypt = async (seed, password, opts) => {
   }
 }
 
-export const decrypt = async (input, password, nonStrict) => {
+export const decrypt = async (input: object | string, password: string, nonStrict?: boolean) => {
   assert(typeof password === 'string', 'Invalid password!')
   const json = (typeof input === 'object') ? input : JSON.parse(nonStrict ? input.toLowerCase() : input)
 
@@ -108,7 +127,6 @@ export const decrypt = async (input, password, nonStrict) => {
   if (json.crypto.kdf === 'scrypt') {
     kdfparams = json.crypto.kdfparams
 
-    // FIXME: support progress reporting callback
     derivedKey = await scrypt(Buffer.from(password), Buffer.from(kdfparams.salt, 'hex'), kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen)
   } else if (json.crypto.kdf === 'pbkdf2') {
     kdfparams = json.crypto.kdfparams
@@ -132,19 +150,7 @@ export const decrypt = async (input, password, nonStrict) => {
   const decipher = createDecipheriv(json.crypto.cipher, derivedKey.slice(0, 16), Buffer.from(json.crypto.cipherparams.iv, 'hex'))
   const seed = decipherBuffer(decipher, ciphertext, 'hex')
 
-  return seed
-}
-
-export const getIdFromSeed = (seed: string) => {
-  const MASTER_SALT = Buffer.from('Bitportal id', 'utf8')
-  const privateKey = createHmac('sha256', MASTER_SALT).update(new Buffer(seed, 'hex')).digest()
-  assert(secp256k1.privateKeyVerify(privateKey), 'Invalid private key!')
-  const publicKey = secp256k1.publicKeyCreate(privateKey)
-  const check = [publicKey]
-  const checksum = createHash('rmd160').update(Buffer.concat(check)).digest().slice(0, 4)
-  const address = base58.encode(Buffer.concat([publicKey, checksum]))
-  const id = 'BP1' + address
-  return id
+  return seed.toString('hex')
 }
 
 export const getMasterSeed = async (mnemonicPhrase: string) => {
@@ -157,13 +163,16 @@ export const getMasterSeed = async (mnemonicPhrase: string) => {
   }
 
   assert(bip39.validateMnemonic(phrase), 'Invalid mnemonic phrase!')
+  const entropy = bip39.mnemonicToEntropy(phrase)
   const seed = bip39.mnemonicToSeed(phrase)
   const id = getIdFromSeed(seed)
 
-  return { phrase, seed, id }
+  return { id, phrase, entropy }
 }
 
-export const getEOSKeys = async (seed, showPrivate) => {
+export const getEOSKeys = async (entropy, showPrivate) => {
+  const phrase = bip39.entropyToMnemonic(entropy)
+  const seed = bip39.mnemonicToSeed(phrase)
   const root = bip32.fromMasterSeed(new Buffer(seed, 'hex'))
   const path = bip44.getBIP44Path({ symbol: 'EOS' })
 

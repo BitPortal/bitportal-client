@@ -114,7 +114,7 @@ export default class Assets extends BaseScreen {
      *   password: 'asddas',
      *   eosAccountName: 'sfdfio'
      * })*/
-    this.props.actions.createWalletRequested({ name: 'TG-1' })
+    // this.props.actions.createWalletRequested({ name: 'TG-1', password: 'helloword' })
     // this.props.actions.syncWalletRequested()
     /* this.props.actions.importEOSKeyRequested({
      *   hdWalletName: 'EOS-1',
