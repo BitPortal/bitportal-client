@@ -1,7 +1,7 @@
 /* @jsx */
 
 import React from 'react'
-import { View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import Colors from 'resources/colors'
 import styles from './styles'
 
@@ -84,7 +84,7 @@ export const PasswordField = ({ input: { onChange, ...restInput }, meta: { touch
   </FieldItem>
 )
 
-export const SubmitButton = ({ disabled, onPress, text }) => (
+export const SubmitButton = ({ disabled, loading, onPress, text }) => (
   <FieldItem>
     <TouchableOpacity
       onPress={onPress}
@@ -92,6 +92,7 @@ export const SubmitButton = ({ disabled, onPress, text }) => (
       style={[styles.submitButton, disabled ? styles.disabled : {}]}
     >
       <Text style={styles.submitButtonText}>{text}</Text>
+      {loading && <ActivityIndicator style={styles.indicator} size="small" color="white" />}
     </TouchableOpacity>
   </FieldItem>
 )

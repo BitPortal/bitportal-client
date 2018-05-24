@@ -96,6 +96,7 @@ export default class Assets extends BaseScreen {
 
   async componentDidMount() {
     await storage.setItem('bitportal_welcome', JSON.stringify({ isFirst: true }))
+    this.props.actions.syncWalletRequested()
     /* this.props.actions.createEOSAccountRequested({
      *   creator: 'eosio',
      *   name: 'fsdfsdfsdf',
@@ -115,7 +116,6 @@ export default class Assets extends BaseScreen {
      *   eosAccountName: 'sfdfio'
      * })*/
     // this.props.actions.createWalletRequested({ name: 'TG-2', password: 'helloword' })
-    this.props.actions.syncWalletRequested()
     /* this.props.actions.importEOSKeyRequested({
      *   hdWalletName: 'EOS-1',
      *   key: '5Hpchj7rC5rLKRMVv6vTg8W3vXPU5VGzBRAg8x2n7P1pyAniZ5i',
@@ -152,7 +152,7 @@ export default class Assets extends BaseScreen {
             !!accountList.size &&
             <View style={styles.scrollContainer}>
               <ScrollView showsVerticalScrollIndicator={false}>
-                <TotalAssetsCard totalAssets={425321132.21} accountName={active.get('name')} onPress={() => this.operateAssetQRCode(true)} />
+                <TotalAssetsCard totalAssets={425321132.21} accountName={active.get('eosAccountName')} onPress={() => this.operateAssetQRCode(true)} />
                 <EnableAssets Title={<FormattedMessage id="asset_title_name_ast" />} enableAssets={() => this.enableAssets()} />
                 {balanceList && <BalanceList data={balanceList} onPress={(e) => this.checkAsset(e)} />}
               </ScrollView>
