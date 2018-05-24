@@ -17,6 +17,7 @@ export default handleActions({
   [actions.createWalletSucceeded] (state, action) {
     return state.set('loaded', true).set('loading', false)
       .set('data', Immutable.fromJS(action.payload))
+      .update('hdWalletList', (v: any) => v.push(Immutable.fromJS(action.payload)))
   },
   [actions.createWalletFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)

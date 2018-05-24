@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
   },
   bgContainer: {
     width: SCREEN_WIDTH,
-    maxHeight: 200,
-    marginTop: NAV_BAR_HEIGHT-SCREEN_HEIGHT
+    // maxHeight: 600,
+    marginTop: NAV_BAR_HEIGHT - SCREEN_HEIGHT
   },
   between: {
     alignItems: 'center',
@@ -64,7 +64,7 @@ const ListItem = ({ item, onPress, active }) => (
 export default class AccountList extends Component {
 
   switchAccount = (item) => {
-    this.props.onPress({ name: item.get('name'), id: item.get('id'), timestamp: item.get('timestamp') })
+    this.props.onPress({ name: item.get('name'), bpid: item.get('bpid'), timestamp: item.get('timestamp') })
     this.props.dismissModal()
   }
 

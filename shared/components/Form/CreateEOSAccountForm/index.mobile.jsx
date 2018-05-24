@@ -12,7 +12,7 @@ import * as walletActions from 'actions/wallet'
 
 const validate = (values, props) => {
   const errors = {}
-  
+
   if (!values.get('eosName')) {
     errors.eosName = 'Please input bitportal wallet name'
   }
@@ -55,13 +55,15 @@ export default class CreateEOSAccountForm extends Component {
   }
 
   submit(data) {
-    this.props.onPress()
+    // this.props.onPress()
     console.log(data.toJS())
   }
 
   render() {
-    const { handleSubmit, invalid, pristine, password } = this.props
-    const disabled = invalid || pristine
+    const { handleSubmit, invalid, pristine, password, wallet } = this.props
+    const loading = wallet.get('loading')
+    const disabled = invalid || pristine || loading
+
     return (
       <FormContainer>
         <Field
@@ -81,7 +83,7 @@ export default class CreateEOSAccountForm extends Component {
           name="confirmedPassword"
           component={PasswordField}
         />
-        <SubmitButton disabled={disabled} onPress={handleSubmit(this.submit)} text="Create" />
+        <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text="Create" />
       </FormContainer>
     )
   }
