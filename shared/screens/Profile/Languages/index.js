@@ -41,8 +41,7 @@ export default class Languages extends BaseScreen {
     this.props.navigator.setTabButton({ tabIndex: 3, label: tabLabels['general_tab_name_prf'] })
   }
 
-  switchLanguage = async (language) => {
-    await storage.setItem('bitportal_lang', language)
+  switchLanguage = (language) => {
     this.props.actions.setLocale(language)
     const tabLabels = tabMessages[language]
     this.changeTabLabels(tabLabels)
@@ -53,26 +52,26 @@ export default class Languages extends BaseScreen {
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-          <NavigationBar 
+          <NavigationBar
             title={messages[locale]['lan_title_name_language']}
             leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <SettingItem 
-                leftItemTitle={'English'} 
-                onPress={() => this.switchLanguage('en')} 
-                extraStyle={{ marginTop: 10 }} 
+              <SettingItem
+                leftItemTitle={'English'}
+                onPress={() => this.switchLanguage('en')}
+                extraStyle={{ marginTop: 10 }}
                 iconColor={Colors.bgColor_0_122_255}
                 rightItemTitle={locale == 'en' ? null : ' '}
                 rightImageName={locale == 'en' && 'md-checkmark'}
               />
-              <SettingItem 
-                leftItemTitle={'简体中文'} 
+              <SettingItem
+                leftItemTitle={'简体中文'}
                 iconColor={Colors.bgColor_0_122_255}
                 rightItemTitle={locale == 'zh' ? null : ' '}
                 rightImageName={locale == 'zh' && 'md-checkmark'}
-                onPress={() => this.switchLanguage('zh')} 
+                onPress={() => this.switchLanguage('zh')}
               />
             </ScrollView>
           </View>
