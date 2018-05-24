@@ -152,7 +152,7 @@ export default class Assets extends BaseScreen {
             !!accountList.size &&
             <View style={styles.scrollContainer}>
               <ScrollView showsVerticalScrollIndicator={false}>
-                <TotalAssetsCard totalAssets={425321132.21} accountName={active.get('name')} onPress={() => this.operateAssetQRCode(true)} />
+                <TotalAssetsCard totalAssets={425321132.21} accountName={active.get('eosAccountName')} onPress={() => this.operateAssetQRCode(true)} />
                 <EnableAssets Title={<FormattedMessage id="asset_title_name_ast" />} enableAssets={() => this.enableAssets()} />
                 {balanceList && <BalanceList data={balanceList} onPress={(e) => this.checkAsset(e)} />}
               </ScrollView>

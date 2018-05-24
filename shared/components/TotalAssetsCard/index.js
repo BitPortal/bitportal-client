@@ -65,8 +65,8 @@ class TotalAssetsCard extends Component {
                   />
                 </Text>
                 <View style={styles.between}>
-                  <Text style={styles.text15}> { accountName }</Text>
-                  <Image style={{ width: 16, height: 16 }} source={Images.qrCode} />
+                  {!!accountName && <Text style={styles.text15}>{accountName}</Text>}
+                  {!!accountName && <Image style={{ width: 16, height: 16 }} source={Images.qrCode} />}
                 </View>
               </View>
             </TouchableHighlight>
@@ -79,7 +79,6 @@ class TotalAssetsCard extends Component {
 
 TotalAssetsCard.propTypes = {
   totalAssets: PropTypes.number.isRequired,
-  accountName: PropTypes.string.isRequired,
   onPress: PropTypes.func
 }
 

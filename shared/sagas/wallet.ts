@@ -12,9 +12,6 @@ function* createWalletRequested(action: Action<CreateWalletParams>) {
   if (!action.payload) return
 
   try {
-    // yield call(secureStorage.removeItem, '226163746976652077616c6c657422')
-    const items = yield call(secureStorage.getAllItems)
-    console.log(items)
     const name = action.payload.name
     const password = action.payload.password
     const { id, phrase, entropy } = yield call(getMasterSeed)
@@ -30,8 +27,8 @@ function* createWalletRequested(action: Action<CreateWalletParams>) {
       timestamp: +Date.now(),
       name
     }
-    const decrypted = yield call(decrypt, keystore, password)
-    console.log('decrypted', entropy)
+    // const decrypted = yield call(decrypt, keystore, password)
+    // console.log('decrypted', entropy)
 
     yield call(secureStorage.setItem, `HD_KEYSTORE_${id}`, keystore, true)
     yield call(secureStorage.setItem, `HD_WALLET_INFO_${id}`, walletInfo, true)
@@ -45,6 +42,10 @@ function* createWalletRequested(action: Action<CreateWalletParams>) {
 
 function* syncWalletRequested() {
   try {
+    // yield call(secureStorage.removeItem, '226163746976652077616c6c657422')
+    const items = yield call(secureStorage.getAllItems)
+    console.log(items)
+
     const allItems = yield call(secureStorage.getAllItems)
     const hdWalletList = Object.keys(allItems).filter(item => !item.indexOf('HD_KEYSTORE')).map(item => {
       const id = item.slice('HD_KEYSTORE'.length + 1)
