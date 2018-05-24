@@ -3,6 +3,7 @@ package com.bitportal;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import co.airbitz.fastcrypto.RNFastCryptoPackage;
 import com.cmcewen.blurview.BlurViewPackage;
 import org.reactnative.camera.RNCameraPackage;
 import com.bitgo.randombytes.RandomBytesPackage;

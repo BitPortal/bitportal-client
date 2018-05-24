@@ -5,7 +5,7 @@ import * as actions from 'actions/wallet'
 import { getErrorMessage, encodeKey } from 'utils'
 import secureStorage from 'utils/secureStorage'
 import { isValidPrivate, privateToPublic } from 'eos'
-import { getMasterSeed } from 'key'
+import { getMasterSeed, encrypt, decrypt } from 'key'
 
 function* createWalletRequested(action: Action<CreateWalletParams>) {
   if (!action.payload) return
@@ -14,23 +14,28 @@ function* createWalletRequested(action: Action<CreateWalletParams>) {
     const name = action.payload.name
     const { phrase, seed, id } = yield call(getMasterSeed)
     console.log('phrase', phrase)
-    console.log('seed', seed)
+    console.log('id', id)
+    console.log('seed', seed.toString('hex'))
+    const keystore = yield call(encrypt, seed, 'helloword')
+    console.log(keystore)
+    const decryptedSeed = yield call(decrypt, keystore, 'helloword')
+    console.log(decryptedSeed.toString('hex'))
+    // let wallets = yield call(secureStorage.getItem, encodeKey('wallets'), true)
+    // assert(typeof wallets !== 'string', 'wallets should not be string!')
 
-    let wallets = yield call(secureStorage.getItem, encodeKey('wallets'), true)
-    assert(typeof wallets !== 'string', 'wallets should not be string!')
+    // if (!wallets) {
+    //   wallets = [{ name, id }]
+    // } else {
+    //   const existedWallet = wallets.filter(item => item.id === id)
+    //   assert(!existedWallet.length, 'Wallet has been imported!')
+    //   wallets.push({ name, id })
+    // }
 
-    if (!wallets) {
-      wallets = [{ name, id }]
-    } else {
-      const existedWallet = wallets.filter(item => item.id === id)
-      assert(!existedWallet.length, 'Wallet has been imported!')
-      wallets.push({ name, id })
-    }
-
-    yield call(secureStorage.setItem, encodeKey('wallets'), wallets, true)
-    yield call(secureStorage.setItem, encodeKey('active wallet'), { name, id }, true)
+    // yield call(secureStorage.setItem, encodeKey('wallets'), wallets, true)
+    // yield call(secureStorage.setItem, encodeKey('active wallet'), { name, id }, true)
     yield put(actions.createWalletSucceeded({ name, id }))
   } catch (e) {
+    console.log(e)
     yield put(actions.createWalletFailed(getErrorMessage(e)))
   }
 }

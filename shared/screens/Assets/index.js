@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react'
-import { Text, View, ScrollView, Image, TouchableOpacity } from 'react-native'
+import { Text, View, ScrollView, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import TotalAssetsCard from 'components/TotalAssetsCard'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -114,9 +114,8 @@ export default class Assets extends BaseScreen {
      *   password: 'asddas',
      *   eosAccountName: 'sfdfio'
      * })*/
-    // this.props.actions.createWalletRequested({ name: 'TG-1' })
-    this.props.actions.syncWalletRequested()
-    // this.props.actions.createWalletRequested({ name: 'TG-2' })
+    this.props.actions.createWalletRequested({ name: 'TG-1' })
+    // this.props.actions.syncWalletRequested()
     /* this.props.actions.importEOSKeyRequested({
      *   hdWalletName: 'EOS-1',
      *   key: '5Hpchj7rC5rLKRMVv6vTg8W3vXPU5VGzBRAg8x2n7P1pyAniZ5i',
@@ -158,9 +157,7 @@ export default class Assets extends BaseScreen {
               </ScrollView>
             </View>
           }
-
-          <Loading isVisible={loading}/>
-
+          {!!loading && <ActivityIndicator size="large" color="white" />}
           <Modal
             animationIn="fadeIn"
             animationOut="fadeOut"
