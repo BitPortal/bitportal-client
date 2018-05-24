@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		0051641BD21F403D8E50DB42 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63C330A6E7DB472694F6CC51 /* Ionicons.ttf */; };
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
@@ -97,7 +96,6 @@
 		DA5CA4C299F44AE8B524A69D /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0DCD6A5DD3424ECC9FC0D42F /* Foundation.ttf */; };
 		E662FE3421664237A221E6FD /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E266F30BB5544C48714E51F /* libRNVectorIcons.a */; };
 		E6C0427315DD4ED798558A4A /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89FF76833E4343689BE91DCE /* libReactNativeNavigation.a */; };
-		F5DB70FD998749E8895C3521 /* libRNFastCrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C58A8207E6104CF89B72F79A /* libRNFastCrypto.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -423,13 +421,6 @@
 			remoteGlobalIDString = EBF21BFA1FC4989A0052F4D5;
 			remoteInfo = "jsinspector-tvOS";
 		};
-		3472448020B69482008D018F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D0DD0E10C07940B499595231 /* RNFastCrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = RNFastCrypto;
-		};
 		3DAD3E831DF850E9000B6D8A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */;
@@ -673,10 +664,8 @@
 		B86296E851D9480F9E6147E9 /* libRNBlur.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNBlur.a; sourceTree = "<group>"; };
 		BB3B885DAB124587870B4E7A /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
 		C02B79A5AF294526A859B506 /* ReactNativeConfig.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeConfig.xcodeproj; path = "../node_modules/react-native-config/ios/ReactNativeConfig.xcodeproj"; sourceTree = "<group>"; };
-		C58A8207E6104CF89B72F79A /* libRNFastCrypto.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFastCrypto.a; sourceTree = "<group>"; };
 		C594A110612840FD81FF27B5 /* RNCamera.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RNCamera.xcodeproj"; sourceTree = "<group>"; };
 		C5BE614B86B24308B2D0B72D /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
-		D0DD0E10C07940B499595231 /* RNFastCrypto.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFastCrypto.xcodeproj; path = "../node_modules/react-native-fast-crypto/ios/RNFastCrypto.xcodeproj"; sourceTree = "<group>"; };
 		E03801B0050446E1B0943001 /* libRNRandomBytes-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNRandomBytes-tvOS.a"; sourceTree = "<group>"; };
 		E378031D0A07409DB9E63E29 /* libRNSVG.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSVG.a; sourceTree = "<group>"; };
 		ECA1E4EECB8E4BE68D5CA430 /* RNBlur.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNBlur.xcodeproj; path = "../node_modules/react-native-blur/ios/RNBlur.xcodeproj"; sourceTree = "<group>"; };
@@ -717,7 +706,6 @@
 				3C4507934177471B93375682 /* libRNRandomBytes.a in Frameworks */,
 				AD83B47857424C849778388D /* libRNCamera.a in Frameworks */,
 				43E5398727FA4DD5AB8E784C /* libRNBlur.a in Frameworks */,
-				F5DB70FD998749E8895C3521 /* libRNFastCrypto.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1104,14 +1092,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3472447D20B69481008D018F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3472448120B69482008D018F /* libRNFastCrypto.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1158,7 +1138,6 @@
 				ACABA47B3B3B44B482FD66ED /* RNRandomBytes.xcodeproj */,
 				C594A110612840FD81FF27B5 /* RNCamera.xcodeproj */,
 				ECA1E4EECB8E4BE68D5CA430 /* RNBlur.xcodeproj */,
-				D0DD0E10C07940B499595231 /* RNFastCrypto.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1348,10 +1327,6 @@
 				{
 					ProductGroup = 18E8845E20A0033D00B9D792 /* Products */;
 					ProjectRef = C594A110612840FD81FF27B5 /* RNCamera.xcodeproj */;
-				},
-				{
-					ProductGroup = 3472447D20B69481008D018F /* Products */;
-					ProjectRef = D0DD0E10C07940B499595231 /* RNFastCrypto.xcodeproj */;
 				},
 				{
 					ProductGroup = 341B2DF2209B34E400FA6067 /* Products */;
@@ -1694,13 +1669,6 @@
 			remoteRef = 3472432920B0B65C008D018F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3472448120B69482008D018F /* libRNFastCrypto.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNFastCrypto.a;
-			remoteRef = 3472448020B69482008D018F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		3DAD3E841DF850E9000B6D8A /* libRCTImage-tvOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1965,7 +1933,6 @@
 					"$(SRCROOT)/../node_modules/react-native-randombytes",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-blur/ios",
-					"$(SRCROOT)/../node_modules/react-native-fast-crypto/ios/**",
 				);
 				INFOPLIST_FILE = bitportal/Info.plist;
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
@@ -1973,7 +1940,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/bitportal\"",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2014,7 +1980,6 @@
 					"$(SRCROOT)/../node_modules/react-native-randombytes",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-blur/ios",
-					"$(SRCROOT)/../node_modules/react-native-fast-crypto/ios/**",
 				);
 				INFOPLIST_FILE = bitportal/Info.plist;
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
@@ -2022,7 +1987,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/bitportal\"",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",

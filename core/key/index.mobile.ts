@@ -3,10 +3,16 @@ import * as bip32 from 'bip32'
 import * as bip44 from 'bip44'
 import bip39 from 'react-native-bip39'
 import wif from 'wif'
-import { createHash, createHmac, createCipheriv, createDecipheriv } from 'crypto'
+import {
+  createHash,
+  createHmac,
+  createCipheriv,
+  createDecipheriv,
+  pbkdf2Sync
+} from 'crypto'
 import secp256k1 from 'secp256k1'
 import base58 from 'bs58'
-import { pbkdf2, scrypt } from 'react-native-fast-crypto'
+import scryptAsync from 'scrypt-async'
 import uuidv4 from 'uuid/v4'
 import { randomBytes } from 'react-native-randombytes'
 import createKeccakHash from 'keccak'
@@ -30,6 +36,16 @@ const getRandomBytes = async (length) => {
       } else {
         resolve(bytes)
       }
+    })
+  })
+}
+
+const scrypt = async (password, salt, N, r, p, dkLen) => {
+  return new Promise((resolve, reject) => {
+    scryptAsync(password, salt, {
+      N, r, p, dkLen
+    }, (derivedKey) => {
+      resolve(Buffer.from(derivedKey))
     })
   })
 }
@@ -59,6 +75,12 @@ export const encrypt = async (input: string, password: string, opts: object) => 
 
   opts = opts || {}
 
+  if (opts.bpid) {
+    assert(opts.bpid === getIdFromEntropy(entropy), 'Entropy and bpid do not match!')
+  }
+
+  const bpid = opts.bpid || getIdFromEntropy(entropy)
+
   let salt = opts.salt
   if (!salt) salt = await getRandomBytes(32)
 
@@ -66,7 +88,7 @@ export const encrypt = async (input: string, password: string, opts: object) => 
   if (!iv) iv = await getRandomBytes(16)
 
   let derivedKey
-  const kdf = opts.kdf || 'scrypt'
+  const kdf = opts.kdf || 'pbkdf2'
   const kdfparams = {
     dklen: opts.dklen || 32,
     salt: salt.toString('hex')
@@ -74,8 +96,8 @@ export const encrypt = async (input: string, password: string, opts: object) => 
 
   if (kdf === 'pbkdf2') {
     kdfparams.c = opts.c || 262144
-    kdfparams.prf = 'hmac-sha512'
-    derivedKey = await pbkdf2.deriveAsync(Buffer.from(password), salt, kdfparams.c, kdfparams.dklen, 'sha512')
+    kdfparams.prf = 'hmac-sha256'
+    derivedKey = pbkdf2Sync(Buffer.from(password), salt, kdfparams.c, kdfparams.dklen, 'sha256')
   } else if (kdf === 'scrypt') {
     kdfparams.n = opts.n || 262144
     kdfparams.r = opts.r || 8
@@ -98,9 +120,9 @@ export const encrypt = async (input: string, password: string, opts: object) => 
   if (!random) random = await getRandomBytes(16)
 
   return {
+    bpid,
     version: 1,
     id: uuidv4({ random }),
-    bpid: getIdFromEntropy(entropy),
     crypto: {
       ciphertext: ciphertext.toString('hex'),
       cipherparams: {
@@ -131,11 +153,11 @@ export const decrypt = async (input: object | string, password: string, nonStric
   } else if (json.crypto.kdf === 'pbkdf2') {
     kdfparams = json.crypto.kdfparams
 
-    if (kdfparams.prf !== 'hmac-sha512') {
+    if (kdfparams.prf !== 'hmac-sha256') {
       throw new Error('Unsupported parameters to PBKDF2')
     }
 
-    derivedKey = await pbkdf2.deriveAsync(Buffer.from(password), Buffer.from(kdfparams.salt, 'hex'), kdfparams.c, kdfparams.dklen, 'sha512')
+    derivedKey = pbkdf2Sync(Buffer.from(password), Buffer.from(kdfparams.salt, 'hex'), kdfparams.c, kdfparams.dklen, 'sha256')
   } else {
     throw new Error('Unsupported key derivation scheme')
   }

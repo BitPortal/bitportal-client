@@ -158,7 +158,6 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-fast-crypto')
     compile project(':react-native-blur')
     compile project(':react-native-camera')
     compile project(':react-native-randombytes')

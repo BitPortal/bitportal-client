@@ -90,8 +90,8 @@ export default class Assets extends BaseScreen {
   }
 
   // 切换EOS账户
-  switchWallet({ name, id }) {
-    this.props.actions.switchWalletRequested({ name, id })
+  switchWallet({ name, bpid, timestamp }) {
+    this.props.actions.switchWalletRequested({ name, bpid, timestamp })
   }
 
   async componentDidMount() {
@@ -114,7 +114,7 @@ export default class Assets extends BaseScreen {
      *   password: 'asddas',
      *   eosAccountName: 'sfdfio'
      * })*/
-    // this.props.actions.createWalletRequested({ name: 'TG-1', password: 'helloword' })
+    this.props.actions.createWalletRequested({ name: 'TG-2', password: 'helloword' })
     // this.props.actions.syncWalletRequested()
     /* this.props.actions.importEOSKeyRequested({
      *   hdWalletName: 'EOS-1',
@@ -126,9 +126,10 @@ export default class Assets extends BaseScreen {
   render() {
     const { wallet, balance, locale } = this.props
     const loading = wallet.get('loading')
-    const active = wallet.get('active')
-    const accountList = wallet.get('data')
+    const active = wallet.get('data')
+    const accountList = wallet.get('hdWalletList')
     const balanceList = balance.get('data').get('eosAccountBalance')
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
