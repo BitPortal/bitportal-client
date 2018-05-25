@@ -5,6 +5,7 @@ import { Navigation } from 'react-native-navigation'
 import { reset } from 'redux-form/immutable'
 import assert from 'assert'
 import * as actions from 'actions/wallet'
+import { syncEOSAccount } from 'actions/eosAccount'
 import { getErrorMessage, encodeKey } from 'utils'
 import secureStorage from 'utils/secureStorage'
 import bip39 from 'react-native-bip39'
@@ -18,7 +19,6 @@ function* createWalletRequested(action: Action<CreateWalletParams>) {
     const name = action.payload.name
     const password = action.payload.password
     const { id, phrase, entropy } = yield call(getMasterSeed)
-    console.log('entropy', entropy)
     const existedWallet = yield call(secureStorage.getItem, `HD_KEYSTORE_${id}`, true)
     assert(!existedWallet, 'Wallet already exists!')
     const keystore = yield call(encrypt, entropy, password, { bpid: id })
@@ -44,16 +44,17 @@ function* createWalletRequested(action: Action<CreateWalletParams>) {
 	  }
     })
   } catch (e) {
-    console.log(e)
     yield put(actions.createWalletFailed(getErrorMessage(e)))
   }
 }
 
 function* syncWalletRequested() {
   try {
-    // yield call(secureStorage.removeItem, 'EOS_ACCOUNT_INFO_222222')
     const items = yield call(secureStorage.getAllItems)
     console.log(items)
+    // for (const item of Object.keys(items)) {
+    //   yield call(secureStorage.removeItem, item)
+    // }
 
     const allItems = yield call(secureStorage.getAllItems)
     const hdWalletList = Object.keys(allItems).filter(item => !item.indexOf('HD_KEYSTORE')).map(item => {
@@ -71,6 +72,12 @@ function* syncWalletRequested() {
       yield call(secureStorage.setItem, 'ACTIVE_WALLET', active, true)
     }
 
+    const eosAccountList = Object.keys(allItems).filter(item => !item.indexOf('EOS_ACCOUNT_INFO')).map(item => {
+      const info = allItems[item]
+      return JSON.parse(info)
+    }).sort((a, b) => a.timestamp - b.timestamp)
+
+    yield put(syncEOSAccount(eosAccountList))
     yield put(actions.syncWalletSucceeded({ hdWalletList, active }))
   } catch (e) {
     yield put(actions.syncWalletFailed(getErrorMessage(e)))

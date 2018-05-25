@@ -5,6 +5,8 @@ export const createEOSAccountRequested = createAction<CreateEOSAccountParams>('e
 export const createEOSAccountSucceeded = createAction<CreateEOSAccountResult>('eosAccount/CREATE_SUCCEEDED')
 export const createEOSAccountFailed = createAction<ErrorMessage>('eosAccount/CREATE_FAILED')
 
+export const syncEOSAccount = createAction<SyncEOSAccountResult>('eosAccount/SYNC')
+
 // export const getEOSAccountRequested = createAction<GetEOSAccountParams>('eosAccount/GET_EOS_ACCOUNT_REQUESTED')
 // export const getEOSAccountSucceeded = createAction<GetEOSAccountResult>('eosAccount/GET_EOS_ACCOUNT_SUCCEEDED')
 // export const getEOSAccountFailed = createAction<ErrorMessage>('eosAccount/GET_EOS_ACCOUNT_FAILED')

@@ -21,5 +21,8 @@ export default handleActions({
   },
   [actions.createEOSAccountFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)
+  },
+  [actions.syncEOSAccount] (state, action) {
+    return state.set('eosAccountList', Immutable.fromJS(action.payload))
   }
 }, initialState)

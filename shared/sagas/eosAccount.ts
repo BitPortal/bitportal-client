@@ -39,7 +39,7 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
     Navigation.handleDeepLink({
 	  link: '*',
 	  payload: {
-		method: 'pop',
+		method: 'popToRoot',
 		params: {}
 	  }
     })

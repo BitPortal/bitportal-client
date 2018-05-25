@@ -2,18 +2,21 @@ import { createSelector } from 'reselect'
 import { Map } from 'immutable'
 
 const walletIdSelector = (state: RootState) => state.wallet.get('data').get('bpid')
-const eosAccountSelector = (state: RootState) => state.eosAccount
+const accountSelector = (state: RootState) => state.eosAccount
 
-export const activeAccountSelector = createSelector(
+export const eosAccountSelector = createSelector(
   walletIdSelector,
-  eosAccountSelector,
+  accountSelector,
   (bpid: string, accounts: any) => {
     const list = accounts.get('eosAccountList')
-    let c
-    if (!bpid) account = Map({})
-    const index = list.findIndex((item: any) => item.get('bpid') === wallet.get('bpid'))
-    if (index !== -1) ? account = list.get(index)
+    if (!bpid) return accounts.set('data', Map({}))
 
-    return accounts.set('data', account)
+    const index = list.findIndex((item: any) => item.get('bpid') === bpid)
+
+    if (index !== -1) {
+      return accounts.set('data', list.get(index))
+    } else {
+      return accounts.set('data', Map({}))
+    }
   }
 )

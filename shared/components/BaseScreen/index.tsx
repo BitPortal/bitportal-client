@@ -92,10 +92,9 @@ export default class BaseScreen<Props extends BaseScreenProps> extends React.Com
     }
 
     if (event.type === 'DeepLink') {
-      console.log('DeepLink', event)
       const payload = event.payload
 
-	  if (payload && (this.screenState === 'willAppear' || this.screenState === 'didAppear')) {
+	  if (payload && this.screenState === 'didAppear') {
 		this.props.navigator[payload.method](payload.params)
 	  }
 	}
