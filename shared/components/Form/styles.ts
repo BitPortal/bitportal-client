@@ -53,7 +53,13 @@ export default EStyleSheet.create({
     marginTop: 3,
     backgroundColor: Colors.textColor_89_185_226,
     borderRadius: 3,
-    paddingVertical: 12
+    paddingVertical: 12,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  indicator: {
+    marginLeft: 10
   },
   disabled: {
     backgroundColor: Colors.textColor_181_181_181

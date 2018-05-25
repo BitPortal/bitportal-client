@@ -4,56 +4,65 @@ import assert from 'assert'
 import * as actions from 'actions/wallet'
 import { getErrorMessage, encodeKey } from 'utils'
 import secureStorage from 'utils/secureStorage'
+import bip39 from 'react-native-bip39'
 import { isValidPrivate, privateToPublic } from 'eos'
-import { getMasterSeed } from 'key'
+import { getMasterSeed, encrypt, decrypt, getEOSKeys } from 'key'
 
 function* createWalletRequested(action: Action<CreateWalletParams>) {
   if (!action.payload) return
 
   try {
     const name = action.payload.name
-    const { phrase, seed, id } = yield call(getMasterSeed)
-    console.log('phrase', phrase)
-    console.log('seed', seed)
+    const password = action.payload.password
+    const { id, phrase, entropy } = yield call(getMasterSeed)
+    console.log('entropy', entropy)
+    const existedWallet = yield call(secureStorage.getItem, `HD_KEYSTORE_${id}`, true)
+    assert(!existedWallet, 'Wallet already exists!')
 
-    let wallets = yield call(secureStorage.getItem, encodeKey('wallets'), true)
-    assert(typeof wallets !== 'string', 'wallets should not be string!')
+    const keystore = yield call(encrypt, entropy, password, { bpid: id })
+    const eosKeys = yield call(getEOSKeys, entropy)
 
-    if (!wallets) {
-      wallets = [{ name, id }]
-    } else {
-      const existedWallet = wallets.filter(item => item.id === id)
-      assert(!existedWallet.length, 'Wallet has been imported!')
-      wallets.push({ name, id })
+    const walletInfo = {
+      bpid: id,
+      timestamp: +Date.now(),
+      name
     }
+    // const decrypted = yield call(decrypt, keystore, password)
+    // console.log('decrypted', entropy)
 
-    yield call(secureStorage.setItem, encodeKey('wallets'), wallets, true)
-    yield call(secureStorage.setItem, encodeKey('active wallet'), { name, id }, true)
-    yield put(actions.createWalletSucceeded({ name, id }))
+    yield call(secureStorage.setItem, `HD_KEYSTORE_${id}`, keystore, true)
+    yield call(secureStorage.setItem, `HD_WALLET_INFO_${id}`, walletInfo, true)
+    yield call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
+    yield put(actions.createWalletSucceeded(walletInfo))
   } catch (e) {
+    console.log(e)
     yield put(actions.createWalletFailed(getErrorMessage(e)))
   }
 }
 
 function* syncWalletRequested() {
   try {
-    let wallets = yield call(secureStorage.getItem, encodeKey('wallets'), true)
-    assert(wallets, 'No wallets!')
-    assert(typeof wallets !== 'string', 'wallets should not be string!')
-    if (!wallets) wallets = []
+    // yield call(secureStorage.removeItem, '226163746976652077616c6c657422')
+    const items = yield call(secureStorage.getAllItems)
+    console.log(items)
 
-    let active = yield call(secureStorage.getItem, encodeKey('active wallet'), true)
+    const allItems = yield call(secureStorage.getAllItems)
+    const hdWalletList = Object.keys(allItems).filter(item => !item.indexOf('HD_KEYSTORE')).map(item => {
+      const id = item.slice('HD_KEYSTORE'.length + 1)
+      const infoKey = `HD_WALLET_INFO_${id}`
+      const info = allItems[infoKey]
+      return JSON.parse(info)
+    }).sort((a, b) => a.timestamp - b.timestamp)
+
+    assert(hdWalletList.length, 'No wallets!')
+
+    const active = allItems.ACTIVE_WALLET && JSON.parse(allItems.ACTIVE_WALLET)
     if (!active) {
-      if (!wallets.length) {
-        active = wallets[0]
-      } else {
-        active = {}
-      }
+      active = hdWalletList[0]
+      yield call(secureStorage.setItem, 'ACTIVE_WALLET', active, true)
     }
 
-    yield put(actions.syncWalletSucceeded({ wallets, active }))
-    // yield call(secureStorage.removeItem, encodeKey('wallets'))
-    // yield call(secureStorage.removeItem, encodeKey('active wallet'))
+    yield put(actions.syncWalletSucceeded({ hdWalletList, active }))
   } catch (e) {
     yield put(actions.syncWalletFailed(getErrorMessage(e)))
   }
@@ -64,10 +73,11 @@ function* switchWalletRequested(action: Action<HDWallet>) {
 
   try {
     const name = action.payload.name
-    const id = action.payload.id
+    const bpid = action.payload.bpid
+    const timestamp = action.payload.timestamp
 
-    yield call(secureStorage.setItem, encodeKey('active wallet'), { name, id }, true)
-    yield put(actions.switchWalletSucceeded({ name, id }))
+    yield call(secureStorage.setItem, 'ACTIVE_WALLET', { name, bpid, timestamp }, true)
+    yield put(actions.switchWalletSucceeded({ name, bpid, timestamp }))
   } catch (e) {
     yield put(actions.switchWalletFailed(getErrorMessage(e)))
   }

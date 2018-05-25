@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react'
-import { Text, View, ScrollView, Image, TouchableOpacity } from 'react-native'
+import { Text, View, ScrollView, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import TotalAssetsCard from 'components/TotalAssetsCard'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -90,12 +90,13 @@ export default class Assets extends BaseScreen {
   }
 
   // 切换EOS账户
-  switchWallet({ name, id }) {
-    this.props.actions.switchWalletRequested({ name, id })
+  switchWallet({ name, bpid, timestamp }) {
+    this.props.actions.switchWalletRequested({ name, bpid, timestamp })
   }
 
   async componentDidMount() {
     await storage.setItem('bitportal_welcome', JSON.stringify({ isFirst: false }))
+    this.props.actions.syncWalletRequested()
     /* this.props.actions.createEOSAccountRequested({
      *   creator: 'eosio',
      *   name: 'fsdfsdfsdf',
@@ -114,9 +115,7 @@ export default class Assets extends BaseScreen {
      *   password: 'asddas',
      *   eosAccountName: 'sfdfio'
      * })*/
-    // this.props.actions.createWalletRequested({ name: 'TG-1' })
-    this.props.actions.syncWalletRequested()
-    // this.props.actions.createWalletRequested({ name: 'TG-2' })
+    // this.props.actions.createWalletRequested({ name: 'TG-2', password: 'helloword' })
     /* this.props.actions.importEOSKeyRequested({
      *   hdWalletName: 'EOS-1',
      *   key: '5Hpchj7rC5rLKRMVv6vTg8W3vXPU5VGzBRAg8x2n7P1pyAniZ5i',
@@ -127,9 +126,10 @@ export default class Assets extends BaseScreen {
   render() {
     const { wallet, balance, locale } = this.props
     const loading = wallet.get('loading')
-    const active = wallet.get('active')
-    const accountList = wallet.get('data')
+    const active = wallet.get('data')
+    const accountList = wallet.get('hdWalletList')
     const balanceList = balance.get('data').get('eosAccountBalance')
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -152,15 +152,13 @@ export default class Assets extends BaseScreen {
             !!accountList.size &&
             <View style={styles.scrollContainer}>
               <ScrollView showsVerticalScrollIndicator={false}>
-                <TotalAssetsCard totalAssets={425321132.21} accountName={active.get('name')} onPress={() => this.operateAssetQRCode(true)} />
+                <TotalAssetsCard totalAssets={425321132.21} accountName={active.get('eosAccountName')} onPress={() => this.operateAssetQRCode(true)} />
                 <EnableAssets Title={<FormattedMessage id="asset_title_name_ast" />} enableAssets={() => this.enableAssets()} />
                 {balanceList && <BalanceList data={balanceList} onPress={(e) => this.checkAsset(e)} />}
               </ScrollView>
             </View>
           }
-
-          <Loading isVisible={loading}/>
-
+          {!!loading && <ActivityIndicator size="large" color="white" />}
           <Modal
             animationIn="fadeIn"
             animationOut="fadeOut"

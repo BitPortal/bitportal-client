@@ -1013,7 +1013,7 @@
 				E03801B0050446E1B0943001 /* libRNRandomBytes-tvOS.a */,
 				47CDB62F8CE244FFAF5141FB /* libRNCamera.a */,
 				B86296E851D9480F9E6147E9 /* libRNBlur.a */,
-				B2EEAF7D26894077B1DE346A /* libRNViewOverflow.a */,
+				C58A8207E6104CF89B72F79A /* libRNFastCrypto.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";

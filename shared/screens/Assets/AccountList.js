@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
   },
   bgContainer: {
     width: SCREEN_WIDTH,
-    maxHeight: 200,
-    marginTop: NAV_BAR_HEIGHT-SCREEN_HEIGHT
+    // maxHeight: 600,
+    marginTop: NAV_BAR_HEIGHT - SCREEN_HEIGHT
   },
   between: {
     alignItems: 'center',
@@ -64,7 +64,7 @@ const ListItem = ({ item, onPress, active }) => (
 export default class AccountList extends Component {
 
   switchAccount = (item) => {
-    this.props.onPress({ name: item.get('name'), id: item.get('id') })
+    this.props.onPress({ name: item.get('name'), bpid: item.get('bpid'), timestamp: item.get('timestamp') })
     this.props.dismissModal()
   }
 
@@ -73,26 +73,19 @@ export default class AccountList extends Component {
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-        <TouchableOpacity style={[styles.container, { backgroundColor: 'rgba(0,0,0,0.1)' }]} onPress={() => dismissModal()} />
+          <TouchableOpacity style={[styles.container, { backgroundColor: 'rgba(0,0,0,0.1)' }]} onPress={() => dismissModal()} />
           <View style={styles.bgContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              {
-                data.map((item, index) => (
-                    <ListItem key={index} item={item} active={item === activeAccount} onPress={() => this.switchAccount(item)}/>
-                  )
-                )
-              }
+              {data.map((item, index) => (<ListItem key={index} item={item} active={item.get('bpid') === activeAccount.get('bpid')} onPress={() => this.switchAccount(item)} />))}
             </ScrollView>
           </View>
-          
-            
           <TouchableHighlight
             underlayColor={Colors.bgColor_000000}
             style={styles.listContainer}
             onPress={() => {
-              createNewAccount()
-              dismissModal()
-            }}
+                createNewAccount()
+                dismissModal()
+              }}
           >
             <View style={[styles.listContainer, styles.between, { backgroundColor: Colors.minorThemeColor, justifyContent: 'flex-start' , paddingHorizontal: 32 }]}>
               <Ionicons name="ios-add-outline" size={26} color={Colors.textColor_89_185_226} />
@@ -102,7 +95,7 @@ export default class AccountList extends Component {
             </View>
           </TouchableHighlight>
         </View>
-      </IntlProvider>  
+      </IntlProvider>
     )
   }
-} 
+}

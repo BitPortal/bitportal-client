@@ -29,29 +29,10 @@ export const loadScript = (src: string) => {
   })
 }
 
-export const getErrorMessage = (error: any) => {
-  try {
-    if (typeof error === 'string') {
-      return JSON.parse(error).message
-    } else if (typeOf(error) === 'Error') {
-      return JSON.parse(error.message).message
-    }
-
-    return error.message
-  } catch (error) {
-    return error.message
-  }
-
-}
+export const getErrorMessage = (error: any) => error.message
 
 export const encodeKey = (...elements: any[]) => {
   const key = JSON.stringify([...elements])
-  const keyTrim = key.substring(1, key.length - 1)
-  return Buffer.from(keyTrim).toString('hex')
-}
-
-export const encodeKeyStoreKey = (...elements: any[]) => {
-  const key = JSON.stringify(['kstor', ...elements])
   const keyTrim = key.substring(1, key.length - 1)
   return Buffer.from(keyTrim).toString('hex')
 }
