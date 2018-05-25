@@ -19,7 +19,7 @@ class Article extends BaseScreen {
         <NavigationBar
           title={this.props.title || 'Details'}
           leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
-          rightButton={<CommonRightButton iconName="md-more" onPress={() => this.share()} />}
+          rightButton={<CommonRightButton iconName="md-share" onPress={() => this.share()} />}
         />
         <WebView source={{ uri: this.props.url }} />
       </View>

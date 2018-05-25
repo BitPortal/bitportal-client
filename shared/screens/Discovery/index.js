@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import BaseScreen from 'components/BaseScreen'
 import { View } from 'react-native'
 import * as newsActions from 'actions/news'
-import NewsList from 'components/NewsList'
-import NewsBanner from 'components/NewsBanner'
-import NewsBannerCard from 'components/NewsBannerCard'
+import NewsList from './NewsList'
+import NewsBanner from './NewsBanner'
+import NewsBannerCard from './NewsBannerCard'
 import NavigationBar, { CommonTitle } from 'components/NavigationBar'
 // import Ionicons from 'react-native-vector-icons/Ionicons'
 // import Colors from 'resources/colors'
@@ -104,7 +104,7 @@ class Discovery extends BaseScreen {
         <NavigationBar
           leftButton={<CommonTitle title="Discovery" />}
         />
-        <NewsBanner autoplay={false} style={{ paddingVertical: 20 }}>
+        <NewsBanner autoplay={true} style={{ paddingVertical: 20 }}>
           {this.getBanner()}
         </NewsBanner>
         <NewsList
