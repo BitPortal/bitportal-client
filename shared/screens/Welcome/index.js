@@ -1,40 +1,50 @@
 /* @tsx */
 
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { View, Text, TouchableOpacity } from 'react-native'
-import Swiper from 'react-native-swiper'
-import { startTabBasedApp } from 'navigators'
 import styles from './styles'
-import BaseScreen from 'components/BaseScreen'
+import Swiper from 'react-native-swiper'
 import messages from 'navigators/messages'
+import BaseScreen from 'components/BaseScreen'
+import { connect } from 'react-redux'
+import { startTabBasedApp } from 'navigators'
+import { View, Text, Image, ImageBackground, TouchableHighlight } from 'react-native'
+import Images from 'resources/images'
+import Colors from 'resources/colors'
+import LinearGradientContainer from 'components/LinearGradientContainer'
+
+const NextButton = ({ goToHomePage }) => (
+  <LinearGradientContainer type="right" style={[styles.btn, styles.btnContainer]}>
+    <TouchableHighlight style={styles.btn} underlayColor={Colors.linearUnderlayColor} onPress={goToHomePage}>
+      <Text style={styles.text14}> 前往体验 </Text>
+    </TouchableHighlight>
+  </LinearGradientContainer>
+)
 
 const Page1 = () => (
-  <View style={[styles.container, styles.center]}>
-    <Text style={styles.text}>
-      Page1
-    </Text>
+  <View style={[styles.pageContainer, styles.center]}>
+    <ImageBackground source={Images.guide_asset} resizeMode="contain" style={styles.imageBg}>
+      <Image source={Images.guide_asset_card} resizeMode="contain" style={styles.imageCard} />
+    </ImageBackground>
+    <Image source={Images.guide_asset_title} resizeMode="contain" style={styles.imageTitle} />
   </View>
 )
 
-const Page2= () => (
-  <View style={[styles.container, styles.center]}>
-    <Text style={styles.text}>
-      Page2
-    </Text>
+const Page2= () => ( 
+  <View style={[styles.pageContainer, styles.center]}>
+    <ImageBackground source={Images.guide_market} resizeMode="contain" style={styles.imageBg}>
+      <Image source={Images.guide_market_card} resizeMode="contain" style={styles.imageCard2} />
+    </ImageBackground>
+    <Image source={Images.guide_market_title} resizeMode="contain" style={styles.imageTitle} />
   </View>
 )
 
 const Page3 = ({ goToHomePage }) => (
-  <View style={[styles.container, styles.center]}>
-    <TouchableOpacity
-      style={styles.center}
-      onPress={goToHomePage}
-    >
-      <Text style={styles.text}>
-        前往体验
-      </Text>
-    </TouchableOpacity>
+  <View style={[styles.pageContainer, styles.center]}>
+    <ImageBackground source={Images.guide_discovery} resizeMode="contain" style={styles.imageBg}>
+      <Image source={Images.guide_discovery_card} resizeMode="contain" style={styles.imageCard3} />
+    </ImageBackground>
+    <Image source={Images.guide_discovery_title} resizeMode="contain" style={styles.imageTitle} />
+    <NextButton goToHomePage={goToHomePage} />
   </View>
 )
 
@@ -45,6 +55,7 @@ const Page3 = ({ goToHomePage }) => (
 )
 
 export default class Welcome extends BaseScreen {
+
   constructor(props, context) {
     super(props, context)
     this.goToHomePage = this.goToHomePage.bind(this)
@@ -57,16 +68,23 @@ export default class Welcome extends BaseScreen {
 
   render() {
     return (
-      <Swiper
-        containerStyle={styles.wrapper}
-        index={0}
-        loop={false}
-        pagingEnabled={true}
-      >
-        <Page1 />
-        <Page2 />
-        <Page3 goToHomePage={this.goToHomePage} />
-      </Swiper>
+      <View style={styles.imageBackground}>
+        <ImageBackground source={Images.guide_bg} resizeMode="stretch" style={styles.imageBackground} />
+        <Swiper
+          index={0}
+          loop={false}
+          bounces={true}
+          pagingEnabled={true}
+          containerStyle={styles.wrapper}
+          dot={<View style={styles.dot} />}
+          activeDot={<View style={styles.activeDot} />}
+          paginationStyle={styles.paginationStyle}
+        >
+          <Page1 />
+          <Page2 />
+          <Page3 goToHomePage={this.goToHomePage} />
+        </Swiper>
+      </View>
     )
   }
 }
