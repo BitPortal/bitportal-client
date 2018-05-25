@@ -1,5 +1,8 @@
+import { delay } from 'redux-saga'
 import { call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
+import { Navigation } from 'react-native-navigation'
+import { reset } from 'redux-form/immutable'
 import assert from 'assert'
 import * as actions from 'actions/wallet'
 import { getErrorMessage, encodeKey } from 'utils'
@@ -20,7 +23,7 @@ function* createWalletRequested(action: Action<CreateWalletParams>) {
     assert(!existedWallet, 'Wallet already exists!')
 
     const keystore = yield call(encrypt, entropy, password, { bpid: id })
-    const eosKeys = yield call(getEOSKeys, entropy)
+    // const eosKeys = yield call(getEOSKeys, entropy)
 
     const walletInfo = {
       bpid: id,
@@ -34,6 +37,18 @@ function* createWalletRequested(action: Action<CreateWalletParams>) {
     yield call(secureStorage.setItem, `HD_WALLET_INFO_${id}`, walletInfo, true)
     yield call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
     yield put(actions.createWalletSucceeded(walletInfo))
+    yield put(reset('createWalletForm'))
+    // yield call(delay, 2000)
+
+    Navigation.handleDeepLink({
+	  link: '*',
+	  payload: {
+		method: 'push',
+		params: {
+          screen: 'BitPortal.EOSAccountCreation'
+        }
+	  }
+    })
   } catch (e) {
     console.log(e)
     yield put(actions.createWalletFailed(getErrorMessage(e)))
