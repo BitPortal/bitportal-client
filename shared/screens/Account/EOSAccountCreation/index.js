@@ -21,7 +21,7 @@ export default class AccountCreation extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.popToRoot()} />}
           title="Create EOS Account"
         />
         <View style={styles.scrollContainer}>

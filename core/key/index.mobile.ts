@@ -174,6 +174,10 @@ export const decrypt = async (input: object | string, password: string, nonStric
 
   return seed.toString('hex')
 }
+export const getMasterSeedFromEntropy = async (entropy: string) => {
+  const phrase = bip39.entropyToMnemonic(entropy)
+  const seed = await getMasterSeed(phrase)
+}
 
 export const getMasterSeed = async (mnemonicPhrase: string) => {
   let phrase
@@ -252,4 +256,9 @@ export const getEOSKeys = async (entropy, showPrivate) => {
       }
     }
   }
+}
+
+export const validateEntropy = (entropy: string) => {
+  const phrase = bip39.entropyToMnemonic(entropy)
+  return bip39.validateMnemonic(phrase)
 }

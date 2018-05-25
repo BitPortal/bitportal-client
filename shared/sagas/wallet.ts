@@ -21,17 +21,12 @@ function* createWalletRequested(action: Action<CreateWalletParams>) {
     console.log('entropy', entropy)
     const existedWallet = yield call(secureStorage.getItem, `HD_KEYSTORE_${id}`, true)
     assert(!existedWallet, 'Wallet already exists!')
-
     const keystore = yield call(encrypt, entropy, password, { bpid: id })
-    // const eosKeys = yield call(getEOSKeys, entropy)
-
     const walletInfo = {
       bpid: id,
       timestamp: +Date.now(),
       name
     }
-    // const decrypted = yield call(decrypt, keystore, password)
-    // console.log('decrypted', entropy)
 
     yield call(secureStorage.setItem, `HD_KEYSTORE_${id}`, keystore, true)
     yield call(secureStorage.setItem, `HD_WALLET_INFO_${id}`, walletInfo, true)
@@ -39,7 +34,6 @@ function* createWalletRequested(action: Action<CreateWalletParams>) {
     yield put(actions.createWalletSucceeded(walletInfo))
     yield put(reset('createWalletForm'))
     // yield call(delay, 2000)
-
     Navigation.handleDeepLink({
 	  link: '*',
 	  payload: {
@@ -57,7 +51,7 @@ function* createWalletRequested(action: Action<CreateWalletParams>) {
 
 function* syncWalletRequested() {
   try {
-    // yield call(secureStorage.removeItem, '226163746976652077616c6c657422')
+    // yield call(secureStorage.removeItem, 'EOS_ACCOUNT_INFO_222222')
     const items = yield call(secureStorage.getAllItems)
     console.log(items)
 

@@ -4,6 +4,7 @@ import { reducer as form } from 'redux-form/es/immutable'
 import intl from './intl'
 import ticker from './ticker'
 import wallet from './wallet'
+import eosAccount from './eosAccount'
 import keystore from './keystore'
 import news from './news'
 import balance from './balance'
@@ -13,6 +14,7 @@ export default combineReducers({
   form,
   intl,
   wallet,
+  eosAccount,
   keystore,
   ticker,
   news,
