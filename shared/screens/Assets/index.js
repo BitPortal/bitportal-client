@@ -95,7 +95,7 @@ export default class Assets extends BaseScreen {
   }
 
   async componentDidMount() {
-    await storage.setItem('bitportal_welcome', JSON.stringify({ isFirst: true }))
+    await storage.setItem('bitportal_welcome', JSON.stringify({ isFirst: false }))
     /* this.props.actions.createEOSAccountRequested({
      *   creator: 'eosio',
      *   name: 'fsdfsdfsdf',
