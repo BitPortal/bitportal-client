@@ -129,7 +129,6 @@ export default class Assets extends BaseScreen {
     const active = wallet.get('data')
     const accountList = wallet.get('hdWalletList')
     const balanceList = balance.get('data').get('eosAccountBalance')
-
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
