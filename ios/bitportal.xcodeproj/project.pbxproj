@@ -423,6 +423,13 @@
 			remoteGlobalIDString = EBF21BFA1FC4989A0052F4D5;
 			remoteInfo = "jsinspector-tvOS";
 		};
+		34BF4F8220B936D0004B66C0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 32810D1F132D47B8AD5583B0 /* RNFastCrypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNFastCrypto;
+		};
 		3DAD3E831DF850E9000B6D8A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */;
@@ -1097,6 +1104,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		34BF4F5020B936D0004B66C0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				34BF4F8320B936D0004B66C0 /* libRNFastCrypto.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1333,6 +1348,10 @@
 				{
 					ProductGroup = 18E8845E20A0033D00B9D792 /* Products */;
 					ProjectRef = C594A110612840FD81FF27B5 /* RNCamera.xcodeproj */;
+				},
+				{
+					ProductGroup = 34BF4F5020B936D0004B66C0 /* Products */;
+					ProjectRef = 32810D1F132D47B8AD5583B0 /* RNFastCrypto.xcodeproj */;
 				},
 				{
 					ProductGroup = 341B2DF2209B34E400FA6067 /* Products */;
@@ -1673,6 +1692,13 @@
 			fileType = archive.ar;
 			path = "libjsinspector-tvOS.a";
 			remoteRef = 3472432920B0B65C008D018F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		34BF4F8320B936D0004B66C0 /* libRNFastCrypto.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFastCrypto.a;
+			remoteRef = 34BF4F8220B936D0004B66C0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3DAD3E841DF850E9000B6D8A /* libRCTImage-tvOS.a */ = {
