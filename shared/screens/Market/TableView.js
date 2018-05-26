@@ -102,8 +102,6 @@ export default class TableView extends Component {
         <VirtualizedList
           data={data}
           style={styles.list}
-          onRefresh={() => onRefresh()}
-          refreshing={isRefreshing}
           getItem={(items, index) => items.get ? items.get(index) : items[index]}
           getItemCount={(items) => (items.count() || 0)}
           keyExtractor={(item, index) => String(index)}

@@ -8,8 +8,9 @@ import {
   createHmac,
   createCipheriv,
   createDecipheriv,
-  pbkdf2Sync
+  pbkdf2
 } from 'crypto'
+// import { pbkdf2, scrypt } from 'react-native-fast-crypto'
 import secp256k1 from 'secp256k1'
 import base58 from 'bs58'
 import scryptAsync from 'scrypt-async'
@@ -35,6 +36,18 @@ const getRandomBytes = async (length) => {
         reject(error)
       } else {
         resolve(bytes)
+      }
+    })
+  })
+}
+
+const pbkdf2Async = async (password, salt, iterations, keylen, digest) => {
+  return new Promise((resolve, reject) => {
+    pbkdf2(password, salt, iterations, keylen, digest, (error, derivedKey) => {
+      if (error) {
+        reject(error)
+      } else {
+        resolve(derivedKey)
       }
     })
   })
@@ -97,7 +110,7 @@ export const encrypt = async (input: string, password: string, opts: object) => 
   if (kdf === 'pbkdf2') {
     kdfparams.c = opts.c || 262144
     kdfparams.prf = 'hmac-sha256'
-    derivedKey = pbkdf2Sync(Buffer.from(password), salt, kdfparams.c, kdfparams.dklen, 'sha256')
+    derivedKey = await pbkdf2Async(Buffer.from(password), salt, kdfparams.c, kdfparams.dklen, 'sha256')
   } else if (kdf === 'scrypt') {
     kdfparams.n = opts.n || 262144
     kdfparams.r = opts.r || 8
@@ -157,7 +170,7 @@ export const decrypt = async (input: object | string, password: string, nonStric
       throw new Error('Unsupported parameters to PBKDF2')
     }
 
-    derivedKey = pbkdf2Sync(Buffer.from(password), Buffer.from(kdfparams.salt, 'hex'), kdfparams.c, kdfparams.dklen, 'sha256')
+    derivedKey = await pbkdf2Async(Buffer.from(password), Buffer.from(kdfparams.salt, 'hex'), kdfparams.c, kdfparams.dklen, 'sha256')
   } else {
     throw new Error('Unsupported key derivation scheme')
   }
