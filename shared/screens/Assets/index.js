@@ -101,7 +101,7 @@ export default class Assets extends BaseScreen {
   }
 
   async componentDidMount() {
-    await storage.setItem('bitportal_welcome', JSON.stringify({ isFirst: true }))
+    await storage.setItem('bitportal_welcome', JSON.stringify({ isFirst: false }))
     this.props.actions.syncWalletRequested()
     /* this.props.actions.createEOSAccountRequested({
      *   creator: 'eosio',
@@ -135,7 +135,6 @@ export default class Assets extends BaseScreen {
     const activeEOSAccount = eosAccount.get('data')
     const accountList = wallet.get('hdWalletList')
     const balanceList = balance.get('data').get('eosAccountBalance')
-
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>

@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   bottom: {
     ...ifIphoneX({
-      paddingBottom: 35
+      paddingBottom: 34
     },{
       paddingBottom: 0
     })
