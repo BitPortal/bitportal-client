@@ -12,6 +12,7 @@ export default class BaseScreen<Props extends BaseScreenProps> extends React.Com
 
   constructor(props: Props, context?: {}) {
     super(props, context)
+    this.screenState = null
     this.props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this))
   }
 
@@ -74,17 +75,29 @@ export default class BaseScreen<Props extends BaseScreenProps> extends React.Com
     switch (event.id) {
       case 'willAppear':
         this.willAppear.apply(this, event)
+        this.screenState = 'willAppear'
         break
       case 'didAppear':
         this.didAppear.apply(this, event)
+        this.screenState = 'didAppear'
         break
       case 'willDisappear':
         this.willDisappear.apply(this, event)
+        this.screenState = 'willDisappear'
         break
       case 'didDisappear':
         this.didDisappear.apply(this, event)
+        this.screenState = 'didDisappear'
         break
     }
+
+    if (event.type === 'DeepLink') {
+      const payload = event.payload
+
+	  if (payload && this.screenState === 'didAppear') {
+		this.props.navigator[payload.method](payload.params)
+	  }
+	}
   }
 
   setTitle(title: any) {

@@ -4,6 +4,7 @@ import intlSaga from './intl'
 import tickerSaga from './ticker'
 import chartSaga from './chart'
 import walletSaga from './wallet'
+import eosAccountSaga from './eosAccount'
 import keystoreSaga from './keystore'
 import balanceSaga from './balance'
 import loggerSaga from './logger'
@@ -14,6 +15,7 @@ const sagas = {
   tickerSaga: fork(tickerSaga),
   chartSaga: fork(chartSaga),
   walletSaga: fork(walletSaga),
+  eosAccountSaga: fork(eosAccountSaga),
   keystoreSaga: fork(keystoreSaga),
   newsSage: fork(newsSage),
   balanceSaga: fork(balanceSaga),

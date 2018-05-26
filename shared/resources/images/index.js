@@ -1,4 +1,6 @@
 
+import { Platform } from 'react-native' 
+
 const Images = {
   qrCode:          require('./qrCode.png'),
   asset:           require('./Asset.png'),
@@ -27,6 +29,16 @@ const Images = {
   loading14:       require('./loading/14.png'),
   loading15:       require('./loading/15.png'),
   loading16:       require('./loading/16.png'),
+  guide_bg:        require('./guide_bg.png'),
+  guide_asset:  Platform.OS === 'ios' ? require('./guide_asset.png') : require('./guide_asset_android.png'),
+  guide_asset_card:      require('./guide_asset_card.png'),
+  guide_asset_title:     require('./guide_asset_title.png'),
+  guide_market: Platform.OS === 'ios' ? require('./guide_market.png') : require('./guide_market_android.png'), 
+  guide_market_card:     require('./guide_market_card.png'),
+  guide_market_title:    require('./guide_market_title.png'),
+  guide_discovery: Platform.OS === 'ios' ? require('./guide_discovery.png') : require('./guide_discovery_android.png'), 
+  guide_discovery_card:  require('./guide_discovery_card.png'),
+  guide_discovery_title: require('./guide_discovery_title.png')
 }
 
 export default Images

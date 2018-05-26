@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
   },
   bgContainer: {
     width: SCREEN_WIDTH,
-    // maxHeight: 600,
     marginTop: NAV_BAR_HEIGHT - SCREEN_HEIGHT
   },
   between: {
@@ -75,7 +74,7 @@ export default class AccountList extends Component {
         <View style={styles.container}>
           <TouchableOpacity style={[styles.container, { backgroundColor: 'rgba(0,0,0,0.1)' }]} onPress={() => dismissModal()} />
           <View style={styles.bgContainer}>
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView style={{ maxHeight: 400, backgroundColor: Colors.bgColor_48_49_59 }} showsVerticalScrollIndicator={false}>
               {data.map((item, index) => (<ListItem key={index} item={item} active={item.get('bpid') === activeAccount.get('bpid')} onPress={() => this.switchAccount(item)} />))}
             </ScrollView>
           </View>

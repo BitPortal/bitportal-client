@@ -39,7 +39,7 @@ const validate = (values) => {
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    password: formValueSelector('createEOSAccountForm')(state, 'password'),
+    password: formValueSelector('createWalletForm')(state, 'password'),
     wallet: state.wallet
   }),
   dispatch => ({
