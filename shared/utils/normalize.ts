@@ -23,3 +23,5 @@ const numberRe = (decimalPlaces: number) => decimalPlaces ? new RegExp(`^\\s*(\\
 const normalizeUnit = (value: any, previousValue: any, decimalPlaces: number) => (value && (numberRe(decimalPlaces).test(value) ? value.trim() : previousValue))
 
 export const normalizeUnitByCurrency = (currency: Currency) => (value: any, previousValue: any) => normalizeUnit(value, previousValue, ASSET_FRACTION[currency])
+
+export const normalizeEOSAccountName = (value: any, previousValue: any) => (value && ((/([1-5]|[a-z])+$/.test(value) && value.length <= 13) ? value.trim() : previousValue))

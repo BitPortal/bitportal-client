@@ -42,15 +42,15 @@ export default class AccountList extends BaseScreen {
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-          <NavigationBar 
+          <NavigationBar
             title="EOS-1"
             leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
             rightButton={ <CommonRightButton iconName="ios-trash" onPress={() => this.deleteAccount()} /> }
           />
           <View style={styles.scrollContainer}>
-            <ScrollView 
+            <ScrollView
               showsVerticalScrollIndicator={false}
-              contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }} 
+              contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }}
             >
               <TotalAssetsCard totalAssets={425321132.21} accountName={'meon'} disabled={true} />
               <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_change" />} onPress={() => this.resetPassword()} extraStyle={{ marginTop: 10 }} />

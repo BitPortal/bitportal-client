@@ -15,11 +15,12 @@ import { bindActionCreators } from 'redux'
 import storage from 'utils/storage'
 import AccountList from './AccountList'
 import * as walletActions from 'actions/wallet'
-import * as keystoreActions from 'actions/keystore'
 import { accountBalanceSelector } from 'selectors/balance'
+import { eosAccountSelector } from 'selectors/eosAccount'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import messages from './messages'
 import NavigationBar, { ListButton, CommonRightButton } from 'components/NavigationBar'
+import SettingItem from 'components/SettingItem'
 
 import Loading from 'components/Loading'
 
@@ -27,13 +28,12 @@ import Loading from 'components/Loading'
   (state) => ({
     locale: state.intl.get('locale'),
     wallet: state.wallet,
-    balance: accountBalanceSelector(state),
-    keystore: state.keystore
+    eosAccount: eosAccountSelector(state),
+    balance: accountBalanceSelector(state)
   }),
   (dispatch) => ({
     actions: bindActionCreators({
       ...walletActions,
-      ...keystoreActions
     }, dispatch)
   })
 )
@@ -89,6 +89,12 @@ export default class Assets extends BaseScreen {
     })
   }
 
+  createEOSAccount = () => {
+    this.props.navigator.push({
+      screen: "BitPortal.EOSAccountCreation"
+    })
+  }
+
   // 切换EOS账户
   switchWallet({ name, bpid, timestamp }) {
     this.props.actions.switchWalletRequested({ name, bpid, timestamp })
@@ -124,9 +130,9 @@ export default class Assets extends BaseScreen {
   }
 
   render() {
-    const { wallet, balance, locale } = this.props
+    const { wallet, balance, locale, eosAccount } = this.props
     const loading = wallet.get('loading')
-    const active = wallet.get('data')
+    const activeEOSAccount = eosAccount.get('data')
     const accountList = wallet.get('hdWalletList')
     const balanceList = balance.get('data').get('eosAccountBalance')
     return (
@@ -151,8 +157,9 @@ export default class Assets extends BaseScreen {
             !!accountList.size &&
             <View style={styles.scrollContainer}>
               <ScrollView showsVerticalScrollIndicator={false}>
-                <TotalAssetsCard totalAssets={425321132.21} accountName={active.get('eosAccountName')} onPress={() => this.operateAssetQRCode(true)} />
-                <EnableAssets Title={<FormattedMessage id="asset_title_name_ast" />} enableAssets={() => this.enableAssets()} />
+                <TotalAssetsCard totalAssets={425321132.21} accountName={activeEOSAccount.get('account_name')} onPress={() => this.operateAssetQRCode(true)} />
+                {!activeEOSAccount.get('account_name') && <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_create_eos_account" />} onPress={() => this.createEOSAccount()} extraStyle={{ marginTop: 10, marginBottom: 10 }} />}
+                {!!activeEOSAccount.get('account_name') && <EnableAssets Title={<FormattedMessage id="asset_title_name_ast" />} enableAssets={() => this.enableAssets()} />}
                 {balanceList && <BalanceList data={balanceList} onPress={(e) => this.checkAsset(e)} />}
               </ScrollView>
             </View>
@@ -178,7 +185,7 @@ export default class Assets extends BaseScreen {
           >
             <AccountList
               data={accountList}
-              activeAccount={active}
+              activeAccount={wallet.get('data')}
               onPress={this.switchWallet}
               createNewAccount={() => this.createNewAccount()}
               dismissModal={() => this.setState({ isVisible2: false })}
