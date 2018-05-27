@@ -81,10 +81,7 @@ export default class AccountList extends Component {
           <TouchableHighlight
             underlayColor={Colors.bgColor_000000}
             style={styles.listContainer}
-            onPress={() => {
-                createNewAccount()
-                dismissModal()
-              }}
+            onPress={() => { createNewAccount() }}
           >
             <View style={[styles.listContainer, styles.between, { backgroundColor: Colors.minorThemeColor, justifyContent: 'flex-start' , paddingHorizontal: 32 }]}>
               <Ionicons name="ios-add-outline" size={26} color={Colors.textColor_89_185_226} />

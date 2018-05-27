@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react'
-import { Text, View, ScrollView, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { Text, View, ScrollView, Image, TouchableOpacity, ActivityIndicator, InteractionManager } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import TotalAssetsCard from 'components/TotalAssetsCard'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -84,8 +84,10 @@ export default class Assets extends BaseScreen {
 
   // 创建新账户
   createNewAccount = () => {
-    this.props.navigator.push({
-      screen: "BitPortal.AccountCreation"
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({ isVisible2: false }, () => {
+        this.props.navigator.push({ screen: "BitPortal.AccountCreation" })
+      })
     })
   }
 
@@ -180,6 +182,7 @@ export default class Assets extends BaseScreen {
             animationIn="fadeIn"
             animationOut="fadeOut"
             style = {{  margin: 0 }}
+            useNativeDriver={true}
             isVisible={this.state.isVisible2}
             backdropOpacity={0}
           >
