@@ -52,7 +52,7 @@ class InputItem extends Component {
   }
 
   render() {
-    const { title, placeholder, isContentVaild, TipsComponent, secureTextEntry, extraStyle  } = this.props
+    const { title, placeholder, isContentVaild, TipsComponent, secureTextEntry, extraStyle, extraProps } = this.props
     const { value } = this.state
     return (
       <View style={[styles.inputItem, {...extraStyle}]}>
@@ -62,6 +62,7 @@ class InputItem extends Component {
           }]
         }>
           <TextInput
+            {...extraProps}
             autoCorrect={false}
             underlineColorAndroid="transparent"
             style={styles.input}

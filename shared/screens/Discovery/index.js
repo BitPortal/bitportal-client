@@ -7,8 +7,6 @@ import NewsList from './NewsList'
 import NewsBanner from './NewsBanner'
 import NewsBannerCard from './NewsBannerCard'
 import NavigationBar, { CommonTitle } from 'components/NavigationBar'
-// import Ionicons from 'react-native-vector-icons/Ionicons'
-// import Colors from 'resources/colors'
 import styles from './styles'
 const PAGE_LENGTH = 10
 
