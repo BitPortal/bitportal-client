@@ -1,36 +1,16 @@
 import Eos from 'react-native-eosjs'
-import Keystore from 'eos/keystore'
 import { EOS_API_URL } from 'constants/env'
-import { encodeKeyStoreKey, decodeKey } from 'utils'
-import secureStorage from 'utils/secureStorage'
 
 const ecc = Eos.modules.ecc
-
-const sessionConfig = {
-  timeoutInMin: 30,
-  uriRules: {
-    owner: '.*',
-    active: '.*',
-    'active/**': '.*'
-  }
-}
-
 let eos: any
-let keystore: any
 
-const initAccount = async ({ name, keyProvider }: { name: string, keyProvider: string | string[] }) => {
-  keystore = await Keystore(name, sessionConfig)
-
+const initAccount = async ({ keyProvider }: { keyProvider: string | string[] }) => {
   eos = Eos.Localnet({
-    keyProvider: keyProvider || keystore.keyProvider,
+    keyProvider: keyProvider,
     httpEndpoint: EOS_API_URL
   })
 
-  return { eos, keystore }
-}
-
-const getKeystore = () => {
-  return keystore
+  return { eos }
 }
 
 const getEOS = () => {
@@ -42,25 +22,11 @@ const privateToPublic = async (privateKey: string) => {
   return keys
 }
 
-const getLocalAccounts = async () => {
-  const storagePrefix = encodeKeyStoreKey()
-  const allItems = await secureStorage.getAllItems()
-  const accounts = Object.keys(allItems)
-    .filter((account => account.indexOf(storagePrefix) !== -1))
-    .map(account => decodeKey(account))
-    .filter(account => account.indexOf('kpath') !== -1)
-    .map(account => account[1])
-    .filter((item, position, self) => self.indexOf(item) === position)
-  return accounts
-}
-
 const isValidPrivate = (privateKey: string) => ecc.isValidPrivate(privateKey)
 
 export {
   getEOS,
-  getKeystore,
   initAccount,
   privateToPublic,
-  getLocalAccounts,
   isValidPrivate
 }
