@@ -8,14 +8,14 @@ import {
   createHmac,
   createCipheriv,
   createDecipheriv,
-  pbkdf2
+  // pbkdf2
 } from 'crypto'
-// import { pbkdf2, scrypt } from 'react-native-fast-crypto'
-import secp256k1 from 'secp256k1'
+import { pbkdf2, scrypt, secp256k1 } from 'react-native-fast-crypto'
+import * as RNRandomBytes from 'react-native-randombytes'
 import base58 from 'bs58'
-import scryptAsync from 'scrypt-async'
+// import secp256k1 from 'secp256k1'
+// import scryptAsync from 'scrypt-async'
 import uuidv4 from 'uuid/v4'
-import { randomBytes } from 'react-native-randombytes'
 import createKeccakHash from 'keccak'
 import { isValidPrivate, privateToPublic } from 'eos'
 
@@ -29,9 +29,9 @@ const decipherBuffer = (decipher, data) => {
   return Buffer.concat([decipher.update(data), decipher.final()])
 }
 
-const getRandomBytes = async (length) => {
+const randomBytes = async (length) => {
   return new Promise((resolve, reject) => {
-    randomBytes(length, (error, bytes) => {
+    RNRandomBytes.randomBytes(length, (error, bytes) => {
       if (error) {
         reject(error)
       } else {
@@ -41,39 +41,40 @@ const getRandomBytes = async (length) => {
   })
 }
 
-const pbkdf2Async = async (password, salt, iterations, keylen, digest) => {
-  return new Promise((resolve, reject) => {
-    pbkdf2(password, salt, iterations, keylen, digest, (error, derivedKey) => {
-      if (error) {
-        reject(error)
-      } else {
-        resolve(derivedKey)
-      }
-    })
-  })
-}
+// const pbkdf2Async = async (password, salt, iterations, keylen, digest) => {
+//   return new Promise((resolve, reject) => {
+//     pbkdf2(password, salt, iterations, keylen, digest, (error, derivedKey) => {
+//       if (error) {
+//         reject(error)
+//       } else {
+//         resolve(derivedKey)
+//       }
+//     })
+//   })
+// }
 
-const scrypt = async (password, salt, N, r, p, dkLen) => {
-  return new Promise((resolve, reject) => {
-    scryptAsync(password, salt, {
-      N, r, p, dkLen
-    }, (derivedKey) => {
-      resolve(Buffer.from(derivedKey))
-    })
-  })
-}
+// const scrypt = async (password, salt, N, r, p, dkLen) => {
+//   return new Promise((resolve, reject) => {
+//     scryptAsync(password, salt, {
+//       N, r, p, dkLen
+//     }, (derivedKey) => {
+//       resolve(Buffer.from(derivedKey))
+//     })
+//   })
+// }
 
-export const getIdFromEntropy = (entropy: string) => {
+export const getIdFromEntropy = async (entropy: string) => {
   const phrase = bip39.entropyToMnemonic(entropy)
   const seed = bip39.mnemonicToSeed(phrase)
-  return getIdFromSeed(seed)
+  const seedInfo = await getIdFromSeed(seed)
+  return seedInfo
 }
 
-export const getIdFromSeed = (seed: Buffer) => {
+export const getIdFromSeed = async (seed: Buffer) => {
   const MASTER_SALT = Buffer.from('Bitportal seed', 'utf8')
   const privateKey = createHmac('sha256', MASTER_SALT).update(seed).digest()
-  assert(secp256k1.privateKeyVerify(privateKey), 'Invalid private key!')
-  const publicKey = secp256k1.publicKeyCreate(privateKey)
+  // assert(secp256k1.privateKeyVerify(privateKey), 'Invalid private key!')
+  const publicKey = await secp256k1.publicKeyCreate(privateKey, true)
   const check = [publicKey]
   const checksum = createHash('rmd160').update(Buffer.concat(check)).digest().slice(0, 4)
   const address = base58.encode(Buffer.concat([publicKey, checksum]))
@@ -88,20 +89,20 @@ export const encrypt = async (input: string, password: string, opts: object) => 
 
   opts = opts || {}
 
+  const bpid = await getIdFromEntropy(entropy)
+
   if (opts.bpid) {
-    assert(opts.bpid === getIdFromEntropy(entropy), 'Entropy and bpid do not match!')
+    assert(opts.bpid === bpid, 'Entropy and bpid do not match!')
   }
 
-  const bpid = opts.bpid || getIdFromEntropy(entropy)
-
   let salt = opts.salt
-  if (!salt) salt = await getRandomBytes(32)
+  if (!salt) salt = await randomBytes(32)
 
   let iv = opts.iv
-  if (!iv) iv = await getRandomBytes(16)
+  if (!iv) iv = await randomBytes(16)
 
   let derivedKey
-  const kdf = opts.kdf || 'pbkdf2'
+  const kdf = opts.kdf || 'scrypt'
   const kdfparams = {
     dklen: opts.dklen || 32,
     salt: salt.toString('hex')
@@ -109,8 +110,8 @@ export const encrypt = async (input: string, password: string, opts: object) => 
 
   if (kdf === 'pbkdf2') {
     kdfparams.c = opts.c || 262144
-    kdfparams.prf = 'hmac-sha256'
-    derivedKey = await pbkdf2Async(Buffer.from(password), salt, kdfparams.c, kdfparams.dklen, 'sha256')
+    kdfparams.prf = 'hmac-sha512'
+    derivedKey = await pbkdf2.deriveAsync(Buffer.from(password), salt, kdfparams.c, kdfparams.dklen, 'sha512')
   } else if (kdf === 'scrypt') {
     kdfparams.n = opts.n || 262144
     kdfparams.r = opts.r || 8
@@ -130,7 +131,7 @@ export const encrypt = async (input: string, password: string, opts: object) => 
   const mac = keccak(Buffer.concat([derivedKey.slice(16, 32), Buffer.from(ciphertext, 'hex')]))
 
   let random = opts.uuid
-  if (!random) random = await getRandomBytes(16)
+  if (!random) random = await randomBytes(16)
 
   return {
     bpid,
@@ -166,11 +167,11 @@ export const decrypt = async (input: object | string, password: string, nonStric
   } else if (json.crypto.kdf === 'pbkdf2') {
     kdfparams = json.crypto.kdfparams
 
-    if (kdfparams.prf !== 'hmac-sha256') {
+    if (kdfparams.prf !== 'hmac-sha512') {
       throw new Error('Unsupported parameters to PBKDF2')
     }
 
-    derivedKey = await pbkdf2Async(Buffer.from(password), Buffer.from(kdfparams.salt, 'hex'), kdfparams.c, kdfparams.dklen, 'sha256')
+    derivedKey = await pbkdf2.deriveAsync(Buffer.from(password), Buffer.from(kdfparams.salt, 'hex'), kdfparams.c, kdfparams.dklen, 'sha512')
   } else {
     throw new Error('Unsupported key derivation scheme')
   }
@@ -204,7 +205,7 @@ export const getMasterSeed = async (mnemonicPhrase: string) => {
   assert(bip39.validateMnemonic(phrase), 'Invalid mnemonic phrase!')
   const entropy = bip39.mnemonicToEntropy(phrase)
   const seed = bip39.mnemonicToSeed(phrase)
-  const id = getIdFromSeed(seed)
+  const id = await getIdFromSeed(seed)
 
   return { id, phrase, entropy }
 }

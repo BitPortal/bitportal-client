@@ -10,7 +10,7 @@ import { getErrorMessage, encodeKey } from 'utils'
 import secureStorage from 'utils/secureStorage'
 import bip39 from 'react-native-bip39'
 import { isValidPrivate, privateToPublic } from 'eos'
-import { getMasterSeed, encrypt, decrypt, getEOSKeys } from 'key'
+import { getMasterSeed, encrypt, decrypt } from 'key'
 
 function* createWalletRequested(action: Action<CreateWalletParams>) {
   if (!action.payload) return

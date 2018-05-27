@@ -8,7 +8,7 @@ import { getBalanceRequested } from 'actions/balance'
 import { getErrorMessage } from 'utils'
 import secureStorage from 'utils/secureStorage'
 import { initAccount, getEOS } from 'eos'
-import { getMasterSeedFromEntropy, getEOSKeys, decrypt, validateEntropy } from 'key'
+import { getEOSKeys, decrypt, validateEntropy } from 'key'
 
 function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
   if (!action.payload) return
