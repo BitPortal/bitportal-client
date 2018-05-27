@@ -38,6 +38,7 @@ import Currencies         from 'screens/Profile/Currencies'
 import AccountList        from 'screens/Profile/AccountList'
 import CreateContact      from 'screens/Profile/CreateContact'
 import ResetPassword      from 'screens/Profile/ResetPassword'
+import TermsOfService     from 'screens/Profile/TermsOfService'
 import AccountManager     from 'screens/Profile/AccountManager'
 import ExportEntrance     from 'screens/Profile/ExportEntrance'
 import ExportKeystore     from 'screens/Profile/ExportKeystore'
@@ -75,6 +76,7 @@ export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.AccountList',        () => AccountList,        store, provider)
   Navigation.registerComponent('BitPortal.CreateContact',      () => CreateContact,      store, provider)
   Navigation.registerComponent('BitPortal.ResetPassword',      () => ResetPassword,      store, provider)
+  Navigation.registerComponent('BitPortal.TermsOfService',     () => TermsOfService,     store, provider)
   Navigation.registerComponent('BitPortal.AccountManager',     () => AccountManager,     store, provider)
   Navigation.registerComponent('BitPortal.ExportEntrance',     () => ExportEntrance,     store, provider)
   Navigation.registerComponent('BitPortal.ExportKeystore',     () => ExportKeystore,     store, provider)

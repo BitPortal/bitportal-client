@@ -5,6 +5,12 @@ import NavigationBar, { CommonButton, CommonRightButton } from 'components/Navig
 import styles from './styles'
 
 class Article extends BaseScreen {
+
+  static navigatorStyle = {
+    tabBarHidden: true,
+    navBarHidden: true
+  }
+
   share = () => {
     try {
       Share.share({ url: this.props.url, title: this.props.title })
