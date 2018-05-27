@@ -63,19 +63,20 @@ const ListItem = ({ item, onPress, active }) => (
 export default class AccountList extends Component {
 
   switchAccount = (item) => {
-    this.props.onPress({ name: item.get('name'), bpid: item.get('bpid'), timestamp: item.get('timestamp') })
+    this.props.onPress(item.toJS())
     this.props.dismissModal()
   }
 
   render() {
-    const { data, activeAccount, dismissModal, onPress, createNewAccount, locale } = this.props
+    const { data, moreData, activeAccount, dismissModal, onPress, createNewAccount, locale } = this.props
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <TouchableOpacity style={[styles.container, { backgroundColor: 'rgba(0,0,0,0.1)' }]} onPress={() => dismissModal()} />
           <View style={styles.bgContainer}>
             <ScrollView style={{ maxHeight: 400, backgroundColor: Colors.bgColor_48_49_59 }} showsVerticalScrollIndicator={false}>
-              {data.map((item, index) => (<ListItem key={index} item={item} active={item.get('bpid') === activeAccount.get('bpid')} onPress={() => this.switchAccount(item)} />))}
+              {data.map((item, index) => (<ListItem key={item.get('bpid')} item={item} active={item.get('bpid') === activeAccount.get('bpid')} onPress={() => this.switchAccount(item)} />))}
+              {moreData.map((item, index) => (<ListItem key={item.get('eosAccountName')} item={item} active={item.get('eosAccountName') === activeAccount.get('eosAccountName')} onPress={() => this.switchAccount(item)} />))}
             </ScrollView>
           </View>
           <TouchableHighlight

@@ -19,8 +19,8 @@ const validate = (values) => {
     errors.name = 'Wallet name should contain 1~12 characters'
   }
 
-  if (!values.get('eosName')) {
-    errors.eosName = 'Please input EOS account name'
+  if (!values.get('eosAccountName')) {
+    errors.eosAccountName = 'Please input EOS account name'
   }
 
   if (!values.get('password')) {
@@ -73,13 +73,13 @@ export default class CreateWalletAndEOSAccountForm extends Component {
     return (
       <FormContainer>
         <Field
-          label="Wallet Name"
+          label="Bitportal Wallet Name"
           name="name"
           component={TextField}
         />
         <Field
           label="EOS Account Name"
-          name="eosName"
+          name="eosAccountName"
           component={TextField}
           normalize={normalizeEOSAccountName}
         />

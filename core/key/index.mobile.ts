@@ -84,15 +84,22 @@ export const getIdFromSeed = async (seed: Buffer) => {
 }
 
 export const encrypt = async (input: string, password: string, opts: object) => {
-  assert(input, 'Invalid entropy!')
+
+  assert(input, 'Invalid encrypt input!')
   const entropy = Buffer.from(input, 'hex')
 
   opts = opts || {}
 
-  const bpid = await getIdFromEntropy(entropy)
+  let bpid
 
-  if (opts.bpid) {
-    assert(opts.bpid === bpid, 'Entropy and bpid do not match!')
+  if (!opts.origin || opts.origin === 'hd') {
+    bpid = await getIdFromEntropy(entropy)
+
+    if (opts.bpid) {
+      assert(opts.bpid === bpid, 'Entropy and bpid do not match!')
+    }
+  } else {
+    assert(opts.origin === 'classic', 'Invalid origin!')
   }
 
   let salt = opts.salt
@@ -134,8 +141,7 @@ export const encrypt = async (input: string, password: string, opts: object) => 
   let random = opts.uuid
   if (!random) random = await randomBytes(16)
 
-  return {
-    bpid,
+  const keystore = {
     version: 1,
     id: uuidv4({ random }),
     crypto: {
@@ -149,6 +155,11 @@ export const encrypt = async (input: string, password: string, opts: object) => 
       mac: mac.toString('hex')
     }
   }
+
+  if (bpid) keystore.bpid = bpid
+  if (opts.coin) keystore.coin = opts.coin
+
+  return keystore
 }
 
 export const decrypt = async (input: object | string, password: string, nonStrict?: boolean) => {

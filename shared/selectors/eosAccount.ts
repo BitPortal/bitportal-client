@@ -1,20 +1,35 @@
 import { createSelector } from 'reselect'
 import { Map } from 'immutable'
 
-const walletIdSelector = (state: RootState) => state.wallet.get('data').get('bpid')
+const walletSelector = (state: RootState) => state.wallet.get('data')
 const accountSelector = (state: RootState) => state.eosAccount
 
 export const eosAccountSelector = createSelector(
-  walletIdSelector,
+  walletSelector,
   accountSelector,
-  (bpid: string, accounts: any) => {
+  (wallet: string, accounts: any) => {
+    const bpid = wallet.get('bpid')
+    const eosAccountName = wallet.get('eosAccountName')
+    const origin = wallet.get('origin')
     const list = accounts.get('eosAccountList')
-    if (!bpid) return accounts.set('data', Map({}))
 
-    const index = list.findIndex((item: any) => item.get('bpid') === bpid)
+    if (origin === 'hd') {
+      const index = list.findIndex((item: any) => item.get('bpid') === bpid)
 
-    if (index !== -1) {
-      return accounts.set('data', list.get(index))
+      if (index !== -1) {
+        return accounts.set('data', list.get(index))
+      } else {
+        return accounts.set('data', Map({}))
+      }
+      return accounts.set('data', Map({}))
+    } else if (origin === 'classic') {
+      const index = list.findIndex((item: any) => item.get('account_name') === eosAccountName)
+
+      if (index !== -1) {
+        return accounts.set('data', list.get(index))
+      } else {
+        return accounts.set('data', Map({}))
+      }
     } else {
       return accounts.set('data', Map({}))
     }

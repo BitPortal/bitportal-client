@@ -1,7 +1,8 @@
 import { createAction } from 'redux-actions'
 
 export const createWalletRequested = createAction<CreateWalletParams>('wallet/CREATE_REQUESTED')
-export const createWalletSucceeded = createAction<CreateWalletResult>('wallet/CREATE_SUCCEEDED')
+export const createHDWalletSucceeded = createAction<CreateWalletResult>('wallet/CREATE_HD_SUCCEEDED')
+export const createClassicWalletSucceeded = createAction<CreateWalletResult>('wallet/CREATE_CLASSIC_SUCCEEDED')
 export const createWalletFailed = createAction<ErrorMessage>('wallet/CREATE_FAILED')
 
 export const importWalletRequested = createAction<ImportWalletParams>('wallet/IMPORT_REQUESTED')
