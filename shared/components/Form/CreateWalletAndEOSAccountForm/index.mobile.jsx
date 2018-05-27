@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
 import { FormContainer, TextField, PasswordField, SubmitButton, Button } from 'components/Form'
 import PasswordStrength from 'components/PasswordStrength'
-import { normalizeText } from 'utils/normalize'
+import { normalizeText, normalizeEOSAccountName } from 'utils/normalize'
 import { getPasswordStrength } from 'utils'
 import * as walletActions from 'actions/wallet'
 
@@ -15,6 +15,12 @@ const validate = (values) => {
 
   if (!values.get('name')) {
     errors.name = 'Please input bitportal wallet name'
+  } else if (values.get('name').length > 12) {
+    errors.name = 'Wallet name should contain 1~12 characters'
+  }
+
+  if (!values.get('eosName')) {
+    errors.eosName = 'Please input EOS account name'
   }
 
   if (!values.get('password')) {
@@ -34,12 +40,12 @@ const validate = (values) => {
   return errors
 }
 
-@reduxForm({ form: 'createWalletForm', validate })
+@reduxForm({ form: 'createWalletAndEOSAccountForm', validate })
 
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    password: formValueSelector('createWalletForm')(state, 'password'),
+    password: formValueSelector('createWalletAndEOSAccountForm')(state, 'password'),
     wallet: state.wallet
   }),
   dispatch => ({
@@ -49,14 +55,14 @@ const validate = (values) => {
   })
 )
 
-export default class CreateWalletForm extends Component {
+export default class CreateWalletAndEOSAccountForm extends Component {
   constructor(props, context) {
     super(props, context)
     this.submit = this.submit.bind(this)
   }
 
   submit(data) {
-    this.props.actions.createWalletRequested(data.delete('confirmedPassword').toJS())
+    this.props.actions.createWalletAndEOSAccountRequested(data.delete('confirmedPassword').toJS())
   }
 
   render() {
@@ -70,7 +76,12 @@ export default class CreateWalletForm extends Component {
           label="Wallet Name"
           name="name"
           component={TextField}
-          normalize={normalizeText}
+        />
+        <Field
+          label="EOS Account Name"
+          name="eosName"
+          component={TextField}
+          normalize={normalizeEOSAccountName}
         />
         <Field
           label="Set a password"
@@ -83,7 +94,7 @@ export default class CreateWalletForm extends Component {
           name="confirmedPassword"
           component={PasswordField}
         />
-        <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text="Next" />
+        <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text="Create" />
         <Button text="Import" onPress={this.props.importEOSAccount} />
       </FormContainer>
     )

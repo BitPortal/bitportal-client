@@ -15,3 +15,5 @@ export const syncWalletFailed = createAction<ErrorMessage>('wallet/SYNC_FAILED')
 export const switchWalletRequested = createAction('wallet/SWITCH_REQUESTED')
 export const switchWalletSucceeded = createAction<HDWallet>('wallet/SWITCH_SUCCEEDED')
 export const switchWalletFailed = createAction<ErrorMessage>('wallet/SWITCH_FAILED')
+
+export const createWalletAndEOSAccountRequested = createAction<CreateWalletAndEOSAccountParams>('wallet/CREATE_WALLET_AND_EOS_ACCOUNT_REQUESTED')

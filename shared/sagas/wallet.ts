@@ -5,12 +5,60 @@ import { Navigation } from 'react-native-navigation'
 import { reset } from 'redux-form/immutable'
 import assert from 'assert'
 import * as actions from 'actions/wallet'
-import { syncEOSAccount } from 'actions/eosAccount'
+import { syncEOSAccount, createEOSAccountSucceeded } from 'actions/eosAccount'
 import { getErrorMessage, encodeKey } from 'utils'
 import secureStorage from 'utils/secureStorage'
 import bip39 from 'react-native-bip39'
-import { isValidPrivate, privateToPublic } from 'eos'
-import { getMasterSeed, encrypt, decrypt } from 'key'
+import { isValidPrivate, privateToPublic, initAccount } from 'eos'
+import { getMasterSeed, encrypt, decrypt, getEOSKeys } from 'key'
+
+function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAccountParams>) {
+  if (!action.payload) return
+
+  try {
+    const name = action.payload.name
+    const eosName = action.payload.eosName
+    const password = action.payload.password
+    const { id, phrase, entropy } = yield call(getMasterSeed)
+    const existedWallet = yield call(secureStorage.getItem, `HD_KEYSTORE_${id}`, true)
+    assert(!existedWallet, 'Wallet already exists!')
+    const keystore = yield call(encrypt, entropy, password, { bpid: id })
+    const walletInfo = {
+      bpid: id,
+      timestamp: +Date.now(),
+      name
+    }
+
+    const eosKeys = yield call(getEOSKeys, entropy)
+    assert(eosKeys, 'Generate EOS keys failed!')
+    const creator = 'eosio'
+    const recovery = 'eosio'
+    const keyProvider = '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
+    const owner = eosKeys.keys.owner.publicKey
+    const active = eosKeys.keys.active.publicKey
+    const { eos } = yield call(initAccount, { keyProvider })
+    yield call(eos.newaccount, { creator, owner, active, recovery, name: eosName })
+    const accountInfo = yield call(eos.getAccount, eosName)
+    const info = { ...accountInfo, bpid: id, timestamp: +Date.now() }
+    yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosName}`, info, true)
+
+    yield call(secureStorage.setItem, `HD_KEYSTORE_${id}`, keystore, true)
+    yield call(secureStorage.setItem, `HD_WALLET_INFO_${id}`, walletInfo, true)
+    yield call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
+    yield put(createEOSAccountSucceeded(info))
+    yield put(actions.createWalletSucceeded(walletInfo))
+    yield put(reset('createWalletAndEOSAccountForm'))
+    // yield call(delay, 2000)
+    Navigation.handleDeepLink({
+	  link: '*',
+	  payload: {
+		method: 'pop'
+	  }
+    })
+  } catch (e) {
+    yield put(actions.createWalletFailed(getErrorMessage(e)))
+  }
+}
 
 function* createWalletRequested(action: Action<CreateWalletParams>) {
   if (!action.payload) return
@@ -101,6 +149,7 @@ function* switchWalletRequested(action: Action<HDWallet>) {
 
 export default function* walletSaga() {
   yield takeEvery(String(actions.createWalletRequested), createWalletRequested)
+  yield takeEvery(String(actions.createWalletAndEOSAccountRequested), createWalletAndEOSAccountRequested)
   yield takeEvery(String(actions.syncWalletRequested), syncWalletRequested)
   yield takeEvery(String(actions.switchWalletRequested), switchWalletRequested)
 }

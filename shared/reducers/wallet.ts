@@ -14,6 +14,9 @@ export default handleActions({
   [actions.createWalletRequested] (state) {
     return state.set('loading', true)
   },
+  [actions.createWalletAndEOSAccountRequested] (state) {
+    return state.set('loading', true)
+  },
   [actions.createWalletSucceeded] (state, action) {
     return state.set('loaded', true).set('loading', false)
       .set('data', Immutable.fromJS(action.payload))

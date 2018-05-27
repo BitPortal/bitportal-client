@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { noop } from 'utils'
 import Colors from 'resources/colors'
 import styles from './styles'
 
@@ -13,8 +14,8 @@ export const FieldItem = ({ children }) => (
   <View style={styles.fieldItem}>{children}</View>
 )
 
-export const FieldInput = ({ children, rightContent, leftContent }) => (
-  <View style={styles.fieldInput}>
+export const FieldInput = ({ children, rightContent, leftContent, style }) => (
+  <View style={[styles.fieldInput, style]}>
     {leftContent && <View>{leftContent}</View>}
     {children}
     {rightContent && <View>{rightContent}</View>}
@@ -46,7 +47,7 @@ export const TextField = ({ input: { onChange, ...restInput }, meta: { touched, 
 export const TextAreaField = ({ input: { onChange, ...restInput }, meta: { touched, error }, label, placeholder }) => (
   <FieldItem>
     <Text style={styles.text14}>{label}</Text>
-    <FieldInput>
+    <FieldInput style={{ borderBottomWidth: 0 }}>
       <TextInput
         multiline={true}
         numberOfLines={4}
@@ -87,12 +88,23 @@ export const PasswordField = ({ input: { onChange, ...restInput }, meta: { touch
 export const SubmitButton = ({ disabled, loading, onPress, text }) => (
   <FieldItem>
     <TouchableOpacity
-      onPress={onPress}
+      onPress={!disabled ? onPress : noop}
       disabled={disabled}
       style={[styles.submitButton, disabled ? styles.disabled : {}]}
     >
       <Text style={styles.submitButtonText}>{text}</Text>
       {loading && <ActivityIndicator style={styles.indicator} size="small" color="white" />}
+    </TouchableOpacity>
+  </FieldItem>
+)
+
+export const Button = ({ disabled, loading, onPress, text }) => (
+  <FieldItem>
+    <TouchableOpacity
+      onPress={onPress}
+      style={styles.button}
+    >
+      <Text style={styles.buttonText}>{text}</Text>
     </TouchableOpacity>
   </FieldItem>
 )
