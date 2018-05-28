@@ -27,6 +27,8 @@ import Discovery          from 'screens/Discovery'
 import ArticleWebView     from 'screens/Discovery/article'
 import Markdown           from 'screens/Discovery/markdown'
 
+import Vote               from 'screens/Profile/Vote'
+import Stake              from 'screens/Profile/Stake'
 import About              from 'screens/Profile/About'
 import Profile            from 'screens/Profile'
 import Contacts           from 'screens/Profile/Contacts'
@@ -36,6 +38,7 @@ import Currencies         from 'screens/Profile/Currencies'
 import AccountList        from 'screens/Profile/AccountList'
 import CreateContact      from 'screens/Profile/CreateContact'
 import ResetPassword      from 'screens/Profile/ResetPassword'
+import TermsOfService     from 'screens/Profile/TermsOfService'
 import AccountManager     from 'screens/Profile/AccountManager'
 import ExportEntrance     from 'screens/Profile/ExportEntrance'
 import ExportKeystore     from 'screens/Profile/ExportKeystore'
@@ -62,6 +65,8 @@ export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.DiscoveryArticle',   () => ArticleWebView,     store, provider)
   Navigation.registerComponent('BitPortal.Markdown',           () => Markdown,           store, provider)
 
+  Navigation.registerComponent('BitPortal.Vote',               () => Vote,               store, provider)
+  Navigation.registerComponent('BitPortal.Stake',              () => Stake,              store, provider)
   Navigation.registerComponent('BitPortal.About',              () => About,              store, provider)
   Navigation.registerComponent('BitPortal.Profile',            () => Profile,            store, provider)
   Navigation.registerComponent('BitPortal.Contacts',           () => Contacts,           store, provider)
@@ -71,6 +76,7 @@ export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.AccountList',        () => AccountList,        store, provider)
   Navigation.registerComponent('BitPortal.CreateContact',      () => CreateContact,      store, provider)
   Navigation.registerComponent('BitPortal.ResetPassword',      () => ResetPassword,      store, provider)
+  Navigation.registerComponent('BitPortal.TermsOfService',     () => TermsOfService,     store, provider)
   Navigation.registerComponent('BitPortal.AccountManager',     () => AccountManager,     store, provider)
   Navigation.registerComponent('BitPortal.ExportEntrance',     () => ExportEntrance,     store, provider)
   Navigation.registerComponent('BitPortal.ExportKeystore',     () => ExportKeystore,     store, provider)

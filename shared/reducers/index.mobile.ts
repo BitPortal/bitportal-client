@@ -9,6 +9,7 @@ import eosAccount from './eosAccount'
 import keystore from './keystore'
 import news from './news'
 import balance from './balance'
+import vote from './vote'
 
 export default combineReducers({
   form,
@@ -20,5 +21,6 @@ export default combineReducers({
   ticker,
   chart,
   news,
-  balance
+  balance,
+  vote
 })

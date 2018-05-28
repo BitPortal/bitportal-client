@@ -3,5 +3,6 @@
   "BITPORTAL_API_REST_URL": "http://market-api.corp.bitportal.io/api",
   "BITPORTAL_API_WEBSOCKET_URL": "wss://api.bitportal.io",
   "EOS_API_URL": "http://localhost:8888",
-  "BITPORTAL_API_CMS_URL": "http://strapi.corp.bitportal.io"
+  "BITPORTAL_API_CMS_URL": "http://strapi.corp.bitportal.io",
+  "BITPORTAL_API_TERMS_URL":"https://www.bitportal.io/tos"
 }

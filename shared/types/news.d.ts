@@ -1,10 +1,10 @@
-declare interface NewsParams = {
+declare interface NewsParams {
   startAt: number,
   limit: number,
   isRefresh: boolean,
 }
 
-declare interface NewsRow = {
+declare interface NewsRow {
   content: string,
   createAt: string,
   id: string,
