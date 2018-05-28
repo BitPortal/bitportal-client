@@ -7,8 +7,8 @@ if (!isMobile) require('isomorphic-fetch')
 export const fetchBase = async (
   method: FetchMethod = 'GET',
   endPoint: string = '/hello',
-  params: object = {},
-  customeHeaders: object = {},
+  params: Object = {},
+  customeHeaders: Object = {},
   baseUrl = BITPORTAL_API_REST_URL
 ) => {
   let url = baseUrl + endPoint

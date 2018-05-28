@@ -33,19 +33,29 @@ function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAc
     const eosKeys = yield call(getEOSKeys, entropy)
     assert(eosKeys, 'Generate EOS keys failed!')
     const creator = 'eosio'
-    const recovery = 'eosio'
-    const keyProvider = '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
+    const keyProvider = [
+      'EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV',
+      '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
+    ]
     const owner = eosKeys.keys.owner.publicKey
     const active = eosKeys.keys.active.publicKey
-    const { eos } = yield call(initAccount, { keyProvider })
-    yield call(eos.newaccount, { creator, owner, active, recovery, name: eosAccountName })
+
+    const signProvider = ({ sign, buf }) => sign(buf, '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3')
+    const { eos } = yield call(initAccount, { keyProvider, signProvider })
+    const transactionActions = transaction => {
+      transaction.newaccount({ name: eosAccountName, creator, owner, active })
+      transaction.buyrambytes({ payer: creator, receiver: eosAccountName, bytes: 8192 })
+      transaction.delegatebw({ from: creator, receiver: eosAccountName, stake_net_quantity: '100.0000 SYS', stake_cpu_quantity: '100.0000 SYS', transfer: 0 })
+    }
+    yield call(eos.transaction, transactionActions)
     const accountInfo = yield call(eos.getAccount, eosAccountName)
     const info = { ...accountInfo, bpid: id, timestamp: +Date.now() }
-    yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, info, true)
 
+    yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, info, true)
     yield call(secureStorage.setItem, `HD_KEYSTORE_${id}`, keystore, true)
     yield call(secureStorage.setItem, `HD_WALLET_INFO_${id}`, walletInfo, true)
     yield call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
+
     yield put(createEOSAccountSucceeded(info))
     yield put(actions.createHDWalletSucceeded(walletInfo))
 

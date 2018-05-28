@@ -27,13 +27,12 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
     const eosKeys = yield call(getEOSKeys, entropy)
     assert(eosKeys, 'Generate EOS keys failed!')
     const creator = 'eosio'
-    const recovery = 'eosio'
     const keyProvider = '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
     const owner = eosKeys.keys.owner.publicKey
     const active = eosKeys.keys.active.publicKey
 
     const { eos } = yield call(initAccount, { keyProvider })
-    yield call(eos.newaccount, { creator, name, owner, active, recovery })
+    yield call(eos.newaccount, { creator, name, owner, active })
     const accountInfo = yield call(eos.getAccount, name)
     const info = { ...accountInfo, bpid, timestamp: +Date.now() }
     yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${name}`, info, true)
