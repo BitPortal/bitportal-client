@@ -86,6 +86,8 @@ export default class ImportEOSAccountForm extends Component {
     const loading = eosAccount.get('loading')
     const disabled = invalid || pristine || loading
 
+    console.log(loading)
+    console.log(disabled)
     return (
       <FormContainer>
         <Field
@@ -122,7 +124,7 @@ export default class ImportEOSAccountForm extends Component {
           component={TextAreaField}
           normalize={normalizeText}
         />
-        <SubmitButton disabled={disabled} onPress={handleSubmit(this.submit)} text="Import" />
+        <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text="Import" />
       </FormContainer>
     )
   }

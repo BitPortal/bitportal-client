@@ -1,4 +1,5 @@
 import assert from 'assert'
+import { delay } from 'redux-saga'
 import { call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import { Navigation } from 'react-native-navigation'
@@ -94,10 +95,6 @@ function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
     }
     const info = { ...accountInfo, timestamp: +Date.now() }
 
-    console.log(info)
-    console.log(ownerKeystore)
-    console.log(activeKeystore)
-    console.log(walletInfo)
     yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, info, true)
     yield call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_OWNER_${ownerPublicKey}`, ownerKeystore, true)
     yield call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_ACTIVE_${activePublicKey}`, activeKeystore, true)

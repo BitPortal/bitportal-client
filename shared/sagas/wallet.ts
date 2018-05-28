@@ -48,8 +48,8 @@ function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAc
     yield call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
     yield put(createEOSAccountSucceeded(info))
     yield put(actions.createHDWalletSucceeded(walletInfo))
+
     yield put(reset('createWalletAndEOSAccountForm'))
-    // yield call(delay, 2000)
     Navigation.handleDeepLink({
 	  link: '*',
 	  payload: {
@@ -82,8 +82,8 @@ function* createWalletRequested(action: Action<CreateWalletParams>) {
     yield call(secureStorage.setItem, `HD_WALLET_INFO_${id}`, walletInfo, true)
     yield call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
     yield put(actions.createHDWalletSucceeded(walletInfo))
+
     yield put(reset('createWalletForm'))
-    // yield call(delay, 2000)
     Navigation.handleDeepLink({
 	  link: '*',
 	  payload: {
@@ -102,9 +102,9 @@ function* syncWalletRequested() {
   try {
     const items = yield call(secureStorage.getAllItems)
     console.log(items)
-    // for (const item of Object.keys(items)) {
-    //   yield call(secureStorage.removeItem, item)
-    // }
+    for (const item of Object.keys(items)) {
+      yield call(secureStorage.removeItem, item)
+    }
 
     const allItems = yield call(secureStorage.getAllItems)
 
