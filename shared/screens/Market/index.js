@@ -9,7 +9,7 @@ import BaseScreen from 'components/BaseScreen'
 import * as tickerActions from 'actions/ticker'
 import { exchangeTickerSelector } from 'selectors/ticker'
 import { bindActionCreators } from 'redux'
-import { Text, View, TouchableOpacity } from 'react-native'
+import { Text, View, InteractionManager } from 'react-native'
 import Modal from 'react-native-modal'
 import ExchangeList from './ExchangeList'
 import { Quotes } from './Quotes'
@@ -49,8 +49,10 @@ export default class Market extends BaseScreen {
 
   // 选择交易所
   changeExchange = (exchange) => {
-    this.setState({ isVisible: false }, () => {
-      this.props.actions.selectTickersByExchange(exchange)
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({ isVisible: false }, () => {
+        this.props.actions.selectTickersByExchange(exchange)
+      })
     })
   }
 
@@ -86,7 +88,7 @@ export default class Market extends BaseScreen {
       <View style={styles.container}>
         <NavigationBar
           leftButton={<ListButton label={EXCHANGE_NAMES[ticker.get('exchangeFilter')]} onPress={() => this.selectExchange()} />}
-          rightButton={<CommonRightButton iconName="md-search" onPress={() => this.searchCoin()} />}
+          // rightButton={<CommonRightButton iconName="md-search" onPress={() => this.searchCoin()} />}
         />
         <Quotes
           onPress={(e) => this.changeQuote(e)}
@@ -104,14 +106,14 @@ export default class Market extends BaseScreen {
           animationIn="fadeIn"
           animationOut="fadeOut"
           style = {{  margin: 0 }}
-          useNativeDriver={true}
           isVisible={this.state.isVisible}
           backdropOpacity={0.3}
         >
           <ExchangeList
             exchangeList={EXCHANGES}
+            activeExchange={ticker.get('exchangeFilter')}
             changeExchange={(e) => this.changeExchange(e)}
-            onPress={() => this.setState({ isVisible: false })}
+            dismissModal={() => this.setState({ isVisible: false })}
           />
         </Modal>
       </View>

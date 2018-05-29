@@ -1,31 +1,36 @@
 import { StyleSheet, Platform } from 'react-native'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, WidthPercent } from 'utils/dimens'
 import Colors from 'resources/colors'
+import { 
+  FontScale, 
+  SCREEN_WIDTH, 
+  SCREEN_HEIGHT, 
+  NAV_BAR_HEIGHT
+} from 'utils/dimens'
 
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT
   },
-  exchangeListContainer: {
-    width: 100,
-    minHeight: 150,
-    backgroundColor: Colors.bgColor_59_59_59,
-    marginLeft: -4,
-    borderRadius: 4,
-  },
-  btn: {
-    width: 100,
-    height: 30,
-    borderBottomColor: Colors.textColor_216_216_216,
+  listContainer: {
+    width: SCREEN_WIDTH,
+    height: 50,
+    borderBottomColor: Colors.minorThemeColor,
     borderBottomWidth: StyleSheet.hairlineWidth,
+    backgroundColor: Colors.bgColor_48_49_59
+  },
+  bgContainer: {
+    width: SCREEN_WIDTH,
+    marginTop: NAV_BAR_HEIGHT - SCREEN_HEIGHT
+  },
+  between: {
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    flexDirection: 'row',
-    paddingLeft: 10,
+    justifyContent: 'space-between',
+    flexDirection: 'row'
   },
   text16: {
     fontSize: FontScale(16),
+    fontWeight: 'bold',
     color: Colors.textColor_255_255_238
   }
 })
