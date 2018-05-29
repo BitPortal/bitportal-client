@@ -6,7 +6,7 @@ import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, TouchableOpacity, TextInput, TouchableHighlight } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import Colors from 'resources/colors'
-import ImportPrivateKeyForm from 'components/Form/ImportPrivateKeyForm'
+import ImportEOSAccountForm from 'components/Form/ImportEOSAccountForm'
 
 export default class AccountImport extends BaseScreen {
 
@@ -24,7 +24,7 @@ export default class AccountImport extends BaseScreen {
   }
 
   enterPrivateKey = (privateKey) => {
-    
+
   }
 
   goToBackUp = () => {
@@ -37,13 +37,13 @@ export default class AccountImport extends BaseScreen {
     const { isAccountVaild } = this.state
     return (
       <View style={styles.container}>
-        <NavigationBar 
+        <NavigationBar
           leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
-          title="Import"
+          title="Import EOS Account"
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <ImportPrivateKeyForm onPress={() => this.goToBackUp()} />
+            <ImportEOSAccountForm onPress={() => this.goToBackUp()} />
             <View style={styles.keyboard} />
           </ScrollView>
         </View>

@@ -98,8 +98,8 @@ export default class Assets extends BaseScreen {
   }
 
   // 切换EOS账户
-  switchWallet({ name, bpid, timestamp }) {
-    this.props.actions.switchWalletRequested({ name, bpid, timestamp })
+  switchWallet(info) {
+    this.props.actions.switchWalletRequested(info)
   }
 
   async componentDidMount() {
@@ -134,8 +134,11 @@ export default class Assets extends BaseScreen {
     const { wallet, balance, locale, eosAccount } = this.props
     const loading = wallet.get('loading')
     const activeEOSAccount = eosAccount.get('data')
-    const accountList = wallet.get('hdWalletList')
+    const hdWalletList = wallet.get('hdWalletList')
+    const classicWalletList = wallet.get('classicWalletList')
+    const walletCount = hdWalletList.size + classicWalletList.size
     const balanceList = balance.get('data').get('eosAccountBalance')
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -144,7 +147,7 @@ export default class Assets extends BaseScreen {
             rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanQR()} />}
           />
           {
-            !accountList.size &&
+            !walletCount  &&
             <TouchableOpacity onPress={() => this.createNewAccount()} style={[styles.createAccountContainer, styles.center]}>
               <View style={{ alignItems: 'center' }}>
                 <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF} />
@@ -155,7 +158,7 @@ export default class Assets extends BaseScreen {
             </TouchableOpacity>
           }
           {
-            !!accountList.size &&
+            !!walletCount &&
             <View style={styles.scrollContainer}>
               <ScrollView showsVerticalScrollIndicator={false}>
                 <TotalAssetsCard totalAssets={425321132.21} accountName={activeEOSAccount.get('account_name')} onPress={() => this.operateAssetQRCode(true)} />
@@ -181,12 +184,12 @@ export default class Assets extends BaseScreen {
             animationIn="fadeIn"
             animationOut="fadeOut"
             style = {{  margin: 0 }}
-            useNativeDriver={true}
             isVisible={this.state.isVisible2}
             backdropOpacity={0}
           >
             <AccountList
-              data={accountList}
+              data={hdWalletList}
+              moreData={classicWalletList}
               activeAccount={wallet.get('data')}
               onPress={this.switchWallet}
               createNewAccount={() => this.createNewAccount()}

@@ -14,8 +14,8 @@ import * as eosAccountActions from 'actions/eosAccount'
 const validate = (values, props) => {
   const errors = {}
 
-  if (!values.get('eosName')) {
-    errors.eosName = 'Please input EOS account name'
+  if (!values.get('eosAccountName')) {
+    errors.eosAccountName = 'Please input EOS account name'
   }
 
   if (!values.get('password')) {
@@ -61,7 +61,7 @@ export default class CreateEOSAccountForm extends Component {
       <FormContainer>
         <Field
           label="EOS Account Name"
-          name="eosName"
+          name="eosAccountName"
           component={TextField}
           normalize={normalizeEOSAccountName}
         />
