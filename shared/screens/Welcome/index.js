@@ -11,6 +11,8 @@ import { View, Text, Image, ImageBackground, TouchableHighlight } from 'react-na
 import Images from 'resources/images'
 import Colors from 'resources/colors'
 import LinearGradientContainer from 'components/LinearGradientContainer'
+import VersionNumber from 'react-native-version-number'
+import storage from 'utils/storage'
 
 const NextButton = ({ goToHomePage }) => (
   <LinearGradientContainer type="right" style={[styles.btn, styles.btnContainer]}>
@@ -61,7 +63,8 @@ export default class Welcome extends BaseScreen {
     this.goToHomePage = this.goToHomePage.bind(this)
   }
 
-  goToHomePage() {
+  async goToHomePage() {
+    await storage.setItem('bitportal_welcome', JSON.stringify({ localVersion: VersionNumber.appVersion }))
     const tabLabels = messages[this.props.locale]
     startTabBasedApp(tabLabels)
   }
