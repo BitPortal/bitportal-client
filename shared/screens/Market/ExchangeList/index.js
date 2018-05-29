@@ -5,26 +5,47 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import {
   Text,
   View,
+  ScrollView,
   TouchableOpacity,
-  StyleSheet
+  TouchableHighlight
 } from 'react-native'
-import { FontScale, NAV_BAR_HEIGHT, SCREEN_HEIGHT } from 'utils/dimens'
 import Colors from 'resources/colors'
 import { EXCHANGE_NAMES } from 'constants/market'
 
-export default ExchangeList = ({ onPress, exchangeList, changeExchange }) => (
+const ListItem = ({ exchange, onPress, active }) => (
+  <TouchableHighlight
+    underlayColor={Colors.bgColor_000000}
+    style={styles.listContainer}
+    onPress={() => onPress(exchange)}
+  >
+    <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32 }]}>
+      <Text style={styles.text16}>{EXCHANGE_NAMES[exchange]}</Text>
+      {active && <Ionicons name="ios-checkmark" size={36} color={Colors.bgColor_0_122_255} />}
+    </View>
+  </TouchableHighlight>
+)
+
+export default ExchangeList = ({ dismissModal, activeExchange, exchangeList, changeExchange }) => (
   <View style={styles.container}>
-    <TouchableOpacity onPress={() => onPress()} style={styles.container} />
-    <View style={[styles.exchangeListContainer, { marginTop: NAV_BAR_HEIGHT-SCREEN_HEIGHT }]}>
-      {exchangeList.map((market, index) => (
-        <TouchableOpacity
-          key={index}
-          onPress={() => changeExchange(market)}
-          style={[styles.btn, { borderBottomWidth: index+1 == exchangeList.length ? 0 : StyleSheet.hairlineWidth }]}
-        >
-          <Text style={styles.text16} >{EXCHANGE_NAMES[market]}</Text>
-        </TouchableOpacity>
-      ))}
+    <TouchableOpacity style={[styles.container, { backgroundColor: 'rgba(0,0,0,0.1)' }]} onPress={() => dismissModal()} />
+    <View style={styles.bgContainer}>
+      <ScrollView 
+        style={{ maxHeight: 400, backgroundColor: Colors.bgColor_48_49_59 }} 
+        showsVerticalScrollIndicator={false}
+      >
+        {
+          exchangeList.map(
+            (exchange, index) => (
+              <ListItem 
+                key={index} 
+                exchange={exchange} 
+                active={activeExchange === exchange} 
+                onPress={() => changeExchange(exchange)} 
+              />
+            )
+          )
+        }
+      </ScrollView>
     </View>
   </View>
 )

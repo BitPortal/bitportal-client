@@ -15,6 +15,7 @@ import sagas from 'sagas'
 import SplashScreen from 'react-native-splash-screen'
 import Colors from 'resources/colors'
 import messages from 'navigators/messages'
+import VersionNumber from 'react-native-version-number'
 
 EStyleSheet.build({})
 
@@ -25,12 +26,11 @@ const runApp = async () => {
   store.runSaga(sagas)
   registerScreens(store, Provider) // this is where you register all of your app's screens
 
-  const result = await storage.getItem('bitportal_welcome')
-  if (result && JSON.parse(result).isFirst) {
-    startSingleApp()
-  } else {
-    startTabBasedApp(tabLabels)
-  }
+  const localInfo = await storage.getItem('bitportal_welcome')
+  const currentVersion = VersionNumber.appVersion
+  const localVersion =  localInfo && JSON.parse(localInfo).localVersion
+  if (localVersion && localVersion == currentVersion ) startTabBasedApp(tabLabels)
+  else startSingleApp()
 
   // hide the splash screens
   SplashScreen.hide()
