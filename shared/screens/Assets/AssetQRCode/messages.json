@@ -5,7 +5,7 @@
     "qrcode_button_name_share": "分享"
   },
   "en": {
-    "astlist_title_name_astlst": "Copy",
+    "qrcode_button_name_copy": "Copy",
     "qrcode_button_name_copied": "Copied",
     "qrcode_button_name_share": "Share"
   }

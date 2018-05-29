@@ -103,7 +103,7 @@ export default class Assets extends BaseScreen {
   }
 
   async componentDidMount() {
-    await storage.setItem('bitportal_welcome', JSON.stringify({ isFirst: true }))
+    await storage.setItem('bitportal_welcome', JSON.stringify({ isFirst: false }))
     this.props.actions.syncWalletRequested()
     /* this.props.actions.createEOSAccountRequested({
      *   creator: 'eosio',
@@ -162,7 +162,7 @@ export default class Assets extends BaseScreen {
             !!walletCount &&
             <View style={styles.scrollContainer}>
               <ScrollView showsVerticalScrollIndicator={false}>
-                <TotalAssetsCard totalAssets={425321132.21} accountName={activeEOSAccount.get('account_name')} onPress={() => this.operateAssetQRCode(true)} />
+                <TotalAssetsCard totalAssets={0} accountName={activeEOSAccount.get('account_name')} onPress={() => this.operateAssetQRCode(true)} />
                 {!activeEOSAccount.get('account_name') && <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_create_eos_account" />} onPress={() => this.createEOSAccount()} extraStyle={{ marginTop: 10, marginBottom: 10 }} />}
                 {!!activeEOSAccount.get('account_name') && <EnableAssets Title={<FormattedMessage id="asset_title_name_ast" />} enableAssets={() => this.enableAssets()} />}
                 {balanceList && <BalanceList data={balanceList} onPress={(e) => this.checkAsset(e)} />}
@@ -177,7 +177,7 @@ export default class Assets extends BaseScreen {
             backdropOpacity={0.9}
           >
             <AssetQRCode
-              assetName={'Meon'}
+              accountName={activeEOSAccount.get('account_name')}
               dismissModal={() => this.operateAssetQRCode(false)}
             />
           </Modal>

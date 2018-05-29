@@ -27,7 +27,8 @@ function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAc
       bpid: id,
       timestamp: +Date.now(),
       origin: 'hd',
-      name
+      name,
+      eosAccountName
     }
 
     const eosKeys = yield call(getEOSKeys, entropy)
@@ -45,7 +46,13 @@ function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAc
     const transactionActions = transaction => {
       transaction.newaccount({ name: eosAccountName, creator, owner, active })
       transaction.buyrambytes({ payer: creator, receiver: eosAccountName, bytes: 8192 })
-      transaction.delegatebw({ from: creator, receiver: eosAccountName, stake_net_quantity: '100.0000 SYS', stake_cpu_quantity: '100.0000 SYS', transfer: 0 })
+      transaction.delegatebw({
+        from: creator,
+        receiver: eosAccountName,
+        stake_net_quantity: '1.0000 SYS',
+        stake_cpu_quantity: '1.0000 SYS',
+        transfer: 0
+      })
     }
     yield call(eos.transaction, transactionActions)
     const accountInfo = yield call(eos.getAccount, eosAccountName)
@@ -110,11 +117,9 @@ function* createWalletRequested(action: Action<CreateWalletParams>) {
 
 function* syncWalletRequested() {
   try {
+    // yield call(secureStorage.removeItem, 'ACTIVE_WALLET')
     const items = yield call(secureStorage.getAllItems)
     console.log(items)
-    for (const item of Object.keys(items)) {
-      yield call(secureStorage.removeItem, item)
-    }
 
     const allItems = yield call(secureStorage.getAllItems)
 

@@ -26,8 +26,11 @@ const runApp = async () => {
   registerScreens(store, Provider) // this is where you register all of your app's screens
 
   const result = await storage.getItem('bitportal_welcome')
-  if (result && JSON.parse(result).isFirst) startTabBasedApp(tabLabels)
-  else startSingleApp()
+  if (result && JSON.parse(result).isFirst) {
+    startSingleApp()
+  } else {
+    startTabBasedApp(tabLabels)
+  }
 
   // hide the splash screens
   SplashScreen.hide()

@@ -10,11 +10,14 @@ import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import WalletCard from './WalletCard'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
+import { eosAccountSelector } from 'selectors/eosAccount'
 import messages from './messages'
 
 @connect(
   (state) => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.get('locale'),
+    wallet: state.wallet,
+    eosAccount: eosAccountSelector(state)
   })
 )
 
@@ -28,33 +31,36 @@ export default class AccountList extends BaseScreen {
   createNewAccount = () => {
     this.props.navigator.push({ screen: 'BitPortal.AccountCreation' })
   }
-  
-  importAccount = () => {
 
+  importAccount = () => {
+    this.props.navigator.push({ screen: 'BitPortal.AccountImport' })
   }
 
-  checkAsset = () => {
-    this.props.navigator.push({ screen: 'BitPortal.AccountManager' })
+  checkAsset = (item) => {
+    const walletInfo = item.toJS()
+    this.props.navigator.push({ screen: 'BitPortal.AccountManager', passProps: walletInfo })
   }
 
   render() {
-    const { locale } = this.props
+    const { locale, eosAccount, wallet } = this.props
+    const activeEOSAccount = eosAccount.get('data')
+    const hdWalletList = wallet.get('hdWalletList')
+    const classicWalletList = wallet.get('classicWalletList')
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-          <NavigationBar 
+          <NavigationBar
             title={messages[locale]['actlist_title_name_account']}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           />
           <View style={styles.scrollContainer}>
-            <ScrollView 
+            <ScrollView
               showsVerticalScrollIndicator={false}
-              contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }} 
+              contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }}
             >
-              <WalletCard assetName="EOS-1"  totalAssets={3211.4123} accountName="meon-1" onPress={() => this.checkAsset()} />
-              <WalletCard assetName="EOS-2"  totalAssets={211.4123} accountName="meon-2" onPress={() => this.checkAsset()} colors={['rgb(247, 107, 28)', 'rgb(250, 191, 81)']} />
-              <WalletCard assetName="EOS-3"  totalAssets={11.4123} accountName="meon-3" onPress={() => this.checkAsset()} colors={['rgb(50, 174, 0)', 'rgb(158, 214, 58)']} />
-              <WalletCard assetName="EOS-4"  totalAssets={1.4123} accountName="meon-4" onPress={() => this.checkAsset()} colors={['rgb(244, 75, 47)', 'rgb(248, 112, 98)']} />
+              {!!hdWalletList.size && hdWalletList.map(item => <WalletCard key={item.get('bpid')} assetName={item.get('name')} accountName={item.get('eosAccountName')} onPress={() => this.checkAsset(item)} />)}
+              {!!classicWalletList.size && classicWalletList.map(item => <WalletCard key={item.get('eosAccountName')} assetName={item.get('name')} accountName={item.get('eosAccountName')} onPress={() => this.checkAsset(item)} />)}
             </ScrollView>
           </View>
           <View style={[styles.btnContainer, styles.between]}>

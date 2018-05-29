@@ -5,6 +5,7 @@ import * as actions from 'actions/keystore'
 const initialState = Immutable.fromJS({
   data: [],
   loading: false,
+  exporting: false,
   loaded: false,
   error: null
 })
@@ -29,6 +30,15 @@ export default handleActions({
   },
   [actions.importEOSKeyFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)
+  },
+  [actions.exportEOSKeyRequested] (state) {
+    return state.set('exporting', true)
+  },
+  [actions.exportEOSKeySucceeded] (state, action) {
+    return state.set('exporting', false)
+  },
+  [actions.exportEOSKeyFailed] (state, action) {
+    return state.set('error', action.payload).set('exporting', false)
   },
   [actions.syncKeyRequested] (state) {
     return state.set('loading', true)

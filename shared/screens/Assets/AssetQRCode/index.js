@@ -5,15 +5,15 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import QRCode from 'react-native-qrcode'
 import { SCREEN_WIDTH, isIphoneX } from 'utils/dimens'
-import { 
-  Text, 
-  View, 
+import {
+  Text,
+  View,
   Image,
   Share,
   TextInput,
   Clipboard,
-  ScrollView, 
-  TouchableOpacity, 
+  ScrollView,
+  TouchableOpacity,
   TouchableHighlight,
   ActivityIndicator,
   LayoutAnimation
@@ -21,6 +21,7 @@ import {
 import Images from 'resources/images'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
+import { eosQrString } from 'utils'
 import messages from './messages'
 
 const screen_width = isIphoneX ? SCREEN_WIDTH - 40 : SCREEN_WIDTH
@@ -37,8 +38,7 @@ export default class AssetQRCode extends Component {
   state = {
     value: '',
     isCopied: false,
-    enableQRCode: false,
-    qrCodeValue: 'rfaklfa'
+    enableQRCode: true
   }
 
   // 输入框输入中
@@ -48,7 +48,7 @@ export default class AssetQRCode extends Component {
 
   // 复制二维码对应值
   copyQrcodeValue = () => {
-    Clipboard.setString(this.state.qrCodeValue)
+    Clipboard.setString(eosQrString(this.props.accountName, this.state.value))
     this.setState({ isCopied: true })
     this.startTimer()
   }
@@ -61,9 +61,9 @@ export default class AssetQRCode extends Component {
   }
 
   shareQrcodeContent = () => {
-    Share.share({ 
-      message: this.state.qrCodeValue,
-      title: this.state.value
+    Share.share({
+      message: eosQrString(this.props.accountName, this.state.value),
+      title: 'EOS Pay'
     })
   }
 
@@ -73,7 +73,7 @@ export default class AssetQRCode extends Component {
       this.setState({ enableQRCode: true })
       LayoutAnimation.spring()
       clearTimeout(this.timer)
-    }, 3000) 
+    }, 3000)
   }
 
   componentWillUnmount() {
@@ -82,21 +82,19 @@ export default class AssetQRCode extends Component {
   }
 
   render() {
-    const { dismissModal, assetName, locale } = this.props
+    const { dismissModal, accountName, locale } = this.props
     const { isCopied, enableQRCode } = this.state
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-
           <TouchableOpacity style={[styles.close, styles.center]} onPress={() => dismissModal()}>
             <Ionicons name="ios-close-outline" size={50} color={Colors.bgColor_FFFFFF} />
           </TouchableOpacity>
-
           <View style={styles.qrCodeContainer}>
             <View style={[styles.head, styles.center]}>
-              <Text style={styles.text24}> { assetName }  </Text>
+              <Text style={styles.text24}>{accountName}</Text>
             </View>
-
             <View style={styles.inputContainer}>
               <TextInput
                 autoCorrect={false}
@@ -109,18 +107,16 @@ export default class AssetQRCode extends Component {
                 value={this.state.value}
               />
             </View>
-
             <View style={[styles.separator, styles.between]}>
               <View style={[styles.semicircle, { marginLeft: -5 }]} />
               <Image source={Images.seperator} style={styles.seperator2} resizeMode="stretch" />
               <View style={[styles.semicircle, { marginRight: -5 }]} />
             </View>
-
             <View style={[styles.qrCode, styles.center]}>
               {
                 enableQRCode ?
                 <QRCode
-                  value={this.state.qrCodeValue}
+                  value={eosQrString(this.props.accountName, this.state.value)}
                   size={qrCodeSize}
                   bgColor='black'
                   fgColor='white'
@@ -130,13 +126,12 @@ export default class AssetQRCode extends Component {
               }
             </View>
           </View>
-
           <View style={[styles.btnContainer, styles.between]}>
-            <TouchableHighlight 
-              underlayColor={Colors.textColor_89_185_226} 
-              onPress={() => this.copyQrcodeValue()} 
+            <TouchableHighlight
+              underlayColor={Colors.textColor_89_185_226}
+              onPress={() => this.copyQrcodeValue()}
               disabled={isCopied}
-              style={[styles.btn, styles.center, { 
+              style={[styles.btn, styles.center, {
                 backgroundColor: isCopied ? Colors.textColor_216_216_216 : Colors.textColor_89_185_226
               }]}
             >
@@ -146,8 +141,8 @@ export default class AssetQRCode extends Component {
                 {isCopied ? <FormattedMessage id="qrcode_button_name_copied" /> : <FormattedMessage id="qrcode_button_name_copy" />}
               </Text>
             </TouchableHighlight>
-            <TouchableHighlight 
-              underlayColor={Colors.textColor_89_185_226} 
+            <TouchableHighlight
+              underlayColor={Colors.textColor_89_185_226}
               onPress={() => this.shareQrcodeContent()} style={[styles.btn, styles.center]}
             >
               <Text style={styles.text14}>
@@ -155,10 +150,8 @@ export default class AssetQRCode extends Component {
               </Text>
             </TouchableHighlight>
           </View>
-
         </View>
       </IntlProvider>
     )
   }
 }
-
