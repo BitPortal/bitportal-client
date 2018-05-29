@@ -49,7 +49,7 @@ const ListItem = ({ item, onPress, active }) => (
   >
     <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32 }]}>
       <Text style={styles.text16}>{item.get('name')}</Text>
-      {active && <Ionicons name="ios-checkmark" size={26} color={Colors.bgColor_0_122_255} />}
+      {active && <Ionicons name="ios-checkmark" size={36} color={Colors.bgColor_0_122_255} />}
     </View>
   </TouchableHighlight>
 )
