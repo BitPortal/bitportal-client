@@ -22,6 +22,7 @@ import Images from 'resources/images'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { eosQrString } from 'utils'
+import { normalizeUnitByCurrency } from 'utils/normalize'
 import messages from './messages'
 
 const screen_width = isIphoneX ? SCREEN_WIDTH - 40 : SCREEN_WIDTH
@@ -43,7 +44,9 @@ export default class AssetQRCode extends Component {
 
   // 输入框输入中
   onChangeText = (value) => {
-    this.setState({ value })
+    const previousValue = this.state.value
+    const nextValue = normalizeUnitByCurrency('EOS')(value, previousValue)
+    this.setState({ value: nextValue })
   }
 
   // 复制二维码对应值

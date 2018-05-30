@@ -26,5 +26,6 @@ export const ASSET_FRACTION = {
   USDT: 2,
   USD: 2,
   EUR: 2,
-  GBP: 2
+  GBP: 2,
+  EOS: 4
 }
