@@ -45,7 +45,8 @@ public class MainApplication extends NavigationApplication {
       new RNSensitiveInfoPackage(),
       new RNCameraPackage(),
       new BlurViewPackage(),
-      new RNVersionNumberPackage()
+      new RNVersionNumberPackage(),
+      new RNFastCryptoPackage()
     );
   }
 
