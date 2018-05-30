@@ -3056,9 +3056,13 @@ core-js@^1.0.0:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
 
-core-js@^2.2.2, core-js@^2.4.0, core-js@^2.5.0:
+core-js@^2.2.2:
   version "2.5.6"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.6.tgz#0fe6d45bf3cac3ac364a9d72de7576f4eb221b9d"
+
+core-js@^2.4.0, core-js@^2.5.0:
+  version "2.5.7"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.7.tgz#f972608ff0cead68b841a16a932d0b183791814e"
 
 core-js@^2.4.1:
   version "2.5.1"
@@ -3997,13 +4001,26 @@ enzyme@^3.1.1:
     raf "^3.3.2"
     rst-selector-parser "^2.2.3"
 
-eosjs-api@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/eosjs-api/-/eosjs-api-5.0.0.tgz#7e4389c748420a88f3fff902c404cce03ae476b1"
+eosjs-api@6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/eosjs-api/-/eosjs-api-6.0.2.tgz#4fb6d437778a6a779314e3fbed982002d9ea5a21"
   dependencies:
     camel-case "^3.0.0"
     is-browser "^2.0.1"
     isomorphic-fetch "^2.2.1"
+
+eosjs-ecc@4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/eosjs-ecc/-/eosjs-ecc-4.0.1.tgz#0a118000d3a78b9eab1432dd758f705810461adf"
+  dependencies:
+    bigi "^1.4.2"
+    browserify-aes "^1.0.6"
+    bs58 "^4.0.1"
+    bytebuffer "^5.0.1"
+    create-hash "^1.1.3"
+    create-hmac "^1.1.6"
+    ecurve "^1.0.5"
+    randombytes "^2.0.5"
 
 eosjs-ecc@^3.0.2:
   version "3.1.0"
@@ -4040,16 +4057,16 @@ eosjs-keygen@^1.3.1:
     localStorage "^1.0.3"
     minimatch "^3.0.4"
 
-eosjs@10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/eosjs/-/eosjs-10.0.0.tgz#182e309b67841d70f7e51d3103ac73844a66c851"
+eosjs@^13.0.0:
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/eosjs/-/eosjs-13.0.0.tgz#3d543dc7da34e086a8730316d8d5686b264ad962"
   dependencies:
     babel-polyfill "^6.26.0"
     binaryen "^37.0.0"
     create-hash "^1.1.3"
-    eosjs-api "^5.0.0"
-    eosjs-ecc "^4.0.0"
-    fcbuffer "^2.1.5"
+    eosjs-api "6.0.2"
+    eosjs-ecc "4.0.1"
+    fcbuffer "2.2.0"
 
 errno@^0.1.3:
   version "0.1.4"
@@ -4698,9 +4715,9 @@ fbjs@^0.8.14, fbjs@^0.8.16, fbjs@^0.8.9:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.9"
 
-fcbuffer@^2.1.5:
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/fcbuffer/-/fcbuffer-2.1.5.tgz#bef821b3cecb4be418dd698d2c375cd517de7f96"
+fcbuffer@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/fcbuffer/-/fcbuffer-2.2.0.tgz#c85d01485f74bb917d87689a55890dba70fc1de3"
   dependencies:
     bn.js "^4.11.8"
     bytebuffer "^5.0.1"
@@ -9579,15 +9596,15 @@ react-native-device-info@^0.21.5:
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.21.5.tgz#99478a2d68182e012297f2d63f2bd1b788106dee"
 
 "react-native-eosjs-api@git+https://github.com/TerenceGe/eosjs-api.git":
-  version "5.0.1"
-  resolved "git+https://github.com/TerenceGe/eosjs-api.git#42d671874eb491b441c4476b8a8a20393b6fae34"
+  version "6.0.2"
+  resolved "git+https://github.com/TerenceGe/eosjs-api.git#2fb55e359343b5154a7c859772f38867a24d5464"
   dependencies:
     camel-case "^3.0.0"
     is-browser "^2.0.1"
 
 "react-native-eosjs-ecc@git+https://github.com/TerenceGe/eosjs-ecc.git":
   version "4.0.1"
-  resolved "git+https://github.com/TerenceGe/eosjs-ecc.git#08572f0789e98d50b2483c8d961bb838c43f853b"
+  resolved "git+https://github.com/TerenceGe/eosjs-ecc.git#7464145e864adfc38aa31a2f4acc1418529b2950"
   dependencies:
     bigi "^1.4.2"
     browserify-aes "^1.0.6"
@@ -9599,13 +9616,13 @@ react-native-device-info@^0.21.5:
     react-native-randombytes "^3.1.0"
 
 "react-native-eosjs@git+https://github.com/TerenceGe/eosjs.git":
-  version "10.0.0"
-  resolved "git+https://github.com/TerenceGe/eosjs.git#8079d4518f3c6c5acdab05cb36fe2065a79c99fe"
+  version "13.0.0"
+  resolved "git+https://github.com/TerenceGe/eosjs.git#8008571e973fd15db5696cd1edd96edb5de87389"
   dependencies:
     babel-polyfill "^6.26.0"
     binaryen "^37.0.0"
     create-hash "^1.1.3"
-    fcbuffer "^2.1.5"
+    fcbuffer "2.2.0"
     react-native-eosjs-api "git+https://github.com/TerenceGe/eosjs-api.git"
     react-native-eosjs-ecc "git+https://github.com/TerenceGe/eosjs-ecc.git"
 
@@ -9738,6 +9755,10 @@ react-native-vector-icons@^4.5.0:
     lodash "^4.0.0"
     prop-types "^15.5.10"
     yargs "^8.0.2"
+
+react-native-version-number@^0.3.3:
+  version "0.3.3"
+  resolved "http://registry.npm.taobao.org/react-native-version-number/download/react-native-version-number-0.3.3.tgz#2a8df3a3f9e9ed272d748da7736309996182d55d"
 
 react-native@0.53.0:
   version "0.53.0"

@@ -1,6 +1,6 @@
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Colors from 'resources/colors'
-import { FontScale, SCREEN_WIDTH } from 'utils/dimens'
+import { FontScale } from 'utils/dimens'
 import { StyleSheet } from 'react-native'
 
 export default EStyleSheet.create({
@@ -16,11 +16,10 @@ export default EStyleSheet.create({
   fieldInput: {
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: Colors.textColor_181_181_181,
-    borderRadius: 2,
     flex: 1,
-    minHeight: 40,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    padding: 1
   },
   input: {
     flex: 1,
@@ -29,17 +28,15 @@ export default EStyleSheet.create({
     fontSize: FontScale(14)
   },
   areaInput: {
-    width: SCREEN_WIDTH-64,
-    height: SCREEN_WIDTH/4-16,
-    paddingHorizontal: 5,
-    marginTop: 10,
-    flexDirection: 'row',
+    flex: 1,
     color: Colors.textColor_255_255_238,
     fontSize: FontScale(14),
+    marginTop: 10,
+    minHeight: 80,
+    padding: 10,
     borderRadius: 2,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: Colors.textColor_181_181_181,
-    borderBottomWidth: 0
+    borderColor: Colors.textColor_181_181_181
   },
   fieldItem: {
     flexDirection: 'column',
@@ -58,6 +55,12 @@ export default EStyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
+  button: {
+    marginTop: 20,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
   indicator: {
     marginLeft: 10
   },
@@ -66,6 +69,11 @@ export default EStyleSheet.create({
   },
   submitButtonText: {
     color: 'white',
+    textAlign: 'center',
+    fontSize: FontScale(14)
+  },
+  buttonText: {
+    color: Colors.textColor_89_185_226,
     textAlign: 'center',
     fontSize: FontScale(14)
   },

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FlatList, View } from 'react-native'
-import NewsRow, { NewsRowTypes } from 'components/NewsRow'
+import NewsRow, { NewsRowTypes } from '../NewsRow'
 import Colors from 'resources/colors'
 
 class NewsList extends React.PureComponent {

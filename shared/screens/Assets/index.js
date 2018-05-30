@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react'
-import { Text, View, ScrollView, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { Text, View, ScrollView, Image, TouchableOpacity, ActivityIndicator, InteractionManager } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import TotalAssetsCard from 'components/TotalAssetsCard'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -84,8 +84,10 @@ export default class Assets extends BaseScreen {
 
   // 创建新账户
   createNewAccount = () => {
-    this.props.navigator.push({
-      screen: "BitPortal.AccountCreation"
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({ isVisible2: false }, () => {
+        this.props.navigator.push({ screen: "BitPortal.AccountCreation" })
+      })
     })
   }
 
@@ -96,12 +98,11 @@ export default class Assets extends BaseScreen {
   }
 
   // 切换EOS账户
-  switchWallet({ name, bpid, timestamp }) {
-    this.props.actions.switchWalletRequested({ name, bpid, timestamp })
+  switchWallet(info) {
+    this.props.actions.switchWalletRequested(info)
   }
 
   async componentDidMount() {
-    await storage.setItem('bitportal_welcome', JSON.stringify({ isFirst: false }))
     this.props.actions.syncWalletRequested()
     /* this.props.actions.createEOSAccountRequested({
      *   creator: 'eosio',
@@ -133,8 +134,11 @@ export default class Assets extends BaseScreen {
     const { wallet, balance, locale, eosAccount } = this.props
     const loading = wallet.get('loading')
     const activeEOSAccount = eosAccount.get('data')
-    const accountList = wallet.get('hdWalletList')
+    const hdWalletList = wallet.get('hdWalletList')
+    const classicWalletList = wallet.get('classicWalletList')
+    const walletCount = hdWalletList.size + classicWalletList.size
     const balanceList = balance.get('data').get('eosAccountBalance')
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -143,7 +147,7 @@ export default class Assets extends BaseScreen {
             rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanQR()} />}
           />
           {
-            !accountList.size &&
+            !walletCount  &&
             <TouchableOpacity onPress={() => this.createNewAccount()} style={[styles.createAccountContainer, styles.center]}>
               <View style={{ alignItems: 'center' }}>
                 <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF} />
@@ -154,7 +158,7 @@ export default class Assets extends BaseScreen {
             </TouchableOpacity>
           }
           {
-            !!accountList.size &&
+            !!walletCount &&
             <View style={styles.scrollContainer}>
               <ScrollView showsVerticalScrollIndicator={false}>
                 <TotalAssetsCard totalAssets={425321132.21} accountName={activeEOSAccount.get('account_name')} onPress={() => this.operateAssetQRCode(true)} />
@@ -184,7 +188,8 @@ export default class Assets extends BaseScreen {
             backdropOpacity={0}
           >
             <AccountList
-              data={accountList}
+              data={hdWalletList}
+              moreData={classicWalletList}
               activeAccount={wallet.get('data')}
               onPress={this.switchWallet}
               createNewAccount={() => this.createNewAccount()}

@@ -12,7 +12,7 @@ class CardSilder extends React.PureComponent{
       position: 1,
     }
     this.autoMove = true
-    this.t = null
+    this.timer = null
   }
 
   componentDidMount() {
@@ -20,16 +20,14 @@ class CardSilder extends React.PureComponent{
   }
 
   componentWillUnmount(){
-    if (this.t) {
-      clearInterval(this.t)
-    }
+    this.timer && clearInterval(this.timer)
   }
 
   startInterval = () => {
     const { autoplay, playInterval } = this.props
     this.autoMove = true
     if (autoplay) {
-      this.t = setInterval(() => {
+      this.timer = setInterval(() => {
         this.next()
       }, playInterval)
     }

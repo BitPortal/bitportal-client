@@ -24,6 +24,18 @@ export default class About extends BaseScreen {
     navBarHidden: true
   }
 
+  changePage = (page) => {
+    let pageName = ''
+    switch (page) {
+      case 'TermsOfService':
+        pageName = page
+        break
+      default:
+        return
+    }
+    this.props.navigator.push({ screen: `BitPortal.${pageName}` })
+  }
+
   render() {
     const { locale } = this.props
     return (
@@ -46,7 +58,11 @@ export default class About extends BaseScreen {
                   <FormattedMessage id="abt_describe_txt_des" />
                 </Text> 
               </View>
-              <SettingItem leftItemTitle={<FormattedMessage id="abt_sec_title_tou" />} onPress={() => {}} extraStyle={{ marginTop: 10 }} />
+              <SettingItem 
+                extraStyle={{ marginTop: 10 }}
+                onPress={() => this.changePage('TermsOfService')} 
+                leftItemTitle={<FormattedMessage id="abt_sec_title_tou" />}  
+              />
               <SettingItem leftItemTitle={<FormattedMessage id="abt_sec_title_update" />} onPress={() => {}} />
               <SettingItem leftItemTitle={<FormattedMessage id="abt_sec_title_check" />} onPress={() => {}} />
             </ScrollView>

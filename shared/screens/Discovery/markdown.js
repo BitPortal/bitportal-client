@@ -10,6 +10,12 @@ import { FontScale } from 'utils/dimens'
 import styles from './styles'
 
 class MarkdownPage extends BaseScreen {
+
+  static navigatorStyle = {
+    tabBarHidden: true,
+    navBarHidden: true
+  }
+
   render() {
     return (
       <View style={styles.container}>

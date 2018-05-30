@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
-import { FormContainer, FieldItem, FieldInput, TextField, PasswordField, SubmitButton } from 'components/Form'
+import { FormContainer, TextField, PasswordField, SubmitButton, Button } from 'components/Form'
 import PasswordStrength from 'components/PasswordStrength'
 import { normalizeText } from 'utils/normalize'
 import { getPasswordStrength } from 'utils'
@@ -83,7 +83,8 @@ export default class CreateWalletForm extends Component {
           name="confirmedPassword"
           component={PasswordField}
         />
-        <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text="Create" />
+        <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text="Next" />
+        <Button text="Import" onPress={this.props.importEOSAccount} />
       </FormContainer>
     )
   }

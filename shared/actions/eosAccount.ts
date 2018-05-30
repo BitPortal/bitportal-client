@@ -7,6 +7,9 @@ export const createEOSAccountFailed = createAction<ErrorMessage>('eosAccount/CRE
 
 export const syncEOSAccount = createAction<SyncEOSAccountResult>('eosAccount/SYNC')
 
+export const importEOSAccountRequested = createAction<ImportEOSAccountParams>('eosAccount/IMPORT_EOS_ACCOUNT_REQUESTED')
+export const importEOSAccountSucceeded = createAction<ImportEOSAccountResult>('eosAccount/IMPORT_EOS_ACCOUNT_SUCCEEDED')
+export const importEOSAccountFailed = createAction<ErrorMessage>('eosAccount/IMPORT_EOS_ACCOUNT_FAILED')
 // export const getEOSAccountRequested = createAction<GetEOSAccountParams>('eosAccount/GET_EOS_ACCOUNT_REQUESTED')
 // export const getEOSAccountSucceeded = createAction<GetEOSAccountResult>('eosAccount/GET_EOS_ACCOUNT_SUCCEEDED')
 // export const getEOSAccountFailed = createAction<ErrorMessage>('eosAccount/GET_EOS_ACCOUNT_FAILED')
@@ -15,9 +18,6 @@ export const syncEOSAccount = createAction<SyncEOSAccountResult>('eosAccount/SYN
 // export const authEOSAccountSucceeded = createAction<AuthEOSAccountResult>('eosAccount/AUTH_EOS_ACCOUNT_SUCCEEDED')
 // export const authEOSAccountFailed = createAction<ErrorMessage>('eosAccount/AUTH_EOS_ACCOUNT_FAILED')
 
-// export const importEOSAccountRequested = createAction<ImportEOSAccountParams>('eosAccount/IMPORT_EOS_ACCOUNT_REQUESTED')
-// export const importEOSAccountSucceeded = createAction<ImportEOSAccountResult>('eosAccount/IMPORT_EOS_ACCOUNT_SUCCEEDED')
-// export const importEOSAccountFailed = createAction<ErrorMessage>('eosAccount/IMPORT_EOS_ACCOUNT_FAILED')
 
 // export const switchEOSAccount = createAction<SwitchEOSAccountParams>('eosAccount/SWITCH_EOS_ACCOUNT')
 
