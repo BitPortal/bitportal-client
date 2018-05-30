@@ -40,6 +40,9 @@ export default handleActions({
   [actions.exportEOSKeyFailed] (state, action) {
     return state.set('error', action.payload).set('exporting', false)
   },
+  [actions.clearError] (state, action) {
+    return state.set('error', null)
+  },
   [actions.syncKeyRequested] (state) {
     return state.set('loading', true)
   },

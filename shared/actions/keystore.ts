@@ -15,3 +15,5 @@ export const exportEOSKeyFailed = createAction<ErrorMessage>('keystore/EXPORT_EO
 export const syncKeyRequested = createAction('keystore/SYNC_KEY_REQUESTED')
 export const syncKeySucceeded = createAction<ImportKeyResult[]>('keystore/SYNC_KEY_SUCCEEDED')
 export const syncKeyFailed = createAction<ErrorMessage>('keystore/SYNC_KEY_FAILED')
+
+export const clearError = createAction('keystore/CLEAR_ERROR')

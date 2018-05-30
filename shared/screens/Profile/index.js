@@ -15,7 +15,8 @@ import messages from './messages'
 
 @connect(
   (state) => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.get('locale'),
+    wallet: state.wallet
   })
 )
 
@@ -45,7 +46,9 @@ export default class Profile extends BaseScreen {
   }
 
   render() {
-    const { navigation, locale } = this.props
+    const { navigation, locale, wallet } = this.props
+    const hasWallet = !!wallet.get('data').get('name')
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -55,9 +58,9 @@ export default class Profile extends BaseScreen {
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center' }} >
-              <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_vote" />} onPress={() => this.changePage('Vote')} />
+              {hasWallet && <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_vote" />} onPress={() => this.changePage('Vote')} />}
               {/* <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_ctcts" />} onPress={() => this.changePage('Contacts')} extraStyle={{ marginTop: 10 }} /> */}
-              <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_act" />} onPress={() => this.changePage('Account')}  />
+              {hasWallet && <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_act" />} onPress={() => this.changePage('Account')}  />}
               <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_sts" />} onPress={() => this.changePage('Settings')} extraStyle={{ marginTop: 10 }} />
               <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_abt" />} onPress={() => this.changePage('About')} />
               {/* <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titiled_ctus" />} onPress={() => this.changePage('ContactUs')} /> */}

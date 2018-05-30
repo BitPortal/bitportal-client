@@ -13,12 +13,27 @@ import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import * as keystoreActions from 'actions/keystore'
 import Loading from 'components/Loading'
+import Alert from 'components/Alert'
 import messages from './messages'
+
+export const errorMessages = (error) => {
+  if (!error) return null
+
+  const message = typeof error === 'object' ? error.message : error
+
+  switch (String(message)) {
+    case 'Key derivation failed - possibly wrong passphrase':
+      return 'Invalid password!'
+    default:
+      return 'Export failed!'
+  }
+}
 
 @connect(
   (state) => ({
     locale: state.intl.get('locale'),
-    exporting: state.keystore.get('exporting')
+    exporting: state.keystore.get('exporting'),
+    error: state.keystore.get('error')
   }),
   (dispatch) => ({
     actions: bindActionCreators({
@@ -53,7 +68,7 @@ export default class AccountList extends BaseScreen {
           style: 'cancel'
         },
         {
-          text: 'Submit',
+          text: 'Confirm',
           onPress: (text) => this.props.actions.exportEOSKeyRequested({
             password: text,
             origin: this.props.origin,
@@ -67,7 +82,7 @@ export default class AccountList extends BaseScreen {
   }
 
   render() {
-    const { locale, name, eosAccountName, exporting } = this.props
+    const { locale, name, eosAccountName, exporting, error } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -88,9 +103,9 @@ export default class AccountList extends BaseScreen {
               <Loading isVisible={exporting} text="exporting" />
             </ScrollView>
           </View>
+          <Alert message={errorMessages(error)} dismiss={this.props.actions.clearError} />
         </View>
       </IntlProvider>
     )
   }
-
 }
