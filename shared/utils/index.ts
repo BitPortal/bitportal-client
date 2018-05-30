@@ -56,3 +56,5 @@ export const getPasswordStrength = (password: any) => {
 
   return passwordStrength
 }
+
+export const noop = () => {}

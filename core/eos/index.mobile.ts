@@ -1,13 +1,14 @@
 import Eos from 'react-native-eosjs'
-import { EOS_API_URL } from 'constants/env'
+import { ENV, EOS_API_URL } from 'constants/env'
 
 const ecc = Eos.modules.ecc
 let eos: any
 
-const initAccount = async ({ keyProvider }: { keyProvider: string | string[] }) => {
+const initAccount = async ({ keyProvider, signProvider }: { keyProvider: string | string[], signProvider: any }) => {
   eos = Eos.Localnet({
     keyProvider: keyProvider,
-    httpEndpoint: EOS_API_URL
+    httpEndpoint: EOS_API_URL,
+    signProvider
   })
 
   return { eos }
