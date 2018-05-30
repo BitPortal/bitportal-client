@@ -19,9 +19,8 @@ import { accountBalanceSelector } from 'selectors/balance'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import messages from './messages'
-import NavigationBar, { ListButton, CommonRightButton } from 'components/NavigationBar'
+import NavigationBar, { ListButton, CommonRightButton, CommonTitle } from 'components/NavigationBar'
 import SettingItem from 'components/SettingItem'
-
 import Loading from 'components/Loading'
 
 @connect(
@@ -52,7 +51,7 @@ export default class Assets extends BaseScreen {
 
   // 展示账户列表
   displayAccountList = () => {
-    this.setState({ isVisible2: true })
+    // this.setState({ isVisible2: true })
   }
 
   // 前往扫描
@@ -64,9 +63,9 @@ export default class Assets extends BaseScreen {
 
   // 激活钱包
   enableAssets = () => {
-    this.props.navigator.push({
-      screen: "BitPortal.AvailableAssets"
-    })
+    /* this.props.navigator.push({
+     *   screen: "BitPortal.AvailableAssets"
+     * })*/
   }
 
   // 查看资产情况
@@ -143,7 +142,7 @@ export default class Assets extends BaseScreen {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            leftButton={<ListButton label={<FormattedMessage id="addpage_title_name_act" />} onPress={() => this.displayAccountList()} />}
+            leftButton={<CommonTitle title={<FormattedMessage id="addpage_title_name_act" />} />}
             rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanQR()} />}
           />
           {
@@ -168,7 +167,7 @@ export default class Assets extends BaseScreen {
               </ScrollView>
             </View>
           }
-          {!!loading && <ActivityIndicator size="large" color="white" />}
+          <Loading isVisible={loading} />
           <Modal
             animationIn="fadeIn"
             animationOut="fadeOut"

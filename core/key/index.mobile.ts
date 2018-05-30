@@ -174,7 +174,6 @@ export const decrypt = async (input: object | string, password: string, nonStric
   let kdfparams
   if (json.crypto.kdf === 'scrypt') {
     kdfparams = json.crypto.kdfparams
-
     derivedKey = await scrypt(Buffer.from(password), Buffer.from(kdfparams.salt, 'hex'), kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen)
   } else {
     throw new Error('Unsupported key derivation scheme')

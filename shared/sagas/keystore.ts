@@ -1,3 +1,4 @@
+import { delay } from 'redux-saga'
 import { call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import assert from 'assert'
@@ -40,6 +41,7 @@ function* exportEOSKeyRequested(action: Action<ExportEOSKeyParams>) {
   if (!action.payload) return
 
   try {
+    yield delay(500)
     const password = action.payload.password
     assert(password, 'Please input password!')
     const origin = action.payload.origin

@@ -1,7 +1,7 @@
 /* @tsx */
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
-import { Text, View, ScrollView, TouchableOpacity, ActivityIndicator, AlertIOS } from 'react-native'
+import { Text, View, ScrollView, TouchableOpacity, AlertIOS } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import styles from './styles'
 import Images from 'resources/images'
@@ -12,6 +12,7 @@ import TotalAssetsCard from 'components/TotalAssetsCard'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import * as keystoreActions from 'actions/keystore'
+import Loading from 'components/Loading'
 import messages from './messages'
 
 @connect(
@@ -48,7 +49,7 @@ export default class AccountList extends BaseScreen {
       [
         {
           text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
+          onPress: () => {},
           style: 'cancel'
         },
         {
@@ -84,7 +85,7 @@ export default class AccountList extends BaseScreen {
               <TotalAssetsCard totalAssets={0} accountName={eosAccountName} disabled={true} />
               <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_change" />} onPress={() => this.resetPassword()} extraStyle={{ marginTop: 10 }} />
               <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_export" />} onPress={() => this.exportAccount()} extraStyle={{ marginTop: 10 }} />
-              {!!exporting && <ActivityIndicator size="large" color="white" />}
+              <Loading isVisible={exporting} text="exporting" />
             </ScrollView>
           </View>
         </View>
