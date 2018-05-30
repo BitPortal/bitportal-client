@@ -63,8 +63,8 @@ export default class Market extends BaseScreen {
 
   // 点击查看币种行情
   pressListItem = (item) => {
-    this.props.actions.selectBaseAsset(item.get('base_asset'))
-    this.props.navigator.push({ screen: 'BitPortal.MarketDetails' })
+    // this.props.actions.selectBaseAsset(item.get('base_asset'))
+    // this.props.navigator.push({ screen: 'BitPortal.MarketDetails' })
   }
 
   // 刷新数据
