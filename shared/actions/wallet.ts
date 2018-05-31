@@ -20,7 +20,13 @@ export const switchWalletFailed = createAction<ErrorMessage>('wallet/SWITCH_FAIL
 export const createWalletAndEOSAccountRequested = createAction<CreateWalletAndEOSAccountParams>('wallet/CREATE_WALLET_AND_EOS_ACCOUNT_REQUESTED')
 
 export const resetWallet = createAction('wallet/RESET')
+export const clearLogoutError = createAction('wallet/CLEAR_LOGOUT_ERROR')
+export const clearError = createAction('wallet/CLEAR_ERROR')
 
 export const logoutRequested = createAction<LogoutParams>('wallet/LOGOUT_REQUESTED')
 export const logoutSucceeded = createAction('wallet/LOGOUT_SUCCEEDED')
 export const logoutFailed = createAction('wallet/LOGOUT_FAILED')
+
+export const changePasswordRequested = createAction<ChangePasswordParams>('wallet/CHANGE_PASSWORD_REQUESTED')
+export const changePasswordSucceeded = createAction('wallet/CHANGE_PASSWORD_SUCCEEDED')
+export const changePasswordFailed = createAction('wallet/CHANGE_PASSWORD_FAILED')

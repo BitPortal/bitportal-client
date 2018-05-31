@@ -6,10 +6,10 @@ import { reset } from 'redux-form/immutable'
 import assert from 'assert'
 import * as actions from 'actions/wallet'
 import { resetEOSAccount } from 'actions/eosAccount'
-import { resetBalance } from 'actions/balance'
+import { resetBalance, getBalanceRequested } from 'actions/balance'
 import { resetKey } from 'actions/keystore'
 import { syncEOSAccount, createEOSAccountSucceeded } from 'actions/eosAccount'
-import { getErrorMessage, encodeKey } from 'utils'
+import { getErrorMessage } from 'utils'
 import secureStorage from 'utils/secureStorage'
 import bip39 from 'react-native-bip39'
 import { isValidPrivate, privateToPublic, initAccount, randomKey } from 'eos'
@@ -78,6 +78,7 @@ function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAc
 
       yield put(createEOSAccountSucceeded(info))
       yield put(actions.createHDWalletSucceeded(walletInfo))
+      yield put(getBalanceRequested({ code: 'eosio.token', account: walletInfo.eosAccountName }))
     } else {
       const { id, phrase, entropy } = yield call(getMasterSeed)
       const existedWallet = yield call(secureStorage.getItem, `HD_KEYSTORE_${id}`, true)
@@ -126,6 +127,7 @@ function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAc
 
       yield put(createEOSAccountSucceeded(info))
       yield put(actions.createHDWalletSucceeded(walletInfo))
+      yield put(getBalanceRequested({ code: 'eosio.token', account: walletInfo.eosAccountName }))
     }
 
     yield put(reset('createWalletAndEOSAccountForm'))
@@ -217,6 +219,7 @@ function* syncWalletRequested() {
 
     yield put(syncEOSAccount(eosAccountList))
     yield put(actions.syncWalletSucceeded({ hdWalletList, classicWalletList, active }))
+    yield put(getBalanceRequested({ code: 'eosio.token', account: active.eosAccountName }))
   } catch (e) {
     yield put(actions.syncWalletFailed(getErrorMessage(e)))
   }

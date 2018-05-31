@@ -5,6 +5,7 @@ const exchangeFilterSelector = (state: RootState) => state.ticker.get('exchangeF
 const currencyFilterSelector = (state: RootState) => state.ticker.get('currencyFilter')
 const quoteAssetFilterSelector = (state: RootState) => state.ticker.get('quoteAssetFilter')
 const sortFilterSelector = (state: RootState) => state.ticker.get('sortFilter')
+export const eosPriceSelector = (state: RootState) => !!state.ticker.get('data').get('BINANCE_SPOT_EOS_USDT') ? state.ticker.get('data').get('BINANCE_SPOT_EOS_USDT').get('price_last') : 0
 
 export const exchangeTickerSelector = createSelector(
   tickerSelector,

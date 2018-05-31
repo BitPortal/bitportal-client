@@ -6,6 +6,7 @@ import { Alert } from 'react-native'
 export default class AlertModal extends Component {
 
   componentWillReceiveProps(nextProps) {
+    const delay = this.props.delay || 0
     if (nextProps.message !== this.props.message && nextProps.message) {
       setTimeout(() => {
         Alert.alert(
@@ -16,7 +17,7 @@ export default class AlertModal extends Component {
           ],
           { cancelable: false }
         )
-      }, 500)
+      }, delay)
     }
   }
 

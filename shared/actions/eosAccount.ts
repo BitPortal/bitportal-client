@@ -12,3 +12,5 @@ export const importEOSAccountSucceeded = createAction<ImportEOSAccountResult>('e
 export const importEOSAccountFailed = createAction<ErrorMessage>('eosAccount/IMPORT_EOS_ACCOUNT_FAILED')
 
 export const resetEOSAccount = createAction('eosAccount/RESET')
+
+export const clearError = createAction('eosAccount/CLEAR_ERROR')

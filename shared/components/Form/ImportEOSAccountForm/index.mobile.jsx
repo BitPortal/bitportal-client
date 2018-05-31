@@ -17,6 +17,32 @@ import PasswordStrength from 'components/PasswordStrength'
 import { getPasswordStrength } from 'utils'
 import { normalizeText, normalizeEOSAccountName } from 'utils/normalize'
 import * as eosAccountActions from 'actions/eosAccount'
+import Alert from 'components/Alert'
+
+export const errorMessages = (error) => {
+  if (!error) return null
+
+  const message = typeof error === 'object' ? error.message : error
+
+  switch (String(message)) {
+    case 'Invalid owner private key!':
+      return 'Invalid owner private key!'
+    case 'Invalid active private key!':
+      return 'Invalid active private key!'
+    case 'EOS account dose not exist!':
+      return 'EOS account dose not exist!'
+    case 'Owner permission dose not exist!':
+      return 'Owner permission dose not exist!'
+    case 'Active permission dose not exist!':
+      return 'Active permission dose not exist!'
+    case 'Unauthorized owner private key!':
+      return 'Unauthorized owner private key!'
+    case 'Unauthorized active private key!':
+      return 'Unauthorized active private key!'
+    default:
+      return 'Import failed!'
+  }
+}
 
 const validate = (values, props) => {
   const errors = {}
@@ -84,6 +110,7 @@ export default class ImportEOSAccountForm extends Component {
   render() {
     const { handleSubmit, invalid, pristine, password, eosAccount } = this.props
     const loading = eosAccount.get('loading')
+    const error = eosAccount.get('error')
     const disabled = invalid || pristine || loading
 
     return (
@@ -123,6 +150,7 @@ export default class ImportEOSAccountForm extends Component {
           normalize={normalizeText}
         />
         <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text="Import" />
+        <Alert message={errorMessages(error)} dismiss={this.props.actions.clearError} />
       </FormContainer>
     )
   }
