@@ -6,6 +6,7 @@ const initialState = Immutable.fromJS({
   data: {},
   hdWalletList: [],
   classicWalletList: [],
+  loggingOut: false,
   loading: false,
   loaded: false,
   error: null
@@ -45,5 +46,17 @@ export default handleActions({
   },
   [actions.switchWalletSucceeded] (state, action) {
     return state.set('data', Immutable.fromJS(action.payload))
+  },
+  [actions.logoutRequested] (state) {
+    return state.set('loggingOut', true)
+  },
+  [actions.logoutSucceeded] (state) {
+    return state.set('loggingOut', false)
+  },
+  [actions.logoutFailed] (state, action) {
+    return state.set('loggingOut', false).set('error', action.payload)
+  },
+  [actions.resetWallet] () {
+    return initialState
   }
 }, initialState)

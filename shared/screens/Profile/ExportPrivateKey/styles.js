@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: SCREEN_WIDTH-64,
-    height: SCREEN_WIDTH/3-21,
+    height: 60,
     flexDirection: 'row',
     borderRadius: 2,
     borderWidth: 1,
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   },
   input: {
     width: SCREEN_WIDTH-64,
-    height: SCREEN_WIDTH/3-21,
+    height: 60,
     padding: 10,
     color: Colors.textColor_255_255_238,
     fontSize: FontScale(14)

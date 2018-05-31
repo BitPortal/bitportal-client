@@ -95,13 +95,15 @@ class ListItem extends PureComponent {
 
 export default class TableView extends Component {
   render() {
-    const { data, isRefreshing, onRefresh, itemExtraStyle, onPress } = this.props
+    const { data, refreshing, onRefresh, itemExtraStyle, onPress } = this.props
 
     return (
       <View style={styles.scrollContainer}>
         <VirtualizedList
           data={data}
           style={styles.list}
+          refreshing={refreshing}
+          onRefresh={onRefresh}
           getItem={(items, index) => items.get ? items.get(index) : items[index]}
           getItemCount={(items) => (items.count() || 0)}
           keyExtractor={(item, index) => String(index)}

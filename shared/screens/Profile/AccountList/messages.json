@@ -2,7 +2,7 @@
   "zh": {
     "actlist_title_name_account" : "账户",
     "actlist_button_name_create" : "新建账户",
-    "actlist_button_name_import" : "导入"
+    "actlist_button_name_import" : "导入账户"
   },
   "en": {
     "actlist_title_name_account" : "Account",

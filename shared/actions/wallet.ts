@@ -18,3 +18,9 @@ export const switchWalletSucceeded = createAction<HDWallet>('wallet/SWITCH_SUCCE
 export const switchWalletFailed = createAction<ErrorMessage>('wallet/SWITCH_FAILED')
 
 export const createWalletAndEOSAccountRequested = createAction<CreateWalletAndEOSAccountParams>('wallet/CREATE_WALLET_AND_EOS_ACCOUNT_REQUESTED')
+
+export const resetWallet = createAction('wallet/RESET')
+
+export const logoutRequested = createAction<LogoutParams>('wallet/LOGOUT_REQUESTED')
+export const logoutSucceeded = createAction('wallet/LOGOUT_SUCCEEDED')
+export const logoutFailed = createAction('wallet/LOGOUT_FAILED')

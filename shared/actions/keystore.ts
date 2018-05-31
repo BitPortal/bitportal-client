@@ -8,6 +8,14 @@ export const importEOSKeyRequested = createAction<ImportEOSKeyParams>('keystore/
 export const importEOSKeySucceeded = createAction<ImportKeyResult>('keystore/IMPORT_EOS_KEY_SUCCEEDED')
 export const importEOSKeyFailed = createAction<ErrorMessage>('keystore/IMPORT_EOS_KEY_FAILED')
 
+export const exportEOSKeyRequested = createAction<ExportEOSKeyParams>('keystore/EXPORT_EOS_KEY_REQUESTED')
+export const exportEOSKeySucceeded = createAction<ExportKeyResult>('keystore/EXPORT_EOS_KEY_SUCCEEDED')
+export const exportEOSKeyFailed = createAction<ErrorMessage>('keystore/EXPORT_EOS_KEY_FAILED')
+
 export const syncKeyRequested = createAction('keystore/SYNC_KEY_REQUESTED')
 export const syncKeySucceeded = createAction<ImportKeyResult[]>('keystore/SYNC_KEY_SUCCEEDED')
 export const syncKeyFailed = createAction<ErrorMessage>('keystore/SYNC_KEY_FAILED')
+
+export const clearError = createAction('keystore/CLEAR_ERROR')
+
+export const resetKey = createAction('keystore/RESET')

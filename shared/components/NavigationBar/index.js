@@ -64,5 +64,3 @@ export const ListButton = ({ label, onPress }) => (
     </View>
   </TouchableOpacity>
 )
-
-

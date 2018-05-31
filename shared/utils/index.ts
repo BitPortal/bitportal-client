@@ -29,7 +29,17 @@ export const loadScript = (src: string) => {
   })
 }
 
-export const getErrorMessage = (error: any) => error.message
+export const getErrorMessage = (error: any) => {
+  if (typeof error === 'string') {
+    const errorObject = JSON.parse(error)
+
+    if (errorObject.error && errorObject.error.details && errorObject.error.details.length && errorObject.error.details[0].message) {
+      return errorObject.error.details[0].message
+    }
+  }
+
+  return error.message
+}
 
 export const encodeKey = (...elements: any[]) => {
   const key = JSON.stringify([...elements])
@@ -58,3 +68,8 @@ export const getPasswordStrength = (password: any) => {
 }
 
 export const noop = () => {}
+
+export const eosQrString = (account_name, amount) => {
+  if (amount) return `eos:${account_name}?amount=${amount}`
+  return `eos:${account_name}`
+}
