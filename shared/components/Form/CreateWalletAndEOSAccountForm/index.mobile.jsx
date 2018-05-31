@@ -9,6 +9,24 @@ import PasswordStrength from 'components/PasswordStrength'
 import { normalizeText, normalizeEOSAccountName } from 'utils/normalize'
 import { getPasswordStrength } from 'utils'
 import * as walletActions from 'actions/wallet'
+import Alert from 'components/Alert'
+
+export const errorMessages = (error) => {
+  if (!error) return null
+
+  const message = typeof error === 'object' ? error.message : error
+
+  switch (String(message)) {
+    case 'EOS account already exists!':
+      return 'EOS account already exists!'
+    case 'Wallet already exists!':
+      return 'Wallet already exists!'
+    case 'Generate EOS keys failed!':
+      return 'Generate EOS keys failed!'
+    default:
+      return 'Create failed!'
+  }
+}
 
 const validate = (values) => {
   const errors = {}
@@ -68,6 +86,7 @@ export default class CreateWalletAndEOSAccountForm extends Component {
   render() {
     const { handleSubmit, invalid, pristine, password, wallet } = this.props
     const loading = wallet.get('loading')
+    const error = wallet.get('error')
     const disabled = invalid || pristine || loading
 
     return (
@@ -96,6 +115,7 @@ export default class CreateWalletAndEOSAccountForm extends Component {
         />
         <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text="Create" />
         <Button text="Import" onPress={this.props.importEOSAccount} />
+        <Alert message={errorMessages(error)} dismiss={this.props.actions.clearError} />
       </FormContainer>
     )
   }

@@ -102,6 +102,7 @@ function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
     yield call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
     yield put(actions.importEOSAccountSucceeded(info))
     yield put(createClassicWalletSucceeded(walletInfo))
+    yield put(getBalanceRequested({ code: 'eosio.token', account: walletInfo.eosAccountName }))
 
     yield put(reset('importEOSAccountForm'))
     Navigation.handleDeepLink({

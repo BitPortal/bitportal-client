@@ -12,7 +12,7 @@ import TotalAssetsCard from 'components/TotalAssetsCard'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import * as keystoreActions from 'actions/keystore'
-import { logoutRequested } from 'actions/wallet'
+import { logoutRequested, clearLogoutError } from 'actions/wallet'
 import Loading from 'components/Loading'
 import Alert from 'components/Alert'
 import messages from './messages'
@@ -35,12 +35,14 @@ export const errorMessages = (error) => {
     locale: state.intl.get('locale'),
     exporting: state.keystore.get('exporting'),
     error: state.keystore.get('error'),
-    loggingOut: state.wallet.get('loggingOut')
+    loggingOut: state.wallet.get('loggingOut'),
+    logoutError: state.wallet.get('logoutError')
   }),
   (dispatch) => ({
     actions: bindActionCreators({
       ...keystoreActions,
-      logoutRequested
+      logoutRequested,
+      clearLogoutError
     }, dispatch)
   })
 )
@@ -110,7 +112,7 @@ export default class AccountList extends BaseScreen {
   }
 
   render() {
-    const { locale, name, eosAccountName, exporting, error, loggingOut } = this.props
+    const { locale, name, eosAccountName, exporting, error, loggingOut, logoutError } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -124,13 +126,14 @@ export default class AccountList extends BaseScreen {
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }}
             >
-              <TotalAssetsCard totalAssets={0} accountName={eosAccountName} disabled={true} />
-              <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_change" />} onPress={() => this.resetPassword()} extraStyle={{ marginTop: 10 }} />
+              {/* <TotalAssetsCard totalAssets={0} accountName={eosAccountName} disabled={true} /> */}
+              {/* <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_change" />} onPress={() => this.resetPassword()} extraStyle={{ marginTop: 10 }} /> */}
               <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_export" />} onPress={() => this.exportAccount()} extraStyle={{ marginTop: 10 }} />
               <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_logout" />} onPress={() => this.logout()} extraStyle={{ marginTop: 10 }} />
               <Loading isVisible={exporting} text="Exporting" />
               <Loading isVisible={loggingOut} text="Logging Out" />
-              <Alert message={errorMessages(error)} dismiss={this.props.actions.clearError} />
+              <Alert message={errorMessages(error)} dismiss={this.props.actions.clearError} delay={500} />
+              <Alert message={errorMessages(logoutError)} dismiss={this.props.actions.clearLogoutError} delay={500} />
             </ScrollView>
           </View>
         </View>

@@ -15,24 +15,37 @@ import { bindActionCreators } from 'redux'
 import storage from 'utils/storage'
 import AccountList from './AccountList'
 import * as walletActions from 'actions/wallet'
+import * as tickerActions from 'actions/ticker'
+import * as balanceActions from 'actions/balance'
 import { accountBalanceSelector } from 'selectors/balance'
 import { eosAccountSelector } from 'selectors/eosAccount'
+import { eosPriceSelector } from 'selectors/ticker'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import messages from './messages'
 import NavigationBar, { ListButton, CommonRightButton, CommonTitle } from 'components/NavigationBar'
 import SettingItem from 'components/SettingItem'
 import Loading from 'components/Loading'
 
+const getTotalAssets = (balanceList, eosPrice) => {
+  if (!balanceList) return 0
+
+  const balance = balanceList.filter(balance => balance.get('symbol') === 'SYS').get(0).get('balance')
+  return +balance * eosPrice * 6.41
+}
+
 @connect(
   (state) => ({
     locale: state.intl.get('locale'),
     wallet: state.wallet,
     eosAccount: eosAccountSelector(state),
-    balance: accountBalanceSelector(state)
+    balance: accountBalanceSelector(state),
+    eosPrice: eosPriceSelector(state)
   }),
   (dispatch) => ({
     actions: bindActionCreators({
       ...walletActions,
+      ...tickerActions,
+      ...balanceActions
     }, dispatch)
   })
 )
@@ -70,10 +83,10 @@ export default class Assets extends BaseScreen {
 
   // 查看资产情况
   checkAsset = (assetInfo) => {
-    this.props.navigator.push({
-      screen: 'BitPortal.AssetChart',
-      passProps: { assetInfo }
-    })
+    /* this.props.navigator.push({
+     *   screen: 'BitPortal.AssetChart',
+     *   passProps: { assetInfo }
+     * })*/
   }
 
   // 钱包二维码
@@ -127,10 +140,22 @@ export default class Assets extends BaseScreen {
      *   key: '5Hpchj7rC5rLKRMVv6vTg8W3vXPU5VGzBRAg8x2n7P1pyAniZ5i',
      *   coin: 'EOS'
      * })*/
+    this.props.actions.getTickersRequested({
+      market: 'EOS_USDT',
+      limit: 200
+    })
+
+    const eosAccountName = this.props.eosAccount.get('data').get('account_name')
+    if (eosAccountName) {
+      this.props.actions.getBalanceRequested({
+        code: 'eosio.token',
+        account: eosAccountName
+      })
+    }
   }
 
   render() {
-    const { wallet, balance, locale, eosAccount } = this.props
+    const { wallet, balance, locale, eosAccount, eosPrice } = this.props
     const loading = wallet.get('loading')
     const activeEOSAccount = eosAccount.get('data')
     const hdWalletList = wallet.get('hdWalletList')
@@ -160,10 +185,10 @@ export default class Assets extends BaseScreen {
             !!walletCount &&
             <View style={styles.scrollContainer}>
               <ScrollView showsVerticalScrollIndicator={false}>
-                <TotalAssetsCard totalAssets={0} accountName={activeEOSAccount.get('account_name')} onPress={() => this.operateAssetQRCode(true)} />
+                <TotalAssetsCard totalAssets={getTotalAssets(balanceList, eosPrice)} accountName={activeEOSAccount.get('account_name')} onPress={() => this.operateAssetQRCode(true)} />
                 {!activeEOSAccount.get('account_name') && <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_create_eos_account" />} onPress={() => this.createEOSAccount()} extraStyle={{ marginTop: 10, marginBottom: 10 }} />}
                 {!!activeEOSAccount.get('account_name') && <EnableAssets Title={<FormattedMessage id="asset_title_name_ast" />} enableAssets={() => this.enableAssets()} />}
-                {balanceList && <BalanceList data={balanceList} onPress={(e) => this.checkAsset(e)} />}
+                {balanceList && <BalanceList data={balanceList} eosPrice={eosPrice} onPress={(e) => this.checkAsset(e)} />}
               </ScrollView>
             </View>
           }
