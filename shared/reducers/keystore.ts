@@ -52,5 +52,8 @@ export default handleActions({
   },
   [actions.syncKeyFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)
+  },
+  [actions.resetKey] () {
+    return initialState
   }
 }, initialState)

@@ -5,6 +5,9 @@ import { Navigation } from 'react-native-navigation'
 import { reset } from 'redux-form/immutable'
 import assert from 'assert'
 import * as actions from 'actions/wallet'
+import { resetEOSAccount } from 'actions/eosAccount'
+import { resetBalance } from 'actions/balance'
+import { resetKey } from 'actions/keystore'
 import { syncEOSAccount, createEOSAccountSucceeded } from 'actions/eosAccount'
 import { getErrorMessage, encodeKey } from 'utils'
 import secureStorage from 'utils/secureStorage'
@@ -176,7 +179,6 @@ function* createWalletRequested(action: Action<CreateWalletParams>) {
 
 function* syncWalletRequested() {
   try {
-    // yield call(secureStorage.removeItem, 'EOS_ACCOUNT_INFO_2n2n2h')
     const items = yield call(secureStorage.getAllItems)
     console.log(items)
 
@@ -231,9 +233,71 @@ function* switchWalletRequested(action: Action<HDWallet>) {
   }
 }
 
+function* logoutRequested(action: Action<LogoutParams>) {
+  if (!action.payload) return
+
+  try {
+    yield delay(500)
+    const eosAccountName = action.payload.eosAccountName
+    const password = action.payload.password
+    const origin = action.payload.origin
+    const bpid = action.payload.bpid
+    const coin = action.payload.coin
+
+    if (origin === 'hd') {
+      const keystore = yield call(secureStorage.getItem, `HD_KEYSTORE_${bpid}`, true)
+      yield call(decrypt, keystore, password)
+    } else if (coin === 'EOS') {
+      const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
+
+      assert(accountInfo.permissions && accountInfo.permissions.length, 'EOS account permissions dose not exist!')
+      const permissions = accountInfo.permissions
+      const ownerPermission = permissions.filter(item => item.perm_name === 'owner')
+      assert(ownerPermission.length && ownerPermission[0].required_auth && ownerPermission[0].required_auth.keys && ownerPermission[0].required_auth.keys.length, 'Owner permission dose not exist!')
+      const activePermission = permissions.filter(item => item.perm_name === 'active')
+      assert(activePermission.length && activePermission[0].required_auth && activePermission[0].required_auth.keys && activePermission[0].required_auth.keys.length, 'Active permission dose not exist!')
+
+      const ownerPublicKeys = ownerPermission[0].required_auth.keys
+      for (const publicKey of ownerPublicKeys) {
+        const key = publicKey.key
+        const keystore = yield call(secureStorage.getItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_OWNER_${key}`, true)
+        if (keystore) yield call(decrypt, keystore, password)
+      }
+
+      const activePublicKeys = activePermission[0].required_auth.keys
+      for (const publicKey of activePublicKeys) {
+        const key = publicKey.key
+        const keystore = yield call(secureStorage.getItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_ACTIVE_${key}`, true)
+        if (keystore) yield call(decrypt, keystore, password)
+      }
+    }
+
+    const items = yield call(secureStorage.getAllItems)
+    for (const item of Object.keys(items)) {
+      yield call(secureStorage.removeItem, item)
+    }
+
+    yield put(actions.resetWallet())
+    yield put(resetEOSAccount())
+    yield put(resetBalance())
+    yield put(resetKey())
+    yield put(actions.logoutSucceeded())
+    Navigation.handleDeepLink({
+	  link: '*',
+	  payload: {
+		method: 'popToRoot',
+		params: {}
+	  }
+    })
+  } catch (e) {
+    yield put(actions.logoutFailed(getErrorMessage(e)))
+  }
+}
+
 export default function* walletSaga() {
   yield takeEvery(String(actions.createWalletRequested), createWalletRequested)
   yield takeEvery(String(actions.createWalletAndEOSAccountRequested), createWalletAndEOSAccountRequested)
   yield takeEvery(String(actions.syncWalletRequested), syncWalletRequested)
   yield takeEvery(String(actions.switchWalletRequested), switchWalletRequested)
+  yield takeEvery(String(actions.logoutRequested), logoutRequested)
 }

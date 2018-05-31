@@ -28,9 +28,11 @@ export default class Profile extends BaseScreen {
 
   changePage = (page) => {
     let pageName = ''
+    let passProps = {}
     switch (page) {
       case 'Account':
-        pageName = 'AccountList'
+        pageName = 'AccountManager'
+        passProps = this.props.wallet.get('data').toJS()
         break
       case 'Vote':
       case 'About':
@@ -42,7 +44,7 @@ export default class Profile extends BaseScreen {
       default:
         return
     }
-    this.props.navigator.push({ screen: `BitPortal.${pageName}` })
+    this.props.navigator.push({ screen: `BitPortal.${pageName}`, passProps })
   }
 
   render() {
@@ -58,9 +60,9 @@ export default class Profile extends BaseScreen {
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center' }} >
-              {hasWallet && <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_vote" />} onPress={() => this.changePage('Vote')} />}
+              <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_vote" />} onPress={() => this.changePage('Vote')} />
               {/* <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_ctcts" />} onPress={() => this.changePage('Contacts')} extraStyle={{ marginTop: 10 }} /> */}
-              {hasWallet && <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_act" />} onPress={() => this.changePage('Account')}  />}
+              <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_act" />} onPress={() => this.changePage('Account')}  />
               <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_sts" />} onPress={() => this.changePage('Settings')} extraStyle={{ marginTop: 10 }} />
               <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_abt" />} onPress={() => this.changePage('About')} />
               {/* <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titiled_ctus" />} onPress={() => this.changePage('ContactUs')} /> */}

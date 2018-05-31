@@ -17,3 +17,5 @@ export const syncKeySucceeded = createAction<ImportKeyResult[]>('keystore/SYNC_K
 export const syncKeyFailed = createAction<ErrorMessage>('keystore/SYNC_KEY_FAILED')
 
 export const clearError = createAction('keystore/CLEAR_ERROR')
+
+export const resetKey = createAction('keystore/RESET')

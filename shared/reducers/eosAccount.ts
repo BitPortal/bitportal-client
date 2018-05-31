@@ -35,5 +35,8 @@ export default handleActions({
   },
   [actions.syncEOSAccount] (state, action) {
     return state.set('eosAccountList', Immutable.fromJS(action.payload))
+  },
+  [actions.resetEOSAccount] () {
+    return initialState
   }
 }, initialState)
