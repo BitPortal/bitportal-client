@@ -16,6 +16,7 @@ import storage from 'utils/storage'
 import AccountList from './AccountList'
 import * as walletActions from 'actions/wallet'
 import * as tickerActions from 'actions/ticker'
+import * as balanceActions from 'actions/balance'
 import { accountBalanceSelector } from 'selectors/balance'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { eosPriceSelector } from 'selectors/ticker'
@@ -43,7 +44,8 @@ const getTotalAssets = (balanceList, eosPrice) => {
   (dispatch) => ({
     actions: bindActionCreators({
       ...walletActions,
-      ...tickerActions
+      ...tickerActions,
+      ...balanceActions
     }, dispatch)
   })
 )
@@ -142,6 +144,14 @@ export default class Assets extends BaseScreen {
       market: 'EOS_USDT',
       limit: 200
     })
+
+    const eosAccountName = this.props.eosAccount.get('data').get('account_name')
+    if (eosAccountName) {
+      this.props.actions.getBalanceRequested({
+        code: 'eosio.token',
+        account: eosAccountName
+      })
+    }
   }
 
   render() {
