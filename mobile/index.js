@@ -3,7 +3,7 @@ import 'crypto'
 import 'intl'
 import 'intl/locale-data/jsonp/en.js'
 import 'intl/locale-data/jsonp/zh.js'
-import { StatusBar } from 'react-native'
+import { StatusBar, Platform } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { registerScreens } from 'screens'
 import { startSingleApp, startTabBasedApp } from 'navigators'
@@ -33,7 +33,7 @@ const runApp = async () => {
   else startSingleApp()
 
   // hide the splash screens
-  SplashScreen.hide()
+  Platform.OS === 'ios' && SplashScreen.hide()
 }
 
 const setStatusBarStyle = async () => {
