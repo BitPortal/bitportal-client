@@ -124,7 +124,7 @@ export default class AccountList extends BaseScreen {
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }}
             >
-              <TotalAssetsCard totalAssets={0} accountName={eosAccountName} disabled={true} />
+              {/* <TotalAssetsCard totalAssets={0} accountName={eosAccountName} disabled={true} /> */}
               <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_change" />} onPress={() => this.resetPassword()} extraStyle={{ marginTop: 10 }} />
               <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_export" />} onPress={() => this.exportAccount()} extraStyle={{ marginTop: 10 }} />
               <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_logout" />} onPress={() => this.logout()} extraStyle={{ marginTop: 10 }} />
