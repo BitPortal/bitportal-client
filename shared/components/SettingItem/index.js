@@ -24,11 +24,12 @@ export default class SettingItem extends Component {
     const iconName = rightImageName ? rightImageName : "ios-arrow-forward"
     const imageColor = iconColor ? iconColor : Colors.textColor_181_181_181
     const rightTextStyle = rightItemStyle ? rightItemStyle : styles.rightItemStyle
+
     if (!rightItemTitle) {
       return (
         <Ionicons name={iconName} size={24} color={imageColor} />
       )
-    }else {
+    } else {
       return (
         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
           <Text style={[styles.text16]}>

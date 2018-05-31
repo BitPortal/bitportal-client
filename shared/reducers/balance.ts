@@ -32,5 +32,8 @@ export default handleActions({
   },
   [actions.getBalanceFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)
+  },
+  [actions.resetBalance] () {
+    return initialState
   }
 }, initialState)

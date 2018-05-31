@@ -18,6 +18,11 @@ const getEOS = () => {
   return eos
 }
 
+const randomKey = async () => {
+  const privateKey = await ecc.randomKey()
+  return privateKey
+}
+
 const privateToPublic = async (privateKey: string) => {
   const keys = await ecc.privateToPublic(privateKey)
   return keys
@@ -29,5 +34,6 @@ export {
   getEOS,
   initAccount,
   privateToPublic,
-  isValidPrivate
+  isValidPrivate,
+  randomKey
 }

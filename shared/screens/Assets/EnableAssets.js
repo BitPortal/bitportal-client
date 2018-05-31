@@ -11,11 +11,7 @@ export default EnableAssets = ({ Title, enableAssets }) => (
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Text style={styles.text14}> { Title } </Text>
       </View>
-      <Ionicons name="ios-add-circle-outline" size={25} color={Colors.textColor_89_185_226} />
+      {/* <Ionicons name="ios-add-circle-outline" size={25} color={Colors.textColor_89_185_226} /> */}
     </View>
   </TouchableHighlight>
 )
-
-
-
-

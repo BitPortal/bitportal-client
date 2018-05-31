@@ -19,9 +19,8 @@ import { accountBalanceSelector } from 'selectors/balance'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import messages from './messages'
-import NavigationBar, { ListButton, CommonRightButton } from 'components/NavigationBar'
+import NavigationBar, { ListButton, CommonRightButton, CommonTitle } from 'components/NavigationBar'
 import SettingItem from 'components/SettingItem'
-
 import Loading from 'components/Loading'
 
 @connect(
@@ -52,7 +51,7 @@ export default class Assets extends BaseScreen {
 
   // 展示账户列表
   displayAccountList = () => {
-    this.setState({ isVisible2: true })
+    // this.setState({ isVisible2: true })
   }
 
   // 前往扫描
@@ -64,9 +63,9 @@ export default class Assets extends BaseScreen {
 
   // 激活钱包
   enableAssets = () => {
-    this.props.navigator.push({
-      screen: "BitPortal.AvailableAssets"
-    })
+    /* this.props.navigator.push({
+     *   screen: "BitPortal.AvailableAssets"
+     * })*/
   }
 
   // 查看资产情况
@@ -143,7 +142,7 @@ export default class Assets extends BaseScreen {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            leftButton={<ListButton label={<FormattedMessage id="addpage_title_name_act" />} onPress={() => this.displayAccountList()} />}
+            leftButton={<CommonTitle title={<FormattedMessage id="addpage_title_name_act" />} />}
             rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanQR()} />}
           />
           {
@@ -161,14 +160,14 @@ export default class Assets extends BaseScreen {
             !!walletCount &&
             <View style={styles.scrollContainer}>
               <ScrollView showsVerticalScrollIndicator={false}>
-                <TotalAssetsCard totalAssets={425321132.21} accountName={activeEOSAccount.get('account_name')} onPress={() => this.operateAssetQRCode(true)} />
+                <TotalAssetsCard totalAssets={0} accountName={activeEOSAccount.get('account_name')} onPress={() => this.operateAssetQRCode(true)} />
                 {!activeEOSAccount.get('account_name') && <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_create_eos_account" />} onPress={() => this.createEOSAccount()} extraStyle={{ marginTop: 10, marginBottom: 10 }} />}
                 {!!activeEOSAccount.get('account_name') && <EnableAssets Title={<FormattedMessage id="asset_title_name_ast" />} enableAssets={() => this.enableAssets()} />}
                 {balanceList && <BalanceList data={balanceList} onPress={(e) => this.checkAsset(e)} />}
               </ScrollView>
             </View>
           }
-          {!!loading && <ActivityIndicator size="large" color="white" />}
+          <Loading isVisible={loading} />
           <Modal
             animationIn="fadeIn"
             animationOut="fadeOut"
@@ -176,7 +175,7 @@ export default class Assets extends BaseScreen {
             backdropOpacity={0.9}
           >
             <AssetQRCode
-              assetName={'Meon'}
+              accountName={activeEOSAccount.get('account_name')}
               dismissModal={() => this.operateAssetQRCode(false)}
             />
           </Modal>

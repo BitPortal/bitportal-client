@@ -86,8 +86,6 @@ export default class ImportEOSAccountForm extends Component {
     const loading = eosAccount.get('loading')
     const disabled = invalid || pristine || loading
 
-    console.log(loading)
-    console.log(disabled)
     return (
       <FormContainer>
         <Field

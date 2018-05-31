@@ -63,8 +63,8 @@ export default class Market extends BaseScreen {
 
   // 点击查看币种行情
   pressListItem = (item) => {
-    this.props.actions.selectBaseAsset(item.get('base_asset'))
-    this.props.navigator.push({ screen: 'BitPortal.MarketDetails' })
+    // this.props.actions.selectBaseAsset(item.get('base_asset'))
+    // this.props.navigator.push({ screen: 'BitPortal.MarketDetails' })
   }
 
   // 刷新数据
@@ -84,11 +84,11 @@ export default class Market extends BaseScreen {
   render() {
     const { ticker } = this.props
     const loading = ticker.get('loading')
+
     return (
       <View style={styles.container}>
         <NavigationBar
           leftButton={<ListButton label={EXCHANGE_NAMES[ticker.get('exchangeFilter')]} onPress={() => this.selectExchange()} />}
-          // rightButton={<CommonRightButton iconName="md-search" onPress={() => this.searchCoin()} />}
         />
         <Quotes
           onPress={(e) => this.changeQuote(e)}
@@ -97,7 +97,7 @@ export default class Market extends BaseScreen {
         />
         <HeaderTitle />
         <TableView
-          isRefreshing={loading}
+          refreshing={loading}
           onRefresh={() => this.onRefresh()}
           data={this.props.ticker.get('data')}
           onPress={(e) => this.pressListItem(e)}
@@ -107,6 +107,8 @@ export default class Market extends BaseScreen {
           animationOut="fadeOut"
           style = {{  margin: 0 }}
           isVisible={this.state.isVisible}
+          useNativeDriver={true}
+          hideModalContentWhileAnimating={true}
           backdropOpacity={0.3}
         >
           <ExchangeList

@@ -11,6 +11,6 @@
     "cpwd_txtbox_title_new" : "New Password",
     "cpwd_txtbox_title_repeat" : "Repeat Password",
     "cpwd_hint_txt_txt" : "Forgot your password? You can import the private key or use memonic to reset the password.",
-    "cpwd_button_name_change" : "Reset"
+    "cpwd_button_name_change" : "Change"
   }
 }
