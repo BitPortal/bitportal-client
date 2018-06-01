@@ -16,6 +16,7 @@ import { logoutRequested, clearLogoutError } from 'actions/wallet'
 import Loading from 'components/Loading'
 import Alert from 'components/Alert'
 import messages from './messages'
+import DialogAndroid from 'react-native-dialogs'
 
 export const errorMessages = (error) => {
   if (!error) return null
@@ -86,29 +87,37 @@ export default class AccountList extends BaseScreen {
     )
   }
 
-  logout = () => {
-    AlertIOS.prompt(
-      '请输入密码',
-      null,
-      [
-        {
-          text: 'Cancel',
-          onPress: () => {},
-          style: 'cancel'
-        },
-        {
-          text: 'Confirm',
-          onPress: (text) => this.props.actions.logoutRequested({
-            password: text,
-            origin: this.props.origin,
-            bpid: this.props.bpid,
-            eosAccountName: this.props.eosAccountName,
-            coin: this.props.coin,
-          })
-        }
-      ],
-      'secure-text'
-    )
+  logout = async () => {
+    const { action, text } = await DialogAndroid.prompt('请输入密码', null, {
+      positiveText: 'OK', 
+      negativeText: 'Cancel',
+      type: DialogAndroid.listRadio
+    })
+    if (action === DialogAndroid.actionPositive) { 
+        alert(`${action} You submitted: "${text}"`);
+    }
+    // AlertIOS.prompt(
+    //   '请输入密码',
+    //   null,
+    //   [
+    //     {
+    //       text: 'Cancel',
+    //       onPress: () => {},
+    //       style: 'cancel'
+    //     },
+    //     {
+    //       text: 'Confirm',
+    //       onPress: (text) => this.props.actions.logoutRequested({
+    //         password: text,
+    //         origin: this.props.origin,
+    //         bpid: this.props.bpid,
+    //         eosAccountName: this.props.eosAccountName,
+    //         coin: this.props.coin,
+    //       })
+    //     }
+    //   ],
+    //   'secure-text'
+    // )
   }
 
   render() {
@@ -129,7 +138,7 @@ export default class AccountList extends BaseScreen {
               {/* <TotalAssetsCard totalAssets={0} accountName={eosAccountName} disabled={true} /> */}
               {/* <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_change" />} onPress={() => this.resetPassword()} extraStyle={{ marginTop: 10 }} /> */}
               <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_export" />} onPress={() => this.exportAccount()} extraStyle={{ marginTop: 10 }} />
-              <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_logout" />} onPress={() => this.logout()} extraStyle={{ marginTop: 10 }} />
+              <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_logout" />} onPress={this.logout} extraStyle={{ marginTop: 10 }} />
               <Loading isVisible={exporting} text="Exporting" />
               <Loading isVisible={loggingOut} text="Logging Out" />
               <Alert message={errorMessages(error)} dismiss={this.props.actions.clearError} delay={500} />
