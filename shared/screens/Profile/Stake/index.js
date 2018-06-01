@@ -31,6 +31,10 @@ export default class Stake extends BaseScreen {
     this.setState({ amount })
   }
 
+  stakeEOS = () => {
+    
+  }
+
   render() {
     const { amount } = this.state
     const { locale } = this.props
@@ -63,7 +67,7 @@ export default class Stake extends BaseScreen {
               />
 
               <TouchableHighlight 
-                onPress={() =>  this.saveContact()} 
+                onPress={() =>  this.stakeEOS()} 
                 underlayColor={Colors.textColor_89_185_226}
                 style={[styles.btn, styles.center, {
                   marginTop: 20,

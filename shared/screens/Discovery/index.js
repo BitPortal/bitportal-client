@@ -2,18 +2,37 @@ import React from 'react'
 import { connect } from 'react-redux'
 import BaseScreen from 'components/BaseScreen'
 import { View } from 'react-native'
-import * as newsActions from 'actions/news'
 import NewsList from './NewsList'
 import NewsBanner from './NewsBanner'
 import NewsBannerCard from './NewsBannerCard'
 import NavigationBar, { CommonTitle } from 'components/NavigationBar'
 import styles from './styles'
+import { bindActionCreators } from 'redux'
+import * as newsActions from 'actions/news'
+import { IntlProvider, FormattedMessage } from 'react-intl'
+import messages from './messages'
+
 const PAGE_LENGTH = 10
 
-class Discovery extends BaseScreen {
+@connect(
+  (state) => ({
+    locale: state.intl.get('locale'),
+    listData: state.news.get('listData'),
+    listDataRefreshing: state.news.get('listLoading'),
+    bannerData: state.news.get('bannerData'),
+    nomore: state.news.get('nomore')
+  }),
+  (dispatch) => ({
+    actions: bindActionCreators({
+      ...newsActions,
+    }, dispatch)
+  })
+)
+
+export default class Discovery extends BaseScreen {
   componentDidMount() {
-    this.props.getNews(0, PAGE_LENGTH)
-    this.props.getBanner()
+    this.props.actions.getNewsListRequested(0, PAGE_LENGTH, false)
+    this.props.actions.getNewsBannerRequested()
   }
 
   getNewsListData = () => {
@@ -55,7 +74,7 @@ class Discovery extends BaseScreen {
   }
 
   onRefresh = () => {
-    this.props.getNews(0, PAGE_LENGTH, true)
+    this.props.actions.getNewsListRequested(0, PAGE_LENGTH, true)
   }
 
   onRowPress = (item) => {
@@ -93,42 +112,30 @@ class Discovery extends BaseScreen {
       return
     }
     const length = this.props.listData.toJS().length
-    this.props.getNews(length, PAGE_LENGTH)
+    this.props.actions.getNewsListRequested(length, PAGE_LENGTH)
   }
 
   render() {
+    const { locale } = this.props
     return (
-      <View style={styles.container}>
-        <NavigationBar
-          leftButton={<CommonTitle title="Discovery" />}
-        />
-        <NewsBanner autoplay={true} style={{ paddingVertical: 20 }}>
-          {this.getBanner()}
-        </NewsBanner>
-        <NewsList
-          data={this.getNewsListData()}
-          onRefresh={this.onRefresh}
-          onEndReached={this.onEndReached}
-          refreshing={this.props.listDataRefreshing}
-          onRowPress={this.onRowPress}
-        />
-      </View>
+      <IntlProvider messages={messages[locale]}>
+        <View style={styles.container}>
+          <NavigationBar
+            leftButton={<CommonTitle title={messages[locale]['discovery_title_name_dsc']} />}
+          />
+          <NewsBanner autoplay={true} style={{ paddingVertical: 20 }}>
+            {this.getBanner()}
+          </NewsBanner>
+          <NewsList
+            data={this.getNewsListData()}
+            onRefresh={this.onRefresh}
+            onEndReached={this.onEndReached}
+            refreshing={this.props.listDataRefreshing}
+            onRowPress={this.onRowPress}
+          />
+        </View>
+      </IntlProvider>
     )
   }
 }
-
-const mapStateToProps = state => ({
-  listData: state.news.get('listData'),
-  listDataRefreshing: state.news.get('listLoading'),
-  bannerData: state.news.get('bannerData'),
-  nomore: state.news.get('nomore'),
-})
-
-const mapDispatchToProps = dispatch => ({
-  getNews: (startAt, limit, isRefresh = false) => {
-    dispatch(newsActions.getNewsListRequested({ startAt, limit, isRefresh }))
-  },
-  getBanner: () => dispatch(newsActions.getNewsBannerRequested())
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Discovery)
+ 

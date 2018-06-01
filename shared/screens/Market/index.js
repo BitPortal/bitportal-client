@@ -15,6 +15,8 @@ import ExchangeList from './ExchangeList'
 import { Quotes } from './Quotes'
 import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from 'constants/market'
 import NavigationBar, { ListButton, CommonRightButton } from 'components/NavigationBar'
+import { IntlProvider } from 'react-intl'
+import messages from './messages'
 
 @connect(
   (state) => ({
@@ -82,43 +84,45 @@ export default class Market extends BaseScreen {
   }
 
   render() {
-    const { ticker } = this.props
+    const { ticker, locale } = this.props
     const loading = ticker.get('loading')
 
     return (
-      <View style={styles.container}>
-        <NavigationBar
-          leftButton={<ListButton label={EXCHANGE_NAMES[ticker.get('exchangeFilter')]} onPress={() => this.selectExchange()} />}
-        />
-        <Quotes
-          onPress={(e) => this.changeQuote(e)}
-          quote={ticker.get('quoteAssetFilter')}
-          quoteList={QUOTE_ASSETS[ticker.get('exchangeFilter')]}
-        />
-        <HeaderTitle />
-        <TableView
-          refreshing={loading}
-          onRefresh={() => this.onRefresh()}
-          data={this.props.ticker.get('data')}
-          onPress={(e) => this.pressListItem(e)}
-        />
-        <Modal
-          animationIn="fadeIn"
-          animationOut="fadeOut"
-          style = {{  margin: 0 }}
-          isVisible={this.state.isVisible}
-          useNativeDriver={true}
-          hideModalContentWhileAnimating={true}
-          backdropOpacity={0.3}
-        >
-          <ExchangeList
-            exchangeList={EXCHANGES}
-            activeExchange={ticker.get('exchangeFilter')}
-            changeExchange={(e) => this.changeExchange(e)}
-            dismissModal={() => this.setState({ isVisible: false })}
+      <IntlProvider messages={messages[locale]}>
+        <View style={styles.container}>
+          <NavigationBar
+            leftButton={<ListButton label={EXCHANGE_NAMES[ticker.get('exchangeFilter')]} onPress={() => this.selectExchange()} />}
           />
-        </Modal>
-      </View>
+          <Quotes
+            onPress={(e) => this.changeQuote(e)}
+            quote={ticker.get('quoteAssetFilter')}
+            quoteList={QUOTE_ASSETS[ticker.get('exchangeFilter')]}
+          />
+          <HeaderTitle messages={messages[locale]} />
+          <TableView
+            refreshing={loading}
+            onRefresh={() => this.onRefresh()}
+            data={this.props.ticker.get('data')}
+            onPress={(e) => this.pressListItem(e)}
+          />
+          <Modal
+            animationIn="fadeIn"
+            animationOut="fadeOut"
+            style = {{  margin: 0 }}
+            isVisible={this.state.isVisible}
+            useNativeDriver={true}
+            hideModalContentWhileAnimating={true}
+            backdropOpacity={0.3}
+          >
+            <ExchangeList
+              exchangeList={EXCHANGES}
+              activeExchange={ticker.get('exchangeFilter')}
+              changeExchange={(e) => this.changeExchange(e)}
+              dismissModal={() => this.setState({ isVisible: false })}
+            />
+          </Modal>
+        </View>
+      </IntlProvider>
     )
   }
 }
