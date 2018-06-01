@@ -1,22 +1,23 @@
 /* @tsx */
 
 import { AlertIOS, Platform } from 'react-native'
-import DialogAndroid from 'react-native-dialogs'
+// import DialogAndroid from 'react-native-dialogs'
+
+const actionNegative = 'actionNegative'
+const actionPositive = 'actionPositive'
 
 const promptIOS = (title='', content=null, options={}) => {
  
   return new Promise((resolve, reject) => {
     let buttons = []
     let inputType = null
-    const actionNegative = 'actionNegative'
-    const actionPositive = 'actionPositive'
     if (options.negativeText) {
       buttons.push({ text: options.negativeText, onPress: () => {} })
     } 
     if (options.positiveText) {
       inputType = 'secure-text'
       buttons.push({ text: options.positiveText, onPress: (text) => {
-          return resolve({ action:actionPositive, text })
+          return resolve({ action: actionPositive, text })
         } 
       })
     }
@@ -28,13 +29,23 @@ const promptIOS = (title='', content=null, options={}) => {
 
 }
 
-const promptAndroid = async (title='', content=null, options={}) => {
-  const { action, text } = await DialogAndroid.prompt(title, content, {
-    positiveText: options.positiveText || '',
-    negativeText: options.negativeText || '',
-    inputType: 2|16
-  }) 
-  return { action, text }
+const promptAndroid = (title='', content=null, options={}) => {
+
+  return new Promise((resolve, reject) => {
+    let inputContent = ''
+    let options = {
+      title,
+      content,
+      positiveText: options.positiveText || '',
+      negativeText: options.negativeText || '',
+      input: { type: 2||16, callback: (text) => { inputContent = text } },
+      onPositive: () => { return resolve({ action: actionPositive, text: inputContent }) },
+      onNegative: () => {}
+    }
+    let dialog = new DialogAndroid()
+    dialog.set(options)
+    dialog.show()
+  })
 }
 
 export default {
