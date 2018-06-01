@@ -120,7 +120,7 @@ export default class Vote extends BaseScreen {
 
           <VoteModal 
             item={this.state.item}
-            vote={() => this.vote(item)}
+            vote={(e) => this.vote(e)}
             isVisible={this.state.isVisible} 
             dismissModal={() => { this.setState({ isVisible: false }) }} 
           />
