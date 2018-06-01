@@ -16,7 +16,7 @@ import { logoutRequested, clearLogoutError } from 'actions/wallet'
 import Loading from 'components/Loading'
 import Alert from 'components/Alert'
 import messages from './messages'
-import DialogAndroid from 'react-native-dialogs'
+import Dialog from 'components/Dialog'
 
 export const errorMessages = (error) => {
   if (!error) return null
@@ -63,61 +63,35 @@ export default class AccountList extends BaseScreen {
     this.push({ screen: 'BitPortal.ResetPassword' })
   }
 
-  exportAccount = () => {
-    AlertIOS.prompt(
-      '请输入密码',
-      null,
-      [
-        {
-          text: 'Cancel',
-          onPress: () => {},
-          style: 'cancel'
-        },
-        {
-          text: 'Confirm',
-          onPress: (text) => this.props.actions.exportEOSKeyRequested({
-            password: text,
-            origin: this.props.origin,
-            bpid: this.props.bpid,
-            eosAccountName: this.props.eosAccountName
-          })
-        }
-      ],
-      'secure-text'
-    )
+  exportAccount = async () => {
+    const { action, text } = await Dialog.prompt('请输入密码', null, {
+      positiveText: 'OK', 
+      negativeText: 'Cancel'
+    })
+    if (action === Dialog.actionPositive) { 
+      this.props.actions.exportEOSKeyRequested({
+        password: text,
+        origin: this.props.origin,
+        bpid: this.props.bpid,
+        eosAccountName: this.props.eosAccountName
+      })
+    }
   }
 
   logout = async () => {
-    const { action, text } = await DialogAndroid.prompt('请输入密码', null, {
+    const { action, text } = await Dialog.prompt('请输入密码', null, {
       positiveText: 'OK', 
       negativeText: 'Cancel',
-      type: DialogAndroid.listRadio
     })
-    if (action === DialogAndroid.actionPositive) { 
-        alert(`${action} You submitted: "${text}"`);
+    if (action === Dialog.actionPositive) { 
+      this.props.actions.logoutRequested({
+        password: text,
+        origin: this.props.origin,
+        bpid: this.props.bpid,
+        eosAccountName: this.props.eosAccountName,
+        coin: this.props.coin,
+      })
     }
-    // AlertIOS.prompt(
-    //   '请输入密码',
-    //   null,
-    //   [
-    //     {
-    //       text: 'Cancel',
-    //       onPress: () => {},
-    //       style: 'cancel'
-    //     },
-    //     {
-    //       text: 'Confirm',
-    //       onPress: (text) => this.props.actions.logoutRequested({
-    //         password: text,
-    //         origin: this.props.origin,
-    //         bpid: this.props.bpid,
-    //         eosAccountName: this.props.eosAccountName,
-    //         coin: this.props.coin,
-    //       })
-    //     }
-    //   ],
-    //   'secure-text'
-    // )
   }
 
   render() {
