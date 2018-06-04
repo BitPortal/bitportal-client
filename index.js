@@ -9,9 +9,3 @@ if (!__DEV__) {
     error: () => {}
   }
 }
-
-if (!__DEV__) {
-  require('ErrorUtils').setGlobalHandler(function () {
-
-  });
-}
