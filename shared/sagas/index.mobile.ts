@@ -10,6 +10,7 @@ import balanceSaga from './balance'
 import loggerSaga from './logger'
 import newsSage from './news'
 import voteSage from './vote'
+import versionInfoSaga from './versionInfo'
 
 const sagas = {
   intlSaga: fork(intlSaga),
@@ -21,7 +22,8 @@ const sagas = {
   newsSage: fork(newsSage),
   balanceSaga: fork(balanceSaga),
   loggerSaga: fork(loggerSaga),
-  voteSage: fork(voteSage)
+  voteSage: fork(voteSage),
+  versionInfoSaga: fork(versionInfoSaga)
 }
 
 if (ENV === 'production') {

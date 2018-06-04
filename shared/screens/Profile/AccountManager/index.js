@@ -16,7 +16,7 @@ import { logoutRequested, clearLogoutError } from 'actions/wallet'
 import Loading from 'components/Loading'
 import Alert from 'components/Alert'
 import messages from './messages'
-import DialogAndroid from 'react-native-dialogs'
+// import DialogAndroid from 'react-native-dialogs'
 
 export const errorMessages = (error) => {
   if (!error) return null

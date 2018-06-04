@@ -11,11 +11,18 @@ import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import messages from './messages'
 import VersionNumber from 'react-native-version-number'
+import { bindActionCreators } from 'redux'
+import * as versionInfoActions from 'actions/versionInfo'
 import { BITPORTAL_API_TERMS_URL, BITPORTAL_API_UPDATE_LOG_URL } from 'constants/env'
 
 @connect(
   (state) => ({
     locale: state.intl.get('locale')
+  }),
+  (dispatch) => ({
+    actions: bindActionCreators({
+      ...versionInfoActions
+    }, dispatch)
   })
 )
 
@@ -49,7 +56,11 @@ export default class About extends BaseScreen {
       default:
         return
     }
-    
+  }
+
+  getVersionInfo = () => {
+    console.log('### ---- begin')
+    this.props.actions.getVersionInfoRequested()
   }
 
   render() {
@@ -85,7 +96,10 @@ export default class About extends BaseScreen {
                 leftItemTitle={<FormattedMessage id="abt_sec_title_update" />} 
                 onPress={() => this.changePage('UpdateLogs')}
               />
-              <SettingItem leftItemTitle={<FormattedMessage id="abt_sec_title_check" />} onPress={() => {}} />
+              <SettingItem 
+                leftItemTitle={<FormattedMessage id="abt_sec_title_check" />} 
+                onPress={this.getVersionInfo} 
+              />
             </ScrollView>
           </View>
         </View>

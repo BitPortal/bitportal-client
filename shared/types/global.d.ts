@@ -17,6 +17,7 @@ declare const String: any
 declare interface Config {
   ENV: string
   BITPORTAL_API_REST_URL: string
+  BITPORTAL_API_CMS_URL: string
   BITPORTAL_API_WEBSOCKET_URL: string
   EOS_API_URL: string
 }
