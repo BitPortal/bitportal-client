@@ -9595,6 +9595,13 @@ react-native-device-info@^0.21.5:
   version "0.21.5"
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.21.5.tgz#99478a2d68182e012297f2d63f2bd1b788106dee"
 
+react-native-dialog@^3.3.0:
+  version "3.3.0"
+  resolved "http://registry.npm.taobao.org/react-native-dialog/download/react-native-dialog-3.3.0.tgz#a310b76154818796e6aa8928ed5d269929690246"
+  dependencies:
+    prop-types "^15.6.0"
+    react-native-modal "^5.0.0"
+
 "react-native-eosjs-api@git+https://github.com/TerenceGe/eosjs-api.git":
   version "6.0.2"
   resolved "git+https://github.com/TerenceGe/eosjs-api.git#2fb55e359343b5154a7c859772f38867a24d5464"
@@ -9646,7 +9653,7 @@ react-native-linear-gradient@^2.4.0:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-modal@^5.4.0:
+react-native-modal@^5.0.0, react-native-modal@^5.4.0:
   version "5.4.0"
   resolved "http://registry.npm.taobao.org/react-native-modal/download/react-native-modal-5.4.0.tgz#95f70b5d68e08824951cd11038b9db2d6fdb9962"
   dependencies:
