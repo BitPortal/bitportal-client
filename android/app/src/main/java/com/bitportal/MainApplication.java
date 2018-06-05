@@ -46,8 +46,7 @@ public class MainApplication extends NavigationApplication {
       new RNCameraPackage(),
       new BlurViewPackage(),
       new RNVersionNumberPackage(),
-      new RNFastCryptoPackage(),
-      new ReactNativeDialogsPackage()
+      new RNFastCryptoPackage()
     );
   }
 
