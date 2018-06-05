@@ -3,7 +3,6 @@ package com.bitportal;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.aakashns.reactnativedialogs.ReactNativeDialogsPackage;
 import co.airbitz.fastcrypto.RNFastCryptoPackage;
 import com.apsl.versionnumber.RNVersionNumberPackage;
 import com.cmcewen.blurview.BlurViewPackage;
@@ -47,8 +46,7 @@ public class MainApplication extends NavigationApplication {
       new RNCameraPackage(),
       new BlurViewPackage(),
       new RNVersionNumberPackage(),
-      new RNFastCryptoPackage(),
-      new ReactNativeDialogsPackage()
+      new RNFastCryptoPackage()
     );
   }
 

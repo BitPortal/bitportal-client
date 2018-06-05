@@ -1,7 +1,7 @@
 /* @tsx */
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
-import { Text, View, ScrollView, TouchableOpacity, AlertIOS } from 'react-native'
+import { Text, View, ScrollView, TouchableOpacity, Platform } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import styles from './styles'
 import Images from 'resources/images'
@@ -16,7 +16,8 @@ import { logoutRequested, clearLogoutError } from 'actions/wallet'
 import Loading from 'components/Loading'
 import Alert from 'components/Alert'
 import messages from './messages'
-// import DialogAndroid from 'react-native-dialogs'
+import Dialog from './Dialog'
+import Dialogs from 'components/Dialog'
 
 export const errorMessages = (error) => {
   if (!error) return null
@@ -55,6 +56,12 @@ export default class AccountList extends BaseScreen {
     navBarHidden: true
   }
 
+  state = {
+    isVisible: false,
+    password: '',
+    type: ''
+  }
+
   deleteAccount = () => {
 
   }
@@ -63,61 +70,67 @@ export default class AccountList extends BaseScreen {
     this.push({ screen: 'BitPortal.ResetPassword' })
   }
 
-  exportAccount = () => {
-    AlertIOS.prompt(
-      '请输入密码',
-      null,
-      [
-        {
-          text: 'Cancel',
-          onPress: () => {},
-          style: 'cancel'
-        },
-        {
-          text: 'Confirm',
-          onPress: (text) => this.props.actions.exportEOSKeyRequested({
-            password: text,
-            origin: this.props.origin,
-            bpid: this.props.bpid,
-            eosAccountName: this.props.eosAccountName
-          })
-        }
-      ],
-      'secure-text'
-    )
+  exportAccount = (password) => {
+    this.props.actions.exportEOSKeyRequested({
+      password,
+      origin: this.props.origin,
+      bpid: this.props.bpid,
+      eosAccountName: this.props.eosAccountName
+    })
   }
 
-  logout = async () => {
-    const { action, text } = await DialogAndroid.prompt('请输入密码', null, {
-      positiveText: 'OK', 
-      negativeText: 'Cancel',
-      type: DialogAndroid.listRadio
+  logout = (password) => {
+    this.props.actions.logoutRequested({
+      password,
+      origin: this.props.origin,
+      bpid: this.props.bpid,
+      eosAccountName: this.props.eosAccountName,
+      coin: this.props.coin,
     })
-    if (action === DialogAndroid.actionPositive) { 
-        alert(`${action} You submitted: "${text}"`);
+  }
+
+  handleExport = async () => {
+    if (Platform.OS == 'android') {
+      this.setState({ isVisible: true, type: 'exportAccount' })
+    } else {
+      const { action, text } = await Dialogs.prompt(
+        '请输入密码',
+        '',
+        {
+          positiveText: 'OK',
+          negativeText: 'Cancel'
+        }
+      )
+      if (action == Dialogs.actionPositive) {
+        this.exportAccount(text)
+      }
     }
-    // AlertIOS.prompt(
-    //   '请输入密码',
-    //   null,
-    //   [
-    //     {
-    //       text: 'Cancel',
-    //       onPress: () => {},
-    //       style: 'cancel'
-    //     },
-    //     {
-    //       text: 'Confirm',
-    //       onPress: (text) => this.props.actions.logoutRequested({
-    //         password: text,
-    //         origin: this.props.origin,
-    //         bpid: this.props.bpid,
-    //         eosAccountName: this.props.eosAccountName,
-    //         coin: this.props.coin,
-    //       })
-    //     }
-    //   ],
-    //   'secure-text'
-    // )
+  }
+
+  handleLogout = async () => {
+    if (Platform.OS == 'android') {
+      this.setState({ isVisible: true, type: 'logout' })
+    } else {
+      const { action, text } = await Dialogs.prompt(
+        '请输入密码',
+        '',
+        {
+          positiveText: 'OK',
+          negativeText: 'Cancel'
+        }
+      )
+      if (action == Dialogs.actionPositive) {
+        this.logout(text)
+      }
+    }
+  }
+
+  handleConfirm = () => {
+    const { type, password } = this.state
+    this.setState({ isVisible: false }, () => {
+      if (type == 'logout') this.logout(password)
+      else this.exportAccount(password)
+    })
   }
 
   render() {
@@ -137,8 +150,17 @@ export default class AccountList extends BaseScreen {
             >
               {/* <TotalAssetsCard totalAssets={0} accountName={eosAccountName} disabled={true} /> */}
               {/* <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_change" />} onPress={() => this.resetPassword()} extraStyle={{ marginTop: 10 }} /> */}
-              <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_export" />} onPress={() => this.exportAccount()} extraStyle={{ marginTop: 10 }} />
-              <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_logout" />} onPress={this.logout} extraStyle={{ marginTop: 10 }} />
+              <SettingItem
+                leftItemTitle={<FormattedMessage id="act_sec_title_export" />}
+                onPress={this.handleExport}
+                extraStyle={{ marginTop: 10 }}
+              />
+              <SettingItem
+                leftItemTitle={<FormattedMessage id="act_sec_title_logout" />}
+                onPress={this.handleLogout}
+                extraStyle={{ marginTop: 10 }}
+              />
+              {Platform.OS == 'android' && <Dialog tilte="请输入密码" content="" onChange={password => this.setState({ password })} isVisible={this.state.isVisible} handleCancel={() => this.setState({ isVisible: false })} handleConfirm={this.handleConfirm} />}
               <Loading isVisible={exporting} text="Exporting" />
               <Loading isVisible={loggingOut} text="Logging Out" />
               <Alert message={errorMessages(error)} dismiss={this.props.actions.clearError} delay={500} />
