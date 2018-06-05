@@ -17,7 +17,7 @@ import Loading from 'components/Loading'
 import Alert from 'components/Alert'
 import messages from './messages'
 import Dialog from './Dialog'
-import Dialogs from 'components/Dialog' 
+import Dialogs from 'components/Dialog'
 
 export const errorMessages = (error) => {
   if (!error) return null
@@ -94,7 +94,7 @@ export default class AccountList extends BaseScreen {
       this.setState({ isVisible: true, type: 'exportAccount' })
     } else {
       const { action, text } = await Dialogs.prompt(
-        '请输入密码', 
+        '请输入密码',
         '',
         {
           positiveText: 'OK',
@@ -112,7 +112,7 @@ export default class AccountList extends BaseScreen {
       this.setState({ isVisible: true, type: 'logout' })
     } else {
       const { action, text } = await Dialogs.prompt(
-        '请输入密码', 
+        '请输入密码',
         '',
         {
           positiveText: 'OK',
@@ -150,31 +150,17 @@ export default class AccountList extends BaseScreen {
             >
               {/* <TotalAssetsCard totalAssets={0} accountName={eosAccountName} disabled={true} /> */}
               {/* <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_change" />} onPress={() => this.resetPassword()} extraStyle={{ marginTop: 10 }} /> */}
-             
-              <SettingItem 
-                leftItemTitle={<FormattedMessage id="act_sec_title_export" />} 
-                onPress={this.handleExport} 
-                extraStyle={{ marginTop: 10 }} 
+              <SettingItem
+                leftItemTitle={<FormattedMessage id="act_sec_title_export" />}
+                onPress={this.handleExport}
+                extraStyle={{ marginTop: 10 }}
               />
-              
-              <SettingItem 
-                leftItemTitle={<FormattedMessage id="act_sec_title_logout" />} 
-                onPress={this.handleLogout} 
-                extraStyle={{ marginTop: 10 }} 
+              <SettingItem
+                leftItemTitle={<FormattedMessage id="act_sec_title_logout" />}
+                onPress={this.handleLogout}
+                extraStyle={{ marginTop: 10 }}
               />
-              
-              {
-                Platform.OS == 'android' &&
-                <Dialog 
-                  tilte="请输入密码"
-                  content="" 
-                  onChange={password => this.setState({ password })}
-                  isVisible={this.state.isVisible}
-                  handleCancel={() => this.setState({ isVisible: false })} 
-                  handleConfirm={this.handleConfirm} 
-                />
-              }
-
+              {Platform.OS == 'android' && <Dialog tilte="请输入密码" content="" onChange={password => this.setState({ password })} isVisible={this.state.isVisible} handleCancel={() => this.setState({ isVisible: false })} handleConfirm={this.handleConfirm} />}
               <Loading isVisible={exporting} text="Exporting" />
               <Loading isVisible={loggingOut} text="Logging Out" />
               <Alert message={errorMessages(error)} dismiss={this.props.actions.clearError} delay={500} />

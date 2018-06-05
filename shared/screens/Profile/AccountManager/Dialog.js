@@ -14,4 +14,4 @@ export default Dialog = ({ isVisible, onChange, tilte, content, handleCancel, ha
     <RNDialog.Button label="Cancel" onPress={handleCancel} />
     <RNDialog.Button label="OK" onPress={handleConfirm} />
   </RNDialog.Container>
-) 
+)

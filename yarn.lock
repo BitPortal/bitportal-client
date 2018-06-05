@@ -9595,9 +9595,9 @@ react-native-device-info@^0.21.5:
   version "0.21.5"
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.21.5.tgz#99478a2d68182e012297f2d63f2bd1b788106dee"
 
-react-native-dialog@^3.3.0:
-  version "3.3.0"
-  resolved "http://registry.npm.taobao.org/react-native-dialog/download/react-native-dialog-3.3.0.tgz#a310b76154818796e6aa8928ed5d269929690246"
+react-native-dialog@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-dialog/-/react-native-dialog-4.0.0.tgz#17c17f83dbe2312716d1eb06c0a79be5106906be"
   dependencies:
     prop-types "^15.6.0"
     react-native-modal "^5.0.0"
