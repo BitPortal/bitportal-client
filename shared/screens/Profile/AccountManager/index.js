@@ -150,35 +150,21 @@ export default class AccountList extends BaseScreen {
             >
               {/* <TotalAssetsCard totalAssets={0} accountName={eosAccountName} disabled={true} /> */}
               {/* <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_change" />} onPress={() => this.resetPassword()} extraStyle={{ marginTop: 10 }} /> */}
-
               <SettingItem
                 leftItemTitle={<FormattedMessage id="act_sec_title_export" />}
                 onPress={this.handleExport}
                 extraStyle={{ marginTop: 10 }}
               />
-
               <SettingItem
                 leftItemTitle={<FormattedMessage id="act_sec_title_logout" />}
                 onPress={this.handleLogout}
                 extraStyle={{ marginTop: 10 }}
               />
-
-              {
-                Platform.OS == 'android' &&
-                <Dialog
-                  tilte="请输入密码"
-                  content=""
-                  onChange={password => this.setState({ password })}
-                  isVisible={this.state.isVisible}
-                  handleCancel={() => this.setState({ isVisible: false })}
-                  handleConfirm={this.handleConfirm}
-                />
-              }
-
-        <Loading isVisible={exporting} text="Exporting" />
-        <Loading isVisible={loggingOut} text="Logging Out" />
-        <Alert message={errorMessages(error)} dismiss={this.props.actions.clearError} delay={500} />
-        <Alert message={errorMessages(logoutError)} dismiss={this.props.actions.clearLogoutError} delay={500} />
+              {Platform.OS == 'android' && <Dialog tilte="请输入密码" content="" onChange={password => this.setState({ password })} isVisible={this.state.isVisible} handleCancel={() => this.setState({ isVisible: false })} handleConfirm={this.handleConfirm} />}
+              <Loading isVisible={exporting} text="Exporting" />
+              <Loading isVisible={loggingOut} text="Logging Out" />
+              <Alert message={errorMessages(error)} dismiss={this.props.actions.clearError} delay={500} />
+              <Alert message={errorMessages(logoutError)} dismiss={this.props.actions.clearLogoutError} delay={500} />
             </ScrollView>
           </View>
         </View>
