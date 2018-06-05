@@ -56,6 +56,12 @@ export default class AccountList extends BaseScreen {
     navBarHidden: true
   }
 
+  state = {
+    isVisible: false,
+    password: '',
+    type: ''
+  }
+
   deleteAccount = () => {
 
   }
@@ -125,31 +131,6 @@ export default class AccountList extends BaseScreen {
       if (type == 'logout') this.logout(password)
       else this.exportAccount(password)
     })
-    if (action === DialogAndroid.actionPositive) {
-      alert(`${action} You submitted: "${text}"`);
-    }
-    // AlertIOS.prompt(
-    //   '请输入密码',
-    //   null,
-    //   [
-    //     {
-    //       text: 'Cancel',
-    //       onPress: () => {},
-    //       style: 'cancel'
-    //     },
-    //     {
-    //       text: 'Confirm',
-    //       onPress: (text) => this.props.actions.logoutRequested({
-    //         password: text,
-    //         origin: this.props.origin,
-    //         bpid: this.props.bpid,
-    //         eosAccountName: this.props.eosAccountName,
-    //         coin: this.props.coin,
-    //       })
-    //     }
-    //   ],
-    //   'secure-text'
-    // )
   }
 
   render() {
@@ -181,6 +162,7 @@ export default class AccountList extends BaseScreen {
                 onPress={this.handleLogout}
                 extraStyle={{ marginTop: 10 }}
               />
+
               {
                 Platform.OS == 'android' &&
                 <Dialog
@@ -192,6 +174,7 @@ export default class AccountList extends BaseScreen {
                   handleConfirm={this.handleConfirm}
                 />
               }
+
         <Loading isVisible={exporting} text="Exporting" />
         <Loading isVisible={loggingOut} text="Logging Out" />
         <Alert message={errorMessages(error)} dismiss={this.props.actions.clearError} delay={500} />
