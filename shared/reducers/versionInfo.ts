@@ -14,8 +14,7 @@ export default handleActions({
     return state.set('loading', true)
   },
   [actions.getVersionInfoSucceeded] (state, action) {
-    console.log('####--', action.payload)
-    return state.set('loaded', true).set('loading', false)
+    return state.set('loaded', true).set('loading', false).set('data', Immutable.fromJS(action.payload))
   },
   [actions.getVersionInfoFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)

@@ -6,6 +6,11 @@ import styles from './styles'
 
 export default class TermsOfService extends BaseScreen {
 
+  static navigatorStyle = {
+    tabBarHidden: true,
+    navBarHidden: true
+  }
+
   render() {
     const { title, uri } = this.props
     return (

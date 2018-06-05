@@ -1,13 +1,20 @@
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { call, put, takeEvery, select } from 'redux-saga/effects'
 import * as actions from 'actions/versionInfo'
-import *as api from 'utils/api'
+import * as api from 'utils/api'
+import { update } from 'utils/update'
 
-function* getVersionInfo(action: any) {
-  console.log('#####', action)
+function* getVersionInfo() {
   try {
-    const data = yield call(api.getVersionInfo)
-    console.log('#####', data)
-    yield put(actions.getVersionInfoSucceeded(data[0]))
+    let data = yield call(api.getVersionInfo)
+    data = { 
+      lastVersion: '1.1.1',
+      requiredVersion: '0.0.0',
+      force: false,
+      features: { zh: 'chinese features', en: 'english features' },
+      downloadUrl: { ios: 'https://www.baidu.com', android: 'https://www.baidu.com' }
+    } 
+    const locale = yield select((state: any) => state.intl.get('locale'))
+    update(data, locale)
   } catch (e) {
     yield put(actions.getVersionInfoFailed(e.message))
   }
@@ -17,3 +24,4 @@ function* getVersionInfo(action: any) {
 export default function* versionInfoSaga() {
   yield takeEvery(String(actions.getVersionInfoRequested), getVersionInfo)
 }
+    

@@ -14,6 +14,8 @@ import VersionNumber from 'react-native-version-number'
 import { bindActionCreators } from 'redux'
 import * as versionInfoActions from 'actions/versionInfo'
 import { BITPORTAL_API_TERMS_URL, BITPORTAL_API_UPDATE_LOG_URL } from 'constants/env'
+import Loading from 'components/Loading'
+import { update } from 'utils/update'
 
 @connect(
   (state) => ({
@@ -59,7 +61,6 @@ export default class About extends BaseScreen {
   }
 
   getVersionInfo = () => {
-    console.log('### ---- begin')
     this.props.actions.getVersionInfoRequested()
   }
 
@@ -78,7 +79,7 @@ export default class About extends BaseScreen {
               contentContainerStyle={{ alignItems: 'center' }} 
             >
               <View style={styles.content}>
-                <Image style={styles.image} source={Images.logo} resizeMode="center" />
+                <Image style={styles.image} source={Images.logo} resizeMode="contain" />
                 <Text style={[styles.text12, { marginTop: 10 }]}> 
                   <FormattedMessage id="abt_subttl_txt_version" />
                     : {VersionNumber.appVersion} 
