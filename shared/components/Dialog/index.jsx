@@ -1,12 +1,11 @@
 /* @tsx */
 
 import { AlertIOS, Platform } from 'react-native'
-import DialogAndroid from 'react-native-dialogs'
 
 const actionNegative = 'actionNegative'
 const actionPositive = 'actionPositive'
 
-const promptIOS = (title='', content=null, options={}) => {
+const prompt = (title='', content=null, options={}) => {
 
   return new Promise((resolve, reject) => {
     let buttons = []
@@ -29,32 +28,9 @@ const promptIOS = (title='', content=null, options={}) => {
 
 }
 
-const promptAndroid = (title='', content=null, options={}) => {
-
-  return new Promise((resolve, reject) => {
-    let inputContent = ''
-    let dialogsOptions = {
-      title,
-      content,
-      positiveText: options.positiveText || '',
-      negativeText: options.negativeText || '',
-      input: { 
-        type: 128, 
-        callback: (value) => {
-          inputContent= value
-        }
-      },
-      onPositive: () => { return resolve({ action: actionPositive, text: inputContent }) },
-      onNegative: () => {}
-    }
-    let dialog = new DialogAndroid()
-    dialog.set(dialogsOptions)
-    dialog.show()
-  })
-}
 
 export default {
-  prompt: Platform.OS == 'ios' ? promptIOS : promptAndroid,
+  prompt,
   actionPositive,
   actionNegative
 }
