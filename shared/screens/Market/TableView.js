@@ -15,22 +15,22 @@ import {
 } from 'react-native'
 import { ASSET_FRACTION } from 'constants/market'
 
-export const HeaderTitle = () => (
+export const HeaderTitle = ({ messages }) => (
   <View>
     <View style={[styles.headerTitle]}>
       <View style={[styles.coin, styles.center, {height: 25}]}>
         <Text style={[[styles.text14]]}>
-          MarketCap
+          {messages['market_title_name_mrtc']}
         </Text>
       </View>
       <View style={[styles.price, { alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row' }]}>
-        <Text style={[styles.text14, { marginRight: 20 }]}>
-          Price
+        <Text style={[styles.text14, { marginRight: 30 }]}>
+          {messages['market_title_name_price']}
         </Text>
       </View>
       <View style={[styles.change, { alignItems: 'center', justifyContent: 'flex-end', flexDirection: 'row', paddingRight: 15 }]}>
         <Text style={[styles.text14]}>
-          Change
+          {messages['market_title_name_change']}
         </Text>
       </View>
     </View>
@@ -54,6 +54,7 @@ class ListItem extends PureComponent {
     return (
       <TouchableHighlight
         key={index}
+        disabled={true}
         underlayColor={Colors.bgColor_000000}
         onPress={() => onPress(data)}
       >
