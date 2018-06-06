@@ -1,0 +1,3 @@
+[submodule "tools/wasmception"]
+	path = tools/wasmception
+	url = https://github.com/yurydelendik/wasmception.git
