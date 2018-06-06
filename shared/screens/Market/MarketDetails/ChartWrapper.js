@@ -156,7 +156,7 @@ export default class ChartWrapper extends React.Component {
   }
 
   render() {
-    console.log('###', typeof this.props.chartData)
+    // console.log('###', typeof this.props.chartData)
     return (
 
       <View style={styles.chartContainer}>

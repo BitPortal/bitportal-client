@@ -33,7 +33,7 @@ export default class SettingItem extends Component {
       return (
         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
           <Text style={[styles.text16]}>
-            {rightItemTitle}
+            {rightItemTitle} 
           </Text>
         </View>
       )

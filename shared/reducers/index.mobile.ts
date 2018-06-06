@@ -9,6 +9,8 @@ import keystore from './keystore'
 import news from './news'
 import balance from './balance'
 import vote from './vote'
+import versionInfo from './versionInfo'
+
 
 export default combineReducers({
   form,
@@ -20,5 +22,6 @@ export default combineReducers({
   chart,
   news,
   balance,
-  vote
+  vote,
+  versionInfo
 })

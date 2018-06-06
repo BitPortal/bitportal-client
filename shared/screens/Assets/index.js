@@ -17,6 +17,7 @@ import AccountList from './AccountList'
 import * as walletActions from 'actions/wallet'
 import * as tickerActions from 'actions/ticker'
 import * as balanceActions from 'actions/balance'
+import * as versionInfoActions from 'actions/versionInfo'
 import { accountBalanceSelector } from 'selectors/balance'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { eosPriceSelector } from 'selectors/ticker'
@@ -45,7 +46,8 @@ const getTotalAssets = (balanceList, eosPrice) => {
     actions: bindActionCreators({
       ...walletActions,
       ...tickerActions,
-      ...balanceActions
+      ...balanceActions,
+      ...versionInfoActions
     }, dispatch)
   })
 )
@@ -115,6 +117,8 @@ export default class Assets extends BaseScreen {
   }
 
   async componentDidMount() {
+    // 检测版本号
+    this.props.actions.getVersionInfoRequested()
     this.props.actions.syncWalletRequested()
     /* this.props.actions.createEOSAccountRequested({
      *   creator: 'eosio',
