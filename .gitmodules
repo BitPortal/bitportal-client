@@ -1,3 +1,6 @@
 [submodule "tools/wasmception"]
 	path = tools/wasmception
 	url = https://github.com/yurydelendik/wasmception.git
+[submodule "tools/djinni"]
+	path = tools/djinni
+	url = https://github.com/dropbox/djinni.git
