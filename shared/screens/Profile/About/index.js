@@ -15,12 +15,12 @@ import { bindActionCreators } from 'redux'
 import * as versionInfoActions from 'actions/versionInfo'
 import { BITPORTAL_API_TERMS_URL, BITPORTAL_API_UPDATE_LOG_URL } from 'constants/env'
 import Loading from 'components/Loading'
-import { update } from 'utils/update'
+import { update, isNewest, showIsLast } from 'utils/update'
 
 @connect(
   (state) => ({
     locale: state.intl.get('locale'),
-    loading: state.versionInfo.get('loading')
+    versionInfo: state.versionInfo
   }),
   (dispatch) => ({
     actions: bindActionCreators({
@@ -62,11 +62,18 @@ export default class About extends BaseScreen {
   }
 
   getVersionInfo = () => {
-    this.props.actions.getVersionInfoRequested()
+    if (isNewest) {
+      const data = this.props.versionInfo.get('data')
+      const locale = this.props.locale
+      showIsLast(data, locale)
+    } else {
+      this.props.actions.getVersionInfoRequested()
+    }
   }
 
   render() {
-    const { locale, loading } = this.props
+    const { locale, versionInfo } = this.props
+    const loading = versionInfo.get('loading')
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>

@@ -21,14 +21,15 @@ import { Navigation } from 'react-native-navigation'
 const actionNegative = 'actionNegative'
 const actionPositive = 'actionPositive'
 let timer = undefined
+let isLast = false
 
 const show = (title='', content=null, options={}) => {
-
+  const overrideBackPress = (options.positiveText && !options.negativeText) ? true : false
   return new Promise((resolve, reject) => {
     timer = setTimeout(() => {
       Navigation.showLightBox({
         screen: 'BitPortal.LightBox',
-        overrideBackPress: true, 
+        overrideBackPress, 
         tapBackgroundToDismiss: false,
         passProps: {
           type: 'update',
@@ -51,7 +52,7 @@ const isRequired = (localVersion, minVersion) => calculate(localVersion) >= calc
 
 const calculate = (VersionNumber) => {
   const versions = VersionNumber.split('.')
-  return versions[0]*1000000 + versions[1]*1000 + versions[2]
+  return parseInt(versions[0]*1000000 + versions[1]*1000 + versions[2])
 }
 
 export const update = (data, locale) => {
@@ -59,23 +60,27 @@ export const update = (data, locale) => {
   const localVersion = VersionNumber.appVersion
   const lastVersion = data.lastVersion
   const minVersion = data.minVersion
-
+  // return alert(`${calculate(lastVersion)}--${calculate(localVersion)}--${calculate(lastVersion) > calculate(localVersion)}`)
   // if (!isRequired(localVersion, minVersion)) return showNoUpdate(locale)
-  if (!needUpdate(localVersion, lastVersion)) return showIsLast(data, locale)
+  if (!needUpdate(localVersion, lastVersion)) return isLast = true
   if (needUpdate(localVersion, lastVersion) && data.force) return showForceUpdate(data, locale)
   if (needUpdate(localVersion, lastVersion) && !data.force) return showGoToUpdate(data, locale)
-  else return showIsLast(data, locale)
+  else return isLast = true
 }
+
+export const showIsLast = async (data, locale) => {
+  const content = data.features && data.features[locale]
+  await show('当前版本已是最新', content, { negativeText: '确定' })
+  clearTimeout(timer)
+  Navigation.dismissLightBox()
+}
+
+export const isNewest = _ => isLast
 
 showNoUpdate = async () => {
   await show('当前版本无需更新', '', { negativeText: '确定' })
   clearTimeout(timer)
-}
-
-showIsLast = async (data, locale) => {
-  const content = data.features && data.features[locale]
-  await show('当前版本已是最新', content, { negativeText: '确定' })
-  clearTimeout(timer)
+  return Navigation.dismissLightBox()
 }
 
 showForceUpdate = async (data, locale) => {
