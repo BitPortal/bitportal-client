@@ -1,10 +1,11 @@
 import { Alert, Platform, Linking } from 'react-native'
 import VersionNumber from 'react-native-version-number'
+import { Navigation } from 'react-native-navigation'
 
 /**
  * {
  *   lastVersion: '1.1.1',
- *   requiredVersion: '1.0.0',
+ *   minVersion: '1.0.0',
  *   force: false,
  *   features: {
  *     zh: '',
@@ -19,86 +20,78 @@ import VersionNumber from 'react-native-version-number'
 
 const actionNegative = 'actionNegative'
 const actionPositive = 'actionPositive'
+let timer = undefined
 
-const alert = (title='', content=null, options={}) => {
+const show = (title='', content=null, options={}) => {
 
   return new Promise((resolve, reject) => {
-    let buttons = []
-    if (options.negativeText) {
-      buttons.push({ text: options.negativeText, onPress: () => {} })
-    } 
-    if (options.positiveText) {
-      buttons.push({ text: options.positiveText, onPress: () => {
-          return resolve({ action: actionPositive })
-        } 
+    timer = setTimeout(() => {
+      Navigation.showLightBox({
+        screen: 'BitPortal.LightBox',
+        overrideBackPress: true, 
+        tapBackgroundToDismiss: false,
+        passProps: {
+          type: 'update',
+          title,
+          content,
+          positiveText: options.positiveText || null,
+          negativeText: options.negativeText || null,
+          onPositive: () => { return resolve({ action: actionPositive }) },
+          onNegative: () => { return resolve({ action: actionNegative }) }
+        },
+        style: Platform.OS == 'ios' ? { backgroundBlur: 'dark' } : { backgroundColor: "rgba(0,0,0,0.5)" }
       })
-    }
-    if (buttons.length == 0) {
-      buttons.push({ text: 'ok', onPress: () => {} })
-    }
-    Alert.alert(title, content, buttons)
+    }, Platform.OS == 'ios' ? 700 : 0)
   })
-
 }
 
-const needUpdate = (localVersion, lastVersion) => {
-  let localVersionCode = localVersion.split('.') 
-  let lastVersionCode  = lastVersion.split('.')
-  if (lastVersionCode[0] > localVersionCode[0]) {
-    return true
-  } else if (lastVersionCode[1] > localVersionCode[1]) {
-    return true
-  } else if (lastVersionCode[2] > localVersionCode[2]) {
-    return true
-  } else {
-    return false
-  }
-}
+const needUpdate = (localVersion, lastVersion) => calculate(lastVersion) > calculate(localVersion)
 
-const isRequired = (localVersion, requiredVersion) => {
-  let localVersionCode = localVersion.split('.') 
-  let requiredVersionCode = requiredVersion.split('.')
-  if (localVersionCode[0] > requiredVersionCode[0]) {
-    return true
-  } else if (localVersionCode[1] > requiredVersionCode[1]) {
-    return true
-  } else if (localVersionCode[2] > requiredVersionCode[2]) {
-    return true
-  } else {
-    return false
-  }
+const isRequired = (localVersion, minVersion) => calculate(localVersion) >= calculate(minVersion)
+
+const calculate = (VersionNumber) => {
+  const versions = VersionNumber.split('.')
+  return versions[0]*1000000 + versions[1]*1000 + versions[2]
 }
 
 export const update = (data, locale) => {
-  // console.log('###--73', data, locale)
+  
   const localVersion = VersionNumber.appVersion
-  const lastVersion = data.lastVersion || '1.0.0'
-  const requiredVersion = data.requiredVersion || '1.0.0'
-  if (!isRequired(localVersion, requiredVersion)) return alertNoUpdate(locale)
-  if (!needUpdate(localVersion, lastVersion)) return alertIsLast(data, locale)
-  if (data.force) return alertForceUpdate(data, locale)
-  else return alertGoToUpdate(data, locale)
+  const lastVersion = data.lastVersion
+  const minVersion = data.minVersion
+
+  // if (!isRequired(localVersion, minVersion)) return showNoUpdate(locale)
+  if (!needUpdate(localVersion, lastVersion)) return showIsLast(data, locale)
+  if (needUpdate(localVersion, lastVersion) && data.force) return showForceUpdate(data, locale)
+  if (needUpdate(localVersion, lastVersion) && !data.force) return showGoToUpdate(data, locale)
+  else return showIsLast(data, locale)
 }
 
-alertNoUpdate = async () => {
-  await alert('当前版本无需更新', '', { negativeText: '确定' })
+showNoUpdate = async () => {
+  await show('当前版本无需更新', '', { negativeText: '确定' })
+  clearTimeout(timer)
 }
 
-alertIsLast = async (data, locale) => {
+showIsLast = async (data, locale) => {
   const content = data.features && data.features[locale]
-  await alert('当前版本已是最新', content, { negativeText: '确定' })
+  await show('当前版本已是最新', content, { negativeText: '确定' })
+  clearTimeout(timer)
 }
 
-alertForceUpdate = async (data, locale) => {
+showForceUpdate = async (data, locale) => {
   const content = data.features && data.features[locale]
-  const { action } = await alert('发现最新版本', content, { positiveText: '更新' })
-  if ( action == actionPositive ) return goUpdate(data)
+  const { action } = await show('发现新版本', content, { positiveText: '更新' })
+  clearTimeout(timer)
+  if (action == actionPositive) return goUpdate(data)
+  else if (action == actionNegative) return Navigation.dismissLightBox()
 }
 
-alertGoToUpdate = async (data, locale) => {
+showGoToUpdate = async (data, locale) => {
   const content = data.features && data.features[locale]
-  const { action } = await alert('发现最新版本', content, { negativeText: '再用用看', positiveText: '更新' })
-  if ( action == actionPositive ) return goUpdate(data)
+  const { action } = await show('发现新版本', content, { negativeText: '再用用看', positiveText: '更新' })
+  clearTimeout(timer)
+  if (action == actionPositive) return goUpdate(data)
+  else if (action == actionNegative) return Navigation.dismissLightBox()
 }
 
 goUpdate = (data) => {

@@ -25,10 +25,6 @@ const styles = StyleSheet.create({
 })
 
 export default class Loading extends Component {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
-  }
 
   render () {
     const { disabledBorder, extraStyle, isVisible, backdropOpacity, text } = this.props
@@ -41,12 +37,12 @@ export default class Loading extends Component {
         isVisible={isVisible}
         backdropOpacity={backdropOpacity ? backdropOpacity : 0.3}
       >
-          <View style={[styles.container, styles.center, extraStyle]}>
-            <View style={borderStyle}>
-              <ActivityIndicator size="small" color="white" />
-              {text && <Text style={{ color: 'white', marginTop: 10 }}>{text}</Text>}
-            </View>
+        <View style={[styles.container, styles.center, extraStyle]}>
+          <View style={borderStyle}>
+            <ActivityIndicator size="small" color="white" />
+            {text && <Text style={{ color: 'white', marginTop: 10 }}>{text}</Text>}
           </View>
+        </View>
       </Modal>
     )
   }

@@ -19,7 +19,8 @@ import { update } from 'utils/update'
 
 @connect(
   (state) => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.get('locale'),
+    loading: state.versionInfo.get('loading')
   }),
   (dispatch) => ({
     actions: bindActionCreators({
@@ -65,7 +66,7 @@ export default class About extends BaseScreen {
   }
 
   render() {
-    const { locale } = this.props
+    const { locale, loading } = this.props
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -79,7 +80,9 @@ export default class About extends BaseScreen {
               contentContainerStyle={{ alignItems: 'center' }} 
             >
               <View style={styles.content}>
-                <Image style={styles.image} source={Images.logo} resizeMode="contain" />
+                <View style={[styles.image, { borderRadius: 15 }]}>
+                  <Image style={styles.image} source={Images.logo} resizeMode="contain" />
+                </View>
                 <Text style={[styles.text12, { marginTop: 10 }]}> 
                   <FormattedMessage id="abt_subttl_txt_version" />
                     : {VersionNumber.appVersion} 
@@ -102,6 +105,7 @@ export default class About extends BaseScreen {
                 onPress={this.getVersionInfo} 
               />
             </ScrollView>
+            <Loading isVisible={loading} />
           </View>
         </View>
       </IntlProvider>
