@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT-NAV_BAR_HEIGHT-74
+    height: SCREEN_HEIGHT-NAV_BAR_HEIGHT-TAB_BAR_HEIGHT-74
   },
   stakeAmountContainer:{
     width: SCREEN_WIDTH,
@@ -67,6 +67,32 @@ const styles = StyleSheet.create({
     color: Colors.textColor_255_255_238,
     fontWeight: 'bold'
   },
+  radius: {
+    width: 20, 
+    height: 20, 
+    borderRadius: 10,
+    borderColor: Colors.bgColor_FFFFFF,
+    borderWidth: 1,
+    marginRight: 1,
+    backgroundColor: Colors.bgColor_48_49_59
+  },
+  btnContainer: {
+    width: SCREEN_WIDTH,
+    height: TAB_BAR_HEIGHT,
+    backgroundColor: Colors.minorThemeColor,
+    paddingHorizontal: 30,
+    ...ifIphoneX({
+      paddingBottom: 34
+    },{
+      paddingBottom: 0
+    })
+  },
+  voteBtn: {
+    width: 80,
+    height: 30,
+    borderRadius: 4,
+    backgroundColor: Colors.textColor_89_185_226
+  }
 })
 
 export default styles
