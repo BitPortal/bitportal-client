@@ -51,7 +51,7 @@ const ListItem = ({ item, rank, onRowPress }) => {
 
 export default class VoteList extends React.PureComponent {
   
-  keyExtractor = (item) => item.id
+  keyExtractor = (item) => item.id+item.name
 
   renderItem = ({ item, index }) => (
     <ListItem key={item.id} item={item} rank={index} onRowPress={() => this.props.onRowPress(item)} />
@@ -77,7 +77,7 @@ export default class VoteList extends React.PureComponent {
 }
 
 VoteList.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.any,
   onRefresh: PropTypes.func,
   onRowPress: PropTypes.func,
   refreshing: PropTypes.bool
