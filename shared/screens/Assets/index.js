@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react'
-import { Text, View, ScrollView, Image, TouchableOpacity, ActivityIndicator, InteractionManager } from 'react-native'
+import { Text, View, ScrollView, Image, TouchableOpacity, ActivityIndicator, InteractionManager, NativeModules } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import TotalAssetsCard from 'components/TotalAssetsCard'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -159,6 +159,9 @@ export default class Assets extends BaseScreen {
     }
 
     await scrypt('secret', 'salt', 262144, 8, 1, 32)
+    const { pbkdf2 } = NativeModules.CoreManager
+    const dkey = await pbkdf2('secret', 'salt', 100000, 64, 'sha512')
+    console.log(dkey)
   }
 
   render() {
