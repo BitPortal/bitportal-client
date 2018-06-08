@@ -32,6 +32,7 @@ declare interface RootState {
   assets: any
   balance: any
   wallet: any
+  vote: any
 }
 
 declare interface FetchOptions {

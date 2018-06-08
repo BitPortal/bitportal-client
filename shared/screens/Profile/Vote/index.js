@@ -6,18 +6,20 @@ import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider, FormattedNumber } from 'react-intl'
-import { Text, View, TouchableOpacity } from 'react-native'
+import { Text, View, TouchableOpacity, TouchableHighlight } from 'react-native'
 import messages from './messages'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import VoteList from './VoteList'
 import * as voteActions from 'actions/vote'
 import { bindActionCreators } from 'redux'
 import VoteModal from './VoteModal'
+import { voteProcuderSelector } from 'selectors/vote'
 
 @connect(
   (state) => ({
     locale: state.intl.get('locale'),
-    vote: state.vote
+    loading: state.vote.get('loading'),
+    vote: voteProcuderSelector(state)
   }),
   (dispatch) => ({
     actions: bindActionCreators({
@@ -46,35 +48,32 @@ export default class Vote extends BaseScreen {
     
   }
 
-  vote = (item) => {
-
+  vote = () => {
+    this.setState({ isVisible: true })
   }
 
   stakeEOS = () => {
-    this.props.navigator.push({ screen: 'BitPortal.Stake' })
+    this.setState({ isVisible: false }, () => {
+      this.props.navigator.push({ screen: 'BitPortal.Stake' })
+    })
   }
 
-  onRowPress = (item, rank) => {
-    this.setState({ isVisible: true, item })
+  onRowPress = (item) => {
+    this.props.actions.selectProducer(item)
   }
+
+  // "json": { "type": "bool", "default": false},
+  // "lower_bound": "string",
+  // "limit": {"type": "uint32", "default": "10"}
 
   onRefresh = () => {
-    this.props.actions.getVoteDataRequested()
+    console.log("### --fetch producer")
+    let params = { json: false, lower_bound: '', limit: 10 }
+    this.props.actions.getVoteDataRequested(params)
   }
 
-  getVoteListData = () => {
-    const data = this.props.vote.get('data').toJS()
-    return data.map((item, index) => ({
-      id: index+item.name,
-      name: item.name,
-      location: item.location,
-      producer: item.producer,
-      totalVotes: item.totalVotes
-    }))
-  }
-
-  render() {
-    const { locale, vote } = this.props
+  render() { 
+    const { locale, vote, loading } = this.props
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -92,7 +91,7 @@ export default class Vote extends BaseScreen {
                 <FormattedNumber 
                   value={4235354}
                   maximumFractionDigits={4}
-                  minimumFractionDigits={4}
+                  minimumFractionDigits={4} 
                 />
               </Text>
               <Text style={[styles.text14, { marginLeft: 2, marginRight: 5 }]}> EOS </Text>
@@ -111,16 +110,26 @@ export default class Vote extends BaseScreen {
 
           <View style={styles.scrollContainer}>
             <VoteList
-              data={this.getVoteListData()}
+              data={vote.get('data')}
               onRefresh={this.onRefresh}
-              refreshing={vote.get('loading')}
+              refreshing={loading}
               onRowPress={this.onRowPress}
             />
           </View>
 
+          <View style={[styles.btnContainer, styles.between]}>
+            <Text style={styles.text14}> Selected </Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text style={[styles.text14, { marginRight: 15 }]}> {vote.get('selectedProducers').size}/30 </Text>
+              <TouchableOpacity onPress={this.vote} style={[styles.center, styles.voteBtn]}>
+                <Text style={styles.text14}> Vote </Text>
+              </TouchableOpacity>
+            </View>
+          </View> 
+
           <VoteModal 
             item={this.state.item}
-            vote={(e) => this.vote(e)}
+            onPress={this.stakeEOS}
             isVisible={this.state.isVisible} 
             dismissModal={() => { this.setState({ isVisible: false }) }} 
           />

@@ -30,10 +30,20 @@ const privateToPublic = async (privateKey: string) => {
 
 const isValidPrivate = (privateKey: string) => ecc.isValidPrivate(privateKey)
 
+const getProducers = (params: any) => {
+  alert(JSON.stringify(params))
+  return new Promise((resolve) => {
+    eos.getProducers(params).then((result: any) => { 
+      return resolve(result)
+    })
+  })
+}
+
 export {
   getEOS,
   initAccount,
   privateToPublic,
   isValidPrivate,
-  randomKey
+  randomKey,
+  getProducers
 }
