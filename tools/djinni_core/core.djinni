@@ -1,0 +1,4 @@
+core = interface +c {
+  static create(): core;
+  pbkdf2(password: string, salt: string, iterations: i32, keylen: i8, digest: string): string;
+}

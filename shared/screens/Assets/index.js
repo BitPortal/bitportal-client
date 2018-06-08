@@ -26,6 +26,7 @@ import messages from './messages'
 import NavigationBar, { ListButton, CommonRightButton, CommonTitle } from 'components/NavigationBar'
 import SettingItem from 'components/SettingItem'
 import Loading from 'components/Loading'
+import { scrypt } from 'react-native-fast-crypto'
 
 const getTotalAssets = (balanceList, eosPrice) => {
   if (!balanceList) return 0
@@ -132,7 +133,7 @@ export default class Assets extends BaseScreen {
      * })*/
   }
 
-  didAppear() {
+  async didAppear() {
     /* this.props.actions.createAccountRequested({
      *   bitportalAccountName: 'EOS-1',
      *   password: 'asddas',
@@ -156,6 +157,8 @@ export default class Assets extends BaseScreen {
         account: eosAccountName
       })
     }
+
+    await scrypt('secret', 'salt', 262144, 8, 1, 32)
   }
 
   render() {
