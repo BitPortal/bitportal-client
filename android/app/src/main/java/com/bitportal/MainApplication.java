@@ -20,6 +20,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.reactnativenavigation.NavigationApplication;
+import com.bitportal.core.BPCorePackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,6 +36,7 @@ public class MainApplication extends NavigationApplication {
 
   protected List<ReactPackage> getPackages() {
     return Arrays.<ReactPackage>asList(
+      new BPCorePackage(),
       new SvgPackage(),
       new SplashScreenReactPackage(),
       new VectorIconsPackage(),

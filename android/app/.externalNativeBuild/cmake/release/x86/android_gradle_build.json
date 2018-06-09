@@ -1,0 +1,59 @@
+
+{
+	"buildFiles" : 
+	[
+		"/Users/terencege/Developer/bitportal/bitportal-client/android/app/CMakeLists.txt"
+	],
+	"cleanCommands" : 
+	[
+		"/Users/terencege/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /Users/terencege/Developer/bitportal/bitportal-client/android/app/.externalNativeBuild/cmake/release/x86 --target clean"
+	],
+	"cppFileExtensions" : [ "cpp" ],
+	"libraries" : 
+	{
+		"core-Release-x86" : 
+		{
+			"abi" : "x86",
+			"artifactName" : "core",
+			"buildCommand" : "/Users/terencege/Library/Android/sdk/cmake/3.6.4111459/bin/cmake --build /Users/terencege/Developer/bitportal/bitportal-client/android/app/.externalNativeBuild/cmake/release/x86 --target core",
+			"buildType" : "release",
+			"files" : 
+			[
+				
+				{
+					"flags" : "  --target=i686-none-linux-android --gcc-toolchain=/Users/terencege/Library/Android/sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/darwin-x86_64 --sysroot=/Users/terencege/Library/Android/sdk/ndk-bundle/sysroot  -Dcore_EXPORTS -I../../../../../../tools/djinni/support-lib -I../../../../../../tools/djinni/support-lib/jni -I../../../../../../core/djinni/cpp -I../../../../../../core/djinni/jni -I../../../../../../core/native/cpp/trezor-crypto -isystem /Users/terencege/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include -isystem /Users/terencege/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/libs/x86/include -isystem /Users/terencege/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/backward  -isystem /Users/terencege/Library/Android/sdk/ndk-bundle/sysroot/usr/include/i686-linux-android -D__ANDROID_API__=16 -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -Wa,--noexecstack -Wformat -Werror=format-security   -O2 -DNDEBUG  -fPIC    -c ",
+					"src" : "/Users/terencege/Developer/bitportal/bitportal-client/tools/djinni/support-lib/jni/djinni_main.cpp",
+					"workingDirectory" : "/Users/terencege/Developer/bitportal/bitportal-client/android/app/.externalNativeBuild/cmake/release/x86"
+				},
+				
+				{
+					"flags" : "  --target=i686-none-linux-android --gcc-toolchain=/Users/terencege/Library/Android/sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/darwin-x86_64 --sysroot=/Users/terencege/Library/Android/sdk/ndk-bundle/sysroot  -Dcore_EXPORTS -I../../../../../../tools/djinni/support-lib -I../../../../../../tools/djinni/support-lib/jni -I../../../../../../core/djinni/cpp -I../../../../../../core/djinni/jni -I../../../../../../core/native/cpp/trezor-crypto -isystem /Users/terencege/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include -isystem /Users/terencege/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/libs/x86/include -isystem /Users/terencege/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/backward  -isystem /Users/terencege/Library/Android/sdk/ndk-bundle/sysroot/usr/include/i686-linux-android -D__ANDROID_API__=16 -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -Wa,--noexecstack -Wformat -Werror=format-security   -O2 -DNDEBUG  -fPIC    -c ",
+					"src" : "/Users/terencege/Developer/bitportal/bitportal-client/tools/djinni/support-lib/jni/djinni_support.cpp",
+					"workingDirectory" : "/Users/terencege/Developer/bitportal/bitportal-client/android/app/.externalNativeBuild/cmake/release/x86"
+				},
+				
+				{
+					"flags" : "  --target=i686-none-linux-android --gcc-toolchain=/Users/terencege/Library/Android/sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/darwin-x86_64 --sysroot=/Users/terencege/Library/Android/sdk/ndk-bundle/sysroot  -Dcore_EXPORTS -I../../../../../../tools/djinni/support-lib -I../../../../../../tools/djinni/support-lib/jni -I../../../../../../core/djinni/cpp -I../../../../../../core/djinni/jni -I../../../../../../core/native/cpp/trezor-crypto -isystem /Users/terencege/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include -isystem /Users/terencege/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/libs/x86/include -isystem /Users/terencege/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/backward  -isystem /Users/terencege/Library/Android/sdk/ndk-bundle/sysroot/usr/include/i686-linux-android -D__ANDROID_API__=16 -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -Wa,--noexecstack -Wformat -Werror=format-security   -O2 -DNDEBUG  -fPIC    -c ",
+					"src" : "/Users/terencege/Developer/bitportal/bitportal-client/core/djinni/jni/NativeCore.cpp",
+					"workingDirectory" : "/Users/terencege/Developer/bitportal/bitportal-client/android/app/.externalNativeBuild/cmake/release/x86"
+				},
+				
+				{
+					"flags" : "  --target=i686-none-linux-android --gcc-toolchain=/Users/terencege/Library/Android/sdk/ndk-bundle/toolchains/x86-4.9/prebuilt/darwin-x86_64 --sysroot=/Users/terencege/Library/Android/sdk/ndk-bundle/sysroot  -Dcore_EXPORTS -I../../../../../../tools/djinni/support-lib -I../../../../../../tools/djinni/support-lib/jni -I../../../../../../core/djinni/cpp -I../../../../../../core/djinni/jni -I../../../../../../core/native/cpp/trezor-crypto -isystem /Users/terencege/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include -isystem /Users/terencege/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/libs/x86/include -isystem /Users/terencege/Library/Android/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/backward  -isystem /Users/terencege/Library/Android/sdk/ndk-bundle/sysroot/usr/include/i686-linux-android -D__ANDROID_API__=16 -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -Wa,--noexecstack -Wformat -Werror=format-security   -O2 -DNDEBUG  -fPIC    -c ",
+					"src" : "/Users/terencege/Developer/bitportal/bitportal-client/core/native/cpp/core_impl.cpp",
+					"workingDirectory" : "/Users/terencege/Developer/bitportal/bitportal-client/android/app/.externalNativeBuild/cmake/release/x86"
+				}
+			],
+			"output" : "/Users/terencege/Developer/bitportal/bitportal-client/android/app/build/intermediates/cmake/release/obj/x86/libcore.so",
+			"toolchain" : "6976344896211006268"
+		}
+	},
+	"toolchains" : 
+	{
+		"6976344896211006268" : 
+		{
+			"cCompilerExecutable" : "/Users/terencege/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang",
+			"cppCompilerExecutable" : "/Users/terencege/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++"
+		}
+	}
+}

@@ -2,7 +2,7 @@
 #include <string>
 
 extern "C" {
-  #include "pbkdf2.h"
+  #include "trezor-crypto/pbkdf2.h"
   // #include "scrypt/crypto_scrypt.h"
 }
 
