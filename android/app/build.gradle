@@ -116,6 +116,12 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++11 -frtti -fexceptions"
+                arguments "-DANDROID_TOOLCHAIN=clang", "-DANDROID_STL=c++_shared"
+            }
+        }
     }
 
     signingConfigs {
@@ -140,6 +146,21 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+    }
+    sourceSets {
+        main {
+            java {
+                srcDirs = [
+                        "../../core/djinni/java",
+                        "src/main/java"
+                ]
+            }
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
         }
     }
     // applicationVariants are e.g. debug, release
