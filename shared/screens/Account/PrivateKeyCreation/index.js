@@ -73,7 +73,7 @@ export default class PrivateKeyCreation extends BaseScreen {
             <View style={styles.content}>
 
               <InputItem 
-                title="Name Your Bitportal" 
+                title="Name Your BitPortal" 
                 placeholder="Up to 12 characters" 
                 isContentVaild={isAccountVaild}
                 textFilter={(text) => (text.substring(0, 12))}

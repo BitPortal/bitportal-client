@@ -1,4 +1,4 @@
-# Bitportal Client
+# BitPortal Client
 
 BitPortal client for web, ios, android, windows and macOS
 
