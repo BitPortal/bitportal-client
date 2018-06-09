@@ -132,7 +132,7 @@
 		34AA718B20CA3BFB009C733E /* ed25519-donna-32bit-tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 34AA717E20CA3BFA009C733E /* ed25519-donna-32bit-tables.c */; };
 		34AA718C20CA3BFB009C733E /* curve25519-donna-32bit.c in Sources */ = {isa = PBXBuildFile; fileRef = 34AA717F20CA3BFA009C733E /* curve25519-donna-32bit.c */; };
 		34AA718D20CA3BFB009C733E /* ed25519-keccak.c in Sources */ = {isa = PBXBuildFile; fileRef = 34AA718120CA3BFB009C733E /* ed25519-keccak.c */; };
-		34AA719020CA3CDB009C733E /* CoreManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 34AA718F20CA3CDB009C733E /* CoreManager.mm */; };
+		34AA719020CA3CDB009C733E /* BPCoreModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 34AA718F20CA3CDB009C733E /* BPCoreModule.mm */; };
 		3C4507934177471B93375682 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE5CE8E4DC4D17BDEAF27C /* libRNRandomBytes.a */; };
 		43E5398727FA4DD5AB8E784C /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B86296E851D9480F9E6147E9 /* libRNBlur.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
@@ -842,8 +842,8 @@
 		34AA718120CA3BFB009C733E /* ed25519-keccak.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "ed25519-keccak.c"; path = "../../../../core/native/cpp/trezor-crypto/ed25519-donna/ed25519-keccak.c"; sourceTree = "<group>"; };
 		34AA718220CA3BFB009C733E /* ed25519-sha3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ed25519-sha3.h"; path = "../../../../core/native/cpp/trezor-crypto/ed25519-donna/ed25519-sha3.h"; sourceTree = "<group>"; };
 		34AA718320CA3BFB009C733E /* curve25519-donna-scalarmult-base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "curve25519-donna-scalarmult-base.h"; path = "../../../../core/native/cpp/trezor-crypto/ed25519-donna/curve25519-donna-scalarmult-base.h"; sourceTree = "<group>"; };
-		34AA718E20CA3CDB009C733E /* CoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CoreManager.h; path = ../../core/native/objc/CoreManager.h; sourceTree = "<group>"; };
-		34AA718F20CA3CDB009C733E /* CoreManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CoreManager.mm; path = ../../core/native/objc/CoreManager.mm; sourceTree = "<group>"; };
+		34AA718E20CA3CDB009C733E /* BPCoreModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BPCoreModule.h; path = ../../core/native/objc/BPCoreModule.h; sourceTree = "<group>"; };
+		34AA718F20CA3CDB009C733E /* BPCoreModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BPCoreModule.mm; path = ../../core/native/objc/BPCoreModule.mm; sourceTree = "<group>"; };
 		38C4780193CC49979A90CDFD /* ReactNativePermissions.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePermissions.xcodeproj; path = "../node_modules/react-native-permissions/ios/ReactNativePermissions.xcodeproj"; sourceTree = "<group>"; };
 		41F22B0429D24A1B96F7A5CE /* libRNSensitiveInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSensitiveInfo.a; sourceTree = "<group>"; };
 		459B006740E5446CA1BEC977 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
@@ -1335,8 +1335,8 @@
 		34AA70E020CA3995009C733E /* Bridge */ = {
 			isa = PBXGroup;
 			children = (
-				34AA718E20CA3CDB009C733E /* CoreManager.h */,
-				34AA718F20CA3CDB009C733E /* CoreManager.mm */,
+				34AA718E20CA3CDB009C733E /* BPCoreModule.h */,
+				34AA718F20CA3CDB009C733E /* BPCoreModule.mm */,
 				34AA70E220CA39AA009C733E /* BPCore.h */,
 				34AA70E320CA39AA009C733E /* BPCore+Private.h */,
 				34AA70E120CA39AA009C733E /* BPCore+Private.mm */,
@@ -2327,7 +2327,7 @@
 				1836E60E2090628000C81AED /* BubbleDataExtract.swift in Sources */,
 				34AA711E20CA3BA6009C733E /* hmac.c in Sources */,
 				1836E6202090628000C81AED /* RNLineChartView.swift in Sources */,
-				34AA719020CA3CDB009C733E /* CoreManager.mm in Sources */,
+				34AA719020CA3CDB009C733E /* BPCoreModule.mm in Sources */,
 				34AA718C20CA3BFB009C733E /* curve25519-donna-32bit.c in Sources */,
 				1836E61B2090628000C81AED /* ChartDateFormatter.swift in Sources */,
 				1836E6192090628000C81AED /* RNCombinedChartView.swift in Sources */,

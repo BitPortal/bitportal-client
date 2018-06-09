@@ -6,11 +6,11 @@
 //  Copyright © 2018 Facebook. All rights reserved.
 //
 
-#import "CoreManager.h"
+#import "BPCoreModule.h"
 #import <React/RCTLog.h>
 #import "BPCore.h"
 
-@implementation CoreManager
+@implementation BPCoreModule
 
 BPCore *_cppApi = [BPCore create];
 

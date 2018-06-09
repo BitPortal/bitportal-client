@@ -8,6 +8,6 @@
 
 #import <React/RCTBridgeModule.h>
 
-@interface CoreManager : NSObject <RCTBridgeModule>
+@interface BPCoreModule : NSObject <RCTBridgeModule>
 
 @end

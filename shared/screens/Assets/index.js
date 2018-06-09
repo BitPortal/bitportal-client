@@ -159,7 +159,7 @@ export default class Assets extends BaseScreen {
     }
 
     await scrypt('secret', 'salt', 262144, 8, 1, 32)
-    const { pbkdf2 } = NativeModules.CoreManager
+    const { pbkdf2 } = NativeModules.BPCoreModule
     const dkey = await pbkdf2('secret', 'salt', 100000, 64, 'sha512')
     console.log(dkey)
   }

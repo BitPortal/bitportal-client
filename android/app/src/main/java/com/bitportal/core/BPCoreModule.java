@@ -27,7 +27,7 @@ public class BPCoreModule extends ReactContextBaseJavaModule {
 
     @Override
     public String getName() {
-        return "CoreManager";
+        return "BPCoreModule";
     }
 
     @ReactMethod
