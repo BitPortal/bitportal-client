@@ -57,7 +57,7 @@ export const getIdFromEntropy = (entropy: string) => {
 }
 
 export const getIdFromSeed = (seed: Buffer) => {
-  const MASTER_SALT = Buffer.from('Bitportal seed', 'utf8')
+  const MASTER_SALT = Buffer.from('BitPortal seed', 'utf8')
   const privateKey = createHmac('sha256', MASTER_SALT).update(seed).digest()
   assert(secp256k1.privateKeyVerify(privateKey), 'Invalid private key!')
   const publicKey = secp256k1.publicKeyCreate(privateKey)

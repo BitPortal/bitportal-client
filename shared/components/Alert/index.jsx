@@ -8,7 +8,7 @@ export default class AlertModal extends Component {
   componentWillReceiveProps(nextProps) {
     const delay = this.props.delay || 0
     if (nextProps.message !== this.props.message && nextProps.message) {
-      setTimeout(() => {
+      this.timer = setTimeout(() => {
         Alert.alert(
           nextProps.message,
           null,
@@ -17,6 +17,7 @@ export default class AlertModal extends Component {
           ],
           { cancelable: false }
         )
+        clearTimeout(this.timer)
       }, delay)
     }
   }

@@ -1,0 +1,12 @@
+[submodule "tools/wasmception"]
+	path = tools/wasmception
+	url = https://github.com/yurydelendik/wasmception.git
+[submodule "tools/djinni"]
+	path = tools/djinni
+	url = https://github.com/dropbox/djinni.git
+[submodule "core/native/cpp/breadwallet-core"]
+	path = core/native/cpp/breadwallet-core
+	url = https://github.com/breadwallet/breadwallet-core.git
+[submodule "core/native/cpp/trezor-crypto"]
+	path = core/native/cpp/trezor-crypto
+	url = https://github.com/TerenceGe/trezor-crypto.git

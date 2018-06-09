@@ -8,6 +8,7 @@ import MarketDetails      from 'screens/Market/MarketDetails'
 
 import Alerts             from 'screens/Alerts'
 import Welcome            from 'screens/Welcome'
+import LightBox           from 'screens/LightBox'
 import QRCodeScanner      from 'screens/QRCodeScanner'
 import TransactionRecord  from 'screens/TransactionRecord'
 
@@ -48,6 +49,7 @@ import TransactionHistory from 'screens/Profile/TransactionHistory'
 export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.Alerts',             () => Alerts,             store, provider)
   Navigation.registerComponent('BitPortal.Welcome',            () => Welcome,            store, provider)
+  Navigation.registerComponent('BitPortal.LightBox',           () => LightBox,           store, provider)
   Navigation.registerComponent('BitPortal.QRCodeScanner',      () => QRCodeScanner,      store, provider)
   Navigation.registerComponent('BitPortal.TransactionRecord',  () => TransactionRecord,  store, provider)
 

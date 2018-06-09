@@ -37,10 +37,12 @@ const ListItem = ({ item, rank, onRowPress }) => {
           </View>
         </View>
         <View style={{ alignItems: 'center' }}>
-          <Text style={styles.text14}> {item.totalVotes} </Text>
-          <View style={{ marginTop: 3 }}>
-            {(rank+1)%2 == 0 && <Ionicons name="ios-thumbs-up-outline" size={20} color={Colors.textColor_255_76_118} />}
-          </View>
+          {
+            item.hasVoted ? 
+            <Ionicons name="md-checkmark-circle" size={26} color={Colors.textColor_89_185_226} />
+            :
+            <View style={styles.radius} />
+          }
         </View>
       </View>
     </TouchableHighlight>
@@ -49,7 +51,7 @@ const ListItem = ({ item, rank, onRowPress }) => {
 
 export default class VoteList extends React.PureComponent {
   
-  keyExtractor = (item) => item.id
+  keyExtractor = (item) => item.id+item.name
 
   renderItem = ({ item, index }) => (
     <ListItem key={item.id} item={item} rank={index} onRowPress={() => this.props.onRowPress(item)} />
@@ -62,7 +64,7 @@ export default class VoteList extends React.PureComponent {
   render() {
     return (
       <FlatList
-        data={this.props.data} 
+        data={this.props.data.toJS()} 
         renderItem={this.renderItem}
         keyExtractor={this.keyExtractor}
         showsVerticalScrollIndicator={false}
@@ -75,7 +77,7 @@ export default class VoteList extends React.PureComponent {
 }
 
 VoteList.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.any,
   onRefresh: PropTypes.func,
   onRowPress: PropTypes.func,
   refreshing: PropTypes.bool

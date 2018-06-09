@@ -11,11 +11,21 @@ import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import messages from './messages'
 import VersionNumber from 'react-native-version-number'
+import { bindActionCreators } from 'redux'
+import * as versionInfoActions from 'actions/versionInfo'
 import { BITPORTAL_API_TERMS_URL, BITPORTAL_API_UPDATE_LOG_URL } from 'constants/env'
+import Loading from 'components/Loading'
+import { update, isNewest, showIsLast } from 'utils/update'
 
 @connect(
   (state) => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.get('locale'),
+    versionInfo: state.versionInfo
+  }),
+  (dispatch) => ({
+    actions: bindActionCreators({
+      ...versionInfoActions
+    }, dispatch)
   })
 )
 
@@ -49,11 +59,21 @@ export default class About extends BaseScreen {
       default:
         return
     }
-    
+  }
+
+  getVersionInfo = () => {
+    if (isNewest) {
+      const data = this.props.versionInfo.get('data')
+      const locale = this.props.locale
+      showIsLast(data, locale)
+    } else {
+      this.props.actions.getVersionInfoRequested()
+    }
   }
 
   render() {
-    const { locale } = this.props
+    const { locale, versionInfo } = this.props
+    const loading = versionInfo.get('loading')
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -67,7 +87,9 @@ export default class About extends BaseScreen {
               contentContainerStyle={{ alignItems: 'center' }} 
             >
               <View style={styles.content}>
-                <Image style={styles.image} source={Images.logo} resizeMode="center" />
+                <View style={[styles.image, { borderRadius: 15 }]}>
+                  <Image style={styles.image} source={Images.logo} resizeMode="contain" />
+                </View>
                 <Text style={[styles.text12, { marginTop: 10 }]}> 
                   <FormattedMessage id="abt_subttl_txt_version" />
                     : {VersionNumber.appVersion} 
@@ -85,8 +107,12 @@ export default class About extends BaseScreen {
                 leftItemTitle={<FormattedMessage id="abt_sec_title_update" />} 
                 onPress={() => this.changePage('UpdateLogs')}
               />
-              <SettingItem leftItemTitle={<FormattedMessage id="abt_sec_title_check" />} onPress={() => {}} />
+              <SettingItem 
+                leftItemTitle={<FormattedMessage id="abt_sec_title_check" />} 
+                onPress={this.getVersionInfo} 
+              />
             </ScrollView>
+            <Loading isVisible={loading} />
           </View>
         </View>
       </IntlProvider>

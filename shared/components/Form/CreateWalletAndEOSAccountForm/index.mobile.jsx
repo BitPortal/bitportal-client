@@ -92,7 +92,7 @@ export default class CreateWalletAndEOSAccountForm extends Component {
     return (
       <FormContainer>
         <Field
-          label="Bitportal Wallet Name"
+          label="BitPortal Wallet Name"
           name="name"
           component={TextField}
         />

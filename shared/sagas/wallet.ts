@@ -247,6 +247,8 @@ function* logoutRequested(action: Action<LogoutParams>) {
     const bpid = action.payload.bpid
     const coin = action.payload.coin
 
+    assert(origin, 'No origin!')
+
     if (origin === 'hd') {
       const keystore = yield call(secureStorage.getItem, `HD_KEYSTORE_${bpid}`, true)
       yield call(decrypt, keystore, password)

@@ -30,9 +30,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   image: {
-    width: 100,
-    height: 100,
-    borderRadius: 4,
+    width: 75,
+    height: 75
   },
   text12: {
     fontSize: FontScale(12),

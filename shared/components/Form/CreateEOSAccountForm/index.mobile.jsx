@@ -66,7 +66,7 @@ export default class CreateEOSAccountForm extends Component {
           normalize={normalizeEOSAccountName}
         />
         <Field
-          label="Bitportal Wallet Password"
+          label="BitPortal Wallet Password"
           name="password"
           component={PasswordField}
         />
