@@ -11,7 +11,6 @@ import {
   // pbkdf2
 } from 'crypto'
 import { NativeModules } from 'react-native'
-// import { pbkdf2, scrypt } from 'react-native-fast-crypto'
 import * as RNRandomBytes from 'react-native-randombytes'
 import base58 from 'bs58'
 import secp256k1 from 'secp256k1'
@@ -59,9 +58,9 @@ const randomBytes = async (length) => {
 // const scrypt = async (password, salt, N, r, p, dkLen) => {
 //   return new Promise((resolve, reject) => {
 //     scryptAsync(password, salt, {
-//       N, r, p, dkLen
+//       N, r, p, dkLen, encoding: 'hex'
 //     }, (derivedKey) => {
-//       resolve(Buffer.from(derivedKey))
+//       resolve(derivedKey)
 //     })
 //   })
 // }

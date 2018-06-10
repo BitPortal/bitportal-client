@@ -26,7 +26,6 @@ import messages from './messages'
 import NavigationBar, { ListButton, CommonRightButton, CommonTitle } from 'components/NavigationBar'
 import SettingItem from 'components/SettingItem'
 import Loading from 'components/Loading'
-// import { scrypt } from 'react-native-fast-crypto'
 
 const getTotalAssets = (balanceList, eosPrice) => {
   if (!balanceList) return 0
@@ -59,9 +58,7 @@ export default class Assets extends BaseScreen {
 
     this.state = {
       isVisible: false,
-      isVisible2: false,
-      time1: 0,
-      time2: 0
+      isVisible2: false
     }
 
     this.switchWallet = this.switchWallet.bind(this)
@@ -159,15 +156,6 @@ export default class Assets extends BaseScreen {
         account: eosAccountName
       })
     }
-
-    const { pbkdf2 } = NativeModules.BPCoreModule
-    const t1 = +Date.now()
-    // await scrypt('secret', 'salt', 262144, 8, 1, 32)
-    const t2 = +Date.now()
-    await NativeModules.BPCoreModule.scrypt('secret', 'salt', 262144, 8, 1, 32)
-    const t3 = +Date.now()
-    this.setState({ time1: t2 - t1 })
-    this.setState({ time2: t3 - t2 })
   }
 
   render() {
@@ -192,7 +180,7 @@ export default class Assets extends BaseScreen {
               <View style={{ alignItems: 'center' }}>
                 <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF} />
                 <Text style={[styles.text14, { color: Colors.textColor_255_255_238, marginTop: 20 }]}>
-                  <FormattedMessage id="addpage_button_name_crt" /> {this.state.time1} {this.state.time2}
+                  <FormattedMessage id="addpage_button_name_crt" />
                 </Text>
               </View>
             </TouchableOpacity>
