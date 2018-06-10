@@ -120,12 +120,14 @@ export const encrypt = async (input: string, password: string, opts: object) => 
   if (kdf === 'pbkdf2') {
     kdfparams.c = opts.c || 262144
     kdfparams.prf = 'hmac-sha256'
-    derivedKey = await pbkdf2(Buffer.from(password).toString('hex'), salt, kdfparams.c, kdfparams.dklen, 'sha256')
+    const derivedKeyHex = await pbkdf2(Buffer.from(password).toString('hex'), kdfparams.salt, kdfparams.c, kdfparams.dklen, 'sha256')
+    derivedKey = Buffer.from(derivedKeyHex, 'hex')
   } else if (kdf === 'scrypt') {
     kdfparams.n = opts.n || 262144
     kdfparams.r = opts.r || 8
     kdfparams.p = opts.p || 1
-    derivedKey = await scrypt(Buffer.from(password).toString('hex'), salt, kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen)
+    const derivedKeyHex = await scrypt(Buffer.from(password).toString('hex'), kdfparams.salt, kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen)
+    derivedKey = Buffer.from(derivedKeyHex, 'hex')
   } else {
     throw new Error('Unsupported kdf')
   }
@@ -176,7 +178,8 @@ export const decrypt = async (input: object | string, password: string, nonStric
   if (json.crypto.kdf === 'scrypt') {
     kdfparams = json.crypto.kdfparams
 
-    derivedKey = await scrypt(Buffer.from(password).toString('hex'), kdfparams.salt, kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen)
+    const derivedKeyHex = await scrypt(Buffer.from(password).toString('hex'), kdfparams.salt, kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen)
+    derivedKey = Buffer.from(derivedKeyHex, 'hex')
   } else if (json.crypto.kdf === 'pbkdf2') {
     kdfparams = json.crypto.kdfparams
 
@@ -184,7 +187,8 @@ export const decrypt = async (input: object | string, password: string, nonStric
       throw new Error('Unsupported parameters to PBKDF2')
     }
 
-    derivedKey = await pbkdf2(Buffer.from(password).toString('hex'), kdfparams.salt, kdfparams.c, kdfparams.dklen, 'sha256')
+    const derivedKeyHex = await pbkdf2(Buffer.from(password).toString('hex'), kdfparams.salt, kdfparams.c, kdfparams.dklen, 'sha256')
+    derivedKey = Buffer.from(derivedKeyHex, 'hex')
   } else {
     throw new Error('Unsupported key derivation scheme')
   }
