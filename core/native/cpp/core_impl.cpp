@@ -3,7 +3,7 @@
 
 extern "C" {
   #include "trezor-crypto/pbkdf2.h"
-  // #include "scrypt/crypto_scrypt.h"
+  #include "crypto/crypto.h"
 }
 
 namespace core {
@@ -77,18 +77,18 @@ namespace core {
         return (std::string) keyHex;
     }
 
-    // std::string CoreImpl::scrypt(const std::string & password, const std::string & salt, int32_t N, int32_t r, int32_t p, int8_t dklen) {
-    //     const uint8_t *passwordBytes = (unsigned char *)(password.c_str());
-    //     const uint8_t *saltBytes = (unsigned char *)(salt.c_str());
-    //     size_t passlen = std::strlen(password.c_str());
-    //     size_t saltlen = std::strlen(salt.c_str());
+     std::string CoreImpl::scrypt(const std::string & password, const std::string & salt, int32_t N, int8_t r, int8_t p, int8_t dklen) {
+         const uint8_t *passwordBytes = (unsigned char *)(password.c_str());
+         const uint8_t *saltBytes = (unsigned char *)(salt.c_str());
+         size_t passlen = std::strlen(password.c_str());
+         size_t saltlen = std::strlen(salt.c_str());
 
-    //     unsigned char key[dklen];
+         unsigned char key[dklen];
 
-    //     crypto_scrypt(passwordBytes, passlen, saltBytes, saltlen, N, r, p, key, dklen);
+         BRScrypt(key, dklen, passwordBytes, passlen, saltBytes, saltlen, N, r, p);
 
-    //     char keyHex[(dklen * 2) + 1];
-    //     bytesToHex(key, sizeof(key), keyHex);
-    //     return (std::string) keyHex;
-    // }
+         char keyHex[(dklen * 2) + 1];
+         bytesToHex(key, sizeof(key), keyHex);
+         return (std::string) keyHex;
+     }
 }

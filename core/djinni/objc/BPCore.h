@@ -15,4 +15,11 @@
                       keylen:(int8_t)keylen
                       digest:(nonnull NSString *)digest;
 
+- (nonnull NSString *)scrypt:(nonnull NSString *)password
+                        salt:(nonnull NSString *)salt
+                           N:(int32_t)N
+                           r:(int8_t)r
+                           p:(int8_t)p
+                       dkLen:(int8_t)dkLen;
+
 @end

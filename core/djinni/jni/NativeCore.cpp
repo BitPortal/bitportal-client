@@ -42,4 +42,19 @@ CJNIEXPORT jstring JNICALL Java_com_bitportal_core_Core_00024CppProxy_native_1pb
     } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
 }
 
+CJNIEXPORT jstring JNICALL Java_com_bitportal_core_Core_00024CppProxy_native_1scrypt(JNIEnv* jniEnv, jobject /*this*/, jlong nativeRef, jstring j_password, jstring j_salt, jint j_N, jbyte j_r, jbyte j_p, jbyte j_dkLen)
+{
+    try {
+        DJINNI_FUNCTION_PROLOGUE1(jniEnv, nativeRef);
+        const auto& ref = ::djinni::objectFromHandleAddress<::core::Core>(nativeRef);
+        auto r = ref->scrypt(::djinni::String::toCpp(jniEnv, j_password),
+                             ::djinni::String::toCpp(jniEnv, j_salt),
+                             ::djinni::I32::toCpp(jniEnv, j_N),
+                             ::djinni::I8::toCpp(jniEnv, j_r),
+                             ::djinni::I8::toCpp(jniEnv, j_p),
+                             ::djinni::I8::toCpp(jniEnv, j_dkLen));
+        return ::djinni::release(::djinni::String::fromCpp(jniEnv, r));
+    } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
+}
+
 }  // namespace djinni_generated

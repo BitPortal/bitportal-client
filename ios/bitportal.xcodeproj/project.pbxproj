@@ -13,7 +13,6 @@
 		00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
-		0581C129743946D2A07759C8 /* libRNFastCrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29ED2EC2371449BA9E333351 /* libRNFastCrypto.a */; };
 		0779ACBE821F41BABD68F497 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 038B2D4747404569AD1A6A38 /* EvilIcons.ttf */; };
 		09B8273B350D4C26AFEA787C /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F6EC61CB1F246A29B1C589D /* libSplashScreen.a */; };
 		115FECE84DEC4025872128D1 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9528833972234C60B5F47256 /* SimpleLineIcons.ttf */; };
@@ -133,8 +132,7 @@
 		34AA718C20CA3BFB009C733E /* curve25519-donna-32bit.c in Sources */ = {isa = PBXBuildFile; fileRef = 34AA717F20CA3BFA009C733E /* curve25519-donna-32bit.c */; };
 		34AA718D20CA3BFB009C733E /* ed25519-keccak.c in Sources */ = {isa = PBXBuildFile; fileRef = 34AA718120CA3BFB009C733E /* ed25519-keccak.c */; };
 		34AA719020CA3CDB009C733E /* BPCoreModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 34AA718F20CA3CDB009C733E /* BPCoreModule.mm */; };
-		34AA720F20CC24E9009C733E /* sha256.c in Sources */ = {isa = PBXBuildFile; fileRef = 34AA720A20CC24E9009C733E /* sha256.c */; };
-		34AA721020CC24E9009C733E /* crypto_scrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 34AA720E20CC24E9009C733E /* crypto_scrypt.c */; };
+		34AA733020CCE369009C733E /* crypto.c in Sources */ = {isa = PBXBuildFile; fileRef = 34AA732E20CCE368009C733E /* crypto.c */; };
 		3C4507934177471B93375682 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE5CE8E4DC4D17BDEAF27C /* libRNRandomBytes.a */; };
 		43E5398727FA4DD5AB8E784C /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B86296E851D9480F9E6147E9 /* libRNBlur.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
@@ -153,6 +151,7 @@
 		D023FF8940464E9991C0DC59 /* libRNSensitiveInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F22B0429D24A1B96F7A5CE /* libRNSensitiveInfo.a */; };
 		DA5CA4C299F44AE8B524A69D /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0DCD6A5DD3424ECC9FC0D42F /* Foundation.ttf */; };
 		E662FE3421664237A221E6FD /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E266F30BB5544C48714E51F /* libRNVectorIcons.a */; };
+		E676E90C83724180B2FEDC08 /* libRNFastCrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CAFA1DA2C8DC4243BBB017A6 /* libRNFastCrypto.a */; };
 		E6C0427315DD4ED798558A4A /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89FF76833E4343689BE91DCE /* libReactNativeNavigation.a */; };
 /* End PBXBuildFile section */
 
@@ -479,13 +478,6 @@
 			remoteGlobalIDString = BF8FCF941BFFB184000FCD37;
 			remoteInfo = RNSensitiveInfo;
 		};
-		3460952920BE9AEE00938FB0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1B187ECFE2F044F19973962C /* RNFastCrypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = RNFastCrypto;
-		};
 		3472432720B0B65C008D018F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -720,8 +712,6 @@
 		1836E6352090630E00C81AED /* bitportal-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "bitportal-Bridging-Header.h"; sourceTree = "<group>"; };
 		18EF1C0C209075F600BF5B70 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = Charts/Charts.xcodeproj; sourceTree = "<group>"; };
 		18EF1CB02090A01F00BF5B70 /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
-		1B187ECFE2F044F19973962C /* RNFastCrypto.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFastCrypto.xcodeproj; path = "../node_modules/react-native-fast-crypto/ios/RNFastCrypto.xcodeproj"; sourceTree = "<group>"; };
-		29ED2EC2371449BA9E333351 /* libRNFastCrypto.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFastCrypto.a; sourceTree = "<group>"; };
 		2DCE5CE8E4DC4D17BDEAF27C /* libRNRandomBytes.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNRandomBytes.a; sourceTree = "<group>"; };
 		34AA70D820CA394B009C733E /* DJIError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DJIError.h; path = "../../tools/djinni/support-lib/objc/DJIError.h"; sourceTree = "<group>"; };
 		34AA70D920CA394B009C733E /* DJIError.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = DJIError.mm; path = "../../tools/djinni/support-lib/objc/DJIError.mm"; sourceTree = "<group>"; };
@@ -846,11 +836,8 @@
 		34AA718320CA3BFB009C733E /* curve25519-donna-scalarmult-base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "curve25519-donna-scalarmult-base.h"; path = "../../../../core/native/cpp/trezor-crypto/ed25519-donna/curve25519-donna-scalarmult-base.h"; sourceTree = "<group>"; };
 		34AA718E20CA3CDB009C733E /* BPCoreModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BPCoreModule.h; path = ../../core/native/objc/BPCoreModule.h; sourceTree = "<group>"; };
 		34AA718F20CA3CDB009C733E /* BPCoreModule.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = BPCoreModule.mm; path = ../../core/native/objc/BPCoreModule.mm; sourceTree = "<group>"; };
-		34AA720A20CC24E9009C733E /* sha256.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha256.c; path = ../../../core/native/cpp/scrypt/sha256.c; sourceTree = "<group>"; };
-		34AA720B20CC24E9009C733E /* sha256.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sha256.h; path = ../../../core/native/cpp/scrypt/sha256.h; sourceTree = "<group>"; };
-		34AA720C20CC24E9009C733E /* crypto_scrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = crypto_scrypt.h; path = ../../../core/native/cpp/scrypt/crypto_scrypt.h; sourceTree = "<group>"; };
-		34AA720D20CC24E9009C733E /* sysendian.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sysendian.h; path = ../../../core/native/cpp/scrypt/sysendian.h; sourceTree = "<group>"; };
-		34AA720E20CC24E9009C733E /* crypto_scrypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = crypto_scrypt.c; path = ../../../core/native/cpp/scrypt/crypto_scrypt.c; sourceTree = "<group>"; };
+		34AA732E20CCE368009C733E /* crypto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = crypto.c; path = ../../../core/native/cpp/crypto/crypto.c; sourceTree = "<group>"; };
+		34AA732F20CCE369009C733E /* crypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = crypto.h; path = ../../../core/native/cpp/crypto/crypto.h; sourceTree = "<group>"; };
 		38C4780193CC49979A90CDFD /* ReactNativePermissions.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePermissions.xcodeproj; path = "../node_modules/react-native-permissions/ios/ReactNativePermissions.xcodeproj"; sourceTree = "<group>"; };
 		41F22B0429D24A1B96F7A5CE /* libRNSensitiveInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSensitiveInfo.a; sourceTree = "<group>"; };
 		459B006740E5446CA1BEC977 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
@@ -876,6 +863,7 @@
 		C02B79A5AF294526A859B506 /* ReactNativeConfig.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeConfig.xcodeproj; path = "../node_modules/react-native-config/ios/ReactNativeConfig.xcodeproj"; sourceTree = "<group>"; };
 		C594A110612840FD81FF27B5 /* RNCamera.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RNCamera.xcodeproj"; sourceTree = "<group>"; };
 		C5BE614B86B24308B2D0B72D /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		CAFA1DA2C8DC4243BBB017A6 /* libRNFastCrypto.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFastCrypto.a; sourceTree = "<group>"; };
 		E03801B0050446E1B0943001 /* libRNRandomBytes-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNRandomBytes-tvOS.a"; sourceTree = "<group>"; };
 		E378031D0A07409DB9E63E29 /* libRNSVG.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSVG.a; sourceTree = "<group>"; };
 		ECA1E4EECB8E4BE68D5CA430 /* RNBlur.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNBlur.xcodeproj; path = "../node_modules/react-native-blur/ios/RNBlur.xcodeproj"; sourceTree = "<group>"; };
@@ -918,7 +906,7 @@
 				AD83B47857424C849778388D /* libRNCamera.a in Frameworks */,
 				43E5398727FA4DD5AB8E784C /* libRNBlur.a in Frameworks */,
 				8742690AC5034BEA97098A14 /* libRNVersionNumber.a in Frameworks */,
-				0581C129743946D2A07759C8 /* libRNFastCrypto.a in Frameworks */,
+				E676E90C83724180B2FEDC08 /* libRNFastCrypto.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1230,7 +1218,7 @@
 				47CDB62F8CE244FFAF5141FB /* libRNCamera.a */,
 				B86296E851D9480F9E6147E9 /* libRNBlur.a */,
 				076FB8ACFE2F417EBF4087E8 /* libRNVersionNumber.a */,
-				29ED2EC2371449BA9E333351 /* libRNFastCrypto.a */,
+				CAFA1DA2C8DC4243BBB017A6 /* libRNFastCrypto.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -1318,14 +1306,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3460952620BE9AEE00938FB0 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3460952A20BE9AEE00938FB0 /* libRNFastCrypto.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		34AA70D720CA3920009C733E /* Djinni */ = {
 			isa = PBXGroup;
 			children = (
@@ -1354,7 +1334,7 @@
 		34AA70E520CA39CF009C733E /* Native */ = {
 			isa = PBXGroup;
 			children = (
-				34AA71C920CC24D9009C733E /* scrypt */,
+				34AA732A20CCE2EE009C733E /* crypto */,
 				34AA70EA20CA3B1E009C733E /* trezor-crypto */,
 				34AA70E620CA39DE009C733E /* core.hpp */,
 				34AA70E720CA3B14009C733E /* core_impl.cpp */,
@@ -1503,16 +1483,13 @@
 			path = "ed25519-donna";
 			sourceTree = "<group>";
 		};
-		34AA71C920CC24D9009C733E /* scrypt */ = {
+		34AA732A20CCE2EE009C733E /* crypto */ = {
 			isa = PBXGroup;
 			children = (
-				34AA720E20CC24E9009C733E /* crypto_scrypt.c */,
-				34AA720C20CC24E9009C733E /* crypto_scrypt.h */,
-				34AA720A20CC24E9009C733E /* sha256.c */,
-				34AA720B20CC24E9009C733E /* sha256.h */,
-				34AA720D20CC24E9009C733E /* sysendian.h */,
+				34AA732E20CCE368009C733E /* crypto.c */,
+				34AA732F20CCE369009C733E /* crypto.h */,
 			);
-			path = scrypt;
+			path = crypto;
 			sourceTree = "<group>";
 		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
@@ -1562,7 +1539,6 @@
 				C594A110612840FD81FF27B5 /* RNCamera.xcodeproj */,
 				ECA1E4EECB8E4BE68D5CA430 /* RNBlur.xcodeproj */,
 				EE6AE622B3C44CFEA40D48DB /* RNVersionNumber.xcodeproj */,
-				1B187ECFE2F044F19973962C /* RNFastCrypto.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1752,10 +1728,6 @@
 				{
 					ProductGroup = 18E8845E20A0033D00B9D792 /* Products */;
 					ProjectRef = C594A110612840FD81FF27B5 /* RNCamera.xcodeproj */;
-				},
-				{
-					ProductGroup = 3460952620BE9AEE00938FB0 /* Products */;
-					ProjectRef = 1B187ECFE2F044F19973962C /* RNFastCrypto.xcodeproj */;
 				},
 				{
 					ProductGroup = 341B2DF2209B34E400FA6067 /* Products */;
@@ -2102,13 +2074,6 @@
 			remoteRef = 3423A01D20977E3C00E7EB8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3460952A20BE9AEE00938FB0 /* libRNFastCrypto.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNFastCrypto.a;
-			remoteRef = 3460952920BE9AEE00938FB0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		3472432820B0B65C008D018F /* libjsinspector.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -2310,7 +2275,6 @@
 				34AA711D20CA3BA6009C733E /* hasher.c in Sources */,
 				1836E6292090628000C81AED /* RNBarLineChartBaseManager.swift in Sources */,
 				34AA711820CA3B89009C733E /* groestl.c in Sources */,
-				34AA720F20CC24E9009C733E /* sha256.c in Sources */,
 				1836E6152090628000C81AED /* RNCandleStickChartView.swift in Sources */,
 				34AA710620CA3B72009C733E /* blake256.c in Sources */,
 				34AA716820CA3BE6009C733E /* rfc7539.c in Sources */,
@@ -2338,7 +2302,6 @@
 				34AA710920CA3B72009C733E /* bignum.c in Sources */,
 				34AA711320CA3B80009C733E /* ecdsa.c in Sources */,
 				1836E6312090628000C81AED /* BridgeUtils.swift in Sources */,
-				34AA721020CC24E9009C733E /* crypto_scrypt.c in Sources */,
 				1836E6072090628000C81AED /* RNBarChartManager.swift in Sources */,
 				34AA718920CA3BFB009C733E /* curve25519-donna-scalarmult-base.c in Sources */,
 				1836E6212090628000C81AED /* PieDataExtract.swift in Sources */,
@@ -2392,6 +2355,7 @@
 				1836E6272090628000C81AED /* RNRadarChartManagerBridge.m in Sources */,
 				1836E62B2090628000C81AED /* RNChartViewBase.swift in Sources */,
 				1836E6182090628000C81AED /* RNCombinedChartManagerBridge.m in Sources */,
+				34AA733020CCE369009C733E /* crypto.c in Sources */,
 				1836E62F2090628000C81AED /* RNScatterChartView.swift in Sources */,
 				1836E62C2090628000C81AED /* RNYAxisChartViewBase.swift in Sources */,
 				1836E6082090628000C81AED /* RNBarChartManagerBridge.m in Sources */,

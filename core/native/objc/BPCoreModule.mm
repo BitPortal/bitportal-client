@@ -34,17 +34,17 @@ RCT_REMAP_METHOD(pbkdf2,
     resolve(key);
 };
 
-// RCT_REMAP_METHOD(scrypt,
-//                  password: (NSString *) password
-//                  salt: (NSString *) salt
-//                  N: (NSInteger) N
-//                  r: (NSInteger) r
-//                  p: (NSInteger) p
-//                  dklen: (NSInteger) dklen
-//                  resolver:(RCTPromiseResolveBlock)resolve
-//                  rejecter:(RCTPromiseRejectBlock)reject)
-// {
-//   NSString *key = [_cppApi scrypt:password salt:salt N:(int32_t)N r:(int32_t)r p:(int32_t)p dklen:dklen];
-//   resolve(key);
-// };
+ RCT_REMAP_METHOD(scrypt,
+                  password: (NSString *) password
+                  salt: (NSString *) salt
+                  N: (NSInteger) N
+                  r: (NSInteger) r
+                  p: (NSInteger) p
+                  dklen: (NSInteger) dklen
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject)
+ {
+   NSString *key = [_cppApi scrypt:password salt:salt N:(int32_t)N r:(int8_t)r p:(int8_t)p dkLen:(int8_t)dklen];
+   resolve(key);
+ };
 @end
