@@ -46,4 +46,22 @@ public class BPCoreModule extends ReactContextBaseJavaModule {
             promise.reject("Err", e);
         }
     }
+
+    @ReactMethod
+    public void scrypt(
+        String password,
+        String salt,
+        int N,
+        int r,
+        int p,
+        int dkLen,
+        Promise promise) {
+        try {
+            String reply = cppApi.scrypt(password, salt, N, (byte) r, (byte) p, (byte) dkLen);
+            Log.d("scrypt", String.format("reply = %s", reply));
+            promise.resolve(reply);
+        } catch (Exception e) {
+            promise.reject("Err", e);
+        }
+    }
 }
