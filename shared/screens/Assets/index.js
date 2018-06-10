@@ -26,7 +26,6 @@ import messages from './messages'
 import NavigationBar, { ListButton, CommonRightButton, CommonTitle } from 'components/NavigationBar'
 import SettingItem from 'components/SettingItem'
 import Loading from 'components/Loading'
-import { scrypt } from 'react-native-fast-crypto'
 
 const getTotalAssets = (balanceList, eosPrice) => {
   if (!balanceList) return 0
@@ -157,11 +156,6 @@ export default class Assets extends BaseScreen {
         account: eosAccountName
       })
     }
-
-    await scrypt('secret', 'salt', 262144, 8, 1, 32)
-    const { pbkdf2 } = NativeModules.BPCoreModule
-    const dkey = await pbkdf2('secret', 'salt', 100000, 64, 'sha512')
-    console.log(dkey)
   }
 
   render() {

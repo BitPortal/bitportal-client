@@ -10,14 +10,16 @@ import {
   createDecipheriv,
   // pbkdf2
 } from 'crypto'
-import { pbkdf2, scrypt, secp256k1 } from 'react-native-fast-crypto'
+import { NativeModules } from 'react-native'
 import * as RNRandomBytes from 'react-native-randombytes'
 import base58 from 'bs58'
-// import secp256k1 from 'secp256k1'
+import secp256k1 from 'secp256k1'
 // import scryptAsync from 'scrypt-async'
 import uuidv4 from 'uuid/v4'
 import createKeccakHash from 'keccak'
 import { isValidPrivate, privateToPublic } from 'eos'
+
+const { pbkdf2, scrypt } = NativeModules.BPCoreModule
 
 const keccak = (a, bits) => {
   a = Buffer.from(a)
@@ -56,9 +58,9 @@ const randomBytes = async (length) => {
 // const scrypt = async (password, salt, N, r, p, dkLen) => {
 //   return new Promise((resolve, reject) => {
 //     scryptAsync(password, salt, {
-//       N, r, p, dkLen
+//       N, r, p, dkLen, encoding: 'hex'
 //     }, (derivedKey) => {
-//       resolve(Buffer.from(derivedKey))
+//       resolve(derivedKey)
 //     })
 //   })
 // }
@@ -115,16 +117,15 @@ export const encrypt = async (input: string, password: string, opts: object) => 
     salt: salt.toString('hex')
   }
 
-  // if (kdf === 'pbkdf2') {
-  //   kdfparams.c = opts.c || 262144
-  //   kdfparams.prf = 'hmac-sha512'
-  //   derivedKey = await pbkdf2.deriveAsync(Buffer.from(password), salt, kdfparams.c, kdfparams.dklen, 'sha512')
-  // } else
-  if (kdf === 'scrypt') {
+  if (kdf === 'pbkdf2') {
+    kdfparams.c = opts.c || 262144
+    kdfparams.prf = 'hmac-sha256'
+    derivedKey = await pbkdf2(Buffer.from(password).toString('hex'), salt, kdfparams.c, kdfparams.dklen, 'sha256')
+  } else if (kdf === 'scrypt') {
     kdfparams.n = opts.n || 262144
     kdfparams.r = opts.r || 8
     kdfparams.p = opts.p || 1
-    derivedKey = await scrypt(Buffer.from(password), salt, kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen)
+    derivedKey = await scrypt(Buffer.from(password).toString('hex'), salt, kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen)
   } else {
     throw new Error('Unsupported kdf')
   }
@@ -175,19 +176,18 @@ export const decrypt = async (input: object | string, password: string, nonStric
   if (json.crypto.kdf === 'scrypt') {
     kdfparams = json.crypto.kdfparams
 
-    derivedKey = await scrypt(Buffer.from(password), Buffer.from(kdfparams.salt, 'hex'), kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen)
+    derivedKey = await scrypt(Buffer.from(password).toString('hex'), kdfparams.salt, kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen)
+  } else if (json.crypto.kdf === 'pbkdf2') {
+    kdfparams = json.crypto.kdfparams
+
+    if (kdfparams.prf !== 'hmac-sha256') {
+      throw new Error('Unsupported parameters to PBKDF2')
+    }
+
+    derivedKey = await pbkdf2(Buffer.from(password).toString('hex'), kdfparams.salt, kdfparams.c, kdfparams.dklen, 'sha256')
   } else {
     throw new Error('Unsupported key derivation scheme')
   }
-  // else if (json.crypto.kdf === 'pbkdf2') {
-  //   kdfparams = json.crypto.kdfparams
-
-  //   if (kdfparams.prf !== 'hmac-sha512') {
-  //     throw new Error('Unsupported parameters to PBKDF2')
-  //   }
-
-  //   derivedKey = await pbkdf2.deriveAsync(Buffer.from(password), Buffer.from(kdfparams.salt, 'hex'), kdfparams.c, kdfparams.dklen, 'sha512')
-  // }
 
   const ciphertext = Buffer.from(json.crypto.ciphertext, 'hex')
 

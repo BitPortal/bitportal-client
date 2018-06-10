@@ -8,6 +8,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public abstract class Core {
     public abstract String pbkdf2(String password, String salt, int iterations, byte keylen, String digest);
 
+    public abstract String scrypt(String password, String salt, int N, byte r, byte p, byte dkLen);
+
     public static native Core create();
 
     private static final class CppProxy extends Core
@@ -40,5 +42,13 @@ public abstract class Core {
             return native_pbkdf2(this.nativeRef, password, salt, iterations, keylen, digest);
         }
         private native String native_pbkdf2(long _nativeRef, String password, String salt, int iterations, byte keylen, String digest);
+
+        @Override
+        public String scrypt(String password, String salt, int N, byte r, byte p, byte dkLen)
+        {
+            assert !this.destroyed.get() : "trying to use a destroyed object";
+            return native_scrypt(this.nativeRef, password, salt, N, r, p, dkLen);
+        }
+        private native String native_scrypt(long _nativeRef, String password, String salt, int N, byte r, byte p, byte dkLen);
     }
 }

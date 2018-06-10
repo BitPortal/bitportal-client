@@ -52,6 +52,23 @@ static_assert(__has_feature(objc_arc), "Djinni requires ARC to be enabled for th
     } DJINNI_TRANSLATE_EXCEPTIONS()
 }
 
+- (nonnull NSString *)scrypt:(nonnull NSString *)password
+                        salt:(nonnull NSString *)salt
+                           N:(int32_t)N
+                           r:(int8_t)r
+                           p:(int8_t)p
+                       dkLen:(int8_t)dkLen {
+    try {
+        auto objcpp_result_ = _cppRefHandle.get()->scrypt(::djinni::String::toCpp(password),
+                                                          ::djinni::String::toCpp(salt),
+                                                          ::djinni::I32::toCpp(N),
+                                                          ::djinni::I8::toCpp(r),
+                                                          ::djinni::I8::toCpp(p),
+                                                          ::djinni::I8::toCpp(dkLen));
+        return ::djinni::String::fromCpp(objcpp_result_);
+    } DJINNI_TRANSLATE_EXCEPTIONS()
+}
+
 namespace djinni_generated {
 
 auto Core::toCpp(ObjcType objc) -> CppType
