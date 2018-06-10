@@ -151,7 +151,6 @@
 		D023FF8940464E9991C0DC59 /* libRNSensitiveInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F22B0429D24A1B96F7A5CE /* libRNSensitiveInfo.a */; };
 		DA5CA4C299F44AE8B524A69D /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0DCD6A5DD3424ECC9FC0D42F /* Foundation.ttf */; };
 		E662FE3421664237A221E6FD /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E266F30BB5544C48714E51F /* libRNVectorIcons.a */; };
-		E676E90C83724180B2FEDC08 /* libRNFastCrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CAFA1DA2C8DC4243BBB017A6 /* libRNFastCrypto.a */; };
 		E6C0427315DD4ED798558A4A /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89FF76833E4343689BE91DCE /* libReactNativeNavigation.a */; };
 /* End PBXBuildFile section */
 
@@ -906,7 +905,6 @@
 				AD83B47857424C849778388D /* libRNCamera.a in Frameworks */,
 				43E5398727FA4DD5AB8E784C /* libRNBlur.a in Frameworks */,
 				8742690AC5034BEA97098A14 /* libRNVersionNumber.a in Frameworks */,
-				E676E90C83724180B2FEDC08 /* libRNFastCrypto.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
