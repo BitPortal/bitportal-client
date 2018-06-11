@@ -60,9 +60,11 @@ export default class Voting extends BaseScreen {
     const name = producer.get('owner')
 
     if (!~this.state.selected.indexOf(name)) {
-      this.setState(prevState => ({
-        selected: [...prevState.selected, name]
-      }))
+      if (this.state.selected.length < 30) {
+        this.setState(prevState => ({
+          selected: [...prevState.selected, name]
+        }))
+      }
     } else {
       const index = this.state.selected.indexOf(name)
       const nextState = [...this.state.selected]
@@ -74,7 +76,7 @@ export default class Voting extends BaseScreen {
   }
 
   onRefresh = () => {
-    this.props.actions.getProducersRequested({ json: true, limit: 10 })
+    this.props.actions.getProducersRequested({ json: true, limit: 500 })
   }
 
   didAppear() {
@@ -138,7 +140,8 @@ export default class Voting extends BaseScreen {
             item={this.state.item}
             onPress={this.stakeEOS}
             isVisible={this.state.isVisible}
-            dismissModal={() => { this.setState({ isVisible: false }) }}
+            dismissModal={() => {this.setState({ isVisible: false })}}
+            selected={this.state.selected}
           />
         </View>
       </IntlProvider>

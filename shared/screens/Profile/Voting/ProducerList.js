@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { Component, PureComponent } from 'react'
 import Colors from 'resources/colors'
 import { FormattedNumber } from 'react-intl'
 import styles from './styles'
@@ -13,10 +13,13 @@ import {
 import { Text, View, TouchableHighlight, VirtualizedList } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-class ListItem extends PureComponent {
+class ListItem extends Component {
+  shouldComponentUpdate(nextProps){
+    return nextProps.selected !== this.props.selected || nextProps.item.get('owner') !== this.props.item.get('owner') || nextProps.item.get('total_votes') !== this.props.item.get('total_votes')
+  }
+
   render() {
     const { item, rank, onRowPress, selected } = this.props
-    console.log(selected)
 
     return (
       <TouchableHighlight
@@ -65,7 +68,7 @@ export default class ProducerList extends PureComponent {
         style={styles.list}
         getItem={(items, index) => items.get ? items.get(index) : items[index]}
         getItemCount={(items) => (items.count() || 0)}
-        keyExtractor={(item, index) => String(index)}
+        keyExtractor={(item, index) => String(index) + item.get('owner')}
         showsVerticalScrollIndicator={false}
         onRefresh={this.props.onRefresh}
         refreshing={this.props.refreshing}

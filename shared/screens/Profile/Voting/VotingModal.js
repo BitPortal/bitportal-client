@@ -88,14 +88,13 @@ const styles = StyleSheet.create({
 
 @connect(
   (state) => ({
-    locale: state.intl.get('locale'),
-    selectedProducers: state.producer.get('selected')
+    locale: state.intl.get('locale')
   })
 )
 
 export default class VotingModal extends Component {
   render() {
-    const { isVisible, dismissModal, selectedProducers, locale, onPress } = this.props
+    const { isVisible, dismissModal, selected, locale, onPress } = this.props
 
     return (
       <Modal
@@ -118,18 +117,16 @@ export default class VotingModal extends Component {
             <View style={[styles.header, styles.bottom, { backgroundColor: Colors.minorThemeColor, minHeight: 300 }]}>
               <ScrollView showsVerticalScrollIndicator={false}>
                 {
-                  selectedProducers.map((item, index) => (
+                  selected.map((item, index) => (
                     <View key={index} style={[styles.item, { alignItems: 'center', flexDirection: 'row', marginTop: 10 }]}>
-                      <Text style={[styles.text14, { minWidth: 20 }]}> {index+1} </Text>
+                      <Text style={[styles.text14, { minWidth: 20 }]}>{index + 1}</Text>
                       <View style={{ flexDirection: 'row', marginLeft: 25 }}>
-                        <View style={[styles.location, styles.center]}>
-                          <Text style={ [styles.text14]}>
+                        {/* <View style={[styles.location, styles.center]}>
+                            <Text style={ [styles.text14]}>
                             {item.get('location')}
-                          </Text>
-                        </View>
-                        <Text style={ [styles.text14, { marginLeft: 10 }]}>
-                          {item.get('name')}
-                        </Text>
+                            </Text>
+                            </View> */}
+                        <Text style={[styles.text14, { marginLeft: 10 }]}>{item}</Text>
                       </View>
                     </View>
                   ))

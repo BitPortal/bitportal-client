@@ -8,10 +8,6 @@ const initialState = Immutable.fromJS({
     rows: [],
     total_producer_vote_weight: 0
   },
-  selected: [
-    { name: '', location: 'Bvi', producer: '协作、创新、去中心化' },
-    { name: 'BitFinex8', location: 'Bvi', producer: '协作、创新、去中心化' }
-  ],
   loading: false,
   loaded: false,
   error: null
