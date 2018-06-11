@@ -8,7 +8,7 @@ import eosAccount from './eosAccount'
 import keystore from './keystore'
 import news from './news'
 import balance from './balance'
-import vote from './vote'
+import producer from './producer'
 import versionInfo from './versionInfo'
 
 
@@ -22,6 +22,6 @@ export default combineReducers({
   chart,
   news,
   balance,
-  vote,
+  producer,
   versionInfo
 })

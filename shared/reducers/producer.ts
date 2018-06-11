@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import { handleActions } from 'redux-actions'
-import * as actions from 'actions/vote'
+import * as actions from 'actions/producer'
 
 const initialState = Immutable.fromJS({
   data: [
@@ -14,8 +14,8 @@ const initialState = Immutable.fromJS({
     { name: 'BitFinex7', location: 'Bvi', producer: '协作、创新、去中心化' },
     { name: 'BitFinex8', location: 'Bvi', producer: '协作、创新、去中心化' },
   ],
-  selectedProducers: [
-    { name: 'BitFinex7', location: 'Bvi', producer: '协作、创新、去中心化' },
+  selected: [
+    { name: '', location: 'Bvi', producer: '协作、创新、去中心化' },
     { name: 'BitFinex8', location: 'Bvi', producer: '协作、创新、去中心化' }
   ],
   loading: false,
@@ -24,13 +24,13 @@ const initialState = Immutable.fromJS({
 })
 
 export default handleActions({
-  [actions.getVoteDataRequested] (state) {
+  [actions.getProducersRequested] (state) {
     return state.set('loading', true)
   },
-  [actions.getVoteDataSucceeded] (state, action) {
+  [actions.getProducersSucceeded] (state, action) {
     return state.set('loaded', true).set('loading', false).update('data', action.payload.data)
   },
-  [actions.getVoteDataFailed] (state, action) {
+  [actions.getProducersFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)
   },
   [actions.selectProducer] (state, action) {

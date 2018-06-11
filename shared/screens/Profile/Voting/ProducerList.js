@@ -1,36 +1,35 @@
-
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import Colors from 'resources/colors'
 import { FormattedNumber } from 'react-intl'
 import styles from './styles'
 import PropTypes from 'prop-types'
-import { 
-  FontScale, 
-  SCREEN_WIDTH, 
+import {
+  FontScale,
+  SCREEN_WIDTH,
   SCREEN_HEIGHT,
-  NAV_BAR_HEIGHT, 
-  TAB_BAR_HEIGHT 
+  NAV_BAR_HEIGHT,
+  TAB_BAR_HEIGHT
 } from 'utils/dimens'
 import { Text, View, TouchableHighlight, FlatList } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-const ListItem = ({ item, rank, onRowPress }) => {
+const ListItem = ({ item, rank, onRowPress, selected }) => {
   return (
-    <TouchableHighlight  
+    <TouchableHighlight
       style={styles.listItem}
       underlayColor={Colors.bgColor_000000}
-      onPress={() => onRowPress(item)} 
+      onPress={() => onRowPress(item)}
     >
       <View style={[styles.listItem, styles.between, { paddingRight: 32 }]}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={[styles.text14, { width: 30, textAlign: 'right', paddingRight: 7, color: Colors.textColor_181_181_181 }]}> 
-            {1+rank}  
+          <Text style={[styles.text14, { width: 30, textAlign: 'right', paddingRight: 7, color: Colors.textColor_181_181_181 }]}>
+            {1+rank}
           </Text>
           <View>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={styles.text18}> {item.name} </Text>
-              <View style={[styles.location, styles.center]}> 
-                <Text style={styles.text14}> {item.location} </Text> 
+              <View style={[styles.location, styles.center]}>
+                <Text style={styles.text14}> {item.location} </Text>
               </View>
             </View>
             <Text style={[styles.text14, { marginTop: 3, color: Colors.textColor_181_181_181 }]}> {item.producer} </Text>
@@ -38,7 +37,7 @@ const ListItem = ({ item, rank, onRowPress }) => {
         </View>
         <View style={{ alignItems: 'center' }}>
           {
-            item.hasVoted ? 
+            false ?
             <Ionicons name="md-checkmark-circle" size={26} color={Colors.textColor_89_185_226} />
             :
             <View style={styles.radius} />
@@ -49,41 +48,37 @@ const ListItem = ({ item, rank, onRowPress }) => {
   )
 }
 
-export default class VoteList extends React.PureComponent {
-  
-  keyExtractor = (item) => item.id+item.name
+export default class ProducerList extends PureComponent {
+  keyExtractor = item => item.id + item.name
 
   renderItem = ({ item, index }) => (
     <ListItem key={item.id} item={item} rank={index} onRowPress={() => this.props.onRowPress(item)} />
   )
- 
+
   renderSeparator = () => (
     <View style={styles.separator} />
   )
 
   render() {
+    console.log(this.props.selected)
     return (
       <FlatList
-        data={this.props.data.toJS()} 
+        data={this.props.data.toJS()}
         renderItem={this.renderItem}
         keyExtractor={this.keyExtractor}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={this.renderSeparator}
         onRefresh={this.props.onRefresh}
         refreshing={this.props.refreshing}
+        selected={this.props.selected}
       />
     )
   }
 }
 
-VoteList.propTypes = {
+ProducerList.propTypes = {
   data: PropTypes.any,
   onRefresh: PropTypes.func,
   onRowPress: PropTypes.func,
   refreshing: PropTypes.bool
 }
-
-
-
-
-

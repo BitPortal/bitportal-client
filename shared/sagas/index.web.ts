@@ -7,6 +7,9 @@ import walletSaga from './wallet'
 import eosAccountSaga from './eosAccount'
 import loggerSaga from './logger'
 import newsSage from './news'
+import producerSage from './producer'
+import balanceSaga from './balance'
+import keystoreSaga from './keystore'
 
 const sagas = {
   intlSaga: fork(intlSaga),
@@ -14,8 +17,11 @@ const sagas = {
   chartSaga: fork(chartSaga),
   walletSaga: fork(walletSaga),
   eosAccountSaga: fork(eosAccountSaga),
+  keystoreSaga: fork(keystoreSaga),
+  newsSaga: fork(newsSage),
+  balanceSaga: fork(balanceSaga),
   loggerSaga: fork(loggerSaga),
-  newsSaga: fork(newsSage)
+  producerSage: fork(producerSage)
 }
 
 if (ENV === 'production') {

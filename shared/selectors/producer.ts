@@ -1,10 +1,10 @@
 import { createSelector } from 'reselect'
-import { Map } from 'immutable' 
+import { Map } from 'immutable'
 
-const producersSelector = (state: RootState) => state.vote
-const selectedProducersSelector = (state: RootState) => state.vote.get('selectedProducers')
+const producerSelector = (state: RootState) => state.producer
+const selectedProducersSelector = (state: RootState) => state.producer.get('selected')
 
-export const voteProcuderSelector = createSelector(
+export const selectedProcuderSelector = createSelector(
   producersSelector,
   selectedProducersSelector,
   (producers: any, selectedProducers: any) => producers.update(
