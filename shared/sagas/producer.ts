@@ -9,8 +9,7 @@ function* getProducersRequested(action: Action<GetProducersParams>) {
   try {
     const { eos } = yield call(initAccount, {})
     const producers = yield call(eos.getProducers, action.payload)
-    console.log(producers)
-    // yield put(actions.getProducersSucceeded(data))
+    yield put(actions.getProducersSucceeded(producers))
   } catch (e) {
     yield put(actions.getProducersFailed(e.message))
   }

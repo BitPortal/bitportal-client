@@ -26,7 +26,7 @@ import VotingModal from './VotingModal'
   })
 )
 
-export default class Vote extends BaseScreen {
+export default class Voting extends BaseScreen {
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -57,22 +57,34 @@ export default class Vote extends BaseScreen {
   }
 
   onRowPress = (producer) => {
-    this.setState(prevState => ({
-      selected: [...prevState.selected, producer.name]
-    }))
+    const name = producer.get('owner')
+
+    if (!~this.state.selected.indexOf(name)) {
+      this.setState(prevState => ({
+        selected: [...prevState.selected, name]
+      }))
+    } else {
+      const index = this.state.selected.indexOf(name)
+      const nextState = [...this.state.selected]
+      nextState.splice(index, 1)
+      this.setState(prevState => ({
+        selected: nextState
+      }))
+    }
   }
 
   onRefresh = () => {
-    this.props.actions.getProducersRequested({ json: false, lower_bound: '0', limit: 10 })
+    this.props.actions.getProducersRequested({ json: true, limit: 10 })
   }
 
   didAppear() {
-    this.props.actions.getProducersRequested({})
+    this.props.actions.getProducersRequested({ json: true, limit: 500 })
   }
 
   render() {
     const { locale, producer } = this.props
     const loading = producer.get('loading')
+    const disabled = !this.state.selected.length
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -106,7 +118,7 @@ export default class Vote extends BaseScreen {
           </View>
           <View style={styles.scrollContainer}>
             <ProducerList
-              data={producer.get('data')}
+              data={producer.get('data').get('rows')}
               onRefresh={this.onRefresh}
               refreshing={loading}
               onRowPress={this.onRowPress}
@@ -116,8 +128,8 @@ export default class Vote extends BaseScreen {
           <View style={[styles.btnContainer, styles.between]}>
             <Text style={styles.text14}>Selected</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={[styles.text14, { marginRight: 15 }]}>{this.state.selected.length}/30</Text>
-              <TouchableOpacity onPress={this.vote} style={[styles.center, styles.voteBtn]}>
+              <Text style={[styles.text14, { marginRight: 15 }]}>{this.state.selected.length}/{this.props.producer.get('data').get('rows').size}</Text>
+              <TouchableOpacity onPress={disabled ? () => {} : this.vote} style={[styles.center, styles.voteBtn, disabled ? styles.disabled : {}]} disabled={disabled}>
                 <Text style={styles.text14}>Vote</Text>
               </TouchableOpacity>
             </View>
@@ -132,5 +144,4 @@ export default class Vote extends BaseScreen {
       </IntlProvider>
     )
   }
-
 }
