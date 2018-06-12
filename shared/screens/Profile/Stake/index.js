@@ -58,6 +58,7 @@ export default class Stake extends BaseScreen {
               <InputItem 
                 title={'Enter the stake amount'} 
                 placeholder="" 
+                keyboardType="numeric"
                 onChangeText={(e) => this.enterStakeAmount(e)} 
                 TipsComponent={() => (
                   <Text style={[styles.text14, { color: Colors.textColor_181_181_181}]}> 

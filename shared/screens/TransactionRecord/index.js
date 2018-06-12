@@ -8,10 +8,10 @@ import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { FormattedNumber } from 'react-intl'
 import Images from 'resources/images'
-import QRCode from 'react-native-qrcode'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import messages from './messages'
+import QRCode from 'react-native-qrcode-svg'
 
 @connect(
   (state) => ({
@@ -27,7 +27,7 @@ export default class TransactionRecord extends BaseScreen {
   }
 
   state = {
-    qrCodeValue: 'fdsafs',
+    qrCodeValue: 'fdsafsfdafdsafsf12312',
     isCopied: false
   }
 
@@ -124,8 +124,7 @@ export default class TransactionRecord extends BaseScreen {
                         <QRCode
                           value={qrCodeValue}
                           size={80}
-                          bgColor='black'
-                          fgColor='white'
+                          color='black'
                         />
                       </View>
                       <TouchableOpacity 

@@ -7,7 +7,7 @@ import Colors from 'resources/colors'
 import { FormattedNumber } from 'react-intl'
 
 const ListItem = ({ item, onPress, eosPrice }) => (
-  <TouchableHighlight style={styles.listContainer} onPress={() => onPress(item)} >
+  <TouchableHighlight underlayColor={Colors.hoverColor} style={styles.listContainer} onPress={() => onPress(item)} >
     <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.minorThemeColor }]}>
       <View style={{ flexDirection: 'row' }}>
         <Text style={styles.text20}> {item.get('symbol')} </Text>

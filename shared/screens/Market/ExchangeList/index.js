@@ -14,7 +14,7 @@ import { EXCHANGE_NAMES } from 'constants/market'
 
 const ListItem = ({ exchange, onPress, active }) => (
   <TouchableHighlight
-    underlayColor={Colors.bgColor_000000}
+    underlayColor={Colors.hoverColor}
     style={styles.listContainer}
     onPress={() => onPress(exchange)}
   >

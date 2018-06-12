@@ -8,6 +8,7 @@ const Colors = {
   linearUnderlayColor: 'rgb(24,79,174)',
   chartIncreaseColor: 'rgb(140, 255, 75)',
   chartDecreaseColor: 'rgb(255, 129, 129)',
+  hoverColor:         'rgba(0,0,0,0.1)',
   bgColor_27_27_26: 'rgb(27,27,26)',
   bgColor_000000:   '#000000',
   bgColor_FFFFFF:   '#FFFFFF',

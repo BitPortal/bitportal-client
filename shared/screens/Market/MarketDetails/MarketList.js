@@ -11,7 +11,7 @@ import Colors from 'resources/colors'
 const MarketElement = ({ onPress, data }) => (
   <TouchableHighlight
     onPress={() => onPress(data)}
-    underlayColor={Colors.bgColor_000000}
+    underlayColor={Colors.hoverColor}
   >
     <View style={styles.marketElementContainer}>
       <View style={styles.spaceBetween}>

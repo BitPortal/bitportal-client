@@ -18,7 +18,7 @@ const ListItem = ({ item, rank, onRowPress }) => {
   return (
     <TouchableHighlight  
       style={styles.listItem}
-      underlayColor={Colors.bgColor_000000}
+      underlayColor={Colors.hoverColor}
       onPress={() => onRowPress(item)} 
     >
       <View style={[styles.listItem, styles.between, { paddingRight: 32 }]}>

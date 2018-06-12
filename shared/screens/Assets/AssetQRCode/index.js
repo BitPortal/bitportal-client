@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import styles from './styles'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
-import QRCode from 'react-native-qrcode'
+import QRCode from 'react-native-qrcode-svg'
 import { SCREEN_WIDTH, isIphoneX } from 'utils/dimens'
 import {
   Text,
@@ -118,12 +118,14 @@ export default class AssetQRCode extends Component {
             <View style={[styles.qrCode, styles.center]}>
               {
                 enableQRCode ?
-                <QRCode
-                  value={eosQrString(this.props.accountName, this.state.value)}
-                  size={qrCodeSize}
-                  bgColor='black'
-                  fgColor='white'
-                />
+
+                <View style={{ padding: 2, borderRadius: 2, maxWidth: qrCodeSize+4, backgroundColor: Colors.bgColor_FFFFFF }}>
+                  <QRCode
+                    value={eosQrString(this.props.accountName, this.state.value)}
+                    size={qrCodeSize}
+                    color='black'
+                  />
+                </View>
                 :
                 <ActivityIndicator />
               }

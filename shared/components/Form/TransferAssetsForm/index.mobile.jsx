@@ -60,6 +60,7 @@ export default class TransferAssetsForm extends Component {
           label="Amount"
           name="amount"
           component={TextField}
+          keyboardType="numeric"
         />
         <Field
           name="memo"

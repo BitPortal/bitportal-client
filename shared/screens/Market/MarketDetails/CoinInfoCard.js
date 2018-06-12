@@ -3,8 +3,7 @@ import React, { Component } from 'react'
 import styles from './styles'
 import { 
   Text,
-  View,
-  TouchableHighlight
+  View
 } from 'react-native'
 import Colors from 'resources/colors'
 

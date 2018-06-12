@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react'
-import { Text, View, ScrollView, Image, TouchableOpacity, TouchableHighlight, TextInput } from 'react-native'
+import { Text, View, ScrollView, Image, TouchableOpacity, TextInput } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import styles from './styles'

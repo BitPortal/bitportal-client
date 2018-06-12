@@ -50,7 +50,7 @@ export default RecordItem = ({ item, onPress }) => {
   return (
     <TouchableHighlight  
       style={styles.container}
-      underlayColor={Colors.bgColor_000000}
+      underlayColor={Colors.hoverColor}
       onPress={() => onPress()} 
     >
       <View style={[styles.container, styles.between, { paddingHorizontal: 32 }]}>
