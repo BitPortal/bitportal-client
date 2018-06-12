@@ -30,7 +30,15 @@ import Loading from 'components/Loading'
 const getTotalAssets = (balanceList, eosPrice) => {
   if (!balanceList) return 0
 
-  const balance = balanceList.filter(balance => balance.get('symbol') === 'SYS').get(0).get('balance')
+  let balance
+  const baseTokenBalance = balanceList.filter(balance => balance.get('symbol') === 'SYS' || balance.get('symbol') === 'EOS')
+
+  if (baseTokenBalance.size) {
+    balance = baseTokenBalance.get(0).get('balance')
+  } else {
+    balance = 0
+  }
+
   return +balance * eosPrice * 6.41
 }
 
