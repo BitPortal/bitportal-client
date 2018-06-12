@@ -10,7 +10,7 @@ import news from './news'
 import balance from './balance'
 import producer from './producer'
 import versionInfo from './versionInfo'
-
+import currency from './currency'
 
 export default combineReducers({
   form,
@@ -23,5 +23,6 @@ export default combineReducers({
   news,
   balance,
   producer,
-  versionInfo
+  versionInfo,
+  currency
 })

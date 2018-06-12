@@ -5,7 +5,7 @@ const producerSelector = (state: RootState) => state.producer
 const selectedProducersSelector = (state: RootState) => state.producer.get('selected')
 
 export const selectedProcuderSelector = createSelector(
-  producersSelector,
+  producerSelector,
   selectedProducersSelector,
   (producers: any, selectedProducers: any) => producers.update(
     'data',
