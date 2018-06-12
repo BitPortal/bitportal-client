@@ -3,19 +3,18 @@ import React, { Component } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, TouchableHighlight, ScrollView } from 'react-native'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { 
-  FontScale, 
-  SCREEN_WIDTH, 
-  SCREEN_HEIGHT, 
-  NAV_BAR_HEIGHT, 
+import {
+  FontScale,
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  NAV_BAR_HEIGHT,
   TAB_BAR_HEIGHT,
-  ifIphoneX 
+  ifIphoneX
 } from 'utils/dimens'
 import { connect } from 'react-redux'
 import { FormattedMessage, FormattedNumber, IntlProvider } from 'react-intl'
 import messages from './messages'
 import Modal from 'react-native-modal'
-import { voteProcuderSelector } from 'selectors/vote'
 
 const styles = StyleSheet.create({
   container: {
@@ -48,7 +47,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     marginLeft: -20
-  },  
+  },
   text18: {
     fontSize: FontScale(18),
     color: Colors.textColor_255_255_238
@@ -89,15 +88,14 @@ const styles = StyleSheet.create({
 
 @connect(
   (state) => ({
-    locale: state.intl.get('locale'),
-    vote: voteProcuderSelector(state)
+    locale: state.intl.get('locale')
   })
 )
 
-export default class VoteModal extends Component {
-
+export default class VotingModal extends Component {
   render() {
-    const { isVisible, dismissModal, vote, locale, onPress } = this.props
+    const { isVisible, dismissModal, selected, locale, onPress } = this.props
+
     return (
       <Modal
         animationIn="slideInUp"
@@ -117,33 +115,29 @@ export default class VoteModal extends Component {
               <Text style={styles.text18}> {' '} </Text>
             </View>
             <View style={[styles.header, styles.bottom, { backgroundColor: Colors.minorThemeColor, minHeight: 300 }]}>
-             
               <ScrollView showsVerticalScrollIndicator={false}>
                 {
-                  vote.get('selectedProducers').map((item, index) => (
+                  selected.map((item, index) => (
                     <View key={index} style={[styles.item, { alignItems: 'center', flexDirection: 'row', marginTop: 10 }]}>
-                      <Text style={[styles.text14, { minWidth: 20 }]}> {index+1} </Text>
+                      <Text style={[styles.text14, { minWidth: 20 }]}>{index + 1}</Text>
                       <View style={{ flexDirection: 'row', marginLeft: 25 }}>
-                        <View style={[styles.location, styles.center]}>
-                          <Text style={ [styles.text14]}>
+                        {/* <View style={[styles.location, styles.center]}>
+                            <Text style={ [styles.text14]}>
                             {item.get('location')}
-                          </Text>
-                        </View>
-                        <Text style={ [styles.text14, { marginLeft: 10 }]}>
-                          {item.get('name')}
-                        </Text>
+                            </Text>
+                            </View> */}
+                        <Text style={[styles.text14, { marginLeft: 10 }]}>{item}</Text>
                       </View>
                     </View>
                   ))
                 }
               </ScrollView>
-
-              <TouchableHighlight 
-                onPress={onPress} 
+              <TouchableHighlight
+                onPress={onPress}
                 underlayColor={Colors.textColor_89_185_226}
                 style={[styles.btn, styles.center]}
               >
-                <Text style={[styles.text18]}> 
+                <Text style={[styles.text18]}>
                   Vote
                 </Text>
               </TouchableHighlight>
@@ -155,4 +149,4 @@ export default class VoteModal extends Component {
     )
   }
 
-} 
+}

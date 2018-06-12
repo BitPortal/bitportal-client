@@ -9,7 +9,7 @@ import keystoreSaga from './keystore'
 import balanceSaga from './balance'
 import loggerSaga from './logger'
 import newsSage from './news'
-import voteSage from './vote'
+import producerSage from './producer'
 import versionInfoSaga from './versionInfo'
 
 const sagas = {
@@ -22,7 +22,7 @@ const sagas = {
   newsSage: fork(newsSage),
   balanceSaga: fork(balanceSaga),
   loggerSaga: fork(loggerSaga),
-  voteSage: fork(voteSage),
+  producerSage: fork(producerSage),
   versionInfoSaga: fork(versionInfoSaga)
 }
 

@@ -31,9 +31,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.bgColor_48_49_59
   },
   separator: {
-    height: StyleSheet.hairlineWidth, 
-    width: SCREEN_WIDTH, 
-    backgroundColor: Colors.bgColor_000000 
+    height: StyleSheet.hairlineWidth,
+    width: SCREEN_WIDTH,
+    backgroundColor: Colors.bgColor_000000
   },
   location: {
     paddingHorizontal: 3,
@@ -67,9 +67,12 @@ const styles = StyleSheet.create({
     color: Colors.textColor_255_255_238,
     fontWeight: 'bold'
   },
+  disabled: {
+    backgroundColor: Colors.textColor_181_181_181
+  },
   radius: {
-    width: 20, 
-    height: 20, 
+    width: 20,
+    height: 20,
     borderRadius: 10,
     borderColor: Colors.bgColor_FFFFFF,
     borderWidth: 1,

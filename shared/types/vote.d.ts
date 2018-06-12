@@ -1,12 +1,12 @@
-declare interface VoteParams {
-  
+declare interface GetProducersParams {
+
 }
 
-declare interface VoteRow  {
+declare interface Producer  {
   name: string
   location: string
   producer: string
   totalVotes: number
 }
 
-declare type VoteResult = VoteRow[]
+declare type GetProducersResult = Producer[]
