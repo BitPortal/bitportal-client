@@ -26,7 +26,7 @@ export const FieldError = ({ children }) => (
   <Text style={styles.fieldError}>{children}</Text>
 )
 
-export const TextField = ({ input: { onChange, ...restInput }, meta: { touched, error }, label }) => (
+export const TextField = ({ input: { onChange, ...restInput }, meta: { touched, error }, label, keyboardType }) => (
   <FieldItem>
     <Text style={styles.text14}>{label}</Text>
     <FieldInput>
@@ -34,6 +34,7 @@ export const TextField = ({ input: { onChange, ...restInput }, meta: { touched, 
         style={styles.input}
         autoCorrect={false}
         autoCapitalize={'none'}
+        keyboardType={keyboardType || 'default'}
         underlineColorAndroid="transparent"
         selectionColor={Colors.textColor_181_181_181}
         keyboardAppearance={Colors.keyboardTheme}

@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react'
-import { Text, View, ScrollView, Image, TouchableOpacity, ActivityIndicator, InteractionManager, NativeModules } from 'react-native'
+import { Text, View, ScrollView, Image, TouchableHighlight, ActivityIndicator, InteractionManager, NativeModules } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import TotalAssetsCard from 'components/TotalAssetsCard'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -176,14 +176,14 @@ export default class Assets extends BaseScreen {
           />
           {
             !walletCount  &&
-            <TouchableOpacity onPress={() => this.createNewAccount()} style={[styles.createAccountContainer, styles.center]}>
+            <TouchableHighlight underlayColor={Colors.mainThemeColor} onPress={() => this.createNewAccount()} style={[styles.createAccountContainer, styles.center]}>
               <View style={{ alignItems: 'center' }}>
                 <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF} />
                 <Text style={[styles.text14, { color: Colors.textColor_255_255_238, marginTop: 20 }]}>
                   <FormattedMessage id="addpage_button_name_crt" />
                 </Text>
               </View>
-            </TouchableOpacity>
+            </TouchableHighlight>
           }
           {
             !!walletCount &&

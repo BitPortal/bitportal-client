@@ -55,7 +55,7 @@ class ListItem extends PureComponent {
       <TouchableHighlight
         key={index}
         disabled={true}
-        underlayColor={Colors.bgColor_000000}
+        underlayColor={Colors.hoverColor}
         onPress={() => onPress(data)}
       >
         <View style={[styles.listItem, { ...itemExtraStyle }]}>

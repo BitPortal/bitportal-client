@@ -56,7 +56,7 @@ export default class SettingItem extends Component {
     const { disabled, leftItemTitle, rightItemTitle, extraStyle } = this.props
     return (
       <TouchableHighlight
-        underlayColor={Colors.bgColor_27_27_26}
+        underlayColor={Colors.hoverColor}
         style={[styles.container, extraStyle]}
         disabled={disabled === undefined ? false : disabled}
         onPress={() => this.onPress()}

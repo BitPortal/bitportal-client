@@ -4,8 +4,7 @@ import styles from './styles'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import {
   Text,
-  View,
-  TouchableHighlight
+  View
 } from 'react-native'
 import Colors from 'resources/colors'
 

@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 
 const ListItem = ({ item, onPress, active }) => (
   <TouchableHighlight
-    underlayColor={Colors.bgColor_000000}
+    underlayColor={Colors.hoverColor}
     style={styles.listContainer}
     onPress={() => onPress(item)}
   >
@@ -80,7 +80,7 @@ export default class AccountList extends Component {
             </ScrollView>
           </View>
           <TouchableHighlight
-            underlayColor={Colors.bgColor_000000}
+            underlayColor={Colors.hoverColor}
             style={styles.listContainer}
             onPress={() => { createNewAccount() }}
           >

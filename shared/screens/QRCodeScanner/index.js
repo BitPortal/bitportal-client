@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import styles from './styles'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { Text, View, ScrollView, TouchableOpacity, TouchableHighlight } from 'react-native'
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
