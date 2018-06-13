@@ -76,20 +76,9 @@ function* votingRequested(action: Action<object>) {
 
     eos = initEOS({ broadcast: true })
 
-    // yield call([eos, 'pushTransaction'], transactionInfo.transaction)
-    const { response, error } = yield call(() => {
-      return eos.pushTransaction(transactionInfo.transaction)
-        .then(response => ({ response }), error => ({ error }))
-    })
-
-    if (response) {
-      yield put(actions.votingSucceeded(producers))
-      yield put(getEOSAccountRequested({ eosAccountName }))
-    } else if (error) {
-      yield put(actions.votingFailed(getErrorMessage(error)))
-    } else {
-      yield put(actions.votingFailed('Voting failed!'))
-    }
+    yield put(eos.pushTransaction, transactionInfo.transaction)
+    yield put(actions.votingSucceeded(producers))
+    yield put(getEOSAccountRequested({ eosAccountName }))
   } catch (e) {
     yield put(actions.votingFailed(getErrorMessage(e)))
   }
