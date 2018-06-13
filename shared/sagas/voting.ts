@@ -76,7 +76,7 @@ function* votingRequested(action: Action<object>) {
 
     eos = initEOS({ broadcast: true })
 
-    yield put(eos.pushTransaction, transactionInfo.transaction)
+    yield call(eos.pushTransaction, transactionInfo.transaction)
     yield put(actions.votingSucceeded(producers))
     yield put(getEOSAccountRequested({ eosAccountName }))
   } catch (e) {
