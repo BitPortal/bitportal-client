@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
 
 export default class VotingModal extends Component {
   render() {
-    const { isVisible, dismissModal, selected, locale, onPress, isVoting } = this.props
+    const { isVisible, dismissModal, selected, locale, onPress, isVoting, error } = this.props
 
     return (
       <Modal
@@ -122,7 +122,7 @@ export default class VotingModal extends Component {
                 <Ionicons name="ios-close" size={28} color={Colors.bgColor_FFFFFF} />
               </TouchableOpacity>
               <Text style={styles.text18}> Selected </Text>
-              <Text style={styles.text18}> {' '} </Text>
+              <Text style={styles.text18}>{' '}</Text>
             </View>
             <View style={[styles.header, styles.bottom, { backgroundColor: Colors.minorThemeColor, minHeight: 300 }]}>
               <ScrollView showsVerticalScrollIndicator={false}>

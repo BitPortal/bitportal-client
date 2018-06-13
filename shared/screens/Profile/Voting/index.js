@@ -28,6 +28,8 @@ export const errorMessages = (error) => {
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
       return 'Invalid password!'
+    case 'assertion failure with message: user must stake before they can vote':
+      return 'You need stake before vote!'
     default:
       return 'Voting failed!'
   }
@@ -149,7 +151,7 @@ export default class Voting extends BaseScreen {
           />
           <Alert message={errorMessages(error)} dismiss={this.props.actions.clearError} />
           <View style={[styles.stakeAmountContainer, styles.between]}>
-            <Text style={[styles.text14, { marginLeft: 32 }]}> Stake Amount </Text>
+            <Text style={[styles.text14, { marginLeft: 32 }]}>Stake Amount</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={styles.text14}>
                 <FormattedNumber
