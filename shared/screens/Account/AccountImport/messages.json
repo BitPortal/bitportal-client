@@ -1,25 +1,25 @@
 {
   "en": {
-	"import_title_name_impt" : "Import EOS Account",
-	"import_title_name_bpnm" : "Name your BitPortal",
-	"import_title_name_eosnm" : "EOS Account Name", 
-	"import_txtbox_txt_hint1" : "Up to 12 characters",
-	"import_txtbox_txt_hint2" : "Only 12345abcdefghijklmnopqrstuvwxyz works",
-	"import_title_name_pwd" : "Set your password",
-	"import_title_name_cfmpwd" : "Confirm your password",
-	"import_txtbox_txt_fill1" : "Owner Private Key",
-	"import_txtbox_txt_fill2" : "Active Private Key",
-	"import_button_name_impt" : "Import"
+		"import_title_name_impt" : "Import EOS Account",
+		"import_title_name_bpnm" : "Name your BitPortal",
+		"import_title_name_eosnm" : "EOS Account Name", 
+		"import_txtbox_txt_hint1" : "Up to 12 characters",
+		"import_txtbox_txt_hint2" : "Only 12345abcdefghijklmnopqrstuvwxyz works",
+		"import_title_name_pwd" : "Set your password",
+		"import_title_name_cfmpwd" : "Confirm your password",
+		"import_txtbox_txt_fill1" : "Owner Private Key",
+		"import_txtbox_txt_fill2" : "Active Private Key",
+		"import_button_name_impt" : "Import"
 	},
   "zh": {"import_title_name_impt" : "导入EOS账户",
-	"import_title_name_bpnm" : "命名您的BitPortal",
-	"import_title_name_eosnm" : "EOS账户名", 
-	"import_txtbox_txt_hint1" : "最多支持12位字符",
-	"import_txtbox_txt_hint2" : "字符范围12345abcdefghijklmnopqrstuvwxyz",
-	"import_title_name_pwd" : "设置您的密码",
-	"import_title_name_cfmpwd" : "确认您的密码",
-	"import_txtbox_txt_fill1" : "Owner权限私钥",
-	"import_txtbox_txt_fill2" : "Active权限私钥",
-	"import_button_name_impt" : "导入"
+		"import_title_name_bpnm" : "命名您的BitPortal",
+		"import_title_name_eosnm" : "EOS账户名", 
+		"import_txtbox_txt_hint1" : "最多支持12位字符",
+		"import_txtbox_txt_hint2" : "字符范围12345abcdefghijklmnopqrstuvwxyz",
+		"import_title_name_pwd" : "设置您的密码",
+		"import_title_name_cfmpwd" : "确认您的密码",
+		"import_txtbox_txt_fill1" : "Owner权限私钥",
+		"import_txtbox_txt_fill2" : "Active权限私钥",
+		"import_button_name_impt" : "导入"
 	}
 }
