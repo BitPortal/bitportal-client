@@ -10,6 +10,7 @@ import news from './news'
 import balance from './balance'
 import producer from './producer'
 import versionInfo from './versionInfo'
+import voting from './voting'
 
 
 export default combineReducers({
@@ -23,5 +24,6 @@ export default combineReducers({
   news,
   balance,
   producer,
-  versionInfo
+  versionInfo,
+  voting
 })

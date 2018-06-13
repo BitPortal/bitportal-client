@@ -11,17 +11,39 @@ import messages from './messages'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import ProducerList from './ProducerList'
 import * as producerActions from 'actions/producer'
+import * as votingActions from 'actions/voting'
 import { bindActionCreators } from 'redux'
+import { eosAccountSelector } from 'selectors/eosAccount'
 import VotingModal from './VotingModal'
+import Loading from 'components/Loading'
+import Alert from 'components/Alert'
+import Dialogs from 'components/Dialog'
+import { sortProducers } from 'eos'
+
+export const errorMessages = (error) => {
+  if (!error) return null
+
+  const message = typeof error === 'object' ? error.message : error
+
+  switch (String(message)) {
+    case 'Key derivation failed - possibly wrong passphrase':
+      return 'Invalid password!'
+    default:
+      return 'Voting failed!'
+  }
+}
 
 @connect(
   (state) => ({
     locale: state.intl.get('locale'),
-    producer: state.producer
+    producer: state.producer,
+    eosAccount: eosAccountSelector(state),
+    voting: state.voting
   }),
   (dispatch) => ({
     actions: bindActionCreators({
-      ...producerActions
+      ...producerActions,
+      ...votingActions
     }, dispatch)
   })
 )
@@ -32,10 +54,16 @@ export default class Voting extends BaseScreen {
     navBarHidden: true
   }
 
-  state = {
-    isVisible: false,
-    item: {},
-    selected: []
+  constructor(props, context) {
+    super(props, context)
+    this.state = {
+      isVisible: false,
+      item: {},
+      selected: this.props.eosAccount.get('data').get('voter_info').get('producers').toJS()
+    }
+
+    this.voting = this.voting.bind(this)
+    this.submitVoting = this.submitVoting.bind(this)
   }
 
   componentDidMount() {
@@ -46,8 +74,28 @@ export default class Voting extends BaseScreen {
 
   }
 
+  submitVoting = (password) => {
+    const eosAccountName = this.props.eosAccount.get('data').get('account_name')
+    this.props.actions.votingRequested({ producers: this.state.selected, eosAccountName, password })
+  }
+
+  async voting() {
+    const { action, text } = await Dialogs.prompt(
+      '请输入密码',
+      '',
+      {
+        positiveText: 'Confirm',
+        negativeText: 'Cancel'
+      }
+    )
+
+    if (action === Dialogs.actionPositive) {
+      this.submitVoting(text)
+    }
+  }
+
   vote = () => {
-    this.setState({ isVisible: true })
+    this.props.actions.showSelected()
   }
 
   stakeEOS = () => {
@@ -62,12 +110,12 @@ export default class Voting extends BaseScreen {
     if (!~this.state.selected.indexOf(name)) {
       if (this.state.selected.length < 30) {
         this.setState(prevState => ({
-          selected: [...prevState.selected, name]
+          selected: [...prevState.selected, name].sort(sortProducers)
         }))
       }
     } else {
       const index = this.state.selected.indexOf(name)
-      const nextState = [...this.state.selected]
+      const nextState = [...this.state.selected].sort(sortProducers)
       nextState.splice(index, 1)
       this.setState(prevState => ({
         selected: nextState
@@ -84,9 +132,13 @@ export default class Voting extends BaseScreen {
   }
 
   render() {
-    const { locale, producer } = this.props
+    const { locale, producer, eosAccount, voting } = this.props
     const loading = producer.get('loading')
-    const disabled = !this.state.selected.length
+    const disabled = !this.state.selected.length && !this.props.producer.get('data').get('rows').siz
+    const voterInfo = eosAccount.get('data').get('voter_info')
+    const isVoting = voting.get('loading')
+    const error = voting.get('error')
+    const showSelected = voting.get('showSelected')
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -96,12 +148,13 @@ export default class Voting extends BaseScreen {
             leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
             rightButton={{ title: '规则', handler: this.checkRules, tintColor: Colors.textColor_255_255_238,  style: { paddingRight: 25 } }}
           />
+          <Alert message={errorMessages(error)} dismiss={this.props.actions.clearError} />
           <View style={[styles.stakeAmountContainer, styles.between]}>
             <Text style={[styles.text14, { marginLeft: 32 }]}> Stake Amount </Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={styles.text14}>
                 <FormattedNumber
-                  value={4235354}
+                  value={voterInfo.get('staked')}
                   maximumFractionDigits={4}
                   minimumFractionDigits={4}
                 />
@@ -138,10 +191,11 @@ export default class Voting extends BaseScreen {
           </View>
           <VotingModal
             item={this.state.item}
-            onPress={this.stakeEOS}
-            isVisible={this.state.isVisible}
-            dismissModal={() => {this.setState({ isVisible: false })}}
+            onPress={this.voting}
+            isVisible={showSelected}
+            dismissModal={!isVoting ? this.props.actions.closeSelected : () => {}}
             selected={this.state.selected}
+            isVoting={isVoting}
           />
         </View>
       </IntlProvider>

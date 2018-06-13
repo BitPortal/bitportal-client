@@ -1,6 +1,7 @@
 /* @jsx */
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, TouchableHighlight, ScrollView } from 'react-native'
+import { connect } from 'react-redux'
+import { Text, View, StyleSheet, TouchableOpacity, TouchableHighlight, ScrollView, ActivityIndicator } from 'react-native'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import {
@@ -11,7 +12,7 @@ import {
   TAB_BAR_HEIGHT,
   ifIphoneX
 } from 'utils/dimens'
-import { connect } from 'react-redux'
+import * as votingActions from 'actions/voting'
 import { FormattedMessage, FormattedNumber, IntlProvider } from 'react-intl'
 import messages from './messages'
 import Modal from 'react-native-modal'
@@ -82,7 +83,16 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     backgroundColor: Colors.textColor_89_185_226,
     marginTop: 20,
-    marginBottom: 20
+    marginBottom: 20,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  indicator: {
+    marginLeft: 10
+  },
+  disabled: {
+    backgroundColor: Colors.textColor_181_181_181
   }
 })
 
@@ -94,7 +104,7 @@ const styles = StyleSheet.create({
 
 export default class VotingModal extends Component {
   render() {
-    const { isVisible, dismissModal, selected, locale, onPress } = this.props
+    const { isVisible, dismissModal, selected, locale, onPress, isVoting } = this.props
 
     return (
       <Modal
@@ -132,21 +142,19 @@ export default class VotingModal extends Component {
                   ))
                 }
               </ScrollView>
-              <TouchableHighlight
+              <TouchableOpacity
                 onPress={onPress}
                 underlayColor={Colors.textColor_89_185_226}
-                style={[styles.btn, styles.center]}
+                style={[styles.btn, styles.center, !isVoting ? {} : styles.disabled]}
+                disabled={isVoting}
               >
-                <Text style={[styles.text18]}>
-                  Vote
-                </Text>
-              </TouchableHighlight>
-
+                <Text style={[styles.text18]}>Vote</Text>
+                {isVoting && <ActivityIndicator style={styles.indicator} size="small" color="white" />}
+              </TouchableOpacity>
             </View>
           </View>
         </IntlProvider>
       </Modal>
     )
   }
-
 }
