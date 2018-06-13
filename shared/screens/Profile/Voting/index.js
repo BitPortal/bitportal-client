@@ -6,7 +6,7 @@ import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider, FormattedNumber } from 'react-intl'
-import { Text, View, TouchableOpacity } from 'react-native'
+import { Text, View, TouchableOpacity, Alert } from 'react-native'
 import messages from './messages'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import ProducerList from './ProducerList'
@@ -16,7 +16,7 @@ import { bindActionCreators } from 'redux'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import VotingModal from './VotingModal'
 import Loading from 'components/Loading'
-import Alert from 'components/Alert'
+import AlertComponent from 'components/Alert'
 import Dialogs from 'components/Dialog'
 import { sortProducers } from 'eos'
 
@@ -97,7 +97,19 @@ export default class Voting extends BaseScreen {
   }
 
   vote = () => {
-    this.props.actions.showSelected()
+    const eosAccountName = this.props.eosAccount.get('data').get('account_name')
+    if (!eosAccountName) {
+      Alert.alert(
+        'Please import EOS account!',
+        null,
+        [
+          { text: 'OK', onPress: () => console.log('ok') },
+        ],
+        { cancelable: false }
+      )
+    } else {
+      this.props.actions.showSelected()
+    }
   }
 
   stakeEOS = () => {
@@ -149,7 +161,7 @@ export default class Voting extends BaseScreen {
             title={messages[locale]['vt_title_name_vote']}
             leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
           />
-          <Alert message={errorMessages(error)} dismiss={this.props.actions.clearError} />
+          <AlertComponent message={errorMessages(error)} dismiss={this.props.actions.clearError} />
           <View style={[styles.stakeAmountContainer, styles.between]}>
             <Text style={[styles.text14, { marginLeft: 32 }]}>Stake Amount</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>

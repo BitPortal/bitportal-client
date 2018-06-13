@@ -14,6 +14,7 @@ function* votingRequested(action: Action<object>) {
 
   try {
     const eosAccountName = action.payload.eosAccountName
+    assert(eosAccountName, 'Please import account!')
     const password = action.payload.password
     const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
     assert(accountInfo.permissions && accountInfo.permissions.length, 'EOS account permissions dose not exist!')

@@ -1,7 +1,7 @@
 /* @tsx */
 
 import React, { Component } from 'react'
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
+import { Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import styles from './styles'
 import Images from 'resources/images'
@@ -31,8 +31,20 @@ export default class Profile extends BaseScreen {
     let passProps = {}
     switch (page) {
       case 'Account':
-        pageName = 'AccountManager'
-        passProps = this.props.wallet.get('data').toJS()
+        if (this.props.wallet.get('data').get('name')) {
+          pageName = 'AccountManager'
+          passProps = this.props.wallet.get('data').toJS()
+        } else {
+          Alert.alert(
+            'Please import EOS account!',
+            null,
+            [
+              { text: 'OK', onPress: () => console.log('ok') },
+            ],
+            { cancelable: false }
+          )
+          return
+        }
         break
       case 'Voting':
       case 'About':
