@@ -94,9 +94,9 @@ export default class About extends BaseScreen {
                   <FormattedMessage id="abt_subttl_txt_version" />
                     : {VersionNumber.appVersion} 
                 </Text>
-                {/* <Text multiline={true} style={[styles.text14, { marginTop: 20 }]}> 
+                <Text multiline={true} style={[styles.text14, { marginTop: 20 }]}> 
                   <FormattedMessage id="abt_describe_txt_des" />
-                </Text>  */}
+                </Text> 
               </View>
               <SettingItem 
                 extraStyle={{ marginTop: 10 }}
