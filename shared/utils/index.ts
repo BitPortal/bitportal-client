@@ -30,13 +30,21 @@ export const loadScript = (src: string) => {
 }
 
 export const getErrorMessage = (error: any) => {
-  // if (typeof error === 'string') {
-  //   const errorObject = JSON.parse(error)
+  if (typeOf(error) === 'Error' && error.message.indexOf('.cpp') !== -1) {
+    const errorObject = JSON.parse(error.message)
 
-  //   if (errorObject.error && errorObject.error.details && errorObject.error.details.length && errorObject.error.details[0].message) {
-  //     return errorObject.error.details[0].message
-  //   }
-  // }
+    if (errorObject.error && errorObject.error.details && errorObject.error.details.length && errorObject.error.details[0].message) {
+      return errorObject.error.details[0].message
+    }
+  }
+
+  if (typeof error === 'string') {
+    const errorObject = JSON.parse(error)
+
+    if (errorObject.error && errorObject.error.details && errorObject.error.details.length && errorObject.error.details[0].message) {
+      return errorObject.error.details[0].message
+    }
+  }
 
   return error.message
 }

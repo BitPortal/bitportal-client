@@ -4,6 +4,7 @@ import { Action } from 'redux-actions'
 import * as actions from 'actions/voting'
 import { getEOSAccountRequested } from 'actions/eosAccount'
 import secureStorage from 'utils/secureStorage'
+import { getErrorMessage } from 'utils'
 import { decrypt } from 'key'
 import { initEOS, sortProducers } from 'eos'
 import wif from 'wif'
@@ -75,11 +76,22 @@ function* votingRequested(action: Action<object>) {
 
     eos = initEOS({ broadcast: true })
 
-    yield call(eos.pushTransaction, transactionInfo.transaction)
-    yield put(actions.votingSucceeded(producers))
-    yield put(getEOSAccountRequested({ eosAccountName }))
+    // yield call([eos, 'pushTransaction'], transactionInfo.transaction)
+    const { response, error } = yield call(() => {
+      return eos.pushTransaction(transactionInfo.transaction)
+        .then(response => ({ response }), error => ({ error }))
+    })
+
+    if (response) {
+      yield put(actions.votingSucceeded(producers))
+      yield put(getEOSAccountRequested({ eosAccountName }))
+    } else if (error) {
+      yield put(actions.votingFailed(getErrorMessage(error)))
+    } else {
+      yield put(actions.votingFailed('Voting failed!'))
+    }
   } catch (e) {
-    yield put(actions.votingFailed(e.message))
+    yield put(actions.votingFailed(getErrorMessage(e)))
   }
 }
 
