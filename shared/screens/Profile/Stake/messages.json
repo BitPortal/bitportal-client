@@ -1,10 +1,10 @@
 {
   "zh": {
-    "vt_title_name_vote" : "节点投票"
+    "vt_title_name_vote" : "委托"
 
   },
   "en": {
-    "vt_title_name_vote" : "Voting"
+    "vt_title_name_vote" : "Stake"
 
   }
 }

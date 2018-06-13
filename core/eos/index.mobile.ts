@@ -6,7 +6,7 @@ let eos: any
 
 const initAccount = async ({ keyProvider, signProvider }: { keyProvider: string | string[], signProvider: any }) => {
   eos = Eos({
-    chainId: '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca',
+    chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
     httpEndpoint: EOS_API_URL,
     keyProvider,
     signProvider
@@ -16,7 +16,7 @@ const initAccount = async ({ keyProvider, signProvider }: { keyProvider: string 
 }
 
 const initEOS = (options: object = {}) => {
-  const chainId = options.chainId || '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca'
+  const chainId = options.chainId || 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
   eos = Eos({ ...options, chainId, httpEndpoint: EOS_API_URL })
   return eos
 }

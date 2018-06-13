@@ -59,7 +59,7 @@ export default class Voting extends BaseScreen {
     this.state = {
       isVisible: false,
       item: {},
-      selected: this.props.eosAccount.get('data').get('voter_info').get('producers').toJS()
+      selected: this.props.eosAccount.get('data').get('voter_info') ? this.props.eosAccount.get('data').get('voter_info').get('producers').toJS() : []
     }
 
     this.voting = this.voting.bind(this)
@@ -146,7 +146,6 @@ export default class Voting extends BaseScreen {
           <NavigationBar
             title={messages[locale]['vt_title_name_vote']}
             leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
-            rightButton={{ title: '规则', handler: this.checkRules, tintColor: Colors.textColor_255_255_238,  style: { paddingRight: 25 } }}
           />
           <Alert message={errorMessages(error)} dismiss={this.props.actions.clearError} />
           <View style={[styles.stakeAmountContainer, styles.between]}>
@@ -154,17 +153,17 @@ export default class Voting extends BaseScreen {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={styles.text14}>
                 <FormattedNumber
-                  value={voterInfo.get('staked')}
+                  value={voterInfo ? voterInfo.get('staked') : 0}
                   maximumFractionDigits={4}
                   minimumFractionDigits={4}
                 />
               </Text>
               <Text style={[styles.text14, { marginLeft: 2, marginRight: 5 }]}> EOS </Text>
-              <TouchableOpacity onPress={() => this.stakeEOS()}>
-                <View style={{ padding: 5, margin: 10, marginRight: 20 }}>
+              {/* <TouchableOpacity onPress={() => this.stakeEOS()}>
+                  <View style={{ padding: 5, margin: 10, marginRight: 20 }}>
                   <Ionicons name="ios-create" size={24} color={Colors.bgColor_FAFAFA} />
-                </View>
-              </TouchableOpacity>
+                  </View>
+                  </TouchableOpacity> */}
             </View>
           </View>
           <View style={[styles.titleContainer, styles.between]}>
@@ -193,7 +192,7 @@ export default class Voting extends BaseScreen {
             item={this.state.item}
             onPress={this.voting}
             isVisible={showSelected}
-            dismissModal={!isVoting ? this.props.actions.closeSelected : () => {}}
+            dismissModal={this.props.actions.closeSelected}
             selected={this.state.selected}
             isVoting={isVoting}
           />

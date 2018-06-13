@@ -11,6 +11,7 @@ import balance from './balance'
 import producer from './producer'
 import versionInfo from './versionInfo'
 import voting from './voting'
+import stake from './stake'
 
 
 export default combineReducers({
@@ -25,5 +26,6 @@ export default combineReducers({
   balance,
   producer,
   versionInfo,
-  voting
+  voting,
+  stake
 })

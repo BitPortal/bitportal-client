@@ -108,7 +108,7 @@ export default class Assets extends BaseScreen {
   createNewAccount = () => {
     InteractionManager.runAfterInteractions(() => {
       this.setState({ isVisible2: false }, () => {
-        this.props.navigator.push({ screen: "BitPortal.AccountCreation" })
+        this.props.navigator.push({ screen: "BitPortal.AccountImport" })
       })
     })
   }
