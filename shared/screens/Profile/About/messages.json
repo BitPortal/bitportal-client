@@ -3,7 +3,7 @@
     "abt_title_name_about" : "关于",
     "abt_subttl_txt_product" : "",
     "abt_subttl_txt_version" : "当前版本",
-    "abt_describe_txt_des" : "BitPortal, 价值互联网传送门。BitPortal是一款设计良好的EOS钱包，致力于为用户提供更便捷、更安全、更易用的产品和服务。",
+    "abt_describe_txt_des" : "BitPortal, 价值互联网传送门。\nBitPortal是一款设计良好的EOS钱包，致力于为用户提供更便捷、更安全、更易用的产品和服务。",
     "abt_sec_title_tou" : "用户服务协议",
     "abt_sec_title_update" : "更新日志",
     "abt_sec_title_check" : "版本检查"
@@ -12,7 +12,7 @@
     "abt_title_name_about" : "About",
     "abt_subttl_txt_product" : "",
     "abt_subttl_txt_version" : "Version",
-    "abt_describe_txt_des" : "BitPortal, Portal to Internet of Value. BitPortal is a well designed EOS wallet which offers faster, simpler and safer services for our users.",
+    "abt_describe_txt_des" : "BitPortal, Portal to Internet of Value. \nBitPortal is a well designed EOS wallet which offers faster, simpler and safer services for our users.",
     "abt_sec_title_tou" : "Terms of Service",
     "abt_sec_title_update" : "Update Logs",
     "abt_sec_title_check" : "Check for updates"
