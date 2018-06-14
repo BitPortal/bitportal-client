@@ -56,9 +56,9 @@ const validate = (values, props) => {
   }
 
   if (!values.get('eosAccountName')) {
-    errors.eosAccountName = <FormattedMessage id="import_txtbox_txt_hint1" />
+    errors.eosAccountName = <FormattedMessage id="import_txtbox_txt_eosnmhint2" />
   } else if (!isEOSAccountNameValid(values.get('eosAccountName'))) {
-    errors.eosAccountName = <FormattedMessage id="import_txtbox_txt_hint1" />
+    errors.eosAccountName = <FormattedMessage id="import_txtbox_txt_eosnmhint1" />
   }
 
   if (!values.get('password')) {
@@ -76,11 +76,11 @@ const validate = (values, props) => {
   }
 
   if (!values.get('ownerPrivateKey')) {
-    errors.ownerPrivateKey = <FormattedMessage id="import_txtbox_txt_fill1" />
+    errors.ownerPrivateKey = <FormattedMessage id="import_txtbox_txt_ownhint" />
   }
 
   if (!values.get('activePrivateKey')) {
-    errors.activePrivateKey = <FormattedMessage id="import_txtbox_txt_fill2" />
+    errors.activePrivateKey = <FormattedMessage id="import_txtbox_txt_activehint" />
   }
 
   return errors

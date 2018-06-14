@@ -26,4 +26,4 @@ export const normalizeUnitByCurrency = (currency: Currency) => (value: any, prev
 
 export const normalizeEOSAccountName = (value: any, previousValue: any) => (value && ((/([1-5]|[a-z])+$/.test(value) && value.length <= 13) ? value.trim() : previousValue))
 
-export const isEOSAccountNameValid = (value: any) => (value && ((/([1-5]|[a-z])+$/.test(value) && value.length <= 13))) ? true : false
+export const isEOSAccountNameValid = (value: any) => (value && ((/([1-5]|[a-z])+$/.test(value) && value.length == 12))) ? true : false
