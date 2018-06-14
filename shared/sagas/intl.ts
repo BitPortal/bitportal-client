@@ -4,7 +4,7 @@ import storage from 'utils/storage'
 import * as actions from 'actions/intl'
 
 function setLocale(action: Action<object>) {
-  storage.setItem('bitportal_lang', action.payload, {
+  storage.setItem('bitportal_lang', action.payload, false, {
     path: '/',
     domain: 'bitportal.io',
     expires: new Date(Date.now() + (3600 * 1000 * 24 * 365))

@@ -1,14 +1,7 @@
 import Immutable from 'immutable'
 import { handleActions } from 'redux-actions'
 import * as actions from 'actions/currency'
-
-const initialState = Immutable.fromJS({
-  rate: 1, // USD:USD / USD:CNY
-  symbol: 'USD',
-  loading: false,
-  loaded: false,
-  error: null
-})
+import { getInitialCurrency } from 'selectors/currency'
 
 export default handleActions({
   [actions.getCurrencyRateRequested] (state) {
@@ -22,6 +15,9 @@ export default handleActions({
     return state.set('error', action.payload).set('loading', false)
   },
   [actions.setCurrency] (state, action) {
-    return state.set('symbol', action.payload.symbol).set('rate', action.payload.rate)
+    return state.set('symbol', action.payload)
+  },
+  [actions.setRate] (state, action) {
+    return state.set('rate', action.payload)
   }
-}, initialState)
+}, getInitialCurrency())

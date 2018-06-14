@@ -6,11 +6,11 @@ const plugToRequest = (req: any) => {
   cookies = new Cookies(req.headers.cookie)
 }
 
-const getItem = async (name: string, options: Object = {}) => await cookies.get(name, options)
+const getItem = async (name: string, json?: boolean, options: Object = {}) => await cookies.get(name, options)
 
-const getItemSync = (name: string, options: Object = {}) => cookies.get(name, options)
+const getItemSync = (name: string, json?: boolean, options: Object = {}) => cookies.get(name, options)
 
-const setItem = (name: string, value: any, options: Object = {}) => cookies.set(name, value, options)
+const setItem = (name: string, value: any, json?: boolean, options: Object = {}) => cookies.set(name, value, options)
 
 const removeItem = (name: string, options: Object = {}) => cookies.remove(name, options)
 

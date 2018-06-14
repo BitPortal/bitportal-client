@@ -13,14 +13,13 @@ import { Text } from 'react-native'
 )
 
 export default class CurrencyText extends Component {
-  
   render() {
     const { symbol, rate, value, ...extraProps } = this.props
+
     return(
       <Text>
-        {symbol == 'USD' ? `$` : '\u00A5'} <FormattedNumber value={value*rate} {...extraProps} />
+        {symbol == 'USD' ? `$` : '\u00A5'}<FormattedNumber value={value*rate} {...extraProps} />
       </Text>
-    )    
+    )
   }
-
 }

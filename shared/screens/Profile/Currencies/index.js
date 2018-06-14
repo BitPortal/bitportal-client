@@ -34,45 +34,39 @@ export default class Currencies extends BaseScreen {
     navBarHidden: true
   }
 
-  switchCurrency = async (symbol) => {
-    if (symbol == 'CNY') {
-      await storage.setItem('bitportal_currency', JSON.stringify({ symbol }))
-      this.props.actions.getCurrencyRateRequested({symbol})
-    } else {
-      this.props.actions.setCurrency({ symbol: 'USD', rate: 1 })
-    }
+  switchCurrency = (symbol) => {
+    this.props.actions.setCurrency(symbol)
   }
 
   render() {
     const { locale, currency } = this.props
     const currentSymbol = currency.get('symbol')
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-          <NavigationBar 
+          <NavigationBar
             title={messages[locale]['cur_title_name_currency']}
             leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <SettingItem 
-                leftItemTitle={'CNY'} 
-                onPress={() => this.switchCurrency('CNY')} 
-                extraStyle={{ marginTop: 10 }} 
+              <SettingItem
+                leftItemTitle={'CNY'}
+                onPress={() => this.switchCurrency('CNY')}
+                extraStyle={{ marginTop: 10 }}
                 iconColor={Colors.bgColor_0_122_255}
                 rightItemTitle={currentSymbol == 'CNY' ? null : ' '}
                 rightImageName={currentSymbol == 'CNY' && 'md-checkmark'}
               />
-              <SettingItem 
-                leftItemTitle={'USD'} 
+              <SettingItem
+                leftItemTitle={'USD'}
                 iconColor={Colors.bgColor_0_122_255}
                 rightItemTitle={currentSymbol == 'USD' ? null : ' '}
                 rightImageName={currentSymbol == 'USD' && 'md-checkmark'}
-                onPress={() => this.switchCurrency('USD')} 
+                onPress={() => this.switchCurrency('USD')}
               />
-              
             </ScrollView>
-            <Loading isVisible={currency.get('loading')} />
           </View>
         </View>
       </IntlProvider>

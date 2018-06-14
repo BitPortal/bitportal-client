@@ -29,3 +29,8 @@ export const ASSET_FRACTION = {
   GBP: 2,
   EOS: 4
 }
+
+export const DEFAULT_USD_RATE = {
+  USD: 1,
+  CNY: 6.4
+}

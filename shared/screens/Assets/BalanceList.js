@@ -5,6 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Text, View, ScrollView, TouchableHighlight, StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
 import { FormattedNumber } from 'react-intl'
+import CurrencyText from 'components/CurrencyText'
 
 const ListItem = ({ item, onPress, eosPrice }) => (
   <TouchableHighlight underlayColor={Colors.hoverColor} style={styles.listContainer} onPress={() => onPress(item)} >
@@ -21,9 +22,9 @@ const ListItem = ({ item, onPress, eosPrice }) => (
           />
         </Text>
         <Text style={[styles.text14, { alignSelf: 'flex-end', color: Colors.textColor_149_149_149 }]}>
-          ≈ ¥
-          <FormattedNumber
-            value={+item.get('balance') * +eosPrice * 6.41}
+          ≈
+          <CurrencyText
+            value={+item.get('balance') * +eosPrice}
             maximumFractionDigits={2}
             minimumFractionDigits={2}
           />

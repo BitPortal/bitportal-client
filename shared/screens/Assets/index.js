@@ -40,7 +40,7 @@ const getTotalAssets = (balanceList, eosPrice) => {
     balance = 0
   }
 
-  return +balance * eosPrice * 6.41
+  return +balance * eosPrice
 }
 
 @connect(
@@ -127,9 +127,10 @@ export default class Assets extends BaseScreen {
   }
 
   getCurrencyRate = async () => {
-    const symbolObj = await storage.getItem('bitportal_currency')
-    if (symbolObj && JSON.parse(symbolObj).symbol == 'CNY') {
-      this.props.actions.getCurrencyRateRequested({ symbol: 'CNY'})
+    const currency = await storage.getItem('bitportal_currency', true)
+
+    if (currency && currency.symbol) {
+      this.props.actions.getCurrencyRateRequested({ symbol: currency.symbol })
     }
   }
 

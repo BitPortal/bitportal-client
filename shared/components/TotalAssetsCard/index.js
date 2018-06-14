@@ -10,6 +10,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import messages from './messages'
 import { FormattedMessage, IntlProvider } from 'react-intl'
+import CurrencyText from 'components/CurrencyText'
 
 const styles = StyleSheet.create({
   linearContainer: {
@@ -57,9 +58,9 @@ class TotalAssetsCard extends Component {
                   <FormattedMessage id="asset_card_title_ttlast" />
                 </Text>
                 <Text style={styles.text24}>
-                  ≈ ¥
-                  <FormattedNumber
-                    value={totalAssets}
+                  ≈
+                  <CurrencyText
+                    value={21}
                     maximumFractionDigits={2}
                     minimumFractionDigits={2}
                   />

@@ -9,6 +9,7 @@ import { registerScreens } from 'screens'
 import { startSingleApp, startTabBasedApp } from 'navigators'
 import storage from 'utils/storage'
 import { getInitialLang } from 'selectors/intl'
+import { getInitialCurrency } from 'selectors/currency'
 import configure from 'store'
 import Provider from 'components/Provider'
 import sagas from 'sagas'
@@ -21,7 +22,14 @@ EStyleSheet.build({})
 
 const runApp = async () => {
   const lang = await storage.getItem('bitportal_lang')
-  const store = configure({ intl: getInitialLang(lang) })
+  const currency = await storage.getItem('bitportal_currency', true)
+  let symbol, rate
+  if (currency) {
+    symbol = currency.symbol
+    rate = currency.rate
+  }
+
+  const store = configure({ intl: getInitialLang(lang), currency: getInitialCurrency(symbol, rate) })
   const tabLabels = messages[getInitialLang(lang).get('locale')]
   store.runSaga(sagas)
   registerScreens(store, Provider) // this is where you register all of your app's screens
