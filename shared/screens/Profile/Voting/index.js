@@ -6,7 +6,7 @@ import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider, FormattedNumber } from 'react-intl'
-import { Text, View, TouchableOpacity, Alert, Platform } from 'react-native'
+import { Text, View, TouchableOpacity, Alert, Platform, InteractionManager } from 'react-native'
 import messages from './messages'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import ProducerList from './ProducerList'
@@ -102,7 +102,11 @@ export default class Voting extends BaseScreen {
   }
 
   handleConfirm = () => {
-    this.setState({ isVisible: false }, () => { this.submitVoting(this.state.password) })
+    this.setState({ isVisible: false }, () => {
+      InteractionManager.runAfterInteractions(() => {
+        this.submitVoting(this.state.password)
+      })
+    })
   }
 
   vote = () => {
