@@ -110,7 +110,7 @@ export default class Voting extends BaseScreen {
     const { locale } = this.props
     const eosAccountName = this.props.eosAccount.get('data').get('account_name')
     if (!eosAccountName) {
-      Dialogs.alert(messages[locale]['vt_popup_title_pwd'], null, { negativeText: messages[locale]['vt_popup_buttom_ent'] })
+      Dialogs.alert(messages[locale]['vt_button_name_err'], null, { negativeText: messages[locale]['vt_popup_buttom_ent'] })
     } else {
       this.props.actions.showSelected()
     }
