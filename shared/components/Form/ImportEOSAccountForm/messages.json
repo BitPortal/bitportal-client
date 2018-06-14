@@ -11,7 +11,9 @@
 		"import_title_name_cfmpwd" : "Confirm your password",
 		"import_txtbox_txt_pwdhint2" : "Password does not match",
 		"import_txtbox_txt_fill1" : "Owner Private Key",
+		"import_txtbox_txt_ownhint" : "Please enter the Owner Private Key",
 		"import_txtbox_txt_fill2" : "Active Private Key",
+		"import_txtbox_txt_activehint" : "Please enter the Active Private Key",
 		"import_button_name_impt" : "Import",
 
 		"ast_imp_hint_invalidowner" : "Invalid owner private key!",
@@ -36,7 +38,9 @@
 		"import_title_name_cfmpwd" : "请确认您的密码",
 		"import_txtbox_txt_pwdhint2" : "密码不匹配",
 		"import_txtbox_txt_fill1" : "Owner权限私钥",
+		"import_txtbox_txt_ownhint" : "请输入Owner私钥",
 		"import_txtbox_txt_fill2" : "Active权限私钥",
+		"import_txtbox_txt_activehint" : "请输入Active私钥",
 		"import_button_name_impt" : "导入",
 
 		"ast_imp_hint_invalidowner" : "无效的Owner权限私钥",
