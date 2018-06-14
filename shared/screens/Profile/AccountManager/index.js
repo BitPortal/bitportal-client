@@ -90,15 +90,16 @@ export default class AccountList extends BaseScreen {
   }
 
   handleExport = async () => {
+    const messagesInfo = messages[this.props.locale]
     if (Platform.OS == 'android') {
       this.setState({ isVisible: true, type: 'exportAccount' })
     } else {
       const { action, text } = await Dialogs.prompt(
-        '请输入密码',
+        messagesInfo['actexport_popup_name'],
         '',
         {
-          positiveText: 'Confirm',
-          negativeText: 'Cancel'
+          positiveText: messagesInfo['actexport_popup_ent'],
+          negativeText: messagesInfo['actexport_popup_can']
         }
       )
       if (action == Dialogs.actionPositive) {
@@ -112,12 +113,12 @@ export default class AccountList extends BaseScreen {
       this.setState({ isVisible: true, type: 'logout' })
     } else {
       const { action, text } = await Dialogs.prompt(
-        '请输入密码',
+        messagesInfo['actexport_popup_name'],
         '',
         {
-          positiveText: 'Confirm',
+          positiveText: messagesInfo['actexport_popup_ent'],
           positiveTextStyle: 'destructive',
-          negativeText: 'Cancel'
+          negativeText: messagesInfo['actexport_popup_can']
         }
       )
       if (action == Dialogs.actionPositive) {
@@ -160,6 +161,7 @@ export default class AccountList extends BaseScreen {
                 leftItemTitle={<FormattedMessage id="act_sec_title_logout" />}
                 onPress={this.handleLogout}
                 extraStyle={{ marginTop: 10 }}
+                leftTitleStyle={{ color: Colors.textColor_255_76_118 }}
               />
               { 
                 Platform.OS == 'android' && 

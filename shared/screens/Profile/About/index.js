@@ -71,6 +71,15 @@ export default class About extends BaseScreen {
     }
   }
 
+  goCheckGuide = () => {
+    this.props.navigator.push({ 
+      screen: `BitPortal.Welcome`,
+      passProps: {
+        from: 'about'
+      }
+    })
+  }
+ 
   render() {
     const { locale, versionInfo } = this.props
     const loading = versionInfo.get('loading')
@@ -110,6 +119,10 @@ export default class About extends BaseScreen {
               <SettingItem 
                 leftItemTitle={<FormattedMessage id="abt_sec_title_check" />} 
                 onPress={this.getVersionInfo} 
+              />
+              <SettingItem 
+                leftItemTitle={<FormattedMessage id="abt_sec_title_guide" />} 
+                onPress={this.goCheckGuide} 
               />
             </ScrollView>
             <Loading isVisible={loading} />

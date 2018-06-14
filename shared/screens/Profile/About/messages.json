@@ -6,7 +6,8 @@
     "abt_describe_txt_des" : "BitPortal, 价值互联网传送门。\nBitPortal是一款设计良好的EOS钱包，致力于为用户提供更便捷、更安全、更易用的产品和服务。",
     "abt_sec_title_tou" : "用户服务协议",
     "abt_sec_title_update" : "更新日志",
-    "abt_sec_title_check" : "版本检查"
+    "abt_sec_title_check" : "版本检查",
+    "abt_sec_title_guide" : "用户向导"
   },
   "en": {
     "abt_title_name_about" : "About",
@@ -15,6 +16,7 @@
     "abt_describe_txt_des" : "BitPortal, Portal to Internet of Value. \nBitPortal is a well designed EOS wallet which offers faster, simpler and safer services for our users.",
     "abt_sec_title_tou" : "Terms of Service",
     "abt_sec_title_update" : "Update Logs",
-    "abt_sec_title_check" : "Check for updates"
+    "abt_sec_title_check" : "Check for updates",
+    "abt_sec_title_guide" : "User Guide"
   }
 }
