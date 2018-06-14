@@ -106,6 +106,7 @@ export default class Voting extends BaseScreen {
   }
 
   vote = () => {
+    const { locale } = this.props
     const eosAccountName = this.props.eosAccount.get('data').get('account_name')
     if (!eosAccountName) {
       Dialogs.alert('Please import EOS account!', null, { negativeText: 'OK' })
@@ -165,7 +166,9 @@ export default class Voting extends BaseScreen {
           />
           <AlertComponent message={errorMessages(error)} dismiss={this.props.actions.clearError} />
           <View style={[styles.stakeAmountContainer, styles.between]}>
-            <Text style={[styles.text14, { marginLeft: 32 }]}>Stake Amount</Text>
+            <Text style={[styles.text14, { marginLeft: 32 }]}>
+              <FormattedMessage id="" />
+            </Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={styles.text14}>
                 <FormattedNumber
