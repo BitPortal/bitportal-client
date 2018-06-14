@@ -18,6 +18,7 @@ import * as walletActions from 'actions/wallet'
 import * as tickerActions from 'actions/ticker'
 import * as balanceActions from 'actions/balance'
 import * as versionInfoActions from 'actions/versionInfo'
+import * as currencyActions from 'actions/currency'
 import { accountBalanceSelector } from 'selectors/balance'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { eosPriceSelector } from 'selectors/ticker'
@@ -55,7 +56,8 @@ const getTotalAssets = (balanceList, eosPrice) => {
       ...walletActions,
       ...tickerActions,
       ...balanceActions,
-      ...versionInfoActions
+      ...versionInfoActions,
+      ...currencyActions
     }, dispatch)
   })
 )
@@ -124,9 +126,18 @@ export default class Assets extends BaseScreen {
     this.props.actions.switchWalletRequested(info)
   }
 
+  getCurrencyRate = async () => {
+    const symbolObj = await storage.getItem('bitportal_currency')
+    if (symbolObj && JSON.parse(symbolObj).symbol == 'CNY') {
+      this.props.actions.getCurrencyRateRequested({ symbol: 'CNY'})
+    }
+  }
+
   async componentDidMount() {
     // 检测版本号
     this.props.actions.getVersionInfoRequested()
+    // 获取资产单位
+    this.getCurrencyRate()
     this.props.actions.syncWalletRequested()
     /* this.props.actions.createEOSAccountRequested({
      *   creator: 'eosio',

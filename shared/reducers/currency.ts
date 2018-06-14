@@ -15,7 +15,8 @@ export default handleActions({
     return state.set('loading', true)
   },
   [actions.getCurrencyRateSucceeded] (state, action) {
-    return state.set('loaded', true).set('loading', false).set('rate', action.payload)
+    return state.set('loaded', true).set('loading', false)
+    .set('rate', action.payload.rate).set('symbol', action.payload.symbol)
   },
   [actions.getCurrencyRateFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)

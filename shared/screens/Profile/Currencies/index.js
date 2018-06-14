@@ -13,6 +13,7 @@ import messages from './messages'
 import { bindActionCreators } from 'redux'
 import * as currencyActions from 'actions/currency'
 import Loading from 'components/Loading'
+import storage from 'utils/storage'
 
 @connect(
   (state) => ({
@@ -33,9 +34,10 @@ export default class Currencies extends BaseScreen {
     navBarHidden: true
   }
 
-  switchCurrency = (symbol) => {
+  switchCurrency = async (symbol) => {
     if (symbol == 'CNY') {
-      this.props.actions.getCurrencyRateRequested()
+      await storage.setItem('bitportal_currency', JSON.stringify({ symbol }))
+      this.props.actions.getCurrencyRateRequested({symbol})
     } else {
       this.props.actions.setCurrency({ symbol: 'USD', rate: 1 })
     }
