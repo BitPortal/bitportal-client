@@ -27,6 +27,6 @@ export default handleActions({
     return state.set('showSelected', true)
   },
   [actions.closeSelected] (state, action) {
-    return state.set('showSelected', false)
+    return !state.get('error') ? state.set('showSelected', false) : state
   }
 }, initialState)
