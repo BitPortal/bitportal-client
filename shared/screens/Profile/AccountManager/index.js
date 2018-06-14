@@ -96,7 +96,7 @@ export default class AccountList extends BaseScreen {
     } else {
       const { action, text } = await Dialogs.prompt(
         messagesInfo['actexport_popup_name'],
-        '',
+        messagesInfo['logout_popup_warning'],
         {
           positiveText: messagesInfo['actexport_popup_ent'],
           negativeText: messagesInfo['actexport_popup_can']
@@ -109,12 +109,13 @@ export default class AccountList extends BaseScreen {
   }
 
   handleLogout = async () => {
+    const messagesInfo = messages[this.props.locale]
     if (Platform.OS == 'android') {
       this.setState({ isVisible: true, type: 'logout' })
     } else {
       const { action, text } = await Dialogs.prompt(
         messagesInfo['actexport_popup_name'],
-        '',
+        messagesInfo['logout_popup_warning'],
         {
           positiveText: messagesInfo['actexport_popup_ent'],
           positiveTextStyle: 'destructive',
@@ -166,18 +167,18 @@ export default class AccountList extends BaseScreen {
               { 
                 Platform.OS == 'android' && 
                 <DialogAndroid 
-                  tilte="请输入密码" 
-                  content=""
-                  positiveText="OK"
-                  negativeText="Cancel" 
+                  tilte={messages[locale]['actexport_popup_name']}
+                  content={messages[locale]['logout_popup_warning']}
+                  positiveText={messages[locale]['actexport_popup_ent']}
+                  negativeText={messages[locale]['actexport_popup_can']} 
                   onChange={password => this.setState({ password })} 
                   isVisible={this.state.isVisible} 
                   handleCancel={() => this.setState({ isVisible: false })} 
                   handleConfirm={this.handleConfirm} 
                 />
               }
-              <Loading isVisible={exporting} text="Exporting" />
-              <Loading isVisible={loggingOut} text="Logging Out" />
+              <Loading isVisible={exporting} text={messages[locale]['logout_popup_exporting']} />
+              <Loading isVisible={loggingOut} text={messages[locale]['logout_popup_deleting']} />
               <Alert message={errorMessages(error)} dismiss={this.props.actions.clearError} delay={500} />
               <Alert message={errorMessages(logoutError)} dismiss={this.props.actions.clearLogoutError} delay={500} />
             </ScrollView>

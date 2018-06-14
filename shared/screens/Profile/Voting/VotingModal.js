@@ -121,7 +121,7 @@ export default class VotingModal extends Component {
               <TouchableOpacity onPress={() => dismissModal()} style={[styles.center, styles.close]} >
                 <Ionicons name="ios-close" size={28} color={Colors.bgColor_FFFFFF} />
               </TouchableOpacity>
-              <Text style={styles.text18}> Selected </Text>
+              <Text style={styles.text18}> <FormattedMessage id="vt_btmsec_name_selected" /> </Text>
               <Text style={styles.text18}>{' '}</Text>
             </View>
             <View style={[styles.header, styles.bottom, { backgroundColor: Colors.minorThemeColor, minHeight: 300 }]}>
@@ -148,7 +148,7 @@ export default class VotingModal extends Component {
                 style={[styles.btn, styles.center, !isVoting ? {} : styles.disabled]}
                 disabled={isVoting}
               >
-                <Text style={[styles.text18]}>Vote</Text>
+                <Text style={[styles.text18]}><FormattedMessage id="vt_button_name_vote" /></Text>
                 {isVoting && <ActivityIndicator style={styles.indicator} size="small" color="white" />}
               </TouchableOpacity>
             </View>
