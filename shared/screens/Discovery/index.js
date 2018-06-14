@@ -18,7 +18,8 @@ const PAGE_LENGTH = 10
   (state) => ({
     locale: state.intl.get('locale'),
     listData: state.news.get('listData'),
-    listDataRefreshing: state.news.get('listLoading'),
+    isRefreshing: state.news.get('isRefreshing'),
+    loadingMore: state.news.get('loadingMore'),
     bannerData: state.news.get('bannerData'),
     nomore: state.news.get('nomore')
   }),
@@ -30,6 +31,7 @@ const PAGE_LENGTH = 10
 )
 
 export default class Discovery extends BaseScreen {
+
   componentDidMount() {
     this.props.actions.getNewsListRequested(0, PAGE_LENGTH, false)
     this.props.actions.getNewsBannerRequested()
@@ -74,7 +76,7 @@ export default class Discovery extends BaseScreen {
   }
 
   onRefresh = () => {
-    this.props.actions.getNewsListRequested(0, PAGE_LENGTH, true)
+    this.props.actions.getNewsListRequested(0, PAGE_LENGTH, false)
   }
 
   onRowPress = (item) => {
@@ -108,15 +110,15 @@ export default class Discovery extends BaseScreen {
   }
 
   onEndReached = () => {
-    if (this.props.nomore || this.props.listDataRefreshing) {
+    if (this.props.nomore || this.props.isRefreshing) {
       return
     }
     const length = this.props.listData.toJS().length
-    this.props.actions.getNewsListRequested(length, PAGE_LENGTH)
+    this.props.actions.getNewsListRequested(length, PAGE_LENGTH, true)
   }
 
   render() {
-    const { locale } = this.props
+    const { locale, loadingMore, isRefreshing, nomore } = this.props
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -130,8 +132,10 @@ export default class Discovery extends BaseScreen {
             data={this.getNewsListData()}
             onRefresh={this.onRefresh}
             onEndReached={this.onEndReached}
-            refreshing={this.props.listDataRefreshing}
+            refreshing={isRefreshing}
             onRowPress={this.onRowPress}
+            nomore={nomore}
+            loadingMore={loadingMore}
           />
         </View>
       </IntlProvider>
