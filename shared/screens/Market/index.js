@@ -80,8 +80,7 @@ export default class Market extends BaseScreen {
       exchange: this.props.ticker.get('exchangeFilter'),
       quote_asset: this.props.ticker.get('quoteAssetFilter'),
       sort: this.props.ticker.get('sortFilter'),
-      limit: 200,
-      fromUserPull: true
+      limit: 200
     })
   }
 
@@ -92,8 +91,6 @@ export default class Market extends BaseScreen {
   render() {
     const { ticker, locale } = this.props
     const loading = ticker.get('loading')
-    const fromUserPull = ticker.get('fromUserPull')
-    const loaded = !!ticker.get('data').size
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -108,7 +105,7 @@ export default class Market extends BaseScreen {
           />
           <HeaderTitle messages={messages[locale]} />
           <TableView
-            refreshing={(!loaded || fromUserPull) && loading}
+            refreshing={loading}
             onRefresh={() => this.onRefresh()}
             data={this.props.ticker.get('data')}
             onPress={(e) => this.pressListItem(e)}
