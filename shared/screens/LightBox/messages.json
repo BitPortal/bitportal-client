@@ -1,0 +1,17 @@
+{
+  "zh": {
+    "prfabtchk_popup_name_already" : "当前版本已是最新",
+    "prfabtchk_popup_name_new" : "发现新版本",
+    "prfabtchk_popup_name_confirm" : "确定",
+    "prfabtchk_popup_name_update" : "更新",
+    "prfabtchk_popup_name_wait" : "再用用看"
+
+  },
+  "en": {
+    "prfabtchk_popup_name_already" : "It is the newest version!",
+    "prfabtchk_popup_name_new" : "New version arrived!",
+    "prfabtchk_popup_name_confirm" : "OK",
+    "prfabtchk_popup_name_update" : "Update",
+    "prfabtchk_popup_name_wait" : "Don't update now."
+  }
+}

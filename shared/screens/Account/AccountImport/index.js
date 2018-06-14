@@ -1,12 +1,20 @@
 /* @jsx */
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import styles from './styles'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, TouchableOpacity, TextInput, TouchableHighlight } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import Colors from 'resources/colors'
 import ImportEOSAccountForm from 'components/Form/ImportEOSAccountForm'
+import { IntlProvider, FormattedMessage } from 'react-intl'
+import messages from './messages'
+import { connect } from 'react-redux'
+
+@connect(
+  (state) => ({
+    locale: state.intl.get('locale')
+  })
+)
 
 export default class AccountImport extends BaseScreen {
 
@@ -35,20 +43,22 @@ export default class AccountImport extends BaseScreen {
 
   render() {
     const { isAccountVaild } = this.state
+    const { locale } = this.props
     return (
-      <View style={styles.container}>
-        <NavigationBar
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
-          title="Import EOS Account"
-        />
-        <View style={styles.scrollContainer}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <ImportEOSAccountForm onPress={() => this.goToBackUp()} />
-            <View style={styles.keyboard} />
-          </ScrollView>
+      <IntlProvider messages={messages[locale]}>
+        <View style={styles.container}>
+          <NavigationBar
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+            title={messages[locale]['import_title_name_impt']}
+          />
+          <View style={styles.scrollContainer}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <ImportEOSAccountForm onPress={() => this.goToBackUp()} />
+              <View style={styles.keyboard} />
+            </ScrollView>
+          </View>
         </View>
-
-      </View>
+      </IntlProvider>
     )
   }
 

@@ -1,7 +1,7 @@
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Colors from 'resources/colors'
 import { FontScale } from 'utils/dimens'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 
 export default EStyleSheet.create({
   formContainer: {
@@ -25,7 +25,8 @@ export default EStyleSheet.create({
     flex: 1,
     height: 40,
     color: Colors.textColor_255_255_238,
-    fontSize: FontScale(14)
+    fontSize: FontScale(14),
+    paddingLeft: Platform.OS == 'android' ? -4 : 0
   },
   areaInput: {
     flex: 1,

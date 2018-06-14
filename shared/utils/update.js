@@ -1,22 +1,7 @@
 import { Alert, Platform, Linking } from 'react-native'
 import VersionNumber from 'react-native-version-number'
 import { Navigation } from 'react-native-navigation'
-
-/**
- * {
- *   lastVersion: '1.1.1',
- *   minVersion: '1.0.0',
- *   force: false,
- *   features: {
- *     zh: '',
- *     en: ''
- *   },
- *   downloadUrl: {
- *     ios: '',
- *     android: ''
- *   }
- * } 
- */ 
+import messages from 'screens/LightBox/messages'
 
 const actionNegative = 'actionNegative'
 const actionPositive = 'actionPositive'
@@ -70,7 +55,7 @@ export const update = (data, locale) => {
 
 export const showIsLast = async (data, locale) => {
   const content = data.features && data.features[locale]
-  await show('当前版本已是最新', content, { negativeText: '确定' })
+  await show(messages[locale]['prfabtchk_popup_name_already'], content, { negativeText: messages[locale]['prfabtchk_popup_name_confirm'] })
   clearTimeout(timer)
   Navigation.dismissLightBox()
 }
@@ -78,14 +63,20 @@ export const showIsLast = async (data, locale) => {
 export const isNewest = _ => isLast
 
 showNoUpdate = async () => {
-  await show('当前版本无需更新', '', { negativeText: '确定' })
+  await show('当前版本无需更新', '', { negativeText: messages[locale]['prfabtchk_popup_name_confirm'] })
   clearTimeout(timer)
   return Navigation.dismissLightBox()
 }
 
 showForceUpdate = async (data, locale) => {
   const content = data.features && data.features[locale]
-  const { action } = await show('发现新版本', content, { positiveText: '更新' })
+  const { action } = await show(
+    messages[locale]['prfabtchk_popup_name_new'], 
+    content, 
+    { 
+      positiveText: messages[locale]['prfabtchk_popup_name_update'] 
+    }
+  )
   clearTimeout(timer)
   if (action == actionPositive) return goUpdate(data)
   else if (action == actionNegative) return Navigation.dismissLightBox()
@@ -93,7 +84,14 @@ showForceUpdate = async (data, locale) => {
 
 showGoToUpdate = async (data, locale) => {
   const content = data.features && data.features[locale]
-  const { action } = await show('发现新版本', content, { negativeText: '再用用看', positiveText: '更新' })
+  const { action } = await show(
+    messages[locale]['prfabtchk_popup_name_new'], 
+    content, 
+    { 
+      negativeText: messages[locale]['prfabtchk_popup_name_wait'], 
+      positiveText: messages[locale]['prfabtchk_popup_name_update'] 
+    }
+  )
   clearTimeout(timer)
   if (action == actionPositive) return goUpdate(data)
   else if (action == actionNegative) return Navigation.dismissLightBox()
