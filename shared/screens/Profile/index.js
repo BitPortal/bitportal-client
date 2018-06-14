@@ -13,6 +13,7 @@ import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import messages from './messages'
 import VersionNumber from 'react-native-version-number'
+import Dialogs from 'components/Dialog'
 
 @connect(
   (state) => ({
@@ -29,21 +30,14 @@ export default class Profile extends BaseScreen {
   changePage = (page) => {
     let pageName = ''
     let passProps = {}
+    const { locale } = this.props
     switch (page) {
       case 'Account':
         if (this.props.wallet.get('data').get('name')) {
           pageName = 'AccountManager'
           passProps = this.props.wallet.get('data').toJS()
         } else {
-          Alert.alert(
-            'Please import EOS account!',
-            null,
-            [
-              { text: 'OK', onPress: () => console.log('ok') },
-            ],
-            { cancelable: false }
-          )
-          return
+          return Dialogs.alert(messages[locale]['profile_button_name_err'], null, { negativeText: messages[locale]['profile_popup_buttom_ent'] })
         }
         break
       case 'Voting':

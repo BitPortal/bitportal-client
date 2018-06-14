@@ -41,11 +41,11 @@ export default class SettingItem extends Component {
   }
 
   renderLeftItem(leftItemTitle) {
-    const { leftImage } = this.props
+    const { leftImage, leftTitleStyle } = this.props
     return (
       <View style={[{flexDirection: 'row'}, styles.center]}>
         { leftImage &&  <Image source={leftImage} style={styles.leftImageStyle} /> }
-        <Text style={styles.text16}>
+        <Text style={[styles.text16, leftTitleStyle]}>
           {leftItemTitle}
         </Text>
       </View>

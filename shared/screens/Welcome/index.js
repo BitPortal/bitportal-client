@@ -58,12 +58,20 @@ const Page3 = ({ goToHomePage }) => (
 
 export default class Welcome extends BaseScreen {
 
+  static navigatorStyle = {
+    tabBarHidden: true,
+    navBarHidden: true
+  }
+
   constructor(props, context) {
     super(props, context)
     this.goToHomePage = this.goToHomePage.bind(this)
   }
 
   async goToHomePage() {
+    if (this.props.from && this.props.from == 'about') {
+      return this.pop()
+    }
     await storage.setItem('bitportal_welcome', JSON.stringify({ localVersion: VersionNumber.appVersion }))
     const tabLabels = messages[this.props.locale]
     startTabBasedApp(tabLabels)
