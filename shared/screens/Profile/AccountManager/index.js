@@ -16,7 +16,7 @@ import { logoutRequested, clearLogoutError } from 'actions/wallet'
 import Loading from 'components/Loading'
 import Alert from 'components/Alert'
 import messages from './messages'
-import Dialog from './Dialog'
+import DialogAndroid from './DialogAndroid'
 import Dialogs from 'components/Dialog'
 
 export const errorMessages = (error) => {
@@ -161,7 +161,19 @@ export default class AccountList extends BaseScreen {
                 onPress={this.handleLogout}
                 extraStyle={{ marginTop: 10 }}
               />
-              {Platform.OS == 'android' && <Dialog tilte="请输入密码" content="" onChange={password => this.setState({ password })} isVisible={this.state.isVisible} handleCancel={() => this.setState({ isVisible: false })} handleConfirm={this.handleConfirm} />}
+              { 
+                Platform.OS == 'android' && 
+                <DialogAndroid 
+                  tilte="请输入密码" 
+                  content=""
+                  positiveText="OK"
+                  negativeText="Cancel" 
+                  onChange={password => this.setState({ password })} 
+                  isVisible={this.state.isVisible} 
+                  handleCancel={() => this.setState({ isVisible: false })} 
+                  handleConfirm={this.handleConfirm} 
+                />
+              }
               <Loading isVisible={exporting} text="Exporting" />
               <Loading isVisible={loggingOut} text="Logging Out" />
               <Alert message={errorMessages(error)} dismiss={this.props.actions.clearError} delay={500} />

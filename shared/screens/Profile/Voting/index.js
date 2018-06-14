@@ -6,7 +6,7 @@ import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider, FormattedNumber } from 'react-intl'
-import { Text, View, TouchableOpacity, Alert } from 'react-native'
+import { Text, View, TouchableOpacity, Alert, Platform } from 'react-native'
 import messages from './messages'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import ProducerList from './ProducerList'
@@ -18,6 +18,7 @@ import VotingModal from './VotingModal'
 import Loading from 'components/Loading'
 import AlertComponent from 'components/Alert'
 import Dialogs from 'components/Dialog'
+import DialogsAndroid from './DialogAndroid'
 import { sortProducers } from 'eos'
 
 export const errorMessages = (error) => {
@@ -60,6 +61,7 @@ export default class Voting extends BaseScreen {
     super(props, context)
     this.state = {
       isVisible: false,
+      password: '',
       item: {},
       selected: this.props.eosAccount.get('data').get('voter_info') ? this.props.eosAccount.get('data').get('voter_info').get('producers').toJS() : []
     }
@@ -82,6 +84,9 @@ export default class Voting extends BaseScreen {
   }
 
   async voting() {
+    if (Platform.OS == 'android') {
+      return this.setState({ isVisible: true })
+    }
     const { action, text } = await Dialogs.prompt(
       '请输入密码',
       '',
@@ -96,17 +101,14 @@ export default class Voting extends BaseScreen {
     }
   }
 
+  handleConfirm = () => {
+    this.setState({ isVisible: false }, () => { this.submitVoting(this.state.password) })
+  }
+
   vote = () => {
     const eosAccountName = this.props.eosAccount.get('data').get('account_name')
     if (!eosAccountName) {
-      Alert.alert(
-        'Please import EOS account!',
-        null,
-        [
-          { text: 'OK', onPress: () => console.log('ok') },
-        ],
-        { cancelable: false }
-      )
+      Dialogs.alert('Please import EOS account!', null, { negativeText: 'OK' })
     } else {
       this.props.actions.showSelected()
     }
@@ -172,7 +174,7 @@ export default class Voting extends BaseScreen {
                   minimumFractionDigits={4}
                 />
               </Text>
-              <Text style={[styles.text14, { marginLeft: 2, marginRight: 5 }]}> EOS </Text>
+              <Text style={[styles.text14, { marginLeft: 2, marginRight: 32 }]}> EOS </Text>
               {/* <TouchableOpacity onPress={() => this.stakeEOS()}>
                   <View style={{ padding: 5, margin: 10, marginRight: 20 }}>
                   <Ionicons name="ios-create" size={24} color={Colors.bgColor_FAFAFA} />
@@ -210,6 +212,19 @@ export default class Voting extends BaseScreen {
             selected={this.state.selected}
             isVoting={isVoting}
           />
+          { 
+            Platform.OS == 'android' && 
+            <DialogAndroid 
+              tilte="请输入密码" 
+              content=""
+              positiveText="OK"
+              negativeText="Cancel" 
+              onChange={password => this.setState({ password })} 
+              isVisible={this.state.isVisible} 
+              handleCancel={() => this.setState({ isVisible: false })} 
+              handleConfirm={this.handleConfirm} 
+            />
+          }
         </View>
       </IntlProvider>
     )
