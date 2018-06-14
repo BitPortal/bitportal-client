@@ -3,12 +3,28 @@
     "act_card_title_ttlast" : "总资产",
     "act_sec_title_change" : "修改密码",
     "act_sec_title_export" : "导出私钥",
-    "act_sec_title_logout" : "登出"
+    "act_sec_title_logout" : "登出",
+
+    "actexport_popup_name" : "请输入密码",
+    "actexport_popup_ent" : "确认",
+    "actexport_popup_can" : "取消",
+
+    "logout_popup_name" : "请输入密码",
+    "logout_popup_ent" : "确认",
+    "logout_popup_can" : "取消",
   },
   "en": {
     "act_card_title_ttlast" : "Total Assets",
     "act_sec_title_change" : "Change Password",
     "act_sec_title_export" : "Export Private Key",
-    "act_sec_title_logout" : "Sign out"
+    "act_sec_title_logout" : "Sign out",
+
+    "actexport_popup_name" : "Password",
+    "actexport_popup_ent" : "Confirm",
+    "actexport_popup_can" : "Cancel",
+
+    "logout_popup_name" : "Password",
+    "logout_popup_ent" : "Confirm",
+    "logout_popup_can" : "Cancel",
   }
 }

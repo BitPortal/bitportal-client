@@ -21,18 +21,18 @@ import Dialogs from 'components/Dialog'
 import DialogsAndroid from './DialogAndroid'
 import { sortProducers } from 'eos'
 
-export const errorMessages = (error) => {
+export const errorMessages = (error, messages) => {
   if (!error) return null
 
   const message = typeof error === 'object' ? error.message : error
 
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
-      return 'Invalid password!'
+      return messages['vt_popup_title_pwderr']
     case 'assertion failure with message: user must stake before they can vote':
-      return 'You need stake before vote!'
+      return messages['vt_button_name_err']
     default:
-      return 'Voting failed!'
+      return messages['vt_popup_title_failed']
   }
 }
 
@@ -87,12 +87,13 @@ export default class Voting extends BaseScreen {
     if (Platform.OS == 'android') {
       return this.setState({ isVisible: true })
     }
+    const { locale } = this.props
     const { action, text } = await Dialogs.prompt(
-      '请输入密码',
+      messages[locale]['vt_popup_title_pwd'],
       '',
       {
-        positiveText: 'Confirm',
-        negativeText: 'Cancel'
+        positiveText: messages[locale]['vt_popup_buttom_ent'],
+        negativeText: messages[locale]['vt_popup_buttom_can']
       }
     )
 
@@ -106,9 +107,10 @@ export default class Voting extends BaseScreen {
   }
 
   vote = () => {
+    const { locale } = this.props
     const eosAccountName = this.props.eosAccount.get('data').get('account_name')
     if (!eosAccountName) {
-      Dialogs.alert('Please import EOS account!', null, { negativeText: 'OK' })
+      Dialogs.alert(messages[locale]['vt_button_name_err'], null, { negativeText: messages[locale]['vt_popup_buttom_ent'] })
     } else {
       this.props.actions.showSelected()
     }
@@ -163,9 +165,11 @@ export default class Voting extends BaseScreen {
             title={messages[locale]['vt_title_name_vote']}
             leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
           />
-          <AlertComponent message={errorMessages(error)} dismiss={this.props.actions.clearError} />
+          <AlertComponent message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearError} />
           <View style={[styles.stakeAmountContainer, styles.between]}>
-            <Text style={[styles.text14, { marginLeft: 32 }]}>Stake Amount</Text>
+            <Text style={[styles.text14, { marginLeft: 32 }]}>
+              Stake
+            </Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={styles.text14}>
                 <FormattedNumber
@@ -174,7 +178,7 @@ export default class Voting extends BaseScreen {
                   minimumFractionDigits={4}
                 />
               </Text>
-              <Text style={[styles.text14, { marginLeft: 2, marginRight: 32 }]}> EOS </Text>
+              <Text style={[styles.text14, { marginLeft: 2, marginRight: 30 }]}> EOS </Text>
               {/* <TouchableOpacity onPress={() => this.stakeEOS()}>
                   <View style={{ padding: 5, margin: 10, marginRight: 20 }}>
                   <Ionicons name="ios-create" size={24} color={Colors.bgColor_FAFAFA} />
@@ -183,8 +187,10 @@ export default class Voting extends BaseScreen {
             </View>
           </View>
           <View style={[styles.titleContainer, styles.between]}>
-            <Text style={[styles.text14, { color: Colors.textColor_181_181_181 }]}> {`Name & Loacation`} </Text>
-            <Text style={[styles.text14, { color: Colors.textColor_181_181_181 }]}> Votes </Text>
+            <Text style={[styles.text14, { color: Colors.textColor_181_181_181 }]}> 
+              <FormattedMessage id="vt_sec_title_nameloc" />
+            </Text>
+            {/* <Text style={[styles.text14, { color: Colors.textColor_181_181_181 }]}> Votes </Text> */}
           </View>
           <View style={styles.scrollContainer}>
             <ProducerList
@@ -196,11 +202,11 @@ export default class Voting extends BaseScreen {
             />
           </View>
           <View style={[styles.btnContainer, styles.between]}>
-            <Text style={styles.text14}>Selected</Text>
+            <Text style={styles.text14}><FormattedMessage id="vt_btmsec_name_selected" /></Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={[styles.text14, { marginRight: 15 }]}>{this.state.selected.length}/30</Text>
               <TouchableOpacity onPress={disabled ? () => {} : this.vote} style={[styles.center, styles.voteBtn, disabled ? styles.disabled : {}]} disabled={disabled}>
-                <Text style={styles.text14}>Vote</Text>
+                <Text style={styles.text14}><FormattedMessage id="vt_button_name_vote" /></Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -212,17 +218,17 @@ export default class Voting extends BaseScreen {
             selected={this.state.selected}
             isVoting={isVoting}
           />
-          {
-            Platform.OS == 'android' &&
-            <DialogAndroid
-              tilte="请输入密码"
+          { 
+            Platform.OS == 'android' && 
+            <DialogAndroid 
+              tilte={<FormattedMessage id="vt_button_name_err" />}
               content=""
-              positiveText="OK"
-              negativeText="Cancel"
-              onChange={password => this.setState({ password })}
-              isVisible={this.state.isVisible}
-              handleCancel={() => this.setState({ isVisible: false })}
-              handleConfirm={this.handleConfirm}
+              positiveText={<FormattedMessage id="vt_popup_buttom_ent" />}
+              negativeText={<FormattedMessage id="vt_popup_buttom_can" />}
+              onChange={password => this.setState({ password })} 
+              isVisible={this.state.isVisible} 
+              handleCancel={() => this.setState({ isVisible: false })} 
+              handleConfirm={this.handleConfirm} 
             />
           }
         </View>

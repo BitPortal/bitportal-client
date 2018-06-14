@@ -15,32 +15,34 @@ import {
 } from 'components/Form'
 import PasswordStrength from 'components/PasswordStrength'
 import { getPasswordStrength } from 'utils'
-import { normalizeText, normalizeEOSAccountName } from 'utils/normalize'
+import { normalizeText, isEOSAccountNameValid } from 'utils/normalize'
 import * as eosAccountActions from 'actions/eosAccount'
 import Alert from 'components/Alert'
+import { IntlProvider, FormattedMessage } from 'react-intl'
+import messages from './messages'
 
-export const errorMessages = (error) => {
+export const errorMessages = (error, messages) => {
   if (!error) return null
 
   const message = typeof error === 'object' ? error.message : error
 
   switch (String(message)) {
     case 'Invalid owner private key!':
-      return 'Invalid owner private key!'
+      return messages['ast_imp_hint_invalidowner']
     case 'Invalid active private key!':
-      return 'Invalid active private key!'
+      return messages['ast_imp_hint_invalidactive']
     case 'EOS account dose not exist!':
-      return 'EOS account dose not exist!'
+      return messages['ast_imp_hint_eosaccount']
     case 'Owner permission dose not exist!':
-      return 'Owner permission dose not exist!'
+      return messages['ast_imp_hint_ownerpermi']
     case 'Active permission dose not exist!':
-      return 'Active permission dose not exist!'
+      return messages['ast_imp_hint_activepermi']
     case 'Unauthorized owner private key!':
-      return 'Unauthorized owner private key!'
+      return messages['ast_imp_hint_unauowner']
     case 'Unauthorized active private key!':
-      return 'Unauthorized active private key!'
+      return messages['ast_imp_hint_unauactive']
     default:
-      return 'Import failed!'
+      return messages['ast_imp_hint_fail']
   }
 }
 
@@ -48,41 +50,41 @@ const validate = (values, props) => {
   const errors = {}
 
   if (!values.get('name')) {
-    errors.name = 'Please input bitportal wallet name'
+    errors.name = <FormattedMessage id="import_txtbox_txt_bpnmhint1" />
   } else if (values.get('name').length > 12) {
-    errors.name = 'Wallet name should contain 1~12 characters'
+    errors.name = <FormattedMessage id="import_txtbox_txt_hint1" />
   }
 
   if (!values.get('eosAccountName')) {
-    errors.eosAccountName = 'Please input EOS account name'
+    errors.eosAccountName = <FormattedMessage id="import_txtbox_txt_eosnmhint2" />
+  } else if (!isEOSAccountNameValid(values.get('eosAccountName'))) {
+    errors.eosAccountName = <FormattedMessage id="import_txtbox_txt_eosnmhint1" />
   }
 
   if (!values.get('password')) {
-    errors.password = 'Please input password'
+    errors.password = <FormattedMessage id="import_title_name_pwd" />
   } else if (!!values.get('password') && values.get('password').length < 6) {
-    errors.password = 'Password must be at least 6 characters'
+    errors.password = <FormattedMessage id="import_txtbox_txt_pwdhint1" />
   }
 
   if (!values.get('confirmedPassword')) {
-    errors.confirmedPassword = 'Please confirm password'
+    errors.confirmedPassword = <FormattedMessage id="import_title_name_cfmpwd" />
   }
 
   if (values.get('confirmedPassword') !== values.get('password')) {
-    errors.confirmedPassword = 'Passwords don\'t macth'
+    errors.confirmedPassword = <FormattedMessage id="import_txtbox_txt_pwdhint2" />
   }
 
   if (!values.get('ownerPrivateKey')) {
-    errors.ownerPrivateKey = 'Please input onwer private key'
+    errors.ownerPrivateKey = <FormattedMessage id="import_txtbox_txt_ownhint" />
   }
 
   if (!values.get('activePrivateKey')) {
-    errors.activePrivateKey = 'Please input active private key'
+    errors.activePrivateKey = <FormattedMessage id="import_txtbox_txt_activehint" />
   }
 
   return errors
 }
-
-@reduxForm({ form: 'importEOSAccountForm', validate })
 
 @connect(
   state => ({
@@ -97,6 +99,8 @@ const validate = (values, props) => {
   })
 )
 
+@reduxForm({ form: 'importEOSAccountForm', validate })
+
 export default class ImportEOSAccountForm extends Component {
   constructor(props, context) {
     super(props, context)
@@ -108,50 +112,51 @@ export default class ImportEOSAccountForm extends Component {
   }
 
   render() {
-    const { handleSubmit, invalid, pristine, password, eosAccount } = this.props
+    const { handleSubmit, invalid, pristine, password, eosAccount, locale } = this.props
     const loading = eosAccount.get('loading')
     const error = eosAccount.get('error')
     const disabled = invalid || pristine || loading
 
     return (
-      <FormContainer>
-        <Field
-          label="BitPortal Wallet Name"
-          name="name"
-          component={TextField}
-        />
-        <Field
-          label="EOS Account Name"
-          name="eosAccountName"
-          component={TextField}
-          normalize={normalizeEOSAccountName}
-        />
-        <Field
-          label="Set a password"
-          name="password"
-          component={PasswordField}
-          rightContent={<PasswordStrength strength={getPasswordStrength(password)} />}
-        />
-        <Field
-          label="Confirm Your Password"
-          name="confirmedPassword"
-          component={PasswordField}
-        />
-        <Field
-          label="Onwer Private Key"
-          name="ownerPrivateKey"
-          component={TextAreaField}
-          normalize={normalizeText}
-        />
-        <Field
-          label="Active Private Key"
-          name="activePrivateKey"
-          component={TextAreaField}
-          normalize={normalizeText}
-        />
-        <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text="Import" />
-        <Alert message={errorMessages(error)} dismiss={this.props.actions.clearError} />
-      </FormContainer>
+      <IntlProvider messages={messages[locale]}>
+        <FormContainer>
+          <Field
+            label={<FormattedMessage id="import_title_name_bpnm" />}
+            name="name"
+            component={TextField}
+          />
+          <Field
+            label={<FormattedMessage id="import_title_name_eosnm" />}
+            name="eosAccountName"
+            component={TextField}
+          />
+          <Field
+            label={<FormattedMessage id="import_title_name_pwd" />}
+            name="password"
+            component={PasswordField}
+            rightContent={<PasswordStrength strength={getPasswordStrength(password)} />}
+          />
+          <Field
+            label={<FormattedMessage id="import_title_name_cfmpwd" />}
+            name="confirmedPassword"
+            component={PasswordField}
+          />
+          <Field
+            label={<FormattedMessage id="import_txtbox_txt_fill1" />}
+            name="ownerPrivateKey"
+            component={TextAreaField}
+            normalize={normalizeText}
+          />
+          <Field
+            label={<FormattedMessage id="import_txtbox_txt_fill2" />}
+            name="activePrivateKey"
+            component={TextAreaField}
+            normalize={normalizeText}
+          />
+          <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text={<FormattedMessage id="import_button_name_impt" />} />
+          <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearError} />
+        </FormContainer>
+      </IntlProvider>
     )
   }
 }
