@@ -60,7 +60,7 @@ class TotalAssetsCard extends Component {
                 <Text style={styles.text24}>
                   ≈
                   <CurrencyText
-                    value={21}
+                    value={totalAssets}
                     maximumFractionDigits={2}
                     minimumFractionDigits={2}
                   />
