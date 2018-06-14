@@ -20,6 +20,7 @@ declare interface Config {
   BITPORTAL_API_CMS_URL: string
   BITPORTAL_API_WEBSOCKET_URL: string
   EOS_API_URL: string
+  CURRENCY_RATE_URL: string
 }
 
 declare interface RootState {
@@ -32,7 +33,7 @@ declare interface RootState {
   assets: any
   balance: any
   wallet: any
-  vote: any
+  producer: any
 }
 
 declare interface FetchOptions {
