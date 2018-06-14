@@ -15,9 +15,11 @@ import {
 } from 'components/Form'
 import PasswordStrength from 'components/PasswordStrength'
 import { getPasswordStrength } from 'utils'
-import { normalizeText, normalizeEOSAccountName } from 'utils/normalize'
+import { normalizeText, isEOSAccountNameValid } from 'utils/normalize'
 import * as eosAccountActions from 'actions/eosAccount'
 import Alert from 'components/Alert'
+import { IntlProvider, FormattedMessage } from 'react-intl'
+import messages from './messages'
 
 export const errorMessages = (error) => {
   if (!error) return null
@@ -48,13 +50,17 @@ const validate = (values, props) => {
   const errors = {}
 
   if (!values.get('name')) {
-    errors.name = 'Please input bitportal wallet name'
+    errors.name = <FormattedMessage id="import_txtbox_txt_hint1" />
   } else if (values.get('name').length > 12) {
-    errors.name = 'Wallet name should contain 1~12 characters'
+    errors.name = <FormattedMessage id="import_txtbox_txt_hint1" />
   }
 
   if (!values.get('eosAccountName')) {
     errors.eosAccountName = 'Please input EOS account name'
+  }
+
+  if (!isEOSAccountNameValid(values.get('eosAccountName'))) {
+    errors.eosAccountName = 'Only 12345abcdefghijklmnopqrstuvwxyz works'
   }
 
   if (!values.get('password')) {
@@ -82,8 +88,6 @@ const validate = (values, props) => {
   return errors
 }
 
-@reduxForm({ form: 'importEOSAccountForm', validate })
-
 @connect(
   state => ({
     locale: state.intl.get('locale'),
@@ -97,6 +101,8 @@ const validate = (values, props) => {
   })
 )
 
+@reduxForm({ form: 'importEOSAccountForm', validate })
+
 export default class ImportEOSAccountForm extends Component {
   constructor(props, context) {
     super(props, context)
@@ -108,50 +114,51 @@ export default class ImportEOSAccountForm extends Component {
   }
 
   render() {
-    const { handleSubmit, invalid, pristine, password, eosAccount } = this.props
+    const { handleSubmit, invalid, pristine, password, eosAccount, locale } = this.props
     const loading = eosAccount.get('loading')
     const error = eosAccount.get('error')
     const disabled = invalid || pristine || loading
 
     return (
-      <FormContainer>
-        <Field
-          label="BitPortal Wallet Name"
-          name="name"
-          component={TextField}
-        />
-        <Field
-          label="EOS Account Name"
-          name="eosAccountName"
-          component={TextField}
-          normalize={normalizeEOSAccountName}
-        />
-        <Field
-          label="Set a password"
-          name="password"
-          component={PasswordField}
-          rightContent={<PasswordStrength strength={getPasswordStrength(password)} />}
-        />
-        <Field
-          label="Confirm Your Password"
-          name="confirmedPassword"
-          component={PasswordField}
-        />
-        <Field
-          label="Onwer Private Key"
-          name="ownerPrivateKey"
-          component={TextAreaField}
-          normalize={normalizeText}
-        />
-        <Field
-          label="Active Private Key"
-          name="activePrivateKey"
-          component={TextAreaField}
-          normalize={normalizeText}
-        />
-        <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text="Import" />
-        <Alert message={errorMessages(error)} dismiss={this.props.actions.clearError} />
-      </FormContainer>
+      <IntlProvider messages={messages[locale]}>
+        <FormContainer>
+          <Field
+            label={messages[locale]['import_title_name_bpnm']}
+            name="name"
+            component={TextField}
+          />
+          <Field
+            label="EOS Account Name"
+            name="eosAccountName"
+            component={TextField}
+          />
+          <Field
+            label="Set a password"
+            name="password"
+            component={PasswordField}
+            rightContent={<PasswordStrength strength={getPasswordStrength(password)} />}
+          />
+          <Field
+            label="Confirm Your Password"
+            name="confirmedPassword"
+            component={PasswordField}
+          />
+          <Field
+            label="Onwer Private Key"
+            name="ownerPrivateKey"
+            component={TextAreaField}
+            normalize={normalizeText}
+          />
+          <Field
+            label="Active Private Key"
+            name="activePrivateKey"
+            component={TextAreaField}
+            normalize={normalizeText}
+          />
+          <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text="Import" />
+          <Alert message={errorMessages(error)} dismiss={this.props.actions.clearError} />
+        </FormContainer>
+      </IntlProvider>
     )
   }
 }

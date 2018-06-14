@@ -25,3 +25,5 @@ const normalizeUnit = (value: any, previousValue: any, decimalPlaces: number) =>
 export const normalizeUnitByCurrency = (currency: Currency) => (value: any, previousValue: any) => normalizeUnit(value, previousValue, ASSET_FRACTION[currency])
 
 export const normalizeEOSAccountName = (value: any, previousValue: any) => (value && ((/([1-5]|[a-z])+$/.test(value) && value.length <= 13) ? value.trim() : previousValue))
+
+export const isEOSAccountNameValid = (value: any) => (value && ((/([1-5]|[a-z])+$/.test(value) && value.length <= 13))) ? true : false
