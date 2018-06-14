@@ -18,15 +18,18 @@ const initialState = Immutable.fromJS({
     POLONIEX: 'quote_volume',
   },
   currencyFilter: null,
-  baseAsset: null
+  baseAsset: null,
+  fromUserPull: false
 })
 
 export default handleActions({
-  [actions.getTickersRequested] (state) {
-    return state.set('loading', true)
+  [actions.getTickersRequested] (state, action) {
+    return state.set('loading', true).set('fromUserPull', !!action.payload.fromUserPull)
   },
   [actions.getTickersSucceeded] (state, action) {
-    return state.set('loaded', true).set('loading', false)
+    return state.set('loaded', true)
+      .set('loading', false)
+      .set('fromUserPull', false)
       .update(
         'data',
         (v: any) => {
@@ -43,7 +46,9 @@ export default handleActions({
       )
   },
   [actions.getTickersFailed] (state, action) {
-    return state.set('error', action.payload).set('loading', false)
+    return state.set('error', action.payload)
+      .set('loading', false)
+      .set('fromUserPull', false)
   },
   [actions.selectTickersByExchange] (state, action) {
     return state.set('exchangeFilter', action.payload)
