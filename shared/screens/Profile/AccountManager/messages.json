@@ -7,7 +7,11 @@
 
     "actexport_popup_name" : "请输入密码",
     "actexport_popup_ent" : "确认",
-    "actexport_popup_can" : "取消"
+    "actexport_popup_can" : "取消",
+
+    "logout_popup_name" : "请输入密码",
+    "logout_popup_ent" : "确认",
+    "logout_popup_can" : "取消",
   },
   "en": {
     "act_card_title_ttlast" : "Total Assets",
@@ -17,6 +21,10 @@
 
     "actexport_popup_name" : "Password",
     "actexport_popup_ent" : "Confirm",
-    "actexport_popup_can" : "Cancel"
+    "actexport_popup_can" : "Cancel",
+
+    "logout_popup_name" : "Password",
+    "logout_popup_ent" : "Confirm",
+    "logout_popup_can" : "Cancel",
   }
 }
