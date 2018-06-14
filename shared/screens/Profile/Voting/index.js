@@ -212,17 +212,17 @@ export default class Voting extends BaseScreen {
             selected={this.state.selected}
             isVoting={isVoting}
           />
-          { 
-            Platform.OS == 'android' && 
-            <DialogAndroid 
-              tilte="请输入密码" 
+          {
+            Platform.OS == 'android' &&
+            <DialogAndroid
+              tilte="请输入密码"
               content=""
               positiveText="OK"
-              negativeText="Cancel" 
-              onChange={password => this.setState({ password })} 
-              isVisible={this.state.isVisible} 
-              handleCancel={() => this.setState({ isVisible: false })} 
-              handleConfirm={this.handleConfirm} 
+              negativeText="Cancel"
+              onChange={password => this.setState({ password })}
+              isVisible={this.state.isVisible}
+              handleCancel={() => this.setState({ isVisible: false })}
+              handleConfirm={this.handleConfirm}
             />
           }
         </View>
