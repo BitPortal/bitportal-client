@@ -29,6 +29,10 @@ const styles = StyleSheet.create({
     color: Colors.textColor_255_255_238,
     fontWeight: 'bold'
   },
+  text14: {
+    fontSize: FontScale(14),
+    color: Colors.textColor_181_181_181
+  },
   markdownContainer: {
     paddingHorizontal: 16,
     marginTop: 24,

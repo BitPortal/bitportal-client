@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { FlatList, View } from 'react-native'
+import { FlatList, View, ActivityIndicator, Text } from 'react-native'
 import NewsRow, { NewsRowTypes } from '../NewsRow'
 import Colors from 'resources/colors'
+import styles from '../styles'
 
 class NewsList extends React.PureComponent {
   keyExtractor = item => item.id
@@ -19,8 +20,16 @@ class NewsList extends React.PureComponent {
       key={item.id}
     />
 
-  renderSeparator = () =>
+  renderSeparator = () => (
     <View style={{ height: 1, width: '100%', backgroundColor: Colors.bgColor_000000 }} />
+  )
+    
+  renderFoot = () => {
+    const { loadingMore, nomore } = this.props
+    if (loadingMore) return <ActivityIndicator style={{ marginVertical: 10 }} size="small" color="white" />
+    if (nomore) return <Text style={[styles.text14, { marginVertical: 10, alignSelf: 'center' }]}> 没有更多数据了 </Text>
+    else return null
+  }
 
   render() {
     return (
@@ -29,8 +38,10 @@ class NewsList extends React.PureComponent {
         keyExtractor={this.keyExtractor}
         ItemSeparatorComponent={this.renderSeparator}
         renderItem={this.renderItem}
+        ListFooterComponent={this.renderFoot}
         onRefresh={this.props.onRefresh}
         onEndReached={this.props.onEndReached}
+        onEndReachedThreshold={-0.1}
         refreshing={this.props.refreshing}
       />
     )

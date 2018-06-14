@@ -11,6 +11,7 @@ import loggerSaga from './logger'
 import newsSage from './news'
 import producerSage from './producer'
 import versionInfoSaga from './versionInfo'
+import currencySaga from './currency'
 import votingSaga from './voting'
 import stakeSaga from './stake'
 
@@ -26,6 +27,7 @@ const sagas = {
   loggerSaga: fork(loggerSaga),
   producerSage: fork(producerSage),
   versionInfoSaga: fork(versionInfoSaga),
+  currencySaga: fork(currencySaga),
   votingSaga: fork(votingSaga),
   stakeSaga: fork(stakeSaga)
 }

@@ -1,4 +1,4 @@
-import { BITPORTAL_API_REST_URL, BITPORTAL_API_CMS_URL } from 'constants/env'
+import { BITPORTAL_API_REST_URL, BITPORTAL_API_CMS_URL, CURRENCY_RATE_URL } from 'constants/env'
 import storage from 'utils/storage'
 import { isMobile } from 'utils/platform'
 
@@ -39,7 +39,7 @@ export const fetchBase = async (
       options.body = JSON.stringify(params)
     }
   }
-
+  console.log('###', url)
   return fetch(url, baseUrl === BITPORTAL_API_REST_URL ? options : {}).then((res: any) => {
     if (!res.ok) {
       return res.json().then((e: any) => Promise.reject({ message: e.error_msg }))
@@ -75,3 +75,4 @@ export const getNewsList = (params: any) => fetchBase('GET', '/article', params,
 export const getNewsBanner = () => fetchBase('GET', '/banner', {}, {}, BITPORTAL_API_CMS_URL)
 
 export const getVersionInfo = () => fetchBase('GET', '/system', {}, {}, BITPORTAL_API_CMS_URL)
+export const getCurrencyRate = () => fetchBase('GET', '', {}, {}, CURRENCY_RATE_URL)
