@@ -30,7 +30,7 @@ export const errorMessages = (error, messages) => {
     case 'Key derivation failed - possibly wrong passphrase':
       return messages['vt_popup_title_pwderr']
     case 'assertion failure with message: user must stake before they can vote':
-      return messages['vt_button_name_err']
+      return messages['vt_popup_title_nostaker']
     default:
       return messages['vt_popup_title_failed']
   }

@@ -19,16 +19,16 @@ import messages from './messages'
 import DialogAndroid from './DialogAndroid'
 import Dialogs from 'components/Dialog'
 
-export const errorMessages = (error) => {
+export const errorMessages = (error, messages) => {
   if (!error) return null
 
   const message = typeof error === 'object' ? error.message : error
 
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
-      return 'Invalid password!'
+      return messages['actexport_popup_ivps']
     default:
-      return 'Export failed!'
+      return messages['actexport_popup_faex']
   }
 }
 
@@ -96,7 +96,7 @@ export default class AccountList extends BaseScreen {
     } else {
       const { action, text } = await Dialogs.prompt(
         messagesInfo['actexport_popup_name'],
-        messagesInfo['logout_popup_warning'],
+        '',
         {
           positiveText: messagesInfo['actexport_popup_ent'],
           negativeText: messagesInfo['actexport_popup_can']
@@ -179,8 +179,8 @@ export default class AccountList extends BaseScreen {
               }
               <Loading isVisible={exporting} text={messages[locale]['logout_popup_exporting']} />
               <Loading isVisible={loggingOut} text={messages[locale]['logout_popup_deleting']} />
-              <Alert message={errorMessages(error)} dismiss={this.props.actions.clearError} delay={500} />
-              <Alert message={errorMessages(logoutError)} dismiss={this.props.actions.clearLogoutError} delay={500} />
+              <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearError} delay={500} />
+              <Alert message={errorMessages(logoutError, messages[locale])} dismiss={this.props.actions.clearLogoutError} delay={500} />
             </ScrollView>
           </View>
         </View>
