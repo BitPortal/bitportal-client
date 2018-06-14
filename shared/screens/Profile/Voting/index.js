@@ -61,6 +61,7 @@ export default class Voting extends BaseScreen {
     super(props, context)
     this.state = {
       isVisible: false,
+      password: '',
       item: {},
       selected: this.props.eosAccount.get('data').get('voter_info') ? this.props.eosAccount.get('data').get('voter_info').get('producers').toJS() : []
     }
@@ -83,6 +84,9 @@ export default class Voting extends BaseScreen {
   }
 
   async voting() {
+    if (Platform.OS == 'android') {
+      return this.setState({ isVisible: true })
+    }
     const { action, text } = await Dialogs.prompt(
       '请输入密码',
       '',
@@ -97,17 +101,14 @@ export default class Voting extends BaseScreen {
     }
   }
 
+  handleConfirm = () => {
+    this.setState({ isVisible: false }, () => { this.submitVoting(this.state.password) })
+  }
+
   vote = () => {
     const eosAccountName = this.props.eosAccount.get('data').get('account_name')
     if (!eosAccountName) {
-      Alert.alert(
-        'Please import EOS account!',
-        null,
-        [
-          { text: 'OK', onPress: () => console.log('ok') },
-        ],
-        { cancelable: false }
-      )
+      Dialogs.alert('Please import EOS account!', null, { negativeText: 'OK' })
     } else {
       this.props.actions.showSelected()
     }
