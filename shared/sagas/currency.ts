@@ -3,6 +3,7 @@ import { call, put, takeEvery } from 'redux-saga/effects'
 import * as actions from 'actions/currency'
 import * as api from 'utils/api'
 import storage from 'utils/storage'
+import { DEFAULT_USD_RATE } from 'constants/market'
 
 function* getCurrencyRate(action: any) {
   try {
@@ -22,7 +23,7 @@ function* getCurrencyRate(action: any) {
     yield put(actions.getCurrencyRateSucceeded(currency))
   } catch (e) {
     yield put(actions.getCurrencyRateFailed(e.message))
-    yield put(actions.setRate(DEFAULT_USD_RATE[symbol]))
+    yield put(actions.setRate(DEFAULT_USD_RATE[action.payload.symbol]))
   }
 }
 
