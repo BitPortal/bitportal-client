@@ -12,6 +12,7 @@ import secureStorage from 'utils/secureStorage'
 import { initAccount, getEOS, privateToPublic, isValidPrivate } from 'eos'
 import { getEOSKeys, decrypt, validateEntropy, encrypt } from 'key'
 import wif from 'wif'
+import { initEOS } from 'eos'
 
 function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
   if (!action.payload) return
@@ -117,7 +118,22 @@ function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
   }
 }
 
+function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
+  if (!action.payload) return
+
+  try {
+    const eosAccountName = action.payload.eosAccountName
+    const eos = initEOS({})
+    const info = yield call(eos.getAccount, eosAccountName)
+    yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, info, true)
+    yield put(actions.getEOSAccountSucceeded(info))
+  } catch (e) {
+    yield put(actions.getEOSAccountFailed(e.message))
+  }
+}
+
 export default function* eosAccountSaga() {
   yield takeEvery(String(actions.createEOSAccountRequested), createEOSAccountRequested)
   yield takeEvery(String(actions.importEOSAccountRequested), importEOSAccountRequested)
+  yield takeEvery(String(actions.getEOSAccountRequested), getEOSAccountRequested)
 }

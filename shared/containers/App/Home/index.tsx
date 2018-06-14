@@ -58,7 +58,6 @@ export default class Home extends Component<Props, State> {
 
   render() {
     const { locale, ticker, wallet } = this.props
-    console.log(wallet.toJS())
 
     return (
       <IntlProvider messages={messages[locale]}>

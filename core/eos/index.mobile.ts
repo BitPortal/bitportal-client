@@ -15,6 +15,12 @@ const initAccount = async ({ keyProvider, signProvider }: { keyProvider: string 
   return { eos }
 }
 
+const initEOS = (options: object = {}) => {
+  const chainId = options.chainId || 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
+  eos = Eos({ ...options, chainId, httpEndpoint: EOS_API_URL })
+  return eos
+}
+
 const getEOS = () => {
   return eos
 }
@@ -40,11 +46,15 @@ const getProducers = (params: any) => {
   })
 }
 
+const sortProducers = (a: any, b: any) => parseInt(Eos.modules.format.encodeName(a, false)) - parseInt(Eos.modules.format.encodeName(b, false))
+
 export {
+  initEOS,
   getEOS,
   initAccount,
   privateToPublic,
   isValidPrivate,
   randomKey,
-  getProducers
+  getProducers,
+  sortProducers
 }

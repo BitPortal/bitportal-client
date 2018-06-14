@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 75,
-    height: 75
+    height: 116
   },
   text12: {
     fontSize: FontScale(12),

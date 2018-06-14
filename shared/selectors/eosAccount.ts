@@ -35,3 +35,13 @@ export const eosAccountSelector = createSelector(
     }
   }
 )
+
+export const voterInfoSelector = createSelector(
+  eosAccountSelector,
+  (account: any) => account.get('data').get('voter_info')
+)
+
+export const votedProducersSelector = createSelector(
+  voterInfoSelector,
+  (voterInfo: any) => voterInfo.get('producers')
+)

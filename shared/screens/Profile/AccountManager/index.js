@@ -97,7 +97,7 @@ export default class AccountList extends BaseScreen {
         '请输入密码',
         '',
         {
-          positiveText: 'OK',
+          positiveText: 'Confirm',
           negativeText: 'Cancel'
         }
       )
@@ -115,7 +115,8 @@ export default class AccountList extends BaseScreen {
         '请输入密码',
         '',
         {
-          positiveText: 'OK',
+          positiveText: 'Confirm',
+          positiveTextStyle: 'destructive',
           negativeText: 'Cancel'
         }
       )

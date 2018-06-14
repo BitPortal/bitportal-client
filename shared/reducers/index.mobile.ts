@@ -11,6 +11,9 @@ import balance from './balance'
 import producer from './producer'
 import versionInfo from './versionInfo'
 import currency from './currency'
+import voting from './voting'
+import stake from './stake'
+
 
 export default combineReducers({
   form,
@@ -24,5 +27,7 @@ export default combineReducers({
   balance,
   producer,
   versionInfo,
-  currency
+  currency,
+  voting,
+  stake
 })

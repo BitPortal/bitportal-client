@@ -71,7 +71,7 @@ export const bindUserTwoFactor = (params: BindUserTwoFactorParams) => fetchBase(
 export const getTickers = (params?: TickerParams) => fetchBase('GET', '/tickers', params)
 export const getChart = (params?: ChartParams) => fetchBase('GET', '/chart', params)
 
-export const getNewsList = (params?: NewsParams) => fetchBase('GET', '/article', params, {}, BITPORTAL_API_CMS_URL)
+export const getNewsList = (params: any) => fetchBase('GET', '/article', params, {}, BITPORTAL_API_CMS_URL)
 export const getNewsBanner = () => fetchBase('GET', '/banner', {}, {}, BITPORTAL_API_CMS_URL)
 
 export const getVersionInfo = () => fetchBase('GET', '/system', {}, {}, BITPORTAL_API_CMS_URL)

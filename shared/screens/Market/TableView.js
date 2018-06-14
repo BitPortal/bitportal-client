@@ -1,5 +1,5 @@
 
-import React, { Component, PureComponent } from 'react'
+import React, { Component } from 'react'
 import { FormattedNumber } from 'react-intl'
 import Immutable from 'immutable'
 import { FontScale, SCREEN_WIDTH } from 'utils/dimens'
@@ -47,7 +47,11 @@ const filterBgColor = (data) => {
   }
 }
 
-class ListItem extends PureComponent {
+class ListItem extends Component {
+  shouldComponentUpdate(nextProps){
+    return nextProps.data.get('base_asset') !== this.props.data.get('base_asset') || nextProps.data.get('price_last') !== this.props.data.get('price_last') || nextProps.data.get('price_change_percent') !== this.props.data.get('price_change_percent')
+  }
+
   render() {
     const { data, index, itemExtraStyle, onPress } = this.props
 

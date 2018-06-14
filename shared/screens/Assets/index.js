@@ -30,7 +30,15 @@ import Loading from 'components/Loading'
 const getTotalAssets = (balanceList, eosPrice) => {
   if (!balanceList) return 0
 
-  const balance = balanceList.filter(balance => balance.get('symbol') === 'SYS').get(0).get('balance')
+  let balance
+  const baseTokenBalance = balanceList.filter(balance => balance.get('symbol') === 'SYS' || balance.get('symbol') === 'EOS')
+
+  if (baseTokenBalance.size) {
+    balance = baseTokenBalance.get(0).get('balance')
+  } else {
+    balance = 0
+  }
+
   return +balance * eosPrice * 6.41
 }
 
@@ -100,7 +108,7 @@ export default class Assets extends BaseScreen {
   createNewAccount = () => {
     InteractionManager.runAfterInteractions(() => {
       this.setState({ isVisible2: false }, () => {
-        this.props.navigator.push({ screen: "BitPortal.AccountCreation" })
+        this.props.navigator.push({ screen: "BitPortal.AccountImport" })
       })
     })
   }
@@ -172,7 +180,7 @@ export default class Assets extends BaseScreen {
         <View style={styles.container}>
           <NavigationBar
             leftButton={<CommonTitle title={<FormattedMessage id="addpage_title_name_act" />} />}
-            rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanQR()} />}
+            // rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanQR()} />}
           />
           {
             !walletCount  &&

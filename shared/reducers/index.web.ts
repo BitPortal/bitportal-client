@@ -10,6 +10,8 @@ import keystore from './keystore'
 import news from './news'
 import balance from './balance'
 import producer from './producer'
+import voting from './voting'
+import stake from './stake'
 
 export default combineReducers({
   router,
@@ -22,5 +24,7 @@ export default combineReducers({
   news,
   balance,
   producer,
-  chart
+  chart,
+  voting,
+  stake
 })

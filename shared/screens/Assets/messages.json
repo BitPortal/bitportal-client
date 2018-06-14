@@ -1,16 +1,16 @@
 {
   "zh": {
     "addpage_title_name_act": "EOS 钱包",
-    "addpage_button_name_crt": "新建帐户",
+    "addpage_button_name_crt": "导入帐户",
     "asset_title_name_ast": "资产",
-    "asset_droplist_button_add": "新建帐户",
-    "act_sec_title_create_eos_account": "创建EOS帐户"
+    "asset_droplist_button_add": "导入帐户",
+    "act_sec_title_create_eos_account": "导入EOS帐户"
   },
   "en": {
     "addpage_title_name_act": "EOS Wallet",
-    "addpage_button_name_crt" : "Create New Account",
+    "addpage_button_name_crt" : "Import New Account",
     "asset_title_name_ast": "Asset",
-    "asset_droplist_button_add": "Create New Account",
-    "act_sec_title_create_eos_account": "Create EOS Account"
+    "asset_droplist_button_add": "Import New Account",
+    "act_sec_title_create_eos_account": "Import EOS Account"
   }
 }
