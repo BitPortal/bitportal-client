@@ -1,6 +1,7 @@
 import './mobile'
+import { ENV } from './shared/constants/env/index.mobile'
 
-if (!__DEV__) {
+if (ENV == 'production') {
   global.console = {
     info:  () => {},
     log:   () => {},
@@ -10,7 +11,7 @@ if (!__DEV__) {
   }
 }
 
-if (!__DEV__) {
+if (ENV == 'production') {
   require('ErrorUtils').setGlobalHandler(function () {
 
   });
