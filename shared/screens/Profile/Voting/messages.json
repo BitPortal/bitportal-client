@@ -7,6 +7,7 @@
     "vt_btmsec_name_selected" : "已选",
     "vt_button_name_vote" : "投票",
     "vt_button_name_err" : "请先导入EOS账户！",
+    "vt_popup_title_nostaker" : "您需要先Stake才可参与投票！",
 
     "vt_vtmodel_title_selected" : "已选",
     "vt_vtmodel_button_selected" : "投票",
@@ -26,6 +27,7 @@
     "vt_btmsec_name_selected" : "Selected",
     "vt_button_name_vote" : "Vote",
     "vt_button_name_err" : "Please import EOS account first!",
+    "vt_popup_title_nostaker" : "You need stake before vote!",
 
     "vt_vtmodel_title_selected" : "Selected",
     "vt_vtmodel_button_selected" : "Vote",
