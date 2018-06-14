@@ -35,7 +35,8 @@ export default class Market extends BaseScreen {
     super(props, context)
     this.state = {
       coinName: '',
-      isVisible: false
+      isVisible: false,
+      activeQuoteAsset: null
     }
   }
 
@@ -52,7 +53,7 @@ export default class Market extends BaseScreen {
   // 选择交易所
   changeExchange = (exchange) => {
     InteractionManager.runAfterInteractions(() => {
-      this.setState({ isVisible: false }, () => {
+      this.setState({ isVisible: false, activeQuoteAsset: null }, () => {
         this.props.actions.selectTickersByExchange(exchange)
       })
     })
@@ -60,7 +61,11 @@ export default class Market extends BaseScreen {
 
   // 选择货币单位
   changeQuote = (quote) => {
-    this.props.actions.selectTickersByQuoteAsset(quote)
+    this.setState({ activeQuoteAsset: quote }, () => {
+      InteractionManager.runAfterInteractions(() => {
+        this.props.actions.selectTickersByQuoteAsset(quote)
+      })
+    })
   }
 
   // 点击查看币种行情
@@ -95,7 +100,7 @@ export default class Market extends BaseScreen {
           />
           <Quotes
             onPress={(e) => this.changeQuote(e)}
-            quote={ticker.get('quoteAssetFilter')}
+            quote={this.state.activeQuoteAsset || ticker.get('quoteAssetFilter')}
             quoteList={QUOTE_ASSETS[ticker.get('exchangeFilter')]}
           />
           <HeaderTitle messages={messages[locale]} />

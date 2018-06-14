@@ -196,7 +196,7 @@ export default class Voting extends BaseScreen {
           <View style={[styles.btnContainer, styles.between]}>
             <Text style={styles.text14}>Selected</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={[styles.text14, { marginRight: 15 }]}>{this.state.selected.length}/{this.props.producer.get('data').get('rows').size}</Text>
+              <Text style={[styles.text14, { marginRight: 15 }]}>{this.state.selected.length}/30</Text>
               <TouchableOpacity onPress={disabled ? () => {} : this.vote} style={[styles.center, styles.voteBtn, disabled ? styles.disabled : {}]} disabled={disabled}>
                 <Text style={styles.text14}>Vote</Text>
               </TouchableOpacity>
