@@ -12,6 +12,9 @@
     "logout_popup_name" : "请输入密码",
     "logout_popup_ent" : "确认",
     "logout_popup_can" : "取消",
+    "logout_popup_exporting": "请稍候",
+    "logout_popup_deleting" : "注销中",
+    "logout_popup_warning": "注销后您的账号信息将从本设备上删除，请确保您已妥善备份您的钱包！"
   },
   "en": {
     "act_card_title_ttlast" : "Total Assets",
@@ -26,5 +29,8 @@
     "logout_popup_name" : "Password",
     "logout_popup_ent" : "Confirm",
     "logout_popup_can" : "Cancel",
+    "logout_popup_exporting": "Loading",
+    "logout_popup_deleting" : "Deleting",
+    "logout_popup_warning": "Be aware that your account would be deleted from this device after log out, please make sure you have backed up your wallet."
   }
 }

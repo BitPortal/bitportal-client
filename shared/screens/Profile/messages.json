@@ -9,7 +9,9 @@
     "prf_sec_titiled_ctus" : "联系我们",
     "profile_check_txt_version" : "当前版本",
     "profile_cpyrt_txt_line1" : "Copyright @2018 Patricia.ltd",
-    "profile_cpyrt_txt_line2" : "All right reserved"
+    "profile_cpyrt_txt_line2" : "All right reserved",
+    "profile_button_name_err" : "请先导入EOS账户！",
+    "profile_popup_buttom_ent" : "确认"
   },
   "en": {
     "profile_title_name_profile" : "Profile",
@@ -21,6 +23,8 @@
     "prf_sec_titiled_ctus" : "Contact Us",
     "profile_check_txt_version" : "Version",
     "profile_cpyrt_txt_line1" : "Copyright @2018 Patricia.ltd",
-    "profile_cpyrt_txt_line2" : "All right reserved"
+    "profile_cpyrt_txt_line2" : "All right reserved",
+    "profile_button_name_err" : "Please import EOS account first!",
+    "profile_popup_buttom_ent" : "Confirm"
   }
 }
