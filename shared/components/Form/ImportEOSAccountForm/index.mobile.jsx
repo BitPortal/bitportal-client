@@ -21,28 +21,28 @@ import Alert from 'components/Alert'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import messages from './messages'
 
-export const errorMessages = (error) => {
+export const errorMessages = (error, messages) => {
   if (!error) return null
 
   const message = typeof error === 'object' ? error.message : error
 
   switch (String(message)) {
     case 'Invalid owner private key!':
-      return 'Invalid owner private key!'
+      return messages['ast_imp_hint_invalidowner']
     case 'Invalid active private key!':
-      return 'Invalid active private key!'
+      return messages['ast_imp_hint_invalidactive']
     case 'EOS account dose not exist!':
-      return 'EOS account dose not exist!'
+      return messages['ast_imp_hint_eosaccount']
     case 'Owner permission dose not exist!':
-      return 'Owner permission dose not exist!'
+      return messages['ast_imp_hint_ownerpermi']
     case 'Active permission dose not exist!':
-      return 'Active permission dose not exist!'
+      return messages['ast_imp_hint_activepermi']
     case 'Unauthorized owner private key!':
-      return 'Unauthorized owner private key!'
+      return messages['ast_imp_hint_unauowner']
     case 'Unauthorized active private key!':
-      return 'Unauthorized active private key!'
+      return messages['ast_imp_hint_unauactive']
     default:
-      return 'Import failed!'
+      return messages['ast_imp_hint_fail']
   }
 }
 
@@ -50,39 +50,37 @@ const validate = (values, props) => {
   const errors = {}
 
   if (!values.get('name')) {
-    errors.name = <FormattedMessage id="import_txtbox_txt_hint1" />
+    errors.name = <FormattedMessage id="import_txtbox_txt_bpnmhint1" />
   } else if (values.get('name').length > 12) {
     errors.name = <FormattedMessage id="import_txtbox_txt_hint1" />
   }
 
   if (!values.get('eosAccountName')) {
-    errors.eosAccountName = 'Please input EOS account name'
-  }
-
-  if (!isEOSAccountNameValid(values.get('eosAccountName'))) {
-    errors.eosAccountName = 'Only 12345abcdefghijklmnopqrstuvwxyz works'
+    errors.eosAccountName = <FormattedMessage id="import_txtbox_txt_hint1" />
+  } else if (!isEOSAccountNameValid(values.get('eosAccountName'))) {
+    errors.eosAccountName = <FormattedMessage id="import_txtbox_txt_hint1" />
   }
 
   if (!values.get('password')) {
-    errors.password = 'Please input password'
+    errors.password = <FormattedMessage id="import_title_name_pwd" />
   } else if (!!values.get('password') && values.get('password').length < 6) {
-    errors.password = 'Password must be at least 6 characters'
+    errors.password = <FormattedMessage id="import_txtbox_txt_pwdhint1" />
   }
 
   if (!values.get('confirmedPassword')) {
-    errors.confirmedPassword = 'Please confirm password'
+    errors.confirmedPassword = <FormattedMessage id="import_title_name_cfmpwd" />
   }
 
   if (values.get('confirmedPassword') !== values.get('password')) {
-    errors.confirmedPassword = 'Passwords don\'t macth'
+    errors.confirmedPassword = <FormattedMessage id="import_txtbox_txt_pwdhint2" />
   }
 
   if (!values.get('ownerPrivateKey')) {
-    errors.ownerPrivateKey = 'Please input onwer private key'
+    errors.ownerPrivateKey = <FormattedMessage id="import_txtbox_txt_fill1" />
   }
 
   if (!values.get('activePrivateKey')) {
-    errors.activePrivateKey = 'Please input active private key'
+    errors.activePrivateKey = <FormattedMessage id="import_txtbox_txt_fill2" />
   }
 
   return errors
@@ -123,40 +121,40 @@ export default class ImportEOSAccountForm extends Component {
       <IntlProvider messages={messages[locale]}>
         <FormContainer>
           <Field
-            label={messages[locale]['import_title_name_bpnm']}
+            label={<FormattedMessage id="import_title_name_bpnm" />}
             name="name"
             component={TextField}
           />
           <Field
-            label="EOS Account Name"
+            label={<FormattedMessage id="import_title_name_eosnm" />}
             name="eosAccountName"
             component={TextField}
           />
           <Field
-            label="Set a password"
+            label={<FormattedMessage id="import_title_name_pwd" />}
             name="password"
             component={PasswordField}
             rightContent={<PasswordStrength strength={getPasswordStrength(password)} />}
           />
           <Field
-            label="Confirm Your Password"
+            label={<FormattedMessage id="import_title_name_cfmpwd" />}
             name="confirmedPassword"
             component={PasswordField}
           />
           <Field
-            label="Onwer Private Key"
+            label={<FormattedMessage id="import_txtbox_txt_fill1" />}
             name="ownerPrivateKey"
             component={TextAreaField}
             normalize={normalizeText}
           />
           <Field
-            label="Active Private Key"
+            label={<FormattedMessage id="import_txtbox_txt_fill2" />}
             name="activePrivateKey"
             component={TextAreaField}
             normalize={normalizeText}
           />
-          <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text="Import" />
-          <Alert message={errorMessages(error)} dismiss={this.props.actions.clearError} />
+          <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text={<FormattedMessage id="import_button_name_impt" />} />
+          <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearError} />
         </FormContainer>
       </IntlProvider>
     )

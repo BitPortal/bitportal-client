@@ -1,10 +1,20 @@
 {
   "zh": {
-    "vt_title_name_vote" : "节点投票"
+    "vt_title_name_vote" : "节点投票",
+
+    "vt_buttom_name_vote" : "投票",
+    "vt_popup_title_pwd" : "请输入密码",
+    "vt_popup_buttom_ent" : "确认",
+    "vt_popup_buttom_can" : "取消"
 
   },
   "en": {
-    "vt_title_name_vote" : "Voting"
+    "vt_title_name_vote" : "Voting",
+
+    "vt_buttom_name_vote" : "Vote",
+    "vt_popup_title_pwd" : "Please enter the password",
+    "vt_popup_buttom_ent" : "Confirm",
+    "vt_popup_buttom_can" : "Cancel"
 
   }
 }
