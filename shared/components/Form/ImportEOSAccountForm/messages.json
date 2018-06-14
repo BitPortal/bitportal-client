@@ -1,0 +1,45 @@
+{
+  "en": {		
+		"import_title_name_bpnm" : "Name your BitPortal",
+		"import_title_name_eosnm" : "EOS Account Name", 
+		"import_txtbox_txt_hint1" : "Up to 12 characters",
+		"import_title_name_pwd" : "Set your password",
+		"import_txtbox_txt_pwdhint1" : "Password must be longer than 6 characters",
+		"import_title_name_cfmpwd" : "Confirm your password",
+		"import_txtbox_txt_pwdhint2" : "Password does not match",
+		"import_txtbox_txt_fill1" : "Owner Private Key",
+		"import_txtbox_txt_fill2" : "Active Private Key",
+		"import_button_name_impt" : "Import",
+
+		"ast_imp_hint_invalidowner" : "Invalid owner private key!",
+   		"ast_imp_hint_invalidactive" : "Invalid active private key!",
+   		"ast_imp_hint_eosaccount" : "EOS account dose not exist!",
+    	"ast_imp_hint_ownerpermi" : "Owner permission dose not exist!",
+    	"ast_imp_hint_activepermi" : "Active permission dose not exist!",
+    	"ast_imp_hint_unauowner" : "Unauthorized owner private key!",
+    	"ast_imp_hint_unauactive" : "nauthorized active private key!",
+    	"ast_imp_hint_fail" : "Import failed!"
+
+	},
+  "zh": {
+		"import_title_name_bpnm" : "命名您的BitPortal",
+		"import_title_name_eosnm" : "EOS账户名", 
+		"import_txtbox_txt_hint1" : "最多支持12位字符",
+		"import_title_name_pwd" : "请设置您的密码",
+		"import_txtbox_txt_pwdhint1" : "密码长度至少为6位",
+		"import_title_name_cfmpwd" : "请确认您的密码",
+		"import_txtbox_txt_pwdhint2" : "密码不匹配",
+		"import_txtbox_txt_fill1" : "Owner权限私钥",
+		"import_txtbox_txt_fill2" : "Active权限私钥",
+		"import_button_name_impt" : "导入",
+
+		"ast_imp_hint_invalidowner" : "无效的Owner权限私钥",
+    	"ast_imp_hint_invalidactive" : "无效的Active权限私钥",
+    	"ast_imp_hint_eosaccount" : "不存在的EOS账户",
+    	"ast_imp_hint_ownerpermi" : "未授予Owner权限",
+    	"ast_imp_hint_activepermi" : "未授予Active权限",
+    	"ast_imp_hint_unauowner" : "Owner权限不匹配",
+    	"ast_imp_hint_unauactive" : "Active权限不匹配",
+    	"ast_imp_hint_fail" : "导入失败"
+	}
+}
