@@ -7,7 +7,7 @@ import SearchItem from 'screens/Market/SearchItem'
 import TableView, { HeaderTitle } from 'screens/Market/TableView'
 import BaseScreen from 'components/BaseScreen'
 import * as tickerActions from 'actions/ticker'
-import { exchangeTickerSelector } from 'selectors/ticker'
+import { exchangeTickerSelector, sortFilterSelector } from 'selectors/ticker'
 import { bindActionCreators } from 'redux'
 import { Text, View, InteractionManager } from 'react-native'
 import Modal from 'react-native-modal'
@@ -21,7 +21,11 @@ import messages from './messages'
 @connect(
   (state) => ({
     locale: state.intl.get('locale'),
-    ticker: exchangeTickerSelector(state)
+    ticker: exchangeTickerSelector(state),
+    loading: state.ticker.get('loading'),
+    exchangeFilter: state.ticker.get('exchangeFilter'),
+    sortFilter: sortFilterSelector(state),
+    quoteAssetFilter: state.ticker.get('quoteAssetFilter')
   }),
   (dispatch) => ({
     actions: bindActionCreators({
@@ -77,11 +81,15 @@ export default class Market extends BaseScreen {
   // 刷新数据
   onRefresh = () => {
     this.props.actions.getTickersRequested({
-      exchange: this.props.ticker.get('exchangeFilter'),
-      quote_asset: this.props.ticker.get('quoteAssetFilter'),
-      sort: this.props.ticker.get('sortFilter'),
+      exchange: this.props.exchangeFilter,
+      quote_asset: this.props.quoteAssetFilter,
+      sort: this.props.sortFilter,
       limit: 200
     })
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.loading !== this.props.loading || nextProps.locale !== this.props.locale || nextProps.exchangeFilter !== this.props.exchangeFilter || nextProps.sortFilter !== this.props.sortFilter || nextProps.quoteAssetFilter !== this.props.quoteAssetFilter || nextState.isVisible !== this.state.isVisible || nextState.coinName !== this.state.coinName || nextState.activeQuoteAsset !== this.state.activeQuoteAsset
   }
 
   didAppear() {
@@ -89,25 +97,24 @@ export default class Market extends BaseScreen {
   }
 
   render() {
-    const { ticker, locale } = this.props
-    const loading = ticker.get('loading')
+    const { ticker, locale, loading, exchangeFilter, quoteAssetFilter } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            leftButton={<ListButton label={EXCHANGE_NAMES[ticker.get('exchangeFilter')]} onPress={() => this.selectExchange()} />}
+            leftButton={<ListButton label={EXCHANGE_NAMES[exchangeFilter]} onPress={() => this.selectExchange()} />}
           />
           <Quotes
             onPress={(e) => this.changeQuote(e)}
-            quote={this.state.activeQuoteAsset || ticker.get('quoteAssetFilter')}
-            quoteList={QUOTE_ASSETS[ticker.get('exchangeFilter')]}
+            quote={this.state.activeQuoteAsset || quoteAssetFilter}
+            quoteList={QUOTE_ASSETS[exchangeFilter]}
           />
           <HeaderTitle messages={messages[locale]} />
           <TableView
             refreshing={loading}
             onRefresh={() => this.onRefresh()}
-            data={this.props.ticker.get('data')}
+            data={this.props.ticker}
             onPress={(e) => this.pressListItem(e)}
           />
           <Modal
@@ -121,7 +128,7 @@ export default class Market extends BaseScreen {
           >
             <ExchangeList
               exchangeList={EXCHANGES}
-              activeExchange={ticker.get('exchangeFilter')}
+              activeExchange={exchangeFilter}
               changeExchange={(e) => this.changeExchange(e)}
               dismissModal={() => this.setState({ isVisible: false })}
             />

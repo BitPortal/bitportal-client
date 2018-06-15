@@ -4,7 +4,7 @@ import { QUOTE_ASSETS } from 'constants/market'
 import * as actions from 'actions/ticker'
 
 const initialState = Immutable.fromJS({
-  data: {},
+  data: [],
   loading: false,
   loaded: false,
   error: null,
@@ -17,6 +17,7 @@ const initialState = Immutable.fromJS({
     HUOBIPRO: 'quote_volume',
     POLONIEX: 'quote_volume',
   },
+  dataSource: {},
   currencyFilter: null,
   baseAsset: null,
   fromUserPull: false
@@ -31,7 +32,7 @@ export default handleActions({
       .set('loading', false)
       .set('fromUserPull', false)
       .update(
-        'data',
+        'dataSource',
         (v: any) => {
           const tickers = action.payload
           let newData = v
