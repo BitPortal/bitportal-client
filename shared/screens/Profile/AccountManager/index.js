@@ -138,7 +138,7 @@ export default class AccountList extends BaseScreen {
 
   render() {
     const { locale, name, eosAccountName, exporting, error, loggingOut, logoutError } = this.props
-
+    const { type } = this.state
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -168,7 +168,7 @@ export default class AccountList extends BaseScreen {
                 Platform.OS == 'android' && 
                 <DialogAndroid 
                   tilte={messages[locale]['actexport_popup_name']}
-                  content={messages[locale]['logout_popup_warning']}
+                  content={type == 'logout' ? messages[locale]['logout_popup_warning'] : ''}
                   positiveText={messages[locale]['actexport_popup_ent']}
                   negativeText={messages[locale]['actexport_popup_can']} 
                   onChange={password => this.setState({ password })} 
