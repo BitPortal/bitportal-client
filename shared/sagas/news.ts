@@ -6,7 +6,7 @@ import * as actions from 'actions/news'
 function* getNewsList(action: Action<NewsParams>) {
   try {
     const data = yield call(api.getNewsList, {
-      _sort: 'createdAt',
+      _sort: 'createdAt:desc',
       _start: action.payload.startAt || 0,
       _limit: action.payload.limit || 10
     })
