@@ -49,6 +49,7 @@ export const startTabBasedApp = (tabLabels) => {
       tabBarHideShadow: false
     },
     appStyle: {
+      forceTitlesDisplay: true,
       screenBackgroundColor: Colors.mainThemeColor,
       orientation: 'portrait', // Sets a specific orientation to the entire app. Default: 'auto'. Supported values: 'auto', 'landscape', 'portrait'
       bottomTabBadgeTextColor: 'red', // Optional, change badge text color. Android only
