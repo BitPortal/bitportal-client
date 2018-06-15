@@ -14,6 +14,8 @@ import versionInfoSaga from './versionInfo'
 import currencySaga from './currency'
 import votingSaga from './voting'
 import stakeSaga from './stake'
+import transferSaga from './transfer'
+import transferHistorySaga from './transferHistory'
 
 const sagas = {
   intlSaga: fork(intlSaga),
@@ -29,7 +31,9 @@ const sagas = {
   versionInfoSaga: fork(versionInfoSaga),
   currencySaga: fork(currencySaga),
   votingSaga: fork(votingSaga),
-  stakeSaga: fork(stakeSaga)
+  stakeSaga: fork(stakeSaga),
+  transferSaga: fork(transferSaga),
+  transferHistorySaga: fork(transferHistorySaga)
 }
 
 if (ENV === 'production') {

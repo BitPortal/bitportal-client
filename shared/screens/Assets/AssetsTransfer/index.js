@@ -19,7 +19,6 @@ import TransferAssetsForm from 'components/Form/TransferAssetsForm'
 )
 
 export default class AssetsTransfer extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -50,10 +49,11 @@ export default class AssetsTransfer extends BaseScreen {
   render() {
     const { destination, amount, memo } = this.state
     const { locale } = this.props
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-          <NavigationBar 
+          <NavigationBar
             title={messages[locale]["snd_title_name_snd"]}
             leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()}/> }
             rightButton={ <CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanner()} /> }
@@ -64,9 +64,7 @@ export default class AssetsTransfer extends BaseScreen {
               <View style={styles.keyboard} />
             </ScrollView>
           </View>
-          
           <TransferCard isVisible={this.state.isVisible} onPress={() => { this.setState({ isVisible: false }) }} transferAsset={() => this.transferAsset()}/>
-
         </View>
       </IntlProvider>
     )

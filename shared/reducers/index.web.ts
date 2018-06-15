@@ -12,6 +12,8 @@ import balance from './balance'
 import producer from './producer'
 import voting from './voting'
 import stake from './stake'
+import transfer from './transfer'
+import transferHistory from './transferHistory'
 
 export default combineReducers({
   router,
@@ -26,5 +28,7 @@ export default combineReducers({
   producer,
   chart,
   voting,
-  stake
+  stake,
+  transfer,
+  transferHistory
 })

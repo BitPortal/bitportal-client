@@ -9588,8 +9588,8 @@ react-native-dialog@^4.0.0:
     react-native-modal "^5.0.0"
 
 "react-native-eosjs-api@git+https://github.com/TerenceGe/eosjs-api.git":
-  version "6.1.4"
-  resolved "git+https://github.com/TerenceGe/eosjs-api.git#72fe77a91c0323c5ca08fe58a9ba251f723b50a6"
+  version "6.1.5"
+  resolved "git+https://github.com/TerenceGe/eosjs-api.git#318cf22403be53ece2977894d97c8a90dc616556"
   dependencies:
     camel-case "^3.0.0"
     is-browser "^2.0.1"
