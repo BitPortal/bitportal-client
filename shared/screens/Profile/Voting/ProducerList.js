@@ -14,7 +14,7 @@ import { Text, View, TouchableHighlight, VirtualizedList } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 class ListItem extends Component {
-  shouldComponentUpdate(nextProps){
+  shouldComponentUpdate(nextProps) {
     return nextProps.selected !== this.props.selected || nextProps.item.get('owner') !== this.props.item.get('owner') || nextProps.item.get('total_votes') !== this.props.item.get('total_votes')
   }
 

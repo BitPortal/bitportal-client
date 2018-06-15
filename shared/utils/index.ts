@@ -30,7 +30,7 @@ export const loadScript = (src: string) => {
 }
 
 export const getErrorMessage = (error: any) => {
-  if (typeOf(error) === 'Error' && error.message.indexOf('.cpp') !== -1) {
+  if ((typeOf(error) === 'Error' && error.message.indexOf('.cpp') !== -1) || (typeOf(error) === 'Object' && typeof error.message === 'string' &&  error.message.indexOf('.cpp') !== -1)) {
     const errorObject = JSON.parse(error.message)
 
     if (errorObject.error && errorObject.error.details && errorObject.error.details.length && errorObject.error.details[0].message) {

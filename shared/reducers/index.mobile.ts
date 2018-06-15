@@ -13,6 +13,8 @@ import versionInfo from './versionInfo'
 import currency from './currency'
 import voting from './voting'
 import stake from './stake'
+import transfer from './transfer'
+import transferHistory from './transferHistory'
 
 
 export default combineReducers({
@@ -29,5 +31,7 @@ export default combineReducers({
   versionInfo,
   currency,
   voting,
-  stake
+  stake,
+  transfer,
+  transferHistory
 })

@@ -113,11 +113,11 @@ export default class Voting extends BaseScreen {
   vote = () => {
     const { locale } = this.props
     const eosAccountName = this.props.eosAccount.get('data').get('account_name')
-    if (!eosAccountName) {
-      Dialogs.alert(messages[locale]['vt_button_name_err'], null, { negativeText: messages[locale]['vt_popup_buttom_ent'] })
-    } else {
+    // if (!eosAccountName) {
+    //   Dialogs.alert(messages[locale]['vt_button_name_err'], null, { negativeText: messages[locale]['vt_popup_buttom_ent'] })
+    // } else {
       this.props.actions.showSelected()
-    }
+    // }
   }
 
   stakeEOS = () => {
@@ -225,10 +225,10 @@ export default class Voting extends BaseScreen {
           { 
             Platform.OS == 'android' && 
             <DialogAndroid 
-              tilte={<FormattedMessage id="vt_button_name_err" />}
+              tilte={messages[locale]['vt_popup_title_pwd']}
               content=""
-              positiveText={<FormattedMessage id="vt_popup_buttom_ent" />}
-              negativeText={<FormattedMessage id="vt_popup_buttom_can" />}
+              positiveText={messages[locale]['vt_popup_buttom_ent']}
+              negativeText={messages[locale]['vt_popup_buttom_can']}
               onChange={password => this.setState({ password })} 
               isVisible={this.state.isVisible} 
               handleCancel={() => this.setState({ isVisible: false })} 

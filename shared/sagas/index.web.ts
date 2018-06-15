@@ -12,6 +12,8 @@ import balanceSaga from './balance'
 import keystoreSaga from './keystore'
 import votingSaga from './voting'
 import stakeSaga from './stake'
+import transferSaga from './transfer'
+import transferHistorySaga from './transferHistory'
 
 const sagas = {
   intlSaga: fork(intlSaga),
@@ -25,7 +27,9 @@ const sagas = {
   loggerSaga: fork(loggerSaga),
   producerSage: fork(producerSage),
   votingSage: fork(votingSage),
-  stakeSaga: fork(stakeSaga)
+  stakeSaga: fork(stakeSaga),
+  transferSaga: fork(transferSaga),
+  transferHistorySaga: fork(transferHistorySaga)
 }
 
 if (ENV === 'production') {
