@@ -21,19 +21,19 @@ import { isValidPrivate, privateToPublic } from 'eos'
 
 const { pbkdf2, scrypt } = NativeModules.BPCoreModule
 
-const keccak = (a, bits) => {
+const keccak = (a: any, bits?: any) => {
   a = Buffer.from(a)
   if (!bits) bits = 256
   return createKeccakHash('keccak' + bits).update(a).digest()
 }
 
-const decipherBuffer = (decipher, data) => {
+const decipherBuffer = (decipher: any, data: any) => {
   return Buffer.concat([decipher.update(data), decipher.final()])
 }
 
-const randomBytes = async (length) => {
+const randomBytes = async (length: number) => {
   return new Promise((resolve, reject) => {
-    RNRandomBytes.randomBytes(length, (error, bytes) => {
+    RNRandomBytes.randomBytes(length, (error: any, bytes: any) => {
       if (error) {
         reject(error)
       } else {
@@ -85,7 +85,7 @@ export const getIdFromSeed = async (seed: Buffer) => {
   return id
 }
 
-export const encrypt = async (input: string, password: string, opts: object) => {
+export const encrypt = async (input: string, password: string, opts: { origin?: 'classic' | 'hd', bpid?: string, salt?: string, kdf?: string, dklen?: number, c?: number, prf?: string, n?: number, iv?: string, r?: number, p?: number, cipher?: number, uuid?: string, coin?: string }) => {
 
   assert(input, 'Invalid encrypt input!')
   const entropy = Buffer.from(input, 'hex')
@@ -112,7 +112,7 @@ export const encrypt = async (input: string, password: string, opts: object) => 
 
   let derivedKey
   const kdf = opts.kdf || 'scrypt'
-  const kdfparams = {
+  const kdfparams: any = {
     dklen: opts.dklen || 32,
     salt: salt.toString('hex')
   }
@@ -144,7 +144,7 @@ export const encrypt = async (input: string, password: string, opts: object) => 
   let random = opts.uuid
   if (!random) random = await randomBytes(16)
 
-  const keystore = {
+  const keystore: any = {
     version: 1,
     id: uuidv4({ random }),
     crypto: {
@@ -209,6 +209,8 @@ export const decrypt = async (input: object | string, password: string, nonStric
 export const getMasterSeedFromEntropy = async (entropy: string) => {
   const phrase = bip39.entropyToMnemonic(entropy)
   const seed = await getMasterSeed(phrase)
+
+  return seed
 }
 
 export const getMasterSeed = async (mnemonicPhrase: string) => {
@@ -228,7 +230,7 @@ export const getMasterSeed = async (mnemonicPhrase: string) => {
   return { id, phrase, entropy }
 }
 
-export const getEOSKeys = async (entropy, showPrivate) => {
+export const getEOSKeys = async (entropy: any, showPrivate: boolean) => {
   const phrase = bip39.entropyToMnemonic(entropy)
   const seed = bip39.mnemonicToSeed(phrase)
   const root = bip32.fromMasterSeed(new Buffer(seed, 'hex'))

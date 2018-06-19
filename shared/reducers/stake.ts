@@ -31,7 +31,7 @@ export default handleActions({
   [actions.unstakeFailed] (state, action) {
     return state.set('unstakeError', action.payload).set('unstaking', false)
   },
-  [actions.clearError] (state, action) {
+  [actions.clearError] (state) {
     return state.set('unstakeError', null).set('error', null)
   }
 }, initialState)

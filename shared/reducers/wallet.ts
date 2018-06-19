@@ -60,7 +60,7 @@ export default handleActions({
   [actions.clearLogoutError] (state, action) {
     return state.set('logoutError', null)
   },
-  [actions.clearError] (state, action) {
+  [actions.clearError] (state) {
     return state.set('error', null)
   },
   [actions.resetWallet] () {

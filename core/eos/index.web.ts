@@ -4,7 +4,7 @@ import { EOS_API_URL } from 'constants/env'
 const ecc = Eos.modules.ecc
 let eos: any
 
-const initAccount = async ({ name, keyProvider }: { name: string, keyProvider: string | string[] }) => {
+const initAccount = async ({ keyProvider }: { keyProvider: string | string[] }) => {
   eos = Eos.Localnet({
     keyProvider: keyProvider,
     httpEndpoint: EOS_API_URL

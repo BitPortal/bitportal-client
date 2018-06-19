@@ -53,11 +53,11 @@ export default class Home extends Component<Props, State> {
      *   recovery: 'eosio',
      *   keyProvider: '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
      * })*/
-    this.props.actions.syncEOSAccount()
+    this.props.actions.syncWalletRequested()
   }
 
   render() {
-    const { locale, ticker, wallet } = this.props
+    const { locale, ticker } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>

@@ -1,36 +1,39 @@
 import assert from 'assert'
 import * as bip32 from 'bip32'
 import * as bip44 from 'bip44'
-import bip39 from 'bip39'
+import bip39 from 'react-native-bip39'
 import wif from 'wif'
 import {
   createHash,
   createHmac,
   createCipheriv,
   createDecipheriv,
-  pbkdf2Sync
+  // pbkdf2
 } from 'crypto'
-import secp256k1 from 'secp256k1'
+import { NativeModules } from 'react-native'
+import * as RNRandomBytes from 'react-native-randombytes'
 import base58 from 'bs58'
-import scryptAsync from 'scrypt-async'
+import secp256k1 from 'secp256k1'
+// import scryptAsync from 'scrypt-async'
 import uuidv4 from 'uuid/v4'
-import { randomBytes } from 'randombytes'
 import createKeccakHash from 'keccak'
 import { isValidPrivate, privateToPublic } from 'eos'
 
-const keccak = (a, bits) => {
+const { pbkdf2, scrypt } = NativeModules.BPCoreModule
+
+const keccak = (a: any, bits?: any) => {
   a = Buffer.from(a)
   if (!bits) bits = 256
   return createKeccakHash('keccak' + bits).update(a).digest()
 }
 
-const decipherBuffer = (decipher, data) => {
+const decipherBuffer = (decipher: any, data: any) => {
   return Buffer.concat([decipher.update(data), decipher.final()])
 }
 
-const getRandomBytes = async (length) => {
+const randomBytes = async (length: number) => {
   return new Promise((resolve, reject) => {
-    randomBytes(length, (error, bytes) => {
+    RNRandomBytes.randomBytes(length, (error: any, bytes: any) => {
       if (error) {
         reject(error)
       } else {
@@ -40,27 +43,40 @@ const getRandomBytes = async (length) => {
   })
 }
 
-const scrypt = async (password, salt, N, r, p, dkLen) => {
-  return new Promise((resolve, reject) => {
-    scryptAsync(password, salt, {
-      N, r, p, dkLen
-    }, (derivedKey) => {
-      resolve(Buffer.from(derivedKey))
-    })
-  })
-}
+// const pbkdf2Async = async (password, salt, iterations, keylen, digest) => {
+//   return new Promise((resolve, reject) => {
+//     pbkdf2(password, salt, iterations, keylen, digest, (error, derivedKey) => {
+//       if (error) {
+//         reject(error)
+//       } else {
+//         resolve(derivedKey)
+//       }
+//     })
+//   })
+// }
 
-export const getIdFromEntropy = (entropy: string) => {
+// const scrypt = async (password, salt, N, r, p, dkLen) => {
+//   return new Promise((resolve, reject) => {
+//     scryptAsync(password, salt, {
+//       N, r, p, dkLen, encoding: 'hex'
+//     }, (derivedKey) => {
+//       resolve(derivedKey)
+//     })
+//   })
+// }
+
+export const getIdFromEntropy = async (entropy: string) => {
   const phrase = bip39.entropyToMnemonic(entropy)
   const seed = bip39.mnemonicToSeed(phrase)
-  return getIdFromSeed(seed)
+  const seedInfo = await getIdFromSeed(seed)
+  return seedInfo
 }
 
-export const getIdFromSeed = (seed: Buffer) => {
+export const getIdFromSeed = async (seed: Buffer) => {
   const MASTER_SALT = Buffer.from('BitPortal seed', 'utf8')
   const privateKey = createHmac('sha256', MASTER_SALT).update(seed).digest()
-  assert(secp256k1.privateKeyVerify(privateKey), 'Invalid private key!')
-  const publicKey = secp256k1.publicKeyCreate(privateKey)
+  // assert(secp256k1.privateKeyVerify(privateKey), 'Invalid private key!')
+  const publicKey = await secp256k1.publicKeyCreate(privateKey, true)
   const check = [publicKey]
   const checksum = createHash('rmd160').update(Buffer.concat(check)).digest().slice(0, 4)
   const address = base58.encode(Buffer.concat([publicKey, checksum]))
@@ -69,27 +85,34 @@ export const getIdFromSeed = (seed: Buffer) => {
   return id
 }
 
-export const encrypt = async (input: string, password: string, opts: object) => {
-  assert(input, 'Invalid entropy!')
+export const encrypt = async (input: string, password: string, opts: { origin?: 'classic' | 'hd', bpid?: string, salt?: string, kdf?: string, dklen?: number, c?: number, prf?: string, n?: number, iv?: string, r?: number, p?: number, cipher?: number, uuid?: string, coin?: string }) => {
+
+  assert(input, 'Invalid encrypt input!')
   const entropy = Buffer.from(input, 'hex')
 
   opts = opts || {}
 
-  if (opts.bpid) {
-    assert(opts.bpid === getIdFromEntropy(entropy), 'Entropy and bpid do not match!')
+  let bpid
+
+  if (!opts.origin || opts.origin === 'hd') {
+    bpid = await getIdFromEntropy(entropy)
+
+    if (opts.bpid) {
+      assert(opts.bpid === bpid, 'Entropy and bpid do not match!')
+    }
+  } else {
+    assert(opts.origin === 'classic', 'Invalid origin!')
   }
 
-  const bpid = opts.bpid || getIdFromEntropy(entropy)
-
   let salt = opts.salt
-  if (!salt) salt = await getRandomBytes(32)
+  if (!salt) salt = await randomBytes(32)
 
   let iv = opts.iv
-  if (!iv) iv = await getRandomBytes(16)
+  if (!iv) iv = await randomBytes(16)
 
   let derivedKey
-  const kdf = opts.kdf || 'pbkdf2'
-  const kdfparams = {
+  const kdf = opts.kdf || 'scrypt'
+  const kdfparams: any = {
     dklen: opts.dklen || 32,
     salt: salt.toString('hex')
   }
@@ -97,12 +120,14 @@ export const encrypt = async (input: string, password: string, opts: object) => 
   if (kdf === 'pbkdf2') {
     kdfparams.c = opts.c || 262144
     kdfparams.prf = 'hmac-sha256'
-    derivedKey = pbkdf2Sync(Buffer.from(password), salt, kdfparams.c, kdfparams.dklen, 'sha256')
+    const derivedKeyHex = await pbkdf2(Buffer.from(password).toString('hex'), kdfparams.salt, kdfparams.c, kdfparams.dklen, 'sha256')
+    derivedKey = Buffer.from(derivedKeyHex, 'hex')
   } else if (kdf === 'scrypt') {
     kdfparams.n = opts.n || 262144
     kdfparams.r = opts.r || 8
     kdfparams.p = opts.p || 1
-    derivedKey = await scrypt(Buffer.from(password), salt, kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen)
+    const derivedKeyHex = await scrypt(Buffer.from(password).toString('hex'), kdfparams.salt, kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen)
+    derivedKey = Buffer.from(derivedKeyHex, 'hex')
   } else {
     throw new Error('Unsupported kdf')
   }
@@ -117,10 +142,9 @@ export const encrypt = async (input: string, password: string, opts: object) => 
   const mac = keccak(Buffer.concat([derivedKey.slice(16, 32), Buffer.from(ciphertext, 'hex')]))
 
   let random = opts.uuid
-  if (!random) random = await getRandomBytes(16)
+  if (!random) random = await randomBytes(16)
 
-  return {
-    bpid,
+  const keystore = {
     version: 1,
     id: uuidv4({ random }),
     crypto: {
@@ -134,6 +158,11 @@ export const encrypt = async (input: string, password: string, opts: object) => 
       mac: mac.toString('hex')
     }
   }
+
+  if (bpid) keystore.bpid = bpid
+  if (opts.coin) keystore.coin = opts.coin
+
+  return keystore
 }
 
 export const decrypt = async (input: object | string, password: string, nonStrict?: boolean) => {
@@ -149,7 +178,8 @@ export const decrypt = async (input: object | string, password: string, nonStric
   if (json.crypto.kdf === 'scrypt') {
     kdfparams = json.crypto.kdfparams
 
-    derivedKey = await scrypt(Buffer.from(password), Buffer.from(kdfparams.salt, 'hex'), kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen)
+    const derivedKeyHex = await scrypt(Buffer.from(password).toString('hex'), kdfparams.salt, kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen)
+    derivedKey = Buffer.from(derivedKeyHex, 'hex')
   } else if (json.crypto.kdf === 'pbkdf2') {
     kdfparams = json.crypto.kdfparams
 
@@ -157,7 +187,8 @@ export const decrypt = async (input: object | string, password: string, nonStric
       throw new Error('Unsupported parameters to PBKDF2')
     }
 
-    derivedKey = pbkdf2Sync(Buffer.from(password), Buffer.from(kdfparams.salt, 'hex'), kdfparams.c, kdfparams.dklen, 'sha256')
+    const derivedKeyHex = await pbkdf2(Buffer.from(password).toString('hex'), kdfparams.salt, kdfparams.c, kdfparams.dklen, 'sha256')
+    derivedKey = Buffer.from(derivedKeyHex, 'hex')
   } else {
     throw new Error('Unsupported key derivation scheme')
   }
@@ -175,24 +206,31 @@ export const decrypt = async (input: object | string, password: string, nonStric
   return seed.toString('hex')
 }
 
+export const getMasterSeedFromEntropy = async (entropy: string) => {
+  const phrase = bip39.entropyToMnemonic(entropy)
+  const seed = await getMasterSeed(phrase)
+
+  return seed
+}
+
 export const getMasterSeed = async (mnemonicPhrase: string) => {
   let phrase
 
   if (mnemonicPhrase) {
     phrase = mnemonicPhrase
   } else {
-    phrase = bip39.generateMnemonic()
+    phrase = await bip39.generateMnemonic()
   }
 
   assert(bip39.validateMnemonic(phrase), 'Invalid mnemonic phrase!')
   const entropy = bip39.mnemonicToEntropy(phrase)
   const seed = bip39.mnemonicToSeed(phrase)
-  const id = getIdFromSeed(seed)
+  const id = await getIdFromSeed(seed)
 
   return { id, phrase, entropy }
 }
 
-export const getEOSKeys = async (entropy, showPrivate) => {
+export const getEOSKeys = async (entropy: any, showPrivate: boolean) => {
   const phrase = bip39.entropyToMnemonic(entropy)
   const seed = bip39.mnemonicToSeed(phrase)
   const root = bip32.fromMasterSeed(new Buffer(seed, 'hex'))
@@ -252,4 +290,9 @@ export const getEOSKeys = async (entropy, showPrivate) => {
       }
     }
   }
+}
+
+export const validateEntropy = (entropy: string) => {
+  const phrase = bip39.entropyToMnemonic(entropy)
+  return bip39.validateMnemonic(phrase)
 }

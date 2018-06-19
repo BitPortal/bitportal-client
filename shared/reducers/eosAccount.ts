@@ -41,7 +41,7 @@ export default handleActions({
         }
       })
   },
-  [actions.importEOSAccountFailed] (state, action) {
+  [actions.importEOSAccountFailed] (state) {
     return state.set('error', action.payload).set('loading', false)
   },
   [actions.syncEOSAccount] (state, action) {

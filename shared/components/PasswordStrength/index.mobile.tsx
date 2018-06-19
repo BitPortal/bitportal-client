@@ -6,15 +6,19 @@ import { View } from 'react-native'
 import styles from './styles'
 
 const getLevel = (strength: number) => {
-  if (strength === 1) return 'weak'
-  if (strength === 2) return 'middle'
-  if (strength >= 3) return 'strong'
+  if (strength === 1) {
+    return 'weak'
+  } else if (strength === 2) {
+    return 'middle'
+  } else {
+    return 'strong'
+  }
 }
 
-const PasswordStrength = ({ strength }) => {
+const PasswordStrength = ({ strength }: { strength: number }) => {
   if (!strength) return null
 
-  const level = getLevel(strength)
+  const level: string = getLevel(strength)
 
   return (
     <View style={styles.passwordStrength}>

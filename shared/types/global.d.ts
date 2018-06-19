@@ -21,6 +21,7 @@ declare interface Config {
   BITPORTAL_API_WEBSOCKET_URL: string
   EOS_API_URL: string
   CURRENCY_RATE_URL: string
+  BITPORTAL_API_TERMS_URL: string
 }
 
 declare interface RootState {
@@ -91,6 +92,11 @@ declare module '*.css' {
 }
 
 declare module '*.png' {
+  const file: any
+  export = file
+}
+
+declare module '*.json' {
   const file: any
   export = file
 }
@@ -264,6 +270,9 @@ declare module 'eos' {
     deriveKeys: any
     getLocalAccounts: any
     getEOS: any
+    isValidPrivate: any
+    initEOS: any
+    sortProducers: any
   }
 
   const eos: EOS
@@ -286,4 +295,49 @@ declare module 'ethereum' {
 
   const ethereum: Ethereum
   export = ethereum
+}
+
+declare module 'hdkey' {
+  const file: any
+  export = file
+}
+
+declare module 'react-native-bip39' {
+  const file: any
+  export = file
+}
+
+declare module 'bs58' {
+  const file: any
+  export = file
+}
+
+declare module 'secp256k1' {
+  const file: any
+  export = file
+}
+
+declare module 'uuid*' {
+  const file: any
+  export = file
+}
+
+declare module 'keccak' {
+  const file: any
+  export = file
+}
+
+declare module 'react-native-randombytes' {
+  const file: any
+  export = file
+}
+
+declare module 'scrypt-async' {
+  const file: any
+  export = file
+}
+
+declare module 'randombytes' {
+  const file: any
+  export = file
 }

@@ -20,13 +20,13 @@ export default handleActions({
   [actions.votingFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)
   },
-  [actions.clearError] (state, action) {
+  [actions.clearError] (state) {
     return state.set('error', null)
   },
   [actions.showSelected] (state, action) {
     return state.set('showSelected', true)
   },
-  [actions.closeSelected] (state, action) {
+  [actions.closeSelected] (state) {
     return !state.get('error') ? state.set('showSelected', false) : state
   }
 }, initialState)

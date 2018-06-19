@@ -1,4 +1,3 @@
-import Immutable from 'immutable'
 import { handleActions } from 'redux-actions'
 import * as actions from 'actions/currency'
 import { getInitialCurrency } from 'selectors/currency'

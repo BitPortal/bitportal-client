@@ -43,7 +43,7 @@ export default handleActions({
     return state.set('listError', action.payload).set('isRefreshing', false).set('loadingMore', false)
   },
 
-  [actions.getNewsBannerRequested] (state, action) {
+  [actions.getNewsBannerRequested] (state) {
     return state.set('bannerLoading', true)
   },
   [actions.getNewsBannerSucceeded] (state, action) {
