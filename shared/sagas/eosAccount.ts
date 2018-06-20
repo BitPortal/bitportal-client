@@ -9,7 +9,7 @@ import { getBalanceRequested } from 'actions/balance'
 import { createClassicWalletSucceeded } from 'actions/wallet'
 import { getErrorMessage } from 'utils'
 import secureStorage from 'utils/secureStorage'
-import { initAccount, getEOS, privateToPublic, isValidPrivate } from 'eos'
+import { initAccount, privateToPublic, isValidPrivate } from 'eos'
 import { getEOSKeys, decrypt, validateEntropy, encrypt } from 'key'
 import wif from 'wif'
 import { initEOS } from 'eos'
@@ -70,13 +70,13 @@ function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
     const accountInfo = yield call(eos.getAccount, eosAccountName)
     assert(accountInfo.permissions && accountInfo.permissions.length, 'EOS account dose not exist!')
     const permissions = accountInfo.permissions
-    const remoteOwnerPermission = permissions.filter(item => item.perm_name === 'owner')
+    const remoteOwnerPermission = permissions.filter((item: any) => item.perm_name === 'owner')
     assert(remoteOwnerPermission.length && remoteOwnerPermission[0].required_auth && remoteOwnerPermission[0].required_auth.keys && remoteOwnerPermission[0].required_auth.keys.length, 'Owner permission dose not exist!')
-    const remoteActivePermission = permissions.filter(item => item.perm_name === 'active')
+    const remoteActivePermission = permissions.filter((item: any) => item.perm_name === 'active')
     assert(remoteActivePermission.length && remoteActivePermission[0].required_auth && remoteActivePermission[0].required_auth.keys && remoteActivePermission[0].required_auth.keys.length, 'Active permission dose not exist!')
-    const ownerPublicKeyMatched = !!remoteOwnerPermission[0].required_auth.keys.filter(item => item.key === ownerPublicKey).length
+    const ownerPublicKeyMatched = !!remoteOwnerPermission[0].required_auth.keys.filter((item: any) => item.key === ownerPublicKey).length
     assert(ownerPublicKeyMatched, 'Unauthorized owner private key!')
-    const activePublicKeyMatched = !!remoteActivePermission[0].required_auth.keys.filter(item => item.key === activePublicKey).length
+    const activePublicKeyMatched = !!remoteActivePermission[0].required_auth.keys.filter((item: any) => item.key === activePublicKey).length
     assert(activePublicKeyMatched, 'Unauthorized active private key!')
 
     const ownerPrivateKeyDecodedString = wif.decode(ownerPrivateKey).privateKey.toString('hex')

@@ -25,7 +25,7 @@ export const clearError = createAction('wallet/CLEAR_ERROR')
 
 export const logoutRequested = createAction<LogoutParams>('wallet/LOGOUT_REQUESTED')
 export const logoutSucceeded = createAction('wallet/LOGOUT_SUCCEEDED')
-export const logoutFailed = createAction('wallet/LOGOUT_FAILED')
+export const logoutFailed = createAction<ErrorMessage>('wallet/LOGOUT_FAILED')
 
 export const changePasswordRequested = createAction<ChangePasswordParams>('wallet/CHANGE_PASSWORD_REQUESTED')
 export const changePasswordSucceeded = createAction('wallet/CHANGE_PASSWORD_SUCCEEDED')

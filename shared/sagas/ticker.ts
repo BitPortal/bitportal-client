@@ -1,4 +1,4 @@
-import { delay } from 'redux-saga'
+// import { delay } from 'redux-saga'
 import { call, put, takeEvery, select } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as api from 'utils/api'

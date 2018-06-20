@@ -9,7 +9,7 @@ export const importEOSKeySucceeded = createAction<ImportKeyResult>('keystore/IMP
 export const importEOSKeyFailed = createAction<ErrorMessage>('keystore/IMPORT_EOS_KEY_FAILED')
 
 export const exportEOSKeyRequested = createAction<ExportEOSKeyParams>('keystore/EXPORT_EOS_KEY_REQUESTED')
-export const exportEOSKeySucceeded = createAction<ExportKeyResult>('keystore/EXPORT_EOS_KEY_SUCCEEDED')
+export const exportEOSKeySucceeded = createAction('keystore/EXPORT_EOS_KEY_SUCCEEDED')
 export const exportEOSKeyFailed = createAction<ErrorMessage>('keystore/EXPORT_EOS_KEY_FAILED')
 
 export const syncKeyRequested = createAction('keystore/SYNC_KEY_REQUESTED')

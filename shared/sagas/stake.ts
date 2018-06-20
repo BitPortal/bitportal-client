@@ -4,7 +4,7 @@ import { call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/stake'
 import { decrypt } from 'key'
-import { initEOS, sortProducers } from 'eos'
+import { initEOS } from 'eos'
 import secureStorage from 'utils/secureStorage'
 import wif from 'wif'
 

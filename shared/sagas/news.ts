@@ -4,6 +4,8 @@ import * as api from 'utils/api'
 import * as actions from 'actions/news'
 
 function* getNewsList(action: Action<NewsParams>) {
+  if (!action.payload) return
+
   try {
     const data = yield call(api.getNewsList, {
       _sort: 'createdAt:desc',
@@ -17,6 +19,8 @@ function* getNewsList(action: Action<NewsParams>) {
 }
 
 function* getNewsBanner(action: Action<any>) {
+  if (!action.payload) return
+
   try {
     const data = yield call(api.getNewsBanner)
     yield put(actions.getNewsBannerSucceeded(data))

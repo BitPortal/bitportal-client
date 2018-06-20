@@ -87,9 +87,11 @@ declare interface CreateAccountParams {
 
 declare interface CreateEOSAccountParams {
   creator: string
-  name: string
   recovery: string
   keyProvider?: string | string[]
+  eosAccountName: string
+  bpid?: string
+  password: string
 }
 
 declare interface CreateEOSAccountResult {
@@ -99,8 +101,10 @@ declare interface CreateEOSAccountResult {
 }
 
 declare interface ImportEOSAccountParams {
-  name: string
-  key: string
+  eosAccountName: string
+  ownerPrivateKey: string
+  activePrivateKey: string
+  password: string
 }
 
 declare interface ImportEOSAccountResult {
@@ -114,7 +118,7 @@ declare interface SwitchEOSAccountParams {
 }
 
 declare interface GetEOSAccountParams {
-  name: string
+  eosAccountName: string
 }
 
 declare interface GetEOSAccountResult {
@@ -137,7 +141,4 @@ declare interface SetEOSAccountPasswordParams {
   password: string
 }
 
-declare interface SyncEOSAccountResult {
-  activeAccount: string
-  accountList: string[]
-}
+declare type SyncEOSAccountResult = string[]

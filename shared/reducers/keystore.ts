@@ -34,13 +34,13 @@ export default handleActions({
   [actions.exportEOSKeyRequested] (state) {
     return state.set('exporting', true)
   },
-  [actions.exportEOSKeySucceeded] (state, action) {
+  [actions.exportEOSKeySucceeded] (state) {
     return state.set('exporting', false)
   },
   [actions.exportEOSKeyFailed] (state, action) {
     return state.set('error', action.payload).set('exporting', false)
   },
-  [actions.clearError] (state, action) {
+  [actions.clearError] (state) {
     return state.set('error', null)
   },
   [actions.syncKeyRequested] (state) {

@@ -6,7 +6,7 @@ import * as actions from 'actions/keystore'
 import { getErrorMessage, encodeKey } from 'utils'
 import secureStorage from 'utils/secureStorage'
 import { Navigation } from 'react-native-navigation'
-import { getMasterSeed, decrypt, getEOSKeys } from 'key'
+import { decrypt, getEOSKeys } from 'key'
 import { isValidPrivate, privateToPublic } from 'eos'
 import wif from 'wif'
 
@@ -16,6 +16,7 @@ function* importEOSKeyRequested(action: Action<ImportEOSKeyParams>) {
   try {
     const privateKey = action.payload.key
     const walletId = action.payload.walletId
+    const hdWalletName = action.payload.hdWalletName
     const coin = 'EOS'
     assert(isValidPrivate(privateKey), 'Invalid EOS private key!')
     const publicKey = yield call(privateToPublic, privateKey)
@@ -25,7 +26,7 @@ function* importEOSKeyRequested(action: Action<ImportEOSKeyParams>) {
     if (!publicKeys) {
       publicKeys = [{ publicKey, hdWalletName, coin }]
     } else {
-      const existedKey = publicKeys.filter(item => item.publicKey === publicKey)
+      const existedKey = publicKeys.filter((item: any) => item.publicKey === publicKey)
       assert(!existedKey.length, 'Public key has been imported!')
       publicKeys.push({ publicKey, walletId, coin })
     }
@@ -64,9 +65,9 @@ function* exportEOSKeyRequested(action: Action<ExportEOSKeyParams>) {
 
       assert(accountInfo.permissions && accountInfo.permissions.length, 'EOS account permissions dose not exist!')
       const permissions = accountInfo.permissions
-      const ownerPermission = permissions.filter(item => item.perm_name === 'owner')
+      const ownerPermission = permissions.filter((item: any) => item.perm_name === 'owner')
       assert(ownerPermission.length && ownerPermission[0].required_auth && ownerPermission[0].required_auth.keys && ownerPermission[0].required_auth.keys.length, 'Owner permission dose not exist!')
-      const activePermission = permissions.filter(item => item.perm_name === 'active')
+      const activePermission = permissions.filter((item: any) => item.perm_name === 'active')
       assert(activePermission.length && activePermission[0].required_auth && activePermission[0].required_auth.keys && activePermission[0].required_auth.keys.length, 'Active permission dose not exist!')
 
       const ownerPublicKeys = ownerPermission[0].required_auth.keys

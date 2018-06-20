@@ -16,7 +16,7 @@ export default handleActions({
   [actions.stakeRequested] (state) {
     return state.set('loading', true)
   },
-  [actions.stakeSucceeded] (state, action) {
+  [actions.stakeSucceeded] (state) {
     return state.set('loaded', true).set('loading', false)
   },
   [actions.stakeFailed] (state, action) {
@@ -25,7 +25,7 @@ export default handleActions({
   [actions.unstakeRequested] (state) {
     return state.set('unstaking', true)
   },
-  [actions.unstakeSucceeded] (state, action) {
+  [actions.unstakeSucceeded] (state) {
     return state.set('unstaked', true).set('unstaking', false)
   },
   [actions.unstakeFailed] (state, action) {

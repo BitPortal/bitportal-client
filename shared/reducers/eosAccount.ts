@@ -41,13 +41,13 @@ export default handleActions({
         }
       })
   },
-  [actions.importEOSAccountFailed] (state) {
+  [actions.importEOSAccountFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)
   },
   [actions.syncEOSAccount] (state, action) {
     return state.set('eosAccountList', Immutable.fromJS(action.payload))
   },
-  [actions.clearError] (state, action) {
+  [actions.clearError] (state) {
     return state.set('error', null)
   },
   [actions.resetEOSAccount] () {

@@ -11,8 +11,7 @@ import { resetKey } from 'actions/keystore'
 import { syncEOSAccount, createEOSAccountSucceeded } from 'actions/eosAccount'
 import { getErrorMessage } from 'utils'
 import secureStorage from 'utils/secureStorage'
-import bip39 from 'react-native-bip39'
-import { isValidPrivate, privateToPublic, initAccount, randomKey } from 'eos'
+import { privateToPublic, initAccount, randomKey } from 'eos'
 import { getMasterSeed, encrypt, decrypt, getEOSKeys } from 'key'
 import wif from 'wif'
 
@@ -43,9 +42,9 @@ function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAc
       const owner = yield call(privateToPublic, ownerWif)
       const active = yield call(privateToPublic, activeWif)
 
-      const signProvider = ({ sign, buf }) => sign(buf, '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3')
+      const signProvider = ({ sign, buf }: { sign: any, buf: any }) => sign(buf, '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3')
       const { eos } = yield call(initAccount, { keyProvider, signProvider })
-      const transactionActions = transaction => {
+      const transactionActions = (transaction: any) => {
         transaction.newaccount({ name: eosAccountName, creator, owner, active })
         transaction.buyrambytes({ payer: creator, receiver: eosAccountName, bytes: 8192 })
         transaction.delegatebw({
@@ -80,7 +79,7 @@ function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAc
       yield put(actions.createHDWalletSucceeded(walletInfo))
       yield put(getBalanceRequested({ code: 'eosio.token', account: walletInfo.eosAccountName }))
     } else {
-      const { id, phrase, entropy } = yield call(getMasterSeed)
+      const { id, entropy } = yield call(getMasterSeed)
       const existedWallet = yield call(secureStorage.getItem, `HD_KEYSTORE_${id}`, true)
       assert(!existedWallet, 'Wallet already exists!')
       const keystore = yield call(encrypt, entropy, password, { bpid: id })
@@ -103,9 +102,9 @@ function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAc
       const owner = eosKeys.keys.owner.publicKey
       const active = eosKeys.keys.active.publicKey
 
-      const signProvider = ({ sign, buf }) => sign(buf, '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3')
+      const signProvider = ({ sign, buf }: { sign: any, buf: any }) => sign(buf, '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3')
       const { eos } = yield call(initAccount, { keyProvider, signProvider })
-      const transactionActions = transaction => {
+      const transactionActions = (transaction: any) => {
         transaction.newaccount({ name: eosAccountName, creator, owner, active })
         transaction.buyrambytes({ payer: creator, receiver: eosAccountName, bytes: 8192 })
         transaction.delegatebw({
@@ -148,7 +147,7 @@ function* createWalletRequested(action: Action<CreateWalletParams>) {
   try {
     const name = action.payload.name
     const password = action.payload.password
-    const { id, phrase, entropy } = yield call(getMasterSeed)
+    const { id, entropy } = yield call(getMasterSeed)
     const existedWallet = yield call(secureStorage.getItem, `HD_KEYSTORE_${id}`, true)
     assert(!existedWallet, 'Wallet already exists!')
     const keystore = yield call(encrypt, entropy, password, { bpid: id })
@@ -181,7 +180,7 @@ function* createWalletRequested(action: Action<CreateWalletParams>) {
 
 function* syncWalletRequested() {
   try {
-    const items = yield call(secureStorage.getAllItems)
+    // const items = yield call(secureStorage.getAllItems)
     // console.log(items)
 
     const allItems = yield call(secureStorage.getAllItems)
@@ -200,7 +199,7 @@ function* syncWalletRequested() {
 
     assert(hdWalletList.length + classicWalletList.length, 'No wallets!')
 
-    const active = allItems.ACTIVE_WALLET && JSON.parse(allItems.ACTIVE_WALLET)
+    let active = allItems.ACTIVE_WALLET && JSON.parse(allItems.ACTIVE_WALLET)
 
     if (!active) {
       if (hdWalletList.length) {
@@ -259,9 +258,9 @@ function* logoutRequested(action: Action<LogoutParams>) {
 
       assert(accountInfo.permissions && accountInfo.permissions.length, 'EOS account permissions dose not exist!')
       const permissions = accountInfo.permissions
-      const ownerPermission = permissions.filter(item => item.perm_name === 'owner')
+      const ownerPermission = permissions.filter((item: any) => item.perm_name === 'owner')
       assert(ownerPermission.length && ownerPermission[0].required_auth && ownerPermission[0].required_auth.keys && ownerPermission[0].required_auth.keys.length, 'Owner permission dose not exist!')
-      const activePermission = permissions.filter(item => item.perm_name === 'active')
+      const activePermission = permissions.filter((item: any) => item.perm_name === 'active')
       assert(activePermission.length && activePermission[0].required_auth && activePermission[0].required_auth.keys && activePermission[0].required_auth.keys.length, 'Active permission dose not exist!')
 
       const ownerPublicKeys = ownerPermission[0].required_auth.keys
@@ -290,11 +289,11 @@ function* logoutRequested(action: Action<LogoutParams>) {
     yield put(resetKey())
     yield put(actions.logoutSucceeded())
     Navigation.handleDeepLink({
-	  link: '*',
-	  payload: {
-		method: 'popToRoot',
-		params: {}
-	  }
+      link: '*',
+      payload: {
+        method: 'popToRoot',
+        params: {}
+      }
     })
   } catch (e) {
     yield put(actions.logoutFailed(getErrorMessage(e)))

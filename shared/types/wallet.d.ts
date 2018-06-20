@@ -1,10 +1,12 @@
 declare interface CreateWalletParams {
-  name: string
+  password: string
 }
 
 declare interface CreateWalletResult {
   name: string
-  id: string
+  bpid?: string
+  origin: string
+  timestamp: number
 }
 
 declare interface HDWallet {
@@ -12,7 +14,39 @@ declare interface HDWallet {
   name: string
 }
 
+declare interface ClassicWallet {
+  name: string
+}
+
 declare interface SyncWalletResult {
-  wallets: HDWallet[]
-  active: HDWallet
+  hdWalletList: HDWallet[]
+  classicWalletList: ClassicWallet[]
+  active: ClassicWallet | HDWallet
+}
+
+declare interface LogoutParams {
+  eosAccountName: string
+  password: string
+  origin: string
+  bpid?: string
+  coin: string
+}
+
+declare interface ChangePasswordParams {
+
+}
+
+declare interface ImportWalletParams {
+
+}
+
+declare interface ImportWalletResult {
+
+}
+
+declare interface CreateWalletAndEOSAccountParams {
+  origin: string
+  name: string
+  password: string
+  eosAccountName: string
 }

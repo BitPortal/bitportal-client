@@ -4,6 +4,7 @@ import * as actions from 'actions/currency'
 import * as api from 'utils/api'
 import storage from 'utils/storage'
 import { DEFAULT_USD_RATE } from 'constants/market'
+import { Action } from 'redux-actions'
 
 function* getCurrencyRate(action: any) {
   try {

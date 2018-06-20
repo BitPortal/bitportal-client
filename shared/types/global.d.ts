@@ -274,10 +274,27 @@ declare module 'eos' {
     isValidPrivate: any
     initEOS: any
     sortProducers: any
+    randomKey: any
   }
 
   const eos: EOS
   export = eos
+}
+
+declare module 'key' {
+  interface KeyManagement {
+    validateEntropy: any
+    getEOSKeys: any
+    getMasterSeed: any
+    getMasterSeedFromEntropy: any
+    decrypt: any
+    encrypt: any
+    getIdFromSeed: any
+    getIdFromEntropy: any
+  }
+
+  const key: KeyManagement
+  export = key
 }
 
 declare module 'bitcoin' {
@@ -339,6 +356,11 @@ declare module 'scrypt-async' {
 }
 
 declare module 'randombytes' {
+  const file: any
+  export = file
+}
+
+declare module 'wif' {
   const file: any
   export = file
 }

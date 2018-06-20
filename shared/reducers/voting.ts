@@ -23,7 +23,7 @@ export default handleActions({
   [actions.clearError] (state) {
     return state.set('error', null)
   },
-  [actions.showSelected] (state, action) {
+  [actions.showSelected] (state) {
     return state.set('showSelected', true)
   },
   [actions.closeSelected] (state) {
