@@ -9,7 +9,7 @@ import { decrypt } from 'key'
 import { initEOS, sortProducers } from 'eos'
 import wif from 'wif'
 
-function* votingRequested(action: Action<object>) {
+function* votingRequested(action: Action<VotingParams>) {
   if (!action.payload) return
 
   try {
@@ -19,7 +19,7 @@ function* votingRequested(action: Action<object>) {
     const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
     assert(accountInfo.permissions && accountInfo.permissions.length, 'EOS account permissions dose not exist!')
     const permissions = accountInfo.permissions
-    const activePermission = permissions.filter(item => item.perm_name === 'active')
+    const activePermission = permissions.filter((item: any) => item.perm_name === 'active')
     assert(activePermission.length && activePermission[0].required_auth && activePermission[0].required_auth.keys && activePermission[0].required_auth.keys.length, 'Active permission dose not exist!')
 
     let activeWifs = []
@@ -61,7 +61,7 @@ function* votingRequested(action: Action<object>) {
 
     eos = initEOS({
       keyProvider: activeWifs,
-      transactionHeaders: function(_, callback) {
+      transactionHeaders: function(_: any, callback: any) {
         callback(null, headers)
       },
       broadcast: false,
@@ -71,7 +71,7 @@ function* votingRequested(action: Action<object>) {
     })
     const transactionInfo = yield call(
       eos.transaction,
-      tr => tr.voteproducer({ producers, voter: eosAccountName, proxy: '' }),
+      (tr: any) => tr.voteproducer({ producers, voter: eosAccountName, proxy: '' }),
       options
     )
 

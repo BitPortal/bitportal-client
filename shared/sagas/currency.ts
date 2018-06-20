@@ -6,7 +6,9 @@ import storage from 'utils/storage'
 import { DEFAULT_USD_RATE } from 'constants/market'
 import { Action } from 'redux-actions'
 
-function* getCurrencyRate(action: any) {
+function* getCurrencyRate(action: Action<GetCurrencyParams>) {
+  if (!action.payload) return
+
   try {
     const symbol = action.payload.symbol
     let currency = { symbol: 'USD', rate: 1 }
@@ -29,6 +31,8 @@ function* getCurrencyRate(action: any) {
 }
 
 function* setCurrency(action: Action<string>) {
+  if (!action.payload) return
+
   const symbol = action.payload
   yield put(actions.getCurrencyRateRequested({ symbol }))
 }

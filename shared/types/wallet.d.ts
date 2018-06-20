@@ -1,5 +1,6 @@
 declare interface CreateWalletParams {
   password: string
+  name: string
 }
 
 declare interface CreateWalletResult {

@@ -1,5 +1,6 @@
 declare interface StakeParams {
-
+  eosAccountName: string
+  password: string
 }
 
 declare interface StakeResult {

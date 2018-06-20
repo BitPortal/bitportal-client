@@ -31,8 +31,8 @@ const decipherBuffer = (decipher: any, data: any) => {
   return Buffer.concat([decipher.update(data), decipher.final()])
 }
 
-const randomBytes = async (length: number) => {
-  return new Promise((resolve, reject) => {
+const randomBytes = async (length: number): Promise<string> => {
+  return new Promise<string>((resolve, reject) => {
     RNRandomBytes.randomBytes(length, (error: any, bytes: any) => {
       if (error) {
         reject(error)
@@ -85,12 +85,10 @@ export const getIdFromSeed = async (seed: Buffer) => {
   return id
 }
 
-export const encrypt = async (input: string, password: string, opts: { origin?: 'classic' | 'hd', bpid?: string, salt?: string, kdf?: string, dklen?: number, c?: number, prf?: string, n?: number, iv?: string, r?: number, p?: number, cipher?: number, uuid?: string, coin?: string }) => {
+export const encrypt = async (input: string, password: string, opts: { origin?: 'classic' | 'hd', bpid?: string, salt?: string, kdf?: string, dklen?: number, c?: number, prf?: string, n?: number, iv?: string, r?: number, p?: number, cipher?: string, uuid?: string, coin?: string } = {}) => {
 
   assert(input, 'Invalid encrypt input!')
-  const entropy = Buffer.from(input, 'hex')
-
-  opts = opts || {}
+  const entropy = input
 
   let bpid
 
@@ -104,10 +102,10 @@ export const encrypt = async (input: string, password: string, opts: { origin?: 
     assert(opts.origin === 'classic', 'Invalid origin!')
   }
 
-  let salt = opts.salt
+  let salt = opts.salt || ''
   if (!salt) salt = await randomBytes(32)
 
-  let iv = opts.iv
+  let iv = opts.iv || ''
   if (!iv) iv = await randomBytes(16)
 
   let derivedKey
@@ -137,14 +135,14 @@ export const encrypt = async (input: string, password: string, opts: { origin?: 
     throw new Error('Unsupported cipher')
   }
 
-  const ciphertext = Buffer.concat([cipher.update(entropy), cipher.final()])
+  const ciphertext = Buffer.concat([cipher.update(Buffer.from(entropy, 'hex')), cipher.final()])
 
-  const mac = keccak(Buffer.concat([derivedKey.slice(16, 32), Buffer.from(ciphertext, 'hex')]))
+  const mac = keccak(Buffer.concat([derivedKey.slice(16, 32), ciphertext]))
 
   let random = opts.uuid
   if (!random) random = await randomBytes(16)
 
-  const keystore = {
+  const keystore: any = {
     version: 1,
     id: uuidv4({ random }),
     crypto: {
@@ -201,7 +199,7 @@ export const decrypt = async (input: object | string, password: string, nonStric
   }
 
   const decipher = createDecipheriv(json.crypto.cipher, derivedKey.slice(0, 16), Buffer.from(json.crypto.cipherparams.iv, 'hex'))
-  const seed = decipherBuffer(decipher, ciphertext, 'hex')
+  const seed = decipherBuffer(decipher, ciphertext)
 
   return seed.toString('hex')
 }

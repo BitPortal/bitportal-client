@@ -105,6 +105,7 @@ declare interface ImportEOSAccountParams {
   ownerPrivateKey: string
   activePrivateKey: string
   password: string
+  name: string
 }
 
 declare interface ImportEOSAccountResult {

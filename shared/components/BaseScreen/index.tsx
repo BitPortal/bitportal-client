@@ -10,6 +10,8 @@ export default class BaseScreen<Props extends BaseScreenProps> extends React.Com
     navBarHidden: true
   }
 
+  screenState: null | string
+
   constructor(props: Props, context?: {}) {
     super(props, context)
     this.screenState = null
