@@ -70,15 +70,6 @@ export default class AssetQRCode extends Component {
     })
   }
 
-  componentDidMount() {
-    // 优化Android modal体验
-    this.timer = setTimeout(() => {
-      this.setState({ enableQRCode: true })
-      LayoutAnimation.spring()
-      clearTimeout(this.timer)
-    }, 3000)
-  }
-
   componentWillUnmount() {
     // 清除定时器
     this.timer && clearTimeout(this.timer)
@@ -103,7 +94,7 @@ export default class AssetQRCode extends Component {
                 autoCorrect={false}
                 underlineColorAndroid="transparent"
                 style={styles.input}
-                selectionColor={Colors.minorThemeColor}
+                selectionColor={Colors.textColor_89_185_226}
                 keyboardAppearance={Colors.keyboardTheme}
                 placeholder={'0'}
                 onChangeText={(e) => this.onChangeText(e)}
@@ -116,19 +107,13 @@ export default class AssetQRCode extends Component {
               <View style={[styles.semicircle, { marginRight: -5 }]} />
             </View>
             <View style={[styles.qrCode, styles.center]}>
-              {
-                enableQRCode ?
-
-                <View style={{ padding: 2, borderRadius: 2, maxWidth: qrCodeSize+4, backgroundColor: Colors.bgColor_FFFFFF }}>
-                  <QRCode
-                    value={eosQrString(this.props.accountName, this.state.value)}
-                    size={qrCodeSize}
-                    color='black'
-                  />
-                </View>
-                :
-                <ActivityIndicator />
-              }
+              <View style={{ padding: 2, borderRadius: 2, maxWidth: qrCodeSize+4, backgroundColor: Colors.bgColor_FFFFFF }}>
+                <QRCode
+                  value={eosQrString(this.props.accountName, this.state.value)}
+                  size={qrCodeSize}
+                  color='black'
+                />
+              </View>
             </View>
           </View>
           <View style={[styles.btnContainer, styles.between]}>
