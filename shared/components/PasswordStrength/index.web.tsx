@@ -11,7 +11,7 @@ interface Props {
 }
 
 @connect(
-  state => ({
+  (state: RootState) => ({
     locale: state.intl.get('locale')
   })
 )

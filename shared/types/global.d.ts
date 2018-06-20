@@ -10,8 +10,6 @@ declare const TradingView: any
 
 declare const Datafeeds: any
 
-declare const String: any
-
 // interfaces
 
 declare interface Config {

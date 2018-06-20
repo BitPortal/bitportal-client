@@ -40,7 +40,7 @@
     "bundle:ios": "react-native bundle --entry-file mobile/index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios",
     "bundle:desktop": "rimraf bundle && cross-env NODE_ENV=production APP_ENV=development TARGET=\"electron-renderer\" webpack --progress --colors",
     "desktop": "electron bundle/index.html",
-    "tsc": "tsc"
+    "tsc": "tsc --watch"
   },
   "dependencies": {
     "bip38": "^2.0.2",
@@ -134,8 +134,8 @@
     "@types/react-hot-loader": "^3.0.5",
     "@types/react-intl": "^2.3.2",
     "@types/react-native": "TerenceGe/types-react-native",
-    "@types/react-native-navigation": "^1.1.10",
-    "@types/react-redux": "^5.0.12",
+    "@types/react-native-navigation": "^1.1.12",
+    "@types/react-redux": "^6.0.2",
     "@types/react-router": "^4.0.16",
     "@types/react-router-config": "^1.0.4",
     "@types/react-router-dom": "^4.0.8",
@@ -214,7 +214,7 @@
     "tslint-config-airbnb": "^5.3.0",
     "tslint-loader": "^3.6.0",
     "tslint-react": "^3.2.0",
-    "typescript": "^2.8.3",
+    "typescript": "^2.9.2",
     "typescript-formatter": "^6.0.0",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "url-loader": "^1.0.1",
