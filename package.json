@@ -28,7 +28,7 @@
     "test": "NODE_ENV=test mocha --icu-data-dir=/usr/local/lib/node_modules/full-icu --require babel-register --require babel-polyfill --require test/helpers/setup.js --recursive",
     "cover": "nyc --reporter=lcov --reporter=text --reporter=html --require babel-register --extension .js npm test",
     "lint": "eslint browser server shared test",
-    "lints": "eslint shared/components",
+    "lints": "eslint shared/resources",
     "mobile": "watchman watch-del-all && rm -fr $TMPDIR/react-* && cross-env NODE_ENV=production node node_modules/react-native/local-cli/cli.js start -- --reset-cache",
     "mobile:test": "rm -fr $TMPDIR/react-* && cross-env NODE_ENV=production APP_ENV=test node node_modules/react-native/local-cli/cli.js start -- --reset-cache",
     "ios": "react-native run-ios --scheme bitportal-development",
@@ -41,7 +41,7 @@
     "bundle:ios": "react-native bundle --entry-file mobile/index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios",
     "bundle:desktop": "rimraf bundle && cross-env NODE_ENV=production APP_ENV=development TARGET=\"electron-renderer\" webpack --progress --colors",
     "desktop": "electron bundle/index.html",
-    "tsc": "tsc --watch"
+    "tsc": "tsc"
   },
   "dependencies": {
     "bip38": "^2.0.2",
