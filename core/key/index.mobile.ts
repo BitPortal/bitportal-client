@@ -31,8 +31,8 @@ const decipherBuffer = (decipher: any, data: any) => {
   return Buffer.concat([decipher.update(data), decipher.final()])
 }
 
-const randomBytes = async (length: number): Promise<string> => {
-  return new Promise<string>((resolve, reject) => {
+const randomBytes = async (length: number): Promise<Buffer> => {
+  return new Promise<Buffer>((resolve, reject) => {
     RNRandomBytes.randomBytes(length, (error: any, bytes: any) => {
       if (error) {
         reject(error)
@@ -85,7 +85,7 @@ export const getIdFromSeed = async (seed: Buffer) => {
   return id
 }
 
-export const encrypt = async (input: string, password: string, opts: { origin?: 'classic' | 'hd', bpid?: string, salt?: string, kdf?: string, dklen?: number, c?: number, prf?: string, n?: number, iv?: string, r?: number, p?: number, cipher?: string, uuid?: string, coin?: string } = {}) => {
+export const encrypt = async (input: string, password: string, opts: { origin?: 'classic' | 'hd', bpid?: string, salt?: Buffer, kdf?: string, dklen?: number, c?: number, prf?: string, n?: number, iv?: Buffer, r?: number, p?: number, cipher?: string, uuid?: Buffer, coin?: string } = {}) => {
 
   assert(input, 'Invalid encrypt input!')
   const entropy = input
@@ -102,10 +102,10 @@ export const encrypt = async (input: string, password: string, opts: { origin?: 
     assert(opts.origin === 'classic', 'Invalid origin!')
   }
 
-  let salt = opts.salt || ''
+  let salt = opts.salt
   if (!salt) salt = await randomBytes(32)
 
-  let iv = opts.iv || ''
+  let iv = opts.iv
   if (!iv) iv = await randomBytes(16)
 
   let derivedKey

@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { reducer as form } from 'redux-form/es/immutable'
+import { reducer as form } from 'redux-form/immutable'
 import intl from './intl'
 import ticker from './ticker'
 import chart  from './chart'

@@ -127,7 +127,7 @@ declare module 'transit-immutable-js' {
   export = transit
 }
 
-declare module 'redux-form/es/immutable' {
+declare module 'redux-form/immutable' {
   interface Form {
     reducer: any
     change: any

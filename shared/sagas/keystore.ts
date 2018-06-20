@@ -97,14 +97,14 @@ function* exportEOSKeyRequested(action: Action<ExportEOSKeyParams>) {
 
     yield put(actions.exportEOSKeySucceeded())
     Navigation.handleDeepLink({
-	  link: '*',
-	  payload: {
-		method: 'push',
-		params: {
+      link: '*',
+      payload: {
+        method: 'push',
+        params: {
           screen: 'BitPortal.ExportPrivateKey',
           passProps: { ownerWifs, activeWifs }
         }
-	  }
+      }
     })
   } catch (e) {
     console.log(e)
