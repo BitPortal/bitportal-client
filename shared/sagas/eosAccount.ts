@@ -114,6 +114,7 @@ function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
 	  }
     })
   } catch (e) {
+    alert(`${e.message} ------ ${JSON.stringify(action.payload)}`)
     yield put(actions.importEOSAccountFailed(getErrorMessage(e)))
   }
 }
