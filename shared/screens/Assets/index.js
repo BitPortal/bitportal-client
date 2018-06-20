@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react'
-import { Text, View, ScrollView, Image, TouchableHighlight, ActivityIndicator, InteractionManager, NativeModules } from 'react-native'
+import { Text, View, ScrollView, Image, LayoutAnimation, TouchableHighlight, ActivityIndicator, InteractionManager } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import TotalAssetsCard from 'components/TotalAssetsCard'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -178,6 +178,10 @@ export default class Assets extends BaseScreen {
     }
   }
 
+  componentWillUpdate() {
+    LayoutAnimation.linear()
+  }
+
   render() {
     const { wallet, balance, locale, eosAccount, eosPrice } = this.props
     const loading = wallet.get('loading')
@@ -186,7 +190,7 @@ export default class Assets extends BaseScreen {
     const classicWalletList = wallet.get('classicWalletList')
     const walletCount = hdWalletList.size + classicWalletList.size
     const balanceList = balance.get('data').get('eosAccountBalance')
-
+    
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>

@@ -4,7 +4,7 @@ import Colors from 'resources/colors'
 
 const scale = Platform.OS == 'ios' ? 2.7 : 2.4
 const cardScale = Platform.OS == 'ios' ? 1 : 0.9
-const titleScale = Platform.OS == 'ios' ? 0.75 : 0.75 
+const titleScale = Platform.OS == 'ios' ? 0.7 : 0.7
 
 const styles = StyleSheet.create({
   imageBackground: {

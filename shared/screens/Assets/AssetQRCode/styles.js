@@ -1,5 +1,5 @@
 import { StyleSheet, Platform } from 'react-native'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, isIphoneX } from 'utils/dimens'
+import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, isIphoneX, ifIphoneX } from 'utils/dimens'
 import Colors from 'resources/colors'
 
 let screen_width = isIphoneX ? SCREEN_WIDTH-40 : SCREEN_WIDTH
@@ -9,7 +9,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   close: {
-    marginTop: NAV_BAR_HEIGHT/2,
+    ...ifIphoneX({
+      marginTop: NAV_BAR_HEIGHT/4
+    }, {
+      marginTop: 0
+    }),
     width: 64,
     height: 64,
     borderRadius: 32,
@@ -38,7 +42,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: screen_width-40-30,
-    height: 30,
+    height: 40,
     marginHorizontal: 15,
     marginVertical: 20,
     borderBottomColor: Colors.textColor_181_181_181,
