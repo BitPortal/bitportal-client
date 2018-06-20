@@ -26,7 +26,7 @@ const sagas = {
   balanceSaga: fork(balanceSaga),
   loggerSaga: fork(loggerSaga),
   producerSage: fork(producerSage),
-  votingSage: fork(votingSage),
+  votingSaga: fork(votingSaga),
   stakeSaga: fork(stakeSaga),
   transferSaga: fork(transferSaga),
   transferHistorySaga: fork(transferHistorySaga)

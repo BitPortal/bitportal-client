@@ -7,7 +7,7 @@ const accountSelector = (state: RootState) => state.eosAccount
 export const eosAccountSelector = createSelector(
   walletSelector,
   accountSelector,
-  (wallet: string, accounts: any) => {
+  (wallet: any, accounts: any) => {
     const bpid = wallet.get('bpid')
     const eosAccountName = wallet.get('eosAccountName')
     const origin = wallet.get('origin')
@@ -21,7 +21,6 @@ export const eosAccountSelector = createSelector(
       } else {
         return accounts.set('data', Map({}))
       }
-      return accounts.set('data', Map({}))
     } else if (origin === 'classic') {
       const index = list.findIndex((item: any) => item.get('account_name') === eosAccountName)
 
