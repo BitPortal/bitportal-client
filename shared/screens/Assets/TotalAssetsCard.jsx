@@ -146,9 +146,9 @@ export default class TotalAssetsCard extends Component {
                   <TouchableOpacity style={[styles.center, styles.btn]} onPress={this.switchDisplayTotal}>
                     {
                       hidden ? 
-                      <Image source={Images.eyes_open} style={styles.image} />
-                      :
                       <Image source={Images.eyes_close} style={styles.image} />
+                      :
+                      <Image source={Images.eyes_open} style={styles.image} />
                     }
                     
                   </TouchableOpacity>

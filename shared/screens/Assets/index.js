@@ -225,9 +225,9 @@ export default class Assets extends BaseScreen {
                 <TotalAssetsCard 
                   totalAssets={getTotalAssets(balanceList, eosPrice)} 
                   accountName={activeEOSAccount.get('account_name')} 
-                  CPUWeight={activeEOSAccount.get('cpu_weight')}
-                  BandWidth={activeEOSAccount.get('self_delegated_bandwidth')}
-                  RAMUsage={activeEOSAccount.get('ram_usage')}
+                  CPUWeight={activeEOSAccount.get('cpu_weight')||0}
+                  BandWidth={activeEOSAccount.get('self_delegated_bandwidth')||0}
+                  RAMUsage={activeEOSAccount.get('ram_usage')||0}
                   onPress={() => this.operateAssetQRCode(true)} 
                 />
                 {!activeEOSAccount.get('account_name') && <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_create_eos_account" />} onPress={() => this.createEOSAccount()} extraStyle={{ marginTop: 10, marginBottom: 10 }} />}
