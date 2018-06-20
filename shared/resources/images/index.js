@@ -22,7 +22,9 @@ const Images = {
   guide_market_title:    require('./guide_market_title.png'),
   guide_discovery: Platform.OS === 'ios' ? require('./guide_discovery.png') : require('./guide_discovery_android.png'), 
   guide_discovery_card:  require('./guide_discovery_card.png'),
-  guide_discovery_title: require('./guide_discovery_title.png')
+  guide_discovery_title: require('./guide_discovery_title.png'),
+  eyes_close: require('./eyes_close.png'),
+  eyes_open:  require('./eyes_open.png')
 }
 
 export default Images

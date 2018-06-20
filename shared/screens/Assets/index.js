@@ -1,24 +1,23 @@
 
 import React, { Component } from 'react'
-import { Text, View, ScrollView, Image, LayoutAnimation, TouchableHighlight, ActivityIndicator, InteractionManager } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
-import TotalAssetsCard from 'components/TotalAssetsCard'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import EnableAssets from './EnableAssets'
-import BalanceList from './BalanceList'
 import styles from './styles'
+import storage from 'utils/storage'
 import Colors from 'resources/colors'
 import Modal from 'react-native-modal'
 import AssetQRCode from './AssetQRCode'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import storage from 'utils/storage'
 import AccountList from './AccountList'
+import EnableAssets from './EnableAssets'
+import BalanceList from './BalanceList'
+import TotalAssetsCard from './TotalAssetsCard'
 import * as walletActions from 'actions/wallet'
 import * as tickerActions from 'actions/ticker'
 import * as balanceActions from 'actions/balance'
 import * as versionInfoActions from 'actions/versionInfo'
 import * as currencyActions from 'actions/currency'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { accountBalanceSelector } from 'selectors/balance'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { eosPriceSelector } from 'selectors/ticker'
@@ -27,6 +26,16 @@ import messages from './messages'
 import NavigationBar, { ListButton, CommonRightButton, CommonTitle } from 'components/NavigationBar'
 import SettingItem from 'components/SettingItem'
 import Loading from 'components/Loading'
+import { 
+  Text, 
+  View, 
+  Image,
+  ScrollView,  
+  LayoutAnimation, 
+  ActivityIndicator, 
+  InteractionManager,
+  TouchableHighlight
+} from 'react-native'
 
 const getTotalAssets = (balanceList, eosPrice) => {
   if (!balanceList) return 0
@@ -179,7 +188,7 @@ export default class Assets extends BaseScreen {
   }
 
   componentWillUpdate() {
-    LayoutAnimation.linear()
+    LayoutAnimation.easeInEaseOut()
   }
 
   render() {
@@ -213,7 +222,14 @@ export default class Assets extends BaseScreen {
             !!walletCount &&
             <View style={styles.scrollContainer}>
               <ScrollView showsVerticalScrollIndicator={false}>
-                <TotalAssetsCard totalAssets={getTotalAssets(balanceList, eosPrice)} accountName={activeEOSAccount.get('account_name')} onPress={() => this.operateAssetQRCode(true)} />
+                <TotalAssetsCard 
+                  totalAssets={getTotalAssets(balanceList, eosPrice)} 
+                  accountName={activeEOSAccount.get('account_name')} 
+                  CPUWeight={activeEOSAccount.get('cpu_weight')}
+                  BandWidth={activeEOSAccount.get('self_delegated_bandwidth')}
+                  RAMUsage={activeEOSAccount.get('ram_usage')}
+                  onPress={() => this.operateAssetQRCode(true)} 
+                />
                 {!activeEOSAccount.get('account_name') && <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_create_eos_account" />} onPress={() => this.createEOSAccount()} extraStyle={{ marginTop: 10, marginBottom: 10 }} />}
                 {!!activeEOSAccount.get('account_name') && <EnableAssets Title={<FormattedMessage id="asset_title_name_ast" />} enableAssets={() => this.enableAssets()} />}
                 {balanceList && <BalanceList data={balanceList} eosPrice={eosPrice} onPress={(e) => this.checkAsset(e)} />}
