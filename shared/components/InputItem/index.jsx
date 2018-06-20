@@ -1,14 +1,12 @@
 /* @jsx */
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { Text, View, TextInput, StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
 import { FontScale, SCREEN_WIDTH } from 'utils/dimens'
-import PropTypes from 'prop-types'
 
 const styles = StyleSheet.create({
   inputItem: {
-    width: SCREEN_WIDTH-64,
+    width: SCREEN_WIDTH - 64,
     minHeight: 44
   },
   text14: {
@@ -16,7 +14,7 @@ const styles = StyleSheet.create({
     color: Colors.textColor_89_185_226
   },
   inputContainer: {
-    width: SCREEN_WIDTH-64,
+    width: SCREEN_WIDTH - 64,
     height: 40,
     flexDirection: 'row',
     alignItems: 'center',
@@ -32,7 +30,6 @@ const styles = StyleSheet.create({
 })
 
 class InputItem extends Component {
-
   static defaultProps = {
     title: '',
     placeholder: '',
@@ -45,9 +42,9 @@ class InputItem extends Component {
   }
 
   onChangeText = (text) => {
-    const { onChangeText, textFilter } = this.props
+    const { textFilter } = this.props
     const newText = textFilter ? textFilter(text) : text
-    onChangeText && onChangeText(newText)
+    // onChangeText && onChangeText(newText)
     this.setState({ value: newText })
   }
 
@@ -55,12 +52,9 @@ class InputItem extends Component {
     const { title, placeholder, isContentVaild, TipsComponent, secureTextEntry, extraStyle, ...extraProps } = this.props
     const { value } = this.state
     return (
-      <View style={[styles.inputItem, {...extraStyle}]}>
+      <View style={[styles.inputItem, { ...extraStyle }]}>
         <Text style={[styles.text14, { marginLeft: -4 }]}> {title} </Text>
-        <View style={[styles.inputContainer, { 
-            borderBottomColor: !isContentVaild ? Colors.textColor_255_98_92 : Colors.textColor_181_181_181 
-          }]
-        }>
+        <View style={[styles.inputContainer, { borderBottomColor: !isContentVaild ? Colors.textColor_255_98_92 : Colors.textColor_181_181_181 }]}>
           <TextInput
             {...extraProps}
             autoCorrect={false}
@@ -71,7 +65,7 @@ class InputItem extends Component {
             placeholder={placeholder}
             secureTextEntry={secureTextEntry}
             placeholderTextColor={Colors.textColor_181_181_181}
-            onChangeText={(e) => this.onChangeText(e)}
+            onChangeText={e => this.onChangeText(e)}
             value={value}
           />
           { TipsComponent && <TipsComponent /> }
@@ -79,18 +73,6 @@ class InputItem extends Component {
       </View>
     )
   }
-
-}
-
-InputItem.propTypes = {
-  title: PropTypes.string,
-  placeholder: PropTypes.string,
-  isContentVaild: PropTypes.bool,
-  onChangeText: PropTypes.func,
-  textFilter: PropTypes.func,
-  extraStyle: PropTypes.object,
-  TipsComponent: PropTypes.any
 }
 
 export default InputItem
-  
