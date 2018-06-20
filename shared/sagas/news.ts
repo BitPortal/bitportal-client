@@ -18,9 +18,7 @@ function* getNewsList(action: Action<NewsParams>) {
   }
 }
 
-function* getNewsBanner(action: Action<any>) {
-  if (!action.payload) return
-
+function* getNewsBanner() {
   try {
     const data = yield call(api.getNewsBanner)
     yield put(actions.getNewsBannerSucceeded(data))

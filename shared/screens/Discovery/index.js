@@ -33,7 +33,7 @@ const PAGE_LENGTH = 10
 export default class Discovery extends BaseScreen {
 
   componentDidMount() {
-    this.props.actions.getNewsListRequested(0, PAGE_LENGTH, false)
+    this.props.actions.getNewsListRequested({ startAt: 0, limit: PAGE_LENGTH, loadingMore: false })
     this.props.actions.getNewsBannerRequested()
   }
 
@@ -76,7 +76,7 @@ export default class Discovery extends BaseScreen {
   }
 
   onRefresh = () => {
-    this.props.actions.getNewsListRequested(0, PAGE_LENGTH, false)
+    this.props.actions.getNewsListRequested({ startAt: 0, limit: PAGE_LENGTH, loadingMore: false })
   }
 
   onRowPress = (item) => {
@@ -114,7 +114,7 @@ export default class Discovery extends BaseScreen {
       return
     }
     const length = this.props.listData.toJS().length
-    this.props.actions.getNewsListRequested(length, PAGE_LENGTH, true)
+    this.props.actions.getNewsListRequested({ startAt: length, limit: PAGE_LENGTH, loadingMore: true })
   }
 
   render() {
@@ -142,4 +142,3 @@ export default class Discovery extends BaseScreen {
     )
   }
 }
- 
