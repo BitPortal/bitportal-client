@@ -1,8 +1,9 @@
 /* @jsx */
-import React, { Component } from 'react'
+
+import React from 'react'
 import styles from './styles'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { Text, View, ScrollView, TouchableOpacity, TextInput, TouchableHighlight } from 'react-native'
+import { View, ScrollView, TouchableOpacity, TextInput, TouchableHighlight } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import Colors from 'resources/colors'
 import ImportEOSAccountForm from 'components/Form/ImportEOSAccountForm'
