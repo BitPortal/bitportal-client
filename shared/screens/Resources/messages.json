@@ -1,0 +1,24 @@
+{
+  "zh": {
+    "reslist_title_name_resources" : "Resources",
+    "reslist_title_name_ram" : "Memory",
+    "reslist_title_name_bw": "BandWidth",
+    "reslist_title_name_cpu": "CPU",
+    "reslist_title_name_ava": "Available:",
+    "reslist_title_name_ramttl": "Quota:",
+    "reslist_title_name_usgttl": "Usage:",
+    "reslist_title_name_bwttl": "Total:",
+    "reslist_title_name_delegate": "Delegated:"
+  },
+  "en": {
+    "reslist_title_name_resources" : "Resources",
+    "reslist_title_name_ram" : "Memory",
+    "reslist_title_name_bw" : "BandWidth",
+    "reslist_title_name_cpu": "CPU",
+    "reslist_title_name_ava": "Available:",
+    "reslist_title_name_ramttl": "Quota:",
+    "reslist_title_name_usgttl": "Usage:",
+    "reslist_title_name_bwttl": "Total:",
+    "reslist_title_name_delegate": "Delegated:"
+  }
+}

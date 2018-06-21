@@ -106,6 +106,16 @@ export default class TotalAssetsCard extends Component {
     LayoutAnimation.easeInEaseOut()
   }
 
+  checkResources = () => {
+    this.props.checkResourcesDetails()
+  }
+
+  extraColor = (available, limit) => {
+    const colorObj = { color: Colors.textColor_255_76_118 }
+    if (available && limit) return available/limit < 0.1 ? colorObj : {}
+    else return {}
+  }
+
   foldResources = () => {
     const { folded } = this.state
     this.setState({ folded: !folded })
@@ -118,7 +128,7 @@ export default class TotalAssetsCard extends Component {
   }
 
   render() {
-    const { totalAssets, CPUWeight, BandWidth, RAMUsage, accountName, disabled, onPress, locale } = this.props
+    const { totalAssets, CPUInfo, NETInfo, RAMQuota, RAMUsage, accountName, disabled, onPress, checkResourcesDetails, locale } = this.props
     const { hidden, folded } = this.state
     return (
       <IntlProvider messages={messages[locale]}>
@@ -150,7 +160,6 @@ export default class TotalAssetsCard extends Component {
                       :
                       <Image source={Images.eyes_open} style={styles.image} />
                     }
-                    
                   </TouchableOpacity>
                 </View>
                 <View style={styles.between}>
@@ -165,10 +174,10 @@ export default class TotalAssetsCard extends Component {
               <View style={[styles.resourcesContainer, styles.between, { paddingVertical: folded ? 0 : 15 } ]}>
                 {!folded && 
                   <View style={styles.center}> 
-                    <Text style={styles.text12}>CPU</Text>
-                    <Text style={styles.text12}>
+                    <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>CPU</Text>
+                    <Text onPress={this.checkResources} style={[styles.text12, this.extraColor(CPUInfo.get('available'), CPUInfo.get('max')), { paddingHorizontal: 2 }]}>
                       <FormattedNumber 
-                        value={CPUWeight}
+                        value={CPUInfo.get('available')}
                         minimumFractionDigits={2}
                         maximumFractionDigits={2}
                       />
@@ -179,10 +188,10 @@ export default class TotalAssetsCard extends Component {
                 {!folded && <View style={styles.divider} />}
                 {!folded && 
                   <View style={styles.center}> 
-                    <Text style={styles.text12}>BW</Text>
-                    <Text style={styles.text12}>
+                    <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>BW</Text>
+                    <Text onPress={this.checkResources} style={[styles.text12, this.extraColor(NETInfo.get('available'), NETInfo.get('max')), { paddingHorizontal: 2 }]}>
                       <FormattedNumber 
-                        value={BandWidth}
+                        value={NETInfo.get('available')}
                         minimumFractionDigits={2}
                         maximumFractionDigits={2}
                       />
@@ -193,10 +202,10 @@ export default class TotalAssetsCard extends Component {
                 {!folded && <View style={styles.divider} />}
                 {!folded && 
                   <View style={styles.center}> 
-                    <Text style={styles.text12}>RAM</Text>
-                    <Text style={styles.text12}>
+                    <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>RAM</Text>
+                    <Text onPress={this.checkResources} style={[styles.text12, this.extraColor(RAMQuota-RAMUsage, RAMQuota), { paddingHorizontal: 2 }]}>
                       <FormattedNumber 
-                        value={RAMUsage}
+                        value={(RAMQuota-RAMUsage)}
                         minimumFractionDigits={2}
                         maximumFractionDigits={2}
                       />
