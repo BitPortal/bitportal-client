@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
   webViewContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT-NAV_BAR_HEIGHT
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT
   }
 })
 

@@ -28,22 +28,22 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
-      return messages['vt_popup_title_pwderr']
+      return messages.vt_popup_title_pwderr
     case 'assertion failure with message: user must stake before they can vote':
-      return messages['vt_popup_title_nostaker']
+      return messages.vt_popup_title_nostaker
     default:
-      return messages['vt_popup_title_failed']
+      return messages.vt_popup_title_failed
   }
 }
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale'),
     producer: state.producer,
     eosAccount: eosAccountSelector(state),
     voting: state.voting
   }),
-  (dispatch) => ({
+  dispatch => ({
     actions: bindActionCreators({
       ...producerActions,
       ...votingActions
@@ -89,11 +89,11 @@ export default class Voting extends BaseScreen {
     }
     const { locale } = this.props
     const { action, text } = await Dialogs.prompt(
-      messages[locale]['vt_popup_title_pwd'],
+      messages[locale].vt_popup_title_pwd,
       '',
       {
-        positiveText: messages[locale]['vt_popup_buttom_ent'],
-        negativeText: messages[locale]['vt_popup_buttom_can']
+        positiveText: messages[locale].vt_popup_buttom_ent,
+        negativeText: messages[locale].vt_popup_buttom_can
       }
     )
 
@@ -114,7 +114,7 @@ export default class Voting extends BaseScreen {
     const { locale } = this.props
     const eosAccountName = this.props.eosAccount.get('data').get('account_name')
     if (!eosAccountName) {
-      Dialogs.alert(messages[locale]['vt_button_name_err'], null, { negativeText: messages[locale]['vt_popup_buttom_ent'] })
+      Dialogs.alert(messages[locale].vt_button_name_err, null, { negativeText: messages[locale].vt_popup_buttom_ent })
     } else {
       this.props.actions.showSelected()
     }
@@ -166,8 +166,8 @@ export default class Voting extends BaseScreen {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale]['vt_title_name_vote']}
-            leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
+            title={messages[locale].vt_title_name_vote}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           />
           <AlertComponent message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearError} />
           <View style={[styles.stakeAmountContainer, styles.between]}>
@@ -191,7 +191,7 @@ export default class Voting extends BaseScreen {
             </View>
           </View>
           <View style={[styles.titleContainer, styles.between]}>
-            <Text style={[styles.text14, { color: Colors.textColor_181_181_181 }]}> 
+            <Text style={[styles.text14, { color: Colors.textColor_181_181_181 }]}>
               <FormattedMessage id="vt_sec_title_nameloc" />
             </Text>
             {/* <Text style={[styles.text14, { color: Colors.textColor_181_181_181 }]}> Votes </Text> */}
@@ -222,17 +222,17 @@ export default class Voting extends BaseScreen {
             selected={this.state.selected}
             isVoting={isVoting}
           />
-          { 
-            Platform.OS == 'android' && 
-            <DialogAndroid 
-              tilte={messages[locale]['vt_popup_title_pwd']}
+          {
+            Platform.OS == 'android' &&
+            <DialogAndroid
+              tilte={messages[locale].vt_popup_title_pwd}
               content=""
-              positiveText={messages[locale]['vt_popup_buttom_ent']}
-              negativeText={messages[locale]['vt_popup_buttom_can']}
-              onChange={password => this.setState({ password })} 
-              isVisible={this.state.isVisible} 
-              handleCancel={() => this.setState({ isVisible: false })} 
-              handleConfirm={this.handleConfirm} 
+              positiveText={messages[locale].vt_popup_buttom_ent}
+              negativeText={messages[locale].vt_popup_buttom_can}
+              onChange={password => this.setState({ password })}
+              isVisible={this.state.isVisible}
+              handleCancel={() => this.setState({ isVisible: false })}
+              handleConfirm={this.handleConfirm}
             />
           }
         </View>

@@ -10,16 +10,16 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT-NAV_BAR_HEIGHT
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT
   },
   navButton: {
-    minWidth: 100, 
-    height: 40, 
-    paddingTop: 6, 
+    minWidth: 100,
+    height: 40,
+    paddingTop: 6,
     marginLeft: 10
   },
   center: {
-    alignItems: 'center', 
+    alignItems: 'center',
     justifyContent: 'center'
   },
   text14: {

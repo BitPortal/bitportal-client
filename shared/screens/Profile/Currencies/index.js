@@ -16,11 +16,11 @@ import Loading from 'components/Loading'
 import storage from 'utils/storage'
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale'),
     currency: state.currency
   }),
-  (dispatch) => ({
+  dispatch => ({
     actions: bindActionCreators({
       ...currencyActions
     }, dispatch)
@@ -28,7 +28,6 @@ import storage from 'utils/storage'
 )
 
 export default class Currencies extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -46,13 +45,13 @@ export default class Currencies extends BaseScreen {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale]['cur_title_name_currency']}
-            leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
+            title={messages[locale].cur_title_name_currency}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <SettingItem
-                leftItemTitle={'CNY'}
+                leftItemTitle="CNY"
                 onPress={() => this.switchCurrency('CNY')}
                 extraStyle={{ marginTop: 10 }}
                 iconColor={Colors.bgColor_0_122_255}
@@ -60,7 +59,7 @@ export default class Currencies extends BaseScreen {
                 rightImageName={currentSymbol == 'CNY' && 'md-checkmark'}
               />
               <SettingItem
-                leftItemTitle={'USD'}
+                leftItemTitle="USD"
                 iconColor={Colors.bgColor_0_122_255}
                 rightItemTitle={currentSymbol == 'USD' ? null : ' '}
                 rightImageName={currentSymbol == 'USD' && 'md-checkmark'}
@@ -72,5 +71,4 @@ export default class Currencies extends BaseScreen {
       </IntlProvider>
     )
   }
-
 }

@@ -19,15 +19,12 @@ const styles = StyleSheet.create({
 })
 
 export default DeleteButton = ({ onPress }) => (
-  <TouchableHighlight 
+  <TouchableHighlight
     onPress={() => onPress()}
-    style={[ styles.btn, styles.center ]}
-    underlayColor={Colors.bgColor_255_71_64} 
+    style={[styles.btn, styles.center]}
+    underlayColor={Colors.bgColor_255_71_64}
   >
     <Ionicons name="ios-trash-outline" size={30} color={Colors.bgColor_FFFFFF} />
   </TouchableHighlight>
 )
-
-
-
 

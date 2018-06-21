@@ -14,7 +14,7 @@ import { eosAccountSelector } from 'selectors/eosAccount'
 import messages from './messages'
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale'),
     wallet: state.wallet,
     eosAccount: eosAccountSelector(state)
@@ -22,7 +22,6 @@ import messages from './messages'
 )
 
 export default class AccountList extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -51,7 +50,7 @@ export default class AccountList extends BaseScreen {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale]['actlist_title_name_account']}
+            title={messages[locale].actlist_title_name_account}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           />
           <View style={styles.scrollContainer}>
@@ -76,5 +75,4 @@ export default class AccountList extends BaseScreen {
       </IntlProvider>
     )
   }
-
 }

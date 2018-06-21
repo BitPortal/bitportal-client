@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   bottom: {
     ...ifIphoneX({
       paddingBottom: 34
-    },{
+    }, {
       paddingBottom: 0
     })
   },
@@ -58,11 +58,11 @@ const styles = StyleSheet.create({
     color: Colors.textColor_255_255_238
   },
   item: {
-    width: SCREEN_WIDTH-64,
+    width: SCREEN_WIDTH - 64,
     height: 30,
   },
   line: {
-    width: SCREEN_WIDTH-64,
+    width: SCREEN_WIDTH - 64,
     height: 1,
     backgroundColor: Colors.textColor_181_181_181,
     marginVertical: 15
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.borderColor_89_185_226
   },
   btn: {
-    width: SCREEN_WIDTH-64,
+    width: SCREEN_WIDTH - 64,
     height: 40,
     borderRadius: 3,
     backgroundColor: Colors.textColor_89_185_226,
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
 })
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale')
   })
 )
@@ -110,11 +110,11 @@ export default class VotingModal extends Component {
       <Modal
         animationIn="slideInUp"
         animationOut="slideOutDown"
-        style = {{  margin: 0 }}
+        style={{ margin: 0 }}
         isVisible={isVisible}
         backdropOpacity={0.9}
       >
-       <IntlProvider messages={messages[locale]}>
+        <IntlProvider messages={messages[locale]}>
           <View style={styles.container}>
             <TouchableOpacity onPress={() => dismissModal()} style={{ flex: 1 }} />
             <View style={[styles.header, styles.between]}>
@@ -122,7 +122,7 @@ export default class VotingModal extends Component {
                 <Ionicons name="ios-close" size={28} color={Colors.bgColor_FFFFFF} />
               </TouchableOpacity>
               <Text style={styles.text18}> <FormattedMessage id="vt_btmsec_name_selected" /> </Text>
-              <Text style={styles.text18}>{' '}</Text>
+              <Text style={styles.text18} />
             </View>
             <View style={[styles.header, styles.bottom, { backgroundColor: Colors.minorThemeColor, minHeight: 300 }]}>
               <ScrollView showsVerticalScrollIndicator={false}>

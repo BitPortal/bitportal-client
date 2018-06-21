@@ -12,13 +12,12 @@ import { FormattedMessage, IntlProvider } from 'react-intl'
 import messages from './messages'
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale')
   })
 )
 
 export default class Stake extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -43,7 +42,7 @@ export default class Stake extends BaseScreen {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale]['vt_title_name_vote']}
+            title={messages[locale].vt_title_name_vote}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           />
           <ScrollView showsVerticalScrollIndicator={false}>

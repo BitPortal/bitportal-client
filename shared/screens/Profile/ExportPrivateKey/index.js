@@ -11,13 +11,12 @@ import { FormattedMessage, IntlProvider } from 'react-intl'
 import messages from './messages'
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale')
   })
 )
 
 export default class ExportPrivateKey extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -40,14 +39,14 @@ export default class ExportPrivateKey extends BaseScreen {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale]['expvk_title_name_expvk']}
-            leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
+            title={messages[locale].expvk_title_name_expvk}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           />
-            <View style={styles.scrollContainer}>
-              <ScrollView
+          <View style={styles.scrollContainer}>
+            <ScrollView
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }}
-              >
+            >
               <View style={styles.content}>
 
                 <Text style={[styles.text16, { marginLeft: -1 }]}>
@@ -69,7 +68,7 @@ export default class ExportPrivateKey extends BaseScreen {
                       style={styles.input}
                       underlineColorAndroid="transparent"
                       selectionColor={Colors.textColor_181_181_181}
-                      placeholder={'owner private key'}
+                      placeholder="owner private key"
                       placeholderTextColor={Colors.textColor_181_181_181}
                       value={item}
                     />
@@ -88,7 +87,7 @@ export default class ExportPrivateKey extends BaseScreen {
                       style={styles.input}
                       underlineColorAndroid="transparent"
                       selectionColor={Colors.textColor_181_181_181}
-                      placeholder={'active private key'}
+                      placeholder="active private key"
                       placeholderTextColor={Colors.textColor_181_181_181}
                       value={item}
                     />
@@ -113,5 +112,4 @@ export default class ExportPrivateKey extends BaseScreen {
       </IntlProvider>
     )
   }
-
 }

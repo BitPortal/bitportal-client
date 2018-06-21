@@ -25,21 +25,21 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
-      return messages['actexport_popup_ivps']
+      return messages.actexport_popup_ivps
     default:
-      return messages['actexport_popup_faex']
+      return messages.actexport_popup_faex
   }
 }
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale'),
     exporting: state.keystore.get('exporting'),
     error: state.keystore.get('error'),
     loggingOut: state.wallet.get('loggingOut'),
     logoutError: state.wallet.get('logoutError')
   }),
-  (dispatch) => ({
+  dispatch => ({
     actions: bindActionCreators({
       ...keystoreActions,
       logoutRequested,
@@ -49,7 +49,6 @@ export const errorMessages = (error, messages) => {
 )
 
 export default class AccountList extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -94,11 +93,11 @@ export default class AccountList extends BaseScreen {
       this.setState({ isVisible: true, type: 'exportAccount' })
     } else {
       const { action, text } = await Dialogs.prompt(
-        messagesInfo['actexport_popup_name'],
+        messagesInfo.actexport_popup_name,
         '',
         {
-          positiveText: messagesInfo['actexport_popup_ent'],
-          negativeText: messagesInfo['actexport_popup_can']
+          positiveText: messagesInfo.actexport_popup_ent,
+          negativeText: messagesInfo.actexport_popup_can
         }
       )
       if (action == Dialogs.actionPositive) {
@@ -113,12 +112,12 @@ export default class AccountList extends BaseScreen {
       this.setState({ isVisible: true, type: 'logout' })
     } else {
       const { action, text } = await Dialogs.prompt(
-        messagesInfo['actexport_popup_name'],
-        messagesInfo['logout_popup_warning'],
+        messagesInfo.actexport_popup_name,
+        messagesInfo.logout_popup_warning,
         {
-          positiveText: messagesInfo['actexport_popup_ent'],
+          positiveText: messagesInfo.actexport_popup_ent,
           positiveTextStyle: 'destructive',
-          negativeText: messagesInfo['actexport_popup_can']
+          negativeText: messagesInfo.actexport_popup_can
         }
       )
       if (action == Dialogs.actionPositive) {
@@ -143,7 +142,7 @@ export default class AccountList extends BaseScreen {
         <View style={styles.container}>
           <NavigationBar
             title={name}
-            leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView
@@ -163,21 +162,21 @@ export default class AccountList extends BaseScreen {
                 extraStyle={{ marginTop: 10 }}
                 leftTitleStyle={{ color: Colors.textColor_255_76_118 }}
               />
-              { 
-                Platform.OS == 'android' && 
-                <DialogAndroid 
-                  tilte={messages[locale]['actexport_popup_name']}
-                  content={type == 'logout' ? messages[locale]['logout_popup_warning'] : ''}
-                  positiveText={messages[locale]['actexport_popup_ent']}
-                  negativeText={messages[locale]['actexport_popup_can']} 
-                  onChange={password => this.setState({ password })} 
-                  isVisible={this.state.isVisible} 
-                  handleCancel={() => this.setState({ isVisible: false })} 
-                  handleConfirm={this.handleConfirm} 
+              {
+                Platform.OS == 'android' &&
+                <DialogAndroid
+                  tilte={messages[locale].actexport_popup_name}
+                  content={type == 'logout' ? messages[locale].logout_popup_warning : ''}
+                  positiveText={messages[locale].actexport_popup_ent}
+                  negativeText={messages[locale].actexport_popup_can}
+                  onChange={password => this.setState({ password })}
+                  isVisible={this.state.isVisible}
+                  handleCancel={() => this.setState({ isVisible: false })}
+                  handleConfirm={this.handleConfirm}
                 />
               }
-              <Loading isVisible={exporting} text={messages[locale]['logout_popup_exporting']} />
-              <Loading isVisible={loggingOut} text={messages[locale]['logout_popup_deleting']} />
+              <Loading isVisible={exporting} text={messages[locale].logout_popup_exporting} />
+              <Loading isVisible={loggingOut} text={messages[locale].logout_popup_deleting} />
               <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearError} delay={500} />
               <Alert message={errorMessages(logoutError, messages[locale])} dismiss={this.props.actions.clearLogoutError} delay={500} />
             </ScrollView>

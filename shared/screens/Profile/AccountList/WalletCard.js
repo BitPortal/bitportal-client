@@ -9,7 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const styles = StyleSheet.create({
   linearContainer: {
-    width: SCREEN_WIDTH-64,
+    width: SCREEN_WIDTH - 64,
     height: 128,
     borderRadius: 10
   },
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   info: {
-    width: SCREEN_WIDTH-64,
+    width: SCREEN_WIDTH - 64,
     height: 64,
     paddingHorizontal: 20
   },
@@ -44,13 +44,12 @@ const styles = StyleSheet.create({
 })
 
 export default class WalletCard extends Component {
-
   render() {
     const { accountName, assetName, colors, onPress } = this.props
 
     return (
       <LinearGradientContainer type="right" colors={colors} style={[styles.linearContainer, { marginHorizontal: 32, marginTop: 20 }]}>
-        <TouchableHighlight style={styles.linearContainer} underlayColor={'transparent'} onPress={() => onPress()} >
+        <TouchableHighlight style={styles.linearContainer} underlayColor="transparent" onPress={() => onPress()} >
           <View style={[styles.linearContainer]}>
             <View style={[styles.between, styles.info, styles.topRadius]}>
               <Text style={styles.text16}>{assetName}</Text>
@@ -64,5 +63,4 @@ export default class WalletCard extends Component {
       </LinearGradientContainer>
     )
   }
-
 }

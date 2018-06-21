@@ -14,13 +14,12 @@ import { FormattedMessage, IntlProvider } from 'react-intl'
 import messages from './messages'
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale')
   })
 )
 
 export default class ExportKeystore extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -31,14 +30,14 @@ export default class ExportKeystore extends BaseScreen {
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-          <NavigationBar 
-            title={messages[locale]['expks_title_name_expks']}
-            leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
+          <NavigationBar
+            title={messages[locale].expks_title_name_expks}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           />
           <ScrollableTabView
             initialPage={0}
             renderTabBar={() => (
-              <DefaultTabBar  
+              <DefaultTabBar
                 textStyle={[styles.text16, { color: Colors.textColor_255_255_238 }]}
                 tabStyle={{ marginTop: 6 }}
                 backgroundColor={Colors.minorThemeColor}
@@ -48,12 +47,11 @@ export default class ExportKeystore extends BaseScreen {
               />
             )}
           >
-            <Keystore tabLabel={`${messages[locale]["expks_tab_title_keystore"]}`} />
-            <QRCode tabLabel={`${messages[locale]["expks_tab_title_QRC"]}`} />
-          </ScrollableTabView>  
+            <Keystore tabLabel={`${messages[locale].expks_tab_title_keystore}`} />
+            <QRCode tabLabel={`${messages[locale].expks_tab_title_QRC}`} />
+          </ScrollableTabView>
         </View>
       </IntlProvider>
     )
   }
-
 }

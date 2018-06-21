@@ -17,10 +17,10 @@ import { FormattedMessage, IntlProvider } from 'react-intl'
 import messages from './messages'
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale'),
   }),
-  (dispatch) => ({
+  dispatch => ({
     actions: bindActionCreators({
       ...intlActions
     }, dispatch)
@@ -28,17 +28,16 @@ import messages from './messages'
 )
 
 export default class Languages extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
   }
 
   changeTabLabels = (tabLabels) => {
-    this.props.navigator.setTabButton({ tabIndex: 0, label: tabLabels['general_tab_name_ast'] })
-    this.props.navigator.setTabButton({ tabIndex: 1, label: tabLabels['general_tab_name_mkt'] })
-    this.props.navigator.setTabButton({ tabIndex: 2, label: tabLabels['general_tab_name_dscv'] })
-    this.props.navigator.setTabButton({ tabIndex: 3, label: tabLabels['general_tab_name_prf'] })
+    this.props.navigator.setTabButton({ tabIndex: 0, label: tabLabels.general_tab_name_ast })
+    this.props.navigator.setTabButton({ tabIndex: 1, label: tabLabels.general_tab_name_mkt })
+    this.props.navigator.setTabButton({ tabIndex: 2, label: tabLabels.general_tab_name_dscv })
+    this.props.navigator.setTabButton({ tabIndex: 3, label: tabLabels.general_tab_name_prf })
   }
 
   switchLanguage = (language) => {
@@ -53,13 +52,13 @@ export default class Languages extends BaseScreen {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale]['lan_title_name_language']}
-            leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
+            title={messages[locale].lan_title_name_language}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <SettingItem
-                leftItemTitle={'English'}
+                leftItemTitle="English"
                 onPress={() => this.switchLanguage('en')}
                 extraStyle={{ marginTop: 10 }}
                 iconColor={Colors.bgColor_0_122_255}
@@ -67,7 +66,7 @@ export default class Languages extends BaseScreen {
                 rightImageName={locale == 'en' && 'md-checkmark'}
               />
               <SettingItem
-                leftItemTitle={'简体中文'}
+                leftItemTitle="简体中文"
                 iconColor={Colors.bgColor_0_122_255}
                 rightItemTitle={locale == 'zh' ? null : ' '}
                 rightImageName={locale == 'zh' && 'md-checkmark'}
@@ -79,5 +78,4 @@ export default class Languages extends BaseScreen {
       </IntlProvider>
     )
   }
-
 }

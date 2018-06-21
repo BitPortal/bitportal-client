@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT-NAV_BAR_HEIGHT-50
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - 50
   },
   between: {
     alignItems: 'center',
@@ -37,13 +37,13 @@ const styles = StyleSheet.create({
     color: Colors.textColor_89_185_226
   },
   btn: {
-    width: SCREEN_WIDTH-64,
+    width: SCREEN_WIDTH - 64,
     height: 40,
     borderRadius: 3
   },
   inputContainer: {
-    width: SCREEN_WIDTH-64,
-    height: SCREEN_WIDTH/3-21,
+    width: SCREEN_WIDTH - 64,
+    height: SCREEN_WIDTH / 3 - 21,
     flexDirection: 'row',
     borderRadius: 2,
     borderWidth: 1,
@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.minorThemeColor
   },
   input: {
-    width: SCREEN_WIDTH-64,
-    height: SCREEN_WIDTH/3-21,
+    width: SCREEN_WIDTH - 64,
+    height: SCREEN_WIDTH / 3 - 21,
     padding: 10,
     color: Colors.textColor_255_255_238,
     fontSize: FontScale(14)

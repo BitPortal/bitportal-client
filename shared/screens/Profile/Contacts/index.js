@@ -12,18 +12,17 @@ import { FormattedMessage, IntlProvider } from 'react-intl'
 import messages from './messages'
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale')
   })
 )
 
 export default class Contacts extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
   }
-  
+
   state = {
     contacts: [
       { accountName: 'EOS-1', memo: 'memo......' },
@@ -36,7 +35,7 @@ export default class Contacts extends BaseScreen {
 
   constructor(props, context) {
     super(props, context)
-    this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+    this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
   }
 
   addContacts = () => {
@@ -73,13 +72,13 @@ export default class Contacts extends BaseScreen {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale]['ctct_title_name_contacts']}
+            title={messages[locale].ctct_title_name_contacts}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
-            rightButton={ <CommonRightButton iconName="md-add" onPress={() => this.addContacts()} /> }
+            rightButton={<CommonRightButton iconName="md-add" onPress={() => this.addContacts()} />}
           />
           <View style={styles.scrollContainer}>
             <SwipeListView
-              contentContainerStyle={{ paddingTop: 10  }}
+              contentContainerStyle={{ paddingTop: 10 }}
               enableEmptySections={true}
               showsVerticalScrollIndicator={false}
               dataSource={this.ds.cloneWithRows(this.state.contacts)}

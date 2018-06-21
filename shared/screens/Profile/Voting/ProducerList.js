@@ -29,7 +29,7 @@ class ListItem extends Component {
       >
         <View style={[styles.listItem, styles.between, { paddingRight: 32 }]}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={[styles.text14, { width: 35, textAlign: 'right', paddingRight: 7, color: Colors.textColor_181_181_181 }]}>{1+rank}</Text>
+            <Text style={[styles.text14, { width: 35, textAlign: 'right', paddingRight: 7, color: Colors.textColor_181_181_181 }]}>{1 + rank}</Text>
             <View>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={styles.text18}>{item.get('owner')}</Text>
@@ -49,9 +49,9 @@ class ListItem extends Component {
           <View style={{ alignItems: 'center' }}>
             {
               selected ?
-              <Ionicons name="md-checkmark-circle" size={26} color={Colors.textColor_89_185_226} />
+                <Ionicons name="md-checkmark-circle" size={26} color={Colors.textColor_89_185_226} />
               :
-              <View style={styles.radius} />
+                <View style={styles.radius} />
             }
           </View>
         </View>
@@ -66,8 +66,8 @@ export default class ProducerList extends PureComponent {
       <VirtualizedList
         data={this.props.data}
         style={styles.list}
-        getItem={(items, index) => items.get ? items.get(index) : items[index]}
-        getItemCount={(items) => (items.count() || 0)}
+        getItem={(items, index) => (items.get ? items.get(index) : items[index])}
+        getItemCount={items => (items.count() || 0)}
         keyExtractor={(item, index) => String(index) + item.get('owner')}
         showsVerticalScrollIndicator={false}
         onRefresh={this.props.onRefresh}

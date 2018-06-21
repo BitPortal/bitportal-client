@@ -5,7 +5,6 @@ import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import styles from './styles'
 
 export default class TermsOfService extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -26,5 +25,4 @@ export default class TermsOfService extends BaseScreen {
     )
   }
 }
-
 

@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT-NAV_BAR_HEIGHT
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT
   },
   between: {
     alignItems: 'center',
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     minHeight: 100,
     paddingVertical: 25,
     paddingHorizontal: 32,
-    backgroundColor: Colors.minorThemeColor,  
+    backgroundColor: Colors.minorThemeColor,
     alignItems: 'center'
   },
   image: {

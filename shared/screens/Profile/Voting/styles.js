@@ -10,9 +10,9 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT-NAV_BAR_HEIGHT-TAB_BAR_HEIGHT-74
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - TAB_BAR_HEIGHT - 74
   },
-  stakeAmountContainer:{
+  stakeAmountContainer: {
     width: SCREEN_WIDTH,
     height: 44,
     backgroundColor: Colors.minorThemeColor
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     ...ifIphoneX({
       paddingBottom: 34
-    },{
+    }, {
       paddingBottom: 0
     })
   },
