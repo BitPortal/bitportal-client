@@ -12,10 +12,10 @@ import producer from './producer'
 import versionInfo from './versionInfo'
 import currency from './currency'
 import voting from './voting'
-import stake from './stake'
 import transfer from './transfer'
 import transferHistory from './transferHistory'
-
+import bandwidth from './bandwidth'
+import ram from './ram'
 
 export default combineReducers({
   form,
@@ -31,7 +31,8 @@ export default combineReducers({
   versionInfo,
   currency,
   voting,
-  stake,
+  bandwidth,
+  ram,
   transfer,
   transferHistory
 })

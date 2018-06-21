@@ -11,7 +11,7 @@ import { resetKey } from 'actions/keystore'
 import { syncEOSAccount, createEOSAccountSucceeded } from 'actions/eosAccount'
 import { getErrorMessage } from 'utils'
 import secureStorage from 'utils/secureStorage'
-import { privateToPublic, initAccount, randomKey } from 'eos'
+import { privateToPublic, initAccount, randomKey, initEOS } from 'eos'
 import { getMasterSeed, encrypt, decrypt, getEOSKeys } from 'key'
 import wif from 'wif'
 
@@ -182,6 +182,8 @@ function* syncWalletRequested() {
   try {
     // const items = yield call(secureStorage.getAllItems)
     // console.log(items)
+    const eos = yield call(initEOS, {})
+    console.log(eos)
 
     const allItems = yield call(secureStorage.getAllItems)
 

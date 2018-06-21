@@ -26,13 +26,13 @@ import messages from './messages'
 import NavigationBar, { ListButton, CommonRightButton, CommonTitle } from 'components/NavigationBar'
 import SettingItem from 'components/SettingItem'
 import Loading from 'components/Loading'
-import { 
-  Text, 
-  View, 
+import {
+  Text,
+  View,
   Image,
-  ScrollView,  
-  LayoutAnimation, 
-  ActivityIndicator, 
+  ScrollView,
+  LayoutAnimation,
+  ActivityIndicator,
   InteractionManager,
   TouchableHighlight
 } from 'react-native'
@@ -135,7 +135,7 @@ export default class Assets extends BaseScreen {
       screen: "BitPortal.Resources"
     })
   }
- 
+
   // 切换EOS账户
   switchWallet(info) {
     this.props.actions.switchWalletRequested(info)
@@ -206,6 +206,7 @@ export default class Assets extends BaseScreen {
     const walletCount = hdWalletList.size + classicWalletList.size
     const balanceList = balance.get('data').get('eosAccountBalance')
     console.log('###', activeEOSAccount.toJS())
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -228,15 +229,15 @@ export default class Assets extends BaseScreen {
             !!walletCount &&
             <View style={styles.scrollContainer}>
               <ScrollView showsVerticalScrollIndicator={false}>
-                <TotalAssetsCard 
-                  totalAssets={getTotalAssets(balanceList, eosPrice)} 
-                  accountName={activeEOSAccount.get('account_name')} 
+                <TotalAssetsCard
+                  totalAssets={getTotalAssets(balanceList, eosPrice)}
+                  accountName={activeEOSAccount.get('account_name')}
                   CPUInfo={activeEOSAccount.get('cpu_limit')}
                   NETInfo={activeEOSAccount.get('net_limit')}
                   RAMQuota={activeEOSAccount.get('ram_quota')}
                   RAMUsage={activeEOSAccount.get('ram_usage')}
                   checkResourcesDetails={this.checkResourcesDetails}
-                  onPress={() => this.operateAssetQRCode(true)} 
+                  onPress={() => this.operateAssetQRCode(true)}
                 />
                 {!activeEOSAccount.get('account_name') && <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_create_eos_account" />} onPress={() => this.createEOSAccount()} extraStyle={{ marginTop: 10, marginBottom: 10 }} />}
                 {!!activeEOSAccount.get('account_name') && <EnableAssets Title={<FormattedMessage id="asset_title_name_ast" />} enableAssets={() => this.enableAssets()} />}
