@@ -1,12 +1,12 @@
 /* @jsx */
-import React, { Component } from 'react'
+
+import React from 'react'
 import { connect } from 'react-redux'
 import { View, ScrollView } from 'react-native'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import BaseScreen from 'components/BaseScreen'
 import CreateWalletAndEOSAccountForm from 'components/Form/CreateWalletAndEOSAccountForm'
 import styles from './styles'
-import messages from './messages'
 
 @connect(
   state => ({
@@ -34,7 +34,7 @@ export default class AccountCreation extends BaseScreen {
 
   onSubmit() {
     this.props.navigator.push({
-      screen: "BitPortal.EOSAccountCreation"
+      screen: 'BitPortal.EOSAccountCreation'
     })
   }
 

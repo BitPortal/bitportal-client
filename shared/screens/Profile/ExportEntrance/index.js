@@ -1,24 +1,21 @@
 /* @tsx */
-import React, { Component } from 'react'
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
+import React from 'react'
+import { View, ScrollView } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
-import styles from './styles'
-import Images from 'resources/images'
-import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
-import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
+import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import messages from './messages'
+import styles from './styles'
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale')
   })
 )
 
 export default class ExportEntrance extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -37,14 +34,14 @@ export default class ExportEntrance extends BaseScreen {
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-          <NavigationBar 
-            title={messages[locale]['export_title_name_export']}
-            leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
+          <NavigationBar
+            title={messages[locale].export_title_name_export}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           />
           <View style={styles.scrollContainer}>
-            <ScrollView 
+            <ScrollView
               showsVerticalScrollIndicator={false}
-              contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }} 
+              contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }}
             >
               <SettingItem leftItemTitle={<FormattedMessage id="exp_sec_title_expks" />} onPress={() => this.exportKeystore()} extraStyle={{ marginTop: 10 }} />
               <SettingItem leftItemTitle={<FormattedMessage id="exp_sec_title_expvk" />} onPress={() => this.exportPrivateKey()} />
@@ -54,5 +51,4 @@ export default class ExportEntrance extends BaseScreen {
       </IntlProvider>
     )
   }
-
 }

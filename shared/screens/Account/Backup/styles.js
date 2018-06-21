@@ -1,11 +1,10 @@
-import { StyleSheet, Platform } from 'react-native'
+import { StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
-import { 
-  FontScale, 
-  SCREEN_WIDTH, 
-  SCREEN_HEIGHT, 
-  NAV_BAR_HEIGHT, 
-  TAB_BAR_HEIGHT
+import {
+  FontScale,
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  NAV_BAR_HEIGHT
 } from 'utils/dimens'
 
 const styles = StyleSheet.create({
@@ -20,7 +19,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT-NAV_BAR_HEIGHT
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT
   },
   content: {
     width: SCREEN_WIDTH,
@@ -38,21 +37,21 @@ const styles = StyleSheet.create({
     color: Colors.textColor_255_255_238
   },
   btn: {
-    width: SCREEN_WIDTH-64,
+    width: SCREEN_WIDTH - 64,
     height: 40,
     borderRadius: 3
   },
   inputContainer: {
-    width: SCREEN_WIDTH-64,
-    height: SCREEN_WIDTH/2-32,
+    width: SCREEN_WIDTH - 64,
+    height: (SCREEN_WIDTH / 2) - 32,
     flexDirection: 'row',
     borderRadius: 2,
     borderWidth: 1,
     borderColor: Colors.textColor_181_181_181
   },
   input: {
-    width: SCREEN_WIDTH-64,
-    height: SCREEN_WIDTH/2-32,
+    width: SCREEN_WIDTH - 64,
+    height: (SCREEN_WIDTH / 2) - 32,
     padding: 10,
     color: Colors.textColor_255_255_238,
     fontSize: FontScale(14)

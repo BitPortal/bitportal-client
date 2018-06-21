@@ -1,20 +1,18 @@
 /* @tsx */
-import React, { Component } from 'react'
+
+import React from 'react'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
-import styles from './styles'
-import Images from 'resources/images'
-import Colors from 'resources/colors'
-import SettingItem from 'components/SettingItem'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import WalletCard from './WalletCard'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { eosAccountSelector } from 'selectors/eosAccount'
+import WalletCard from './WalletCard'
 import messages from './messages'
+import styles from './styles'
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale'),
     wallet: state.wallet,
     eosAccount: eosAccountSelector(state)
@@ -22,7 +20,6 @@ import messages from './messages'
 )
 
 export default class AccountList extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -42,8 +39,7 @@ export default class AccountList extends BaseScreen {
   }
 
   render() {
-    const { locale, eosAccount, wallet } = this.props
-    const activeEOSAccount = eosAccount.get('data')
+    const { locale, wallet } = this.props
     const hdWalletList = wallet.get('hdWalletList')
     const classicWalletList = wallet.get('classicWalletList')
 
@@ -51,7 +47,7 @@ export default class AccountList extends BaseScreen {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale]['actlist_title_name_account']}
+            title={messages[locale].actlist_title_name_account}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           />
           <View style={styles.scrollContainer}>
@@ -76,5 +72,4 @@ export default class AccountList extends BaseScreen {
       </IntlProvider>
     )
   }
-
 }

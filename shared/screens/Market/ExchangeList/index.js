@@ -1,6 +1,5 @@
 
-import React, { Component } from 'react'
-import styles from './styles'
+import React from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import {
   Text,
@@ -11,6 +10,7 @@ import {
 } from 'react-native'
 import Colors from 'resources/colors'
 import { EXCHANGE_NAMES } from 'constants/market'
+import styles from './styles'
 
 const ListItem = ({ exchange, onPress, active }) => (
   <TouchableHighlight
@@ -25,22 +25,22 @@ const ListItem = ({ exchange, onPress, active }) => (
   </TouchableHighlight>
 )
 
-export default ExchangeList = ({ dismissModal, activeExchange, exchangeList, changeExchange }) => (
+const ExchangeList = ({ dismissModal, activeExchange, exchangeList, changeExchange }) => (
   <View style={styles.container}>
     <TouchableOpacity style={[styles.container, { backgroundColor: 'rgba(0,0,0,0.1)' }]} onPress={() => dismissModal()} />
     <View style={styles.bgContainer}>
-      <ScrollView 
-        style={{ maxHeight: 400, backgroundColor: Colors.bgColor_48_49_59 }} 
+      <ScrollView
+        style={{ maxHeight: 400, backgroundColor: Colors.bgColor_48_49_59 }}
         showsVerticalScrollIndicator={false}
       >
         {
           exchangeList.map(
-            (exchange, index) => (
-              <ListItem 
-                key={index} 
-                exchange={exchange} 
-                active={activeExchange === exchange} 
-                onPress={() => changeExchange(exchange)} 
+            exchange => (
+              <ListItem
+                key={exchange}
+                exchange={exchange}
+                active={activeExchange === exchange}
+                onPress={() => changeExchange(exchange)}
               />
             )
           )
@@ -49,3 +49,5 @@ export default ExchangeList = ({ dismissModal, activeExchange, exchangeList, cha
     </View>
   </View>
 )
+
+export default ExchangeList

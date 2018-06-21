@@ -1,41 +1,40 @@
 import { Navigation } from 'react-native-navigation'
 import Images from 'resources/images'
 import Colors from 'resources/colors'
-import { FormattedMessage } from 'react-intl'
 
 export const startSingleApp = () => {
   Navigation.startSingleScreenApp({
     screen: {
-    screen: 'BitPortal.Welcome', // unique ID registered with Navigation.registerScreen
-    navigatorStyle: { navBarHidden: true } // override the navigator style for the screen, see "Styling the navigator" below (optional)
+      screen: 'BitPortal.Welcome', // unique ID registered with Navigation.registerScreen
+      navigatorStyle: { navBarHidden: true } // override the navigator style for the screen, see "Styling the navigator" below (optional)
     },
     animationType: 'fade' // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
-  });
+  })
 }
 
 export const startTabBasedApp = (tabLabels) => {
   Navigation.startTabBasedApp({
     tabs: [
       {
-        label: `${tabLabels['general_tab_name_ast']}`, // tab label as appears under the icon in iOS (optional)
+        label: `${tabLabels.general_tab_name_ast}`, // tab label as appears under the icon in iOS (optional)
         screen: 'BitPortal.Assets', // unique ID registered with Navigation.registerScreen
         icon: Images.asset, // local image asset for the tab icon unselected state (optional on iOS)
         selectedIcon: Images.asset_press // local image asset for the tab icon selected state (optional, iOS only. On Android, Use `tabBarSelectedButtonColor` instead)
       },
       {
-        label: `${tabLabels['general_tab_name_mkt']}`,
+        label: `${tabLabels.general_tab_name_mkt}`,
         screen: 'BitPortal.Market',
         icon: Images.market,
         selectedIcon: Images.market_press
       },
       {
-        label: `${tabLabels['general_tab_name_dscv']}`,
+        label: `${tabLabels.general_tab_name_dscv}`,
         screen: 'BitPortal.Discovery',
         icon: Images.discovery,
         selectedIcon: Images.discovery_press
       },
       {
-        label: `${tabLabels['general_tab_name_prf']}`,
+        label: `${tabLabels.general_tab_name_prf}`,
         screen: 'BitPortal.Profile',
         icon: Images.profile,
         selectedIcon: Images.profile_press
@@ -61,5 +60,5 @@ export const startTabBasedApp = (tabLabels) => {
       initialTabIndex: 0
     },
     animationType: 'fade' // optional, add transition animation to root change: 'none', 'slide-down', 'fade'
-  });
+  })
 }

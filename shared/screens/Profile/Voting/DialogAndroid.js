@@ -1,10 +1,8 @@
 /* @tsx */
-import React, { Component } from 'react'
-import { Text, View } from 'react-native'
-import Colors from 'resources/colors'
-import RNDialog from "react-native-dialog"
+import React from 'react'
+import RNDialog from 'react-native-dialog'
 
-export default DialogAndroid = ({ isVisible, onChange, tilte, content, positiveText, negativeText, handleCancel, handleConfirm }) => (
+const DialogAndroid = ({ isVisible, onChange, tilte, content, positiveText, negativeText, handleCancel, handleConfirm }) => (
   <RNDialog.Container visible={isVisible}>
     <RNDialog.Title>{tilte}</RNDialog.Title>
     <RNDialog.Description>
@@ -15,3 +13,4 @@ export default DialogAndroid = ({ isVisible, onChange, tilte, content, positiveT
     <RNDialog.Button label={positiveText} onPress={handleConfirm} />
   </RNDialog.Container>
 )
+export default DialogAndroid

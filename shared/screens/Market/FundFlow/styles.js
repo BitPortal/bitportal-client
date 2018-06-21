@@ -1,5 +1,5 @@
-import { StyleSheet, Platform } from 'react-native'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, WidthPercent } from 'utils/dimens'
+import { StyleSheet } from 'react-native'
+import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
 import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     minHeight: 60,
     paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingHorizontal: 15
   },
   spaceBetween: {
     alignItems: 'center',

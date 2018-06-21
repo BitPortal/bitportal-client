@@ -1,13 +1,9 @@
-
-import React, { Component } from 'react'
-import styles from './styles'
+import React from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import {
-  Text,
-  View
-} from 'react-native'
+import { Text, View } from 'react-native'
 import Colors from 'resources/colors'
 import { SCREEN_WIDTH } from 'utils/dimens'
+import styles from './styles'
 
 export const Logo = () => (
   <View style={styles.cardContainer}>
@@ -19,7 +15,7 @@ export const Logo = () => (
       </View>
     </View>
     <View style={styles.spaceBetween}>
-      <Text style={[styles.text18,{ marginLeft: 3 } ]}>Bytom(BTM)</Text>
+      <Text style={[styles.text18, { marginLeft: 3 }]}>Bytom(BTM)</Text>
       <Text style={styles.text18}> 11,949.00 USD </Text>
     </View>
     <View style={[styles.spaceBetween, { marginTop: 4 }]}>
@@ -58,7 +54,7 @@ export const ListedExchange = ({ dataArr }) => (
   <View style={[styles.cardContainer, { backgroundColor: Colors.bgColor_41_41_44, marginTop: 10 }]}>
     <View style={[styles.spaceBetween, { width: SCREEN_WIDTH - 30, height: 30, borderBottomColor: Colors.borderColor_48_48_46, borderBottomWidth: 2 }]}>
       <View style={{ flex: 1 }}>
-       <Text style={styles.text12}> exchange </Text>
+        <Text style={styles.text12}>exchange</Text>
       </View>
       <View style={{ flex: 1 }}>
         <Text style={[styles.text12, { textAlign: 'right' }]}>Fund Flow (USD)</Text>
@@ -67,16 +63,13 @@ export const ListedExchange = ({ dataArr }) => (
         <Text style={[styles.text12, { textAlign: 'right' }]}>Occupy</Text>
       </View>
     </View>
-
-    {dataArr.map((item, index) => (
-      <View  key={index} style={[styles.spaceBetween, { marginTop: 10 }]}>
+    {dataArr.map(item => (
+      <View key={item.fundFlow} style={[styles.spaceBetween, { marginTop: 10 }]}>
         <View style={{ flex: 1 }}>
-          <Text style={styles.text14}> {item.market} </Text>
+          <Text style={styles.text14}>{item.market}</Text>
         </View>
         <View style={{ flex: 1 }}>
-          <Text style={[styles.text14,
-            { color: item.fundFlow.split('+').length > 1 ? Colors.textColor_80_201_109 : Colors.textColor_255_76_118, textAlign: 'right' }
-          ]}>
+          <Text style={[styles.text14, { color: item.fundFlow.split('+').length > 1 ? Colors.textColor_80_201_109 : Colors.textColor_255_76_118, textAlign: 'right' }]}>
             {item.fundFlow}
           </Text>
         </View>
@@ -85,6 +78,5 @@ export const ListedExchange = ({ dataArr }) => (
         </View>
       </View>
     ))}
-
   </View>
 )

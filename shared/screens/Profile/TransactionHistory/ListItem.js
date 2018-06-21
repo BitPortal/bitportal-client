@@ -1,15 +1,12 @@
 
-import React, { Component } from 'react'
-import { Text, View, ScrollView, TouchableHighlight, StyleSheet } from 'react-native'
+import React from 'react'
+import { Text, View, TouchableHighlight, StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { FormattedNumber } from 'react-intl'
-import { 
-  FontScale, 
-  SCREEN_WIDTH, 
-  SCREEN_HEIGHT,
-  NAV_BAR_HEIGHT, 
-  TAB_BAR_HEIGHT 
+import {
+  FontScale,
+  SCREEN_WIDTH
 } from 'utils/dimens'
 
 const styles = StyleSheet.create({
@@ -43,15 +40,15 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ListItem = ({ item, onPress }) => {
+const ListItem = ({ item, onPress }) => {
   const isReceiver = item.amount > 0
-  const iconName = isReceiver ? "ios-arrow-round-down" : "ios-arrow-round-up"
+  const iconName = isReceiver ? 'ios-arrow-round-down' : 'ios-arrow-round-up'
   const diffColor = isReceiver ? Colors.textColor_89_185_226 : Colors.textColor_255_98_92
   return (
-    <TouchableHighlight  
+    <TouchableHighlight
       style={styles.container}
       underlayColor={Colors.hoverColor}
-      onPress={() => onPress()} 
+      onPress={() => onPress()}
     >
       <View style={[styles.container, styles.between, { paddingHorizontal: 32 }]}>
         <View style={{ alignItems: 'center', flexDirection: 'row' }}>
@@ -61,20 +58,17 @@ export default ListItem = ({ item, onPress }) => {
             <Text style={styles.text12}> 1 day ago </Text>
           </View>
         </View>
-        <Text style={[styles.text20, { color: diffColor }]}> 
-          { isReceiver ? '+' : '' }
-          <FormattedNumber 
+        <Text style={[styles.text20, { color: diffColor }]}>
+          {isReceiver ? '+' : ''}
+          <FormattedNumber
             value={item.amount}
             maximumFractionDigits={4}
             minimumFractionDigits={4}
-          /> 
+          />
         </Text>
       </View>
     </TouchableHighlight>
   )
 }
 
-
-
-
-
+export default ListItem

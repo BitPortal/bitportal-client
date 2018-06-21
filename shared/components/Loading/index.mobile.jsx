@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
 })
 
 export default class Loading extends Component {
-
   render () {
     const { disabledBorder, extraStyle, isVisible, backdropOpacity, text } = this.props
     const borderStyle = disabledBorder ? {} : styles.border
@@ -46,5 +45,4 @@ export default class Loading extends Component {
       </Modal>
     )
   }
-
 }

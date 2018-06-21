@@ -2,20 +2,20 @@ import React from 'react'
 import { connect } from 'react-redux'
 import BaseScreen from 'components/BaseScreen'
 import { View } from 'react-native'
+import NavigationBar, { CommonTitle } from 'components/NavigationBar'
+import { bindActionCreators } from 'redux'
+import * as newsActions from 'actions/news'
+import { IntlProvider } from 'react-intl'
 import NewsList from './NewsList'
 import NewsBanner from './NewsBanner'
 import NewsBannerCard from './NewsBannerCard'
-import NavigationBar, { CommonTitle } from 'components/NavigationBar'
-import styles from './styles'
-import { bindActionCreators } from 'redux'
-import * as newsActions from 'actions/news'
-import { IntlProvider, FormattedMessage } from 'react-intl'
 import messages from './messages'
+import styles from './styles'
 
 const PAGE_LENGTH = 10
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale'),
     listData: state.news.get('listData'),
     isRefreshing: state.news.get('isRefreshing'),
@@ -23,15 +23,14 @@ const PAGE_LENGTH = 10
     bannerData: state.news.get('bannerData'),
     nomore: state.news.get('nomore')
   }),
-  (dispatch) => ({
+  dispatch => ({
     actions: bindActionCreators({
-      ...newsActions,
+      ...newsActions
     }, dispatch)
   })
 )
 
 export default class Discovery extends BaseScreen {
-
   componentDidMount() {
     this.props.actions.getNewsListRequested({ startAt: 0, limit: PAGE_LENGTH, loadingMore: false })
     this.props.actions.getNewsBannerRequested()
@@ -40,6 +39,7 @@ export default class Discovery extends BaseScreen {
   getNewsListData = () => {
     try {
       const data = this.props.listData.toJS()
+
       return data.map(item => ({
         previewImage: item.img_url,
         title: item.title,
@@ -50,7 +50,7 @@ export default class Discovery extends BaseScreen {
         id: item.id,
         type: item.type,
         jumpUrl: item.jump_url,
-        content: item.content,
+        content: item.content
       }))
     } catch (e) {
       return []
@@ -123,7 +123,7 @@ export default class Discovery extends BaseScreen {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            leftButton={<CommonTitle title={messages[locale]['discovery_title_name_dsc']} />}
+            leftButton={<CommonTitle title={messages[locale].discovery_title_name_dsc} />}
           />
           <NewsBanner autoplay={true} style={{ paddingVertical: 20 }}>
             {this.getBanner()}

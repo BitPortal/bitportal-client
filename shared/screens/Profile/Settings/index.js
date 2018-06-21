@@ -1,24 +1,22 @@
 /* @tsx */
 
-import React, { Component } from 'react'
+import React from 'react'
 import BaseScreen from 'components/BaseScreen'
-import styles from './styles'
-import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
-import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
-import { Text, View, ScrollView, Switch } from 'react-native'
+import NavigationBar, { CommonButton } from 'components/NavigationBar'
+import { View, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import messages from './messages'
+import styles from './styles'
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale')
   })
 )
 
 export default class Setting extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -37,14 +35,14 @@ export default class Setting extends BaseScreen {
   }
 
   render() {
-    const { enableTouchID } = this.state
     const { locale } = this.props
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale]['sts_title_name_settings']}
-            leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
+            title={messages[locale].sts_title_name_settings}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -61,5 +59,4 @@ export default class Setting extends BaseScreen {
       </IntlProvider>
     )
   }
-
 }

@@ -52,7 +52,10 @@
     "no-restricted-syntax": [0],
     "no-continue": [0],
     "guard-for-in": [0],
-    "no-plusplus": [0]
+    "no-plusplus": [0],
+    "react/no-did-mount-set-state": [0],
+    "react/no-string-refs": [0],
+    "react/no-multi-comp": [0]
   },
   "env": {
     "browser": true,

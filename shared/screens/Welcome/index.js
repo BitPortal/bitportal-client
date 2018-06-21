@@ -1,7 +1,6 @@
 /* @tsx */
 
-import React, { Component } from 'react'
-import styles from './styles'
+import React from 'react'
 import Swiper from 'react-native-swiper'
 import messages from 'navigators/messages'
 import BaseScreen from 'components/BaseScreen'
@@ -13,6 +12,7 @@ import Colors from 'resources/colors'
 import LinearGradientContainer from 'components/LinearGradientContainer'
 import VersionNumber from 'react-native-version-number'
 import storage from 'utils/storage'
+import styles from './styles'
 
 const NextButton = ({ goToHomePage }) => (
   <LinearGradientContainer type="right" style={[styles.btn, styles.btnContainer]}>
@@ -31,7 +31,7 @@ const Page1 = () => (
   </View>
 )
 
-const Page2= () => ( 
+const Page2 = () => (
   <View style={[styles.pageContainer, styles.center]}>
     <ImageBackground source={Images.guide_market} resizeMode="contain" style={styles.imageBg}>
       <Image source={Images.guide_market_card} resizeMode="contain" style={styles.imageCard2} />
@@ -57,7 +57,6 @@ const Page3 = ({ goToHomePage }) => (
 )
 
 export default class Welcome extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -69,7 +68,7 @@ export default class Welcome extends BaseScreen {
   }
 
   async goToHomePage() {
-    if (this.props.from && this.props.from == 'about') {
+    if (this.props.from && this.props.from === 'about') {
       return this.pop()
     }
     await storage.setItem('bitportal_welcome', JSON.stringify({ localVersion: VersionNumber.appVersion }))

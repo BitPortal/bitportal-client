@@ -1,5 +1,5 @@
-import { StyleSheet, Platform } from 'react-native'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, WidthPercent } from 'utils/dimens'
+import { StyleSheet } from 'react-native'
+import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
 import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT-NAV_BAR_HEIGHT
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT
   },
   itemContainer: {
     width: SCREEN_WIDTH,

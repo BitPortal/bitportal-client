@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, ifIphoneX } from 'utils/dimens'
 import Colors from 'resources/colors'
 
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT-NAV_BAR_HEIGHT-TAB_BAR_HEIGHT
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - TAB_BAR_HEIGHT
   },
   btnContainer: {
     width: SCREEN_WIDTH,
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.minorThemeColor,
     ...ifIphoneX({
       paddingBottom: 34
-    },{
+    }, {
       paddingBottom: 0
     })
   },
@@ -28,10 +28,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.bgColor_FFFFFF
   },
   btn: {
-    width: (SCREEN_WIDTH-1)/2,
+    width: (SCREEN_WIDTH - 1) / 2,
     ...ifIphoneX({
       height: TAB_BAR_HEIGHT - 34
-    },{
+    }, {
       height: TAB_BAR_HEIGHT
     })
   },

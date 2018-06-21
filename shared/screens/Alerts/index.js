@@ -1,13 +1,14 @@
 /* @jsx */
-import React, { Component } from 'react'
+
+import React from 'react'
 import { connect } from 'react-redux'
-import styles from './styles'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
+import Colors from 'resources/colors'
 import AlertInput from './AlertInput'
 import AlertList from './AlertList'
-import Colors from 'resources/colors'
+import styles from './styles'
 
 @connect(
   state => ({
@@ -16,7 +17,6 @@ import Colors from 'resources/colors'
 )
 
 export default class Alerts extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -44,7 +44,7 @@ export default class Alerts extends BaseScreen {
   changeLow = (low) => {
     this.setState({ low })
   }
-  
+
   changeMode = () => {
     this.setState({ isEdited: !this.state.isEdited })
   }
@@ -57,7 +57,7 @@ export default class Alerts extends BaseScreen {
   render() {
     return (
       <View style={styles.container}>
-        <NavigationBar 
+        <NavigationBar
           leftButton={<CommonButton iconName="md-arrow-back" title="Alerts" onPress={() => this.pop()} />}
         />
         <View style={styles.scrollContainer}>
@@ -71,21 +71,19 @@ export default class Alerts extends BaseScreen {
                   </Text>
                 </View>
               </View>
-              <AlertInput value={this.state.high} title="High" unit="USD" onChangeText={(e) => this.changeHigh(e)} />
+              <AlertInput value={this.state.high} title="High" unit="USD" onChangeText={e => this.changeHigh(e)} />
             </View>
             <View style={{ flexDirection: 'row' }}>
-              <AlertInput value={this.state.change} title="Change" unit="%" onChangeText={(e) => this.onChange(e)} />
-              <AlertInput value={this.state.low} title="Low" unit="USD" onChangeText={(e) => this.changeLow(e)} />
+              <AlertInput value={this.state.change} title="Change" unit="%" onChangeText={e => this.onChange(e)} />
+              <AlertInput value={this.state.low} title="Low" unit="USD" onChangeText={e => this.changeLow(e)} />
             </View>
             <TouchableOpacity onPress={() => {}} style={styles.btn} >
               <Text style={[styles.text14, { color: Colors.textColor_93_207_242 }]}> Add</Text>
             </TouchableOpacity>
-            <AlertList isEdited={this.state.isEdited} dataArr={this.state.dataArr} deleteAlert={(index) => this.deleteAlert(index)} changeMode={() => this.changeMode()} />
-          </ScrollView> 
+            <AlertList isEdited={this.state.isEdited} dataArr={this.state.dataArr} deleteAlert={index => this.deleteAlert(index)} changeMode={() => this.changeMode()} />
+          </ScrollView>
         </View>
-
       </View>
     )
   }
-
 }

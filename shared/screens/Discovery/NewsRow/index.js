@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { View, Text, Image, TouchableHighlight } from 'react-native'
-import styles from './style'
 import Colors from 'resources/colors'
+import styles from './style'
 
 function NewsRow ({ previewImage, title, subTitle, author, date, onRowPress }) {
   return (

@@ -1,21 +1,18 @@
 /* @jsx */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Text, View, StyleSheet, TouchableOpacity, TouchableHighlight, ScrollView, ActivityIndicator } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import {
   FontScale,
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
-  NAV_BAR_HEIGHT,
-  TAB_BAR_HEIGHT,
   ifIphoneX
 } from 'utils/dimens'
-import * as votingActions from 'actions/voting'
-import { FormattedMessage, FormattedNumber, IntlProvider } from 'react-intl'
-import messages from './messages'
+import { FormattedMessage, IntlProvider } from 'react-intl'
 import Modal from 'react-native-modal'
+import messages from './messages'
 
 const styles = StyleSheet.create({
   container: {
@@ -40,7 +37,7 @@ const styles = StyleSheet.create({
   bottom: {
     ...ifIphoneX({
       paddingBottom: 34
-    },{
+    }, {
       paddingBottom: 0
     })
   },
@@ -58,17 +55,16 @@ const styles = StyleSheet.create({
     color: Colors.textColor_255_255_238
   },
   item: {
-    width: SCREEN_WIDTH-64,
+    width: SCREEN_WIDTH - 64,
     height: 30,
   },
   line: {
-    width: SCREEN_WIDTH-64,
+    width: SCREEN_WIDTH - 64,
     height: 1,
     backgroundColor: Colors.textColor_181_181_181,
     marginVertical: 15
   },
   location: {
-    paddingHorizontal: 3,
     paddingHorizontal: 8,
     minWidth: 44,
     height: 20,
@@ -78,7 +74,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.borderColor_89_185_226
   },
   btn: {
-    width: SCREEN_WIDTH-64,
+    width: SCREEN_WIDTH - 64,
     height: 40,
     borderRadius: 3,
     backgroundColor: Colors.textColor_89_185_226,
@@ -97,24 +93,24 @@ const styles = StyleSheet.create({
 })
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale')
   })
 )
 
 export default class VotingModal extends Component {
   render() {
-    const { isVisible, dismissModal, selected, locale, onPress, isVoting, error } = this.props
+    const { isVisible, dismissModal, selected, locale, onPress, isVoting } = this.props
 
     return (
       <Modal
         animationIn="slideInUp"
         animationOut="slideOutDown"
-        style = {{  margin: 0 }}
+        style={{ margin: 0 }}
         isVisible={isVisible}
         backdropOpacity={0.9}
       >
-       <IntlProvider messages={messages[locale]}>
+        <IntlProvider messages={messages[locale]}>
           <View style={styles.container}>
             <TouchableOpacity onPress={() => dismissModal()} style={{ flex: 1 }} />
             <View style={[styles.header, styles.between]}>
@@ -122,13 +118,13 @@ export default class VotingModal extends Component {
                 <Ionicons name="ios-close" size={28} color={Colors.bgColor_FFFFFF} />
               </TouchableOpacity>
               <Text style={styles.text18}> <FormattedMessage id="vt_btmsec_name_selected" /> </Text>
-              <Text style={styles.text18}>{' '}</Text>
+              <Text style={styles.text18} />
             </View>
             <View style={[styles.header, styles.bottom, { backgroundColor: Colors.minorThemeColor, minHeight: 300 }]}>
               <ScrollView showsVerticalScrollIndicator={false}>
                 {
                   selected.map((item, index) => (
-                    <View key={index} style={[styles.item, { alignItems: 'center', flexDirection: 'row', marginTop: 10 }]}>
+                    <View key={item} style={[styles.item, { alignItems: 'center', flexDirection: 'row', marginTop: 10 }]}>
                       <Text style={[styles.text14, { minWidth: 20 }]}>{index + 1}</Text>
                       <View style={{ flexDirection: 'row', marginLeft: 25 }}>
                         {/* <View style={[styles.location, styles.center]}>

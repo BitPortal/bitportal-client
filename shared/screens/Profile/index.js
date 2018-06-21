@@ -1,22 +1,19 @@
 /* @tsx */
 
-import React, { Component } from 'react'
-import { Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native'
+import React from 'react'
+import { Text, View, ScrollView } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
-import styles from './styles'
-import Images from 'resources/images'
-import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
-import NavigationBar, { CommonTitle, CommonRightButton } from 'components/NavigationBar'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import NavigationBar, { CommonTitle } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
-import messages from './messages'
 import VersionNumber from 'react-native-version-number'
 import Dialogs from 'components/Dialog'
+import messages from './messages'
+import styles from './styles'
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale'),
     wallet: state.wallet
   })
@@ -24,7 +21,7 @@ import Dialogs from 'components/Dialog'
 
 export default class Profile extends BaseScreen {
   checkHistory = () => {
-    this.push({ screen: "BitPortal.TransactionHistory" })
+    this.push({ screen: 'BitPortal.TransactionHistory' })
   }
 
   changePage = (page) => {
@@ -37,7 +34,7 @@ export default class Profile extends BaseScreen {
           pageName = 'AccountManager'
           passProps = this.props.wallet.get('data').toJS()
         } else {
-          return Dialogs.alert(messages[locale]['profile_button_name_err'], null, { negativeText: messages[locale]['profile_popup_buttom_ent'] })
+          return Dialogs.alert(messages[locale].profile_button_name_err, null, { negativeText: messages[locale].profile_popup_buttom_ent })
         }
         break
       case 'Voting':
@@ -54,21 +51,19 @@ export default class Profile extends BaseScreen {
   }
 
   render() {
-    const { navigation, locale, wallet } = this.props
-    const hasWallet = !!wallet.get('data').get('name')
+    const { locale } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            leftButton={ <CommonTitle title={<FormattedMessage id="profile_title_name_profile" />}/> }
-            // rightButton={ <CommonRightButton iconName="md-timer" onPress={() => this.checkHistory()} /> }
+            leftButton={<CommonTitle title={<FormattedMessage id="profile_title_name_profile" />} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center' }} >
               <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_vote" />} onPress={() => this.changePage('Voting')} extraStyle={{ marginTop: 10 }} />
               {/* <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_ctcts" />} onPress={() => this.changePage('Contacts')}  /> */}
-              <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_act" />} onPress={() => this.changePage('Account')}  />
+              <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_act" />} onPress={() => this.changePage('Account')} />
               <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_sts" />} onPress={() => this.changePage('Settings')} extraStyle={{ marginTop: 10 }} />
               <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_abt" />} onPress={() => this.changePage('About')} />
               {/* <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titiled_ctus" />} onPress={() => this.changePage('ContactUs')} /> */}
@@ -81,5 +76,4 @@ export default class Profile extends BaseScreen {
       </IntlProvider>
     )
   }
-
 }

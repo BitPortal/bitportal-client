@@ -1,8 +1,6 @@
-
-import React, { Component } from 'react'
+import React from 'react'
 import { Text, View, TouchableOpacity } from 'react-native'
 import styles from './styles'
-import Colors from 'resources/colors'
 
 const NegativeBtn = ({ negativeText, onNegative }) => (
   <TouchableOpacity onPress={onNegative} style={[styles.btn, styles.center]}>
@@ -16,9 +14,9 @@ const PositiveBtn = ({ positiveText, onPositive }) => (
   </TouchableOpacity>
 )
 
-export default Update = ({ title, content, negativeText, positiveText, onNegative, onPositive }) => (
+const Update = ({ title, content, negativeText, positiveText, onNegative, onPositive }) => (
   <View style={[styles.container, styles.center]}>
-    <View style={[styles.content, styles.between]}> 
+    <View style={[styles.content, styles.between]}>
       <View style={[styles.titleContainer, styles.center]}>
         <Text style={styles.text18}>{title}</Text>
       </View>
@@ -33,3 +31,5 @@ export default Update = ({ title, content, negativeText, positiveText, onNegativ
     </View>
   </View>
 )
+
+export default Update

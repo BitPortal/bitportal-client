@@ -1,23 +1,21 @@
 /* @tsx */
-import React, { Component } from 'react'
+import React from 'react'
 import BaseScreen from 'components/BaseScreen'
-import styles from './styles'
-import Images from 'resources/images'
 import Colors from 'resources/colors'
-import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
-import { Text, View, ScrollView, TextInput, TouchableOpacity, TouchableHighlight, Clipboard } from 'react-native'
+import NavigationBar, { CommonButton } from 'components/NavigationBar'
+import { Text, View, ScrollView, TextInput } from 'react-native'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
+import styles from './styles'
 import messages from './messages'
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale')
   })
 )
 
 export default class ExportPrivateKey extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -33,21 +31,20 @@ export default class ExportPrivateKey extends BaseScreen {
   }
 
   render() {
-    const { isCopied } = this.state
     const { locale, ownerWifs, activeWifs } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale]['expvk_title_name_expvk']}
-            leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()} /> }
+            title={messages[locale].expvk_title_name_expvk}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           />
-            <View style={styles.scrollContainer}>
-              <ScrollView
+          <View style={styles.scrollContainer}>
+            <ScrollView
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }}
-              >
+            >
               <View style={styles.content}>
 
                 <Text style={[styles.text16, { marginLeft: -1 }]}>
@@ -69,7 +66,7 @@ export default class ExportPrivateKey extends BaseScreen {
                       style={styles.input}
                       underlineColorAndroid="transparent"
                       selectionColor={Colors.textColor_181_181_181}
-                      placeholder={'owner private key'}
+                      placeholder="owner private key"
                       placeholderTextColor={Colors.textColor_181_181_181}
                       value={item}
                     />
@@ -88,7 +85,7 @@ export default class ExportPrivateKey extends BaseScreen {
                       style={styles.input}
                       underlineColorAndroid="transparent"
                       selectionColor={Colors.textColor_181_181_181}
-                      placeholder={'active private key'}
+                      placeholder="active private key"
                       placeholderTextColor={Colors.textColor_181_181_181}
                       value={item}
                     />
@@ -113,5 +110,4 @@ export default class ExportPrivateKey extends BaseScreen {
       </IntlProvider>
     )
   }
-
 }
