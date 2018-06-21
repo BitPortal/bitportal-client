@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import styles from './styles'
-import Images from 'resources/images'
 import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
@@ -29,7 +28,13 @@ export default class Resources extends BaseScreen {
   }
 
   check = (type) => {
-    alert(type)
+    switch (type) {
+      case 'ram':
+        this.props.navigator.push({ screen: 'BitPortal.Memory' })
+        break;
+      default:
+        break;
+    }
   }
 
   render() {

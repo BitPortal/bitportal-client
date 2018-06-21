@@ -29,6 +29,7 @@ import ArticleWebView     from 'screens/Discovery/article'
 import Markdown           from 'screens/Discovery/markdown'
 
 import Resources          from 'screens/Resources'
+import Memory             from 'screens/Resources/Memory'
 
 import Voting             from 'screens/Profile/Voting'
 import Stake              from 'screens/Profile/Stake'
@@ -69,6 +70,7 @@ export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.Markdown',           () => Markdown,           store, provider)
 
   Navigation.registerComponent('BitPortal.Resources',          () => Resources,          store, provider)
+  Navigation.registerComponent('BitPortal.Memory',             () => Memory,             store, provider)
 
   Navigation.registerComponent('BitPortal.Voting',             () => Voting,             store, provider)
   Navigation.registerComponent('BitPortal.Stake',              () => Stake,              store, provider)

@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react'
-import { Text, View, TouchableHighlight, StyleSheet, Image } from 'react-native'
+import { Text, View, TouchableWithoutFeedback, StyleSheet, Image } from 'react-native'
 import Colors from 'resources/colors'
 import LinearGradientContainer from 'components/LinearGradientContainer'
 import { FormattedNumber } from 'react-intl'
@@ -66,7 +66,7 @@ export default class ResourcesCard extends Component {
     return (
       <View style={[styles.linearContainer, { marginHorizontal: 32, marginTop: 40 }, {...extraStyle}]}>
         <LinearGradientContainer type="right" colors={colors} style={[styles.linearContainer]}>
-          <TouchableHighlight style={styles.linearContainer} underlayColor={'transparent'} onPress={onPress} >
+          <TouchableWithoutFeedback style={styles.linearContainer} onPress={onPress} >
             <View>
               <View style={[styles.between, styles.info, styles.topRadius]}>
                 <Text style={styles.text16}>{title}</Text>
@@ -96,7 +96,7 @@ export default class ResourcesCard extends Component {
                 }
               </View>
             </View>
-          </TouchableHighlight>
+          </TouchableWithoutFeedback>
         </LinearGradientContainer>
       </View>
     )
