@@ -130,6 +130,12 @@ export default class Assets extends BaseScreen {
     })
   }
 
+  checkResourcesDetails = () => {
+    this.props.navigator.push({
+      screen: "BitPortal.Resources"
+    })
+  }
+ 
   // 切换EOS账户
   switchWallet(info) {
     this.props.actions.switchWalletRequested(info)
@@ -199,7 +205,7 @@ export default class Assets extends BaseScreen {
     const classicWalletList = wallet.get('classicWalletList')
     const walletCount = hdWalletList.size + classicWalletList.size
     const balanceList = balance.get('data').get('eosAccountBalance')
-    
+    console.log('###', activeEOSAccount.toJS())
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -225,9 +231,11 @@ export default class Assets extends BaseScreen {
                 <TotalAssetsCard 
                   totalAssets={getTotalAssets(balanceList, eosPrice)} 
                   accountName={activeEOSAccount.get('account_name')} 
-                  CPUWeight={activeEOSAccount.get('cpu_weight')||0}
-                  BandWidth={activeEOSAccount.get('self_delegated_bandwidth')||0}
-                  RAMUsage={activeEOSAccount.get('ram_usage')||0}
+                  CPUInfo={activeEOSAccount.get('cpu_limit')}
+                  NETInfo={activeEOSAccount.get('net_limit')}
+                  RAMQuota={activeEOSAccount.get('ram_quota')}
+                  RAMUsage={activeEOSAccount.get('ram_usage')}
+                  checkResourcesDetails={this.checkResourcesDetails}
                   onPress={() => this.operateAssetQRCode(true)} 
                 />
                 {!activeEOSAccount.get('account_name') && <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_create_eos_account" />} onPress={() => this.createEOSAccount()} extraStyle={{ marginTop: 10, marginBottom: 10 }} />}
