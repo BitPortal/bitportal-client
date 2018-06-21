@@ -1,16 +1,14 @@
-
-import React, { Component } from 'react'
-import styles from './styles'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import React from 'react'
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
+import styles from './styles'
 
 export const Quotes = ({ quoteList, quote, onPress }) => (
   <View style={styles.quoteContainer}>
     {
-      quoteList.map((item, index) => (
+      quoteList.map(item => (
         <TouchableOpacity
-          key={index}
+          key={item}
           onPress={() => { onPress(item) }}
           style={[styles.center, {
             flex: 1,

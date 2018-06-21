@@ -1,12 +1,11 @@
-
-import React, { Component } from 'react'
-import styles from './styles'
+import React from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import {
   Text,
   View
 } from 'react-native'
 import Colors from 'resources/colors'
+import styles from './styles'
 
 export const Logo = () => (
   <View style={styles.cardContainer}>
@@ -18,8 +17,8 @@ export const Logo = () => (
       </View>
     </View>
     <View style={styles.spaceBetween}>
-      <Text style={[styles.text18,{ marginLeft: 3 } ]}>Bytom(BTM)</Text>
-      <Text style={styles.text18}> 11,949.00 USD </Text>
+      <Text style={[styles.text18, { marginLeft: 3 }]}>Bytom(BTM)</Text>
+      <Text style={styles.text18}>11,949.00 USD</Text>
     </View>
     <View style={[styles.spaceBetween, { marginTop: 4 }]}>
       <Text style={[styles.text14, { color: Colors.textColor_142_142_147 }]}> Total Cap: 75,493.00 USD </Text>

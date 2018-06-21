@@ -1,25 +1,24 @@
 /* @tsx */
 
-import React, { Component } from 'react'
-import styles from './styles'
+import React from 'react'
 import { connect } from 'react-redux'
-import SearchItem from 'screens/Market/SearchItem'
 import TableView, { HeaderTitle } from 'screens/Market/TableView'
 import BaseScreen from 'components/BaseScreen'
 import * as tickerActions from 'actions/ticker'
 import { exchangeTickerSelector, sortFilterSelector } from 'selectors/ticker'
 import { bindActionCreators } from 'redux'
-import { Text, View, InteractionManager } from 'react-native'
+import { View, InteractionManager } from 'react-native'
 import Modal from 'react-native-modal'
+import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from 'constants/market'
+import NavigationBar, { ListButton } from 'components/NavigationBar'
+import { IntlProvider } from 'react-intl'
 import ExchangeList from './ExchangeList'
 import { Quotes } from './Quotes'
-import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from 'constants/market'
-import NavigationBar, { ListButton, CommonRightButton } from 'components/NavigationBar'
-import { IntlProvider } from 'react-intl'
 import messages from './messages'
+import styles from './styles'
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale'),
     ticker: exchangeTickerSelector(state),
     loading: state.ticker.get('loading'),
@@ -27,7 +26,7 @@ import messages from './messages'
     sortFilter: sortFilterSelector(state),
     quoteAssetFilter: state.ticker.get('quoteAssetFilter')
   }),
-  (dispatch) => ({
+  dispatch => ({
     actions: bindActionCreators({
       ...tickerActions
     }, dispatch)
@@ -73,7 +72,7 @@ export default class Market extends BaseScreen {
   }
 
   // 点击查看币种行情
-  pressListItem = (item) => {
+  pressListItem = () => {
     // this.props.actions.selectBaseAsset(item.get('base_asset'))
     // this.props.navigator.push({ screen: 'BitPortal.MarketDetails' })
   }
@@ -106,7 +105,7 @@ export default class Market extends BaseScreen {
             leftButton={<ListButton label={EXCHANGE_NAMES[exchangeFilter]} onPress={() => this.selectExchange()} />}
           />
           <Quotes
-            onPress={(e) => this.changeQuote(e)}
+            onPress={e => this.changeQuote(e)}
             quote={this.state.activeQuoteAsset || quoteAssetFilter}
             quoteList={QUOTE_ASSETS[exchangeFilter]}
           />
@@ -114,13 +113,13 @@ export default class Market extends BaseScreen {
           <TableView
             refreshing={loading}
             onRefresh={() => this.onRefresh()}
-            data={this.props.ticker}
-            onPress={(e) => this.pressListItem(e)}
+            data={ticker}
+            onPress={e => this.pressListItem(e)}
           />
           <Modal
             animationIn="fadeIn"
             animationOut="fadeOut"
-            style = {{  margin: 0 }}
+            style={{ margin: 0 }}
             isVisible={this.state.isVisible}
             useNativeDriver={true}
             hideModalContentWhileAnimating={true}
@@ -129,7 +128,7 @@ export default class Market extends BaseScreen {
             <ExchangeList
               exchangeList={EXCHANGES}
               activeExchange={exchangeFilter}
-              changeExchange={(e) => this.changeExchange(e)}
+              changeExchange={e => this.changeExchange(e)}
               dismissModal={() => this.setState({ isVisible: false })}
             />
           </Modal>

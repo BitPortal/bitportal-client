@@ -1,19 +1,18 @@
 /* @jsx */
-import React, { Component } from 'react'
+
+import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import styles from './styles'
-import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import { exchangeTickerSelector } from 'selectors/ticker'
 import BaseScreen from 'components/BaseScreen'
+import * as chartActions from 'actions/chart'
+import { EXCHANGE_NAMES } from 'constants/market'
 import CoinInfoCard from './CoinInfoCard'
 import MarketList from './MarketList'
 import ChartWrapper from './ChartWrapper'
-import { SCREEN_WIDTH, FontScale } from 'utils/dimens'
-import * as chartActions from 'actions/chart'
-import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from 'constants/market'
+import styles from './styles'
 
 const ButtonElement = ({ Title, onPress }) => (
   <TouchableOpacity style={[styles.btn, styles.center]} onPress={() => onPress()}>
@@ -24,10 +23,10 @@ const ButtonElement = ({ Title, onPress }) => (
 )
 
 @connect(
-  (state) => ({
+  state => ({
     ticker: exchangeTickerSelector(state)
   }),
-  (dispatch) => ({
+  dispatch => ({
     actions: bindActionCreators({
       ...chartActions
     }, dispatch)
@@ -35,14 +34,13 @@ const ButtonElement = ({ Title, onPress }) => (
 )
 
 export default class MarketDetails extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
   }
 
   changeMarket = (data) => {
-    alert(JSON.stringify(data))
+    console.log(JSON.stringify(data))
   }
 
   changeRoute = (screen) => {
@@ -59,6 +57,7 @@ export default class MarketDetails extends BaseScreen {
 
   render() {
     const { ticker } = this.props
+
     return (
       <View style={styles.container}>
         <NavigationBar
@@ -71,18 +70,15 @@ export default class MarketDetails extends BaseScreen {
           >
             <CoinInfoCard />
             <ChartWrapper />
-            <MarketList changeMarket={(e) => this.changeMarket(e)} />
+            <MarketList changeMarket={e => this.changeMarket(e)} />
           </ScrollView>
         </View>
-
         <View style={[styles.btnContainer, styles.spaceAround]}>
           <ButtonElement Title="Token Details" onPress={() => this.changeRoute('TokenDetails')} />
           <ButtonElement Title="Fund Flow" onPress={() => this.changeRoute('FundFlow')} />
           <ButtonElement Title="Alerts" onPress={() => this.changeRoute('Alerts')} />
         </View>
-
       </View>
     )
   }
-
 }

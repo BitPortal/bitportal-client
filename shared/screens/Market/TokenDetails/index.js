@@ -1,15 +1,13 @@
 /* @jsx */
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import styles from './styles'
-import Colors from 'resources/colors'
+
+import React from 'react'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import { Logo, Description, Details, ListedExchange } from './TokenComponents'
+import styles from './styles'
 
 export default class TokenDetails extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -18,7 +16,7 @@ export default class TokenDetails extends BaseScreen {
   render() {
     return (
       <View style={styles.container}>
-        <NavigationBar 
+        <NavigationBar
           leftButton={
             <CommonButton iconName="md-arrow-back" title="Token Details" onPress={() => this.pop()} />
           }
@@ -33,9 +31,7 @@ export default class TokenDetails extends BaseScreen {
             <ListedExchange />
           </ScrollView>
         </View>
-
       </View>
     )
   }
-
 }

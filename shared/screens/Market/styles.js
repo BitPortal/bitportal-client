@@ -1,13 +1,12 @@
 import { StyleSheet, Platform } from 'react-native'
 import Colors from 'resources/colors'
-import { 
-  FontScale, 
-  SCREEN_WIDTH, 
-  SCREEN_HEIGHT, 
-  NAV_BAR_HEIGHT, 
-  TAB_BAR_HEIGHT, 
-  WidthPercent, 
-  ifIphoneX 
+import {
+  FontScale,
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  NAV_BAR_HEIGHT,
+  TAB_BAR_HEIGHT,
+  WidthPercent
 } from 'utils/dimens'
 
 const styles = StyleSheet.create({
@@ -23,11 +22,11 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'ios' ? 20 : 0
   },
   navButton: {
-    minWidth: 100, 
-    height: 40, 
-    paddingTop: 6, 
-    marginLeft: 10, 
-    alignItems: 'center', 
+    minWidth: 100,
+    height: 40,
+    paddingTop: 6,
+    marginLeft: 10,
+    alignItems: 'center',
     justifyContent: 'center'
   },
   center: {
@@ -56,7 +55,7 @@ const styles = StyleSheet.create({
     color: Colors.textColor_142_142_147
   },
   searchContainer: {
-    width: (SCREEN_WIDTH - 30)*2/3,
+    width: ((SCREEN_WIDTH - 30) * 2) / 3,
     height: 40,
     marginVertical: 10,
     marginLeft: 15,
@@ -68,7 +67,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   textInputStyle: {
-    width: (SCREEN_WIDTH-30)*2/3-40,
+    width: (((SCREEN_WIDTH - 30) * 2) / 3) - 40,
     height: 40,
     marginLeft: Platform.OS === 'ios' ? 11 : 7,
     color: Colors.textColor_FFFFEE,
@@ -76,7 +75,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT-NAV_BAR_HEIGHT-TAB_BAR_HEIGHT-40-30,
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - TAB_BAR_HEIGHT - 70,
     backgroundColor: Colors.mainThemeColor
   },
   listItem: {

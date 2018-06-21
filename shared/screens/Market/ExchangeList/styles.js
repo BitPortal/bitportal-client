@@ -1,9 +1,9 @@
-import { StyleSheet, Platform } from 'react-native'
+import { StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
-import { 
-  FontScale, 
-  SCREEN_WIDTH, 
-  SCREEN_HEIGHT, 
+import {
+  FontScale,
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
   NAV_BAR_HEIGHT
 } from 'utils/dimens'
 
