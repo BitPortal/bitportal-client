@@ -21,7 +21,7 @@ import Backup             from 'screens/Account/Backup'
 import BackupTips         from 'screens/Account/BackupTips'
 import AccountImport      from 'screens/Account/AccountImport'
 import AccountCreation    from 'screens/Account/AccountCreation'
-import EOSAccountCreation    from 'screens/Account/EOSAccountCreation'
+import EOSAccountCreation from 'screens/Account/EOSAccountCreation'
 import PrivateKeyCreation from 'screens/Account/PrivateKeyCreation'
 
 import Discovery          from 'screens/Discovery'
@@ -30,6 +30,8 @@ import Markdown           from 'screens/Discovery/markdown'
 
 import Resources          from 'screens/Resources'
 import Memory             from 'screens/Resources/Memory'
+import Bandwidth          from 'screens/Resources/Bandwidth'
+import CPU                from 'screens/Resources/CPU'
 
 import Voting             from 'screens/Profile/Voting'
 import Stake              from 'screens/Profile/Stake'
@@ -70,7 +72,9 @@ export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.Markdown',           () => Markdown,           store, provider)
 
   Navigation.registerComponent('BitPortal.Resources',          () => Resources,          store, provider)
+  Navigation.registerComponent('BitPortal.CPU',                () => CPU,                store, provider)
   Navigation.registerComponent('BitPortal.Memory',             () => Memory,             store, provider)
+  Navigation.registerComponent('BitPortal.Bandwidth',          () => Bandwidth,          store, provider)
 
   Navigation.registerComponent('BitPortal.Voting',             () => Voting,             store, provider)
   Navigation.registerComponent('BitPortal.Stake',              () => Stake,              store, provider)

@@ -65,8 +65,8 @@ export default class ResourcesCard extends Component {
     const { extraStyle } = this.props 
     return (
       <View style={[styles.linearContainer, { marginHorizontal: 32, marginTop: 40 }, {...extraStyle}]}>
-        <LinearGradientContainer type="right" colors={colors} style={[styles.linearContainer]}>
-          <TouchableWithoutFeedback style={styles.linearContainer} onPress={onPress} >
+        <LinearGradientContainer type="right" colors={colors} style={[styles.linearContainer, {...extraStyle}]}>
+          <TouchableWithoutFeedback style={[styles.linearContainer]} onPress={onPress} >
             <View>
               <View style={[styles.between, styles.info, styles.topRadius]}>
                 <Text style={styles.text16}>{title}</Text>
