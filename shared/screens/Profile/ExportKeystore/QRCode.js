@@ -1,12 +1,12 @@
 /* @tsx */
 import React, { Component } from 'react'
-import styles from './styles'
 import Colors from 'resources/colors'
-import { Text, View, ScrollView, TextInput, TouchableOpacity, TouchableHighlight } from 'react-native'
+import { Text, View, ScrollView, TouchableHighlight } from 'react-native'
 import QRCodeModule from 'react-native-qrcode-svg'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import messages from './messages'
+import styles from './styles'
 
 @connect(
   state => ({

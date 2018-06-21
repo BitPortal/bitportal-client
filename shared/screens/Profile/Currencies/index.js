@@ -1,19 +1,17 @@
 /* @tsx */
 
-import React, { Component } from 'react'
+import React from 'react'
 import BaseScreen from 'components/BaseScreen'
-import styles from './styles'
 import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
-import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
-import { Text, View, ScrollView, Switch } from 'react-native'
+import NavigationBar, { CommonButton } from 'components/NavigationBar'
+import { View, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
-import { FormattedMessage, IntlProvider } from 'react-intl'
-import messages from './messages'
+import { IntlProvider } from 'react-intl'
 import { bindActionCreators } from 'redux'
 import * as currencyActions from 'actions/currency'
-import Loading from 'components/Loading'
-import storage from 'utils/storage'
+import messages from './messages'
+import styles from './styles'
 
 @connect(
   state => ({
@@ -55,14 +53,14 @@ export default class Currencies extends BaseScreen {
                 onPress={() => this.switchCurrency('CNY')}
                 extraStyle={{ marginTop: 10 }}
                 iconColor={Colors.bgColor_0_122_255}
-                rightItemTitle={currentSymbol == 'CNY' ? null : ' '}
-                rightImageName={currentSymbol == 'CNY' && 'md-checkmark'}
+                rightItemTitle={currentSymbol === 'CNY' ? null : ' '}
+                rightImageName={currentSymbol === 'CNY' && 'md-checkmark'}
               />
               <SettingItem
                 leftItemTitle="USD"
                 iconColor={Colors.bgColor_0_122_255}
-                rightItemTitle={currentSymbol == 'USD' ? null : ' '}
-                rightImageName={currentSymbol == 'USD' && 'md-checkmark'}
+                rightItemTitle={currentSymbol === 'USD' ? null : ' '}
+                rightImageName={currentSymbol === 'USD' && 'md-checkmark'}
                 onPress={() => this.switchCurrency('USD')}
               />
             </ScrollView>

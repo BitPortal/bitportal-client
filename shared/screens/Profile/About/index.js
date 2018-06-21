@@ -1,21 +1,20 @@
 /* @tsx */
-import React, { Component } from 'react'
-import { Text, View, ScrollView, TouchableOpacity, Image } from 'react-native'
+import React from 'react'
+import { Text, View, ScrollView, Image } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
-import styles from './styles'
 import Images from 'resources/images'
-import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
-import messages from './messages'
 import VersionNumber from 'react-native-version-number'
 import { bindActionCreators } from 'redux'
 import * as versionInfoActions from 'actions/versionInfo'
 import { BITPORTAL_API_TERMS_URL, BITPORTAL_API_UPDATE_LOG_URL } from 'constants/env'
 import Loading from 'components/Loading'
-import { update, isNewest, showIsLast } from 'utils/update'
+import { isNewest, showIsLast } from 'utils/update'
+import messages from './messages'
+import styles from './styles'
 
 @connect(
   state => ({
@@ -55,6 +54,7 @@ export default class About extends BaseScreen {
             uri: BITPORTAL_API_UPDATE_LOG_URL
           }
         })
+        break
       default:
     }
   }

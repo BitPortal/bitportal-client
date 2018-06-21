@@ -1,14 +1,15 @@
 /* @jsx */
-import React, { Component } from 'react'
+
+import React from 'react'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import BaseScreen from 'components/BaseScreen'
-import styles from './styles'
 import { Text, View, TouchableHighlight } from 'react-native'
 import Colors from 'resources/colors'
 import InputItem from 'components/InputItem'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import messages from './messages'
+import styles from './styles'
 
 @connect(
   state => ({

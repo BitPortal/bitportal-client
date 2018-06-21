@@ -1,25 +1,23 @@
 /* @tsx */
-import React, { Component } from 'react'
+import React from 'react'
 import BaseScreen from 'components/BaseScreen'
-import styles from './styles'
 import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider, FormattedNumber } from 'react-intl'
-import { Text, View, TouchableOpacity, Alert, Platform, InteractionManager } from 'react-native'
-import messages from './messages'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import ProducerList from './ProducerList'
+import { Text, View, TouchableOpacity, Platform, InteractionManager } from 'react-native'
 import * as producerActions from 'actions/producer'
 import * as votingActions from 'actions/voting'
 import { bindActionCreators } from 'redux'
 import { eosAccountSelector } from 'selectors/eosAccount'
-import VotingModal from './VotingModal'
-import Loading from 'components/Loading'
 import AlertComponent from 'components/Alert'
 import Dialogs from 'components/Dialog'
-import DialogsAndroid from './DialogAndroid'
 import { sortProducers } from 'eos'
+import DialogAndroid from './DialogAndroid'
+import VotingModal from './VotingModal'
+import ProducerList from './ProducerList'
+import messages from './messages'
+import styles from './styles'
 
 export const errorMessages = (error, messages) => {
   if (!error) return null
@@ -84,7 +82,7 @@ export default class Voting extends BaseScreen {
   }
 
   async voting() {
-    if (Platform.OS == 'android') {
+    if (Platform.OS === 'android') {
       return this.setState({ isVisible: true })
     }
     const { locale } = this.props
@@ -139,7 +137,7 @@ export default class Voting extends BaseScreen {
       const index = this.state.selected.indexOf(name)
       const nextState = [...this.state.selected].sort(sortProducers)
       nextState.splice(index, 1)
-      this.setState(prevState => ({
+      this.setState(() => ({
         selected: nextState
       }))
     }
@@ -223,7 +221,7 @@ export default class Voting extends BaseScreen {
             isVoting={isVoting}
           />
           {
-            Platform.OS == 'android' &&
+            Platform.OS === 'android' &&
             <DialogAndroid
               tilte={messages[locale].vt_popup_title_pwd}
               content=""

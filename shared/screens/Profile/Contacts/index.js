@@ -1,14 +1,14 @@
 /* @jsx */
-import React, { Component } from 'react'
+import React from 'react'
 import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
 import BaseScreen from 'components/BaseScreen'
-import styles from './styles'
 import { Text, View, ListView } from 'react-native'
-import DeleteButton from './DeleteButton'
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
-import { FormattedMessage, IntlProvider } from 'react-intl'
+import { IntlProvider } from 'react-intl'
+import DeleteButton from './DeleteButton'
+import styles from './styles'
 import messages from './messages'
 
 @connect(
@@ -68,6 +68,7 @@ export default class Contacts extends BaseScreen {
   render() {
     const { contacts } = this.state
     const { locale } = this.props
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -81,7 +82,7 @@ export default class Contacts extends BaseScreen {
               contentContainerStyle={{ paddingTop: 10 }}
               enableEmptySections={true}
               showsVerticalScrollIndicator={false}
-              dataSource={this.ds.cloneWithRows(this.state.contacts)}
+              dataSource={this.ds.cloneWithRows(contacts)}
               renderRow={this.renderRow.bind(this)}
             />
           </View>

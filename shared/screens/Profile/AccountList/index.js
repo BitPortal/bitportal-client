@@ -1,17 +1,15 @@
 /* @tsx */
-import React, { Component } from 'react'
+
+import React from 'react'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
-import styles from './styles'
-import Images from 'resources/images'
-import Colors from 'resources/colors'
-import SettingItem from 'components/SettingItem'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import WalletCard from './WalletCard'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { eosAccountSelector } from 'selectors/eosAccount'
+import WalletCard from './WalletCard'
 import messages from './messages'
+import styles from './styles'
 
 @connect(
   state => ({
@@ -41,8 +39,7 @@ export default class AccountList extends BaseScreen {
   }
 
   render() {
-    const { locale, eosAccount, wallet } = this.props
-    const activeEOSAccount = eosAccount.get('data')
+    const { locale, wallet } = this.props
     const hdWalletList = wallet.get('hdWalletList')
     const classicWalletList = wallet.get('classicWalletList')
 

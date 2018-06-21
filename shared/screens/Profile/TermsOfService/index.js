@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, WebView, Share } from 'react-native'
+import { View, WebView } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import styles from './styles'
@@ -25,4 +25,3 @@ export default class TermsOfService extends BaseScreen {
     )
   }
 }
-

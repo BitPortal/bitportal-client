@@ -1,19 +1,16 @@
 /* @tsx */
 
-import React, { Component } from 'react'
-import { Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native'
+import React from 'react'
+import { Text, View, ScrollView } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
-import styles from './styles'
-import Images from 'resources/images'
-import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
-import NavigationBar, { CommonTitle, CommonRightButton } from 'components/NavigationBar'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import NavigationBar, { CommonTitle } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
-import messages from './messages'
 import VersionNumber from 'react-native-version-number'
 import Dialogs from 'components/Dialog'
+import messages from './messages'
+import styles from './styles'
 
 @connect(
   state => ({
@@ -54,15 +51,13 @@ export default class Profile extends BaseScreen {
   }
 
   render() {
-    const { navigation, locale, wallet } = this.props
-    const hasWallet = !!wallet.get('data').get('name')
+    const { locale } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
             leftButton={<CommonTitle title={<FormattedMessage id="profile_title_name_profile" />} />}
-            // rightButton={ <CommonRightButton iconName="md-timer" onPress={() => this.checkHistory()} /> }
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center' }} >

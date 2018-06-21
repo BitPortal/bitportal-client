@@ -1,16 +1,16 @@
 
-import React, { Component } from 'react'
-import { Text, View, TouchableHighlight, StyleSheet } from 'react-native'
+import React from 'react'
+import { TouchableHighlight, StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { SCREEN_HEIGHT, SCREEN_WIDTH, FontScale } from 'utils/dimens'
+import { SCREEN_WIDTH } from 'utils/dimens'
 
 const styles = StyleSheet.create({
   btn: {
     width: 100,
     height: 50,
     marginLeft: SCREEN_WIDTH - 100,
-    backgroundColor: Colors.bgColor_255_71_64,
+    backgroundColor: Colors.bgColor_255_71_64
   },
   center: {
     alignItems: 'center',
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   }
 })
 
-export default DeleteButton = ({ onPress }) => (
+const DeleteButton = ({ onPress }) => (
   <TouchableHighlight
     onPress={() => onPress()}
     style={[styles.btn, styles.center]}
@@ -28,3 +28,4 @@ export default DeleteButton = ({ onPress }) => (
   </TouchableHighlight>
 )
 
+export default DeleteButton

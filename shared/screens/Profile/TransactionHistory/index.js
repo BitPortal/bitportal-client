@@ -1,14 +1,14 @@
 /* @jsx */
-import React, { Component } from 'react'
-import styles from './styles'
+
+import React from 'react'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import BaseScreen from 'components/BaseScreen'
-import Colors from 'resources/colors'
-import ListItem from './ListItem'
-import { Text, View, ScrollView, TouchableOpacity, SectionList } from 'react-native'
+import { Text, View, SectionList } from 'react-native'
 import { connect } from 'react-redux'
-import { FormattedMessage, IntlProvider } from 'react-intl'
+import { IntlProvider } from 'react-intl'
+import ListItem from './ListItem'
 import messages from './messages'
+import styles from './styles'
 
 @connect(
   state => ({
@@ -41,6 +41,7 @@ export default class TransationHistory extends BaseScreen {
 
   render() {
     const { locale } = this.props
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -50,7 +51,7 @@ export default class TransationHistory extends BaseScreen {
           />
           <View style={styles.scrollContainer}>
             <SectionList
-              renderItem={({ item, index, section }) => <ListItem key={index} item={item} onPress={() => {}} />}
+              renderItem={({ item, index }) => <ListItem key={index} item={item} onPress={() => {}} />}
               renderSectionHeader={({ section: { timeStamp } }) => (
                 <View style={styles.sectionHeader}>
                   <Text style={[styles.text12, { marginLeft: 30 }]}>

@@ -1,12 +1,13 @@
 /* @jsx */
-import React, { Component } from 'react'
+
+import React from 'react'
 import { View, ScrollView } from 'react-native'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import BaseScreen from 'components/BaseScreen'
 import ResetPasswordForm from 'components/Form/ResetPasswordForm'
-import styles from './styles'
 import { connect } from 'react-redux'
-import { FormattedMessage, IntlProvider } from 'react-intl'
+import { IntlProvider } from 'react-intl'
+import styles from './styles'
 import messages from './messages'
 
 @connect(

@@ -1,13 +1,12 @@
 /* @tsx */
-import React, { Component } from 'react'
+import React from 'react'
 import BaseScreen from 'components/BaseScreen'
-import styles from './styles'
-import Images from 'resources/images'
 import Colors from 'resources/colors'
-import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
-import { Text, View, ScrollView, TextInput, TouchableOpacity, TouchableHighlight, Clipboard } from 'react-native'
+import NavigationBar, { CommonButton } from 'components/NavigationBar'
+import { Text, View, ScrollView, TextInput } from 'react-native'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
+import styles from './styles'
 import messages from './messages'
 
 @connect(
@@ -32,7 +31,6 @@ export default class ExportPrivateKey extends BaseScreen {
   }
 
   render() {
-    const { isCopied } = this.state
     const { locale, ownerWifs, activeWifs } = this.props
 
     return (

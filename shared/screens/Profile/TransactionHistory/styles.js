@@ -4,8 +4,7 @@ import {
   FontScale,
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
-  NAV_BAR_HEIGHT,
-  TAB_BAR_HEIGHT
+  NAV_BAR_HEIGHT
 } from 'utils/dimens'
 
 const styles = StyleSheet.create({

@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, ifIphoneX } from 'utils/dimens'
 import Colors from 'resources/colors'
 
@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.bgColor_000000
   },
   location: {
-    paddingHorizontal: 3,
     paddingHorizontal: 8,
     minWidth: 44,
     height: 20,

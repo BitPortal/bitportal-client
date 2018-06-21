@@ -1,17 +1,17 @@
 /* @tsx */
-import React, { Component } from 'react'
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
+
+import React from 'react'
+import { View } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
-import styles from './styles'
-import Images from 'resources/images'
 import Colors from 'resources/colors'
-import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
+import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view'
+import { connect } from 'react-redux'
+import { IntlProvider } from 'react-intl'
 import Keystore from './Keystore'
 import QRCode from './QRCode'
-import { connect } from 'react-redux'
-import { FormattedMessage, IntlProvider } from 'react-intl'
 import messages from './messages'
+import styles from './styles'
 
 @connect(
   state => ({

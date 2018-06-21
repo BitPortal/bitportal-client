@@ -1,20 +1,18 @@
 /* @tsx */
 
-import React, { Component } from 'react'
+import React from 'react'
 import BaseScreen from 'components/BaseScreen'
-import styles from './styles'
 import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
 import { bindActionCreators } from 'redux'
 import * as intlActions from 'actions/intl'
-import storage from 'utils/storage'
-import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
-import { Text, View, ScrollView, Switch } from 'react-native'
-import { startTabBasedApp } from 'navigators'
+import NavigationBar, { CommonButton } from 'components/NavigationBar'
+import { View, ScrollView } from 'react-native'
 import tabMessages from 'navigators/messages'
 import { connect } from 'react-redux'
-import { FormattedMessage, IntlProvider } from 'react-intl'
+import { IntlProvider } from 'react-intl'
 import messages from './messages'
+import styles from './styles'
 
 @connect(
   state => ({
@@ -62,14 +60,14 @@ export default class Languages extends BaseScreen {
                 onPress={() => this.switchLanguage('en')}
                 extraStyle={{ marginTop: 10 }}
                 iconColor={Colors.bgColor_0_122_255}
-                rightItemTitle={locale == 'en' ? null : ' '}
-                rightImageName={locale == 'en' && 'md-checkmark'}
+                rightItemTitle={locale === 'en' ? null : ' '}
+                rightImageName={locale === 'en' && 'md-checkmark'}
               />
               <SettingItem
                 leftItemTitle="简体中文"
                 iconColor={Colors.bgColor_0_122_255}
-                rightItemTitle={locale == 'zh' ? null : ' '}
-                rightImageName={locale == 'zh' && 'md-checkmark'}
+                rightItemTitle={locale === 'zh' ? null : ' '}
+                rightImageName={locale === 'zh' && 'md-checkmark'}
                 onPress={() => this.switchLanguage('zh')}
               />
             </ScrollView>

@@ -1,22 +1,22 @@
 /* @tsx */
-import React, { Component } from 'react'
+
+import React from 'react'
 import { bindActionCreators } from 'redux'
-import { Text, View, ScrollView, TouchableOpacity, Platform } from 'react-native'
+import { View, ScrollView, Platform } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
-import styles from './styles'
-import Images from 'resources/images'
 import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
-import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
+import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import * as keystoreActions from 'actions/keystore'
 import { logoutRequested, clearLogoutError } from 'actions/wallet'
 import Loading from 'components/Loading'
 import Alert from 'components/Alert'
-import messages from './messages'
-import DialogAndroid from './DialogAndroid'
 import Dialogs from 'components/Dialog'
+import DialogAndroid from './DialogAndroid'
+import messages from './messages'
+import styles from './styles'
 
 export const errorMessages = (error, messages) => {
   if (!error) return null
@@ -89,7 +89,7 @@ export default class AccountList extends BaseScreen {
 
   handleExport = async () => {
     const messagesInfo = messages[this.props.locale]
-    if (Platform.OS == 'android') {
+    if (Platform.OS === 'android') {
       this.setState({ isVisible: true, type: 'exportAccount' })
     } else {
       const { action, text } = await Dialogs.prompt(
@@ -100,7 +100,7 @@ export default class AccountList extends BaseScreen {
           negativeText: messagesInfo.actexport_popup_can
         }
       )
-      if (action == Dialogs.actionPositive) {
+      if (action === Dialogs.actionPositive) {
         this.exportAccount(text)
       }
     }
@@ -108,7 +108,7 @@ export default class AccountList extends BaseScreen {
 
   handleLogout = async () => {
     const messagesInfo = messages[this.props.locale]
-    if (Platform.OS == 'android') {
+    if (Platform.OS === 'android') {
       this.setState({ isVisible: true, type: 'logout' })
     } else {
       const { action, text } = await Dialogs.prompt(
@@ -120,7 +120,7 @@ export default class AccountList extends BaseScreen {
           negativeText: messagesInfo.actexport_popup_can
         }
       )
-      if (action == Dialogs.actionPositive) {
+      if (action === Dialogs.actionPositive) {
         this.logout(text)
       }
     }
@@ -129,14 +129,15 @@ export default class AccountList extends BaseScreen {
   handleConfirm = () => {
     const { type, password } = this.state
     this.setState({ isVisible: false }, () => {
-      if (type == 'logout') this.logout(password)
+      if (type === 'logout') this.logout(password)
       else this.exportAccount(password)
     })
   }
 
   render() {
-    const { locale, name, eosAccountName, exporting, error, loggingOut, logoutError } = this.props
+    const { locale, name, exporting, error, loggingOut, logoutError } = this.props
     const { type } = this.state
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -163,10 +164,10 @@ export default class AccountList extends BaseScreen {
                 leftTitleStyle={{ color: Colors.textColor_255_76_118 }}
               />
               {
-                Platform.OS == 'android' &&
+                Platform.OS === 'android' &&
                 <DialogAndroid
                   tilte={messages[locale].actexport_popup_name}
-                  content={type == 'logout' ? messages[locale].logout_popup_warning : ''}
+                  content={type === 'logout' ? messages[locale].logout_popup_warning : ''}
                   positiveText={messages[locale].actexport_popup_ent}
                   negativeText={messages[locale].actexport_popup_can}
                   onChange={password => this.setState({ password })}

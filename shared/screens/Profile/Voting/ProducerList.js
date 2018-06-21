@@ -1,17 +1,9 @@
 import React, { Component, PureComponent } from 'react'
 import Colors from 'resources/colors'
 import { FormattedNumber } from 'react-intl'
-import styles from './styles'
-import PropTypes from 'prop-types'
-import {
-  FontScale,
-  SCREEN_WIDTH,
-  SCREEN_HEIGHT,
-  NAV_BAR_HEIGHT,
-  TAB_BAR_HEIGHT
-} from 'utils/dimens'
 import { Text, View, TouchableHighlight, VirtualizedList } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import styles from './styles'
 
 class ListItem extends Component {
   shouldComponentUpdate(nextProps) {
@@ -77,11 +69,4 @@ export default class ProducerList extends PureComponent {
       />
     )
   }
-}
-
-ProducerList.propTypes = {
-  data: PropTypes.any,
-  onRefresh: PropTypes.func,
-  onRowPress: PropTypes.func,
-  refreshing: PropTypes.bool
 }

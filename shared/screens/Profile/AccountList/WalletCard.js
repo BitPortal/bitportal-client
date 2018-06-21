@@ -1,10 +1,9 @@
 
 import React, { Component } from 'react'
-import { Text, View, TouchableHighlight, StyleSheet, Image } from 'react-native'
+import { Text, View, TouchableHighlight, StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
 import LinearGradientContainer from 'components/LinearGradientContainer'
-import { FormattedNumber } from 'react-intl'
-import { SCREEN_HEIGHT, SCREEN_WIDTH, FontScale } from 'utils/dimens'
+import { SCREEN_WIDTH, FontScale } from 'utils/dimens'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const styles = StyleSheet.create({

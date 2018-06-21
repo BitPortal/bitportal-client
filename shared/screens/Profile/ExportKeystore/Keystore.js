@@ -1,11 +1,11 @@
 /* @tsx */
 import React, { Component } from 'react'
-import styles from './styles'
 import Colors from 'resources/colors'
-import { Text, View, ScrollView, TextInput, TouchableOpacity, TouchableHighlight, Clipboard } from 'react-native'
+import { Text, View, ScrollView, TextInput, TouchableHighlight, Clipboard } from 'react-native'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import messages from './messages'
+import styles from './styles'
 
 @connect(
   state => ({

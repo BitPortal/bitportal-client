@@ -1,21 +1,18 @@
 /* @jsx */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Text, View, StyleSheet, TouchableOpacity, TouchableHighlight, ScrollView, ActivityIndicator } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import {
   FontScale,
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
-  NAV_BAR_HEIGHT,
-  TAB_BAR_HEIGHT,
   ifIphoneX
 } from 'utils/dimens'
-import * as votingActions from 'actions/voting'
-import { FormattedMessage, FormattedNumber, IntlProvider } from 'react-intl'
-import messages from './messages'
+import { FormattedMessage, IntlProvider } from 'react-intl'
 import Modal from 'react-native-modal'
+import messages from './messages'
 
 const styles = StyleSheet.create({
   container: {
@@ -68,7 +65,6 @@ const styles = StyleSheet.create({
     marginVertical: 15
   },
   location: {
-    paddingHorizontal: 3,
     paddingHorizontal: 8,
     minWidth: 44,
     height: 20,
@@ -104,7 +100,7 @@ const styles = StyleSheet.create({
 
 export default class VotingModal extends Component {
   render() {
-    const { isVisible, dismissModal, selected, locale, onPress, isVoting, error } = this.props
+    const { isVisible, dismissModal, selected, locale, onPress, isVoting } = this.props
 
     return (
       <Modal
@@ -128,7 +124,7 @@ export default class VotingModal extends Component {
               <ScrollView showsVerticalScrollIndicator={false}>
                 {
                   selected.map((item, index) => (
-                    <View key={index} style={[styles.item, { alignItems: 'center', flexDirection: 'row', marginTop: 10 }]}>
+                    <View key={item} style={[styles.item, { alignItems: 'center', flexDirection: 'row', marginTop: 10 }]}>
                       <Text style={[styles.text14, { minWidth: 20 }]}>{index + 1}</Text>
                       <View style={{ flexDirection: 'row', marginLeft: 25 }}>
                         {/* <View style={[styles.location, styles.center]}>
