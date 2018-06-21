@@ -1,5 +1,5 @@
-import { StyleSheet, Platform } from 'react-native'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, WidthPercent } from 'utils/dimens'
+import { StyleSheet } from 'react-native'
+import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
 import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   },
   textInputContainer: {
     flexDirection: 'row',
-    width: (SCREEN_WIDTH-60)/2,
+    width: (SCREEN_WIDTH - 60) / 2,
     height: 44,
     borderRadius: 2,
     borderColor: Colors.borderColor_76_76_80,
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   textInputStyle: {
     flex: 1,
     textAlign: 'right',
-    fontSize: FontScale(15), 
+    fontSize: FontScale(15),
     color: Colors.textColor_255_255_238,
     minHeight: 44
   },
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     fontSize: FontScale(14),
     color: Colors.textColor_216_216_216
   },
-  text16: { 
+  text16: {
     fontSize: FontScale(16),
     color: Colors.textColor_149_149_149
   },
@@ -59,11 +59,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   listHeader: {
-    width: SCREEN_WIDTH-30,
+    width: SCREEN_WIDTH - 30,
     height: 40
   },
   listItemContainer: {
-    width: SCREEN_WIDTH-30,
+    width: SCREEN_WIDTH - 30,
     minHeight: 45,
     borderTopColor: Colors.borderColor_55_55_55,
     borderTopWidth: StyleSheet.hairlineWidth,

@@ -1,26 +1,24 @@
 /* @jsx */
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import styles from './styles'
+
+import React from 'react'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import BaseScreen from 'components/BaseScreen'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import InputItem from 'components/InputItem'
 import { BlurView } from 'react-native-blur'
 import { SCREEN_WIDTH } from 'utils/dimens'
-import { 
-  Text, 
-  View, 
+import {
+  Text,
+  View,
   TextInput,
   ScrollView,
   findNodeHandle,
-  TouchableOpacity, 
+  TouchableOpacity,
   TouchableHighlight
 } from 'react-native'
+import styles from './styles'
 
 export default class PrivateKeyCreation extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -34,7 +32,7 @@ export default class PrivateKeyCreation extends BaseScreen {
   }
 
   changeAccountName = (accountName) => {
-    if (accountName == 'meon') this.setState({ isAccountVaild: false })
+    if (accountName === 'meon') this.setState({ isAccountVaild: false })
     else this.setState({ isAccountVaild: true })
   }
 
@@ -51,46 +49,44 @@ export default class PrivateKeyCreation extends BaseScreen {
   }
 
   importPrivateKey = () => {
-    this.props.navigator.push({ 
+    this.props.navigator.push({
       screen: 'BitPortal.AccountImport'
     })
   }
 
   componentDidMount() {
-    this.setState({ viewRef: findNodeHandle(this.viewRef) })
+    this.setState({ viewRef: findNodeHandle(this.viewRef) }) // eslint-disable-line react/no-did-mount-set-state
   }
 
   render() {
     const { isAccountVaild, showPrivateKey } = this.state
+
     return (
       <View style={styles.container}>
-        <NavigationBar 
+        <NavigationBar
           leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           title="Create New Account"
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.content}>
-
-              <InputItem 
-                title="Name Your BitPortal" 
-                placeholder="Up to 12 characters" 
+              <InputItem
+                title="Name Your BitPortal"
+                placeholder="Up to 12 characters"
                 isContentVaild={isAccountVaild}
-                textFilter={(text) => (text.substring(0, 12))}
-                onChangeText={(e) => this.changeAccountName(e)} 
+                textFilter={text => (text.substring(0, 12))}
+                onChangeText={e => this.changeAccountName(e)}
                 TipsComponent={() => (
                   !isAccountVaild &&
-                  <Text style={[styles.text14, { color: Colors.textColor_255_98_92 }]}> 
-                    Occupied Name 
+                  <Text style={[styles.text14, { color: Colors.textColor_255_98_92 }]}>
+                    Occupied Name
                   </Text>
                 )}
               />
-
-              <Text style={[styles.text14, { color: Colors.textColor_89_185_226, marginLeft: -1, marginTop: 25, marginBottom: 15 }]}> 
-                Private Key 
+              <Text style={[styles.text14, { color: Colors.textColor_89_185_226, marginLeft: -1, marginTop: 25, marginBottom: 15 }]}>
+                Private Key
               </Text>
-
-              <View ref={e => this.viewRef = e} style={[styles.inputContainer]}>
+              <View ref={(e) => { this.viewRef = e; return e }} style={[styles.inputContainer]}>
                 <TextInput
                   editable={false}
                   multiline={true}
@@ -99,52 +95,46 @@ export default class PrivateKeyCreation extends BaseScreen {
                   underlineColorAndroid="transparent"
                   selectionColor={Colors.textColor_181_181_181}
                   keyboardAppearance={Colors.keyboardTheme}
-                  placeholder={'private key'}
+                  placeholder="private key"
                   placeholderTextColor={Colors.textColor_181_181_181}
-                  onChangeText={(e) => this.changePrivateKey(e)}
+                  onChangeText={e => this.changePrivateKey(e)}
                   value={this.state.privateKey}
                 />
               </View>
-
               {
                 !showPrivateKey &&
                 <BlurView
-                  style={[styles.inputContainer, { borderWidth: 0, height: SCREEN_WIDTH/4-14, marginTop: -(SCREEN_WIDTH-64)/4 }]}
+                  style={[styles.inputContainer, { borderWidth: 0, height: (SCREEN_WIDTH / 4) - 14, marginTop: -(SCREEN_WIDTH - 64) / 4 }]}
                   viewRef={this.state.viewRef}
                   blurType="dark"
-                  overlayColor={'rgba(0,0,0,0.95)'}
+                  overlayColor="rgba(0, 0, 0, 0.95)"
                   blurAmount={10}
                 />
               }
-
-              <TouchableHighlight 
-                onPress={() => this.goToBackup()} 
+              <TouchableHighlight
+                onPress={() => this.goToBackup()}
                 underlayColor={Colors.textColor_89_185_226}
                 style={[styles.btn, styles.center, {
                   marginTop: 25,
                   backgroundColor: !showPrivateKey ? Colors.textColor_181_181_181 : Colors.textColor_89_185_226
                 }]}
               >
-                <Text style={styles.text14}> 
+                <Text style={styles.text14}>
                   {!showPrivateKey ? 'Show Private Key' : 'Next'}
                 </Text>
               </TouchableHighlight>
-
-              <TouchableOpacity 
-                onPress={() => this.importPrivateKey()} 
-                style={[styles.btn, styles.center, { marginTop: 25}]}
+              <TouchableOpacity
+                onPress={() => this.importPrivateKey()}
+                style={[styles.btn, styles.center, { marginTop: 25 }]}
               >
-                <Text style={[styles.text14, { color: Colors.textColor_89_185_226 }]}> 
+                <Text style={[styles.text14, { color: Colors.textColor_89_185_226 }]}>
                   Import
                 </Text>
               </TouchableOpacity>
-
             </View>
           </ScrollView>
         </View>
-        
       </View>
     )
   }
-
 }

@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { FlatList, View, ActivityIndicator, Text } from 'react-native'
-import NewsRow, { NewsRowTypes } from '../NewsRow'
 import Colors from 'resources/colors'
+import NewsRow, { NewsRowTypes } from '../NewsRow'
 import styles from '../styles'
 
-class NewsList extends React.PureComponent {
+class NewsList extends PureComponent {
   keyExtractor = item => item.id
 
   renderItem = ({ item }) =>
@@ -23,12 +23,12 @@ class NewsList extends React.PureComponent {
   renderSeparator = () => (
     <View style={{ height: 1, width: '100%', backgroundColor: Colors.bgColor_000000 }} />
   )
-    
+
   renderFoot = () => {
     const { loadingMore, nomore } = this.props
-    if (loadingMore) return <ActivityIndicator style={{ marginVertical: 10 }} size="small" color="white" />
-    if (nomore) return <Text style={[styles.text14, { marginVertical: 10, alignSelf: 'center' }]}> 没有更多数据了 </Text>
-    else return null
+    if (loadingMore) return (<ActivityIndicator style={{ marginVertical: 10 }} size="small" color="white" />)
+    if (nomore) return (<Text style={[styles.text14, { marginVertical: 10, alignSelf: 'center' }]}>没有更多数据了</Text>)
+    return null
   }
 
   render() {

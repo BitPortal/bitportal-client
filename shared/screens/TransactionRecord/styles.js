@@ -1,11 +1,10 @@
-import { StyleSheet, Platform } from 'react-native'
+import { StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
-import { 
-  FontScale, 
-  SCREEN_WIDTH, 
-  SCREEN_HEIGHT, 
-  NAV_BAR_HEIGHT, 
-  TAB_BAR_HEIGHT 
+import {
+  FontScale,
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  NAV_BAR_HEIGHT
 } from 'utils/dimens'
 
 const styles = StyleSheet.create({
@@ -16,36 +15,36 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT-NAV_BAR_HEIGHT
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT
   },
   content: {
     padding: 32,
     width: SCREEN_WIDTH
   },
   header: {
-    width: SCREEN_WIDTH-64,
+    width: SCREEN_WIDTH - 64,
     height: 30,
     borderTopLeftRadius: 6,
     borderTopRightRadius: 6,
     backgroundColor: Colors.textColor_89_185_226
   },
   header2: {
-    width: SCREEN_WIDTH-64,
+    width: SCREEN_WIDTH - 64,
     height: 60,
     backgroundColor: Colors.bgColor_48_49_59
   },
   amountContent: {
     padding: 20,
-    width: SCREEN_WIDTH-64,
+    width: SCREEN_WIDTH - 64,
     minHeight: 100,
     backgroundColor: Colors.minorThemeColor
   },
   separator: {
-    width: SCREEN_WIDTH-64,
+    width: SCREEN_WIDTH - 64,
     height: 10
   },
   seperator2: {
-    width: SCREEN_WIDTH-84,
+    width: SCREEN_WIDTH - 84,
     height: 2
   },
   semicircle: {
@@ -56,15 +55,15 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.mainThemeColor
   },
   card: {
-    width: SCREEN_WIDTH-64,
+    width: SCREEN_WIDTH - 64,
     height: 180,
     borderBottomLeftRadius: 6,
     borderBottomRightRadius: 6,
     backgroundColor: Colors.bgColor_48_49_59
   },
   btn: {
-    width: 90, 
-    marginTop: 10, 
+    width: 90,
+    marginTop: 10,
     height: 30,
     borderRadius: 3,
     backgroundColor: Colors.textColor_216_216_216

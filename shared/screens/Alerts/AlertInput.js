@@ -1,11 +1,9 @@
-
-import React, { Component } from 'react'
-import styles from './styles'
-import Colors from 'resources/colors'
-import { FontScale } from 'utils/dimens'
+import React from 'react'
 import { Text, View, TextInput } from 'react-native'
+import Colors from 'resources/colors'
+import styles from './styles'
 
-export default AlertInput = ({ value, title, unit, onChangeText }) => (
+const AlertInput = ({ value, title, unit, onChangeText }) => (
   <View style={{ paddingHorizontal: 15, marginTop: 20 }}>
     <Text style={[styles.text14, { marginBottom: 10, color: Colors.textColor_149_149_149 }]}> {title} </Text>
     <View style={styles.textInputContainer}>
@@ -15,9 +13,9 @@ export default AlertInput = ({ value, title, unit, onChangeText }) => (
         style={styles.textInputStyle}
         selectionColor={Colors.textColor_FFFFEE}
         keyboardAppearance={Colors.keyboardTheme}
-        placeholder={''}
+        placeholder=""
         keyboardType="numeric"
-        onChangeText={(text) => { onChangeText(text) }}
+        onChangeText={text => onChangeText(text)}
         value={value}
       />
       <Text style={[styles.text16, { marginLeft: 10 }]}>
@@ -26,3 +24,5 @@ export default AlertInput = ({ value, title, unit, onChangeText }) => (
     </View>
   </View>
 )
+
+export default AlertInput

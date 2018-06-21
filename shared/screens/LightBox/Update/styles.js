@@ -1,12 +1,12 @@
 import { StyleSheet, Platform } from 'react-native'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, WidthPercent } from 'utils/dimens'
+import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, WidthPercent } from 'utils/dimens'
 import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
-    backgroundColor: Platform.OS == 'ios' ? "rgba(0,0,0,0.1)" : "rgba(0,0,0,0.7)"
+    backgroundColor: Platform.OS === 'ios' ? 'rgba(0, 0, 0, 0.1)' : 'rgba(0, 0, 0, 0.7)'
   },
   center: {
     alignItems: 'center',
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     width: WidthPercent(80),
     height: 44,
     borderBottomColor: Colors.borderColor_55_55_55,
-    borderBottomWidth: StyleSheet.hairlineWidth,  
+    borderBottomWidth: StyleSheet.hairlineWidth
   },
   text18: {
     fontSize: FontScale(18),
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     width: WidthPercent(80),
     height: 44,
     borderTopColor: Colors.borderColor_55_55_55,
-    borderTopWidth: StyleSheet.hairlineWidth,  
+    borderTopWidth: StyleSheet.hairlineWidth,
     flexDirection: 'row'
   },
   line: {

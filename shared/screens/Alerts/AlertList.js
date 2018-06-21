@@ -1,43 +1,44 @@
 
-import React, { Component } from 'react'
-import styles from './styles'
+import React from 'react'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { FontScale } from 'utils/dimens'
 import { Text, View, TouchableOpacity } from 'react-native'
+import styles from './styles'
 
-export default AlertList = ({ isEdited, dataArr, changeMode, deleteAlert }) => (
+const AlertList = ({ isEdited, dataArr, changeMode, deleteAlert }) => (
   <View style={{ paddingHorizontal: 15, marginTop: 25 }}>
     <View style={[styles.listHeader, styles.betweenStyle]}>
-      <Text style={styles.text16}> Details </Text>
-      <TouchableOpacity onPress={() => changeMode()}  style={{ alignItems: 'center', padding: 15 }} >
-        <Text style={[styles.text14, { color: Colors.textColor_93_207_242 }]}> {isEdited ? "Cancel" : "Edit"} </Text>
+      <Text style={styles.text16}>Details</Text>
+      <TouchableOpacity onPress={() => changeMode()} style={{ alignItems: 'center', padding: 15 }} >
+        <Text style={[styles.text14, { color: Colors.textColor_93_207_242 }]}> {isEdited ? 'Cancel' : 'Edit'} </Text>
       </TouchableOpacity>
     </View>
     {dataArr.map((item, index) => (
-      <View key={index} style={[styles.listItemContainer, styles.betweenStyle]}>
+      <View key={+item.high + +item.low + +item.change} style={[styles.listItemContainer, styles.betweenStyle]}>
         <View style={{ flexDirection: 'row' }}>
           <View>
-            {isEdited && 
+            {isEdited &&
               <TouchableOpacity onPress={() => deleteAlert()} style={{ marginRight: 15 }}>
                 <Ionicons name="md-remove-circle" size={22} color={Colors.textColor_255_76_118} />
-              </TouchableOpacity> 
+              </TouchableOpacity>
             }
           </View>
-          <Text style={[styles.text16, { color: Colors.textColor_255_255_238 }]}> Alert{index+1} </Text>
+          <Text style={[styles.text16, { color: Colors.textColor_255_255_238 }]}>Alert{index + 1}</Text>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View>
-            {item.high   && <Text style={[styles.text16, { textAlign: 'right', color: Colors.textColor_255_255_238 }]}> High: {item.high} </Text>}
-            {item.low    && <Text style={[styles.text16, { textAlign: 'right', color: Colors.textColor_255_255_238 }]}> Low: {item.low} </Text>}
-            {item.change && <Text style={[styles.text16, { textAlign: 'right', color: Colors.textColor_255_255_238 }]}> Change: {item.change} </Text>}
+            {item.high && <Text style={[styles.text16, { textAlign: 'right', color: Colors.textColor_255_255_238 }]}>High: {item.high}</Text>}
+            {item.low && <Text style={[styles.text16, { textAlign: 'right', color: Colors.textColor_255_255_238 }]}>Low: {item.low}</Text>}
+            {item.change && <Text style={[styles.text16, { textAlign: 'right', color: Colors.textColor_255_255_238 }]}>Change: {item.change}</Text>}
           </View>
           <TouchableOpacity style={{ marginHorizontal: 15 }}>
             <Ionicons name="md-create" size={22} color={Colors.textColor_93_207_242} />
           </TouchableOpacity>
         </View>
       </View>
-     )) 
+     ))
     }
   </View>
 )
+
+export default AlertList

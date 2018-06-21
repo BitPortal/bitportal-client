@@ -1,15 +1,16 @@
 /* eslint-disable react/no-array-index-key */
-import React from 'react'
+
+import React, { PureComponent } from 'react'
 import { View, ScrollView } from 'react-native'
 import PropTypes from 'prop-types'
 import { styles } from './style'
 
-class CardSilder extends React.PureComponent{
-  constructor(props){
-    super(props)
+class CardSilder extends PureComponent {
+  constructor(props, context) {
+    super(props, context)
     this.state = {
       numOfCards: this.props.children.length,
-      position: 1,
+      position: 1
     }
     this.autoMove = true
     this.timer = null
@@ -20,7 +21,7 @@ class CardSilder extends React.PureComponent{
   }
 
   componentWillUnmount(){
-    this.timer && clearInterval(this.timer)
+    if (this.timer) clearInterval(this.timer)
   }
 
   startInterval = () => {

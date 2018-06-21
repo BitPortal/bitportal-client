@@ -10,7 +10,6 @@ import { FontScale } from 'utils/dimens'
 import styles from './styles'
 
 class MarkdownPage extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -43,31 +42,31 @@ const markdownStyles = {
   text: {
     fontSize: FontScale(15),
     color: Colors.textColor_255_255_238,
-    lineHeight: 22,
+    lineHeight: 22
   },
   heading1: {
     fontSize: 24,
     fontWeight: 'bold',
     marginTop: 8,
     marginBottom: 4,
-    lineHeight: 28,
+    lineHeight: 28
   },
   heading2: {
     fontSize: 22,
     fontWeight: 'bold',
     marginTop: 8,
     marginBottom: 4,
-    lineHeight: 26,
+    lineHeight: 26
   },
   heading3: {
     fontSize: 20,
     fontWeight: 'bold',
     marginTop: 8,
     marginBottom: 4,
-    lineHeight: 24,
+    lineHeight: 24
   },
   strong: {
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   }
 }
 
