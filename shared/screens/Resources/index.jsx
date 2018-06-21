@@ -32,6 +32,12 @@ export default class Resources extends BaseScreen {
       case 'ram':
         this.props.navigator.push({ screen: 'BitPortal.Memory' })
         break;
+      case 'bw':
+        this.props.navigator.push({ screen: 'BitPortal.Bandwidth' })
+        break;
+      case 'cpu':
+        this.props.navigator.push({ screen: 'BitPortal.CPU' })
+        break;
       default:
         break;
     }
@@ -55,7 +61,7 @@ export default class Resources extends BaseScreen {
               <ResourcesCard 
                 colors={Colors.ramColor}
                 onPress={() => this.check('ram')}
-                extraStyle={{ marginTop: 20 }}
+                extraStyle={{ marginTop: 10 }}
                 title={<FormattedMessage id="reslist_title_name_ram" />}
                 availableText={<FormattedMessage id="reslist_title_name_ava" />}
                 available={activeEOSAccount.get('ram_quota')-activeEOSAccount.get('ram_usage')}
@@ -66,7 +72,7 @@ export default class Resources extends BaseScreen {
               />
               <ResourcesCard 
                 onPress={() => this.check('bw')}
-                extraStyle={{ marginTop: 20 }}
+                extraStyle={{ marginTop: 20, height: 220 }}
                 title={<FormattedMessage id="reslist_title_name_bw" />}
                 availableText={<FormattedMessage id="reslist_title_name_ava" />}
                 available={activeEOSAccount.get('net_limit').get('available')}
@@ -79,7 +85,7 @@ export default class Resources extends BaseScreen {
               />
               <ResourcesCard 
                 colors={Colors.cpuColor}
-                extraStyle={{ marginTop: 50, marginBottom: 30 }}
+                extraStyle={{ marginTop: 25, marginBottom: 30, height: 220 }}
                 onPress={() => this.check('cpu')}
                 title={<FormattedMessage id="reslist_title_name_cpu" />}
                 availableText={<FormattedMessage id="reslist_title_name_ava" />}
