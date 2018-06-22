@@ -55,7 +55,8 @@
     "no-plusplus": [0],
     "react/no-did-mount-set-state": [0],
     "react/no-string-refs": [0],
-    "react/no-multi-comp": [0]
+    "react/no-multi-comp": [0],
+    "react/no-array-index-key": [0]
   },
   "env": {
     "browser": true,

@@ -20,7 +20,6 @@ declare interface Config {
   EOS_API_URL: string
   CURRENCY_RATE_URL: string
   BITPORTAL_API_TERMS_URL: string
-  CURRENCY_RATE_URL: string
   BITPORTAL_API_UPDATE_LOG_URL: string
 }
 
@@ -216,6 +215,17 @@ declare module 'components/*' {
 declare module 'utils/*' {
   const file: any
   export = file
+}
+
+declare module 'utils/location' {
+  interface LocationActions {
+    pop: any
+    push: any
+    popToRoot: any
+  }
+
+  const locationActions: LocationActions
+  export = locationActions
 }
 
 declare module 'resources/icons/*' {

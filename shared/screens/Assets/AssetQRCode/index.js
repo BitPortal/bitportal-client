@@ -66,8 +66,9 @@ export default class AssetQRCode extends Component {
   }
 
   componentWillUnmount() {
-    // 清除定时器
-    this.timer && clearTimeout(this.timer)
+    if (this.timer) {
+      clearTimeout(this.timer)
+    }
   }
 
   render() {
