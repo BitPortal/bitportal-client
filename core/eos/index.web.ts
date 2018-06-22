@@ -4,17 +4,30 @@ import { EOS_API_URL } from 'constants/env'
 const ecc = Eos.modules.ecc
 let eos: any
 
-const initAccount = async ({ keyProvider }: { keyProvider: string | string[] }) => {
-  eos = Eos.Localnet({
-    keyProvider: keyProvider,
+const initAccount = async ({ keyProvider, signProvider }: { keyProvider: string | string[], signProvider: any }) => {
+  eos = Eos({
+    keyProvider,
+    signProvider,
+    chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
     httpEndpoint: EOS_API_URL
   })
 
   return { eos }
 }
 
+const initEOS = (options: any) => {
+  const chainId = options.chainId || 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
+  eos = Eos({ ...options, chainId, httpEndpoint: EOS_API_URL })
+  return eos
+}
+
 const getEOS = () => {
   return eos
+}
+
+const randomKey = async () => {
+  const privateKey = await ecc.randomKey()
+  return privateKey
 }
 
 const privateToPublic = async (privateKey: string) => {
@@ -24,9 +37,24 @@ const privateToPublic = async (privateKey: string) => {
 
 const isValidPrivate = (privateKey: string) => ecc.isValidPrivate(privateKey)
 
+const getProducers = (params: any) => {
+  alert(JSON.stringify(params))
+  return new Promise((resolve) => {
+    eos.getProducers(params).then((result: any) => {
+      return resolve(result)
+    })
+  })
+}
+
+const sortProducers = (a: any, b: any) => parseInt(Eos.modules.format.encodeName(a, false), 10) - parseInt(Eos.modules.format.encodeName(b, false), 10)
+
 export {
+  initEOS,
   getEOS,
   initAccount,
   privateToPublic,
-  isValidPrivate
+  isValidPrivate,
+  randomKey,
+  getProducers,
+  sortProducers
 }

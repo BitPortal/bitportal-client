@@ -1,26 +1,24 @@
 import assert from 'assert'
 import * as bip32 from 'bip32'
 import * as bip44 from 'bip44'
-import bip39 from 'react-native-bip39'
+import bip39 from 'bip39'
 import wif from 'wif'
 import {
   createHash,
   createHmac,
   createCipheriv,
   createDecipheriv,
-  // pbkdf2
+  pbkdf2,
+  randomBytes as randombytes
 } from 'crypto'
-import { NativeModules } from 'react-native'
-import * as RNRandomBytes from 'react-native-randombytes'
+// import { NativeModules } from 'react-native'
 import base58 from 'bs58'
 import secp256k1 from 'secp256k1'
-// import scryptAsync from 'scrypt-async'
+import scryptAsync from 'scrypt-async'
 import uuidv4 from 'uuid/v4'
 import createKeccakHash from 'keccak'
 import { isValidPrivate, privateToPublic } from 'eos'
 import secureStorage from 'utils/secureStorage'
-
-const { pbkdf2, scrypt } = NativeModules.BPCoreModule
 
 const keccak = (a: any, bits?: any) => {
   a = Buffer.from(a)
@@ -34,7 +32,7 @@ const decipherBuffer = (decipher: any, data: any) => {
 
 const randomBytes = async (length: number): Promise<Buffer> => {
   return new Promise<Buffer>((resolve, reject) => {
-    RNRandomBytes.randomBytes(length, (error: any, bytes: any) => {
+    randombytes(length, (error, bytes) => {
       if (error) {
         reject(error)
       } else {
@@ -44,27 +42,27 @@ const randomBytes = async (length: number): Promise<Buffer> => {
   })
 }
 
-// const pbkdf2Async = async (password, salt, iterations, keylen, digest) => {
-//   return new Promise((resolve, reject) => {
-//     pbkdf2(password, salt, iterations, keylen, digest, (error, derivedKey) => {
-//       if (error) {
-//         reject(error)
-//       } else {
-//         resolve(derivedKey)
-//       }
-//     })
-//   })
-// }
+const pbkdf2Async = async (password: string, salt: string, iterations: number, keylen: number, digest: string) => {
+  return new Promise<string>((resolve, reject) => {
+    pbkdf2(password, salt, iterations, keylen, digest, (error: any, derivedKey: Buffer) => {
+      if (error) {
+        reject(error)
+      } else {
+        resolve(derivedKey.toString('hex'))
+      }
+    })
+  })
+}
 
-// const scrypt = async (password, salt, N, r, p, dkLen) => {
-//   return new Promise((resolve, reject) => {
-//     scryptAsync(password, salt, {
-//       N, r, p, dkLen, encoding: 'hex'
-//     }, (derivedKey) => {
-//       resolve(derivedKey)
-//     })
-//   })
-// }
+const scrypt = async (password: string, salt: string, N: number, r: number, p: number, dkLen: number) => {
+  return new Promise<string>((resolve) => {
+    scryptAsync(password, salt, {
+      N, r, p, dkLen, encoding: 'hex'
+    }, (derivedKey: string) => {
+      resolve(derivedKey)
+    })
+  })
+}
 
 export const getIdFromEntropy = async (entropy: string) => {
   const phrase = bip39.entropyToMnemonic(entropy)
@@ -119,7 +117,7 @@ export const encrypt = async (input: string, password: string, opts: { origin?: 
   if (kdf === 'pbkdf2') {
     kdfparams.c = opts.c || 262144
     kdfparams.prf = 'hmac-sha256'
-    const derivedKeyHex = await pbkdf2(Buffer.from(password).toString('hex'), kdfparams.salt, kdfparams.c, kdfparams.dklen, 'sha256')
+    const derivedKeyHex = await pbkdf2Async(Buffer.from(password).toString('hex'), kdfparams.salt, kdfparams.c, kdfparams.dklen, 'sha256')
     derivedKey = Buffer.from(derivedKeyHex, 'hex')
   } else if (kdf === 'scrypt') {
     kdfparams.n = opts.n || 262144
@@ -147,13 +145,13 @@ export const encrypt = async (input: string, password: string, opts: { origin?: 
     version: 1,
     id: uuidv4({ random }),
     crypto: {
+      kdf,
+      kdfparams,
       ciphertext: ciphertext.toString('hex'),
       cipherparams: {
         iv: iv.toString('hex')
       },
       cipher: opts.cipher || 'aes-128-ctr',
-      kdf: kdf,
-      kdfparams: kdfparams,
       mac: mac.toString('hex')
     }
   }
@@ -186,7 +184,7 @@ export const decrypt = async (input: object | string, password: string, nonStric
       throw new Error('Unsupported parameters to PBKDF2')
     }
 
-    const derivedKeyHex = await pbkdf2(Buffer.from(password).toString('hex'), kdfparams.salt, kdfparams.c, kdfparams.dklen, 'sha256')
+    const derivedKeyHex = await pbkdf2Async(Buffer.from(password).toString('hex'), kdfparams.salt, kdfparams.c, kdfparams.dklen, 'sha256')
     derivedKey = Buffer.from(derivedKeyHex, 'hex')
   } else {
     throw new Error('Unsupported key derivation scheme')
@@ -215,11 +213,7 @@ export const getMasterSeedFromEntropy = async (entropy: string) => {
 export const getMasterSeed = async (mnemonicPhrase: string) => {
   let phrase
 
-  if (mnemonicPhrase) {
-    phrase = mnemonicPhrase
-  } else {
-    phrase = await bip39.generateMnemonic()
-  }
+  phrase = mnemonicPhrase || (await bip39.generateMnemonic())
 
   assert(bip39.validateMnemonic(phrase), 'Invalid mnemonic phrase!')
   const entropy = bip39.mnemonicToEntropy(phrase)

@@ -2,17 +2,16 @@ import assert from 'assert'
 import { delay } from 'redux-saga'
 import { call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
-import { Navigation } from 'react-native-navigation'
 import { reset } from 'redux-form/immutable'
 import * as actions from 'actions/eosAccount'
 import { getBalanceRequested } from 'actions/balance'
 import { createClassicWalletSucceeded } from 'actions/wallet'
 import { getErrorMessage } from 'utils'
 import secureStorage from 'utils/secureStorage'
-import { initAccount, privateToPublic, isValidPrivate } from 'eos'
+import { initAccount, privateToPublic, isValidPrivate, initEOS } from 'eos'
 import { getEOSKeys, decrypt, validateEntropy, encrypt } from 'key'
+import { popToRoot } from 'utils/location'
 import wif from 'wif'
-import { initEOS } from 'eos'
 
 function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
   if (!action.payload) return
@@ -39,13 +38,7 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
     yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${name}`, info, true)
     yield put(actions.createEOSAccountSucceeded(info))
     yield put(reset('createWalletForm'))
-    Navigation.handleDeepLink({
-	  link: '*',
-	  payload: {
-		method: 'popToRoot',
-		params: {}
-	  }
-    })
+    popToRoot()
   } catch (e) {
     yield put(actions.createEOSAccountFailed(getErrorMessage(e)))
   }
@@ -88,11 +81,11 @@ function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
     const ownerKeystore = yield call(encrypt, ownerPrivateKeyDecodedString, password, { origin: 'classic', coin: 'EOS' })
     const activeKeystore = yield call(encrypt, activePrivateKeyDecodedString, password, { origin: 'classic', coin: 'EOS' })
     const walletInfo = {
+      name,
+      eosAccountName,
       coin: 'EOS',
       timestamp: +Date.now(),
-      origin: 'classic',
-      name,
-      eosAccountName
+      origin: 'classic'
     }
     const info = { ...accountInfo, timestamp: +Date.now() }
 
@@ -106,13 +99,7 @@ function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
     yield put(getBalanceRequested({ code: 'eosio.token', account: walletInfo.eosAccountName }))
 
     yield put(reset('importEOSAccountForm'))
-    Navigation.handleDeepLink({
-	  link: '*',
-	  payload: {
-		method: 'popToRoot',
-		params: {}
-	  }
-    })
+    popToRoot()
   } catch (e) {
     alert(`${e.message} ------ ${JSON.stringify(action.payload)}`)
     yield put(actions.importEOSAccountFailed(getErrorMessage(e)))

@@ -5,9 +5,9 @@ import assert from 'assert'
 import * as actions from 'actions/keystore'
 import { getErrorMessage, encodeKey } from 'utils'
 import secureStorage from 'utils/secureStorage'
-import { Navigation } from 'react-native-navigation'
 import { decrypt, getEOSKeys, getEOSWifsByInfo } from 'key'
 import { isValidPrivate, privateToPublic } from 'eos'
+import { push } from 'utils/location'
 
 function* importEOSKeyRequested(action: Action<ImportEOSKeyParams>) {
   if (!action.payload) return
@@ -69,16 +69,7 @@ function* exportEOSKeyRequested(action: Action<ExportEOSKeyParams>) {
     assert(ownerWifs.length + activeWifs.length, 'No EOS private keys!')
 
     yield put(actions.exportEOSKeySucceeded())
-    Navigation.handleDeepLink({
-      link: '*',
-      payload: {
-        method: 'push',
-        params: {
-          screen: 'BitPortal.ExportPrivateKey',
-          passProps: { ownerWifs, activeWifs }
-        }
-      }
-    })
+    push('BitPortal.ExportPrivateKey', { ownerWifs, activeWifs })
   } catch (e) {
     console.log(e)
     yield put(actions.exportEOSKeyFailed(getErrorMessage(e)))

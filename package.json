@@ -209,7 +209,7 @@
     "rimraf": "^2.5.4",
     "sinon": "^1.17.6",
     "style-loader": "^0.20.3",
-    "ts-loader": "^4.1.0",
+    "ts-loader": "^4.4.1",
     "tslint": "^5.9.1",
     "tslint-config-airbnb": "^5.3.0",
     "tslint-loader": "^3.6.0",

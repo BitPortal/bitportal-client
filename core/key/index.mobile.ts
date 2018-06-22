@@ -152,8 +152,8 @@ export const encrypt = async (input: string, password: string, opts: { origin?: 
         iv: iv.toString('hex')
       },
       cipher: opts.cipher || 'aes-128-ctr',
-      kdf: kdf,
-      kdfparams: kdfparams,
+      kdf,
+      kdfparams,
       mac: mac.toString('hex')
     }
   }

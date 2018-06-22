@@ -21,7 +21,7 @@ export default handleActions({
     return state.set('isRefreshing', true)
   },
   [actions.getNewsListSucceeded] (state, action) {
-    const length = Immutable.fromJS(action.payload.data).size;
+    const length = Immutable.fromJS(action.payload.data).size
     if (length === 0) {
       return state
         .set('nomore', true)

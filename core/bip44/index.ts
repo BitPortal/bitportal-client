@@ -1,5 +1,5 @@
 import assert from 'assert'
-import coinTypes from './coinTypes.json'
+import coinTypes from './coinTypes'
 
 export const BIP44_PURPOSE = 44
 export const BIP44_CHAIN_EXTERNAL: bip44Chain = 0

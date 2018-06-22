@@ -1,18 +1,17 @@
 import { delay } from 'redux-saga'
 import { call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
-import { Navigation } from 'react-native-navigation'
 import { reset } from 'redux-form/immutable'
 import assert from 'assert'
 import * as actions from 'actions/wallet'
-import { resetEOSAccount } from 'actions/eosAccount'
 import { resetBalance, getBalanceRequested } from 'actions/balance'
 import { resetKey } from 'actions/keystore'
-import { syncEOSAccount, createEOSAccountSucceeded } from 'actions/eosAccount'
+import { resetEOSAccount, syncEOSAccount, createEOSAccountSucceeded } from 'actions/eosAccount'
 import { getErrorMessage } from 'utils'
 import secureStorage from 'utils/secureStorage'
 import { privateToPublic, initAccount, randomKey, initEOS } from 'eos'
 import { getMasterSeed, encrypt, decrypt, getEOSKeys, getEOSWifsByInfo } from 'key'
+import { push, pop, popToRoot } from 'utils/location'
 import wif from 'wif'
 
 function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAccountParams>) {
@@ -45,7 +44,7 @@ function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAc
       const signProvider = ({ sign, buf }: { sign: any, buf: any }) => sign(buf, '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3')
       const { eos } = yield call(initAccount, { keyProvider, signProvider })
       const transactionActions = (transaction: any) => {
-        transaction.newaccount({ name: eosAccountName, creator, owner, active })
+        transaction.newaccount({ creator, owner, active, name: eosAccountName })
         transaction.buyrambytes({ payer: creator, receiver: eosAccountName, bytes: 8192 })
         transaction.delegatebw({
           from: creator,
@@ -62,11 +61,11 @@ function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAc
       const ownerKeystore = yield call(encrypt, ownerPrivateKey, password, { origin: 'classic', coin: 'EOS' })
       const activeKeystore = yield call(encrypt, activePrivateKey, password, { origin: 'classic', coin: 'EOS' })
       const walletInfo = {
-        coin: 'EOS',
-        timestamp: +Date.now(),
         origin,
         name,
-        eosAccountName
+        eosAccountName,
+        coin: 'EOS',
+        timestamp: +Date.now()
       }
 
       yield call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_OWNER_${owner}`, ownerKeystore, true)
@@ -85,11 +84,11 @@ function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAc
       const keystore = yield call(encrypt, entropy, password, { bpid: id })
 
       const walletInfo = {
-        bpid: id,
-        timestamp: +Date.now(),
         origin,
         name,
-        eosAccountName
+        eosAccountName,
+        bpid: id,
+        timestamp: +Date.now()
       }
 
       const eosKeys = yield call(getEOSKeys, entropy)
@@ -105,7 +104,7 @@ function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAc
       const signProvider = ({ sign, buf }: { sign: any, buf: any }) => sign(buf, '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3')
       const { eos } = yield call(initAccount, { keyProvider, signProvider })
       const transactionActions = (transaction: any) => {
-        transaction.newaccount({ name: eosAccountName, creator, owner, active })
+        transaction.newaccount({ creator, owner, active, name: eosAccountName })
         transaction.buyrambytes({ payer: creator, receiver: eosAccountName, bytes: 8192 })
         transaction.delegatebw({
           from: creator,
@@ -130,12 +129,7 @@ function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAc
     }
 
     yield put(reset('createWalletAndEOSAccountForm'))
-    Navigation.handleDeepLink({
-	  link: '*',
-	  payload: {
-		method: 'pop'
-	  }
-    })
+    pop()
   } catch (e) {
     yield put(actions.createWalletFailed(getErrorMessage(e)))
   }
@@ -152,10 +146,10 @@ function* createWalletRequested(action: Action<CreateWalletParams>) {
     assert(!existedWallet, 'Wallet already exists!')
     const keystore = yield call(encrypt, entropy, password, { bpid: id })
     const walletInfo = {
+      name,
       bpid: id,
       timestamp: +Date.now(),
-      origin: 'hd',
-      name
+      origin: 'hd'
     }
 
     yield call(secureStorage.setItem, `HD_KEYSTORE_${id}`, keystore, true)
@@ -164,15 +158,7 @@ function* createWalletRequested(action: Action<CreateWalletParams>) {
     yield put(actions.createHDWalletSucceeded(walletInfo))
 
     yield put(reset('createWalletForm'))
-    Navigation.handleDeepLink({
-	  link: '*',
-	  payload: {
-		method: 'push',
-		params: {
-          screen: 'BitPortal.EOSAccountCreation'
-        }
-	  }
-    })
+    push('BitPortal.EOSAccountCreation')
   } catch (e) {
     yield put(actions.createWalletFailed(getErrorMessage(e)))
   }
@@ -187,14 +173,14 @@ function* syncWalletRequested() {
 
     const allItems = yield call(secureStorage.getAllItems)
 
-    const hdWalletList = Object.keys(allItems).filter(item => !item.indexOf('HD_KEYSTORE')).map(item => {
+    const hdWalletList = Object.keys(allItems).filter(item => !item.indexOf('HD_KEYSTORE')).map((item) => {
       const id = item.slice('HD_KEYSTORE'.length + 1)
       const infoKey = `HD_WALLET_INFO_${id}`
       const info = allItems[infoKey]
       return JSON.parse(info)
     }).sort((a, b) => a.timestamp - b.timestamp)
 
-    const classicWalletList = Object.keys(allItems).filter(item => !item.indexOf('CLASSIC_WALLET_INFO_EOS')).map(item => {
+    const classicWalletList = Object.keys(allItems).filter(item => !item.indexOf('CLASSIC_WALLET_INFO_EOS')).map((item) => {
       const info = allItems[item]
       return JSON.parse(info)
     }).sort((a, b) => a.timestamp - b.timestamp)
@@ -204,16 +190,11 @@ function* syncWalletRequested() {
     let active = allItems.ACTIVE_WALLET && JSON.parse(allItems.ACTIVE_WALLET)
 
     if (!active) {
-      if (hdWalletList.length) {
-        active = hdWalletList[0]
-      } else {
-        active = classicWalletList[0]
-      }
-
+      active = hdWalletList.length ? hdWalletList[0] : classicWalletList[0]
       yield call(secureStorage.setItem, 'ACTIVE_WALLET', active, true)
     }
 
-    const eosAccountList = Object.keys(allItems).filter(item => !item.indexOf('EOS_ACCOUNT_INFO')).map(item => {
+    const eosAccountList = Object.keys(allItems).filter(item => !item.indexOf('EOS_ACCOUNT_INFO')).map((item) => {
       const info = allItems[item]
       return JSON.parse(info)
     }).sort((a, b) => a.timestamp - b.timestamp)
@@ -270,13 +251,7 @@ function* logoutRequested(action: Action<LogoutParams>) {
     yield put(resetBalance())
     yield put(resetKey())
     yield put(actions.logoutSucceeded())
-    Navigation.handleDeepLink({
-      link: '*',
-      payload: {
-        method: 'popToRoot',
-        params: {}
-      }
-    })
+    popToRoot()
   } catch (e) {
     yield put(actions.logoutFailed(getErrorMessage(e)))
   }

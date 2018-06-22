@@ -47,12 +47,6 @@ export default class Home extends Component<Props, State> {
   }
 
   componentDidMount() {
-    /* this.props.actions.createEOSAccountRequested({
-     *   creator: 'eosio',
-     *   name: 'lkohopdn',
-     *   recovery: 'eosio',
-     *   keyProvider: '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
-     * })*/
     this.props.actions.syncWalletRequested()
   }
 
@@ -62,7 +56,7 @@ export default class Home extends Component<Props, State> {
     return (
       <IntlProvider messages={messages[locale]}>
         <div className={style.home}>
-          {ticker.get('data').map((item: any) =>
+          {ticker.map((item: any) =>
             <div key={`${item.get('exchange')}_${item.get('market')}`}>
               {`${item.get('market')}:`}
               <FormattedNumber

@@ -22,7 +22,7 @@ function* votingRequested(action: Action<VotingParams>) {
     const activePermission = permissions.filter((item: any) => item.perm_name === 'active')
     assert(activePermission.length && activePermission[0].required_auth && activePermission[0].required_auth.keys && activePermission[0].required_auth.keys.length, 'Active permission dose not exist!')
 
-    let activeWifs = []
+    const activeWifs = []
     const activePublicKeys = activePermission[0].required_auth.keys
     for (const publicKey of activePublicKeys) {
       const key = publicKey.key
@@ -51,8 +51,8 @@ function* votingRequested(action: Action<VotingParams>) {
     }
 
     const headers = {
-      ref_block_num: ref_block_num,
-      ref_block_prefix: ref_block_prefix,
+      ref_block_num,
+      ref_block_prefix,
       expiration: new Date(new Date().getTime() + expireInSeconds * 1000).toISOString().split('.')[0],
       net_usage_words: 0,
       max_cpu_usage_ms: 0,
@@ -61,9 +61,7 @@ function* votingRequested(action: Action<VotingParams>) {
 
     eos = initEOS({
       keyProvider: activeWifs,
-      transactionHeaders: function(_: any, callback: any) {
-        callback(null, headers)
-      },
+      transactionHeaders: (_: any, callback: any) => callback(null, headers),
       broadcast: false,
       sign: true,
       chainId: chainInfo.chainId,

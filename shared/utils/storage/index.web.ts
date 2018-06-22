@@ -6,22 +6,22 @@ const plugToRequest = (req: any) => {
   cookies = new Cookies(req.headers.cookie)
 }
 
-const getItem = async (name: string, json?: boolean, options: Object = {}) => {
+const getItem = async (name: string, json?: boolean, options: object = {}) => {
   const value = await cookies.get(name, options)
   return (json && !!value) ? JSON.parse(value) : value
 }
 
-const getItemSync = (name: string, json?: boolean, options: Object = {}) => {
+const getItemSync = (name: string, json?: boolean, options: object = {}) => {
   const value = cookies.get(name, options)
   return (json && !!value) ? JSON.parse(value) : value
 }
 
-const setItem = (name: string, value: any, json?: boolean, options: Object = {}) => {
+const setItem = (name: string, value: any, json?: boolean, options: object = {}) => {
   const stringValue = (json && !!value) ? JSON.stringify(value) : value
   cookies.set(name, stringValue, options)
 }
 
-const removeItem = (name: string, options: Object = {}) => cookies.remove(name, options)
+const removeItem = (name: string, options: object = {}) => cookies.remove(name, options)
 
 const storage = { plugToRequest, getItem, getItemSync, setItem, removeItem }
 

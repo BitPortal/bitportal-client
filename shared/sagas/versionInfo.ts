@@ -17,4 +17,3 @@ function* getVersionInfo() {
 export default function* versionInfoSaga() {
   yield takeEvery(String(actions.getVersionInfoRequested), getVersionInfo)
 }
-    

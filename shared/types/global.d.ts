@@ -20,6 +20,8 @@ declare interface Config {
   EOS_API_URL: string
   CURRENCY_RATE_URL: string
   BITPORTAL_API_TERMS_URL: string
+  CURRENCY_RATE_URL: string
+  BITPORTAL_API_UPDATE_LOG_URL: string
 }
 
 declare interface RootState {
@@ -241,11 +243,6 @@ declare module 'react-native-eosjs-ecc' {
   export = file
 }
 
-declare module 'bip39' {
-  const file: any
-  export = file
-}
-
 declare module 'ethereumjs-wallet*' {
   const file: any
   export = file
@@ -360,6 +357,11 @@ declare module 'randombytes' {
 }
 
 declare module 'wif' {
-  const file: any
-  export = file
+  const wif: any
+  export default wif
+}
+
+declare module 'bip39' {
+  const bip39: any
+  export default bip39
 }

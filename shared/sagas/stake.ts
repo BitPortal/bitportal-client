@@ -22,7 +22,7 @@ function* stakeRequested(action: Action<StakeParams>) {
     const activePermission = permissions.filter((item: any) => item.perm_name === 'active')
     assert(activePermission.length && activePermission[0].required_auth && activePermission[0].required_auth.keys && activePermission[0].required_auth.keys.length, 'Active permission dose not exist!')
 
-    let activeWifs = []
+    const activeWifs = []
     const activePublicKeys = activePermission[0].required_auth.keys
     for (const publicKey of activePublicKeys) {
       const key = publicKey.key
