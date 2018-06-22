@@ -24,6 +24,28 @@ const styles = StyleSheet.create({
   text14: {
     fontSize: FontScale(14),
     color: Colors.textColor_255_255_238
+  },
+  text16: {
+    fontSize: FontScale(16),
+    color: Colors.textColor_89_185_226
+  },
+  progressContaner: {
+    paddingVertical: 20,
+    paddingHorizontal: 32,
+    width: SCREEN_WIDTH,
+    minHeight: 80,
+    backgroundColor: Colors.minorThemeColor
+  },
+  totalContainer: {
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  tipsContainer: {
+    marginTop: 10,
+    paddingVertical: 20,
+    paddingHorizontal: 32,
+    width: SCREEN_WIDTH,
+    backgroundColor: Colors.minorThemeColor
   }
 })
 
