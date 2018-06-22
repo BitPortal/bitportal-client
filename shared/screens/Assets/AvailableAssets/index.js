@@ -1,14 +1,13 @@
 /* @jsx */
-import React, { Component } from 'react'
-import styles from './styles'
+import React from 'react'
 import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { Text, View, ScrollView, TouchableOpacity, Switch } from 'react-native'
+import { Text, View, ScrollView, Switch } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
-import { SCREEN_WIDTH, FontScale } from 'utils/dimens'
 import { connect } from 'react-redux'
-import { FormattedMessage, IntlProvider } from 'react-intl'
+import { IntlProvider } from 'react-intl'
 import messages from './messages'
+import styles from './styles'
 
 const AssetElement = ({ item, onValueChange }) => (
   <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.bgColor_48_49_59 }]}>

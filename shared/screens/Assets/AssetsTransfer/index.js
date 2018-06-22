@@ -1,16 +1,14 @@
 
-import React, { Component } from 'react'
-import { Text, View, ScrollView, Image, TouchableOpacity, TextInput } from 'react-native'
+import React from 'react'
+import { View, ScrollView } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import styles from './styles'
-import Colors from 'resources/colors'
 import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
-import TransferCard from './TransferCard'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
-import messages from './messages'
 import TransferAssetsForm from 'components/Form/TransferAssetsForm'
+import styles from './styles'
+import messages from './messages'
+import TransferCard from './TransferCard'
 
 @connect(
   state => ({
@@ -29,7 +27,7 @@ export default class AssetsTransfer extends BaseScreen {
   }
 
   scanner = () => {
-    if (this.props.entry && this.props.entry == 'scanner') {
+    if (this.props.entry && this.props.entry === 'scanner') {
       this.pop()
     } else {
       this.props.navigator.push({
@@ -47,7 +45,6 @@ export default class AssetsTransfer extends BaseScreen {
   }
 
   render() {
-    const { destination, amount, memo } = this.state
     const { locale } = this.props
 
     return (

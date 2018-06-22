@@ -1,16 +1,10 @@
 
-import React, { Component } from 'react'
+import React from 'react'
 import BaseScreen from 'components/BaseScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import styles from './styles'
 import storage from 'utils/storage'
 import Colors from 'resources/colors'
 import Modal from 'react-native-modal'
-import AssetQRCode from './AssetQRCode'
-import AccountList from './AccountList'
-import EnableAssets from './EnableAssets'
-import BalanceList from './BalanceList'
-import TotalAssetsCard from './TotalAssetsCard'
 import * as walletActions from 'actions/wallet'
 import * as tickerActions from 'actions/ticker'
 import * as balanceActions from 'actions/balance'
@@ -22,20 +16,18 @@ import { accountBalanceSelector } from 'selectors/balance'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { eosPriceSelector } from 'selectors/ticker'
 import { IntlProvider, FormattedMessage } from 'react-intl'
-import messages from './messages'
-import NavigationBar, { ListButton, CommonRightButton, CommonTitle } from 'components/NavigationBar'
+import NavigationBar, { CommonTitle } from 'components/NavigationBar'
 import SettingItem from 'components/SettingItem'
 import Loading from 'components/Loading'
-import {
-  Text,
-  View,
-  Image,
-  ScrollView,
-  LayoutAnimation,
-  ActivityIndicator,
-  InteractionManager,
-  TouchableHighlight
-} from 'react-native'
+import { Text, View, ScrollView, LayoutAnimation, InteractionManager, TouchableHighlight } from 'react-native'
+import styles from './styles'
+import messages from './messages'
+import AssetQRCode from './AssetQRCode'
+import AccountList from './AccountList'
+import EnableAssets from './EnableAssets'
+import BalanceList from './BalanceList'
+import TotalAssetsCard from './TotalAssetsCard'
+
 
 const getTotalAssets = (balanceList, eosPrice) => {
   if (!balanceList) return 0
@@ -103,7 +95,7 @@ export default class Assets extends BaseScreen {
   }
 
   // 查看资产情况
-  checkAsset = (assetInfo) => {
+  checkAsset = () => {
     /* this.props.navigator.push({
      *   screen: 'BitPortal.AssetChart',
      *   passProps: { assetInfo }
@@ -205,7 +197,6 @@ export default class Assets extends BaseScreen {
     const classicWalletList = wallet.get('classicWalletList')
     const walletCount = hdWalletList.size + classicWalletList.size
     const balanceList = balance.get('data').get('eosAccountBalance')
-    console.log('###', activeEOSAccount.toJS())
 
     return (
       <IntlProvider messages={messages[locale]}>

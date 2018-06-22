@@ -1,15 +1,13 @@
 /* @jsx */
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import styles from './styles'
-import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
-import BaseScreen from 'components/BaseScreen'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import Colors from 'resources/colors'
+import React from 'react'
+// import { connect } from 'react-redux'
 import { FormattedNumber } from 'react-intl'
+import { Text, View, ScrollView } from 'react-native'
+import BaseScreen from 'components/BaseScreen'
+import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import ChartWrapper from './ChartWrapper'
 import RecordItem from './RecordItem'
+import styles from './styles'
 
 export default class AssetChart extends BaseScreen {
   static navigatorStyle = {
