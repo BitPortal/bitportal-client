@@ -70,7 +70,7 @@ export default class App extends Component<Props, State> {
   }
 
   componentDidMount() {
-    this.props.actions.locationInit()
+    // this.props.actions.locationInit()
   }
 
   render() {
@@ -79,7 +79,7 @@ export default class App extends Component<Props, State> {
     return (
       <IntlProvider messages={messages[locale]}>
         <div className={style.app}>
-          <Title render="" />
+          <Title render="BitPortal" />
           <div className={style.appContainer}>
             <div className={classNames({ [style.transitionContext]: true, [style.showMobileMenu]: false })}>
               <div className={style.content}>
