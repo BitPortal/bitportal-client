@@ -15,18 +15,17 @@ const AssetElement = ({ item, onValueChange }) => (
     <View style={{ flexDirection: 'row' }}>
       <Text style={styles.text20}> { item.assetName } </Text>
     </View>
-    <Switch value={item.value} onValueChange={(e) => onValueChange(e, item)} />
+    <Switch value={item.value} onValueChange={e => onValueChange(e, item)} />
   </View>
 )
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale')
   })
 )
 
 export default class AvailableAssets extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -35,12 +34,12 @@ export default class AvailableAssets extends BaseScreen {
   state = {
     assetsList: [
       { assetName: 'EOS', value: true },
-      { assetName: 'UIP', value: false }, 
-      { assetName: 'OCT', value: false }, 
-      { assetName: 'PRA', value: false }, 
+      { assetName: 'UIP', value: false },
+      { assetName: 'OCT', value: false },
+      { assetName: 'PRA', value: false },
       { assetName: 'DEW', value: false },
       { assetName: 'EOS', value: true },
-      { assetName: 'UIP', value: false }, 
+      { assetName: 'UIP', value: false },
       { assetName: 'OCT', value: false }
     ]
   }
@@ -56,9 +55,9 @@ export default class AvailableAssets extends BaseScreen {
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-          <NavigationBar 
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()}/>}
-            title={messages[locale]["astlist_title_name_astlst"]}
+          <NavigationBar
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+            title={messages[locale].astlist_title_name_astlst}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -67,11 +66,10 @@ export default class AvailableAssets extends BaseScreen {
                   <AssetElement key={index} item={item} onValueChange={(e, item) => this.onValueChange(e, item)} />
                 ))
               }
-            </ScrollView>  
+            </ScrollView>
           </View>
         </View>
       </IntlProvider>
     )
   }
-
 }

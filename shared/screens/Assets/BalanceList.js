@@ -35,5 +35,5 @@ const ListItem = ({ item, onPress, eosPrice }) => (
 )
 
 export default BalanceList = ({ data, onPress, eosPrice }) => (
-  <View>{data.map((item, index) => (<ListItem key={index} item={item} eosPrice={eosPrice} onPress={(e) => onPress(e)} />))}</View>
+  <View>{data.map((item, index) => (<ListItem key={index} item={item} eosPrice={eosPrice} onPress={e => onPress(e)} />))}</View>
 )

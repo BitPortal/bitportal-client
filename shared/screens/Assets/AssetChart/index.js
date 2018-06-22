@@ -12,7 +12,6 @@ import ChartWrapper from './ChartWrapper'
 import RecordItem from './RecordItem'
 
 export default class AssetChart extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -35,7 +34,7 @@ export default class AssetChart extends BaseScreen {
     const { assetInfo } = this.props
     return (
       <View style={styles.container}>
-        <NavigationBar 
+        <NavigationBar
           leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
           title={assetInfo.get('assetName')}
         />
@@ -43,16 +42,16 @@ export default class AssetChart extends BaseScreen {
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.content}>
               <Text style={[styles.text24, { marginTop: 20 }]}>
-                <FormattedNumber 
+                <FormattedNumber
                   value={assetInfo.get('amount')}
                   maximumFractionDigits={4}
                   minimumFractionDigits={4}
                 />
               </Text>
               <Text style={[styles.text14, { marginBottom: 20 }]}>
-                ≈ ¥ 
-                <FormattedNumber 
-                  value={assetInfo.get('amount')*6.5}
+                ≈ ¥
+                <FormattedNumber
+                  value={assetInfo.get('amount') * 6.5}
                   maximumFractionDigits={4}
                   minimumFractionDigits={4}
                 />
@@ -69,9 +68,8 @@ export default class AssetChart extends BaseScreen {
             </View>
           </ScrollView>
         </View>
-        
+
       </View>
     )
   }
-
 }

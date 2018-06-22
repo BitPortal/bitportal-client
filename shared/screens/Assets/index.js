@@ -53,14 +53,14 @@ const getTotalAssets = (balanceList, eosPrice) => {
 }
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale'),
     wallet: state.wallet,
     eosAccount: eosAccountSelector(state),
     balance: accountBalanceSelector(state),
     eosPrice: eosPriceSelector(state)
   }),
-  (dispatch) => ({
+  dispatch => ({
     actions: bindActionCreators({
       ...walletActions,
       ...tickerActions,
@@ -119,20 +119,20 @@ export default class Assets extends BaseScreen {
   createNewAccount = () => {
     InteractionManager.runAfterInteractions(() => {
       this.setState({ isVisible2: false }, () => {
-        this.props.navigator.push({ screen: "BitPortal.AccountImport" })
+        this.props.navigator.push({ screen: 'BitPortal.AccountImport' })
       })
     })
   }
 
   createEOSAccount = () => {
     this.props.navigator.push({
-      screen: "BitPortal.EOSAccountCreation"
+      screen: 'BitPortal.EOSAccountCreation'
     })
   }
 
   checkResourcesDetails = () => {
     this.props.navigator.push({
-      screen: "BitPortal.Resources"
+      screen: 'BitPortal.Resources'
     })
   }
 
@@ -215,7 +215,7 @@ export default class Assets extends BaseScreen {
             // rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanQR()} />}
           />
           {
-            !walletCount  &&
+            !walletCount &&
             <TouchableHighlight underlayColor={Colors.mainThemeColor} onPress={() => this.createNewAccount()} style={[styles.createAccountContainer, styles.center]}>
               <View style={{ alignItems: 'center' }}>
                 <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF} />
@@ -241,7 +241,7 @@ export default class Assets extends BaseScreen {
                 />
                 {!activeEOSAccount.get('account_name') && <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_create_eos_account" />} onPress={() => this.createEOSAccount()} extraStyle={{ marginTop: 10, marginBottom: 10 }} />}
                 {!!activeEOSAccount.get('account_name') && <EnableAssets Title={<FormattedMessage id="asset_title_name_ast" />} enableAssets={() => this.enableAssets()} />}
-                {balanceList && <BalanceList data={balanceList} eosPrice={eosPrice} onPress={(e) => this.checkAsset(e)} />}
+                {balanceList && <BalanceList data={balanceList} eosPrice={eosPrice} onPress={e => this.checkAsset(e)} />}
               </ScrollView>
             </View>
           }
@@ -260,7 +260,7 @@ export default class Assets extends BaseScreen {
           <Modal
             animationIn="fadeIn"
             animationOut="fadeOut"
-            style = {{  margin: 0 }}
+            style={{ margin: 0 }}
             isVisible={this.state.isVisible2}
             backdropOpacity={0}
           >

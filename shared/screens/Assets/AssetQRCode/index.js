@@ -26,16 +26,15 @@ import { normalizeUnitByCurrency } from 'utils/normalize'
 import messages from './messages'
 
 const screen_width = isIphoneX ? SCREEN_WIDTH - 40 : SCREEN_WIDTH
-const qrCodeSize = screen_width/2
+const qrCodeSize = screen_width / 2
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale')
   })
 )
 
 export default class AssetQRCode extends Component {
-
   state = {
     value: '',
     isCopied: false,
@@ -96,8 +95,8 @@ export default class AssetQRCode extends Component {
                 style={styles.input}
                 selectionColor={Colors.textColor_89_185_226}
                 keyboardAppearance={Colors.keyboardTheme}
-                placeholder={'0'}
-                onChangeText={(e) => this.onChangeText(e)}
+                placeholder="0"
+                onChangeText={e => this.onChangeText(e)}
                 value={this.state.value}
               />
             </View>
@@ -107,11 +106,11 @@ export default class AssetQRCode extends Component {
               <View style={[styles.semicircle, { marginRight: -5 }]} />
             </View>
             <View style={[styles.qrCode, styles.center]}>
-              <View style={{ padding: 2, borderRadius: 2, maxWidth: qrCodeSize+4, backgroundColor: Colors.bgColor_FFFFFF }}>
+              <View style={{ padding: 2, borderRadius: 2, maxWidth: qrCodeSize + 4, backgroundColor: Colors.bgColor_FFFFFF }}>
                 <QRCode
                   value={eosQrString(this.props.accountName, this.state.value)}
                   size={qrCodeSize}
-                  color='black'
+                  color="black"
                 />
               </View>
             </View>
@@ -127,13 +126,15 @@ export default class AssetQRCode extends Component {
             >
               <Text style={[styles.text14, {
                 color: isCopied ? Colors.textColor_181_181_181 : Colors.textColor_255_255_238
-              }]}>
+              }]}
+              >
                 {isCopied ? <FormattedMessage id="qrcode_button_name_copied" /> : <FormattedMessage id="qrcode_button_name_copy" />}
               </Text>
             </TouchableHighlight>
             <TouchableHighlight
               underlayColor={Colors.textColor_89_185_226}
-              onPress={() => this.shareQrcodeContent()} style={[styles.btn, styles.center]}
+              onPress={() => this.shareQrcodeContent()}
+style={[styles.btn, styles.center]}
             >
               <Text style={styles.text14}>
                 <FormattedMessage id="qrcode_button_name_share" />

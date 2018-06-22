@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     height: 70,
     marginTop: 1
   }
-  
+
 })
 
 export default styles

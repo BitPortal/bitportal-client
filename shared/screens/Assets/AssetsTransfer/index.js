@@ -13,7 +13,7 @@ import messages from './messages'
 import TransferAssetsForm from 'components/Form/TransferAssetsForm'
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale')
   })
 )
@@ -54,9 +54,9 @@ export default class AssetsTransfer extends BaseScreen {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale]["snd_title_name_snd"]}
-            leftButton={ <CommonButton iconName="md-arrow-back" onPress={() => this.pop()}/> }
-            rightButton={ <CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanner()} /> }
+            title={messages[locale].snd_title_name_snd}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+            rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanner()} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -64,7 +64,7 @@ export default class AssetsTransfer extends BaseScreen {
               <View style={styles.keyboard} />
             </ScrollView>
           </View>
-          <TransferCard isVisible={this.state.isVisible} onPress={() => { this.setState({ isVisible: false }) }} transferAsset={() => this.transferAsset()}/>
+          <TransferCard isVisible={this.state.isVisible} onPress={() => { this.setState({ isVisible: false }) }} transferAsset={() => this.transferAsset()} />
         </View>
       </IntlProvider>
     )

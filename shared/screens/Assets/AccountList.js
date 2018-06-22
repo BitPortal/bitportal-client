@@ -55,13 +55,12 @@ const ListItem = ({ item, onPress, active }) => (
 )
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale')
   })
 )
 
 export default class AccountList extends Component {
-
   switchAccount = (item) => {
     this.props.onPress(item.toJS())
     this.props.dismissModal()
@@ -84,7 +83,7 @@ export default class AccountList extends Component {
             style={styles.listContainer}
             onPress={() => { createNewAccount() }}
           >
-            <View style={[styles.listContainer, styles.between, { backgroundColor: Colors.minorThemeColor, justifyContent: 'flex-start' , paddingHorizontal: 32 }]}>
+            <View style={[styles.listContainer, styles.between, { backgroundColor: Colors.minorThemeColor, justifyContent: 'flex-start', paddingHorizontal: 32 }]}>
               <Ionicons name="ios-add-outline" size={26} color={Colors.textColor_89_185_226} />
               <Text style={[styles.text16, { marginLeft: 10, color: Colors.textColor_89_185_226 }]}>
                 <FormattedMessage id="asset_droplist_button_add" />

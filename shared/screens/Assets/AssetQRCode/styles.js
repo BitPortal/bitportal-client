@@ -2,7 +2,7 @@ import { StyleSheet, Platform } from 'react-native'
 import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, isIphoneX, ifIphoneX } from 'utils/dimens'
 import Colors from 'resources/colors'
 
-let screen_width = isIphoneX ? SCREEN_WIDTH-40 : SCREEN_WIDTH
+const screen_width = isIphoneX ? SCREEN_WIDTH - 40 : SCREEN_WIDTH
 
 const styles = StyleSheet.create({
   container: {
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
   close: {
     ...ifIphoneX({
-      marginTop: NAV_BAR_HEIGHT/4
+      marginTop: NAV_BAR_HEIGHT / 4
     }, {
       marginTop: 0
     }),
@@ -30,18 +30,18 @@ const styles = StyleSheet.create({
   qrCodeContainer: {
     marginTop: 20,
     marginHorizontal: 20,
-    width: screen_width-40,
+    width: screen_width - 40,
     minHeight: 100,
     borderRadius: 2,
     backgroundColor: Colors.bgColor_FFFFFF
   },
   head: {
-    width: screen_width-40,
+    width: screen_width - 40,
     height: 60,
     backgroundColor: Colors.textColor_89_185_226
   },
   inputContainer: {
-    width: screen_width-40-30,
+    width: screen_width - 40 - 30,
     height: 40,
     marginHorizontal: 15,
     marginVertical: 20,
@@ -49,17 +49,17 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth
   },
   input: {
-    width: screen_width-40-30,
+    width: screen_width - 40 - 30,
     height: 42,
-    fontSize: FontScale(20), 
+    fontSize: FontScale(20),
     color: Colors.minorThemeColor,
   },
   separator: {
-    width: screen_width-40,
+    width: screen_width - 40,
     height: 10
   },
   seperator2: {
-    width: screen_width-80,
+    width: screen_width - 80,
     height: 2
   },
   semicircle: {
@@ -69,18 +69,18 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.bgColor_000000
   },
   qrCode: {
-    width: screen_width-40,
+    width: screen_width - 40,
     minHeight: 100,
     paddingVertical: 20
   },
   btnContainer: {
     marginTop: 20,
     marginHorizontal: 20,
-    width: screen_width-40,
+    width: screen_width - 40,
     height: 40
   },
   btn: {
-    width: (screen_width-60)/2,
+    width: (screen_width - 60) / 2,
     height: 40,
     borderRadius: 3,
     backgroundColor: Colors.textColor_89_185_226
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   text10: {
-    width: screen_width-40-30,
+    width: screen_width - 40 - 30,
     fontSize: FontScale(8),
     color: Colors.textColor_216_216_216
   },

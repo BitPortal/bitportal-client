@@ -15,11 +15,11 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'ios' ? 20 : 0
   },
   navButton: {
-    minWidth: 100, 
-    height: 40, 
-    paddingTop: 6, 
-    marginLeft: 10, 
-    alignItems: 'center', 
+    minWidth: 100,
+    height: 40,
+    paddingTop: 6,
+    marginLeft: 10,
+    alignItems: 'center',
     justifyContent: 'center'
   },
   center: {
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT-NAV_BAR_HEIGHT-TAB_BAR_HEIGHT,
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - TAB_BAR_HEIGHT,
     backgroundColor: Colors.mainThemeColor
   },
   listContainer: {
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
   createAccountContainer: {
     width: SCREEN_WIDTH - 64,
-    height: SCREEN_WIDTH/2 - 32,
+    height: SCREEN_WIDTH / 2 - 32,
     borderRadius: 12,
     marginHorizontal: 32,
     marginVertical: 20,
