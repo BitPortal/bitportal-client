@@ -1,6 +1,6 @@
 {
   "ENV": "development",
-  "BITPORTAL_API_REST_URL": "http://market-api.corp.bitportal.io/api",
+  "BITPORTAL_API_REST_URL": "https://market.bitportal.io/api",
   "BITPORTAL_API_WEBSOCKET_URL": "ws://staging-api.bitportal.io",
   "EOS_API_URL": "http://mainnet.eoscalgary.io",
   "BITPORTAL_API_CMS_URL": "http://cms.bitportal.io",

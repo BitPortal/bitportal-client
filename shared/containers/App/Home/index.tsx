@@ -48,6 +48,7 @@ export default class Home extends Component<Props, State> {
 
   componentDidMount() {
     this.props.actions.syncWalletRequested()
+    // this.props.actions.getTickersRequested({ exchange: 'BINANCE' })
   }
 
   render() {
