@@ -26,10 +26,10 @@ export const FieldError = ({ children }) => (
   <Text style={styles.fieldError}>{children}</Text>
 )
 
-export const TextField = ({ input: { onChange, ...restInput }, meta: { touched, error }, label, keyboardType }) => (
+export const TextField = ({ input: { onChange, ...restInput }, meta: { touched, error }, label, keyboardType, rightContent }) => (
   <FieldItem>
-    <Text style={styles.text14}>{label}</Text>
-    <FieldInput>
+    {label && <Text style={styles.text14}>{label}</Text>}
+    <FieldInput rightContent={rightContent}>
       <TextInput
         style={styles.input}
         autoCorrect={false}

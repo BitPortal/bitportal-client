@@ -19,7 +19,8 @@ export default EStyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 1
+    padding: 1,
+    alignItems: 'center'
   },
   input: {
     flex: 1,

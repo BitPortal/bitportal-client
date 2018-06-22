@@ -289,6 +289,7 @@ declare module 'key' {
     encrypt: any
     getIdFromSeed: any
     getIdFromEntropy: any
+    getEOSWifsByInfo: any
   }
 
   const key: KeyManagement

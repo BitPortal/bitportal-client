@@ -9,11 +9,12 @@ import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { eosAccountSelector } from 'selectors/eosAccount'
+import TradeRAMForm from 'components/Form/TradeRAMForm'
 import messages from './messages'
 import Progress from '../Progress'
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale'),
     wallet: state.wallet,
     eosAccount: eosAccountSelector(state)
@@ -21,7 +22,6 @@ import Progress from '../Progress'
 )
 
 export default class Memory extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -30,7 +30,8 @@ export default class Memory extends BaseScreen {
   render() {
     const { locale, eosAccount } = this.props
     const activeEOSAccount = eosAccount.get('data')
-    const percent = (activeEOSAccount.get('ram_quota') - activeEOSAccount.get('ram_usage'))/activeEOSAccount.get('ram_quota')
+    const percent = (activeEOSAccount.get('ram_quota') - activeEOSAccount.get('ram_usage')) / activeEOSAccount.get('ram_quota')
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -50,19 +51,17 @@ export default class Memory extends BaseScreen {
                   <Text style={styles.text14}>{activeEOSAccount.get('ram_quota')} byte</Text>
                 </View>
               </View>
-
+              <TradeRAMForm />
               <View style={styles.tipsContainer}>
                 <Text style={styles.text16}><FormattedMessage id="memory_title_name_tips" /></Text>
                 <Text style={[styles.text14, {marginTop: 15}]}><FormattedMessage id="memory_title_name_tip1" /></Text>
                 <Text style={[styles.text14, {marginTop: 10}]}><FormattedMessage id="memory_title_name_tip2" /></Text>
                 <Text style={[styles.text14, {marginTop: 10}]}><FormattedMessage id="memory_title_name_tip3" /></Text>
               </View>
-
             </ScrollView>
           </View>
         </View>
       </IntlProvider>
     )
   }
-
 }

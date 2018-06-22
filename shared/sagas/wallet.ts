@@ -12,7 +12,7 @@ import { syncEOSAccount, createEOSAccountSucceeded } from 'actions/eosAccount'
 import { getErrorMessage } from 'utils'
 import secureStorage from 'utils/secureStorage'
 import { privateToPublic, initAccount, randomKey, initEOS } from 'eos'
-import { getMasterSeed, encrypt, decrypt, getEOSKeys } from 'key'
+import { getMasterSeed, encrypt, decrypt, getEOSKeys, getEOSWifsByInfo } from 'key'
 import wif from 'wif'
 
 function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAccountParams>) {
@@ -257,27 +257,7 @@ function* logoutRequested(action: Action<LogoutParams>) {
       yield call(decrypt, keystore, password)
     } else if (coin === 'EOS') {
       const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
-
-      assert(accountInfo.permissions && accountInfo.permissions.length, 'EOS account permissions dose not exist!')
-      const permissions = accountInfo.permissions
-      const ownerPermission = permissions.filter((item: any) => item.perm_name === 'owner')
-      assert(ownerPermission.length && ownerPermission[0].required_auth && ownerPermission[0].required_auth.keys && ownerPermission[0].required_auth.keys.length, 'Owner permission dose not exist!')
-      const activePermission = permissions.filter((item: any) => item.perm_name === 'active')
-      assert(activePermission.length && activePermission[0].required_auth && activePermission[0].required_auth.keys && activePermission[0].required_auth.keys.length, 'Active permission dose not exist!')
-
-      const ownerPublicKeys = ownerPermission[0].required_auth.keys
-      for (const publicKey of ownerPublicKeys) {
-        const key = publicKey.key
-        const keystore = yield call(secureStorage.getItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_OWNER_${key}`, true)
-        if (keystore) yield call(decrypt, keystore, password)
-      }
-
-      const activePublicKeys = activePermission[0].required_auth.keys
-      for (const publicKey of activePublicKeys) {
-        const key = publicKey.key
-        const keystore = yield call(secureStorage.getItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_ACTIVE_${key}`, true)
-        if (keystore) yield call(decrypt, keystore, password)
-      }
+      yield call(getEOSWifsByInfo, password, accountInfo, ['owner', 'active'])
     }
 
     const items = yield call(secureStorage.getAllItems)

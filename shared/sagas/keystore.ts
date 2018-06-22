@@ -6,9 +6,8 @@ import * as actions from 'actions/keystore'
 import { getErrorMessage, encodeKey } from 'utils'
 import secureStorage from 'utils/secureStorage'
 import { Navigation } from 'react-native-navigation'
-import { decrypt, getEOSKeys } from 'key'
+import { decrypt, getEOSKeys, getEOSWifsByInfo } from 'key'
 import { isValidPrivate, privateToPublic } from 'eos'
-import wif from 'wif'
 
 function* importEOSKeyRequested(action: Action<ImportEOSKeyParams>) {
   if (!action.payload) return
@@ -62,35 +61,9 @@ function* exportEOSKeyRequested(action: Action<ExportEOSKeyParams>) {
     } else {
       const eosAccountName = action.payload.eosAccountName
       const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
-
-      assert(accountInfo.permissions && accountInfo.permissions.length, 'EOS account permissions dose not exist!')
-      const permissions = accountInfo.permissions
-      const ownerPermission = permissions.filter((item: any) => item.perm_name === 'owner')
-      assert(ownerPermission.length && ownerPermission[0].required_auth && ownerPermission[0].required_auth.keys && ownerPermission[0].required_auth.keys.length, 'Owner permission dose not exist!')
-      const activePermission = permissions.filter((item: any) => item.perm_name === 'active')
-      assert(activePermission.length && activePermission[0].required_auth && activePermission[0].required_auth.keys && activePermission[0].required_auth.keys.length, 'Active permission dose not exist!')
-
-      const ownerPublicKeys = ownerPermission[0].required_auth.keys
-      for (const publicKey of ownerPublicKeys) {
-        const key = publicKey.key
-        const keystore = yield call(secureStorage.getItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_OWNER_${key}`, true)
-        if (keystore) {
-          const privateKey = yield call(decrypt, keystore, password)
-          const ownerWif = wif.encode(0x80, Buffer.from(privateKey, 'hex'), false)
-          ownerWifs.push(ownerWif)
-        }
-      }
-
-      const activePublicKeys = activePermission[0].required_auth.keys
-      for (const publicKey of activePublicKeys) {
-        const key = publicKey.key
-        const keystore = yield call(secureStorage.getItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_ACTIVE_${key}`, true)
-        if (keystore) {
-          const privateKey = yield call(decrypt, keystore, password)
-          const activeWif = wif.encode(0x80, Buffer.from(privateKey, 'hex'), false)
-          activeWifs.push(activeWif)
-        }
-      }
+      const wifs = yield call(getEOSWifsByInfo, password, accountInfo, ['owner', 'active'])
+      ownerWifs = wifs.ownerWifs
+      activeWifs = wifs.activeWifs
     }
 
     assert(ownerWifs.length + activeWifs.length, 'No EOS private keys!')
