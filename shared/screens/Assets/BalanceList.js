@@ -1,11 +1,10 @@
 
-import React, { Component } from 'react'
-import styles from './styles'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import { Text, View, ScrollView, TouchableHighlight, StyleSheet } from 'react-native'
+import React from 'react'
+import { Text, View, TouchableHighlight } from 'react-native'
 import Colors from 'resources/colors'
 import { FormattedNumber } from 'react-intl'
 import CurrencyText from 'components/CurrencyText'
+import styles from './styles'
 
 const ListItem = ({ item, onPress, eosPrice }) => (
   <TouchableHighlight underlayColor={Colors.hoverColor} style={styles.listContainer} onPress={() => onPress(item)} >
@@ -34,6 +33,6 @@ const ListItem = ({ item, onPress, eosPrice }) => (
   </TouchableHighlight>
 )
 
-export default BalanceList = ({ data, onPress, eosPrice }) => (
+export default ({ data, onPress, eosPrice }) => (
   <View>{data.map((item, index) => (<ListItem key={index} item={item} eosPrice={eosPrice} onPress={e => onPress(e)} />))}</View>
 )

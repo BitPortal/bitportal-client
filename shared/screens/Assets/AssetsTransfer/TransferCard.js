@@ -3,18 +3,11 @@ import React, { Component } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, TouchableHighlight } from 'react-native'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import {
-  FontScale,
-  SCREEN_WIDTH,
-  SCREEN_HEIGHT,
-  NAV_BAR_HEIGHT,
-  TAB_BAR_HEIGHT,
-  ifIphoneX
-} from 'utils/dimens'
+import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, ifIphoneX } from 'utils/dimens'
 import { connect } from 'react-redux'
 import { FormattedMessage, FormattedNumber, IntlProvider } from 'react-intl'
-import messages from './messages'
 import Modal from 'react-native-modal'
+import messages from './messages'
 
 const styles = StyleSheet.create({
   container: {

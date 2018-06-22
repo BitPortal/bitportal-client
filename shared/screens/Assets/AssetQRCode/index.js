@@ -1,6 +1,5 @@
 
 import React, { Component } from 'react'
-import styles from './styles'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import QRCode from 'react-native-qrcode-svg'
@@ -12,11 +11,8 @@ import {
   Share,
   TextInput,
   Clipboard,
-  ScrollView,
   TouchableOpacity,
-  TouchableHighlight,
-  ActivityIndicator,
-  LayoutAnimation
+  TouchableHighlight
 } from 'react-native'
 import Images from 'resources/images'
 import { connect } from 'react-redux'
@@ -24,6 +20,7 @@ import { FormattedMessage, IntlProvider } from 'react-intl'
 import { eosQrString } from 'utils'
 import { normalizeUnitByCurrency } from 'utils/normalize'
 import messages from './messages'
+import styles from './styles'
 
 const screen_width = isIphoneX ? SCREEN_WIDTH - 40 : SCREEN_WIDTH
 const qrCodeSize = screen_width / 2
@@ -37,8 +34,7 @@ const qrCodeSize = screen_width / 2
 export default class AssetQRCode extends Component {
   state = {
     value: '',
-    isCopied: false,
-    enableQRCode: true
+    isCopied: false
   }
 
   // 输入框输入中
@@ -76,7 +72,7 @@ export default class AssetQRCode extends Component {
 
   render() {
     const { dismissModal, accountName, locale } = this.props
-    const { isCopied, enableQRCode } = this.state
+    const { isCopied } = this.state
 
     return (
       <IntlProvider messages={messages[locale]}>

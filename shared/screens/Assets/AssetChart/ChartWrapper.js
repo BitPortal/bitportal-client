@@ -1,19 +1,12 @@
 import React, { Component } from 'react'
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  Button,
-  View,
-  processColor
-} from 'react-native'
-import { connect } from 'react-redux'
-import styles from './styles'
-import Colors from 'resources/colors'
-
+import { View, processColor } from 'react-native'
+// import { connect } from 'react-redux'
 import { LineChart } from 'react-native-charts-wrapper'
 
-const greenBlue = 'rgb(26, 182, 151)'
+import Colors from 'resources/colors'
+import styles from './styles'
+
+// const greenBlue = 'rgb(26, 182, 151)'
 const petrel = 'rgb(59, 145, 153)'
 
 export default class ChartWrapper extends Component {

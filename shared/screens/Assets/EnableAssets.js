@@ -1,11 +1,10 @@
 
-import React, { Component } from 'react'
-import styles from './styles'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import { Text, View, TouchableHighlight, StyleSheet } from 'react-native'
+import React from 'react'
+import { Text, View, TouchableHighlight } from 'react-native'
 import Colors from 'resources/colors'
+import styles from './styles'
 
-export default EnableAssets = ({ Title, enableAssets }) => (
+export default ({ Title, enableAssets }) => (
   <TouchableHighlight underlayColor={Colors.hoverColor} style={styles.addAssetsContainer} onPress={() => enableAssets()}>
     <View style={[styles.addAssetsContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.minorThemeColor }]}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
