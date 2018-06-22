@@ -10,6 +10,7 @@ import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import messages from './messages'
+import Progress from '../Progress'
 
 @connect(
   (state) => ({
@@ -19,7 +20,7 @@ import messages from './messages'
   })
 )
 
-export default class Bandwidth extends BaseScreen {
+export default class Memory extends BaseScreen {
 
   static navigatorStyle = {
     tabBarHidden: true,
@@ -29,6 +30,7 @@ export default class Bandwidth extends BaseScreen {
   render() {
     const { locale, eosAccount } = this.props
     const activeEOSAccount = eosAccount.get('data')
+    const percent = activeEOSAccount.get('net_limit').get('available')/activeEOSAccount.get('net_limit').get('max')
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -41,6 +43,20 @@ export default class Bandwidth extends BaseScreen {
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }}
             >
+              <View style={styles.progressContaner}>
+                <Progress percent={percent} />
+                <View style={[styles.totalContainer, styles.between]}>
+                  <Text style={styles.text14}><FormattedMessage id="bdwidth_title_name_total" /></Text>
+                  <Text style={styles.text14}>{activeEOSAccount.get('net_limit').get('max')} byte</Text>
+                </View>
+              </View>
+
+              <View style={styles.tipsContainer}>
+                <Text style={styles.text16}><FormattedMessage id="bdwidth_title_name_tips" /></Text>
+                <Text style={[styles.text14, {marginTop: 15}]}><FormattedMessage id="bdwidth_title_name_tip1" /></Text>
+                <Text style={[styles.text14, {marginTop: 10}]}><FormattedMessage id="bdwidth_title_name_tip2" /></Text>
+                <Text style={[styles.text14, {marginTop: 10}]}><FormattedMessage id="bdwidth_title_name_tip3" /></Text>
+              </View>
 
             </ScrollView>
           </View>
