@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
   createAccountContainer: {
     width: SCREEN_WIDTH - 64,
-    height: SCREEN_WIDTH / 2 - 32,
+    height: (SCREEN_WIDTH / 2) - 32,
     borderRadius: 12,
     marginHorizontal: 32,
     marginVertical: 20,

@@ -1,18 +1,14 @@
 
 import React, { Component } from 'react'
-import { Text, View, ScrollView, TouchableHighlight, TouchableOpacity, StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
+import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
+import { Text, View, ScrollView, TouchableHighlight, TouchableOpacity, StyleSheet } from 'react-native'
+
 import messages from './messages'
-import {
-  FontScale,
-  SCREEN_WIDTH,
-  SCREEN_HEIGHT,
-  NAV_BAR_HEIGHT,
-  TAB_BAR_HEIGHT
-} from 'utils/dimens'
 
 const styles = StyleSheet.create({
   container: {
@@ -67,15 +63,15 @@ export default class AccountList extends Component {
   }
 
   render() {
-    const { data, moreData, activeAccount, dismissModal, onPress, createNewAccount, locale } = this.props
+    const { data, moreData, activeAccount, dismissModal, createNewAccount, locale } = this.props
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <TouchableOpacity style={[styles.container, { backgroundColor: 'rgba(0,0,0,0.1)' }]} onPress={() => dismissModal()} />
           <View style={styles.bgContainer}>
             <ScrollView style={{ maxHeight: 400, backgroundColor: Colors.bgColor_48_49_59 }} showsVerticalScrollIndicator={false}>
-              {data.map((item, index) => (<ListItem key={item.get('bpid')} item={item} active={item.get('bpid') === activeAccount.get('bpid')} onPress={() => this.switchAccount(item)} />))}
-              {moreData.map((item, index) => (<ListItem key={item.get('eosAccountName')} item={item} active={item.get('eosAccountName') === activeAccount.get('eosAccountName')} onPress={() => this.switchAccount(item)} />))}
+              {data.map(item => (<ListItem key={item.get('bpid')} item={item} active={item.get('bpid') === activeAccount.get('bpid')} onPress={() => this.switchAccount(item)} />))}
+              {moreData.map(item => (<ListItem key={item.get('eosAccountName')} item={item} active={item.get('eosAccountName') === activeAccount.get('eosAccountName')} onPress={() => this.switchAccount(item)} />))}
             </ScrollView>
           </View>
           <TouchableHighlight
