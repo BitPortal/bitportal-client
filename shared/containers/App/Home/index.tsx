@@ -9,6 +9,7 @@ import * as walletActions from 'actions/wallet'
 import * as tickerActions from 'actions/ticker'
 import * as intlActions from 'actions/intl'
 import { exchangeTickerSelector } from 'selectors/ticker'
+import { hot } from 'react-hot-loader'
 import messages from './messages'
 import style from './style.css'
 
@@ -22,6 +23,8 @@ interface Props extends RouteComponentProps<void> {
 interface State {
   price: any
 }
+
+@hot(module)
 
 @connect(
   (state: any) => ({

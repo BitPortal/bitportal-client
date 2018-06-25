@@ -19,12 +19,12 @@ export default function configure(initialState?: RootState, history?: any): AppS
   store.runSaga = sagaMiddleware.run
   store.close = () => store.dispatch(END)
 
-  // if (module.hot) {
-  //   module.hot.accept('reducers', () => {
-  //     const nextReducer = require('reducers').default
-  //     store.replaceReducer(nextReducer)
-  //   })
-  // }
+  if (module.hot) {
+    module.hot.accept('reducers', () => {
+      const nextReducer = require('reducers').default
+      store.replaceReducer(nextReducer)
+    })
+  }
 
   return store
 }

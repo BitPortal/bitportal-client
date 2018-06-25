@@ -27,7 +27,7 @@ store.runSaga(sagas)
 
 const renderApp = (routes: RouteConfig[]) => {
   (preloadedState ? ReactDOM.hydrate : ReactDOM.render)(
-    <AppContainer warnings={false}>
+    <AppContainer>
       <CookiesProvider>
         <Provider store={store}>
           <ConnectedRouter history={browserHistory}>

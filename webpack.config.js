@@ -82,7 +82,8 @@ const baseConfig = {
                 'syntax-dynamic-import',
                 'transform-decorators-legacy',
                 'react-hot-loader/babel',
-                'transform-runtime'
+                'transform-runtime',
+                'react-hot-loader/babel'
               ]
             }
           },
