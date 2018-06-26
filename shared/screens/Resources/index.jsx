@@ -59,16 +59,19 @@ export default class Resources extends BaseScreen {
               contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }}
             >
               <ResourcesCard 
-                colors={Colors.ramColor}
-                onPress={() => this.check('ram')}
-                extraStyle={{ marginTop: 10 }}
-                title={<FormattedMessage id="reslist_title_name_ram" />}
+                colors={Colors.cpuColor}
+                extraStyle={{ marginTop: 10, height: 220 }}
+                type={'cpu'}
+                onPress={() => this.check('cpu')}
+                title={<FormattedMessage id="reslist_title_name_cpu" />}
                 availableText={<FormattedMessage id="reslist_title_name_ava" />}
-                available={activeEOSAccount.get('ram_quota')-activeEOSAccount.get('ram_usage')}
-                totalText={<FormattedMessage id="reslist_title_name_ramttl" />}
-                total={activeEOSAccount.get('ram_quota')}
+                available={activeEOSAccount.get('cpu_limit').get('available')}
+                totalText={<FormattedMessage id="reslist_title_name_bwttl" />}
+                total={activeEOSAccount.get('cpu_limit').get('max')}
                 usageText={<FormattedMessage id="reslist_title_name_usgttl" />}
-                usage={activeEOSAccount.get('ram_usage')}
+                usage={activeEOSAccount.get('cpu_limit').get('used')}
+                delegateText={<FormattedMessage id="reslist_title_name_delegate" />}
+                delegate={activeEOSAccount.get('total_resources').get('cpu_weight')}
               />
               <ResourcesCard 
                 onPress={() => this.check('bw')}
@@ -84,20 +87,17 @@ export default class Resources extends BaseScreen {
                 delegate={activeEOSAccount.get('total_resources').get('net_weight')}
               />
               <ResourcesCard 
-                colors={Colors.cpuColor}
-                extraStyle={{ marginTop: 25, marginBottom: 30, height: 220 }}
-                onPress={() => this.check('cpu')}
-                title={<FormattedMessage id="reslist_title_name_cpu" />}
+                colors={Colors.ramColor}
+                onPress={() => this.check('ram')}
+                extraStyle={{ marginTop: 25, marginBottom: 30}}
+                title={<FormattedMessage id="reslist_title_name_ram" />}
                 availableText={<FormattedMessage id="reslist_title_name_ava" />}
-                available={activeEOSAccount.get('cpu_limit').get('available')}
-                totalText={<FormattedMessage id="reslist_title_name_bwttl" />}
-                total={activeEOSAccount.get('cpu_limit').get('max')}
+                available={activeEOSAccount.get('ram_quota')-activeEOSAccount.get('ram_usage')}
+                totalText={<FormattedMessage id="reslist_title_name_ramttl" />}
+                total={activeEOSAccount.get('ram_quota')}
                 usageText={<FormattedMessage id="reslist_title_name_usgttl" />}
-                usage={activeEOSAccount.get('cpu_limit').get('used')}
-                delegateText={<FormattedMessage id="reslist_title_name_delegate" />}
-                delegate={activeEOSAccount.get('total_resources').get('cpu_weight')}
+                usage={activeEOSAccount.get('ram_usage')}
               />
-
             </ScrollView>
           </View>
         </View>

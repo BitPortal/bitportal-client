@@ -16,6 +16,7 @@ import storage from 'utils/storage'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { Text, View, TouchableHighlight, StyleSheet, Image, TouchableOpacity, LayoutAnimation } from 'react-native'
 import { SCREEN_HEIGHT, SCREEN_WIDTH, FontScale } from 'utils/dimens'
+import { formatCycleTime , formatMemorySize } from 'utils/format'
 
 const styles = StyleSheet.create({
   linearContainer: {
@@ -176,12 +177,7 @@ export default class TotalAssetsCard extends Component {
                   <View style={styles.center}> 
                     <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>CPU</Text>
                     <Text onPress={this.checkResources} style={[styles.text12, this.extraColor(CPUInfo.get('available'), CPUInfo.get('max')), { paddingHorizontal: 2 }]}>
-                      <FormattedNumber 
-                        value={CPUInfo.get('available')}
-                        minimumFractionDigits={2}
-                        maximumFractionDigits={2}
-                      />
-                      us
+                      {formatCycleTime(CPUInfo.get('available'))}
                     </Text> 
                   </View>
                 }
@@ -190,12 +186,7 @@ export default class TotalAssetsCard extends Component {
                   <View style={styles.center}> 
                     <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>BW</Text>
                     <Text onPress={this.checkResources} style={[styles.text12, this.extraColor(NETInfo.get('available'), NETInfo.get('max')), { paddingHorizontal: 2 }]}>
-                      <FormattedNumber 
-                        value={NETInfo.get('available')}
-                        minimumFractionDigits={2}
-                        maximumFractionDigits={2}
-                      />
-                      byte
+                      {formatMemorySize(NETInfo.get('available'))}
                     </Text> 
                   </View>
                 }                
@@ -204,12 +195,7 @@ export default class TotalAssetsCard extends Component {
                   <View style={styles.center}> 
                     <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>RAM</Text>
                     <Text onPress={this.checkResources} style={[styles.text12, this.extraColor(RAMQuota-RAMUsage, RAMQuota), { paddingHorizontal: 2 }]}>
-                      <FormattedNumber 
-                        value={(RAMQuota-RAMUsage)}
-                        minimumFractionDigits={2}
-                        maximumFractionDigits={2}
-                      />
-                      byte
+                      {formatMemorySize(RAMQuota-RAMUsage)}
                     </Text> 
                   </View>
                 }             
