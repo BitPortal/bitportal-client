@@ -113,7 +113,7 @@ export default class TradeRAMForm extends Component {
       )
       if (action === Dialogs.actionPositive) {
         this.actionRequest(data, text)
-      }
+      } 
     } else {
       this.setState({ isVisible: true, data })
     }

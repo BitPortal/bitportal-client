@@ -45,7 +45,7 @@ const prompt = (title = '', content = null, options = {}) => {
     if (options.negativeText) {
       buttons.push({
         text: options.negativeText || 'cancel',
-        onPress: () => console.log('Cancel Pressed'),
+        onPress: () => resolve({ action: actionNegative }),
         style: options.negativeTextStyle || 'cancel'
       })
     }
@@ -62,7 +62,7 @@ const prompt = (title = '', content = null, options = {}) => {
     if (buttons.length == 0) {
       buttons.push({
         text: options.positiveText || 'OK',
-        onPress: () => console.log('Ok Pressed'),
+        onPress: resolve({ action: actionNegative }),
         style: options.positiveTextStyle || 'default'
       })
     }

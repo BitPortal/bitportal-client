@@ -32,7 +32,6 @@ export const formatCycleTime = (value: any) => {
   let index = 0, timeValue = parseFloat(value)
   index = calculateIndex(timeValue)
   let formatValue = calculateFormatValue(timeValue)
-  console.log('###', timeValue, Math.pow(1000, 6)/Math.pow(60, 1), formatValue)
   if (formatValue.toString().split('.').length <= 1) {
     return formatValue.toFixed(2) + ' ' + quoteArr[index]
   } else {
