@@ -14,7 +14,7 @@ import { logoutRequested, clearLogoutError } from 'actions/wallet'
 import Loading from 'components/Loading'
 import Alert from 'components/Alert'
 import Dialogs from 'components/Dialog'
-import DialogAndroid from './DialogAndroid'
+import DialogAndroid from 'components/DialogAndroid'
 import messages from './messages'
 import styles from './styles'
 

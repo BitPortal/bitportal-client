@@ -6,7 +6,6 @@ import LinearGradientContainer from 'components/LinearGradientContainer'
 import { FormattedNumber } from 'react-intl'
 import { SCREEN_HEIGHT, SCREEN_WIDTH, FontScale } from 'utils/dimens'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { formatMemorySize, formatCycleTime } from 'utils/format'
 
 const styles = StyleSheet.create({
   linearContainer: {
@@ -77,23 +76,20 @@ export default class ResourcesCard extends Component {
                 <View style={[styles.available, styles.between]}>
                   <Text style={styles.text18}> {availableText} </Text>
                   <Text style={styles.text18}> 
-                    {
-                      type == 'cpu' ? formatCycleTime(available) : formatMemorySize(available)
-                    }
-                    
+                    {available}
                   </Text>
                 </View>
                 <View style={[styles.available]}>
                   <View style={[styles.between, { marginTop: 10 }]} >
                     <Text style={styles.text14}> {totalText} </Text>
                     <Text style={styles.text14}> 
-                      {formatMemorySize(total)}
+                      {total}
                     </Text>
                   </View>
                   <View style={[styles.between, { marginTop: 10 }]} > 
                     <Text style={styles.text14}> {usageText} </Text>
                     <Text style={styles.text14}> 
-                      {formatMemorySize(usage)}
+                      {usage}
                     </Text>
                   </View>
                 </View>

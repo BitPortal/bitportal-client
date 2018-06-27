@@ -11,6 +11,7 @@ import ResourcesCard from './ResourcesCard'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { eosAccountSelector } from 'selectors/eosAccount'
+import { formatMemorySize, formatCycleTime } from 'utils/format'
 import messages from './messages'
 
 @connect(
@@ -66,11 +67,11 @@ export default class Resources extends BaseScreen {
                 onPress={() => this.check('cpu')}
                 title={<FormattedMessage id="reslist_title_name_cpu" />}
                 availableText={<FormattedMessage id="reslist_title_name_ava" />}
-                available={activeEOSAccount.get('cpu_limit').get('available')}
+                available={formatCycleTime(activeEOSAccount.get('cpu_limit').get('available'))}
                 totalText={<FormattedMessage id="reslist_title_name_bwttl" />}
-                total={activeEOSAccount.get('cpu_limit').get('max')}
+                total={formatCycleTime(activeEOSAccount.get('cpu_limit').get('max'))}
                 usageText={<FormattedMessage id="reslist_title_name_usgttl" />}
-                usage={activeEOSAccount.get('cpu_limit').get('used')}
+                usage={formatCycleTime(activeEOSAccount.get('cpu_limit').get('used'))}
                 delegateText={<FormattedMessage id="reslist_title_name_delegate" />}
                 delegate={activeEOSAccount.get('total_resources').get('cpu_weight')}
               />
@@ -79,11 +80,11 @@ export default class Resources extends BaseScreen {
                 extraStyle={{ marginTop: 20, height: 220 }}
                 title={<FormattedMessage id="reslist_title_name_bw" />}
                 availableText={<FormattedMessage id="reslist_title_name_ava" />}
-                available={activeEOSAccount.get('net_limit').get('available')}
+                available={formatMemorySize(activeEOSAccount.get('net_limit').get('available'))}
                 totalText={<FormattedMessage id="reslist_title_name_bwttl" />}
-                total={activeEOSAccount.get('net_limit').get('max')}
+                total={formatMemorySize(activeEOSAccount.get('net_limit').get('max'))}
                 usageText={<FormattedMessage id="reslist_title_name_usgttl" />}
-                usage={activeEOSAccount.get('net_limit').get('used')}
+                usage={formatMemorySize(activeEOSAccount.get('net_limit').get('used'))}
                 delegateText={<FormattedMessage id="reslist_title_name_delegate" />}
                 delegate={activeEOSAccount.get('total_resources').get('net_weight')}
               />
@@ -93,11 +94,11 @@ export default class Resources extends BaseScreen {
                 extraStyle={{ marginTop: 25, marginBottom: 30}}
                 title={<FormattedMessage id="reslist_title_name_ram" />}
                 availableText={<FormattedMessage id="reslist_title_name_ava" />}
-                available={activeEOSAccount.get('ram_quota')-activeEOSAccount.get('ram_usage')}
+                available={formatMemorySize(activeEOSAccount.get('ram_quota')-activeEOSAccount.get('ram_usage'))}
                 totalText={<FormattedMessage id="reslist_title_name_ramttl" />}
-                total={activeEOSAccount.get('ram_quota')}
+                total={formatMemorySize(activeEOSAccount.get('ram_quota'))}
                 usageText={<FormattedMessage id="reslist_title_name_usgttl" />}
-                usage={activeEOSAccount.get('ram_usage')}
+                usage={formatMemorySize(activeEOSAccount.get('ram_usage'))}
               />
             </ScrollView>
           </View>

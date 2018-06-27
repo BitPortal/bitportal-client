@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { View, Text, AlertIOS } from 'react-native'
+import { View, Text, Platform, InteractionManager } from 'react-native'
 import { Field, reduxForm, reset } from 'redux-form/immutable'
 import {
   FormContainer,
@@ -19,7 +19,8 @@ import Switch from 'components/Switch'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { eosAccountSelector } from 'selectors/eosAccount'
-import Dialog from 'components/Dialog'
+import Dialogs from 'components/Dialog'
+import DialogAndroid from 'components/DialogAndroid'
 import messages from './messages'
 
 const styles = EStyleSheet.create({
@@ -38,9 +39,9 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
-      return '密码错误'
+      return messages["tra_popup_title_pwderr"]
     default:
-      return '交易失败'
+      return messages["tra_popup_title_trafail"]
   }
 }
 
@@ -53,13 +54,13 @@ const validate = (values, props) => {
   const errors = {}
 
   if (!+values.get('quant')) {
-    errors.quant = 'Please input quantity'
+    errors.quant = messages[props.locale]["tra_popup_title_epteosinput"]
   }
 
   if (!values.get('bytes')) {
-    errors.bytes = 'Please input bytes'
+    errors.bytes = messages[props.locale]["tra_popup_title_eptbyteinput"]
   } else if (+ramBytes < +values.get('bytes')) {
-    errors.bytes = 'You don\'t have enough ram bytes'
+    errors.bytes = messages[props.locale]["tra_popup_title_enbyteinput"]
   }
 
   return errors
@@ -84,27 +85,45 @@ const validate = (values, props) => {
 export default class TradeRAMForm extends Component {
   constructor(props, context) {
     super(props, context)
-    this.state = { activeForm: 'Buy' }
+    this.state = { activeForm: 'Buy', isVisible: false, password: '', data: undefined }
     this.submit = this.submit.bind(this)
     this.switchForm = this.switchForm.bind(this)
   }
 
-  submit(data) {
-    AlertIOS.prompt(
-      'Please input password',
-      null,
-      (password) => {
-        const eosAccount = this.props.eosAccount
-        const eosAccountName = eosAccount.get('data').get('account_name')
+  actionRequest = (data, password) => {
+    const eosAccount = this.props.eosAccount
+    const eosAccountName = eosAccount.get('data').get('account_name')
+    if (this.state.activeForm === 'Buy') {
+      this.props.actions.buyRAMRequested(data.set('eosAccountName', eosAccountName).set('password', password).toJS())
+    } else {
+      this.props.actions.sellRAMRequested(data.set('eosAccountName', eosAccountName).set('password', password).toJS())
+    }
+  }
 
-        if (this.state.activeForm === 'Buy') {
-          this.props.actions.buyRAMRequested(data.set('eosAccountName', eosAccountName).set('password', password).toJS())
-        } else {
-          this.props.actions.sellRAMRequested(data.set('eosAccountName', eosAccountName).set('password', password).toJS())
+  async submit(data) {
+    if (Platform.OS == 'ios') {
+      const { action, text } = await Dialogs.prompt(
+        messages[this.props.locale]["tra_popup_title_pwd"],
+        null,
+        {
+          positiveText: messages[this.props.locale]["tra_popup_buttom_ent"],
+          negativeText: messages[this.props.locale]["tra_popup_buttom_can"]
         }
-      },
-      'secure-text'
-    )
+      )
+      if (action === Dialogs.actionPositive) {
+        this.actionRequest(data, text)
+      }
+    } else {
+      this.setState({ isVisible: true, data })
+    }
+  }
+
+  handleConfirm = () => {
+    this.setState({ isVisible: false }, () => {
+      InteractionManager.runAfterInteractions(() => {
+        this.actionRequest(this.state.data, this.state.password)
+      })
+    })
   }
 
   switchForm(form) {
@@ -141,9 +160,27 @@ export default class TradeRAMForm extends Component {
               normalize={normalizeUnitByFraction(0)}
               rightContent={<Text style={{ color: 'white' }}>Bytes</Text>}
             />}
-            <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text={this.state.activeForm === 'Buy' ? 'Buy' : 'Sell'} />
+            <SubmitButton 
+              disabled={disabled} 
+              loading={loading} 
+              onPress={handleSubmit(this.submit)} 
+              text={this.state.activeForm === 'Buy' ? messages[locale]['tra_popup_title_buy'] : messages[locale]['tra_popup_title_sell']} 
+            />
             <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearError} />
-            <Alert message={!!showSuccess && '交易成功'} dismiss={this.props.actions.hideSuccessModal} />
+            <Alert message={!!showSuccess && messages[locale]['tra_popup_title_trasucc']} dismiss={this.props.actions.hideSuccessModal} />
+            {
+              Platform.OS === 'android' &&
+              <DialogAndroid
+                tilte={messages[locale]["tra_popup_title_pwd"]}
+                content=""
+                positiveText={messages[locale]["tra_popup_buttom_ent"]}
+                negativeText={messages[locale]["tra_popup_buttom_can"]}
+                onChange={password => this.setState({ password })}
+                isVisible={this.state.isVisible}
+                handleCancel={() => this.setState({ isVisible: false })}
+                handleConfirm={this.handleConfirm}
+              />
+            }
           </FormContainer>
         </View>
       </IntlProvider>

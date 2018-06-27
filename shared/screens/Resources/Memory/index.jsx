@@ -10,6 +10,7 @@ import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import TradeRAMForm from 'components/Form/TradeRAMForm'
+import { formatMemorySize } from 'utils/format'
 import messages from './messages'
 import Progress from '../Progress'
 
@@ -48,7 +49,7 @@ export default class Memory extends BaseScreen {
                 <Progress percent={percent} colors={Colors.ramColor} />
                 <View style={[styles.totalContainer, styles.between]}>
                   <Text style={styles.text14}><FormattedMessage id="memory_title_name_total" /></Text>
-                  <Text style={styles.text14}>{activeEOSAccount.get('ram_quota')} byte</Text>
+                  <Text style={styles.text14}>{formatMemorySize(activeEOSAccount.get('ram_quota'))}</Text>
                 </View>
               </View>
               <TradeRAMForm />

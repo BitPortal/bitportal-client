@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { View, Text, AlertIOS } from 'react-native'
+import { View, Text } from 'react-native'
 import { Field, reduxForm, reset } from 'redux-form/immutable'
 import {
   FormContainer,
@@ -19,7 +19,8 @@ import Switch from 'components/Switch'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { eosAccountSelector } from 'selectors/eosAccount'
-import Dialog from 'components/Dialog'
+import Dialogs from 'components/Dialog'
+import DialogAndroid from 'components/DialogAndroid'
 import messages from './messages'
 
 const styles = EStyleSheet.create({
@@ -83,7 +84,7 @@ export default class DelegateBandwidthForm extends Component {
   }
 
   submit(data) {
-    AlertIOS.prompt(
+    Dialog.prompt(
       'Please input password',
       null,
       (password) => {

@@ -3,6 +3,9 @@ import Colors from 'resources/colors'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { SCREEN_WDITH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import { connect } from 'react-redux'
+import { IntlProvider, FormattedMessage } from 'react-intl'
+import messages from './messages'
 
 const styles = EStyleSheet.create({
   container: {
@@ -34,18 +37,27 @@ const styles = EStyleSheet.create({
   }
 })
 
+@connect(
+  state => ({
+    locale: state.intl.get('locale'),
+  })
+)
+
 export default class Switch extends Component {
   render () {
-    const { itemList, active, onSwitch } = this.props
-
+    const { itemList, active, onSwitch, locale } = this.props
     return (
-      <View style={styles.container}>
-        {itemList.map(item =>
-          <TouchableOpacity key={item} style={[styles.item, active === item ? styles.active : {}]} onPress={() => onSwitch(item)}>
-            <Text style={[styles.itemText, active === item ? styles.activeText : {}]}>{item}</Text>
-          </TouchableOpacity>
-         )}
-      </View>
+      <IntlProvider messages={messages[locale]}>
+        <View style={styles.container}>
+          {itemList.map(item =>
+            <TouchableOpacity key={item} style={[styles.item, active === item ? styles.active : {}]} onPress={() => onSwitch(item)}>
+              <Text style={[styles.itemText, active === item ? styles.activeText : {}]}>
+                {item == 'Buy' ? messages[locale]["tra_popup_title_buy"] : messages[locale]["tra_popup_title_sell"]}
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </IntlProvider>
     )
   }
 }
