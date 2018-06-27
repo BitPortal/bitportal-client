@@ -47,12 +47,13 @@ export const errorMessages = (error, messages) => {
 
 const validate = (values, props) => {
   const hasAccount = !!props.eosAccount.get('data').size
-  console.log(props.eosAccount.toJS())
   const eosBalance = (hasAccount && props.eosAccount.get('data').get('core_liquid_balance')) ? props.eosAccount.get('data').get('core_liquid_balance').split(' ')[0] : 0
 
   const errors = {}
 
   if (!+values.get('quant')) {
+    errors.quant = messages[props.locale]["dlgt_popup_title_epteosinput"]
+  } else if (+eosBalance < +values.get('quant')) {
     errors.quant = messages[props.locale]["dlgt_popup_title_epteosinput"]
   }
 

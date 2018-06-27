@@ -8,6 +8,7 @@ import { initEOS } from 'eos'
 import { getEOSWifsByInfo } from 'key'
 import secureStorage from 'utils/secureStorage'
 import { reset } from 'redux-form/immutable'
+import { getErrorMessage } from 'utils'
 
 function* delegateBandwidthRequested(action: Action<DelegateBandwidthParams>) {
   if (!action.payload) return
@@ -30,23 +31,21 @@ function* delegateBandwidthRequested(action: Action<DelegateBandwidthParams>) {
 
     const result = yield call(
       eos.transaction,
-      (tr: any) => {
-        console.log(tr)
-        tr.delegatebw({
-          from: eosAccountName,
-          receiver: eosAccountName,
-          stake_net_quantity: netQuantity,
-          stake_cpu_quantity: cpuQuantity,
-          transfer: 0
-        })
-      }
+      (tr: any) => tr.delegatebw({
+        from: eosAccountName,
+        receiver: eosAccountName,
+        stake_net_quantity: netQuantity,
+        stake_cpu_quantity: cpuQuantity,
+        transfer: 0
+      })
     )
     console.log(result)
     yield put(actions.delegateBandwidthSucceeded({}))
     yield put(reset('delegateBandwidthForm'))
     yield put(getEOSAccountRequested({ eosAccountName }))
   } catch (e) {
-    yield put(actions.delegateBandwidthFailed(e.message))
+    console.log(e)
+    yield put(actions.delegateBandwidthFailed(getErrorMessage(e)))
   }
 }
 
@@ -70,23 +69,20 @@ function* undelegateBandwidthRequested(action: Action<UndelegateBandwidthResult>
 
     const result = yield call(
       eos.transaction,
-      (tr: any) => {
-        console.log(tr)
-        tr.undelegatebw({
-          from: eosAccountName,
-          receiver: eosAccountName,
-          stake_net_quantity: netQuantity,
-          stake_cpu_quantity: cpuQuantity,
-          transfer: 0
-        })
-      }
+      (tr: any) => tr.undelegatebw({
+        from: eosAccountName,
+        receiver: eosAccountName,
+        unstake_net_quantity: netQuantity,
+        unstake_cpu_quantity: cpuQuantity,
+        transfer: 0
+      })
     )
     console.log(result)
     yield put(actions.undelegateBandwidthSucceeded({}))
     yield put(reset('delegateBandwidthForm'))
     yield put(getEOSAccountRequested({ eosAccountName }))
   } catch (e) {
-    yield put(actions.undelegateBandwidthFailed(e.message))
+    yield put(actions.undelegateBandwidthFailed(getErrorMessage(e)))
   }
 }
 

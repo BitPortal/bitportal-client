@@ -8,6 +8,7 @@ import { initEOS } from 'eos'
 import { getEOSWifsByInfo } from 'key'
 import secureStorage from 'utils/secureStorage'
 import { reset } from 'redux-form/immutable'
+import { getErrorMessage } from 'utils'
 
 function* buyRAMRequested(action: Action<BuyRAMParams>) {
   if (!action.payload) return
@@ -27,17 +28,14 @@ function* buyRAMRequested(action: Action<BuyRAMParams>) {
 
     const result = yield call(
       eos.transaction,
-      (tr: any) => {
-        console.log(tr)
-        tr.buyram({ payer: eosAccountName, receiver: eosAccountName, quant: `${quant} EOS` })
-      }
+      (tr: any) => tr.buyram({ payer: eosAccountName, receiver: eosAccountName, quant: `${quant} EOS` })
     )
     console.log(result)
     yield put(actions.buyRAMSucceeded({}))
     yield put(reset('tradeRAMForm'))
     yield put(getEOSAccountRequested({ eosAccountName }))
   } catch (e) {
-    yield put(actions.buyRAMFailed(e.message))
+    yield put(actions.buyRAMFailed(getErrorMessage(e)))
   }
 }
 
@@ -59,17 +57,14 @@ function* sellRAMRequested(action: Action<SellRAMParams>) {
 
     const result = yield call(
       eos.transaction,
-      (tr: any) => {
-        console.log(tr)
-        tr.sellramBytes({ bytes, account: eosAccountName })
-      }
+      (tr: any) => tr.sellram({ bytes, account: eosAccountName })
     )
     console.log(result)
     yield put(actions.sellRAMSucceeded({}))
     yield put(reset('tradeRAMForm'))
     yield put(getEOSAccountRequested({ eosAccountName }))
   } catch (e) {
-    yield put(actions.sellRAMFailed(e.message))
+    yield put(actions.sellRAMFailed(getErrorMessage(e)))
   }
 }
 

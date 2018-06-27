@@ -46,7 +46,7 @@ export const getErrorMessage = (error: any) => {
     }
   }
 
-  return error.message
+  return error.message || 'unknown error'
 }
 
 export const encodeKey = (...elements: any[]) => {

@@ -47,13 +47,14 @@ export const errorMessages = (error, messages) => {
 
 const validate = (values, props) => {
   const hasAccount = !!props.eosAccount.get('data').size
-  console.log(props.eosAccount.toJS())
   const eosBalance = (hasAccount && props.eosAccount.get('data').get('core_liquid_balance')) ? props.eosAccount.get('data').get('core_liquid_balance').split(' ')[0] : 0
   const ramBytes = (hasAccount && props.eosAccount.get('data').get('total_resources').get('ram_bytes')) ? props.eosAccount.get('data').get('total_resources').get('ram_bytes') : 0
 
   const errors = {}
 
   if (!+values.get('quant')) {
+    errors.quant = messages[props.locale]["tra_popup_title_epteosinput"]
+  } else if (+eosBalance < +values.get('quant')) {
     errors.quant = messages[props.locale]["tra_popup_title_epteosinput"]
   }
 
@@ -160,11 +161,11 @@ export default class TradeRAMForm extends Component {
               normalize={normalizeUnitByFraction(0)}
               rightContent={<Text style={{ color: 'white' }}>Bytes</Text>}
             />}
-            <SubmitButton 
-              disabled={disabled} 
-              loading={loading} 
-              onPress={handleSubmit(this.submit)} 
-              text={this.state.activeForm === 'Buy' ? messages[locale]['tra_popup_title_buy'] : messages[locale]['tra_popup_title_sell']} 
+            <SubmitButton
+              disabled={disabled}
+              loading={loading}
+              onPress={handleSubmit(this.submit)}
+              text={this.state.activeForm === 'Buy' ? messages[locale]['tra_popup_title_buy'] : messages[locale]['tra_popup_title_sell']}
             />
             <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearError} />
             <Alert message={!!showSuccess && messages[locale]['tra_popup_title_trasucc']} dismiss={this.props.actions.hideSuccessModal} />
