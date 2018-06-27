@@ -175,7 +175,7 @@ export default class Voting extends BaseScreen {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={styles.text14}>
                 <FormattedNumber
-                  value={voterInfo ? voterInfo.get('staked') : 0}
+                  value={voterInfo ? (+voterInfo.get('staked') / 1000) : 0}
                   maximumFractionDigits={4}
                   minimumFractionDigits={4}
                 />
