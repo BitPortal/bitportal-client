@@ -48,7 +48,10 @@ export default class Memory extends BaseScreen {
                 <Progress percent={percent} />
                 <View style={[styles.totalContainer, styles.between]}>
                   <Text style={styles.text14}><FormattedMessage id="bdwidth_title_name_total" /></Text>
-                  <Text style={styles.text14}>{formatMemorySize(activeEOSAccount.get('net_limit').get('max'))}</Text>
+                  <Text style={styles.text14}>
+                    {formatMemorySize(activeEOSAccount.get('net_limit').get('avalible'))}
+                    /{formatMemorySize(activeEOSAccount.get('net_limit').get('max'))}
+                  </Text>
                 </View>
               </View>
               <DelegateBandwidthForm />

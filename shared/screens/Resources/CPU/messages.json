@@ -1,14 +1,14 @@
 {
   "zh": {
     "cpu_title_name_cpu": "计算资源",
-    "cpu_title_name_total": "总量: ",
+    "cpu_title_name_total": "可用/总量: ",
     "cpu_title_name_tips": "提示:",
     "cpu_title_name_tip1": "1. 计算资源是EOS网络中的资源，获取时需要抵押委托的EOS.",
     "cpu_title_name_tip2": "2. EOS的抵押可以撤销，撤销后将于72小时候退回之您的账户."
   },
   "en": {
     "cpu_title_name_cpu": "CPU",
-    "cpu_title_name_total": "Total: ",
+    "cpu_title_name_total": "Available/Total: ",
     "cpu_title_name_tips": "Tips:",
     "cpu_title_name_tip1": "1. You have to delegate your EOS in case to acquire the resources.",
     "cpu_title_name_tip2": "2. You could cancel the delegation anytime you want, but the amount will be returned in 72 hours."

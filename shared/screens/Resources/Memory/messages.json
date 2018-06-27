@@ -1,7 +1,7 @@
 {
   "zh": {
     "memory_title_name_memory": "储存容量",
-    "memory_title_name_total": "总配给: ",
+    "memory_title_name_total": "可配给/总配给: ",
     "memory_title_name_tips": "提示:",
     "memory_title_name_tip1": "1. 储存容量是EOS网络中的资源，获取时需要使用EOS进行购买.",
     "memory_title_name_tip2": "2. 你可以随时购买或者卖出您所拥有的储存容量.",
@@ -9,7 +9,7 @@
   },
   "en": {
     "memory_title_name_memory": "Memory",
-    "memory_title_name_total": "Total Quota: ",
+    "memory_title_name_total": "Available Quota/Total Quota: ",
     "memory_title_name_tips": "Tips:",
     "memory_title_name_tip1": "1. You have to use EOS to buy RAM in the EOS mainnet.",
     "memory_title_name_tip2": "2. You could buy or sell RAM anytime you want.",
