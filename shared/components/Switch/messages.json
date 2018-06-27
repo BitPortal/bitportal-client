@@ -1,10 +1,14 @@
 {
   "zh": {
     "tra_popup_title_buy" : "买",
-    "tra_popup_title_sell" : "卖"
+    "tra_popup_title_sell" : "卖",
+    "tra_popup_title_dlgt": "代理",
+    "tra_popup_title_undlgt": "撤销代理"
   },
   "en": {
     "tra_popup_title_buy" : "Buy",
-    "tra_popup_title_sell" : "Sell"
+    "tra_popup_title_sell" : "Sell",
+    "tra_popup_title_dlgt": "Delegate",
+    "tra_popup_title_undlgt": "Undelegate"
   }
 }

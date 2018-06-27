@@ -46,13 +46,19 @@ const styles = EStyleSheet.create({
 export default class Switch extends Component {
   render () {
     const { itemList, active, onSwitch, locale } = this.props
+    const transactions = {
+      'Buy': messages[locale]["tra_popup_title_buy"],
+      'Sell':  messages[locale]["tra_popup_title_sell"],
+      'Delegate': messages[locale]["tra_popup_title_dlgt"],
+      'Undelegate': messages[locale]["tra_popup_title_undlgt"]
+    }
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           {itemList.map(item =>
             <TouchableOpacity key={item} style={[styles.item, active === item ? styles.active : {}]} onPress={() => onSwitch(item)}>
               <Text style={[styles.itemText, active === item ? styles.activeText : {}]}>
-                {item == 'Buy' ? messages[locale]["tra_popup_title_buy"] : messages[locale]["tra_popup_title_sell"]}
+                {transactions[item]}
               </Text>
             </TouchableOpacity>
           )}
