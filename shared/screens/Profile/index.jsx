@@ -37,6 +37,13 @@ export default class Profile extends BaseScreen {
           return Dialogs.alert(messages[locale].profile_button_name_err, null, { negativeText: messages[locale].profile_popup_buttom_ent })
         }
         break
+      case 'Resources':
+        if (this.props.wallet.get('data').get('name')) {
+          pageName = 'Resources'
+        } else {
+          return Dialogs.alert(messages[locale].profile_button_name_err, null, { negativeText: messages[locale].profile_popup_buttom_ent })
+        }
+        break
       case 'Voting':
       case 'About':
       case 'Contacts':
@@ -63,6 +70,7 @@ export default class Profile extends BaseScreen {
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center' }} >
               <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_vote" />} onPress={() => this.changePage('Voting')} extraStyle={{ marginTop: 10 }} />
               {/* <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_ctcts" />} onPress={() => this.changePage('Contacts')}  /> */}
+              <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_res" />} onPress={() => this.changePage('Resources')} />
               <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_act" />} onPress={() => this.changePage('Account')} />
               <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_sts" />} onPress={() => this.changePage('Settings')} extraStyle={{ marginTop: 10 }} />
               <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titile_abt" />} onPress={() => this.changePage('About')} />

@@ -149,7 +149,12 @@ export default class DelegateBandwidthForm extends Component {
               normalize={normalizeUnitByCurrency('EOS')}
               rightContent={<Text style={{ color: 'white' }}>EOS</Text>}
             />
-            <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text={this.state.activeForm === 'Delegate' ? 'Delegate' : 'Undelegate'} />
+            <SubmitButton 
+              disabled={disabled} 
+              loading={loading} 
+              onPress={handleSubmit(this.submit)} 
+              text={this.state.activeForm === 'Delegate' ? messages[locale]["dlgt_popup_title_dlgt"] : messages[locale]["dlgt_popup_title_undlgt"]} 
+            />
             <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearError} />
             <Alert message={!!showSuccess && messages[locale]['dlgt_popup_title_trasucc']} dismiss={this.props.actions.hideSuccessModal} />
             {

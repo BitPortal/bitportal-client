@@ -1,18 +1,18 @@
 {
   "zh": {
-    "memory_title_name_memory": "Memory",
-    "memory_title_name_total": "Total Quota: ",
-    "memory_title_name_tips": "Tips:",
-    "memory_title_name_tip1": "1. This is a reference text, you can not care.",
-    "memory_title_name_tip2": "2. If you really care, you can read this text, anyway, I do not care.",
-    "memory_title_name_tip3": "3. You're awesome."
+    "memory_title_name_memory": "储存容量",
+    "memory_title_name_total": "可配给/总配给: ",
+    "memory_title_name_tips": "提示:",
+    "memory_title_name_tip1": "1. 储存容量是EOS网络中的资源，获取时需要使用EOS进行购买.",
+    "memory_title_name_tip2": "2. 你可以随时购买或者卖出您所拥有的储存容量.",
+    "memory_title_name_tip3": "3. 储存容量的交易将要缴纳 (x+199)/200 的费用，x为您的交易额."
   },
   "en": {
     "memory_title_name_memory": "Memory",
-    "memory_title_name_total": "Total Quota: ",
+    "memory_title_name_total": "Available Quota/Total Quota: ",
     "memory_title_name_tips": "Tips:",
-    "memory_title_name_tip1": "1. This is a reference text, you can not care.",
-    "memory_title_name_tip2": "2. If you really care, you can read this text, anyway, I do not care.",
-    "memory_title_name_tip3": "3. You're awesome."
+    "memory_title_name_tip1": "1. You have to use EOS to buy RAM in the EOS mainnet.",
+    "memory_title_name_tip2": "2. You could buy or sell RAM anytime you want.",
+    "memory_title_name_tip3": "3. Each trade will charge a fee, follow the formula (x+199)/200, x is your volume."
   }
 }

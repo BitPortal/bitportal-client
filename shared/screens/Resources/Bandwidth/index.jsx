@@ -48,7 +48,10 @@ export default class Memory extends BaseScreen {
                 <Progress percent={percent} />
                 <View style={[styles.totalContainer, styles.between]}>
                   <Text style={styles.text14}><FormattedMessage id="bdwidth_title_name_total" /></Text>
-                  <Text style={styles.text14}>{formatMemorySize(activeEOSAccount.get('net_limit').get('max'))}</Text>
+                  <Text style={styles.text14}>
+                    {formatMemorySize(activeEOSAccount.get('net_limit').get('avalible'))}
+                    /{formatMemorySize(activeEOSAccount.get('net_limit').get('max'))}
+                  </Text>
                 </View>
               </View>
               <DelegateBandwidthForm resource="net" />
@@ -56,7 +59,6 @@ export default class Memory extends BaseScreen {
                 <Text style={styles.text16}><FormattedMessage id="bdwidth_title_name_tips" /></Text>
                 <Text style={[styles.text14, {marginTop: 15}]}><FormattedMessage id="bdwidth_title_name_tip1" /></Text>
                 <Text style={[styles.text14, {marginTop: 10}]}><FormattedMessage id="bdwidth_title_name_tip2" /></Text>
-                <Text style={[styles.text14, {marginTop: 10}]}><FormattedMessage id="bdwidth_title_name_tip3" /></Text>
               </View>
             </ScrollView>
           </View>
