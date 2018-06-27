@@ -1,19 +1,16 @@
 {
   "zh": {
-    "bdwidth_title_name_bandwidth": "Bandwidth",
-    "bdwidth_title_name_total": "Total: ",
+    "bdwidth_title_name_bandwidth": "网络带宽",
+    "bdwidth_title_name_total": "总量: ",
     "bdwidth_title_name_tips": "Tips:",
-    "bdwidth_title_name_tip1": "1. This is a reference text, you can not care.",
-    "bdwidth_title_name_tip2": "2. If you really care, you can read this text, anyway, I do not care.",
-    "bdwidth_title_name_tip3": "3. You're awesome."
+    "bdwidth_title_name_tip1": "1. 网络带宽是EOS网络中的资源，获取时需要抵押委托的EOS.",
+    "bdwidth_title_name_tip2": "2. EOS的抵押可以撤销，撤销后将于72小时候退回之您的账户."
   },
   "en": {
     "bdwidth_title_name_bandwidth": "Bandwidth",
     "bdwidth_title_name_total": "Total: ",
     "bdwidth_title_name_tips": "Tips:",
-    "bdwidth_title_name_tip1": "1. This is a reference text, you can not care.",
-    "bdwidth_title_name_tip2": "2. If you really care, you can read this text, anyway, I do not care.",
-    "bdwidth_title_name_tip3": "3. You're awesome."
+    "bdwidth_title_name_tip1": "1. You have to delegate your EOS in case to acquire the resources.",
+    "bdwidth_title_name_tip2": "2. You could cancel the delegation anytime you want, but the amount will be returned in 72 hours."
   }
 }
-

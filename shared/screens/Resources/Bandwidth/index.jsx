@@ -56,7 +56,6 @@ export default class Memory extends BaseScreen {
                 <Text style={styles.text16}><FormattedMessage id="bdwidth_title_name_tips" /></Text>
                 <Text style={[styles.text14, {marginTop: 15}]}><FormattedMessage id="bdwidth_title_name_tip1" /></Text>
                 <Text style={[styles.text14, {marginTop: 10}]}><FormattedMessage id="bdwidth_title_name_tip2" /></Text>
-                <Text style={[styles.text14, {marginTop: 10}]}><FormattedMessage id="bdwidth_title_name_tip3" /></Text>
               </View>
             </ScrollView>
           </View>
