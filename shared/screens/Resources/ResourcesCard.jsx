@@ -6,13 +6,11 @@ import LinearGradientContainer from 'components/LinearGradientContainer'
 import { FormattedNumber } from 'react-intl'
 import { SCREEN_HEIGHT, SCREEN_WIDTH, FontScale } from 'utils/dimens'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { formatMemorySize, formatCycleTime } from 'utils/format'
 
 const styles = StyleSheet.create({
   linearContainer: {
     width: SCREEN_WIDTH-64,
-    height: 200,
-    borderRadius: 10
+    minHeight: 200
   },
   between: {
     alignItems: 'center',
@@ -22,6 +20,7 @@ const styles = StyleSheet.create({
   info: {
     width: SCREEN_WIDTH-64,
     height: 64,
+    marginTop: 20,
     paddingHorizontal: 20
   },
   content: {
@@ -63,52 +62,44 @@ export default class ResourcesCard extends Component {
 
   render() {
     const { type, title, availableText, available, totalText, total, usageText, usage, delegateText, delegate, colors, onPress } = this.props
-    const { extraStyle } = this.props 
     return (
-      <View style={[styles.linearContainer, { marginHorizontal: 32, marginTop: 40 }, {...extraStyle}]}>
-        <LinearGradientContainer type="right" colors={colors} style={[styles.linearContainer, {...extraStyle}]}>
-          <TouchableWithoutFeedback style={[styles.linearContainer]} onPress={onPress} >
-            <View>
-              <View style={[styles.between, styles.info, styles.topRadius]}>
-                <Text style={styles.text16}>{title}</Text>
-                <Ionicons name="ios-arrow-forward" size={16} color={Colors.bgColor_FFFFFF} />
+      <TouchableWithoutFeedback style={styles.linearContainer} onPress={onPress}>
+        <View>
+          <LinearGradientContainer type="right" colors={colors} style={[styles.between, styles.info, styles.topRadius]}>
+            <Text style={styles.text16}>{title}</Text>
+            <Ionicons name="ios-arrow-forward" size={16} color={Colors.bgColor_FFFFFF} />
+          </LinearGradientContainer>
+          <View style={[styles.content, styles.bottomRadius]}>
+            <View style={[styles.available, styles.between]}>
+              <Text style={styles.text18}> {availableText} </Text>
+              <Text style={styles.text18}> 
+                {available}
+              </Text>
+            </View>
+            <View style={[styles.available]}>
+              <View style={[styles.between, { marginTop: 10 }]} >
+                <Text style={styles.text14}> {totalText} </Text>
+                <Text style={styles.text14}> 
+                  {total}
+                </Text>
               </View>
-              <View style={[styles.content, styles.bottomRadius]}>
-                <View style={[styles.available, styles.between]}>
-                  <Text style={styles.text18}> {availableText} </Text>
-                  <Text style={styles.text18}> 
-                    {
-                      type == 'cpu' ? formatCycleTime(available) : formatMemorySize(available)
-                    }
-                    
-                  </Text>
-                </View>
-                <View style={[styles.available]}>
-                  <View style={[styles.between, { marginTop: 10 }]} >
-                    <Text style={styles.text14}> {totalText} </Text>
-                    <Text style={styles.text14}> 
-                      {formatMemorySize(total)}
-                    </Text>
-                  </View>
-                  <View style={[styles.between, { marginTop: 10 }]} > 
-                    <Text style={styles.text14}> {usageText} </Text>
-                    <Text style={styles.text14}> 
-                      {formatMemorySize(usage)}
-                    </Text>
-                  </View>
-                </View>
-                {
-                  delegate &&
-                  <View style={[styles.between, { marginTop: 10 }]} > 
-                  <Text style={styles.text14}> {delegateText} </Text>
-                  <Text style={styles.text14}> {delegate} </Text>
-                </View>
-                }
+              <View style={[styles.between, { marginTop: 10 }]} > 
+                <Text style={styles.text14}> {usageText} </Text>
+                <Text style={styles.text14}> 
+                  {usage}
+                </Text>
               </View>
             </View>
-          </TouchableWithoutFeedback>
-        </LinearGradientContainer>
-      </View>
+            {
+              delegate &&
+              <View style={[styles.between, { marginTop: 10 }]} > 
+              <Text style={styles.text14}> {delegateText} </Text>
+              <Text style={styles.text14}> {delegate} </Text>
+            </View>
+            }
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
     )
   }
 

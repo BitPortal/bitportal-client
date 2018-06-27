@@ -10,6 +10,7 @@ import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import DelegateBandwidthForm from 'components/Form/DelegateBandwidthForm'
+import { formatMemorySize } from 'utils/format'
 import messages from './messages'
 import Progress from '../Progress'
 
@@ -47,7 +48,7 @@ export default class Memory extends BaseScreen {
                 <Progress percent={percent} />
                 <View style={[styles.totalContainer, styles.between]}>
                   <Text style={styles.text14}><FormattedMessage id="bdwidth_title_name_total" /></Text>
-                  <Text style={styles.text14}>{activeEOSAccount.get('net_limit').get('max')} byte</Text>
+                  <Text style={styles.text14}>{formatMemorySize(activeEOSAccount.get('net_limit').get('max'))}</Text>
                 </View>
               </View>
               <DelegateBandwidthForm />
