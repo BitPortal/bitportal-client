@@ -62,8 +62,6 @@ export default class Resources extends BaseScreen {
             >
               <ResourcesCard
                 colors={Colors.cpuColor}
-                extraStyle={{ marginTop: 10, height: 220 }}
-                type={'cpu'}
                 onPress={() => this.check('cpu')}
                 title={<FormattedMessage id="reslist_title_name_cpu" />}
                 availableText={<FormattedMessage id="reslist_title_name_ava" />}
@@ -77,7 +75,6 @@ export default class Resources extends BaseScreen {
               />
               <ResourcesCard
                 onPress={() => this.check('bw')}
-                extraStyle={{ marginTop: 20, height: 220 }}
                 title={<FormattedMessage id="reslist_title_name_bw" />}
                 availableText={<FormattedMessage id="reslist_title_name_ava" />}
                 available={formatMemorySize(activeEOSAccount.get('net_limit').get('available'))}
@@ -91,7 +88,6 @@ export default class Resources extends BaseScreen {
               <ResourcesCard
                 colors={Colors.ramColor}
                 onPress={() => this.check('ram')}
-                extraStyle={{ marginTop: 25, marginBottom: 30}}
                 title={<FormattedMessage id="reslist_title_name_ram" />}
                 availableText={<FormattedMessage id="reslist_title_name_ava" />}
                 available={formatMemorySize(activeEOSAccount.get('ram_quota')-activeEOSAccount.get('ram_usage'))}
