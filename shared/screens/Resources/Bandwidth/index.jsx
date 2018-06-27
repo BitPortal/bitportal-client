@@ -9,6 +9,7 @@ import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { eosAccountSelector } from 'selectors/eosAccount'
+import DelegateBandwidthForm from 'components/Form/DelegateBandwidthForm'
 import messages from './messages'
 import Progress from '../Progress'
 
@@ -21,7 +22,6 @@ import Progress from '../Progress'
 )
 
 export default class Memory extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -50,19 +50,17 @@ export default class Memory extends BaseScreen {
                   <Text style={styles.text14}>{activeEOSAccount.get('net_limit').get('max')} byte</Text>
                 </View>
               </View>
-
+              <DelegateBandwidthForm />
               <View style={styles.tipsContainer}>
                 <Text style={styles.text16}><FormattedMessage id="bdwidth_title_name_tips" /></Text>
                 <Text style={[styles.text14, {marginTop: 15}]}><FormattedMessage id="bdwidth_title_name_tip1" /></Text>
                 <Text style={[styles.text14, {marginTop: 10}]}><FormattedMessage id="bdwidth_title_name_tip2" /></Text>
                 <Text style={[styles.text14, {marginTop: 10}]}><FormattedMessage id="bdwidth_title_name_tip3" /></Text>
               </View>
-
             </ScrollView>
           </View>
         </View>
       </IntlProvider>
     )
   }
-
 }

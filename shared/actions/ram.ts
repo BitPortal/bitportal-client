@@ -9,3 +9,4 @@ export const sellRAMSucceeded = createAction<SellRAMResult>('ram/SELL_SUCCEEDED'
 export const sellRAMFailed = createAction<ErrorMessage>('ram/SELL_FAILED')
 
 export const clearError = createAction('ram/CLEAR_ERROR')
+export const hideSuccessModal = createAction('ram/HIDE_SUCCESS_MODAL')

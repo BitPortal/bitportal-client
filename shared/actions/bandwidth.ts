@@ -9,3 +9,4 @@ export const undelegateBandwidthSucceeded = createAction<UndelegateBandwidthResu
 export const undelegateBandwidthFailed = createAction<ErrorMessage>('bandwidth/UNDELEGATE_FAILED')
 
 export const clearError = createAction('bandwidth/CLEAR_ERROR')
+export const hideSuccessModal = createAction('bandwidth/HIDE_SUCCESS_MODAL')

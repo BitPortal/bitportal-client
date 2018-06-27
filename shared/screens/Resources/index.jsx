@@ -1,4 +1,5 @@
 /* @tsx */
+
 import React, { Component } from 'react'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import BaseScreen from 'components/BaseScreen'
@@ -21,7 +22,6 @@ import messages from './messages'
 )
 
 export default class Resources extends BaseScreen {
-
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -31,21 +31,22 @@ export default class Resources extends BaseScreen {
     switch (type) {
       case 'ram':
         this.props.navigator.push({ screen: 'BitPortal.Memory' })
-        break;
+        break
       case 'bw':
         this.props.navigator.push({ screen: 'BitPortal.Bandwidth' })
-        break;
+        break
       case 'cpu':
         this.props.navigator.push({ screen: 'BitPortal.CPU' })
-        break;
+        break
       default:
-        break;
+        break
     }
   }
 
   render() {
     const { locale, eosAccount } = this.props
     const activeEOSAccount = eosAccount.get('data')
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -58,7 +59,7 @@ export default class Resources extends BaseScreen {
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }}
             >
-              <ResourcesCard 
+              <ResourcesCard
                 colors={Colors.ramColor}
                 onPress={() => this.check('ram')}
                 extraStyle={{ marginTop: 10 }}
@@ -70,7 +71,7 @@ export default class Resources extends BaseScreen {
                 usageText={<FormattedMessage id="reslist_title_name_usgttl" />}
                 usage={activeEOSAccount.get('ram_usage')}
               />
-              <ResourcesCard 
+              <ResourcesCard
                 onPress={() => this.check('bw')}
                 extraStyle={{ marginTop: 20, height: 220 }}
                 title={<FormattedMessage id="reslist_title_name_bw" />}
@@ -83,7 +84,7 @@ export default class Resources extends BaseScreen {
                 delegateText={<FormattedMessage id="reslist_title_name_delegate" />}
                 delegate={activeEOSAccount.get('total_resources').get('net_weight')}
               />
-              <ResourcesCard 
+              <ResourcesCard
                 colors={Colors.cpuColor}
                 extraStyle={{ marginTop: 25, marginBottom: 30, height: 220 }}
                 onPress={() => this.check('cpu')}
@@ -97,12 +98,10 @@ export default class Resources extends BaseScreen {
                 delegateText={<FormattedMessage id="reslist_title_name_delegate" />}
                 delegate={activeEOSAccount.get('total_resources').get('cpu_weight')}
               />
-
             </ScrollView>
           </View>
         </View>
       </IntlProvider>
     )
   }
-
 }

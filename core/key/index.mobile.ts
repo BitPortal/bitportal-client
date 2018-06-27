@@ -299,7 +299,7 @@ export const validateEntropy = (entropy: string) => {
 export const getEOSWifsByInfo = async (password: string, accountInfo: any, checkPermissions: string[]) => {
   assert(accountInfo.permissions && accountInfo.permissions.length, 'EOS account permissions dose not exist!')
   assert(accountInfo.account_name, 'EOS account name dose not exist!')
-  assert(typeof checkPermissions === 'object' && !!checkPermissions.length && checkPermissions.indexOf('owner') !== -1 && checkPermissions.indexOf('active') !== -1, 'Permissions should contain owner or active!')
+  assert(typeof checkPermissions === 'object' && !!checkPermissions.length && (checkPermissions.indexOf('owner') !== -1 || checkPermissions.indexOf('active') !== -1), 'Permissions should contain owner or active!')
   const permissions = accountInfo.permissions
   const eosAccountName = accountInfo.account_name
 

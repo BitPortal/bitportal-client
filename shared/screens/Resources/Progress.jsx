@@ -20,9 +20,9 @@ const styles = StyleSheet.create({
 })
 
 export default class Progress extends Component {
-
   render() {
-    const { colors, percent, extraStyle } = this.props 
+    const { colors, percent, extraStyle } = this.props
+
     return (
       <View style={[styles.container, { backgroundColor: Colors.mainThemeColor }, {...extraStyle}]}>
         <LinearGradientContainer type="right" colors={colors} style={[styles.container, { alignItems: 'center', width: percent*(SCREEN_WIDTH-64) }]}>
@@ -33,5 +33,4 @@ export default class Progress extends Component {
       </View>
     )
   }
-
 }

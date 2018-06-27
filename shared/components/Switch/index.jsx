@@ -16,19 +16,35 @@ const styles = EStyleSheet.create({
     width: '50%',
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    height: 50
   },
   itemText: {
-    color: 'white'
+    color: 'white',
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  active: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#59b9e2'
+  },
+  activeText: {
+    color: '#59b9e2'
   }
 })
 
 export default class Switch extends Component {
   render () {
+    const { itemList, active, onSwitch } = this.props
+
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.item}><Text style={styles.itemText}>Buy</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.item}><Text style={styles.itemText}>Sell</Text></TouchableOpacity>
+        {itemList.map(item =>
+          <TouchableOpacity key={item} style={[styles.item, active === item ? styles.active : {}]} onPress={() => onSwitch(item)}>
+            <Text style={[styles.itemText, active === item ? styles.activeText : {}]}>{item}</Text>
+          </TouchableOpacity>
+         )}
       </View>
     )
   }

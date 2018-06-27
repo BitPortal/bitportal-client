@@ -193,7 +193,9 @@ const browserConfig = {
   ]),
   devServer: {
     contentBase: './browser',
-    hot: true
+    hot: true,
+    open: true,
+    openPage: ''
   }
 }
 

@@ -5,7 +5,8 @@ import * as actions from 'actions/bandwidth'
 const initialState = Immutable.fromJS({
   delegating: false,
   undelegating: false,
-  error: null
+  error: null,
+  showSuccess: false
 })
 
 export default handleActions({
@@ -28,6 +29,9 @@ export default handleActions({
     return state.set('error', action.payload).set('undelegating', false)
   },
   [actions.clearError] (state) {
-    return state.set('error', null)
+    return state.set('error', null).set('delegating', false).set('undelegating', false)
+  },
+  [actions.hideSuccessModal] (state) {
+    return state.set('showSuccess', false)
   }
 }, initialState)

@@ -5,6 +5,7 @@ import { reset } from 'redux-form/immutable'
 import assert from 'assert'
 import * as actions from 'actions/wallet'
 import { resetBalance, getBalanceRequested } from 'actions/balance'
+import { getEOSAccountRequested } from 'actions/eosAccount'
 import { resetKey } from 'actions/keystore'
 import { resetEOSAccount, syncEOSAccount, createEOSAccountSucceeded } from 'actions/eosAccount'
 import { getErrorMessage } from 'utils'
@@ -166,10 +167,8 @@ function* createWalletRequested(action: Action<CreateWalletParams>) {
 
 function* syncWalletRequested() {
   try {
-    // const items = yield call(secureStorage.getAllItems)
-    // console.log(items)
-    const eos = yield call(initEOS, {})
-    console.log(eos)
+    const items = yield call(secureStorage.getAllItems)
+    console.log(items)
 
     const allItems = yield call(secureStorage.getAllItems)
 
@@ -202,6 +201,7 @@ function* syncWalletRequested() {
     yield put(syncEOSAccount(eosAccountList))
     yield put(actions.syncWalletSucceeded({ hdWalletList, classicWalletList, active }))
     if (active.eosAccountName) {
+      yield put(getEOSAccountRequested({ eosAccountName: active.eosAccountName }))
       yield put(getBalanceRequested({ code: 'eosio.token', account: active.eosAccountName }))
     }
   } catch (e) {

@@ -5,7 +5,8 @@ import * as actions from 'actions/ram'
 const initialState = Immutable.fromJS({
   buying: false,
   selling: false,
-  error: null
+  error: null,
+  showSuccess: false
 })
 
 export default handleActions({
@@ -13,7 +14,7 @@ export default handleActions({
     return state.set('buying', true)
   },
   [actions.buyRAMSucceeded] (state) {
-    return state.set('buying', false)
+    return state.set('buying', false).set('showSuccess', true)
   },
   [actions.buyRAMFailed] (state, action) {
     return state.set('error', action.payload).set('buying', false)
@@ -22,12 +23,15 @@ export default handleActions({
     return state.set('selling', true)
   },
   [actions.sellRAMSucceeded] (state) {
-    return state.set('selling', false)
+    return state.set('selling', false).set('showSuccess', true)
   },
   [actions.sellRAMFailed] (state, action) {
     return state.set('error', action.payload).set('selling', false)
   },
   [actions.clearError] (state) {
-    return state.set('error', null)
+    return state.set('error', null).set('selling', false).set('buying', false)
+  },
+  [actions.hideSuccessModal] (state) {
+    return state.set('showSuccess', false)
   }
 }, initialState)
