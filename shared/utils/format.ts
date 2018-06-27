@@ -42,7 +42,7 @@ export const formatCycleTime = (value: any) => {
 
 export const formatMemorySize = (value: any) => {
   if (null == value || value == '') return "0.00 byte"
-  let quoteArr = ["byte","kB","mB","gB","tB","pB","eB","zB","yB"]
+  let quoteArr = ["byte","KB","MB","GB","TB","PB","EB","ZB","YB"]
   let index = 0, srcSize = parseFloat(value)
   index = Math.floor(Math.log(srcSize)/Math.log(1024))
   let size = srcSize/Math.pow(1024,index)

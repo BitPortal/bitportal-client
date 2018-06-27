@@ -26,7 +26,7 @@ export default class Progress extends Component {
     return (
       <View style={[styles.container, { backgroundColor: Colors.mainThemeColor }, {...extraStyle}]}>
         <LinearGradientContainer type="right" colors={colors} style={[styles.container, { alignItems: 'center', width: percent*(SCREEN_WIDTH-64) }]} />
-        <Text style={[styles.text12, { marginLeft: percent*(SCREEN_WIDTH-64)-5, marginBottom: -32 }]}>
+        <Text style={[styles.text12, { marginLeft: percent*(SCREEN_WIDTH-64)-5, marginRight: -25, marginBottom: -35 }]}>
           {parseInt(percent*100)}%
         </Text>
       </View>

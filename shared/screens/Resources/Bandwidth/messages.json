@@ -2,7 +2,7 @@
   "zh": {
     "bdwidth_title_name_bandwidth": "网络带宽",
     "bdwidth_title_name_total": "总量: ",
-    "bdwidth_title_name_tips": "Tips:",
+    "bdwidth_title_name_tips": "提示:",
     "bdwidth_title_name_tip1": "1. 网络带宽是EOS网络中的资源，获取时需要抵押委托的EOS.",
     "bdwidth_title_name_tip2": "2. EOS的抵押可以撤销，撤销后将于72小时候退回之您的账户."
   },

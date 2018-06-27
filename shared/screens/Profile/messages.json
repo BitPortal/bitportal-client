@@ -2,6 +2,7 @@
   "zh": {
     "profile_title_name_profile" : "我的",
     "prf_sec_titile_vote" : "节点投票",
+    "prf_sec_titile_res": "资源管理",
     "prf_sec_titile_ctcts" : "联系人",
     "prf_sec_titile_act" : "管理钱包",
     "prf_sec_titile_sts" : "系统设置",
@@ -16,6 +17,7 @@
   "en": {
     "profile_title_name_profile" : "Profile",
     "prf_sec_titile_vote" : "Voting",
+    "prf_sec_titile_res": "Resources",
     "prf_sec_titile_ctcts" : "Contacts",
     "prf_sec_titile_act" : "Wallet Management",
     "prf_sec_titile_sts" : "Settings",
