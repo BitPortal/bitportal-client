@@ -50,7 +50,8 @@ export const errorMessages = (error, messages) => {
 const validate = (values, props) => {
   const hasAccount = !!props.eosAccount.get('data').size
   const eosBalance = (hasAccount && props.eosAccount.get('data').get('core_liquid_balance')) ? props.eosAccount.get('data').get('core_liquid_balance').split(' ')[0] : 0
-  const ramBytes = (hasAccount && props.eosAccount.get('data').get('total_resources').get('ram_bytes')) ? props.eosAccount.get('data').get('total_resources').get('ram_bytes') : 0
+  const ramQuota = (hasAccount && props.eosAccount.get('data').get('ram_quota')) ? props.eosAccount.get('data').get('ram_quota') : 0
+  const ramUsage = (hasAccount && props.eosAccount.get('data').get('ram_usage')) ? props.eosAccount.get('data').get('ram_usage') : 0
 
   const errors = {}
 
@@ -62,7 +63,7 @@ const validate = (values, props) => {
 
   if (!values.get('bytes')) {
     errors.bytes = messages[props.locale]["tra_popup_title_eptbyteinput"]
-  } else if (+ramBytes < +values.get('bytes')) {
+  } else if ((+ramQuota - +ramUsage) < +values.get('bytes')) {
     errors.bytes = messages[props.locale]["tra_popup_title_enbyteinput"]
   }
 
