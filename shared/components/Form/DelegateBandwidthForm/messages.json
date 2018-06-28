@@ -11,7 +11,7 @@
     "dlgt_popup_title_epteosinput": "请输入EOS数量",
     "dlgt_popup_title_eptbyteinput": "请输入数量",
     "dlgt_popup_title_enbyteinput": "您的余额不足",
-    "dlgt_popup_title_mousg": "account using more than allotted RAM usage"
+    "dlgt_popup_title_mousg": "储存容量（RAM）不足"
   },
   "en": {
     "dlgt_popup_title_pwd" : "Please enter the password",
