@@ -40,8 +40,10 @@ export const errorMessages = (error, messages) => {
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
       return messages["tra_popup_title_pwderr"]
-    case 'transaction exceeded the current CPU usage limit imposed on the transaction':
+    case 'account using more than allotted RAM usage':
       return messages["tra_popup_title_mousg"]
+    case 'transaction exceeded the current CPU usage limit imposed on the transaction':
+      return messages["tra_popup_title_exlimit"]
     default:
       return messages["tra_popup_title_trafail"]
   }
