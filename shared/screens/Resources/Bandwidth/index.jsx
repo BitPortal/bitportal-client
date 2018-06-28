@@ -32,6 +32,7 @@ export default class Memory extends BaseScreen {
     const { locale, eosAccount } = this.props
     const activeEOSAccount = eosAccount.get('data')
     const percent = activeEOSAccount.get('net_limit').get('available')/activeEOSAccount.get('net_limit').get('max')
+    const refund = activeEOSAccount.get('refund_request') ? activeEOSAccount.get('refund_request').get('net_amount') : '0.0000 EOS'
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -56,7 +57,7 @@ export default class Memory extends BaseScreen {
                 <View style={[styles.totalContainer, styles.between, {marginTop: 0}]}>
                   <Text style={styles.text14}><FormattedMessage id="bdwidth_title_name_unstaking" /></Text>
                   <Text style={styles.text14}>
-                    
+                    {refund}
                   </Text>
                 </View>
               </View>
