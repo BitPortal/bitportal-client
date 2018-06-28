@@ -1,7 +1,9 @@
+import assert from 'assert'
 import SensitiveInfo from 'react-native-sensitive-info'
 
 const getItem = async (key: string, json?: boolean) => {
   try {
+    assert(key, 'Invalid storage key')
     const value = await SensitiveInfo.getItem(key, {
       sharedPreferencesName: 'BitportalSharedPrefs',
       keychainService: 'BitportalKeychain'
@@ -14,7 +16,9 @@ const getItem = async (key: string, json?: boolean) => {
 
 const setItem = async (key: string, value: any, json?: boolean) => {
   try {
+    assert(key, 'Invalid storage key')
     const stringValue = (json && !!value) ? JSON.stringify(value) : value
+    assert(typeof stringValue === 'string' && stringValue && stringValue !== 'null' && stringValue !== 'undefined', 'Invalid storage value')
     await SensitiveInfo.setItem(key, stringValue, {
       sharedPreferencesName: 'BitportalSharedPrefs',
       keychainService: 'BitportalKeychain',

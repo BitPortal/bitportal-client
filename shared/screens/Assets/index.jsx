@@ -59,7 +59,8 @@ const getTotalAssets = (balanceList, eosPrice) => {
       ...tickerActions,
       ...balanceActions,
       ...versionInfoActions,
-      ...currencyActions
+      ...currencyActions,
+      ...eosAccountActions
     }, dispatch)
   })
 )
@@ -178,7 +179,12 @@ export default class Assets extends BaseScreen {
     })
 
     const eosAccountName = this.props.eosAccount.get('data').get('account_name')
+
     if (eosAccountName) {
+      this.props.actions.getEOSAccountRequested({
+        eosAccountName
+      })
+
       this.props.actions.getBalanceRequested({
         code: 'eosio.token',
         account: eosAccountName
