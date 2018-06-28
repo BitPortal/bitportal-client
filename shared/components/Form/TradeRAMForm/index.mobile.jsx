@@ -60,7 +60,7 @@ const validate = (values, props) => {
   if (!+values.get('quant')) {
     errors.quant = messages[props.locale]["tra_popup_title_epteosinput"]
   } else if (+eosBalance < +values.get('quant')) {
-    errors.quant = messages[props.locale]["tra_popup_title_epteosinput"]
+    errors.quant = messages[props.locale]["tra_popup_title_enbyteinput"]
   }
 
   if (!values.get('bytes')) {
