@@ -10,7 +10,8 @@
     "tra_popup_title_trasucc": "交易成功",
     "tra_popup_title_epteosinput": "请输入EOS数量",
     "tra_popup_title_eptbyteinput": "请输入bytes",
-    "tra_popup_title_enbyteinput": "您的余额不足"
+    "tra_popup_title_enbyteinput": "您的余额不足",
+    "tra_popup_title_mousg": "transaction exceeded the current CPU usage limit imposed on the transaction"
   },
   "en": {
     "tra_popup_title_pwd" : "Please enter the password",
@@ -23,6 +24,7 @@
     "tra_popup_title_trasucc": "Success",
     "tra_popup_title_epteosinput": "Please input the amount",
     "tra_popup_title_eptbyteinput": "Please input the amount",
-    "tra_popup_title_enbyteinput": "You do not have enough RAM"
+    "tra_popup_title_enbyteinput": "You do not have enough RAM",
+    "tra_popup_title_mousg": "transaction exceeded the current CPU usage limit imposed on the transaction"
   }
 }
