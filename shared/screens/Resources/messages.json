@@ -5,10 +5,10 @@
     "reslist_title_name_bw": "网络带宽",
     "reslist_title_name_cpu": "计算资源",
     "reslist_title_name_ava": "可用:",
-    "reslist_title_name_ramttl": "已配给:",
-    "reslist_title_name_usgttl": "已使用:",
+    "reslist_title_name_ramttl": "总量:",
+    "reslist_title_name_usgttl": "已用:",
     "reslist_title_name_bwttl": "总量:",
-    "reslist_title_name_delegate": "已托管:"
+    "reslist_title_name_delegate": "已抵押:"
   },
   "en": {
     "reslist_title_name_resources" : "Resources",
@@ -17,8 +17,8 @@
     "reslist_title_name_cpu": "CPU",
     "reslist_title_name_ava": "Available:",
     "reslist_title_name_ramttl": "Quota:",
-    "reslist_title_name_usgttl": "Usage:",
+    "reslist_title_name_usgttl": "Used:",
     "reslist_title_name_bwttl": "Total:",
-    "reslist_title_name_delegate": "Delegated:"
+    "reslist_title_name_delegate": "Staked:"
   }
 }
