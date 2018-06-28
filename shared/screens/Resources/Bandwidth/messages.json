@@ -1,18 +1,18 @@
 {
   "zh": {
     "bdwidth_title_name_bandwidth": "网络带宽",
-    "bdwidth_title_name_total": "可抵押/总额: ",
-    "bdwidth_title_name_unstaking": "撤销中: ",
+    "bdwidth_title_name_total": "可用/总量: ",
+    "bdwidth_title_name_unstaking": "赎回中: ",
     "bdwidth_title_name_tips": "提示:",
-    "bdwidth_title_name_tip1": "1. 网络带宽是EOS网络中的资源，获取时需要抵押委托的EOS.",
-    "bdwidth_title_name_tip2": "2. EOS的抵押可以撤销，撤销后将于72小时候退回之您的账户."
+    "bdwidth_title_name_tip1": "1. 网络带宽是EOS网络中的资源，需要抵押EOS以获取.",
+    "bdwidth_title_name_tip2": "2. 您可以赎回抵押的EOS，赎回的资产将在72小时后返回您的账户."
   },
   "en": {
     "bdwidth_title_name_bandwidth": "Bandwidth",
-    "bdwidth_title_name_total": "Available Stake/Total: ",
-    "bdwidth_title_name_unstaking": "Unstaking: ",
+    "bdwidth_title_name_total": "Available/Total: ",
+    "bdwidth_title_name_unstaking": "Refund: ",
     "bdwidth_title_name_tips": "Tips:",
-    "bdwidth_title_name_tip1": "1. You have to delegate your EOS in case to acquire the resources.",
-    "bdwidth_title_name_tip2": "2. You could cancel the delegation anytime you want, but the amount will be returned in 72 hours."
+    "bdwidth_title_name_tip1": "1. You have to stake EOS in case to acquire the resources.",
+    "bdwidth_title_name_tip2": "2. You can retrieve your stake anytime you want, the refund will arrive around 72 hours."
   }
 }
