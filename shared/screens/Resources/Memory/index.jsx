@@ -33,7 +33,6 @@ export default class Memory extends BaseScreen {
     const activeEOSAccount = eosAccount.get('data')
     const percent = (activeEOSAccount.get('ram_quota') - activeEOSAccount.get('ram_usage')) / activeEOSAccount.get('ram_quota')
     const eosBalance = (activeEOSAccount && activeEOSAccount.get('core_liquid_balance')) 
-
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>

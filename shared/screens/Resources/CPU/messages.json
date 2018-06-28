@@ -3,6 +3,7 @@
     "cpu_title_name_cpu": "计算资源",
     "cpu_title_name_total": "可用/总量: ",
     "cpu_title_name_unstaking": "赎回中: ",
+    "cpu_title_name_avaeos": "EOS余额:",
     "cpu_title_name_tips": "提示:",
     "cpu_title_name_tip1": "1. 计算资源是EOS网络中的资源，需要抵押EOS以获取.",
     "cpu_title_name_tip2": "2. 您可以赎回抵押的EOS，赎回的资产将在72小时后返回您的账户."
@@ -11,6 +12,7 @@
     "cpu_title_name_cpu": "CPU",
     "cpu_title_name_total": "Available Stake/Total: ",
     "cpu_title_name_unstaking": "Unstaking: ",
+    "cpu_title_name_avaeos": "EOS Balance:",
     "cpu_title_name_tips": "Tips:",
     "cpu_title_name_tip1": "1. You have to stake EOS in case to acquire the resources.",
     "cpu_title_name_tip2": "2. You can retrieve your stake anytime you want, the refund will arrive around 72 hours."
