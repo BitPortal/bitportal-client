@@ -40,6 +40,8 @@ export const errorMessages = (error, messages) => {
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
       return messages["tra_popup_title_pwderr"]
+    case 'transaction exceeded the current CPU usage limit imposed on the transaction':
+      return 'transaction exceeded the current CPU usage limit imposed on the transaction'
     default:
       return messages["tra_popup_title_trafail"]
   }
@@ -113,7 +115,7 @@ export default class TradeRAMForm extends Component {
       )
       if (action === Dialogs.actionPositive) {
         this.actionRequest(data, text)
-      } 
+      }
     } else {
       this.setState({ isVisible: true, data })
     }

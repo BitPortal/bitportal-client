@@ -1,4 +1,4 @@
-// import assert from 'assert'
+import assert from 'assert'
 import { delay } from 'redux-saga'
 import { call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
@@ -18,6 +18,8 @@ function* buyRAMRequested(action: Action<BuyRAMParams>) {
     const eosAccountName = action.payload.eosAccountName
     const password = action.payload.password
     const quant = action.payload.quant
+    assert(quant, 'Invalid quant!')
+    const asset = (+quant).toFixed(4)
     const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
     const wifs = yield call(getEOSWifsByInfo, password, accountInfo, ['active'])
     const activeWifs = wifs.activeWifs
@@ -28,9 +30,9 @@ function* buyRAMRequested(action: Action<BuyRAMParams>) {
 
     const result = yield call(
       eos.transaction,
-      (tr: any) => tr.buyram({ payer: eosAccountName, receiver: eosAccountName, quant: `${quant} EOS` })
+      (tr: any) => tr.buyram({ payer: eosAccountName, receiver: eosAccountName, quant: `${asset} EOS` })
     )
-    console.log(result)
+
     yield put(actions.buyRAMSucceeded({}))
     yield put(reset('tradeRAMForm'))
     yield put(getEOSAccountRequested({ eosAccountName }))
@@ -59,7 +61,7 @@ function* sellRAMRequested(action: Action<SellRAMParams>) {
       eos.transaction,
       (tr: any) => tr.sellram({ bytes, account: eosAccountName })
     )
-    console.log(result)
+
     yield put(actions.sellRAMSucceeded({}))
     yield put(reset('tradeRAMForm'))
     yield put(getEOSAccountRequested({ eosAccountName }))

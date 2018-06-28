@@ -40,6 +40,8 @@ export const errorMessages = (error, messages) => {
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
       return messages["dlgt_popup_title_pwderr"]
+    case 'account using more than allotted RAM usage':
+      return 'account using more than allotted RAM usage'
     default:
       return messages["dlgt_popup_title_trafail"]
   }
@@ -87,11 +89,12 @@ export default class DelegateBandwidthForm extends Component {
   actionRequest = (data, password) => {
     const eosAccount = this.props.eosAccount
     const eosAccountName = eosAccount.get('data').get('account_name')
+    const resource = this.props.resource
 
-    if (this.state.activeForm === 'Buy') {
-      this.props.actions.delegateBandwidthRequested(data.set('eosAccountName', eosAccountName).set('password', password).toJS())
+    if (this.state.activeForm === 'Delegate') {
+      this.props.actions.delegateBandwidthRequested(data.set('resource', resource).set('eosAccountName', eosAccountName).set('password', password).toJS())
     } else {
-      this.props.actions.undelegateBandwidthRequested(data.set('eosAccountName', eosAccountName).set('password', password).toJS())
+      this.props.actions.undelegateBandwidthRequested(data.set('resource', resource).set('eosAccountName', eosAccountName).set('password', password).toJS())
     }
   }
 
@@ -149,11 +152,11 @@ export default class DelegateBandwidthForm extends Component {
               normalize={normalizeUnitByCurrency('EOS')}
               rightContent={<Text style={{ color: 'white' }}>EOS</Text>}
             />
-            <SubmitButton 
-              disabled={disabled} 
-              loading={loading} 
-              onPress={handleSubmit(this.submit)} 
-              text={this.state.activeForm === 'Delegate' ? messages[locale]["dlgt_popup_title_dlgt"] : messages[locale]["dlgt_popup_title_undlgt"]} 
+            <SubmitButton
+              disabled={disabled}
+              loading={loading}
+              onPress={handleSubmit(this.submit)}
+              text={this.state.activeForm === 'Delegate' ? messages[locale]["dlgt_popup_title_dlgt"] : messages[locale]["dlgt_popup_title_undlgt"]}
             />
             <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearError} />
             <Alert message={!!showSuccess && messages[locale]['dlgt_popup_title_trasucc']} dismiss={this.props.actions.hideSuccessModal} />

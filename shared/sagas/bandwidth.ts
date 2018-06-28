@@ -1,4 +1,4 @@
-// import assert from 'assert'
+import assert from 'assert'
 import { delay } from 'redux-saga'
 import { call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
@@ -18,9 +18,11 @@ function* delegateBandwidthRequested(action: Action<DelegateBandwidthParams>) {
     const eosAccountName = action.payload.eosAccountName
     const password = action.payload.password
     const quant = action.payload.quant
+    assert(quant, 'Invalid quant!')
+    const asset = (+quant).toFixed(4)
     const resource = action.payload.resource
-    const netQuantity = resource === 'net' ? `${quant} EOS` : '0.0000 EOS'
-    const cpuQuantity = resource === 'cpu' ? `${quant} EOS` : '0.0000 EOS'
+    const netQuantity = resource === 'net' ? `${asset} EOS` : '0.0000 EOS'
+    const cpuQuantity = resource === 'cpu' ? `${asset} EOS` : '0.0000 EOS'
     const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
     const wifs = yield call(getEOSWifsByInfo, password, accountInfo, ['active'])
     const activeWifs = wifs.activeWifs
@@ -39,12 +41,11 @@ function* delegateBandwidthRequested(action: Action<DelegateBandwidthParams>) {
         transfer: 0
       })
     )
-    console.log(result)
+
     yield put(actions.delegateBandwidthSucceeded({}))
     yield put(reset('delegateBandwidthForm'))
     yield put(getEOSAccountRequested({ eosAccountName }))
   } catch (e) {
-    console.log(e)
     yield put(actions.delegateBandwidthFailed(getErrorMessage(e)))
   }
 }
@@ -56,9 +57,11 @@ function* undelegateBandwidthRequested(action: Action<UndelegateBandwidthResult>
     const eosAccountName = action.payload.eosAccountName
     const password = action.payload.password
     const quant = action.payload.quant
+    assert(quant, 'Invalid quant!')
+    const asset = (+quant).toFixed(4)
     const resource = action.payload.resource
-    const netQuantity = resource === 'net' ? `${quant} EOS` : '0.0000 EOS'
-    const cpuQuantity = resource === 'cpu' ? `${quant} EOS` : '0.0000 EOS'
+    const netQuantity = resource === 'net' ? `${asset} EOS` : '0.0000 EOS'
+    const cpuQuantity = resource === 'cpu' ? `${asset} EOS` : '0.0000 EOS'
     const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
     const wifs = yield call(getEOSWifsByInfo, password, accountInfo, ['active'])
     const activeWifs = wifs.activeWifs
@@ -77,7 +80,7 @@ function* undelegateBandwidthRequested(action: Action<UndelegateBandwidthResult>
         transfer: 0
       })
     )
-    console.log(result)
+
     yield put(actions.undelegateBandwidthSucceeded({}))
     yield put(reset('delegateBandwidthForm'))
     yield put(getEOSAccountRequested({ eosAccountName }))
