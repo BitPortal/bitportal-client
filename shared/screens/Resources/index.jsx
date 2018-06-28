@@ -47,7 +47,7 @@ export default class Resources extends BaseScreen {
   render() {
     const { locale, eosAccount } = this.props
     const activeEOSAccount = eosAccount.get('data')
-
+    console.log('###', activeEOSAccount.toJS())
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>

@@ -36,7 +36,7 @@ export const SCREEN_WIDTH = Dimensions.get('window').width
 export const SCREEN_HEIGHT = getScreenHeight()
 export const NAV_BAR_HEIGHT = getNavBarHeigt()
 export const TAB_BAR_HEIGHT = getTabBarHeight()
-export const KEYBOARD_HEIGHT = Platform.OS === 'ios' ? 220 : 240
+export const KEYBOARD_HEIGHT = Platform.OS === 'ios' ? 240 : 300
 export const FontScale = size => Math.round((size * SCREEN_WIDTH) / 375)
 export const WidthPercent = percent => (SCREEN_WIDTH * percent) / 100
 export const HeightPercent = percent => (SCREEN_HEIGHT * percent) / 100
