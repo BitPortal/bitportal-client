@@ -41,7 +41,7 @@ export const errorMessages = (error, messages) => {
     case 'Key derivation failed - possibly wrong passphrase':
       return messages["dlgt_popup_title_pwderr"]
     case 'account using more than allotted RAM usage':
-      return 'account using more than allotted RAM usage'
+      return messages["dlgt_popup_title_mousg"] 
     default:
       return messages["dlgt_popup_title_trafail"]
   }

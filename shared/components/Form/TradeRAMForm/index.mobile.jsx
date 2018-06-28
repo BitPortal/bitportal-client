@@ -41,7 +41,7 @@ export const errorMessages = (error, messages) => {
     case 'Key derivation failed - possibly wrong passphrase':
       return messages["tra_popup_title_pwderr"]
     case 'transaction exceeded the current CPU usage limit imposed on the transaction':
-      return 'transaction exceeded the current CPU usage limit imposed on the transaction'
+      return messages["tra_popup_title_mousg"]
     default:
       return messages["tra_popup_title_trafail"]
   }

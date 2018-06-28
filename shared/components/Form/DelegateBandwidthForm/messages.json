@@ -10,7 +10,8 @@
     "dlgt_popup_title_trasucc": "交易成功",
     "dlgt_popup_title_epteosinput": "请输入EOS数量",
     "dlgt_popup_title_eptbyteinput": "请输入数量",
-    "dlgt_popup_title_enbyteinput": "您的余额不足"
+    "dlgt_popup_title_enbyteinput": "您的余额不足",
+    "dlgt_popup_title_mousg": "account using more than allotted RAM usage"
   },
   "en": {
     "dlgt_popup_title_pwd" : "Please enter the password",
@@ -23,6 +24,7 @@
     "dlgt_popup_title_trasucc": "Success",
     "dlgt_popup_title_epteosinput": "Please input the amount",
     "dlgt_popup_title_eptbyteinput": "Please input the amount",
-    "dlgt_popup_title_enbyteinput": "Your EOS balance is not enough"
+    "dlgt_popup_title_enbyteinput": "Your EOS balance is not enough",
+    "dlgt_popup_title_mousg": "account using more than allotted RAM usage"
   }
 }
