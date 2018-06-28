@@ -53,6 +53,12 @@ export default class Memory extends BaseScreen {
                     /{formatMemorySize(activeEOSAccount.get('net_limit').get('max'))}
                   </Text>
                 </View>
+                <View style={[styles.totalContainer, styles.between, {marginTop: 0}]}>
+                  <Text style={styles.text14}><FormattedMessage id="bdwidth_title_name_unstaking" /></Text>
+                  <Text style={styles.text14}>
+                    
+                  </Text>
+                </View>
               </View>
               <DelegateBandwidthForm resource="net" />
               <View style={styles.tipsContainer}>

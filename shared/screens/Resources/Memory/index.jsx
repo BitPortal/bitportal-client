@@ -32,6 +32,7 @@ export default class Memory extends BaseScreen {
     const { locale, eosAccount } = this.props
     const activeEOSAccount = eosAccount.get('data')
     const percent = (activeEOSAccount.get('ram_quota') - activeEOSAccount.get('ram_usage')) / activeEOSAccount.get('ram_quota')
+    const eosBalance = (activeEOSAccount && activeEOSAccount.get('core_liquid_balance')) 
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -52,6 +53,12 @@ export default class Memory extends BaseScreen {
                   <Text style={styles.text14}>
                     {formatMemorySize(activeEOSAccount.get('ram_quota') - activeEOSAccount.get('ram_usage'))}
                     /{formatMemorySize(activeEOSAccount.get('ram_quota'))}
+                  </Text>
+                </View>
+                <View style={[styles.totalContainer, styles.between, {marginTop: 0}]}>
+                  <Text style={styles.text14}><FormattedMessage id="memory_title_name_avaeos" /></Text>
+                  <Text style={styles.text14}>
+                    {eosBalance}
                   </Text>
                 </View>
               </View>
