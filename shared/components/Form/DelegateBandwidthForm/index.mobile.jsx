@@ -43,7 +43,7 @@ export const errorMessages = (error, messages) => {
     case 'account using more than allotted RAM usage':
       return messages["dlgt_popup_title_mousg"]
     case 'transaction exceeded the current CPU usage limit imposed on the transaction':
-      return 'transaction exceeded the current CPU usage limit imposed on the transaction'
+      return messages["dlgt_popup_title_exlimit"]
     default:
       return messages["dlgt_popup_title_trafail"]
   }
