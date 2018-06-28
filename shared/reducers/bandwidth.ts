@@ -14,7 +14,7 @@ export default handleActions({
     return state.set('delegating', true)
   },
   [actions.delegateBandwidthSucceeded] (state) {
-    return state.set('delegating', false)
+    return state.set('delegating', false).set('showSuccess', true)
   },
   [actions.delegateBandwidthFailed] (state, action) {
     return state.set('error', action.payload).set('delegating', false)
@@ -23,7 +23,7 @@ export default handleActions({
     return state.set('undelegating', true)
   },
   [actions.undelegateBandwidthSucceeded] (state) {
-    return state.set('undelegating', false)
+    return state.set('undelegating', false).set('showSuccess', true)
   },
   [actions.undelegateBandwidthFailed] (state, action) {
     return state.set('error', action.payload).set('undelegating', false)

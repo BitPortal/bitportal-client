@@ -41,7 +41,9 @@ export const errorMessages = (error, messages) => {
     case 'Key derivation failed - possibly wrong passphrase':
       return messages["dlgt_popup_title_pwderr"]
     case 'account using more than allotted RAM usage':
-      return messages["dlgt_popup_title_mousg"] 
+      return messages["dlgt_popup_title_mousg"]
+    case 'transaction exceeded the current CPU usage limit imposed on the transaction':
+      return 'transaction exceeded the current CPU usage limit imposed on the transaction'
     default:
       return messages["dlgt_popup_title_trafail"]
   }
