@@ -48,6 +48,7 @@ export default class Setting extends BaseScreen {
             <ScrollView showsVerticalScrollIndicator={false}>
               <SettingItem leftItemTitle={<FormattedMessage id="sts_sec_title_language" />} onPress={() => this.changeSettings('Languages')} extraStyle={{ marginTop: 10 }} />
               <SettingItem leftItemTitle={<FormattedMessage id="sts_sec_title_currency" />} onPress={() => this.changeSettings('Currencies')} />
+              <SettingItem leftItemTitle={<FormattedMessage id="sts_sec_title_nodesettings" />} onPress={() => this.changeSettings('NodeSettings')} />
               {/* <SettingItem leftItemTitle={<FormattedMessage id="sts_sec_title_theme" />} onPress={() => {}} /> */}
               {/* <View style={[styles.itemContainer, styles.between, { marginTop: 10 }]}>
                 <Text style={[styles.text16, { marginLeft: -2 }]}> Touch ID </Text>

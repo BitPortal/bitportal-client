@@ -33,14 +33,16 @@ import Memory             from 'screens/Resources/Memory'
 import Bandwidth          from 'screens/Resources/Bandwidth'
 import CPU                from 'screens/Resources/CPU'
 
+import Settings           from 'screens/Profile/Settings'
+import Languages          from 'screens/Profile/Settings/Languages'
+import Currencies         from 'screens/Profile/Settings/Currencies'
+import NodeSettings       from 'screens/Profile/Settings/NodeSettings'
+
 import Voting             from 'screens/Profile/Voting'
 import Stake              from 'screens/Profile/Stake'
 import About              from 'screens/Profile/About'
 import Profile            from 'screens/Profile'
 import Contacts           from 'screens/Profile/Contacts'
-import Settings           from 'screens/Profile/Settings'
-import Languages          from 'screens/Profile/Languages'
-import Currencies         from 'screens/Profile/Currencies'
 import AccountList        from 'screens/Profile/AccountList'
 import CreateContact      from 'screens/Profile/CreateContact'
 import ResetPassword      from 'screens/Profile/ResetPassword'
@@ -76,14 +78,16 @@ export const registerScreens = (store, provider) => {
   Navigation.registerComponent('BitPortal.Memory',             () => Memory,             store, provider)
   Navigation.registerComponent('BitPortal.Bandwidth',          () => Bandwidth,          store, provider)
 
+  Navigation.registerComponent('BitPortal.Settings',           () => Settings,           store, provider)
+  Navigation.registerComponent('BitPortal.Languages',          () => Languages,          store, provider)
+  Navigation.registerComponent('BitPortal.Currencies',         () => Currencies,         store, provider)
+  Navigation.registerComponent('BitPortal.NodeSettings',       () => NodeSettings,       store, provider)
+
   Navigation.registerComponent('BitPortal.Voting',             () => Voting,             store, provider)
   Navigation.registerComponent('BitPortal.Stake',              () => Stake,              store, provider)
   Navigation.registerComponent('BitPortal.About',              () => About,              store, provider)
   Navigation.registerComponent('BitPortal.Profile',            () => Profile,            store, provider)
   Navigation.registerComponent('BitPortal.Contacts',           () => Contacts,           store, provider)
-  Navigation.registerComponent('BitPortal.Settings',           () => Settings,           store, provider)
-  Navigation.registerComponent('BitPortal.Languages',          () => Languages,          store, provider)
-  Navigation.registerComponent('BitPortal.Currencies',         () => Currencies,         store, provider)
   Navigation.registerComponent('BitPortal.AccountList',        () => AccountList,        store, provider)
   Navigation.registerComponent('BitPortal.CreateContact',      () => CreateContact,      store, provider)
   Navigation.registerComponent('BitPortal.ResetPassword',      () => ResetPassword,      store, provider)

@@ -6,7 +6,7 @@ import messages from 'screens/LightBox/messages'
 const actionNegative = 'actionNegative'
 const actionPositive = 'actionPositive'
 let timer
-let isLast = false
+const isLast = false
 
 // const showNoUpdate = async () => {
 //   await show('当前版本无需更新', '', { negativeText: messages[locale]['prfabtchk_popup_name_confirm'] })

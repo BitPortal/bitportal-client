@@ -9263,6 +9263,10 @@ react-native-randombytes@^3.1.0:
     buffer "^4.9.1"
     sjcl "^1.0.3"
 
+react-native-restart@^0.0.6:
+  version "0.0.6"
+  resolved "http://registry.npm.taobao.org/react-native-restart/download/react-native-restart-0.0.6.tgz#77770d078683947b2c1f2adb876f179269d8443a"
+
 react-native-scrollable-tab-view@^0.8.0:
   version "0.8.0"
   resolved "http://registry.npm.taobao.org/react-native-scrollable-tab-view/download/react-native-scrollable-tab-view-0.8.0.tgz#5cb1fcfce07bf530a3c81ab51fc5071144edac5c"

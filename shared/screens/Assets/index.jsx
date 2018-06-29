@@ -243,7 +243,6 @@ export default class Assets extends BaseScreen {
               </ScrollView>
             </View>
           }
-          <Loading isVisible={loading} />
           <Modal
             animationIn="fadeIn"
             animationOut="fadeOut"
