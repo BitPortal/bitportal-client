@@ -24,11 +24,9 @@ function* buyRAMRequested(action: Action<BuyRAMParams>) {
     const wifs = yield call(getEOSWifsByInfo, password, accountInfo, ['active'])
     const activeWifs = wifs.activeWifs
 
-    const eos = initEOS({
-      keyProvider: activeWifs
-    })
+    const eos = initEOS({ keyProvider: activeWifs })
 
-    const result = yield call(
+    yield call(
       eos.transaction,
       (tr: any) => tr.buyram({ payer: eosAccountName, receiver: eosAccountName, quant: `${asset} EOS` })
     )
@@ -53,11 +51,9 @@ function* sellRAMRequested(action: Action<SellRAMParams>) {
     const wifs = yield call(getEOSWifsByInfo, password, accountInfo, ['active'])
     const activeWifs = wifs.activeWifs
 
-    const eos = initEOS({
-      keyProvider: activeWifs
-    })
+    const eos = initEOS({ keyProvider: activeWifs })
 
-    const result = yield call(
+    yield call(
       eos.transaction,
       (tr: any) => tr.sellram({ bytes, account: eosAccountName })
     )
@@ -70,7 +66,25 @@ function* sellRAMRequested(action: Action<SellRAMParams>) {
   }
 }
 
+function* getRAMMarketRequested() {
+  try {
+    const eos = initEOS({})
+    const data = yield call(eos.getTableRows, {
+      json: true,
+      code: 'eosio',
+      scope: 'eosio',
+      table: 'rammarket',
+      table_key: 'rammarket'
+    })
+
+    yield put(actions.getRAMMarketSucceeded(data))
+  } catch (e) {
+    yield put(actions.getRAMMarketFailed(getErrorMessage(e)))
+  }
+}
+
 export default function* ramSaga() {
   yield takeEvery(String(actions.buyRAMRequested), buyRAMRequested)
   yield takeEvery(String(actions.sellRAMRequested), sellRAMRequested)
+  yield takeEvery(String(actions.getRAMMarketRequested), getRAMMarketRequested)
 }

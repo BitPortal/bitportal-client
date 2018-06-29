@@ -113,8 +113,8 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
     const eos = initEOS({})
     const info = yield call(eos.getAccount, eosAccountName)
     assert(info && info.account_name, 'Invalid account info')
-    yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, info, true)
     yield put(actions.getEOSAccountSucceeded(info))
+    yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, info, true)
   } catch (e) {
     yield put(actions.getEOSAccountFailed(e.message))
   }

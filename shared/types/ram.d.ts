@@ -17,3 +17,7 @@ declare interface SellRAMParams {
 declare interface SellRAMResult {
 
 }
+
+declare interface GetRAMMarketResult {
+
+}

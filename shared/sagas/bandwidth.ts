@@ -27,11 +27,9 @@ function* delegateBandwidthRequested(action: Action<DelegateBandwidthParams>) {
     const wifs = yield call(getEOSWifsByInfo, password, accountInfo, ['active'])
     const activeWifs = wifs.activeWifs
 
-    const eos = initEOS({
-      keyProvider: activeWifs
-    })
+    const eos = initEOS({ keyProvider: activeWifs })
 
-    const result = yield call(
+    yield call(
       eos.transaction,
       (tr: any) => tr.delegatebw({
         from: eosAccountName,
@@ -50,7 +48,7 @@ function* delegateBandwidthRequested(action: Action<DelegateBandwidthParams>) {
   }
 }
 
-function* undelegateBandwidthRequested(action: Action<UndelegateBandwidthResult>) {
+function* undelegateBandwidthRequested(action: Action<UndelegateBandwidthParams>) {
   if (!action.payload) return
 
   try {
@@ -66,11 +64,9 @@ function* undelegateBandwidthRequested(action: Action<UndelegateBandwidthResult>
     const wifs = yield call(getEOSWifsByInfo, password, accountInfo, ['active'])
     const activeWifs = wifs.activeWifs
 
-    const eos = initEOS({
-      keyProvider: activeWifs
-    })
+    const eos = initEOS({ keyProvider: activeWifs })
 
-    const result = yield call(
+    yield call(
       eos.transaction,
       (tr: any) => tr.undelegatebw({
         from: eosAccountName,
