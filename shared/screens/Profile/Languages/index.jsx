@@ -31,21 +31,34 @@ export default class Languages extends BaseScreen {
     navBarHidden: true
   }
 
-  changeTabLabels = (tabLabels) => {
+  constructor(props, context) {
+    super(props, context)
+    this.state = {
+      locale: this.props.locale
+    }
+
+    this.switchLanguage = this.switchLanguage.bind(this)
+    this.changeTabLabels = this.changeTabLabels.bind(this)
+  }
+
+  changeTabLabels(tabLabels) {
     this.props.navigator.setTabButton({ tabIndex: 0, label: tabLabels.general_tab_name_ast })
     this.props.navigator.setTabButton({ tabIndex: 1, label: tabLabels.general_tab_name_mkt })
     this.props.navigator.setTabButton({ tabIndex: 2, label: tabLabels.general_tab_name_dscv })
     this.props.navigator.setTabButton({ tabIndex: 3, label: tabLabels.general_tab_name_prf })
   }
 
-  switchLanguage = (language) => {
-    this.props.actions.setLocale(language)
-    const tabLabels = tabMessages[language]
-    this.changeTabLabels(tabLabels)
+  switchLanguage(language) {
+    this.setState({ locale: language }, () => {
+      this.props.actions.setLocale(language)
+      const tabLabels = tabMessages[language]
+      this.changeTabLabels(tabLabels)
+    })
   }
 
   render() {
-    const { locale } = this.props
+    const locale = this.state.locale  || this.props.locale
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -57,7 +70,7 @@ export default class Languages extends BaseScreen {
             <ScrollView showsVerticalScrollIndicator={false}>
               <SettingItem
                 leftItemTitle="English"
-                onPress={() => this.switchLanguage('en')}
+                onPress={this.switchLanguage.bind(this, 'en')}
                 extraStyle={{ marginTop: 10 }}
                 iconColor={Colors.bgColor_0_122_255}
                 rightItemTitle={locale === 'en' ? null : ' '}
@@ -68,7 +81,7 @@ export default class Languages extends BaseScreen {
                 iconColor={Colors.bgColor_0_122_255}
                 rightItemTitle={locale === 'zh' ? null : ' '}
                 rightImageName={locale === 'zh' && 'md-checkmark'}
-                onPress={() => this.switchLanguage('zh')}
+                onPress={this.switchLanguage.bind(this, 'zh')}
               />
             </ScrollView>
           </View>
