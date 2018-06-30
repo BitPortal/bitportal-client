@@ -9,6 +9,7 @@ coverage
 .#*.js
 tools/csvInput/*
 tools/csvOutput/*
+__tests__
 
 # OSX
 #
