@@ -192,7 +192,7 @@ export default class Assets extends BaseScreen {
     }
   }
 
-  componentWillUpdate() {
+  UNSAFE_componentWillUpdate() {
     LayoutAnimation.easeInEaseOut()
   }
 

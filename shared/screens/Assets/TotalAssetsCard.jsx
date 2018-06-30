@@ -103,7 +103,7 @@ export default class TotalAssetsCard extends Component {
     }
   }
 
-  componentWillUpdate() {
+  UNSAFE_componentWillUpdate() {
     LayoutAnimation.easeInEaseOut()
   }
 
@@ -142,7 +142,7 @@ export default class TotalAssetsCard extends Component {
                 </Text>
                 <View style={styles.between}>
                   {
-                    hidden ? 
+                    hidden ?
                     <Text style={styles.text24}>******</Text>
                     :
                     <Text style={styles.text24}>
@@ -156,7 +156,7 @@ export default class TotalAssetsCard extends Component {
                   }
                   <TouchableOpacity style={[styles.center, styles.btn]} onPress={this.switchDisplayTotal}>
                     {
-                      hidden ? 
+                      hidden ?
                       <Image source={Images.eyes_close} style={styles.image} />
                       :
                       <Image source={Images.eyes_open} style={styles.image} />
@@ -173,32 +173,32 @@ export default class TotalAssetsCard extends Component {
           <TouchableOpacity onPress={this.foldResources}>
             <View style={{ alignItems: 'center' }}>
               <View style={[styles.resourcesContainer, styles.between, { paddingVertical: folded ? 0 : 15 } ]}>
-                {!folded && 
-                  <View style={styles.center}> 
+                {!folded &&
+                  <View style={styles.center}>
                     <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>CPU</Text>
                     <Text onPress={this.checkResources} style={[styles.text12, this.extraColor(CPUInfo.get('available'), CPUInfo.get('max')), { paddingHorizontal: 2 }]}>
                       {formatCycleTime(CPUInfo.get('available'))}
-                    </Text> 
+                    </Text>
                   </View>
                 }
                 {!folded && <View style={styles.divider} />}
-                {!folded && 
-                  <View style={styles.center}> 
+                {!folded &&
+                  <View style={styles.center}>
                     <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>BW</Text>
                     <Text onPress={this.checkResources} style={[styles.text12, this.extraColor(NETInfo.get('available'), NETInfo.get('max')), { paddingHorizontal: 2 }]}>
                       {formatMemorySize(NETInfo.get('available'))}
-                    </Text> 
+                    </Text>
                   </View>
-                }                
+                }
                 {!folded && <View style={styles.divider} />}
-                {!folded && 
-                  <View style={styles.center}> 
+                {!folded &&
+                  <View style={styles.center}>
                     <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>RAM</Text>
                     <Text onPress={this.checkResources} style={[styles.text12, this.extraColor(RAMQuota-RAMUsage, RAMQuota), { paddingHorizontal: 2 }]}>
                       {formatMemorySize(RAMQuota-RAMUsage)}
-                    </Text> 
+                    </Text>
                   </View>
-                }             
+                }
               </View>
               <View style={styles.guideArrow} />
             </View>
@@ -208,5 +208,3 @@ export default class TotalAssetsCard extends Component {
     )
   }
 }
-
-

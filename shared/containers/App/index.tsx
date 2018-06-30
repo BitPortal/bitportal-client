@@ -61,7 +61,7 @@ const renderRoutes = (routes: RouteComponent[], extraProps = {}, switchProps = {
 export default class App extends Component<Props, State> {
   previousLocation = this.props.location
 
-  componentWillUpdate(nextProps: Props) {
+  UNSAFE_componentWillUpdate(nextProps: Props) {
     const { location } = this.props
 
     if (nextProps.history.action !== 'POP' && (!location.state || !location.state.modal)) {

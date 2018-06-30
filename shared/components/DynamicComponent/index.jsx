@@ -37,7 +37,7 @@ export function asyncComponent(getComponent) {
         })
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
       if (!this.state.Component) this.load()
     }
 

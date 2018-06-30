@@ -27,14 +27,14 @@ declare interface RootState {
   router?: any
   modal?: any
   ui?: any
-  form: any
-  intl: any
-  ticker: any
-  assets: any
-  balance: any
-  wallet: any
-  producer: any
-  eosAccount: any
+  form?: any
+  intl?: any
+  ticker?: any
+  assets?: any
+  balance?: any
+  wallet?: any
+  producer?: any
+  eosAccount?: any
 }
 
 declare interface FetchOptions {
