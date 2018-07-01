@@ -13,19 +13,19 @@ import Title from 'components/DocumentTitle'
 import style from './style.css'
 import messages from './messages'
 
+export interface Props extends RouteComponentProps<any> {
+  actions: any
+  router: any
+  route: any
+  locale: string
+}
+
 interface RouteComponent {
   key?: number
   path: string
   exact: boolean
   strict: boolean
   component: any
-}
-
-export interface Props extends RouteComponentProps<void> {
-  actions: any
-  router: any
-  route: any,
-  locale: string
 }
 
 interface State {
@@ -65,7 +65,7 @@ export default class App extends Component<Props, State> {
     const { location } = this.props
 
     if (nextProps.history.action !== 'POP' && (!location.state || !location.state.modal)) {
-      this.previousLocation = this.props.location
+      this.previousLocation = location
     }
   }
 

@@ -35,7 +35,9 @@ export const getErrorMessage = (error: any) => {
 
     if (errorObject.error && errorObject.error.details && errorObject.error.details.length && errorObject.error.details[0].message) {
       return errorObject.error.details[0].message
-    } else if (errorObject.error && errorObject.error.what) {
+    }
+
+    if (errorObject.error && errorObject.error.what) {
       return errorObject.error.what
     }
   }
@@ -45,7 +47,9 @@ export const getErrorMessage = (error: any) => {
 
     if (errorObject.error && errorObject.error.details && errorObject.error.details.length && errorObject.error.details[0].message) {
       return errorObject.error.details[0].message
-    } else if (errorObject.error && errorObject.error.what) {
+    }
+
+    if (errorObject.error && errorObject.error.what) {
       return errorObject.error.what
     }
   }

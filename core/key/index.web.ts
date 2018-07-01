@@ -21,9 +21,9 @@ import { isValidPrivate, privateToPublic } from 'eos'
 import secureStorage from 'utils/secureStorage'
 
 const keccak = (a: any, bits?: any) => {
-  a = Buffer.from(a)
-  if (!bits) bits = 256
-  return createKeccakHash('keccak' + bits).update(a).digest()
+  const buffer = Buffer.from(a)
+  const kbits = bits || 256
+  return createKeccakHash('keccak' + kbits).update(buffer).digest()
 }
 
 const decipherBuffer = (decipher: any, data: any) => {
