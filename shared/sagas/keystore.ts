@@ -5,8 +5,8 @@ import assert from 'assert'
 import * as actions from 'actions/keystore'
 import { getErrorMessage, encodeKey } from 'utils'
 import secureStorage from 'utils/secureStorage'
-import { decrypt, getEOSKeys, getEOSWifsByInfo } from 'key'
-import { isValidPrivate, privateToPublic } from 'eos'
+import { decrypt, getEOSKeys, getEOSWifsByInfo } from 'core/key'
+import { isValidPrivate, privateToPublic } from 'core/eos'
 import { push } from 'utils/location'
 
 function* importEOSKeyRequested(action: Action<ImportEOSKeyParams>) {

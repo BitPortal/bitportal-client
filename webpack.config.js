@@ -28,7 +28,6 @@ const baseConfig = {
       resolve('browser'),
       resolve('desktop'),
       resolve('server'),
-      resolve('core'),
       'node_modules'
     ],
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],

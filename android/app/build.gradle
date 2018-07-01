@@ -152,7 +152,7 @@ android {
         main {
             java {
                 srcDirs = [
-                        "../../core/djinni/java",
+                        "../../shared/core/djinni/java",
                         "src/main/java"
                 ]
             }
@@ -179,6 +179,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-device-info')
     compile project(':react-native-version-number')
     compile project(':react-native-blur')
     compile project(':react-native-camera')

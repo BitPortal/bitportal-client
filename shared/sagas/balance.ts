@@ -2,7 +2,7 @@ import { call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/balance'
 import { getErrorMessage } from 'utils'
-import { initAccount } from 'eos'
+import { initAccount } from 'core/eos'
 
 function* getBalanceRequested(action: Action<BalanceParams>) {
   if (!action.payload) return
