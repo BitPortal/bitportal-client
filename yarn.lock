@@ -567,6 +567,14 @@
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/@types/history/-/history-4.6.2.tgz#12cfaba693ba20f114ed5765467ff25fdf67ddb0"
 
+"@types/jest@22.x.x":
+  version "22.2.3"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.2.3.tgz#0157c0316dc3722c43a7b71de3fdf3acbccef10d"
+
+"@types/lodash@4.x.x":
+  version "4.14.110"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.110.tgz#fb07498f84152947f30ea09d89207ca07123461e"
+
 "@types/node@*":
   version "10.5.1"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.1.tgz#d578446f4abff5c0b49ade9b4e5274f6badaadfc"
@@ -574,6 +582,10 @@
 "@types/node@^8.0.24", "@types/node@^8.0.49":
   version "8.10.20"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.20.tgz#fe674ea52e13950ab10954433a7824438aabbcac"
+
+"@types/prop-types@15.x.x":
+  version "15.5.3"
+  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.5.3.tgz#bef071852dca2a2dbb65fecdb7bfb30cedae2de2"
 
 "@types/query-string@^5.0.1":
   version "5.1.0"
@@ -599,6 +611,12 @@
 "@types/react-native-navigation@^1.1.12":
   version "1.1.12"
   resolved "https://registry.yarnpkg.com/@types/react-native-navigation/-/react-native-navigation-1.1.12.tgz#1f43bdf88d39bce2a3c0fdded0befda5083df6ff"
+  dependencies:
+    "@types/react" "*"
+
+"@types/react-native@0.51.1":
+  version "0.51.1"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.51.1.tgz#ab47c0d17c68149cbe5233d9f67dc586c61146df"
   dependencies:
     "@types/react" "*"
 
@@ -647,7 +665,13 @@
     "@types/history" "*"
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^16.4.6":
+"@types/react-test-renderer@16.x.x":
+  version "16.0.1"
+  resolved "https://registry.yarnpkg.com/@types/react-test-renderer/-/react-test-renderer-16.0.1.tgz#36ee8c4fe33c61d460ad0e7bc42a2d0ddcc775a1"
+  dependencies:
+    "@types/react" "*"
+
+"@types/react@*", "@types/react@16.x.x", "@types/react@^16.4.6":
   version "16.4.6"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.4.6.tgz#5024957c6bcef4f02823accf5974faba2e54fada"
   dependencies:
@@ -5373,13 +5397,13 @@ hmac-drbg@^1.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
+hoist-non-react-statics@2.x.x, hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0, hoist-non-react-statics@^2.5.4:
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
+
 hoist-non-react-statics@^1.0.5:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
-
-hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0, hoist-non-react-statics@^2.5.4:
-  version "2.5.5"
-  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
 
 home-or-tmp@^2.0.0:
   version "2.0.0"
@@ -8577,7 +8601,7 @@ promise@~1.3.0:
   dependencies:
     is-promise "~1"
 
-prop-types@^15.0.0, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@15.x.x, prop-types@^15.0.0, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   dependencies:
@@ -8868,6 +8892,10 @@ react-is@^16.4.1:
   version "16.4.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.1.tgz#d624c4650d2c65dbd52c72622bbf389435d9776e"
 
+react-lifecycles-compat@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-2.0.0.tgz#71d9c4cde47114c4102454f76da055c2bc48c948"
+
 react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
@@ -8995,11 +9023,20 @@ react-native-navbar@^2.1.0:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-navigation@^1.1.409:
-  version "1.1.473"
-  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.473.tgz#f0f8c6d9d2c88b120bab1d20b73860f3a0c3c92f"
+react-native-navigation@^2.0.2381:
+  version "2.0.2381"
+  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-2.0.2381.tgz#9fd1170555e6f31596e5fe7ec37765b85f54b2e6"
   dependencies:
+    "@types/jest" "22.x.x"
+    "@types/lodash" "4.x.x"
+    "@types/prop-types" "15.x.x"
+    "@types/react" "16.x.x"
+    "@types/react-native" "0.51.1"
+    "@types/react-test-renderer" "16.x.x"
+    hoist-non-react-statics "2.x.x"
     lodash "4.x.x"
+    prop-types "15.x.x"
+    react-lifecycles-compat "2.0.0"
 
 react-native-permissions@^1.1.1:
   version "1.1.1"
