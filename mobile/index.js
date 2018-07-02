@@ -41,7 +41,8 @@ const runApp = async () => {
     startSingleApp()
   }
 
-  if (Platform.OS === 'ios') SplashScreen.hide()
+  // if (Platform.OS === 'ios')
+  SplashScreen.hide()
 }
 
 const setStatusBarStyle = async () => {

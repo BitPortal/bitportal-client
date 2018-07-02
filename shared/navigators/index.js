@@ -50,7 +50,8 @@ Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setDefaultOptions({
     topBar: {
       visible: false,
-      animate: false
+      animate: false,
+      height: 0
     },
     layout: {
       backgroundColor: Colors.mainThemeColor,
@@ -62,7 +63,8 @@ Navigation.events().registerAppLaunchedListener(() => {
       backgroundColor: Colors.minorThemeColor,
       tabColor: 'gray',
       selectedTabColor: Colors.textColor_89_185_226,
-      hideShadow: false
+      hideShadow: false,
+      titleDisplayMode: 'alwaysShow'
     }
   })
 })

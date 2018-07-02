@@ -84,7 +84,7 @@ export default class Welcome extends Component {
   }
 
   componentDidMount() {
-    if (Platform.OS === 'ios') SplashScreen.hide()
+    SplashScreen.hide()
   }
 
   render() {

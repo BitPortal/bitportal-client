@@ -140,7 +140,7 @@ export default class Assets extends Component {
   }
 
   async componentDidMount() {
-    if (Platform.OS === 'ios') SplashScreen.hide()
+    SplashScreen.hide()
     this.props.actions.getVersionInfoRequested()
     this.getCurrencyRate()
     this.props.actions.syncWalletRequested()
