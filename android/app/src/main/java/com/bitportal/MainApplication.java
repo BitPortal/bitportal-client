@@ -3,6 +3,7 @@ package com.bitportal;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.facebook.react.ReactNativeHost;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.apsl.versionnumber.RNVersionNumberPackage;
 import com.cmcewen.blurview.BlurViewPackage;
@@ -20,6 +21,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.reactnativenavigation.NavigationApplication;
+import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.bitportal.core.BPCorePackage;
 
 import java.util.Arrays;
@@ -27,6 +29,15 @@ import java.util.List;
 import java.util.Vector;
 
 public class MainApplication extends NavigationApplication {
+  @Override
+  protected ReactNativeHost createReactNativeHost() {
+      return new NavigationReactNativeHost(this) {
+          @Override
+          protected String getJSMainModuleName() {
+              return "index";
+          }
+      };
+  }
 
   @Override
   public boolean isDebug() {
@@ -54,10 +65,5 @@ public class MainApplication extends NavigationApplication {
   @Override
   public List<ReactPackage> createAdditionalReactPackages() {
     return getPackages();
-  }
-
-  @Override
-  public String getJSMainModuleName() {
-    return "index";
   }
 }
