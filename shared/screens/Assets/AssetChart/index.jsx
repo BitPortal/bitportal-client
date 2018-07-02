@@ -1,15 +1,25 @@
 /* @jsx */
-import React from 'react'
-// import { connect } from 'react-redux'
+
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Navigation } from 'react-native-navigation'
 import { FormattedNumber } from 'react-intl'
 import { Text, View, ScrollView } from 'react-native'
-import BaseScreen from 'components/BaseScreen'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import ChartWrapper from './ChartWrapper'
 import RecordItem from './RecordItem'
 import styles from './styles'
 
-export default class AssetChart extends BaseScreen {
+@connect(
+  state => ({
+    locale: state.intl.get('locale')
+  }),
+  null,
+  null,
+  { withRef : true }
+)
+
+export default class AssetChart extends Component {
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -23,8 +33,10 @@ export default class AssetChart extends BaseScreen {
   }
 
   checkTransactionRecord = () => {
-    this.props.navigator.push({
-      screen: 'BitPortal.TransactionRecord'
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.TransactionRecord'
+      }
     })
   }
 
@@ -33,7 +45,7 @@ export default class AssetChart extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           title={assetInfo.get('assetName')}
         />
         <View style={styles.scrollContainer}>

@@ -1,7 +1,8 @@
 /* @tsx */
-import React from 'react'
+
+import React, { Component } from 'react'
 import { Text, View, ScrollView, Image } from 'react-native'
-import BaseScreen from 'components/BaseScreen'
+import { Navigation } from 'react-native-navigation'
 import Images from 'resources/images'
 import SettingItem from 'components/SettingItem'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
@@ -25,10 +26,12 @@ import styles from './styles'
     actions: bindActionCreators({
       ...versionInfoActions
     }, dispatch)
-  })
+  }),
+  null,
+  { withRef : true }
 )
 
-export default class About extends BaseScreen {
+export default class About extends Component {
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -38,20 +41,24 @@ export default class About extends BaseScreen {
     const { locale } = this.props
     switch (page) {
       case 'TermsOfService':
-        this.props.navigator.push({
-          screen: 'BitPortal.TermsOfService',
-          passProps: {
-            title: messages[locale].abt_sec_title_tou,
-            uri: BITPORTAL_API_TERMS_URL
+        Navigation.push(this.props.componentId, {
+          component: {
+            name: 'BitPortal.TermsOfService',
+            passProps: {
+              title: messages[locale].abt_sec_title_tou,
+              uri: BITPORTAL_API_TERMS_URL
+            }
           }
         })
         break
       case 'UpdateLogs':
-        this.props.navigator.push({
-          screen: 'BitPortal.TermsOfService',
-          passProps: {
-            title: messages[locale].abt_sec_title_update,
-            uri: BITPORTAL_API_UPDATE_LOG_URL
+        Navigation.push(this.props.componentId, {
+          component: {
+            name: 'BitPortal.TermsOfService',
+            passProps: {
+              title: messages[locale].abt_sec_title_update,
+              uri: BITPORTAL_API_UPDATE_LOG_URL
+            }
           }
         })
         break
@@ -70,10 +77,12 @@ export default class About extends BaseScreen {
   }
 
   goCheckGuide = () => {
-    this.props.navigator.push({
-      screen: 'BitPortal.Welcome',
-      passProps: {
-        from: 'about'
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.Welcome',
+        passProps: {
+         from: 'about'
+        }
       }
     })
   }
@@ -86,7 +95,7 @@ export default class About extends BaseScreen {
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale].abt_title_name_about}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView

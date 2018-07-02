@@ -1,8 +1,17 @@
-import React from 'react'
-import BaseScreen from 'components/BaseScreen'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import Update from './Update'
 
-export default class LightBox extends BaseScreen {
+@connect(
+  state => ({
+    locale: state.intl.get('locale')
+  }),
+  null,
+  null,
+  { withRef : true }
+)
+
+export default class LightBox extends Component {
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true

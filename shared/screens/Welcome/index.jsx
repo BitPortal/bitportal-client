@@ -1,12 +1,12 @@
 /* @tsx */
 
-import React from 'react'
+import React, { Component } from 'react'
 import Swiper from 'react-native-swiper'
-import messages from 'navigators/messages'
-import BaseScreen from 'components/BaseScreen'
 import { connect } from 'react-redux'
+import { Navigation } from 'react-native-navigation'
 import { startTabBasedApp } from 'navigators'
-import { View, Text, Image, ImageBackground, TouchableHighlight } from 'react-native'
+import { Platform, View, Text, Image, ImageBackground, TouchableHighlight } from 'react-native'
+import SplashScreen from 'react-native-splash-screen'
 import Images from 'resources/images'
 import Colors from 'resources/colors'
 import LinearGradientContainer from 'components/LinearGradientContainer'
@@ -53,10 +53,13 @@ const Page3 = ({ goToHomePage }) => (
 @connect(
   state => ({
     locale: state.intl.get('locale')
-  })
+  }),
+  null,
+  null,
+  { withRef : true }
 )
 
-export default class Welcome extends BaseScreen {
+export default class Welcome extends Component {
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -68,12 +71,13 @@ export default class Welcome extends BaseScreen {
   }
 
   async goToHomePage() {
-    if (this.props.from && this.props.from === 'about') {
-      return this.pop()
-    }
-    await storage.setItem('bitportal_welcome', JSON.stringify({ localVersion: VersionNumber.appVersion }))
-    const tabLabels = messages[this.props.locale]
-    startTabBasedApp(tabLabels)
+    if (this.props.from === 'about') Navigation.pop(this.props.componentId)
+    await storage.setItem('bitportal_welcome', { localVersion: VersionNumber.appVersion }, true)
+    startTabBasedApp(this.props.locale)
+  }
+
+  componentDidMount() {
+    if (Platform.OS === 'ios') SplashScreen.hide()
   }
 
   render() {

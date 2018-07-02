@@ -1,21 +1,34 @@
 /* @jsx */
-import React from 'react'
+
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, TouchableOpacity, TouchableHighlight } from 'react-native'
-import BaseScreen from 'components/BaseScreen'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import styles from './styles'
 
-export default class BackupTips extends BaseScreen {
+@connect(
+  state => ({
+    locale: state.intl.get('locale')
+  }),
+  null,
+  null,
+  { withRef : true }
+)
+
+export default class BackupTips extends Component {
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
   }
 
   goToBackup = () => {
-    this.props.navigator.push({
-      screen: 'BitPortal.Backup'
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.Backup'
+      }
     })
   }
 
@@ -27,7 +40,7 @@ export default class BackupTips extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           title="Backup"
         />
         <View style={styles.scrollContainer}>

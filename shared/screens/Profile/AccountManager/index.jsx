@@ -1,9 +1,9 @@
 /* @tsx */
 
-import React from 'react'
+import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { View, ScrollView, Platform } from 'react-native'
-import BaseScreen from 'components/BaseScreen'
+import { Navigation } from 'react-native-navigation'
 import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
@@ -45,10 +45,12 @@ export const errorMessages = (error, messages) => {
       logoutRequested,
       clearLogoutError
     }, dispatch)
-  })
+  }),
+  null,
+  { withRef : true }
 )
 
-export default class AccountList extends BaseScreen {
+export default class AccountList extends Component {
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -143,7 +145,7 @@ export default class AccountList extends BaseScreen {
         <View style={styles.container}>
           <NavigationBar
             title={name}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView

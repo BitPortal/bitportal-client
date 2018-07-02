@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
-import BaseScreen from 'components/BaseScreen'
+import { Navigation } from 'react-native-navigation'
 import styles from './styles'
 import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
@@ -27,10 +27,12 @@ import Progress from '../Progress'
     actions: bindActionCreators({
       ...ramActions
     }, dispatch)
-  })
+  }),
+  null,
+  { withRef : true }
 )
 
-export default class Memory extends BaseScreen {
+export default class Memory extends Component {
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -50,7 +52,7 @@ export default class Memory extends BaseScreen {
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale]['memory_title_name_memory']}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView

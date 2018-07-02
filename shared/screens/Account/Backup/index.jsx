@@ -1,5 +1,6 @@
 /* @jsx */
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import {
   Text,
   View,
@@ -8,12 +9,21 @@ import {
   ScrollView,
   TouchableHighlight
 } from 'react-native'
+import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import BaseScreen from 'components/BaseScreen'
 import Colors from 'resources/colors'
 import styles from './styles'
 
-export default class Backup extends BaseScreen {
+@connect(
+  state => ({
+    locale: state.intl.get('locale')
+  }),
+  null,
+  null,
+  { withRef : true }
+)
+
+export default class Backup extends Component {
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -35,7 +45,7 @@ export default class Backup extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           title="Backup"
         />
         <View style={styles.scrollContainer}>

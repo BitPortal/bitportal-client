@@ -1,13 +1,22 @@
 /* @jsx */
 
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { View, ScrollView } from 'react-native'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import BaseScreen from 'components/BaseScreen'
 import CreateEOSAccountForm from 'components/Form/CreateEOSAccountForm'
 import styles from './styles'
 
-export default class AccountCreation extends BaseScreen {
+@connect(
+  state => ({
+    locale: state.intl.get('locale')
+  }),
+  null,
+  null,
+  { withRef : true }
+)
+
+export default class AccountCreation extends Component {
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true

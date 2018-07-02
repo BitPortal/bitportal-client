@@ -1,9 +1,9 @@
 /* @jsx */
 
-import React from 'react'
+import React, { Component } from 'react'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import BaseScreen from 'components/BaseScreen'
 import { Text, View, SectionList } from 'react-native'
+import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import ListItem from './ListItem'
@@ -13,10 +13,13 @@ import styles from './styles'
 @connect(
   state => ({
     locale: state.intl.get('locale')
-  })
+  }),
+  null,
+  null,
+  { withRef : true }
 )
 
-export default class TransationHistory extends BaseScreen {
+export default class TransationHistory extends Component {
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -47,7 +50,7 @@ export default class TransationHistory extends BaseScreen {
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale].txhis_title_name_txhistory}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
             <SectionList

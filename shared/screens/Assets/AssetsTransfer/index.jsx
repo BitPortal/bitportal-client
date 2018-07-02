@@ -1,7 +1,7 @@
 
-import React from 'react'
+import React, { Component } from 'react'
 import { View, ScrollView } from 'react-native'
-import BaseScreen from 'components/BaseScreen'
+import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
@@ -13,10 +13,13 @@ import TransferCard from './TransferCard'
 @connect(
   state => ({
     locale: state.intl.get('locale')
-  })
+  }),
+  null,
+  null,
+  { withRef : true }
 )
 
-export default class AssetsTransfer extends BaseScreen {
+export default class AssetsTransfer extends Component {
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -28,18 +31,22 @@ export default class AssetsTransfer extends BaseScreen {
 
   scanner = () => {
     if (this.props.entry && this.props.entry === 'scanner') {
-      this.pop()
+      Navigation.pop(this.props.componentId)
     } else {
-      this.props.navigator.push({
-        screen: 'BitPortal.QRCodeScanner'
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.QRCodeScanner'
+        }
       })
     }
   }
 
   transferAsset = () => {
     this.setState({ isVisible: false }, () => {
-      this.props.navigator.push({
-        screen: 'BitPortal.TransactionRecord'
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.TransactionRecord'
+        }
       })
     })
   }
@@ -52,7 +59,7 @@ export default class AssetsTransfer extends BaseScreen {
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale].snd_title_name_snd}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
             rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanner()} />}
           />
           <View style={styles.scrollContainer}>

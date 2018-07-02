@@ -1,13 +1,23 @@
 /* @jsx */
 
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { View, ScrollView } from 'react-native'
-import BaseScreen from 'components/BaseScreen'
 import { Logo, Description, Details, ListedExchange } from './TokenComponents'
 import styles from './styles'
 
-export default class TokenDetails extends BaseScreen {
+@connect(
+  state => ({
+    locale: state.intl.get('locale')
+  }),
+  null,
+  null,
+  { withRef : true }
+)
+
+export default class TokenDetails extends Component {
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -18,7 +28,7 @@ export default class TokenDetails extends BaseScreen {
       <View style={styles.container}>
         <NavigationBar
           leftButton={
-            <CommonButton iconName="md-arrow-back" title="Token Details" onPress={() => this.pop()} />
+            <CommonButton iconName="md-arrow-back" title="Token Details" onPress={() => Navigation.pop(this.props.componentId)} />
           }
         />
         <View style={styles.scrollContainer}>

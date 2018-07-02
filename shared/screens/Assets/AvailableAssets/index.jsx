@@ -1,9 +1,9 @@
 /* @jsx */
-import React from 'react'
+import React, { Component } from 'react'
 import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, Switch } from 'react-native'
-import BaseScreen from 'components/BaseScreen'
+import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import messages from './messages'
@@ -21,10 +21,13 @@ const AssetElement = ({ item, onValueChange }) => (
 @connect(
   state => ({
     locale: state.intl.get('locale')
-  })
+  }),
+  null,
+  null,
+  { withRef : true }
 )
 
-export default class AvailableAssets extends BaseScreen {
+export default class AvailableAssets extends Component {
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -55,7 +58,7 @@ export default class AvailableAssets extends BaseScreen {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
             title={messages[locale].astlist_title_name_astlst}
           />
           <View style={styles.scrollContainer}>

@@ -1,15 +1,25 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable react/no-array-index-key */
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { View, ScrollView } from 'react-native'
+import { Navigation } from 'react-native-navigation'
 import Markdown from 'react-native-simple-markdown'
-import BaseScreen from 'components/BaseScreen'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import Colors from 'resources/colors'
 import { FontScale } from 'utils/dimens'
 import styles from './styles'
 
-class MarkdownPage extends BaseScreen {
+@connect(
+  state => ({
+    locale: state.intl.get('locale')
+  }),
+  null,
+  null,
+  { withRef : true }
+)
+
+class MarkdownPage extends Component {
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -20,7 +30,7 @@ class MarkdownPage extends BaseScreen {
       <View style={styles.container}>
         <NavigationBar
           title={this.props.title || 'Details'}
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
         />
         <ScrollView contentContainerStyle={styles.markdownContainer}>
           {this.props.markdown

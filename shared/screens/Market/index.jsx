@@ -1,9 +1,8 @@
 /* @tsx */
 
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import TableView, { HeaderTitle } from 'screens/Market/TableView'
-import BaseScreen from 'components/BaseScreen'
 import * as tickerActions from 'actions/ticker'
 import { exchangeTickerSelector, sortFilterSelector } from 'selectors/ticker'
 import { bindActionCreators } from 'redux'
@@ -30,10 +29,12 @@ import styles from './styles'
     actions: bindActionCreators({
       ...tickerActions
     }, dispatch)
-  })
+  }),
+  null,
+  { withRef : true }
 )
 
-export default class Market extends BaseScreen {
+export default class Market extends Component {
   constructor(props, context) {
     super(props, context)
     this.state = {
@@ -73,8 +74,7 @@ export default class Market extends BaseScreen {
 
   // 点击查看币种行情
   pressListItem = () => {
-    // this.props.actions.selectBaseAsset(item.get('base_asset'))
-    // this.props.navigator.push({ screen: 'BitPortal.MarketDetails' })
+    
   }
 
   // 刷新数据
@@ -91,7 +91,7 @@ export default class Market extends BaseScreen {
     return nextProps.loading !== this.props.loading || nextProps.locale !== this.props.locale || nextProps.exchangeFilter !== this.props.exchangeFilter || nextProps.sortFilter !== this.props.sortFilter || nextProps.quoteAssetFilter !== this.props.quoteAssetFilter || nextState.isVisible !== this.state.isVisible || nextState.coinName !== this.state.coinName || nextState.activeQuoteAsset !== this.state.activeQuoteAsset
   }
 
-  didAppear() {
+  componentDidAppear() {
     this.onRefresh()
   }
 

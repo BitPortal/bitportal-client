@@ -1,8 +1,8 @@
 /* @jsx */
-import React from 'react'
+import React, { Component } from 'react'
 import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
-import BaseScreen from 'components/BaseScreen'
 import { Text, View, ListView } from 'react-native'
+import { Navigation } from 'react-native-navigation'
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
@@ -14,10 +14,13 @@ import messages from './messages'
 @connect(
   state => ({
     locale: state.intl.get('locale')
-  })
+  }),
+  null,
+  null,
+  { withRef : true }
 )
 
-export default class Contacts extends BaseScreen {
+export default class Contacts extends Component {
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -74,7 +77,7 @@ export default class Contacts extends BaseScreen {
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale].ctct_title_name_contacts}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
             rightButton={<CommonRightButton iconName="md-add" onPress={() => this.addContacts()} />}
           />
           <View style={styles.scrollContainer}>

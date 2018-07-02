@@ -1,20 +1,23 @@
 /* @jsx */
 
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { View, ScrollView } from 'react-native'
+import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import BaseScreen from 'components/BaseScreen'
 import CreateWalletAndEOSAccountForm from 'components/Form/CreateWalletAndEOSAccountForm'
 import styles from './styles'
 
 @connect(
   state => ({
     locale: state.intl.get('locale')
-  })
+  }),
+  null,
+  null,
+  { withRef : true }
 )
 
-export default class AccountCreation extends BaseScreen {
+export default class AccountCreation extends Component {
   static navigatorStyle = {
     tabBarHidden: true,
     navBarHidden: true
@@ -27,26 +30,34 @@ export default class AccountCreation extends BaseScreen {
   }
 
   importEOSAccount() {
-    this.props.navigator.push({
-      screen: 'BitPortal.AccountImport'
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.AccountImport'
+      }
     })
   }
 
   onSubmit() {
-    this.props.navigator.push({
-      screen: 'BitPortal.EOSAccountCreation'
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.EOSAccountCreation'
+      }
     })
   }
 
   createPrivateKey = () => {
-    this.props.navigator.push({ screen: 'BitPortal.PrivateKeyCreation' })
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.PrivateKeyCreation'
+      }
+    })
   }
 
   render() {
     return (
       <View style={styles.container}>
         <NavigationBar
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           title="Create EOS Account"
         />
         <View style={styles.scrollContainer}>
