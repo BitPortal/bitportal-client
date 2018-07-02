@@ -5,12 +5,12 @@
     "act_sec_title_export" : "导出私钥",
     "act_sec_title_logout" : "登出",
 
-    "actexport_popup_name" : "请输入密码",
-    "actexport_popup_ent" : "确认",
-    "actexport_popup_can" : "取消",
+    "act_export_popup_name" : "请输入密码",
+    "act_export_popup_ent" : "确认",
+    "act_export_popup_can" : "取消",
 
-    "actexport_popup_ivps": "无效的密码",
-    "actexport_popup_faex" : "导出失败",
+    "act_export_popup_ivps": "无效的密码",
+    "act_export_popup_faex" : "导出失败",
 
     "logout_popup_name" : "请输入密码",
     "logout_popup_ent" : "确认",
@@ -25,12 +25,12 @@
     "act_sec_title_export" : "Export Private Key",
     "act_sec_title_logout" : "Sign out",
 
-    "actexport_popup_ivps": "Invalid password!",
-    "actexport_popup_faex" : "Export failed!",
+    "act_export_popup_ivps": "Invalid password!",
+    "act_export_popup_faex" : "Export failed!",
 
-    "actexport_popup_name" : "Password",
-    "actexport_popup_ent" : "Confirm",
-    "actexport_popup_can" : "Cancel",
+    "act_export_popup_name" : "Password",
+    "act_export_popup_ent" : "Confirm",
+    "act_export_popup_can" : "Cancel",
 
     "logout_popup_name" : "Password",
     "logout_popup_ent" : "Confirm",

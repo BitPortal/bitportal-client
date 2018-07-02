@@ -1,16 +1,16 @@
 import { StyleSheet } from 'react-native'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
+import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, ifIphoneX } from 'utils/dimens'
 import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
-    backgroundColor: Colors.mainThemeColor
+    backgroundColor: Colors.minorThemeColor
   },
   scrollContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - TAB_BAR_HEIGHT
   },
   itemContainer: {
     width: SCREEN_WIDTH,
@@ -22,6 +22,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row'
+  },
+  center: {
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   text16: {
     fontSize: FontScale(16),
@@ -37,6 +41,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     backgroundColor: Colors.mainThemeColor,
     justifyContent: 'center'
+  },
+  btnContainer: {
+    width: SCREEN_WIDTH,
+    height: TAB_BAR_HEIGHT,
+    paddingHorizontal: 32,
+    backgroundColor: Colors.mainThemeColor,
+    ...ifIphoneX({
+      paddingBottom: 34
+    }, {
+      paddingBottom: 0
+    })
+  },
+  btn: {
+    width: SCREEN_WIDTH-64,
+    height: 30,
+    borderRadius: 2
   }
 })
 

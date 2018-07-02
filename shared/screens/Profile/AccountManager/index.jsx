@@ -25,9 +25,9 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
-      return messages.actexport_popup_ivps
+      return messages.act_export_popup_ivps
     default:
-      return messages.actexport_popup_faex
+      return messages.act_export_popup_faex
   }
 }
 
@@ -93,11 +93,11 @@ export default class AccountList extends BaseScreen {
       this.setState({ isVisible: true, type: 'exportAccount' })
     } else {
       const { action, text } = await Dialogs.prompt(
-        messagesInfo.actexport_popup_name,
+        messagesInfo.act_export_popup_name,
         '',
         {
-          positiveText: messagesInfo.actexport_popup_ent,
-          negativeText: messagesInfo.actexport_popup_can
+          positiveText: messagesInfo.act_export_popup_ent,
+          negativeText: messagesInfo.act_export_popup_can
         }
       )
       if (action === Dialogs.actionPositive) {
@@ -112,12 +112,12 @@ export default class AccountList extends BaseScreen {
       this.setState({ isVisible: true, type: 'logout' })
     } else {
       const { action, text } = await Dialogs.prompt(
-        messagesInfo.actexport_popup_name,
+        messagesInfo.act_export_popup_name,
         messagesInfo.logout_popup_warning,
         {
-          positiveText: messagesInfo.actexport_popup_ent,
+          positiveText: messagesInfo.act_export_popup_ent,
           positiveTextStyle: 'destructive',
-          negativeText: messagesInfo.actexport_popup_can
+          negativeText: messagesInfo.act_export_popup_can
         }
       )
       if (action === Dialogs.actionPositive) {
@@ -166,10 +166,10 @@ export default class AccountList extends BaseScreen {
               {
                 Platform.OS === 'android' &&
                 <DialogAndroid
-                  tilte={messages[locale].actexport_popup_name}
+                  tilte={messages[locale].act_export_popup_name}
                   content={type === 'logout' ? messages[locale].logout_popup_warning : ''}
-                  positiveText={messages[locale].actexport_popup_ent}
-                  negativeText={messages[locale].actexport_popup_can}
+                  positiveText={messages[locale].act_export_popup_ent}
+                  negativeText={messages[locale].act_export_popup_can}
                   onChange={password => this.setState({ password })}
                   isVisible={this.state.isVisible}
                   handleCancel={() => this.setState({ isVisible: false })}

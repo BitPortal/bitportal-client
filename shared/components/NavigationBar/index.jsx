@@ -29,7 +29,7 @@ export const CommonButton = ({ iconName, title, onPress, extraTextStyle }) => (
   >
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       {iconName && <Ionicons name={iconName} size={24} color={Colors.bgColor_FFFFFF} />}
-      <Text style={[styles.text20, { marginLeft: 10, marginTop: -3 }, ...extraTextStyle]}>
+      <Text style={[styles.text20, { marginLeft: 10, marginTop: -3 }, {...extraTextStyle}]}>
         {title}
       </Text>
     </View>
