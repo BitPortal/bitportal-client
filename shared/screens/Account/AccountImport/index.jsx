@@ -56,7 +56,7 @@ export default class AccountImport extends Component {
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <ImportEOSAccountForm onPress={() => this.goToBackUp()} />
+              <ImportEOSAccountForm onPress={() => this.goToBackUp()} componentId={this.props.componentId} />
               <View style={styles.keyboard} />
             </ScrollView>
           </View>

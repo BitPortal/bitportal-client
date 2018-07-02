@@ -129,7 +129,7 @@ function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAc
     }
 
     yield put(reset('createWalletAndEOSAccountForm'))
-    pop()
+    if (action.payload.componentId) pop(action.payload.componentId)
   } catch (e) {
     yield put(actions.createWalletFailed(getErrorMessage(e)))
   }
@@ -250,7 +250,7 @@ function* logoutRequested(action: Action<LogoutParams>) {
     yield put(resetBalance())
     yield put(resetKey())
     yield put(actions.logoutSucceeded())
-    popToRoot()
+    if (action.payload.componentId) popToRoot(action.payload.componentId)
   } catch (e) {
     yield put(actions.logoutFailed(getErrorMessage(e)))
   }

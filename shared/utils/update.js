@@ -18,22 +18,30 @@ const show = (title = '', content = null, options = {}) => {
   const overrideBackPress = (!!options.positiveText && !options.negativeText)
   return new Promise((resolve) => {
     timer = setTimeout(() => {
-      Navigation.showLightBox({
-        screen: 'BitPortal.LightBox',
-        overrideBackPress,
-        tapBackgroundToDismiss: false,
-        passProps: {
-          type: 'update',
-          title,
-          content,
-          positiveText: options.positiveText || null,
-          negativeText: options.negativeText || null,
-          onPositive: () => resolve({ action: actionPositive }),
-          onNegative: () => resolve({ action: actionNegative })
-        },
-        style: Platform.OS === 'ios' ? { backgroundBlur: 'dark' } : { backgroundColor: 'rgba(0, 0, 0, 0.5)' }
+      Navigation.showOverlay({
+        component: {
+          id: 'BitPortalLightBox',
+          name: 'BitPortal.LightBox',
+          options: {
+            overlay: {
+              interceptTouchOutside: true
+            }
+          },
+          // overrideBackPress,
+          // tapBackgroundToDismiss: false,
+          passProps: {
+            type: 'update',
+            title,
+            content,
+            positiveText: options.positiveText || null,
+            negativeText: options.negativeText || null,
+            onPositive: () => resolve({ action: actionPositive }),
+            onNegative: () => resolve({ action: actionNegative })
+          }
+          // style: Platform.OS === 'ios' ? { backgroundBlur: 'dark' } : { backgroundColor: 'rgba(0, 0, 0, 0.5)' }
+        }
       })
-    }, Platform.OS === 'ios' ? 700 : 0)
+    }, Platform.OS === 'ios' ? 500 : 0)
   })
 }
 
@@ -62,7 +70,7 @@ const showForceUpdate = async (data, locale) => {
   if (action === actionPositive) {
     return goUpdate(data)
   } else if (action === actionNegative) {
-    return Navigation.dismissLightBox()
+    return Navigation.dismissOverlay('BitPortalLightBox')
   }
 }
 
@@ -80,7 +88,7 @@ const showGoToUpdate = async (data, locale) => {
   if (action === actionPositive) {
     return goUpdate(data)
   } else if (action === actionNegative) {
-    return Navigation.dismissLightBox()
+    return Navigation.dismissOverlay('BitPortalLightBox')
   }
 }
 
@@ -109,7 +117,7 @@ export const showIsLast = async (data, locale) => {
   const content = data.features && data.features[locale]
   await show(messages[locale].prfabtchk_popup_name_already, content, { negativeText: messages[locale].prfabtchk_popup_name_confirm })
   clearTimeout(timer)
-  Navigation.dismissLightBox()
+  Navigation.dismissOverlay('BitPortalLightBox')
 }
 
 export const isNewest = () => isLast

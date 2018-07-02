@@ -75,6 +75,7 @@ export default class AccountList extends Component {
 
   exportAccount = (password) => {
     this.props.actions.exportEOSKeyRequested({
+      componentId: this.props.componentId,
       password,
       origin: this.props.origin,
       bpid: this.props.bpid,
@@ -84,6 +85,7 @@ export default class AccountList extends Component {
 
   logout = (password) => {
     this.props.actions.logoutRequested({
+      componentId: this.props.componentId,
       password,
       origin: this.props.origin,
       bpid: this.props.bpid,

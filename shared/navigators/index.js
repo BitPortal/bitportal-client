@@ -46,6 +46,27 @@ import Images from 'resources/images'
 import Colors from 'resources/colors'
 import messages from './messages'
 
+Navigation.events().registerAppLaunchedListener(() => {
+  Navigation.setDefaultOptions({
+    topBar: {
+      visible: false,
+      animate: false
+    },
+    layout: {
+      backgroundColor: Colors.mainThemeColor,
+      orientation: ['portrait']
+    },
+    bottomTabs: {
+      visible: true,
+      animate: false,
+      backgroundColor: Colors.minorThemeColor,
+      tabColor: 'gray',
+      selectedTabColor: Colors.textColor_89_185_226,
+      hideShadow: false
+    }
+  })
+})
+
 export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.Welcome', () => screenComponent(Welcome, store))
   Navigation.registerComponent('BitPortal.LightBox', () => screenComponent(LightBox, store))
@@ -90,25 +111,6 @@ export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.EOSAccountCreation', () => screenComponent(EOSAccountCreation, store))
   Navigation.registerComponent('BitPortal.PrivateKeyCreation', () => screenComponent(PrivateKeyCreation, store))
 }
-
-Navigation.setDefaultOptions({
-  topBar: {
-    visible: false,
-    animate: false
-  },
-  layout: {
-    backgroundColor: Colors.mainThemeColor,
-    orientation: ['portrait']
-  },
-  bottomTabs: {
-    visible: true,
-    animate: false,
-    backgroundColor: Colors.minorThemeColor,
-    tabColor: 'gray',
-    selectedTabColor: Colors.textColor_89_185_226,
-    hideShadow: false
-  }
-})
 
 export const startSingleApp = () => {
   Navigation.setRoot({

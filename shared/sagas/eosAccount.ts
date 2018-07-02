@@ -38,7 +38,7 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
     yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${name}`, info, true)
     yield put(actions.createEOSAccountSucceeded(info))
     yield put(reset('createWalletForm'))
-    popToRoot()
+    if (action.payload.componentId) popToRoot(action.payload.componentId)
   } catch (e) {
     yield put(actions.createEOSAccountFailed(getErrorMessage(e)))
   }
@@ -99,7 +99,7 @@ function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
     yield put(getBalanceRequested({ code: 'eosio.token', account: walletInfo.eosAccountName }))
 
     yield put(reset('importEOSAccountForm'))
-    popToRoot()
+    if (action.payload.componentId) popToRoot(action.payload.componentId)
   } catch (e) {
     yield put(actions.importEOSAccountFailed(getErrorMessage(e)))
   }

@@ -1,33 +1,18 @@
 import { Navigation } from 'react-native-navigation'
 
-export const push = (location: string, passProps?: object) => {
-  Navigation.handleDeepLink({
-    link: '*',
-    payload: {
-      method: 'push',
-      params: {
-        passProps,
-        screen: location
-      }
+export const push = (location: string, componentId, passProps?: object) => {
+  Navigation.push(componentId, {
+    component: {
+      passProps,
+      name: location
     }
   })
 }
 
-export const pop = () => {
-  Navigation.handleDeepLink({
-    link: '*',
-    payload: {
-      method: 'pop'
-    }
-  })
+export const pop = (componentId) => {
+  Navigation.pop(componentId)
 }
 
-export const popToRoot = () => {
-  Navigation.handleDeepLink({
-    link: '*',
-    payload: {
-      method: 'popToRoot',
-      params: {}
-    }
-  })
+export const popToRoot = (componentId) => {
+  Navigation.popToRoot(componentId)
 }

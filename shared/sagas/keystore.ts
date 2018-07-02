@@ -69,7 +69,7 @@ function* exportEOSKeyRequested(action: Action<ExportEOSKeyParams>) {
     assert(ownerWifs.length + activeWifs.length, 'No EOS private keys!')
 
     yield put(actions.exportEOSKeySucceeded())
-    push('BitPortal.ExportPrivateKey', { ownerWifs, activeWifs })
+    if (action.payload.componentId) push('BitPortal.ExportPrivateKey', action.payload.componentId, { ownerWifs, activeWifs })
   } catch (e) {
     console.log(e)
     yield put(actions.exportEOSKeyFailed(getErrorMessage(e)))
