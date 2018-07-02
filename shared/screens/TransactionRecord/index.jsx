@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Text, View, ScrollView, TouchableOpacity, Clipboard } from 'react-native'
-import BaseScreen from 'components/BaseScreen'
+import { Navigation } from 'react-native-navigation'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
@@ -13,13 +13,19 @@ import styles from './styles'
 @connect(
   state => ({
     locale: state.intl.get('locale')
-  })
+  }),
+  null,
+  null,
+  { withRef : true }
 )
 
-export default class TransactionRecord extends BaseScreen {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+export default class TransactionRecord extends Component {
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   state = {
@@ -28,7 +34,7 @@ export default class TransactionRecord extends BaseScreen {
   }
 
   goBack = () => {
-    this.props.navigator.popToRoot()
+    Navigation.popToRoot(this.props.componentId)
   }
 
   clipboard = () => {

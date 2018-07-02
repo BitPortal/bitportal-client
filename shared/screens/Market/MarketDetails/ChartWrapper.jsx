@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {
   Text,
   View,
@@ -16,7 +16,7 @@ import styles from './styles'
   })
 )
 
-export default class ChartWrapper extends React.Component {
+export default class ChartWrapper extends Component {
   constructor(props, context) {
     super(props, context)
 

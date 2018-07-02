@@ -9,8 +9,8 @@ import { resetKey } from 'actions/keystore'
 import { resetEOSAccount, syncEOSAccount, createEOSAccountSucceeded, getEOSAccountRequested } from 'actions/eosAccount'
 import { getErrorMessage } from 'utils'
 import secureStorage from 'utils/secureStorage'
-import { privateToPublic, initAccount, randomKey } from 'eos'
-import { getMasterSeed, encrypt, decrypt, getEOSKeys, getEOSWifsByInfo } from 'key'
+import { privateToPublic, initAccount, randomKey } from 'core/eos'
+import { getMasterSeed, encrypt, decrypt, getEOSKeys, getEOSWifsByInfo } from 'core/key'
 import { push, pop, popToRoot } from 'utils/location'
 import wif from 'wif'
 
@@ -129,7 +129,7 @@ function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAc
     }
 
     yield put(reset('createWalletAndEOSAccountForm'))
-    pop()
+    if (action.payload.componentId) pop(action.payload.componentId)
   } catch (e) {
     yield put(actions.createWalletFailed(getErrorMessage(e)))
   }
@@ -250,7 +250,7 @@ function* logoutRequested(action: Action<LogoutParams>) {
     yield put(resetBalance())
     yield put(resetKey())
     yield put(actions.logoutSucceeded())
-    popToRoot()
+    if (action.payload.componentId) popToRoot(action.payload.componentId)
   } catch (e) {
     yield put(actions.logoutFailed(getErrorMessage(e)))
   }

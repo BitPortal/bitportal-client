@@ -1,9 +1,9 @@
 /* @jsx */
 
-import React from 'react'
+import React, { Component } from 'react'
+import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { Text, View, TouchableOpacity } from 'react-native'
-import BaseScreen from 'components/BaseScreen'
 import QRCodeScanner from 'react-native-qrcode-scanner'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
@@ -13,19 +13,28 @@ import styles from './styles'
 @connect(
   state => ({
     locale: state.intl.get('locale')
-  })
+  }),
+  null,
+  null,
+  { withRef : true }
 )
-export default class Scanner extends BaseScreen {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+
+export default class Scanner extends Component {
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   onSuccess() {
-    this.props.navigator.push({
-      screen: 'BitPortal.AssetsTransfer',
-      passProps: {
-        entry: 'scanner'
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.AssetsTransfer',
+        passProps: {
+          entry: 'scanner'
+        }
       }
     })
   }
@@ -37,7 +46,7 @@ export default class Scanner extends BaseScreen {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
             title={messages[locale].qrscn_title_name_qrscanner}
           />
           <QRCodeScanner

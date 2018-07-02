@@ -2,8 +2,7 @@
 
 import React, { Component } from 'react'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
-import BaseScreen from 'components/BaseScreen'
-import styles from './styles'
+import { Navigation } from 'react-native-navigation'
 import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
@@ -12,6 +11,7 @@ import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { formatMemorySize, formatCycleTime } from 'utils/format'
+import styles from './styles'
 import messages from './messages'
 
 @connect(
@@ -19,25 +19,43 @@ import messages from './messages'
     locale: state.intl.get('locale'),
     wallet: state.wallet,
     eosAccount: eosAccountSelector(state)
-  })
+  }),
+  null,
+  null,
+  { withRef : true }
 )
 
-export default class Resources extends BaseScreen {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+export default class Resources extends Component {
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   check = (type) => {
     switch (type) {
       case 'ram':
-        this.props.navigator.push({ screen: 'BitPortal.Memory' })
+        Navigation.push(this.props.componentId, {
+          component: {
+            name: 'BitPortal.Memory'
+          }
+        })
         break
       case 'bw':
-        this.props.navigator.push({ screen: 'BitPortal.Bandwidth' })
+        Navigation.push(this.props.componentId, {
+          component: {
+            name: 'BitPortal.Bandwidth'
+          }
+        })
         break
       case 'cpu':
-        this.props.navigator.push({ screen: 'BitPortal.CPU' })
+        Navigation.push(this.props.componentId, {
+          component: {
+            name: 'BitPortal.CPU'
+          }
+        })
         break
       default:
         break
@@ -47,13 +65,13 @@ export default class Resources extends BaseScreen {
   render() {
     const { locale, eosAccount } = this.props
     const activeEOSAccount = eosAccount.get('data')
-    console.log('###', activeEOSAccount.toJS())
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale]['reslist_title_name_resources']}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView

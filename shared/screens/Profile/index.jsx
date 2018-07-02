@@ -1,8 +1,8 @@
 /* @tsx */
 
-import React from 'react'
+import React, { Component } from 'react'
 import { Text, View, ScrollView } from 'react-native'
-import BaseScreen from 'components/BaseScreen'
+import { Navigation } from 'react-native-navigation'
 import SettingItem from 'components/SettingItem'
 import NavigationBar, { CommonTitle } from 'components/NavigationBar'
 import { connect } from 'react-redux'
@@ -16,10 +16,13 @@ import styles from './styles'
   state => ({
     locale: state.intl.get('locale'),
     wallet: state.wallet
-  })
+  }),
+  null,
+  null,
+  { withRef : true }
 )
 
-export default class Profile extends BaseScreen {
+export default class Profile extends Component {
   checkHistory = () => {
     this.push({ screen: 'BitPortal.TransactionHistory' })
   }
@@ -54,7 +57,12 @@ export default class Profile extends BaseScreen {
       default:
         return
     }
-    this.props.navigator.push({ screen: `BitPortal.${pageName}`, passProps })
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: `BitPortal.${pageName}`,
+        passProps
+      }
+    })
   }
 
   render() {

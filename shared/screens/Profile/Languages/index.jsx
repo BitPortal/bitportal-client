@@ -1,14 +1,13 @@
 /* @tsx */
 
-import React from 'react'
-import BaseScreen from 'components/BaseScreen'
+import React, { Component } from 'react'
+import { Navigation } from 'react-native-navigation'
 import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
 import { bindActionCreators } from 'redux'
 import * as intlActions from 'actions/intl'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { View, ScrollView } from 'react-native'
-import tabMessages from 'navigators/messages'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import messages from './messages'
@@ -22,13 +21,18 @@ import styles from './styles'
     actions: bindActionCreators({
       ...intlActions
     }, dispatch)
-  })
+  }),
+  null,
+  { withRef : true }
 )
 
-export default class Languages extends BaseScreen {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+export default class Languages extends Component {
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   constructor(props, context) {
@@ -38,21 +42,11 @@ export default class Languages extends BaseScreen {
     }
 
     this.switchLanguage = this.switchLanguage.bind(this)
-    this.changeTabLabels = this.changeTabLabels.bind(this)
-  }
-
-  changeTabLabels(tabLabels) {
-    this.props.navigator.setTabButton({ tabIndex: 0, label: tabLabels.general_tab_name_ast })
-    this.props.navigator.setTabButton({ tabIndex: 1, label: tabLabels.general_tab_name_mkt })
-    this.props.navigator.setTabButton({ tabIndex: 2, label: tabLabels.general_tab_name_dscv })
-    this.props.navigator.setTabButton({ tabIndex: 3, label: tabLabels.general_tab_name_prf })
   }
 
   switchLanguage(language) {
     this.setState({ locale: language }, () => {
       this.props.actions.setLocale(language)
-      const tabLabels = tabMessages[language]
-      this.changeTabLabels(tabLabels)
     })
   }
 
@@ -64,7 +58,7 @@ export default class Languages extends BaseScreen {
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale].lan_title_name_language}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>

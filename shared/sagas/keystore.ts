@@ -5,8 +5,8 @@ import assert from 'assert'
 import * as actions from 'actions/keystore'
 import { getErrorMessage, encodeKey } from 'utils'
 import secureStorage from 'utils/secureStorage'
-import { decrypt, getEOSKeys, getEOSWifsByInfo } from 'key'
-import { isValidPrivate, privateToPublic } from 'eos'
+import { decrypt, getEOSKeys, getEOSWifsByInfo } from 'core/key'
+import { isValidPrivate, privateToPublic } from 'core/eos'
 import { push } from 'utils/location'
 
 function* importEOSKeyRequested(action: Action<ImportEOSKeyParams>) {
@@ -69,7 +69,7 @@ function* exportEOSKeyRequested(action: Action<ExportEOSKeyParams>) {
     assert(ownerWifs.length + activeWifs.length, 'No EOS private keys!')
 
     yield put(actions.exportEOSKeySucceeded())
-    push('BitPortal.ExportPrivateKey', { ownerWifs, activeWifs })
+    if (action.payload.componentId) push('BitPortal.ExportPrivateKey', action.payload.componentId, { ownerWifs, activeWifs })
   } catch (e) {
     console.log(e)
     yield put(actions.exportEOSKeyFailed(getErrorMessage(e)))

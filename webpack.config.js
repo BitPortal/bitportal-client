@@ -5,7 +5,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const { getIfUtils, removeEmpty } = require('webpack-config-utils')
 const { ifProduction, ifNotProduction } = getIfUtils(process.env.NODE_ENV)
@@ -29,7 +28,6 @@ const baseConfig = {
       resolve('browser'),
       resolve('desktop'),
       resolve('server'),
-      resolve('core'),
       'node_modules'
     ],
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
@@ -189,7 +187,6 @@ const browserConfig = {
       appMountId: 'app',
       mobile: true
     }),
-    // new BundleAnalyzerPlugin()
   ]),
   devServer: {
     contentBase: './browser',

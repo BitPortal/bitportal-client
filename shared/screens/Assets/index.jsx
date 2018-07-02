@@ -1,6 +1,9 @@
 
-import React from 'react'
-import BaseScreen from 'components/BaseScreen'
+import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { Platform, Text, View, ScrollView, LayoutAnimation, InteractionManager, TouchableHighlight } from 'react-native'
+import { Navigation } from 'react-native-navigation'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import storage from 'utils/storage'
 import Colors from 'resources/colors'
@@ -11,16 +14,13 @@ import * as balanceActions from 'actions/balance'
 import * as versionInfoActions from 'actions/versionInfo'
 import * as currencyActions from 'actions/currency'
 import * as eosAccountActions from 'actions/eosAccount'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import { accountBalanceSelector } from 'selectors/balance'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { eosPriceSelector } from 'selectors/ticker'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import NavigationBar, { CommonTitle } from 'components/NavigationBar'
 import SettingItem from 'components/SettingItem'
-import Loading from 'components/Loading'
-import { Text, View, ScrollView, LayoutAnimation, InteractionManager, TouchableHighlight } from 'react-native'
+import SplashScreen from 'react-native-splash-screen'
 import styles from './styles'
 import messages from './messages'
 import AssetQRCode from './AssetQRCode'
@@ -62,10 +62,12 @@ const getTotalAssets = (balanceList, eosPrice) => {
       ...currencyActions,
       ...eosAccountActions
     }, dispatch)
-  })
+  }),
+  null,
+  { withRef : true }
 )
 
-export default class Assets extends BaseScreen {
+export default class Assets extends Component {
   constructor(props, context) {
     super(props, context)
 
@@ -77,34 +79,20 @@ export default class Assets extends BaseScreen {
     this.switchWallet = this.switchWallet.bind(this)
   }
 
-  // 展示账户列表
-  displayAccountList = () => {
-    // this.setState({ isVisible2: true })
-  }
+  displayAccountList = () => {}
 
-  // 前往扫描
   scanQR = () => {
-    this.props.navigator.push({
-      screen: 'BitPortal.QRCodeScanner'
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.QRCodeScanner'
+      }
     })
   }
 
-  // 激活钱包
-  enableAssets = () => {
-    /* this.props.navigator.push({
-     *   screen: "BitPortal.AvailableAssets"
-     * })*/
-  }
+  enableAssets = () => {}
 
-  // 查看资产情况
-  checkAsset = () => {
-    /* this.props.navigator.push({
-     *   screen: 'BitPortal.AssetChart',
-     *   passProps: { assetInfo }
-     * })*/
-  }
+  checkAsset = () => {}
 
-  // 钱包二维码
   operateAssetQRCode = (isVisible) => {
     this.setState({ isVisible })
   }
@@ -113,20 +101,28 @@ export default class Assets extends BaseScreen {
   createNewAccount = () => {
     InteractionManager.runAfterInteractions(() => {
       this.setState({ isVisible2: false }, () => {
-        this.props.navigator.push({ screen: 'BitPortal.AccountImport' })
+        Navigation.push(this.props.componentId, {
+          component: {
+            name: 'BitPortal.AccountImport'
+          }
+        })
       })
     })
   }
 
   createEOSAccount = () => {
-    this.props.navigator.push({
-      screen: 'BitPortal.EOSAccountCreation'
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.EOSAccountCreation'
+      }
     })
   }
 
   checkResourcesDetails = () => {
-    this.props.navigator.push({
-      screen: 'BitPortal.Resources'
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.Resources'
+      }
     })
   }
 
@@ -144,35 +140,13 @@ export default class Assets extends BaseScreen {
   }
 
   async componentDidMount() {
-    // 检测版本号
+    SplashScreen.hide()
     this.props.actions.getVersionInfoRequested()
-    // 获取资产单位
     this.getCurrencyRate()
     this.props.actions.syncWalletRequested()
-    /* this.props.actions.createEOSAccountRequested({
-     *   creator: 'eosio',
-     *   name: 'fsdfsdfsdf',
-     *   recovery: 'eosio'
-     * })*/
-    // this.props.actions.syncEOSAccount()
-    /* this.props.actions.importEOSAccountRequested({
-     *   name: 'eosio',
-     *   key: 'PW5KfRDq5g6F8LqkSRa3KhZABHhFkyqGa3oXc9fEqgX8hBQNJbuv6'
-     * })*/
   }
 
-  async didAppear() {
-    /* this.props.actions.createAccountRequested({
-     *   bitportalAccountName: 'EOS-1',
-     *   password: 'asddas',
-     *   eosAccountName: 'sfdfio'
-     * })*/
-    // this.props.actions.createWalletRequested({ name: 'TG-2', password: 'helloword' })
-    /* this.props.actions.importEOSKeyRequested({
-     *   hdWalletName: 'EOS-1',
-     *   key: '5Hpchj7rC5rLKRMVv6vTg8W3vXPU5VGzBRAg8x2n7P1pyAniZ5i',
-     *   coin: 'EOS'
-     * })*/
+  async componentDidAppear() {
     this.props.actions.getTickersRequested({
       market: 'EOS_USDT',
       limit: 200
@@ -192,13 +166,8 @@ export default class Assets extends BaseScreen {
     }
   }
 
-  UNSAFE_componentWillUpdate() {
-    LayoutAnimation.easeInEaseOut()
-  }
-
   render() {
     const { wallet, balance, locale, eosAccount, eosPrice } = this.props
-    const loading = wallet.get('loading')
     const activeEOSAccount = eosAccount.get('data')
     const hdWalletList = wallet.get('hdWalletList')
     const classicWalletList = wallet.get('classicWalletList')
@@ -210,7 +179,6 @@ export default class Assets extends BaseScreen {
         <View style={styles.container}>
           <NavigationBar
             leftButton={<CommonTitle title={<FormattedMessage id="addpage_title_name_act" />} />}
-            // rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanQR()} />}
           />
           {
             !walletCount &&
@@ -243,7 +211,6 @@ export default class Assets extends BaseScreen {
               </ScrollView>
             </View>
           }
-          <Loading isVisible={loading} />
           <Modal
             animationIn="fadeIn"
             animationOut="fadeOut"

@@ -1,8 +1,9 @@
 /* @jsx */
 
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import BaseScreen from 'components/BaseScreen'
 import Colors from 'resources/colors'
 import InputItem from 'components/InputItem'
 import { BlurView } from 'react-native-blur'
@@ -18,10 +19,22 @@ import {
 } from 'react-native'
 import styles from './styles'
 
-export default class PrivateKeyCreation extends BaseScreen {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+@connect(
+  state => ({
+    locale: state.intl.get('locale')
+  }),
+  null,
+  null,
+  { withRef : true }
+)
+
+export default class PrivateKeyCreation extends Component {
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   state = {
@@ -44,13 +57,19 @@ export default class PrivateKeyCreation extends BaseScreen {
     if (!this.state.showPrivateKey) {
       this.setState({ showPrivateKey: !this.state.showPrivateKey })
     } else {
-      this.props.navigator.push({ screen: 'BitPortal.BackupTips' })
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.BackupTips'
+        }
+      })
     }
   }
 
   importPrivateKey = () => {
-    this.props.navigator.push({
-      screen: 'BitPortal.AccountImport'
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.AccountImport'
+      }
     })
   }
 
@@ -64,7 +83,7 @@ export default class PrivateKeyCreation extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           title="Create New Account"
         />
         <View style={styles.scrollContainer}>

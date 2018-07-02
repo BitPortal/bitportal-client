@@ -1,12 +1,12 @@
 /* @jsx */
 
-import React from 'react'
+import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import { exchangeTickerSelector } from 'selectors/ticker'
-import BaseScreen from 'components/BaseScreen'
 import * as chartActions from 'actions/chart'
 import { EXCHANGE_NAMES } from 'constants/market'
 import CoinInfoCard from './CoinInfoCard'
@@ -30,13 +30,18 @@ const ButtonElement = ({ Title, onPress }) => (
     actions: bindActionCreators({
       ...chartActions
     }, dispatch)
-  })
+  }),
+  null,
+  { withRef : true }
 )
 
-export default class MarketDetails extends BaseScreen {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+export default class MarketDetails extends Component {
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   changeMarket = (data) => {
@@ -44,7 +49,11 @@ export default class MarketDetails extends BaseScreen {
   }
 
   changeRoute = (screen) => {
-    this.props.navigator.push({ screen: `BitPortal.${screen}` })
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: `BitPortal.${screen}`
+      }
+    })
   }
 
   componentDidMount() {
@@ -61,7 +70,7 @@ export default class MarketDetails extends BaseScreen {
     return (
       <View style={styles.container}>
         <NavigationBar
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           title={`${EXCHANGE_NAMES[ticker.get('exchangeFilter')]} / ${ticker.get('baseAsset')}`}
         />
         <View style={styles.scrollContainer}>
