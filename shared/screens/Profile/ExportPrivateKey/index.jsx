@@ -19,9 +19,12 @@ import messages from './messages'
 )
 
 export default class ExportPrivateKey extends Component {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   state = {

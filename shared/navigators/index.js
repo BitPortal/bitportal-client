@@ -135,6 +135,7 @@ export const startTabBasedApp = (locale) => {
               children: [
                 {
                   component: {
+                    id: 'BitPortalAssets',
                     name: 'BitPortal.Assets',
                     options: {
                       topBar: {
@@ -147,17 +148,13 @@ export const startTabBasedApp = (locale) => {
               ],
               options: {
                 bottomTab: {
-                  visible: true,
-                  title: `${messages[locale].general_tab_name_ast}`,
+                  title: messages[locale].general_tab_name_ast,
                   icon: Images.asset,
                   selectedIcon: Images.asset_press,
                   testID: 'BITPORTAL_ASSETS'
                 },
                 bottomTabs: {
-                  visible: true,
-                  currentTabIndex: 0,
-                  currentTabId: 'currentTabId0',
-                  testID: 'bottomTabsTestID0'
+                  visible: true
                 }
               }
             }
@@ -167,6 +164,7 @@ export const startTabBasedApp = (locale) => {
               children: [
                 {
                   component: {
+                    id: 'BitPortalMarket',
                     name: 'BitPortal.Market',
                     options: {
                       topBar: {
@@ -179,16 +177,13 @@ export const startTabBasedApp = (locale) => {
               ],
               options: {
                 bottomTab: {
-                  title: `${messages[locale].general_tab_name_mkt}`,
+                  title: messages[locale].general_tab_name_mkt,
                   icon: Images.market,
                   selectedIcon: Images.market_press,
                   testID: 'BITPORTAL_MARKET'
                 },
                 bottomTabs: {
-                  visible: true,
-                  currentTabIndex: 1,
-                  currentTabId: 'currentTabId1',
-                  testID: 'bottomTabsTestID1'
+                  visible: true
                 }
               }
             }
@@ -198,6 +193,7 @@ export const startTabBasedApp = (locale) => {
               children: [
                 {
                   component: {
+                    id: 'BitPortalDiscovery',
                     name: 'BitPortal.Discovery',
                     options: {
                       topBar: {
@@ -210,16 +206,13 @@ export const startTabBasedApp = (locale) => {
               ],
               options: {
                 bottomTab: {
-                  title: `${messages[locale].general_tab_name_dscv}`,
+                  title: messages[locale].general_tab_name_dscv,
                   icon: Images.discovery,
                   selectedIcon: Images.discovery_press,
                   testID: 'BITPORTAL_DISCOVERY'
                 },
                 bottomTabs: {
-                  visible: true,
-                  currentTabIndex: 2,
-                  currentTabId: 'currentTabId2',
-                  testID: 'bottomTabsTestID2'
+                  visible: true
                 }
               }
             }
@@ -229,6 +222,7 @@ export const startTabBasedApp = (locale) => {
               children: [
                 {
                   component: {
+                    id: 'BitPortalProfile',
                     name: 'BitPortal.Profile',
                     options: {
                       topBar: {
@@ -241,22 +235,57 @@ export const startTabBasedApp = (locale) => {
               ],
               options: {
                 bottomTab: {
-                  title: `${messages[locale].general_tab_name_prf}`,
+                  title: messages[locale].general_tab_name_prf,
                   icon: Images.profile,
                   selectedIcon: Images.profile_press,
                   testID: 'BITPORTAL_PROFILE'
                 },
                 bottomTabs: {
-                  visible: true,
-                  currentTabIndex: 3,
-                  currentTabId: 'currentTabId3',
-                  testID: 'bottomTabsTestID3'
+                  visible: true
                 }
               }
             }
           }
         ]
       }
+    }
+  })
+}
+
+export const setBottomTabsLocale = (locale) => {
+  Navigation.mergeOptions('BitPortalAssets', {
+    bottomTab: {
+      title: messages[locale].general_tab_name_ast,
+      icon: Images.asset,
+      selectedIcon: Images.asset_press,
+      testID: 'BITPORTAL_ASSETS'
+    }
+  })
+
+  Navigation.mergeOptions('BitPortalMarket', {
+    bottomTab: {
+      title: messages[locale].general_tab_name_mkt,
+      icon: Images.market,
+      selectedIcon: Images.market_press,
+      testID: 'BITPORTAL_MARKET'
+    }
+  })
+
+  Navigation.mergeOptions('BitPortalDiscovery', {
+    bottomTab: {
+      title: messages[locale].general_tab_name_dscv,
+      icon: Images.discovery,
+      selectedIcon: Images.discovery_press,
+      testID: 'BITPORTAL_DISCOVERY'
+    }
+  })
+
+  Navigation.mergeOptions('BitPortalProfile', {
+    bottomTab: {
+      title: messages[locale].general_tab_name_prf,
+      icon: Images.profile,
+      selectedIcon: Images.profile_press,
+      testID: 'BITPORTAL_PROFILE'
     }
   })
 }

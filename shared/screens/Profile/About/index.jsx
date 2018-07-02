@@ -32,9 +32,12 @@ import styles from './styles'
 )
 
 export default class About extends Component {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   changePage = (page) => {

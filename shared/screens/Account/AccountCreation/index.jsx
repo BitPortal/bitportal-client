@@ -18,9 +18,12 @@ import styles from './styles'
 )
 
 export default class AccountCreation extends Component {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   constructor(props, context) {

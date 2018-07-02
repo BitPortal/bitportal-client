@@ -27,9 +27,12 @@ import styles from './styles'
 )
 
 export default class Languages extends Component {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   constructor(props, context) {
@@ -39,20 +42,11 @@ export default class Languages extends Component {
     }
 
     this.switchLanguage = this.switchLanguage.bind(this)
-    this.changeTabLabels = this.changeTabLabels.bind(this)
-  }
-
-  changeTabLabels(tabLabels) {
-    // this.props.navigator.setTabButton({ tabIndex: 0, label: tabLabels.general_tab_name_ast })
-    // this.props.navigator.setTabButton({ tabIndex: 1, label: tabLabels.general_tab_name_mkt })
-    // this.props.navigator.setTabButton({ tabIndex: 2, label: tabLabels.general_tab_name_dscv })
-    // this.props.navigator.setTabButton({ tabIndex: 3, label: tabLabels.general_tab_name_prf })
   }
 
   switchLanguage(language) {
     this.setState({ locale: language }, () => {
       this.props.actions.setLocale(language)
-      this.changeTabLabels(language)
     })
   }
 

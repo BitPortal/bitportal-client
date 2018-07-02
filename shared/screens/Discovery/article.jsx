@@ -15,9 +15,12 @@ import styles from './styles'
 )
 
 class Article extends Component {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   share = () => {

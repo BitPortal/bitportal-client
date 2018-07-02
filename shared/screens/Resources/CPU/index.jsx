@@ -26,9 +26,12 @@ import Progress from '../Progress'
 )
 
 export default class Memory extends Component {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   render() {

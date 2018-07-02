@@ -29,9 +29,12 @@ import styles from './styles'
 )
 
 export default class PrivateKeyCreation extends Component {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   state = {

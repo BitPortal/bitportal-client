@@ -36,9 +36,12 @@ const ButtonElement = ({ Title, onPress }) => (
 )
 
 export default class MarketDetails extends Component {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   changeMarket = (data) => {

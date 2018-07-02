@@ -20,9 +20,12 @@ import styles from './styles'
 )
 
 class MarkdownPage extends Component {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   render() {
