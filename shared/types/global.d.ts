@@ -27,14 +27,14 @@ declare interface RootState {
   router?: any
   modal?: any
   ui?: any
-  form: any
-  intl: any
-  ticker: any
-  assets: any
-  balance: any
-  wallet: any
-  producer: any
-  eosAccount: any
+  form?: any
+  intl?: any
+  ticker?: any
+  assets?: any
+  balance?: any
+  wallet?: any
+  producer?: any
+  eosAccount?: any
 }
 
 declare interface FetchOptions {
@@ -263,12 +263,7 @@ declare module 'react-native-sensitive-info' {
   export = file
 }
 
-declare module 'eos/*' {
-  const file: any
-  export = file
-}
-
-declare module 'eos' {
+declare module 'core/eos' {
   interface EOS {
     generateMasterKeys: any
     initAccount: any
@@ -286,7 +281,7 @@ declare module 'eos' {
   export = eos
 }
 
-declare module 'key' {
+declare module 'core/key' {
   interface KeyManagement {
     validateEntropy: any
     getEOSKeys: any

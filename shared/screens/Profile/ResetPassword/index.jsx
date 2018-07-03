@@ -1,9 +1,9 @@
 /* @jsx */
 
-import React from 'react'
+import React, { Component } from 'react'
 import { View, ScrollView } from 'react-native'
+import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import BaseScreen from 'components/BaseScreen'
 import ResetPasswordForm from 'components/Form/ResetPasswordForm'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
@@ -13,13 +13,19 @@ import messages from './messages'
 @connect(
   state => ({
     locale: state.intl.get('locale')
-  })
+  }),
+  null,
+  null,
+  { withRef : true }
 )
 
-export default class ResetPassword extends BaseScreen {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+export default class ResetPassword extends Component {
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   render() {
@@ -29,7 +35,7 @@ export default class ResetPassword extends BaseScreen {
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale].cpwd_title_name_cpwd}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>

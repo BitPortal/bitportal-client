@@ -1,7 +1,9 @@
 /* @tsx */
+
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
-import BaseScreen from 'components/BaseScreen'
+import { Navigation } from 'react-native-navigation'
 import styles from './styles'
 import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
@@ -10,6 +12,7 @@ import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import TradeRAMForm from 'components/Form/TradeRAMForm'
+import * as ramActions from 'actions/ram'
 import { formatMemorySize } from 'utils/format'
 import messages from './messages'
 import Progress from '../Progress'
@@ -19,26 +22,40 @@ import Progress from '../Progress'
     locale: state.intl.get('locale'),
     wallet: state.wallet,
     eosAccount: eosAccountSelector(state)
-  })
+  }),
+  dispatch => ({
+    actions: bindActionCreators({
+      ...ramActions
+    }, dispatch)
+  }),
+  null,
+  { withRef : true }
 )
 
-export default class Memory extends BaseScreen {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+export default class Memory extends Component {
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
+  }
+
+  componentDidMount() {
+    this.props.actions.getRAMMarketRequested()
   }
 
   render() {
     const { locale, eosAccount } = this.props
     const activeEOSAccount = eosAccount.get('data')
     const percent = (activeEOSAccount.get('ram_quota') - activeEOSAccount.get('ram_usage')) / activeEOSAccount.get('ram_quota')
-    const eosBalance = (activeEOSAccount && activeEOSAccount.get('core_liquid_balance')) 
+    const eosBalance = (activeEOSAccount && activeEOSAccount.get('core_liquid_balance'))
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale]['memory_title_name_memory']}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView

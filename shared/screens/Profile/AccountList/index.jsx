@@ -1,8 +1,8 @@
 /* @tsx */
 
-import React from 'react'
+import React, { Component } from 'react'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
-import BaseScreen from 'components/BaseScreen'
+import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
@@ -16,26 +16,45 @@ import styles from './styles'
     locale: state.intl.get('locale'),
     wallet: state.wallet,
     eosAccount: eosAccountSelector(state)
-  })
+  }),
+  null,
+  null,
+  { withRef : true }
 )
 
-export default class AccountList extends BaseScreen {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+export default class AccountList extends Component {
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   createNewAccount = () => {
-    this.props.navigator.push({ screen: 'BitPortal.AccountCreation' })
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.AccountCreation'
+      }
+    })
   }
 
   importAccount = () => {
-    this.props.navigator.push({ screen: 'BitPortal.AccountImport' })
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.AccountImport'
+      }
+    })
   }
 
   checkAsset = (item) => {
     const walletInfo = item.toJS()
-    this.props.navigator.push({ screen: 'BitPortal.AccountManager', passProps: walletInfo })
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.AccountManager',
+        passProps: walletInfo
+      }
+    })
   }
 
   render() {
@@ -48,7 +67,7 @@ export default class AccountList extends BaseScreen {
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale].actlist_title_name_account}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView

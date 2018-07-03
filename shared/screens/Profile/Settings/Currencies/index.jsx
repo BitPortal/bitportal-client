@@ -1,7 +1,7 @@
 /* @tsx */
 
-import React from 'react'
-import BaseScreen from 'components/BaseScreen'
+import React, { Component } from 'react'
+import { Navigation } from 'react-native-navigation'
 import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
@@ -22,13 +22,18 @@ import styles from './styles'
     actions: bindActionCreators({
       ...currencyActions
     }, dispatch)
-  })
+  }),
+  null,
+  { withRef : true }
 )
 
-export default class Currencies extends BaseScreen {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+export default class Currencies extends Component {
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   switchCurrency = (symbol) => {
@@ -44,7 +49,7 @@ export default class Currencies extends BaseScreen {
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale].cur_title_name_currency}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>

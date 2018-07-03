@@ -1,6 +1,6 @@
 /* @tsx */
-import React from 'react'
-import BaseScreen from 'components/BaseScreen'
+import React, { Component } from 'react'
+import { Navigation } from 'react-native-navigation'
 import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
@@ -46,13 +46,18 @@ export const errorMessages = (error, messages) => {
       ...producerActions,
       ...votingActions
     }, dispatch)
-  })
+  }),
+  null,
+  { withRef : true }
 )
 
-export default class Voting extends BaseScreen {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+export default class Voting extends Component {
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   constructor(props, context) {
@@ -120,7 +125,11 @@ export default class Voting extends BaseScreen {
 
   stakeEOS = () => {
     this.setState({ isVisible: false }, () => {
-      this.props.navigator.push({ screen: 'BitPortal.Stake' })
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.Stake'
+        }
+      })
     })
   }
 
@@ -147,7 +156,7 @@ export default class Voting extends BaseScreen {
     this.props.actions.getProducersRequested({ json: true, limit: 500 })
   }
 
-  didAppear() {
+  componentDidAppear() {
     this.props.actions.getProducersRequested({ json: true, limit: 500 })
   }
 
@@ -165,7 +174,7 @@ export default class Voting extends BaseScreen {
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale].vt_title_name_vote}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <AlertComponent message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearError} />
           <View style={[styles.stakeAmountContainer, styles.between]}>

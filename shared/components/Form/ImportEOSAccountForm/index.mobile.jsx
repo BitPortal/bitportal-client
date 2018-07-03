@@ -108,7 +108,7 @@ export default class ImportEOSAccountForm extends Component {
   }
 
   submit(data) {
-    this.props.actions.importEOSAccountRequested(data.delete('confirmedPassword').toJS())
+    this.props.actions.importEOSAccountRequested(data.set('componentId', this.props.componentId).delete('confirmedPassword').toJS())
   }
 
   render() {

@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import BaseScreen from 'components/BaseScreen'
 import { View } from 'react-native'
+import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonTitle } from 'components/NavigationBar'
 import { bindActionCreators } from 'redux'
 import * as newsActions from 'actions/news'
@@ -27,10 +27,12 @@ const PAGE_LENGTH = 10
     actions: bindActionCreators({
       ...newsActions
     }, dispatch)
-  })
+  }),
+  null,
+  { withRef : true }
 )
 
-export default class Discovery extends BaseScreen {
+export default class Discovery extends Component {
   componentDidMount() {
     this.props.actions.getNewsListRequested({ startAt: 0, limit: PAGE_LENGTH, loadingMore: false })
     this.props.actions.getNewsBannerRequested()
@@ -81,30 +83,36 @@ export default class Discovery extends BaseScreen {
 
   onRowPress = (item) => {
     if (item.type === 'link' && item.jumpUrl && item.jumpUrl.length > 0) {
-      this.push({
-        screen: 'BitPortal.DiscoveryArticle',
-        passProps: {
-          url: item.jumpUrl,
-          title: item.title,
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: `BitPortal.DiscoveryArticle`,
+          passProps: {
+            url: item.jumpUrl,
+            title: item.title,
+          }
         }
       })
     } else {
-      this.push({
-        screen: 'BitPortal.Markdown',
-        passProps: {
-          markdown: item.content,
-          title: item.title,
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.Markdown',
+          passProps: {
+            markdown: item.content,
+            title: item.title,
+          }
         }
       })
     }
   }
 
   onBannerPress = (item) => {
-    this.push({
-      screen: 'BitPortal.DiscoveryArticle',
-      passProps: {
-        url: item.jump_url,
-        title: item.tittle || item.title,
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: `BitPortal.DiscoveryArticle`,
+        passProps: {
+          url: item.jumpUrl,
+          title: item.title,
+        }
       }
     })
   }

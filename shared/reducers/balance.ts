@@ -25,9 +25,9 @@ export default handleActions({
             eosAccountName: name,
             eosAccountBalance: balances
           }))
-        } else {
-          return v.update(index, (v: any) => v.set('eosAccountBalance', Immutable.fromJS(balances)))
         }
+
+        return v.update(index, (v: any) => v.set('eosAccountBalance', Immutable.fromJS(balances)))
       })
   },
   [actions.getBalanceFailed] (state, action) {

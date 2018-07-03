@@ -1,7 +1,7 @@
 /* @tsx */
 import React, { Component } from 'react'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
-import BaseScreen from 'components/BaseScreen'
+import { Navigation } from 'react-native-navigation'
 import styles from './styles'
 import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
@@ -19,13 +19,19 @@ import Progress from '../Progress'
     locale: state.intl.get('locale'),
     wallet: state.wallet,
     eosAccount: eosAccountSelector(state)
-  })
+  }),
+  null,
+  null,
+  { withRef : true }
 )
 
-export default class Memory extends BaseScreen {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+export default class Memory extends Component {
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   render() {
@@ -39,7 +45,7 @@ export default class Memory extends BaseScreen {
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale]['bdwidth_title_name_bandwidth']}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView

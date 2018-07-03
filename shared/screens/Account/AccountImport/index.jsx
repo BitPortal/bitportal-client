@@ -1,11 +1,11 @@
 /* @jsx */
 
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Navigation } from 'react-native-navigation'
 import { IntlProvider } from 'react-intl'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { View, ScrollView } from 'react-native'
-import BaseScreen from 'components/BaseScreen'
 import ImportEOSAccountForm from 'components/Form/ImportEOSAccountForm'
 import messages from './messages'
 import styles from './styles'
@@ -13,13 +13,19 @@ import styles from './styles'
 @connect(
   state => ({
     locale: state.intl.get('locale')
-  })
+  }),
+  null,
+  null,
+  { withRef : true }
 )
 
-export default class AccountImport extends BaseScreen {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+export default class AccountImport extends Component {
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   changeAccountName = () => {
@@ -31,8 +37,10 @@ export default class AccountImport extends BaseScreen {
   }
 
   goToBackUp = () => {
-    this.props.navigator.push({
-      screen: 'BitPortal.BackupTips'
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.BackupTips'
+      }
     })
   }
 
@@ -43,12 +51,12 @@ export default class AccountImport extends BaseScreen {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
             title={messages[locale].import_title_name_impt}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <ImportEOSAccountForm onPress={() => this.goToBackUp()} />
+              <ImportEOSAccountForm onPress={() => this.goToBackUp()} componentId={this.props.componentId} />
               <View style={styles.keyboard} />
             </ScrollView>
           </View>

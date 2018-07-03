@@ -36,9 +36,9 @@ export default handleActions({
         const index = v.findIndex((item: any) => item.get('account_name') === action.payload.account_name)
         if (index === -1) {
           return v.push(Immutable.fromJS(action.payload))
-        } else {
-          return v.update(index, () => Immutable.fromJS(action.payload))
         }
+
+        return v.update(index, () => Immutable.fromJS(action.payload))
       })
   },
   [actions.importEOSAccountFailed] (state, action) {

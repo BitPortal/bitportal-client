@@ -1,18 +1,31 @@
 /* @jsx */
 
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Navigation } from 'react-native-navigation'
 import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { View, ScrollView } from 'react-native'
-import BaseScreen from 'components/BaseScreen'
 import { SCREEN_WIDTH } from 'utils/dimens'
 import { Logo, FlowInfo, ListedExchange } from './FundFlowComponents'
 import styles from './styles'
 
-export default class TokenDetails extends BaseScreen {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+@connect(
+  state => ({
+    locale: state.intl.get('locale')
+  }),
+  null,
+  null,
+  { withRef : true }
+)
+
+export default class TokenDetails extends Component {
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   state = {
@@ -29,7 +42,7 @@ export default class TokenDetails extends BaseScreen {
       <View style={styles.container}>
         <NavigationBar
           leftButton={
-            <CommonButton iconName="md-arrow-back" title="Fund Flow" onPress={() => this.pop()} />
+            <CommonButton iconName="md-arrow-back" title="Fund Flow" onPress={() => Navigation.pop(this.props.componentId)} />
           }
         />
         <View style={styles.scrollContainer}>

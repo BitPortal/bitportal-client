@@ -28,7 +28,10 @@ const qrCodeSize = screen_width / 2
 @connect(
   state => ({
     locale: state.intl.get('locale')
-  })
+  }),
+  null,
+  null,
+  { withRef : true }
 )
 
 export default class AssetQRCode extends Component {

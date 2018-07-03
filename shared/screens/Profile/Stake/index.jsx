@@ -1,8 +1,8 @@
 /* @jsx */
-import React from 'react'
+import React, { Component } from 'react'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import BaseScreen from 'components/BaseScreen'
 import { View, ScrollView } from 'react-native'
+import { Navigation } from 'react-native-navigation'
 import StakeEOSForm from 'components/Form/StakeEOSForm'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
@@ -12,13 +12,19 @@ import styles from './styles'
 @connect(
   state => ({
     locale: state.intl.get('locale')
-  })
+  }),
+  null,
+  null,
+  { withRef : true }
 )
 
-export default class Stake extends BaseScreen {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+export default class Stake extends Component {
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   state = {
@@ -41,7 +47,7 @@ export default class Stake extends BaseScreen {
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale].vt_title_name_vote}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <ScrollView showsVerticalScrollIndicator={false}>
             <StakeEOSForm />

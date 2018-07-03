@@ -1,13 +1,26 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { View, WebView, Share } from 'react-native'
-import BaseScreen from 'components/BaseScreen'
+import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
 import styles from './styles'
 
-class Article extends BaseScreen {
-  static navigatorStyle = {
-    tabBarHidden: true,
-    navBarHidden: true
+@connect(
+  state => ({
+    locale: state.intl.get('locale')
+  }),
+  null,
+  null,
+  { withRef : true }
+)
+
+class Article extends Component {
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
   }
 
   share = () => {
@@ -23,7 +36,7 @@ class Article extends BaseScreen {
       <View style={styles.container}>
         <NavigationBar
           title={this.props.title || 'Details'}
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.pop()} />}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           rightButton={<CommonRightButton iconName="md-share" onPress={() => this.share()} />}
         />
         <WebView source={{ uri: this.props.url }} />

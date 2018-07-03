@@ -10,12 +10,12 @@ interface AppStore<S> extends Store<S> {
   close?: any
 }
 
-export default function configure(initialState?: RootState, history?: any): AppStore<RootState> {
+export default function configure(initialState: RootState = {}, history?: any): AppStore<RootState> {
   const sagaMiddleware = createSagaMiddleware()
   const routerMiddleware = createRouterMiddleware(history)
   const middlewares = !isMobile ? [routerMiddleware, sagaMiddleware] : [sagaMiddleware]
   const composeEnhancers = (ENV !== 'production' && isBrowser && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
-  const store = createStore(rootReducer, initialState, composeEnhancers(applyMiddleware(...middlewares))) as AppStore<RootState>
+  const store: AppStore<RootState> = createStore(rootReducer, initialState, composeEnhancers(applyMiddleware(...middlewares)))
 
   store.runSaga = sagaMiddleware.run
   store.close = () => store.dispatch(END)

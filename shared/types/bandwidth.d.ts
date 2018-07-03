@@ -1,8 +1,8 @@
 declare interface DelegateBandwidthParams {
   eosAccountName: string
   password: string
-  stakeNETQuantity: number
-  stakeCPUQuantity: number
+  quant: number
+  resource: string
 }
 
 declare interface DelegateBandwidthResult {
@@ -12,8 +12,8 @@ declare interface DelegateBandwidthResult {
 declare interface UndelegateBandwidthParams {
   eosAccountName: string
   password: string
-  stakeNetQuantity: number
-  stakeCpuQuantity: number
+  quant: number
+  resource: string
 }
 
 declare interface UndelegateBandwidthResult {
