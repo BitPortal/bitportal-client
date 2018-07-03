@@ -59,7 +59,7 @@ Navigation.events().registerAppLaunchedListener(() => {
     },
     bottomTabs: {
       visible: true,
-      animate: false,
+      animate: true,
       backgroundColor: Colors.minorThemeColor,
       tabColor: 'gray',
       selectedTabColor: Colors.textColor_89_185_226,
