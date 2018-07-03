@@ -107,7 +107,7 @@ export default class About extends Component {
             >
               <View style={styles.content}>
                 <View style={[styles.image, { borderRadius: 15 }]}>
-                  <Image style={styles.image} source={Images.logo} resizeMode="contain" />
+                  <Image style={styles.image} source={Images.about_logo} resizeMode="contain" />
                 </View>
                 <Text style={[styles.text12, { marginTop: 10 }]}>
                   <FormattedMessage id="abt_subttl_txt_version" />

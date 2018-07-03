@@ -1,5 +1,6 @@
 import { Navigation } from 'react-native-navigation'
 import screenComponent from 'components/ScreenComponent'
+import { Platform } from 'react-native'
 import Market from 'screens/Market'
 import FundFlow from 'screens/Market/FundFlow'
 import TokenDetails from 'screens/Market/TokenDetails'
@@ -54,12 +55,13 @@ Navigation.events().registerAppLaunchedListener(() => {
       height: 0
     },
     layout: {
-      backgroundColor: Colors.mainThemeColor,
+      screenBackgroundColor: Colors.mainThemeColor,
+      backgroundColor: Colors.minorThemeColor,
       orientation: ['portrait']
     },
     bottomTabs: {
       visible: true,
-      animate: true,
+      animate: Platform.OS == 'ios' ? false : true,
       backgroundColor: Colors.minorThemeColor,
       tabColor: 'gray',
       selectedTabColor: Colors.textColor_89_185_226,
