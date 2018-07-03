@@ -1,8 +1,8 @@
 /* @jsx */
 import React, { Component } from 'react'
+import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
 import { Text, View, ListView } from 'react-native'
-import { Navigation } from 'react-native-navigation'
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
@@ -45,7 +45,11 @@ export default class Contacts extends Component {
   }
 
   addContacts = () => {
-    this.push({ screen: 'BitPortal.CreateContact' })
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.CreateContact'
+      }
+    })
   }
 
   deleteContact = (data, secId, rowId, rowMap) => {

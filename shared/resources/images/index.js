@@ -11,7 +11,7 @@ const Images = {
   discovery: require('./Discovery.png'),
   discovery_press: require('./Discovery_Press.png'),
   seperator: require('./seperator.png'),
-  logo: require('./logo.png'),
+  about_logo: require('./About_logo.png'),
   guide_bg: require('./guide_bg.png'),
   guide_asset: Platform.OS === 'ios' ? require('./guide_asset.png') : require('./guide_asset_android.png'),
   guide_asset_card: require('./guide_asset_card.png'),

@@ -3,9 +3,9 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { View, ScrollView, Platform } from 'react-native'
-import { Navigation } from 'react-native-navigation'
 import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
+import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
@@ -70,7 +70,11 @@ export default class AccountList extends Component {
   }
 
   resetPassword = () => {
-    this.push({ screen: 'BitPortal.ResetPassword' })
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.ResetPassword'
+      }
+    })
   }
 
   exportAccount = (password) => {

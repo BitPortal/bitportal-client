@@ -24,7 +24,11 @@ import styles from './styles'
 
 export default class Profile extends Component {
   checkHistory = () => {
-    this.push({ screen: 'BitPortal.TransactionHistory' })
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.TransactionHistory'
+      }
+    })
   }
 
   changePage = (page) => {
