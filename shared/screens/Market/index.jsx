@@ -6,7 +6,7 @@ import TableView, { HeaderTitle } from 'screens/Market/TableView'
 import * as tickerActions from 'actions/ticker'
 import { exchangeTickerSelector, sortFilterSelector } from 'selectors/ticker'
 import { bindActionCreators } from 'redux'
-import { View, InteractionManager } from 'react-native'
+import { View, InteractionManager, LayoutAnimation } from 'react-native'
 import Modal from 'react-native-modal'
 import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from 'constants/market'
 import NavigationBar, { ListButton } from 'components/NavigationBar'
@@ -85,6 +85,10 @@ export default class Market extends Component {
       sort: this.props.sortFilter,
       limit: 200
     })
+  }
+
+  componentWillUpdate() {
+    LayoutAnimation.easeInEaseOut()
   }
 
   shouldComponentUpdate(nextProps, nextState) {

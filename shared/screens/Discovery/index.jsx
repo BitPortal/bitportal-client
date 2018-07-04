@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View } from 'react-native'
+import { View, LayoutAnimation } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonTitle } from 'components/NavigationBar'
 import { bindActionCreators } from 'redux'
@@ -36,6 +36,10 @@ export default class Discovery extends Component {
   componentDidMount() {
     this.props.actions.getNewsListRequested({ startAt: 0, limit: PAGE_LENGTH, loadingMore: false })
     this.props.actions.getNewsBannerRequested()
+  }
+
+  componentWillUpdate() {
+    LayoutAnimation.easeInEaseOut()
   }
 
   getNewsListData = () => {

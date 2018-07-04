@@ -50,7 +50,7 @@ export const DefaultItem = ({ item, onPress, active, disabled }) => (
   </TouchableWithoutFeedback>
 )
 
-const DeleteButton = ({ onPress }) => (
+export const DeleteButton = ({ onPress }) => (
   <TouchableHighlight
     onPress={() => onPress()}
     style={[styles.btn, styles.center]}
@@ -75,12 +75,16 @@ class SwipeItem extends React.Component {
     this.setState({ isSwiped: false })
   }
 
-  onRowPress = () => {
-    this.setState({ isSwiped: true })
+  onPressItem = () => {
+    if (this.state.isSwiped) {
+      this.setState({ isSwiped: false })
+    } else {
+      this.props.onPress()
+    }
   }
 
   render() {
-    const { index, item, onPress, active, deleteItem } = this.props
+    const { item, onPress, active, deleteItem } = this.props
     const { isSwiped } = this.state
     return (
       <SwipeRow
@@ -89,12 +93,11 @@ class SwipeItem extends React.Component {
         preview={true}
         onRowOpen={this.onRowOpen}
         onRowClose={this.onRowClose}
-        onRowPress={this.onRowPress}
         closeOnRowPress={true}
         style={{ backgroundColor: Colors.bgColor_48_49_59 }}
       >
-        <DeleteButton onPress={() => deleteItem(index)} />
-        <DefaultItem disabled={isSwiped} item={item} onPress={() => onPress(item)} active={active} />
+        <DeleteButton onPress={deleteItem} />
+        <DefaultItem item={item} onPress={this.onPressItem} active={active} />
       </SwipeRow>
     )
   }
