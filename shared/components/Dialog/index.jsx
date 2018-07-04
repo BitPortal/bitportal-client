@@ -51,7 +51,7 @@ const prompt = (title = '', content = null, options = {}) => {
     }
 
     if (options.positiveText) {
-      inputType = 'secure-text'
+      inputType = options.disableSecureText ? options.disableSecureText : 'secure-text'
       buttons.push({
         text: options.positiveText || 'OK',
         onPress: (text) => resolve({ action: actionPositive, text }),

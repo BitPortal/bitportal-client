@@ -32,8 +32,9 @@ import About from 'screens/Profile/About'
 import Profile from 'screens/Profile'
 import Contacts from 'screens/Profile/Contacts'
 import Settings from 'screens/Profile/Settings'
-import Languages from 'screens/Profile/Languages'
-import Currencies from 'screens/Profile/Currencies'
+import Languages from 'screens/Profile/Settings/Languages'
+import Currencies from 'screens/Profile/Settings/Currencies'
+import NodeSettings from 'screens/Profile/Settings/NodeSettings'
 import AccountList from 'screens/Profile/AccountList'
 import CreateContact from 'screens/Profile/CreateContact'
 import ResetPassword from 'screens/Profile/ResetPassword'
@@ -99,6 +100,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.Settings', () => screenComponent(Settings, store))
   Navigation.registerComponent('BitPortal.Languages', () => screenComponent(Languages, store))
   Navigation.registerComponent('BitPortal.Currencies', () => screenComponent(Currencies, store))
+  Navigation.registerComponent('BitPortal.NodeSettings', () => screenComponent(NodeSettings, store))
   Navigation.registerComponent('BitPortal.AccountList', () => screenComponent(AccountList, store))
   Navigation.registerComponent('BitPortal.CreateContact', () => screenComponent(CreateContact, store))
   Navigation.registerComponent('BitPortal.ResetPassword', () => screenComponent(ResetPassword, store))

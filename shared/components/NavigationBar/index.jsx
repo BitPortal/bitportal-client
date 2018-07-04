@@ -22,14 +22,14 @@ export default class NavigationBar extends Component {
   }
 }
 
-export const CommonButton = ({ iconName, title, onPress }) => (
+export const CommonButton = ({ iconName, title, onPress, extraTextStyle }) => (
   <TouchableOpacity
     style={styles.navButton}
     onPress={() => onPress()}
   >
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-      <Ionicons name={iconName} size={24} color={Colors.bgColor_FFFFFF} />
-      <Text style={[styles.text20, { marginLeft: 10, marginTop: -3 }]}>
+      {iconName && <Ionicons name={iconName} size={24} color={Colors.bgColor_FFFFFF} />}
+      <Text style={[styles.text20, { marginLeft: 10, marginTop: -3 }, {...extraTextStyle}]}>
         {title}
       </Text>
     </View>

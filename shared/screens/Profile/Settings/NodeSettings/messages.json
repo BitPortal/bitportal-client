@@ -1,0 +1,16 @@
+{
+  "zh": {
+    "ndst_title_name_nodesettings" : "节点设置",
+    "ndst_title_popup_addNode": "请输入自定义节点:",
+    "ndst_setting_popup_ent": "确定",
+    "ndst_setting_popup_can": "取消",
+    "ndst_button_name_add": "添加自定义节点"
+  },
+  "en": {
+    "ndst_title_name_nodesettings" : "Node Settings",
+    "ndst_title_popup_addNode": "Please input custom node:",
+    "ndst_setting_popup_ent": "Confirm",
+    "ndst_setting_popup_can": "Cancel",
+    "ndst_button_name_add": "Add Custom Node"
+  }
+}

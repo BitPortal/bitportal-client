@@ -3,6 +3,7 @@ package com.bitportal;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import com.facebook.react.ReactNativeHost;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.apsl.versionnumber.RNVersionNumberPackage;
@@ -58,7 +59,9 @@ public class MainApplication extends NavigationApplication {
       new RNSensitiveInfoPackage(),
       new RNCameraPackage(),
       new BlurViewPackage(),
-      new RNVersionNumberPackage()
+      new RNVersionNumberPackage(),
+      new RNDeviceInfo(),
+      new ReactNativeRestartPackage()
     );
   }
 

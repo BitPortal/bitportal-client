@@ -27,6 +27,15 @@ const setItem = async (key: string, value: any, json?: boolean) => {
   }
 }
 
+const mergeItem = async (key: string, value: any, json?: boolean) => {
+  try {
+    const stringValue = (json && !!value) ? JSON.stringify(value) : value
+    await AsyncStorage.mergeItem(key, stringValue)
+  } catch (error) {
+    console.error(`AsyncStorage mergeItem Error: ${error.message}`)
+  }
+}
+
 const removeItem = async (key: string) => {
   try {
     await AsyncStorage.removeItem(key)
@@ -35,6 +44,6 @@ const removeItem = async (key: string) => {
   }
 }
 
-const storage = { getItem, setItem, removeItem }
+const storage = { getItem, setItem, mergeItem, removeItem }
 
 export default storage
