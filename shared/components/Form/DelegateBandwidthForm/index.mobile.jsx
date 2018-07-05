@@ -53,13 +53,30 @@ export const errorMessages = (error, messages) => {
 const validate = (values, props) => {
   const hasAccount = !!props.eosAccount.get('data').size
   const eosBalance = (hasAccount && props.eosAccount.get('data').get('core_liquid_balance')) ? props.eosAccount.get('data').get('core_liquid_balance').split(' ')[0] : 0
+  const netWeight = (hasAccount && props.eosAccount.get('data').get('total_resources')) ? props.eosAccount.get('data').get('total_resources').get('net_weight').split(' ')[0] : 0
+  const cpuWeight = (hasAccount && props.eosAccount.get('data').get('total_resources')) ? props.eosAccount.get('data').get('total_resources').get('cpu_weight').split(' ')[0] : 0
 
   const errors = {}
 
   if (!+values.get('quant')) {
     errors.quant = messages[props.locale]["dlgt_popup_title_epteosinput"]
-  } else if (+eosBalance < +values.get('quant')) {
-    errors.quant = messages[props.locale]["dlgt_popup_title_enbyteinput"]
+  }
+
+  const activeForm = props.bandwidth.get('activeForm')
+  const resource = props.resource
+
+  if (activeForm === 'Delegate') {
+    if (+eosBalance < +values.get('quant')) {
+      errors.quant = messages[props.locale]["dlgt_popup_title_enbyteinput"]
+    }
+  } else if (resource === 'net') {
+    if (+netWeight < +values.get('quant')) {
+      errors.quant = messages[props.locale]["dlgt_popup_title_enbyteinput"]
+    }
+  } else {
+    if (+cpuWeight < +values.get('quant')) {
+      errors.quant = messages[props.locale]["dlgt_popup_title_enbyteinput"]
+    }
   }
 
   return errors
@@ -129,6 +146,7 @@ export default class DelegateBandwidthForm extends Component {
 
   switchForm(form) {
     if (form !== this.state.activeForm) {
+      this.props.actions.setActiveForm(form)
       this.setState({ activeForm: form })
       this.props.actions.clearError()
       this.props.reset('delegateBandwidthForm')

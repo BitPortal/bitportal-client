@@ -6,7 +6,8 @@ const initialState = Immutable.fromJS({
   delegating: false,
   undelegating: false,
   error: null,
-  showSuccess: false
+  showSuccess: false,
+  activeForm: 'Delegate'
 })
 
 export default handleActions({
@@ -27,6 +28,9 @@ export default handleActions({
   },
   [actions.undelegateBandwidthFailed] (state, action) {
     return state.set('error', action.payload).set('undelegating', false)
+  },
+  [actions.setActiveForm] (state, action) {
+    return state.set('activeForm', action.payload)
   },
   [actions.clearError] (state) {
     return state.set('error', null).set('delegating', false).set('undelegating', false)

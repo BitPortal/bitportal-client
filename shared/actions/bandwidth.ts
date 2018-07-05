@@ -6,5 +6,6 @@ export const delegateBandwidthFailed = createAction<ErrorMessage>('bandwidth/DEL
 export const undelegateBandwidthRequested = createAction<UndelegateBandwidthParams>('bandwidth/UNDELEGATE_REQUESTED')
 export const undelegateBandwidthSucceeded = createAction<UndelegateBandwidthResult>('bandwidth/UNDELEGATE_SUCCEEDED')
 export const undelegateBandwidthFailed = createAction<ErrorMessage>('bandwidth/UNDELEGATE_FAILED')
+export const setActiveForm = createAction<string>('bandwidth/SET_ACTIVE_FORM')
 export const clearError = createAction('bandwidth/CLEAR_ERROR')
 export const hideSuccessModal = createAction('bandwidth/HIDE_SUCCESS_MODAL')
