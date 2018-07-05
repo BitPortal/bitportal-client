@@ -62,12 +62,6 @@ export default class Memory extends Component {
                   </Text>
                 </View>
                 <View style={[styles.totalContainer, styles.between, {marginTop: 0}]}>
-                  <Text style={styles.text14}><FormattedMessage id="cpu_title_name_avaeos" /></Text>
-                  <Text style={styles.text14}>
-                    {eosBalance}
-                  </Text>
-                </View>
-                <View style={[styles.totalContainer, styles.between, {marginTop: 0}]}>
                   <Text style={styles.text14}><FormattedMessage id="cpu_title_name_unstaking" /></Text>
                   <Text style={styles.text14}>
                     {refund}

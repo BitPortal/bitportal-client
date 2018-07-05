@@ -16,6 +16,7 @@ import { normalizeUnitByCurrency } from 'utils/normalize'
 import * as bandwidthActions from 'actions/bandwidth'
 import Alert from 'components/Alert'
 import Switch from 'components/Switch'
+import Balance from 'components/Balance'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { eosAccountSelector } from 'selectors/eosAccount'
@@ -153,18 +154,19 @@ export default class DelegateBandwidthForm extends Component {
   }
 
   render() {
-    const { handleSubmit, invalid, pristine, password, bandwidth, locale } = this.props
+    const { handleSubmit, invalid, pristine, password, bandwidth, locale, eosAccount } = this.props
     const delegating = bandwidth.get('delegating')
     const undelegating = bandwidth.get('undelegating')
     const showSuccess = bandwidth.get('showSuccess')
     const loading = delegating || undelegating
     const error = bandwidth.get('error')
     const disabled = invalid || pristine || loading
-
+    const eosBalance = eosAccount.get('data').get('core_liquid_balance') ? eosAccount.get('data').get('core_liquid_balance').split(' ')[0] : '0.0000'
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.delegateBandwidthForm}>
           <Switch itemList={['Delegate', 'Undelegate']} active={this.state.activeForm} onSwitch={this.switchForm} />
+          <Balance title={messages[locale]["tra_popup_title_baln"]} value={eosBalance} />
           <FormContainer>
             <Field
               name="quant"
