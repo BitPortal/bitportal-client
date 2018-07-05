@@ -92,8 +92,7 @@ const styles = StyleSheet.create({
 export default class TotalAssetsCard extends Component {
 
   state = {
-    hidden: false,
-    folded: true
+    hidden: false
   }
 
   async componentDidMount() {
@@ -117,11 +116,6 @@ export default class TotalAssetsCard extends Component {
     else return {}
   }
 
-  foldResources = () => {
-    const { folded } = this.state
-    this.setState({ folded: !folded })
-  }
-
   switchDisplayTotal = async () => {
     const { hidden } = this.state
     await storage.setItem('bitportal.hiddenTotalAssets', { hiddenTotalAssets: !hidden }, true)
@@ -130,7 +124,7 @@ export default class TotalAssetsCard extends Component {
 
   render() {
     const { totalAssets, CPUInfo, NETInfo, RAMQuota, RAMUsage, accountName, disabled, onPress, checkResourcesDetails, locale } = this.props
-    const { hidden, folded } = this.state
+    const { hidden } = this.state
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={{ alignItems: 'center', backgroundColor: Colors.minorThemeColor, paddingVertical: 15 }}>
@@ -170,35 +164,29 @@ export default class TotalAssetsCard extends Component {
               </View>
             </TouchableHighlight>
           </LinearGradientContainer>
-          <TouchableOpacity onPress={this.foldResources}>
+          <TouchableOpacity disabled={true} onPress={this.foldResources}>
             <View style={{ alignItems: 'center' }}>
-              <View style={[styles.resourcesContainer, styles.between, { paddingVertical: folded ? 0 : 15 } ]}>
-                {!folded &&
-                  <View style={styles.center}>
-                    <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>CPU</Text>
-                    <Text onPress={this.checkResources} style={[styles.text12, this.extraColor(CPUInfo.get('available'), CPUInfo.get('max')), { paddingHorizontal: 2 }]}>
-                      {formatCycleTime(CPUInfo.get('available'))}
-                    </Text>
-                  </View>
-                }
-                {!folded && <View style={styles.divider} />}
-                {!folded &&
-                  <View style={styles.center}>
-                    <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>BW</Text>
-                    <Text onPress={this.checkResources} style={[styles.text12, this.extraColor(NETInfo.get('available'), NETInfo.get('max')), { paddingHorizontal: 2 }]}>
-                      {formatMemorySize(NETInfo.get('available'))}
-                    </Text>
-                  </View>
-                }
-                {!folded && <View style={styles.divider} />}
-                {!folded &&
-                  <View style={styles.center}>
-                    <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>RAM</Text>
-                    <Text onPress={this.checkResources} style={[styles.text12, this.extraColor(RAMQuota-RAMUsage, RAMQuota), { paddingHorizontal: 2 }]}>
-                      {formatMemorySize(RAMQuota-RAMUsage)}
-                    </Text>
-                  </View>
-                }
+              <View style={[styles.resourcesContainer, styles.between, { paddingVertical: 15 } ]}>
+                <View style={styles.center}>
+                  <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>CPU</Text>
+                  <Text onPress={this.checkResources} style={[styles.text12, this.extraColor(CPUInfo.get('available'), CPUInfo.get('max')), { paddingHorizontal: 2 }]}>
+                    {formatCycleTime(CPUInfo.get('available'))}
+                  </Text>
+                </View>
+                <View style={styles.divider} />
+                <View style={styles.center}>
+                  <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>BW</Text>
+                  <Text onPress={this.checkResources} style={[styles.text12, this.extraColor(NETInfo.get('available'), NETInfo.get('max')), { paddingHorizontal: 2 }]}>
+                    {formatMemorySize(NETInfo.get('available'))}
+                  </Text>
+                </View>
+                <View style={styles.divider} />
+                <View style={styles.center}>
+                  <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>RAM</Text>
+                  <Text onPress={this.checkResources} style={[styles.text12, this.extraColor(RAMQuota-RAMUsage, RAMQuota), { paddingHorizontal: 2 }]}>
+                    {formatMemorySize(RAMQuota-RAMUsage)}
+                  </Text>
+                </View>
               </View>
               <View style={styles.guideArrow} />
             </View>

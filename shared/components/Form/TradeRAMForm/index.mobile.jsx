@@ -16,6 +16,7 @@ import { normalizeUnitByFraction, normalizeUnitByCurrency } from 'utils/normaliz
 import * as ramActions from 'actions/ram'
 import Alert from 'components/Alert'
 import Switch from 'components/Switch'
+import Balance from 'components/Balance'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { eosAccountSelector } from 'selectors/eosAccount'
@@ -141,18 +142,19 @@ export default class TradeRAMForm extends Component {
   }
 
   render() {
-    const { handleSubmit, invalid, pristine, password, ram, locale } = this.props
+    const { handleSubmit, invalid, pristine, password, ram, locale, eosAccount } = this.props
     const buying = ram.get('buying')
     const selling = ram.get('selling')
     const showSuccess = ram.get('showSuccess')
     const loading = buying || selling
     const error = ram.get('error')
     const disabled = invalid || pristine || loading
-
+    const eosBalance = eosAccount.get('data').get('core_liquid_balance') ? eosAccount.get('data').get('core_liquid_balance').split(' ')[0] : '0.0000'
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.buyRAMForm}>
           <Switch itemList={['Buy', 'Sell']} active={this.state.activeForm} onSwitch={this.switchForm} />
+          <Balance title={messages[locale]["tra_popup_title_baln"]} value={eosBalance} />
           <FormContainer>
             {this.state.activeForm === 'Buy' && <Field
               name="quant"

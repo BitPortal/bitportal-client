@@ -35,6 +35,7 @@ declare interface RootState {
   wallet?: any
   producer?: any
   eosAccount?: any
+  ram?: any
 }
 
 declare interface FetchOptions {

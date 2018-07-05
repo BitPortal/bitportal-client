@@ -9,8 +9,9 @@ import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
-import { FormattedMessage, IntlProvider } from 'react-intl'
+import { FormattedMessage, FormattedNumber, IntlProvider } from 'react-intl'
 import { eosAccountSelector } from 'selectors/eosAccount'
+import { ramPriceSelector } from 'selectors/ram'
 import TradeRAMForm from 'components/Form/TradeRAMForm'
 import * as ramActions from 'actions/ram'
 import { formatMemorySize } from 'utils/format'
@@ -21,7 +22,8 @@ import Progress from '../Progress'
   state => ({
     locale: state.intl.get('locale'),
     wallet: state.wallet,
-    eosAccount: eosAccountSelector(state)
+    eosAccount: eosAccountSelector(state),
+    ramPrice: ramPriceSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -46,7 +48,7 @@ export default class Memory extends Component {
   }
 
   render() {
-    const { locale, eosAccount } = this.props
+    const { locale, eosAccount, ramPrice } = this.props
     const activeEOSAccount = eosAccount.get('data')
     const percent = (activeEOSAccount.get('ram_quota') - activeEOSAccount.get('ram_usage')) / activeEOSAccount.get('ram_quota')
     const eosBalance = (activeEOSAccount && activeEOSAccount.get('core_liquid_balance'))
@@ -72,9 +74,14 @@ export default class Memory extends Component {
                   </Text>
                 </View>
                 <View style={[styles.totalContainer, styles.between, {marginTop: 0}]}>
-                  <Text style={styles.text14}><FormattedMessage id="memory_title_name_avaeos" /></Text>
+                  <Text style={styles.text14}><FormattedMessage id="memory_title_name_ramprice" /></Text>
                   <Text style={styles.text14}>
-                    {eosBalance}
+                    <FormattedNumber 
+                      value={ramPrice}
+                      maximumFractionDigits={4}
+                      minimumFractionDigits={4}
+                    />
+                    {' '}EOS
                   </Text>
                 </View>
               </View>
