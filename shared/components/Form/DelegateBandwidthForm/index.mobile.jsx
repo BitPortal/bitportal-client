@@ -161,12 +161,17 @@ export default class DelegateBandwidthForm extends Component {
     const loading = delegating || undelegating
     const error = bandwidth.get('error')
     const disabled = invalid || pristine || loading
-    const eosBalance = eosAccount.get('data').get('core_liquid_balance') ? eosAccount.get('data').get('core_liquid_balance').split(' ')[0] : '0.0000'
+    const hasAccount = !!eosAccount.get('data').size
+    const eosBalance = (hasAccount && eosAccount.get('data').get('core_liquid_balance')) ? eosAccount.get('data').get('core_liquid_balance').split(' ')[0] : 0
+    const netWeight = (hasAccount && eosAccount.get('data').get('total_resources')) ? eosAccount.get('data').get('total_resources').get('net_weight').split(' ')[0] : 0
+    const cpuWeight = (hasAccount && eosAccount.get('data').get('total_resources')) ? eosAccount.get('data').get('total_resources').get('cpu_weight').split(' ')[0] : 0
+    const availableBalance = this.state.activeForm === 'Delegate' ? eosBalance : (this.props.resource === 'net' ? netWeight : cpuWeight)
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.delegateBandwidthForm}>
           <Switch itemList={['Delegate', 'Undelegate']} active={this.state.activeForm} onSwitch={this.switchForm} />
-          <Balance title={messages[locale]["tra_popup_title_baln"]} value={eosBalance} />
+          <Balance title={messages[locale]["tra_popup_title_baln"]} value={availableBalance} unit="EOS" />
           <FormContainer>
             <Field
               name="quant"

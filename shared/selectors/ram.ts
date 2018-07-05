@@ -5,18 +5,16 @@ const ramSelector = (state: RootState) => state.ram.get('data')
 export const ramPriceSelector = createSelector(
   ramSelector,
   (data: any) => {
-    const dataObj = data && data.toJS()
-    console.log("###", dataObj)
-    if (dataObj && dataObj.rows && dataObj.rows.length > 0) {
-      const info = dataObj.rows[0]
-      const baseBalance = info.base.balance.split(' ')[0]
-      const quoteBalance = info.quote.balance.split(' ')[0]
-      const baseWeight = info.base.weight
-      const quoteWeight = info.quote.weight
-      console.log("### ---- ", baseBalance, quoteBalance, quoteBalance / (baseBalance * quoteWeight))
-      return quoteBalance / (baseBalance * quoteWeight)
-    } else {
-      return '0.0000'
+    if (data.get('rows') && data.get('rows').size && data.get('rows').get(0)) {
+      const info = data.get('rows').get(0)
+
+      if (info.get('base') && info.get('base').get('balance') && info.get('quote') && info.get('quote').get('balance')) {
+        const baseBalance = info.get('base').get('balance').split(' ')[0]
+        const quoteBalance = info.get('quote').get('balance').split(' ')[0]
+        return +quoteBalance / +baseBalance
+      }
     }
+
+    return 0
   }
 )

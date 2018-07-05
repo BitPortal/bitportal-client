@@ -150,11 +150,15 @@ export default class TradeRAMForm extends Component {
     const error = ram.get('error')
     const disabled = invalid || pristine || loading
     const eosBalance = eosAccount.get('data').get('core_liquid_balance') ? eosAccount.get('data').get('core_liquid_balance').split(' ')[0] : '0.0000'
+    const availableRAM = (eosAccount.get('data').get('ram_quota') && eosAccount.get('data').get('ram_usage')) ? (eosAccount.get('data').get('ram_quota') - eosAccount.get('data').get('ram_usage')) : 0
+    const availableBalance = this.state.activeForm === 'Buy' ? eosBalance : availableRAM
+    const availableBalanceUnit = this.state.activeForm === 'Buy' ? 'EOS' : 'Bytes'
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.buyRAMForm}>
           <Switch itemList={['Buy', 'Sell']} active={this.state.activeForm} onSwitch={this.switchForm} />
-          <Balance title={messages[locale]["tra_popup_title_baln"]} value={eosBalance} />
+          <Balance title={messages[locale]["tra_popup_title_baln"]} value={availableBalance} unit={availableBalanceUnit} />
           <FormContainer>
             {this.state.activeForm === 'Buy' && <Field
               name="quant"
