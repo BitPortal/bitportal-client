@@ -1,8 +1,9 @@
 import React, { Component, PureComponent } from 'react'
 import Colors from 'resources/colors'
 import { FormattedNumber } from 'react-intl'
-import { Text, View, TouchableHighlight, VirtualizedList } from 'react-native'
+import { Text, View, TouchableHighlight, TouchableOpacity, VirtualizedList } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import LinearGradientContainer from 'components/LinearGradientContainer'
 import styles from './styles'
 
 class ListItem extends Component {
@@ -11,8 +12,8 @@ class ListItem extends Component {
   }
 
   render() {
-    const { item, rank, onRowPress, selected } = this.props
-
+    const { item, rank, onRowPress, onMarkPress, selected } = this.props
+    const graColor = rank==1 ? Colors.recommandColor : Colors.cooperateColor
     return (
       <TouchableHighlight
         style={styles.listItem}
@@ -21,31 +22,44 @@ class ListItem extends Component {
       >
         <View style={[styles.listItem, styles.between, { paddingRight: 32 }]}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={[styles.text14, { width: 35, textAlign: 'right', paddingRight: 7, color: Colors.textColor_181_181_181 }]}>{1 + rank}</Text>
-            <View>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ paddingLeft: 32 }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center'}}>
                 <Text style={styles.text18}>{item.get('owner')}</Text>
-                {/* <View style={[styles.location, styles.center]}>
-                    <Text style={styles.text14}> {'Bvi'}</Text>
-                    </View> */}
+                { (rank==1||rank==2) &&
+                  <LinearGradientContainer type="right" colors={graColor} style={[styles.center, styles.flag]} >
+                    <Text style={[styles.text12, { color: Colors.textColor_255_255_238 }]}>
+                      {rank == 1 ? '推广' : '合作'}
+                    </Text>
+                  </LinearGradientContainer>
+                }
               </View>
-              <Text style={[styles.text14, { marginTop: 3, color: Colors.textColor_181_181_181 }]}>
-                <FormattedNumber
-                  value={item.get('total_votes')}
-                  maximumFractionDigits={0}
-                  minimumFractionDigits={0}
-                />
-              </Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
+                <View style={[styles.rank, styles.center]}>
+                  <Text style={[styles.text14, { color: Colors.textColor_181_181_181, marginHorizontal: 5, marginVertical: 2 }]}>
+                   {rank+1}
+                  </Text>
+                </View>
+                <View style={[styles.location, styles.center, { marginHorizontal: 10 }]}>
+                  <Text style={styles.text14}> {'Bvi'}</Text>
+                </View>
+                <Text style={[styles.text14, { marginTop: 3, color: Colors.textColor_181_181_181 }]}>
+                  <FormattedNumber
+                    value={item.get('total_votes')}
+                    maximumFractionDigits={0}
+                    minimumFractionDigits={0}
+                  />
+                </Text>
+              </View>
             </View>
           </View>
-          <View style={{ alignItems: 'center' }}>
+          <TouchableOpacity onPress={() => onMarkPress(item)} style={{ width: 40, height: 70, alignItems: 'flex-end', justifyContent: 'center' }}>
             {
               selected ?
                 <Ionicons name="md-checkmark-circle" size={26} color={Colors.textColor_89_185_226} />
               :
                 <View style={styles.radius} />
             }
-          </View>
+          </TouchableOpacity>
         </View>
       </TouchableHighlight>
     )
@@ -65,7 +79,16 @@ export default class ProducerList extends PureComponent {
         onRefresh={this.props.onRefresh}
         refreshing={this.props.refreshing}
         ItemSeparatorComponent={() => (<View style={styles.separator} />)}
-        renderItem={({ item, index }) => <ListItem key={item.get('owner')} item={item} rank={index} onRowPress={() => this.props.onRowPress(item)} selected={this.props.selected.indexOf(item.get('owner')) !== -1} />}
+        renderItem={({ item, index }) => (
+          <ListItem 
+            key={item.get('owner')} 
+            item={item} 
+            rank={index} 
+            onRowPress={() => this.props.onRowPress(item)} 
+            onMarkPress={() => this.props.onMarkPress(item)} 
+            selected={this.props.selected.indexOf(item.get('owner')) !== -1}
+          />
+        )}
       />
     )
   }

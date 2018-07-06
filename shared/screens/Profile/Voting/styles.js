@@ -15,7 +15,8 @@ const styles = StyleSheet.create({
   stakeAmountContainer: {
     width: SCREEN_WIDTH,
     height: 44,
-    backgroundColor: Colors.minorThemeColor
+    backgroundColor: Colors.minorThemeColor,
+    paddingHorizontal: 32
   },
   titleContainer: {
     width: SCREEN_WIDTH,
@@ -35,6 +36,12 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     backgroundColor: Colors.bgColor_000000
   },
+  rank: {
+    minWidth: 24,
+    minHeight: 16,
+    borderRadius: 4,
+    backgroundColor: Colors.textColor_white_2
+  },
   location: {
     paddingHorizontal: 8,
     minWidth: 44,
@@ -43,6 +50,12 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: Colors.borderColor_89_185_226
+  },
+  flag: {
+    marginLeft: 10,
+    width: 40,
+    height: 20,
+    borderRadius: 4
   },
   between: {
     alignItems: 'center',
@@ -65,9 +78,6 @@ const styles = StyleSheet.create({
     fontSize: FontScale(18),
     color: Colors.textColor_255_255_238,
     fontWeight: 'bold'
-  },
-  disabled: {
-    backgroundColor: Colors.textColor_181_181_181
   },
   radius: {
     width: 20,
@@ -94,6 +104,11 @@ const styles = StyleSheet.create({
     height: 30,
     borderRadius: 4,
     backgroundColor: Colors.textColor_89_185_226
+  },
+  resourcesBtn: {
+    width: 100,
+    height: 30,
+    borderRadius: 2
   }
 })
 
