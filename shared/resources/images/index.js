@@ -28,7 +28,8 @@ const Images = {
   profile_voting: require('./Profile_Voting.png'),
   profile_contacts: require('./Profile_Contacts.png'),
   profile_account: require('./Profile_Account.png'),
-  profile_settings: require('./Profile_Settings.png')
+  profile_settings: require('./Profile_Settings.png'),
+  profile_resources: require('./Profile_Resources.png')
 }
 
 export default Images
