@@ -15,7 +15,7 @@ const isLast = false
 // }
 
 const show = (title = '', content = null, options = {}) => {
-  const overrideBackPress = (!!options.positiveText && !options.negativeText)
+  // const overrideBackPress = (!!options.positiveText && !options.negativeText)
   return new Promise((resolve) => {
     timer = setTimeout(() => {
       Navigation.showOverlay({

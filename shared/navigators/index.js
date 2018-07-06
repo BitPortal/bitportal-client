@@ -63,7 +63,7 @@ Navigation.events().registerAppLaunchedListener(() => {
     },
     bottomTabs: {
       visible: true,
-      animate: Platform.OS == 'ios' ? false : true,
+      animate: Platform.OS !== 'ios',
       backgroundColor: Colors.minorThemeColor,
       tabColor: 'gray',
       selectedTabColor: Colors.textColor_89_185_226,

@@ -92,6 +92,7 @@ declare interface CreateEOSAccountParams {
   eosAccountName: string
   bpid?: string
   password: string
+  componentId?: string
 }
 
 declare interface CreateEOSAccountResult {
@@ -106,6 +107,7 @@ declare interface ImportEOSAccountParams {
   activePrivateKey: string
   password: string
   name: string
+  componentId?: string
 }
 
 declare interface ImportEOSAccountResult {

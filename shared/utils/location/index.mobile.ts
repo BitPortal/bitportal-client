@@ -1,6 +1,6 @@
 import { Navigation } from 'react-native-navigation'
 
-export const push = (location: string, componentId, passProps?: object) => {
+export const push = (location: string, componentId: string, passProps?: object) => {
   Navigation.push(componentId, {
     component: {
       passProps,
@@ -9,10 +9,10 @@ export const push = (location: string, componentId, passProps?: object) => {
   })
 }
 
-export const pop = (componentId) => {
+export const pop = (componentId: string) => {
   Navigation.pop(componentId)
 }
 
-export const popToRoot = (componentId) => {
+export const popToRoot = (componentId: string) => {
   Navigation.popToRoot(componentId)
 }
