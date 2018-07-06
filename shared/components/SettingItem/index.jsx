@@ -37,9 +37,9 @@ const styles = StyleSheet.create({
     color: Colors.textColor_255_255_238
   },
   leftImageStyle: {
-    width: 26,
-    height: 26,
-    marginRight: 15
+    width: FontScale(16),
+    height: FontScale(16),
+    marginRight: 10
   }
 })
 

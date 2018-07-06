@@ -23,7 +23,12 @@ const Images = {
   guide_discovery_card: require('./guide_discovery_card.png'),
   guide_discovery_title: require('./guide_discovery_title.png'),
   eyes_close: require('./eyes_close.png'),
-  eyes_open: require('./eyes_open.png')
+  eyes_open: require('./eyes_open.png'),
+  profile_about: require('./Profile_About.png'),
+  profile_voting: require('./Profile_Voting.png'),
+  profile_contacts: require('./Profile_Contacts.png'),
+  profile_account: require('./Profile_Account.png'),
+  profile_settings: require('./Profile_Settings.png')
 }
 
 export default Images
