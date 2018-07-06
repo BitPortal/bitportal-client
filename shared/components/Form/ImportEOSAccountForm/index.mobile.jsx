@@ -79,13 +79,13 @@ const validate = (values, props) => {
   if (!values.get('ownerPrivateKey')) {
     errors.ownerPrivateKey = <FormattedMessage id="import_txtbox_txt_ownhint" />
   } else if (!validateText(values.get('ownerPrivateKey'))) {
-    errors.ownerPrivateKey = 'Invalid ownerPrivateKey'
+    errors.ownerPrivateKey = <FormattedMessage id="import_txtbox_txt_invalidown" />
   }
 
   if (!values.get('activePrivateKey')) {
     errors.activePrivateKey = <FormattedMessage id="import_txtbox_txt_activehint" />
-  } else if (!validateText(values.get('ownerPrivateKey'))) {
-    errors.ownerPrivateKey = 'Invalid activePrivateKey'
+  } else if (!validateText(values.get('activePrivateKey'))) {
+    errors.activePrivateKey = <FormattedMessage id="import_txtbox_txt_invalidactive" />
   }
 
   return errors
@@ -150,13 +150,11 @@ export default class ImportEOSAccountForm extends Component {
             label={<FormattedMessage id="import_txtbox_txt_fill1" />}
             name="ownerPrivateKey"
             component={TextAreaField}
-            normalize={normalizeText}
           />
           <Field
             label={<FormattedMessage id="import_txtbox_txt_fill2" />}
             name="activePrivateKey"
             component={TextAreaField}
-            normalize={normalizeText}
           />
           <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text={<FormattedMessage id="import_button_name_impt" />} />
           <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearError} />

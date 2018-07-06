@@ -64,15 +64,15 @@ const validate = (values, props) => {
   } else if (+eosBalance < +values.get('quant')) {
     errors.quant = messages[props.locale]["tra_popup_title_enbyteinput"]
   } else if (!validateUnitByCurrency('EOS')(values.get('quant'))) {
-    errors.quant = 'Invalid quant'
+    errors.quant = messages[props.locale]["tra_popup_title_invalideinput"]
   }
 
-  if (!values.get('bytes')) {
+  if (!+values.get('bytes')) {
     errors.bytes = messages[props.locale]["tra_popup_title_eptbyteinput"]
   } else if ((+ramQuota - +ramUsage) < +values.get('bytes')) {
     errors.bytes = messages[props.locale]["tra_popup_title_enbyteinput"]
-  } else if (!validateUnitByFraction(0)(values.get('quant'))) {
-    errors.quant = 'Invalid bytes'
+  } else if (!validateUnitByFraction(0)(values.get('bytes'))) {
+    errors.bytes = messages[props.locale]["tra_popup_title_invalideinput"]
   }
 
   return errors
@@ -168,13 +168,11 @@ export default class TradeRAMForm extends Component {
             {this.state.activeForm === 'Buy' && <Field
               name="quant"
               component={TextField}
-              normalize={normalizeUnitByCurrency('EOS')}
               rightContent={<Text style={{ color: 'white' }}>EOS</Text>}
             />}
             {this.state.activeForm === 'Sell' && <Field
               name="bytes"
               component={TextField}
-              normalize={normalizeUnitByFraction(0)}
               rightContent={<Text style={{ color: 'white' }}>Bytes</Text>}
             />}
             <SubmitButton
