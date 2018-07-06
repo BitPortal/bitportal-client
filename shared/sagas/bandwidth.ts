@@ -43,6 +43,8 @@ function* delegateBandwidthRequested(action: Action<DelegateBandwidthParams>) {
     yield put(actions.delegateBandwidthSucceeded({}))
     yield put(reset('delegateBandwidthForm'))
     yield put(getEOSAccountRequested({ eosAccountName }))
+    yield delay(2000)
+    yield put(getEOSAccountRequested({ eosAccountName }))
   } catch (e) {
     yield put(actions.delegateBandwidthFailed(getErrorMessage(e)))
   }

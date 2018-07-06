@@ -76,12 +76,12 @@ export default class Memory extends Component {
                 <View style={[styles.totalContainer, styles.between, {marginTop: 0}]}>
                   <Text style={styles.text14}><FormattedMessage id="memory_title_name_ramprice" /></Text>
                   <Text style={styles.text14}>
-                    <FormattedNumber 
-                      value={ramPrice}
+                    <FormattedNumber
+                      value={+ramPrice * 1024}
                       maximumFractionDigits={4}
                       minimumFractionDigits={4}
                     />
-                    {' '}EOS
+                    {' '}EOS/KB
                   </Text>
                 </View>
               </View>

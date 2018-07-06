@@ -61,6 +61,8 @@ function* sellRAMRequested(action: Action<SellRAMParams>) {
     yield put(actions.sellRAMSucceeded({}))
     yield put(reset('tradeRAMForm'))
     yield put(getEOSAccountRequested({ eosAccountName }))
+    yield delay(2000)
+    yield put(getEOSAccountRequested({ eosAccountName }))
   } catch (e) {
     yield put(actions.sellRAMFailed(getErrorMessage(e)))
   }

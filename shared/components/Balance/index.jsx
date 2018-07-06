@@ -23,13 +23,13 @@ const styles = EStyleSheet.create({
   }
 })
 
-export default ({ title, value }) => (
+export default ({ title, value, unit }) => (
   <View style={[styles.container, styles.between]}>
     <Text style={styles.text14}>
       {title}
     </Text>
     <Text style={styles.text14}>
-      {value} EOS
+      {value} {unit}
     </Text>
   </View>
 )
