@@ -5,7 +5,7 @@ import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider, FormattedNumber } from 'react-intl'
-import { Text, View, TouchableOpacity, Platform, InteractionManager } from 'react-native'
+import { Text, View, TouchableWithoutFeedback, Platform, InteractionManager, LayoutAnimation } from 'react-native'
 import * as producerActions from 'actions/producer'
 import * as votingActions from 'actions/voting'
 import { bindActionCreators } from 'redux'
@@ -13,6 +13,7 @@ import { eosAccountSelector } from 'selectors/eosAccount'
 import AlertComponent from 'components/Alert'
 import Dialogs from 'components/Dialog'
 import DialogAndroid from 'components/DialogAndroid'
+import LinearGradientContainer from 'components/LinearGradientContainer'
 import { sortProducers } from 'eos'
 import VotingModal from './VotingModal'
 import ProducerList from './ProducerList'
@@ -77,6 +78,10 @@ export default class Voting extends Component {
     // this.props.actions.getVoteDataRequested()
   }
 
+  componentWillUpdate() {
+    LayoutAnimation.easeInEaseOut()
+  }
+
   checkRules = () => {
 
   }
@@ -101,7 +106,11 @@ export default class Voting extends Component {
     )
 
     if (action === Dialogs.actionPositive) {
-      this.submitVoting(text)
+      this.setState({ isVisible: false }, () => {
+        InteractionManager.runAfterInteractions(() => {
+          this.submitVoting(text)
+        })
+      })
     }
   }
 
@@ -123,17 +132,26 @@ export default class Voting extends Component {
     }
   }
 
-  stakeEOS = () => {
-    this.setState({ isVisible: false }, () => {
-      Navigation.push(this.props.componentId, {
-        component: {
-          name: 'BitPortal.Stake'
-        }
-      })
+  checkResources = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.Resources'
+      }
     })
   }
 
   onRowPress = (producer) => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.ProducerDetails',
+        passProps: {
+          producer
+        }
+      }
+    })
+  }
+
+  onMarkPress = (producer) => {
     const name = producer.get('owner')
 
     if (!~this.state.selected.indexOf(name)) {
@@ -178,24 +196,20 @@ export default class Voting extends Component {
           />
           <AlertComponent message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearError} />
           <View style={[styles.stakeAmountContainer, styles.between]}>
-            <Text style={[styles.text14, { marginLeft: 32 }]}>
-              Stake
+            <Text style={styles.text14}>
+              {'Stake: '}
+              <FormattedNumber
+                value={voterInfo ? (+voterInfo.get('staked') / 1000) : 0}
+                maximumFractionDigits={4}
+                minimumFractionDigits={4}
+              />
+              {' EOS'}
             </Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={styles.text14}>
-                <FormattedNumber
-                  value={voterInfo ? (+voterInfo.get('staked') / 1000) : 0}
-                  maximumFractionDigits={4}
-                  minimumFractionDigits={4}
-                />
-              </Text>
-              <Text style={[styles.text14, { marginLeft: 2, marginRight: 30 }]}> EOS </Text>
-              {/* <TouchableOpacity onPress={() => this.stakeEOS()}>
-                  <View style={{ padding: 5, margin: 10, marginRight: 20 }}>
-                  <Ionicons name="ios-create" size={24} color={Colors.bgColor_FAFAFA} />
-                  </View>
-                  </TouchableOpacity> */}
-            </View>
+            <LinearGradientContainer type="right" colors={Colors.voteColor} style={styles.resourcesBtn} >
+              <TouchableWithoutFeedback style={styles.center} underlayColor="transparent" onPress={() => this.checkResources()} >
+                <View><Text style={[styles.text14, { marginHorizontal: 10, marginVertical: 2 }]}>资源管理</Text></View>
+              </TouchableWithoutFeedback>
+            </LinearGradientContainer>
           </View>
           <View style={[styles.titleContainer, styles.between]}>
             <Text style={[styles.text14, { color: Colors.textColor_181_181_181 }]}>
@@ -209,6 +223,7 @@ export default class Voting extends Component {
               onRefresh={this.onRefresh}
               refreshing={loading}
               onRowPress={this.onRowPress}
+              onMarkPress={this.onMarkPress}
               selected={this.state.selected}
             />
           </View>
@@ -216,9 +231,15 @@ export default class Voting extends Component {
             <Text style={styles.text14}><FormattedMessage id="vt_btmsec_name_selected" /></Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={[styles.text14, { marginRight: 15 }]}>{this.state.selected.length}/30</Text>
-              <TouchableOpacity onPress={disabled ? () => {} : this.vote} style={[styles.center, styles.voteBtn, disabled ? styles.disabled : {}]} disabled={disabled}>
-                <Text style={styles.text14}><FormattedMessage id="vt_button_name_vote" /></Text>
-              </TouchableOpacity>
+              <LinearGradientContainer type="right" colors={disabled ? Colors.disabled : Colors.voteColor} style={styles.voteBtn} >
+                <TouchableWithoutFeedback onPress={disabled ? () => {} : this.vote} style={styles.center} disabled={disabled} >
+                  <View>
+                    <Text style={[styles.text14, { marginHorizontal: 10, marginVertical: 2 }]}>
+                      <FormattedMessage id="vt_button_name_vote" />
+                    </Text>
+                  </View>
+                </TouchableWithoutFeedback>
+              </LinearGradientContainer>
             </View>
           </View>
           <VotingModal
