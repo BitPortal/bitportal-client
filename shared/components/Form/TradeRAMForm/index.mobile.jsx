@@ -13,6 +13,7 @@ import {
   SubmitButton
 } from 'components/Form'
 import { normalizeUnitByFraction, normalizeUnitByCurrency } from 'utils/normalize'
+import { validateUnitByFraction, validateUnitByCurrency } from 'utils/validate'
 import * as ramActions from 'actions/ram'
 import Alert from 'components/Alert'
 import Switch from 'components/Switch'
@@ -62,12 +63,16 @@ const validate = (values, props) => {
     errors.quant = messages[props.locale]["tra_popup_title_epteosinput"]
   } else if (+eosBalance < +values.get('quant')) {
     errors.quant = messages[props.locale]["tra_popup_title_enbyteinput"]
+  } else if (!validateUnitByCurrency('EOS')(values.get('quant'))) {
+    errors.quant = 'Invalid quant'
   }
 
   if (!values.get('bytes')) {
     errors.bytes = messages[props.locale]["tra_popup_title_eptbyteinput"]
   } else if ((+ramQuota - +ramUsage) < +values.get('bytes')) {
     errors.bytes = messages[props.locale]["tra_popup_title_enbyteinput"]
+  } else if (!validateUnitByFraction(0)(values.get('quant'))) {
+    errors.quant = 'Invalid bytes'
   }
 
   return errors

@@ -15,7 +15,8 @@ import {
 } from 'components/Form'
 import PasswordStrength from 'components/PasswordStrength'
 import { getPasswordStrength } from 'utils'
-import { normalizeText, isEOSAccountNameValid } from 'utils/normalize'
+import { normalizeText } from 'utils/normalize'
+import { validateText, validateEOSAccountName } from 'utils/validate'
 import * as eosAccountActions from 'actions/eosAccount'
 import Alert from 'components/Alert'
 import { IntlProvider, FormattedMessage } from 'react-intl'
@@ -57,7 +58,7 @@ const validate = (values, props) => {
 
   if (!values.get('eosAccountName')) {
     errors.eosAccountName = <FormattedMessage id="import_txtbox_txt_eosnmhint2" />
-  } else if (!isEOSAccountNameValid(values.get('eosAccountName'))) {
+  } else if (!validateEOSAccountName(values.get('eosAccountName'))) {
     errors.eosAccountName = <FormattedMessage id="import_txtbox_txt_eosnmhint1" />
   }
 
@@ -77,10 +78,14 @@ const validate = (values, props) => {
 
   if (!values.get('ownerPrivateKey')) {
     errors.ownerPrivateKey = <FormattedMessage id="import_txtbox_txt_ownhint" />
+  } else if (!validateText(values.get('ownerPrivateKey'))) {
+    errors.ownerPrivateKey = 'Invalid ownerPrivateKey'
   }
 
   if (!values.get('activePrivateKey')) {
     errors.activePrivateKey = <FormattedMessage id="import_txtbox_txt_activehint" />
+  } else if (!validateText(values.get('ownerPrivateKey'))) {
+    errors.ownerPrivateKey = 'Invalid activePrivateKey'
   }
 
   return errors
