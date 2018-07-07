@@ -168,11 +168,13 @@ export default class TradeRAMForm extends Component {
             {this.state.activeForm === 'Buy' && <Field
               name="quant"
               component={TextField}
+              keyboardType="numeric"
               rightContent={<Text style={{ color: 'white' }}>EOS</Text>}
             />}
             {this.state.activeForm === 'Sell' && <Field
               name="bytes"
               component={TextField}
+              keyboardType="numeric"
               rightContent={<Text style={{ color: 'white' }}>Bytes</Text>}
             />}
             <SubmitButton
