@@ -1,6 +1,7 @@
 const webpack = require('webpack')
 const fs = require('fs')
 const { resolve, join } = require('path')
+const DotENV = require('dotenv-webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -152,13 +153,10 @@ const baseConfig = {
     ]
   },
   plugins: removeEmpty([
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'production'),
-        APP_ENV: JSON.stringify(process.env.APP_ENV || 'production')
-      }
+    new DotENV({
+      path: resolve(__dirname, `.env.${process.env.APP_ENV}`),
+      systemvars: true
     }),
-    new webpack.NormalModuleReplacementPlugin(/.\/production/, `./${process.env.APP_ENV}.json`),
     new MiniCssExtractPlugin({
       filename: ifProduction('styles/bundle.css?v=[hash]', 'styles/bundle.css'),
       chunkFilename: ifProduction('styles/[name].chunk.css?v=[chunkhash]', 'styles/[name].chunk.css')
