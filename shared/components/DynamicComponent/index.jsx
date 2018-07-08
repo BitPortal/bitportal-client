@@ -28,6 +28,7 @@ export function asyncComponent(getComponent) {
     }
 
     mounted = false
+
     state = { Component: AsyncComponent.Component }
 
     load() {

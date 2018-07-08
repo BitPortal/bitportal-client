@@ -14,36 +14,34 @@ const isLast = false
 //   return Navigation.dismissLightBox()
 // }
 
-const show = (title = '', content = null, options = {}) => {
-  // const overrideBackPress = (!!options.positiveText && !options.negativeText)
-  return new Promise((resolve) => {
-    timer = setTimeout(() => {
-      Navigation.showOverlay({
-        component: {
-          id: 'BitPortalLightBox',
-          name: 'BitPortal.LightBox',
-          options: {
-            overlay: {
-              interceptTouchOutside: true
-            }
-          },
-          // overrideBackPress,
-          // tapBackgroundToDismiss: false,
-          passProps: {
-            type: 'update',
-            title,
-            content,
-            positiveText: options.positiveText || null,
-            negativeText: options.negativeText || null,
-            onPositive: () => resolve({ action: actionPositive }),
-            onNegative: () => resolve({ action: actionNegative })
+const show = (title = '', content = null, options = {}) => new Promise((resolve) => {
+  timer = setTimeout(() => {
+    Navigation.showOverlay({
+      component: {
+        id: 'BitPortalLightBox',
+        name: 'BitPortal.LightBox',
+        options: {
+          overlay: {
+            interceptTouchOutside: true
           }
-          // style: Platform.OS === 'ios' ? { backgroundBlur: 'dark' } : { backgroundColor: 'rgba(0, 0, 0, 0.5)' }
+        },
+        // overrideBackPress,
+        // tapBackgroundToDismiss: false,
+        passProps: {
+          type: 'update',
+          title,
+          content,
+          positiveText: options.positiveText || null,
+          negativeText: options.negativeText || null,
+          onPositive: () => resolve({ action: actionPositive }),
+          onNegative: () => resolve({ action: actionNegative })
         }
-      })
-    }, Platform.OS === 'ios' ? 500 : 0)
-  })
-}
+        // style: Platform.OS === 'ios' ? { backgroundBlur: 'dark' } : { backgroundColor: 'rgba(0, 0, 0, 0.5)' }
+      }
+    })
+  }, Platform.OS === 'ios' ? 500 : 0)
+})
+
 
 const goUpdate = (data) => {
   const url = data.downloadUrl && data.downloadUrl[Platform.OS]

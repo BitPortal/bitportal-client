@@ -2,7 +2,7 @@ import { takeEvery, call } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import storage from 'utils/storage'
 import * as actions from 'actions/intl'
-import { setBottomTabsLocale } from 'navigators'
+import { setExtraLocale } from 'utils/location'
 
 function* setLocale(action: Action<object>) {
   const locale = action.payload
@@ -12,7 +12,7 @@ function* setLocale(action: Action<object>) {
     expires: new Date(Date.now() + (3600 * 1000 * 24 * 365))
   })
 
-  setBottomTabsLocale(locale)
+  setExtraLocale(locale)
 }
 
 export default function* intlSaga() {
