@@ -49,7 +49,7 @@ export const errorMessages = (error, messages) => {
     }, dispatch)
   }),
   null,
-  { withRef : true }
+  { withRef: true }
 )
 
 export default class Voting extends Component {

@@ -31,7 +31,7 @@ import Progress from '../Progress'
     }, dispatch)
   }),
   null,
-  { withRef : true }
+  { withRef: true }
 )
 
 export default class Memory extends Component {

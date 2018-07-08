@@ -8,7 +8,7 @@ import Update from './Update'
   }),
   null,
   null,
-  { withRef : true }
+  { withRef: true }
 )
 
 export default class LightBox extends Component {

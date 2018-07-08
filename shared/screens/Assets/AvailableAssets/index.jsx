@@ -24,7 +24,7 @@ const AssetElement = ({ item, onValueChange }) => (
   }),
   null,
   null,
-  { withRef : true }
+  { withRef: true }
 )
 
 export default class AvailableAssets extends Component {

@@ -15,7 +15,7 @@ import messages from './messages'
   }),
   null,
   null,
-  { withRef : true }
+  { withRef: true }
 )
 
 export default class ExportPrivateKey extends Component {

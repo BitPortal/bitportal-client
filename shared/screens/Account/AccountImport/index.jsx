@@ -16,7 +16,7 @@ import styles from './styles'
   }),
   null,
   null,
-  { withRef : true }
+  { withRef: true }
 )
 
 export default class AccountImport extends Component {

@@ -32,7 +32,7 @@ const ButtonElement = ({ Title, onPress }) => (
     }, dispatch)
   }),
   null,
-  { withRef : true }
+  { withRef: true }
 )
 
 export default class MarketDetails extends Component {

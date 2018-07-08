@@ -25,7 +25,7 @@ import styles from './styles'
   }),
   null,
   null,
-  { withRef : true }
+  { withRef: true }
 )
 
 export default class PrivateKeyCreation extends Component {

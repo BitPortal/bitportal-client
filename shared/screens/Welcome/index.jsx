@@ -56,7 +56,7 @@ const Page3 = ({ goToHomePage }) => (
   }),
   null,
   null,
-  { withRef : true }
+  { withRef: true }
 )
 
 export default class Welcome extends Component {

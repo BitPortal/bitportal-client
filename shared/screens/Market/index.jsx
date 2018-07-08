@@ -31,7 +31,7 @@ import styles from './styles'
     }, dispatch)
   }),
   null,
-  { withRef : true }
+  { withRef: true }
 )
 
 export default class Market extends Component {

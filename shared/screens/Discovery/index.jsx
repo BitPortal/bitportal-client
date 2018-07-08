@@ -29,7 +29,7 @@ const PAGE_LENGTH = 10
     }, dispatch)
   }),
   null,
-  { withRef : true }
+  { withRef: true }
 )
 
 export default class Discovery extends Component {
