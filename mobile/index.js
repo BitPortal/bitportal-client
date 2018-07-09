@@ -41,7 +41,6 @@ const runApp = async () => {
     startSingleApp()
   }
 
-  // if (Platform.OS === 'ios')
   SplashScreen.hide()
 }
 
