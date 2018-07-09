@@ -9,7 +9,7 @@ BitPortal client for web, ios, android, windows and macOS
 - [x] [Redux](https://github.com/reactjs/redux)
 - [x] [Immutable](http://facebook.github.io/immutable-js)
 - [x] [React Router 4](https://reacttraining.com/react-router/)
-- [x] [Redux Native Navigation](https://wix.github.io/react-native-navigation/v2)
+- [x] [Redux Native Navigation 2](https://github.com/wix/react-native-navigation)
 - [x] [React Intl](https://github.com/yahoo/react-intl)
 - [x] [Redux Actions](https://github.com/acdlite/redux-actions)
 - [x] [Redux Saga](https://github.com/yelouafi/redux-saga)
