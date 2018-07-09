@@ -5,7 +5,7 @@ import 'intl/locale-data/jsonp/en.js'
 import 'intl/locale-data/jsonp/zh.js'
 import 'core-js/es6/symbol'
 import 'core-js/fn/symbol/iterator'
-import { StatusBar, Platform } from 'react-native'
+import { StatusBar } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { getInitialLang } from 'selectors/intl'
 import { getInitialCurrency } from 'selectors/currency'
@@ -43,7 +43,6 @@ const runApp = async () => {
     startSingleApp()
   }
 
-  // if (Platform.OS === 'ios')
   SplashScreen.hide()
 }
 

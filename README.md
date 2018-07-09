@@ -2,6 +2,28 @@
 
 BitPortal client for web, ios, android, windows and macOS
 
+## teck stack
+- [x] [React](https://facebook.github.io/react/)
+- [x] [React Native](https://facebook.github.io/react-native/)
+- [x] [Typescript](https://www.typescriptlang.org/)
+- [x] [Redux](https://github.com/reactjs/redux)
+- [x] [Immutable](http://facebook.github.io/immutable-js)
+- [x] [React Router 4](https://reacttraining.com/react-router/)
+- [x] [Redux Native Navigation](https://wix.github.io/react-native-navigation/v2)
+- [x] [React Intl](https://github.com/yahoo/react-intl)
+- [x] [Redux Actions](https://github.com/acdlite/redux-actions)
+- [x] [Redux Saga](https://github.com/yelouafi/redux-saga)
+- [x] [Redux Form](http://redux-form.com)
+- [x] [Reselect](https://github.com/reactjs/reselect)
+- [x] [PostCSS](https://github.com/postcss/postcss)
+- [x] [CSS modules](https://github.com/outpunk/postcss-modules)
+- [x] [Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+- [x] [React Testing Library](https://github.com/kentcdodds/react-testing-library)
+- [x] [Webpack 4](https://webpack.js.org)
+- [x] [Babel](https://babeljs.io/)
+- [x] [Express](https://github.com/expressjs/express)
+- [x] [Electron](https://github.com/electron/electron)
+
 ## get repo
 ```sh
 $ git clone https://github.com/BitPortal/bitportal-client.git

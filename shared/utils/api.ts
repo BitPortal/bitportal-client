@@ -39,7 +39,7 @@ export const fetchBase = async (
       options.body = JSON.stringify(params)
     }
   }
-  // console.log('###', url)
+
   return fetch(url, baseUrl === BITPORTAL_API_REST_URL ? options : {}).then((res: any) => {
     if (!res.ok) {
       return res.json().then((e: any) => Promise.reject({ message: e.error_msg }))
