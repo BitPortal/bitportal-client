@@ -180,6 +180,7 @@ export default class DelegateBandwidthForm extends Component {
               name="quant"
               component={TextField}
               rightContent={<Text style={{ color: 'white' }}>EOS</Text>}
+              normalize={normalizeUnitByCurrency('EOS')}
               keyboardType="numeric"
             />
             <SubmitButton
