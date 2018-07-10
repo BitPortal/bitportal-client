@@ -34,6 +34,7 @@ export default class Contacts extends Component {
   render() {
     const { locale, contacts } = this.props
     const { folded } = this.state
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={[styles.intro, { marginTop: 10 }]}>

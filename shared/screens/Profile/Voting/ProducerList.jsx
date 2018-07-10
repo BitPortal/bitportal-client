@@ -43,7 +43,7 @@ class ListItem extends Component {
                    {rank + 1}
                   </Text>
                 </View>
-                {location && <View style={[styles.location, styles.center, { marginRight: 10 }]}>
+                {!!location && typeof location === 'string' && <View style={[styles.location, styles.center, { marginRight: 10 }]}>
                   <Text style={styles.text14}>{location}</Text>
                 </View>}
                 <Text style={[styles.text14, { marginTop: 3, color: Colors.textColor_181_181_181 }]}>

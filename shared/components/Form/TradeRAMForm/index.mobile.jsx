@@ -52,10 +52,10 @@ export const errorMessages = (error, messages) => {
 }
 
 const validate = (values, props) => {
-  const hasAccount = !!props.eosAccount.get('data').size
-  const eosBalance = (hasAccount && props.eosAccount.get('data').get('core_liquid_balance')) ? props.eosAccount.get('data').get('core_liquid_balance').split(' ')[0] : 0
-  const ramQuota = (hasAccount && props.eosAccount.get('data').get('ram_quota')) ? props.eosAccount.get('data').get('ram_quota') : 0
-  const ramUsage = (hasAccount && props.eosAccount.get('data').get('ram_usage')) ? props.eosAccount.get('data').get('ram_usage') : 0
+  const { eosAccount } = props
+  const eosBalance = eosAccount.getIn(['data', 'core_liquid_balance']) ? eosAccount.getIn(['data', 'core_liquid_balance']).split(' ')[0] : 0
+  const ramQuota = eosAccount.getIn(['data', 'ram_quota']) || 0
+  const ramUsage = eosAccount.getIn(['data', 'ram_usage']) || 0
 
   const errors = {}
 

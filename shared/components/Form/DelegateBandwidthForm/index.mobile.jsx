@@ -52,10 +52,10 @@ export const errorMessages = (error, messages) => {
 }
 
 const validate = (values, props) => {
-  const hasAccount = !!props.eosAccount.get('data').size
-  const eosBalance = (hasAccount && props.eosAccount.get('data').get('core_liquid_balance')) ? props.eosAccount.get('data').get('core_liquid_balance').split(' ')[0] : 0
-  const netWeight = (hasAccount && props.eosAccount.get('data').get('total_resources')) ? props.eosAccount.get('data').get('total_resources').get('net_weight').split(' ')[0] : 0
-  const cpuWeight = (hasAccount && props.eosAccount.get('data').get('total_resources')) ? props.eosAccount.get('data').get('total_resources').get('cpu_weight').split(' ')[0] : 0
+  const { eosAccount } = props
+  const eosBalance = eosAccount.getIn(['data', 'core_liquid_balance']) ? eosAccount.getIn(['data', 'core_liquid_balance']).split(' ')[0] : 0
+  const netWeight =  eosAccount.getIn(['data', 'total_resources', 'net_weight']) ? eosAccount.getIn(['data', 'total_resources', 'net_weight']).split(' ')[0] : 0
+  const cpuWeight = eosAccount.getIn(['data', 'total_resources', 'cpu_weight']) ? eosAccount.getIn(['data', 'total_resources', 'cpu_weight']).split(' ')[0] : 0
 
   const errors = {}
 
@@ -164,10 +164,9 @@ export default class DelegateBandwidthForm extends Component {
     const loading = delegating || undelegating
     const error = bandwidth.get('error')
     const disabled = invalid || pristine || loading
-    const hasAccount = !!eosAccount.get('data').size
-    const eosBalance = (hasAccount && eosAccount.get('data').get('core_liquid_balance')) ? eosAccount.get('data').get('core_liquid_balance').split(' ')[0] : 0
-    const netWeight = (hasAccount && eosAccount.get('data').get('total_resources')) ? eosAccount.get('data').get('total_resources').get('net_weight').split(' ')[0] : 0
-    const cpuWeight = (hasAccount && eosAccount.get('data').get('total_resources')) ? eosAccount.get('data').get('total_resources').get('cpu_weight').split(' ')[0] : 0
+    const eosBalance = eosAccount.getIn(['data', 'core_liquid_balance']) ? eosAccount.getIn(['data', 'core_liquid_balance']).split(' ')[0] : 0
+    const netWeight =  eosAccount.getIn(['data', 'total_resources', 'net_weight']) ? eosAccount.getIn(['data', 'total_resources', 'net_weight']).split(' ')[0] : 0
+    const cpuWeight = eosAccount.getIn(['data', 'total_resources', 'cpu_weight']) ? eosAccount.getIn(['data', 'total_resources', 'cpu_weight']).split(' ')[0] : 0
     const availableBalance = this.state.activeForm === 'Delegate' ? eosBalance : (this.props.resource === 'net' ? netWeight : cpuWeight)
 
     return (
