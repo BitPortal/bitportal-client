@@ -13,9 +13,9 @@ class ListItem extends Component {
 
   render() {
     const { item, rank, onRowPress, onMarkPress, selected, totalVotes } = this.props
-    const graColor = rank==1 ? Colors.recommandColor : Colors.cooperateColor
     const location = item.getIn(['info', 'org', 'location'])
     const weight = +item.getIn(['info', 'weight'])
+    const graColor = weight === 0 ? Colors.recommandColor : Colors.cooperateColor
 
     return (
       <TouchableHighlight
