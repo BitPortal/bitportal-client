@@ -1,7 +1,7 @@
 /* @tsx */
 
 import React, { Component } from 'react'
-import { Text, View, ScrollView, Image } from 'react-native'
+import { Text, View, ScrollView, Image, TouchableOpacity } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import Images from 'resources/images'
 import SettingItem from 'components/SettingItem'
@@ -14,6 +14,7 @@ import * as versionInfoActions from 'actions/versionInfo'
 import { BITPORTAL_API_TERMS_URL, BITPORTAL_API_UPDATE_LOG_URL } from 'constants/env'
 import Loading from 'components/Loading'
 import { isNewest, showIsLast } from 'utils/update'
+import { Mediafax } from 'constants/mediafax'
 import messages from './messages'
 import styles from './styles'
 
@@ -90,6 +91,10 @@ export default class About extends Component {
     })
   }
 
+  browseMedia = (media) => {
+
+  }
+
   render() {
     const { locale, versionInfo } = this.props
     const loading = versionInfo.get('loading')
@@ -116,6 +121,17 @@ export default class About extends Component {
                 <Text multiline={true} style={[styles.text14, { marginTop: 20 }]}>
                   <FormattedMessage id="abt_describe_txt_des" />
                 </Text>
+                <View style={styles.mediaContainer}>
+                  {Mediafax.map((item, index) => (
+                    <TouchableOpacity key={index} onPress={() => this.browseMedia(item)} style={[styles.border, { marginHorizontal: 5, marginVertical: 5 }]}>
+                      <View style={[styles.border, styles.center]}>
+                        <Text style={styles.text14}>
+                          {item}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  ))}
+                </View>
               </View>
               <SettingItem
                 extraStyle={{ marginTop: 10 }}

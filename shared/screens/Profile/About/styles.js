@@ -33,6 +33,17 @@ const styles = StyleSheet.create({
     width: 75,
     height: 116
   },
+  mediaContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  border: {
+    width: 90,
+    height: 30,
+    borderRadius: 5,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: Colors.bgColor_FFFFFF,
+  },
   text12: {
     fontSize: FontScale(12),
     color: Colors.textColor_255_255_238

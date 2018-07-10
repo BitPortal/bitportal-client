@@ -5,6 +5,7 @@ import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'reac
 import { noop } from 'utils'
 import Colors from 'resources/colors'
 import styles from './styles'
+import Tips from 'components/Tips'
 
 export const FormContainer = ({ children }) => (
   <View style={styles.formContainer}>{children}</View>
@@ -26,9 +27,12 @@ export const FieldError = ({ children }) => (
   <Text style={styles.fieldError}>{children}</Text>
 )
 
-export const TextField = ({ input: { onChange, ...restInput }, meta: { touched, error }, label, keyboardType, rightContent }) => (
+export const TextField = ({ input: { onChange, ...restInput }, meta: { touched, error }, label, keyboardType, rightContent, tips }) => (
   <FieldItem>
-    {label && <Text style={styles.text14}>{label}</Text>}
+    <View style={{ flexDirection: 'row' }}>
+      {label && <Text style={styles.text14}>{label}</Text>}
+      {tips && <Tips tips={tips} />}
+    </View>
     <FieldInput rightContent={rightContent}>
       <TextInput
         style={styles.input}
