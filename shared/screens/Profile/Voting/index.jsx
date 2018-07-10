@@ -76,6 +76,7 @@ export default class Voting extends Component {
 
   componentDidMount() {
     // this.props.actions.getVoteDataRequested()
+    this.props.actions.getProducersRequested({ json: true, limit: 500 })
   }
 
   componentWillUpdate() {
@@ -177,7 +178,7 @@ export default class Voting extends Component {
   }
 
   componentDidAppear() {
-    this.props.actions.getProducersRequested({ json: true, limit: 500 })
+    // this.props.actions.getProducersRequested({ json: true, limit: 500 })
   }
 
   render() {
@@ -222,6 +223,7 @@ export default class Voting extends Component {
           <View style={styles.scrollContainer}>
             <ProducerList
               data={producer.get('data').get('rows')}
+              totalVotes={producer.get('data').get('total_producer_vote_weight')}
               onRefresh={this.onRefresh}
               refreshing={loading}
               onRowPress={this.onRowPress}

@@ -12,10 +12,11 @@ class ListItem extends Component {
   }
 
   render() {
-    const { item, rank, onRowPress, onMarkPress, selected } = this.props
+    const { item, rank, onRowPress, onMarkPress, selected, totalVotes } = this.props
     const location = item.getIn(['info', 'org', 'location'])
     const weight = +item.getIn(['info', 'weight'])
     const graColor = weight === 0 ? Colors.recommandColor : Colors.cooperateColor
+
     return (
       <TouchableHighlight
         style={styles.listItem}
@@ -43,14 +44,14 @@ class ListItem extends Component {
                   </Text>
                 </View>
                 {!!location && typeof location === 'string' && <View style={[styles.location, styles.center, { marginRight: 10 }]}>
-                  <Text style={styles.text14}>{location}</Text>
+                  <Text style={styles.text14}>{location.length > 20 ? `${location.slice(0, 19)}...` : location}</Text>
                 </View>}
                 <Text style={[styles.text14, { marginTop: 3, color: Colors.textColor_181_181_181 }]}>
                   <FormattedNumber
-                    value={item.get('total_votes')}
-                    maximumFractionDigits={0}
-                    minimumFractionDigits={0}
-                  />
+                    value={(+item.get('total_votes') / +totalVotes) * 100}
+                    maximumFractionDigits={2}
+                    minimumFractionDigits={2}
+                  />%
                 </Text>
               </View>
             </View>
@@ -87,6 +88,7 @@ export default class ProducerList extends PureComponent {
             key={item.get('owner')}
             item={item}
             rank={index}
+            totalVotes={this.props.totalVotes}
             onRowPress={() => this.props.onRowPress(item)}
             onMarkPress={() => this.props.onMarkPress(item)}
             selected={this.props.selected.indexOf(item.get('owner')) !== -1}
