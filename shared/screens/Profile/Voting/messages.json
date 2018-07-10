@@ -1,8 +1,18 @@
 {
   "zh": {
-    "vt_title_name_vote" : "节点投票",
+    "vt_title_name_vote" : "节点竞选",
 
-    "vt_sec_title_nameloc" : "名称/票数",
+    "vt_rscs_nmb_stake" : "已抵押",
+    "vt_rscs_button_rscs" : "资源管理",
+
+    "vt_sec_title_def" : "默认",
+    "vt_sec_title_rk" : "排名",
+
+    "vt_sec_info_loc" : "区域",
+    "vt_sec_info_locp" : "占比",
+
+    "vt_sec_tag_prmt" : "推广",
+    "vt_sec_tag_cprt" : "合作",
 
     "vt_btmsec_name_selected" : "已选",
     "vt_button_name_vote" : "投票",
@@ -22,7 +32,17 @@
   "en": {
     "vt_title_name_vote" : "Voting",
 
-    "vt_sec_title_nameloc" : "Name/Votes",
+    "vt_rscs_nmb_stake" : "Staked",
+    "vt_rscs_button_rscs" : "Rescource",
+
+    "vt_sec_title_def" : "Default",
+    "vt_sec_title_rk" : "Ranking",
+
+    "vt_sec_info_loc" : "Loc",
+    "vt_sec_info_locp" : "Score",
+
+    "vt_sec_tag_prmt" : "Promotion",
+    "vt_sec_tag_cprt" : "Cooperation",
 
     "vt_btmsec_name_selected" : "Selected",
     "vt_button_name_vote" : "Vote",

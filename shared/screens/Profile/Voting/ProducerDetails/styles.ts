@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     borderRadius: 22
   },
   flag: {
-    width: 40,
+    minWidth: 40,
     height: 20,
     borderRadius: 4
   },

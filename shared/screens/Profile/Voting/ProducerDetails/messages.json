@@ -1,8 +1,39 @@
 {
   "zh": {
-    "prod_title_name_prodtl" : "节点信息"
+    "prod_title_name_prodtl" : "节点信息",
+    "prod_name_tag_prmt" : "推广",
+    "prod_name_tag_cprt" : "合作",
+
+    "prod_sec_info_teamloc" : "团队位置",
+    "prod_sec_info_bploc" : "节点位置",
+    "prod_sec_info_score" : "得分",
+
+    "prod_sec_name_intro" : "团队介绍",
+    "prod_sec_name_cont" : "社群信息",
+
+    "prod_cont_media_twt" : "推特",
+    "prod_cont_media_fb" : "脸书",
+    "prod_cont_media_tele" : "电报",
+    "prod_cont_media_wech" : "微信",
+    "prod_cont_media_weibo" : "微博"
+
   },
   "en": {
-    "prod_title_name_prodtl" : "BP Information"
+    "prod_title_name_prodtl" : "BP Information",
+    "prod_name_tag_prmt" : "Promotion",
+    "prod_name_tag_cprt" : "Cooperation",
+
+    "prod_sec_info_teamloc" : "Team Location",
+    "prod_sec_info_bploc" : "BP Location",
+    "prod_sec_info_score" : "Score",
+
+    "prod_sec_name_intro" : "Team Introduction",
+    "prod_sec_name_cont" : "Contacts",
+
+    "prod_cont_media_twt" : "Twitter",
+    "prod_cont_media_fb" : "Facebook",
+    "prod_cont_media_tele" : "Telegram",
+    "prod_cont_media_wech" : "Wechat",
+    "prod_cont_media_weibo" : "Weibo"
   }
 }

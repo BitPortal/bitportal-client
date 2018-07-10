@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
   location: {
     paddingHorizontal: 8,
-    minWidth: 44,
+    maxWidth: 120,
     height: 20,
     backgroundColor: 'rgba(89,185,226,0.6)',
     borderRadius: 3,
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
   flag: {
     marginLeft: 10,
-    width: 40,
+    minWidth: 40,
     height: 20,
     borderRadius: 4
   },

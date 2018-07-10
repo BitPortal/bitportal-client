@@ -147,7 +147,8 @@ export default class Voting extends Component {
         component: {
           name: 'BitPortal.ProducerDetails',
           passProps: {
-            producer
+            producer,
+            totalProducers: this.props.producer
           }
         }
       })
@@ -210,13 +211,17 @@ export default class Voting extends Component {
             </Text>
             <LinearGradientContainer type="right" colors={Colors.voteColor} style={styles.resourcesBtn} >
               <TouchableWithoutFeedback style={styles.center} underlayColor="transparent" onPress={() => this.checkResources()} >
-                <View><Text style={[styles.text14, { marginHorizontal: 10, marginVertical: 2 }]}>资源管理</Text></View>
+                <View>
+                  <Text style={[styles.text14, { marginHorizontal: 10, marginVertical: 2 }]}>
+                    <FormattedMessage id="vt_rscs_button_rscs" />
+                  </Text>
+                </View>
               </TouchableWithoutFeedback>
             </LinearGradientContainer>
           </View>
           <View style={[styles.titleContainer, styles.between]}>
             <Text style={[styles.text14, { color: Colors.textColor_181_181_181 }]}>
-              <FormattedMessage id="vt_sec_title_nameloc" />
+              <FormattedMessage id="vt_sec_title_def" />/<FormattedMessage id="vt_sec_title_rk" />
             </Text>
             {/* <Text style={[styles.text14, { color: Colors.textColor_181_181_181 }]}> Votes </Text> */}
           </View>

@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { View, Text, Image } from 'react-native'
 import { connect } from 'react-redux'
-import { IntlProvider, FormattedNumber } from 'react-intl'
+import { IntlProvider, FormattedNumber, FormattedMessage } from 'react-intl'
 import Colors from 'resources/colors'
 import Images from 'resources/images'
 import LinearGradientContainer from 'components/LinearGradientContainer'
@@ -46,29 +46,29 @@ export default class Header extends Component {
             </View>
             {(weight === 0 || weight === 1) &&
               <LinearGradientContainer type="right" colors={graColor} style={[styles.center, styles.flag]} >
-                <Text style={[styles.text12, { color: Colors.textColor_255_255_238 }]}>
-                  {weight === 0 && '推广'}
-                  {weight === 1 && '合作'}
+                <Text style={[styles.text12, { marginHorizontal: 5, color: Colors.textColor_255_255_238 }]}>
+                  {weight === 0 && <FormattedMessage id="prod_name_tag_prmt" />}
+                  {weight === 1 && <FormattedMessage id="prod_name_tag_cprt" />}
                 </Text>
               </LinearGradientContainer>
             }
           </View>
           <View style={[styles.info, { marginVertical: 10}]}>
             <View style={[styles.between]}>
-              <Text style={styles.text14}>Team location:</Text>
+              <Text style={styles.text14}><FormattedMessage id="prod_sec_info_teamloc" />:</Text>
               <Text style={styles.text14}>{teamLocation}</Text>
             </View>
             <View style={[styles.between, { marginVertical: 10 }]}>
-              <Text style={styles.text14}>BP location:</Text>
+              <Text style={styles.text14}><FormattedMessage id="prod_sec_info_bploc" />:</Text>
               <Text style={styles.text14}>{bpLocation}</Text>
             </View>
             <View style={[styles.between]}>
-              <Text style={styles.text14}>Score:</Text>
+              <Text style={styles.text14}><FormattedMessage id="prod_sec_info_score" />:</Text>
               <Text style={styles.text14}>
                 <FormattedNumber
                   value={this.props.votes}
-                  maximumFractionDigits={0}
-                  minimumFractionDigits={0}
+                  maximumFractionDigits={2}
+                  minimumFractionDigits={2}
                 />%
               </Text>
             </View>

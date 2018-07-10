@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableHighlight, LayoutAnimation } from 'react-native'
 import { connect } from 'react-redux'
-import { IntlProvider } from 'react-intl'
+import { IntlProvider, FormattedMessage } from 'react-intl'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import messages from './messages'
@@ -41,7 +41,7 @@ export default class Contacts extends Component {
           <TouchableHighlight underlayColor={Colors.hoverColor} onPress={this.hidden} style={styles.introTitle}>
             <View style={[styles.introTitle, styles.between, { paddingHorizontal: 32 }]}>
               <Text style={[styles.text16, { color: Colors.textColor_89_185_226 }]}>
-                Contacts
+                <FormattedMessage id="prod_sec_name_cont" />
               </Text>
               {
                 folded ?
