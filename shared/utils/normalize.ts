@@ -4,7 +4,7 @@ export const normalizeVcode = (value: any, previousValue: any) => (value && ((/^
 
 export const normalizeCaptch = (value: any, previousValue: any) => (value && ((/^\w+$/.test(value) && value.length <= 4) ? value.trim() : previousValue))
 
-export const normalizeText = (value: any) => (value && value.trim())
+export const normalizeText = (value: any, previousValue: any) => (value && (!/\s/.test(value) ? value.trim() : previousValue))
 
 export const normalizePasswordText = (value: any, previousValue: any) => (value && ((value.trim().length <= 32 && !/[^\x00-\xff]/.test(value.trim())) ? value.trim() : previousValue))
 

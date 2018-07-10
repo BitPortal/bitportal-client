@@ -1,6 +1,7 @@
 const webpack = require('webpack')
 const fs = require('fs')
 const { resolve, join } = require('path')
+const DotENV = require('dotenv-webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -31,7 +32,7 @@ const baseConfig = {
       'node_modules'
     ],
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
-    mainFiles: ['index', 'index.web']
+    mainFiles: ['index.web', 'index']
   },
   stats: {
     colors: true,
@@ -44,13 +45,23 @@ const baseConfig = {
         test: /\.jsx?$/,
         loader: 'eslint-loader',
         enforce: 'pre',
-        exclude: resolve(__dirname, 'node_modules')
+        exclude: [
+          resolve(__dirname, 'node_modules'),
+          resolve(__dirname, 'resources/scripts'),
+          resolve(__dirname, 'resources/charting_library'),
+          resolve(__dirname, 'shared/screens'),
+          resolve(__dirname, 'shared/navigators')
+        ]
       },
       {
         test: /\.tsx?$/,
         loader: 'tslint-loader',
         enforce: 'pre',
-        exclude: resolve(__dirname, 'node_modules')
+        exclude: [
+          resolve(__dirname, 'node_modules'),
+          resolve(__dirname, 'shared/screens'),
+          resolve(__dirname, 'shared/navigators')
+        ]
       },
       {
 		test: /\.wasm$/,
@@ -60,10 +71,10 @@ const baseConfig = {
         test: /\.(t|j)sx?$/,
         exclude: [
           resolve(__dirname, 'node_modules'),
-          resolve(__dirname, 'resources', 'scripts'),
-          resolve(__dirname, 'resources', 'charting_library'),
-          resolve(__dirname, 'shared', 'screens'),
-          resolve(__dirname, 'shared', 'navigators')
+          resolve(__dirname, 'resources/scripts'),
+          resolve(__dirname, 'resources/charting_library'),
+          resolve(__dirname, 'shared/screens'),
+          resolve(__dirname, 'shared/navigators')
         ],
         use: [
           {
@@ -123,7 +134,7 @@ const baseConfig = {
       },
       {
         test: /\.(ttf|eot|otf|svg|woff(2)?)(\?[a-z0-9]+)?$/,
-        include: resolve(__dirname, 'shared', 'resources', 'fonts'),
+        include: resolve(__dirname, 'shared/resources/fonts'),
         loader: 'url-loader',
         options: {
           ...(process.env.TARGET !== 'electron-renderer' ? { limit: 1024 } : null),
@@ -132,7 +143,7 @@ const baseConfig = {
       },
       {
         test: /\.(ico|png|jpg|svg|gif)$/,
-        include: resolve(__dirname, 'shared', 'resources', 'images'),
+        include: resolve(__dirname, 'shared/resources/images'),
         loader: 'url-loader',
         options: {
           ...(process.env.TARGET !== 'electron-renderer' ? { limit: 10240 } : null),
@@ -142,13 +153,10 @@ const baseConfig = {
     ]
   },
   plugins: removeEmpty([
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'production'),
-        APP_ENV: JSON.stringify(process.env.APP_ENV || 'production')
-      }
+    new DotENV({
+      path: resolve(__dirname, `.env.${process.env.APP_ENV}`),
+      systemvars: true
     }),
-    new webpack.NormalModuleReplacementPlugin(/.\/production/, `./${process.env.APP_ENV}.json`),
     new MiniCssExtractPlugin({
       filename: ifProduction('styles/bundle.css?v=[hash]', 'styles/bundle.css'),
       chunkFilename: ifProduction('styles/[name].chunk.css?v=[chunkhash]', 'styles/[name].chunk.css')

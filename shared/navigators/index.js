@@ -63,7 +63,8 @@ Navigation.events().registerAppLaunchedListener(() => {
     },
     bottomTabs: {
       visible: true,
-      animate: Platform.OS == 'ios' ? false : true,
+      drawBehind: true,
+      animate: Platform.OS !== 'ios',
       backgroundColor: Colors.minorThemeColor,
       tabColor: 'gray',
       selectedTabColor: Colors.textColor_89_185_226,
@@ -263,39 +264,43 @@ export const startTabBasedApp = (locale) => {
 }
 
 export const setBottomTabsLocale = (locale) => {
-  Navigation.mergeOptions('BitPortalAssets', {
-    bottomTab: {
-      title: messages[locale].general_tab_name_ast,
-      icon: Images.asset,
-      selectedIcon: Images.asset_press,
-      testID: 'BITPORTAL_ASSETS'
-    }
-  })
+  if (Platform.OS === 'ios') {
+    Navigation.mergeOptions('BitPortalAssets', {
+      bottomTab: {
+        title: messages[locale].general_tab_name_ast,
+        icon: Images.asset,
+        selectedIcon: Images.asset_press,
+        testID: 'BITPORTAL_ASSETS'
+      }
+    })
 
-  Navigation.mergeOptions('BitPortalMarket', {
-    bottomTab: {
-      title: messages[locale].general_tab_name_mkt,
-      icon: Images.market,
-      selectedIcon: Images.market_press,
-      testID: 'BITPORTAL_MARKET'
-    }
-  })
+    Navigation.mergeOptions('BitPortalMarket', {
+      bottomTab: {
+        title: messages[locale].general_tab_name_mkt,
+        icon: Images.market,
+        selectedIcon: Images.market_press,
+        testID: 'BITPORTAL_MARKET'
+      }
+    })
 
-  Navigation.mergeOptions('BitPortalDiscovery', {
-    bottomTab: {
-      title: messages[locale].general_tab_name_dscv,
-      icon: Images.discovery,
-      selectedIcon: Images.discovery_press,
-      testID: 'BITPORTAL_DISCOVERY'
-    }
-  })
+    Navigation.mergeOptions('BitPortalDiscovery', {
+      bottomTab: {
+        title: messages[locale].general_tab_name_dscv,
+        icon: Images.discovery,
+        selectedIcon: Images.discovery_press,
+        testID: 'BITPORTAL_DISCOVERY'
+      }
+    })
 
-  Navigation.mergeOptions('BitPortalProfile', {
-    bottomTab: {
-      title: messages[locale].general_tab_name_prf,
-      icon: Images.profile,
-      selectedIcon: Images.profile_press,
-      testID: 'BITPORTAL_PROFILE'
-    }
-  })
+    Navigation.mergeOptions('BitPortalProfile', {
+      bottomTab: {
+        title: messages[locale].general_tab_name_prf,
+        icon: Images.profile,
+        selectedIcon: Images.profile_press,
+        testID: 'BITPORTAL_PROFILE'
+      }
+    })
+  } else {
+    startTabBasedApp(locale)
+  }
 }

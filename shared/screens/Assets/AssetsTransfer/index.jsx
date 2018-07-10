@@ -16,7 +16,7 @@ import TransferCard from './TransferCard'
   }),
   null,
   null,
-  { withRef : true }
+  { withRef: true }
 )
 
 export default class AssetsTransfer extends Component {

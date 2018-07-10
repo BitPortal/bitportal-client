@@ -17,7 +17,7 @@ import messages from './messages'
   }),
   null,
   null,
-  { withRef : true }
+  { withRef: true }
 )
 
 export default class Contacts extends Component {

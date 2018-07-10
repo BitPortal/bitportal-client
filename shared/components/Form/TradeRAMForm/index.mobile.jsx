@@ -13,6 +13,7 @@ import {
   SubmitButton
 } from 'components/Form'
 import { normalizeUnitByFraction, normalizeUnitByCurrency } from 'utils/normalize'
+import { validateUnitByFraction, validateUnitByCurrency } from 'utils/validate'
 import * as ramActions from 'actions/ram'
 import Alert from 'components/Alert'
 import Switch from 'components/Switch'
@@ -62,12 +63,16 @@ const validate = (values, props) => {
     errors.quant = messages[props.locale]["tra_popup_title_epteosinput"]
   } else if (+eosBalance < +values.get('quant')) {
     errors.quant = messages[props.locale]["tra_popup_title_enbyteinput"]
+  } else if (!validateUnitByCurrency('EOS')(values.get('quant'))) {
+    errors.quant = messages[props.locale]["tra_popup_title_invalideinput"]
   }
 
-  if (!values.get('bytes')) {
+  if (!+values.get('bytes')) {
     errors.bytes = messages[props.locale]["tra_popup_title_eptbyteinput"]
   } else if ((+ramQuota - +ramUsage) < +values.get('bytes')) {
     errors.bytes = messages[props.locale]["tra_popup_title_enbyteinput"]
+  } else if (!validateUnitByFraction(0)(values.get('bytes'))) {
+    errors.bytes = messages[props.locale]["tra_popup_title_invalideinput"]
   }
 
   return errors
@@ -163,14 +168,16 @@ export default class TradeRAMForm extends Component {
             {this.state.activeForm === 'Buy' && <Field
               name="quant"
               component={TextField}
-              normalize={normalizeUnitByCurrency('EOS')}
+              keyboardType="numeric"
               rightContent={<Text style={{ color: 'white' }}>EOS</Text>}
+              normalize={normalizeUnitByCurrency('EOS')}
             />}
             {this.state.activeForm === 'Sell' && <Field
               name="bytes"
               component={TextField}
-              normalize={normalizeUnitByFraction(0)}
+              keyboardType="numeric"
               rightContent={<Text style={{ color: 'white' }}>Bytes</Text>}
+              normalize={normalizeUnitByFraction(0)}
             />}
             <SubmitButton
               disabled={disabled}

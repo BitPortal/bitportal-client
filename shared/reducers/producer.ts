@@ -8,6 +8,7 @@ const initialState = Immutable.fromJS({
     rows: [],
     total_producer_vote_weight: 0
   },
+  info: [],
   loading: false,
   loaded: false,
   error: null
@@ -21,6 +22,15 @@ export default handleActions({
     return state.set('loaded', true).set('loading', false).set('data', Immutable.fromJS(action.payload))
   },
   [actions.getProducersFailed] (state, action) {
+    return state.set('error', action.payload).set('loading', false)
+  },
+  [actions.getProducersInfoRequested] (state) {
+    return state.set('loading', true)
+  },
+  [actions.getProducersInfoSucceeded] (state, action) {
+    return state.set('loaded', true).set('loading', false).set('info', Immutable.fromJS(action.payload))
+  },
+  [actions.getProducersInfoFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)
   }
 }, initialState)

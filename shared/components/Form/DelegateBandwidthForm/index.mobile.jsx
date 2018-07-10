@@ -13,6 +13,7 @@ import {
   SubmitButton
 } from 'components/Form'
 import { normalizeUnitByCurrency } from 'utils/normalize'
+import { validateUnitByCurrency } from 'utils/validate'
 import * as bandwidthActions from 'actions/bandwidth'
 import Alert from 'components/Alert'
 import Switch from 'components/Switch'
@@ -60,6 +61,8 @@ const validate = (values, props) => {
 
   if (!+values.get('quant')) {
     errors.quant = messages[props.locale]["dlgt_popup_title_epteosinput"]
+  } else if (!validateUnitByCurrency('EOS')(values.get('quant'))){
+    errors.quant = messages[props.locale]["dlgt_popup_title_invalideinput"]
   }
 
   const activeForm = props.bandwidth.get('activeForm')
@@ -176,8 +179,9 @@ export default class DelegateBandwidthForm extends Component {
             <Field
               name="quant"
               component={TextField}
-              normalize={normalizeUnitByCurrency('EOS')}
               rightContent={<Text style={{ color: 'white' }}>EOS</Text>}
+              normalize={normalizeUnitByCurrency('EOS')}
+              keyboardType="numeric"
             />
             <SubmitButton
               disabled={disabled}

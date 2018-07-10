@@ -31,7 +31,7 @@ const qrCodeSize = screen_width / 2
   }),
   null,
   null,
-  { withRef : true }
+  { withRef: true }
 )
 
 export default class AssetQRCode extends Component {

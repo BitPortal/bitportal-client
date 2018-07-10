@@ -31,6 +31,7 @@ declare interface LogoutParams {
   origin: string
   bpid?: string
   coin: string
+  componentId?: string
 }
 
 declare interface ChangePasswordParams {
@@ -50,4 +51,5 @@ declare interface CreateWalletAndEOSAccountParams {
   name: string
   password: string
   eosAccountName: string
+  componentId?: string
 }

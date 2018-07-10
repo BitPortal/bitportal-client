@@ -13,8 +13,7 @@ import * as keystoreActions from 'actions/keystore'
 import { logoutRequested, clearLogoutError } from 'actions/wallet'
 import Loading from 'components/Loading'
 import Alert from 'components/Alert'
-import Dialogs from 'components/Dialog'
-import DialogAndroid from 'components/DialogAndroid'
+import Prompt from 'components/Prompt'
 import messages from './messages'
 import styles from './styles'
 
@@ -47,7 +46,7 @@ export const errorMessages = (error, messages) => {
     }, dispatch)
   }),
   null,
-  { withRef : true }
+  { withRef: true }
 )
 
 export default class AccountList extends Component {
@@ -59,17 +58,24 @@ export default class AccountList extends Component {
     }
   }
 
-  state = {
-    isVisible: false,
-    password: '',
-    type: ''
+  constructor(props, context) {
+    super(props, context)
+
+    this.state = {
+      showExportPrompt: false,
+      showLogoutPrompt: false
+    }
+
+    this.showExportPrompt = this.showExportPrompt.bind(this)
+    this.dismissExportPrompt = this.dismissExportPrompt.bind(this)
+    this.showLogoutPrompt = this.showLogoutPrompt.bind(this)
+    this.dismissLogoutPrompt = this.dismissLogoutPrompt.bind(this)
+    this.exportAccount = this.exportAccount.bind(this)
+    this.logout = this.logout.bind(this)
+    this.resetPassword = this.resetPassword.bind(this)
   }
 
-  deleteAccount = () => {
-
-  }
-
-  resetPassword = () => {
+  resetPassword() {
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.ResetPassword'
@@ -77,7 +83,7 @@ export default class AccountList extends Component {
     })
   }
 
-  exportAccount = (password) => {
+  exportAccount(password) {
     this.props.actions.exportEOSKeyRequested({
       componentId: this.props.componentId,
       password,
@@ -87,7 +93,7 @@ export default class AccountList extends Component {
     })
   }
 
-  logout = (password) => {
+  logout(password) {
     this.props.actions.logoutRequested({
       componentId: this.props.componentId,
       password,
@@ -98,56 +104,24 @@ export default class AccountList extends Component {
     })
   }
 
-  handleExport = async () => {
-    const messagesInfo = messages[this.props.locale]
-    if (Platform.OS === 'android') {
-      this.setState({ isVisible: true, type: 'exportAccount' })
-    } else {
-      const { action, text } = await Dialogs.prompt(
-        messagesInfo.act_export_popup_name,
-        '',
-        {
-          positiveText: messagesInfo.act_export_popup_ent,
-          negativeText: messagesInfo.act_export_popup_can
-        }
-      )
-      if (action === Dialogs.actionPositive) {
-        this.exportAccount(text)
-      }
-    }
+  showExportPrompt() {
+    this.setState({ showExportPrompt: true })
   }
 
-  handleLogout = async () => {
-    const messagesInfo = messages[this.props.locale]
-    if (Platform.OS === 'android') {
-      this.setState({ isVisible: true, type: 'logout' })
-    } else {
-      const { action, text } = await Dialogs.prompt(
-        messagesInfo.act_export_popup_name,
-        messagesInfo.logout_popup_warning,
-        {
-          positiveText: messagesInfo.act_export_popup_ent,
-          positiveTextStyle: 'destructive',
-          negativeText: messagesInfo.act_export_popup_can
-        }
-      )
-      if (action === Dialogs.actionPositive) {
-        this.logout(text)
-      }
-    }
+  dismissExportPrompt() {
+    this.setState({ showExportPrompt: false })
   }
 
-  handleConfirm = () => {
-    const { type, password } = this.state
-    this.setState({ isVisible: false }, () => {
-      if (type === 'logout') this.logout(password)
-      else this.exportAccount(password)
-    })
+  showLogoutPrompt() {
+    this.setState({ showLogoutPrompt: true })
+  }
+
+  dismissLogoutPrompt() {
+    this.setState({ showLogoutPrompt: false })
   }
 
   render() {
     const { locale, name, exporting, error, loggingOut, logoutError } = this.props
-    const { type } = this.state
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -165,32 +139,38 @@ export default class AccountList extends Component {
               {/* <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_change" />} onPress={() => this.resetPassword()} extraStyle={{ marginTop: 10 }} /> */}
               <SettingItem
                 leftItemTitle={<FormattedMessage id="act_sec_title_export" />}
-                onPress={this.handleExport}
+                onPress={this.showExportPrompt}
                 extraStyle={{ marginTop: 10 }}
               />
               <SettingItem
                 leftItemTitle={<FormattedMessage id="act_sec_title_logout" />}
-                onPress={this.handleLogout}
+                onPress={this.showLogoutPrompt}
                 extraStyle={{ marginTop: 10 }}
                 leftTitleStyle={{ color: Colors.textColor_255_76_118 }}
               />
-              {
-                Platform.OS === 'android' &&
-                <DialogAndroid
-                  tilte={messages[locale].act_export_popup_name}
-                  content={type === 'logout' ? messages[locale].logout_popup_warning : ''}
-                  positiveText={messages[locale].act_export_popup_ent}
-                  negativeText={messages[locale].act_export_popup_can}
-                  onChange={password => this.setState({ password })}
-                  isVisible={this.state.isVisible}
-                  handleCancel={() => this.setState({ isVisible: false })}
-                  handleConfirm={this.handleConfirm}
-                />
-              }
               <Loading isVisible={exporting} text={messages[locale].logout_popup_exporting} />
               <Loading isVisible={loggingOut} text={messages[locale].logout_popup_deleting} />
               <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearError} delay={500} />
               <Alert message={errorMessages(logoutError, messages[locale])} dismiss={this.props.actions.clearLogoutError} delay={500} />
+              <Prompt
+                visible={this.state.showExportPrompt}
+                title={messages[locale].act_export_popup_name}
+                negativeText={messages[locale].act_export_popup_can}
+                positiveText={messages[locale].act_export_popup_ent}
+                type="secure-text"
+                callback={this.exportAccount}
+                dismiss={this.dismissExportPrompt}
+              />
+              <Prompt
+                visible={this.state.showLogoutPrompt}
+                title={messages[locale].act_export_popup_name}
+                message={messages[locale].logout_popup_warning}
+                negativeText={messages[locale].act_export_popup_can}
+                positiveText={messages[locale].act_export_popup_ent}
+                type="secure-text"
+                callback={this.logout}
+                dismiss={this.dismissLogoutPrompt}
+              />
             </ScrollView>
           </View>
         </View>

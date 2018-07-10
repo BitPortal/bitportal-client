@@ -22,7 +22,7 @@ import Progress from '../Progress'
   }),
   null,
   null,
-  { withRef : true }
+  { withRef: true }
 )
 
 export default class Memory extends Component {

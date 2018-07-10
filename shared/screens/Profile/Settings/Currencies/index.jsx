@@ -24,7 +24,7 @@ import styles from './styles'
     }, dispatch)
   }),
   null,
-  { withRef : true }
+  { withRef: true }
 )
 
 export default class Currencies extends Component {

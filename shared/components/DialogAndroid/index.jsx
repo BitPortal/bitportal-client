@@ -9,7 +9,7 @@ const DialogAndroid = ({ isVisible, onChange, tilte, content, positiveText, nega
     <RNDialog.Description>
       {content}
     </RNDialog.Description>
-    <RNDialog.Input autoFocus={true} secureTextEntry={disableSecureText ? false : true} onChangeText={onChange} />
+    <RNDialog.Input autoFocus={true} secureTextEntry={!disableSecureText} onChangeText={onChange} />
     <RNDialog.Button label={negativeText} onPress={handleCancel} />
     <RNDialog.Button label={positiveText} onPress={handleConfirm} />
   </RNDialog.Container>

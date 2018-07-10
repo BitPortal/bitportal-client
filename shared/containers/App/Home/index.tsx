@@ -10,6 +10,7 @@ import * as tickerActions from 'actions/ticker'
 import * as intlActions from 'actions/intl'
 import { exchangeTickerSelector } from 'selectors/ticker'
 import { hot } from 'react-hot-loader'
+import test from 'components/Form/ImportEOSAccountForm/messages'
 import messages from './messages'
 import style from './style.css'
 
@@ -61,7 +62,7 @@ export default class Home extends Component<Props, State> {
       <IntlProvider messages={messages[locale]}>
         <div className={style.home}>
           <div>
-            Welcome to BitPortal!
+            Welcome to BitPortal! {test[locale].import_title_name_bpnm}
           </div>
           {ticker.map((item: any) =>
             <div key={`${item.get('exchange')}_${item.get('market')}`}>

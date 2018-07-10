@@ -223,6 +223,7 @@ declare module 'utils/location' {
     pop: any
     push: any
     popToRoot: any
+    setExtraLocale: any
   }
 
   const locationActions: LocationActions

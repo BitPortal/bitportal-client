@@ -10,6 +10,7 @@ declare interface ExportEOSKeyParams {
   bpid: string
   eosAccountName: string
   password: string
+  componentId?: string
 }
 
 declare interface ExportKeyResult {

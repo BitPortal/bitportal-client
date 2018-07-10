@@ -64,7 +64,7 @@ const getTotalAssets = (balanceList, eosPrice) => {
     }, dispatch)
   }),
   null,
-  { withRef : true }
+  { withRef: true }
 )
 
 export default class Assets extends Component {
