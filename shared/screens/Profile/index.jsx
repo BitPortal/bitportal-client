@@ -38,7 +38,7 @@ export default class Profile extends Component {
     const { locale } = this.props
     switch (page) {
       case 'Account':
-        if (this.props.wallet.get('data').get('name')) {
+        if (this.props.wallet.getIn(['data', 'eosAccountName'])) {
           pageName = 'AccountManager'
           passProps = this.props.wallet.get('data').toJS()
         } else {
@@ -46,7 +46,7 @@ export default class Profile extends Component {
         }
         break
       case 'Resources':
-        if (this.props.wallet.get('data').get('name')) {
+        if (this.props.wallet.getIn(['data', 'eosAccountName'])) {
           pageName = 'Resources'
         } else {
           return Dialogs.alert(messages[locale].profile_button_name_err, null, { negativeText: messages[locale].profile_popup_buttom_ent })

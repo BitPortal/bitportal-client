@@ -1,6 +1,6 @@
 import React, { Component, PureComponent } from 'react'
 import Colors from 'resources/colors'
-import { FormattedNumber } from 'react-intl'
+import { FormattedNumber, FormattedMessage } from 'react-intl'
 import { Text, View, TouchableHighlight, TouchableOpacity, VirtualizedList } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import LinearGradientContainer from 'components/LinearGradientContainer'
@@ -30,9 +30,9 @@ class ListItem extends Component {
                 <Text style={styles.text18}>{item.get('owner')}</Text>
                 {(weight === 0 || weight === 1) &&
                   <LinearGradientContainer type="right" colors={graColor} style={[styles.center, styles.flag]} >
-                    <Text style={[styles.text12, { color: Colors.textColor_255_255_238 }]}>
-                      {weight === 0 && '推广'}
-                      {weight === 1 && '合作'}
+                    <Text numberOfLines={1} style={[styles.text12, { marginHorizontal: 8, color: Colors.textColor_255_255_238 }]}>
+                      {weight === 0 && <FormattedMessage id="vt_sec_tag_prmt" />}
+                      {weight === 1 && <FormattedMessage id="vt_sec_tag_cprt" />}
                     </Text>
                   </LinearGradientContainer>
                 }
@@ -44,9 +44,10 @@ class ListItem extends Component {
                   </Text>
                 </View>
                 {!!location && typeof location === 'string' && <View style={[styles.location, styles.center, { marginRight: 10 }]}>
-                  <Text style={styles.text14}>{location.length > 20 ? `${location.slice(0, 19)}...` : location}</Text>
+                  <Text numberOfLines={1} style={styles.text14}>{location}</Text>
                 </View>}
                 <Text style={[styles.text14, { marginTop: 3, color: Colors.textColor_181_181_181 }]}>
+                  <FormattedMessage id="vt_sec_info_locp" />{': '}
                   <FormattedNumber
                     value={(+item.get('total_votes') / +totalVotes) * 100}
                     maximumFractionDigits={2}

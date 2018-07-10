@@ -6,8 +6,6 @@ import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
   defaultStyle: {
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT,
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden'
