@@ -19,7 +19,7 @@ function* getProducersRequested(action: Action<GetProducersParams>) {
 
 function* getProducersInfoRequested(action) {
   try {
-    const producers = yield call(api.getProducersInfo)
+    const producers = yield call(api.getProducersInfo, { _limit: 500 })
     const info = producers.reduce((info, producer) => ({ ...info, [producer.account_name]: producer }), {})
     yield put(actions.getProducersInfoSucceeded(info))
   } catch (e) {
