@@ -49,7 +49,7 @@ export default class ProducerDetails extends Component {
           />
           <ScrollView showsVerticalScrollIndicator={false}>
             <Header info={info} votes={votes} />
-            <Introduction introduce={introduce} />
+            {!!introduce && <Introduction introduce={introduce} />}
             {!!contacts && <Contacts contacts={contacts} />}
           </ScrollView>
         </View>

@@ -25,8 +25,9 @@ const styles = StyleSheet.create({
   },
   info: {
     width: SCREEN_WIDTH,
-    height: 80,
-    flexDirection: 'row',
+    minHeight: 80,
+    paddingHorizontal: 32,
+    paddingVertical: 20,
     backgroundColor: Colors.minorThemeColor,
   },
   icon: {
