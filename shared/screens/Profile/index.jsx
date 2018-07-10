@@ -62,6 +62,7 @@ export default class Profile extends Component {
       default:
         return
     }
+
     Navigation.push(this.props.componentId, {
       component: {
         name: `BitPortal.${pageName}`,

@@ -25,18 +25,20 @@ export default class Header extends Component {
     const graColor = true ? Colors.recommandColor : Colors.cooperateColor
     const weight = +info.get('weight')
     const teamLocation = info.getIn(['org', 'location'])
+    const teamName = info.getIn(['org', 'name'])
     const bpLocation = info.getIn(['nodes', '0', 'location', 'name'])
     const website = info.getIn(['org', 'website'])
+    const logo = info.getIn(['org', 'branding', 'logo'])
 
     return (
       <IntlProvider messages={messages[locale]}>
         <View>
           <View style={[styles.header, styles.between]}>
             <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-              <Image source={Images.about_logo} style={styles.icon} />
+              {!!logo && <Image source={{ uri: `https://storage.googleapis.com/bitportal-cms/bp/${logo}` }} style={styles.icon} />}
               <View style={{ marginLeft: 10 }}>
                 <Text style={[styles.text16, { marginLeft: 4, fontWeight: 'bold' }]}>
-                  {info.get('account_name')}
+                  {teamName}
                   <Text style={[styles.text12, { color: Colors.textColor_white_4 }]}>{'  '}@{info.get('account_name')}</Text>
                 </Text>
                 <Text style={[styles.text16, { color: Colors.textColor_89_185_226 }]}>{website}</Text>
