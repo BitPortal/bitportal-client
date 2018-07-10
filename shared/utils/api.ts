@@ -8,39 +8,42 @@ export const fetchBase = async (
   method: FetchMethod = 'GET',
   endPoint: string = '/hello',
   params: object = {},
-  customeHeaders: object = {},
-  baseUrl = BITPORTAL_API_REST_URL
+  options: object = {}
 ) => {
-  let url = baseUrl + endPoint
-  const token = await storage.getItem('bitportal_t')
-  const authorization = token && `Bearer ${token}`
+  const baseUrl = options.baseUrl || BITPORTAL_API_REST_URL
+  const headers = options.headers || {}
+  const auth = options.auth
 
-  const headers = {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-    Authorization: authorization || null,
-    ...customeHeaders
+  let url = baseUrl + endPoint
+
+  if (!headers.Accept) headers.Accept = 'application/json'
+  if (!headers['Content-Type']) headers['Content-Type'] = 'application/json'
+
+  if (auth) {
+    const token = await storage.getItem('bitportal_t')
+    const authorization = token && `Bearer ${token}`
+    headers.Authorization = authorization || null
   }
 
-  const options: any = { method, headers }
+  const fetchOptions: any = { method, headers }
 
   if (method === 'GET') {
     const queryString: string = `${Object.keys(params).map(k => [k, params[k]].map(encodeURIComponent).join('=')).join('&')}`
     if (queryString) url += '?' + queryString
   } else if (method === 'POST' || method === 'PUT') {
     if (headers['Content-Type'] === 'application/x-www-form-urlencoded') {
-      options.body = `${Object.keys(params).map(k => [k, params[k]].join('=')).join('&')}`
+      fetchOptions.body = `${Object.keys(params).map(k => [k, params[k]].join('=')).join('&')}`
     } else if (headers['Content-Type'] === 'multipart/form-data') {
       delete headers['Content-Type']
       const formData = new FormData()
       Object.keys(params).forEach(key => formData.append(key, params[key]))
-      options.body = formData
+      fetchOptions.body = formData
     } else {
-      options.body = JSON.stringify(params)
+      fetchOptions.body = JSON.stringify(params)
     }
   }
 
-  return fetch(url, baseUrl === BITPORTAL_API_REST_URL ? options : {}).then((res: any) => {
+  return fetch(url, fetchOptions).then((res: any) => {
     if (!res.ok) {
       return res.json().then((e: any) => Promise.reject({ message: e.error_msg }))
     }
@@ -54,6 +57,13 @@ export const fetchBase = async (
     return null
   })
 }
+
+const cmsFetchBase = (
+  method: FetchMethod = 'GET',
+  endPoint: string = '/hello',
+  params: object = {},
+  options: object = {}
+) => fetchBase(method, endPoint, params, { ...options, baseUrl: BITPORTAL_API_CMS_URL })
 
 export const sendSMS = (params: SendSMSParams) => fetchBase('POST', '/auth/sms', params)
 export const sendEmail = (params: SendEmailParams) => fetchBase('POST', '/auth/email', params)
@@ -69,7 +79,10 @@ export const deleteUser = (params: UserIdParams) => fetchBase('DELETE', `/user/$
 export const bindUserTwoFactor = (params: BindUserTwoFactorParams) => fetchBase('DELETE', `/user/two-factor/${params.id}`, params)
 export const getTickers = (params?: TickerParams) => fetchBase('GET', '/tickers', params)
 export const getChart = (params?: ChartParams) => fetchBase('GET', '/chart', params)
-export const getNewsList = (params: any) => fetchBase('GET', '/article', params, {}, BITPORTAL_API_CMS_URL)
-export const getNewsBanner = () => fetchBase('GET', '/banner', {}, {}, BITPORTAL_API_CMS_URL)
-export const getVersionInfo = () => fetchBase('GET', '/system', {}, {}, BITPORTAL_API_CMS_URL)
-export const getCurrencyRate = () => fetchBase('GET', '', {}, {}, CURRENCY_RATE_URL)
+
+export const getCurrencyRate = () => fetchBase('GET', '', {}, { baseUrl: CURRENCY_RATE_URL })
+
+export const getNewsList = (params: any) => cmsFetchBase('GET', '/article', params)
+export const getNewsBanner = () => cmsFetchBase('GET', '/banner')
+export const getVersionInfo = () => cmsFetchBase('GET', '/system')
+export const getProducersInfo = (params: any) => cmsFetchBase('GET', '/eosbp', params)
