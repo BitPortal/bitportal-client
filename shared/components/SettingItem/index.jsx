@@ -12,7 +12,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.bgColor_48_49_59,
     borderBottomColor: Colors.minorThemeColor,
     borderBottomWidth: StyleSheet.hairlineWidth
   },
@@ -22,6 +21,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: SCREEN_WIDTH,
     height: 50,
+    backgroundColor: Colors.bgColor_48_49_59,
     paddingHorizontal: 32
   },
   center: {
@@ -37,9 +37,9 @@ const styles = StyleSheet.create({
     color: Colors.textColor_255_255_238
   },
   leftImageStyle: {
-    width: 26,
-    height: 26,
-    marginRight: 15
+    width: FontScale(16),
+    height: FontScale(16),
+    marginRight: 10
   }
 })
 
