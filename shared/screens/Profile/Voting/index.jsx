@@ -141,14 +141,16 @@ export default class Voting extends Component {
   }
 
   onRowPress = (producer) => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.ProducerDetails',
-        passProps: {
-          producer
+    if (producer.get('info')) {
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.ProducerDetails',
+          passProps: {
+            producer
+          }
         }
-      }
-    })
+      })
+    }
   }
 
   onMarkPress = (producer) => {
@@ -181,7 +183,7 @@ export default class Voting extends Component {
   render() {
     const { locale, producer, eosAccount, voting } = this.props
     const loading = producer.get('loading')
-    const disabled = !this.state.selected.length && !this.props.producer.get('data').get('rows').siz
+    const disabled = !this.state.selected.length && !this.props.producer.get('data').get('rows').size
     const voterInfo = eosAccount.get('data').get('voter_info')
     const isVoting = voting.get('loading')
     const error = voting.get('error')

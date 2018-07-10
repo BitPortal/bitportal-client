@@ -32,14 +32,14 @@ export default class Introduction extends Component {
   }
 
   render() {
-    const { locale, producer } = this.props
+    const { locale, introduce } = this.props
     const { folded } = this.state
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.intro}>
           <TouchableHighlight underlayColor={Colors.hoverColor} onPress={this.hidden} style={styles.introTitle}>
             <View style={[styles.introTitle, styles.between, { paddingHorizontal: 32 }]}>
-              <Text style={[styles.text16, { color: Colors.textColor_89_185_226 }]}> 
+              <Text style={[styles.text16, { color: Colors.textColor_89_185_226 }]}>
                 Team Introduction
               </Text>
               {
@@ -53,13 +53,7 @@ export default class Introduction extends Component {
           {
             !folded &&
             <Text style={[styles.text14, { marginHorizontal: 32, marginBottom: 20 }]}>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
-              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
-              pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa 
-              qui officia deserunt mollit anim id est laborum.
+              {introduce}
             </Text>
           }
         </View>

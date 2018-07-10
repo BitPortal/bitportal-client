@@ -8,12 +8,15 @@ import styles from './styles'
 
 class ListItem extends Component {
   shouldComponentUpdate(nextProps) {
-    return nextProps.selected !== this.props.selected || nextProps.item.get('owner') !== this.props.item.get('owner') || nextProps.item.get('total_votes') !== this.props.item.get('total_votes')
+    return nextProps.selected !== this.props.selected || nextProps.item.get('owner') !== this.props.item.get('owner') || nextProps.item.get('total_votes') !== this.props.item.get('total_votes') || nextProps.item.get('info') !== this.props.item.get('info')
   }
 
   render() {
     const { item, rank, onRowPress, onMarkPress, selected } = this.props
     const graColor = rank==1 ? Colors.recommandColor : Colors.cooperateColor
+    const location = item.getIn(['info', 'org', 'location'])
+    const weight = +item.getIn(['info', 'weight'])
+
     return (
       <TouchableHighlight
         style={styles.listItem}
@@ -25,23 +28,24 @@ class ListItem extends Component {
             <View style={{ paddingLeft: 32 }}>
               <View style={{ flexDirection: 'row', alignItems: 'center'}}>
                 <Text style={styles.text18}>{item.get('owner')}</Text>
-                { (rank==1||rank==2) &&
+                {(weight === 0 || weight === 1) &&
                   <LinearGradientContainer type="right" colors={graColor} style={[styles.center, styles.flag]} >
                     <Text style={[styles.text12, { color: Colors.textColor_255_255_238 }]}>
-                      {rank == 1 ? '推广' : '合作'}
+                      {weight === 0 && '推广'}
+                      {weight === 1 && '合作'}
                     </Text>
                   </LinearGradientContainer>
                 }
               </View>
               <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
-                <View style={[styles.rank, styles.center]}>
+                <View style={[styles.rank, styles.center, { marginRight: 10 }]}>
                   <Text style={[styles.text14, { color: Colors.textColor_181_181_181, marginHorizontal: 5, marginVertical: 2 }]}>
-                   {rank+1}
+                   {rank + 1}
                   </Text>
                 </View>
-                <View style={[styles.location, styles.center, { marginHorizontal: 10 }]}>
-                  <Text style={styles.text14}> {'Bvi'}</Text>
-                </View>
+                {location && <View style={[styles.location, styles.center, { marginRight: 10 }]}>
+                  <Text style={styles.text14}>{location}</Text>
+                </View>}
                 <Text style={[styles.text14, { marginTop: 3, color: Colors.textColor_181_181_181 }]}>
                   <FormattedNumber
                     value={item.get('total_votes')}
@@ -80,12 +84,12 @@ export default class ProducerList extends PureComponent {
         refreshing={this.props.refreshing}
         ItemSeparatorComponent={() => (<View style={styles.separator} />)}
         renderItem={({ item, index }) => (
-          <ListItem 
-            key={item.get('owner')} 
-            item={item} 
-            rank={index} 
-            onRowPress={() => this.props.onRowPress(item)} 
-            onMarkPress={() => this.props.onMarkPress(item)} 
+          <ListItem
+            key={item.get('owner')}
+            item={item}
+            rank={index}
+            onRowPress={() => this.props.onRowPress(item)}
+            onMarkPress={() => this.props.onMarkPress(item)}
             selected={this.props.selected.indexOf(item.get('owner')) !== -1}
           />
         )}

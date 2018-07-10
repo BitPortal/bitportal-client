@@ -32,14 +32,14 @@ export default class Contacts extends Component {
   }
 
   render() {
-    const { locale, producer } = this.props
+    const { locale, contacts } = this.props
     const { folded } = this.state
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={[styles.intro, { marginTop: 10 }]}>
           <TouchableHighlight underlayColor={Colors.hoverColor} onPress={this.hidden} style={styles.introTitle}>
             <View style={[styles.introTitle, styles.between, { paddingHorizontal: 32 }]}>
-              <Text style={[styles.text16, { color: Colors.textColor_89_185_226 }]}> 
+              <Text style={[styles.text16, { color: Colors.textColor_89_185_226 }]}>
                 Contacts
               </Text>
               {
@@ -50,11 +50,7 @@ export default class Contacts extends Component {
               }
             </View>
           </TouchableHighlight>
-          {!folded &&<Text style={[styles.text14, { marginHorizontal: 32, marginBottom: 20 }]}> Github </Text>}
-          {!folded &&<Text style={[styles.text14, { marginHorizontal: 32, marginBottom: 20 }]}> Twitter </Text>}
-          {!folded &&<Text style={[styles.text14, { marginHorizontal: 32, marginBottom: 20 }]}> Facebook </Text>}
-          {!folded &&<Text style={[styles.text14, { marginHorizontal: 32, marginBottom: 20 }]}> Telegram </Text>}
-          {!folded &&<Text style={[styles.text14, { marginHorizontal: 32, marginBottom: 20 }]}> Wechat </Text>}
+          {contacts.entrySeq().map(([key, value]) => !folded && <Text key={key} style={[styles.text14, { marginHorizontal: 32, marginBottom: 20 }]}>{key}: {value}</Text>)}
         </View>
       </IntlProvider>
     )
