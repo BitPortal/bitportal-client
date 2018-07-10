@@ -55,21 +55,21 @@ export default class Header extends Component {
           </View>
           <View style={[styles.info, { marginVertical: 10}]}>
             <View style={[styles.between]}>
-              <Text style={styles.text14}>Team location</Text>
+              <Text style={styles.text14}>Team location:</Text>
               <Text style={styles.text14}>{teamLocation}</Text>
             </View>
             <View style={[styles.between, { marginVertical: 10 }]}>
-              <Text style={styles.text14}>BP location</Text>
+              <Text style={styles.text14}>BP location:</Text>
               <Text style={styles.text14}>{bpLocation}</Text>
             </View>
             <View style={[styles.between]}>
-              <Text style={styles.text14}>Votes</Text>
+              <Text style={styles.text14}>Score:</Text>
               <Text style={styles.text14}>
                 <FormattedNumber
                   value={this.props.votes}
                   maximumFractionDigits={0}
                   minimumFractionDigits={0}
-                />
+                />%
               </Text>
             </View>
           </View>

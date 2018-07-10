@@ -23,19 +23,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     paddingVertical: 20,
     backgroundColor: Colors.bgColor_48_49_59
-  },
-  btn: {
-    width: SCREEN_WIDTH - 64,
-    height: 40,
-    borderRadius: 3
-  },
-  center: {
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  text14: {
-    fontSize: FontScale(14),
-    color: Colors.textColor_255_255_238
   }
 })
 

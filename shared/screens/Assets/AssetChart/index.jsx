@@ -44,19 +44,17 @@ export default class AssetChart extends Component {
   }
 
   render() {
-    const { assetInfo } = this.props
     return (
       <View style={styles.container}>
         <NavigationBar
           leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
-          title={assetInfo.get('assetName')}
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.content}>
               <Text style={[styles.text24, { marginTop: 20 }]}>
                 <FormattedNumber
-                  value={assetInfo.get('amount')}
+                  value={0.16}
                   maximumFractionDigits={4}
                   minimumFractionDigits={4}
                 />
@@ -64,7 +62,7 @@ export default class AssetChart extends Component {
               <Text style={[styles.text14, { marginBottom: 20 }]}>
                 ≈ ¥
                 <FormattedNumber
-                  value={assetInfo.get('amount') * 6.5}
+                  value={10.2}
                   maximumFractionDigits={4}
                   minimumFractionDigits={4}
                 />

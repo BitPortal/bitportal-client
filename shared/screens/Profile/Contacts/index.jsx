@@ -7,6 +7,7 @@ import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
+import storage from 'utils/storage'
 import DeleteButton from './DeleteButton'
 import styles from './styles'
 import messages from './messages'
@@ -30,18 +31,20 @@ export default class Contacts extends Component {
   }
 
   state = {
-    contacts: [
-      { accountName: 'EOS-1', memo: 'memo......' },
-      { accountName: 'EOS-2', memo: 'memo......' },
-      { accountName: 'EOS-3', memo: 'memo......' },
-      { accountName: 'EOS-4', memo: 'memo......' },
-      { accountName: 'EOS-5', memo: 'memo......' }
-    ]
+    contacts: []
   }
 
   constructor(props, context) {
     super(props, context)
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
+  }
+
+  async componentDidAppear() {
+    const objInfo = await storage.getItem('bitportal.contacts', true)
+    const contacts = objInfo && objInfo.contacts
+    if (contacts && contacts.length > 0) {
+      this.setState({ contacts })
+    }
   }
 
   addContacts = () => {
@@ -52,10 +55,11 @@ export default class Contacts extends Component {
     })
   }
 
-  deleteContact = (data, secId, rowId, rowMap) => {
+  deleteContact = async (data, secId, rowId, rowMap) => {
     rowMap[`${secId}${rowId}`].closeRow()
     const newData = [...this.state.contacts]
     newData.splice(rowId, 1)
+    await storage.mergeItem('bitportal.contacts', { contacts: newData }, true)
     this.setState({ contacts: newData })
   }
 
@@ -78,7 +82,6 @@ export default class Contacts extends Component {
   render() {
     const { contacts } = this.state
     const { locale } = this.props
-
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -88,13 +91,16 @@ export default class Contacts extends Component {
             rightButton={<CommonRightButton iconName="md-add" onPress={() => this.addContacts()} />}
           />
           <View style={styles.scrollContainer}>
-            <SwipeListView
-              contentContainerStyle={{ paddingTop: 10 }}
-              enableEmptySections={true}
-              showsVerticalScrollIndicator={false}
-              dataSource={this.ds.cloneWithRows(contacts)}
-              renderRow={this.renderRow.bind(this)}
-            />
+            {
+              contacts.length > 0 &&
+              <SwipeListView
+                contentContainerStyle={{ paddingTop: 10 }}
+                enableEmptySections={true}
+                showsVerticalScrollIndicator={false}
+                dataSource={this.ds.cloneWithRows(contacts)}
+                renderRow={this.renderRow.bind(this)}
+              />
+            }
           </View>
         </View>
       </IntlProvider>
