@@ -22,13 +22,13 @@ export default class Header extends Component {
 
   render() {
     const { locale, info } = this.props
-    const graColor = true ? Colors.recommandColor : Colors.cooperateColor
     const weight = +info.get('weight')
     const teamLocation = info.getIn(['org', 'location'])
     const teamName = info.getIn(['org', 'name'])
     const bpLocation = info.getIn(['nodes', '0', 'location', 'name'])
     const website = info.getIn(['org', 'website'])
     const logo = info.getIn(['org', 'branding', 'logo'])
+    const graColor = weight === 0 ? Colors.recommandColor : Colors.cooperateColor
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -53,20 +53,18 @@ export default class Header extends Component {
               </LinearGradientContainer>
             }
           </View>
-          <View style={[styles.info, styles.center, { marginVertical: 10}]}>
-            <View style={[styles.center, { flex: 1 }]}>
-              <Text style={styles.text12}>Team location</Text>
-              <Text style={styles.text12}>{teamLocation}</Text>
+          <View style={[styles.info, { marginVertical: 10}]}>
+            <View style={[styles.between]}>
+              <Text style={styles.text14}>Team location</Text>
+              <Text style={styles.text14}>{teamLocation}</Text>
             </View>
-            <View style={styles.line} />
-            <View style={[styles.center, { flex: 1 }]}>
-              <Text style={styles.text12}>BP location</Text>
-              <Text style={styles.text12}>{bpLocation}</Text>
+            <View style={[styles.between, { marginVertical: 10 }]}>
+              <Text style={styles.text14}>BP location</Text>
+              <Text style={styles.text14}>{bpLocation}</Text>
             </View>
-            <View style={styles.line} />
-            <View style={[styles.center, { flex: 1 }]}>
-              <Text style={styles.text12}>Votes</Text>
-              <Text style={styles.text12}>
+            <View style={[styles.between]}>
+              <Text style={styles.text14}>Votes</Text>
+              <Text style={styles.text14}>
                 <FormattedNumber
                   value={this.props.votes}
                   maximumFractionDigits={0}
