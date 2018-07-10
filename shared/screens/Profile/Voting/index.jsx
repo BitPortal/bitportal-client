@@ -210,7 +210,11 @@ export default class Voting extends Component {
             </Text>
             <LinearGradientContainer type="right" colors={Colors.voteColor} style={styles.resourcesBtn} >
               <TouchableWithoutFeedback style={styles.center} underlayColor="transparent" onPress={() => this.checkResources()} >
-                <View><Text style={[styles.text14, { marginHorizontal: 10, marginVertical: 2 }]}>资源管理</Text></View>
+                <View>
+                  <Text style={[styles.text14, { marginHorizontal: 10, marginVertical: 2 }]}>
+                    <FormattedMessage id="vt_popup_title_res" />
+                  </Text>
+                </View>
               </TouchableWithoutFeedback>
             </LinearGradientContainer>
           </View>

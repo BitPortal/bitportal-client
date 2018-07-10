@@ -16,8 +16,8 @@
     "vt_popup_title_pwderr" : "密码错误",
     "vt_popup_buttom_ent" : "确认",
     "vt_popup_buttom_can" : "取消",
-    "vt_popup_title_failed" : "投票失败"
-
+    "vt_popup_title_failed" : "投票失败",
+    "vt_popup_title_res": "资源管理"
   },
   "en": {
     "vt_title_name_vote" : "Voting",
@@ -36,7 +36,7 @@
     "vt_popup_title_pwderr" : "Invalid password",
     "vt_popup_buttom_ent" : "Confirm",
     "vt_popup_buttom_can" : "Cancel",
-    "vt_popup_title_failed" : "Vote failed"
-
+    "vt_popup_title_failed" : "Vote failed",
+    "vt_popup_title_res": "Resources"
   }
 }
