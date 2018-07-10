@@ -1,0 +1,18 @@
+{
+  "en": {
+		"import_title_name_acc" : "Account Name",
+		"import_txtbox_txt_acchint" : "he account name should be 12 characters from 1-5 or/and a-z ",
+		"import_txtbox_txt_acchint2" : "Please input account name",
+		"import_title_name_Note" : "EOS Account Name",
+		"import_txtbox_txt_hint" : "Up to 12 characters",
+		"import_button_name_save" : "Save"
+  },
+  "zh": {
+		"import_title_name_acc" : "用户名",
+		"import_txtbox_txt_acchint" : "用户名必须是从1-5与a-z的12位字符",
+		"import_txtbox_txt_acchint2" : "请输入用户名",
+		"import_title_name_Note" : "备注：",
+		"import_txtbox_txt_hint" : "最多支持12位字符",
+		"import_button_name_save" : "保存"
+  }
+}

@@ -91,7 +91,13 @@ export default class Assets extends Component {
 
   enableAssets = () => {}
 
-  checkAsset = () => {}
+  checkAsset = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.AssetChart'
+      }
+    })
+  }
 
   operateAssetQRCode = (isVisible) => {
     this.setState({ isVisible })

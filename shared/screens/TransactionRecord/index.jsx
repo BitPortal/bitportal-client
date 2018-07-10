@@ -34,7 +34,7 @@ export default class TransactionRecord extends Component {
   }
 
   goBack = () => {
-    Navigation.popToRoot(this.props.componentId)
+    Navigation.pop(this.props.componentId)
   }
 
   clipboard = () => {
