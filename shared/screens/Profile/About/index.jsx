@@ -1,7 +1,7 @@
 /* @tsx */
 
 import React, { Component } from 'react'
-import { Text, View, ScrollView, Image, TouchableOpacity } from 'react-native'
+import { Text,Image, View, ScrollView, TouchableOpacity } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import Images from 'resources/images'
 import SettingItem from 'components/SettingItem'
@@ -14,7 +14,8 @@ import * as versionInfoActions from 'actions/versionInfo'
 import { BITPORTAL_API_TERMS_URL, BITPORTAL_API_UPDATE_LOG_URL } from 'constants/env'
 import Loading from 'components/Loading'
 import { isNewest, showIsLast } from 'utils/update'
-import { Mediafax } from 'constants/mediafax'
+import { Mediafax, MediafaxIcons, MediafaxUrls } from 'constants/mediafax'
+import { validateUrl } from 'utils/validate'
 import messages from './messages'
 import styles from './styles'
 
@@ -47,7 +48,7 @@ export default class About extends Component {
       case 'TermsOfService':
         Navigation.push(this.props.componentId, {
           component: {
-            name: 'BitPortal.TermsOfService',
+            name: 'BitPortal.BPWebView',
             passProps: {
               title: messages[locale].abt_sec_title_tou,
               uri: BITPORTAL_API_TERMS_URL
@@ -58,7 +59,7 @@ export default class About extends Component {
       case 'UpdateLogs':
         Navigation.push(this.props.componentId, {
           component: {
-            name: 'BitPortal.TermsOfService',
+            name: 'BitPortal.BPWebView',
             passProps: {
               title: messages[locale].abt_sec_title_update,
               uri: BITPORTAL_API_UPDATE_LOG_URL
@@ -91,8 +92,28 @@ export default class About extends Component {
     })
   }
 
-  browseMedia = (media) => {
-
+  browseMedia = (title) => {
+    if (validateUrl(MediafaxUrls[title])) {
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: `BitPortal.BPWebView`,
+          passProps: {
+            title,
+            uri: MediafaxUrls[title]
+          }
+        }
+      })
+    } else {
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: `BitPortal.BPWebView`,
+          passProps: {
+            title,
+            name: MediafaxUrls[title]
+          }
+        }
+      })
+    }
   }
 
   render() {
@@ -124,7 +145,8 @@ export default class About extends Component {
                 <View style={styles.mediaContainer}>
                   {Mediafax.map((item, index) => (
                     <TouchableOpacity key={index} onPress={() => this.browseMedia(item)} style={[styles.border, { marginHorizontal: 5, marginVertical: 5 }]}>
-                      <View style={[styles.border, styles.center]}>
+                      <View style={[styles.border, styles.center, {flexDirection: 'row'}]}>
+                        <Image source={MediafaxIcons[item]} style={{ marginLeft: -2, marginRight: 4, width: 16, height: 16 }} />
                         <Text style={styles.text14}>
                           {item}
                         </Text>

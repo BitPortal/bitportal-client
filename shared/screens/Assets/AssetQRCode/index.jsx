@@ -134,7 +134,7 @@ export default class AssetQRCode extends Component {
             <TouchableHighlight
               underlayColor={Colors.textColor_89_185_226}
               onPress={() => this.shareQrcodeContent()}
-style={[styles.btn, styles.center]}
+              style={[styles.btn, styles.center]}
             >
               <Text style={styles.text14}>
                 <FormattedMessage id="qrcode_button_name_share" />

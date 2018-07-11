@@ -1,0 +1,12 @@
+{
+  "zh": {
+    "web_title_name_err" : "加载异常",
+    "web_button_name_copied": "已复制",
+    "web_button_name_copy": "复制"
+  },
+  "en": {
+    "web_title_name_err" : "Loading Failed",
+    "web_button_name_copied": "Copied",
+    "web_button_name_copy": "Copy"
+  }
+}
