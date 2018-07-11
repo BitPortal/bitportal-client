@@ -28,7 +28,7 @@ export default class Header extends Component {
     const bpLocation = info.getIn(['nodes', '0', 'location', 'name'])
     const website = info.getIn(['org', 'website'])
     const logo = info.getIn(['org', 'branding', 'logo'])
-    const graColor = weight === 0 ? Colors.recommandColor : Colors.cooperateColor
+    const graColor = weight === 1 ? Colors.recommandColor : Colors.cooperateColor
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -44,11 +44,11 @@ export default class Header extends Component {
                 <Text style={[styles.text16, { color: Colors.textColor_89_185_226 }]}>{website}</Text>
               </View>
             </View>
-            {(weight === 0 || weight === 1) &&
+            {!!weight &&
               <LinearGradientContainer type="right" colors={graColor} style={[styles.center, styles.flag]} >
                 <Text style={[styles.text12, { marginHorizontal: 5, color: Colors.textColor_255_255_238 }]}>
-                  {weight === 0 && <FormattedMessage id="prod_name_tag_prmt" />}
-                  {weight === 1 && <FormattedMessage id="prod_name_tag_cprt" />}
+                  {weight === 1 && <FormattedMessage id="prod_name_tag_prmt" />}
+                  {weight === 2 && <FormattedMessage id="prod_name_tag_cprt" />}
                 </Text>
               </LinearGradientContainer>
             }
