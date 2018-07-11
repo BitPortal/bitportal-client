@@ -72,8 +72,8 @@ export default class Contacts extends Component {
       >
         <DeleteButton onPress={() => this.deleteContact(data, secId, rowId, rowMap)} />
         <View style={styles.listItem}>
-          <Text style={styles.text14}> Account Name </Text>
-          <Text style={styles.text12}> memo </Text>
+          <Text style={styles.text14}> {data.accountName} </Text>
+          <Text style={styles.text12}> {data.memo} </Text>
         </View>
       </SwipeRow>
     )

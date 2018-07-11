@@ -11,3 +11,5 @@ export const validateUnitByCurrency = (currency: string) => (value: any) => vali
 export const validateUnitByFraction = (fraction: number) => (value: any) => validateUnit(value, fraction)
 
 export const validateEOSAccountName = (value: any) => !!value && /([1-5]|[a-z])+$/.test(value) && value.length === 12
+
+export const validateUrl = (value: any) => (!!value && /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/.test(value)) ? true : false

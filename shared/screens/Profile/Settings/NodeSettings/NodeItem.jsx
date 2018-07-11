@@ -4,6 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
 import { Text, View, ScrollView, TouchableHighlight, TouchableWithoutFeedback, StyleSheet } from 'react-native'
 import { SwipeRow } from 'react-native-swipe-list-view'
+import { connect } from 'react-redux'
 
 const styles = StyleSheet.create({
   container: {
@@ -60,6 +61,15 @@ export const DeleteButton = ({ onPress }) => (
   </TouchableHighlight>
 )
 
+
+@connect(
+  state => ({
+    locale: state.intl.get('locale')
+  }),
+  null,
+  null,
+  { withRef: true }
+)
 
 class SwipeItem extends React.Component {
 
