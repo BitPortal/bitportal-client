@@ -268,7 +268,6 @@ declare module 'react-native-sensitive-info' {
 declare module 'core/eos' {
   interface EOS {
     generateMasterKeys: any
-    initAccount: any
     privateToPublic: any
     deriveKeys: any
     getLocalAccounts: any

@@ -9,7 +9,7 @@ import { resetKey } from 'actions/keystore'
 import { resetEOSAccount, syncEOSAccount, createEOSAccountSucceeded, getEOSAccountRequested } from 'actions/eosAccount'
 import { getErrorMessage } from 'utils'
 import secureStorage from 'utils/secureStorage'
-import { privateToPublic, initAccount, randomKey } from 'core/eos'
+import { privateToPublic, initEOS, randomKey } from 'core/eos'
 import { getMasterSeed, encrypt, decrypt, getEOSKeys, getEOSWifsByInfo } from 'core/key'
 import { push, pop, popToRoot } from 'utils/location'
 import wif from 'wif'
@@ -42,7 +42,7 @@ function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAc
       const active = yield call(privateToPublic, activeWif)
 
       const signProvider = ({ sign, buf }: { sign: any, buf: any }) => sign(buf, '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3')
-      const { eos } = yield call(initAccount, { keyProvider, signProvider })
+      const eos = yield call(initEOS, { keyProvider, signProvider })
       const transactionActions = (transaction: any) => {
         transaction.newaccount({ creator, owner, active, name: eosAccountName })
         transaction.buyrambytes({ payer: creator, receiver: eosAccountName, bytes: 8192 })
@@ -102,7 +102,7 @@ function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAc
       const active = eosKeys.keys.active.publicKey
 
       const signProvider = ({ sign, buf }: { sign: any, buf: any }) => sign(buf, '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3')
-      const { eos } = yield call(initAccount, { keyProvider, signProvider })
+      const eos = yield call(initEOS, { keyProvider, signProvider })
       const transactionActions = (transaction: any) => {
         transaction.newaccount({ creator, owner, active, name: eosAccountName })
         transaction.buyrambytes({ payer: creator, receiver: eosAccountName, bytes: 8192 })

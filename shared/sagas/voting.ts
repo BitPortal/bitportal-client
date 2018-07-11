@@ -36,9 +36,9 @@ function* votingRequested(action: Action<VotingParams>) {
 
     const producers = action.payload.producers.sort(sortProducers)
 
-    let eos = initEOS({})
+    let eos = yield call(initEOS, {})
     const chainInfo = yield call(eos.getInfo, {})
-    eos = initEOS({ chainId: chainInfo.chain_id })
+    eos = yield call(initEOS, { chainId: chainInfo.chain_id })
     const blockInfo = yield call(eos.getBlock, chainInfo.last_irreversible_block_num)
     const expireInSeconds = 60 * 1
     const block_num = blockInfo.block_num
@@ -59,7 +59,7 @@ function* votingRequested(action: Action<VotingParams>) {
       delay_sec: 0
     }
 
-    eos = initEOS({
+    eos = yield call(initEOS, {
       keyProvider: activeWifs,
       transactionHeaders: (_: any, callback: any) => callback(null, headers),
       broadcast: false,
@@ -73,7 +73,7 @@ function* votingRequested(action: Action<VotingParams>) {
       options
     )
 
-    eos = initEOS({ broadcast: true })
+    eos = yield call(initEOS, { broadcast: true })
 
     yield call(eos.pushTransaction, transactionInfo.transaction)
     yield put(actions.votingSucceeded(producers))

@@ -24,7 +24,7 @@ function* buyRAMRequested(action: Action<BuyRAMParams>) {
     const wifs = yield call(getEOSWifsByInfo, password, accountInfo, ['active'])
     const activeWifs = wifs.activeWifs
 
-    const eos = initEOS({ keyProvider: activeWifs })
+    const eos = yield call(initEOS, { keyProvider: activeWifs })
 
     yield call(
       eos.transaction,
@@ -51,7 +51,7 @@ function* sellRAMRequested(action: Action<SellRAMParams>) {
     const wifs = yield call(getEOSWifsByInfo, password, accountInfo, ['active'])
     const activeWifs = wifs.activeWifs
 
-    const eos = initEOS({ keyProvider: activeWifs })
+    const eos = yield call(initEOS, { keyProvider: activeWifs })
 
     yield call(
       eos.transaction,
@@ -70,7 +70,7 @@ function* sellRAMRequested(action: Action<SellRAMParams>) {
 
 function* getRAMMarketRequested() {
   try {
-    const eos = initEOS({})
+    const eos = yield call(initEOS, {})
     const data = yield call(eos.getTableRows, {
       json: true,
       code: 'eosio',

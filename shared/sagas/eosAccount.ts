@@ -8,7 +8,7 @@ import { getBalanceRequested } from 'actions/balance'
 import { createClassicWalletSucceeded } from 'actions/wallet'
 import { getErrorMessage } from 'utils'
 import secureStorage from 'utils/secureStorage'
-import { initAccount, privateToPublic, isValidPrivate, initEOS } from 'core/eos'
+import { privateToPublic, isValidPrivate, initEOS } from 'core/eos'
 import { getEOSKeys, decrypt, validateEntropy, encrypt } from 'core/key'
 import { popToRoot } from 'utils/location'
 import wif from 'wif'
@@ -31,7 +31,7 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
     const owner = eosKeys.keys.owner.publicKey
     const active = eosKeys.keys.active.publicKey
 
-    const { eos } = yield call(initAccount, { keyProvider })
+    const eos = yield call(initEOS, { keyProvider })
     yield call(eos.newaccount, { creator, name, owner, active })
     const accountInfo = yield call(eos.getAccount, name)
     const info = { ...accountInfo, bpid, timestamp: +Date.now() }
@@ -59,7 +59,7 @@ function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
     const ownerPublicKey = yield call(privateToPublic, ownerPrivateKey)
     const activePublicKey = yield call(privateToPublic, activePrivateKey)
 
-    const { eos } = yield call(initAccount, { keyProvider: [ownerPrivateKey, activePrivateKey] })
+    const eos = yield call(initEOS, { keyProvider: [ownerPrivateKey, activePrivateKey] })
     const accountInfo = yield call(eos.getAccount, eosAccountName)
     assert(accountInfo.permissions && accountInfo.permissions.length, 'EOS account dose not exist!')
     const permissions = accountInfo.permissions
@@ -110,7 +110,9 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
 
   try {
     const eosAccountName = action.payload.eosAccountName
-    const eos = initEOS({})
+    const eos = yield call(initEOS, {})
+    console.log(eos)
+    assert(eos.getAccount, 'No eos getAccount method')
     const info = yield call(eos.getAccount, eosAccountName)
     assert(info && info.account_name, 'Invalid account info')
     yield put(actions.getEOSAccountSucceeded(info))

@@ -2,13 +2,13 @@ import { call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/producer'
 import * as api from 'utils/api'
-import { initAccount } from 'core/eos'
+import { initEOS } from 'core/eos'
 
 function* getProducersRequested(action: Action<GetProducersParams>) {
   if (!action.payload) return
 
   try {
-    const { eos } = yield call(initAccount, {})
+    const eos = yield call(initEOS, {})
     const producers = yield call(eos.getProducers, action.payload)
     yield put(actions.getProducersSucceeded(producers))
     yield put(actions.getProducersInfoRequested())
