@@ -40,6 +40,7 @@ export default class ProducerDetails extends Component {
     const votes = producer.get('total_votes')
     const info = producer.get('info')
     const totalVotesWeight = totalProducers.get('data').get('total_producer_vote_weight')
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -48,7 +49,7 @@ export default class ProducerDetails extends Component {
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <ScrollView showsVerticalScrollIndicator={false}>
-            <Header info={info} votes={(+votes / +totalVotesWeight) * 100} />
+            <Header producer={producer} votes={(+votes / +totalVotesWeight) * 100} />
             {!!introduce && <Introduction introduce={introduce} />}
             {!!contacts && <Contacts contacts={contacts} />}
           </ScrollView>

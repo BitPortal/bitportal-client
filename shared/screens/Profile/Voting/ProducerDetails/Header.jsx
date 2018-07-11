@@ -21,14 +21,17 @@ import styles from './styles'
 export default class Header extends Component {
 
   render() {
-    const { locale, info } = this.props
-    const weight = +info.get('weight')
-    const teamLocation = info.getIn(['org', 'location'])
-    const teamName = info.getIn(['org', 'name'])
-    const bpLocation = info.getIn(['nodes', '0', 'location', 'name'])
-    const website = info.getIn(['org', 'website'])
-    const logo = info.getIn(['org', 'branding', 'logo'])
+    const { locale, producer } = this.props
+    const weight = +producer.getIn(['info', 'weight'])
+    const teamLocation = producer.getIn(['info', 'org', 'location'])
+    const teamName = producer.getIn(['info', 'org', 'name'])
+    const bpLocation = producer.getIn(['info', 'nodes', '0', 'location', 'name'])
+    const website = producer.getIn(['info', 'org', 'website'])
+    const logo = producer.getIn(['info', 'org', 'branding', 'logo'])
     const graColor = weight === 1 ? Colors.recommandColor : Colors.cooperateColor
+    const owner = producer.get('owner')
+    const url = producer.get('url')
+    const totalVotes = producer.get('total_votes')
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -39,7 +42,7 @@ export default class Header extends Component {
               <View style={{ marginLeft: 10 }}>
                 <View style={{ alignItems: 'center', flexDirection: 'row' }}>
                   <Text style={[styles.text16, { fontWeight: 'bold', marginRight: 10 }]}>
-                    {teamName}
+                    {teamName || owner}
                   </Text>
                   {!!weight &&
                     <LinearGradientContainer type="right" colors={graColor} style={[styles.center, styles.flag]} >
@@ -50,28 +53,28 @@ export default class Header extends Component {
                     </LinearGradientContainer>
                   }
                 </View>
-                <Text style={[styles.text12, { color: Colors.textColor_white_4, marginLeft: -7 }]}>{'  '}@{info.get('account_name')}</Text>
-                <Text style={[styles.text16, { color: Colors.textColor_89_185_226 }]}>{website}</Text>
+                {!!teamName && <Text style={[styles.text12, { color: Colors.textColor_white_4, marginLeft: -7 }]}>{'  '}@{owner}</Text>}
+                <Text style={[styles.text16, { color: Colors.textColor_89_185_226 }]}>{website || url}</Text>
               </View>
             </View>
           </View>
           <View style={[styles.info, { marginVertical: 10}]}>
-            <View style={[styles.between]}>
+            {!!teamLocation && <View style={[styles.between]}>
               <Text style={styles.text14}><FormattedMessage id="prod_sec_info_teamloc" />:</Text>
               <Text style={styles.text14}>{teamLocation}</Text>
-            </View>
-            <View style={[styles.between, { marginVertical: 10 }]}>
+            </View>}
+            {!!bpLocation && <View style={[styles.between, { marginVertical: 10 }]}>
               <Text style={styles.text14}><FormattedMessage id="prod_sec_info_bploc" />:</Text>
               <Text style={styles.text14}>{bpLocation}</Text>
-            </View>
+            </View>}
             <View style={[styles.between]}>
               <Text style={styles.text14}><FormattedMessage id="prod_sec_info_score" />:</Text>
               <Text style={styles.text14}>
                 <FormattedNumber
-                  value={this.props.votes}
-                  maximumFractionDigits={2}
-                  minimumFractionDigits={2}
-                />%
+                  value={totalVotes}
+                  maximumFractionDigits={0}
+                  minimumFractionDigits={0}
+                />
               </Text>
             </View>
           </View>

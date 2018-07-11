@@ -16,6 +16,7 @@ class ListItem extends Component {
     const location = item.getIn(['info', 'org', 'location'])
     const weight = +item.getIn(['info', 'weight'])
     const graColor = weight === 1 ? Colors.recommandColor : Colors.cooperateColor
+    const teamName = item.getIn(['info', 'org', 'name'])
 
     return (
       <TouchableHighlight
@@ -32,7 +33,7 @@ class ListItem extends Component {
                    {rank + 1}
                   </Text>
                 </View>
-                <Text style={styles.text18}>{item.get('owner')}</Text>
+                <Text style={styles.text18}>{teamName || item.get('owner')}</Text>
                 {!!weight &&
                   <LinearGradientContainer type="right" colors={graColor} style={[styles.center, styles.flag]} >
                     <Text numberOfLines={1} style={[styles.text12, { marginHorizontal: 8, color: Colors.textColor_255_255_238 }]}>
@@ -47,7 +48,6 @@ class ListItem extends Component {
                   <Text numberOfLines={1} style={styles.text14}>{location}</Text>
                 </View>}
                 <Text style={[styles.text14, { marginTop: 3, color: Colors.textColor_181_181_181 }]}>
-                  <FormattedMessage id="vt_sec_info_locp" />{': '}
                   <FormattedNumber
                     value={(+item.get('total_votes') / +totalVotes) * 100}
                     maximumFractionDigits={2}

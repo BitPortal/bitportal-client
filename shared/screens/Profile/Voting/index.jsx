@@ -142,17 +142,15 @@ export default class Voting extends Component {
   }
 
   onRowPress = (producer) => {
-    if (producer.get('info')) {
-      Navigation.push(this.props.componentId, {
-        component: {
-          name: 'BitPortal.ProducerDetails',
-          passProps: {
-            producer,
-            totalProducers: this.props.producer
-          }
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.ProducerDetails',
+        passProps: {
+          producer,
+          totalProducers: this.props.producer
         }
-      })
-    }
+      }
+    })
   }
 
   onMarkPress = (producer) => {
