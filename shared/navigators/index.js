@@ -8,6 +8,7 @@ import MarketDetails from 'screens/Market/MarketDetails'
 import Welcome from 'screens/Welcome'
 import LightBox from 'screens/LightBox'
 import QRCodeScanner from 'screens/QRCodeScanner'
+import BPWebView from 'components/BPWebView'
 import TransactionRecord from 'screens/TransactionRecord'
 import Assets from 'screens/Assets'
 import AssetChart from 'screens/Assets/AssetChart'
@@ -39,7 +40,6 @@ import NodeSettings from 'screens/Profile/Settings/NodeSettings'
 import AccountList from 'screens/Profile/AccountList'
 import CreateContact from 'screens/Profile/CreateContact'
 import ResetPassword from 'screens/Profile/ResetPassword'
-import TermsOfService from 'screens/Profile/TermsOfService'
 import AccountManager from 'screens/Profile/AccountManager'
 import ExportEntrance from 'screens/Profile/ExportEntrance'
 import ExportKeystore from 'screens/Profile/ExportKeystore'
@@ -77,6 +77,7 @@ Navigation.events().registerAppLaunchedListener(() => {
 export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.Welcome', () => screenComponent(Welcome, store))
   Navigation.registerComponent('BitPortal.LightBox', () => screenComponent(LightBox, store))
+  Navigation.registerComponent('BitPortal.BPWebView', () => screenComponent(BPWebView, store))
   Navigation.registerComponent('BitPortal.QRCodeScanner', () => screenComponent(QRCodeScanner, store))
   Navigation.registerComponent('BitPortal.TransactionRecord', () => screenComponent(TransactionRecord, store))
   Navigation.registerComponent('BitPortal.Assets', () => screenComponent(Assets, store))
@@ -107,7 +108,6 @@ export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.AccountList', () => screenComponent(AccountList, store))
   Navigation.registerComponent('BitPortal.CreateContact', () => screenComponent(CreateContact, store))
   Navigation.registerComponent('BitPortal.ResetPassword', () => screenComponent(ResetPassword, store))
-  Navigation.registerComponent('BitPortal.TermsOfService', () => screenComponent(TermsOfService, store))
   Navigation.registerComponent('BitPortal.AccountManager', () => screenComponent(AccountManager, store))
   Navigation.registerComponent('BitPortal.ExportEntrance', () => screenComponent(ExportEntrance, store))
   Navigation.registerComponent('BitPortal.ExportKeystore', () => screenComponent(ExportKeystore, store))

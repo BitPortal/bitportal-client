@@ -29,7 +29,13 @@ const Images = {
   profile_contacts: require('./Profile_Contacts.png'),
   profile_account: require('./Profile_Account.png'),
   profile_settings: require('./Profile_Settings.png'),
-  profile_resources: require('./Profile_Resources.png')
+  profile_resources: require('./Profile_Resources.png'),
+  about_wechat: require('./About_Wechat.png'),
+  about_telegram: require('./About_Telegram.png'),
+  about_kakao: require('./About_Kakao.png'),
+  about_twitter: require('./About_Twitter.png'),
+  about_facebook: require('./About_Facebook.png'),
+  about_weibo: require('./About_Weibo.png')
 }
 
 export default Images
