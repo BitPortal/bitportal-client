@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
   mediaContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    marginTop: 10,
   },
   border: {
     width: 90,
