@@ -188,7 +188,6 @@ export default class TotalAssetsCard extends Component {
                   </Text>
                 </View>
               </View>
-              <View style={styles.guideArrow} />
             </View>
           </TouchableOpacity>
         </View>

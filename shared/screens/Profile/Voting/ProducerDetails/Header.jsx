@@ -37,21 +37,23 @@ export default class Header extends Component {
             <View style={{ alignItems: 'center', flexDirection: 'row' }}>
               {!!logo && <Image source={{ uri: `https://storage.googleapis.com/bitportal-cms/bp/${logo}` }} style={styles.icon} />}
               <View style={{ marginLeft: 10 }}>
-                <Text style={[styles.text16, { marginLeft: 4, fontWeight: 'bold' }]}>
-                  {teamName}
-                  <Text style={[styles.text12, { color: Colors.textColor_white_4 }]}>{'  '}@{info.get('account_name')}</Text>
-                </Text>
+                <View style={{ alignItems: 'center', flexDirection: 'row' }}>
+                  <Text style={[styles.text16, { fontWeight: 'bold', marginRight: 10 }]}>
+                    {teamName}
+                  </Text>
+                  {!!weight &&
+                    <LinearGradientContainer type="right" colors={graColor} style={[styles.center, styles.flag]} >
+                      <Text style={[styles.text12, { marginHorizontal: 5, color: Colors.textColor_255_255_238 }]}>
+                        {weight === 1 && <FormattedMessage id="prod_name_tag_prmt" />}
+                        {weight === 2 && <FormattedMessage id="prod_name_tag_cprt" />}
+                      </Text>
+                    </LinearGradientContainer>
+                  }
+                </View>
+                <Text style={[styles.text12, { color: Colors.textColor_white_4, marginLeft: -7 }]}>{'  '}@{info.get('account_name')}</Text>
                 <Text style={[styles.text16, { color: Colors.textColor_89_185_226 }]}>{website}</Text>
               </View>
             </View>
-            {!!weight &&
-              <LinearGradientContainer type="right" colors={graColor} style={[styles.center, styles.flag]} >
-                <Text style={[styles.text12, { marginHorizontal: 5, color: Colors.textColor_255_255_238 }]}>
-                  {weight === 1 && <FormattedMessage id="prod_name_tag_prmt" />}
-                  {weight === 2 && <FormattedMessage id="prod_name_tag_cprt" />}
-                </Text>
-              </LinearGradientContainer>
-            }
           </View>
           <View style={[styles.info, { marginVertical: 10}]}>
             <View style={[styles.between]}>

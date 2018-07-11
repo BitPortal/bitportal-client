@@ -27,6 +27,11 @@ class ListItem extends Component {
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ paddingLeft: 32 }}>
               <View style={{ flexDirection: 'row', alignItems: 'center'}}>
+                <View style={[styles.rank, styles.center, { marginRight: 10 }]}>
+                  <Text style={[styles.text14, { color: Colors.textColor_181_181_181, marginHorizontal: 5, marginVertical: 2 }]}>
+                   {rank + 1}
+                  </Text>
+                </View>
                 <Text style={styles.text18}>{item.get('owner')}</Text>
                 {!!weight &&
                   <LinearGradientContainer type="right" colors={graColor} style={[styles.center, styles.flag]} >
@@ -38,11 +43,6 @@ class ListItem extends Component {
                 }
               </View>
               <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
-                <View style={[styles.rank, styles.center, { marginRight: 10 }]}>
-                  <Text style={[styles.text14, { color: Colors.textColor_181_181_181, marginHorizontal: 5, marginVertical: 2 }]}>
-                   {rank + 1}
-                  </Text>
-                </View>
                 {!!location && typeof location === 'string' && <View style={[styles.location, styles.center, { marginRight: 10 }]}>
                   <Text numberOfLines={1} style={styles.text14}>{location}</Text>
                 </View>}
