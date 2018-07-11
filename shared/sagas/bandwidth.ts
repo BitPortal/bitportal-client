@@ -27,7 +27,7 @@ function* delegateBandwidthRequested(action: Action<DelegateBandwidthParams>) {
     const wifs = yield call(getEOSWifsByInfo, password, accountInfo, ['active'])
     const activeWifs = wifs.activeWifs
 
-    const eos = initEOS({ keyProvider: activeWifs })
+    const eos = yield call(initEOS, { keyProvider: activeWifs })
 
     yield call(
       eos.transaction,
@@ -66,7 +66,7 @@ function* undelegateBandwidthRequested(action: Action<UndelegateBandwidthParams>
     const wifs = yield call(getEOSWifsByInfo, password, accountInfo, ['active'])
     const activeWifs = wifs.activeWifs
 
-    const eos = initEOS({ keyProvider: activeWifs })
+    const eos = yield call(initEOS, { keyProvider: activeWifs })
 
     yield call(
       eos.transaction,
