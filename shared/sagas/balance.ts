@@ -2,13 +2,13 @@ import { call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/balance'
 import { getErrorMessage } from 'utils'
-import { initAccount } from 'core/eos'
+import { initEOS } from 'core/eos'
 
 function* getBalanceRequested(action: Action<BalanceParams>) {
   if (!action.payload) return
 
   try {
-    const { eos } = yield call(initAccount, {})
+    const eos = yield call(initEOS, {})
     const data = yield call(eos.getCurrencyBalance, action.payload)
     const name = action.payload.account
     let balances = data.map((item: any) => {

@@ -17,6 +17,8 @@ import storage from 'utils/storage'
 import Dialog from 'components/Dialog'
 import DialogAndroid from 'components/DialogAndroid'
 import { SwipeRow } from 'react-native-swipe-list-view'
+import { validateUrl } from 'utils/validate'
+import _ from 'lodash'
 import messages from './messages'
 import styles from './styles'
 
@@ -103,8 +105,6 @@ export default class NodeSettings extends Component {
 
   // 删除自定义节点
   deleteCustomNodes = (rowData, secId, rowId, rowMap) => {
-    const rowRef = rowMap[`${secId}${rowId}`]
-    rowRef.closeRow()
     const { CUSTOM_NODES } = this.state
     CUSTOM_NODES.splice(rowId, 1)
     storage.mergeItem('bitportal.customNodes', { customNodes: CUSTOM_NODES }, true)
@@ -115,7 +115,8 @@ export default class NodeSettings extends Component {
   saveCustomNodes = (customNode) => {
     this.setState({ isVisible: false }, () => {
       InteractionManager.runAfterInteractions(() => {
-        if (customNode) {
+        const isVaild = this.validateCustomeNode(customNode)
+        if (customNode && isVaild) {
           this.state.CUSTOM_NODES.push(customNode)
           storage.mergeItem('bitportal.customNodes', { customNodes: this.state.CUSTOM_NODES }, true)
           this.setState({ CUSTOM_NODES: this.state.CUSTOM_NODES })
@@ -127,6 +128,20 @@ export default class NodeSettings extends Component {
   // 切换节点 
   switchNode = (activeNode) => {
     this.setState({ activeNode })
+  }
+
+  // 检测节点有效性
+  validateCustomeNode = (customNode) => {
+    if (!validateUrl(customNode)) {
+      Dialog.alert('请输入正确网址！')
+      return false
+    } 
+    const index = _.findIndex(this.state.CUSTOM_NODES.concat(NODES), (node) => node == customNode )
+    if (index != -1) {
+      Dialog.alert('不可输入重复节点')
+      return false
+    } 
+    return true
   }
 
   renderRow(rowData, secId, rowId, rowMap) {

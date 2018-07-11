@@ -12,6 +12,8 @@ import {
 } from 'components/Form'
 import { validateText, validateEOSAccountName } from 'utils/validate'
 import { IntlProvider, FormattedMessage } from 'react-intl'
+import { Navigation } from 'react-native-navigation'
+import storage from 'utils/storage'
 import messages from './messages'
 
 const validate = (values, props) => {
@@ -19,12 +21,12 @@ const validate = (values, props) => {
 
   if (!values.get('name')) {
     errors.name = <FormattedMessage id="import_txtbox_txt_acchint2" />
-  } else if (!validateEOSAccountName.get('name')) {
+  } else if (!validateEOSAccountName(values.get('name'))) {
     errors.name = <FormattedMessage id="import_txtbox_txt_acchint" />
   }
 
   if (values.get('memo') && values.get('memo').length > 12) {
-    errors.eosAccountName = <FormattedMessage id="import_txtbox_txt_hint" />
+    errors.memo = <FormattedMessage id="import_txtbox_txt_hint" />
   }
 
   return errors
@@ -36,7 +38,7 @@ const validate = (values, props) => {
   })
 )
 
-@reduxForm({ form: 'AddContactsForm', validate })
+@reduxForm({ form: 'addContactsForm', validate })
 
 export default class AddContactsForm extends Component {
   constructor(props, context) {
@@ -44,13 +46,28 @@ export default class AddContactsForm extends Component {
     this.submit = this.submit.bind(this)
   }
 
-  submit(data) {
+  state = {
+    contacts: []
+  }
 
+  async componentDidMount() {
+    const objInfo = await storage.getItem('bitportal.contacts', true)
+    const contacts = objInfo && objInfo.contacts
+    if (contacts && contacts.length > 0) {
+      this.setState({ contacts })
+    }
+  }
+
+  async submit(data) {
+    const tempObj = { accountName: data.get('name'), memo: data.get('memo') }
+    this.state.contacts.push(tempObj)
+    await storage.setItem('bitportal.contacts', { contacts: this.state.contacts } , true)
+    Navigation.pop(this.props.componentId)
   }
 
   render() {
     const { handleSubmit, invalid, pristine, locale } = this.props
-    const disabled = invalid || pristine || loading
+    const disabled = invalid || pristine
 
     return (
       <IntlProvider messages={messages[locale]}>
