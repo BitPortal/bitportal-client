@@ -209,7 +209,7 @@ export default class Voting extends Component {
               />
               {' EOS'}
             </Text>
-            <LinearGradientContainer type="right" colors={Colors.voteColor} style={styles.resourcesBtn} >
+            <LinearGradientContainer type="right" colors={Colors.voteColor} style={[styles.resourcesBtn, { marginRight: -10 }]} >
               <TouchableWithoutFeedback style={styles.center} underlayColor="transparent" onPress={() => this.checkResources()} >
                 <View>
                   <Text style={[styles.text14, { marginHorizontal: 10, marginVertical: 2 }]}>
