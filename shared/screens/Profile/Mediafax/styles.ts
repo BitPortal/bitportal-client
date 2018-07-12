@@ -12,34 +12,28 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT - NAV_BAR_HEIGHT
   },
-  between: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row'
+  navButton: {
+    minWidth: 100,
+    height: 40,
+    paddingTop: 6,
+    marginLeft: 10
   },
   center: {
     alignItems: 'center',
     justifyContent: 'center'
   },
-  content: {
-    width: SCREEN_WIDTH,
-    minHeight: 100,
-    paddingVertical: 25,
-    paddingHorizontal: 32,
-    backgroundColor: Colors.minorThemeColor,
-    alignItems: 'center'
-  },
-  image: {
-    width: 75,
-    height: 116
-  },
-  text12: {
-    fontSize: FontScale(12),
-    color: Colors.textColor_255_255_238
-  },
   text14: {
     fontSize: FontScale(14),
+    color: Colors.textColor_181_181_181
+  },
+  text16: {
+    fontSize: FontScale(16),
     color: Colors.textColor_255_255_238
+  },
+  text24: {
+    fontSize: FontScale(24),
+    color: Colors.textColor_255_255_238,
+    fontWeight: 'bold'
   }
 })
 

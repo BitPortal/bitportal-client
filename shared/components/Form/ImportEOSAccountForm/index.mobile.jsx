@@ -125,11 +125,11 @@ export default class ImportEOSAccountForm extends Component {
     return (
       <IntlProvider messages={messages[locale]}>
         <FormContainer>
-          <Field
+          {/* <Field
             label={<FormattedMessage id="import_title_name_bpnm" />}
             name="name"
             component={TextField}
-          />
+          /> */}
           <Field
             label={<FormattedMessage id="import_title_name_eosnm" />}
             name="eosAccountName"

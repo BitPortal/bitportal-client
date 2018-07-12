@@ -142,18 +142,6 @@ export default class About extends Component {
                 <Text multiline={true} style={[styles.text14, { marginTop: 20 }]}>
                   <FormattedMessage id="abt_describe_txt_des" />
                 </Text>
-                <View style={[styles.mediaContainer, styles.center]}>
-                  {Mediafax.map((item, index) => (
-                    <TouchableOpacity key={index} onPress={() => this.browseMedia(item)} style={[styles.border, { marginHorizontal: 5, marginVertical: 5 }]}>
-                      <View style={[styles.border, styles.between, {flexDirection: 'row', paddingHorizontal:8}]}>
-                        <Image source={MediafaxIcons[item]} style={{ marginLeft: -2, marginRight: 4, width: 16, height: 16 }} />
-                        <Text style={styles.text14}>
-                          {item}
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  ))}
-                </View>
               </View>
               <SettingItem
                 extraStyle={{ marginTop: 10 }}
