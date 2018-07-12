@@ -24,6 +24,8 @@ import com.facebook.soloader.SoLoader;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.bitportal.core.BPCorePackage;
+import com.umeng.commonsdk.UMConfigure;
+import com.bitportal.umeng.RNUMConfigure;
 
 import java.util.Arrays;
 import java.util.List;
@@ -63,6 +65,14 @@ public class MainApplication extends NavigationApplication {
       new RNDeviceInfo(),
       new ReactNativeRestartPackage()
     );
+  }
+
+  @Override
+  public void onCreate() {
+      super.onCreate();
+      SoLoader.init(this, /* native exopackage */ false);
+      UMConfigure.setLogEnabled(false);
+      RNUMConfigure.init(this, "5b46d7f1f43e482296000178", "android channel", UMConfigure.DEVICE_TYPE_PHONE, null);
   }
 
   @Override

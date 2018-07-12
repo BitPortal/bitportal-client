@@ -72,6 +72,13 @@
 		1836E6312090628000C81AED /* BridgeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E6022090628000C81AED /* BridgeUtils.swift */; };
 		1836E6322090628000C81AED /* ChartDataSetConfigUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E6032090628000C81AED /* ChartDataSetConfigUtils.swift */; };
 		1836E6332090628000C81AED /* EntryToDictionaryUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E6042090628000C81AED /* EntryToDictionaryUtils.swift */; };
+		18849DD320F70079008C8BC8 /* UMAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18849DD220F70079008C8BC8 /* UMAnalytics.framework */; };
+		18849DD520F70082008C8BC8 /* UMCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18849DD420F70082008C8BC8 /* UMCommon.framework */; };
+		18849DD720F7008B008C8BC8 /* UMPush.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18849DD620F7008B008C8BC8 /* UMPush.framework */; };
+		18849DDA20F700B5008C8BC8 /* UMAnalyticsModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 18849DD820F700B5008C8BC8 /* UMAnalyticsModule.m */; };
+		18849DDD20F700C4008C8BC8 /* RNUMConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = 18849DDC20F700C3008C8BC8 /* RNUMConfigure.m */; };
+		18849DE020F702C0008C8BC8 /* UMPushModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 18849DDE20F702C0008C8BC8 /* UMPushModule.m */; };
+		18A2AA5220F70A4300CD3D3C /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A2AA0C20F70A4300CD3D3C /* libsqlite3.tbd */; };
 		18EF1C182090760100BF5B70 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18EF1C13209075F600BF5B70 /* Charts.framework */; };
 		18EF1C192090760800BF5B70 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18EF1C13209075F600BF5B70 /* Charts.framework */; };
 		18EF1C1A2090760800BF5B70 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18EF1C13209075F600BF5B70 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -316,20 +323,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 3D7682761D8E76B80014119E;
 			remoteInfo = SplashScreen;
-		};
-		18439FC320ECD767002166AC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 13D51715EF5C4A4B9ED3B4FB /* RNDeviceInfo.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = DA5891D81BA9A9FC002B4DB2;
-			remoteInfo = RNDeviceInfo;
-		};
-		18439FC520ECD767002166AC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 13D51715EF5C4A4B9ED3B4FB /* RNDeviceInfo.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E72EC1401F7ABB5A0001BC90;
-			remoteInfo = "RNDeviceInfo-tvOS";
 		};
 		1875EDF9205F676E00E4A12C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -773,6 +766,16 @@
 		1836E6032090628000C81AED /* ChartDataSetConfigUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartDataSetConfigUtils.swift; sourceTree = "<group>"; };
 		1836E6042090628000C81AED /* EntryToDictionaryUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryToDictionaryUtils.swift; sourceTree = "<group>"; };
 		1836E6352090630E00C81AED /* bitportal-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "bitportal-Bridging-Header.h"; sourceTree = "<group>"; };
+		18849DD220F70079008C8BC8 /* UMAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMAnalytics.framework; sourceTree = "<group>"; };
+		18849DD420F70082008C8BC8 /* UMCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMCommon.framework; sourceTree = "<group>"; };
+		18849DD620F7008B008C8BC8 /* UMPush.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMPush.framework; sourceTree = "<group>"; };
+		18849DD820F700B5008C8BC8 /* UMAnalyticsModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMAnalyticsModule.m; sourceTree = "<group>"; };
+		18849DD920F700B5008C8BC8 /* UMAnalyticsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMAnalyticsModule.h; sourceTree = "<group>"; };
+		18849DDB20F700C3008C8BC8 /* RNUMConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNUMConfigure.h; sourceTree = "<group>"; };
+		18849DDC20F700C3008C8BC8 /* RNUMConfigure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNUMConfigure.m; sourceTree = "<group>"; };
+		18849DDE20F702C0008C8BC8 /* UMPushModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMPushModule.m; sourceTree = "<group>"; };
+		18849DDF20F702C0008C8BC8 /* UMPushModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMPushModule.h; sourceTree = "<group>"; };
+		18A2AA0C20F70A4300CD3D3C /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		18EF1C0C209075F600BF5B70 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = Charts/Charts.xcodeproj; sourceTree = "<group>"; };
 		18EF1CB02090A01F00BF5B70 /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
 		19F3AC824ACC4F94AE750BD7 /* RCTRestart.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTRestart.xcodeproj; path = "../node_modules/react-native-restart/ios/RCTRestart.xcodeproj"; sourceTree = "<group>"; };
@@ -953,8 +956,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18A2AA5220F70A4300CD3D3C /* libsqlite3.tbd in Frameworks */,
 				3446CAB220E8F39F00ACA3C8 /* libReactNativeNavigation.a in Frameworks */,
 				18EF1CC92090A03900BF5B70 /* SwiftyJSON.framework in Frameworks */,
+				18849DD720F7008B008C8BC8 /* UMPush.framework in Frameworks */,
 				18EF1C182090760100BF5B70 /* Charts.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				18EF1C192090760800BF5B70 /* Charts.framework in Frameworks */,
@@ -980,8 +985,10 @@
 				65B9E23F4D9E4DB68F5A768C /* libReactNativePermissions.a in Frameworks */,
 				3C4507934177471B93375682 /* libRNRandomBytes.a in Frameworks */,
 				AD83B47857424C849778388D /* libRNCamera.a in Frameworks */,
+				18849DD320F70079008C8BC8 /* UMAnalytics.framework in Frameworks */,
 				43E5398727FA4DD5AB8E784C /* libRNBlur.a in Frameworks */,
 				8742690AC5034BEA97098A14 /* libRNVersionNumber.a in Frameworks */,
+				18849DD520F70082008C8BC8 /* UMCommon.framework in Frameworks */,
 				75196F384CA649EDB16DBE43 /* libRNDeviceInfo.a in Frameworks */,
 				8F038558D05141399EF71E3A /* libRCTRestart.a in Frameworks */,
 			);
@@ -1055,6 +1062,7 @@
 		13B07FAE1A68108700A75B9A /* bitportal */ = {
 			isa = PBXGroup;
 			children = (
+				18849D8C20F7004B008C8BC8 /* Umeng */,
 				3454A46F20D0FD34009964B2 /* Djinni */,
 				3454A46720D0FA0C009964B2 /* Bridge */,
 				3454A38020D0F9C5009964B2 /* Native */,
@@ -1283,17 +1291,9 @@
 		1836E658209063D300C81AED /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				18A2AA0C20F70A4300CD3D3C /* libsqlite3.tbd */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		18439F8C20ECD766002166AC /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				18439FC420ECD767002166AC /* libRNDeviceInfo.a */,
-				18439FC620ECD767002166AC /* libRNDeviceInfo-tvOS.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		1875EDF3205F676D00E4A12C /* Recovered References */ = {
@@ -1326,6 +1326,22 @@
 				1875EE1C205F676F00E4A12C /* libRNSVG-tvOS.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		18849D8C20F7004B008C8BC8 /* Umeng */ = {
+			isa = PBXGroup;
+			children = (
+				18849DDF20F702C0008C8BC8 /* UMPushModule.h */,
+				18849DDE20F702C0008C8BC8 /* UMPushModule.m */,
+				18849DDB20F700C3008C8BC8 /* RNUMConfigure.h */,
+				18849DDC20F700C3008C8BC8 /* RNUMConfigure.m */,
+				18849DD920F700B5008C8BC8 /* UMAnalyticsModule.h */,
+				18849DD820F700B5008C8BC8 /* UMAnalyticsModule.m */,
+				18849DD620F7008B008C8BC8 /* UMPush.framework */,
+				18849DD420F70082008C8BC8 /* UMCommon.framework */,
+				18849DD220F70079008C8BC8 /* UMAnalytics.framework */,
+			);
+			path = Umeng;
 			sourceTree = "<group>";
 		};
 		18C75BE920BD466200E1C279 /* Products */ = {
@@ -2057,20 +2073,6 @@
 			remoteRef = 1836E3E4208F022700C81AED /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		18439FC420ECD767002166AC /* libRNDeviceInfo.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNDeviceInfo.a;
-			remoteRef = 18439FC320ECD767002166AC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		18439FC620ECD767002166AC /* libRNDeviceInfo-tvOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libRNDeviceInfo-tvOS.a";
-			remoteRef = 18439FC520ECD767002166AC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		1875EDFA205F676E00E4A12C /* libRCTBlob-tvOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -2502,6 +2504,7 @@
 				1836E6202090628000C81AED /* RNLineChartView.swift in Sources */,
 				3454A41720D0F9C5009964B2 /* hmac.c in Sources */,
 				3454A45620D0F9C5009964B2 /* aescrypt.c in Sources */,
+				18849DDD20F700C4008C8BC8 /* RNUMConfigure.m in Sources */,
 				3454A45520D0F9C5009964B2 /* aeskey.c in Sources */,
 				3454A45220D0F9C5009964B2 /* base58.c in Sources */,
 				3454A43420D0F9C5009964B2 /* modm-donna-32bit.c in Sources */,
@@ -2549,10 +2552,12 @@
 				3454A42520D0F9C5009964B2 /* rc4.c in Sources */,
 				3454A41820D0F9C5009964B2 /* sha2.c in Sources */,
 				3454A44D20D0F9C5009964B2 /* script.c in Sources */,
+				18849DE020F702C0008C8BC8 /* UMPushModule.m in Sources */,
 				3454A47920D0FD34009964B2 /* DJIError.mm in Sources */,
 				1836E62E2090628000C81AED /* RNScatterChartManagerBridge.m in Sources */,
 				3454A45920D0F9C5009964B2 /* chacha_merged.c in Sources */,
 				1836E6222090628000C81AED /* RNPieChartManager.swift in Sources */,
+				18849DDA20F700B5008C8BC8 /* UMAnalyticsModule.m in Sources */,
 				1836E6272090628000C81AED /* RNRadarChartManagerBridge.m in Sources */,
 				1836E62B2090628000C81AED /* RNChartViewBase.swift in Sources */,
 				3454A45D20D0F9C5009964B2 /* core_impl.cpp in Sources */,
@@ -2592,6 +2597,10 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = WFW5A3K678;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Umeng",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
@@ -2647,6 +2656,10 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WFW5A3K678;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Umeng",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",

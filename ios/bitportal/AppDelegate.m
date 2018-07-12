@@ -13,6 +13,9 @@
 #import <React/RCTRootView.h>
 #import <ReactNativeNavigation.h>
 #import "SplashScreen.h"
+#import "RNUMConfigure.h"
+#import "UMAnalyticsModule.h"
+#import <UMAnalytics/MobClick.h>
 
 @implementation AppDelegate
 
@@ -20,6 +23,15 @@
 {
   NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
   [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
+  
+  // Umeng sdk:
+  if (DEBUG) {
+    [UMConfigure setLogEnabled:YES];
+  }
+  [RNUMConfigure initWithAppkey:@"5b46cc71f43e481b4f0000e7" channel:@"App Store"];
+  [MobClick setScenarioType:E_UM_NORMAL];
+  
+  // splash:
   [SplashScreen show];
   return YES;
 }
