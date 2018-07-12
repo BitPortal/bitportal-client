@@ -54,6 +54,7 @@ export default class Profile extends Component {
         break
       case 'Voting':
       case 'About':
+      case 'Mediafax':
       case 'Contacts':
       case 'Settings':
       case 'ContactUs':
@@ -87,6 +88,7 @@ export default class Profile extends Component {
               <SettingItem leftImage={Images.profile_contacts} leftItemTitle={<FormattedMessage id="prf_sec_titile_ctcts" />} onPress={() => this.changePage('Contacts')}  />
               <SettingItem leftImage={Images.profile_account} leftItemTitle={<FormattedMessage id="prf_sec_titile_act" />} onPress={() => this.changePage('Account')} />
               <SettingItem leftImage={Images.profile_settings} leftItemTitle={<FormattedMessage id="prf_sec_titile_sts" />} onPress={() => this.changePage('Settings')} extraStyle={{ marginTop: 10 }} />
+              <SettingItem leftImage={Images.profile_settings} leftItemTitle={<FormattedMessage id="prf_sec_titile_mdf" />} onPress={() => this.changePage('Mediafax')} />
               <SettingItem leftImage={Images.profile_about} leftItemTitle={<FormattedMessage id="prf_sec_titile_abt" />} onPress={() => this.changePage('About')} />
               {/* <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titiled_ctus" />} onPress={() => this.changePage('ContactUs')} /> */}
 

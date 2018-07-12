@@ -34,6 +34,7 @@ import About from 'screens/Profile/About'
 import Profile from 'screens/Profile'
 import Contacts from 'screens/Profile/Contacts'
 import Settings from 'screens/Profile/Settings'
+import Mediafax from 'screens/Profile/Mediafax'
 import Languages from 'screens/Profile/Settings/Languages'
 import Currencies from 'screens/Profile/Settings/Currencies'
 import NodeSettings from 'screens/Profile/Settings/NodeSettings'
@@ -102,6 +103,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.Profile', () => screenComponent(Profile, store))
   Navigation.registerComponent('BitPortal.Contacts', () => screenComponent(Contacts, store))
   Navigation.registerComponent('BitPortal.Settings', () => screenComponent(Settings, store))
+  Navigation.registerComponent('BitPortal.Mediafax', () => screenComponent(Mediafax, store))
   Navigation.registerComponent('BitPortal.Languages', () => screenComponent(Languages, store))
   Navigation.registerComponent('BitPortal.Currencies', () => screenComponent(Currencies, store))
   Navigation.registerComponent('BitPortal.NodeSettings', () => screenComponent(NodeSettings, store))
