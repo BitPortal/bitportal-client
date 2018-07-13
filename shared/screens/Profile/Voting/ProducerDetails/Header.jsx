@@ -38,7 +38,12 @@ export default class Header extends Component {
         <View>
           <View style={[styles.header, styles.between]}>
             <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-              {!!logo && <Image source={{ uri: `https://storage.googleapis.com/bitportal-cms/bp/${logo}` }} style={styles.icon} />}
+              {
+                !!logo ? 
+                <Image source={{ uri: `https://storage.googleapis.com/bitportal-cms/bp/${logo}` }} style={styles.icon} />
+                :
+                <Image source={Images.default_icon} style={styles.icon} />
+              }
               <View style={{ marginLeft: 10 }}>
                 <View style={{ alignItems: 'center', flexDirection: 'row' }}>
                   <Text style={[styles.text16, { fontWeight: 'bold', marginRight: 10 }]}>

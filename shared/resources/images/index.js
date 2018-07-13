@@ -24,6 +24,7 @@ const Images = {
   guide_discovery_title: require('./guide_discovery_title.png'),
   eyes_close: require('./eyes_close.png'),
   eyes_open: require('./eyes_open.png'),
+  default_icon: require('./default_icon.png'),
   profile_about: require('./Profile_About.png'),
   profile_voting: require('./Profile_Voting.png'),
   profile_contacts: require('./Profile_Contacts.png'),

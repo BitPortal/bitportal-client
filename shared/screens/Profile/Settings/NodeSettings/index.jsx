@@ -76,7 +76,7 @@ export default class NodeSettings extends Component {
   // 激活并保存选中节点
   saveNode = async () => {
     await storage.mergeItem('bitportal.activeNode', { activeNode: this.state.activeNode }, true)
-    Dialog.alert(messages[this.props.locale]["ndst_button_name_save"])
+    Dialog.alert(messages[this.props.locale]["ndst_button_name_saved"])
   }
 
   // 弹出添加弹框
