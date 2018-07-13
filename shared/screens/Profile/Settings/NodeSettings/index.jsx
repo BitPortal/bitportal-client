@@ -76,7 +76,7 @@ export default class NodeSettings extends Component {
   // 激活并保存选中节点
   saveNode = async () => {
     await storage.mergeItem('bitportal.activeNode', { activeNode: this.state.activeNode }, true)
-    Dialog.alert('保存成功')
+    Dialog.alert(messages[this.props.locale]["ndst_button_name_saved"])
   }
 
   // 弹出添加弹框
@@ -133,12 +133,12 @@ export default class NodeSettings extends Component {
   // 检测节点有效性
   validateCustomeNode = (customNode) => {
     if (!validateUrl(customNode)) {
-      Dialog.alert('请输入正确网址！')
+      Dialog.alert(messages[locale]["ndst_button_name_errnd"])
       return false
     } 
     const index = _.findIndex(this.state.CUSTOM_NODES.concat(NODES), (node) => node == customNode )
     if (index != -1) {
-      Dialog.alert('不可输入重复节点')
+      Dialog.alert(messages[locale]["ndst_button_name_dplnd"])
       return false
     } 
     return true
@@ -182,7 +182,7 @@ export default class NodeSettings extends Component {
           <NavigationBar
             title={messages[locale]["ndst_title_name_nodesettings"]}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
-            rightButton={<CommonButton title={"保存"} onPress={this.saveNode} extraTextStyle={{ fontSize: FontScale(18), color: Colors.textColor_89_185_226 }} />}
+            rightButton={<CommonButton title={messages[locale]["ndst_button_name_save"]} onPress={this.saveNode} extraTextStyle={{ fontSize: FontScale(18), color: Colors.textColor_89_185_226 }} />}
           />
           <View style={styles.scrollContainer}>
             <SwipeListView
