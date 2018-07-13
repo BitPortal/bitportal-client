@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
+import { Text, View, ScrollView, TouchableOpacity, Linking } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import styles from './styles'
 import Colors from 'resources/colors'
@@ -47,6 +47,17 @@ export default class Memory extends Component {
     this.props.actions.getRAMMarketRequested()
   }
 
+  checkRamPrice = () => {
+    const url = 'https://eos.feexplorer.io/'
+    Linking.canOpenURL(url).then(supported => {
+      if (!supported) {
+        console.log('Can\'t handle url: ' + url);
+      } else {
+        return Linking.openURL(url);
+      }
+    }).catch(err => console.error('An error occurred', err));
+  }
+
   render() {
     const { locale, eosAccount, ramPrice } = this.props
     const activeEOSAccount = eosAccount.get('data')
@@ -75,12 +86,14 @@ export default class Memory extends Component {
                 </View>
                 <View style={[styles.totalContainer, styles.between, {marginTop: 0}]}>
                   <Text style={styles.text14}><FormattedMessage id="memory_title_name_ramprice" /></Text>
-                  <Text style={styles.text14}>
-                    <FormattedNumber
-                      value={+ramPrice * 1024}
-                      maximumFractionDigits={4}
-                      minimumFractionDigits={4}
-                    />
+                  <Text onPress={this.checkRamPrice} style={styles.text14}>
+                    <Text style={{ color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }}>
+                      <FormattedNumber
+                        value={+ramPrice * 1024}
+                        maximumFractionDigits={4}
+                        minimumFractionDigits={4}
+                      />
+                    </Text>
                     {' '}EOS/KB
                   </Text>
                 </View>

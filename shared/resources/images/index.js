@@ -29,6 +29,7 @@ const Images = {
   profile_contacts: require('./Profile_Contacts.png'),
   profile_account: require('./Profile_Account.png'),
   profile_settings: require('./Profile_Settings.png'),
+  profile_mediafax: require('./Profile_Mediafax.png'),
   profile_resources: require('./Profile_Resources.png'),
   about_wechat: require('./About_Wechat.png'),
   about_telegram: require('./About_Telegram.png'),
