@@ -25,9 +25,7 @@
   [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
   
   // Umeng sdk:
-  if (DEBUG) {
-    [UMConfigure setLogEnabled:YES];
-  }
+  [UMConfigure setLogEnabled:NO];
   [RNUMConfigure initWithAppkey:@"5b46cc71f43e481b4f0000e7" channel:@"App Store"];
   [MobClick setScenarioType:E_UM_NORMAL];
   

@@ -77,7 +77,7 @@ export default class BPWebView extends Component {
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
             rightButton={needShare && <CommonRightButton iconName="md-share" onPress={() => this.share()} />}
           />
-          <View style={[styles.content, styles.center]}>
+          <View style={styles.content}>
             {
               uri && 
               <WebView 
@@ -96,7 +96,7 @@ export default class BPWebView extends Component {
             }
             {
               name && 
-              <View style={styles.center}>
+              <View style={[styles.content, styles.center]}>
                 <Text style={styles.text18}>
                   {title}{': '}{name}
                 </Text>
