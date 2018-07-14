@@ -1,7 +1,7 @@
 {
   "en": {
 		"import_title_name_acc" : "Account Name",
-		"import_txtbox_txt_acchint" : "he account name should be 12 characters from 1-5 or/and a-z ",
+		"import_txtbox_txt_acchint" : "The account name should be 12 characters from 1-5 or/and a-z ",
 		"import_txtbox_txt_acchint2" : "Please input account name",
 		"import_title_name_Note" : "Memo",
 		"import_txtbox_txt_hint" : "Up to 12 characters",
