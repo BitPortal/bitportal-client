@@ -1,8 +1,7 @@
 /* @jsx */
 
 import React from 'react'
-import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native'
-import { BPTextInput } from 'components/CustomComponents'
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { noop } from 'utils'
 import Colors from 'resources/colors'
 import styles from './styles'
@@ -35,7 +34,7 @@ export const TextField = ({ input: { onChange, ...restInput }, meta: { touched, 
       {tips && <Tips tips={tips} />}
     </View>
     <FieldInput rightContent={rightContent}>
-      <BPTextInput
+      <TextInput
         style={styles.input}
         autoCorrect={false}
         autoCapitalize="none"
@@ -55,7 +54,7 @@ export const TextAreaField = ({ input: { onChange, ...restInput }, meta: { touch
   <FieldItem>
     <Text style={styles.text14}>{label}</Text>
     <FieldInput style={{ borderBottomWidth: 0 }}>
-      <BPTextInput
+      <TextInput
         multiline={true}
         numberOfLines={4}
         style={styles.areaInput}
@@ -78,7 +77,7 @@ export const PasswordField = ({ input: { onChange, ...restInput }, meta: { touch
   <FieldItem>
     <Text style={styles.text14}>{label}</Text>
     <FieldInput rightContent={rightContent}>
-      <BPTextInput
+      <TextInput
         style={styles.input}
         autoCorrect={false}
         autoCapitalize="none"

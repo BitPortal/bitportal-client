@@ -11,6 +11,7 @@ import {
   SubmitButton
 } from 'components/Form'
 import { validateText, validateEOSAccountName } from 'utils/validate'
+// import { normalizeText } from 'utils/normalize'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import { Navigation } from 'react-native-navigation'
 import storage from 'utils/storage'
@@ -82,10 +83,10 @@ export default class AddContactsForm extends Component {
             name="memo"
             component={TextField}
           />
-          <SubmitButton 
-            disabled={disabled} 
-            onPress={handleSubmit(this.submit)} 
-            text={<FormattedMessage id="import_button_name_save" />} 
+          <SubmitButton
+            disabled={disabled}
+            onPress={handleSubmit(this.submit)}
+            text={<FormattedMessage id="import_button_name_save" />}
           />
         </FormContainer>
       </IntlProvider>
