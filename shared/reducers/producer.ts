@@ -37,5 +37,11 @@ export default handleActions({
   },
   [actions.getProducersInfoFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)
+  },
+  [actions.sortProducers] (state, action) {
+    const sortItem = action.payload
+    return state.set('loaded', true).set('loading', false).updateIn(['data', 'rows'], (v: any) => {
+      return (v.size && (sortItem === 'weight' || sortItem === 'votes')) ? v.sortBy((v: any) => sortItem === 'weight' ? (v.getIn(['info', 'weight']) ? -+v.getIn(['info', 'weight']) : 0) : -+v.get('total_votes')) : v
+    })
   }
 }, initialState)

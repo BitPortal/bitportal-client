@@ -85,7 +85,4 @@ export const getPasswordStrength = (password: any) => {
 
 export const noop = () => {}
 
-export const eosQrString = (account_name: string, amount: number) => {
-  if (amount) return `eos:${account_name}?amount=${amount}`
-  return `eos:${account_name}`
-}
+export const eosQrString = (account_name: string, amount: number, token: string) => `eos:${account_name}?amount=${amount || 0}&token=${token || 'EOS'}`
