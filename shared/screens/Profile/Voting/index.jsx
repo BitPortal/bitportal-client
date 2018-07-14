@@ -88,11 +88,11 @@ export default class Voting extends Component {
   changeSort() {
     if (this.state.sortType === 'default') {
       this.setState({ sortType: 'ranking' }, () => {
-        this.props.actions.sortProducers('weight')
+        this.props.actions.sortProducers('ranking')
       })
     } else {
       this.setState({ sortType: 'default' }, () => {
-        this.props.actions.sortProducers('votes')
+        this.props.actions.sortProducers('default')
       })
     }
   }

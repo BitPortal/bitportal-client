@@ -10,7 +10,8 @@ const initialState = Immutable.fromJS({
   },
   loading: false,
   loaded: false,
-  error: null
+  error: null,
+  sortType: 'default'
 })
 
 export default handleActions({
@@ -27,21 +28,22 @@ export default handleActions({
     return state.set('loading', true)
   },
   [actions.getProducersInfoSucceeded] (state, action) {
+    const sortType = state.get('sortType')
     return state.set('loaded', true).set('loading', false).updateIn(['data', 'rows'], (v: any) => {
       return v.size ? v.map((producer: any) => {
         const owner = producer.get('owner')
         const info = action.payload[owner]
         return info ? producer.set('info', Immutable.fromJS(info)) : producer
-      }).sortBy((v: any) => v.getIn(['info', 'weight']) ? -+v.getIn(['info', 'weight']) : 0) : v
+      }).sortBy((v: any) => sortType === 'default' ? (v.getIn(['info', 'weight']) ? -+v.getIn(['info', 'weight']) : 0) : -+v.get('total_votes')) : v
     })
   },
   [actions.getProducersInfoFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)
   },
   [actions.sortProducers] (state, action) {
-    const sortItem = action.payload
-    return state.set('loaded', true).set('loading', false).updateIn(['data', 'rows'], (v: any) => {
-      return (v.size && (sortItem === 'weight' || sortItem === 'votes')) ? v.sortBy((v: any) => sortItem === 'weight' ? (v.getIn(['info', 'weight']) ? -+v.getIn(['info', 'weight']) : 0) : -+v.get('total_votes')) : v
+    const sortType = action.payload
+    return state.set('sortType', sortType).set('loaded', true).set('loading', false).updateIn(['data', 'rows'], (v: any) => {
+      return (v.size && (sortType === 'default' || sortType === 'ranking')) ? v.sortBy((v: any) => sortType === 'default' ? (v.getIn(['info', 'weight']) ? -+v.getIn(['info', 'weight']) : 0) : -+v.get('total_votes')) : v
     })
   }
 }, initialState)
