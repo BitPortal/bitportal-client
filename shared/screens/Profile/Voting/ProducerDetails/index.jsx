@@ -36,7 +36,7 @@ export default class ProducerDetails extends Component {
   render() {
     const { locale, producer, totalProducers } = this.props
     const introduce = producer.getIn(['info', 'introduce', locale])
-    const contacts = producer.getIn(['info', 'org', 'social'])
+    const contacts = producer.getIn(['info', 'org', 'social']) || producer.getIn(['info', 'org', 'social_network'])
     const votes = producer.get('total_votes')
     const info = producer.get('info')
     const totalVotesWeight = totalProducers.get('data').get('total_producer_vote_weight')

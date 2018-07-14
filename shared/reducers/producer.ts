@@ -32,7 +32,7 @@ export default handleActions({
         const owner = producer.get('owner')
         const info = action.payload[owner]
         return info ? producer.set('info', Immutable.fromJS(info)) : producer
-      }) : v
+      }).sortBy((v: any) => v.getIn(['info', 'weight']) ? -+v.getIn(['info', 'weight']) : 0) : v
     })
   },
   [actions.getProducersInfoFailed] (state, action) {

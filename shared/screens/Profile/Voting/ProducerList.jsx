@@ -15,7 +15,7 @@ class ListItem extends Component {
     const { item, rank, onRowPress, onMarkPress, selected, totalVotes } = this.props
     const location = item.getIn(['info', 'org', 'location'])
     const weight = +item.getIn(['info', 'weight'])
-    const graColor = weight === 1 ? Colors.recommandColor : Colors.cooperateColor
+    const graColor = weight === 1 ? Colors.cooperateColor :Colors.recommandColor
     const teamName = item.getIn(['info', 'org', 'name'])
 
     return (
@@ -37,8 +37,8 @@ class ListItem extends Component {
                 {!!weight &&
                   <LinearGradientContainer type="right" colors={graColor} style={[styles.center, styles.flag]} >
                     <Text numberOfLines={1} style={[styles.text12, { marginHorizontal: 8, color: Colors.textColor_255_255_238 }]}>
-                      {weight === 1 && <FormattedMessage id="vt_sec_tag_prmt" />}
-                      {weight === 2 && <FormattedMessage id="vt_sec_tag_cprt" />}
+                      {weight === 1 && <FormattedMessage id="vt_sec_tag_cprt" />}
+                      {weight >= 2 && <FormattedMessage id="vt_sec_tag_prmt" />}
                     </Text>
                   </LinearGradientContainer>
                 }

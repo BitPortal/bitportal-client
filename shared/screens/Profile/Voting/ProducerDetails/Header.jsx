@@ -21,14 +21,14 @@ import styles from './styles'
 export default class Header extends Component {
 
   render() {
-    const { locale, producer } = this.props
+    const { locale, producer, votes } = this.props
     const weight = +producer.getIn(['info', 'weight'])
     const teamLocation = producer.getIn(['info', 'org', 'location'])
     const teamName = producer.getIn(['info', 'org', 'name'])
     const bpLocation = producer.getIn(['info', 'nodes', '0', 'location', 'name'])
     const website = producer.getIn(['info', 'org', 'website'])
     const logo = producer.getIn(['info', 'org', 'branding', 'logo'])
-    const graColor = weight === 1 ? Colors.recommandColor : Colors.cooperateColor
+    const graColor = weight === 1 ? Colors.cooperateColor :Colors.recommandColor
     const owner = producer.get('owner')
     const url = producer.get('url')
     const totalVotes = producer.get('total_votes')
@@ -39,7 +39,7 @@ export default class Header extends Component {
           <View style={[styles.header, styles.between]}>
             <View style={{ alignItems: 'center', flexDirection: 'row' }}>
               {
-                !!logo ? 
+                !!logo ?
                 <Image source={{ uri: `https://storage.googleapis.com/bitportal-cms/bp/${logo}` }} style={styles.icon} />
                 :
                 <Image source={Images.default_icon} style={styles.icon} />
@@ -52,8 +52,8 @@ export default class Header extends Component {
                   {!!weight &&
                     <LinearGradientContainer type="right" colors={graColor} style={[styles.center, styles.flag]} >
                       <Text style={[styles.text12, { marginHorizontal: 5, color: Colors.textColor_255_255_238 }]}>
-                        {weight === 1 && <FormattedMessage id="prod_name_tag_prmt" />}
-                        {weight === 2 && <FormattedMessage id="prod_name_tag_cprt" />}
+                        {weight === 1 && <FormattedMessage id="prod_name_tag_cprt" />}
+                        {weight >= 2 && <FormattedMessage id="prod_name_tag_prmt" />}
                       </Text>
                     </LinearGradientContainer>
                   }
@@ -80,6 +80,11 @@ export default class Header extends Component {
                   maximumFractionDigits={0}
                   minimumFractionDigits={0}
                 />
+                (<FormattedNumber
+                   value={votes}
+                   maximumFractionDigits={2}
+                   minimumFractionDigits={2}
+                 />%)
               </Text>
             </View>
           </View>
