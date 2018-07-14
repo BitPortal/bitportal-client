@@ -67,11 +67,13 @@ export default class Voting extends Component {
       isVisible: false,
       password: '',
       item: {},
-      selected: this.props.eosAccount.get('data').get('voter_info') ? this.props.eosAccount.get('data').get('voter_info').get('producers').toJS() : []
+      selected: this.props.eosAccount.get('data').get('voter_info') ? this.props.eosAccount.get('data').get('voter_info').get('producers').toJS() : [],
+      sortType: 'default'
     }
 
     this.voting = this.voting.bind(this)
     this.submitVoting = this.submitVoting.bind(this)
+    this.changeSort = this.changeSort.bind(this)
   }
 
   componentDidMount() {
@@ -81,6 +83,18 @@ export default class Voting extends Component {
 
   componentWillUpdate() {
     LayoutAnimation.easeInEaseOut()
+  }
+
+  changeSort() {
+    if (this.state.sortType === 'default') {
+      this.setState({ sortType: 'ranking' }, () => {
+        this.props.actions.sortProducers('ranking')
+      })
+    } else {
+      this.setState({ sortType: 'default' }, () => {
+        this.props.actions.sortProducers('default')
+      })
+    }
   }
 
   checkRules = () => {
@@ -218,7 +232,7 @@ export default class Voting extends Component {
             </LinearGradientContainer>
           </View>
           <View style={[styles.titleContainer, styles.between]}>
-            <Text style={[styles.text14, { color: Colors.textColor_181_181_181 }]}>
+            <Text style={[styles.text14, { color: Colors.textColor_181_181_181 }]} onPress={this.changeSort}>
               <FormattedMessage id="vt_sec_title_def" />/<FormattedMessage id="vt_sec_title_rk" />
             </Text>
             {/* <Text style={[styles.text14, { color: Colors.textColor_181_181_181 }]}> Votes </Text> */}

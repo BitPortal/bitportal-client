@@ -49,7 +49,7 @@ export default class AssetQRCode extends Component {
 
   // 复制二维码对应值
   copyQrcodeValue = () => {
-    Clipboard.setString(eosQrString(this.props.accountName, this.state.value))
+    Clipboard.setString(eosQrString(this.props.accountName, this.state.value, 'EOS'))
     this.setState({ isCopied: true })
     this.startTimer()
   }
