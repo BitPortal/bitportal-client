@@ -39,9 +39,13 @@ declare interface RootState {
 }
 
 declare interface FetchOptions {
-  headers: object
-  method: FetchMethod
-  body?: string | FormData
+  baseUrl?: string
+  auth?: boolean
+  headers?: {
+    Accept?: string
+    'Content-Type'?: string
+    Authorization?: string | null
+  }
 }
 
 declare interface SuccessResponse {

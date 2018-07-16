@@ -107,12 +107,7 @@ const validate = (values, props) => {
 @reduxForm({ form: 'importEOSAccountForm', validate })
 
 export default class ImportEOSAccountForm extends Component {
-  constructor(props, context) {
-    super(props, context)
-    this.submit = this.submit.bind(this)
-  }
-
-  submit(data) {
+  submit = (data) => {
     this.props.actions.importEOSAccountRequested(data.set('componentId', this.props.componentId).delete('confirmedPassword').toJS())
   }
 

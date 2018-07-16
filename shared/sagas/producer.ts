@@ -11,16 +11,16 @@ function* getProducersRequested(action: Action<GetProducersParams>) {
     const eos = yield call(initEOS, {})
     const producers = yield call(eos.getProducers, action.payload)
     yield put(actions.getProducersSucceeded(producers))
-    yield put(actions.getProducersInfoRequested())
+    yield put(actions.getProducersInfoRequested({ _limit: 500 }))
   } catch (e) {
     yield put(actions.getProducersFailed(e.message))
   }
 }
 
-function* getProducersInfoRequested(action) {
+function* getProducersInfoRequested(action: Action<GetProducersInfoParams>) {
   try {
-    const producers = yield call(api.getProducersInfo, { _limit: 500 })
-    const info = producers.reduce((info, producer) => ({ ...info, [producer.account_name]: producer }), {})
+    const producers = yield call(api.getProducersInfo, action.payload)
+    const info = producers.reduce((info: any, producer: any) => ({ ...info, [producer.account_name]: producer }), {})
     yield put(actions.getProducersInfoSucceeded(info))
   } catch (e) {
     yield put(actions.getProducersInfoFailed(e.message))

@@ -1,5 +1,6 @@
 import Eos from 'eosjs'
 import { EOS_API_URL } from 'constants/env'
+import storage from 'utils/storage'
 
 const ecc = Eos.modules.ecc
 let eos: any
