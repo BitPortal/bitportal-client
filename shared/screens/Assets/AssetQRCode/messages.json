@@ -2,11 +2,13 @@
   "zh": {
     "qrcode_button_name_copy": "复制",
     "qrcode_button_name_copied": "已复制",
-    "qrcode_button_name_share": "分享"
+    "qrcode_button_name_share": "分享",
+    "qrcode_button_name_amount": "金额"
   },
   "en": {
     "qrcode_button_name_copy": "Copy",
     "qrcode_button_name_copied": "Copied",
-    "qrcode_button_name_share": "Share"
+    "qrcode_button_name_share": "Share",
+    "qrcode_button_name_amount": "Amount"
   }
 }

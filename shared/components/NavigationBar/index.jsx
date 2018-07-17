@@ -53,6 +53,17 @@ export const CommonRightButton = ({ iconName, onPress }) => (
   </TouchableOpacity>
 )
 
+export const LinkingRightButton = ({ iconName, title, onPress }) => (
+  <TouchableOpacity
+    style={styles.navButton}
+    onPress={onPress}
+  >
+    <View style={{ alignSelf: 'flex-end', marginRight: 32 }}>
+      { iconName && <Ionicons name={iconName} size={24} color={Colors.bgColor_FFFFFF} /> }
+    </View>
+  </TouchableOpacity>
+)
+
 export const ListButton = ({ label, onPress }) => (
   <TouchableOpacity onPress={() => onPress()} style={styles.navButton}>
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
