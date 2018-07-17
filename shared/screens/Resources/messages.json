@@ -1,7 +1,7 @@
 {
   "zh": {
     "reslist_title_name_resources" : "资源管理",
-    "reslist_title_name_ram" : "储存容量",
+    "reslist_title_name_ram" : "内存容量",
     "reslist_title_name_bw": "网络带宽",
     "reslist_title_name_cpu": "计算资源",
     "reslist_title_name_ava": "可用:",
@@ -12,7 +12,7 @@
   },
   "en": {
     "reslist_title_name_resources" : "Resources",
-    "reslist_title_name_ram" : "Memory",
+    "reslist_title_name_ram" : "RAM",
     "reslist_title_name_bw" : "BandWidth",
     "reslist_title_name_cpu": "CPU",
     "reslist_title_name_ava": "Available:",

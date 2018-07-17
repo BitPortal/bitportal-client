@@ -39,6 +39,7 @@ export default class MediafaxScreen extends Component {
           name: `BitPortal.BPWebView`,
           passProps: {
             title,
+            needLinking: true,
             uri: MediafaxUrls[title]
           }
         }
