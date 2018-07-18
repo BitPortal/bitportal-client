@@ -8,8 +8,7 @@ import styles from '../styles'
 class NewsList extends PureComponent {
   keyExtractor = item => item.id
 
-  renderItem = ({ item }) =>
-    <NewsRow
+  renderItem = ({ item }) => <NewsRow
       previewImage={item.previewImage}
       title={item.title}
       subTitle={item.subTitle}
@@ -18,7 +17,7 @@ class NewsList extends PureComponent {
       id={item.id}
       onRowPress={() => this.props.onRowPress(item)}
       key={item.id}
-    />
+  />
 
   renderSeparator = () => (
     <View style={{ height: 1, width: '100%', backgroundColor: Colors.bgColor_000000 }} />

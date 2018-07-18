@@ -10,7 +10,6 @@ import { connect } from 'react-redux'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import { bindActionCreators } from 'redux'
 import { NODES } from 'constants/nodeSettings'
-import { DefaultItem, DeleteButton, SwipeItem } from './NodeItem'
 import { SwipeListView } from 'react-native-swipe-list-view'
 import { FontScale } from 'utils/dimens'
 import storage from 'utils/storage'
@@ -19,6 +18,7 @@ import DialogAndroid from 'components/DialogAndroid'
 import { SwipeRow } from 'react-native-swipe-list-view'
 import { validateUrl } from 'utils/validate'
 import _ from 'lodash'
+import { DefaultItem, DeleteButton, SwipeItem } from './NodeItem'
 import messages from './messages'
 import styles from './styles'
 
@@ -28,7 +28,7 @@ import styles from './styles'
   }),
   dispatch => ({
     actions: bindActionCreators({
-      
+
     }, dispatch)
   }),
   null,
@@ -36,7 +36,6 @@ import styles from './styles'
 )
 
 export default class NodeSettings extends Component {
-
   static get options() {
     return {
       bottomTabs: {
@@ -76,7 +75,7 @@ export default class NodeSettings extends Component {
   // 激活并保存选中节点
   saveNode = async () => {
     await storage.mergeItem('bitportal.activeNode', { activeNode: this.state.activeNode }, true)
-    Dialog.alert(messages[this.props.locale]["ndst_button_name_saved"])
+    Dialog.alert(messages[this.props.locale].ndst_button_name_saved)
   }
 
   // 弹出添加弹框
@@ -86,18 +85,18 @@ export default class NodeSettings extends Component {
       this.setState({ isVisible: true })
     } else {
       const { action, text } = await Dialog.prompt(
-        messages[locale]["ndst_title_popup_addNode"],
+        messages[locale].ndst_title_popup_addNode,
         null,
         {
-          positiveText: messages[locale]["ndst_setting_popup_ent"],
-          negativeText: messages[locale]["ndst_setting_popup_can"],
+          positiveText: messages[locale].ndst_setting_popup_ent,
+          negativeText: messages[locale].ndst_setting_popup_can,
           disableSecureText: 'plain-text'
         }
       )
-      if ( action == Dialog.actionPositive ) return this.saveCustomNodes(text)
+      if (action == Dialog.actionPositive) return this.saveCustomNodes(text)
     }
   }
-  
+
   // only android 前往保存
   handleConfirm = () => {
     this.saveCustomNodes(this.state.customNode)
@@ -125,7 +124,7 @@ export default class NodeSettings extends Component {
     })
   }
 
-  // 切换节点 
+  // 切换节点
   switchNode = (activeNode) => {
     this.setState({ activeNode })
   }
@@ -133,14 +132,14 @@ export default class NodeSettings extends Component {
   // 检测节点有效性
   validateCustomeNode = (customNode) => {
     if (!validateUrl(customNode)) {
-      Dialog.alert(messages[locale]["ndst_button_name_errnd"])
+      Dialog.alert(messages[locale].ndst_button_name_errnd)
       return false
-    } 
-    const index = _.findIndex(this.state.CUSTOM_NODES.concat(NODES), (node) => node == customNode )
+    }
+    const index = _.findIndex(this.state.CUSTOM_NODES.concat(NODES), node => node == customNode)
     if (index != -1) {
-      Dialog.alert(messages[locale]["ndst_button_name_dplnd"])
+      Dialog.alert(messages[locale].ndst_button_name_dplnd)
       return false
-    } 
+    }
     return true
   }
 
@@ -151,7 +150,7 @@ export default class NodeSettings extends Component {
         <SwipeItem
           item={rowData}
           onPress={() => this.switchNode(rowData)}
-          active={rowData == activeNode} 
+          active={rowData == activeNode}
           deleteItem={() => this.deleteCustomNodes(rowData, secId, rowId, rowMap)}
         />
       )
@@ -166,7 +165,7 @@ export default class NodeSettings extends Component {
       <View>
         <View style={styles.headTitle}><Text style={styles.text14}> 默认节点 </Text></View>
         {
-          NODES.map((item, index) => <DefaultItem key={index} item={item} active={activeNode==item} onPress={this.switchNode} />)
+          NODES.map((item, index) => <DefaultItem key={index} item={item} active={activeNode == item} onPress={this.switchNode} />)
         }
         {CUSTOM_NODES.length > 0 && <View style={styles.headTitle}><Text style={styles.text14}> 自定义节点 </Text></View>}
       </View>
@@ -180,9 +179,9 @@ export default class NodeSettings extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale]["ndst_title_name_nodesettings"]}
+            title={messages[locale].ndst_title_name_nodesettings}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
-            rightButton={<CommonButton title={messages[locale]["ndst_button_name_save"]} onPress={this.saveNode} extraTextStyle={{ fontSize: FontScale(18), color: Colors.textColor_89_185_226 }} />}
+            rightButton={<CommonButton title={messages[locale].ndst_button_name_save} onPress={this.saveNode} extraTextStyle={{ fontSize: FontScale(18), color: Colors.textColor_89_185_226 }} />}
           />
           <View style={styles.scrollContainer}>
             <SwipeListView
@@ -195,19 +194,19 @@ export default class NodeSettings extends Component {
           </View>
           <View style={[styles.btnContainer, styles.center]}>
             <TouchableOpacity style={[styles.center, styles.btn]} onPress={this.addCustomNodes}>
-              <Text style={[styles.text14, { color: Colors.textColor_255_255_238}]}> 
-                <FormattedMessage id="ndst_button_name_add" /> 
+              <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>
+                <FormattedMessage id="ndst_button_name_add" />
               </Text>
             </TouchableOpacity>
           </View>
           {
-            Platform.OS === 'android' &&
-            <DialogAndroid
-              tilte={messages[locale]["ndst_title_popup_addNode"]}
-              content={''}
+            Platform.OS === 'android'
+            && <DialogAndroid
+              tilte={messages[locale].ndst_title_popup_addNode}
+              content=""
               disableSecureText={true}
-              positiveText={messages[locale]["ndst_setting_popup_ent"]}
-              negativeText={messages[locale]["ndst_setting_popup_can"]}
+              positiveText={messages[locale].ndst_setting_popup_ent}
+              negativeText={messages[locale].ndst_setting_popup_can}
               onChange={customNode => this.setState({ customNode })}
               isVisible={this.state.isVisible}
               handleCancel={() => this.setState({ isVisible: false })}

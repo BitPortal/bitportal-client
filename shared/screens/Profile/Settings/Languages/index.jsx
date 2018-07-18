@@ -51,7 +51,7 @@ export default class Languages extends Component {
   }
 
   render() {
-    const locale = this.state.locale  || this.props.locale
+    const locale = this.state.locale || this.props.locale
 
     return (
       <IntlProvider messages={messages[locale]}>

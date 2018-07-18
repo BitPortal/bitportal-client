@@ -4,7 +4,6 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { Text, View, ScrollView, TouchableOpacity, Linking } from 'react-native'
 import { Navigation } from 'react-native-navigation'
-import styles from './styles'
 import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
@@ -15,6 +14,7 @@ import { ramPriceSelector } from 'selectors/ram'
 import TradeRAMForm from 'components/Form/TradeRAMForm'
 import * as ramActions from 'actions/ram'
 import { formatMemorySize } from 'utils/format'
+import styles from './styles'
 import messages from './messages'
 import Progress from '../Progress'
 
@@ -49,9 +49,9 @@ export default class Memory extends Component {
 
   checkRamPrice = () => {
     const url = 'https://eos.feexplorer.io/'
-    Linking.canOpenURL(url).then(supported => {
+    Linking.canOpenURL(url).then((supported) => {
       if (!supported) {
-        console.log('Can\'t handle url: ' + url);
+        console.log(`Can't handle url: ${url}`);
       } else {
         return Linking.openURL(url);
       }
@@ -67,7 +67,7 @@ export default class Memory extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale]['memory_title_name_memory']}
+            title={messages[locale].memory_title_name_memory}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
@@ -84,7 +84,7 @@ export default class Memory extends Component {
                     /{formatMemorySize(activeEOSAccount.get('ram_quota'))}
                   </Text>
                 </View>
-                <View style={[styles.totalContainer, styles.between, {marginTop: 0}]}>
+                <View style={[styles.totalContainer, styles.between, { marginTop: 0 }]}>
                   <Text style={styles.text14}><FormattedMessage id="memory_title_name_ramprice" /></Text>
                   <Text onPress={this.checkRamPrice} style={styles.text14}>
                     <Text style={{ color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }}>
@@ -101,9 +101,9 @@ export default class Memory extends Component {
               <TradeRAMForm />
               <View style={styles.tipsContainer}>
                 <Text style={styles.text16}><FormattedMessage id="memory_title_name_tips" /></Text>
-                <Text style={[styles.text14, {marginTop: 15}]}><FormattedMessage id="memory_title_name_tip1" /></Text>
-                <Text style={[styles.text14, {marginTop: 10}]}><FormattedMessage id="memory_title_name_tip2" /></Text>
-                <Text style={[styles.text14, {marginTop: 10}]}><FormattedMessage id="memory_title_name_tip3" /></Text>
+                <Text style={[styles.text14, { marginTop: 15 }]}><FormattedMessage id="memory_title_name_tip1" /></Text>
+                <Text style={[styles.text14, { marginTop: 10 }]}><FormattedMessage id="memory_title_name_tip2" /></Text>
+                <Text style={[styles.text14, { marginTop: 10 }]}><FormattedMessage id="memory_title_name_tip3" /></Text>
               </View>
             </ScrollView>
           </View>

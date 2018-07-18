@@ -19,7 +19,6 @@ import styles from './styles'
 )
 
 export default class Header extends Component {
-
   render() {
     const { locale, producer, votes } = this.props
     const weight = +producer.getIn(['info', 'weight'])
@@ -28,7 +27,7 @@ export default class Header extends Component {
     const bpLocation = producer.getIn(['info', 'nodes', '0', 'location', 'name'])
     const website = producer.getIn(['info', 'org', 'website'])
     const logo = producer.getIn(['info', 'org', 'branding', 'logo'])
-    const graColor = weight === 1 ? Colors.cooperateColor :Colors.recommandColor
+    const graColor = weight === 1 ? Colors.cooperateColor : Colors.recommandColor
     const owner = producer.get('owner')
     const url = producer.get('url')
     const totalVotes = producer.get('total_votes')
@@ -39,18 +38,17 @@ export default class Header extends Component {
           <View style={[styles.header, styles.between]}>
             <View style={{ alignItems: 'center', flexDirection: 'row' }}>
               {
-                !!logo ?
-                <Image source={{ uri: `https://storage.googleapis.com/bitportal-cms/bp/${logo}` }} style={styles.icon} />
-                :
-                <Image source={Images.default_icon} style={styles.icon} />
+                logo
+                  ? <Image source={{ uri: `https://storage.googleapis.com/bitportal-cms/bp/${logo}` }} style={styles.icon} />
+                  : <Image source={Images.default_icon} style={styles.icon} />
               }
               <View style={{ marginLeft: 10 }}>
                 <View style={{ alignItems: 'center', flexDirection: 'row' }}>
                   <Text style={[styles.text16, { fontWeight: 'bold', marginRight: 10 }]}>
                     {teamName || owner}
                   </Text>
-                  {!!weight &&
-                    <LinearGradientContainer type="right" colors={graColor} style={[styles.center, styles.flag]} >
+                  {!!weight
+                    && <LinearGradientContainer type="right" colors={graColor} style={[styles.center, styles.flag]}>
                       <Text style={[styles.text12, { marginHorizontal: 5, color: Colors.textColor_255_255_238 }]}>
                         {weight === 1 && <FormattedMessage id="prod_name_tag_cprt" />}
                         {weight >= 2 && <FormattedMessage id="prod_name_tag_prmt" />}
@@ -63,7 +61,7 @@ export default class Header extends Component {
               </View>
             </View>
           </View>
-          <View style={[styles.info, { marginVertical: 10}]}>
+          <View style={[styles.info, { marginVertical: 10 }]}>
             {!!teamLocation && <View style={[styles.between]}>
               <Text style={styles.text14}><FormattedMessage id="prod_sec_info_teamloc" />:</Text>
               <Text style={styles.text14}>{teamLocation}</Text>
@@ -84,7 +82,7 @@ export default class Header extends Component {
                    value={votes}
                    maximumFractionDigits={2}
                    minimumFractionDigits={2}
-                 />%)
+                />%)
               </Text>
             </View>
           </View>

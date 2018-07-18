@@ -90,7 +90,7 @@ export default class TransferCard extends Component {
           <View style={styles.container}>
             <TouchableOpacity onPress={() => onPress()} style={{ flex: 1 }} />
             <View style={[styles.header, styles.between]}>
-              <TouchableOpacity onPress={() => onPress()} style={[styles.center, styles.close]} >
+              <TouchableOpacity onPress={() => onPress()} style={[styles.center, styles.close]}>
                 <Ionicons name="ios-close" size={28} color={Colors.bgColor_FFFFFF} />
               </TouchableOpacity>
               <Text style={styles.text18}> <FormattedMessage id="sndcfm_title_name_cfm" /> </Text>

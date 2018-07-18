@@ -6,16 +6,16 @@ import { Navigation } from 'react-native-navigation'
 import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import ResourcesCard from './ResourcesCard'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { formatMemorySize, formatCycleTime } from 'utils/format'
+import ResourcesCard from './ResourcesCard'
 import styles from './styles'
 import messages from './messages'
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale'),
     wallet: state.wallet,
     eosAccount: eosAccountSelector(state)
@@ -70,7 +70,7 @@ export default class Resources extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale]['reslist_title_name_resources']}
+            title={messages[locale].reslist_title_name_resources}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
@@ -108,7 +108,7 @@ export default class Resources extends Component {
                 onPress={() => this.check('ram')}
                 title={<FormattedMessage id="reslist_title_name_ram" />}
                 availableText={<FormattedMessage id="reslist_title_name_ava" />}
-                available={formatMemorySize(activeEOSAccount.get('ram_quota')-activeEOSAccount.get('ram_usage'))}
+                available={formatMemorySize(activeEOSAccount.get('ram_quota') - activeEOSAccount.get('ram_usage'))}
                 totalText={<FormattedMessage id="reslist_title_name_ramttl" />}
                 total={formatMemorySize(activeEOSAccount.get('ram_quota'))}
                 usageText={<FormattedMessage id="reslist_title_name_usgttl" />}

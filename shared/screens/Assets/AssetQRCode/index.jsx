@@ -95,7 +95,7 @@ export default class AssetQRCode extends Component {
                 style={styles.input}
                 selectionColor={Colors.textColor_89_185_226}
                 keyboardAppearance={Colors.keyboardTheme}
-                placeholder={messages[locale]["qrcode_button_name_amount"]}
+                placeholder={messages[locale].qrcode_button_name_amount}
                 onChangeText={e => this.onChangeText(e)}
                 value={this.state.value}
               />

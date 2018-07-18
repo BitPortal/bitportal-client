@@ -63,8 +63,7 @@ export default class ExportPrivateKey extends Component {
                   <FormattedMessage id="expvk_txtbox_title_pvk_owner" />
                 </Text>
                 <View style={[styles.inputContainer]}>
-                  {ownerWifs.map(item =>
-                    <TextInput
+                  {ownerWifs.map(item => <TextInput
                       key={item}
                       editable={false}
                       multiline={true}
@@ -75,15 +74,14 @@ export default class ExportPrivateKey extends Component {
                       placeholder="owner private key"
                       placeholderTextColor={Colors.textColor_181_181_181}
                       value={item}
-                    />
-                   )}
+                  />
+                  )}
                 </View>
                 <Text style={[styles.text16, { marginLeft: -1, marginTop: 30, marginBottom: 10 }]}>
                   <FormattedMessage id="expvk_txtbox_title_pvk_active" />
                 </Text>
                 <View style={[styles.inputContainer]}>
-                  {activeWifs.map(item =>
-                    <TextInput
+                  {activeWifs.map(item => <TextInput
                       key={item}
                       editable={false}
                       multiline={true}
@@ -94,8 +92,8 @@ export default class ExportPrivateKey extends Component {
                       placeholder="active private key"
                       placeholderTextColor={Colors.textColor_181_181_181}
                       value={item}
-                    />
-                   )}
+                  />
+                  )}
                 </View>
                 {/* <TouchableHighlight
                     onPress={() => this.copyPrivateKey()}

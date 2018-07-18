@@ -48,7 +48,7 @@ export default class WalletCard extends Component {
 
     return (
       <LinearGradientContainer type="right" colors={colors} style={[styles.linearContainer, { marginHorizontal: 32, marginTop: 20 }]}>
-        <TouchableHighlight style={styles.linearContainer} underlayColor="transparent" onPress={() => onPress()} >
+        <TouchableHighlight style={styles.linearContainer} underlayColor="transparent" onPress={() => onPress()}>
           <View style={[styles.linearContainer]}>
             <View style={[styles.between, styles.info, styles.topRadius]}>
               <Text style={styles.text16}>{assetName}</Text>

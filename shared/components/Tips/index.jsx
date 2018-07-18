@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
 })
 
 export default class Tips extends Component {
-
   alertTips = () => {
     Dialog.alert('提示', this.props.tips, { positiveText: '确定' })
   }
@@ -42,5 +41,4 @@ export default class Tips extends Component {
       </TouchableOpacity>
     )
   }
- 
 }

@@ -66,15 +66,14 @@ export default class Discovery extends Component {
   getBanner = () => {
     try {
       const data = this.props.bannerData.toJS()
-      return data.map(item =>
-        <NewsBannerCard
+      return data.map(item => <NewsBannerCard
           imageUrl={item.img_url}
           title={item.title}
           // api don't have subtitle
           subTitle={item.subTitle || ''}
           key={item.id}
           onPress={() => this.onBannerPress(item)}
-        />
+      />
       )
     } catch (e) {
       return []
@@ -89,7 +88,7 @@ export default class Discovery extends Component {
     if (item.type === 'link' && item.jumpUrl && item.jumpUrl.length > 0) {
       Navigation.push(this.props.componentId, {
         component: {
-          name: `BitPortal.DiscoveryArticle`,
+          name: 'BitPortal.DiscoveryArticle',
           passProps: {
             url: item.jumpUrl,
             title: item.title,
@@ -112,7 +111,7 @@ export default class Discovery extends Component {
   onBannerPress = (item) => {
     Navigation.push(this.props.componentId, {
       component: {
-        name: `BitPortal.DiscoveryArticle`,
+        name: 'BitPortal.DiscoveryArticle',
         passProps: {
           url: item.jumpUrl,
           title: item.title,

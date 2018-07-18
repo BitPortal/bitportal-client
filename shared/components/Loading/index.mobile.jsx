@@ -34,7 +34,7 @@ export default class Loading extends Component {
         animationIn="fadeIn"
         animationOut="fadeOut"
         isVisible={isVisible}
-        backdropOpacity={backdropOpacity ? backdropOpacity : 0.3}
+        backdropOpacity={backdropOpacity || 0.3}
       >
         <View style={[styles.container, styles.center, extraStyle]}>
           <View style={borderStyle}>

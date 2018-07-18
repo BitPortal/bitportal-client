@@ -221,8 +221,8 @@ export default class Voting extends Component {
               />
               {' EOS'}
             </Text>
-            <LinearGradientContainer type="right" colors={Colors.voteColor} style={[styles.resourcesBtn, { marginRight: -10 }]} >
-              <TouchableWithoutFeedback style={styles.center} underlayColor="transparent" onPress={() => this.checkResources()} >
+            <LinearGradientContainer type="right" colors={Colors.voteColor} style={[styles.resourcesBtn, { marginRight: -10 }]}>
+              <TouchableWithoutFeedback style={styles.center} underlayColor="transparent" onPress={() => this.checkResources()}>
                 <View>
                   <Text style={[styles.text14, { marginHorizontal: 10, marginVertical: 2 }]}>
                     <FormattedMessage id="vt_rscs_button_rscs" />
@@ -252,8 +252,8 @@ export default class Voting extends Component {
             <Text style={styles.text14}><FormattedMessage id="vt_btmsec_name_selected" /></Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={[styles.text14, { marginRight: 15 }]}>{this.state.selected.length}/30</Text>
-              <LinearGradientContainer type="right" colors={disabled ? Colors.disabled : Colors.voteColor} style={styles.voteBtn} >
-                <TouchableWithoutFeedback onPress={disabled ? () => {} : this.vote} style={styles.center} disabled={disabled} >
+              <LinearGradientContainer type="right" colors={disabled ? Colors.disabled : Colors.voteColor} style={styles.voteBtn}>
+                <TouchableWithoutFeedback onPress={disabled ? () => {} : this.vote} style={styles.center} disabled={disabled}>
                   <View>
                     <Text style={[styles.text14, { marginHorizontal: 10, marginVertical: 2 }]}>
                       <FormattedMessage id="vt_button_name_vote" />
@@ -272,8 +272,8 @@ export default class Voting extends Component {
             isVoting={isVoting}
           />
           {
-            Platform.OS === 'android' &&
-            <DialogAndroid
+            Platform.OS === 'android'
+            && <DialogAndroid
               tilte={messages[locale].vt_popup_title_pwd}
               content=""
               positiveText={messages[locale].vt_popup_buttom_ent}

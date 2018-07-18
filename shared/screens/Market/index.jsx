@@ -74,7 +74,7 @@ export default class Market extends Component {
 
   // 点击查看币种行情
   pressListItem = () => {
-    
+
   }
 
   // 刷新数据

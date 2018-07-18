@@ -70,10 +70,9 @@ class CardSilder extends PureComponent {
           scrollEventThrottle={20}
         >
           {
-            this.props.children.map((item, index) =>
-              <View style={styles.card} key={index}>
-                {item}
-              </View>)
+            this.props.children.map((item, index) => <View style={styles.card} key={index}>
+              {item}
+            </View>)
           }
         </ScrollView>
       </View>

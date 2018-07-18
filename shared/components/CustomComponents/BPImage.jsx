@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import { Image, Animated, Easing } from 'react-native'
+import { Animated, Easing } from 'react-native'
 
 export default class BPImage extends Component{
-
   state = {
-    defaultIcon: null,
     opacity: new Animated.Value(0)
   }
 
@@ -25,5 +23,4 @@ export default class BPImage extends Component{
       <Animated.Image style={{ opacity }} {...props} />
     )
   }
-
 }

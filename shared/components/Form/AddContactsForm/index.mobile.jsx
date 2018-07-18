@@ -62,7 +62,7 @@ export default class AddContactsForm extends Component {
   async submit(data) {
     const tempObj = { accountName: data.get('name'), memo: data.get('memo') }
     this.state.contacts.push(tempObj)
-    await storage.setItem('bitportal.contacts', { contacts: this.state.contacts } , true)
+    await storage.setItem('bitportal.contacts', { contacts: this.state.contacts }, true)
     Navigation.pop(this.props.componentId)
   }
 

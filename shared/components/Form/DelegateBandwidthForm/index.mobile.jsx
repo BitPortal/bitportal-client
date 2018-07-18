@@ -41,28 +41,28 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
-      return messages["dlgt_popup_title_pwderr"]
+      return messages.dlgt_popup_title_pwderr
     case 'account using more than allotted RAM usage':
-      return messages["dlgt_popup_title_mousg"]
+      return messages.dlgt_popup_title_mousg
     case 'transaction exceeded the current CPU usage limit imposed on the transaction':
-      return messages["dlgt_popup_title_exlimit"]
+      return messages.dlgt_popup_title_exlimit
     default:
-      return messages["dlgt_popup_title_trafail"]
+      return messages.dlgt_popup_title_trafail
   }
 }
 
 const validate = (values, props) => {
   const { eosAccount } = props
   const eosBalance = eosAccount.getIn(['data', 'core_liquid_balance']) ? eosAccount.getIn(['data', 'core_liquid_balance']).split(' ')[0] : 0
-  const netWeight =  eosAccount.getIn(['data', 'total_resources', 'net_weight']) ? eosAccount.getIn(['data', 'total_resources', 'net_weight']).split(' ')[0] : 0
+  const netWeight = eosAccount.getIn(['data', 'total_resources', 'net_weight']) ? eosAccount.getIn(['data', 'total_resources', 'net_weight']).split(' ')[0] : 0
   const cpuWeight = eosAccount.getIn(['data', 'total_resources', 'cpu_weight']) ? eosAccount.getIn(['data', 'total_resources', 'cpu_weight']).split(' ')[0] : 0
 
   const errors = {}
 
   if (!+values.get('quant')) {
-    errors.quant = messages[props.locale]["dlgt_popup_title_epteosinput"]
+    errors.quant = messages[props.locale].dlgt_popup_title_epteosinput
   } else if (!validateUnitByCurrency('EOS')(values.get('quant'))){
-    errors.quant = messages[props.locale]["dlgt_popup_title_invalideinput"]
+    errors.quant = messages[props.locale].dlgt_popup_title_invalideinput
   }
 
   const activeForm = props.bandwidth.get('activeForm')
@@ -70,16 +70,14 @@ const validate = (values, props) => {
 
   if (activeForm === 'Delegate') {
     if (+eosBalance < +values.get('quant')) {
-      errors.quant = messages[props.locale]["dlgt_popup_title_enbyteinput"]
+      errors.quant = messages[props.locale].dlgt_popup_title_enbyteinput
     }
   } else if (resource === 'net') {
     if (+netWeight < +values.get('quant')) {
-      errors.quant = messages[props.locale]["dlgt_popup_title_enbyteinput"]
+      errors.quant = messages[props.locale].dlgt_popup_title_enbyteinput
     }
-  } else {
-    if (+cpuWeight < +values.get('quant')) {
-      errors.quant = messages[props.locale]["dlgt_popup_title_enbyteinput"]
-    }
+  } else if (+cpuWeight < +values.get('quant')) {
+    errors.quant = messages[props.locale].dlgt_popup_title_enbyteinput
   }
 
   return errors
@@ -124,11 +122,11 @@ export default class DelegateBandwidthForm extends Component {
   async submit(data) {
     if (Platform.OS == 'ios') {
       const { action, text } = await Dialogs.prompt(
-        messages[this.props.locale]["dlgt_popup_title_pwd"],
+        messages[this.props.locale].dlgt_popup_title_pwd,
         null,
         {
-          positiveText: messages[this.props.locale]["dlgt_popup_buttom_ent"],
-          negativeText: messages[this.props.locale]["dlgt_popup_buttom_can"]
+          positiveText: messages[this.props.locale].dlgt_popup_buttom_ent,
+          negativeText: messages[this.props.locale].dlgt_popup_buttom_can
         }
       )
       if (action === Dialogs.actionPositive) {
@@ -165,7 +163,7 @@ export default class DelegateBandwidthForm extends Component {
     const error = bandwidth.get('error')
     const disabled = invalid || pristine || loading
     const eosBalance = eosAccount.getIn(['data', 'core_liquid_balance']) ? eosAccount.getIn(['data', 'core_liquid_balance']).split(' ')[0] : 0
-    const netWeight =  eosAccount.getIn(['data', 'total_resources', 'net_weight']) ? eosAccount.getIn(['data', 'total_resources', 'net_weight']).split(' ')[0] : 0
+    const netWeight = eosAccount.getIn(['data', 'total_resources', 'net_weight']) ? eosAccount.getIn(['data', 'total_resources', 'net_weight']).split(' ')[0] : 0
     const cpuWeight = eosAccount.getIn(['data', 'total_resources', 'cpu_weight']) ? eosAccount.getIn(['data', 'total_resources', 'cpu_weight']).split(' ')[0] : 0
     const availableBalance = this.state.activeForm === 'Delegate' ? eosBalance : (this.props.resource === 'net' ? netWeight : cpuWeight)
 
@@ -173,7 +171,7 @@ export default class DelegateBandwidthForm extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.delegateBandwidthForm}>
           <Switch itemList={['Delegate', 'Undelegate']} active={this.state.activeForm} onSwitch={this.switchForm} />
-          <Balance title={messages[locale]["tra_popup_title_baln"]} value={availableBalance} unit="EOS" />
+          <Balance title={messages[locale].tra_popup_title_baln} value={availableBalance} unit="EOS" />
           <FormContainer>
             <Field
               name="quant"
@@ -186,17 +184,17 @@ export default class DelegateBandwidthForm extends Component {
               disabled={disabled}
               loading={loading}
               onPress={handleSubmit(this.submit)}
-              text={this.state.activeForm === 'Delegate' ? messages[locale]["dlgt_popup_title_dlgt"] : messages[locale]["dlgt_popup_title_undlgt"]}
+              text={this.state.activeForm === 'Delegate' ? messages[locale].dlgt_popup_title_dlgt : messages[locale].dlgt_popup_title_undlgt}
             />
             <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearError} />
-            <Alert message={!!showSuccess && messages[locale]['dlgt_popup_title_trasucc']} dismiss={this.props.actions.hideSuccessModal} />
+            <Alert message={!!showSuccess && messages[locale].dlgt_popup_title_trasucc} dismiss={this.props.actions.hideSuccessModal} />
             {
-              Platform.OS === 'android' &&
-              <DialogAndroid
-                tilte={messages[locale]["dlgt_popup_title_pwd"]}
+              Platform.OS === 'android'
+              && <DialogAndroid
+                tilte={messages[locale].dlgt_popup_title_pwd}
                 content=""
-                positiveText={messages[locale]["dlgt_popup_buttom_ent"]}
-                negativeText={messages[locale]["dlgt_popup_buttom_can"]}
+                positiveText={messages[locale].dlgt_popup_buttom_ent}
+                negativeText={messages[locale].dlgt_popup_buttom_can}
                 onChange={password => this.setState({ password })}
                 isVisible={this.state.isVisible}
                 handleCancel={() => this.setState({ isVisible: false })}

@@ -14,9 +14,9 @@ import {
 import { normalizeText } from 'utils/normalize'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
-import messages from './messages'
 import PasswordStrength from 'components/PasswordStrength'
 import { getPasswordStrength } from 'utils'
+import messages from './messages'
 
 const validate = (values, props) => {
   const errors = {}
@@ -56,7 +56,6 @@ const validate = (values, props) => {
 @reduxForm({ form: 'resetPasswordForm', validate })
 
 export default class ResetPasswordForm extends Component {
-
   constructor(props, context) {
     super(props, context)
     this.submit = this.submit.bind(this)

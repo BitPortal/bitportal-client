@@ -4,8 +4,8 @@ import React from 'react'
 import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { noop } from 'utils'
 import Colors from 'resources/colors'
-import styles from './styles'
 import Tips from 'components/Tips'
+import styles from './styles'
 
 export const FormContainer = ({ children }) => (
   <View style={styles.formContainer}>{children}</View>

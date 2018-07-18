@@ -18,7 +18,6 @@ import styles from './styles'
 )
 
 export default class Contacts extends Component {
-
   state = {
     folded: false
   }
@@ -44,10 +43,9 @@ export default class Contacts extends Component {
                 <FormattedMessage id="prod_sec_name_cont" />
               </Text>
               {
-                folded ?
-                <Ionicons name="ios-arrow-down" size={24} color={Colors.textColor_181_181_181} />
-                :
-                <Ionicons name="ios-arrow-up" size={24} color={Colors.textColor_181_181_181} />
+                folded
+                  ? <Ionicons name="ios-arrow-down" size={24} color={Colors.textColor_181_181_181} />
+                  : <Ionicons name="ios-arrow-up" size={24} color={Colors.textColor_181_181_181} />
               }
             </View>
           </TouchableHighlight>

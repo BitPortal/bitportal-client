@@ -40,11 +40,10 @@ class MarkdownPage extends Component {
             .replace(/\r/gi, '')
             .split('\n')
             .filter(item => item.length > 0)
-            .map((item, index) =>
-              <Markdown key={index} styles={markdownStyles}>
-                {item}
-              </Markdown>
-          )}
+            .map((item, index) => <Markdown key={index} styles={markdownStyles}>
+              {item}
+            </Markdown>
+            )}
         </ScrollView>
       </View>
     )

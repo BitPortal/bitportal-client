@@ -18,7 +18,6 @@ import styles from './styles'
 )
 
 export default class Introduction extends Component {
-
   state = {
     folded: false
   }
@@ -43,16 +42,15 @@ export default class Introduction extends Component {
                 <FormattedMessage id="prod_sec_name_intro" />
               </Text>
               {
-                folded ?
-                <Ionicons name="ios-arrow-down" size={24} color={Colors.textColor_181_181_181} />
-                :
-                <Ionicons name="ios-arrow-up" size={24} color={Colors.textColor_181_181_181} />
+                folded
+                  ? <Ionicons name="ios-arrow-down" size={24} color={Colors.textColor_181_181_181} />
+                  : <Ionicons name="ios-arrow-up" size={24} color={Colors.textColor_181_181_181} />
               }
             </View>
           </TouchableHighlight>
           {
-            !folded &&
-            <Text style={[styles.text14, { marginHorizontal: 32, marginBottom: 20 }]}>
+            !folded
+            && <Text style={[styles.text14, { marginHorizontal: 32, marginBottom: 20 }]}>
               {introduce}
             </Text>
           }

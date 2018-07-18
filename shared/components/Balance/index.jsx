@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Colors from 'resources/colors'
-import { View, Text, StyleSheet } from 'react-native'
-import { SCREEN_WDITH, SCREEN_HEIGHT, FontScale } from 'utils/dimens'
+import { View, Text } from 'react-native'
+import { FontScale } from 'utils/dimens'
 import EStyleSheet from 'react-native-extended-stylesheet'
 
 const styles = EStyleSheet.create({

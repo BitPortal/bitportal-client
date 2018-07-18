@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { WebView, View, Text, Share, Linking, Clipboard, TouchableHighlight, Platform } from 'react-native'
+import { WebView, View, Text, Share, Linking, Clipboard, TouchableHighlight } from 'react-native'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
-import NavigationBar, { CommonButton, CommonRightButton, LinkingRightButton } from 'components/NavigationBar'
+import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
 import Loading from 'components/Loading'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 // import ActionSheet from 'react-native-actionsheet'
@@ -20,7 +20,6 @@ import messages from './messages'
 )
 
 export default class BPWebView extends Component {
-
   static get options() {
     return {
       bottomTabs: {
@@ -37,11 +36,11 @@ export default class BPWebView extends Component {
   constructor(props) {
     super(props)
     this.options = [
-      'Cancel', 
-      'Apple', 
-      <Text style={{color: 'yellow'}}>Banana</Text>,
-      'Watermelon', 
-      <Text style={{color: 'red'}}>Durian</Text>
+      'Cancel',
+      'Apple',
+      <Text style={{ color: 'yellow' }}>Banana</Text>,
+      'Watermelon',
+      <Text style={{ color: 'red' }}>Durian</Text>
     ]
   }
 
@@ -62,7 +61,7 @@ export default class BPWebView extends Component {
       case 1:
         this.linking()
         break;
-    
+
       default:
         break;
     }
@@ -114,7 +113,7 @@ export default class BPWebView extends Component {
   )
 
   render() {
-    const { needShare, needLinking, uri, title, name, locale } = this.props
+    const { needShare, uri, title, name, locale } = this.props
     const { isCopied } = this.state
     return (
       <IntlProvider messages={messages[locale]}>
@@ -124,18 +123,18 @@ export default class BPWebView extends Component {
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
             rightButton={needShare && <CommonRightButton iconName="md-share" onPress={() => this.share()} />}
             // rightButton={
-            //   needLinking && 
-            //   <LinkingRightButton 
-            //     iconName={"ios-more"} 
-            //     onPress={this.linking} 
-            //   /> 
+            //   needLinking &&
+            //   <LinkingRightButton
+            //     iconName={"ios-more"}
+            //     onPress={this.linking}
+            //   />
             // }
           />
           <View style={styles.content}>
             {
-              uri && 
-              <WebView 
-                source={{ uri }} 
+              uri
+              && <WebView
+                source={{ uri }}
                 renderError={this.renderError}
                 renderLoading={this.renderLoading}
                 onLoadStart={this.onLoadStart}
@@ -149,8 +148,8 @@ export default class BPWebView extends Component {
               />
             }
             {
-              name && 
-              <View style={[styles.content, styles.center]}>
+              name
+              && <View style={[styles.content, styles.center]}>
                 <Text style={styles.text18}>
                   {title}{': '}{name}
                 </Text>
@@ -162,10 +161,9 @@ export default class BPWebView extends Component {
                 >
                   <Text style={[styles.text14, { color: isCopied ? Colors.textColor_181_181_181 : Colors.textColor_255_255_238 }]}>
                     {
-                      isCopied ? 
-                      <FormattedMessage id="web_button_name_copied" /> 
-                      : 
-                      <FormattedMessage id="web_button_name_copy" />
+                      isCopied
+                        ? <FormattedMessage id="web_button_name_copied" />
+                        : <FormattedMessage id="web_button_name_copy" />
                     }
                   </Text>
                 </TouchableHighlight>
@@ -184,6 +182,4 @@ export default class BPWebView extends Component {
       </IntlProvider>
     )
   }
-
 }
-

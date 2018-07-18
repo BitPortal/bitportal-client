@@ -41,7 +41,7 @@ export const DefaultItem = ({ item, onPress, active, disabled }) => (
   <TouchableWithoutFeedback
     underlayColor={Colors.hoverColor}
     style={styles.container}
-    disabled={disabled ? disabled : false}
+    disabled={disabled || false}
     onPress={() => onPress(item)}
   >
     <View style={[styles.container, styles.between, styles.border, { paddingHorizontal: 32 }]}>
@@ -72,7 +72,6 @@ export const DeleteButton = ({ onPress }) => (
 )
 
 class SwipeItem extends React.Component {
-
   state = {
     isSwiped: false
   }
@@ -111,8 +110,6 @@ class SwipeItem extends React.Component {
       </SwipeRow>
     )
   }
-
 }
 
-export { SwipeItem } 
-
+export { SwipeItem }

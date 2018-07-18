@@ -29,21 +29,21 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid owner private key!':
-      return messages['ast_imp_hint_invalidowner']
+      return messages.ast_imp_hint_invalidowner
     case 'Invalid active private key!':
-      return messages['ast_imp_hint_invalidactive']
+      return messages.ast_imp_hint_invalidactive
     case 'EOS account dose not exist!':
-      return messages['ast_imp_hint_eosaccount']
+      return messages.ast_imp_hint_eosaccount
     case 'Owner permission dose not exist!':
-      return messages['ast_imp_hint_ownerpermi']
+      return messages.ast_imp_hint_ownerpermi
     case 'Active permission dose not exist!':
-      return messages['ast_imp_hint_activepermi']
+      return messages.ast_imp_hint_activepermi
     case 'Unauthorized owner private key!':
-      return messages['ast_imp_hint_unauowner']
+      return messages.ast_imp_hint_unauowner
     case 'Unauthorized active private key!':
-      return messages['ast_imp_hint_unauactive']
+      return messages.ast_imp_hint_unauactive
     default:
-      return messages['ast_imp_hint_fail']
+      return messages.ast_imp_hint_fail
   }
 }
 

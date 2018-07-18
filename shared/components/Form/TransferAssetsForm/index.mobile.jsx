@@ -60,7 +60,7 @@ export default class TransferAssetsForm extends Component {
         />
         <Field
           name="memo"
-          placeholder={'Memo...'}
+          placeholder="Memo..."
           component={TextAreaField}
         />
         <SubmitButton disabled={disabled} onPress={handleSubmit(this.submit)} text="Next" />

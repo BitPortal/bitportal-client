@@ -1,7 +1,7 @@
 /* @tsx */
 
 import React, { Component } from 'react'
-import { Text,Image, View, ScrollView, TouchableOpacity } from 'react-native'
+import { Text, Image, View, ScrollView, TouchableOpacity } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import Images from 'resources/images'
 import SettingItem from 'components/SettingItem'
@@ -86,7 +86,7 @@ export default class About extends Component {
       component: {
         name: 'BitPortal.Welcome',
         passProps: {
-         from: 'about'
+          from: 'about'
         }
       }
     })
@@ -96,7 +96,7 @@ export default class About extends Component {
     if (validateUrl(MediafaxUrls[title])) {
       Navigation.push(this.props.componentId, {
         component: {
-          name: `BitPortal.BPWebView`,
+          name: 'BitPortal.BPWebView',
           passProps: {
             title,
             uri: MediafaxUrls[title]
@@ -106,7 +106,7 @@ export default class About extends Component {
     } else {
       Navigation.push(this.props.componentId, {
         component: {
-          name: `BitPortal.BPWebView`,
+          name: 'BitPortal.BPWebView',
           passProps: {
             title,
             name: MediafaxUrls[title]

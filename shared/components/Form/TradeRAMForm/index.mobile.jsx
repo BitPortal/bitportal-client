@@ -41,13 +41,13 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
-      return messages["tra_popup_title_pwderr"]
+      return messages.tra_popup_title_pwderr
     case 'account using more than allotted RAM usage':
-      return messages["tra_popup_title_mousg"]
+      return messages.tra_popup_title_mousg
     case 'transaction exceeded the current CPU usage limit imposed on the transaction':
-      return messages["tra_popup_title_exlimit"]
+      return messages.tra_popup_title_exlimit
     default:
-      return messages["tra_popup_title_trafail"]
+      return messages.tra_popup_title_trafail
   }
 }
 
@@ -60,19 +60,19 @@ const validate = (values, props) => {
   const errors = {}
 
   if (!+values.get('quant')) {
-    errors.quant = messages[props.locale]["tra_popup_title_epteosinput"]
+    errors.quant = messages[props.locale].tra_popup_title_epteosinput
   } else if (+eosBalance < +values.get('quant')) {
-    errors.quant = messages[props.locale]["tra_popup_title_enbyteinput"]
+    errors.quant = messages[props.locale].tra_popup_title_enbyteinput
   } else if (!validateUnitByCurrency('EOS')(values.get('quant'))) {
-    errors.quant = messages[props.locale]["tra_popup_title_invalideinput"]
+    errors.quant = messages[props.locale].tra_popup_title_invalideinput
   }
 
   if (!+values.get('bytes')) {
-    errors.bytes = messages[props.locale]["tra_popup_title_eptbyteinput"]
+    errors.bytes = messages[props.locale].tra_popup_title_eptbyteinput
   } else if ((+ramQuota - +ramUsage) < +values.get('bytes')) {
-    errors.bytes = messages[props.locale]["tra_popup_title_enbyteinput"]
+    errors.bytes = messages[props.locale].tra_popup_title_enbyteinput
   } else if (!validateUnitByFraction(0)(values.get('bytes'))) {
-    errors.bytes = messages[props.locale]["tra_popup_title_invalideinput"]
+    errors.bytes = messages[props.locale].tra_popup_title_invalideinput
   }
 
   return errors
@@ -115,11 +115,11 @@ export default class TradeRAMForm extends Component {
   async submit(data) {
     if (Platform.OS == 'ios') {
       const { action, text } = await Dialogs.prompt(
-        messages[this.props.locale]["tra_popup_title_pwd"],
+        messages[this.props.locale].tra_popup_title_pwd,
         null,
         {
-          positiveText: messages[this.props.locale]["tra_popup_buttom_ent"],
-          negativeText: messages[this.props.locale]["tra_popup_buttom_can"]
+          positiveText: messages[this.props.locale].tra_popup_buttom_ent,
+          negativeText: messages[this.props.locale].tra_popup_buttom_can
         }
       )
       if (action === Dialogs.actionPositive) {
@@ -163,7 +163,7 @@ export default class TradeRAMForm extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.buyRAMForm}>
           <Switch itemList={['Buy', 'Sell']} active={this.state.activeForm} onSwitch={this.switchForm} />
-          <Balance title={messages[locale]["tra_popup_title_baln"]} value={availableBalance} unit={availableBalanceUnit} />
+          <Balance title={messages[locale].tra_popup_title_baln} value={availableBalance} unit={availableBalanceUnit} />
           <FormContainer>
             {this.state.activeForm === 'Buy' && <Field
               name="quant"
@@ -183,17 +183,17 @@ export default class TradeRAMForm extends Component {
               disabled={disabled}
               loading={loading}
               onPress={handleSubmit(this.submit)}
-              text={this.state.activeForm === 'Buy' ? messages[locale]['tra_popup_title_buy'] : messages[locale]['tra_popup_title_sell']}
+              text={this.state.activeForm === 'Buy' ? messages[locale].tra_popup_title_buy : messages[locale].tra_popup_title_sell}
             />
             <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearError} />
-            <Alert message={!!showSuccess && messages[locale]['tra_popup_title_trasucc']} dismiss={this.props.actions.hideSuccessModal} />
+            <Alert message={!!showSuccess && messages[locale].tra_popup_title_trasucc} dismiss={this.props.actions.hideSuccessModal} />
             {
-              Platform.OS === 'android' &&
-              <DialogAndroid
-                tilte={messages[locale]["tra_popup_title_pwd"]}
+              Platform.OS === 'android'
+              && <DialogAndroid
+                tilte={messages[locale].tra_popup_title_pwd}
                 content=""
-                positiveText={messages[locale]["tra_popup_buttom_ent"]}
-                negativeText={messages[locale]["tra_popup_buttom_can"]}
+                positiveText={messages[locale].tra_popup_buttom_ent}
+                negativeText={messages[locale].tra_popup_buttom_can}
                 onChange={password => this.setState({ password })}
                 isVisible={this.state.isVisible}
                 handleCancel={() => this.setState({ isVisible: false })}

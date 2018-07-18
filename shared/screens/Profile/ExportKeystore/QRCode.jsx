@@ -42,8 +42,8 @@ export default class QRCode extends Component {
               </Text>
 
               {
-                !showQRCode &&
-                <View style={[styles.qrCodeContainer, styles.center]}>
+                !showQRCode
+                && <View style={[styles.qrCodeContainer, styles.center]}>
                   <Text multiline={true} style={[styles.text14, { marginBottom: 45 }]}>
                     <FormattedMessage id="expksqrc_txtbox_txt_content" />
                   </Text>
@@ -60,8 +60,8 @@ export default class QRCode extends Component {
                 </View>
               }
               {
-                showQRCode &&
-                <View style={[styles.qrCodeContainer, styles.center, { backgroundColor: Colors.bgColor_48_49_59 }]}>
+                showQRCode
+                && <View style={[styles.qrCodeContainer, styles.center, { backgroundColor: Colors.bgColor_48_49_59 }]}>
                   <View style={{ padding: 2, maxWidth: 144, backgroundColor: Colors.bgColor_FFFFFF }}>
                     <QRCodeModule
                       value={qrCodeValue}

@@ -92,8 +92,8 @@ export default class Contacts extends Component {
           />
           <View style={styles.scrollContainer}>
             {
-              contacts.length > 0 &&
-              <SwipeListView
+              contacts.length > 0
+              && <SwipeListView
                 contentContainerStyle={{ paddingTop: 10 }}
                 enableEmptySections={true}
                 showsVerticalScrollIndicator={false}

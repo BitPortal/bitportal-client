@@ -23,7 +23,6 @@ import styles from './styles'
 )
 
 export default class MediafaxScreen extends Component {
-
   static get options() {
     return {
       bottomTabs: {
@@ -36,7 +35,7 @@ export default class MediafaxScreen extends Component {
     if (validateUrl(MediafaxUrls[title])) {
       Navigation.push(this.props.componentId, {
         component: {
-          name: `BitPortal.BPWebView`,
+          name: 'BitPortal.BPWebView',
           passProps: {
             title,
             needLinking: true,
@@ -47,7 +46,7 @@ export default class MediafaxScreen extends Component {
     } else {
       Navigation.push(this.props.componentId, {
         component: {
-          name: `BitPortal.BPWebView`,
+          name: 'BitPortal.BPWebView',
           passProps: {
             title,
             name: MediafaxUrls[title]
@@ -64,17 +63,17 @@ export default class MediafaxScreen extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale]["mdf_title_name_nav"]}
+            title={messages[locale].mdf_title_name_nav}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center', paddingTop: 10 }}>
               {Mediafax.map((item, index) => (
-                <SettingItem 
-                  key={index} 
-                  leftImage={MediafaxIcons[item]} 
-                  leftItemTitle={item} 
-                  onPress={() => this.changePage(item)} 
+                <SettingItem
+                  key={index}
+                  leftImage={MediafaxIcons[item]}
+                  leftItemTitle={item}
+                  onPress={() => this.changePage(item)}
                 />
               ))}
             </ScrollView>

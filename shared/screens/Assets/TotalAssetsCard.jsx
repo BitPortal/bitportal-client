@@ -7,7 +7,6 @@ import LinearGradientContainer from 'components/LinearGradientContainer'
 import Colors from 'resources/colors'
 import Images from 'resources/images'
 
-import messages from './messages'
 import { connect } from 'react-redux'
 import { FormattedNumber } from 'react-intl'
 
@@ -16,16 +15,17 @@ import storage from 'utils/storage'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { Text, View, TouchableHighlight, StyleSheet, Image, TouchableOpacity, LayoutAnimation } from 'react-native'
 import { SCREEN_HEIGHT, SCREEN_WIDTH, FontScale } from 'utils/dimens'
-import { formatCycleTime , formatMemorySize } from 'utils/format'
+import { formatCycleTime, formatMemorySize } from 'utils/format'
+import messages from './messages'
 
 const styles = StyleSheet.create({
   linearContainer: {
-    width: SCREEN_WIDTH-64,
+    width: SCREEN_WIDTH - 64,
     height: 150,
     borderRadius: 12
   },
   resourcesContainer: {
-    width: SCREEN_WIDTH-64-30,
+    width: SCREEN_WIDTH - 64 - 30,
     minHeight: 20,
     borderBottomLeftRadius: 12,
     borderBottomRightRadius: 12,
@@ -84,13 +84,12 @@ const styles = StyleSheet.create({
 })
 
 @connect(
-  (state) => ({
+  state => ({
     locale: state.intl.get('locale')
   })
 )
 
 export default class TotalAssetsCard extends Component {
-
   state = {
     hidden: false
   }
@@ -112,7 +111,7 @@ export default class TotalAssetsCard extends Component {
 
   extraColor = (available, limit) => {
     const colorObj = { color: Colors.textColor_255_76_118 }
-    if (available && limit) return available/limit < 0.1 ? colorObj : {}
+    if (available && limit) return available / limit < 0.1 ? colorObj : {}
     else return {}
   }
 
@@ -129,31 +128,29 @@ export default class TotalAssetsCard extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={{ alignItems: 'center', backgroundColor: Colors.minorThemeColor, paddingVertical: 15 }}>
           <LinearGradientContainer type="right" style={[styles.linearContainer, { marginHorizontal: 32, marginTop: 10 }]}>
-            <TouchableHighlight disabled={disabled} style={styles.linearContainer} underlayColor={Colors.linearUnderlayColor} onPress={() => onPress()} >
+            <TouchableHighlight disabled={disabled} style={styles.linearContainer} underlayColor={Colors.linearUnderlayColor} onPress={() => onPress()}>
               <View style={[styles.linearContainer, styles.paddingStyle]}>
                 <Text style={styles.text15}>
                   <FormattedMessage id="asset_card_title_ttlast" />
                 </Text>
                 <View style={styles.between}>
                   {
-                    hidden ?
-                    <Text style={styles.text24}>******</Text>
-                    :
-                    <Text style={styles.text24}>
+                    hidden
+                      ? <Text style={styles.text24}>******</Text>
+                      : <Text style={styles.text24}>
                       ≈
-                      <CurrencyText
+                        <CurrencyText
                         value={totalAssets}
                         maximumFractionDigits={2}
                         minimumFractionDigits={2}
-                      />
-                    </Text>
+                        />
+                      </Text>
                   }
                   <TouchableOpacity style={[styles.center, styles.btn]} onPress={this.switchDisplayTotal}>
                     {
-                      hidden ?
-                      <Image source={Images.eyes_close} style={styles.image} />
-                      :
-                      <Image source={Images.eyes_open} style={styles.image} />
+                      hidden
+                        ? <Image source={Images.eyes_close} style={styles.image} />
+                        : <Image source={Images.eyes_open} style={styles.image} />
                     }
                   </TouchableOpacity>
                 </View>
@@ -166,7 +163,7 @@ export default class TotalAssetsCard extends Component {
           </LinearGradientContainer>
           <TouchableOpacity disabled={true} onPress={this.foldResources}>
             <View style={{ alignItems: 'center' }}>
-              <View style={[styles.resourcesContainer, styles.between, { paddingVertical: 15 } ]}>
+              <View style={[styles.resourcesContainer, styles.between, { paddingVertical: 15 }]}>
                 <View style={styles.center}>
                   <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>CPU</Text>
                   <Text onPress={this.checkResources} style={[styles.text12, this.extraColor(CPUInfo.get('available'), CPUInfo.get('max')), { paddingHorizontal: 2 }]}>
@@ -183,8 +180,8 @@ export default class TotalAssetsCard extends Component {
                 <View style={styles.divider} />
                 <View style={styles.center}>
                   <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>RAM</Text>
-                  <Text onPress={this.checkResources} style={[styles.text12, this.extraColor(RAMQuota-RAMUsage, RAMQuota), { paddingHorizontal: 2 }]}>
-                    {formatMemorySize(RAMQuota-RAMUsage)}
+                  <Text onPress={this.checkResources} style={[styles.text12, this.extraColor(RAMQuota - RAMUsage, RAMQuota), { paddingHorizontal: 2 }]}>
+                    {formatMemorySize(RAMQuota - RAMUsage)}
                   </Text>
                 </View>
               </View>
