@@ -153,7 +153,7 @@ export default class AccountList extends Component {
               <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearError} delay={500} />
               <Alert message={errorMessages(logoutError, messages[locale])} dismiss={this.props.actions.clearLogoutError} delay={500} />
               <Prompt
-                visible={this.state.showExportPrompt}
+                isVisible={this.state.showExportPrompt}
                 title={messages[locale].act_export_popup_name}
                 negativeText={messages[locale].act_export_popup_can}
                 positiveText={messages[locale].act_export_popup_ent}
@@ -162,7 +162,7 @@ export default class AccountList extends Component {
                 dismiss={this.dismissExportPrompt}
               />
               <Prompt
-                visible={this.state.showLogoutPrompt}
+                isVisible={this.state.showLogoutPrompt}
                 title={messages[locale].act_export_popup_name}
                 message={messages[locale].logout_popup_warning}
                 negativeText={messages[locale].act_export_popup_can}

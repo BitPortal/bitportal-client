@@ -8,7 +8,7 @@ export default class Prompt extends Component {
     const delay = this.props.delay || 0
     const type = nextProps.type || 'default'
 
-    if (nextProps.visible !== this.props.visible && nextProps.visible) {
+    if (nextProps.isVisible !== this.props.isVisible && nextProps.isVisible) {
       this.timer = setTimeout(() => {
         AlertIOS.prompt(
           nextProps.title,

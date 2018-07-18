@@ -111,7 +111,6 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
   try {
     const eosAccountName = action.payload.eosAccountName
     const eos = yield call(initEOS, {})
-    console.log(eos)
     assert(eos.getAccount, 'No eos getAccount method')
     const info = yield call(eos.getAccount, eosAccountName)
     assert(info && info.account_name, 'Invalid account info')

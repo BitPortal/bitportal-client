@@ -26,7 +26,7 @@ export default class Prompt extends Component {
 
   render() {
     return (
-      <RNDialog.Container visible={this.props.visible}>
+      <RNDialog.Container visible={this.props.isVisible}>
         <RNDialog.Title>{this.props.title}</RNDialog.Title>
         <RNDialog.Description>{this.props.message || ''}</RNDialog.Description>
         <RNDialog.Input autoFocus={true} secureTextEntry={this.props.type === 'secure-text'} onChangeText={this.onChange} />
