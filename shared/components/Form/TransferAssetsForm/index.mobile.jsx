@@ -35,12 +35,7 @@ const validate = (values, props) => {
 @reduxForm({ form: 'transferAssetsForm', validate })
 
 export default class TransferAssetsForm extends Component {
-  constructor(props, context) {
-    super(props, context)
-    this.submit = this.submit.bind(this)
-  }
-
-  submit(data) {
+  submit = (data) => {
     this.props.onPress()
     console.log(data.toJS())
   }
@@ -48,6 +43,7 @@ export default class TransferAssetsForm extends Component {
   render() {
     const { handleSubmit, invalid, pristine } = this.props
     const disabled = invalid || pristine
+
     return (
       <FormContainer>
         <Field
