@@ -1,23 +1,21 @@
 /* @jsx */
 
 import React, { Component } from 'react'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form/immutable'
 import {
   FormContainer,
-  FieldItem,
   TextField,
   SubmitButton
 } from 'components/Form'
-import { validateText, validateEOSAccountName } from 'utils/validate'
+import { validateEOSAccountName } from 'utils/validate'
 // import { normalizeText } from 'utils/normalize'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import { Navigation } from 'react-native-navigation'
 import storage from 'utils/storage'
 import messages from './messages'
 
-const validate = (values, props) => {
+const validate = (values) => {
   const errors = {}
 
   if (!values.get('name')) {

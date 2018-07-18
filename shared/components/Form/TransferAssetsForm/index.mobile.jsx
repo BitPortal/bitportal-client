@@ -3,11 +3,11 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
-import { FormContainer, FieldItem, FieldInput, TextField, TextAreaField, SubmitButton } from 'components/Form'
+import { Field, reduxForm } from 'redux-form/immutable'
+import { FormContainer, TextField, TextAreaField, SubmitButton } from 'components/Form'
 import { normalizeText } from 'utils/normalize'
 
-const validate = (values, props) => {
+const validate = (values) => {
   const errors = {}
   if (!values.get('name')) {
     errors.name = 'Please input account name'

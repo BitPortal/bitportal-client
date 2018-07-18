@@ -1,10 +1,9 @@
 /* @tsx */
 
 import React, { Component } from 'react'
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import Colors from 'resources/colors'
-import SettingItem from 'components/SettingItem'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'

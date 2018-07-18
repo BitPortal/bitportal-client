@@ -106,7 +106,7 @@ export const SubmitButton = ({ disabled, loading, onPress, text }) => (
   </FieldItem>
 )
 
-export const Button = ({ disabled, loading, onPress, text }) => (
+export const Button = ({ onPress, text }) => (
   <FieldItem>
     <TouchableOpacity
       onPress={onPress}

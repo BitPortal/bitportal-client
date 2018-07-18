@@ -7,8 +7,6 @@ import { View, Text, Platform, InteractionManager } from 'react-native'
 import { Field, reduxForm, reset } from 'redux-form/immutable'
 import {
   FormContainer,
-  FieldItem,
-  FieldInput,
   TextField,
   SubmitButton
 } from 'components/Form'
@@ -18,7 +16,7 @@ import * as ramActions from 'actions/ram'
 import Alert from 'components/Alert'
 import Switch from 'components/Switch'
 import Balance from 'components/Balance'
-import { IntlProvider, FormattedMessage } from 'react-intl'
+import { IntlProvider } from 'react-intl'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import Dialogs from 'components/Dialog'
@@ -113,7 +111,7 @@ export default class TradeRAMForm extends Component {
   }
 
   async submit(data) {
-    if (Platform.OS == 'ios') {
+    if (Platform.OS === 'ios') {
       const { action, text } = await Dialogs.prompt(
         messages[this.props.locale].tra_popup_title_pwd,
         null,
@@ -147,7 +145,7 @@ export default class TradeRAMForm extends Component {
   }
 
   render() {
-    const { handleSubmit, invalid, pristine, password, ram, locale, eosAccount } = this.props
+    const { handleSubmit, invalid, pristine, ram, locale, eosAccount } = this.props
     const buying = ram.get('buying')
     const selling = ram.get('selling')
     const showSuccess = ram.get('showSuccess')

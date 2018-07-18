@@ -1,10 +1,9 @@
 
 import React, { Component } from 'react'
-import { Text, View, TouchableWithoutFeedback, StyleSheet, Image } from 'react-native'
+import { Text, View, TouchableWithoutFeedback, StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
 import LinearGradientContainer from 'components/LinearGradientContainer'
-import { FormattedNumber } from 'react-intl'
-import { SCREEN_HEIGHT, SCREEN_WIDTH, FontScale } from 'utils/dimens'
+import { SCREEN_WIDTH, FontScale } from 'utils/dimens'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const styles = StyleSheet.create({
@@ -60,7 +59,7 @@ const styles = StyleSheet.create({
 
 export default class ResourcesCard extends Component {
   render() {
-    const { type, title, availableText, available, totalText, total, usageText, usage, delegateText, delegate, colors, onPress } = this.props
+    const { title, availableText, available, totalText, total, usageText, usage, delegateText, delegate, colors, onPress } = this.props
     return (
       <TouchableWithoutFeedback style={styles.linearContainer} onPress={onPress}>
         <View>

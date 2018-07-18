@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import Colors from 'resources/colors'
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native'
-import { SCREEN_WDITH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
+import { SCREEN_WDITH, SCREEN_HEIGHT } from 'utils/dimens'
 import Modal from 'react-native-modal'
 
 const styles = StyleSheet.create({

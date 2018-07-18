@@ -1,9 +1,8 @@
 /* @tsx */
 import React, { Component } from 'react'
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
+import { Text, View, ScrollView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import Colors from 'resources/colors'
-import SettingItem from 'components/SettingItem'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
@@ -38,7 +37,6 @@ export default class Memory extends Component {
     const { locale, eosAccount } = this.props
     const activeEOSAccount = eosAccount.get('data')
     const percent = activeEOSAccount.get('cpu_limit').get('available') / activeEOSAccount.get('cpu_limit').get('max')
-    const eosBalance = (activeEOSAccount && activeEOSAccount.get('core_liquid_balance'))
     const refund = activeEOSAccount.get('refund_request') ? activeEOSAccount.get('refund_request').get('cpu_amount') : '0.0000 EOS'
     return (
       <IntlProvider messages={messages[locale]}>

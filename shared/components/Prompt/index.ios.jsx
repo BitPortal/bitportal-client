@@ -27,7 +27,7 @@ export default class Prompt extends Component {
               }
             }
           ],
-          nextProps.type
+          type
         )
         clearTimeout(this.timer)
       }, delay)

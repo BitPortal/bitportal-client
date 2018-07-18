@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react'
 import Colors from 'resources/colors'
-import SettingItem from 'components/SettingItem'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { View, Text, ListView, Platform, TouchableOpacity, InteractionManager, LayoutAnimation } from 'react-native'
@@ -15,10 +14,9 @@ import { FontScale } from 'utils/dimens'
 import storage from 'utils/storage'
 import Dialog from 'components/Dialog'
 import DialogAndroid from 'components/DialogAndroid'
-import { SwipeRow } from 'react-native-swipe-list-view'
 import { validateUrl } from 'utils/validate'
 import _ from 'lodash'
-import { DefaultItem, DeleteButton, SwipeItem } from './NodeItem'
+import { DefaultItem, SwipeItem } from './NodeItem'
 import messages from './messages'
 import styles from './styles'
 
@@ -81,7 +79,7 @@ export default class NodeSettings extends Component {
   // 弹出添加弹框
   addCustomNodes = async () => {
     const { locale } = this.props
-    if (Platform.OS == 'android') {
+    if (Platform.OS === 'android') {
       this.setState({ isVisible: true })
     } else {
       const { action, text } = await Dialog.prompt(
@@ -93,7 +91,7 @@ export default class NodeSettings extends Component {
           disableSecureText: 'plain-text'
         }
       )
-      if (action == Dialog.actionPositive) return this.saveCustomNodes(text)
+      if (action === Dialog.actionPositive) return this.saveCustomNodes(text)
     }
   }
 
@@ -103,7 +101,7 @@ export default class NodeSettings extends Component {
   }
 
   // 删除自定义节点
-  deleteCustomNodes = (rowData, secId, rowId, rowMap) => {
+  deleteCustomNodes = (rowData, secId, rowId) => {
     const { CUSTOM_NODES } = this.state
     CUSTOM_NODES.splice(rowId, 1)
     storage.mergeItem('bitportal.customNodes', { customNodes: CUSTOM_NODES }, true)
@@ -118,7 +116,7 @@ export default class NodeSettings extends Component {
         if (customNode && isVaild) {
           this.state.CUSTOM_NODES.push(customNode)
           storage.mergeItem('bitportal.customNodes', { customNodes: this.state.CUSTOM_NODES }, true)
-          this.setState({ CUSTOM_NODES: this.state.CUSTOM_NODES })
+          this.setState(prevState => ({ CUSTOM_NODES: prevState.CUSTOM_NODES }))
         }
       })
     })
@@ -132,12 +130,12 @@ export default class NodeSettings extends Component {
   // 检测节点有效性
   validateCustomeNode = (customNode) => {
     if (!validateUrl(customNode)) {
-      Dialog.alert(messages[locale].ndst_button_name_errnd)
+      Dialog.alert(messages[this.props.locale].ndst_button_name_errnd)
       return false
     }
-    const index = _.findIndex(this.state.CUSTOM_NODES.concat(NODES), node => node == customNode)
-    if (index != -1) {
-      Dialog.alert(messages[locale].ndst_button_name_dplnd)
+    const index = _.findIndex(this.state.CUSTOM_NODES.concat(NODES), node => node === customNode)
+    if (index !== -1) {
+      Dialog.alert(messages[this.props.locale].ndst_button_name_dplnd)
       return false
     }
     return true
@@ -150,7 +148,7 @@ export default class NodeSettings extends Component {
         <SwipeItem
           item={rowData}
           onPress={() => this.switchNode(rowData)}
-          active={rowData == activeNode}
+          active={rowData === activeNode}
           deleteItem={() => this.deleteCustomNodes(rowData, secId, rowId, rowMap)}
         />
       )
@@ -165,7 +163,7 @@ export default class NodeSettings extends Component {
       <View>
         <View style={styles.headTitle}><Text style={styles.text14}> 默认节点 </Text></View>
         {
-          NODES.map((item, index) => <DefaultItem key={index} item={item} active={activeNode == item} onPress={this.switchNode} />)
+          NODES.map((item, index) => <DefaultItem key={index} item={item} active={activeNode === item} onPress={this.switchNode} />)
         }
         {CUSTOM_NODES.length > 0 && <View style={styles.headTitle}><Text style={styles.text14}> 自定义节点 </Text></View>}
       </View>
@@ -173,7 +171,7 @@ export default class NodeSettings extends Component {
   }
 
   render() {
-    const { locale, currency } = this.props
+    const { locale } = this.props
     const { CUSTOM_NODES } = this.state
     return (
       <IntlProvider messages={messages[locale]}>

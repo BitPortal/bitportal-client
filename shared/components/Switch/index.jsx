@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import Colors from 'resources/colors'
 import { View, Text, TouchableOpacity } from 'react-native'
-import { SCREEN_WDITH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
-import { IntlProvider, FormattedMessage } from 'react-intl'
+import { IntlProvider } from 'react-intl'
 import messages from './messages'
 
 const styles = EStyleSheet.create({

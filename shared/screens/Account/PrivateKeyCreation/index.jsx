@@ -55,7 +55,7 @@ export default class PrivateKeyCreation extends Component {
 
   goToBackup = () => {
     if (!this.state.showPrivateKey) {
-      this.setState({ showPrivateKey: !this.state.showPrivateKey })
+      this.setState(prevState => ({ showPrivateKey: !prevState.showPrivateKey }))
     } else {
       Navigation.push(this.props.componentId, {
         component: {

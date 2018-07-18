@@ -7,8 +7,6 @@ import { View, Text, Platform, InteractionManager } from 'react-native'
 import { Field, reduxForm, reset } from 'redux-form/immutable'
 import {
   FormContainer,
-  FieldItem,
-  FieldInput,
   TextField,
   SubmitButton
 } from 'components/Form'
@@ -18,7 +16,7 @@ import * as bandwidthActions from 'actions/bandwidth'
 import Alert from 'components/Alert'
 import Switch from 'components/Switch'
 import Balance from 'components/Balance'
-import { IntlProvider, FormattedMessage } from 'react-intl'
+import { IntlProvider } from 'react-intl'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import Dialogs from 'components/Dialog'
@@ -120,7 +118,7 @@ export default class DelegateBandwidthForm extends Component {
   }
 
   async submit(data) {
-    if (Platform.OS == 'ios') {
+    if (Platform.OS === 'ios') {
       const { action, text } = await Dialogs.prompt(
         messages[this.props.locale].dlgt_popup_title_pwd,
         null,
@@ -155,7 +153,7 @@ export default class DelegateBandwidthForm extends Component {
   }
 
   render() {
-    const { handleSubmit, invalid, pristine, password, bandwidth, locale, eosAccount } = this.props
+    const { handleSubmit, invalid, pristine, bandwidth, locale, eosAccount } = this.props
     const delegating = bandwidth.get('delegating')
     const undelegating = bandwidth.get('undelegating')
     const showSuccess = bandwidth.get('showSuccess')

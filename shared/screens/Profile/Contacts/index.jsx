@@ -57,7 +57,7 @@ export default class Contacts extends Component {
 
   deleteContact = async (data, secId, rowId, rowMap) => {
     rowMap[`${secId}${rowId}`].closeRow()
-    const newData = [...this.state.contacts]
+    const newData = [...this.state.contacts] // eslint-disable-line react/no-access-state-in-setstate
     newData.splice(rowId, 1)
     await storage.mergeItem('bitportal.contacts', { contacts: newData }, true)
     this.setState({ contacts: newData })

@@ -17,9 +17,9 @@ export default class ChartWrapper extends Component {
   handleSelect(event) {
     const entry = event.nativeEvent
     if (entry == null) {
-      this.setState({ ...this.state, selectedEntry: null })
+      this.setState(prevState => ({ ...prevState, selectedEntry: null }))
     } else {
-      this.setState({ ...this.state, selectedEntry: JSON.stringify(entry) })
+      this.setState(prevState => ({ ...prevState, selectedEntry: JSON.stringify(entry) }))
     }
 
     console.log(event.nativeEvent)

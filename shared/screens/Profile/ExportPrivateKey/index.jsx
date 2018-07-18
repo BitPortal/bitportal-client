@@ -27,14 +27,13 @@ export default class ExportPrivateKey extends Component {
     }
   }
 
-  state = {
-    isCopied: false
-  }
+  // state = {
+  //   isCopied: false
+  // }
 
-  copyPrivateKey = () => {
-    // Clipboard.setString(this.state.privateKey)
-    this.setState({ isCopied: true })
-  }
+  // copyPrivateKey = () => {
+  //   this.setState({ isCopied: true })
+  // }
 
   render() {
     const { locale, ownerWifs, activeWifs } = this.props

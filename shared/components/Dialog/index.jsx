@@ -1,11 +1,11 @@
-/* @tsx */
+/* @jsx */
 
-import { AlertIOS, Alert, Platform } from 'react-native'
+import { AlertIOS, Alert } from 'react-native'
 
 const actionNegative = 'actionNegative'
 const actionPositive = 'actionPositive'
 
-const alert = (title = '', content = null, options = {}) => new Promise((resolve, reject) => {
+const alert = (title = '', content = null, options = {}) => new Promise((resolve) => {
   const buttons = []
 
   if (options.negativeText) {
@@ -24,7 +24,7 @@ const alert = (title = '', content = null, options = {}) => new Promise((resolve
     })
   }
 
-  if (buttons.length == 0) {
+  if (buttons.length === 0) {
     buttons.push({
       text: options.positiveText || 'OK',
       onPress: () => console.log('Ok Pressed'),
@@ -35,7 +35,7 @@ const alert = (title = '', content = null, options = {}) => new Promise((resolve
   Alert.alert(title, content, buttons)
 })
 
-const prompt = (title = '', content = null, options = {}) => new Promise((resolve, reject) => {
+const prompt = (title = '', content = null, options = {}) => new Promise((resolve) => {
   const buttons = []
   let inputType = null
 
@@ -56,7 +56,7 @@ const prompt = (title = '', content = null, options = {}) => new Promise((resolv
     })
   }
 
-  if (buttons.length == 0) {
+  if (buttons.length === 0) {
     buttons.push({
       text: options.positiveText || 'OK',
       onPress: resolve({ action: actionNegative }),

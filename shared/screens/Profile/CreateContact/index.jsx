@@ -3,11 +3,10 @@
 import React, { Component } from 'react'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { Text, View, ScrollView } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import Colors from 'resources/colors'
-import InputItem from 'components/InputItem'
 import { connect } from 'react-redux'
-import { FormattedMessage, IntlProvider } from 'react-intl'
+import { IntlProvider } from 'react-intl'
 import AddContactsForm from 'components/Form/AddContactsForm'
 import messages from './messages'
 import styles from './styles'
@@ -30,10 +29,6 @@ export default class CreateContact extends Component {
     }
   }
 
-  state = {
-    isAccountVaild: true
-  }
-
   changeNickName = () => {
 
   }
@@ -43,7 +38,6 @@ export default class CreateContact extends Component {
   }
 
   render() {
-    const { isAccountVaild } = this.state
     const { locale } = this.props
     return (
       <IntlProvider messages={messages[locale]}>

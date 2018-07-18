@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { StyleSheet } from 'react-native'
-import { SCREEN_WIDTH, SCREEN_HEIGHT } from 'utils/dimens'
 import LinearGradient from 'react-native-linear-gradient'
 import Colors from 'resources/colors'
 

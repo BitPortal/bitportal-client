@@ -52,7 +52,7 @@ export default class AvailableAssets extends Component {
   // 激活或隐藏钱包
   onValueChange = (value, item) => {
     item.value = value
-    this.setState({ assetsList: this.state.assetsList })
+    this.setState(prevState => ({ assetsList: prevState.assetsList }))
   }
 
   render() {

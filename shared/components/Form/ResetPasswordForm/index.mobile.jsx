@@ -1,12 +1,9 @@
 /* @jsx */
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
-import { Text, View, TextInput } from 'react-native'
 import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
 import {
   FormContainer,
-  FieldItem,
-  FieldInput,
   TextField,
   PasswordField,
   SubmitButton
@@ -18,7 +15,7 @@ import PasswordStrength from 'components/PasswordStrength'
 import { getPasswordStrength } from 'utils'
 import messages from './messages'
 
-const validate = (values, props) => {
+const validate = (values) => {
   const errors = {}
   if (!values.get('currentPassword')) {
     errors.currentPassword = <FormattedMessage id="cpwd_txtbox_title_current" />

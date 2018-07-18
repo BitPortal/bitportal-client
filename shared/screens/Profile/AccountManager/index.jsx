@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
-import { View, ScrollView, Platform } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
 import { Navigation } from 'react-native-navigation'

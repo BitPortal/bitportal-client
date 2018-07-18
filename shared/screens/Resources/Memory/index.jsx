@@ -2,10 +2,9 @@
 
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
-import { Text, View, ScrollView, TouchableOpacity, Linking } from 'react-native'
+import { Text, View, ScrollView, Linking } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import Colors from 'resources/colors'
-import SettingItem from 'components/SettingItem'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, FormattedNumber, IntlProvider } from 'react-intl'
@@ -62,7 +61,7 @@ export default class Memory extends Component {
     const { locale, eosAccount, ramPrice } = this.props
     const activeEOSAccount = eosAccount.get('data')
     const percent = (activeEOSAccount.get('ram_quota') - activeEOSAccount.get('ram_usage')) / activeEOSAccount.get('ram_quota')
-    const eosBalance = (activeEOSAccount && activeEOSAccount.get('core_liquid_balance'))
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>

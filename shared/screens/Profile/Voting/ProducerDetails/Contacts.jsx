@@ -27,7 +27,7 @@ export default class Contacts extends Component {
   }
 
   hidden = () => {
-    this.setState({ folded: !this.state.folded })
+    this.setState(prevState => ({ folded: !prevState.folded }))
   }
 
   render() {

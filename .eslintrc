@@ -1,13 +1,6 @@
 {
   "parser": "babel-eslint",
   "extends": "eslint-config-airbnb",
-  "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    }
-  },
   "rules": {
     "react/jsx-filename-extension": [0],
     "react/require-extension": [0],

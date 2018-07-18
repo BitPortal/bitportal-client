@@ -6,8 +6,6 @@ import { connect } from 'react-redux'
 import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
 import {
   FormContainer,
-  FieldItem,
-  FieldInput,
   TextField,
   PasswordField,
   TextAreaField,
@@ -47,7 +45,7 @@ export const errorMessages = (error, messages) => {
   }
 }
 
-const validate = (values, props) => {
+const validate = (values) => {
   const errors = {}
 
   if (!values.get('name')) {

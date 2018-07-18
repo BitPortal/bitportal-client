@@ -33,7 +33,7 @@ export default class Setting extends Component {
   }
 
   switchTouchID = () => {
-    this.setState({ enableTouchID: !this.state.enableTouchID })
+    this.setState(prevState => ({ enableTouchID: !prevState.enableTouchID }))
   }
 
   changeSettings = (page) => {

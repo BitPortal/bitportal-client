@@ -29,7 +29,6 @@ import Bandwidth from 'screens/Resources/Bandwidth'
 import CPU from 'screens/Resources/CPU'
 import Voting from 'screens/Profile/Voting'
 import ProducerDetails from 'screens/Profile/Voting/ProducerDetails'
-import Stake from 'screens/Profile/Stake'
 import About from 'screens/Profile/About'
 import Profile from 'screens/Profile'
 import Contacts from 'screens/Profile/Contacts'
@@ -98,7 +97,6 @@ export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.Bandwidth', () => screenComponent(Bandwidth, store))
   Navigation.registerComponent('BitPortal.Voting', () => screenComponent(Voting, store))
   Navigation.registerComponent('BitPortal.ProducerDetails', () => screenComponent(ProducerDetails, store))
-  Navigation.registerComponent('BitPortal.Stake', () => screenComponent(Stake, store))
   Navigation.registerComponent('BitPortal.About', () => screenComponent(About, store))
   Navigation.registerComponent('BitPortal.Profile', () => screenComponent(Profile, store))
   Navigation.registerComponent('BitPortal.Contacts', () => screenComponent(Contacts, store))

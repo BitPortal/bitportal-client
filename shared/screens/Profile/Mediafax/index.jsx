@@ -1,14 +1,13 @@
 /* @tsx */
 
 import React, { Component } from 'react'
-import { Text, View, ScrollView } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import SettingItem from 'components/SettingItem'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
-import { FormattedMessage, IntlProvider } from 'react-intl'
+import { IntlProvider } from 'react-intl'
 import { Mediafax, MediafaxIcons, MediafaxUrls } from 'constants/mediafax'
-import Images from 'resources/images'
 import { validateUrl } from 'utils/validate'
 import messages from './messages'
 import styles from './styles'

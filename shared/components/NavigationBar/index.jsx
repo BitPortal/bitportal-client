@@ -53,7 +53,7 @@ export const CommonRightButton = ({ iconName, onPress }) => (
   </TouchableOpacity>
 )
 
-export const LinkingRightButton = ({ iconName, title, onPress }) => (
+export const LinkingRightButton = ({ iconName, onPress }) => (
   <TouchableOpacity
     style={styles.navButton}
     onPress={onPress}

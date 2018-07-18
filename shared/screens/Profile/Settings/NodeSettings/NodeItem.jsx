@@ -1,8 +1,8 @@
 import React from 'react'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
-import { Text, View, ScrollView, TouchableHighlight, TouchableWithoutFeedback, StyleSheet } from 'react-native'
+import { FontScale, SCREEN_WIDTH } from 'utils/dimens'
+import { Text, View, TouchableHighlight, TouchableWithoutFeedback, StyleSheet } from 'react-native'
 import { SwipeRow } from 'react-native-swipe-list-view'
 import { connect } from 'react-redux'
 
@@ -93,8 +93,8 @@ class SwipeItem extends React.Component {
   }
 
   render() {
-    const { item, onPress, active, deleteItem } = this.props
-    const { isSwiped } = this.state
+    const { item, active, deleteItem } = this.props
+
     return (
       <SwipeRow
         disableRightSwipe={true}

@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
-import { FontScale, SCREEN_WIDTH } from 'utils/dimens'
+import { FontScale } from 'utils/dimens'
 import Dialog from 'components/Dialog'
 
 const styles = StyleSheet.create({
@@ -32,7 +32,6 @@ export default class Tips extends Component {
   }
 
   render() {
-    const { tips } = this.props
     return (
       <TouchableOpacity onPress={this.alertTips} style={styles.btn}>
         <View style={[styles.container, styles.center]}>

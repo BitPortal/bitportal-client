@@ -1,20 +1,14 @@
 
 import React, { Component } from 'react'
-
 import CurrencyText from 'components/CurrencyText'
 import LinearGradientContainer from 'components/LinearGradientContainer'
-
 import Colors from 'resources/colors'
 import Images from 'resources/images'
-
 import { connect } from 'react-redux'
-import { FormattedNumber } from 'react-intl'
-
 import storage from 'utils/storage'
-
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { Text, View, TouchableHighlight, StyleSheet, Image, TouchableOpacity, LayoutAnimation } from 'react-native'
-import { SCREEN_HEIGHT, SCREEN_WIDTH, FontScale } from 'utils/dimens'
+import { SCREEN_WIDTH, FontScale } from 'utils/dimens'
 import { formatCycleTime, formatMemorySize } from 'utils/format'
 import messages from './messages'
 
@@ -122,7 +116,7 @@ export default class TotalAssetsCard extends Component {
   }
 
   render() {
-    const { totalAssets, CPUInfo, NETInfo, RAMQuota, RAMUsage, accountName, disabled, onPress, checkResourcesDetails, locale } = this.props
+    const { totalAssets, CPUInfo, NETInfo, RAMQuota, RAMUsage, accountName, disabled, onPress, locale } = this.props
     const { hidden } = this.state
     return (
       <IntlProvider messages={messages[locale]}>

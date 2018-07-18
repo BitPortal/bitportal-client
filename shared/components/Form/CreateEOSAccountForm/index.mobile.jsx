@@ -3,15 +3,13 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
-import { FormContainer, FieldItem, FieldInput, TextField, PasswordField, SubmitButton } from 'components/Form'
-import PasswordStrength from 'components/PasswordStrength'
+import { Field, reduxForm } from 'redux-form/immutable'
+import { FormContainer, TextField, PasswordField, SubmitButton } from 'components/Form'
 import { normalizeEOSAccountName } from 'utils/normalize'
-import { getPasswordStrength } from 'utils'
 import * as walletActions from 'actions/wallet'
 import * as eosAccountActions from 'actions/eosAccount'
 
-const validate = (values, props) => {
+const validate = (values) => {
   const errors = {}
 
   if (!values.get('eosAccountName')) {

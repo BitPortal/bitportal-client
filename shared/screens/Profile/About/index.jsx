@@ -1,7 +1,7 @@
 /* @tsx */
 
 import React, { Component } from 'react'
-import { Text, Image, View, ScrollView, TouchableOpacity } from 'react-native'
+import { Text, Image, View, ScrollView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import Images from 'resources/images'
 import SettingItem from 'components/SettingItem'
@@ -14,7 +14,7 @@ import * as versionInfoActions from 'actions/versionInfo'
 import { BITPORTAL_API_TERMS_URL, BITPORTAL_API_UPDATE_LOG_URL } from 'constants/env'
 import Loading from 'components/Loading'
 import { isNewest, showIsLast } from 'utils/update'
-import { Mediafax, MediafaxIcons, MediafaxUrls } from 'constants/mediafax'
+import { MediafaxUrls } from 'constants/mediafax'
 import { validateUrl } from 'utils/validate'
 import messages from './messages'
 import styles from './styles'
