@@ -1,6 +1,12 @@
 {
+  "plugins": [
+        "react"
+    ],
   "parser": "babel-eslint",
-  "extends": "eslint-config-airbnb",
+  "parserOptions": { "ecmaVersion": 6 },
+  "extends": ["airbnb",
+        "plugin:react/recommended"
+    ],
   "rules": {
     "react/jsx-filename-extension": [0],
     "react/require-extension": [0],

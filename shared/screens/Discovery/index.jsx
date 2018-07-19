@@ -45,6 +45,7 @@ export default class Discovery extends Component {
   getNewsListData = () => {
     try {
       const data = this.props.listData.toJS()
+      // console.log('data',data);
 
       return data.map(item => ({
         previewImage: item.img_url,
