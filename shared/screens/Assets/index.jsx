@@ -18,7 +18,7 @@ import { accountBalanceSelector } from 'selectors/balance'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { eosPriceSelector } from 'selectors/ticker'
 import { IntlProvider, FormattedMessage } from 'react-intl'
-import NavigationBar, { CommonTitle } from 'components/NavigationBar'
+import NavigationBar, { CommonTitle, CommonRightButton } from 'components/NavigationBar'
 import SettingItem from 'components/SettingItem'
 import SplashScreen from 'react-native-splash-screen'
 import styles from './styles'
@@ -28,7 +28,7 @@ import AccountList from './AccountList'
 import EnableAssets from './EnableAssets'
 import BalanceList from './BalanceList'
 import TotalAssetsCard from './TotalAssetsCard'
-
+import { checkCamera } from 'utils/permissions'
 
 const getTotalAssets = (balanceList, eosPrice) => {
   if (!balanceList) return 0
@@ -81,12 +81,15 @@ export default class Assets extends Component {
 
   displayAccountList = () => {}
 
-  scanQR = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.QRCodeScanner'
-      }
-    })
+  scanQR = async () => {
+    const authorized = await checkCamera()
+    if (authorized) {
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.QRCodeScanner'
+        }
+      })
+    }
   }
 
   enableAssets = () => {}
@@ -185,7 +188,7 @@ export default class Assets extends Component {
         <View style={styles.container}>
           <NavigationBar
             leftButton={<CommonTitle title={<FormattedMessage id="addpage_title_name_act" />} />}
-            // rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanQR()} />}
+            rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanQR()} />}
           />
           {
             !walletCount
