@@ -79,14 +79,6 @@ export default class BPWebView extends Component {
     }).catch(err => console.error('An error occurred', err));
   }
 
-  onLoadStart = () => {
-    this.setState({ isVisible: true })
-  }
-
-  onLoadEnd = () => {
-    this.setState({ isVisible: false })
-  }
-
   copyName = () => {
     Clipboard.setString(this.props.name)
     this.setState({ isCopied: true })
@@ -100,16 +92,21 @@ export default class BPWebView extends Component {
     }, 2000)
   }
 
-  renderError = () => (
-    <View style={[styles.center, styles.content]}>
-      <Text style={styles.text18}>
-        <FormattedMessage id="web_title_name_err" />
-      </Text>
-    </View>
-  )
+  renderError = (e) => {
+    if (e == 'WebKitErrorDomain') {
+      return null
+    }
+    return (
+      <View style={[styles.center, styles.content]}>
+        <Text style={styles.text18}>
+          <FormattedMessage id="web_title_name_err" />
+        </Text>
+      </View>
+    )
+  }
 
   renderLoading = () => (
-    <Loading isVisible={this.state.isVisible} />
+    <Loading isVisible={true} />
   )
 
   render() {
@@ -132,19 +129,18 @@ export default class BPWebView extends Component {
           />
           <View style={styles.content}>
             {
-              uri
-              && <WebView
+              uri && 
+              <WebView
                 source={{ uri }}
                 renderError={this.renderError}
                 renderLoading={this.renderLoading}
-                onLoadStart={this.onLoadStart}
-                onLoadEnd={this.onLoadEnd}
                 startInLoadingState={true}
                 automaticallyAdjustContentInsets={false}
                 javaScriptEnabled={true}
                 domStorageEnabled={true}
                 decelerationRate="normal"
                 scalesPageToFit={true}
+                nativeConfig={{ props: { backgroundColor: Colors.minorThemeColor } }}
               />
             }
             {
