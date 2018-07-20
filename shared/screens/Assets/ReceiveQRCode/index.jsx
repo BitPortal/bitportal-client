@@ -1,11 +1,10 @@
 
 import React, { Component } from 'react'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import QRCode from 'react-native-qrcode-svg'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
-import { Text, View, Share, TextInput, Clipboard, TouchableOpacity, ScrollView } from 'react-native'
+import { Text, View, Share, TextInput, Clipboard, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { normalizeUnitByCurrency } from 'utils/normalize'
@@ -74,7 +73,7 @@ export default class ReceiveQRCode extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale]["rcv_nav_title_name"]}
+            title={messages[locale].rcv_nav_title_name}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
             rightButton={<CommonRightButton iconName="md-share" onPress={() => this.shareQrcodeContent()} />}
           />
@@ -83,7 +82,7 @@ export default class ReceiveQRCode extends Component {
 
               <View style={[styles.content, styles.center]}>
                 <View style={styles.qrContainer}>
-                  <QRCode 
+                  <QRCode
                     value={eosQrString(activeEOSAccount.get('account_name'), this.state.value)}
                     size={140}
                     color="black"
@@ -94,12 +93,11 @@ export default class ReceiveQRCode extends Component {
                 </Text>
                 <Text onPress={this.copyQrcodeValue} style={[styles.text14, { color: isCopied ? Colors.textColor_181_181_181 : Colors.textColor_89_185_226 }]}>
                   {
-                    isCopied ?
-                    <FormattedMessage id="rcv_qrcode_bottom_copied" />
-                    :
-                    <FormattedMessage id="rcv_qrcode_bottom_copy" />
+                    isCopied
+                      ? <FormattedMessage id="rcv_qrcode_bottom_copied" />
+                      : <FormattedMessage id="rcv_qrcode_bottom_copy" />
                   }
-                  
+
                 </Text>
               </View>
 
@@ -114,7 +112,7 @@ export default class ReceiveQRCode extends Component {
                   keyboardType="numeric"
                   selectionColor={Colors.textColor_89_185_226}
                   keyboardAppearance={Colors.keyboardTheme}
-                  placeholder={messages[locale]["rcv_input_content_tips"]}
+                  placeholder={messages[locale].rcv_input_content_tips}
                   placeholderTextColor={Colors.textColor_149_149_149}
                   onChangeText={e => this.onChangeText(e)}
                   value={this.state.value}
@@ -127,7 +125,7 @@ export default class ReceiveQRCode extends Component {
               <View style={styles.keyboard} />
             </ScrollView>
           </View>
-                      
+
         </View>
       </IntlProvider>
     )

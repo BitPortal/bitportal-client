@@ -3,7 +3,7 @@ import { WebView, View, Text, Share, Linking, Clipboard, TouchableHighlight, Pla
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
-import NavigationBar, { CommonButton, CommonRightButton, LinkingRightButton } from 'components/NavigationBar'
+import NavigationBar, { CommonButton, LinkingRightButton } from 'components/NavigationBar'
 import Loading from 'components/Loading'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
@@ -29,7 +29,6 @@ export default class BPWebView extends Component {
   }
 
   state = {
-    isVisible: false,
     isCopied: false
   }
 
@@ -97,7 +96,7 @@ export default class BPWebView extends Component {
   }
 
   renderError = (e) => {
-    if (e == 'WebKitErrorDomain') {
+    if (e === 'WebKitErrorDomain') {
       return null
     }
     return (
@@ -114,7 +113,7 @@ export default class BPWebView extends Component {
   )
 
   render() {
-    const { needShare, needLinking, uri, title, name, locale } = this.props
+    const { needLinking, uri, title, name, locale } = this.props
     const { isCopied } = this.state
     return (
       <IntlProvider messages={messages[locale]}>
@@ -122,19 +121,12 @@ export default class BPWebView extends Component {
           <NavigationBar
             title={title}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
-            rightButton={needShare && <CommonRightButton iconName="md-share" onPress={() => this.share()} />}
-            rightButton={
-              needLinking &&
-              <LinkingRightButton
-                iconName={"ios-more"}
-                onPress={this.showActionSheet}
-              />
-            }
+            rightButton={needLinking && <LinkingRightButton iconName="ios-more" onPress={this.showActionSheet} />}
           />
           <View style={styles.content}>
             {
-              uri && 
-              <WebView
+              uri
+              && <WebView
                 source={{ uri }}
                 renderError={this.renderError}
                 renderLoading={this.renderLoading}
@@ -148,8 +140,8 @@ export default class BPWebView extends Component {
               />
             }
             {
-              name && 
-              <View style={[styles.content, styles.center]}>
+              name
+              && <View style={[styles.content, styles.center]}>
                 <Text style={styles.text18}>
                   {title}{': '}{name}
                 </Text>
@@ -170,16 +162,16 @@ export default class BPWebView extends Component {
               </View>
             }
             <ActionSheet
-              ref={o => this.actionSheet = o}
-              title={'Which one do you like ?'}
+              ref={(o) => { this.actionSheet = o }}
+              title=""
               options={[
-                messages[locale]["web_button_name_share"], 
-                Platform.OS == 'ios' ? messages[locale]["web_button_name_linkios"] : messages[locale]["web_button_name_linkandroid"], 
-                messages[locale]["web_button_name_cancel"], 
+                messages[locale].web_button_name_share,
+                Platform.OS === 'ios' ? messages[locale].web_button_name_linkios : messages[locale].web_button_name_linkandroid,
+                messages[locale].web_button_name_cancel,
               ]}
               cancelButtonIndex={2}
               destructiveButtonIndex={1}
-              onPress={(index) => this.selectActionSheet(index)}
+              onPress={index => this.selectActionSheet(index)}
             />
           </View>
         </View>

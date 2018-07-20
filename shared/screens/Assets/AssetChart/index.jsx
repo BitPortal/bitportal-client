@@ -3,10 +3,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
-import { FormattedNumber } from 'react-intl'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { FormattedMessage, IntlProvider } from 'react-intl'
+import { FormattedNumber, FormattedMessage, IntlProvider } from 'react-intl'
 import { eosPriceSelector } from 'selectors/ticker'
 import CurrencyText from 'components/CurrencyText'
 import messages from './messages'
@@ -80,11 +79,11 @@ export default class AssetChart extends Component {
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.content}>
                 <Text style={[styles.text24, { marginTop: 20 }]}>
-                <FormattedNumber
+                  <FormattedNumber
                   value={eosItem.get('balance')}
                   maximumFractionDigits={4}
                   minimumFractionDigits={4}
-                />
+                  />
                 </Text>
                 <Text style={[styles.text14, { marginBottom: 20 }]}>
                   ≈
