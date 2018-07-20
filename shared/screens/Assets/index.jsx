@@ -21,6 +21,7 @@ import { IntlProvider, FormattedMessage } from 'react-intl'
 import NavigationBar, { CommonTitle, CommonRightButton } from 'components/NavigationBar'
 import SettingItem from 'components/SettingItem'
 import SplashScreen from 'react-native-splash-screen'
+import { checkCamera } from 'utils/permissions'
 import styles from './styles'
 import messages from './messages'
 import AssetQRCode from './AssetQRCode'
@@ -28,7 +29,6 @@ import AccountList from './AccountList'
 import EnableAssets from './EnableAssets'
 import BalanceList from './BalanceList'
 import TotalAssetsCard from './TotalAssetsCard'
-import { checkCamera } from 'utils/permissions'
 
 const getTotalAssets = (balanceList, eosPrice) => {
   if (!balanceList) return 0
@@ -194,8 +194,8 @@ export default class Assets extends Component {
             rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanQR()} />}
           />
           {
-            !walletCount && 
-            <TouchableHighlight underlayColor={Colors.mainThemeColor} onPress={() => this.createNewAccount()} style={[styles.createAccountContainer, styles.center]}>
+            !walletCount
+            && <TouchableHighlight underlayColor={Colors.mainThemeColor} onPress={() => this.createNewAccount()} style={[styles.createAccountContainer, styles.center]}>
               <View style={{ alignItems: 'center' }}>
                 <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF} />
                 <Text style={[styles.text14, { color: Colors.textColor_255_255_238, marginTop: 20 }]}>
@@ -205,8 +205,8 @@ export default class Assets extends Component {
             </TouchableHighlight>
           }
           {
-            !!walletCount && 
-            <View style={styles.scrollContainer}>
+            !!walletCount
+            && <View style={styles.scrollContainer}>
               <ScrollView showsVerticalScrollIndicator={false}>
                 <TotalAssetsCard
                   totalAssets={getTotalAssets(balanceList, eosPrice)}
