@@ -1,0 +1,16 @@
+{
+  "zh": {
+    "rcv_nav_title_name": "收款",
+    "rcv_input_content_tips": "请设置收款金额",
+    "rcv_input_left_tips": "收款金额:",
+    "rcv_qrcode_bottom_copy": "复制收款地址",
+    "rcv_qrcode_bottom_copied": "已复制"
+  },
+  "en": {
+    "rcv_nav_title_name": "Receive",
+    "rcv_input_content_tips": "Please input amount",
+    "rcv_input_left_tips": "Amount:",
+    "rcv_qrcode_bottom_copy": "Copy the receive address",
+    "rcv_qrcode_bottom_copied": "Copied"
+  }
+}
