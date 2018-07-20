@@ -21,6 +21,7 @@ import { IntlProvider, FormattedMessage } from 'react-intl'
 import NavigationBar, { CommonTitle, CommonRightButton } from 'components/NavigationBar'
 import SettingItem from 'components/SettingItem'
 import SplashScreen from 'react-native-splash-screen'
+import { checkCamera } from 'utils/permissions'
 import styles from './styles'
 import messages from './messages'
 import AssetQRCode from './AssetQRCode'
@@ -28,7 +29,6 @@ import AccountList from './AccountList'
 import EnableAssets from './EnableAssets'
 import BalanceList from './BalanceList'
 import TotalAssetsCard from './TotalAssetsCard'
-import { checkCamera } from 'utils/permissions'
 
 const getTotalAssets = (balanceList, eosPrice) => {
   if (!balanceList) return 0

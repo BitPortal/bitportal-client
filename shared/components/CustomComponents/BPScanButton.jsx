@@ -17,9 +17,8 @@ const styles = StyleSheet.create({
 })
 
 export default class BPScanButton extends Component{
-
   checkPermissions = () => {
-    Permissions.check('camera').then(response => {
+    Permissions.check('camera').then((response) => {
       // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
       console.log('###', response)
     })
@@ -33,7 +32,7 @@ export default class BPScanButton extends Component{
         onPress={this.checkPermissions}
       >
         <View style={{ alignSelf: 'flex-end', marginRight: 32 }}>
-          <Ionicons name={"md-qr-scanner"} size={24} color={Colors.bgColor_FFFFFF} />
+          <Ionicons name="md-qr-scanner" size={24} color={Colors.bgColor_FFFFFF} />
         </View>
       </TouchableOpacity>
     )

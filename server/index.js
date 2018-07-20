@@ -1,4 +1,3 @@
-/* @jsx */
 /* global __webpack_hash__ */
 
 import cluster from 'cluster'

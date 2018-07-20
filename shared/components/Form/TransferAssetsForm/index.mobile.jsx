@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form/immutable'
 import { FormContainer, TextField, TextAreaField, SubmitButton } from 'components/Form'
 import { normalizeText } from 'utils/normalize'
+import * as transferActions from 'actions/transfer'
 
 const validate = (values) => {
   const errors = {}
@@ -24,10 +25,12 @@ const validate = (values) => {
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.get('locale'),
+    transfer: state.transfer
   }),
   dispatch => ({
     actions: bindActionCreators({
+      ...transferActions
     }, dispatch)
   })
 )
@@ -48,13 +51,13 @@ export default class TransferAssetsForm extends Component {
       <FormContainer>
         <Field
           label="Account Name"
-          name="name"
+          name="toAccount"
           component={TextField}
           normalize={normalizeText}
         />
         <Field
           label="Amount"
-          name="amount"
+          name="quantity"
           component={TextField}
           keyboardType="numeric"
         />
