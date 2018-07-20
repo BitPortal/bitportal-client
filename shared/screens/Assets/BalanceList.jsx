@@ -7,7 +7,7 @@ import CurrencyText from 'components/CurrencyText'
 import styles from './styles'
 
 const ListItem = ({ item, onPress, eosPrice }) => (
-  <TouchableHighlight disabled={true} underlayColor={Colors.hoverColor} style={styles.listContainer} onPress={() => onPress(item)}>
+  <TouchableHighlight underlayColor={Colors.hoverColor} style={styles.listContainer} onPress={() => onPress(item)}>
     <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.minorThemeColor }]}>
       <View style={{ flexDirection: 'row' }}>
         <Text style={styles.text20}> {item.get('symbol')} </Text>

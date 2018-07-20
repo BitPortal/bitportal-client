@@ -11,6 +11,7 @@ import QRCodeScanner from 'screens/QRCodeScanner'
 import BPWebView from 'components/BPWebView'
 import TransactionRecord from 'screens/TransactionRecord'
 import Assets from 'screens/Assets'
+import ReceiveQRCode from 'screens/Assets/ReceiveQRCode'
 import AssetChart from 'screens/Assets/AssetChart'
 import AssetsTransfer from 'screens/Assets/AssetsTransfer'
 import AvailableAssets from 'screens/Assets/AvailableAssets'
@@ -81,6 +82,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.QRCodeScanner', () => screenComponent(QRCodeScanner, store))
   Navigation.registerComponent('BitPortal.TransactionRecord', () => screenComponent(TransactionRecord, store))
   Navigation.registerComponent('BitPortal.Assets', () => screenComponent(Assets, store))
+  Navigation.registerComponent('BitPortal.ReceiveQRCode', () => screenComponent(ReceiveQRCode, store))
   Navigation.registerComponent('BitPortal.AssetChart', () => screenComponent(AssetChart, store))
   Navigation.registerComponent('BitPortal.AssetsTransfer', () => screenComponent(AssetsTransfer, store))
   Navigation.registerComponent('BitPortal.AvailableAssets', () => screenComponent(AvailableAssets, store))
