@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { WebView, View, Text, Share, Linking, Clipboard, TouchableHighlight } from 'react-native'
+import { WebView, View, Text, Share, Linking, Clipboard, TouchableHighlight, Platform } from 'react-native'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
-import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
+import NavigationBar, { CommonButton, CommonRightButton, LinkingRightButton } from 'components/NavigationBar'
 import Loading from 'components/Loading'
 import { FormattedMessage, IntlProvider } from 'react-intl'
-// import ActionSheet from 'react-native-actionsheet'
+import ActionSheet from 'react-native-actionsheet'
 import styles from './styles'
 import messages from './messages'
 
@@ -46,18 +46,22 @@ export default class BPWebView extends Component {
 
   share = () => {
     try {
-      Share.share({ url: this.props.url, title: this.props.title })
+      Share.share({ url: this.props.uri, title: this.props.title })
     } catch (e) {
       console.warn('share error --', e)
     }
   }
 
   showActionSheet = () => {
-    this.ActionSheet.show()
+    // console.log('###', this.actionSheet)
+    this.actionSheet.show()
   }
 
   selectActionSheet = (index) => {
     switch (index) {
+      case 0:
+        this.share()
+        break;
       case 1:
         this.linking()
         break;
@@ -68,7 +72,7 @@ export default class BPWebView extends Component {
   }
 
   linking = () => {
-    const url = this.props.url
+    const url = this.props.uri
     Linking.canOpenURL(url).then((supported) => {
       if (!supported) {
         // console.log(`Can't handle url: ${url}`);
@@ -110,7 +114,7 @@ export default class BPWebView extends Component {
   )
 
   render() {
-    const { needShare, uri, title, name, locale } = this.props
+    const { needShare, needLinking, uri, title, name, locale } = this.props
     const { isCopied } = this.state
     return (
       <IntlProvider messages={messages[locale]}>
@@ -119,13 +123,13 @@ export default class BPWebView extends Component {
             title={title}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
             rightButton={needShare && <CommonRightButton iconName="md-share" onPress={() => this.share()} />}
-            // rightButton={
-            //   needLinking &&
-            //   <LinkingRightButton
-            //     iconName={"ios-more"}
-            //     onPress={this.linking}
-            //   />
-            // }
+            rightButton={
+              needLinking &&
+              <LinkingRightButton
+                iconName={"ios-more"}
+                onPress={this.showActionSheet}
+              />
+            }
           />
           <View style={styles.content}>
             {
@@ -144,8 +148,8 @@ export default class BPWebView extends Component {
               />
             }
             {
-              name
-              && <View style={[styles.content, styles.center]}>
+              name && 
+              <View style={[styles.content, styles.center]}>
                 <Text style={styles.text18}>
                   {title}{': '}{name}
                 </Text>
@@ -165,14 +169,18 @@ export default class BPWebView extends Component {
                 </TouchableHighlight>
               </View>
             }
-            {/* <ActionSheet
-              ref={o => this.ActionSheet = o}
-              title={<Text style={{color: '#000', fontSize: 18}}>Which one do you like?</Text>}
-              options={options}
-              cancelButtonIndex={0}
-              destructiveButtonIndex={4}
+            <ActionSheet
+              ref={o => this.actionSheet = o}
+              title={'Which one do you like ?'}
+              options={[
+                messages[locale]["web_button_name_share"], 
+                Platform.OS == 'ios' ? messages[locale]["web_button_name_linkios"] : messages[locale]["web_button_name_linkandroid"], 
+                messages[locale]["web_button_name_cancel"], 
+              ]}
+              cancelButtonIndex={2}
+              destructiveButtonIndex={1}
               onPress={(index) => this.selectActionSheet(index)}
-            /> */}
+            />
           </View>
         </View>
       </IntlProvider>
