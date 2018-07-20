@@ -76,7 +76,7 @@ function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
     const activePrivateKeyDecodedString = wif.decode(activePrivateKey).privateKey.toString('hex')
 
     const existedAccount = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
-    assert(!existedAccount, 'EOS account already exists!')
+    // assert(!existedAccount, 'EOS account already exists!')
 
     const ownerKeystore = yield call(encrypt, ownerPrivateKeyDecodedString, password, { origin: 'classic', coin: 'EOS' })
     const activeKeystore = yield call(encrypt, activePrivateKeyDecodedString, password, { origin: 'classic', coin: 'EOS' })
