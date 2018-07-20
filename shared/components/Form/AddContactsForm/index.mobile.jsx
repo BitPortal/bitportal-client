@@ -12,6 +12,7 @@ import { validateEOSAccountName } from 'utils/validate'
 // import { normalizeText } from 'utils/normalize'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import { Navigation } from 'react-native-navigation'
+import { eosAccountSelector } from 'selectors/eosAccount'
 import storage from 'utils/storage'
 import messages from './messages'
 
@@ -33,7 +34,8 @@ const validate = (values) => {
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.get('locale'),
+    eosAccount: eosAccountSelector(state)
   })
 )
 
@@ -50,7 +52,8 @@ export default class AddContactsForm extends Component {
   }
 
   async componentDidMount() {
-    const objInfo = await storage.getItem('bitportal.contacts', true)
+    const accountName = this.props.eosAccount.get('data').get('account_name')
+    const objInfo = await storage.getItem(`bitportal.${accountName}-contacts`, true)
     const contacts = objInfo && objInfo.contacts
     if (contacts && contacts.length > 0) {
       this.setState({ contacts })
@@ -60,7 +63,8 @@ export default class AddContactsForm extends Component {
   async submit(data) {
     const tempObj = { accountName: data.get('name'), memo: data.get('memo') }
     this.state.contacts.push(tempObj)
-    await storage.setItem('bitportal.contacts', { contacts: this.state.contacts }, true)
+    const accountName = this.props.eosAccount.get('data').get('account_name')
+    await storage.setItem(`bitportal.${accountName}-contacts`, { contacts: this.state.contacts }, true)
     Navigation.pop(this.props.componentId)
   }
 

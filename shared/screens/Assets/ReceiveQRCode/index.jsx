@@ -39,7 +39,7 @@ export default class ReceiveQRCode extends Component {
   // 复制二维码对应值
   copyQrcodeValue = () => {
     if (!this.state.isCopied) {
-      Clipboard.setString(eosQrString(this.props.eosAccount.get('data').get('account_name'), this.state.value, 'EOS'))
+      Clipboard.setString(this.props.eosAccount.get('data').get('account_name'))
       this.setState({ isCopied: true })
       this.startTimer()
     }

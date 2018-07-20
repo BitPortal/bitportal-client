@@ -28,15 +28,7 @@ export default class CreateContact extends Component {
       }
     }
   }
-
-  changeNickName = () => {
-
-  }
-
-  saveContact = () => {
-
-  }
-
+  
   render() {
     const { locale } = this.props
     return (
