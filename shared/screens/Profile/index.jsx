@@ -32,30 +32,40 @@ export default class Profile extends Component {
     })
   }
 
+  dialog = () => {
+    const { locale } = this.props
+    Dialogs.alert(messages[locale].profile_button_name_err, null, { negativeText: messages[locale].profile_popup_buttom_ent })
+  }
+
   changePage = (page) => {
     let pageName = ''
     let passProps = {}
-    const { locale } = this.props
     switch (page) {
       case 'Account':
         if (this.props.wallet.get('data').get('eosAccountName')) {
           pageName = 'AccountManager'
           passProps = this.props.wallet.get('data').toJS()
         } else {
-          return Dialogs.alert(messages[locale].profile_button_name_err, null, { negativeText: messages[locale].profile_popup_buttom_ent })
+          return this.dialog()
+        }
+        break
+      case 'Contacts':
+        if (this.props.wallet.get('data').get('eosAccountName')) {
+          pageName = 'Contacts'
+        } else {
+          return this.dialog()
         }
         break
       case 'Resources':
         if (this.props.wallet.get('data').get('eosAccountName')) {
           pageName = 'Resources'
         } else {
-          return Dialogs.alert(messages[locale].profile_button_name_err, null, { negativeText: messages[locale].profile_popup_buttom_ent })
+          return this.dialog()
         }
         break
       case 'Voting':
       case 'About':
       case 'Mediafax':
-      case 'Contacts':
       case 'Settings':
       case 'ContactUs':
         pageName = page

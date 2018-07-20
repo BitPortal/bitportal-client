@@ -7,6 +7,7 @@ import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
+import { eosAccountSelector } from 'selectors/eosAccount'
 import storage from 'utils/storage'
 import DeleteButton from './DeleteButton'
 import styles from './styles'
@@ -14,7 +15,8 @@ import messages from './messages'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.get('locale'),
+    eosAccount: eosAccountSelector(state)
   }),
   null,
   null,
@@ -40,7 +42,8 @@ export default class Contacts extends Component {
   }
 
   async componentDidAppear() {
-    const objInfo = await storage.getItem('bitportal.contacts', true)
+    const accountName = this.props.eosAccount.get('data').get('account_name')
+    const objInfo = await storage.getItem(`bitportal.${accountName}-contacts`, true)
     const contacts = objInfo && objInfo.contacts
     if (contacts && contacts.length > 0) {
       this.setState({ contacts })
@@ -59,7 +62,8 @@ export default class Contacts extends Component {
     rowMap[`${secId}${rowId}`].closeRow()
     const newData = [...this.state.contacts] // eslint-disable-line react/no-access-state-in-setstate
     newData.splice(rowId, 1)
-    await storage.mergeItem('bitportal.contacts', { contacts: newData }, true)
+    const accountName = this.props.eosAccount.get('data').get('account_name')
+    await storage.mergeItem(`bitportal.${accountName}-contacts`, { contacts: newData }, true)
     this.setState({ contacts: newData })
   }
 

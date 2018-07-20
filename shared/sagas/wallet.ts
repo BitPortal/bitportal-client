@@ -9,6 +9,7 @@ import { resetKey } from 'actions/keystore'
 import { resetEOSAccount, syncEOSAccount, createEOSAccountSucceeded, getEOSAccountRequested } from 'actions/eosAccount'
 import { getErrorMessage } from 'utils'
 import secureStorage from 'utils/secureStorage'
+import storage from 'utils/storage'
 import { privateToPublic, initEOS, randomKey } from 'core/eos'
 import { getMasterSeed, encrypt, decrypt, getEOSKeys, getEOSWifsByInfo } from 'core/key'
 import { push, pop, popToRoot } from 'utils/location'
@@ -244,6 +245,7 @@ function* logoutRequested(action: Action<LogoutParams>) {
     for (const item of Object.keys(items)) {
       yield call(secureStorage.removeItem, item)
     }
+    yield call(storage.removeItem, `bitportal.${eosAccountName}-contacts`)
 
     yield put(actions.resetWallet())
     yield put(resetEOSAccount())
