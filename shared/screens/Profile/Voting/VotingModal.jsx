@@ -1,4 +1,4 @@
-/* @jsx */
+
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Text, View, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native'

@@ -1,4 +1,4 @@
-/* @tsx */
+
 
 import 'core-js/es6'
 import React from 'react'

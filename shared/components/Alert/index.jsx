@@ -1,4 +1,4 @@
-/* @tsx */
+
 
 import { Component } from 'react'
 import { Alert } from 'react-native'

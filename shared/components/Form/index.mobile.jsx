@@ -1,4 +1,4 @@
-/* @jsx */
+
 
 import React from 'react'
 import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'

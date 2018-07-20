@@ -1,4 +1,4 @@
-/* @jsx */
+
 
 import { AlertIOS, Alert } from 'react-native'
 

@@ -1,4 +1,4 @@
-/* @tsx */
+
 
 import { Component } from 'react'
 import { AlertIOS } from 'react-native'

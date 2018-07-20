@@ -1,4 +1,4 @@
-/* @tsx */
+
 
 import React, { Component } from 'react'
 import { Text, Image, View, ScrollView } from 'react-native'

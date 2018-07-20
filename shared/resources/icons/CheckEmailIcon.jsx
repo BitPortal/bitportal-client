@@ -1,5 +1,3 @@
-/* @jsx */
-
 import React from 'react'
 
 const CheckEmailIcon = () => (

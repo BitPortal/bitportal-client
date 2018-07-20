@@ -1,4 +1,4 @@
-/* @tsx */
+
 
 import { FormattedNumber } from 'react-intl'
 import { connect } from 'react-redux'

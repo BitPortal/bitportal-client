@@ -1,4 +1,4 @@
-/* @jsx */
+
 /* global WxLogin */
 
 import React, { Component } from 'react'

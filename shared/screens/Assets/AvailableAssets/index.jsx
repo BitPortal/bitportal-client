@@ -1,4 +1,4 @@
-/* @jsx */
+
 import React, { Component } from 'react'
 import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
