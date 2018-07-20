@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
+import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, ifIphoneX, TAB_BAR_HEIGHT } from 'utils/dimens'
 
 const styles = StyleSheet.create({
   container: {
@@ -40,7 +40,30 @@ const styles = StyleSheet.create({
   chartContainer: {
     width: SCREEN_WIDTH - 40,
     height: 160
-  }
+  },
+  btnContainer: {
+    width: SCREEN_WIDTH,
+    height: TAB_BAR_HEIGHT,
+    backgroundColor: Colors.minorThemeColor,
+    ...ifIphoneX({
+      paddingBottom: 34
+    }, {
+      paddingBottom: 0
+    })
+  },
+  line: {
+    height: 10,
+    width: 1,
+    backgroundColor: Colors.bgColor_FFFFFF
+  },
+  btn: {
+    width: (SCREEN_WIDTH - 1) / 2,
+    ...ifIphoneX({
+      height: TAB_BAR_HEIGHT - 34
+    }, {
+      height: TAB_BAR_HEIGHT
+    })
+  },
 })
 
 export default styles

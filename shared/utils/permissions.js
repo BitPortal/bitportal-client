@@ -1,7 +1,9 @@
 import Permissions from 'react-native-permissions'
 import Dialog from 'components/Dialog'
 
-const checkCamera = locale => new Promise((resolve) => {
+const checkCameraAuthorized = response => response === 'authorized'
+
+const checkCamera = () => new Promise((resolve) => {
   Permissions.check('camera').then((response) => {
     // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
     if (checkCameraAuthorized(response)) {
@@ -19,9 +21,6 @@ const checkCamera = locale => new Promise((resolve) => {
     }
   })
 })
-
-const checkCameraAuthorized = response => response === 'authorized'
-
 
 export {
   checkCamera

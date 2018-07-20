@@ -14,7 +14,8 @@
     "dlgt_popup_title_enbyteinput": "您的余额不足",
     "dlgt_popup_title_mousg": "内存容量（RAM）不足",
     "dlgt_popup_title_exlimit": "计算资源资源（CPU）不足",
-    "tra_popup_title_baln": "余额:"
+    "tra_popup_title_baln": "余额:",
+    "tra_popup_title_stked": "已抵押:"
   },
   "en": {
     "dlgt_popup_title_pwd" : "Please enter the password",
@@ -31,6 +32,7 @@
     "dlgt_popup_title_enbyteinput": "Your EOS balance is not enough",
     "dlgt_popup_title_mousg": "account using more than allotted RAM usage",
     "dlgt_popup_title_exlimit": "transaction exceeded the current CPU usage limit imposed on the transaction",
-    "tra_popup_title_baln": "Balance:"
+    "tra_popup_title_baln": "Balance:",
+    "tra_popup_title_stked": "Staked:"
   }
 }

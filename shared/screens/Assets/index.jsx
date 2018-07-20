@@ -94,10 +94,13 @@ export default class Assets extends Component {
 
   enableAssets = () => {}
 
-  checkAsset = () => {
+  checkAsset = (item) => {
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.AssetChart'
+        name: 'BitPortal.AssetChart',
+        passProps: {
+          eosItem: item
+        }
       }
     })
   }
