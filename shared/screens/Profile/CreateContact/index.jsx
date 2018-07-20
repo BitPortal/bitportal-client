@@ -28,7 +28,7 @@ export default class CreateContact extends Component {
       }
     }
   }
-  
+
   render() {
     const { locale } = this.props
     return (
