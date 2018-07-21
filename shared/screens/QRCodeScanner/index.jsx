@@ -1,12 +1,12 @@
-
-
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { Text, View, TouchableOpacity } from 'react-native'
 import QRCodeScanner from 'react-native-qrcode-scanner'
-import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
+import * as balanceActions from 'actions/balance'
 import messages from './messages'
 import styles from './styles'
 
@@ -14,7 +14,11 @@ import styles from './styles'
   state => ({
     locale: state.intl.get('locale')
   }),
-  null,
+  dispatch => ({
+    actions: bindActionCreators({
+      ...balanceActions
+    }, dispatch)
+  }),
   null,
   { withRef: true }
 )
@@ -29,6 +33,7 @@ export default class Scanner extends Component {
   }
 
   onSuccess() {
+    this.props.actions.setActiveAsset('EOS')
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.AssetsTransfer',

@@ -59,8 +59,7 @@
     "react/no-array-index-key": [0],
     "react/jsx-one-expression-per-line": [0],
     "no-else-return": [0],
-    "react/destructuring-assignment": [0],
-    "no-multiple-empty-lines": [1]
+    "react/destructuring-assignment": [0]
   },
   "env": {
     "browser": true,

@@ -1,19 +1,17 @@
 import { createSelector } from 'reselect'
-import { Map } from 'immutable'
 
 const accountSelector = (state: RootState) => state.wallet.get('data').get('eosAccountName')
 const balancerSelector = (state: RootState) => state.balance
+const activeAssetSelector = (state: RootState) => state.balance.get('activeAsset')
 
-export const accountBalanceSelector = createSelector(
+export const eosAccountBalanceSelector = createSelector(
   accountSelector,
   balancerSelector,
-  (name: string, balance: any) => balance.update(
-    'data',
-    (v: any) => {
-      if (!name) return Map({})
-      const index = v.findIndex((item: any) => item.get('eosAccountName') === name)
+  (name: string, balance: any) => name ? balance.get('data').filter((item: any) => item.get('eosAccountName') === name).getIn(['0', 'eosAccountBalance']) : null
+)
 
-      return index === -1 ? Map({}) : v.get(index)
-    }
-  )
+export const eosAssetBalanceSelector = createSelector(
+  activeAssetSelector,
+  eosAccountBalanceSelector,
+  (asset: string, balance: any) => (asset && balance) ? balance.filter((item: any) => item.get('symbol') === asset).get(0) : null
 )

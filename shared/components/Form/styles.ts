@@ -28,7 +28,7 @@ export default EStyleSheet.create({
     height: 40,
     color: Colors.textColor_255_255_238,
     fontSize: FontScale(14),
-    paddingLeft: Platform.OS == 'android' ? -4 : 0
+    paddingLeft: Platform.OS === 'android' ? -4 : 0
   },
   areaInput: {
     flex: 1,
@@ -45,9 +45,15 @@ export default EStyleSheet.create({
     flexDirection: 'column',
     width: '100%'
   },
-  text14: {
+  fieldInfo: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  label: {
     fontSize: FontScale(14),
-    color: Colors.textColor_89_185_226
+    color: Colors.textColor_89_185_226,
   },
   submitButton: {
     marginTop: 3,

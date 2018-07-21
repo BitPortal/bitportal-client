@@ -23,16 +23,25 @@ export const FieldInput = ({ children, rightContent, leftContent, style }) => (
   </View>
 )
 
+export const FieldInfo = ({ children, style }) => (
+  <View style={[styles.fieldInfo, style]}>
+    {children}
+  </View>
+)
+
 export const FieldError = ({ children }) => (
   <Text style={styles.fieldError}>{children}</Text>
 )
 
-export const TextField = ({ input: { onChange, ...restInput }, meta: { touched, error }, label, keyboardType, rightContent, tips }) => (
+export const TextField = ({ input: { onChange, ...restInput }, meta: { touched, error }, label, keyboardType, rightContent, tips, info }) => (
   <FieldItem>
-    <View style={{ flexDirection: 'row' }}>
-      {label && <Text style={styles.text14}>{label}</Text>}
-      {tips && <Tips tips={tips} />}
-    </View>
+    <FieldInfo>
+      <View style={{ flexDirection: 'row' }}>
+        {label && <Text style={styles.label}>{label}</Text>}
+        {tips && <Tips tips={tips} />}
+      </View>
+      {info && <View>{info}</View>}
+    </FieldInfo>
     <FieldInput rightContent={rightContent}>
       <TextInput
         style={styles.input}
@@ -52,7 +61,7 @@ export const TextField = ({ input: { onChange, ...restInput }, meta: { touched, 
 
 export const TextAreaField = ({ input: { onChange, ...restInput }, meta: { touched, error }, label, placeholder }) => (
   <FieldItem>
-    <Text style={styles.text14}>{label}</Text>
+    <Text style={styles.label}>{label}</Text>
     <FieldInput style={{ borderBottomWidth: 0 }}>
       <TextInput
         multiline={true}
@@ -75,7 +84,7 @@ export const TextAreaField = ({ input: { onChange, ...restInput }, meta: { touch
 
 export const PasswordField = ({ input: { onChange, ...restInput }, meta: { touched, error }, label, rightContent }) => (
   <FieldItem>
-    <Text style={styles.text14}>{label}</Text>
+    <Text style={styles.label}>{label}</Text>
     <FieldInput rightContent={rightContent}>
       <TextInput
         style={styles.input}

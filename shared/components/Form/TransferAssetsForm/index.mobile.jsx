@@ -1,12 +1,14 @@
-
-
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { Text } from 'react-native'
 import { Field, reduxForm } from 'redux-form/immutable'
 import { FormContainer, TextField, TextAreaField, SubmitButton } from 'components/Form'
-import { normalizeText } from 'utils/normalize'
+import { normalizeText, normalizeEOSAccountName } from 'utils/normalize'
 import * as transferActions from 'actions/transfer'
+import { eosAccountSelector } from 'selectors/eosAccount'
+import { eosAssetBalanceSelector } from 'selectors/balance'
+import styles from './styles'
 
 const validate = (values) => {
   const errors = {}
@@ -26,7 +28,9 @@ const validate = (values) => {
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    transfer: state.transfer
+    transfer: state.transfer,
+    eosAccount: eosAccountSelector(state),
+    eosAssetBalance: eosAssetBalanceSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -39,13 +43,15 @@ const validate = (values) => {
 
 export default class TransferAssetsForm extends Component {
   submit = (data) => {
-    this.props.onPress()
-    console.log(data.toJS())
+    const fromAccount = this.props.eosAccount.get('account_name')
+    console.log(data.set('fromAccount', fromAccount).toJS())
   }
 
   render() {
-    const { handleSubmit, invalid, pristine } = this.props
+    const { handleSubmit, invalid, pristine, eosAssetBalance } = this.props
     const disabled = invalid || pristine
+    const symbol = eosAssetBalance && eosAssetBalance.get('symbol')
+    const balance = eosAssetBalance && eosAssetBalance.get('balance')
 
     return (
       <FormContainer>
@@ -53,13 +59,14 @@ export default class TransferAssetsForm extends Component {
           label="Account Name"
           name="toAccount"
           component={TextField}
-          normalize={normalizeText}
+          normalize={normalizeEOSAccountName}
         />
         <Field
           label="Amount"
           name="quantity"
           component={TextField}
           keyboardType="numeric"
+          info={balance && <Text style={styles.balance}>Balance: {balance} {symbol}</Text>}
         />
         <Field
           name="memo"

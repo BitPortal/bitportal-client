@@ -6,7 +6,8 @@ const initialState = Immutable.fromJS({
   data: [],
   loading: false,
   loaded: false,
-  error: null
+  error: null,
+  activeAsset: null
 })
 
 export default handleActions({
@@ -32,6 +33,9 @@ export default handleActions({
   },
   [actions.getBalanceFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)
+  },
+  [actions.setActiveAsset] (state, action) {
+    return state.set('activeAsset', action.payload)
   },
   [actions.resetBalance] () {
     return initialState

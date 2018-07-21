@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -14,7 +13,7 @@ import * as balanceActions from 'actions/balance'
 import * as versionInfoActions from 'actions/versionInfo'
 import * as currencyActions from 'actions/currency'
 import * as eosAccountActions from 'actions/eosAccount'
-import { accountBalanceSelector } from 'selectors/balance'
+import { eosAccountBalanceSelector } from 'selectors/balance'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { eosPriceSelector } from 'selectors/ticker'
 import { IntlProvider, FormattedMessage } from 'react-intl'
@@ -30,11 +29,11 @@ import EnableAssets from './EnableAssets'
 import BalanceList from './BalanceList'
 import TotalAssetsCard from './TotalAssetsCard'
 
-const getTotalAssets = (balanceList, eosPrice) => {
-  if (!balanceList) return 0
+const getTotalAssets = (eosAccountBalance, eosPrice) => {
+  if (!eosAccountBalance) return 0
 
   let balance
-  const baseTokenBalance = balanceList.filter(balance => balance.get('symbol') === 'SYS' || balance.get('symbol') === 'EOS')
+  const baseTokenBalance = eosAccountBalance.filter(balance => balance.get('symbol') === 'SYS' || balance.get('symbol') === 'EOS')
 
   if (baseTokenBalance.size) {
     balance = baseTokenBalance.get(0).get('balance')
@@ -50,7 +49,7 @@ const getTotalAssets = (balanceList, eosPrice) => {
     locale: state.intl.get('locale'),
     wallet: state.wallet,
     eosAccount: eosAccountSelector(state),
-    balance: accountBalanceSelector(state),
+    eosAccountBalance: eosAccountBalanceSelector(state),
     eosPrice: eosPriceSelector(state)
   }),
   dispatch => ({
@@ -179,12 +178,11 @@ export default class Assets extends Component {
   }
 
   render() {
-    const { wallet, balance, locale, eosAccount, eosPrice } = this.props
+    const { wallet, eosAccountBalance, locale, eosAccount, eosPrice } = this.props
     const activeEOSAccount = eosAccount.get('data')
     const hdWalletList = wallet.get('hdWalletList')
     const classicWalletList = wallet.get('classicWalletList')
     const walletCount = hdWalletList.size + classicWalletList.size
-    const balanceList = balance.get('data').get('eosAccountBalance')
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -194,35 +192,37 @@ export default class Assets extends Component {
             rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanQR()} />}
           />
           {
-            !walletCount
-            && <TouchableHighlight underlayColor={Colors.mainThemeColor} onPress={() => this.createNewAccount()} style={[styles.createAccountContainer, styles.center]}>
-              <View style={{ alignItems: 'center' }}>
-                <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF} />
-                <Text style={[styles.text14, { color: Colors.textColor_255_255_238, marginTop: 20 }]}>
-                  <FormattedMessage id="addpage_button_name_crt" />
-                </Text>
-              </View>
-            </TouchableHighlight>
+            !walletCount && (
+              <TouchableHighlight underlayColor={Colors.mainThemeColor} onPress={() => this.createNewAccount()} style={[styles.createAccountContainer, styles.center]}>
+                <View style={{ alignItems: 'center' }}>
+                  <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF} />
+                  <Text style={[styles.text14, { color: Colors.textColor_255_255_238, marginTop: 20 }]}>
+                    <FormattedMessage id="addpage_button_name_crt" />
+                  </Text>
+                </View>
+              </TouchableHighlight>
+            )
           }
           {
-            !!walletCount
-            && <View style={styles.scrollContainer}>
-              <ScrollView showsVerticalScrollIndicator={false}>
-                <TotalAssetsCard
-                  totalAssets={getTotalAssets(balanceList, eosPrice)}
-                  accountName={activeEOSAccount.get('account_name')}
-                  CPUInfo={activeEOSAccount.get('cpu_limit')}
-                  NETInfo={activeEOSAccount.get('net_limit')}
-                  RAMQuota={activeEOSAccount.get('ram_quota')}
-                  RAMUsage={activeEOSAccount.get('ram_usage')}
-                  checkResourcesDetails={this.checkResourcesDetails}
-                  onPress={() => this.operateAssetQRCode(true)}
-                />
-                {!activeEOSAccount.get('account_name') && <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_create_eos_account" />} onPress={() => this.createEOSAccount()} extraStyle={{ marginTop: 10, marginBottom: 10 }} />}
-                {!!activeEOSAccount.get('account_name') && <EnableAssets Title={<FormattedMessage id="asset_title_name_ast" />} enableAssets={() => this.enableAssets()} />}
-                {balanceList && <BalanceList data={balanceList} eosPrice={eosPrice} onPress={e => this.checkAsset(e)} />}
-              </ScrollView>
-            </View>
+            !!walletCount && !!eosAccountBalance && (
+              <View style={styles.scrollContainer}>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                  <TotalAssetsCard
+                    totalAssets={getTotalAssets(eosAccountBalance, eosPrice)}
+                    accountName={activeEOSAccount.get('account_name')}
+                    CPUInfo={activeEOSAccount.get('cpu_limit')}
+                    NETInfo={activeEOSAccount.get('net_limit')}
+                    RAMQuota={activeEOSAccount.get('ram_quota')}
+                    RAMUsage={activeEOSAccount.get('ram_usage')}
+                    checkResourcesDetails={this.checkResourcesDetails}
+                    onPress={() => this.operateAssetQRCode(true)}
+                  />
+                  {!activeEOSAccount.get('account_name') && <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_create_eos_account" />} onPress={() => this.createEOSAccount()} extraStyle={{ marginTop: 10, marginBottom: 10 }} />}
+                  {!!activeEOSAccount.get('account_name') && <EnableAssets Title={<FormattedMessage id="asset_title_name_ast" />} enableAssets={() => this.enableAssets()} />}
+                  {eosAccountBalance && <BalanceList data={eosAccountBalance} eosPrice={eosPrice} onPress={e => this.checkAsset(e)} />}
+                </ScrollView>
+              </View>
+            )
           }
           <Modal
             animationIn="fadeIn"
