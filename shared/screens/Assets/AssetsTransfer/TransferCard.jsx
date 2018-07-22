@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, TouchableHighlight, ActivityIndicator } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, ifIphoneX } from 'utils/dimens'

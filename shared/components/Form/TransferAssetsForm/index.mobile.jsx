@@ -5,7 +5,7 @@ import { Text } from 'react-native'
 import { IntlProvider } from 'react-intl'
 import { Field, reduxForm } from 'redux-form/immutable'
 import { FormContainer, TextField, TextAreaField, SubmitButton } from 'components/Form'
-import { normalizeText, normalizeEOSAccountName, normalizeUnitByFraction, normalizeMemo } from 'utils/normalize'
+import { normalizeEOSAccountName, normalizeUnitByFraction, normalizeMemo } from 'utils/normalize'
 import { validateEOSAccountName } from 'utils/validate'
 import * as transferActions from 'actions/transfer'
 import * as eosAccountActions from 'actions/eosAccount'
@@ -17,7 +17,7 @@ import Alert from 'components/Alert'
 import messages from './messages'
 import styles from './styles'
 
-export const errorMessages = (error, messages) => {
+export const errorMessages = (error/* , messages*/) => {
   if (!error) return null
 
   const message = typeof error === 'object' ? error.message : error
@@ -51,11 +51,9 @@ const validate = (values, props) => {
   return errors
 }
 
-const asyncValidate = (values, dispatch, props, blurredField) => {
-  return new Promise((resolve, reject) => {
-    props.actions.validateEOSAccountRequested({ field: 'toAccount', value: values.get('toAccount'), resolve, reject })
-  })
-}
+const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject) => {
+  props.actions.validateEOSAccountRequested({ field: 'toAccount', value: values.get('toAccount'), resolve, reject })
+})
 
 @connect(
   state => ({
@@ -76,7 +74,6 @@ const asyncValidate = (values, dispatch, props, blurredField) => {
 
 export default class TransferAssetsForm extends Component {
   state = {
-    showModal: false,
     quantity: null,
     symbol: null,
     toAccount: null,
@@ -87,7 +84,7 @@ export default class TransferAssetsForm extends Component {
   showModal = (data) => {
     const { eosAssetBalance } = this.props
     const symbol = eosAssetBalance && eosAssetBalance.get('symbol')
-    this.setState({ showModal: true, quantity: data.get('quantity'), toAccount: data.get('toAccount'), memo: data.get('memo'), symbol }, () => {
+    this.setState({ quantity: data.get('quantity'), toAccount: data.get('toAccount'), memo: data.get('memo'), symbol }, () => {
       this.props.actions.openTransferModal()
     })
   }
@@ -95,7 +92,6 @@ export default class TransferAssetsForm extends Component {
   closeModal = () => {
     this.props.actions.closeTransferModal()
     this.setState({
-      showModal: false,
       quantity: null,
       symbol: null,
       toAccount: null,
