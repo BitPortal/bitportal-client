@@ -89,6 +89,7 @@ const baseConfig = {
               ]),
               plugins: [
                 'syntax-dynamic-import',
+                'transform-class-properties',
                 'transform-decorators-legacy',
                 'react-hot-loader/babel',
                 'transform-runtime',

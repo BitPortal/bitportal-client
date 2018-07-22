@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { IntlProvider, FormattedNumber } from 'react-intl'
@@ -43,11 +41,8 @@ interface State {
 )
 
 export default class Home extends Component<Props, State> {
-  constructor(props: Props, context?: {}) {
-    super(props, context)
-    this.state = {
-      price: null
-    }
+  state = {
+    price: null
   }
 
   componentDidMount() {

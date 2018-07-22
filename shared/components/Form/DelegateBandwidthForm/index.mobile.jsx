@@ -1,15 +1,9 @@
-
-
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { View, Text, Platform, InteractionManager } from 'react-native'
 import { Field, reduxForm, reset } from 'redux-form/immutable'
-import {
-  FormContainer,
-  TextField,
-  SubmitButton
-} from 'components/Form'
+import { FormContainer, TextField, SubmitButton } from 'components/Form'
 import { normalizeUnitByCurrency } from 'utils/normalize'
 import { validateUnitByCurrency } from 'utils/validate'
 import * as bandwidthActions from 'actions/bandwidth'
