@@ -147,7 +147,7 @@ export default class DelegateBandwidthForm extends Component {
     if (form !== this.state.activeForm) {
       this.props.actions.setActiveForm(form)
       this.setState({ activeForm: form })
-      this.props.actions.clearError()
+      this.props.actions.clearBandwidthError()
       this.props.reset('delegateBandwidthForm')
     }
   }
@@ -183,7 +183,7 @@ export default class DelegateBandwidthForm extends Component {
               onPress={handleSubmit(this.submit)}
               text={this.state.activeForm === 'Delegate' ? messages[locale].dlgt_popup_title_dlgt : messages[locale].dlgt_popup_title_undlgt}
             />
-            <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearError} />
+            <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearBandwidthError} />
             <Alert message={!!showSuccess && messages[locale].dlgt_popup_title_trasucc} dismiss={this.props.actions.hideSuccessModal} />
             {
               Platform.OS === 'android'

@@ -150,7 +150,7 @@ export default class AccountList extends Component {
               />
               <Loading isVisible={exporting} text={messages[locale].logout_popup_exporting} />
               <Loading isVisible={loggingOut} text={messages[locale].logout_popup_deleting} />
-              <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearError} delay={500} />
+              <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearKeystoreError} delay={500} />
               <Alert message={errorMessages(logoutError, messages[locale])} dismiss={this.props.actions.clearLogoutError} delay={500} />
               <Prompt
                 isVisible={this.state.showExportPrompt}

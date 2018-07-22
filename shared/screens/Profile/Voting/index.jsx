@@ -210,7 +210,7 @@ export default class Voting extends Component {
             title={messages[locale].vt_title_name_vote}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
-          <AlertComponent message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearError} />
+          <AlertComponent message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearVotingError} />
           <View style={[styles.stakeAmountContainer, styles.between]}>
             <Text style={styles.text14}>
               {'Stake: '}

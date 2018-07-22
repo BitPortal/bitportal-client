@@ -20,7 +20,7 @@ export default handleActions({
   [actions.votingFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)
   },
-  [actions.clearError] (state) {
+  [actions.clearVotingError] (state) {
     return state.set('error', null)
   },
   [actions.showSelected] (state) {

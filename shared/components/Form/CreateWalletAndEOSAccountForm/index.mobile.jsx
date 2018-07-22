@@ -115,7 +115,7 @@ export default class CreateWalletAndEOSAccountForm extends Component {
         />
         <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text="Create" />
         <Button text="Import" onPress={this.props.importEOSAccount} />
-        <Alert message={errorMessages(error)} dismiss={this.props.actions.clearError} />
+        <Alert message={errorMessages(error)} dismiss={this.props.actions.clearEOSAccountError} />
       </FormContainer>
     )
   }

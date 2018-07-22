@@ -139,7 +139,7 @@ export default class TradeRAMForm extends Component {
   switchForm(form) {
     if (form !== this.state.activeForm) {
       this.setState({ activeForm: form })
-      this.props.actions.clearError()
+      this.props.actions.clearRAMError()
       this.props.reset('tradeRAMForm')
     }
   }
@@ -183,7 +183,7 @@ export default class TradeRAMForm extends Component {
               onPress={handleSubmit(this.submit)}
               text={this.state.activeForm === 'Buy' ? messages[locale].tra_popup_title_buy : messages[locale].tra_popup_title_sell}
             />
-            <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearError} />
+            <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearRAMError} />
             <Alert message={!!showSuccess && messages[locale].tra_popup_title_trasucc} dismiss={this.props.actions.hideSuccessModal} />
             {
               Platform.OS === 'android'
