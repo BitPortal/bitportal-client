@@ -204,7 +204,7 @@ export default class Assets extends Component {
             )
           }
           {
-            !!walletCount && !!eosAccountBalance && (
+            !!walletCount && (
               <View style={styles.scrollContainer}>
                 <ScrollView showsVerticalScrollIndicator={false}>
                   <TotalAssetsCard

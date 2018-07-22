@@ -10,6 +10,7 @@ import { getErrorMessage } from 'utils'
 import secureStorage from 'utils/secureStorage'
 import { privateToPublic, isValidPrivate, initEOS } from 'core/eos'
 import { getEOSKeys, decrypt, validateEntropy, encrypt } from 'core/key'
+import { getErrorMessage } from 'utils'
 import { popToRoot } from 'utils/location'
 import wif from 'wif'
 
@@ -121,8 +122,42 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
   }
 }
 
+function* validateEOSAccountRequested(action: Action<ValidateEOSAccountParams>) {
+  if (!action.payload) return
+
+  try {
+    const eosAccountName = action.payload.value
+    const resolve = action.payload.resolve
+    const eos = yield call(initEOS, {})
+    assert(eos.getAccount, 'No eos getAccount method')
+    const info = yield call(eos.getAccount, eosAccountName)
+    assert(info && info.account_name, 'Invalid account info')
+    yield put(actions.validateEOSAccountSucceeded({ resolve }))
+  } catch (e) {
+    const { reject, field } = action.payload
+    yield put(actions.validateEOSAccountFailed({ reject, field, message: getErrorMessage(e.message) }))
+  }
+}
+
+function* validateEOSAccountSucceeded(action: Action<ValidateEOSAccountResult>) {
+  if (!action.payload) return
+  const resolve = action.payload.resolve
+  resolve()
+}
+
+function* validateEOSAccountFailed(action: Action<ValidateEOSAccountRejection>) {
+  if (!action.payload) return
+  const reject = action.payload.reject
+  const field = action.payload.field
+  // const message = action.payload.message
+  reject({ [field]: 'Account does not exist!' })
+}
+
 export default function* eosAccountSaga() {
   yield takeEvery(String(actions.createEOSAccountRequested), createEOSAccountRequested)
   yield takeEvery(String(actions.importEOSAccountRequested), importEOSAccountRequested)
   yield takeEvery(String(actions.getEOSAccountRequested), getEOSAccountRequested)
+  yield takeEvery(String(actions.validateEOSAccountRequested), validateEOSAccountRequested)
+  yield takeEvery(String(actions.validateEOSAccountSucceeded), validateEOSAccountSucceeded)
+  yield takeEvery(String(actions.validateEOSAccountFailed), validateEOSAccountFailed)
 }

@@ -4,25 +4,45 @@ import { connect } from 'react-redux'
 import { Text } from 'react-native'
 import { Field, reduxForm } from 'redux-form/immutable'
 import { FormContainer, TextField, TextAreaField, SubmitButton } from 'components/Form'
-import { normalizeText, normalizeEOSAccountName } from 'utils/normalize'
+import { normalizeText, normalizeEOSAccountName, normalizeUnitByFraction } from 'utils/normalize'
+import { validateEOSAccountName } from 'utils/validate'
 import * as transferActions from 'actions/transfer'
+import * as eosAccountActions from 'actions/eosAccount'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { eosAssetBalanceSelector } from 'selectors/balance'
 import styles from './styles'
 
-const validate = (values) => {
+const validate = (values, props) => {
+  const { eosAssetBalance } = props
+  const balance = eosAssetBalance && eosAssetBalance.get('balance')
+
   const errors = {}
-  if (!values.get('name')) {
-    errors.name = 'Please input account name'
+
+  if (!values.get('toAccount')) {
+    errors.toAccount = 'Please input account name'
+  } else if (!validateEOSAccountName(values.get('toAccount'))) {
+    errors.toAccount = 'Invalid eos account name'
   }
 
-  if (!values.get('amount')) {
-    errors.amount = 'Please input amount'
-  } else if (!!values.get('amount') && values.get('amount') <= 0) {
-    errors.amount = 'Amount must be more than 0'
+  if (!values.get('quantity')) {
+    errors.quantity = 'Please input amount'
+  } else if (!!values.get('quantity') && values.get('quantity') <= 0) {
+    errors.quantity = 'Amount must be more than 0'
+  } else if (balance && +values.get('quantity') > +balance) {
+    errors.quantity = 'You don\'t have enought balance'
   }
 
   return errors
+}
+
+const asyncValidate = (values, dispatch, props, blurredField) => {
+  if (blurredField === 'toAccount') {
+    return new Promise((resolve, reject) => {
+      props.actions.validateEOSAccountRequested({ field: blurredField, value: values.get(blurredField), resolve, reject })
+    })
+  } else {
+    return new Promise(resolve => resolve())
+  }
 }
 
 @connect(
@@ -34,16 +54,18 @@ const validate = (values) => {
   }),
   dispatch => ({
     actions: bindActionCreators({
-      ...transferActions
+      ...transferActions,
+      ...eosAccountActions
     }, dispatch)
   })
 )
 
-@reduxForm({ form: 'transferAssetsForm', validate })
+@reduxForm({ form: 'transferAssetsForm', validate, asyncValidate, asyncBlurFields: ['toAccount'] })
 
 export default class TransferAssetsForm extends Component {
   submit = (data) => {
-    const fromAccount = this.props.eosAccount.get('account_name')
+    this.props.blur('toAccount')
+    const fromAccount = this.props.eosAccount.getIn(['data', 'account_name'])
     console.log(data.set('fromAccount', fromAccount).toJS())
   }
 
@@ -66,6 +88,7 @@ export default class TransferAssetsForm extends Component {
           name="quantity"
           component={TextField}
           keyboardType="numeric"
+          normalize={normalizeUnitByFraction(4)}
           info={balance && <Text style={styles.balance}>Balance: {balance} {symbol}</Text>}
         />
         <Field
