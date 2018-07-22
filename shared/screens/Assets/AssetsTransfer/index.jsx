@@ -8,7 +8,6 @@ import { IntlProvider } from 'react-intl'
 import TransferAssetsForm from 'components/Form/TransferAssetsForm'
 import styles from './styles'
 import messages from './messages'
-import TransferCard from './TransferCard'
 
 @connect(
   state => ({
@@ -28,10 +27,6 @@ export default class AssetsTransfer extends Component {
     }
   }
 
-  state = {
-    isVisible: false
-  }
-
   scanner = () => {
     if (this.props.entry && this.props.entry === 'scanner') {
       Navigation.pop(this.props.componentId)
@@ -45,12 +40,10 @@ export default class AssetsTransfer extends Component {
   }
 
   transferAsset = () => {
-    this.setState({ isVisible: false }, () => {
-      Navigation.push(this.props.componentId, {
-        component: {
-          name: 'BitPortal.TransactionRecord'
-        }
-      })
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.TransactionRecord'
+      }
     })
   }
 
@@ -67,11 +60,10 @@ export default class AssetsTransfer extends Component {
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <TransferAssetsForm onPress={() => this.setState({ isVisible: true })} />
+              <TransferAssetsForm componentId={this.props.componentId} />
               <View style={styles.keyboard} />
             </ScrollView>
           </View>
-          <TransferCard isVisible={this.state.isVisible} onPress={() => { this.setState({ isVisible: false }) }} transferAsset={() => this.transferAsset()} />
         </View>
       </IntlProvider>
     )

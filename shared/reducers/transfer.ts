@@ -6,7 +6,8 @@ const initialState = Immutable.fromJS({
   data: [],
   loading: false,
   loaded: false,
-  error: null
+  error: null,
+  showModal: false
 })
 
 export default handleActions({
@@ -19,5 +20,14 @@ export default handleActions({
   },
   [actions.transferFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)
+  },
+  [actions.clearTransferError] (state) {
+    return state.set('error', null)
+  },
+  [actions.openTransferModal] (state) {
+    return state.set('showModal', true)
+  },
+  [actions.closeTransferModal] (state) {
+    return state.set('showModal', false)
   }
 }, initialState)

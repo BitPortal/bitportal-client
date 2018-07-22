@@ -42,9 +42,14 @@ export default class TransactionRecord extends Component {
     this.setState({ isCopied: true })
   }
 
+  componentDidMount() {
+    console.log(this.props.transactionInfo)
+  }
+
   render() {
     const { qrCodeValue, isCopied } = this.state
     const { locale } = this.props
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
