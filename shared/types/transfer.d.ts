@@ -3,9 +3,9 @@ declare interface TransferParams {
   fromAccount: string
   toAccount: string
   quantity: string
+  symbol: string
   memo?: string
+  componentId?: string
 }
 
-declare interface TransferResult {
-
-}
+declare type TransferResult = any

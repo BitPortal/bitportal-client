@@ -1,6 +1,5 @@
-
-
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
@@ -8,6 +7,7 @@ import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { FormattedNumber, FormattedMessage, IntlProvider } from 'react-intl'
 import { eosPriceSelector } from 'selectors/ticker'
 import CurrencyText from 'components/CurrencyText'
+import * as balanceActions from 'actions/balance'
 import messages from './messages'
 import ChartWrapper from './ChartWrapper'
 import RecordItem from './RecordItem'
@@ -18,7 +18,11 @@ import styles from './styles'
     locale: state.intl.get('locale'),
     eosPrice: eosPriceSelector(state)
   }),
-  null,
+  dispatch => ({
+    actions: bindActionCreators({
+      ...balanceActions
+    }, dispatch)
+  }),
   null,
   { withRef: true }
 )
@@ -40,6 +44,7 @@ export default class AssetChart extends Component {
   }
 
   send = () => {
+    this.props.actions.setActiveAsset(this.props.eosItem.get('symbol'))
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.AssetsTransfer'

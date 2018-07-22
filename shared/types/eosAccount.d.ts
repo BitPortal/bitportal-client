@@ -145,3 +145,20 @@ declare interface SetEOSAccountPasswordParams {
 }
 
 declare type SyncEOSAccountResult = string[]
+
+declare interface ValidateEOSAccountParams {
+  field: string
+  value: string
+  resolve: any
+  reject: any
+}
+
+declare interface ValidateEOSAccountResult {
+  resolve: any
+}
+
+declare interface ValidateEOSAccountRejection {
+  reject: any
+  field: string
+  message?: string | object
+}

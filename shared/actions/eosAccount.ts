@@ -14,4 +14,4 @@ export const getEOSAccountSucceeded = createAction<GetEOSAccountResult>('eosAcco
 export const getEOSAccountFailed = createAction<ErrorMessage>('eosAccount/GET_FAILED')
 export const validateEOSAccountRequested = createAction<ValidateEOSAccountParams>('eosAccount/VALIDATE_REQUESTED')
 export const validateEOSAccountSucceeded = createAction<ValidateEOSAccountResult>('eosAccount/VALIDATE_SUCCEEDED')
-export const validateEOSAccountFailed = createAction<ErrorMessage>('eosAccount/VALIDATE_FAILED')
+export const validateEOSAccountFailed = createAction<ValidateEOSAccountRejection>('eosAccount/VALIDATE_FAILED')

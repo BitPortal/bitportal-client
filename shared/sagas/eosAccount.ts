@@ -6,7 +6,6 @@ import { reset } from 'redux-form/immutable'
 import * as actions from 'actions/eosAccount'
 import { getBalanceRequested } from 'actions/balance'
 import { createClassicWalletSucceeded } from 'actions/wallet'
-import { getErrorMessage } from 'utils'
 import secureStorage from 'utils/secureStorage'
 import { privateToPublic, isValidPrivate, initEOS } from 'core/eos'
 import { getEOSKeys, decrypt, validateEntropy, encrypt } from 'core/key'
@@ -76,7 +75,7 @@ function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
     const ownerPrivateKeyDecodedString = wif.decode(ownerPrivateKey).privateKey.toString('hex')
     const activePrivateKeyDecodedString = wif.decode(activePrivateKey).privateKey.toString('hex')
 
-    const existedAccount = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
+    // const existedAccount = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
     // assert(!existedAccount, 'EOS account already exists!')
 
     const ownerKeystore = yield call(encrypt, ownerPrivateKeyDecodedString, password, { origin: 'classic', coin: 'EOS' })
@@ -139,13 +138,13 @@ function* validateEOSAccountRequested(action: Action<ValidateEOSAccountParams>) 
   }
 }
 
-function* validateEOSAccountSucceeded(action: Action<ValidateEOSAccountResult>) {
+function validateEOSAccountSucceeded(action: Action<ValidateEOSAccountResult>) {
   if (!action.payload) return
   const resolve = action.payload.resolve
   resolve()
 }
 
-function* validateEOSAccountFailed(action: Action<ValidateEOSAccountRejection>) {
+function validateEOSAccountFailed(action: Action<ValidateEOSAccountRejection>) {
   if (!action.payload) return
   const reject = action.payload.reject
   const field = action.payload.field
