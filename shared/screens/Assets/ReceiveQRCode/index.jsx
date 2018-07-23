@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'
 import Colors from 'resources/colors'
 import QRCode from 'react-native-qrcode-svg'

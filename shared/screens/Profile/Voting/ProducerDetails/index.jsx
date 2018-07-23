@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { View, ScrollView, LayoutAnimation } from 'react-native'

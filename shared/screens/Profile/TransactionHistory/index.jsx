@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { Text, View, SectionList } from 'react-native'

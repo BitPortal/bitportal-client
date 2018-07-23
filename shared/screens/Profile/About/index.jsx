@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react'
 import { Text, Image, View, ScrollView } from 'react-native'
 import { Navigation } from 'react-native-navigation'

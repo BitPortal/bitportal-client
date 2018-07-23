@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'
 import { Navigation } from 'react-native-navigation'
 import Colors from 'resources/colors'

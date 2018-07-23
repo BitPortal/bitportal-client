@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
 import Colors from 'resources/colors'

@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'

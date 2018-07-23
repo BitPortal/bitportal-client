@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react'
 import RNDialog from 'react-native-dialog'
 

@@ -1,5 +1,3 @@
-
-
 import { AlertIOS, Alert } from 'react-native'
 
 const actionNegative = 'actionNegative'
