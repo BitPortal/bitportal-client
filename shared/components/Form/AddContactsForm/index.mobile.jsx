@@ -1,5 +1,4 @@
 
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form/immutable'
@@ -42,13 +41,16 @@ const validate = (values) => {
 @reduxForm({ form: 'addContactsForm', validate })
 
 export default class AddContactsForm extends Component {
-  constructor(props, context) {
-    super(props, context)
-    this.submit = this.submit.bind(this)
-  }
-
   state = {
     contacts: []
+  }
+
+  submit = async (data) => {
+    const tempObj = { accountName: data.get('name'), memo: data.get('memo') }
+    this.state.contacts.push(tempObj)
+    const accountName = this.props.eosAccount.get('data').get('account_name')
+    await storage.setItem(`bitportal.${accountName}-contacts`, { contacts: this.state.contacts }, true)
+    Navigation.pop(this.props.componentId)
   }
 
   async componentDidMount() {
@@ -58,14 +60,6 @@ export default class AddContactsForm extends Component {
     if (contacts && contacts.length > 0) {
       this.setState({ contacts })
     }
-  }
-
-  async submit(data) {
-    const tempObj = { accountName: data.get('name'), memo: data.get('memo') }
-    this.state.contacts.push(tempObj)
-    const accountName = this.props.eosAccount.get('data').get('account_name')
-    await storage.setItem(`bitportal.${accountName}-contacts`, { contacts: this.state.contacts }, true)
-    Navigation.pop(this.props.componentId)
   }
 
   render() {

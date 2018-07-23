@@ -68,12 +68,7 @@ export default class Welcome extends Component {
     }
   }
 
-  constructor(props, context) {
-    super(props, context)
-    this.goToHomePage = this.goToHomePage.bind(this)
-  }
-
-  async goToHomePage() {
+  goToHomePage = async () => {
     if (this.props.from === 'about') {
       Navigation.pop(this.props.componentId)
       return

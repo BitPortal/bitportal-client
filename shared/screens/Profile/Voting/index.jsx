@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'
 import { Navigation } from 'react-native-navigation'
 import Colors from 'resources/colors'
@@ -61,31 +60,15 @@ export default class Voting extends Component {
     }
   }
 
-  constructor(props, context) {
-    super(props, context)
-    this.state = {
-      isVisible: false,
-      password: '',
-      item: {},
-      selected: this.props.eosAccount.get('data').get('voter_info') ? this.props.eosAccount.get('data').get('voter_info').get('producers').toJS() : [],
-      sortType: 'default'
-    }
-
-    this.voting = this.voting.bind(this)
-    this.submitVoting = this.submitVoting.bind(this)
-    this.changeSort = this.changeSort.bind(this)
+  state = {
+    isVisible: false,
+    password: '',
+    item: {},
+    selected: this.props.eosAccount.get('data').get('voter_info') ? this.props.eosAccount.get('data').get('voter_info').get('producers').toJS() : [],
+    sortType: 'default'
   }
 
-  componentDidMount() {
-    // this.props.actions.getVoteDataRequested()
-    this.props.actions.getProducersRequested({ json: true, limit: 500 })
-  }
-
-  componentWillUpdate() {
-    LayoutAnimation.easeInEaseOut()
-  }
-
-  changeSort() {
+  changeSort = () => {
     if (this.state.sortType === 'default') {
       this.setState({ sortType: 'ranking' }, () => {
         this.props.actions.sortProducers('ranking')
@@ -97,16 +80,12 @@ export default class Voting extends Component {
     }
   }
 
-  checkRules = () => {
-
-  }
-
   submitVoting = (password) => {
     const eosAccountName = this.props.eosAccount.get('data').get('account_name')
     this.props.actions.votingRequested({ producers: this.state.selected, eosAccountName, password })
   }
 
-  async voting() {
+  voting = async () => {
     if (Platform.OS === 'android') {
       return this.setState({ isVisible: true })
     }
@@ -194,6 +173,14 @@ export default class Voting extends Component {
     // this.props.actions.getProducersRequested({ json: true, limit: 500 })
   }
 
+  componentDidMount() {
+    this.props.actions.getProducersRequested({ json: true, limit: 500 })
+  }
+
+  componentWillUpdate() {
+    LayoutAnimation.easeInEaseOut()
+  }
+
   render() {
     const { locale, producer, eosAccount, voting } = this.props
     const loading = producer.get('loading')
@@ -222,7 +209,7 @@ export default class Voting extends Component {
               {' EOS'}
             </Text>
             <LinearGradientContainer type="right" colors={Colors.voteColor} style={[styles.resourcesBtn, { marginRight: -10 }]}>
-              <TouchableWithoutFeedback style={styles.center} underlayColor="transparent" onPress={() => this.checkResources()}>
+              <TouchableWithoutFeedback style={styles.center} underlayColor="transparent" onPress={this.checkResources}>
                 <View>
                   <Text style={[styles.text14, { marginHorizontal: 10, marginVertical: 2 }]}>
                     <FormattedMessage id="vt_rscs_button_rscs" />
@@ -235,7 +222,6 @@ export default class Voting extends Component {
             <Text style={[styles.text14, { color: Colors.textColor_181_181_181 }]} onPress={this.changeSort}>
               <FormattedMessage id="vt_sec_title_def" />/<FormattedMessage id="vt_sec_title_rk" />
             </Text>
-            {/* <Text style={[styles.text14, { color: Colors.textColor_181_181_181 }]}> Votes </Text> */}
           </View>
           <View style={styles.scrollContainer}>
             <ProducerList

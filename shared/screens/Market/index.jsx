@@ -35,13 +35,10 @@ import styles from './styles'
 )
 
 export default class Market extends Component {
-  constructor(props, context) {
-    super(props, context)
-    this.state = {
-      coinName: '',
-      isVisible: false,
-      activeQuoteAsset: null
-    }
+  state = {
+    coinName: '',
+    isVisible: false,
+    activeQuoteAsset: null
   }
 
   // 搜索币种

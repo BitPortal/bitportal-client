@@ -1,4 +1,3 @@
-
 /* eslint-disable react/no-multi-comp */
 
 import React, { Component } from 'react'
@@ -22,12 +21,7 @@ export const ModalBody = ({ children }) => <div className={style.modalBody}>{chi
 )
 
 export class PageModal extends Component {
-  constructor(props, context) {
-    super(props, context)
-    this.close = this.close.bind(this)
-  }
-
-  close() {
+  close = () => {
     this.props.actions.goBack()
   }
 
@@ -48,15 +42,11 @@ export class PageModal extends Component {
 }
 
 export default class Modal extends Component {
-  constructor(props, context) {
-    super(props, context)
-    this.state = {
-      animation: style.fadein
-    }
-    this.close = this.close.bind(this)
+  state = {
+    animation: style.fadein
   }
 
-  close() {
+  close = () => {
     this.setState({ animation: style.fadeout })
 
     if (this.props.close) {

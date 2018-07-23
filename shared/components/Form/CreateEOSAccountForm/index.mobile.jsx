@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -40,12 +38,7 @@ const validate = (values) => {
 @reduxForm({ form: 'createEOSAccountForm', validate })
 
 export default class CreateEOSAccountForm extends Component {
-  constructor(props, context) {
-    super(props, context)
-    this.submit = this.submit.bind(this)
-  }
-
-  submit(data) {
+  submit = (data) => {
     const bpid = this.props.wallet.get('data').get('bpid')
     this.props.actions.createEOSAccountRequested(data.set('bpid', bpid).toJS())
   }

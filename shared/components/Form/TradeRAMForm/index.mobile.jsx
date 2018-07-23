@@ -1,15 +1,9 @@
-
-
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { View, Text, Platform, InteractionManager } from 'react-native'
 import { Field, reduxForm, reset } from 'redux-form/immutable'
-import {
-  FormContainer,
-  TextField,
-  SubmitButton
-} from 'components/Form'
+import { FormContainer, TextField, SubmitButton } from 'components/Form'
 import { normalizeUnitByFraction, normalizeUnitByCurrency } from 'utils/normalize'
 import { validateUnitByFraction, validateUnitByCurrency } from 'utils/validate'
 import * as ramActions from 'actions/ram'
@@ -93,12 +87,7 @@ const validate = (values, props) => {
 @reduxForm({ form: 'tradeRAMForm', validate })
 
 export default class TradeRAMForm extends Component {
-  constructor(props, context) {
-    super(props, context)
-    this.state = { activeForm: 'Buy', isVisible: false, password: '', data: undefined }
-    this.submit = this.submit.bind(this)
-    this.switchForm = this.switchForm.bind(this)
-  }
+  state = { activeForm: 'Buy', isVisible: false, password: '', data: undefined }
 
   actionRequest = (data, password) => {
     const eosAccount = this.props.eosAccount
@@ -110,7 +99,7 @@ export default class TradeRAMForm extends Component {
     }
   }
 
-  async submit(data) {
+  submit = async (data) => {
     if (Platform.OS === 'ios') {
       const { action, text } = await Dialogs.prompt(
         messages[this.props.locale].tra_popup_title_pwd,
@@ -136,7 +125,7 @@ export default class TradeRAMForm extends Component {
     })
   }
 
-  switchForm(form) {
+  switchForm = (form) => {
     if (form !== this.state.activeForm) {
       this.setState({ activeForm: form })
       this.props.actions.clearRAMError()

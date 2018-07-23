@@ -4,23 +4,16 @@ import React, { Component } from 'react'
 import RNDialog from 'react-native-dialog'
 
 export default class Prompt extends Component {
-  constructor(props, context) {
-    super(props, context)
-
-    this.state = {
-      value: ''
-    }
-
-    this.handleConfirm = this.handleConfirm.bind(this)
-    this.onChange = this.onChange.bind(this)
+  state = {
+    value: ''
   }
 
-  handleConfirm() {
+  handleConfirm = () => {
     this.props.dismiss()
     this.props.callback(this.state.value)
   }
 
-  onChange(value) {
+  onChange = (value) => {
     this.setState({ value })
   }
 

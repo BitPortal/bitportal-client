@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -50,12 +48,7 @@ const validate = (values) => {
 )
 
 export default class CreateWalletForm extends Component {
-  constructor(props, context) {
-    super(props, context)
-    this.submit = this.submit.bind(this)
-  }
-
-  submit(data) {
+  submit = (data) => {
     this.props.actions.createWalletRequested(data.delete('confirmedPassword').toJS())
   }
 

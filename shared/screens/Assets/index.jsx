@@ -67,15 +67,9 @@ const getTotalAssets = (eosAccountBalance, eosPrice) => {
 )
 
 export default class Assets extends Component {
-  constructor(props, context) {
-    super(props, context)
-
-    this.state = {
-      isVisible: false,
-      isVisible2: false
-    }
-
-    this.switchWallet = this.switchWallet.bind(this)
+  state = {
+    isVisible: false,
+    isVisible2: false
   }
 
   displayAccountList = () => {}
@@ -138,7 +132,7 @@ export default class Assets extends Component {
   }
 
   // 切换EOS账户
-  switchWallet(info) {
+  switchWallet = (info) => {
     this.props.actions.switchWalletRequested(info)
   }
 

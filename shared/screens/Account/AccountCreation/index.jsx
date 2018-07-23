@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { View, ScrollView } from 'react-native'
@@ -26,13 +24,7 @@ export default class AccountCreation extends Component {
     }
   }
 
-  constructor(props, context) {
-    super(props, context)
-    this.onSubmit = this.onSubmit.bind(this)
-    this.importEOSAccount = this.importEOSAccount.bind(this)
-  }
-
-  importEOSAccount() {
+  importEOSAccount = () => {
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.AccountImport'
@@ -40,7 +32,7 @@ export default class AccountCreation extends Component {
     })
   }
 
-  onSubmit() {
+  onSubmit = () => {
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.EOSAccountCreation'

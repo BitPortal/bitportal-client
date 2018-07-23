@@ -1,13 +1,7 @@
-
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
-import {
-  FormContainer,
-  TextField,
-  PasswordField,
-  SubmitButton
-} from 'components/Form'
+import { FormContainer, TextField, PasswordField, SubmitButton } from 'components/Form'
 import { normalizeText } from 'utils/normalize'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
@@ -53,12 +47,7 @@ const validate = (values) => {
 @reduxForm({ form: 'resetPasswordForm', validate })
 
 export default class ResetPasswordForm extends Component {
-  constructor(props, context) {
-    super(props, context)
-    this.submit = this.submit.bind(this)
-  }
-
-  submit(data) {
+  submit = (data) => {
     this.props.onPress()
     console.log(data.toJS())
   }

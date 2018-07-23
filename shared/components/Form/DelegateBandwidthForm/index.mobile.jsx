@@ -92,12 +92,7 @@ const validate = (values, props) => {
 @reduxForm({ form: 'delegateBandwidthForm', validate })
 
 export default class DelegateBandwidthForm extends Component {
-  constructor(props, context) {
-    super(props, context)
-    this.state = { activeForm: 'Delegate', isVisible: false, password: '', data: undefined }
-    this.submit = this.submit.bind(this)
-    this.switchForm = this.switchForm.bind(this)
-  }
+  state = { activeForm: 'Delegate', isVisible: false, password: '', data: undefined }
 
   actionRequest = (data, password) => {
     const eosAccount = this.props.eosAccount
@@ -111,7 +106,7 @@ export default class DelegateBandwidthForm extends Component {
     }
   }
 
-  async submit(data) {
+  submit = async (data) => {
     if (Platform.OS === 'ios') {
       const { action, text } = await Dialogs.prompt(
         messages[this.props.locale].dlgt_popup_title_pwd,
@@ -137,7 +132,7 @@ export default class DelegateBandwidthForm extends Component {
     })
   }
 
-  switchForm(form) {
+  switchForm = (form) => {
     if (form !== this.state.activeForm) {
       this.props.actions.setActiveForm(form)
       this.setState({ activeForm: form })

@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { View, ScrollView } from 'react-native'
@@ -58,24 +56,12 @@ export default class AccountList extends Component {
     }
   }
 
-  constructor(props, context) {
-    super(props, context)
-
-    this.state = {
-      showExportPrompt: false,
-      showLogoutPrompt: false
-    }
-
-    this.showExportPrompt = this.showExportPrompt.bind(this)
-    this.dismissExportPrompt = this.dismissExportPrompt.bind(this)
-    this.showLogoutPrompt = this.showLogoutPrompt.bind(this)
-    this.dismissLogoutPrompt = this.dismissLogoutPrompt.bind(this)
-    this.exportAccount = this.exportAccount.bind(this)
-    this.logout = this.logout.bind(this)
-    this.resetPassword = this.resetPassword.bind(this)
+  state = {
+    showExportPrompt: false,
+    showLogoutPrompt: false
   }
 
-  resetPassword() {
+  resetPassword = () => {
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.ResetPassword'
@@ -83,40 +69,40 @@ export default class AccountList extends Component {
     })
   }
 
-  exportAccount(password) {
+  exportAccount = (password) => {
     this.props.actions.exportEOSKeyRequested({
-      componentId: this.props.componentId,
       password,
+      componentId: this.props.componentId,
       origin: this.props.origin,
       bpid: this.props.bpid,
       eosAccountName: this.props.eosAccountName
     })
   }
 
-  logout(password) {
+  logout = (password) => {
     this.props.actions.logoutRequested({
-      componentId: this.props.componentId,
       password,
+      componentId: this.props.componentId,
       origin: this.props.origin,
       bpid: this.props.bpid,
       eosAccountName: this.props.eosAccountName,
-      coin: this.props.coin,
+      coin: this.props.coin
     })
   }
 
-  showExportPrompt() {
+  showExportPrompt = () => {
     this.setState({ showExportPrompt: true })
   }
 
-  dismissExportPrompt() {
+  dismissExportPrompt = () => {
     this.setState({ showExportPrompt: false })
   }
 
-  showLogoutPrompt() {
+  showLogoutPrompt = () => {
     this.setState({ showLogoutPrompt: true })
   }
 
-  dismissLogoutPrompt() {
+  dismissLogoutPrompt = () => {
     this.setState({ showLogoutPrompt: false })
   }
 
@@ -135,8 +121,6 @@ export default class AccountList extends Component {
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }}
             >
-              {/* <TotalAssetsCard totalAssets={0} accountName={eosAccountName} disabled={true} /> */}
-              {/* <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_change" />} onPress={() => this.resetPassword()} extraStyle={{ marginTop: 10 }} /> */}
               <SettingItem
                 leftItemTitle={<FormattedMessage id="act_sec_title_export" />}
                 onPress={this.showExportPrompt}

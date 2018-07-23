@@ -35,16 +35,11 @@ export default class Languages extends Component {
     }
   }
 
-  constructor(props, context) {
-    super(props, context)
-    this.state = {
-      locale: this.props.locale
-    }
-
-    this.switchLanguage = this.switchLanguage.bind(this)
+  state = {
+    locale: this.props.locale
   }
 
-  switchLanguage(language) {
+  switchLanguage = (language) => {
     this.setState({ locale: language }, () => {
       this.props.actions.setLocale(language)
     })
