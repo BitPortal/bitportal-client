@@ -1,3 +1,4 @@
+import Immutable from 'immutable'
 import { delay } from 'redux-saga'
 import { put, call, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
@@ -28,12 +29,14 @@ function* transfer(action: Action<TransferParams>) {
     const activeWifs = wifs.activeWifs
 
     const eos = yield call(initEOS, { keyProvider: activeWifs })
-    const transactionInfo = yield call(eos.transfer, { quantity, memo, from: fromAccount, to: toAccount })
-    yield put(actions.transferSucceeded(transactionInfo))
+    const transactionResult = yield call(eos.transfer, { quantity, memo, from: fromAccount, to: toAccount })
+    yield put(actions.transferSucceeded(transactionResult))
     yield put(reset('transferAssetsForm'))
     yield put(actions.closeTransferModal())
     yield delay(500)
-    if (action.payload.componentId) push('BitPortal.TransactionRecord', action.payload.componentId, { transactionInfo })
+    if (action.payload.componentId) {
+      push('BitPortal.TransactionRecord', action.payload.componentId, { transactionResult: Immutable.fromJS(transactionResult) })
+    }
     yield put(getEOSAccountRequested({ eosAccountName: fromAccount }))
     yield put(getBalanceRequested({ code: 'eosio.token', account: fromAccount }))
   } catch (e) {

@@ -171,7 +171,7 @@ export default class TransferAssetsForm extends Component {
             info={balance && <Text style={styles.balance}>{messages[locale].snd_title_name_bln} {balance} {symbol}</Text>}
           />
           <Field
-            name={messages[locale].snd_txtbox_txt_rmk}
+            name="memo"
             placeholder={`${messages[locale].snd_txtbox_txt_rmk}......`}
             component={TextAreaField}
             normalize={normalizeMemo}
