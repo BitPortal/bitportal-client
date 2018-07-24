@@ -3,7 +3,6 @@ import { put, call, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/transaction'
 import { initEOS } from 'core/eos'
-import { getEOSWifsByInfo } from 'core/key'
 import { getErrorMessage } from 'utils'
 
 function* getTransactionsRequested(action: Action<TransactionsParams>) {
@@ -20,7 +19,7 @@ function* getTransactionsRequested(action: Action<TransactionsParams>) {
     const eos = yield call(initEOS, {})
     const data = yield call(eos.getActions, { offset, account_name: eosAccountName, pos: position })
 
-    const accountActions = data.actions.reverse().filter(action => action && action.action_trace && action.action_trace.receipt.receiver === eosAccountName)
+    const accountActions = data.actions.reverse().filter((action: any) => action && action.action_trace && action.action_trace.receipt.receiver === eosAccountName)
     const hasMore = data.actions && data.actions.length === Math.abs(offset)
     const refresh = position === -1
     let newPosition = position

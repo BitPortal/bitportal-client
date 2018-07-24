@@ -39,7 +39,7 @@ export default handleActions({
   [actions.getTransactionDetailFailed] (state, action) {
     return state.set('detailError', action.payload).set('detailLoading', false)
   },
-  [actions.resetTransaction] (state, action) {
+  [actions.resetTransaction] () {
     return initialState
   }
 }, initialState)

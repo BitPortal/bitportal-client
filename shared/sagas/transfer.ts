@@ -1,6 +1,5 @@
 import Immutable from 'immutable'
 import { delay } from 'redux-saga'
-import Immutable from 'immutable'
 import { put, call, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/transfer'
