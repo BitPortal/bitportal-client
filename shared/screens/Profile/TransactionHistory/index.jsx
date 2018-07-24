@@ -1,18 +1,28 @@
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { Text, View, SectionList } from 'react-native'
+import { Text, View, ScrollView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
+import { eosAccountNameSelector } from 'selectors/eosAccount'
+import * as transactionActions from 'actions/transaction'
+import RecordItem from 'screens/Assets/AssetChart/RecordItem'
 import ListItem from './ListItem'
 import messages from './messages'
 import styles from './styles'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.get('locale'),
+    transaction: state.transaction,
+    eosAccountName: eosAccountNameSelector(state),
   }),
-  null,
+  dispatch => ({
+    actions: bindActionCreators({
+      ...transactionActions
+    }, dispatch)
+  }),
   null,
   { withRef: true }
 )
@@ -26,25 +36,30 @@ export default class TransationHistory extends Component {
     }
   }
 
-  state = {
-    sections: [
-      { timeStamp: '04/28/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] },
-      { timeStamp: '05/03/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] },
-      { timeStamp: '06/21/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] },
-      { timeStamp: '04/28/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] },
-      { timeStamp: '05/03/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] },
-      { timeStamp: '06/21/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] },
-      { timeStamp: '04/28/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] },
-      { timeStamp: '05/03/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] },
-      { timeStamp: '06/21/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] },
-      { timeStamp: '04/28/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] },
-      { timeStamp: '05/03/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] },
-      { timeStamp: '06/21/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] }
-    ]
+  checkTransactionRecord = (transactionInfo) => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.TransactionRecord',
+        passProps: {
+          transactionInfo
+        }
+      }
+    })
+  }
+
+  componentDidMount() {
+    const eosAccountName = this.props.eosAccountName
+    const offset = this.props.transaction.get('offset')
+    this.props.actions.getTransactionsRequested({ eosAccountName, offset, position: -1 })
+  }
+
+  componentWillUnmount() {
+    this.props.actions.resetTransaction()
   }
 
   render() {
-    const { locale } = this.props
+    const { locale, transaction, eosAccountName } = this.props
+    const transferHistory = transaction.get('data')
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -54,18 +69,13 @@ export default class TransationHistory extends Component {
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
-            <SectionList
-              renderItem={({ item, index }) => <ListItem key={index} item={item} onPress={() => {}} />}
-              renderSectionHeader={({ section: { timeStamp } }) => (
-                <View style={styles.sectionHeader}>
-                  <Text style={[styles.text12, { marginLeft: 30 }]}>
-                    { timeStamp }
-                  </Text>
-                </View>
-              )}
-              sections={this.state.sections}
-              keyExtractor={(item, index) => item + index}
-            />
+            <ScrollView>
+              {
+                transferHistory.map(transaction => (
+                  <RecordItem key={transaction.get('account_action_seq')} item={transaction} onPress={this.checkTransactionRecord} eosAccountName={eosAccountName} />
+                ))
+              }
+            </ScrollView>
           </View>
         </View>
       </IntlProvider>

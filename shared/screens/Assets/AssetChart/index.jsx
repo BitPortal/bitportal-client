@@ -110,9 +110,9 @@ export default class AssetChart extends Component {
               <View style={styles.content}>
                 <Text style={[styles.text24, { marginTop: 20 }]}>
                   <FormattedNumber
-                  value={eosItem.get('balance')}
-                  maximumFractionDigits={4}
-                  minimumFractionDigits={4}
+                    value={eosItem.get('balance')}
+                    maximumFractionDigits={4}
+                    minimumFractionDigits={4}
                   />
                 </Text>
                 <Text style={[styles.text14, { marginBottom: 20 }]}>
@@ -132,11 +132,11 @@ export default class AssetChart extends Component {
             </ScrollView>
             <View style={[styles.btnContainer, styles.between]}>
               <TouchableOpacity style={[styles.center, styles.btn]} onPress={this.send}>
-                <Text style={styles.text14}> <FormattedMessage id="token_button_name_send" /> </Text>
+                <Text style={styles.text14}><FormattedMessage id="token_button_name_send" /></Text>
               </TouchableOpacity>
               <View style={styles.line} />
               <TouchableOpacity style={[styles.center, styles.btn]} onPress={this.receive}>
-                <Text style={styles.text14}> <FormattedMessage id="token_button_name_receive" /> </Text>
+                <Text style={styles.text14}><FormattedMessage id="token_button_name_receive" /></Text>
               </TouchableOpacity>
             </View>
           </View>
