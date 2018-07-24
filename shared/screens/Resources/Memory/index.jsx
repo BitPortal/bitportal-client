@@ -47,14 +47,16 @@ export default class Memory extends Component {
   }
 
   checkRamPrice = () => {
-    const url = 'https://eos.feexplorer.io/'
-    Linking.canOpenURL(url).then((supported) => {
-      if (!supported) {
-        console.log(`Can't handle url: ${url}`);
-      } else {
-        return Linking.openURL(url);
+    const uri = 'https://eos.feexplorer.io/'
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.BPWebView',
+        passProps: {
+          needLinking: true,
+          uri
+        }
       }
-    }).catch(err => console.error('An error occurred', err));
+    })
   }
 
   render() {

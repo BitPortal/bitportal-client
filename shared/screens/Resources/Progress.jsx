@@ -9,7 +9,9 @@ const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH - 64,
     height: 20,
-    borderRadius: 3
+    borderRadius: 3,
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   text12: {
     fontSize: FontScale(12),
@@ -20,11 +22,11 @@ const styles = StyleSheet.create({
 export default class Progress extends Component {
   render() {
     const { colors, percent, extraStyle } = this.props
-
+    const mrLeft = percent * (SCREEN_WIDTH - 64) > 40 ? -35 : 5
     return (
       <View style={[styles.container, { backgroundColor: Colors.mainThemeColor }, { ...extraStyle }]}>
         <LinearGradientContainer type="right" colors={colors} style={[styles.container, { alignItems: 'center', width: percent * (SCREEN_WIDTH - 64) }]} />
-        <Text style={[styles.text12, { marginLeft: percent * (SCREEN_WIDTH - 64) - 5, marginRight: -35, marginBottom: -35 }]}>
+        <Text style={[styles.text12, { marginLeft: mrLeft}]}>
           {parseInt(percent * 100, 10)}%
         </Text>
       </View>
