@@ -4,6 +4,8 @@ import LinearGradientContainer from 'components/LinearGradientContainer'
 import Colors from 'resources/colors'
 import Images from 'resources/images'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as eosAccountActions from 'actions/eosAccount'
 import storage from 'utils/storage'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { Text, View, TouchableHighlight, StyleSheet, Image, TouchableOpacity, LayoutAnimation } from 'react-native'
@@ -78,19 +80,31 @@ const styles = StyleSheet.create({
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.get('locale'),
+    isAssetHidden: state.eosAccount.get('isAssetHidden')
   })
 )
 
+@connect(
+  state => ({
+    locale: state.intl.get('locale'),
+    isAssetHidden: state.eosAccount.get('isAssetHidden')
+  }),
+  dispatch => ({
+    actions: bindActionCreators({
+      ...eosAccountActions
+    }, dispatch)
+  }),
+  null,
+  { withRef: true }
+)
+
 export default class TotalAssetsCard extends Component {
-  state = {
-    hidden: false
-  }
 
   async componentDidMount() {
     const storeInfo = await storage.getItem('bitportal.hiddenTotalAssets', true)
     if (storeInfo && storeInfo.hiddenTotalAssets) {
-      this.setState({ hidden: storeInfo.hiddenTotalAssets })
+      this.props.actions.hiddenAssetDisplay(storeInfo.hiddenTotalAssets)
     }
   }
 
@@ -109,14 +123,13 @@ export default class TotalAssetsCard extends Component {
   }
 
   switchDisplayTotal = async () => {
-    const { hidden } = this.state
-    await storage.setItem('bitportal.hiddenTotalAssets', { hiddenTotalAssets: !hidden }, true)
-    this.setState({ hidden: !hidden })
+    const { isAssetHidden } = this.props
+    await storage.setItem('bitportal.hiddenTotalAssets', { hiddenTotalAssets: !isAssetHidden }, true)
+    this.props.actions.hiddenAssetDisplay(!isAssetHidden)
   }
 
   render() {
-    const { totalAssets, CPUInfo, NETInfo, RAMQuota, RAMUsage, accountName, disabled, onPress, locale } = this.props
-    const { hidden } = this.state
+    const { isAssetHidden, totalAssets, CPUInfo, NETInfo, RAMQuota, RAMUsage, accountName, disabled, onPress, locale } = this.props
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={{ alignItems: 'center', backgroundColor: Colors.minorThemeColor, paddingVertical: 15 }}>
@@ -128,7 +141,7 @@ export default class TotalAssetsCard extends Component {
                 </Text>
                 <View style={styles.between}>
                   {
-                    hidden
+                    isAssetHidden
                       ? <Text style={styles.text24}>******</Text>
                       : <Text style={styles.text24}>
                       ≈
@@ -141,7 +154,7 @@ export default class TotalAssetsCard extends Component {
                   }
                   <TouchableOpacity style={[styles.center, styles.btn]} onPress={this.switchDisplayTotal}>
                     {
-                      hidden
+                      isAssetHidden
                         ? <Image source={Images.eyes_close} style={styles.image} />
                         : <Image source={Images.eyes_open} style={styles.image} />
                     }

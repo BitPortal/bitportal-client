@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
-import { Text, View, ScrollView, Linking } from 'react-native'
+import { Text, View, ScrollView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
@@ -45,14 +45,16 @@ export default class Memory extends Component {
   }
 
   checkRamPrice = () => {
-    const url = 'https://eos.feexplorer.io/'
-    Linking.canOpenURL(url).then((supported) => {
-      if (!supported) {
-        console.log(`Can't handle url: ${url}`);
-      } else {
-        return Linking.openURL(url);
+    const uri = 'https://eos.feexplorer.io/'
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.BPWebView',
+        passProps: {
+          needLinking: true,
+          uri
+        }
       }
-    }).catch(err => console.error('An error occurred', err));
+    })
   }
 
   render() {
