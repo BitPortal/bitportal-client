@@ -70,9 +70,8 @@ export default class TransactionRecord extends Component {
       symbol = quantity && quantity.split(' ')[1]
       transactionId = transactionInfo.getIn(['action_trace', 'trx_id'])
     } else if (transactionResult) {
-      console.log(transactionResult.toJS())
-      time = Date.now() // transactionInfo.get('block_time')
-      blockHeight = null // transactionInfo.get('block_num')
+      time = Date.now()
+      blockHeight = null
       fromAccount = transactionResult.getIn(['processed', 'action_traces', '0', 'act', 'data', 'from'])
       toAccount = transactionResult.getIn(['processed', 'action_traces', '0', 'act', 'data', 'to'])
       quantity = transactionResult.getIn(['processed', 'action_traces', '0', 'act', 'data', 'quantity'])
@@ -106,7 +105,6 @@ export default class TransactionRecord extends Component {
       symbol,
       transactionId
     } = this.getInfo(transactionInfo, transactionResult, transactionDetail)
-    console.log({ time, blockHeight, fromAccount, toAccount, quantity, memo, amount, symbol, transactionId })
 
     return (
       <IntlProvider messages={messages[locale]}>
