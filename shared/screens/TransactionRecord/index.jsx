@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
-import { IntlProvider, FormattedMessage, FormattedNumber, FormattedDate, FormattedTime } from 'react-intl'
+import { IntlProvider, FormattedMessage, FormattedNumber, FormattedDate, FormattedTime, FormattedRelative } from 'react-intl'
 import * as transactionActions from 'actions/transaction'
 import QRCode from 'react-native-qrcode-svg'
 import messages from './messages'
@@ -48,19 +48,63 @@ export default class TransactionRecord extends Component {
     this.setState({ isCopied: true })
   }
 
+  getInfo = (transactionInfo, transactionResult, transactionDetail) => {
+    let time
+    let blockHeight
+    let fromAccount
+    let toAccount
+    let quantity
+    let memo
+    let amount
+    let symbol
+    let transactionId
+
+    if (transactionInfo) {
+      time = transactionInfo.get('block_time')
+      blockHeight = transactionInfo.get('block_num')
+      fromAccount = transactionInfo.getIn(['action_trace', 'act', 'data', 'from'])
+      toAccount = transactionInfo.getIn(['action_trace', 'act', 'data', 'to'])
+      quantity = transactionInfo.getIn(['action_trace', 'act', 'data', 'quantity'])
+      memo = transactionInfo.getIn(['action_trace', 'act', 'data', 'memo'])
+      amount = quantity && quantity.split(' ')[0]
+      symbol = quantity && quantity.split(' ')[1]
+      transactionId = transactionInfo.getIn(['action_trace', 'trx_id'])
+    } else if (transactionResult) {
+      time = Date.now()
+      blockHeight = null
+      fromAccount = transactionResult.getIn(['processed', 'action_traces', '0', 'act', 'data', 'from'])
+      toAccount = transactionResult.getIn(['processed', 'action_traces', '0', 'act', 'data', 'to'])
+      quantity = transactionResult.getIn(['processed', 'action_traces', '0', 'act', 'data', 'quantity'])
+      memo = transactionResult.getIn(['processed', 'action_traces', '0', 'act', 'data', 'memo'])
+      amount = quantity && quantity.split(' ')[0]
+      symbol = quantity && quantity.split(' ')[1]
+      transactionId = transactionResult.get('transaction_id')
+    }
+
+    return { time, blockHeight, fromAccount, toAccount, quantity, memo, amount, symbol, transactionId }
+  }
+
+  componentDidMount() {
+    if (this.props.transferResult) {
+      const id = this.props.transferResult.get('transaction_id')
+      this.props.actions.getTransactionDetailRequested({ id })
+    }
+  }
+
   render() {
     const { qrCodeValue, isCopied } = this.state
-    const { locale, transactionInfo } = this.props
-    console.log('####', transactionInfo.toJS())
-    const time = transactionInfo.get('block_time')
-    const blockHeight = transactionInfo.get('block_num')
-    const fromAccount = transactionInfo.getIn(['action_trace', 'act', 'data', 'from'])
-    const toAccount = transactionInfo.getIn(['action_trace', 'act', 'data', 'to'])
-    const quantity = transactionInfo.getIn(['action_trace', 'act', 'data', 'quantity'])
-    const memo = transactionInfo.getIn(['action_trace', 'act', 'data', 'memo'])
-    const amount = quantity && quantity.split(' ')[0]
-    const symbol = quantity && quantity.split(' ')[1]
-    const transactionId = transactionInfo.getIn(['action_trace', 'trx_id']) || ''
+    const { locale, transactionInfo, transactionResult, transactionDetail } = this.props
+    const {
+      time,
+      blockHeight,
+      fromAccount,
+      toAccount,
+      quantity,
+      memo,
+      amount,
+      symbol,
+      transactionId
+    } = this.getInfo(transactionInfo, transactionResult, transactionDetail)
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -74,12 +118,8 @@ export default class TransactionRecord extends Component {
               <View style={styles.content}>
                 <View style={[styles.header, styles.center]}>
                   <Text style={styles.text12}>
-                    {/* <FormattedDate
-                      value={+new Date(`${time}Z`)}
-                      year='numeric'
-                      month='long'
-                      day='2-digit'
-                    /> <FormattedTime value={+new Date(`${time}Z`)}/> */}
+                    {transactionResult && <FormattedRelative value={time} updateInterval={1000} />}
+                    {!transactionResult && <FormattedDate value={+new Date(`${time}Z`)} year='numeric' month='long' day='2-digit' />} {!transactionResult && <FormattedTime value={+new Date(`${time}Z`)}/>}
                   </Text>
                 </View>
                 <View style={[styles.header2, styles.between]}>
@@ -130,7 +170,7 @@ export default class TransactionRecord extends Component {
                       </Text>
                       <Text numberOfLines={1} style={styles.text14}>
                         # <Text style={{ color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }}>
-                          {`${transactionId.slice(0, 7)}....${transactionId.slice(-7)}`}
+                          {transactionId && `${transactionId.slice(0, 7)}....${transactionId.slice(-7)}`}
                         </Text>
                       </Text>
                       <Text style={[styles.text14, { marginTop: 15 }]}>

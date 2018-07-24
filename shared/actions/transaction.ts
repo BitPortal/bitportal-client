@@ -6,3 +6,4 @@ export const getTransactionsFailed = createAction<ErrorMessage>('transaction/GET
 export const getTransactionDetailRequested = createAction<TransactionDetailParams>('transaction/GET_DETAIL_REQUESTED')
 export const getTransactionDetailSucceeded = createAction<TransactionDetailResult>('transaction/GET_DETAIL_SUCCEEDED')
 export const getTransactionDetailFailed = createAction<ErrorMessage>('transaction/GET_DETAIL_FAILED')
+export const resetTransaction = createAction('transaction/reset')

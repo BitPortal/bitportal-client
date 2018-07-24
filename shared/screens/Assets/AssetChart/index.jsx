@@ -91,6 +91,10 @@ export default class AssetChart extends Component {
     this.props.actions.getTransactionsRequested({ eosAccountName, offset, position: -1 })
   }
 
+  componentWillUnmount() {
+    this.props.actions.resetTransaction()
+  }
+
   render() {
     const { locale, eosItem, eosPrice, transferHistory, eosAccountName } = this.props
 
