@@ -6,21 +6,28 @@ import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { FormattedNumber, FormattedMessage, IntlProvider } from 'react-intl'
 import { eosPriceSelector } from 'selectors/ticker'
+import { eosAccountNameSelector } from 'selectors/eosAccount'
+import { transferTransactionsSelector } from 'selectors/transaction'
 import CurrencyText from 'components/CurrencyText'
 import * as balanceActions from 'actions/balance'
+import * as transactionActions from 'actions/transaction'
 import messages from './messages'
-import ChartWrapper from './ChartWrapper'
 import RecordItem from './RecordItem'
 import styles from './styles'
 
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    eosPrice: eosPriceSelector(state)
+    eosPrice: eosPriceSelector(state),
+    offset: state.transaction.get('offset'),
+    hasMore: state.transaction.get('hasMore'),
+    eosAccountName: eosAccountNameSelector(state),
+    transferHistory: transferTransactionsSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
-      ...balanceActions
+      ...balanceActions,
+      ...transactionActions
     }, dispatch)
   }),
   null,
@@ -63,16 +70,30 @@ export default class AssetChart extends Component {
     })
   }
 
-  checkTransactionRecord = () => {
+  checkTransactionRecord = (transactionInfo) => {
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.TransactionRecord'
+        name: 'BitPortal.TransactionRecord',
+        passProps: {
+          transactionInfo
+        }
       }
     })
   }
 
+  shouldComponentUpdate(nextProps) {
+    return nextProps.eosAccountName !== this.props.eosAccountName || nextProps.offset !== this.props.offset || nextProps.eosPrice !== this.props.eosPrice || nextProps.locale !== this.props.locale || nextProps.eosItem !== this.props.eosItem || nextProps.transferHistory !== this.props.transferHistory
+  }
+
+  componentDidMount() {
+    const eosAccountName = this.props.eosAccountName
+    const offset = this.props.offset
+    this.props.actions.getTransactionsRequested({ eosAccountName, offset, position: -1 })
+  }
+
   render() {
-    const { locale, eosItem, eosPrice } = this.props
+    const { locale, eosItem, eosPrice, transferHistory, eosAccountName } = this.props
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -98,18 +119,13 @@ export default class AssetChart extends Component {
                     minimumFractionDigits={2}
                   />
                 </Text>
-
-                <ChartWrapper />
-
                 {
-                  this.state.data.map((item, index) => (
-                    <RecordItem key={index} item={item} onPress={() => this.checkTransactionRecord()} />
+                  transferHistory.map(transaction => (
+                    <RecordItem key={transaction.get('account_action_seq')} item={transaction} onPress={this.checkTransactionRecord} eosAccountName={eosAccountName} />
                   ))
                 }
-
               </View>
             </ScrollView>
-
             <View style={[styles.btnContainer, styles.between]}>
               <TouchableOpacity style={[styles.center, styles.btn]} onPress={this.send}>
                 <Text style={styles.text14}> <FormattedMessage id="token_button_name_send" /> </Text>
@@ -119,9 +135,7 @@ export default class AssetChart extends Component {
                 <Text style={styles.text14}> <FormattedMessage id="token_button_name_receive" /> </Text>
               </TouchableOpacity>
             </View>
-
           </View>
-
         </View>
       </IntlProvider>
     )

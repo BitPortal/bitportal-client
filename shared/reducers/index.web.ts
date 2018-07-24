@@ -12,7 +12,7 @@ import balance from './balance'
 import producer from './producer'
 import voting from './voting'
 import transfer from './transfer'
-import transferHistory from './transferHistory'
+import transaction from './transaction'
 import bandwidth from './bandwidth'
 import ram from './ram'
 
@@ -32,5 +32,5 @@ export default combineReducers({
   bandwidth,
   ram,
   transfer,
-  transferHistory
+  transaction
 })

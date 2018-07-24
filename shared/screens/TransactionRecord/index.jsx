@@ -1,20 +1,27 @@
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
 import { Text, View, ScrollView, TouchableOpacity, Clipboard } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
-import { FormattedMessage, IntlProvider, FormattedNumber } from 'react-intl'
+import { IntlProvider, FormattedMessage, FormattedNumber, FormattedDate, FormattedTime } from 'react-intl'
+import * as transactionActions from 'actions/transaction'
 import QRCode from 'react-native-qrcode-svg'
 import messages from './messages'
 import styles from './styles'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.get('locale'),
+    transactionDetail: state.transaction.get('detail')
   }),
-  null,
+  dispatch => ({
+    actions: bindActionCreators({
+      ...transactionActions
+    }, dispatch)
+  }),
   null,
   { withRef: true }
 )
@@ -29,7 +36,6 @@ export default class TransactionRecord extends Component {
   }
 
   state = {
-    qrCodeValue: 'fdsafsfdafdsafsf12312',
     isCopied: false
   }
 
@@ -38,17 +44,23 @@ export default class TransactionRecord extends Component {
   }
 
   clipboard = () => {
-    Clipboard.setString(this.state.qrCodeValue)
+    Clipboard.setString(this.props.transactionInfo.getIn(['action_trace', 'trx_id']))
     this.setState({ isCopied: true })
-  }
-
-  componentDidMount() {
-    console.log(this.props.transactionInfo)
   }
 
   render() {
     const { qrCodeValue, isCopied } = this.state
-    const { locale } = this.props
+    const { locale, transactionInfo } = this.props
+    console.log(transactionInfo.toJS())
+    const time = transactionInfo.get('block_time')
+    const blockHeight = transactionInfo.get('block_num')
+    const fromAccount = transactionInfo.getIn(['action_trace', 'act', 'data', 'from'])
+    const toAccount = transactionInfo.getIn(['action_trace', 'act', 'data', 'to'])
+    const quantity = transactionInfo.getIn(['action_trace', 'act', 'data', 'quantity'])
+    const memo = transactionInfo.getIn(['action_trace', 'act', 'data', 'memo'])
+    const amount = quantity && quantity.split(' ')[0]
+    const symbol = quantity && quantity.split(' ')[1]
+    const transactionId = transactionInfo.getIn(['action_trace', 'trx_id'])
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -61,19 +73,26 @@ export default class TransactionRecord extends Component {
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.content}>
                 <View style={[styles.header, styles.center]}>
-                  <Text style={styles.text12}> 2018-05-07 </Text>
+                  <Text style={styles.text12}>
+                    <FormattedDate
+                      value={+new Date(`${time}Z`)}
+                      year='numeric'
+                      month='long'
+                      day='2-digit'
+                    /> <FormattedTime value={+new Date(`${time}Z`)}/>
+                  </Text>
                 </View>
                 <View style={[styles.header2, styles.between]}>
                   <View style={[styles.center, { marginHorizontal: 15 }]}>
                     <Text style={styles.text10}><FormattedMessage id="tx_sec_title_from" /></Text>
-                    <Text numberOfLines={1} style={styles.text18}>GHIJKLMN</Text>
+                    <Text numberOfLines={1} style={styles.text18}>{fromAccount}</Text>
                   </View>
                   <View style={{ marginTop: 15 }}>
                     <Ionicons name="ios-arrow-round-forward-outline" size={20} color={Colors.textColor_74_74_74} />
                   </View>
                   <View style={[styles.center, { marginHorizontal: 15 }]}>
                     <Text style={styles.text10}><FormattedMessage id="tx_sec_title_to" /></Text>
-                    <Text numberOfLines={1} style={styles.text18}>ABCDEF</Text>
+                    <Text numberOfLines={1} style={styles.text18}>{toAccount}</Text>
                   </View>
                 </View>
                 <View style={styles.amountContent}>
@@ -83,17 +102,17 @@ export default class TransactionRecord extends Component {
                   <View style={[styles.between, { alignItems: 'center' }]}>
                     <Text style={styles.text24}>
                       <FormattedNumber
-                        value={54122.2132}
+                        value={amount}
                         maximumFractionDigits={4}
                         minimumFractionDigits={4}
                       />
                     </Text>
-                    <Text style={styles.text14}> EOS </Text>
+                    <Text style={styles.text14}> {symbol}</Text>
                   </View>
                   <Text style={[styles.text14, { marginLeft: -3, marginTop: 15 }]}>
                     <FormattedMessage id="tx_sec_button_detail" />:
                   </Text>
-                  <Text style={[styles.text14, { marginLeft: -3, marginTop: 4, marginBottom: 10 }]}> # ABCDEFGHIJKLMN </Text>
+                  <Text style={[styles.text14, { marginLeft: -3, marginTop: 4, marginBottom: 10 }]}># {memo}</Text>
                 </View>
                 <View style={styles.card}>
                   <View style={[styles.separator, styles.between]}>
@@ -106,34 +125,32 @@ export default class TransactionRecord extends Component {
                         <FormattedMessage id="txdtl_title_name_tctID" />:
                       </Text>
                       <Text numberOfLines={1} style={styles.text14}>
-                        # {' '}
-                        <Text style={{ color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }}>
-                          ABCDEFG…HIJKLMN
+                        # <Text style={{ color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }}>
+                          {`${transactionId.slice(0, 7)}....${transactionId.slice(-7)}`}
                         </Text>
                       </Text>
                       <Text style={[styles.text14, { marginTop: 15 }]}>
                         <FormattedMessage id="tx_sec_button_detail" />:
                       </Text>
                       <Text numberOfLines={1} style={[styles.text14, { marginBottom: 15 }]}>
-                        # {' '}
-                        <Text style={{ color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }}>
-                          1234567
+                        # <Text style={{ color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }}>
+                          {blockHeight}
                         </Text>
                       </Text>
                       <Text style={styles.text14}><FormattedMessage id="txdtl_title_name_producer" />:</Text>
-                      <Text numberOfLines={1} style={styles.text14}># ABCDEFGHIJKLMN</Text>
+                      <Text numberOfLines={1} style={styles.text14}># </Text>
                     </View>
                     <View style={{ marginRight: 20, marginTop: 10, alignItems: 'center' }}>
                       <View style={{ padding: 3, backgroundColor: Colors.bgColor_FFFFFF }}>
                         <QRCode
-                          value={qrCodeValue}
+                          value={transactionId}
                           size={80}
                           color="black"
                         />
                       </View>
                       <TouchableOpacity
                         disabled={isCopied}
-                        onPress={() => this.clipboard()}
+                        onPress={this.clipboard}
                         style={[styles.btn, styles.center]}
                       >
                         <Text style={[styles.text14, { color: Colors.textColor_107_107_107 }]}>
