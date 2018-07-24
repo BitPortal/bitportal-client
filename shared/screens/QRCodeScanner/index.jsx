@@ -58,7 +58,7 @@ export default class Scanner extends Component {
           <QRCodeScanner
             onRead={this.onSuccess.bind(this)}
             showMarker={true}
-            bottomContent={<TouchableOpacity onPress={() => this.onSuccess()} style={styles.buttonTouchable}><Text style={styles.buttonText}>Go To Send</Text></TouchableOpacity>}
+            // bottomContent={<TouchableOpacity onPress={() => this.onSuccess()} style={styles.buttonTouchable}><Text style={styles.buttonText}>Go To Send</Text></TouchableOpacity>}
           />
         </View>
       </IntlProvider>
