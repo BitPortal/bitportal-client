@@ -83,7 +83,7 @@ export default class Contacts extends Component {
         style={{ backgroundColor: Colors.bgColor_48_49_59 }}
       >
         <DeleteButton onPress={() => this.deleteContact(data, secId, rowId, rowMap)} />
-        <TouchableWithoutFeedback disabled={this.props.from ? false : true} style={styles.listItem} onPress={() => this.onRowOpen(data)} >
+        <TouchableWithoutFeedback disabled={!this.props.from} style={styles.listItem} onPress={() => this.onRowOpen(data)}>
           <View style={[styles.listItem, styles.extraListItem]}>
             <Text style={styles.text14}> {data.accountName} </Text>
             <Text style={styles.text12}> {data.memo} </Text>
@@ -106,8 +106,8 @@ export default class Contacts extends Component {
           />
           <View style={styles.scrollContainer}>
             {
-              contacts.length > 0 && 
-              <SwipeListView
+              contacts.length > 0
+              && <SwipeListView
                 contentContainerStyle={{ paddingTop: 10 }}
                 enableEmptySections={true}
                 showsVerticalScrollIndicator={false}

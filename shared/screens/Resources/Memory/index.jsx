@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
-import { Text, View, ScrollView, Linking } from 'react-native'
+import { Text, View, ScrollView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
