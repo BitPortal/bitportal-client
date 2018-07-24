@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
 import { delay } from 'redux-saga'
+import Immutable from 'immutable'
 import { put, call, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/transfer'
@@ -34,6 +35,7 @@ function* transfer(action: Action<TransferParams>) {
     yield put(reset('transferAssetsForm'))
     yield put(actions.closeTransferModal())
     yield delay(500)
+
     if (action.payload.componentId) {
       push('BitPortal.TransactionRecord', action.payload.componentId, { transactionResult: Immutable.fromJS(transactionResult) })
     }

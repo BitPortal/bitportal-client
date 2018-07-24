@@ -171,12 +171,12 @@ export default class TransferAssetsForm extends Component {
             info={balance && <Text style={styles.balance}>{messages[locale].snd_title_name_bln} {balance} {symbol}</Text>}
           />
           <Field
-            name="memo"
-            placeholder={`${messages[locale].snd_txtbox_txt_rmk}......`}
+            name={"memo"}
+            placeholder={messages[locale].snd_txtbox_txt_rmk}
             component={TextAreaField}
             normalize={normalizeMemo}
           />
-          <SubmitButton disabled={disabled} onPress={handleSubmit(this.showModal)} text="Next" />
+          <SubmitButton disabled={disabled} onPress={handleSubmit(this.showModal)} text={messages[locale].snd_button_name_nxt} />
           <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearTransferError} delay={500} />
           <TransferCard
             isVisible={showModal}

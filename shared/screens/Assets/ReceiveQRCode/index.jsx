@@ -31,7 +31,7 @@ export default class ReceiveQRCode extends Component {
   // 输入框输入中
   onChangeText = (value) => {
     const previousValue = this.state.value
-    const nextValue = normalizeUnitByCurrency('EOS')(value, previousValue)
+    const nextValue = normalizeUnitByCurrency(this.props.symbol)(value, previousValue)
     this.setState({ value: nextValue })
   }
 
@@ -53,8 +53,8 @@ export default class ReceiveQRCode extends Component {
 
   shareQrcodeContent = () => {
     Share.share({
-      message: eosQrString(this.props.eosAccount.get('data').get('account_name'), this.state.value),
-      title: 'EOS Pay'
+      message: eosQrString(this.props.eosAccount.get('data').get('account_name'), this.state.value, this.props.symbol),
+      title: `${this.props.symbol} Pay`
     })
   }
 
@@ -65,7 +65,7 @@ export default class ReceiveQRCode extends Component {
   }
 
   render() {
-    const { locale, eosAccount } = this.props
+    const { locale, eosAccount, symbol } = this.props
     const { isCopied } = this.state
     const activeEOSAccount = eosAccount.get('data')
     return (
@@ -117,7 +117,7 @@ export default class ReceiveQRCode extends Component {
                   value={this.state.value}
                 />
                 <Text style={styles.text14}>
-                  EOS
+                  {symbol}
                 </Text>
               </View>
 

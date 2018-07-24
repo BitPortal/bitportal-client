@@ -100,8 +100,15 @@ export default class Assets extends Component {
     })
   }
 
-  operateAssetQRCode = (isVisible) => {
-    this.setState({ isVisible })
+  displayReceiceQRCode = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.ReceiveQRCode',
+        passProps: {
+          symbol: 'EOS'
+        }
+      }
+    })
   }
 
   // 创建新账户
@@ -211,7 +218,7 @@ export default class Assets extends Component {
                     RAMQuota={activeEOSAccount.get('ram_quota')}
                     RAMUsage={activeEOSAccount.get('ram_usage')}
                     checkResourcesDetails={this.checkResourcesDetails}
-                    onPress={() => this.operateAssetQRCode(true)}
+                    onPress={this.displayReceiceQRCode}
                   />
                   {!activeEOSAccount.get('account_name') && <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_create_eos_account" />} onPress={() => this.createEOSAccount()} extraStyle={{ marginTop: 10, marginBottom: 10 }} />}
                   {!!activeEOSAccount.get('account_name') && <EnableAssets Title={<FormattedMessage id="asset_title_name_ast" />} enableAssets={() => this.enableAssets()} />}
@@ -220,17 +227,6 @@ export default class Assets extends Component {
               </View>
             )
           }
-          <Modal
-            animationIn="fadeIn"
-            animationOut="fadeOut"
-            isVisible={this.state.isVisible}
-            backdropOpacity={0.9}
-          >
-            <AssetQRCode
-              accountName={activeEOSAccount.get('account_name')}
-              dismissModal={() => this.operateAssetQRCode(false)}
-            />
-          </Modal>
           <Modal
             animationIn="fadeIn"
             animationOut="fadeOut"

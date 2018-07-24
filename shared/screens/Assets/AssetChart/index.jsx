@@ -64,7 +64,7 @@ export default class AssetChart extends Component {
       component: {
         name: 'BitPortal.ReceiveQRCode',
         passProps: {
-          accountName: this.props.eosItem.get('account_name')
+          symbol: this.props.eosItem.get('symbol')
         }
       }
     })

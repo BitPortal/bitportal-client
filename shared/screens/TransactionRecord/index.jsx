@@ -128,7 +128,11 @@ export default class TransactionRecord extends Component {
                     <Text numberOfLines={1} style={styles.text18}>{fromAccount}</Text>
                   </View>
                   <View style={{ marginTop: 15 }}>
-                    <Ionicons name="ios-arrow-round-forward-outline" size={20} color={Colors.textColor_74_74_74} />
+                    <Ionicons  
+                      size={20} 
+                      color={Colors.textColor_74_74_74}
+                      name="ios-arrow-round-forward-outline"
+                    />
                   </View>
                   <View style={[styles.center, { marginHorizontal: 15 }]}>
                     <Text style={styles.text10}><FormattedMessage id="tx_sec_title_to" /></Text>
