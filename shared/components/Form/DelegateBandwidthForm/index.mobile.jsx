@@ -7,14 +7,13 @@ import { FormContainer, TextField, SubmitButton } from 'components/Form'
 import { normalizeUnitByCurrency } from 'utils/normalize'
 import { validateUnitByCurrency } from 'utils/validate'
 import * as bandwidthActions from 'actions/bandwidth'
-import Alert from 'components/Alert'
 import Switch from 'components/Switch'
 import Balance from 'components/Balance'
 import { IntlProvider } from 'react-intl'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { eosAccountSelector } from 'selectors/eosAccount'
-import Dialogs from 'components/Dialog'
-import DialogAndroid from 'components/DialogAndroid'
+import Prompt from 'components/Prompt'
+import Alert from 'components/Alert'
 import messages from './messages'
 
 const styles = EStyleSheet.create({
@@ -92,42 +91,25 @@ const validate = (values, props) => {
 @reduxForm({ form: 'delegateBandwidthForm', validate })
 
 export default class DelegateBandwidthForm extends Component {
-  state = { activeForm: 'Delegate', isVisible: false, password: '', data: undefined }
+  state = { activeForm: 'Delegate', isVisible: false, data: null }
 
-  actionRequest = (data, password) => {
-    const eosAccount = this.props.eosAccount
-    const eosAccountName = eosAccount.get('data').get('account_name')
-    const resource = this.props.resource
-
-    if (this.state.activeForm === 'Delegate') {
-      this.props.actions.delegateBandwidthRequested(data.set('resource', resource).set('eosAccountName', eosAccountName).set('password', password).toJS())
-    } else {
-      this.props.actions.undelegateBandwidthRequested(data.set('resource', resource).set('eosAccountName', eosAccountName).set('password', password).toJS())
-    }
+  submit = (data) => {
+    this.setState({ isVisible: true, data })
   }
 
-  submit = async (data) => {
-    if (Platform.OS === 'ios') {
-      const { action, text } = await Dialogs.prompt(
-        messages[this.props.locale].dlgt_popup_title_pwd,
-        null,
-        {
-          positiveText: messages[this.props.locale].dlgt_popup_buttom_ent,
-          negativeText: messages[this.props.locale].dlgt_popup_buttom_can
-        }
-      )
-      if (action === Dialogs.actionPositive) {
-        this.actionRequest(data, text)
-      }
-    } else {
-      this.setState({ isVisible: true, data })
-    }
-  }
-
-  handleConfirm = () => {
+  handleConfirm = (password) => {
     this.setState({ isVisible: false }, () => {
       InteractionManager.runAfterInteractions(() => {
-        this.actionRequest(this.state.data, this.state.password)
+        const data = this.state.data
+        const eosAccount = this.props.eosAccount
+        const eosAccountName = eosAccount.get('data').get('account_name')
+        const resource = this.props.resource
+
+        if (this.state.activeForm === 'Delegate') {
+          this.props.actions.delegateBandwidthRequested(data.set('resource', resource).set('eosAccountName', eosAccountName).set('password', password).toJS())
+        } else {
+          this.props.actions.undelegateBandwidthRequested(data.set('resource', resource).set('eosAccountName', eosAccountName).set('password', password).toJS())
+        }
       })
     })
   }
@@ -139,6 +121,10 @@ export default class DelegateBandwidthForm extends Component {
       this.props.actions.clearBandwidthError()
       this.props.reset('delegateBandwidthForm')
     }
+  }
+
+  closePrompt = () => {
+    this.setState({ isVisible: false })
   }
 
   render() {
@@ -154,6 +140,7 @@ export default class DelegateBandwidthForm extends Component {
     const cpuWeight = eosAccount.getIn(['data', 'total_resources', 'cpu_weight']) ? eosAccount.getIn(['data', 'total_resources', 'cpu_weight']).split(' ')[0] : 0
     const availableBalance = this.state.activeForm === 'Delegate' ? eosBalance : (this.props.resource === 'net' ? netWeight : cpuWeight)
     const balanceTitle = this.state.activeForm === 'Delegate' ? messages[locale].tra_popup_title_baln : messages[locale].tra_popup_title_stked
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.delegateBandwidthForm}>
@@ -175,19 +162,15 @@ export default class DelegateBandwidthForm extends Component {
             />
             <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearBandwidthError} />
             <Alert message={!!showSuccess && messages[locale].dlgt_popup_title_trasucc} dismiss={this.props.actions.hideSuccessModal} />
-            {
-              Platform.OS === 'android'
-              && <DialogAndroid
-                tilte={messages[locale].dlgt_popup_title_pwd}
-                content=""
-                positiveText={messages[locale].dlgt_popup_buttom_ent}
-                negativeText={messages[locale].dlgt_popup_buttom_can}
-                onChange={password => this.setState({ password })}
-                isVisible={this.state.isVisible}
-                handleCancel={() => this.setState({ isVisible: false })}
-                handleConfirm={this.handleConfirm}
-              />
-            }
+            <Prompt
+              isVisible={this.state.isVisible}
+              title={messages[locale].dlgt_popup_title_pwd}
+              negativeText={messages[locale].dlgt_popup_buttom_can}
+              positiveText={messages[locale].dlgt_popup_buttom_ent}
+              type="secure-text"
+              callback={this.handleConfirm}
+              dismiss={this.closePrompt}
+            />
           </FormContainer>
         </View>
       </IntlProvider>

@@ -9,9 +9,8 @@ import * as producerActions from 'actions/producer'
 import * as votingActions from 'actions/voting'
 import { bindActionCreators } from 'redux'
 import { eosAccountSelector } from 'selectors/eosAccount'
-import AlertComponent from 'components/Alert'
-import Dialogs from 'components/Dialog'
-import DialogAndroid from 'components/DialogAndroid'
+import Prompt from 'components/Prompt'
+import Alert from 'components/Alert'
 import LinearGradientContainer from 'components/LinearGradientContainer'
 import { sortProducers } from 'eos'
 import VotingModal from './VotingModal'
@@ -62,7 +61,7 @@ export default class Voting extends Component {
 
   state = {
     isVisible: false,
-    password: '',
+    alertMessage: null,
     item: {},
     selected: this.props.eosAccount.get('data').get('voter_info') ? this.props.eosAccount.get('data').get('voter_info').get('producers').toJS() : [],
     sortType: 'default'
@@ -85,33 +84,14 @@ export default class Voting extends Component {
     this.props.actions.votingRequested({ producers: this.state.selected, eosAccountName, password })
   }
 
-  voting = async () => {
-    if (Platform.OS === 'android') {
-      return this.setState({ isVisible: true })
-    }
-    const { locale } = this.props
-    const { action, text } = await Dialogs.prompt(
-      messages[locale].vt_popup_title_pwd,
-      '',
-      {
-        positiveText: messages[locale].vt_popup_buttom_ent,
-        negativeText: messages[locale].vt_popup_buttom_can
-      }
-    )
-
-    if (action === Dialogs.actionPositive) {
-      this.setState({ isVisible: false }, () => {
-        InteractionManager.runAfterInteractions(() => {
-          this.submitVoting(text)
-        })
-      })
-    }
+  voting = () => {
+    this.setState({ isVisible: true })
   }
 
-  handleConfirm = () => {
+  handleConfirm = (password) => {
     this.setState({ isVisible: false }, () => {
       InteractionManager.runAfterInteractions(() => {
-        this.submitVoting(this.state.password)
+        this.submitVoting(password)
       })
     })
   }
@@ -120,7 +100,7 @@ export default class Voting extends Component {
     const { locale } = this.props
     const eosAccountName = this.props.eosAccount.get('data').get('account_name')
     if (!eosAccountName) {
-      Dialogs.alert(messages[locale].vt_button_name_err, null, { negativeText: messages[locale].vt_popup_buttom_ent })
+      this.setState({ alertMessage: messages[locale].vt_button_name_err })
     } else {
       this.props.actions.showSelected()
     }
@@ -169,6 +149,14 @@ export default class Voting extends Component {
     this.props.actions.getProducersRequested({ json: true, limit: 500 })
   }
 
+  closePrompt = () => {
+    this.setState({ isVisible: false })
+  }
+
+  closeAlert = () => {
+    this.setState({ alertMessage: null })
+  }
+
   componentDidAppear() {
     // this.props.actions.getProducersRequested({ json: true, limit: 500 })
   }
@@ -177,7 +165,7 @@ export default class Voting extends Component {
     this.props.actions.getProducersRequested({ json: true, limit: 500 })
   }
 
-  componentWillUpdate() {
+  UNSAFE_componentWillUpdate() {
     LayoutAnimation.easeInEaseOut()
   }
 
@@ -197,7 +185,6 @@ export default class Voting extends Component {
             title={messages[locale].vt_title_name_vote}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
-          <AlertComponent message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearVotingError} />
           <View style={[styles.stakeAmountContainer, styles.between]}>
             <Text style={styles.text14}>
               {'Stake: '}
@@ -257,19 +244,17 @@ export default class Voting extends Component {
             selected={this.state.selected}
             isVoting={isVoting}
           />
-          {
-            Platform.OS === 'android'
-            && <DialogAndroid
-              tilte={messages[locale].vt_popup_title_pwd}
-              content=""
-              positiveText={messages[locale].vt_popup_buttom_ent}
-              negativeText={messages[locale].vt_popup_buttom_can}
-              onChange={password => this.setState({ password })}
-              isVisible={this.state.isVisible}
-              handleCancel={() => this.setState({ isVisible: false })}
-              handleConfirm={this.handleConfirm}
-            />
-          }
+          <Alert message={this.state.alertMessage} dismiss={this.closeAlert} />
+          <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearVotingError} />
+          <Prompt
+            isVisible={this.state.isVisible}
+            title={messages[locale].vt_popup_title_pwd}
+            negativeText={messages[locale].vt_popup_buttom_can}
+            positiveText={messages[locale].vt_popup_buttom_ent}
+            type="secure-text"
+            callback={this.handleConfirm}
+            dismiss={this.closePrompt}
+          />
         </View>
       </IntlProvider>
     )
