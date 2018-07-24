@@ -1,8 +1,8 @@
 {
   "zh": {
     "snd_title_name_accnm" : "账户名称",
-    "snd_txtbox_acc_warning" : "请输入用户名",
-    "snd_txtbox_acc_warning2" : "用户名必须是从1-5与a-z的12位字符",
+    "snd_txtbox_acc_warning" : "请输入账户",
+    "snd_txtbox_acc_warning2" : "账户必须是从1-5与a-z的12位字符",
     "snd_txtbox_amn_warning": "请输入数量",
     "snd_txtbox_amn_warning2": "数量须大于0",
     "snd_txtbox_bls_warning": "您的余额不足",
@@ -13,16 +13,16 @@
     "snd_button_name_nxt" : "下一步"
   },
   "en": {
-    "snd_title_name_accnm" : "Account Name",
-    "snd_txtbox_acc_warning" : "Please input account name",
-    "snd_txtbox_acc_warning2" : "The account name should be 12 characters from 1-5 or/and a-z ",
-    "snd_txtbox_amn_warning": "Please input amount",
+    "snd_title_name_accnm" : "Account",
+    "snd_txtbox_acc_warning" : "Please input the account",
+    "snd_txtbox_acc_warning2" : "The account must be formed in 12 characters from 1-5 or/and a-z ",
+    "snd_txtbox_amn_warning": "Please input the amount",
     "snd_txtbox_amn_warning2": "Amount must be more than 0",
-    "snd_txtbox_bls_warning": "You do not have enought balance",
+    "snd_txtbox_bls_warning": "Balance is not enough",
     "snd_txtbox_tras_err": "Transfer Failed!",
     "snd_title_name_amt" : "Amount",
     "snd_title_name_bln" : "Balance:",
-    "snd_txtbox_txt_rmk" : "Remark",
+    "snd_txtbox_txt_rmk" : "Memo",
     "snd_button_name_nxt" : "Next"
   }
 }
