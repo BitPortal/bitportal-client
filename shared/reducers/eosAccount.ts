@@ -4,6 +4,7 @@ import * as actions from 'actions/eosAccount'
 
 const initialState = Immutable.fromJS({
   data: {},
+  isAssetHidden: false,
   eosAccountList: [],
   loading: false,
   loaded: false,
@@ -52,5 +53,8 @@ export default handleActions({
   },
   [actions.resetEOSAccount] () {
     return initialState
+  },
+  [actions.hiddenAssetDisplay] (state, action) {
+    return state.set('isAssetHidden', action.payload)
   }
 }, initialState)
