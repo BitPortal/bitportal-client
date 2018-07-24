@@ -51,7 +51,7 @@ export default class TransactionRecord extends Component {
   render() {
     const { qrCodeValue, isCopied } = this.state
     const { locale, transactionInfo } = this.props
-    console.log(transactionInfo.toJS())
+    console.log('####', transactionInfo.toJS())
     const time = transactionInfo.get('block_time')
     const blockHeight = transactionInfo.get('block_num')
     const fromAccount = transactionInfo.getIn(['action_trace', 'act', 'data', 'from'])
@@ -60,7 +60,7 @@ export default class TransactionRecord extends Component {
     const memo = transactionInfo.getIn(['action_trace', 'act', 'data', 'memo'])
     const amount = quantity && quantity.split(' ')[0]
     const symbol = quantity && quantity.split(' ')[1]
-    const transactionId = transactionInfo.getIn(['action_trace', 'trx_id'])
+    const transactionId = transactionInfo.getIn(['action_trace', 'trx_id']) || ''
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -74,12 +74,12 @@ export default class TransactionRecord extends Component {
               <View style={styles.content}>
                 <View style={[styles.header, styles.center]}>
                   <Text style={styles.text12}>
-                    <FormattedDate
+                    {/* <FormattedDate
                       value={+new Date(`${time}Z`)}
                       year='numeric'
                       month='long'
                       day='2-digit'
-                    /> <FormattedTime value={+new Date(`${time}Z`)}/>
+                    /> <FormattedTime value={+new Date(`${time}Z`)}/> */}
                   </Text>
                 </View>
                 <View style={[styles.header2, styles.between]}>
@@ -88,7 +88,11 @@ export default class TransactionRecord extends Component {
                     <Text numberOfLines={1} style={styles.text18}>{fromAccount}</Text>
                   </View>
                   <View style={{ marginTop: 15 }}>
-                    <Ionicons name="ios-arrow-round-forward-outline" size={20} color={Colors.textColor_74_74_74} />
+                    <Ionicons  
+                      size={20} 
+                      color={Colors.textColor_74_74_74}
+                      name="ios-arrow-round-forward-outline"
+                    />
                   </View>
                   <View style={[styles.center, { marginHorizontal: 15 }]}>
                     <Text style={styles.text10}><FormattedMessage id="tx_sec_title_to" /></Text>

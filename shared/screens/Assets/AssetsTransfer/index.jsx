@@ -5,6 +5,7 @@ import NavigationBar, { CommonButton, CommonRightButton } from 'components/Navig
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import TransferAssetsForm from 'components/Form/TransferAssetsForm'
+import { checkCamera } from 'utils/permissions'
 import styles from './styles'
 import messages from './messages'
 
@@ -26,15 +27,18 @@ export default class AssetsTransfer extends Component {
     }
   }
 
-  scanner = () => {
+  scanner = async () => {
     if (this.props.entry && this.props.entry === 'scanner') {
       Navigation.pop(this.props.componentId)
     } else {
-      Navigation.push(this.props.componentId, {
-        component: {
-          name: 'BitPortal.QRCodeScanner'
-        }
-      })
+      const authorized = await checkCamera()
+      if (authorized) {
+        Navigation.push(this.props.componentId, {
+          component: {
+            name: 'BitPortal.QRCodeScanner'
+          }
+        })
+      }
     }
   }
 

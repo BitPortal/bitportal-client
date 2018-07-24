@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Text, View, ScrollView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import SettingItem from 'components/SettingItem'
-import NavigationBar, { CommonTitle } from 'components/NavigationBar'
+import NavigationBar, { CommonTitle, CommonRightButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import VersionNumber from 'react-native-version-number'
@@ -66,6 +66,7 @@ export default class Profile extends Component {
       case 'Mediafax':
       case 'Settings':
       case 'ContactUs':
+      case 'TransactionHistory':
         pageName = page
         break
       default:
@@ -88,6 +89,7 @@ export default class Profile extends Component {
         <View style={styles.container}>
           <NavigationBar
             leftButton={<CommonTitle title={<FormattedMessage id="profile_title_name_profile" />} />}
+            rightButton={<CommonRightButton iconName="md-add" onPress={() => this.changePage("TransactionHistory")} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center' }}>

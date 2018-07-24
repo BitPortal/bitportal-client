@@ -4,7 +4,7 @@ import Colors from 'resources/colors'
 import styles from './styles'
 
 export default ({ Title, enableAssets }) => (
-  <TouchableHighlight underlayColor={Colors.hoverColor} style={styles.addAssetsContainer} onPress={() => enableAssets()}>
+  <TouchableHighlight disabled={true} underlayColor={Colors.hoverColor} style={styles.addAssetsContainer} onPress={() => enableAssets()}>
     <View style={[styles.addAssetsContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.minorThemeColor }]}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Text style={styles.text14}> { Title } </Text>
