@@ -7,7 +7,7 @@ export default EStyleSheet.create({
   formContainer: {
     width: '100%',
     paddingHorizontal: 32,
-    paddingTop: 5,
+    paddingTop: 20,
     paddingBottom: 20,
     alignItems: 'center',
     flex: 1,

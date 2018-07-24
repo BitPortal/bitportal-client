@@ -3,7 +3,8 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Text } from 'react-native'
 import { IntlProvider } from 'react-intl'
-import { Field, reduxForm } from 'redux-form/immutable'
+import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
+import { Navigation } from 'react-native-navigation'
 import { FormContainer, TextField, TextAreaField, SubmitButton } from 'components/Form'
 import { normalizeEOSAccountName, normalizeUnitByFraction, normalizeMemo } from 'utils/normalize'
 import { validateEOSAccountName } from 'utils/validate'
@@ -11,20 +12,23 @@ import * as transferActions from 'actions/transfer'
 import * as eosAccountActions from 'actions/eosAccount'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { eosAssetBalanceSelector } from 'selectors/balance'
+import { eosPriceSelector } from 'selectors/ticker'
 import TransferCard from 'screens/Assets/AssetsTransfer/TransferCard'
 import Prompt from 'components/Prompt'
 import Alert from 'components/Alert'
+import ContactIcon from 'components/FormRightContent/TransferContact'
+import CurrencyUnit from 'components/FormRightContent/TransferCurrency'
 import messages from './messages'
 import styles from './styles'
 
-export const errorMessages = (error/* , messages*/) => {
+export const errorMessages = (error, messages) => {
   if (!error) return null
 
   const message = typeof error === 'object' ? error.message : error
 
   switch (String(message)) {
     default:
-      return 'Transfer Failed!'
+      return messages.snd_txtbox_tras_err
   }
 }
 
@@ -35,17 +39,17 @@ const validate = (values, props) => {
   const errors = {}
 
   if (!values.get('toAccount')) {
-    errors.toAccount = 'Please input account name'
+    errors.toAccount = messages[props.locale].snd_txtbox_acc_warning
   } else if (!validateEOSAccountName(values.get('toAccount'))) {
-    errors.toAccount = 'Invalid eos account name'
+    errors.toAccount = messages[props.locale].snd_txtbox_acc_warning2
   }
 
   if (!values.get('quantity')) {
-    errors.quantity = 'Please input amount'
+    errors.quantity = messages[props.locale].snd_txtbox_amn_warning
   } else if (!!values.get('quantity') && values.get('quantity') <= 0) {
-    errors.quantity = 'Amount must be more than 0'
+    errors.quantity = messages[props.locale].snd_txtbox_amn_warning2
   } else if (balance && +values.get('quantity') > +balance) {
-    errors.quantity = 'You don\'t have enought balance'
+    errors.quantity = messages[props.locale].snd_txtbox_bls_warning
   }
 
   return errors
@@ -60,7 +64,9 @@ const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject)
     locale: state.intl.get('locale'),
     transfer: state.transfer,
     eosAccount: eosAccountSelector(state),
-    eosAssetBalance: eosAssetBalanceSelector(state)
+    eosAssetBalance: eosAssetBalanceSelector(state),
+    eosPrice: eosPriceSelector(state),
+    quantity: formValueSelector('transferAssetsForm')(state, 'quantity')
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -107,6 +113,22 @@ export default class TransferAssetsForm extends Component {
     this.setState({ showPrompt: false })
   }
 
+  callbackFromContacts = (contactInfo) => {
+    console.log('###', contactInfo)
+  }
+
+  getContactInfo = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.Contacts',
+        passProps: {
+          from: 'AssetsTransfer',
+          callback: this.callbackFromContacts
+        }
+      }
+    })
+  }
+
   submit = (password) => {
     const fromAccount = this.props.eosAccount.getIn(['data', 'account_name'])
 
@@ -122,7 +144,7 @@ export default class TransferAssetsForm extends Component {
   }
 
   render() {
-    const { handleSubmit, invalid, pristine, eosAssetBalance, transfer, locale } = this.props
+    const { handleSubmit, invalid, pristine, eosAssetBalance, eosPrice, quantity, transfer, locale } = this.props
     const disabled = invalid || pristine
     const symbol = eosAssetBalance && eosAssetBalance.get('symbol')
     const balance = eosAssetBalance && eosAssetBalance.get('balance')
@@ -133,22 +155,24 @@ export default class TransferAssetsForm extends Component {
       <IntlProvider messages={messages[locale]}>
         <FormContainer>
           <Field
-            label="Account Name"
+            label={messages[locale].snd_title_name_accnm}
             name="toAccount"
             component={TextField}
+            rightContent={<ContactIcon onPress={this.getContactInfo} />}
             normalize={normalizeEOSAccountName}
           />
           <Field
-            label="Amount"
+            label={messages[locale].snd_title_name_amt}
             name="quantity"
             component={TextField}
+            rightContent={<CurrencyUnit quantity={+quantity * +eosPrice} />}
             keyboardType="numeric"
             normalize={normalizeUnitByFraction(4)}
-            info={balance && <Text style={styles.balance}>Balance: {balance} {symbol}</Text>}
+            info={balance && <Text style={styles.balance}>{messages[locale].snd_title_name_bln} {balance} {symbol}</Text>}
           />
           <Field
-            name="memo"
-            placeholder="Memo..."
+            name={messages[locale].snd_txtbox_txt_rmk}
+            placeholder={`${messages[locale].snd_txtbox_txt_rmk}......`}
             component={TextAreaField}
             normalize={normalizeMemo}
           />

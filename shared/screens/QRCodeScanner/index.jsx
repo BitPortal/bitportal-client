@@ -32,13 +32,14 @@ export default class Scanner extends Component {
     }
   }
 
-  onSuccess() {
+  onSuccess(qrValue) {
     this.props.actions.setActiveAsset('EOS')
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.AssetsTransfer',
         passProps: {
-          entry: 'scanner'
+          entry: 'scanner',
+          qrValue
         }
       }
     })
