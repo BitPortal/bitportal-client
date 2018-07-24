@@ -23,7 +23,6 @@ import SplashScreen from 'react-native-splash-screen'
 import { checkCamera } from 'utils/permissions'
 import styles from './styles'
 import messages from './messages'
-import AssetQRCode from './AssetQRCode'
 import AccountList from './AccountList'
 import EnableAssets from './EnableAssets'
 import BalanceList from './BalanceList'
@@ -68,7 +67,6 @@ const getTotalAssets = (eosAccountBalance, eosPrice) => {
 
 export default class Assets extends Component {
   state = {
-    isVisible: false,
     isVisible2: false
   }
 

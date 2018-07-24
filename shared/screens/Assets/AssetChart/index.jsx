@@ -43,13 +43,6 @@ export default class AssetChart extends Component {
     }
   }
 
-  state = {
-    data: [
-      { amount: 234.532 },
-      { amount: -4212.42 }
-    ]
-  }
-
   send = () => {
     this.props.actions.setActiveAsset(this.props.eosItem.get('symbol'))
     Navigation.push(this.props.componentId, {
