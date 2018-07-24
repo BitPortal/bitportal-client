@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
-import { Text, View, ListView } from 'react-native'
+import { Text, View, ListView, TouchableWithoutFeedback } from 'react-native'
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
@@ -49,6 +49,14 @@ export default class Contacts extends Component {
     }
   }
 
+  onRowOpen = (data) => {
+    const { from, callback } = this.props
+    if (from && callback) {
+      callback(data)
+      Navigation.pop(this.props.componentId, { component: { name: `BitPortal.${from}` } })
+    }
+  }
+
   addContacts = () => {
     Navigation.push(this.props.componentId, {
       component: {
@@ -74,10 +82,12 @@ export default class Contacts extends Component {
         style={{ backgroundColor: Colors.bgColor_48_49_59 }}
       >
         <DeleteButton onPress={() => this.deleteContact(data, secId, rowId, rowMap)} />
-        <View style={styles.listItem}>
-          <Text style={styles.text14}> {data.accountName} </Text>
-          <Text style={styles.text12}> {data.memo} </Text>
-        </View>
+        <TouchableWithoutFeedback disabled={!this.props.from} style={styles.listItem} onPress={() => this.onRowOpen(data)}>
+          <View style={[styles.listItem, styles.extraListItem]}>
+            <Text style={styles.text14}> {data.accountName} </Text>
+            <Text style={styles.text12}> {data.memo} </Text>
+          </View>
+        </TouchableWithoutFeedback>
       </SwipeRow>
     )
   }

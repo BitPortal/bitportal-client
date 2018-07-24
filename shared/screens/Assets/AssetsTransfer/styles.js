@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   keyboard: {
     width: SCREEN_WIDTH,
     height: KEYBOARD_HEIGHT,
-    backgroundColor: Colors.mainThemeColor
+    backgroundColor: Colors.minorThemeColor
   }
 })
 
