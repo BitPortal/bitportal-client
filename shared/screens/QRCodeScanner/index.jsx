@@ -5,8 +5,10 @@ import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { View } from 'react-native'
 import QRCodeScanner from 'react-native-qrcode-scanner'
+import { change } from 'redux-form/immutable'
 import { IntlProvider } from 'react-intl'
 import * as balanceActions from 'actions/balance'
+import { parseEOSQrString } from 'utils'
 import messages from './messages'
 import styles from './styles'
 
@@ -16,7 +18,8 @@ import styles from './styles'
   }),
   dispatch => ({
     actions: bindActionCreators({
-      ...balanceActions
+      ...balanceActions,
+      change
     }, dispatch)
   }),
   null,
@@ -32,17 +35,33 @@ export default class Scanner extends Component {
     }
   }
 
-  onSuccess(qrValue) {
-    this.props.actions.setActiveAsset('EOS')
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.AssetsTransfer',
-        passProps: {
-          entry: 'scanner',
-          qrValue
-        }
+  onSuccess = (qrValue) => {
+    const qrInfo = parseEOSQrString(qrValue)
+
+    if (qrInfo) {
+      const token = qrInfo.token
+      this.props.actions.setActiveAsset(token)
+
+      if (this.props.entry === 'form') {
+        const eosAccountName = qrInfo.eosAccountName
+        const quantity = qrInfo.amount
+
+        if (eosAccountName) this.props.actions.change('transferAssetsForm', 'toAccount', eosAccountName)
+        if (quantity) this.props.actions.change('transferAssetsForm', 'quantity', quantity)
+
+        Navigation.pop(this.props.componentId)
+      } else {
+        Navigation.push(this.props.componentId, {
+          component: {
+            name: 'BitPortal.AssetsTransfer',
+            passProps: {
+              entry: 'scanner',
+              qrInfo
+            }
+          }
+        })
       }
-    })
+    }
   }
 
   render() {
@@ -56,9 +75,8 @@ export default class Scanner extends Component {
             title={messages[locale].qrscn_title_name_qrscanner}
           />
           <QRCodeScanner
-            onRead={this.onSuccess.bind(this)}
+            onRead={this.onSuccess}
             showMarker={true}
-            // bottomContent={<TouchableOpacity onPress={() => this.onSuccess()} style={styles.buttonTouchable}><Text style={styles.buttonText}>Go To Send</Text></TouchableOpacity>}
           />
         </View>
       </IntlProvider>

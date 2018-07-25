@@ -86,3 +86,39 @@ export const getPasswordStrength = (password: any) => {
 export const noop = () => {}
 
 export const eosQrString = (account_name: string, amount: number, token: string) => `eos:${account_name}?amount=${amount || 0}&token=${token || 'EOS'}`
+
+export const parseEOSQrString = (text: string) => {
+  let eosAccountName
+  let amount
+  let token
+
+  if (text && typeof text === 'string') {
+    const account = text.split('?')[0]
+    const queryString = text.split('?')[1]
+
+    if (account && account.split(':')[1]) {
+      if (account.split(':')[0] !== 'eos') return null
+
+      eosAccountName = account.split(':')[1]
+
+      if (queryString) {
+        const queryObject = queryString.split('&').map((item: any) => {
+          if (item && typeof item === 'string' && item.split('=').length === 2 && item.split('=')[0] && item.split('=')[1]) {
+            return { [item.split('=')[0]]: item.split('=')[1] }
+          }
+
+          return null
+        }).filter((item: any) => !!item).reduce((items, item) => ({ ...items, ...item }), {})
+
+        amount = queryObject.amount
+        token = queryObject.token && queryObject.token.toUpperCase()
+
+        if (!token) return null
+      }
+
+      return { eosAccountName, amount, token }
+    }
+
+    return null
+  }
+}

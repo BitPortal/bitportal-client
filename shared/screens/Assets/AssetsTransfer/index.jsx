@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
 import { View, ScrollView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
+import { change } from 'redux-form/immutable'
 import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
@@ -13,7 +15,11 @@ import messages from './messages'
   state => ({
     locale: state.intl.get('locale')
   }),
-  null,
+  dispatch => ({
+    actions: bindActionCreators({
+      change
+    }, dispatch)
+  }),
   null,
   { withRef: true }
 )
@@ -28,14 +34,17 @@ export default class AssetsTransfer extends Component {
   }
 
   scanner = async () => {
-    if (this.props.entry && this.props.entry === 'scanner') {
+    if (this.props.entry === 'scanner') {
       Navigation.pop(this.props.componentId)
     } else {
       const authorized = await checkCamera()
       if (authorized) {
         Navigation.push(this.props.componentId, {
           component: {
-            name: 'BitPortal.QRCodeScanner'
+            name: 'BitPortal.QRCodeScanner',
+            passProps: {
+              entry: 'form'
+            }
           }
         })
       }
@@ -48,6 +57,19 @@ export default class AssetsTransfer extends Component {
         name: 'BitPortal.TransactionRecord'
       }
     })
+  }
+
+  componentDidMount() {
+    const qrInfo = this.props.qrInfo
+    const entry = this.props.entry
+
+    if (entry === 'scanner' && qrInfo) {
+      const eosAccountName = qrInfo.eosAccountName
+      const quantity = qrInfo.amount
+
+      if (eosAccountName) this.props.actions.change('transferAssetsForm', 'toAccount', eosAccountName)
+      if (quantity) this.props.actions.change('transferAssetsForm', 'quantity', quantity)
+    }
   }
 
   render() {
