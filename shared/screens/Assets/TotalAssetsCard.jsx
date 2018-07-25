@@ -177,7 +177,7 @@ export default class TotalAssetsCard extends Component {
                 </View>
                 <View style={styles.divider} />
                 <View style={styles.center}>
-                  <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>BW</Text>
+                  <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>NET</Text>
                   <Text onPress={this.checkResources} style={[styles.text12, this.extraColor(NETInfo.get('available'), NETInfo.get('max')), { paddingHorizontal: 2 }]}>
                     {formatMemorySize(NETInfo.get('available'))}
                   </Text>
