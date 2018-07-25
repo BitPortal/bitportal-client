@@ -89,7 +89,7 @@ export default class AssetChart extends Component {
     this.props.actions.getTransactionsRequested({ eosAccountName, offset, position: -1 })
   }
 
-  componentDidMount() {
+  componentDidAppear() {
     this.onRefresh()
   }
 
