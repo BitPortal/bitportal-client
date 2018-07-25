@@ -18,15 +18,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   scrollContainer: {
-    width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT - NAV_BAR_HEIGHT,
     flexDirection: 'column'
   },
   content: {
-    width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - 50,
-    alignItems: 'center',
     backgroundColor: Colors.minorThemeColor
+  },
+  topContent: {
+    alignItems: 'center',
+    width: SCREEN_WIDTH
   },
   text14: {
     fontSize: FontScale(14),

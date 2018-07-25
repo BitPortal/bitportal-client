@@ -109,21 +109,23 @@ export default class AssetChart extends Component {
           />
           <View style={styles.scrollContainer}>
             <View style={styles.content}>
-              <Text style={[styles.text24, { marginTop: 20 }]}>
-                <FormattedNumber
-                  value={eosItem.get('balance')}
-                  maximumFractionDigits={4}
-                  minimumFractionDigits={4}
-                />
-              </Text>
-              <Text style={[styles.text14, { marginBottom: 20 }]}>
-                ≈
-                <CurrencyText
-                  value={+eosItem.get('balance') * +eosPrice}
-                  maximumFractionDigits={2}
-                  minimumFractionDigits={2}
-                />
-              </Text>
+              <View style={styles.topContent}>
+                <Text style={[styles.text24, { marginTop: 20 }]}>
+                  <FormattedNumber
+                    value={eosItem.get('balance')}
+                    maximumFractionDigits={4}
+                    minimumFractionDigits={4}
+                  />
+                </Text>
+                <Text style={[styles.text14, { marginBottom: 20 }]}>
+                  ≈
+                  <CurrencyText
+                    value={+eosItem.get('balance') * +eosPrice}
+                    maximumFractionDigits={2}
+                    minimumFractionDigits={2}
+                  />
+                </Text>
+              </View>
               <VirtualizedList
                 data={transferHistory}
                 refreshing={loading && !loaded}
