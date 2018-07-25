@@ -13,7 +13,7 @@
   "en": {
     "reslist_title_name_resources" : "Resources",
     "reslist_title_name_ram" : "RAM",
-    "reslist_title_name_bw" : "BandWidth",
+    "reslist_title_name_bw" : "NET",
     "reslist_title_name_cpu": "CPU",
     "reslist_title_name_ava": "Available:",
     "reslist_title_name_ramttl": "Quota:",
