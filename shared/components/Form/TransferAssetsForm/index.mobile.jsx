@@ -190,9 +190,6 @@ export default class TransferAssetsForm extends Component {
           />
           <Prompt
             isVisible={this.state.showPrompt}
-            title="Please input password"
-            negativeText="cancel"
-            positiveText="confirm"
             type="secure-text"
             callback={this.submit}
             dismiss={this.closePrompt}

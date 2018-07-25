@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
-import { Text, View, ScrollView, TouchableOpacity, Clipboard } from 'react-native'
+import { Text, View, ScrollView, TouchableOpacity, Clipboard, Animated, Easing } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
@@ -36,7 +36,24 @@ export default class TransactionRecord extends Component {
   }
 
   state = {
-    isCopied: false
+    isCopied: false,
+    rotateValue: new Animated.Value(0)
+  }
+
+  startAnimation() {
+    this.state.rotateValue.setValue(0);
+    Animated.timing(this.state.rotateValue, {
+        toValue: 1,  
+        duration: 1000,  
+        easing: Easing.out(Easing.linear),
+    }).start(()=>this.startAnimation())
+  }
+
+  checkBlockInfo = () => {
+    const uri = 'https://explorer.eoseco.com/'
+    Navigation.push(this.props.componentId, {
+      component: { name: 'Bitportal.BPWebView', passProps: { uri, needLinking: true } }
+    })
   }
 
   goBack = () => {
@@ -85,6 +102,7 @@ export default class TransactionRecord extends Component {
   }
 
   componentDidMount() {
+    this.startAnimation()
     if (this.props.transferResult) {
       const id = this.props.transferResult.get('transaction_id')
       this.props.actions.getTransactionDetailRequested({ id })
@@ -116,11 +134,19 @@ export default class TransactionRecord extends Component {
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.content}>
-                <View style={[styles.header, styles.center]}>
+                <View style={[styles.header, styles.between]}>
                   <Text style={styles.text12}>
                     {transactionResult && <FormattedRelative value={time} updateInterval={1000} />}
                     {!transactionResult && <FormattedDate value={+new Date(`${time}Z`)} year='numeric' month='long' day='2-digit' />} {!transactionResult && <FormattedTime value={+new Date(`${time}Z`)}/>}
                   </Text>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Animated.View style={{
+                      transform: [{ rotateZ: this.state.rotateValue.interpolate({ inputRange: [0,1], outputRange: ['0deg', '360deg'] }) }]
+                    }}>
+                      <Ionicons name="ios-refresh" size={22} color={Colors.bgColor_FAFAFA} />
+                    </Animated.View>
+                    <Text style={[styles.text14, { marginLeft: 10 }]}>发送中...</Text>
+                  </View>
                 </View>
                 <View style={[styles.header2, styles.between]}>
                   <View style={[styles.center, { marginHorizontal: 15 }]}>
@@ -168,7 +194,7 @@ export default class TransactionRecord extends Component {
                       <Text style={[styles.text14, { marginTop: 10 }]}>
                         <FormattedMessage id="txdtl_title_name_tctID" />:
                       </Text>
-                      <Text numberOfLines={1} style={styles.text14}>
+                      <Text onPress={this.checkBlockInfo} numberOfLines={1} style={styles.text14}>
                         # <Text style={{ color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }}>
                           {transactionId && `${transactionId.slice(0, 7)}....${transactionId.slice(-7)}`}
                         </Text>
@@ -176,7 +202,7 @@ export default class TransactionRecord extends Component {
                       <Text style={[styles.text14, { marginTop: 15 }]}>
                         <FormattedMessage id="tx_sec_button_detail" />:
                       </Text>
-                      <Text numberOfLines={1} style={[styles.text14, { marginBottom: 15 }]}>
+                      <Text onPress={this.checkBlockInfo} numberOfLines={1} style={[styles.text14, { marginBottom: 15 }]}>
                         # <Text style={{ color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }}>
                           {blockHeight}
                         </Text>
