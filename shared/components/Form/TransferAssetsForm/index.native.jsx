@@ -30,6 +30,12 @@ export const errorMessages = (error, messages) => {
     case 'Key derivation failed - possibly wrong passphrase':
       return 'Invalid password'
     default:
+      if (!~String(message).indexOf('net usage of transaction is too high')) {
+        return 'net usage of transaction is too high'
+      } else if (!~String(message).indexOf('cpu usage of transaction is too high')) {
+        return 'cpu usage of transaction is too high'
+      }
+
       return messages.snd_txtbox_tras_err
   }
 }
