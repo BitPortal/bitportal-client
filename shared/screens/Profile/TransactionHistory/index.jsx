@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { View, ScrollView } from 'react-native'
+import { View, VirtualizedList } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
@@ -46,10 +46,14 @@ export default class TransationHistory extends Component {
     })
   }
 
-  componentDidMount() {
+  onRefresh = () => {
     const eosAccountName = this.props.eosAccountName
     const offset = this.props.transaction.get('offset')
     this.props.actions.getTransactionsRequested({ eosAccountName, offset, position: -1 })
+  }
+
+  componentDidMount() {
+    this.onRefresh()
   }
 
   componentWillUnmount() {
@@ -59,6 +63,7 @@ export default class TransationHistory extends Component {
   render() {
     const { locale, transaction, eosAccountName } = this.props
     const transferHistory = transaction.get('data')
+    const loading = transaction.get('loading')
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -68,13 +73,15 @@ export default class TransationHistory extends Component {
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
-            <ScrollView>
-              {
-                transferHistory.map(transaction => (
-                  <RecordItem key={transaction.get('account_action_seq')} item={transaction} onPress={this.checkTransactionRecord} eosAccountName={eosAccountName} />
-                ))
-              }
-            </ScrollView>
+            <VirtualizedList
+              data={transferHistory}
+              refreshing={loading}
+              onRefresh={this.onRefresh}
+              getItem={(items, index) => (items.get ? items.get(index) : items[index])}
+              getItemCount={items => (items.size || 0)}
+              keyExtractor={(item, index) => String(index)}
+              renderItem={({ item, index }) => <RecordItem key={item.get('account_action_seq')} item={item} onPress={this.checkTransactionRecord} eosAccountName={eosAccountName} />}
+            />
           </View>
         </View>
       </IntlProvider>

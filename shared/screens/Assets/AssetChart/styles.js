@@ -20,12 +20,12 @@ const styles = StyleSheet.create({
   scrollContainer: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT - NAV_BAR_HEIGHT,
+    flexDirection: 'column'
   },
   content: {
     width: SCREEN_WIDTH,
-    minHeight: 400,
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - 50,
     alignItems: 'center',
-    paddingHorizontal: 32,
     backgroundColor: Colors.minorThemeColor
   },
   text14: {
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     }, {
       height: TAB_BAR_HEIGHT
     })
-  },
+  }
 })
 
 export default styles
