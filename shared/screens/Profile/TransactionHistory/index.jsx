@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { View, VirtualizedList } from 'react-native'
+import { View, Text, VirtualizedList, ActivityIndicator } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
@@ -52,18 +52,26 @@ export default class TransationHistory extends Component {
     this.props.actions.getTransactionsRequested({ eosAccountName, offset, position: -1 })
   }
 
-  componentDidMount() {
-    this.onRefresh()
+  loadMore = () => {
+    const hasMore = this.props.transaction.get('hasMore')
+
+    if (hasMore) {
+      const eosAccountName = this.props.eosAccountName
+      const offset = this.props.transaction.get('offset')
+      const position = this.props.transaction.get('position')
+      this.props.actions.getTransactionsRequested({ eosAccountName, offset, position })
+    }
   }
 
-  componentWillUnmount() {
-    this.props.actions.resetTransaction()
+  componentDidMount() {
+    this.onRefresh()
   }
 
   render() {
     const { locale, transaction, eosAccountName } = this.props
     const transferHistory = transaction.get('data')
     const loading = transaction.get('loading')
+    const hasMore = transaction.get('hasMore')
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -81,6 +89,9 @@ export default class TransationHistory extends Component {
               getItemCount={items => (items.size || 0)}
               keyExtractor={(item, index) => String(index)}
               renderItem={({ item, index }) => <RecordItem key={item.get('account_action_seq')} item={item} onPress={this.checkTransactionRecord} eosAccountName={eosAccountName} />}
+              onEndReached={this.loadMore}
+              onEndReachedThreshold={0.5}
+              ListFooterComponent={hasMore ? <ActivityIndicator style={{ marginVertical: 10 }} size="small" color="white" /> : <Text style={{ marginVertical: 10, alignSelf: 'center', color: 'white' }}>没有更多数据了</Text>}
             />
           </View>
         </View>

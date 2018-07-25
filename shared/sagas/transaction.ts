@@ -1,5 +1,5 @@
 import assert from 'assert'
-import { put, call, takeEvery } from 'redux-saga/effects'
+import { put, call, takeEvery, takeLatest } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/transaction'
 import { initEOS } from 'core/eos'
@@ -19,11 +19,10 @@ function* getTransactionsRequested(action: Action<TransactionsParams>) {
     const eos = yield call(initEOS, {})
     const data = yield call(eos.getActions, { offset, account_name: eosAccountName, pos: position })
 
-    const accountActions = data.actions.reverse().filter((action: any) => action && action.action_trace && action.action_trace.receipt.receiver === eosAccountName)
-    const hasMore = data.actions && data.actions.length === Math.abs(offset)
+    const hasMore = data.actions && data.actions.length && !!data.actions[0].account_action_seq
+    const accountActions = (hasMore ? [...data.actions.slice(2)] : [...data.actions]).reverse().filter((action: any) => action && action.action_trace && action.action_trace.receipt.receiver === eosAccountName)
     const refresh = position === -1
-    let newPosition = position
-    if (hasMore) newPosition = +position + +offset
+    let newPosition = data.actions.length ? (data.actions[0].account_action_seq + 1) : position
 
     yield put(actions.getTransactionsSucceeded({ hasMore, refresh, position: newPosition, actions: accountActions }))
   } catch (e) {
@@ -47,6 +46,6 @@ function* getTransactionDetailRequested(action: Action<TransactionDetailParams>)
 }
 
 export default function* transactionSaga() {
-  yield takeEvery(String(actions.getTransactionsRequested), getTransactionsRequested)
+  yield takeLatest(String(actions.getTransactionsRequested), getTransactionsRequested)
   yield takeEvery(String(actions.getTransactionDetailRequested), getTransactionDetailRequested)
 }

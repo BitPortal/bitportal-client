@@ -9,7 +9,7 @@ const initialState = Immutable.fromJS({
   loaded: false,
   error: null,
   position: -1,
-  offset: -1000,
+  offset: -100,
   hasMore: true,
   detailLoading: false,
   detailLoaded: false,
@@ -24,7 +24,7 @@ export default handleActions({
     return state.set('loaded', true).set('loading', false)
       .set('hasMore', action.payload.hasMore)
       .set('position', action.payload.position)
-      .update('data', (v: any) => action.payload.refresh ? Immutable.fromJS(action.payload.actions) : v.insert(Immutable.fromJS(action.payload.actions)))
+      .update('data', (v: any) => action.payload.refresh ? Immutable.fromJS(action.payload.actions) : v.concat(Immutable.fromJS(action.payload.actions)))
   },
   [actions.getTransactionsFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)
