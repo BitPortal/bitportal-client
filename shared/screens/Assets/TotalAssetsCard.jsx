@@ -100,7 +100,6 @@ const styles = StyleSheet.create({
 )
 
 export default class TotalAssetsCard extends Component {
-
   async componentDidMount() {
     const storeInfo = await storage.getItem('bitportal.hiddenTotalAssets', true)
     if (storeInfo && storeInfo.hiddenTotalAssets) {

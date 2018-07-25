@@ -18,15 +18,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   scrollContainer: {
-    width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT - NAV_BAR_HEIGHT,
+    flexDirection: 'column'
   },
   content: {
-    width: SCREEN_WIDTH,
-    minHeight: 400,
-    alignItems: 'center',
-    paddingHorizontal: 32,
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - 50,
     backgroundColor: Colors.minorThemeColor
+  },
+  topContent: {
+    alignItems: 'center',
+    width: SCREEN_WIDTH
   },
   text14: {
     fontSize: FontScale(14),
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
     }, {
       height: TAB_BAR_HEIGHT
     })
-  },
+  }
 })
 
 export default styles

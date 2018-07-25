@@ -1,20 +1,19 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { View, Text, Platform, InteractionManager } from 'react-native'
+import { View, Text, InteractionManager } from 'react-native'
 import { Field, reduxForm, reset } from 'redux-form/immutable'
 import { FormContainer, TextField, SubmitButton } from 'components/Form'
 import { normalizeUnitByFraction, normalizeUnitByCurrency } from 'utils/normalize'
 import { validateUnitByFraction, validateUnitByCurrency } from 'utils/validate'
 import * as ramActions from 'actions/ram'
-import Alert from 'components/Alert'
 import Switch from 'components/Switch'
 import Balance from 'components/Balance'
 import { IntlProvider } from 'react-intl'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { eosAccountSelector } from 'selectors/eosAccount'
-import Dialogs from 'components/Dialog'
-import DialogAndroid from 'components/DialogAndroid'
+import Prompt from 'components/Prompt'
+import Alert from 'components/Alert'
 import messages from './messages'
 
 const styles = EStyleSheet.create({
@@ -87,40 +86,23 @@ const validate = (values, props) => {
 @reduxForm({ form: 'tradeRAMForm', validate })
 
 export default class TradeRAMForm extends Component {
-  state = { activeForm: 'Buy', isVisible: false, password: '', data: undefined }
+  state = { activeForm: 'Buy', isVisible: false, data: null }
 
-  actionRequest = (data, password) => {
-    const eosAccount = this.props.eosAccount
-    const eosAccountName = eosAccount.get('data').get('account_name')
-    if (this.state.activeForm === 'Buy') {
-      this.props.actions.buyRAMRequested(data.set('eosAccountName', eosAccountName).set('password', password).toJS())
-    } else {
-      this.props.actions.sellRAMRequested(data.set('eosAccountName', eosAccountName).set('password', password).toJS())
-    }
+  submit = (data) => {
+    this.setState({ isVisible: true, data })
   }
 
-  submit = async (data) => {
-    if (Platform.OS === 'ios') {
-      const { action, text } = await Dialogs.prompt(
-        messages[this.props.locale].tra_popup_title_pwd,
-        null,
-        {
-          positiveText: messages[this.props.locale].tra_popup_buttom_ent,
-          negativeText: messages[this.props.locale].tra_popup_buttom_can
-        }
-      )
-      if (action === Dialogs.actionPositive) {
-        this.actionRequest(data, text)
-      }
-    } else {
-      this.setState({ isVisible: true, data })
-    }
-  }
-
-  handleConfirm = () => {
+  handleConfirm = (password) => {
     this.setState({ isVisible: false }, () => {
       InteractionManager.runAfterInteractions(() => {
-        this.actionRequest(this.state.data, this.state.password)
+        const data = this.state.data
+        const eosAccount = this.props.eosAccount
+        const eosAccountName = eosAccount.get('data').get('account_name')
+        if (this.state.activeForm === 'Buy') {
+          this.props.actions.buyRAMRequested(data.set('eosAccountName', eosAccountName).set('password', password).toJS())
+        } else {
+          this.props.actions.sellRAMRequested(data.set('eosAccountName', eosAccountName).set('password', password).toJS())
+        }
       })
     })
   }
@@ -131,6 +113,10 @@ export default class TradeRAMForm extends Component {
       this.props.actions.clearRAMError()
       this.props.reset('tradeRAMForm')
     }
+  }
+
+  closePrompt = () => {
+    this.setState({ isVisible: false })
   }
 
   render() {
@@ -174,19 +160,15 @@ export default class TradeRAMForm extends Component {
             />
             <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearRAMError} />
             <Alert message={!!showSuccess && messages[locale].tra_popup_title_trasucc} dismiss={this.props.actions.hideSuccessModal} />
-            {
-              Platform.OS === 'android'
-              && <DialogAndroid
-                tilte={messages[locale].tra_popup_title_pwd}
-                content=""
-                positiveText={messages[locale].tra_popup_buttom_ent}
-                negativeText={messages[locale].tra_popup_buttom_can}
-                onChange={password => this.setState({ password })}
-                isVisible={this.state.isVisible}
-                handleCancel={() => this.setState({ isVisible: false })}
-                handleConfirm={this.handleConfirm}
-              />
-            }
+            <Prompt
+              isVisible={this.state.isVisible}
+              title={messages[locale].tra_popup_title_pwd}
+              negativeText={messages[locale].tra_popup_buttom_can}
+              positiveText={messages[locale].tra_popup_buttom_ent}
+              type="secure-text"
+              callback={this.handleConfirm}
+              dismiss={this.closePrompt}
+            />
           </FormContainer>
         </View>
       </IntlProvider>

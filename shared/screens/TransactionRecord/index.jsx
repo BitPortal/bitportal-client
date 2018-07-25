@@ -65,13 +65,13 @@ export default class TransactionRecord extends Component {
     this.setState({ isCopied: true })
   }
 
-  getInfo = (transactionInfo, transactionResult, transactionDetail) => {
+  getInfo = (transactionInfo, transactionResult) => {
     let time
     let blockHeight
     let fromAccount
     let toAccount
-    let quantity
     let memo
+    let quantity
     let amount
     let symbol
     let transactionId
@@ -98,7 +98,7 @@ export default class TransactionRecord extends Component {
       transactionId = transactionResult.get('transaction_id')
     }
 
-    return { time, blockHeight, fromAccount, toAccount, quantity, memo, amount, symbol, transactionId }
+    return { time, blockHeight, fromAccount, toAccount, memo, amount, symbol, transactionId }
   }
 
   componentDidMount() {
@@ -110,19 +110,18 @@ export default class TransactionRecord extends Component {
   }
 
   render() {
-    const { qrCodeValue, isCopied } = this.state
-    const { locale, transactionInfo, transactionResult, transactionDetail } = this.props
+    const { isCopied } = this.state
+    const { locale, transactionInfo, transactionResult } = this.props
     const {
       time,
       blockHeight,
       fromAccount,
       toAccount,
-      quantity,
       memo,
       amount,
       symbol,
       transactionId
-    } = this.getInfo(transactionInfo, transactionResult, transactionDetail)
+    } = this.getInfo(transactionInfo, transactionResult)
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -137,7 +136,7 @@ export default class TransactionRecord extends Component {
                 <View style={[styles.header, styles.between]}>
                   <Text style={styles.text12}>
                     {transactionResult && <FormattedRelative value={time} updateInterval={1000} />}
-                    {!transactionResult && <FormattedDate value={+new Date(`${time}Z`)} year='numeric' month='long' day='2-digit' />} {!transactionResult && <FormattedTime value={+new Date(`${time}Z`)}/>}
+                    {!transactionResult && <FormattedDate value={+new Date(`${time}Z`)} year="numeric" month="long" day="2-digit" />} {!transactionResult && <FormattedTime value={+new Date(`${time}Z`)} />}
                   </Text>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Animated.View style={{
@@ -156,8 +155,8 @@ export default class TransactionRecord extends Component {
                     <Text numberOfLines={1} style={styles.text18}>{fromAccount}</Text>
                   </View>
                   <View style={{ marginTop: 15 }}>
-                    <Ionicons  
-                      size={20} 
+                    <Ionicons
+                      size={20}
                       color={Colors.textColor_74_74_74}
                       name="ios-arrow-round-forward-outline"
                     />

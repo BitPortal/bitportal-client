@@ -18,8 +18,22 @@ import Colors from 'resources/colors'
 import VersionNumber from 'react-native-version-number'
 import SplashScreen from 'react-native-splash-screen'
 import DeviceInfo from 'react-native-device-info'
+import { ENV } from 'constants/env'
+import { noop } from 'utils'
 
 EStyleSheet.build({})
+
+if (ENV === 'production') {
+  global.console = {
+    info: noop,
+    log: noop,
+    warn: noop,
+    debug: noop,
+    error: noop
+  }
+
+  require('ErrorUtils').setGlobalHandler(noop)
+}
 
 const runApp = async () => {
   let lang = await storage.getItem('bitportal_lang')

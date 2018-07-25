@@ -38,7 +38,7 @@ export default class Discovery extends Component {
     this.props.actions.getNewsBannerRequested()
   }
 
-  componentWillUpdate() {
+  UNSAFE_componentWillUpdate() {
     LayoutAnimation.easeInEaseOut()
   }
 

@@ -84,7 +84,7 @@ export default class Market extends Component {
     })
   }
 
-  componentWillUpdate() {
+  UNSAFE_componentWillUpdate() {
     LayoutAnimation.easeInEaseOut()
   }
 

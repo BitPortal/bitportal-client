@@ -21,7 +21,7 @@ export default class Contacts extends Component {
     folded: false
   }
 
-  componentWillUpdate() {
+  UNSAFE_componentWillUpdate() {
     LayoutAnimation.easeInEaseOut()
   }
 
