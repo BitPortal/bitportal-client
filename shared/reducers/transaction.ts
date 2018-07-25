@@ -9,7 +9,7 @@ const initialState = Immutable.fromJS({
   loaded: false,
   error: null,
   position: -1,
-  offset: -100,
+  offset: -50,
   hasMore: true,
   detailLoading: false,
   detailLoaded: false,

@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Text } from 'react-native'
 import { IntlProvider } from 'react-intl'
-import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
+import { Field, reduxForm, formValueSelector, change } from 'redux-form/immutable'
 import { Navigation } from 'react-native-navigation'
 import { FormContainer, TextField, TextAreaField, SubmitButton } from 'components/Form'
 import { normalizeEOSAccountName, normalizeUnitByFraction, normalizeMemo } from 'utils/normalize'
@@ -27,6 +27,8 @@ export const errorMessages = (error, messages) => {
   const message = typeof error === 'object' ? error.message : error
 
   switch (String(message)) {
+    case 'Key derivation failed - possibly wrong passphrase':
+      return 'Invalid password'
     default:
       return messages.snd_txtbox_tras_err
   }
@@ -71,7 +73,8 @@ const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject)
   dispatch => ({
     actions: bindActionCreators({
       ...transferActions,
-      ...eosAccountActions
+      ...eosAccountActions,
+      change
     }, dispatch)
   })
 )
@@ -114,7 +117,7 @@ export default class TransferAssetsForm extends Component {
   }
 
   callbackFromContacts = (contactInfo) => {
-    console.log('###', contactInfo)
+    this.props.actions.change('transferAssetsForm', 'toAccount', contactInfo.accountName)
   }
 
   getContactInfo = () => {

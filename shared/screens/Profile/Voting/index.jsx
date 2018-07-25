@@ -172,6 +172,7 @@ export default class Voting extends Component {
   render() {
     const { locale, producer, eosAccount, voting } = this.props
     const loading = producer.get('loading')
+    const loaded = producer.get('loaded')
     const disabled = !this.state.selected.length && !this.props.producer.get('data').get('rows').size
     const voterInfo = eosAccount.get('data').get('voter_info')
     const isVoting = voting.get('loading')
@@ -215,7 +216,7 @@ export default class Voting extends Component {
               data={producer.get('data').get('rows')}
               totalVotes={producer.get('data').get('total_producer_vote_weight')}
               onRefresh={this.onRefresh}
-              refreshing={loading}
+              refreshing={loading && !loaded}
               onRowPress={this.onRowPress}
               onMarkPress={this.onMarkPress}
               selected={this.state.selected}

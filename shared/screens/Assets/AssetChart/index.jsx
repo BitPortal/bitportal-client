@@ -98,6 +98,7 @@ export default class AssetChart extends Component {
     const transferHistory = transaction.get('data').filter(transaction => transaction && transaction.getIn(['action_trace', 'act', 'name']) === 'transfer')
     const loading = transaction.get('loading')
     const hasMore = transaction.get('hasMore')
+    const loaded = transaction.get('loaded')
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -125,7 +126,7 @@ export default class AssetChart extends Component {
               </Text>
               <VirtualizedList
                 data={transferHistory}
-                refreshing={loading}
+                refreshing={loading && !loaded}
                 onRefresh={this.onRefresh}
                 getItem={(items, index) => (items.get ? items.get(index) : items[index])}
                 getItemCount={items => (items.size || 0)}
@@ -133,7 +134,7 @@ export default class AssetChart extends Component {
                 renderItem={({ item, index }) => <RecordItem key={item.get('account_action_seq')} item={item} onPress={this.checkTransactionRecord} eosAccountName={eosAccountName} />}
                 onEndReached={this.loadMore}
                 onEndReachedThreshold={0.5}
-                ListFooterComponent={hasMore ? <ActivityIndicator style={{ marginVertical: 10 }} size="small" color="white" /> : <Text style={{ marginVertical: 10, alignSelf: 'center', color: 'white' }}>没有更多数据了</Text>}
+                ListFooterComponent={(loaded && hasMore) ? <ActivityIndicator style={{ marginVertical: 10 }} size="small" color="white" /> : (loaded && <Text style={{ marginVertical: 10, alignSelf: 'center', color: 'white' }}>没有更多数据了</Text>)}
               />
             </View>
             <View style={[styles.btnContainer, styles.between]}>
