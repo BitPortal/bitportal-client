@@ -145,7 +145,9 @@ export default class TransactionRecord extends Component {
                     }}>
                       <Ionicons name="ios-refresh" size={22} color={Colors.bgColor_FAFAFA} />
                     </Animated.View>
-                    <Text style={[styles.text14, { marginLeft: 10 }]}>发送中...</Text>
+                    <Text style={[styles.text14, { marginLeft: 10 }]}>
+                      <FormattedMessage id="tx_sec_title_sending" />
+                    </Text>
                   </View>
                 </View>
                 <View style={[styles.header2, styles.between]}>
