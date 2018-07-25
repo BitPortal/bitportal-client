@@ -64,7 +64,7 @@ const validate = (values, props) => {
 }
 
 const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject) => {
-  props.actions.validateEOSAccountRequested({ field: 'toAccount', value: values.get('toAccount'), resolve, reject })
+  props.actions.validateEOSAccountRequested({ field: 'toAccount', value: props.toAccount, resolve, reject })
 })
 
 @connect(
@@ -74,7 +74,8 @@ const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject)
     eosAccount: eosAccountSelector(state),
     eosAssetBalance: eosAssetBalanceSelector(state),
     eosPrice: eosPriceSelector(state),
-    quantity: formValueSelector('transferAssetsForm')(state, 'quantity')
+    quantity: formValueSelector('transferAssetsForm')(state, 'quantity'),
+    toAccount: formValueSelector('transferAssetsForm')(state, 'toAccount')
   }),
   dispatch => ({
     actions: bindActionCreators({
