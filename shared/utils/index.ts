@@ -102,7 +102,7 @@ export const parseEOSQrString = (text: string) => {
       eosAccountName = account.split(':')[1]
 
       if (queryString) {
-        const queryObject = queryString.split('&').map((item: any) => {
+        const queryObject: any = queryString.split('&').map((item: any) => {
           if (item && typeof item === 'string' && item.split('=').length === 2 && item.split('=')[0] && item.split('=')[1]) {
             return { [item.split('=')[0]]: item.split('=')[1] }
           }

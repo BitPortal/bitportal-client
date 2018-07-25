@@ -7,7 +7,6 @@ import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { FormattedNumber, FormattedMessage, IntlProvider } from 'react-intl'
 import { eosPriceSelector } from 'selectors/ticker'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
-import { transferTransactionsSelector } from 'selectors/transaction'
 import CurrencyText from 'components/CurrencyText'
 import * as balanceActions from 'actions/balance'
 import * as transactionActions from 'actions/transaction'
@@ -133,7 +132,7 @@ export default class AssetChart extends Component {
                 getItem={(items, index) => (items.get ? items.get(index) : items[index])}
                 getItemCount={items => (items.size || 0)}
                 keyExtractor={(item, index) => String(index)}
-                renderItem={({ item, index }) => <RecordItem key={item.get('account_action_seq')} item={item} onPress={this.checkTransactionRecord} eosAccountName={eosAccountName} />}
+                renderItem={({ item }) => <RecordItem key={item.get('account_action_seq')} item={item} onPress={this.checkTransactionRecord} eosAccountName={eosAccountName} />}
                 onEndReached={this.loadMore}
                 onEndReachedThreshold={0.5}
                 ListFooterComponent={(loaded && hasMore) ? <ActivityIndicator style={{ marginVertical: 10 }} size="small" color="white" /> : (loaded && <Text style={{ marginVertical: 10, alignSelf: 'center', color: 'white' }}>没有更多数据了</Text>)}

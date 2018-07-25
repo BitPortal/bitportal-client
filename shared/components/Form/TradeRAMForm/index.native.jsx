@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { View, Text, Platform, InteractionManager } from 'react-native'
+import { View, Text, InteractionManager } from 'react-native'
 import { Field, reduxForm, reset } from 'redux-form/immutable'
 import { FormContainer, TextField, SubmitButton } from 'components/Form'
 import { normalizeUnitByFraction, normalizeUnitByCurrency } from 'utils/normalize'

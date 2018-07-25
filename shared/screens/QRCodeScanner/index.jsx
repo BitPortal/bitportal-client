@@ -35,8 +35,8 @@ export default class Scanner extends Component {
     }
   }
 
-  onSuccess = (qrValue) => {
-    const qrInfo = parseEOSQrString(qrValue)
+  onSuccess = (e) => {
+    const qrInfo = parseEOSQrString(e.data)
 
     if (qrInfo) {
       const token = qrInfo.token
