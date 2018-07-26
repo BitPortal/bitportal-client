@@ -24,7 +24,7 @@ function* getTransactionsRequested(action: Action<TransactionsParams>) {
     const refresh = position === -1
     let newPosition = data.actions.length ? (data.actions[0].account_action_seq + 1) : position
 
-    yield put(actions.getTransactionsSucceeded({ hasMore, refresh, position: newPosition, actions: accountActions }))
+    yield put(actions.getTransactionsSucceeded({ hasMore, refresh, position: newPosition, actions: accountActions, lastIrreversibleBlock: data.last_irreversible_block }))
   } catch (e) {
     yield put(actions.getTransactionsFailed(getErrorMessage(e)))
   }

@@ -220,7 +220,7 @@ export default class Assets extends Component {
                   />
                   {!activeEOSAccount.get('account_name') && <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_create_eos_account" />} onPress={() => this.createEOSAccount()} extraStyle={{ marginTop: 10, marginBottom: 10 }} />}
                   {!!activeEOSAccount.get('account_name') && <EnableAssets Title={<FormattedMessage id="asset_title_name_ast" />} enableAssets={() => this.enableAssets()} />}
-                  {eosAccountBalance && <BalanceList data={eosAccountBalance} eosPrice={eosPrice} onPress={e => this.checkAsset(e)} />}
+                  {eosAccountBalance && <BalanceList data={eosAccountBalance} eosPrice={eosPrice} onPress={this.checkAsset} />}
                 </ScrollView>
               </View>
             )

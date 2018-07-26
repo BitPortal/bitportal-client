@@ -30,6 +30,7 @@ function* transfer(action: Action<TransferParams>) {
 
     const eos = yield call(initEOS, { keyProvider: activeWifs })
     const transactionResult = yield call(eos.transfer, { quantity, memo, from: fromAccount, to: toAccount })
+
     yield put(actions.transferSucceeded(transactionResult))
     yield put(reset('transferAssetsForm'))
     yield put(actions.closeTransferModal())
