@@ -7,6 +7,8 @@ const Colors = {
   ramColor: ['rgb(50, 174, 0)', 'rgb(158, 214, 58)'],
   cpuColor: ['rgb(247, 107, 28)', 'rgb(252, 177, 38)'],
   voteColor: ['rgb(54, 127, 192)', 'rgb(89, 176, 214)'],
+  tradeFailed: ['rgb(244, 75, 47)', 'rgb(248, 112, 98)'],
+  tradeSuccess: ['rgb(24, 79, 174)', 'rgb(0, 157, 255)'],
   disabled: ['rgb(181,181,181)', 'rgb(181,181,181)'],
   recommandColor: ['#184FAE', '#009DFF'],
   cooperateColor: ['#32AE00', '#9ED63A'],
