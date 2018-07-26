@@ -28,6 +28,19 @@ const styles = StyleSheet.create({
     marginTop: 30,
     backgroundColor: Colors.textColor_89_185_226
   },
+  loadContainer: {
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT,
+    marginTop: NAV_BAR_HEIGHT
+  },
+  borderStyle: {
+    width: 100,
+    height: 100,
+    marginTop: -NAV_BAR_HEIGHT*2,
+    borderRadius: 4,
+    padding: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+  }
 })
 
 export default styles

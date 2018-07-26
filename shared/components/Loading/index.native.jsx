@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native'
-import { SCREEN_WDITH, SCREEN_HEIGHT } from 'utils/dimens'
+import { SCREEN_WIDTH, SCREEN_HEIGHT } from 'utils/dimens'
 import Modal from 'react-native-modal'
 
 const styles = StyleSheet.create({
   container: {
-    width: SCREEN_WDITH,
+    width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT
   },
   center: {
