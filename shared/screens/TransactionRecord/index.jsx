@@ -99,20 +99,20 @@ export default class TransactionRecord extends Component {
     }
   }
 
-  getBgColor = (info) => {
-    if (info && info.get && info.get('broadcast') ) return Colors.tradeSuccess
-    else return Colors.tradeFailed
-  }
+  // getBgColor = (info) => {
+  //   if (info && info.get && !info.get('broadcast') ) return Colors.tradeFailed
+  //   else return Colors.tradeSuccess
+  // }
 
-  getIconName = (info) => {
-    if (info && info.get && info.get('broadcast') ) return "ios-checkmark"
-    else return "ios-close"
-  }
+  // getIconName = (info) => {
+  //   if (info && info.get && !info.get('broadcast') ) return "ios-close"
+  //   else return "ios-checkmark"
+  // }
 
-  getStatus = (info) => {
-    if (info && info.get && info.get('broadcast') ) return <FormattedMessage id="tx_sec_title_sdsuc" />
-    else return <FormattedMessage id="tx_sec_title_sdfail" />
-  }
+  // getStatus = (info) => {
+  //   if (info && info.get && !info.get('broadcast') ) return <FormattedMessage id="tx_sec_title_sdfail" />
+  //   else return <FormattedMessage id="tx_sec_title_sdsuc" />
+  // }
   
   render() {
     const { isCopied } = this.state
@@ -127,10 +127,6 @@ export default class TransactionRecord extends Component {
       symbol,
       transactionId
     } = this.getInfo(transactionInfo, transactionResult)
-    const graBgColor = this.getBgColor(transactionInfo || transactionResult)
-    const iconMark = this.getIconName(transactionInfo || transactionResult)
-    const txStatus = this.getStatus(transactionInfo || transactionResult)
-    console.log('###', transactionInfo, transactionResult.toJS())
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -142,17 +138,17 @@ export default class TransactionRecord extends Component {
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.content}>
 
-                <LinearGradientContainer type="right" colors={graBgColor} style={[styles.between, styles.header]}>
+                <LinearGradientContainer type="right" colors={Colors.tradeSuccess} style={[styles.center, styles.header]}>
                   <Text style={styles.text12}>
                     {transactionResult && <FormattedRelative value={time} updateInterval={1000} />}
                     {!transactionResult && <FormattedDate value={+new Date(`${time}Z`)} year="numeric" month="long" day="2-digit" />} {!transactionResult && <FormattedTime value={+new Date(`${time}Z`)} />}
                   </Text>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Ionicons name={iconMark} size={26} color={Colors.bgColor_FAFAFA} />
                     <Text style={[styles.text14, { marginLeft: 10 }]}>
                       {txStatus}
                     </Text>
-                  </View>
+                  </View> */}
                 </LinearGradientContainer>
                 
                 <View style={[styles.header2, styles.between]}>
@@ -163,7 +159,7 @@ export default class TransactionRecord extends Component {
                   <View style={{ marginTop: 15 }}>
                     <Ionicons
                       size={20}
-                      color={Colors.textColor_74_74_74}
+                      color={Colors.bgColor_FAFAFA}
                       name="ios-arrow-round-forward-outline"
                     />
                   </View>
