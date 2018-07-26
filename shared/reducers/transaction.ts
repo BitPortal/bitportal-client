@@ -13,7 +13,8 @@ const initialState = Immutable.fromJS({
   hasMore: true,
   detailLoading: false,
   detailLoaded: false,
-  detailError: null
+  detailError: null,
+  lastIrreversibleBlock: 0
 })
 
 export default handleActions({
@@ -24,6 +25,7 @@ export default handleActions({
     return state.set('loaded', true).set('loading', false)
       .set('hasMore', action.payload.hasMore)
       .set('position', action.payload.position)
+      .set('lastIrreversibleBlock', action.payload.lastIrreversibleBlock)
       .update('data', (v: any) => action.payload.refresh ? Immutable.fromJS(action.payload.actions) : v.concat(Immutable.fromJS(action.payload.actions)))
   },
   [actions.getTransactionsFailed] (state, action) {
@@ -38,6 +40,9 @@ export default handleActions({
   },
   [actions.getTransactionDetailFailed] (state, action) {
     return state.set('detailError', action.payload).set('detailLoading', false)
+  },
+  [actions.resetTransactionDetail] () {
+    return state.set('detail', Immutable.fromJS({}))
   },
   [actions.resetTransaction] () {
     return initialState
