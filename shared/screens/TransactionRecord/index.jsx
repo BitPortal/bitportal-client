@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
-import { Text, View, ScrollView, TouchableOpacity, Clipboard, Animated, Easing } from 'react-native'
+import { Text, View, ScrollView, TouchableOpacity, Clipboard } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 import { IntlProvider, FormattedMessage, FormattedNumber, FormattedDate, FormattedTime, FormattedRelative } from 'react-intl'
 import * as transactionActions from 'actions/transaction'
 import QRCode from 'react-native-qrcode-svg'
+import LinearGradientContainer from 'components/LinearGradientContainer'
 import messages from './messages'
 import styles from './styles'
 
@@ -36,23 +37,13 @@ export default class TransactionRecord extends Component {
   }
 
   state = {
-    isCopied: false,
-    rotateValue: new Animated.Value(0)
-  }
-
-  startAnimation() {
-    this.state.rotateValue.setValue(0);
-    Animated.timing(this.state.rotateValue, {
-        toValue: 1,  
-        duration: 1000,  
-        easing: Easing.out(Easing.linear),
-    }).start(()=>this.startAnimation())
+    isCopied: false
   }
 
   checkBlockInfo = () => {
     const uri = 'https://explorer.eoseco.com/'
     Navigation.push(this.props.componentId, {
-      component: { name: 'Bitportal.BPWebView', passProps: { uri, needLinking: true } }
+      component: { name: 'BitPortal.BPWebView', passProps: { uri, needLinking: true } }
     })
   }
 
@@ -102,13 +93,27 @@ export default class TransactionRecord extends Component {
   }
 
   componentDidMount() {
-    this.startAnimation()
     if (this.props.transferResult) {
       const id = this.props.transferResult.get('transaction_id')
       this.props.actions.getTransactionDetailRequested({ id })
     }
   }
 
+  getBgColor = (info) => {
+    if (info && info.get && info.get('broadcast') ) return Colors.tradeSuccess
+    else return Colors.tradeFailed
+  }
+
+  getIconName = (info) => {
+    if (info && info.get && info.get('broadcast') ) return "ios-checkmark"
+    else return "ios-close"
+  }
+
+  getStatus = (info) => {
+    if (info && info.get && info.get('broadcast') ) return <FormattedMessage id="tx_sec_title_sdsuc" />
+    else return <FormattedMessage id="tx_sec_title_sdfail" />
+  }
+  
   render() {
     const { isCopied } = this.state
     const { locale, transactionInfo, transactionResult } = this.props
@@ -122,7 +127,10 @@ export default class TransactionRecord extends Component {
       symbol,
       transactionId
     } = this.getInfo(transactionInfo, transactionResult)
-
+    const graBgColor = this.getBgColor(transactionInfo || transactionResult)
+    const iconMark = this.getIconName(transactionInfo || transactionResult)
+    const txStatus = this.getStatus(transactionInfo || transactionResult)
+    console.log('###', transactionInfo, transactionResult.toJS())
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -133,26 +141,24 @@ export default class TransactionRecord extends Component {
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.content}>
-                <View style={[styles.header, styles.between]}>
+
+                <LinearGradientContainer type="right" colors={graBgColor} style={[styles.between, styles.header]}>
                   <Text style={styles.text12}>
                     {transactionResult && <FormattedRelative value={time} updateInterval={1000} />}
                     {!transactionResult && <FormattedDate value={+new Date(`${time}Z`)} year="numeric" month="long" day="2-digit" />} {!transactionResult && <FormattedTime value={+new Date(`${time}Z`)} />}
                   </Text>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Animated.View style={{
-                      transform: [{ rotateZ: this.state.rotateValue.interpolate({ inputRange: [0,1], outputRange: ['0deg', '360deg'] }) }]
-                    }}>
-                      <Ionicons name="ios-refresh" size={22} color={Colors.bgColor_FAFAFA} />
-                    </Animated.View>
+                    <Ionicons name={iconMark} size={26} color={Colors.bgColor_FAFAFA} />
                     <Text style={[styles.text14, { marginLeft: 10 }]}>
-                      <FormattedMessage id="tx_sec_title_sending" />
+                      {txStatus}
                     </Text>
                   </View>
-                </View>
+                </LinearGradientContainer>
+                
                 <View style={[styles.header2, styles.between]}>
                   <View style={[styles.center, { marginHorizontal: 15 }]}>
                     <Text style={styles.text10}><FormattedMessage id="tx_sec_title_from" /></Text>
-                    <Text numberOfLines={1} style={styles.text18}>{fromAccount}</Text>
+                    <Text numberOfLines={1} style={styles.text12}>{fromAccount}</Text>
                   </View>
                   <View style={{ marginTop: 15 }}>
                     <Ionicons
@@ -163,12 +169,12 @@ export default class TransactionRecord extends Component {
                   </View>
                   <View style={[styles.center, { marginHorizontal: 15 }]}>
                     <Text style={styles.text10}><FormattedMessage id="tx_sec_title_to" /></Text>
-                    <Text numberOfLines={1} style={styles.text18}>{toAccount}</Text>
+                    <Text numberOfLines={1} style={styles.text12}>{toAccount}</Text>
                   </View>
                 </View>
                 <View style={styles.amountContent}>
                   <Text style={[styles.text14, { marginLeft: -3, marginBottom: 3 }]}>
-                    <FormattedMessage id="tx_sec_title_amount" />
+                    <FormattedMessage id="tx_sec_title_amount" />:
                   </Text>
                   <View style={[styles.between, { alignItems: 'center' }]}>
                     <Text style={styles.text24}>
@@ -201,7 +207,7 @@ export default class TransactionRecord extends Component {
                         </Text>
                       </Text>
                       <Text style={[styles.text14, { marginTop: 15 }]}>
-                        <FormattedMessage id="tx_sec_button_detail" />:
+                        <FormattedMessage id="txdtl_title_name_block" />:
                       </Text>
                       <Text onPress={this.checkBlockInfo} numberOfLines={1} style={[styles.text14, { marginBottom: 15 }]}>
                         # <Text style={{ color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }}>
@@ -209,7 +215,7 @@ export default class TransactionRecord extends Component {
                         </Text>
                       </Text>
                       <Text style={styles.text14}><FormattedMessage id="txdtl_title_name_producer" />:</Text>
-                      <Text numberOfLines={1} style={styles.text14}># </Text>
+                      <Text numberOfLines={1} style={styles.text14}># EOS.IO </Text>
                     </View>
                     <View style={{ marginRight: 20, marginTop: 10, alignItems: 'center' }}>
                       <View style={{ padding: 3, backgroundColor: Colors.bgColor_FFFFFF }}>

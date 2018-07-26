@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   content: {
-    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - 50,
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - TAB_BAR_HEIGHT,
     backgroundColor: Colors.minorThemeColor
   },
   topContent: {

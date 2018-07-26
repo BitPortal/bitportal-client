@@ -4,25 +4,27 @@
     "tx_sec_title_from" : "从",
     "tx_sec_title_to" : "至",
     "tx_sec_title_amount" : "数量",
-    "tx_sec_button_detail" : "更多",
+    "tx_sec_button_detail" : "备注",
     "txdtl_title_name_tctID" : "交易ID",
     "txdtl_title_name_block" : "区块高度",
     "txdtl_title_name_producer" : "超级节点",
     "txdtl_title_button_copy" : "复制",
     "txdtl_title_button_copied" : "已复制",
-    "tx_sec_title_sending": "发送中..."
+    "tx_sec_title_sdsuc": "已确认",
+    "tx_sec_title_sdfail": "交易失败"
   },
   "en": {
     "tx_title_name_txrcd" : "Transaction Record",
     "tx_sec_title_from" : "From",
     "tx_sec_title_to" : "To",
     "tx_sec_title_amount" : "Amount",
-    "tx_sec_button_detail" : "Details",
+    "tx_sec_button_detail" : "Memo",
     "txdtl_title_name_tctID" : "Transaction ID",
     "txdtl_title_name_block" : "Block",
     "txdtl_title_name_producer" : "Producer",
     "txdtl_title_button_copy" : "Copy",
     "txdtl_title_button_copied" : "Copied",
-    "tx_sec_title_sending": "Sending"
+    "tx_sec_title_sdsuc": "Success",
+    "tx_sec_title_sdfail": "Failed"
   }
 }
