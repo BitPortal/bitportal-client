@@ -2,7 +2,6 @@ import React from 'react'
 import { Text, Image, View, TouchableHighlight, StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
 import Images from 'resources/images'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import { FormattedNumber, FormattedRelative } from 'react-intl'
 import { FontScale, SCREEN_WIDTH } from 'utils/dimens'
 import LinearGradientContainer from 'components/LinearGradientContainer'
@@ -26,7 +25,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     width: 30,
-    height: 30, 
+    height: 30,
     borderRadius: 15,
     marginTop: 2,
   },
@@ -52,7 +51,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const GradientIcon = ({ isReceiver }) =>(
+const GradientIcon = ({ isReceiver }) => (
   <LinearGradientContainer type="right" colors={isReceiver ? Colors.tradeSuccess : Colors.tradeFailed} style={[styles.center, styles.icon]}>
     <Image source={isReceiver ? Images.transfer_receiver : Images.transfer_sender} style={styles.image} />
   </LinearGradientContainer>

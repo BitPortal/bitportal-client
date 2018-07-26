@@ -64,7 +64,13 @@ const validate = (values, props) => {
 }
 
 const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject) => {
-  props.actions.validateEOSAccountRequested({ field: 'toAccount', value: props.toAccount, resolve, reject })
+  props.actions.validateEOSAccountRequested({
+    field: 'toAccount',
+    value: props.toAccount,
+    errorMessage: 'Account dose not exist!',
+    resolve,
+    reject
+  })
 })
 
 @connect(

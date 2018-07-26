@@ -113,7 +113,7 @@ export default class TransactionRecord extends Component {
   //   if (info && info.get && !info.get('broadcast') ) return <FormattedMessage id="tx_sec_title_sdfail" />
   //   else return <FormattedMessage id="tx_sec_title_sdsuc" />
   // }
-  
+
   render() {
     const { isCopied } = this.state
     const { locale, transactionInfo, transactionResult } = this.props
@@ -150,7 +150,7 @@ export default class TransactionRecord extends Component {
                     </Text>
                   </View> */}
                 </LinearGradientContainer>
-                
+
                 <View style={[styles.header2, styles.between]}>
                   <View style={[styles.center, { marginHorizontal: 15 }]}>
                     <Text style={styles.text10}><FormattedMessage id="tx_sec_title_from" /></Text>

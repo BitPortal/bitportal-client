@@ -149,6 +149,7 @@ declare type SyncEOSAccountResult = string[]
 declare interface ValidateEOSAccountParams {
   field: string
   value: string
+  errorMessage: string
   resolve: any
   reject: any
 }
@@ -160,5 +161,5 @@ declare interface ValidateEOSAccountResult {
 declare interface ValidateEOSAccountRejection {
   reject: any
   field: string
-  message?: string | object
+  message: string | object
 }

@@ -133,8 +133,8 @@ function* validateEOSAccountRequested(action: Action<ValidateEOSAccountParams>) 
     assert(info && info.account_name, 'Invalid account info')
     yield put(actions.validateEOSAccountSucceeded({ resolve }))
   } catch (e) {
-    const { reject, field } = action.payload
-    yield put(actions.validateEOSAccountFailed({ reject, field, message: getErrorMessage(e.message) }))
+    const { reject, field, errorMessage } = action.payload
+    yield put(actions.validateEOSAccountFailed({ reject, field, message: errorMessage }))
   }
 }
 
@@ -148,8 +148,8 @@ function validateEOSAccountFailed(action: Action<ValidateEOSAccountRejection>) {
   if (!action.payload) return
   const reject = action.payload.reject
   const field = action.payload.field
-  // const message = action.payload.message
-  reject({ [field]: 'Account does not exist!' })
+  const message = action.payload.message
+  reject({ [field]: message })
 }
 
 export default function* eosAccountSaga() {

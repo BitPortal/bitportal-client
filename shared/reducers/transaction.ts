@@ -41,7 +41,7 @@ export default handleActions({
   [actions.getTransactionDetailFailed] (state, action) {
     return state.set('detailError', action.payload).set('detailLoading', false)
   },
-  [actions.resetTransactionDetail] () {
+  [actions.resetTransactionDetail] (state) {
     return state.set('detail', Immutable.fromJS({}))
   },
   [actions.resetTransaction] () {
