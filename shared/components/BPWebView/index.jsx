@@ -1,14 +1,22 @@
 import React, { Component } from 'react'
-import { WebView, View, Text, Share, Linking, Clipboard, TouchableHighlight, Platform } from 'react-native'
+import { WebView, View, Text, Share, Linking, Clipboard, TouchableHighlight, Platform, ActivityIndicator } from 'react-native'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton, LinkingRightButton } from 'components/NavigationBar'
-import Loading from 'components/Loading'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
 import styles from './styles'
 import messages from './messages'
+
+const Loading = ({ text }) => (
+  <View style={[styles.loadContainer, styles.center]}>
+    <View style={[styles.borderStyle, styles.center]}>
+      <ActivityIndicator size="small" color="white" />
+      {text && <Text style={{ color: 'white', marginTop: 10 }}>{text}</Text>}
+    </View>
+  </View>
+)
 
 @connect(
   state => ({
@@ -30,17 +38,6 @@ export default class BPWebView extends Component {
 
   state = {
     isCopied: false
-  }
-
-  constructor(props) {
-    super(props)
-    this.options = [
-      'Cancel',
-      'Apple',
-      <Text style={{ color: 'yellow' }}>Banana</Text>,
-      'Watermelon',
-      <Text style={{ color: 'red' }}>Durian</Text>
-    ]
   }
 
   share = () => {
@@ -109,7 +106,7 @@ export default class BPWebView extends Component {
   }
 
   renderLoading = () => (
-    <Loading isVisible={true} />
+    <Loading />
   )
 
   render() {
@@ -136,7 +133,7 @@ export default class BPWebView extends Component {
                 domStorageEnabled={true}
                 decelerationRate="normal"
                 scalesPageToFit={true}
-                nativeConfig={{ props: { backgroundColor: Colors.minorThemeColor } }}
+                nativeConfig={{ props: { backgroundColor: Colors.minorThemeColor, flex: 1 } }}
               />
             }
             {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form/immutable'
+import { bindActionCreators } from 'redux'
+import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
 import {
   FormContainer,
   TextField,
@@ -11,6 +12,7 @@ import { validateEOSAccountName } from 'utils/validate'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import { Navigation } from 'react-native-navigation'
 import { eosAccountSelector } from 'selectors/eosAccount'
+import * as eosAccountActions from 'actions/eosAccount'
 import storage from 'utils/storage'
 import messages from './messages'
 
@@ -23,21 +25,31 @@ const validate = (values) => {
     errors.name = <FormattedMessage id="import_txtbox_txt_acchint" />
   }
 
-  if (values.get('memo') && values.get('memo').length > 12) {
+  if (values.get('memo') && values.get('memo').length > 24) {
     errors.memo = <FormattedMessage id="import_txtbox_txt_hint" />
   }
 
   return errors
 }
 
+const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject) => {
+  props.actions.validateEOSAccountRequested({ field: 'name', value: props.name, resolve, reject })
+})
+
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    eosAccount: eosAccountSelector(state)
+    eosAccount: eosAccountSelector(state),
+    name: formValueSelector('addContactsForm')(state, 'name')
+  }),
+  dispatch => ({
+    actions: bindActionCreators({
+      ...eosAccountActions
+    }, dispatch)
   })
 )
 
-@reduxForm({ form: 'addContactsForm', validate })
+@reduxForm({ form: 'addContactsForm', validate, asyncValidate, asyncBlurFields: ['name'] })
 
 export default class AddContactsForm extends Component {
   state = {

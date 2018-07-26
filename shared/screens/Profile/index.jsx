@@ -89,7 +89,7 @@ export default class Profile extends Component {
         <View style={styles.container}>
           <NavigationBar
             leftButton={<CommonTitle title={<FormattedMessage id="profile_title_name_profile" />} />}
-            rightButton={<CommonRightButton iconName="md-add" onPress={() => this.changePage('TransactionHistory')} />}
+            rightButton={<CommonRightButton imageSource={Images.transaction_history} onPress={() => this.changePage('TransactionHistory')} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center' }}>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import NavBar from 'react-native-navbar'
-import { TouchableOpacity, View, Text } from 'react-native'
+import { TouchableOpacity, View, Text, Image } from 'react-native'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import styles from './styles'
@@ -42,13 +42,14 @@ export const CommonTitle = ({ title }) => (
   </View>
 )
 
-export const CommonRightButton = ({ iconName, onPress }) => (
+export const CommonRightButton = ({ iconName, imageSource, onPress }) => (
   <TouchableOpacity
     style={styles.navButton}
     onPress={() => onPress()}
   >
     <View style={{ alignSelf: 'flex-end', marginRight: 32 }}>
-      <Ionicons name={iconName} size={24} color={Colors.bgColor_FFFFFF} />
+      {iconName && <Ionicons name={iconName} size={24} color={Colors.bgColor_FFFFFF} />}
+      {imageSource && <Image source={imageSource} style={{ width: 24, height: 24 }} />}
     </View>
   </TouchableOpacity>
 )
