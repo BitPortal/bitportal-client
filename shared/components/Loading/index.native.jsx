@@ -5,7 +5,6 @@ import Modal from 'react-native-modal'
 
 const styles = StyleSheet.create({
   container: {
-    width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT
   },
   center: {
