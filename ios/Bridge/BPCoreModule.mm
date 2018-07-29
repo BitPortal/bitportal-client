@@ -14,11 +14,6 @@
 
 BPCore *_cppApi = [BPCore create];
 
-- (dispatch_queue_t)methodQueue
-{
-  return dispatch_get_main_queue();
-}
-
 RCT_EXPORT_MODULE();
 
 RCT_REMAP_METHOD(pbkdf2,
