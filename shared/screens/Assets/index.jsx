@@ -115,7 +115,7 @@ export default class Assets extends Component {
       this.setState({ isVisible2: false }, () => {
         Navigation.push(this.props.componentId, {
           component: {
-            name: 'BitPortal.AccountImport'
+            name: 'BitPortal.EOSAccountCreation'
           }
         })
       })

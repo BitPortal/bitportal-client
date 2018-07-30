@@ -16,7 +16,7 @@ export default EStyleSheet.create({
   },
   fieldInput: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.textColor_181_181_181,
+    borderBottomColor: Colors.textColor_107_107_107,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -53,7 +53,7 @@ export default EStyleSheet.create({
   },
   label: {
     fontSize: FontScale(14),
-    color: Colors.textColor_89_185_226,
+    color: Colors.textColor_255_255_238,
   },
   submitButton: {
     marginTop: 3,
