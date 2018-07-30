@@ -8,9 +8,11 @@ import { exchangeTickerSelector, sortFilterSelector } from 'selectors/ticker';
 import { bindActionCreators } from 'redux';
 import { View, InteractionManager, LayoutAnimation } from 'react-native';
 import Modal from 'react-native-modal';
+import { Navigation } from 'react-native-navigation';
 import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from 'constants/market';
 import NavigationBar, { ListButton } from 'components/NavigationBar';
 import { IntlProvider } from 'react-intl';
+import secureStorage from 'utils/secureStorage';
 import ExchangeList from './ExchangeList';
 import { Quotes } from './Quotes';
 import messages from './messages';
@@ -24,17 +26,18 @@ import styles from './styles';
     exchangeFilter: state.ticker.get('exchangeFilter'),
     sortFilter: sortFilterSelector(state),
     quoteAssetFilter: state.ticker.get('quoteAssetFilter'),
+    baseAsset: state.ticker.get('baseAsset')
   }),
   dispatch => ({
     actions: bindActionCreators(
       {
-        ...tickerActions,
+        ...tickerActions
       },
-      dispatch,
-    ),
+      dispatch
+    )
   }),
   null,
-  { withRef: true },
+  { withRef: true }
 )
 export default class Market extends Component {
   constructor(props, context) {
@@ -42,7 +45,7 @@ export default class Market extends Component {
     this.state = {
       coinName: '',
       isVisible: false,
-      activeQuoteAsset: null,
+      activeQuoteAsset: null
     };
   }
 
@@ -75,15 +78,28 @@ export default class Market extends Component {
   };
 
   // 点击查看币种行情
-  pressListItem = () => {};
+  pressListItem = (item) => {
+    const baseAsset = item.get('base_asset');
+    console.log('pressListItem', item.toJS());
+    InteractionManager.runAfterInteractions(() => {
+      this.props.actions.selectBaseAsset(baseAsset);
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.MarketDetails',
+          passProps: { item }
+        }
+      });
+    });
+  };
 
   // 刷新数据
   onRefresh = () => {
+    console.log('onRefresh called');
     this.props.actions.getTickersRequested({
       exchange: this.props.exchangeFilter,
       quote_asset: this.props.quoteAssetFilter,
       sort: this.props.sortFilter,
-      limit: 200,
+      limit: 200
     });
   };
 
@@ -109,20 +125,46 @@ export default class Market extends Component {
   }
 
   render() {
+    const storage = async () => {
+      const x = await secureStorage.getItem('EOS_ACCOUNT_INFO_testaccounts');
+      return x;
+    };
+    const result = storage();
+    setTimeout(() => {
+      console.log('getItem', result);
+    }, 4000);
+
     const {
-      ticker, locale, loading, exchangeFilter, quoteAssetFilter,
+      ticker,
+      locale,
+      loading,
+      exchangeFilter,
+      quoteAssetFilter,
+      sortFilter,
+      baseAsset
     } = this.props;
+
+    console.log(
+      'exchangeFilter',
+      exchangeFilter,
+      'sortFilter',
+      sortFilter,
+      'quoteAssetFilter',
+      quoteAssetFilter,
+      'baseAsset',
+      baseAsset
+    );
 
     return (
       <IntlProvider messages={messages[locale]}>
-        <View style={    styles.container}>
+        <View style={styles.container}>
           <NavigationBar
-            leftButton={(
+            leftButton={
               <ListButton
                 label={EXCHANGE_NAMES[exchangeFilter]}
                 onPress={() => this.selectExchange()}
               />
-)}
+            }
           />
           <Quotes
             onPress={e => this.changeQuote(e)}
@@ -134,7 +176,9 @@ export default class Market extends Component {
             refreshing={loading}
             onRefresh={() => this.onRefresh()}
             data={ticker}
-            onPress={e => this.pressListItem(e)}
+            onPress={(item) => {
+              this.pressListItem(item);
+            }}
           />
 
           <Modal

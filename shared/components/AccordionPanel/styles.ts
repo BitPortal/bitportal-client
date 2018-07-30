@@ -20,10 +20,12 @@ const styles = StyleSheet.create({
   cardContainer: {
     width: SCREEN_WIDTH,
     minHeight: 100,
-    paddingVertical: 20,
-    paddingHorizontal: 25,
+    // maxHeight: 2000,
+    // paddingVertical: 20,
+    // paddingHorizontal: 25,
     backgroundColor: Colors.minorThemeColor,
-    marginBottom: 13
+    // marginBottom: 13
+    flex: 1
   },
   spaceAround: {
     alignItems: 'center',

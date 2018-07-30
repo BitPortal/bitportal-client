@@ -1,44 +1,92 @@
-
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
   Text,
   View,
-  TouchableHighlight
-} from 'react-native'
-import Colors from 'resources/colors'
-import styles from './styles'
+  TouchableHighlight,
+  ActivityIndicator
+} from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import Colors from 'resources/colors';
+import { EXCHANGE_NAMES } from 'constants/market';
+import * as tickerActions from 'actions/ticker';
+import styles from './styles';
 
 const MarketElement = ({ onPress, data }) => (
   <TouchableHighlight
-    onPress={() => onPress(data)}
+    // onPress={() => onPress(data)}
     underlayColor={Colors.hoverColor}
   >
     <View style={styles.marketElementContainer}>
       <View style={styles.spaceBetween}>
-        <Text style={styles.text16}> {data.market} </Text>
-        <Text style={styles.text16}> {data.price} USD </Text>
+        <View>
+          <Text style={styles.text18}> {EXCHANGE_NAMES[data.exchange]} </Text>
+        </View>
+        <View>
+          <Text style={[styles.text16]}>
+            {' '}
+            {`${data.price_last} ${data.quote_asset}`}{' '}
+          </Text>
+          <Text
+            style={[
+              styles.text14,
+              {
+                color: Colors.textColor_142_142_147,
+                textAlign: 'right',
+                marginRight: 4
+              }
+            ]}
+          >
+            Vol: {`${data.quote_volume} ${data.quote_asset}`}
+          </Text>
+        </View>
       </View>
-      <Text style={[styles.text14, { color: Colors.textColor_142_142_147, textAlign: 'right', marginRight: 4 }]}>
-        Vol: {data.vol}
-      </Text>
     </View>
   </TouchableHighlight>
-)
+);
 
+@connect(
+  state => ({
+    listedExchange: state.ticker.get('listedExchange'),
+    loading: state.ticker.get('loading')
+  }),
+  dispatch => ({
+    actions: bindActionCreators(
+      {
+        ...tickerActions
+      },
+      dispatch
+    )
+  }),
+  null,
+  { withRef: true }
+)
 export default class MarketList extends Component {
-  state = {
-    listArr: [
-      { market: 'Huobi.pro', price: '11,949.00', vol: '8,320.009' },
-      { market: 'Bitfinex ', price: '11,949.00', vol: '8,320.009' },
-      { market: 'Bittrex  ', price: '11,949.00', vol: '8,320.009' },
-      { market: 'Binance  ', price: '11,949.00', vol: '8,320.009' }
-    ]
+  componentWillUnmount() {
+    this.props.actions.deleteListedExchange();
   }
 
   render() {
-    const { changeMarket } = this.props
+    const { changeMarket, listedExchange, loading } = this.props;
     return (
-      <View>{this.state.listArr.map(data => (<MarketElement key={data.market} data={data} onPress={e => changeMarket(e)} />))}</View>
-    )
+      <View>
+        <View style={styles.marketElementContainer}>
+          <Text style={styles.headerText}>Listed Exchange</Text>
+        </View>
+        {loading ? (
+          <View style={styles.loadingSymbol}>
+            <ActivityIndicator />
+          </View>
+        ) : (
+          listedExchange.map(data => (
+            <MarketElement
+              key={data.market + data.exchange}
+              data={data}
+              onPress={e => changeMarket(e)}
+            />
+          ))
+        )}
+      </View>
+    );
   }
 }

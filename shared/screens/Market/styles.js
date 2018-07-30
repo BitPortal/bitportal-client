@@ -1,5 +1,5 @@
-import { StyleSheet, Platform } from 'react-native'
-import Colors from 'resources/colors'
+import { StyleSheet, Platform } from 'react-native';
+import Colors from 'resources/colors';
 import {
   FontScale,
   SCREEN_WIDTH,
@@ -7,7 +7,7 @@ import {
   NAV_BAR_HEIGHT,
   TAB_BAR_HEIGHT,
   WidthPercent
-} from 'utils/dimens'
+} from 'utils/dimens';
 
 const styles = StyleSheet.create({
   container: {
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   textInputStyle: {
-    width: (((SCREEN_WIDTH - 30) * 2) / 3) - 40,
+    width: ((SCREEN_WIDTH - 30) * 2) / 3 - 40,
     height: 40,
     marginLeft: Platform.OS === 'ios' ? 11 : 7,
     color: Colors.textColor_FFFFEE,
@@ -116,6 +116,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: Colors.minorThemeColor
   }
-})
+});
 
-export default styles
+export default styles;

@@ -50,6 +50,7 @@ export const fetchBase = async (
       fetchOptions.body = JSON.stringify(params);
     }
   }
+  console.log('api string', url);
 
   return fetch(url, fetchOptions).then((res: any) => {
     if (!res.ok) {

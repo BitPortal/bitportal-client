@@ -1,7 +1,7 @@
-import Immutable from 'immutable'
-import { handleActions } from 'redux-actions'
-import { QUOTE_ASSETS } from 'constants/market'
-import * as actions from 'actions/ticker'
+import Immutable from 'immutable';
+import { handleActions } from 'redux-actions';
+import { QUOTE_ASSETS } from 'constants/market';
+import * as actions from 'actions/ticker';
 
 const initialState = Immutable.fromJS({
   data: [],
@@ -15,53 +15,86 @@ const initialState = Immutable.fromJS({
     BITTREX: 'quote_volume',
     OKEX: 'quote_volume',
     HUOBIPRO: 'quote_volume',
-    POLONIEX: 'quote_volume',
+    POLONIEX: 'quote_volume'
   },
   dataSource: {},
   currencyFilter: null,
   baseAsset: null,
-  fromUserPull: false
-})
+  fromUserPull: false,
+  listedExchange: []
+});
 
-export default handleActions({
-  [actions.getTickersRequested] (state, action) {
-    return state.set('loading', true).set('fromUserPull', !!action.payload.fromUserPull)
-  },
-  [actions.getTickersSucceeded] (state, action) {
-    return state.set('loaded', true)
-      .set('loading', false)
-      .set('fromUserPull', false)
-      .update(
-        'dataSource',
-        (v: any) => {
-          const tickers = action.payload
-          let newData = v
+export default handleActions(
+  {
+    [actions.getTickersRequested](state, action) {
+      console.log('actions.getTickersRequested action.payload', action.payload);
+      return state
+        .set('loading', true)
+        .set('fromUserPull', !!action.payload.fromUserPull);
+    },
+    [actions.getTickersSucceeded](state, action) {
+      return state
+        .set('loaded', true)
+        .set('loading', false)
+        .set('fromUserPull', false)
+        .update('dataSource', (v: any) => {
+          const tickers = action.payload;
+          let newData = v;
 
           for (const ticker of tickers) {
-            const { symbol, ...data } = ticker
-            newData = newData.set(symbol, Immutable.fromJS(data))
+            const { symbol, ...data } = ticker;
+            newData = newData.set(symbol, Immutable.fromJS(data));
           }
 
-          return newData
-        }
-      )
+          return newData;
+        });
+    },
+    [actions.getTickersFailed](state, action) {
+      return state
+        .set('error', action.payload)
+        .set('loading', false)
+        .set('fromUserPull', false);
+    },
+    [actions.getPairListedExchangeRequested](state, action) {
+      console.log(
+        'actions.getPairListedExchangeRequested action.payload',
+        action.payload
+      );
+      return state
+        .set('loading', true)
+        .set('fromUserPull', !!action.payload.fromUserPull);
+    },
+    [actions.getPairListedExchangeFailed](state, action) {
+      return state
+        .set('error', action.payload)
+        .set('loading', false)
+        .set('fromUserPull', false);
+    },
+    [actions.getPairListedExchangeSucceeded](state, action) {
+      return state
+        .set('loaded', true)
+        .set('loading', false)
+        .set('fromUserPull', false)
+        .set('listedExchange', action.payload);
+    },
+    [actions.selectTickersByExchange](state, action) {
+      return state
+        .set('exchangeFilter', action.payload)
+        .set('quoteAssetFilter', QUOTE_ASSETS[action.payload][0]);
+    },
+    [actions.selectTickersByQuoteAsset](state, action) {
+      return state.set('quoteAssetFilter', action.payload);
+    },
+    [actions.selectTickersByCurrency](state, action) {
+      return state.set('currencyFilter', action.payload);
+    },
+    [actions.selectBaseAsset](state, action) {
+      console.log('actions.selectBaseAsset', action.payload);
+      return state.set('baseAsset', action.payload);
+    },
+    [actions.deleteListedExchange](state, action) {
+      return state.set('listedExchange', []);
+    }
   },
-  [actions.getTickersFailed] (state, action) {
-    return state.set('error', action.payload)
-      .set('loading', false)
-      .set('fromUserPull', false)
-  },
-  [actions.selectTickersByExchange] (state, action) {
-    return state.set('exchangeFilter', action.payload)
-      .set('quoteAssetFilter', QUOTE_ASSETS[action.payload][0])
-  },
-  [actions.selectTickersByQuoteAsset] (state, action) {
-    return state .set('quoteAssetFilter', action.payload)
-  },
-  [actions.selectTickersByCurrency] (state, action) {
-    return state.set('currencyFilter', action.payload)
-  },
-  [actions.selectBaseAsset] (state, action) {
-    return state.set('baseAsset', action.payload)
-  }
-}, initialState)
+  initialState
+);
