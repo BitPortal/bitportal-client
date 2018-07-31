@@ -3,13 +3,15 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import { LayoutAnimation, TouchableOpacity, Text, View } from 'react-native'
-import { Field, reduxForm } from 'redux-form/immutable'
+import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
 import { IntlProvider } from 'react-intl'
 import { FormContainer, TextField, PasswordField, TextAreaField, SubmitButton } from 'components/Form'
 import { normalizeEOSAccountName } from 'utils/normalize'
 import { BITPORTAL_API_TERMS_URL } from 'constants/env'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
+import PasswordStrength from 'components/PasswordStrength'
+import { getPasswordStrength } from 'utils'
 import * as walletActions from 'actions/wallet'
 import * as eosAccountActions from 'actions/eosAccount'
 import messages from './messages'
@@ -33,7 +35,8 @@ const validate = (values) => {
   state => ({
     locale: state.intl.get('locale'),
     wallet: state.wallet,
-    eosAccount: state.eosAccount
+    eosAccount: state.eosAccount,
+    password: formValueSelector('createEOSAccountForm')(state, 'password')
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -91,7 +94,7 @@ export default class CreateEOSAccountForm extends Component {
   }
 
   render() {
-    const { handleSubmit, invalid, pristine, eosAccount, locale } = this.props
+    const { handleSubmit, invalid, pristine, eosAccount, locale, password } = this.props
     const { unsignAgreement, hasPrivateKey } = this.state
     const loading = eosAccount.get('loading')
     const disabled = invalid || pristine || loading || unsignAgreement
@@ -112,6 +115,7 @@ export default class CreateEOSAccountForm extends Component {
             placeholder={messages[locale].act_fid_plachd_password}
             name="password"
             component={PasswordField}
+            rightContent={<PasswordStrength strength={getPasswordStrength(password)} />}
           />
           <Field
             placeholder={messages[locale].act_fid_plachd_repeat}

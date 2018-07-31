@@ -28,8 +28,6 @@ export const errorMessages = (error, messages) => {
       return messages.ast_imp_hint_invalidowner
     case 'Invalid active private key!':
       return messages.ast_imp_hint_invalidactive
-    case 'EOS account dose not exist!':
-      return messages.ast_imp_hint_eosaccount
     case 'Owner permission dose not exist!':
       return messages.ast_imp_hint_ownerpermi
     case 'Active permission dose not exist!':
@@ -45,18 +43,6 @@ export const errorMessages = (error, messages) => {
 
 const validate = (values) => {
   const errors = {}
-
-  if (!values.get('name')) {
-    errors.name = <FormattedMessage id="import_txtbox_txt_bpnmhint1" />
-  } else if (values.get('name').length > 12) {
-    errors.name = <FormattedMessage id="import_txtbox_txt_hint1" />
-  }
-
-  if (!values.get('eosAccountName')) {
-    errors.eosAccountName = <FormattedMessage id="import_txtbox_txt_eosnmhint2" />
-  } else if (!validateEOSAccountName(values.get('eosAccountName'))) {
-    errors.eosAccountName = <FormattedMessage id="import_txtbox_txt_eosnmhint1" />
-  }
 
   if (!values.get('password')) {
     errors.password = <FormattedMessage id="import_title_name_pwd" />
@@ -116,40 +102,31 @@ export default class ImportEOSAccountForm extends Component {
     return (
       <IntlProvider messages={messages[locale]}>
         <FormContainer>
-          {/* <Field
-            label={<FormattedMessage id="import_title_name_bpnm" />}
-            name="name"
-            component={TextField}
-          /> */}
           <Field
-            label={<FormattedMessage id="import_title_name_eosnm" />}
-            name="eosAccountName"
-            component={TextField}
+            placeholder={messages[locale].import_title_plchd_privtk}
+            name="privateKey"
+            component={TextAreaField}
           />
           <Field
             label={<FormattedMessage id="import_title_name_pwd" />}
+            tips={messages[locale].import_title_tips_pwd}
+            placeholder={messages[locale].import_title_plchd_pwd}
             name="password"
             component={PasswordField}
             rightContent={<PasswordStrength strength={getPasswordStrength(password)} />}
           />
           <Field
-            label={<FormattedMessage id="import_title_name_cfmpwd" />}
-            name="confirmedPassword"
+            placeholder={messages[locale].import_title_plchd_cfmpwd}
+            name="confirmPassword"
             component={PasswordField}
           />
           <Field
-            label={<FormattedMessage id="import_txtbox_txt_fill1" />}
-            name="ownerPrivateKey"
-            component={TextAreaField}
-            normalize={normalizeText}
+            placeholder={messages[locale].import_title_name_pswht}
+            name="passwordHint"
+            component={TextField}
           />
-          <Field
-            label={<FormattedMessage id="import_txtbox_txt_fill2" />}
-            name="activePrivateKey"
-            component={TextAreaField}
-            normalize={normalizeText}
-          />
-          <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text={<FormattedMessage id="import_button_name_impt" />} />
+
+          <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text={<FormattedMessage id="import_button_name_nxt" />} />
           <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearEOSAccountError} />
         </FormContainer>
       </IntlProvider>
