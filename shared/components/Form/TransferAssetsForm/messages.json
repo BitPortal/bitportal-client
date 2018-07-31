@@ -10,7 +10,11 @@
     "snd_title_name_amt" : "数量",
     "snd_title_name_bln" : "余额:",
     "snd_txtbox_txt_rmk" : "附言",
-    "snd_button_name_nxt" : "下一步"
+    "snd_button_name_nxt" : "下一步",
+    "snd_title_error_invact" : "账户不存在",
+    "snd_title_error_psw" : "密码错误",
+    "snd_title_error_hinet" : "NET的使用过高",
+    "snd_title_error_hicpu" : "CPU的使用过高"
   },
   "en": {
     "snd_title_name_accnm" : "Account",
@@ -23,6 +27,10 @@
     "snd_title_name_amt" : "Amount",
     "snd_title_name_bln" : "Balance:",
     "snd_txtbox_txt_rmk" : "Memo",
-    "snd_button_name_nxt" : "Next"
+    "snd_button_name_nxt" : "Next",
+    "snd_title_error_invact" : "Account dose not exist!",
+    "snd_title_error_psw" : "Invalid password",
+    "snd_title_error_hinet" : "net usage of transaction is too high",
+    "snd_title_error_hicpu" : "cpu usage of transaction is too high"
   }
 }

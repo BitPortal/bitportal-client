@@ -28,12 +28,12 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
-      return 'Invalid password'
+      return messages.snd_title_error_psw
     default:
       if (!~String(message).indexOf('net usage of transaction is too high')) {
-        return 'net usage of transaction is too high'
+        return messages.snd_title_error_hinet
       } else if (!~String(message).indexOf('cpu usage of transaction is too high')) {
-        return 'cpu usage of transaction is too high'
+        return messages.snd_title_error_hicpu
       }
 
       return messages.snd_txtbox_tras_err
@@ -67,7 +67,7 @@ const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject)
   props.actions.validateEOSAccountRequested({
     field: 'toAccount',
     value: props.toAccount,
-    errorMessage: 'Account dose not exist!',
+    errorMessage: messages[props.locale].snd_title_error_invact,
     resolve,
     reject
   })
