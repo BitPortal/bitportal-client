@@ -135,7 +135,14 @@ export default class AssetChart extends Component {
                 renderItem={({ item }) => <RecordItem key={item.get('account_action_seq')} item={item} onPress={this.checkTransactionRecord} eosAccountName={eosAccountName} />}
                 onEndReached={this.loadMore}
                 onEndReachedThreshold={0.5}
-                ListFooterComponent={(loaded && hasMore) ? <ActivityIndicator style={{ marginVertical: 10 }} size="small" color="white" /> : (loaded && <Text style={{ marginVertical: 10, alignSelf: 'center', color: 'white' }}>没有更多数据了</Text>)}
+                ListFooterComponent={
+                  (loaded && hasMore) 
+                  ? <ActivityIndicator style={{ marginVertical: 10 }} size="small" color="white" /> 
+                  : (loaded && 
+                    <Text style={{ marginVertical: 10, alignSelf: 'center', color: 'white' }}>
+                      {messages[locale].token_title_name_nomore}
+                    </Text>)
+                }
               />
             </View>
             <View style={[styles.btnContainer, styles.between]}>
