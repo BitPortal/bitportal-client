@@ -31,7 +31,7 @@ export const FieldError = ({ children }) => (
   <Text style={styles.fieldError}>{children}</Text>
 )
 
-export const TextField = ({ input: { onChange, ...restInput }, meta: { touched, error }, label, keyboardType, rightContent, tips, info }) => (
+export const TextField = ({ input: { onChange, ...restInput }, meta: { touched, error }, label, keyboardType, rightContent, tips, info, placeholder }) => (
   <FieldItem>
     <FieldInfo>
       <View style={{ flexDirection: 'row' }}>
@@ -45,6 +45,8 @@ export const TextField = ({ input: { onChange, ...restInput }, meta: { touched, 
         style={styles.input}
         autoCorrect={false}
         autoCapitalize="none"
+        placeholder={placeholder}
+        placeholderTextColor={Colors.textColor_107_107_107}
         keyboardType={keyboardType || 'default'}
         underlineColorAndroid="transparent"
         selectionColor={Colors.textColor_181_181_181}
@@ -68,7 +70,7 @@ export const TextAreaField = ({ input: { onChange, ...restInput }, meta: { touch
         autoCorrect={false}
         autoCapitalize="none"
         placeholder={placeholder}
-        placeholderTextColor={Colors.textColor_181_181_181}
+        placeholderTextColor={Colors.textColor_107_107_107}
         underlineColorAndroid="transparent"
         selectionColor={Colors.textColor_181_181_181}
         keyboardAppearance={Colors.keyboardTheme}
@@ -80,14 +82,22 @@ export const TextAreaField = ({ input: { onChange, ...restInput }, meta: { touch
   </FieldItem>
 )
 
-export const PasswordField = ({ input: { onChange, ...restInput }, meta: { touched, error }, label, rightContent }) => (
+export const PasswordField = ({ input: { onChange, ...restInput }, meta: { touched, error }, label, placeholder, rightContent, tips, info }) => (
   <FieldItem>
-    <Text style={styles.label}>{label}</Text>
+    <FieldInfo>
+      <View style={{ flexDirection: 'row' }}>
+        {label && <Text style={styles.label}>{label}</Text>}
+        {tips && <Tips tips={tips} />}
+      </View>
+      {info && <View>{info}</View>}
+    </FieldInfo>
     <FieldInput rightContent={rightContent}>
       <TextInput
         style={styles.input}
         autoCorrect={false}
         autoCapitalize="none"
+        placeholder={placeholder}
+        placeholderTextColor={Colors.textColor_107_107_107}
         underlineColorAndroid="transparent"
         selectionColor={Colors.textColor_181_181_181}
         keyboardAppearance={Colors.keyboardTheme}
