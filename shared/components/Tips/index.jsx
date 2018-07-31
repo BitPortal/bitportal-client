@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   text14: {
     fontSize: FontScale(14),
     color: Colors.bgColor_000000,
-    marginTop: Platform.OS === 'ios' ? 0 : -FontScale(14)-3
+    marginTop: Platform.OS === 'ios' ? 0 : -FontScale(14) - 3
   },
   btn: {
     width: 36,

@@ -49,7 +49,6 @@ const validate = (values) => {
 @reduxForm({ form: 'createEOSAccountForm', validate })
 
 export default class CreateEOSAccountForm extends Component {
-
   state = {
     unsignAgreement: true,
     hasPrivateKey: false
@@ -60,11 +59,11 @@ export default class CreateEOSAccountForm extends Component {
   }
 
   showPrivateKey = () => {
-    this.setState({ hasPrivateKey: !this.state.hasPrivateKey })
+    this.setState(prevState => ({ hasPrivateKey: !prevState.hasPrivateKey }))
   }
 
   signAgreement = () => {
-    this.setState({ unsignAgreement: !this.state.unsignAgreement })
+    this.setState(prevState => ({ unsignAgreement: !prevState.unsignAgreement }))
   }
 
   checkTerms = () => {
@@ -135,8 +134,8 @@ export default class CreateEOSAccountForm extends Component {
             component={TextField}
           />
           {
-            hasPrivateKey &&
-            <Field
+            hasPrivateKey
+            && <Field
               placeholder={messages[locale].act_fid_plachd_key}
               name="privateKey"
               component={TextAreaField}
@@ -145,16 +144,16 @@ export default class CreateEOSAccountForm extends Component {
 
           <TouchableOpacity style={styles.privateKeyBtn} onPress={this.showPrivateKey}>
             <Text style={styles.text14}>
-              { hasPrivateKey ? messages[locale].act_btn_title_close: messages[locale].act_btn_title_key }
+              { hasPrivateKey ? messages[locale].act_btn_title_close : messages[locale].act_btn_title_key }
             </Text>
           </TouchableOpacity>
 
           <View style={styles.terms}>
             <TouchableOpacity style={styles.termsBtn} onPress={this.signAgreement}>
               {
-                unsignAgreement 
-                ? <Ionicons name="ios-checkmark-circle" size={24} color={Colors.textColor_181_181_181} />
-                : <Ionicons name="ios-checkmark-circle" size={24} color={Colors.textColor_89_185_226} />
+                unsignAgreement
+                  ? <Ionicons name="ios-checkmark-circle" size={24} color={Colors.textColor_181_181_181} />
+                  : <Ionicons name="ios-checkmark-circle" size={24} color={Colors.textColor_89_185_226} />
               }
             </TouchableOpacity>
             <Text numberOfLines={1} style={styles.text14}>
@@ -164,7 +163,7 @@ export default class CreateEOSAccountForm extends Component {
               </Text>
             </Text>
           </View>
-          
+
           <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text={messages[locale].act_button_text_create} />
           <Text onPress={this.importAccount} style={[styles.text14, { marginVertical: 20, color: Colors.textColor_89_185_226 }]}>
             {messages[locale].act_btn_title_import}

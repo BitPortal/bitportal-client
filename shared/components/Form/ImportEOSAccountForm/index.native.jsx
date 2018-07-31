@@ -2,17 +2,10 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
-import {
-  FormContainer,
-  TextField,
-  PasswordField,
-  TextAreaField,
-  SubmitButton
-} from 'components/Form'
+import { FormContainer, TextField, PasswordField, TextAreaField, SubmitButton } from 'components/Form'
 import PasswordStrength from 'components/PasswordStrength'
 import { getPasswordStrength } from 'utils'
-import { normalizeText } from 'utils/normalize'
-import { validateText, validateEOSAccountName } from 'utils/validate'
+import { validateText } from 'utils/validate'
 import * as eosAccountActions from 'actions/eosAccount'
 import Alert from 'components/Alert'
 import { IntlProvider, FormattedMessage } from 'react-intl'
