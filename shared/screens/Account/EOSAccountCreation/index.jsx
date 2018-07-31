@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { View, ScrollView } from 'react-native'
+import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import CreateEOSAccountForm from 'components/Form/CreateEOSAccountForm'
+import { IntlProvider } from 'react-intl'
+import messages from './messages'
 import styles from './styles'
 
 @connect(
@@ -24,18 +27,22 @@ export default class AccountCreation extends Component {
   }
 
   render() {
+    const { locale } = this.props
     return (
-      <View style={styles.container}>
-        <NavigationBar
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.popToRoot()} />}
-          title="Create EOS Account"
-        />
-        <View style={styles.scrollContainer}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <CreateEOSAccountForm />
-          </ScrollView>
+      <IntlProvider messages={messages[locale]}>
+        <View style={styles.container}>
+          <NavigationBar
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
+            title={messages[locale].act_sec_title_create_eos_account}
+          />
+          <View style={styles.scrollContainer}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <CreateEOSAccountForm componentId={this.props.componentId} />
+              <View style={styles.keyboard} />
+            </ScrollView>
+          </View>
         </View>
-      </View>
+      </IntlProvider>
     )
   }
 }
