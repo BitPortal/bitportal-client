@@ -151,7 +151,7 @@ export const startTabBasedApp = (locale) => {
                 {
                   component: {
                     id: 'BitPortalAssets',
-                    name: 'BitPortal.AccountSelection',
+                    name: 'BitPortal.Assets',
                     options: {
                       topBar: {
                         visible: false,
