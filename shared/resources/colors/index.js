@@ -21,7 +21,7 @@ const Colors = {
   bgColor_FFFFFF: '#FFFFFF',
   bgColor_F3F4F9: '#F3F4F9',
   bgColor_FAFAFA: '#FAFAFA',
-  bgColor_343434: 'rgb(34,34,34)',
+  bgColor_30_31_37: 'rgb(30,31,37)',
   bgColor_48_49_59: 'rgb(48,49,59)',
   bgColor_59_59_59: 'rgb(59,59,59)',
   bgColor_41_41_44: 'rgb(41,41,44)',
