@@ -19,6 +19,7 @@ import Backup from 'screens/Account/Backup'
 import BackupTips from 'screens/Account/BackupTips'
 import AccountImport from 'screens/Account/AccountImport'
 import AccountCreation from 'screens/Account/AccountCreation'
+import AccountSelection from 'screens/Account/AccountSelection'
 import EOSAccountCreation from 'screens/Account/EOSAccountCreation'
 import PrivateKeyCreation from 'screens/Account/PrivateKeyCreation'
 import Discovery from 'screens/Discovery'
@@ -119,6 +120,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.BackupTips', () => screenComponent(BackupTips, store))
   Navigation.registerComponent('BitPortal.AccountImport', () => screenComponent(AccountImport, store))
   Navigation.registerComponent('BitPortal.AccountCreation', () => screenComponent(AccountCreation, store))
+  Navigation.registerComponent('BitPortal.AccountSelection', () => screenComponent(AccountSelection, store))
   Navigation.registerComponent('BitPortal.EOSAccountCreation', () => screenComponent(EOSAccountCreation, store))
   Navigation.registerComponent('BitPortal.PrivateKeyCreation', () => screenComponent(PrivateKeyCreation, store))
 }
@@ -149,7 +151,7 @@ export const startTabBasedApp = (locale) => {
                 {
                   component: {
                     id: 'BitPortalAssets',
-                    name: 'BitPortal.Assets',
+                    name: 'BitPortal.AccountSelection',
                     options: {
                       topBar: {
                         visible: false,

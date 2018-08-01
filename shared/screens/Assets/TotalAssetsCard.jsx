@@ -78,12 +78,6 @@ const styles = StyleSheet.create({
   }
 })
 
-@connect(
-  state => ({
-    locale: state.intl.get('locale'),
-    isAssetHidden: state.eosAccount.get('isAssetHidden')
-  })
-)
 
 @connect(
   state => ({
