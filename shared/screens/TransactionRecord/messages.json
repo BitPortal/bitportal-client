@@ -11,7 +11,8 @@
     "txdtl_title_button_copy" : "复制",
     "txdtl_title_button_copied" : "已复制",
     "tx_sec_title_sdsuc": "已确认",
-    "tx_sec_title_sdfail": "交易失败"
+    "tx_sec_title_sdfail": "交易失败",
+    "txdtl_title_button_ent": "确定"
   },
   "en": {
     "tx_title_name_txrcd" : "Transaction Record",
@@ -25,6 +26,7 @@
     "txdtl_title_button_copy" : "Copy",
     "txdtl_title_button_copied" : "Copied",
     "tx_sec_title_sdsuc": "Success",
-    "tx_sec_title_sdfail": "Failed"
+    "tx_sec_title_sdfail": "Failed",
+    "txdtl_title_button_ent": "Confirm"
   }
 }

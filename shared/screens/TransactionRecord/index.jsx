@@ -10,6 +10,8 @@ import { IntlProvider, FormattedMessage, FormattedNumber, FormattedDate, Formatt
 import * as transactionActions from 'actions/transaction'
 import QRCode from 'react-native-qrcode-svg'
 import LinearGradientContainer from 'components/LinearGradientContainer'
+import Dialog from 'components/Dialog'
+import { EOS_EXPLORER_URL } from 'constants/env'
 import messages from './messages'
 import styles from './styles'
 
@@ -40,10 +42,19 @@ export default class TransactionRecord extends Component {
     isCopied: false
   }
 
-  checkBlockInfo = () => {
-    const uri = 'https://explorer.eoseco.com/'
+  checkBlockInfo = (type) => {
+    const { transactionInfo, transactionResult } = this.props
+    const { blockHeight, transactionId } = this.getInfo(transactionInfo, transactionResult)
+    // transactions  --  blocks
+    const number = type === 'transactions' ? transactionId : blockHeight
     Navigation.push(this.props.componentId, {
-      component: { name: 'BitPortal.BPWebView', passProps: { uri, needLinking: true } }
+      component: { 
+        name: 'BitPortal.BPWebView', 
+        passProps: { 
+          uri: `${EOS_EXPLORER_URL}/${type}/${number}`, 
+          needLinking: true 
+        } 
+      }
     })
   }
 
@@ -51,8 +62,18 @@ export default class TransactionRecord extends Component {
     Navigation.pop(this.props.componentId)
   }
 
-  clipboard = () => {
+  copyTxID = () => {
     Clipboard.setString(this.props.transactionInfo.getIn(['action_trace', 'trx_id']))
+    Dialog.alert(
+      messages[this.props.locale].txdtl_title_button_copied,
+      this.props.transactionInfo.getIn(['action_trace', 'trx_id']),
+      { positiveText: messages[this.props.locale].txdtl_title_button_ent } 
+    )
+  }
+
+  clipboard = () => {
+    const url = `${EOS_EXPLORER_URL}/transactions/${this.props.transactionInfo.getIn(['action_trace', 'trx_id'])}`
+    Clipboard.setString(url)
     this.setState({ isCopied: true })
   }
 
@@ -197,7 +218,7 @@ export default class TransactionRecord extends Component {
                       <Text style={[styles.text14, { marginTop: 10 }]}>
                         <FormattedMessage id="txdtl_title_name_tctID" />:
                       </Text>
-                      <Text onPress={this.checkBlockInfo} numberOfLines={1} style={styles.text14}>
+                      <Text onLongPress={this.copyTxID} onPress={() => this.checkBlockInfo('transactions')} numberOfLines={1} style={styles.text14}>
                         # <Text style={{ color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }}>
                           {transactionId && `${transactionId.slice(0, 7)}....${transactionId.slice(-7)}`}
                         </Text>
@@ -205,7 +226,7 @@ export default class TransactionRecord extends Component {
                       <Text style={[styles.text14, { marginTop: 15 }]}>
                         <FormattedMessage id="txdtl_title_name_block" />:
                       </Text>
-                      <Text onPress={this.checkBlockInfo} numberOfLines={1} style={[styles.text14, { marginBottom: 15 }]}>
+                      <Text onPress={() => this.checkBlockInfo('blocks')} numberOfLines={1} style={[styles.text14, { marginBottom: 15 }]}>
                         # <Text style={{ color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }}>
                           {blockHeight}
                         </Text>
