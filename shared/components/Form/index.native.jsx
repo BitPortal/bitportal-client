@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, ActivityIndicator } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import LinearGradientContainer from 'components/LinearGradientContainer'
 import { noop } from 'utils'
 import Colors from 'resources/colors'
@@ -113,12 +113,12 @@ export const PasswordField = ({ input: { onChange, ...restInput }, meta: { touch
 
 export const SubmitButton = ({ disabled, loading, onPress, text }) => (
   <FieldItem>
-    <TouchableWithoutFeedback onPress={!disabled ? onPress : noop} disabled={disabled}>
-      <LinearGradientContainer type="right" style={[styles.submitButton, disabled ? styles.disabled : {}]}>
+    <TouchableOpacity onPress={!disabled ? onPress : noop} disabled={disabled}>
+      <LinearGradientContainer type="right" colors={disabled ? Colors.disabled : null} style={[styles.submitButton]}>
         <Text style={styles.submitButtonText}>{text}</Text>
         {loading && <ActivityIndicator style={styles.indicator} size="small" color="white" />}
       </LinearGradientContainer>
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   </FieldItem>
 )
 
