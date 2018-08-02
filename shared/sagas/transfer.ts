@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import { delay } from 'redux-saga'
-import { put, call, takeEvery } from 'redux-saga/effects'
+import { put, call, takeEvery, select } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/transfer'
 import { getEOSAccountRequested } from 'actions/eosAccount'
@@ -25,10 +25,10 @@ function* transfer(action: Action<TransferParams>) {
     const password = action.payload.password
 
     const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${fromAccount}`, true)
-    const wifs = yield call(getEOSWifsByInfo, password, accountInfo, ['active'])
-    const activeWifs = wifs.activeWifs
-
-    const eos = yield call(initEOS, { keyProvider: activeWifs })
+    const permission = yield select((state: RootState) => state.wallet.get('data').get('permission'))
+    const wifs = yield call(getEOSWifsByInfo, password, accountInfo, [permission])
+    const keyProvider = wifs.map((item: any) => item.wif)
+    const eos = yield call(initEOS, { keyProvider })
     const transactionResult = yield call(eos.transfer, { quantity, memo, from: fromAccount, to: toAccount })
 
     yield put(actions.transferSucceeded(transactionResult))

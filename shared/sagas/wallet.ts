@@ -1,5 +1,5 @@
 import { delay } from 'redux-saga'
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { call, put, takeEvery, select } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import { reset } from 'redux-form/immutable'
 import assert from 'assert'
@@ -167,8 +167,11 @@ function* createWalletRequested(action: Action<CreateWalletParams>) {
 
 function* syncWalletRequested() {
   try {
-    // const items = yield call(secureStorage.getAllItems)
-    // console.log(items)
+    const items = yield call(secureStorage.getAllItems)
+    // for (const item of Object.keys(items)) {
+    //   yield call(secureStorage.removeItem, item)
+    // }
+    console.log(items)
 
     const allItems = yield call(secureStorage.getAllItems)
 
@@ -238,7 +241,8 @@ function* logoutRequested(action: Action<LogoutParams>) {
       yield call(decrypt, keystore, password)
     } else if (coin === 'EOS') {
       const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
-      yield call(getEOSWifsByInfo, password, accountInfo, ['owner', 'active'])
+      const permission = yield select((state: RootState) => state.wallet.get('data').get('permission'))
+      yield call(getEOSWifsByInfo, password, accountInfo, [permission])
     }
 
     const items = yield call(secureStorage.getAllItems)

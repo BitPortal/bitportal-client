@@ -16,3 +16,6 @@ export const validateEOSAccountRequested = createAction<ValidateEOSAccountParams
 export const validateEOSAccountSucceeded = createAction<ValidateEOSAccountResult>('eosAccount/VALIDATE_SUCCEEDED')
 export const validateEOSAccountFailed = createAction<ValidateEOSAccountRejection>('eosAccount/VALIDATE_FAILED')
 export const hiddenAssetDisplay = createAction<string>('eosAccount/HIDDEN_ASSET_DISPLAY')
+export const getEOSKeyAccountsRequested = createAction<GetEOSKeyAccountsParams>('eosAccount/GET_KEY_ACCOUNTS_REQUESTED')
+export const getEOSKeyAccountsSucceeded = createAction<GetEOSKeyAccountsResult>('eosAccount/GET_KEY_ACCOUNTS_SUCCEEDED')
+export const getEOSKeyAccountsFailed = createAction<ErrorMessage>('eosAccount/GET_KEY_ACCOUNTS_FAILED')

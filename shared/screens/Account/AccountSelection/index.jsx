@@ -1,18 +1,42 @@
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { View, ScrollView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import Colors from 'resources/colors'
+import { eosPriceSelector } from 'selectors/ticker'
+import * as eosAccountActions from 'actions/eosAccount'
+import Alert from 'components/Alert'
+import Loading from 'components/Loading'
 import AccountCard from './AccountCard'
 import styles from './styles'
 import messages from './messages'
 
+export const errorMessages = (error, messages) => {
+  if (!error) return null
+
+  const message = typeof error === 'object' ? error.message : error
+
+  switch (String(message)) {
+    case 'Unauthorized private key!':
+      return messages.ast_imp_hint_unauowner
+    default:
+      return messages.ast_imp_hint_fail
+  }
+}
+
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.get('locale'),
+    eosAccount: state.eosAccount,
+    eosPrice: eosPriceSelector(state)
   }),
-  null,
+  dispatch => ({
+    actions: bindActionCreators({
+      ...eosAccountActions
+    }, dispatch)
+  }),
   null,
   { withRef: true }
 )
@@ -26,12 +50,20 @@ export default class AccountSelection extends Component {
     }
   }
 
-  selectAccount = () => {
-
+  selectAccount = (keyPermission) => {
+    const { publicKey, privateKey, password, hint } = this.props
+    const accountInfo = keyPermission.accountInfo
+    const eosAccountName = keyPermission.accountName
+    const permission = keyPermission.permission
+    const componentId = this.props.componentId
+    this.props.actions.importEOSAccountRequested({ eosAccountName, permission, accountInfo, publicKey, privateKey, password, hint, componentId })
   }
 
   render() {
-    const { locale } = this.props
+    const { locale, keyPermissions, eosPrice, eosAccount } = this.props
+    const loading = eosAccount.get('loading')
+    const error = eosAccount.get('error')
+
     return (
       <View style={styles.container}>
         <NavigationBar
@@ -40,23 +72,21 @@ export default class AccountSelection extends Component {
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <AccountCard 
-              accountType={'Owner'} 
-              accountName="testaccounts"
-              EOSValue={12135.53}
-              EOSAmount={421.4323}
-              balanceTitle="Balance"
-              onPress={this.selectAccount} 
-            />
-            <AccountCard 
-              EOSValue={23142.55}
-              EOSAmount={5242.5}
-              balanceTitle="Balance"
-              accountType={'Active'} 
-              accountName="testaccounts" 
-              colors={Colors.ramColor} 
-            />
+            {keyPermissions.map(keyPermission =>
+              <AccountCard
+                key={keyPermission.permission}
+                accountType={keyPermission.permission}
+                accountName={keyPermission.accountName}
+                eosValue={+eosPrice * +keyPermission.balance}
+                eosAmount={keyPermission.balance}
+                balanceTitle="Balance"
+                onPress={this.selectAccount.bind(this, keyPermission)}
+                colors={keyPermission.permission !== 'owner' && Colors.ramColor}
+              />
+             )}
           </ScrollView>
+          <Loading isVisible={loading} text="导入中..." />
+          <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearEOSAccountError} />
         </View>
       </View>
     )

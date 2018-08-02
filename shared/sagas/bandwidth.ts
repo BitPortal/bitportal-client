@@ -1,6 +1,6 @@
 import assert from 'assert'
 import { delay } from 'redux-saga'
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { call, put, takeEvery, select } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/bandwidth'
 import { getEOSAccountRequested } from 'actions/eosAccount'
@@ -24,10 +24,10 @@ function* delegateBandwidthRequested(action: Action<DelegateBandwidthParams>) {
     const netQuantity = resource === 'net' ? `${asset} EOS` : '0.0000 EOS'
     const cpuQuantity = resource === 'cpu' ? `${asset} EOS` : '0.0000 EOS'
     const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
-    const wifs = yield call(getEOSWifsByInfo, password, accountInfo, ['active'])
-    const activeWifs = wifs.activeWifs
-
-    const eos = yield call(initEOS, { keyProvider: activeWifs })
+    const permission = yield select((state: RootState) => state.wallet.get('data').get('permission'))
+    const wifs = yield call(getEOSWifsByInfo, password, accountInfo, [permission])
+    const keyProvider = wifs.map((item: any) => item.wif)
+    const eos = yield call(initEOS, { keyProvider })
 
     yield call(
       eos.transaction,
@@ -63,10 +63,10 @@ function* undelegateBandwidthRequested(action: Action<UndelegateBandwidthParams>
     const netQuantity = resource === 'net' ? `${asset} EOS` : '0.0000 EOS'
     const cpuQuantity = resource === 'cpu' ? `${asset} EOS` : '0.0000 EOS'
     const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
-    const wifs = yield call(getEOSWifsByInfo, password, accountInfo, ['active'])
-    const activeWifs = wifs.activeWifs
-
-    const eos = yield call(initEOS, { keyProvider: activeWifs })
+    const permission = yield select((state: RootState) => state.wallet.get('data').get('permission'))
+    const wifs = yield call(getEOSWifsByInfo, password, accountInfo, [permission])
+    const keyProvider = wifs.map((item: any) => item.wif)
+    const eos = yield call(initEOS, { keyProvider })
 
     yield call(
       eos.transaction,

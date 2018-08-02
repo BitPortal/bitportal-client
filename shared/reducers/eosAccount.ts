@@ -45,6 +45,15 @@ export default handleActions({
   [actions.importEOSAccountFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)
   },
+  [actions.getEOSKeyAccountsRequested] (state) {
+    return state.set('loading', true)
+  },
+  [actions.getEOSKeyAccountsSucceeded] (state, action) {
+    return state.set('loaded', true).set('loading', false)
+  },
+  [actions.getEOSKeyAccountsFailed] (state, action) {
+    return state.set('error', action.payload).set('loading', false)
+  },
   [actions.syncEOSAccount] (state, action) {
     return state.set('eosAccountList', Immutable.fromJS(action.payload))
   },

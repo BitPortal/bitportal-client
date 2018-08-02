@@ -299,52 +299,28 @@ export const validateEntropy = (entropy: string) => {
 export const getEOSWifsByInfo = async (password: string, accountInfo: any, checkPermissions: string[]) => {
   assert(accountInfo.permissions && accountInfo.permissions.length, 'EOS account permissions dose not exist!')
   assert(accountInfo.account_name, 'EOS account name dose not exist!')
-  assert(typeof checkPermissions === 'object' && !!checkPermissions.length && (checkPermissions.indexOf('owner') !== -1 || checkPermissions.indexOf('active') !== -1), 'Permissions should contain owner or active!')
+  assert(typeof checkPermissions === 'object' && !!checkPermissions.length, 'Invalid check permissions!')
   const permissions = accountInfo.permissions
   const eosAccountName = accountInfo.account_name
 
-  const ownerWifs = []
-  const activeWifs = []
+  let wifs = []
 
-  if (checkPermissions.indexOf('owner') !== -1) {
-    const ownerPermission = permissions.filter((item: any) => item.perm_name === 'owner')
-    assert(ownerPermission.length && ownerPermission[0].required_auth && ownerPermission[0].required_auth.keys && ownerPermission[0].required_auth.keys.length, 'Owner permission dose not exist!')
+  for (const checkPermission of checkPermissions) {
+    const currentPermission = permissions.filter((item: any) => item.perm_name === checkPermission.toLowerCase())
+    assert(currentPermission.length && currentPermission[0].required_auth && currentPermission[0].required_auth.keys && currentPermission[0].required_auth.keys.length, 'Current permission dose not exist!')
 
-    const ownerPublicKeys = ownerPermission[0].required_auth.keys
+    const publicKeys = currentPermission[0].required_auth.keys
 
-    for (const publicKey of ownerPublicKeys) {
+    for (const publicKey of publicKeys) {
       const key = publicKey.key
-      const keystore = await secureStorage.getItem(`CLASSIC_KEYSTORE_EOS_${eosAccountName}_OWNER_${key}`, true)
+      const keystore = await secureStorage.getItem(`CLASSIC_KEYSTORE_EOS_${eosAccountName}_${checkPermission}_${key}`, true)
 
       if (keystore) {
         const privateKey = await decrypt(keystore, password)
-        const ownerWif = wif.encode(0x80, Buffer.from(privateKey, 'hex'), false)
-        ownerWifs.push(ownerWif)
+        wifs.push({ permission: checkPermission, wif: wif.encode(0x80, Buffer.from(privateKey, 'hex'), false) })
       }
     }
   }
-
-  if (checkPermissions.indexOf('active') !== -1) {
-    const activePermission = permissions.filter((item: any) => item.perm_name === 'active')
-    assert(activePermission.length && activePermission[0].required_auth && activePermission[0].required_auth.keys && activePermission[0].required_auth.keys.length, 'Active permission dose not exist!')
-
-    const activePublicKeys = activePermission[0].required_auth.keys
-
-    for (const publicKey of activePublicKeys) {
-      const key = publicKey.key
-      const keystore = await secureStorage.getItem(`CLASSIC_KEYSTORE_EOS_${eosAccountName}_ACTIVE_${key}`, true)
-
-      if (keystore) {
-        const privateKey = await decrypt(keystore, password)
-        const activeWif = wif.encode(0x80, Buffer.from(privateKey, 'hex'), false)
-        activeWifs.push(activeWif)
-      }
-    }
-  }
-
-  const wifs: { ownerWifs?: string[], activeWifs?: string[] } = {}
-  if (ownerWifs.length) wifs.ownerWifs = ownerWifs
-  if (activeWifs.length) wifs.activeWifs = activeWifs
 
   return wifs
 }

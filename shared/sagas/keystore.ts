@@ -1,5 +1,5 @@
 import { delay } from 'redux-saga'
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { call, put, takeEvery, select } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import assert from 'assert'
 import * as actions from 'actions/keystore'
@@ -46,32 +46,25 @@ function* exportEOSKeyRequested(action: Action<ExportEOSKeyParams>) {
     assert(password, 'Please input password!')
     const origin = action.payload.origin
     assert(origin, 'Missing origin!')
+    assert(origin === 'classic', 'Only support classic origin now!')
 
-    let ownerWifs = []
-    let activeWifs = []
+    let wifs = []
+
     if (origin === 'hd') {
-      const bpid = action.payload.bpid
-      const keystore = yield call(secureStorage.getItem, `HD_KEYSTORE_${bpid}`, true)
-      assert(keystore, 'Missing keystore!')
-      const entropy = yield call(decrypt, keystore, password)
-      assert(entropy, 'Missing entropy!')
-      const eosKeys = yield call(getEOSKeys, entropy, true)
-      ownerWifs = [eosKeys.keys.owner.privateKey.wif]
-      activeWifs = [eosKeys.keys.active.privateKey.wif]
+      // ...
     } else {
       const eosAccountName = action.payload.eosAccountName
       const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
-      const wifs = yield call(getEOSWifsByInfo, password, accountInfo, ['owner', 'active'])
-      ownerWifs = wifs.ownerWifs
-      activeWifs = wifs.activeWifs
+      const permission = yield select((state: RootState) => state.wallet.get('data').get('permission'))
+      assert(permission, 'No permission!')
+      wifs = yield call(getEOSWifsByInfo, password, accountInfo, [permission])
     }
 
-    assert(ownerWifs.length + activeWifs.length, 'No EOS private keys!')
+    assert(wifs.length, 'No EOS private keys!')
 
     yield put(actions.exportEOSKeySucceeded())
-    if (action.payload.componentId) push('BitPortal.ExportPrivateKey', action.payload.componentId, { ownerWifs, activeWifs })
+    if (action.payload.componentId) push('BitPortal.ExportPrivateKey', action.payload.componentId, { wifs })
   } catch (e) {
-    console.log(e)
     yield put(actions.exportEOSKeyFailed(getErrorMessage(e)))
   }
 }

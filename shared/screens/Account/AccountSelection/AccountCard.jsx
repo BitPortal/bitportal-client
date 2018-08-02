@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import styles from './styles'
 
-export default ({ accountType, accountName, balanceTitle, EOSValue, EOSAmount, colors, onPress }) => (
+export default ({ accountType, accountName, balanceTitle, eosValue, eosAmount, colors, onPress }) => (
   <TouchableWithoutFeedback onPress={onPress}>
     <View style={styles.cardContainer}>
       <LinearGradientContainer type="right" colors={colors} style={[styles.contentContainer, styles.topRadius]}>
@@ -28,10 +28,10 @@ export default ({ accountType, accountName, balanceTitle, EOSValue, EOSAmount, c
         </Text>
         <View>
           <Text style={[styles.text16, { alignSelf: 'flex-end' }]}>
-            <CurrencyText value={EOSValue} />
+            <CurrencyText value={eosValue} />
           </Text>
           <Text style={[styles.text14, { alignSelf: 'flex-end', color: Colors.textColor_149_149_149 }]}>
-            {EOSAmount}
+            {eosAmount}
           </Text>
         </View>
       </View>

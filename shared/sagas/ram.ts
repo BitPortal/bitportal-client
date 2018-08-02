@@ -1,6 +1,6 @@
 import assert from 'assert'
 import { delay } from 'redux-saga'
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { call, put, takeEvery, select } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/ram'
 import { getEOSAccountRequested } from 'actions/eosAccount'
@@ -21,10 +21,10 @@ function* buyRAMRequested(action: Action<BuyRAMParams>) {
     assert(quant, 'Invalid quant!')
     const asset = (+quant).toFixed(4)
     const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
-    const wifs = yield call(getEOSWifsByInfo, password, accountInfo, ['active'])
-    const activeWifs = wifs.activeWifs
-
-    const eos = yield call(initEOS, { keyProvider: activeWifs })
+    const permission = yield select((state: RootState) => state.wallet.get('data').get('permission'))
+    const wifs = yield call(getEOSWifsByInfo, password, accountInfo, [permission])
+    const keyProvider = wifs.map((item: any) => item.wif)
+    const eos = yield call(initEOS, { keyProvider })
 
     yield call(
       eos.transaction,
@@ -48,10 +48,10 @@ function* sellRAMRequested(action: Action<SellRAMParams>) {
     const password = action.payload.password
     const bytes = action.payload.bytes
     const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
-    const wifs = yield call(getEOSWifsByInfo, password, accountInfo, ['active'])
-    const activeWifs = wifs.activeWifs
-
-    const eos = yield call(initEOS, { keyProvider: activeWifs })
+    const permission = yield select((state: RootState) => state.wallet.get('data').get('permission'))
+    const wifs = yield call(getEOSWifsByInfo, password, accountInfo, [permission])
+    const keyProvider = wifs.map((item: any) => item.wif)
+    const eos = yield call(initEOS, { keyProvider })
 
     yield call(
       eos.transaction,

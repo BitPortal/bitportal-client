@@ -6,6 +6,7 @@ import { FormContainer, TextField, PasswordField, TextAreaField, SubmitButton } 
 import PasswordStrength from 'components/PasswordStrength'
 import { getPasswordStrength } from 'utils'
 import { validateText } from 'utils/validate'
+import { normalizeText } from 'utils/normalize'
 import * as eosAccountActions from 'actions/eosAccount'
 import Alert from 'components/Alert'
 import { IntlProvider, FormattedMessage } from 'react-intl'
@@ -17,18 +18,8 @@ export const errorMessages = (error, messages) => {
   const message = typeof error === 'object' ? error.message : error
 
   switch (String(message)) {
-    case 'Invalid owner private key!':
+    case 'Invalid private key!':
       return messages.ast_imp_hint_invalidowner
-    case 'Invalid active private key!':
-      return messages.ast_imp_hint_invalidactive
-    case 'Owner permission dose not exist!':
-      return messages.ast_imp_hint_ownerpermi
-    case 'Active permission dose not exist!':
-      return messages.ast_imp_hint_activepermi
-    case 'Unauthorized owner private key!':
-      return messages.ast_imp_hint_unauowner
-    case 'Unauthorized active private key!':
-      return messages.ast_imp_hint_unauactive
     default:
       return messages.ast_imp_hint_fail
   }
@@ -51,16 +42,10 @@ const validate = (values) => {
     errors.confirmedPassword = <FormattedMessage id="import_txtbox_txt_pwdhint2" />
   }
 
-  if (!values.get('ownerPrivateKey')) {
-    errors.ownerPrivateKey = <FormattedMessage id="import_txtbox_txt_ownhint" />
-  } else if (!validateText(values.get('ownerPrivateKey'))) {
-    errors.ownerPrivateKey = <FormattedMessage id="import_txtbox_txt_invalidown" />
-  }
-
-  if (!values.get('activePrivateKey')) {
-    errors.activePrivateKey = <FormattedMessage id="import_txtbox_txt_activehint" />
-  } else if (!validateText(values.get('activePrivateKey'))) {
-    errors.activePrivateKey = <FormattedMessage id="import_txtbox_txt_invalidactive" />
+  if (!values.get('privateKey')) {
+    errors.privateKey = <FormattedMessage id="import_txtbox_txt_ownhint" />
+  } else if (!validateText(values.get('privateKey'))) {
+    errors.privateKey = <FormattedMessage id="import_txtbox_txt_invalidown" />
   }
 
   return errors
@@ -83,7 +68,7 @@ const validate = (values) => {
 
 export default class ImportEOSAccountForm extends Component {
   submit = (data) => {
-    this.props.actions.importEOSAccountRequested(data.set('componentId', this.props.componentId).delete('confirmedPassword').toJS())
+    this.props.actions.getEOSKeyAccountsRequested(data.set('componentId', this.props.componentId).delete('confirmedPassword').toJS())
   }
 
   render() {
@@ -99,6 +84,7 @@ export default class ImportEOSAccountForm extends Component {
             placeholder={messages[locale].import_title_plchd_privtk}
             name="privateKey"
             component={TextAreaField}
+            normalize={normalizeText}
           />
           <Field
             label={<FormattedMessage id="import_title_name_pwd" />}
@@ -110,7 +96,7 @@ export default class ImportEOSAccountForm extends Component {
           />
           <Field
             placeholder={messages[locale].import_title_plchd_cfmpwd}
-            name="confirmPassword"
+            name="confirmedPassword"
             component={PasswordField}
           />
           <Field
@@ -118,7 +104,6 @@ export default class ImportEOSAccountForm extends Component {
             name="passwordHint"
             component={TextField}
           />
-
           <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text={<FormattedMessage id="import_button_name_nxt" />} />
           <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearEOSAccountError} />
         </FormContainer>

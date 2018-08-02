@@ -46,21 +46,21 @@ class NewsList extends PureComponent {
     )
   }
 }
-
-NewsList.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(NewsRowTypes)),
-  onRefresh: PropTypes.func,
-  onEndReached: PropTypes.func,
-  onRowPress: PropTypes.func,
-  refreshing: PropTypes.bool,
-}
-
-NewsList.defaultProps = {
-  data: [],
-  onRefresh: null,
-  onEndReached: null,
-  onRowPress: null,
-  refreshing: false,
-}
+/*
+ * NewsList.propTypes = {
+ *   data: PropTypes.arrayOf(PropTypes.shape(NewsRowTypes)),
+ *   onRefresh: PropTypes.func,
+ *   onEndReached: PropTypes.func,
+ *   onRowPress: PropTypes.func,
+ *   refreshing: PropTypes.bool,
+ * }
+ *
+ * NewsList.defaultProps = {
+ *   data: [],
+ *   onRefresh: null,
+ *   onEndReached: null,
+ *   onRowPress: null,
+ *   refreshing: false,
+ * }*/
 
 export default NewsList

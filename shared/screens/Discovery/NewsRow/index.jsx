@@ -21,20 +21,20 @@ function NewsRow ({ previewImage, title, subTitle, author, date, onRowPress }) {
     </TouchableHighlight>
   )
 }
-
-export const NewsRowTypes = {
-  previewImage: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  subTitle: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
-  onRowPress: PropTypes.func,
-}
-
-NewsRow.propTypes = NewsRowTypes
-
-NewsRow.defaultProps = {
-  onRowPress: null
-}
+/*
+ * export const NewsRowTypes = {
+ *   previewImage: PropTypes.string.isRequired,
+ *   title: PropTypes.string.isRequired,
+ *   subTitle: PropTypes.string.isRequired,
+ *   author: PropTypes.string.isRequired,
+ *   date: PropTypes.string.isRequired,
+ *   onRowPress: PropTypes.func,
+ * }
+ *
+ * NewsRow.propTypes = NewsRowTypes
+ *
+ * NewsRow.defaultProps = {
+ *   onRowPress: null
+ * }*/
 
 export default NewsRow
