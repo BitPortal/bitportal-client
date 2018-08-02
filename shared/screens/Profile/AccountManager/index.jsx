@@ -127,6 +127,10 @@ export default class AccountList extends Component {
                 extraStyle={{ marginTop: 10 }}
               />
               <SettingItem
+                leftItemTitle={<FormattedMessage id="act_sec_title_rspsw" />}
+                onPress={this.resetPassword}
+              />
+              <SettingItem
                 leftItemTitle={<FormattedMessage id="act_sec_title_logout" />}
                 onPress={this.showLogoutPrompt}
                 extraStyle={{ marginTop: 10 }}

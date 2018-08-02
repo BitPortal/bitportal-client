@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
-import { FormContainer, TextField, PasswordField, SubmitButton } from 'components/Form'
+import { FormContainer, TextField, TextAreaField, PasswordField, SubmitButton } from 'components/Form'
 import { normalizeText } from 'utils/normalize'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
@@ -11,22 +11,18 @@ import messages from './messages'
 
 const validate = (values) => {
   const errors = {}
-  if (!values.get('currentPassword')) {
-    errors.currentPassword = <FormattedMessage id="cpwd_txtbox_title_current" />
-    // 'Please input current password'
-  }
-
-  if (!values.get('newPassword')) {
-    errors.newPassword = 'Please input password'
-  } else if (!!values.get('newPassword') && values.get('newPassword').length < 6) {
-    errors.newPassword = 'Password must be at least 6 characters'
+  
+  if (!values.get('password')) {
+    errors.password = 'Please input password'
+  } else if (!!values.get('password') && values.get('password').length < 6) {
+    errors.password = 'Password must be at least 6 characters'
   }
 
   if (!values.get('confirmedPassword')) {
     errors.confirmedPassword = 'Please confirm the new password'
   }
 
-  if (values.get('confirmedPassword') !== values.get('newPassword')) {
+  if (values.get('confirmedPassword') !== values.get('password')) {
     errors.confirmedPassword = 'Passwords don\'t macth'
   }
 
@@ -36,7 +32,7 @@ const validate = (values) => {
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    password: formValueSelector('resetPasswordForm')(state, 'newPassword')
+    password: formValueSelector('resetPasswordForm')(state, 'password')
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -60,21 +56,27 @@ export default class ResetPasswordForm extends Component {
       <IntlProvider messages={messages[locale]}>
         <FormContainer>
           <Field
-            label={<FormattedMessage id="cpwd_txtbox_title_current" />}
-            name="currentPassword"
-            component={TextField}
-            normalize={normalizeText}
+            placeholder={messages[locale].cpwd_title_plchd_privtk}
+            name="privateKey"
+            component={TextAreaField}
           />
           <Field
             label={<FormattedMessage id="cpwd_txtbox_title_new" />}
-            name="newPassword"
+            tips={messages[locale].cpwd_title_tips_pwd}
+            placeholder={messages[locale].cpwd_title_plchd_pwd}
+            name="password"
             component={PasswordField}
             rightContent={<PasswordStrength strength={getPasswordStrength(password)} />}
           />
           <Field
-            label={<FormattedMessage id="cpwd_txtbox_title_repeat" />}
-            name="confirmedPassword"
+            placeholder={messages[locale].cpwd_txtbox_title_repeat}
+            name="confirmPassword"
             component={PasswordField}
+          />
+          <Field
+            placeholder={messages[locale].cpwd_title_name_pswht}
+            name="passwordHint"
+            component={TextField}
           />
           <SubmitButton
             disabled={disabled}
