@@ -73,9 +73,6 @@ export default EStyleSheet.create({
   indicator: {
     marginLeft: 10
   },
-  disabled: {
-    backgroundColor: Colors.textColor_181_181_181
-  },
   submitButtonText: {
     color: 'white',
     textAlign: 'center',
