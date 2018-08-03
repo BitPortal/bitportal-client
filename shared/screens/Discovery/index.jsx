@@ -8,7 +8,6 @@ import * as newsActions from 'actions/news'
 import { IntlProvider } from 'react-intl'
 import NewsList from './NewsList'
 import NewsBanner from './NewsBanner'
-import NewsBannerCard from './NewsBannerCard'
 import messages from './messages'
 import styles from './styles'
 
@@ -57,23 +56,6 @@ export default class Discovery extends Component {
         jumpUrl: item.jump_url,
         content: item.content
       }))
-    } catch (e) {
-      return []
-    }
-  }
-
-  getBanner = () => {
-    try {
-      const data = this.props.bannerData.toJS()
-      return data.map(item => <NewsBannerCard
-          imageUrl={item.img_url}
-          title={item.title}
-          // api don't have subtitle
-          subTitle={item.subTitle || ''}
-          key={item.id}
-          onPress={() => this.onBannerPress(item)}
-      />
-      )
     } catch (e) {
       return []
     }
@@ -139,9 +121,6 @@ export default class Discovery extends Component {
           <NavigationBar
             leftButton={<CommonTitle title={messages[locale].discovery_title_name_dsc} />}
           />
-          <NewsBanner autoplay={true} style={{ paddingVertical: 20 }}>
-            {this.getBanner()}
-          </NewsBanner>
           <NewsList
             data={this.getNewsListData()}
             onRefresh={this.onRefresh}
@@ -150,6 +129,7 @@ export default class Discovery extends Component {
             onRowPress={this.onRowPress}
             nomore={nomore}
             loadingMore={loadingMore}
+            componentId={this.props.componentId}
           />
         </View>
       </IntlProvider>

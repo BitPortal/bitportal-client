@@ -2,12 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { View, Text, Image, TouchableHighlight } from 'react-native'
 import Colors from 'resources/colors'
-import styles from './style'
+import styles from './styles'
 
-function NewsRow ({ previewImage, title, subTitle, author, date, onRowPress }) {
+export default ({ previewImage, title, subTitle, author, date, onRowPress }) => {
   return (
     <TouchableHighlight underlayColor={Colors.hoverColor} onPress={onRowPress}>
-      <View style={styles.container}>
+      <View style={styles.rowContainer}>
         <Image style={styles.image} source={{ uri: previewImage }} />
         <View style={styles.right}>
           <Text style={styles.title}>{title}</Text>
@@ -21,20 +21,4 @@ function NewsRow ({ previewImage, title, subTitle, author, date, onRowPress }) {
     </TouchableHighlight>
   )
 }
-/*
- * export const NewsRowTypes = {
- *   previewImage: PropTypes.string.isRequired,
- *   title: PropTypes.string.isRequired,
- *   subTitle: PropTypes.string.isRequired,
- *   author: PropTypes.string.isRequired,
- *   date: PropTypes.string.isRequired,
- *   onRowPress: PropTypes.func,
- * }
- *
- * NewsRow.propTypes = NewsRowTypes
- *
- * NewsRow.defaultProps = {
- *   onRowPress: null
- * }*/
 
-export default NewsRow

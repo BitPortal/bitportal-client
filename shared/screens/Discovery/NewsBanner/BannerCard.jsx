@@ -1,11 +1,9 @@
 import React from 'react'
 import { TouchableOpacity, Text, Image } from 'react-native'
-import { styles } from './style'
+import styles from './styles'
 
 export default ({ imageUrl, title, subTitle, onPress }) => (
-  <TouchableOpacity style={styles.card} onPress={onPress}>
-    <Text style={styles.title}>{title}</Text>
-    <Text style={styles.subTitle}>{subTitle}</Text>
+  <TouchableOpacity style={styles.container} onPress={onPress}>
     <Image resizeMode="cover" style={styles.background} source={{ uri: imageUrl }} />
   </TouchableOpacity>
 )
