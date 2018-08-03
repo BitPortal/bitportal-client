@@ -32,6 +32,7 @@ class Article extends Component {
   }
 
   render() {
+    alert(this.props.url)
     return (
       <View style={styles.container}>
         <NavigationBar

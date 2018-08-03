@@ -35,7 +35,6 @@ const PAGE_LENGTH = 10
 export default class Discovery extends Component {
   componentDidMount() {
     this.props.actions.getNewsListRequested({ startAt: 0, limit: PAGE_LENGTH, loadingMore: false })
-    this.props.actions.getNewsBannerRequested()
   }
 
   UNSAFE_componentWillUpdate() {
@@ -81,7 +80,11 @@ export default class Discovery extends Component {
   }
 
   onRefresh = () => {
-    this.props.actions.getNewsListRequested({ startAt: 0, limit: PAGE_LENGTH, loadingMore: false })
+    this.props.actions.getNewsListRequested({ 
+      startAt: 0, 
+      limit: PAGE_LENGTH, 
+      loadingMore: false 
+    })
   }
 
   onRowPress = (item) => {
@@ -113,7 +116,7 @@ export default class Discovery extends Component {
       component: {
         name: 'BitPortal.DiscoveryArticle',
         passProps: {
-          url: item.jumpUrl,
+          url: item.jump_url,
           title: item.title,
         }
       }

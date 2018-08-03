@@ -2,92 +2,63 @@
 
 import React, { PureComponent } from 'react'
 import { View, ScrollView } from 'react-native'
-import PropTypes from 'prop-types'
+import { Navigation } from 'react-native-navigation'
+import { bindActionCreators } from 'redux'
+import * as newsActions from 'actions/news'
+import { connect } from 'react-redux'
+import Swiper from 'react-native-swiper'
 import { styles } from './style'
 
-class CardSilder extends PureComponent {
-  constructor(props, context) {
-    super(props, context)
-    this.state = {
-      numOfCards: this.props.children.length,
-      position: 1
-    }
-    this.autoMove = true
-    this.timer = null
-  }
+@connect(
+  state => ({
+    locale: state.intl.get('locale'),
+    bannerData: state.news.get('bannerData')
+  }),
+  dispatch => ({
+    actions: bindActionCreators({
+      ...newsActions
+    }, dispatch)
+  }),
+  null,
+  { withRef: true }
+)
+
+export default class NewBanner extends PureComponent {
 
   componentDidMount() {
-    this.startInterval()
+    this.props.actions.getNewsBannerRequested()
   }
 
   componentWillUnmount(){
     if (this.timer) clearInterval(this.timer)
   }
 
-  startInterval = () => {
-    const { autoplay, playInterval } = this.props
-    this.autoMove = true
-    if (autoplay) {
-      this.timer = setInterval(() => {
-        this.next()
-      }, playInterval)
-    }
-  }
-
-  next = () => {
-    if (this.autoMove) {
-      this.slider.scrollTo({ x: (window.width - 30) * this.state.position })
-    }
-  }
-
-  onScroll = (event) => {
-    this.autoMove = false
-    const offsetX = event.nativeEvent.contentOffset.x
-    const page = parseInt(offsetX / (window.width - 30), 10)
-
-    if (page === this.state.numOfCards - 1) {
-      this.setState({ position: 0 })
-    } else {
-      this.setState({ position: page + 1 })
-    }
-
-    setTimeout(() => {
-      this.autoMove = true
-    }, 1000)
-  }
-
   render() {
+    const { bannerData } = this.props
     return (
-      <View style={{ height: 180 }}>
-        <ScrollView
-          {...this.props}
-          ref={(i) => { this.slider = i }}
-          style={[styles.scroll, this.props.style]}
-          onScroll={this.onScroll}
-          horizontal={true}
+      <View style={styles.container}>
+        <Swiper
+          index={0}
+          loop={false}
+          bounces={true}
           pagingEnabled={true}
-          showsHorizontalScrollIndicator={false}
-          scrollEventThrottle={20}
+          containerStyle={styles.wrapper}
+          dot={<View style={styles.dot} />}
+          activeDot={<View style={styles.activeDot} />}
+          paginationStyle={styles.paginationStyle}
         >
-          {
-            this.props.children.map((item, index) => <View style={styles.card} key={index}>
-              {item}
-            </View>)
-          }
-        </ScrollView>
+          {bannerData.map(() => (
+            <NewsBannerCard
+              imageUrl={item.img_url}
+              title={item.title}
+              subTitle={item.subTitle || ''}
+              key={item.id}
+              onPress={() => this.onBannerPress(item)}
+            />
+          ))}
+        </Swiper>
       </View>
     )
   }
 }
 
-CardSilder.propTypes = {
-  playInterval: PropTypes.number,
-  autoplay: PropTypes.bool,
-}
-
-CardSilder.defaultProps = {
-  playInterval: 3000,
-  autoplay: true,
-}
-
-export default CardSilder

@@ -1,15 +1,12 @@
-import { StyleSheet, Dimensions } from 'react-native'
-const window = Dimensions.get('window')
+import { StyleSheet } from 'react-native'
+import Colors from 'resources/colors'
+import { SCREEN_WIDTH } from 'utils/dimens'
 
-export const styles = StyleSheet.create({
-  scroll: {
-    flex: 1,
-    width: window.width - 30,
-    marginHorizontal: 15,
-    overflow: 'visible',
-  },
-  card: {
-    width: window.width - 40,
-    marginHorizontal: 5,
+const styles = StyleSheet.create({
+  container: {
+    width: SCREEN_WIDTH,
+    height: 160
   }
 })
+
+export default styles
