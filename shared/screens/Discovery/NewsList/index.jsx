@@ -1,14 +1,25 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { FlatList, View, ActivityIndicator, Text } from 'react-native'
+import NewsBanner from '../NewsBanner'
 import Colors from 'resources/colors'
-import NewsRow, { NewsRowTypes } from '../NewsRow'
-import styles from '../styles'
+import NewsRow, { NewsRowTypes } from './NewsRow'
+import styles from './styles'
 
 class NewsList extends PureComponent {
   keyExtractor = item => item.id
 
-  renderItem = ({ item }) => <NewsRow
+  renderHeader = () => (
+    <View>
+      <NewsBanner componentId={this.props.componentId} />
+      <View style={styles.listTitle}>
+        <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}> 资讯 </Text>
+      </View>
+    </View>
+  )
+
+  renderItem = ({ item }) => (
+    <NewsRow
       previewImage={item.previewImage}
       title={item.title}
       subTitle={item.subTitle}
@@ -17,7 +28,8 @@ class NewsList extends PureComponent {
       id={item.id}
       onRowPress={() => this.props.onRowPress(item)}
       key={item.id}
-  />
+    />
+  )
 
   renderSeparator = () => (
     <View style={{ height: 1, width: '100%', backgroundColor: Colors.bgColor_000000 }} />
@@ -36,7 +48,9 @@ class NewsList extends PureComponent {
         data={this.props.data}
         keyExtractor={this.keyExtractor}
         ItemSeparatorComponent={this.renderSeparator}
+        showsVerticalScrollIndicator={false}
         renderItem={this.renderItem}
+        ListHeaderComponent={this.renderHeader}
         ListFooterComponent={this.renderFoot}
         onRefresh={this.props.onRefresh}
         onEndReached={this.props.onEndReached}
@@ -46,21 +60,5 @@ class NewsList extends PureComponent {
     )
   }
 }
-/*
- * NewsList.propTypes = {
- *   data: PropTypes.arrayOf(PropTypes.shape(NewsRowTypes)),
- *   onRefresh: PropTypes.func,
- *   onEndReached: PropTypes.func,
- *   onRowPress: PropTypes.func,
- *   refreshing: PropTypes.bool,
- * }
- *
- * NewsList.defaultProps = {
- *   data: [],
- *   onRefresh: null,
- *   onEndReached: null,
- *   onRowPress: null,
- *   refreshing: false,
- * }*/
 
 export default NewsList
