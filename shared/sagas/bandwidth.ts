@@ -24,7 +24,7 @@ function* delegateBandwidthRequested(action: Action<DelegateBandwidthParams>) {
     const netQuantity = resource === 'net' ? `${asset} EOS` : '0.0000 EOS'
     const cpuQuantity = resource === 'cpu' ? `${asset} EOS` : '0.0000 EOS'
     const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
-    const permission = yield select((state: RootState) => state.wallet.get('data').get('permission'))
+    const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
     const wifs = yield call(getEOSWifsByInfo, password, accountInfo, [permission])
     const keyProvider = wifs.map((item: any) => item.wif)
     const eos = yield call(initEOS, { keyProvider })
@@ -63,7 +63,7 @@ function* undelegateBandwidthRequested(action: Action<UndelegateBandwidthParams>
     const netQuantity = resource === 'net' ? `${asset} EOS` : '0.0000 EOS'
     const cpuQuantity = resource === 'cpu' ? `${asset} EOS` : '0.0000 EOS'
     const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
-    const permission = yield select((state: RootState) => state.wallet.get('data').get('permission'))
+    const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
     const wifs = yield call(getEOSWifsByInfo, password, accountInfo, [permission])
     const keyProvider = wifs.map((item: any) => item.wif)
     const eos = yield call(initEOS, { keyProvider })

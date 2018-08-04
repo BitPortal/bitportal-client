@@ -58,23 +58,22 @@ export default class ResetPasswordForm extends Component {
           <Field
             label={<FormattedMessage id="cpwd_txtbox_title_new" />}
             tips={messages[locale].cpwd_title_tips_pwd}
-            placeholder={messages[locale].cpwd_title_plchd_pwd}
             name="oldPassword"
+            component={PasswordField}
+          />
+          <Field
+            label={<FormattedMessage id="cpwd_txtbox_title_repeat" />}
+            name="newPassword"
             component={PasswordField}
             rightContent={<PasswordStrength strength={getPasswordStrength(password)} />}
           />
           <Field
-            placeholder={messages[locale].cpwd_txtbox_title_repeat}
-            name="newPassword"
-            component={PasswordField}
-          />
-          <Field
-            placeholder={messages[locale].cpwd_txtbox_title_repeat}
+            label={<FormattedMessage id="cpwd_txtbox_title_repeat" />}
             name="confirmedNewPassword"
             component={PasswordField}
           />
           <Field
-            placeholder={messages[locale].cpwd_title_name_pswht}
+            label={<FormattedMessage id="cpwd_title_name_pswht" />}
             name="passwordHint"
             component={TextField}
           />

@@ -238,7 +238,7 @@ function* logoutRequested(action: Action<LogoutParams>) {
       yield call(decrypt, keystore, password)
     } else if (coin === 'EOS') {
       const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
-      const permission = yield select((state: RootState) => state.wallet.get('data').get('permission'))
+      const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
       yield call(getEOSWifsByInfo, password, accountInfo, [permission])
     }
 
