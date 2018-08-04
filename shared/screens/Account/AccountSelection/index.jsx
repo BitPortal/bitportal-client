@@ -72,9 +72,8 @@ export default class AccountSelection extends Component {
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            {keyPermissions.map(keyPermission =>
-              <AccountCard
-                key={keyPermission.permission}
+            {keyPermissions.map(keyPermission => <AccountCard
+                key={`${keyPermission.permission}_${keyPermission.accountName}`}
                 accountType={keyPermission.permission}
                 accountName={keyPermission.accountName}
                 eosValue={+eosPrice * +keyPermission.balance}
@@ -82,8 +81,8 @@ export default class AccountSelection extends Component {
                 balanceTitle="Balance"
                 onPress={this.selectAccount.bind(this, keyPermission)}
                 colors={keyPermission.permission !== 'owner' && Colors.ramColor}
-              />
-             )}
+            />
+            )}
           </ScrollView>
           <Loading isVisible={loading} text="导入中..." />
           <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearEOSAccountError} />

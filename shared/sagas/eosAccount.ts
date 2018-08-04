@@ -7,39 +7,56 @@ import * as actions from 'actions/eosAccount'
 import { getBalanceRequested } from 'actions/balance'
 import { createClassicWalletSucceeded } from 'actions/wallet'
 import secureStorage from 'utils/secureStorage'
-import { privateToPublic, isValidPrivate, initEOS, getPermissionsByKey } from 'core/eos'
+import { randomKey, privateToPublic, isValidPrivate, initEOS, getPermissionsByKey } from 'core/eos'
 import { getEOSKeys, decrypt, validateEntropy, encrypt } from 'core/key'
 import { getErrorMessage } from 'utils'
 import { popToRoot, push } from 'utils/location'
+import * as api from 'utils/api'
 import wif from 'wif'
 
 function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
   if (!action.payload) return
 
   try {
-    const name = action.payload.eosAccountName
-    const bpid = action.payload.bpid
-    const keystore = yield call(secureStorage.getItem, `HD_KEYSTORE_${bpid}`, true)
-    assert(keystore, 'Wallet dose not exist!')
+    const eosAccountName = action.payload.eosAccountName
     const password = action.payload.password
-    const entropy = yield call(decrypt, keystore, password)
-    assert(validateEntropy(entropy), 'Invalid entropy!')
-    const eosKeys = yield call(getEOSKeys, entropy)
-    assert(eosKeys, 'Generate EOS keys failed!')
-    const creator = 'eosio'
-    const keyProvider = '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
-    const owner = eosKeys.keys.owner.publicKey
-    const active = eosKeys.keys.active.publicKey
+    const hint = action.payload.hint
+    const inviteCode = action.payload.inviteCode
+    let privateKey = action.payload.privateKey
 
-    const eos = yield call(initEOS, { keyProvider })
-    yield call(eos.newaccount, { creator, name, owner, active })
-    const accountInfo = yield call(eos.getAccount, name)
-    const info = { ...accountInfo, bpid, timestamp: +Date.now() }
-    yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${name}`, info, true)
-    yield put(actions.createEOSAccountSucceeded(info))
-    yield put(reset('createWalletForm'))
-    if (action.payload.componentId) popToRoot(action.payload.componentId)
+    if (privateKey) {
+      assert(isValidPrivate(privateKey), 'Invalid private key')
+    } else {
+      privateKey = yield call(randomKey)
+    }
+
+    const publicKey = yield call(privateToPublic, privateKey)
+
+    console.log({
+      inviteCode,
+      chainType: 'eos',
+      walletId: eosAccountName,
+      ownerKey: publicKey,
+      activeKey: publicKey
+    })
+
+    const result = yield call(api.createEOSAccount, {
+      inviteCode,
+      chainType: 'eos',
+      walletId: eosAccountName,
+      ownerKey: publicKey,
+      activeKey: publicKey
+    })
+
+    console.log(result)
+    // const accountInfo = yield call(eos.getAccount, eosAccountName)
+    // const info = { ...accountInfo, bpid, timestamp: +Date.now() }
+    // yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, info, true)
+    // yield put(actions.createEOSAccountSucceeded(info))
+    // yield put(reset('createWalletForm'))
+    // if (action.payload.componentId) popToRoot(action.payload.componentId)
   } catch (e) {
+    console.log(e)
     yield put(actions.createEOSAccountFailed(getErrorMessage(e)))
   }
 }

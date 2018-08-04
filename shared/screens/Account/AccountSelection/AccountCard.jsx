@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import CurrencyText from 'components/CurrencyText'
 import LinearGradientContainer from 'components/LinearGradientContainer'
-import { View, Text, TouchableWithoutFeedback  } from 'react-native'
+import { View, Text, TouchableWithoutFeedback } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import styles from './styles'

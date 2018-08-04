@@ -11,7 +11,7 @@ import messages from './messages'
 
 const validate = (values) => {
   const errors = {}
-  
+
   if (!values.get('password')) {
     errors.password = 'Please input password'
   } else if (!!values.get('password') && values.get('password').length < 6) {
@@ -56,21 +56,21 @@ export default class ResetPasswordForm extends Component {
       <IntlProvider messages={messages[locale]}>
         <FormContainer>
           <Field
-            placeholder={messages[locale].cpwd_title_plchd_privtk}
-            name="privateKey"
-            component={TextAreaField}
-          />
-          <Field
             label={<FormattedMessage id="cpwd_txtbox_title_new" />}
             tips={messages[locale].cpwd_title_tips_pwd}
             placeholder={messages[locale].cpwd_title_plchd_pwd}
-            name="password"
+            name="oldPassword"
             component={PasswordField}
             rightContent={<PasswordStrength strength={getPasswordStrength(password)} />}
           />
           <Field
             placeholder={messages[locale].cpwd_txtbox_title_repeat}
-            name="confirmPassword"
+            name="newPassword"
+            component={PasswordField}
+          />
+          <Field
+            placeholder={messages[locale].cpwd_txtbox_title_repeat}
+            name="confirmedNewPassword"
             component={PasswordField}
           />
           <Field

@@ -48,12 +48,12 @@ export default class TransactionRecord extends Component {
     // transactions  --  blocks
     const number = type === 'transactions' ? transactionId : blockHeight
     Navigation.push(this.props.componentId, {
-      component: { 
-        name: 'BitPortal.BPWebView', 
-        passProps: { 
-          uri: `${EOS_EXPLORER_URL}/${type}/${number}`, 
-          needLinking: true 
-        } 
+      component: {
+        name: 'BitPortal.BPWebView',
+        passProps: {
+          uri: `${EOS_EXPLORER_URL}/${type}/${number}`,
+          needLinking: true
+        }
       }
     })
   }
@@ -67,7 +67,7 @@ export default class TransactionRecord extends Component {
     Dialog.alert(
       messages[this.props.locale].txdtl_title_button_copied,
       this.props.transactionInfo.getIn(['action_trace', 'trx_id']),
-      { positiveText: messages[this.props.locale].txdtl_title_button_ent } 
+      { positiveText: messages[this.props.locale].txdtl_title_button_ent }
     )
   }
 

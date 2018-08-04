@@ -28,6 +28,18 @@ const validate = (values) => {
     errors.password = 'Please input bitportal wallet password'
   }
 
+  if (!values.get('confirmedPassword')) {
+    errors.confirmedPassword = 'Please confirm password'
+  }
+
+  if (values.get('confirmedPassword') !== values.get('password')) {
+    errors.confirmedPassword = 'Password not match'
+  }
+
+  if (!values.get('inviteCode')) {
+    errors.inviteCode = 'Please input inviteCode'
+  }
+
   return errors
 }
 
@@ -88,8 +100,7 @@ export default class CreateEOSAccountForm extends Component {
   }
 
   submit = (data) => {
-    const bpid = this.props.wallet.get('data').get('bpid')
-    this.props.actions.createEOSAccountRequested(data.set('bpid', bpid).toJS())
+    this.props.actions.createEOSAccountRequested(data.toJS())
   }
 
   render() {
@@ -118,7 +129,7 @@ export default class CreateEOSAccountForm extends Component {
           />
           <Field
             placeholder={messages[locale].act_fid_plachd_repeat}
-            name="confirmPassword"
+            name="confirmedPassword"
             component={PasswordField}
           />
           <Field
@@ -130,7 +141,7 @@ export default class CreateEOSAccountForm extends Component {
             label={messages[locale].act_fid_title_invcd}
             tips={messages[locale].act_fid_tips_invcd}
             placeholder={messages[locale].act_fid_plachd_invcd}
-            name="invitationCode"
+            name="inviteCode"
             component={TextField}
           />
           {
@@ -141,20 +152,14 @@ export default class CreateEOSAccountForm extends Component {
               component={TextAreaField}
             />
           }
-
           <TouchableOpacity style={styles.privateKeyBtn} onPress={this.showPrivateKey}>
             <Text style={styles.text14}>
-              { hasPrivateKey ? messages[locale].act_btn_title_close : messages[locale].act_btn_title_key }
+              {hasPrivateKey ? messages[locale].act_btn_title_close : messages[locale].act_btn_title_key}
             </Text>
           </TouchableOpacity>
-
           <View style={styles.terms}>
             <TouchableOpacity style={styles.termsBtn} onPress={this.signAgreement}>
-              {
-                unsignAgreement
-                  ? <Ionicons name="ios-checkmark-circle" size={24} color={Colors.textColor_181_181_181} />
-                  : <Ionicons name="ios-checkmark-circle" size={24} color={Colors.textColor_89_185_226} />
-              }
+              <Ionicons name="ios-checkmark-circle" size={24} color={unsignAgreement ? Colors.textColor_181_181_181 : Colors.textColor_89_185_226} />
             </TouchableOpacity>
             <Text numberOfLines={1} style={styles.text14}>
               {messages[locale].act_btn_title_agrm}{' '}
@@ -163,7 +168,6 @@ export default class CreateEOSAccountForm extends Component {
               </Text>
             </Text>
           </View>
-
           <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text={messages[locale].act_button_text_create} />
           <Text onPress={this.importAccount} style={[styles.text14, { marginVertical: 20, color: Colors.textColor_89_185_226 }]}>
             {messages[locale].act_btn_title_import}

@@ -146,7 +146,7 @@ export default class Voting extends Component {
   }
 
   onRefresh = () => {
-    this.props.actions.getProducersRequested({ json: true, limit: 500 })
+    this.props.actions.getProducersWithInfoRequested({ json: true, limit: 500 })
   }
 
   closePrompt = () => {
@@ -157,12 +157,8 @@ export default class Voting extends Component {
     this.setState({ alertMessage: null })
   }
 
-  componentDidAppear() {
-    // this.props.actions.getProducersRequested({ json: true, limit: 500 })
-  }
-
   componentDidMount() {
-    this.props.actions.getProducersRequested({ json: true, limit: 500 })
+    this.props.actions.getProducersWithInfoRequested({ json: true, limit: 500 })
   }
 
   UNSAFE_componentWillUpdate() {
