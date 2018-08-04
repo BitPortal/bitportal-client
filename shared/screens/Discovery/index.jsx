@@ -8,7 +8,6 @@ import * as newsActions from 'actions/news'
 import { IntlProvider } from 'react-intl'
 import NewsList from './NewsList'
 import NewsBanner from './NewsBanner'
-import NewsBannerCard from './NewsBannerCard'
 import messages from './messages'
 import styles from './styles'
 
@@ -35,7 +34,6 @@ const PAGE_LENGTH = 10
 export default class Discovery extends Component {
   componentDidMount() {
     this.props.actions.getNewsListRequested({ startAt: 0, limit: PAGE_LENGTH, loadingMore: false })
-    this.props.actions.getNewsBannerRequested()
   }
 
   UNSAFE_componentWillUpdate() {
@@ -63,25 +61,12 @@ export default class Discovery extends Component {
     }
   }
 
-  getBanner = () => {
-    try {
-      const data = this.props.bannerData.toJS()
-      return data.map(item => <NewsBannerCard
-          imageUrl={item.img_url}
-          title={item.title}
-          // api don't have subtitle
-          subTitle={item.subTitle || ''}
-          key={item.id}
-          onPress={() => this.onBannerPress(item)}
-      />
-      )
-    } catch (e) {
-      return []
-    }
-  }
-
   onRefresh = () => {
-    this.props.actions.getNewsListRequested({ startAt: 0, limit: PAGE_LENGTH, loadingMore: false })
+    this.props.actions.getNewsListRequested({ 
+      startAt: 0, 
+      limit: PAGE_LENGTH, 
+      loadingMore: false 
+    })
   }
 
   onRowPress = (item) => {
@@ -113,7 +98,7 @@ export default class Discovery extends Component {
       component: {
         name: 'BitPortal.DiscoveryArticle',
         passProps: {
-          url: item.jumpUrl,
+          url: item.jump_url,
           title: item.title,
         }
       }
@@ -136,9 +121,6 @@ export default class Discovery extends Component {
           <NavigationBar
             leftButton={<CommonTitle title={messages[locale].discovery_title_name_dsc} />}
           />
-          <NewsBanner autoplay={true} style={{ paddingVertical: 20 }}>
-            {this.getBanner()}
-          </NewsBanner>
           <NewsList
             data={this.getNewsListData()}
             onRefresh={this.onRefresh}
@@ -147,6 +129,7 @@ export default class Discovery extends Component {
             onRowPress={this.onRowPress}
             nomore={nomore}
             loadingMore={loadingMore}
+            componentId={this.props.componentId}
           />
         </View>
       </IntlProvider>
