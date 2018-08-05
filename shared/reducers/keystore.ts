@@ -6,8 +6,10 @@ const initialState = Immutable.fromJS({
   data: [],
   loading: false,
   exporting: false,
+  changing: false,
   loaded: false,
-  error: null
+  error: null,
+  changingError: null
 })
 
 export default handleActions({
@@ -40,8 +42,17 @@ export default handleActions({
   [actions.exportEOSKeyFailed] (state, action) {
     return state.set('error', action.payload).set('exporting', false)
   },
+  [actions.changePasswordRequested] (state) {
+    return state.set('changing', true)
+  },
+  [actions.changePasswordSucceeded] (state, action) {
+    return state.set('changing', false)
+  },
+  [actions.changePasswordFailed] (state, action) {
+    return state.set('changingError', action.payload).set('changing', false)
+  },
   [actions.clearKeystoreError] (state) {
-    return state.set('error', null)
+    return state.set('error', null).set('changingError', null)
   },
   [actions.syncKeyRequested] (state) {
     return state.set('loading', true)

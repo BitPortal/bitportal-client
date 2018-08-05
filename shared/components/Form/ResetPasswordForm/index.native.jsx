@@ -1,29 +1,43 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
-import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
-import { FormContainer, TextField, TextAreaField, PasswordField, SubmitButton } from 'components/Form'
-import { normalizeText } from 'utils/normalize'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
+import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
+import { FormContainer, TextField, TextAreaField, PasswordField, SubmitButton } from 'components/Form'
 import PasswordStrength from 'components/PasswordStrength'
+import Alert from 'components/Alert'
+import { normalizeText } from 'utils/normalize'
+import { eosAccountSelector } from 'selectors/eosAccount'
 import { getPasswordStrength } from 'utils'
+import * as keystoreActions from 'actions/keystore'
 import messages from './messages'
+
+export const errorMessages = (error, messages) => {
+  if (!error) return null
+
+  const message = typeof error === 'object' ? error.message : error
+
+  switch (String(message)) {
+    case 'Key derivation failed - possibly wrong passphrase':
+      return 'Invalid old password'
+    default:
+      return 'Change failed!'
+  }
+}
 
 const validate = (values) => {
   const errors = {}
 
-  if (!values.get('password')) {
-    errors.password = 'Please input password'
-  } else if (!!values.get('password') && values.get('password').length < 6) {
-    errors.password = 'Password must be at least 6 characters'
+  if (!values.get('oldPassword')) {
+    errors.oldPassword = 'Please input password'
   }
 
-  if (!values.get('confirmedPassword')) {
-    errors.confirmedPassword = 'Please confirm the new password'
+  if (!values.get('newPassword')) {
+    errors.newPassword = 'Please confirm the new password'
   }
 
-  if (values.get('confirmedPassword') !== values.get('password')) {
-    errors.confirmedPassword = 'Passwords don\'t macth'
+  if (values.get('confirmedNewPassword') !== values.get('newPassword')) {
+    errors.confirmedNewPassword = 'Passwords don\'t macth'
   }
 
   return errors
@@ -32,10 +46,13 @@ const validate = (values) => {
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    password: formValueSelector('resetPasswordForm')(state, 'password')
+    keystore: state.keystore,
+    eosAccount: eosAccountSelector(state),
+    newPassword: formValueSelector('resetPasswordForm')(state, 'newPassword')
   }),
   dispatch => ({
     actions: bindActionCreators({
+      ...keystoreActions
     }, dispatch)
   })
 )
@@ -44,31 +61,33 @@ const validate = (values) => {
 
 export default class ResetPasswordForm extends Component {
   submit = (data) => {
-    this.props.onPress()
-    console.log(data.toJS())
+    const eosAccountName = this.props.eosAccount.get('data').get('account_name')
+    const componentId = this.props.componentId
+    this.props.actions.changePasswordRequested(data.set('componentId', componentId).set('eosAccountName', eosAccountName).delete('confirmedNewPassword').toJS())
   }
 
   render() {
-    const { handleSubmit, invalid, pristine, locale, password } = this.props
-    const disabled = invalid || pristine
+    const { handleSubmit, invalid, pristine, locale, newPassword, keystore } = this.props
+    const loading = keystore.get('changing')
+    const error = keystore.get('changingError')
+    const disabled = invalid || pristine || loading
 
     return (
       <IntlProvider messages={messages[locale]}>
         <FormContainer>
           <Field
-            label={<FormattedMessage id="cpwd_txtbox_title_new" />}
-            tips={messages[locale].cpwd_title_tips_pwd}
+            label="原密码"
             name="oldPassword"
             component={PasswordField}
           />
           <Field
-            label={<FormattedMessage id="cpwd_txtbox_title_repeat" />}
+            label="新密码"
             name="newPassword"
             component={PasswordField}
-            rightContent={<PasswordStrength strength={getPasswordStrength(password)} />}
+            rightContent={<PasswordStrength strength={getPasswordStrength(newPassword)} />}
           />
           <Field
-            label={<FormattedMessage id="cpwd_txtbox_title_repeat" />}
+            label="确认新密码"
             name="confirmedNewPassword"
             component={PasswordField}
           />
@@ -79,9 +98,11 @@ export default class ResetPasswordForm extends Component {
           />
           <SubmitButton
             disabled={disabled}
+            loading={loading}
             onPress={handleSubmit(this.submit)}
             text={<FormattedMessage id="cpwd_button_name_change" />}
           />
+          <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearKeystoreError} />
         </FormContainer>
       </IntlProvider>
     )
