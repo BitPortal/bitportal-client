@@ -2,7 +2,7 @@
   "zh": {
     "snd_title_name_accnm" : "账户名称",
     "snd_txtbox_acc_warning" : "请输入账户",
-    "snd_txtbox_acc_warning2" : "账户必须是从1-5与a-z的12位字符",
+    "snd_txtbox_acc_warning2" : "EOS账户名不能长于12位字符",
     "snd_txtbox_amn_warning": "请输入数量",
     "snd_txtbox_amn_warning2": "数量须大于0",
     "snd_txtbox_bls_warning": "您的余额不足",
@@ -19,7 +19,7 @@
   "en": {
     "snd_title_name_accnm" : "Account",
     "snd_txtbox_acc_warning" : "Please input the account",
-    "snd_txtbox_acc_warning2" : "The account must be formed in 12 characters from 1-5 or/and a-z ",
+    "snd_txtbox_acc_warning2" : "The maximum length of EOS account is 12",
     "snd_txtbox_amn_warning": "Please input the amount",
     "snd_txtbox_amn_warning2": "Amount must be more than 0",
     "snd_txtbox_bls_warning": "Balance is not enough",
