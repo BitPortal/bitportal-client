@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import CurrencyText from 'components/CurrencyText'
 import LinearGradientContainer from 'components/LinearGradientContainer'
 import { View, Text, TouchableWithoutFeedback } from 'react-native'

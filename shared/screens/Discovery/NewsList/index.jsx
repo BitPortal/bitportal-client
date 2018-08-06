@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 import { FlatList, View, ActivityIndicator, Text } from 'react-native'
-import NewsBanner from '../NewsBanner'
 import Colors from 'resources/colors'
-import NewsRow, { NewsRowTypes } from './NewsRow'
+import NewsBanner from '../NewsBanner'
+import NewsRow from './NewsRow'
 import styles from './styles'
 
 export default class NewsList extends PureComponent {

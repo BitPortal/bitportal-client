@@ -7,7 +7,6 @@ import { bindActionCreators } from 'redux'
 import * as newsActions from 'actions/news'
 import { IntlProvider } from 'react-intl'
 import NewsList from './NewsList'
-import NewsBanner from './NewsBanner'
 import messages from './messages'
 import styles from './styles'
 
@@ -62,10 +61,10 @@ export default class Discovery extends Component {
   }
 
   onRefresh = () => {
-    this.props.actions.getNewsListRequested({ 
-      startAt: 0, 
-      limit: PAGE_LENGTH, 
-      loadingMore: false 
+    this.props.actions.getNewsListRequested({
+      startAt: 0,
+      limit: PAGE_LENGTH,
+      loadingMore: false
     })
   }
 
@@ -75,7 +74,7 @@ export default class Discovery extends Component {
         component: {
           name: 'BitPortal.BPWebView',
           passProps: {
-            uri: "https://www.baidu.com",
+            uri: 'https://www.baidu.com',
             title: item.title
           }
         }
