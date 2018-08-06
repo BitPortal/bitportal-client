@@ -6,7 +6,7 @@ import { View, Text, ListView, TouchableOpacity, InteractionManager, LayoutAnima
 import { connect } from 'react-redux'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import { bindActionCreators } from 'redux'
-import { NODES } from 'constants/nodeSettings'
+import { EOS_NODES } from 'constants/chain'
 import { SwipeListView } from 'react-native-swipe-list-view'
 import { FontScale } from 'utils/dimens'
 import storage from 'utils/storage'
@@ -41,7 +41,7 @@ export default class NodeSettings extends Component {
 
   state = {
     CUSTOM_NODES: [],
-    activeNode: NODES[0],
+    activeNode: EOS_NODES[0],
     isVisible: false,
     alertMessage: null
   }
@@ -76,7 +76,7 @@ export default class NodeSettings extends Component {
       InteractionManager.runAfterInteractions(() => {
         if (!validateUrl(text)) {
           this.setState({ alertMessage: messages[this.props.locale].ndst_button_name_errnd })
-        } else if (this.state.CUSTOM_NODES.concat(NODES).filter(node => node === text).length) {
+        } else if (this.state.CUSTOM_NODES.concat(EOS_NODES).filter(node => node === text).length) {
           this.setState({ alertMessage: messages[this.props.locale].ndst_button_name_dplnd })
         } else if (text) {
           this.state.CUSTOM_NODES.push(text)
@@ -122,7 +122,7 @@ export default class NodeSettings extends Component {
     return (
       <View>
         <View style={styles.headTitle}><Text style={styles.text14}>默认节点</Text></View>
-        {NODES.map((item, index) => <DefaultItem key={index} item={item} active={activeNode === item} onPress={this.switchNode} />)}
+        {EOS_NODES.map((item, index) => <DefaultItem key={index} item={item} active={activeNode === item} onPress={this.switchNode} />)}
         {CUSTOM_NODES.length > 0 && <View style={styles.headTitle}><Text style={styles.text14}>自定义节点</Text></View>}
       </View>
     )

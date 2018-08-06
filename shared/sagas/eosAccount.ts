@@ -31,6 +31,7 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
     }
 
     const publicKey = yield call(privateToPublic, privateKey)
+
     const result = yield call(api.createEOSAccount, {
       inviteCode,
       chainType: 'eos',
@@ -38,6 +39,11 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
       ownerKey: publicKey,
       activeKey: publicKey
     })
+
+    const txhash = result.txhash
+    assert(txhash, 'No txhash!')
+    const eos = yield call(initEOS, {})
+    // const data = yield call(eos.getTransaction, { id: txhash })
 
     const accountInfo = yield call(eos.getAccount, eosAccountName)
     const privateKeyDecodedString = wif.decode(privateKey).privateKey.toString('hex')
@@ -55,7 +61,7 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
     yield call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_${permission}_${publicKey}`, keystore, true)
     yield call(secureStorage.setItem, `CLASSIC_WALLET_INFO_EOS_${eosAccountName}`, walletInfo, true)
     yield call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
-    yield put(actions.createEOSAccountSucceeded())
+    yield put(actions.createEOSAccountSucceeded(accountInfo))
     yield put(createClassicWalletSucceeded(walletInfo))
     yield put(getBalanceRequested({ code: 'eosio.token', account: walletInfo.eosAccountName }))
 

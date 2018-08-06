@@ -24,6 +24,8 @@ export const errorMessages = (error, messages) => {
   const message = typeof error === 'object' ? error.message : error
 
   switch (String(message)) {
+    case 'Account name already exists':
+      return 'Account name already exists!'
     case 'Invalid private key!':
       return 'Invalid private key!'
     default:
