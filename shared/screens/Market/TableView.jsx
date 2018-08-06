@@ -8,6 +8,7 @@ import {
   TouchableHighlight,
   VirtualizedList
 } from 'react-native'
+import { FontScale } from 'utils/dimens'
 import { ASSET_FRACTION } from 'constants/market'
 import styles from './styles'
 
@@ -60,7 +61,7 @@ class ListItem extends Component {
       >
         <View style={[styles.listItem, { ...itemExtraStyle }]}>
           <View style={styles.coin}>
-            <Text style={[styles.text16, { width: 30, marginLeft: 10 }]}>
+            <Text style={[styles.text16, { width: FontScale(25), marginLeft: 10 }]}>
               {index + 1}
             </Text>
             <Text style={[styles.text16, { marginRight: 10 }]}>

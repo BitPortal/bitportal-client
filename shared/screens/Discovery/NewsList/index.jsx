@@ -6,7 +6,7 @@ import Colors from 'resources/colors'
 import NewsRow, { NewsRowTypes } from './NewsRow'
 import styles from './styles'
 
-class NewsList extends PureComponent {
+export default class NewsList extends PureComponent {
   keyExtractor = item => item.id
 
   renderHeader = () => (
@@ -60,5 +60,3 @@ class NewsList extends PureComponent {
     )
   }
 }
-
-export default NewsList

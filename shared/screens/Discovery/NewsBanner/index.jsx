@@ -28,9 +28,7 @@ import styles from './styles'
 export default class NewBanner extends PureComponent {
 
   componentDidMount() {
-    setTimeout(() => {
-      this.props.actions.getNewsBannerRequested()
-    }, 3000);
+    this.props.actions.getNewsBannerRequested()
   }
 
   UNSAFE_componentWillUpdate() {
@@ -55,8 +53,6 @@ export default class NewBanner extends PureComponent {
     return banners.map(item => (
       <BannerCard
         imageUrl={item.img_url}
-        title={item.title}
-        subTitle={item.subTitle || ''}
         key={item.id}
         onPress={() => this.onBannerPress(item)}
       />
