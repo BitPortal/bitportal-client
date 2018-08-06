@@ -31,7 +31,13 @@ const validate = (values) => {
 }
 
 const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject) => {
-  props.actions.validateEOSAccountRequested({ field: 'name', value: props.name, resolve, reject })
+  props.actions.validateEOSAccountRequested({
+    field: 'name',
+    value: props.name,
+    errorMessage: messages[props.locale].contacts_txtbox_txt_invalid,
+    resolve,
+    reject
+  })
 })
 
 @connect(

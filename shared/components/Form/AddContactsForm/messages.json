@@ -1,18 +1,20 @@
 {
+	"zh": {
+		"contacts_title_name_acc" : "账户名",
+		"contacts_txtbox_txt_acchint" : "EOS账户名不能长于12位字符",
+		"contacts_txtbox_txt_acchint2" : "请输入用户名",
+		"contacts_title_name_Note" : "备注：",
+		"contacts_txtbox_txt_hint" : "最多支持24位字符",
+		"contacts_button_name_save" : "保存",
+		"contacts_txtbox_txt_invalid": "请输入有效账户"
+  },
   "en": {
 		"contacts_title_name_acc" : "Account",
 		"contacts_txtbox_txt_acchint" : "The maximum length of EOS account is 12",
 		"contacts_txtbox_txt_acchint2" : "Please input account name",
 		"contacts_title_name_Note" : "Memo",
 		"contacts_txtbox_txt_hint" : "Up to 24 characters",
-		"contacts_button_name_save" : "Save"
-  },
-  "zh": {
-		"contacts_title_name_acc" : "账户名称",
-		"contacts_txtbox_txt_acchint" : "EOS账户名不能长于12位字符",
-		"contacts_txtbox_txt_acchint2" : "请输入用户名",
-		"contacts_title_name_Note" : "备注：",
-		"contacts_txtbox_txt_hint" : "最多支持24位字符",
-		"contacts_button_name_save" : "保存"
+		"contacts_button_name_save" : "Save",
+		"contacts_txtbox_txt_invalid": "Account is not correct"
   }
 }

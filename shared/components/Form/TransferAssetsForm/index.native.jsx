@@ -48,7 +48,7 @@ const validate = (values, props) => {
 
   if (!values.get('toAccount')) {
     errors.toAccount = messages[props.locale].snd_txtbox_acc_warning
-  } else if (!validateEOSAccountName(values.get('toAccount'))) {
+  } else if (values.get('toAccount').length > 12) {
     errors.toAccount = messages[props.locale].snd_txtbox_acc_warning2
   }
 
