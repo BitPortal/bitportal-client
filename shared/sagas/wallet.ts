@@ -6,6 +6,7 @@ import assert from 'assert'
 import * as actions from 'actions/wallet'
 import { resetBalance, getBalanceRequested } from 'actions/balance'
 import { resetKey } from 'actions/keystore'
+import { resetTransaction } from 'actions/transaction'
 import { resetEOSAccount, syncEOSAccount, createEOSAccountSucceeded, getEOSAccountRequested } from 'actions/eosAccount'
 import { getErrorMessage } from 'utils'
 import secureStorage from 'utils/secureStorage'
@@ -251,6 +252,7 @@ function* logoutRequested(action: Action<LogoutParams>) {
     yield put(actions.resetWallet())
     yield put(resetEOSAccount())
     yield put(resetBalance())
+    yield put(resetTransaction())
     yield put(resetKey())
     yield put(actions.logoutSucceeded())
     if (action.payload.componentId) popToRoot(action.payload.componentId)
