@@ -42,7 +42,7 @@ export const fetchBase = async (
       fetchOptions.body = JSON.stringify(params)
     }
   }
-  console.log('###', url)
+
   return fetch(url, fetchOptions).then((res: any) => {
     if (!res.ok) {
       return res.json().then((e: any) => Promise.reject({ message: e.error_msg }))

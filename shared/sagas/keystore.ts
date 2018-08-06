@@ -7,7 +7,7 @@ import { getErrorMessage, encodeKey } from 'utils'
 import secureStorage from 'utils/secureStorage'
 import { encrypt, getEOSWifsByInfo } from 'core/key'
 import { isValidPrivate, privateToPublic } from 'core/eos'
-import { push, popToRoot } from 'utils/location'
+import { push, pop } from 'utils/location'
 import wif from 'wif'
 
 function* importEOSKeyRequested(action: Action<ImportEOSKeyParams>) {
@@ -67,7 +67,7 @@ function* changePasswordRequested(action: Action<ChangePasswordParams>) {
     }
 
     yield put(actions.changePasswordSucceeded())
-    if (action.payload.componentId) popToRoot(action.payload.componentId)
+    if (action.payload.componentId) pop(action.payload.componentId)
   } catch (e) {
     yield put(actions.changePasswordFailed(getErrorMessage(e)))
   }

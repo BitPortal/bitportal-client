@@ -6,16 +6,30 @@ import { LayoutAnimation, TouchableOpacity, Text, View } from 'react-native'
 import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
 import { IntlProvider } from 'react-intl'
 import { FormContainer, TextField, PasswordField, TextAreaField, SubmitButton } from 'components/Form'
-import { normalizeEOSAccountName } from 'utils/normalize'
+import { normalizeEOSAccountName, normalizeText } from 'utils/normalize'
 import { BITPORTAL_API_TERMS_URL } from 'constants/env'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import PasswordStrength from 'components/PasswordStrength'
+import Alert from 'components/Alert'
 import { getPasswordStrength } from 'utils'
 import * as walletActions from 'actions/wallet'
 import * as eosAccountActions from 'actions/eosAccount'
 import messages from './messages'
 import styles from './styles'
+
+export const errorMessages = (error, messages) => {
+  if (!error) return null
+
+  const message = typeof error === 'object' ? error.message : error
+
+  switch (String(message)) {
+    case 'Invalid private key!':
+      return 'Invalid private key!'
+    default:
+      return '创建失败'
+  }
+}
 
 const validate = (values) => {
   const errors = {}
@@ -100,7 +114,8 @@ export default class CreateEOSAccountForm extends Component {
   }
 
   submit = (data) => {
-    this.props.actions.createEOSAccountRequested(data.toJS())
+    const componentId = this.props.componentId
+    this.props.actions.createEOSAccountRequested(data.set('componentId', componentId).toJS())
   }
 
   render() {
@@ -108,6 +123,7 @@ export default class CreateEOSAccountForm extends Component {
     const { unsignAgreement, hasPrivateKey } = this.state
     const loading = eosAccount.get('loading')
     const disabled = invalid || pristine || loading || unsignAgreement
+    const error = eosAccount.get('error')
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -145,12 +161,14 @@ export default class CreateEOSAccountForm extends Component {
             component={TextField}
           />
           {
-            hasPrivateKey
-            && <Field
-              placeholder={messages[locale].act_fid_plachd_key}
-              name="privateKey"
-              component={TextAreaField}
-            />
+            hasPrivateKey && (
+              <Field
+                placeholder={messages[locale].act_fid_plachd_key}
+                name="privateKey"
+                normalize={normalizeText}
+                component={TextAreaField}
+              />
+            )
           }
           <TouchableOpacity style={styles.privateKeyBtn} onPress={this.showPrivateKey}>
             <Text style={styles.text14}>
@@ -172,6 +190,7 @@ export default class CreateEOSAccountForm extends Component {
           <Text onPress={this.importAccount} style={[styles.text14, { marginVertical: 20, color: Colors.textColor_89_185_226 }]}>
             {messages[locale].act_btn_title_import}
           </Text>
+          <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearEOSAccountError} />
         </FormContainer>
       </IntlProvider>
     )
