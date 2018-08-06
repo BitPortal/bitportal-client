@@ -46,7 +46,7 @@ export default class Tips extends Component {
     return (
       <TouchableOpacity onPress={this.alertTips} style={styles.btn}>
         <View style={[styles.container, styles.center]}>
-          <Text style={[styles.text14, { }]}> ？ </Text>
+          <Text style={[styles.text14]}> ？ </Text>
         </View>
       </TouchableOpacity>
     )

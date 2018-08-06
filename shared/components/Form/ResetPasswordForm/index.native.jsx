@@ -4,13 +4,17 @@ import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
 import { FormContainer, TextField, TextAreaField, PasswordField, SubmitButton } from 'components/Form'
+import { Text } from 'react-native'
+import { Navigation } from 'react-native-navigation'
 import PasswordStrength from 'components/PasswordStrength'
 import Alert from 'components/Alert'
 import { normalizeText } from 'utils/normalize'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { getPasswordStrength } from 'utils'
 import * as keystoreActions from 'actions/keystore'
+import Colors from 'resources/colors'
 import messages from './messages'
+import styles from './styles'
 
 export const errorMessages = (error, messages) => {
   if (!error) return null
@@ -66,6 +70,14 @@ export default class ResetPasswordForm extends Component {
     this.props.actions.changePasswordRequested(data.set('componentId', componentId).set('eosAccountName', eosAccountName).delete('confirmedNewPassword').toJS())
   }
 
+  importPrivateKey = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.AccountImport'
+      }
+    })
+  }
+
   render() {
     const { handleSubmit, invalid, pristine, locale, newPassword, keystore } = this.props
     const loading = keystore.get('changing')
@@ -76,18 +88,18 @@ export default class ResetPasswordForm extends Component {
       <IntlProvider messages={messages[locale]}>
         <FormContainer>
           <Field
-            label="原密码"
+            label={<FormattedMessage id="cpwd_txtbox_title_current" />}
             name="oldPassword"
             component={PasswordField}
           />
           <Field
-            label="新密码"
+            label={<FormattedMessage id="cpwd_txtbox_title_new" />}
             name="newPassword"
             component={PasswordField}
             rightContent={<PasswordStrength strength={getPasswordStrength(newPassword)} />}
           />
           <Field
-            label="确认新密码"
+            label={<FormattedMessage id="cpwd_txtbox_title_repeat" />}
             name="confirmedNewPassword"
             component={PasswordField}
           />
@@ -96,6 +108,16 @@ export default class ResetPasswordForm extends Component {
             name="passwordHint"
             component={TextField}
           />
+          <Text style={styles.text14}>
+            <Text style={{ color: Colors.textColor_89_185_226 }}> 
+              <FormattedMessage id="cpwd_hint_txt_txt1" /> 
+            </Text>
+            <FormattedMessage id="cpwd_hint_txt_txt2" />
+            <Text onPress={this.importPrivateKey} style={{ textDecorationLine: "underline", color: Colors.textColor_89_185_226 }}> 
+              <FormattedMessage id="cpwd_hint_txt_txt3" /> 
+            </Text>
+            <FormattedMessage id="cpwd_hint_txt_txt4" /> 
+          </Text>
           <SubmitButton
             disabled={disabled}
             loading={loading}
