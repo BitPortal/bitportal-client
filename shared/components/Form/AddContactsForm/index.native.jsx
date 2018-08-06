@@ -7,8 +7,6 @@ import {
   TextField,
   SubmitButton
 } from 'components/Form'
-import { validateEOSAccountName } from 'utils/validate'
-// import { normalizeText } from 'utils/normalize'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import { Navigation } from 'react-native-navigation'
 import { eosAccountSelector } from 'selectors/eosAccount'
@@ -20,20 +18,26 @@ const validate = (values) => {
   const errors = {}
 
   if (!values.get('name')) {
-    errors.name = <FormattedMessage id="import_txtbox_txt_acchint2" />
-  } else if (!validateEOSAccountName(values.get('name'))) {
-    errors.name = <FormattedMessage id="import_txtbox_txt_acchint" />
+    errors.name = <FormattedMessage id="contacts_txtbox_txt_acchint2" />
+  } else if (values.get('name').length > 12) {
+    errors.name = <FormattedMessage id="contacts_txtbox_txt_acchint" />
   }
 
   if (values.get('memo') && values.get('memo').length > 24) {
-    errors.memo = <FormattedMessage id="import_txtbox_txt_hint" />
+    errors.memo = <FormattedMessage id="contacts_txtbox_txt_hint" />
   }
 
   return errors
 }
 
 const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject) => {
-  props.actions.validateEOSAccountRequested({ field: 'name', value: props.name, resolve, reject })
+  props.actions.validateEOSAccountRequested({
+    field: 'name',
+    value: props.name,
+    errorMessage: messages[props.locale].contacts_txtbox_txt_invalid,
+    resolve,
+    reject
+  })
 })
 
 @connect(
@@ -81,19 +85,19 @@ export default class AddContactsForm extends Component {
       <IntlProvider messages={messages[locale]}>
         <FormContainer>
           <Field
-            label={<FormattedMessage id="import_title_name_acc" />}
+            label={<FormattedMessage id="contacts_title_name_acc" />}
             name="name"
             component={TextField}
           />
           <Field
-            label={<FormattedMessage id="import_title_name_Note" />}
+            label={<FormattedMessage id="contacts_title_name_Note" />}
             name="memo"
             component={TextField}
           />
           <SubmitButton
             disabled={disabled}
             onPress={handleSubmit(this.submit)}
-            text={<FormattedMessage id="import_button_name_save" />}
+            text={<FormattedMessage id="contacts_button_name_save" />}
           />
         </FormContainer>
       </IntlProvider>

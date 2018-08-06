@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, View, Text, Image } from 'react-native'
+import { TouchableOpacity, Image } from 'react-native'
 import styles from './styles'
 
 export default ({ imageUrl, onPress }) => (

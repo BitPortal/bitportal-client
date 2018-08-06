@@ -1,7 +1,7 @@
 {
   "zh": {
     "act_fid_title_name": "EOS 账户名",
-    "act_fid_tips_name": "EOS账户名是您EOS账户的唯⼀标识，一个EOS账户名对应⼀一个唯⼀的EOS私钥，根据该私钥所属权限获得相应的账户权限。",
+    "act_fid_tips_name": "EOS账户名是您EOS账户的唯⼀标识，一个EOS账户名对应⼀个唯⼀的EOS私钥，根据该私钥所属权限获得相应的账户权限。",
     "act_fid_title_password" : "设置密码",
     "act_fid_plachd_password": "输入密码",
     "act_fid_plachd_repeat" : "确认密码",

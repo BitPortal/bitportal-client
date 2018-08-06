@@ -7,7 +7,6 @@ import { Field, reduxForm, formValueSelector, change } from 'redux-form/immutabl
 import { Navigation } from 'react-native-navigation'
 import { FormContainer, TextField, TextAreaField, SubmitButton } from 'components/Form'
 import { normalizeEOSAccountName, normalizeUnitByFraction, normalizeMemo } from 'utils/normalize'
-import { validateEOSAccountName } from 'utils/validate'
 import * as transferActions from 'actions/transfer'
 import * as eosAccountActions from 'actions/eosAccount'
 import { eosAccountSelector } from 'selectors/eosAccount'
@@ -48,7 +47,7 @@ const validate = (values, props) => {
 
   if (!values.get('toAccount')) {
     errors.toAccount = messages[props.locale].snd_txtbox_acc_warning
-  } else if (!validateEOSAccountName(values.get('toAccount'))) {
+  } else if (values.get('toAccount').length > 12) {
     errors.toAccount = messages[props.locale].snd_txtbox_acc_warning2
   }
 

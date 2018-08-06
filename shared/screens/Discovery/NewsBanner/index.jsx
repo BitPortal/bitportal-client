@@ -1,14 +1,13 @@
 /* eslint-disable react/no-array-index-key */
 
 import React, { PureComponent } from 'react'
-import { View, Text, ScrollView, LayoutAnimation } from 'react-native'
+import { View, LayoutAnimation } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { bindActionCreators } from 'redux'
 import * as newsActions from 'actions/news'
 import { connect } from 'react-redux'
-import BannerCard from './BannerCard'
 import Swiper from 'react-native-swiper'
-import Colors from 'resources/colors'
+import BannerCard from './BannerCard'
 import styles from './styles'
 
 @connect(
@@ -26,7 +25,6 @@ import styles from './styles'
 )
 
 export default class NewBanner extends PureComponent {
-
   componentDidMount() {
     this.props.actions.getNewsBannerRequested()
   }
@@ -81,4 +79,3 @@ export default class NewBanner extends PureComponent {
     )
   }
 }
-

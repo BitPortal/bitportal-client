@@ -3,12 +3,11 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
-import { FormContainer, TextField, TextAreaField, PasswordField, SubmitButton } from 'components/Form'
+import { FormContainer, TextField, PasswordField, SubmitButton } from 'components/Form'
 import { Text } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import PasswordStrength from 'components/PasswordStrength'
 import Alert from 'components/Alert'
-import { normalizeText } from 'utils/normalize'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { getPasswordStrength } from 'utils'
 import * as keystoreActions from 'actions/keystore'
@@ -109,14 +108,14 @@ export default class ResetPasswordForm extends Component {
             component={TextField}
           />
           <Text style={styles.text14}>
-            <Text style={{ color: Colors.textColor_89_185_226 }}> 
-              <FormattedMessage id="cpwd_hint_txt_txt1" /> 
+            <Text style={{ color: Colors.textColor_89_185_226 }}>
+              <FormattedMessage id="cpwd_hint_txt_txt1" />
             </Text>
             <FormattedMessage id="cpwd_hint_txt_txt2" />
-            <Text onPress={this.importPrivateKey} style={{ textDecorationLine: "underline", color: Colors.textColor_89_185_226 }}> 
-              <FormattedMessage id="cpwd_hint_txt_txt3" /> 
+            <Text onPress={this.importPrivateKey} style={{ textDecorationLine: 'underline', color: Colors.textColor_89_185_226 }}>
+              <FormattedMessage id="cpwd_hint_txt_txt3" />
             </Text>
-            <FormattedMessage id="cpwd_hint_txt_txt4" /> 
+            <FormattedMessage id="cpwd_hint_txt_txt4" />
           </Text>
           <SubmitButton
             disabled={disabled}
