@@ -1,6 +1,6 @@
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Colors from 'resources/colors'
-import { FontScale } from 'utils/dimens'
+import { FontScale, SCREEN_WIDTH } from 'utils/dimens'
 
 export default EStyleSheet.create({
   privateKeyBtn: {
@@ -12,7 +12,7 @@ export default EStyleSheet.create({
     paddingVertical: 2
   },
   terms: {
-    width: '100%',
+    width: SCREEN_WIDTH - 100,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
@@ -20,7 +20,7 @@ export default EStyleSheet.create({
   },
   termsBtn: {
     padding: 15,
-    marginLeft: -15,
+    marginLeft: -30,
   },
   text14: {
     fontSize: FontScale(14),

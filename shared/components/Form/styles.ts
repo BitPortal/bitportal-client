@@ -25,7 +25,7 @@ export default EStyleSheet.create({
   },
   input: {
     flex: 1,
-    height: 40,
+    height: FontScale(30),
     color: Colors.textColor_255_255_238,
     fontSize: FontScale(14),
     paddingLeft: Platform.OS === 'android' ? -4 : 0

@@ -73,10 +73,10 @@ export default class Discovery extends Component {
     if (item.type === 'link' && item.jumpUrl && item.jumpUrl.length > 0) {
       Navigation.push(this.props.componentId, {
         component: {
-          name: 'BitPortal.DiscoveryArticle',
+          name: 'BitPortal.BPWebView',
           passProps: {
-            url: item.jumpUrl,
-            title: item.title,
+            uri: "https://www.baidu.com",
+            title: item.title
           }
         }
       })

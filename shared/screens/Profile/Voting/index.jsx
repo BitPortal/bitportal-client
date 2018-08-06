@@ -107,11 +107,17 @@ export default class Voting extends Component {
   }
 
   checkResources = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.Resources'
-      }
-    })
+    const { locale } = this.props
+    const eosAccountName = this.props.eosAccount.get('data').get('account_name')
+    if (!eosAccountName) {
+      this.setState({ alertMessage: messages[locale].vt_button_name_err })
+    } else {
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.Resources'
+        }
+      })
+    }
   }
 
   onRowPress = (producer) => {
