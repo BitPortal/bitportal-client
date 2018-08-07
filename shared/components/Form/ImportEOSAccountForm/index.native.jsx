@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { Navigation } from 'react-native-navigation'
 import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
 import { FormContainer, TextField, PasswordField, TextAreaField, SubmitButton } from 'components/Form'
 import PasswordStrength from 'components/PasswordStrength'
