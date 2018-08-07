@@ -45,7 +45,7 @@ export default handleActions({
   [actions.changePasswordRequested] (state) {
     return state.set('changing', true)
   },
-  [actions.changePasswordSucceeded] (state, action) {
+  [actions.changePasswordSucceeded] (state) {
     return state.set('changing', false)
   },
   [actions.changePasswordFailed] (state, action) {

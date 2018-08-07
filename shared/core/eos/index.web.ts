@@ -1,3 +1,4 @@
+import assert from 'assert'
 import Eos from 'eosjs'
 import { EOS_API_URL } from 'constants/env'
 import storage from 'utils/storage'

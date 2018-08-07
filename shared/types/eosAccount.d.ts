@@ -86,13 +86,13 @@ declare interface CreateAccountParams {
 }
 
 declare interface CreateEOSAccountParams {
-  creator: string
-  recovery: string
-  keyProvider?: string | string[]
   eosAccountName: string
+  privateKey?: string
   bpid?: string
+  inviteCode: string
   password: string
   componentId?: string
+  hint?: string
 }
 
 declare interface CreateEOSAccountResult {
@@ -103,11 +103,13 @@ declare interface CreateEOSAccountResult {
 
 declare interface ImportEOSAccountParams {
   eosAccountName: string
-  ownerPrivateKey: string
-  activePrivateKey: string
+  privateKey: string
+  publicKey: string
   password: string
   name: string
   componentId?: string
+  accountInfo: any
+  permission: string
 }
 
 declare interface ImportEOSAccountResult {
@@ -162,4 +164,15 @@ declare interface ValidateEOSAccountRejection {
   reject: any
   field: string
   message: string | object
+}
+
+declare interface GetEOSKeyAccountsParams {
+  privateKey: string
+  password: string
+  hint?: string
+  componentId?: string
+}
+
+declare interface GetEOSKeyAccountsResult {
+  account_names: string[]
 }

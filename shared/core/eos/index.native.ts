@@ -1,7 +1,7 @@
 import assert from 'assert'
 import Eos from 'react-native-eosjs'
 import { EOS_API_URL } from 'constants/env'
-import { EOS_MAINNET_NODES, EOS_TESTNET_NODES, EOS_MAINNET_CHAIN_ID, EOS_TESTNET_CHAIN_ID } from 'constants/chain'
+import { EOS_TESTNET_NODES, EOS_MAINNET_CHAIN_ID, EOS_TESTNET_CHAIN_ID } from 'constants/chain'
 import storage from 'utils/storage'
 
 const ecc = Eos.modules.ecc

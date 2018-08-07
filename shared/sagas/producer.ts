@@ -11,6 +11,7 @@ function* getProducersWithInfoRequested(action: Action<GetProducersWithInfoParam
   try {
     const limit = action.payload.limit || 500
     let producersWithInfo
+    let producersInfoObject: object
 
     const eos = yield call(initEOS, {})
     const [producers, producersInfo] = yield all([

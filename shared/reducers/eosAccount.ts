@@ -48,7 +48,7 @@ export default handleActions({
   [actions.getEOSKeyAccountsRequested] (state) {
     return state.set('loading', true)
   },
-  [actions.getEOSKeyAccountsSucceeded] (state, action) {
+  [actions.getEOSKeyAccountsSucceeded] (state) {
     return state.set('loaded', true).set('loading', false)
   },
   [actions.getEOSKeyAccountsFailed] (state, action) {

@@ -16,3 +16,10 @@ declare interface ExportEOSKeyParams {
 declare interface ExportKeyResult {
 
 }
+
+declare interface ChangePasswordParams {
+  oldPassword: string
+  newPassword: string
+  eosAccountName: string
+  componentId?: string
+}

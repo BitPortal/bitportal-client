@@ -8,7 +8,7 @@ import { getBalanceRequested } from 'actions/balance'
 import { createClassicWalletSucceeded } from 'actions/wallet'
 import secureStorage from 'utils/secureStorage'
 import { randomKey, privateToPublic, isValidPrivate, initEOS, getPermissionsByKey } from 'core/eos'
-import { getEOSKeys, decrypt, validateEntropy, encrypt } from 'core/key'
+import { encrypt } from 'core/key'
 import { getErrorMessage } from 'utils'
 import { popToRoot, push } from 'utils/location'
 import * as api from 'utils/api'
@@ -20,7 +20,7 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
   try {
     const eosAccountName = action.payload.eosAccountName
     const password = action.payload.password
-    const hint = action.payload.hint
+    // const hint = action.payload.hint
     const inviteCode = action.payload.inviteCode
     let privateKey = action.payload.privateKey
 
@@ -126,9 +126,9 @@ function* getEOSKeyAccountsRequested(action: Action<GetEOSKeyAccountsParams>) {
     const result = yield call(eos.getKeyAccounts, { public_key: publicKey })
     assert(result.account_names && result.account_names.length, 'No key accounts')
     const keyAccounts = result.account_names
-    let keyPermissions = []
+    let keyPermissions: string[] = []
 
-    for (accountName of keyAccounts) {
+    for (const accountName of keyAccounts) {
       const accountInfo = yield call(eos.getAccount, accountName)
       const permissions = getPermissionsByKey(publicKey, accountInfo)
       keyPermissions = [...keyPermissions, ...permissions]

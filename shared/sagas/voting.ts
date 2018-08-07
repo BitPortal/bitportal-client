@@ -5,9 +5,8 @@ import * as actions from 'actions/voting'
 import { getEOSAccountRequested } from 'actions/eosAccount'
 import secureStorage from 'utils/secureStorage'
 import { getErrorMessage } from 'utils'
-import { decrypt, getEOSWifsByInfo } from 'core/key'
+import { getEOSWifsByInfo } from 'core/key'
 import { initEOS, sortProducers } from 'core/eos'
-import wif from 'wif'
 
 function* votingRequested(action: Action<VotingParams>) {
   if (!action.payload) return

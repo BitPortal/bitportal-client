@@ -282,6 +282,7 @@ declare module 'core/eos' {
     initEOS: any
     sortProducers: any
     randomKey: any
+    getPermissionsByKey: any
   }
 
   const eos: EOS
