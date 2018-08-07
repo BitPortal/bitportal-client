@@ -8,8 +8,7 @@ export const EOS_MAINNET_NODES = [
 ]
 
 export const EOS_TESTNET_NODES = [
-  'https://api-kylin.eosasia.one',
-  'https://api-kylin.eoslaomao.com'
+  'https://api-kylin.eosasia.one'
 ]
 
 export const EOS_NODES = [
