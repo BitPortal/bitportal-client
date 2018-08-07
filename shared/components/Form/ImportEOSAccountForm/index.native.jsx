@@ -25,7 +25,7 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid private key!':
-      return messages.ast_imp_hint_invalidowner
+      return messages.import_txtbox_txt_invalidown
     default:
       return messages.ast_imp_hint_fail
   }
