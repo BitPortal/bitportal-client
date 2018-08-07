@@ -41,7 +41,8 @@ const Images = {
   transaction_history: require('./transaction_history.png'),
   transfer_sender: require('./transfer_sender.png'),
   transfer_receiver: require('./transfer_receiver.png'),
-  EOSIcon: require('./EOSIcon.png')
+  EOSIcon: require('./EOSIcon.png'),
+  tips: require('./tips.png')
 }
 
 export default Images

@@ -35,6 +35,10 @@ export default class Scanner extends Component {
     }
   }
 
+  componentDidAppear() {
+    this.scanner.reactivate()
+  }
+
   onSuccess = (e) => {
     const qrInfo = parseEOSQrString(e.data)
 
@@ -75,6 +79,7 @@ export default class Scanner extends Component {
             title={messages[locale].qrscn_title_name_qrscanner}
           />
           <QRCodeScanner
+            ref={(node) => { this.scanner = node }}
             onRead={this.onSuccess}
             showMarker={true}
           />
