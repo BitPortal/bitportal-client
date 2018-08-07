@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Text, View, TouchableOpacity, StyleSheet, Platform } from 'react-native'
+import { Text, View, Image, TouchableOpacity, StyleSheet, Platform } from 'react-native'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { FontScale } from 'utils/dimens'
 import Dialog from 'components/Dialog'
+import images from 'resources/images'
 import messages from './messages'
 
 const styles = StyleSheet.create({
@@ -17,10 +18,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  text14: {
-    fontSize: FontScale(14),
-    color: Colors.bgColor_000000,
-    marginTop: Platform.OS === 'ios' ? 0 : -FontScale(14) - 3
+  image: {
+    width: 16,
+    height: 16
   },
   btn: {
     width: 36,
@@ -45,9 +45,7 @@ export default class Tips extends Component {
   render() {
     return (
       <TouchableOpacity onPress={this.alertTips} style={styles.btn}>
-        <View style={[styles.container, styles.center]}>
-          <Text style={[styles.text14]}> ？ </Text>
-        </View>
+        <Image source={images.tips} style={styles.image} />
       </TouchableOpacity>
     )
   }
