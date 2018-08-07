@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Text, View, TouchableHighlight } from 'react-native'
+import { Text, View, Image, TouchableHighlight } from 'react-native'
 import Colors from 'resources/colors'
+import Images from 'resources/images'
 import { FormattedNumber } from 'react-intl'
 import { connect } from 'react-redux'
 import CurrencyText from 'components/CurrencyText'
@@ -10,6 +11,7 @@ const ListItem = ({ item, onPress, eosPrice, isAssetHidden }) => (
   <TouchableHighlight underlayColor={Colors.hoverColor} style={styles.listContainer} onPress={() => onPress(item)}>
     <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.minorThemeColor }]}>
       <View style={{ flexDirection: 'row' }}>
+        {item.get('symbol') === 'EOS' && <Image source={Images.EOSIcon} style={styles.image} /> } 
         <Text style={styles.text20}> {item.get('symbol')} </Text>
       </View>
       <View>

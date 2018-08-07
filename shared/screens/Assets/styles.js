@@ -61,6 +61,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 32,
     marginVertical: 20,
     backgroundColor: Colors.mainThemeColor
+  },
+  image: {
+    width: FontScale(25),
+    height: FontScale(25),
+    marginRight: 10,
   }
 })
 
