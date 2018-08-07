@@ -41,6 +41,10 @@ const validate = (values, props) => {
     errors.eosAccountName = messages[locale].act_fid_empty_name
   }
 
+  if (values.get('eosAccountName') && values.get('eosAccountName').length > 12) {
+    errors.eosAccountName = messages[locale].act_fid_limit_name
+  }
+
   if (!values.get('password')) {
     errors.password = messages[locale].act_fid_empty_psd
   }
