@@ -38,23 +38,23 @@ const validate = (values, props) => {
   const { locale } = props
 
   if (!values.get('eosAccountName')) {
-    errors.eosAccountName = messages[locale].act_fid_empty_name 
+    errors.eosAccountName = messages[locale].act_fid_empty_name
   }
 
   if (!values.get('password')) {
-    errors.password = messages[locale].act_fid_empty_psd 
+    errors.password = messages[locale].act_fid_empty_psd
   }
 
   if (!values.get('confirmedPassword')) {
-    errors.confirmedPassword = messages[locale].act_fid_empty_rptpsd 
+    errors.confirmedPassword = messages[locale].act_fid_empty_rptpsd
   }
 
   if (values.get('confirmedPassword') !== values.get('password')) {
-    errors.confirmedPassword = messages[locale].act_fid_error_rptpsd 
+    errors.confirmedPassword = messages[locale].act_fid_error_rptpsd
   }
 
   if (!values.get('inviteCode')) {
-    errors.inviteCode = messages[locale].act_fid_empty_invicode 
+    errors.inviteCode = messages[locale].act_fid_empty_invicode
   }
 
   return errors

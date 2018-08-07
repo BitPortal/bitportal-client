@@ -33,15 +33,15 @@ const validate = (values, props) => {
   const { locale } = props
 
   if (!values.get('oldPassword')) {
-    errors.oldPassword = messages[locale].cpwd_title_empty_psd 
+    errors.oldPassword = messages[locale].cpwd_title_empty_psd
   }
 
   if (!values.get('newPassword')) {
-    errors.newPassword = messages[locale].cpwd_title_empty_newpsd 
+    errors.newPassword = messages[locale].cpwd_title_empty_newpsd
   }
 
   if (values.get('confirmedNewPassword') !== values.get('newPassword')) {
-    errors.confirmedNewPassword = messages[locale].cpwd_title_empty_rptnewpsd 
+    errors.confirmedNewPassword = messages[locale].cpwd_title_empty_rptnewpsd
   }
 
   return errors

@@ -74,7 +74,7 @@ export default class Discovery extends Component {
         component: {
           name: 'BitPortal.BPWebView',
           passProps: {
-            uri: item.mobile_jump_url,  
+            uri: item.mobile_jump_url,
             title: item.title
           }
         }

@@ -11,7 +11,7 @@ const ListItem = ({ item, onPress, eosPrice, isAssetHidden }) => (
   <TouchableHighlight underlayColor={Colors.hoverColor} style={styles.listContainer} onPress={() => onPress(item)}>
     <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.minorThemeColor }]}>
       <View style={{ flexDirection: 'row' }}>
-        {item.get('symbol') === 'EOS' && <Image source={Images.EOSIcon} style={styles.image} /> } 
+        {item.get('symbol') === 'EOS' && <Image source={Images.EOSIcon} style={styles.image} /> }
         <Text style={styles.text20}> {item.get('symbol')} </Text>
       </View>
       <View>

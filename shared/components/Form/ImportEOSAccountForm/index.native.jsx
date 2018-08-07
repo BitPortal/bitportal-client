@@ -73,7 +73,6 @@ const validate = (values) => {
 @reduxForm({ form: 'importEOSAccountForm', validate })
 
 export default class ImportEOSAccountForm extends Component {
-
   state = {
     unsignAgreement: true
   }
