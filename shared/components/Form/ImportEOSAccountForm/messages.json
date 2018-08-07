@@ -23,7 +23,10 @@
 		"ast_imp_hint_activepermi" : "未授予Active权限",
 		"ast_imp_hint_unauowner" : "Owner权限不匹配",
 		"ast_imp_hint_unauactive" : "Active权限不匹配",
-		"ast_imp_hint_fail" : "导入失败"
+		"ast_imp_hint_fail" : "导入失败",
+		"import_txt_title_agrm": "同意",
+		"import_txt_title_term": "服务条款和隐私政策",
+		"import_nav_title_terms": "服务条款"
 	},
 	"en": {
 		"import_title_plchd_privtk" : "Please fill your private key...",
@@ -49,6 +52,9 @@
 		"ast_imp_hint_activepermi" : "Active permission dose not exist!",
 		"ast_imp_hint_unauowner" : "Unauthorized owner private key!",
 		"ast_imp_hint_unauactive" : "nauthorized active private key!",
-		"ast_imp_hint_fail" : "Import failed!"
+		"ast_imp_hint_fail" : "Import failed!",
+		"import_txt_title_agrm": "Agree on",
+		"import_txt_title_term": "Terms of Service and Privacy Policy",
+		"import_nav_title_terms": "Terms of Service"
   }
 }

@@ -18,8 +18,16 @@
     "act_btn_title_term": "服务条款和隐私政策",
     "act_button_text_create": "创建账户",
     "act_btn_title_import": "导入账户",
-    "act_fid_title_terms": "服务条款"
-  },
+    "act_fid_title_terms": "服务条款",
+    "act_fid_error_extact": "账号名已存在",
+    "act_fid_error_privatekey": "请导入有效的私钥",
+    "act_fid_error_failed": "创建失败",
+    "act_fid_empty_name": "请输入EOS账户名",
+    "act_fid_empty_psd": "请输入密码",
+    "act_fid_empty_rptpsd": "请确认密码",
+    "act_fid_error_rptpsd": "密码不相符",
+    "act_fid_empty_invicode": "请输入邀请码"
+  },  
   "en": {
     "act_fid_title_name" : "Name Your EOS Account",
     "act_fid_tips_name": "The EOS account name is the unique identifier of your EOS account. An EOS account name corresponds to a unique EOS private key, and the corresponding account rights are obtained according to the permissions of the private key.",
@@ -39,6 +47,14 @@
     "act_btn_title_term": "Terms of Service and Privacy Policy",
     "act_button_text_create": "Create",
     "act_btn_title_import": "Import",
-    "act_fid_title_terms": "Terms of Service"
+    "act_fid_title_terms": "Terms of Service",
+    "act_fid_error_extact": "Account name already exists!",
+    "act_fid_error_privatekey": "Invalid private key!",
+    "act_fid_error_failed": "Failed to create",
+    "act_fid_empty_name": "Please input EOS account name",
+    "act_fid_empty_psd": "Please input bitportal wallet password",
+    "act_fid_empty_rptpsd": "Please confirm password",
+    "act_fid_error_rptpsd": "Passwords do not match",
+    "act_fid_empty_invicode": "Please input inviteCode"
   }
 }

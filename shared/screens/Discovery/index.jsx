@@ -51,8 +51,8 @@ export default class Discovery extends Component {
         author: item.publisher,
         date: new Date(item.createdAt).toLocaleDateString(),
         id: item.id,
-        type: item.type,
-        jumpUrl: item.jump_url,
+        mobile_type: item.mobile_type,
+        mobile_jump_url: item.mobile_jump_url,
         content: item.content
       }))
     } catch (e) {
@@ -69,12 +69,12 @@ export default class Discovery extends Component {
   }
 
   onRowPress = (item) => {
-    if (item.type === 'link' && item.jumpUrl && item.jumpUrl.length > 0) {
+    if (item.mobile_type === 'link' && item.mobile_jump_url && item.mobile_jump_url.length > 0) {
       Navigation.push(this.props.componentId, {
         component: {
           name: 'BitPortal.BPWebView',
           passProps: {
-            uri: 'https://www.baidu.com',
+            uri: item.mobile_jump_url,  
             title: item.title
           }
         }

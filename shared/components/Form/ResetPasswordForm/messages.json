@@ -11,7 +11,12 @@
     "cpwd_title_plchd_privtk" : "请输入您的私钥",
     "cpwd_title_tips_pwd" : "密码是您使⽤BitPortal钱包的相关功能时所需要的凭证。该密码对BitPortal以外的其他应⽤是⽆效的。BitPortal不会以任何形式储存您的密码，若您忘记密码，请重新导⼊钱包以重置。",
     "cpwd_title_plchd_pwd" : "输入密码",
-    "cpwd_title_name_pswht" : "密码提示"
+    "cpwd_title_name_pswht" : "密码提示",
+    "cpwd_title_error_odpsd": "旧密码错误",
+    "cpwd_title_error_reset": "重置失败",
+    "cpwd_title_empty_psd": "请输入旧密码",
+    "cpwd_title_empty_newpsd": "请输入新密码",
+    "cpwd_title_empty_rptnewpsd": "与新密码不相同"
   },
   "en": {
     "cpwd_txtbox_title_current" : "Current Password",
@@ -25,6 +30,11 @@
     "cpwd_title_plchd_privtk" : "Please fill your private key...",
     "cpwd_title_tips_pwd" : "Password is your certificate to use the features of BitPortal Wallet. This password is not valid for applications other than BitPortal. BitPortal will not store your password in any form. If you forget your password, please re-import the private key to reset it.",
     "cpwd_title_plchd_pwd" : "Set password",
-    "cpwd_title_name_pswht" : "Password Hint"
+    "cpwd_title_name_pswht" : "Password Hint",
+    "cpwd_title_error_odpsd": "Invalid old password",
+    "cpwd_title_error_reset": "Change failed!",
+    "cpwd_title_empty_psd": "Please input password!",
+    "cpwd_title_empty_newpsd": "Please input the new password",
+    "cpwd_title_empty_rptnewpsd": "Passwords do not macth"
   }
 }

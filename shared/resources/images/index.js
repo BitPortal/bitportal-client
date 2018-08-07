@@ -40,7 +40,8 @@ const Images = {
   about_weibo: require('./About_Weibo.png'),
   transaction_history: require('./transaction_history.png'),
   transfer_sender: require('./transfer_sender.png'),
-  transfer_receiver: require('./transfer_receiver.png')
+  transfer_receiver: require('./transfer_receiver.png'),
+  EOSIcon: require('./EOSIcon.png')
 }
 
 export default Images

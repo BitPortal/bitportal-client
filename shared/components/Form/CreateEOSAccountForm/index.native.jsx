@@ -25,35 +25,36 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Account name already exists':
-      return 'Account name already exists!'
+      return messages.act_fid_error_extact
     case 'Invalid private key!':
-      return 'Invalid private key!'
+      return messages.act_fid_error_privatekey
     default:
-      return '创建失败'
+      return messages.act_fid_error_failed
   }
 }
 
-const validate = (values) => {
+const validate = (values, props) => {
   const errors = {}
+  const { locale } = props
 
   if (!values.get('eosAccountName')) {
-    errors.eosAccountName = 'Please input EOS account name'
+    errors.eosAccountName = messages[locale].act_fid_empty_name 
   }
 
   if (!values.get('password')) {
-    errors.password = 'Please input bitportal wallet password'
+    errors.password = messages[locale].act_fid_empty_psd 
   }
 
   if (!values.get('confirmedPassword')) {
-    errors.confirmedPassword = 'Please confirm password'
+    errors.confirmedPassword = messages[locale].act_fid_empty_rptpsd 
   }
 
   if (values.get('confirmedPassword') !== values.get('password')) {
-    errors.confirmedPassword = 'Password not match'
+    errors.confirmedPassword = messages[locale].act_fid_error_rptpsd 
   }
 
   if (!values.get('inviteCode')) {
-    errors.inviteCode = 'Please input inviteCode'
+    errors.inviteCode = messages[locale].act_fid_empty_invicode 
   }
 
   return errors
