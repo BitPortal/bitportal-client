@@ -45,7 +45,7 @@ export const fetchBase = async (
 
   return fetch(url, fetchOptions).then((res: any) => {
     if (!res.ok) {
-      return res.json().then((e: any) => Promise.reject({ message: e.error }))
+      return res.json().then((e: any) => Promise.reject({ message: e }))
     }
 
     const contentType = res.headers.get('content-type')
