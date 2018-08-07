@@ -22,25 +22,26 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
-      return 'Invalid old password'
+      return messages.cpwd_title_error_odpsd
     default:
-      return 'Change failed!'
+      return messages.cpwd_title_error_reset
   }
 }
 
-const validate = (values) => {
+const validate = (values, props) => {
   const errors = {}
+  const { locale } = props
 
   if (!values.get('oldPassword')) {
-    errors.oldPassword = 'Please input password'
+    errors.oldPassword = messages[locale].cpwd_title_empty_psd 
   }
 
   if (!values.get('newPassword')) {
-    errors.newPassword = 'Please confirm the new password'
+    errors.newPassword = messages[locale].cpwd_title_empty_newpsd 
   }
 
   if (values.get('confirmedNewPassword') !== values.get('newPassword')) {
-    errors.confirmedNewPassword = 'Passwords don\'t macth'
+    errors.confirmedNewPassword = messages[locale].cpwd_title_empty_rptnewpsd 
   }
 
   return errors
