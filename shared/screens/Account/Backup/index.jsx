@@ -1,16 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {
-  Text,
-  View,
-  Clipboard,
-  TextInput,
-  ScrollView,
-  TouchableHighlight
-} from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
+import { Text, View, Image, ScrollView, TouchableOpacity, TouchableHighlight } from 'react-native'
 import Colors from 'resources/colors'
+import images from 'resources/images'
 import styles from './styles'
 
 @connect(
@@ -31,19 +25,19 @@ export default class Backup extends Component {
     }
   }
 
-  state = {
-    isCopied: false,
-    privateKey: '(function(i,s,o,g,r,a,m){i[`GoogleAnalyticsObject`]=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,`script`,`//www.google-analytics.com/analytics.js`,`ga`);'
+  goToBackup = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.Backup'
+      }
+    })
   }
 
-  copyPrivateKey = () => {
-    Clipboard.setString(this.state.privateKey)
-    this.setState({ isCopied: true })
+  goToTutorials = () => {
+
   }
 
   render() {
-    const { isCopied } = this.state
-
     return (
       <View style={styles.container}>
         <NavigationBar
@@ -52,40 +46,34 @@ export default class Backup extends Component {
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={styles.content}>
-
-              <Text style={[styles.text14, { marginLeft: -1 }]}>
-                Please store the private key safely. Make sure no one or other device is monitring your screen
-              </Text>
-
-              <Text style={[styles.text14, { color: Colors.textColor_89_185_226, marginLeft: -1, marginTop: 25, marginBottom: 15 }]}>
-                Private Key
-              </Text>
-              <View style={[styles.inputContainer]}>
-                <TextInput
-                  editable={false}
-                  multiline={true}
-                  autoCorrect={false}
-                  style={styles.input}
-                  underlineColorAndroid="transparent"
-                  selectionColor={Colors.textColor_181_181_181}
-                  placeholder="private key"
-                  placeholderTextColor={Colors.textColor_181_181_181}
-                  value={this.state.privateKey}
-                />
+            <View style={[styles.content, { alignItems: 'center' }]}>
+              <View style={{ marginVertical: 20 }}>
+                <Image source={images.backup_group} style={styles.image} />
+              </View>
+              <Text style={styles.text14}>The final step: </Text>
+              <Text style={styles.text14}>Back up your account now!</Text>
+              <View style={{ marginTop: 20 }}>
+                <Text style={[styles.text14, { color: Colors.textColor_181_181_181 }]}>
+                  Backup account: Export mnemonics and copy it to a safe place, never save it on the web. Then try to transfer and transfer the small assets to start using.
+                </Text>
               </View>
               <TouchableHighlight
-                onPress={() => this.copyPrivateKey()}
+                onPress={() => this.goToBackup()}
                 underlayColor={Colors.textColor_89_185_226}
-                style={[styles.btn, styles.center, {
-                  marginTop: 25,
-                  backgroundColor: isCopied ? Colors.textColor_181_181_181 : Colors.textColor_89_185_226 }]
-                      }
+                style={[styles.btn, styles.center, { marginTop: 25, backgroundColor: Colors.textColor_89_185_226 }]}
               >
                 <Text style={styles.text14}>
-                  {isCopied ? 'Copied' : 'Copy'}
+                  Backup
                 </Text>
               </TouchableHighlight>
+              <TouchableOpacity
+                onPress={() => this.goToTutorials()}
+                style={[styles.btn, styles.center, { marginTop: 15 }]}
+              >
+                <Text style={[styles.text14, { color: Colors.textColor_89_185_226 }]}>
+                  View Backup Detailed Tutorials
+                </Text>
+              </TouchableOpacity>
             </View>
           </ScrollView>
         </View>

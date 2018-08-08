@@ -16,7 +16,6 @@ import AssetChart from 'screens/Assets/AssetChart'
 import AssetsTransfer from 'screens/Assets/AssetsTransfer'
 import AvailableAssets from 'screens/Assets/AvailableAssets'
 import Backup from 'screens/Account/Backup'
-import BackupTips from 'screens/Account/BackupTips'
 import AccountImport from 'screens/Account/AccountImport'
 import AccountCreation from 'screens/Account/AccountCreation'
 import AccountSelection from 'screens/Account/AccountSelection'
@@ -117,7 +116,6 @@ export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.ExportPrivateKey', () => screenComponent(ExportPrivateKey, store))
   Navigation.registerComponent('BitPortal.TransactionHistory', () => screenComponent(TransactionHistory, store))
   Navigation.registerComponent('BitPortal.Backup', () => screenComponent(Backup, store))
-  Navigation.registerComponent('BitPortal.BackupTips', () => screenComponent(BackupTips, store))
   Navigation.registerComponent('BitPortal.AccountImport', () => screenComponent(AccountImport, store))
   Navigation.registerComponent('BitPortal.AccountCreation', () => screenComponent(AccountCreation, store))
   Navigation.registerComponent('BitPortal.AccountSelection', () => screenComponent(AccountSelection, store))
@@ -151,7 +149,7 @@ export const startTabBasedApp = (locale) => {
                 {
                   component: {
                     id: 'BitPortalAssets',
-                    name: 'BitPortal.Assets',
+                    name: 'BitPortal.Backup',
                     options: {
                       topBar: {
                         visible: false,
