@@ -19,7 +19,9 @@ const styles = StyleSheet.create({
   },
   listItem: {
     width: SCREEN_WIDTH,
-    height: 50,
+    height: 50
+  },
+  extraListItem: {
     justifyContent: 'center',
     paddingLeft: 32,
     borderBottomColor: Colors.minorThemeColor,

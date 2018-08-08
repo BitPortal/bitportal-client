@@ -1,18 +1,16 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { View, LayoutAnimation } from 'react-native';
-import { Navigation } from 'react-native-navigation';
-import NavigationBar, { CommonTitle } from 'components/NavigationBar';
-import { bindActionCreators } from 'redux';
-import * as newsActions from 'actions/news';
-import { IntlProvider } from 'react-intl';
-import NewsList from './NewsList';
-import NewsBanner from './NewsBanner';
-import NewsBannerCard from './NewsBannerCard';
-import messages from './messages';
-import styles from './styles';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { View, LayoutAnimation } from 'react-native'
+import { Navigation } from 'react-native-navigation'
+import NavigationBar, { CommonTitle } from 'components/NavigationBar'
+import { bindActionCreators } from 'redux'
+import * as newsActions from 'actions/news'
+import { IntlProvider } from 'react-intl'
+import NewsList from './NewsList'
+import messages from './messages'
+import styles from './styles'
 
-const PAGE_LENGTH = 10;
+const PAGE_LENGTH = 10
 
 @connect(
   state => ({
@@ -24,34 +22,26 @@ const PAGE_LENGTH = 10;
     nomore: state.news.get('nomore')
   }),
   dispatch => ({
-    actions: bindActionCreators(
-      {
-        ...newsActions
-      },
-      dispatch
-    )
+    actions: bindActionCreators({
+      ...newsActions
+    }, dispatch)
   }),
   null,
   { withRef: true }
 )
+
 export default class Discovery extends Component {
   componentDidMount() {
-    this.props.actions.getNewsListRequested({
-      startAt: 0,
-      limit: PAGE_LENGTH,
-      loadingMore: false
-    });
-    this.props.actions.getNewsBannerRequested();
+    this.props.actions.getNewsListRequested({ startAt: 0, limit: PAGE_LENGTH, loadingMore: false })
   }
 
-  componentWillUpdate() {
-    LayoutAnimation.easeInEaseOut();
+  UNSAFE_componentWillUpdate() {
+    LayoutAnimation.easeInEaseOut()
   }
 
   getNewsListData = () => {
     try {
-      const data = this.props.listData.toJS();
-      // console.log('data',data);
+      const data = this.props.listData.toJS()
 
       return data.map(item => ({
         previewImage: item.img_url,
@@ -61,102 +51,75 @@ export default class Discovery extends Component {
         author: item.publisher,
         date: new Date(item.createdAt).toLocaleDateString(),
         id: item.id,
-        type: item.type,
-        jumpUrl: item.jump_url,
+        mobile_type: item.mobile_type,
+        mobile_jump_url: item.mobile_jump_url,
         content: item.content
-      }));
+      }))
     } catch (e) {
-      return [];
+      return []
     }
-  };
-
-  getBanner = () => {
-    try {
-      const data = this.props.bannerData.toJS();
-      return data.map(item => (
-        <NewsBannerCard
-          imageUrl={item.img_url}
-          title={item.title}
-          // api don't have subtitle
-          subTitle={item.subTitle || ''}
-          key={item.id}
-          onPress={() => this.onBannerPress(item)}
-        />
-      ));
-    } catch (e) {
-      return [];
-    }
-  };
+  }
 
   onRefresh = () => {
     this.props.actions.getNewsListRequested({
       startAt: 0,
       limit: PAGE_LENGTH,
       loadingMore: false
-    });
-  };
+    })
+  }
 
   onRowPress = (item) => {
-    if (item.type === 'link' && item.jumpUrl && item.jumpUrl.length > 0) {
+    if (item.mobile_type === 'link' && item.mobile_jump_url && item.mobile_jump_url.length > 0) {
       Navigation.push(this.props.componentId, {
         component: {
-          name: 'BitPortal.DiscoveryArticle',
+          name: 'BitPortal.BPWebView',
           passProps: {
-            url: item.jumpUrl,
+            uri: item.mobile_jump_url,
             title: item.title
           }
         }
-      });
+      })
     } else {
       Navigation.push(this.props.componentId, {
         component: {
           name: 'BitPortal.Markdown',
           passProps: {
             markdown: item.content,
-            title: item.title
+            title: item.title,
           }
         }
-      });
+      })
     }
-  };
+  }
 
   onBannerPress = (item) => {
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.DiscoveryArticle',
         passProps: {
-          url: item.jumpUrl,
-          title: item.title
+          url: item.jump_url,
+          title: item.title,
         }
       }
-    });
-  };
+    })
+  }
 
   onEndReached = () => {
     if (this.props.nomore || this.props.isRefreshing) {
-      return;
+      return
     }
-    const length = this.props.listData.toJS().length;
-    this.props.actions.getNewsListRequested({
-      startAt: length,
-      limit: PAGE_LENGTH,
-      loadingMore: true
-    });
-  };
+    const length = this.props.listData.toJS().length
+    this.props.actions.getNewsListRequested({ startAt: length, limit: PAGE_LENGTH, loadingMore: true })
+  }
 
   render() {
-    const { locale, loadingMore, isRefreshing, nomore } = this.props;
+    const { locale, loadingMore, isRefreshing, nomore } = this.props
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            leftButton={
-              <CommonTitle title={messages[locale].discovery_title_name_dsc} />
-            }
+            leftButton={<CommonTitle title={messages[locale].discovery_title_name_dsc} />}
           />
-          <NewsBanner autoplay={true} style={{ paddingVertical: 20 }}>
-            {this.getBanner()}
-          </NewsBanner>
           <NewsList
             data={this.getNewsListData()}
             onRefresh={this.onRefresh}
@@ -165,9 +128,10 @@ export default class Discovery extends Component {
             onRowPress={this.onRowPress}
             nomore={nomore}
             loadingMore={loadingMore}
+            componentId={this.props.componentId}
           />
         </View>
       </IntlProvider>
-    );
+    )
   }
 }

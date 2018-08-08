@@ -1,13 +1,12 @@
-/* @jsx */
 import React, { Component } from 'react'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { View, ScrollView, LayoutAnimation } from 'react-native'
 import { Navigation } from 'react-native-navigation'
+import { connect } from 'react-redux'
+import { IntlProvider } from 'react-intl'
 import Header from './Header'
 import Introduction from './Introduction'
 import Contacts from './Contacts'
-import { connect } from 'react-redux'
-import { IntlProvider } from 'react-intl'
 import messages from './messages'
 import styles from './styles'
 
@@ -29,7 +28,7 @@ export default class ProducerDetails extends Component {
     }
   }
 
-  componentWillUpdate() {
+  UNSAFE_componentWillUpdate() {
     LayoutAnimation.easeInEaseOut()
   }
 
@@ -38,14 +37,13 @@ export default class ProducerDetails extends Component {
     const introduce = producer.getIn(['info', 'introduce', locale])
     const contacts = producer.getIn(['info', 'org', 'social']) || producer.getIn(['info', 'org', 'social_network'])
     const votes = producer.get('total_votes')
-    const info = producer.get('info')
     const totalVotesWeight = totalProducers.get('data').get('total_producer_vote_weight')
 
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={producer&&producer.get&&producer.get('owner')}
+            title={producer && producer.get && producer.get('owner')}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <ScrollView showsVerticalScrollIndicator={false}>

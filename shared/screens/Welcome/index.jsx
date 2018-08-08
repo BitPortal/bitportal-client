@@ -1,11 +1,9 @@
-/* @tsx */
-
 import React, { Component } from 'react'
 import Swiper from 'react-native-swiper'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import { startTabBasedApp } from 'navigators'
-import { Platform, View, Text, Image, ImageBackground, TouchableHighlight } from 'react-native'
+import { View, Text, Image, ImageBackground, TouchableHighlight } from 'react-native'
 import SplashScreen from 'react-native-splash-screen'
 import Images from 'resources/images'
 import Colors from 'resources/colors'
@@ -68,12 +66,7 @@ export default class Welcome extends Component {
     }
   }
 
-  constructor(props, context) {
-    super(props, context)
-    this.goToHomePage = this.goToHomePage.bind(this)
-  }
-
-  async goToHomePage() {
+  goToHomePage = async () => {
     if (this.props.from === 'about') {
       Navigation.pop(this.props.componentId)
       return

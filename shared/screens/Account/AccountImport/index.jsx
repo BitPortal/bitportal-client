@@ -1,5 +1,3 @@
-/* @jsx */
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
@@ -56,7 +54,7 @@ export default class AccountImport extends Component {
             title={messages[locale].import_title_name_impt}
           />
           <View style={styles.scrollContainer}>
-            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingTop: 20, backgroundColor: Colors.bgColor_48_49_59 }} >
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ backgroundColor: Colors.bgColor_48_49_59 }}>
               <ImportEOSAccountForm onPress={() => this.goToBackUp()} componentId={this.props.componentId} />
               <View style={styles.keyboard} />
             </ScrollView>

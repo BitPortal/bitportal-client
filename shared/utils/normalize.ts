@@ -6,6 +6,8 @@ export const normalizeCaptch = (value: any, previousValue: any) => (value && ((/
 
 export const normalizeText = (value: any, previousValue: any) => (value && (!/\s/.test(value) ? value.trim() : previousValue))
 
+export const normalizeMemo = (value: any, previousValue: any) => (value && (!/(\s|\\|\_|\/|\&|\^|\#|\@|\$|\<|\>|\*|\~|\`|\-|\%)/.test(value) ? value.trim() : previousValue))
+
 export const normalizePasswordText = (value: any, previousValue: any) => (value && ((value.trim().length <= 32 && !/[^\x00-\xff]/.test(value.trim())) ? value.trim() : previousValue))
 
 export const normalizeNickNameText = (value: any, previousValue: string) => (value.split('').reduce((s: any, x: any) => (/[\u4e00-\u9fa5]/.test(x) ? s += 2 : s += 1), 0) > 20 ? previousValue : value.trim())
@@ -27,5 +29,3 @@ export const normalizeUnitByCurrency = (currency: string) => (value: any, previo
 export const normalizeUnitByFraction = (fraction: number) => (value: any, previousValue: any) => normalizeUnit(value, previousValue, fraction)
 
 export const normalizeEOSAccountName = (value: any, previousValue: any) => (value && ((/([1-5]|[a-z])+$/.test(value) && value.length <= 13) ? value.trim() : previousValue))
-
-export const isEOSAccountNameValid = (value: any) => (value && ((/([1-5]|[a-z])+$/.test(value) && value.length == 12))) ? true : false

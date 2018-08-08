@@ -1,5 +1,6 @@
 import {
   BITPORTAL_API_REST_URL,
+  BITPORTAL_API_MARKET_URL,
   BITPORTAL_API_CMS_URL,
   CURRENCY_RATE_URL
 } from 'constants/env';
@@ -54,9 +55,7 @@ export const fetchBase = async (
 
   return fetch(url, fetchOptions).then((res: any) => {
     if (!res.ok) {
-      return res
-        .json()
-        .then((e: any) => Promise.reject({ message: e.error_msg }));
+      return res.json().then((e: any) => Promise.reject({ message: e }));
     }
 
     const contentType = res.headers.get('content-type');
@@ -79,20 +78,18 @@ const cmsFetchBase = (
   baseUrl: BITPORTAL_API_CMS_URL
 });
 
-export const sendSMS = (params: SendSMSParams) => fetchBase('POST', '/auth/sms', params);
-export const sendEmail = (params: SendEmailParams) => fetchBase('POST', '/auth/email', params);
-export const smsLogin = (params: SMSLoginParams) => fetchBase('POST', '/auth/smslogin', params);
-export const login = () => fetchBase('POST', '/auth/login');
-export const emailCallback = (params: EmailCallbackParams) => fetchBase('GET', `/auth/email/callback/${params.id}`);
-export const generateTwoFactor = () => fetchBase('GET', '/auth/two-factor');
-export const getUserById = (params: UserIdParams) => fetchBase('GET', `/user/${params.id}`);
-export const getUserByToken = () => fetchBase('GET', '/user/getUserByToken');
-export const createUser = (params: CreateUserParams) => fetchBase('POST', '/user', params);
-export const updateUser = (params: UserIdParams) => fetchBase('PUT', `/user/${params.id}`, params);
-export const deleteUser = (params: UserIdParams) => fetchBase('DELETE', `/user/${params.id}`, params);
-export const bindUserTwoFactor = (params: BindUserTwoFactorParams) => fetchBase('DELETE', `/user/two-factor/${params.id}`, params);
-export const getTickers = (params?: TickerParams) => fetchBase('GET', '/tickers', params);
-export const getChart = (params?: ChartParams) => fetchBase('GET', '/chart', params);
+const marketFetchBase = (
+  method: FetchMethod = 'GET',
+  endPoint: string = '/hello',
+  params: object = {},
+  options: object = {}
+) => fetchBase(method, endPoint, params, {
+  ...options,
+  baseUrl: BITPORTAL_API_MARKET_URL
+});
+
+export const getTickers = (params?: TickerParams) => marketFetchBase('GET', '/tickers', params);
+export const getChart = (params?: ChartParams) => marketFetchBase('GET', '/chart', params);
 
 export const getCurrencyRate = () => fetchBase('GET', '', {}, { baseUrl: CURRENCY_RATE_URL });
 
@@ -101,3 +98,5 @@ export const getNewsBanner = () => cmsFetchBase('GET', '/banner');
 export const getVersionInfo = () => cmsFetchBase('GET', '/system');
 export const getProducersInfo = (params: any) => cmsFetchBase('GET', '/eosbp', params);
 export const getTokenDetail = (params: any) => cmsFetchBase('GET', '/token', params);
+
+export const createEOSAccount = (params: any) => fetchBase('POST', '/registry/wallets/campaign/eoscreation', params);

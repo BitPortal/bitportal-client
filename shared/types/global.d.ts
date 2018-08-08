@@ -15,6 +15,7 @@ declare const Datafeeds: any
 declare interface Config {
   ENV: string
   BITPORTAL_API_REST_URL: string
+  BITPORTAL_API_MARKET_URL: string
   BITPORTAL_API_CMS_URL: string
   BITPORTAL_API_WEBSOCKET_URL: string
   EOS_API_URL: string
@@ -36,6 +37,7 @@ declare interface RootState {
   producer?: any
   eosAccount?: any
   ram?: any
+  transaction?: any
 }
 
 declare interface FetchOptions {
@@ -280,6 +282,7 @@ declare module 'core/eos' {
     initEOS: any
     sortProducers: any
     randomKey: any
+    getPermissionsByKey: any
   }
 
   const eos: EOS

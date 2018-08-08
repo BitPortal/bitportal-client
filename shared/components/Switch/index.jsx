@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import Colors from 'resources/colors'
 import { View, Text, TouchableOpacity } from 'react-native'
-import { SCREEN_WDITH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
-import { IntlProvider, FormattedMessage } from 'react-intl'
+import { IntlProvider } from 'react-intl'
 import messages from './messages'
 
 const styles = EStyleSheet.create({
@@ -47,20 +45,19 @@ export default class Switch extends Component {
   render () {
     const { itemList, active, onSwitch, locale } = this.props
     const transactions = {
-      'Buy': messages[locale]["switch_popup_title_buy"],
-      'Sell':  messages[locale]["switch_popup_title_sell"],
-      'Delegate': messages[locale]["switch_popup_title_dlgt"],
-      'Undelegate': messages[locale]["switch_popup_title_undlgt"]
+      Buy: messages[locale].switch_popup_title_buy,
+      Sell: messages[locale].switch_popup_title_sell,
+      Delegate: messages[locale].switch_popup_title_dlgt,
+      Undelegate: messages[locale].switch_popup_title_undlgt
     }
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-          {itemList.map(item =>
-            <TouchableOpacity key={item} style={[styles.item, active === item ? styles.active : {}]} onPress={() => onSwitch(item)}>
-              <Text style={[styles.itemText, active === item ? styles.activeText : {}]}>
-                {transactions[item]}
-              </Text>
-            </TouchableOpacity>
+          {itemList.map(item => <TouchableOpacity key={item} style={[styles.item, active === item ? styles.active : {}]} onPress={() => onSwitch(item)}>
+            <Text style={[styles.itemText, active === item ? styles.activeText : {}]}>
+              {transactions[item]}
+            </Text>
+          </TouchableOpacity>
           )}
         </View>
       </IntlProvider>

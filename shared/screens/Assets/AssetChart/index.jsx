@@ -1,20 +1,32 @@
-/* @jsx */
-
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
-import { FormattedNumber } from 'react-intl'
-import { Text, View, ScrollView } from 'react-native'
+import { Text, View, TouchableOpacity, VirtualizedList, ActivityIndicator } from 'react-native'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import ChartWrapper from './ChartWrapper'
+import { FormattedNumber, FormattedMessage, IntlProvider } from 'react-intl'
+import { eosPriceSelector } from 'selectors/ticker'
+import { eosAccountNameSelector } from 'selectors/eosAccount'
+import CurrencyText from 'components/CurrencyText'
+import * as balanceActions from 'actions/balance'
+import * as transactionActions from 'actions/transaction'
+import messages from './messages'
 import RecordItem from './RecordItem'
 import styles from './styles'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.get('locale'),
+    eosPrice: eosPriceSelector(state),
+    transaction: state.transaction,
+    eosAccountName: eosAccountNameSelector(state)
   }),
-  null,
+  dispatch => ({
+    actions: bindActionCreators({
+      ...balanceActions,
+      ...transactionActions
+    }, dispatch)
+  }),
   null,
   { withRef: true }
 )
@@ -28,59 +40,123 @@ export default class AssetChart extends Component {
     }
   }
 
-  state = {
-    data: [
-      { amount: 234.532 },
-      { amount: -4212.42 }
-    ]
-  }
-
-  checkTransactionRecord = () => {
+  send = () => {
+    this.props.actions.setActiveAsset(this.props.eosItem.get('symbol'))
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.TransactionRecord'
+        name: 'BitPortal.AssetsTransfer'
       }
     })
   }
 
+  receive = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.ReceiveQRCode',
+        passProps: {
+          symbol: this.props.eosItem.get('symbol')
+        }
+      }
+    })
+  }
+
+  checkTransactionRecord = (transactionInfo) => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.TransactionRecord',
+        passProps: {
+          transactionInfo
+        }
+      }
+    })
+  }
+
+  loadMore = () => {
+    const hasMore = this.props.transaction.get('hasMore')
+
+    if (hasMore) {
+      const eosAccountName = this.props.eosAccountName
+      const offset = this.props.transaction.get('offset')
+      const position = this.props.transaction.get('position')
+      this.props.actions.getTransactionsRequested({ eosAccountName, offset, position })
+    }
+  }
+
+  onRefresh = () => {
+    const eosAccountName = this.props.eosAccountName
+    const offset = this.props.transaction.get('offset')
+    this.props.actions.getTransactionsRequested({ eosAccountName, offset, position: -1 })
+  }
+
+  componentDidAppear() {
+    this.onRefresh()
+  }
+
   render() {
+    const { locale, eosItem, eosPrice, transaction, eosAccountName } = this.props
+    const transferHistory = transaction.get('data').filter(transaction => transaction && transaction.getIn(['action_trace', 'act', 'name']) === 'transfer')
+    const loading = transaction.get('loading')
+    const hasMore = transaction.get('hasMore')
+    const loaded = transaction.get('loaded')
+
     return (
-      <View style={styles.container}>
-        <NavigationBar
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
-        />
-        <View style={styles.scrollContainer}>
-          <ScrollView showsVerticalScrollIndicator={false}>
+      <IntlProvider messages={messages[locale]}>
+        <View style={styles.container}>
+          <NavigationBar
+            title={eosItem.get('symbol')}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
+          />
+          <View style={styles.scrollContainer}>
             <View style={styles.content}>
-              <Text style={[styles.text24, { marginTop: 20 }]}>
-                <FormattedNumber
-                  value={0.16}
-                  maximumFractionDigits={4}
-                  minimumFractionDigits={4}
-                />
-              </Text>
-              <Text style={[styles.text14, { marginBottom: 20 }]}>
-                ≈ ¥
-                <FormattedNumber
-                  value={10.2}
-                  maximumFractionDigits={4}
-                  minimumFractionDigits={4}
-                />
-              </Text>
-
-              <ChartWrapper />
-
-              {
-                this.state.data.map((item, index) => (
-                  <RecordItem key={index} item={item} onPress={() => this.checkTransactionRecord()} />
-                ))
-              }
-
+              <View style={styles.topContent}>
+                <Text style={[styles.text24, { marginTop: 20 }]}>
+                  <FormattedNumber
+                    value={eosItem.get('balance')}
+                    maximumFractionDigits={4}
+                    minimumFractionDigits={4}
+                  />
+                </Text>
+                <Text style={[styles.text14, { marginBottom: 20 }]}>
+                  ≈
+                  <CurrencyText
+                    value={+eosItem.get('balance') * +eosPrice}
+                    maximumFractionDigits={2}
+                    minimumFractionDigits={2}
+                  />
+                </Text>
+              </View>
+              <VirtualizedList
+                data={transferHistory}
+                refreshing={loading && !loaded}
+                onRefresh={this.onRefresh}
+                getItem={(items, index) => (items.get ? items.get(index) : items[index])}
+                getItemCount={items => (items.size || 0)}
+                keyExtractor={(item, index) => String(index)}
+                renderItem={({ item }) => <RecordItem key={item.get('account_action_seq')} item={item} onPress={this.checkTransactionRecord} eosAccountName={eosAccountName} />}
+                onEndReached={this.loadMore}
+                onEndReachedThreshold={0.5}
+                ListFooterComponent={
+                  (loaded && hasMore)
+                    ? <ActivityIndicator style={{ marginVertical: 10 }} size="small" color="white" />
+                    : (loaded
+                    && <Text style={{ marginVertical: 10, alignSelf: 'center', color: 'white' }}>
+                      {messages[locale].token_title_name_nomore}
+                    </Text>)
+                }
+              />
             </View>
-          </ScrollView>
+            <View style={[styles.btnContainer, styles.between]}>
+              <TouchableOpacity style={[styles.center, styles.btn]} onPress={this.send}>
+                <Text style={styles.text14}><FormattedMessage id="token_button_name_send" /></Text>
+              </TouchableOpacity>
+              <View style={styles.line} />
+              <TouchableOpacity style={[styles.center, styles.btn]} onPress={this.receive}>
+                <Text style={styles.text14}><FormattedMessage id="token_button_name_receive" /></Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
-
-      </View>
+      </IntlProvider>
     )
   }
 }

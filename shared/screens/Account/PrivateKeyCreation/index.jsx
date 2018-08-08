@@ -1,5 +1,3 @@
-/* @jsx */
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
@@ -55,7 +53,7 @@ export default class PrivateKeyCreation extends Component {
 
   goToBackup = () => {
     if (!this.state.showPrivateKey) {
-      this.setState({ showPrivateKey: !this.state.showPrivateKey })
+      this.setState(prevState => ({ showPrivateKey: !prevState.showPrivateKey }))
     } else {
       Navigation.push(this.props.componentId, {
         component: {
@@ -96,8 +94,8 @@ export default class PrivateKeyCreation extends Component {
                 textFilter={text => (text.substring(0, 12))}
                 onChangeText={e => this.changeAccountName(e)}
                 TipsComponent={() => (
-                  !isAccountVaild &&
-                  <Text style={[styles.text14, { color: Colors.textColor_255_98_92 }]}>
+                  !isAccountVaild
+                  && <Text style={[styles.text14, { color: Colors.textColor_255_98_92 }]}>
                     Occupied Name
                   </Text>
                 )}
@@ -121,8 +119,8 @@ export default class PrivateKeyCreation extends Component {
                 />
               </View>
               {
-                !showPrivateKey &&
-                <BlurView
+                !showPrivateKey
+                && <BlurView
                   style={[styles.inputContainer, { borderWidth: 0, height: (SCREEN_WIDTH / 4) - 14, marginTop: -(SCREEN_WIDTH - 64) / 4 }]}
                   viewRef={this.state.viewRef}
                   blurType="dark"

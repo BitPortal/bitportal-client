@@ -1,5 +1,3 @@
-/* @jsx */
-
 import React from 'react'
 import { connect, Provider as ReduxProvider } from 'react-redux'
 import { IntlProvider, addLocaleData } from 'react-intl'

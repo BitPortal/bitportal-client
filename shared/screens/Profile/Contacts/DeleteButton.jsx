@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { TouchableHighlight, StyleSheet } from 'react-native'
 import Colors from 'resources/colors'

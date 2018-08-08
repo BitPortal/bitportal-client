@@ -1,3 +1,4 @@
+import assert from 'assert'
 import Eos from 'eosjs'
 import { EOS_API_URL } from 'constants/env'
 import storage from 'utils/storage'
@@ -40,6 +41,17 @@ const getProducers = (params: any) => {
 
 const sortProducers = (a: any, b: any) => parseInt(Eos.modules.format.encodeName(a, false), 10) - parseInt(Eos.modules.format.encodeName(b, false), 10)
 
+const getPermissionsByKey = (publickKey: string, accountInfo: any) => {
+  assert(accountInfo.permissions && accountInfo.permissions.length, 'EOS account permissions dose not exist!')
+  assert(accountInfo.account_name, 'EOS account name dose not exist!')
+  const permissions = accountInfo.permissions
+  const eosAccountName = accountInfo.account_name
+  const balance = accountInfo.core_liquid_balance ? accountInfo.core_liquid_balance.split(' ')[0] : 0
+  const roles = permissions.filter((permission: any) => permission.required_auth && permission.required_auth.keys.filter((key: any) => key && key.key === publickKey).length).map((permission: any) => ({ balance, accountInfo, accountName: eosAccountName, permission: permission.perm_name }))
+  const ownerPermission = roles.filter((role: any) => role.permission === 'owner')
+  return ownerPermission.length ? ownerPermission : roles
+}
+
 export {
   initEOS,
   getEOS,
@@ -47,5 +59,6 @@ export {
   isValidPrivate,
   randomKey,
   getProducers,
-  sortProducers
+  sortProducers,
+  getPermissionsByKey
 }

@@ -1,5 +1,3 @@
-/* @jsx */
-
 import React, { Component } from 'react'
 import { View, ScrollView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
@@ -29,7 +27,8 @@ export default class ResetPassword extends Component {
   }
 
   render() {
-    const { locale } = this.props
+    const { locale, componentId } = this.props
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -39,7 +38,7 @@ export default class ResetPassword extends Component {
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <ResetPasswordForm />
+              <ResetPasswordForm componentId={componentId} />
               <View style={styles.keyboard} />
             </ScrollView>
           </View>

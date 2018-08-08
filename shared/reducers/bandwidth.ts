@@ -32,7 +32,7 @@ export default handleActions({
   [actions.setActiveForm] (state, action) {
     return state.set('activeForm', action.payload)
   },
-  [actions.clearError] (state) {
+  [actions.clearBandwidthError] (state) {
     return state.set('error', null).set('delegating', false).set('undelegating', false)
   },
   [actions.hideSuccessModal] (state) {

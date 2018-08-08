@@ -1,20 +1,25 @@
-
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
 import { View, ScrollView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
+import { change } from 'redux-form/immutable'
 import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import TransferAssetsForm from 'components/Form/TransferAssetsForm'
+import { checkCamera } from 'utils/permissions'
 import styles from './styles'
 import messages from './messages'
-import TransferCard from './TransferCard'
 
 @connect(
   state => ({
     locale: state.intl.get('locale')
   }),
-  null,
+  dispatch => ({
+    actions: bindActionCreators({
+      change
+    }, dispatch)
+  }),
   null,
   { withRef: true }
 )
@@ -28,30 +33,43 @@ export default class AssetsTransfer extends Component {
     }
   }
 
-  state = {
-    isVisible: false
-  }
-
-  scanner = () => {
-    if (this.props.entry && this.props.entry === 'scanner') {
+  scanner = async () => {
+    if (this.props.entry === 'scanner') {
       Navigation.pop(this.props.componentId)
     } else {
-      Navigation.push(this.props.componentId, {
-        component: {
-          name: 'BitPortal.QRCodeScanner'
-        }
-      })
+      const authorized = await checkCamera()
+      if (authorized) {
+        Navigation.push(this.props.componentId, {
+          component: {
+            name: 'BitPortal.QRCodeScanner',
+            passProps: {
+              entry: 'form'
+            }
+          }
+        })
+      }
     }
   }
 
   transferAsset = () => {
-    this.setState({ isVisible: false }, () => {
-      Navigation.push(this.props.componentId, {
-        component: {
-          name: 'BitPortal.TransactionRecord'
-        }
-      })
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.TransactionRecord'
+      }
     })
+  }
+
+  componentDidMount() {
+    const qrInfo = this.props.qrInfo
+    const entry = this.props.entry
+
+    if (entry === 'scanner' && qrInfo) {
+      const eosAccountName = qrInfo.eosAccountName
+      const quantity = qrInfo.amount
+
+      if (eosAccountName) this.props.actions.change('transferAssetsForm', 'toAccount', eosAccountName)
+      if (quantity) this.props.actions.change('transferAssetsForm', 'quantity', quantity)
+    }
   }
 
   render() {
@@ -67,11 +85,10 @@ export default class AssetsTransfer extends Component {
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <TransferAssetsForm onPress={() => this.setState({ isVisible: true })} />
+              <TransferAssetsForm componentId={this.props.componentId} />
               <View style={styles.keyboard} />
             </ScrollView>
           </View>
-          <TransferCard isVisible={this.state.isVisible} onPress={() => { this.setState({ isVisible: false }) }} transferAsset={() => this.transferAsset()} />
         </View>
       </IntlProvider>
     )

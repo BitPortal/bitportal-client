@@ -4,6 +4,7 @@ import * as actions from 'actions/eosAccount'
 
 const initialState = Immutable.fromJS({
   data: {},
+  isAssetHidden: false,
   eosAccountList: [],
   loading: false,
   loaded: false,
@@ -44,13 +45,25 @@ export default handleActions({
   [actions.importEOSAccountFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)
   },
+  [actions.getEOSKeyAccountsRequested] (state) {
+    return state.set('loading', true)
+  },
+  [actions.getEOSKeyAccountsSucceeded] (state) {
+    return state.set('loaded', true).set('loading', false)
+  },
+  [actions.getEOSKeyAccountsFailed] (state, action) {
+    return state.set('error', action.payload).set('loading', false)
+  },
   [actions.syncEOSAccount] (state, action) {
     return state.set('eosAccountList', Immutable.fromJS(action.payload))
   },
-  [actions.clearError] (state) {
+  [actions.clearEOSAccountError] (state) {
     return state.set('error', null)
   },
   [actions.resetEOSAccount] () {
     return initialState
+  },
+  [actions.hiddenAssetDisplay] (state, action) {
+    return state.set('isAssetHidden', action.payload)
   }
 }, initialState)

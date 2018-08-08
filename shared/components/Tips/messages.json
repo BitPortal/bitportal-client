@@ -1,0 +1,10 @@
+{
+  "zh": {
+    "tips_alert_title_tip" : "提示",
+    "tips_alert_btn_enter" : "确定"
+  },
+  "en": {
+    "tips_alert_title_tip" : "Tips",
+    "tips_alert_btn_enter" : "Confirm"
+  }
+}

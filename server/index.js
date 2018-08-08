@@ -1,4 +1,3 @@
-/* @jsx */
 /* global __webpack_hash__ */
 
 import cluster from 'cluster'
@@ -49,6 +48,7 @@ if (cluster.isMaster) {
     <title>${title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
     <link rel="shortcut icon" href="/images/favicon.png">
+    <link rel="stylesheet" href="/styles/vendor.chunk.css?v=${__webpack_hash__}">
     <link rel="stylesheet" href="/styles/bundle.css?v=${__webpack_hash__}">
     ${chunks.map(chunk => `<link rel="stylesheet" href="/styles/${chunk}.chunk.css?v=${__webpack_hash__}">`)}
   </head>
@@ -56,6 +56,7 @@ if (cluster.isMaster) {
     <div id="app">${root}</div>
     <script>window.__PRELOADED_STATE__ = ${serialize(Transit.toJSON(state), { isJSON: true })}</script>
     <script>window.__PRELOADED_CHUNKS__ = ${JSON.stringify(chunks)}</script>
+    <script src="/scripts/vendor.chunk.js?v=${__webpack_hash__}"></script>
     <script src="/scripts/bundle.js?v=${__webpack_hash__}"></script>
   </body>
   </html>

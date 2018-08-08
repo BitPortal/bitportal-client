@@ -15,6 +15,19 @@ const initialState = Immutable.fromJS({
 })
 
 export default handleActions({
+  [actions.getProducersWithInfoRequested] (state) {
+    return state.set('loading', true)
+  },
+  [actions.getProducersWithInfoSucceeded] (state, action) {
+    const sortType = state.get('sortType')
+    return state.set('loaded', true).set('loading', false)
+      .setIn(['data', 'total_producer_vote_weight'], action.payload.total_producer_vote_weight)
+      .setIn(['data', 'more'], action.payload.more)
+      .setIn(['data', 'rows'], Immutable.fromJS(action.payload.rows).sortBy((v: any) => sortType === 'default' ? (v.getIn(['info', 'weight']) ? -+v.getIn(['info', 'weight']) : 0) : -+v.get('total_votes')))
+  },
+  [actions.getProducersWithInfoFailed] (state, action) {
+    return state.set('error', action.payload).set('loading', false)
+  },
   [actions.getProducersRequested] (state) {
     return state.set('loading', true)
   },

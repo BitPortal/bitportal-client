@@ -17,18 +17,37 @@ import sagas from 'sagas'
 import Colors from 'resources/colors'
 import VersionNumber from 'react-native-version-number'
 import SplashScreen from 'react-native-splash-screen'
+import DeviceInfo from 'react-native-device-info'
+import { ENV } from 'constants/env'
+import { noop } from 'utils'
 
 EStyleSheet.build({})
 
+if (ENV === 'production') {
+  global.console = {
+    info: noop,
+    log: noop,
+    warn: noop,
+    debug: noop,
+    error: noop
+  }
+
+  require('ErrorUtils').setGlobalHandler(noop)
+}
+
 const runApp = async () => {
-  const lang = await storage.getItem('bitportal_lang')
+  let lang = await storage.getItem('bitportal_lang')
   const currency = await storage.getItem('bitportal_currency', true)
   let symbol, rate
   if (currency) {
     symbol = currency.symbol
     rate = currency.rate
   }
-
+  if (!lang) {
+    lang = DeviceInfo.getDeviceLocale()
+    if (lang.indexOf('zh-') !== -1) lang = 'zh'
+    else lang = 'en'
+  }
   const store = configure({ intl: getInitialLang(lang), currency: getInitialCurrency(symbol, rate) })
   registerScreens(store)
   store.runSaga(sagas)

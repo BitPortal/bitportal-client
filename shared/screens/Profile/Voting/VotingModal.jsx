@@ -1,4 +1,3 @@
-/* @jsx */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Text, View, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native'
@@ -114,7 +113,7 @@ export default class VotingModal extends Component {
           <View style={styles.container}>
             <TouchableOpacity onPress={() => dismissModal()} style={{ flex: 1 }} />
             <View style={[styles.header, styles.between]}>
-              <TouchableOpacity onPress={() => dismissModal()} style={[styles.center, styles.close]} >
+              <TouchableOpacity onPress={() => dismissModal()} style={[styles.center, styles.close]}>
                 <Ionicons name="ios-close" size={28} color={Colors.bgColor_FFFFFF} />
               </TouchableOpacity>
               <Text style={styles.text18}> <FormattedMessage id="vt_btmsec_name_selected" /> </Text>

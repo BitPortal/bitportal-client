@@ -1,20 +1,27 @@
-/* @jsx */
-
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { Text, View, SectionList } from 'react-native'
+import { View, Text, VirtualizedList, ActivityIndicator } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
-import ListItem from './ListItem'
+import { eosAccountNameSelector } from 'selectors/eosAccount'
+import * as transactionActions from 'actions/transaction'
+import RecordItem from 'screens/Assets/AssetChart/RecordItem'
 import messages from './messages'
 import styles from './styles'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.get('locale'),
+    transaction: state.transaction,
+    eosAccountName: eosAccountNameSelector(state),
   }),
-  null,
+  dispatch => ({
+    actions: bindActionCreators({
+      ...transactionActions
+    }, dispatch)
+  }),
   null,
   { withRef: true }
 )
@@ -28,25 +35,44 @@ export default class TransationHistory extends Component {
     }
   }
 
-  state = {
-    sections: [
-      { timeStamp: '04/28/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] },
-      { timeStamp: '05/03/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] },
-      { timeStamp: '06/21/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] },
-      { timeStamp: '04/28/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] },
-      { timeStamp: '05/03/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] },
-      { timeStamp: '06/21/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] },
-      { timeStamp: '04/28/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] },
-      { timeStamp: '05/03/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] },
-      { timeStamp: '06/21/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] },
-      { timeStamp: '04/28/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] },
-      { timeStamp: '05/03/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] },
-      { timeStamp: '06/21/2018 14:20:17', data: [{ amount: 14213.3242 }, { amount: -41232.422 }] }
-    ]
+  checkTransactionRecord = (transactionInfo) => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.TransactionRecord',
+        passProps: {
+          transactionInfo
+        }
+      }
+    })
+  }
+
+  onRefresh = () => {
+    const eosAccountName = this.props.eosAccountName
+    const offset = this.props.transaction.get('offset')
+    this.props.actions.getTransactionsRequested({ eosAccountName, offset, position: -1 })
+  }
+
+  loadMore = () => {
+    const hasMore = this.props.transaction.get('hasMore')
+
+    if (hasMore) {
+      const eosAccountName = this.props.eosAccountName
+      const offset = this.props.transaction.get('offset')
+      const position = this.props.transaction.get('position')
+      this.props.actions.getTransactionsRequested({ eosAccountName, offset, position })
+    }
+  }
+
+  componentDidMount() {
+    this.onRefresh()
   }
 
   render() {
-    const { locale } = this.props
+    const { locale, transaction, eosAccountName } = this.props
+    const transferHistory = transaction.get('data')
+    const loading = transaction.get('loading')
+    const hasMore = transaction.get('hasMore')
+    const loaded = transaction.get('loaded')
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -56,17 +82,24 @@ export default class TransationHistory extends Component {
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
-            <SectionList
-              renderItem={({ item, index }) => <ListItem key={index} item={item} onPress={() => {}} />}
-              renderSectionHeader={({ section: { timeStamp } }) => (
-                <View style={styles.sectionHeader}>
-                  <Text style={[styles.text12, { marginLeft: 30 }]}>
-                    { timeStamp }
-                  </Text>
-                </View>
-              )}
-              sections={this.state.sections}
-              keyExtractor={(item, index) => item + index}
+            <VirtualizedList
+              data={transferHistory}
+              refreshing={loading && !loaded}
+              onRefresh={this.onRefresh}
+              getItem={(items, index) => (items.get ? items.get(index) : items[index])}
+              getItemCount={items => (items.size || 0)}
+              keyExtractor={(item, index) => String(index)}
+              renderItem={({ item }) => <RecordItem key={item.get('account_action_seq')} item={item} onPress={this.checkTransactionRecord} eosAccountName={eosAccountName} />}
+              onEndReached={this.loadMore}
+              onEndReachedThreshold={0.5}
+              ListFooterComponent={
+                (loaded && hasMore)
+                  ? <ActivityIndicator style={{ marginVertical: 10 }} size="small" color="white" />
+                  : (loaded
+                  && <Text style={{ marginVertical: 10, alignSelf: 'center', color: 'white' }}>
+                    {messages[locale].txhis_sec_time_nomore}
+                  </Text>)
+              }
             />
           </View>
         </View>

@@ -7,4 +7,9 @@ export const getProducersFailed = createAction<ErrorMessage>('producer/GET_FAILE
 export const getProducersInfoRequested = createAction<GetProducersInfoParams>('producer/GET_INFO_REQUESTED')
 export const getProducersInfoSucceeded = createAction<GetProducersInfoResult>('producer/GET_INFO_SUCCEEDED')
 export const getProducersInfoFailed = createAction<ErrorMessage>('producer/GET_INFO_FAILED')
+
+export const getProducersWithInfoRequested = createAction<GetProducersWithInfoParams>('producer/GET_ALL_REQUESTED')
+export const getProducersWithInfoSucceeded = createAction<GetProducersWithInfoResult>('producer/GET_ALL_SUCCEEDED')
+export const getProducersWithInfoFailed = createAction<ErrorMessage>('producer/GET_ALL_FAILED')
+
 export const sortProducers = createAction<string>('producer/SORT')

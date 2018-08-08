@@ -1,4 +1,3 @@
-/* @tsx */
 import React, { Component } from 'react'
 import Colors from 'resources/colors'
 import { Text, View, ScrollView, TextInput, TouchableHighlight, Clipboard } from 'react-native'

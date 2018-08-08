@@ -17,7 +17,9 @@ const styles = StyleSheet.create({
   textTitle: {
     fontSize: FontScale(20),
     color: Colors.textColor_FFFFEE,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    width: SCREEN_WIDTH / 2,
+    textAlign: 'center'
   },
   navButton: {
     minWidth: 100,

@@ -69,6 +69,16 @@ export const getErrorMessage = (error: any) => {
     }
   }
 
+  if (
+    error.message
+    && typeOf(error.message) === 'Object'
+    && error.message.code
+    && error.message.name
+    && error.message.what
+  ) {
+    return error.message.what;
+  }
+
   return error.message || 'unknown error';
 };
 
@@ -106,6 +116,57 @@ export const eosQrString = (
   token: string
 ) => `eos:${account_name}?amount=${amount || 0}&token=${token || 'EOS'}`;
 
+export const eosQrString = (
+  account_name: string,
+  amount: number,
+  token: string
+) => `eos:${account_name}?amount=${amount || 0}&token=${token || 'EOS'}`;
+
+export const parseEOSQrString = (text: string) => {
+  let eosAccountName;
+  let amount;
+  let token;
+
+  if (text && typeof text === 'string') {
+    const account = text.split('?')[0];
+    const queryString = text.split('?')[1];
+
+    if (account && account.split(':')[1]) {
+      if (account.split(':')[0] !== 'eos') return null;
+
+      eosAccountName = account.split(':')[1];
+
+      if (queryString) {
+        const queryObject: any = queryString
+          .split('&')
+          .map((item: any) => {
+            if (
+              item
+              && typeof item === 'string'
+              && item.split('=').length === 2
+              && item.split('=')[0]
+              && item.split('=')[1]
+            ) {
+              return { [item.split('=')[0]]: item.split('=')[1] };
+            }
+
+            return null;
+          })
+          .filter((item: any) => !!item)
+          .reduce((items, item) => ({ ...items, ...item }), {});
+
+        amount = queryObject.amount;
+        token = queryObject.token && queryObject.token.toUpperCase();
+
+        if (!token) return null;
+      }
+
+      return { eosAccountName, amount, token };
+    }
+
+    return null;
+  }
+};
 export const filterBgColor = (data: string) => {
   if (data && parseFloat(data) > 0) {
     return Colors.bgColor_104_189_57;

@@ -13,6 +13,7 @@ import { sortFilterSelector } from 'selectors/ticker';
 import { bindActionCreators } from 'redux';
 import * as tickerActions from 'actions/ticker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { FontScale } from 'utils/dimens';
 import { ASSET_FRACTION, DEFAULT_SORT_FILTER } from 'constants/market';
 import styles from './styles';
 
@@ -237,7 +238,9 @@ class ListItem extends Component {
       >
         <View style={[styles.listItem, { ...itemExtraStyle }]}>
           <View style={styles.coin}>
-            <Text style={[styles.text16, { width: 30, marginLeft: 10 }]}>
+            <Text
+              style={[styles.text16, { width: FontScale(25), marginLeft: 10 }]}
+            >
               {index + 1}
             </Text>
             <Text style={[styles.text16, { marginRight: 10 }]}>

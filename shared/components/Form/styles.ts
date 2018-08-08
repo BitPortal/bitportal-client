@@ -7,7 +7,7 @@ export default EStyleSheet.create({
   formContainer: {
     width: '100%',
     paddingHorizontal: 32,
-    paddingTop: 5,
+    paddingTop: 20,
     paddingBottom: 20,
     alignItems: 'center',
     flex: 1,
@@ -16,7 +16,7 @@ export default EStyleSheet.create({
   },
   fieldInput: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.textColor_181_181_181,
+    borderBottomColor: Colors.textColor_107_107_107,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -25,10 +25,10 @@ export default EStyleSheet.create({
   },
   input: {
     flex: 1,
-    height: 40,
+    height: FontScale(40),
     color: Colors.textColor_255_255_238,
     fontSize: FontScale(14),
-    paddingLeft: Platform.OS == 'android' ? -4 : 0
+    paddingLeft: Platform.OS === 'android' ? -4 : 0
   },
   areaInput: {
     flex: 1,
@@ -45,9 +45,15 @@ export default EStyleSheet.create({
     flexDirection: 'column',
     width: '100%'
   },
-  text14: {
+  fieldInfo: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  label: {
     fontSize: FontScale(14),
-    color: Colors.textColor_89_185_226
+    color: Colors.textColor_255_255_238,
   },
   submitButton: {
     marginTop: 3,
@@ -66,9 +72,6 @@ export default EStyleSheet.create({
   },
   indicator: {
     marginLeft: 10
-  },
-  disabled: {
-    backgroundColor: Colors.textColor_181_181_181
   },
   submitButtonText: {
     color: 'white',

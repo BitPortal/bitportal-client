@@ -1,12 +1,14 @@
-/* @jsx */
-
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { Text, View, TouchableOpacity } from 'react-native'
+import { View } from 'react-native'
 import QRCodeScanner from 'react-native-qrcode-scanner'
-import { connect } from 'react-redux'
+import { change } from 'redux-form/immutable'
 import { IntlProvider } from 'react-intl'
+import * as balanceActions from 'actions/balance'
+import { parseEOSQrString } from 'utils'
 import messages from './messages'
 import styles from './styles'
 
@@ -14,7 +16,12 @@ import styles from './styles'
   state => ({
     locale: state.intl.get('locale')
   }),
-  null,
+  dispatch => ({
+    actions: bindActionCreators({
+      ...balanceActions,
+      change
+    }, dispatch)
+  }),
   null,
   { withRef: true }
 )
@@ -28,15 +35,37 @@ export default class Scanner extends Component {
     }
   }
 
-  onSuccess() {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.AssetsTransfer',
-        passProps: {
-          entry: 'scanner'
-        }
+  componentDidAppear() {
+    this.scanner.reactivate()
+  }
+
+  onSuccess = (e) => {
+    const qrInfo = parseEOSQrString(e.data)
+
+    if (qrInfo) {
+      const token = qrInfo.token
+      this.props.actions.setActiveAsset(token)
+
+      if (this.props.entry === 'form') {
+        const eosAccountName = qrInfo.eosAccountName
+        const quantity = qrInfo.amount
+
+        if (eosAccountName) this.props.actions.change('transferAssetsForm', 'toAccount', eosAccountName)
+        if (quantity) this.props.actions.change('transferAssetsForm', 'quantity', quantity)
+
+        Navigation.pop(this.props.componentId)
+      } else {
+        Navigation.push(this.props.componentId, {
+          component: {
+            name: 'BitPortal.AssetsTransfer',
+            passProps: {
+              entry: 'scanner',
+              qrInfo
+            }
+          }
+        })
       }
-    })
+    }
   }
 
   render() {
@@ -50,9 +79,9 @@ export default class Scanner extends Component {
             title={messages[locale].qrscn_title_name_qrscanner}
           />
           <QRCodeScanner
-            onRead={this.onSuccess.bind(this)}
+            ref={(node) => { this.scanner = node }}
+            onRead={this.onSuccess}
             showMarker={true}
-            bottomContent={<TouchableOpacity onPress={() => this.onSuccess()} style={styles.buttonTouchable}><Text style={styles.buttonText}>Go To Send</Text></TouchableOpacity>}
           />
         </View>
       </IntlProvider>

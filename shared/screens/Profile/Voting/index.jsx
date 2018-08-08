@@ -1,18 +1,16 @@
-/* @tsx */
 import React, { Component } from 'react'
 import { Navigation } from 'react-native-navigation'
 import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider, FormattedNumber } from 'react-intl'
-import { Text, View, TouchableWithoutFeedback, Platform, InteractionManager, LayoutAnimation } from 'react-native'
+import { Text, View, TouchableWithoutFeedback, InteractionManager, LayoutAnimation } from 'react-native'
 import * as producerActions from 'actions/producer'
 import * as votingActions from 'actions/voting'
 import { bindActionCreators } from 'redux'
 import { eosAccountSelector } from 'selectors/eosAccount'
-import AlertComponent from 'components/Alert'
-import Dialogs from 'components/Dialog'
-import DialogAndroid from 'components/DialogAndroid'
+import Prompt from 'components/Prompt'
+import Alert from 'components/Alert'
 import LinearGradientContainer from 'components/LinearGradientContainer'
 import { sortProducers } from 'eos'
 import VotingModal from './VotingModal'
@@ -61,31 +59,15 @@ export default class Voting extends Component {
     }
   }
 
-  constructor(props, context) {
-    super(props, context)
-    this.state = {
-      isVisible: false,
-      password: '',
-      item: {},
-      selected: this.props.eosAccount.get('data').get('voter_info') ? this.props.eosAccount.get('data').get('voter_info').get('producers').toJS() : [],
-      sortType: 'default'
-    }
-
-    this.voting = this.voting.bind(this)
-    this.submitVoting = this.submitVoting.bind(this)
-    this.changeSort = this.changeSort.bind(this)
+  state = {
+    isVisible: false,
+    alertMessage: null,
+    item: {},
+    selected: this.props.eosAccount.get('data').get('voter_info') ? this.props.eosAccount.get('data').get('voter_info').get('producers').toJS() : [],
+    sortType: 'default'
   }
 
-  componentDidMount() {
-    // this.props.actions.getVoteDataRequested()
-    this.props.actions.getProducersRequested({ json: true, limit: 500 })
-  }
-
-  componentWillUpdate() {
-    LayoutAnimation.easeInEaseOut()
-  }
-
-  changeSort() {
+  changeSort = () => {
     if (this.state.sortType === 'default') {
       this.setState({ sortType: 'ranking' }, () => {
         this.props.actions.sortProducers('ranking')
@@ -97,42 +79,19 @@ export default class Voting extends Component {
     }
   }
 
-  checkRules = () => {
-
-  }
-
   submitVoting = (password) => {
     const eosAccountName = this.props.eosAccount.get('data').get('account_name')
     this.props.actions.votingRequested({ producers: this.state.selected, eosAccountName, password })
   }
 
-  async voting() {
-    if (Platform.OS === 'android') {
-      return this.setState({ isVisible: true })
-    }
-    const { locale } = this.props
-    const { action, text } = await Dialogs.prompt(
-      messages[locale].vt_popup_title_pwd,
-      '',
-      {
-        positiveText: messages[locale].vt_popup_buttom_ent,
-        negativeText: messages[locale].vt_popup_buttom_can
-      }
-    )
-
-    if (action === Dialogs.actionPositive) {
-      this.setState({ isVisible: false }, () => {
-        InteractionManager.runAfterInteractions(() => {
-          this.submitVoting(text)
-        })
-      })
-    }
+  voting = () => {
+    this.setState({ isVisible: true })
   }
 
-  handleConfirm = () => {
+  handleConfirm = (password) => {
     this.setState({ isVisible: false }, () => {
       InteractionManager.runAfterInteractions(() => {
-        this.submitVoting(this.state.password)
+        this.submitVoting(password)
       })
     })
   }
@@ -141,18 +100,24 @@ export default class Voting extends Component {
     const { locale } = this.props
     const eosAccountName = this.props.eosAccount.get('data').get('account_name')
     if (!eosAccountName) {
-      Dialogs.alert(messages[locale].vt_button_name_err, null, { negativeText: messages[locale].vt_popup_buttom_ent })
+      this.setState({ alertMessage: messages[locale].vt_button_name_err })
     } else {
       this.props.actions.showSelected()
     }
   }
 
   checkResources = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.Resources'
-      }
-    })
+    const { locale } = this.props
+    const eosAccountName = this.props.eosAccount.get('data').get('account_name')
+    if (!eosAccountName) {
+      this.setState({ alertMessage: messages[locale].vt_button_name_err })
+    } else {
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.Resources'
+        }
+      })
+    }
   }
 
   onRowPress = (producer) => {
@@ -187,16 +152,29 @@ export default class Voting extends Component {
   }
 
   onRefresh = () => {
-    this.props.actions.getProducersRequested({ json: true, limit: 500 })
+    this.props.actions.getProducersWithInfoRequested({ json: true, limit: 500 })
   }
 
-  componentDidAppear() {
-    // this.props.actions.getProducersRequested({ json: true, limit: 500 })
+  closePrompt = () => {
+    this.setState({ isVisible: false })
+  }
+
+  closeAlert = () => {
+    this.setState({ alertMessage: null })
+  }
+
+  componentDidMount() {
+    this.props.actions.getProducersWithInfoRequested({ json: true, limit: 500 })
+  }
+
+  UNSAFE_componentWillUpdate() {
+    LayoutAnimation.easeInEaseOut()
   }
 
   render() {
     const { locale, producer, eosAccount, voting } = this.props
     const loading = producer.get('loading')
+    const loaded = producer.get('loaded')
     const disabled = !this.state.selected.length && !this.props.producer.get('data').get('rows').size
     const voterInfo = eosAccount.get('data').get('voter_info')
     const isVoting = voting.get('loading')
@@ -210,7 +188,6 @@ export default class Voting extends Component {
             title={messages[locale].vt_title_name_vote}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
-          <AlertComponent message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearError} />
           <View style={[styles.stakeAmountContainer, styles.between]}>
             <Text style={styles.text14}>
               {'Stake: '}
@@ -221,8 +198,8 @@ export default class Voting extends Component {
               />
               {' EOS'}
             </Text>
-            <LinearGradientContainer type="right" colors={Colors.voteColor} style={[styles.resourcesBtn, { marginRight: -10 }]} >
-              <TouchableWithoutFeedback style={styles.center} underlayColor="transparent" onPress={() => this.checkResources()} >
+            <LinearGradientContainer type="right" colors={Colors.voteColor} style={[styles.resourcesBtn, { marginRight: -10 }]}>
+              <TouchableWithoutFeedback style={styles.center} underlayColor="transparent" onPress={this.checkResources}>
                 <View>
                   <Text style={[styles.text14, { marginHorizontal: 10, marginVertical: 2 }]}>
                     <FormattedMessage id="vt_rscs_button_rscs" />
@@ -235,14 +212,13 @@ export default class Voting extends Component {
             <Text style={[styles.text14, { color: Colors.textColor_181_181_181 }]} onPress={this.changeSort}>
               <FormattedMessage id="vt_sec_title_def" />/<FormattedMessage id="vt_sec_title_rk" />
             </Text>
-            {/* <Text style={[styles.text14, { color: Colors.textColor_181_181_181 }]}> Votes </Text> */}
           </View>
           <View style={styles.scrollContainer}>
             <ProducerList
               data={producer.get('data').get('rows')}
               totalVotes={producer.get('data').get('total_producer_vote_weight')}
               onRefresh={this.onRefresh}
-              refreshing={loading}
+              refreshing={loading && !loaded}
               onRowPress={this.onRowPress}
               onMarkPress={this.onMarkPress}
               selected={this.state.selected}
@@ -252,8 +228,8 @@ export default class Voting extends Component {
             <Text style={styles.text14}><FormattedMessage id="vt_btmsec_name_selected" /></Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={[styles.text14, { marginRight: 15 }]}>{this.state.selected.length}/30</Text>
-              <LinearGradientContainer type="right" colors={disabled ? Colors.disabled : Colors.voteColor} style={styles.voteBtn} >
-                <TouchableWithoutFeedback onPress={disabled ? () => {} : this.vote} style={styles.center} disabled={disabled} >
+              <LinearGradientContainer type="right" colors={disabled ? Colors.disabled : Colors.voteColor} style={styles.voteBtn}>
+                <TouchableWithoutFeedback onPress={disabled ? () => {} : this.vote} style={styles.center} disabled={disabled}>
                   <View>
                     <Text style={[styles.text14, { marginHorizontal: 10, marginVertical: 2 }]}>
                       <FormattedMessage id="vt_button_name_vote" />
@@ -271,19 +247,17 @@ export default class Voting extends Component {
             selected={this.state.selected}
             isVoting={isVoting}
           />
-          {
-            Platform.OS === 'android' &&
-            <DialogAndroid
-              tilte={messages[locale].vt_popup_title_pwd}
-              content=""
-              positiveText={messages[locale].vt_popup_buttom_ent}
-              negativeText={messages[locale].vt_popup_buttom_can}
-              onChange={password => this.setState({ password })}
-              isVisible={this.state.isVisible}
-              handleCancel={() => this.setState({ isVisible: false })}
-              handleConfirm={this.handleConfirm}
-            />
-          }
+          <Alert message={this.state.alertMessage} dismiss={this.closeAlert} />
+          <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearVotingError} />
+          <Prompt
+            isVisible={this.state.isVisible}
+            title={messages[locale].vt_popup_title_pwd}
+            negativeText={messages[locale].vt_popup_buttom_can}
+            positiveText={messages[locale].vt_popup_buttom_ent}
+            type="secure-text"
+            callback={this.handleConfirm}
+            dismiss={this.closePrompt}
+          />
         </View>
       </IntlProvider>
     )

@@ -15,7 +15,7 @@ class ListItem extends Component {
     const { item, rank, onRowPress, onMarkPress, selected, totalVotes } = this.props
     const location = item.getIn(['info', 'org', 'location'])
     const weight = +item.getIn(['info', 'weight'])
-    const graColor = weight === 1 ? Colors.cooperateColor :Colors.recommandColor
+    const graColor = weight === 1 ? Colors.cooperateColor : Colors.recommandColor
     const teamName = item.getIn(['info', 'org', 'name'])
 
     return (
@@ -27,15 +27,15 @@ class ListItem extends Component {
         <View style={[styles.listItem, styles.between, { paddingRight: 32 }]}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={{ paddingLeft: 32 }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={[styles.rank, styles.center, { marginRight: 10 }]}>
                   <Text style={[styles.text14, { color: Colors.textColor_181_181_181, marginHorizontal: 5, marginVertical: 2 }]}>
-                   {rank + 1}
+                    {rank + 1}
                   </Text>
                 </View>
                 <Text style={styles.text18}>{teamName || item.get('owner')}</Text>
-                {!!weight &&
-                  <LinearGradientContainer type="right" colors={graColor} style={[styles.center, styles.flag]} >
+                {!!weight
+                  && <LinearGradientContainer type="right" colors={graColor} style={[styles.center, styles.flag]}>
                     <Text numberOfLines={1} style={[styles.text12, { marginHorizontal: 8, color: Colors.textColor_255_255_238 }]}>
                       {weight === 1 && <FormattedMessage id="vt_sec_tag_cprt" />}
                       {weight >= 2 && <FormattedMessage id="vt_sec_tag_prmt" />}
@@ -59,10 +59,9 @@ class ListItem extends Component {
           </View>
           <TouchableOpacity onPress={() => onMarkPress(item)} style={{ width: 40, height: 70, alignItems: 'flex-end', justifyContent: 'center' }}>
             {
-              selected ?
-                <Ionicons name="md-checkmark-circle" size={26} color={Colors.textColor_89_185_226} />
-              :
-                <View style={styles.radius} />
+              selected
+                ? <Ionicons name="md-checkmark-circle" size={26} color={Colors.textColor_89_185_226} />
+                : <View style={styles.radius} />
             }
           </TouchableOpacity>
         </View>

@@ -4,7 +4,7 @@ declare interface CreateWalletParams {
 }
 
 declare interface CreateWalletResult {
-  name: string
+  name?: string
   bpid?: string
   origin: string
   timestamp: number

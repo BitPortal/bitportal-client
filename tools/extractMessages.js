@@ -3,8 +3,8 @@ const path = require('path')
 
 const supportedLocales = ['zh', 'en']
 const targetFiles = ['messages.json']
-const sourceDir = '../shared'
-const outputDir = '../static/messages'
+const sourceDir = 'shared'
+const outputDir = 'static/messages'
 
 const initialMessages = supportedLocales.reduce(
   (messages, locale) => Object.assign(messages, { [locale]: {} }), {}

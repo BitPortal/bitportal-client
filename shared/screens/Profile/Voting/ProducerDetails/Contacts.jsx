@@ -1,4 +1,3 @@
-/* @jsx */
 import React, { Component } from 'react'
 import { View, Text, TouchableHighlight, LayoutAnimation } from 'react-native'
 import { connect } from 'react-redux'
@@ -18,17 +17,16 @@ import styles from './styles'
 )
 
 export default class Contacts extends Component {
-
   state = {
     folded: false
   }
 
-  componentWillUpdate() {
+  UNSAFE_componentWillUpdate() {
     LayoutAnimation.easeInEaseOut()
   }
 
   hidden = () => {
-    this.setState({ folded: !this.state.folded })
+    this.setState(prevState => ({ folded: !prevState.folded }))
   }
 
   render() {
@@ -44,10 +42,9 @@ export default class Contacts extends Component {
                 <FormattedMessage id="prod_sec_name_cont" />
               </Text>
               {
-                folded ?
-                <Ionicons name="ios-arrow-down" size={24} color={Colors.textColor_181_181_181} />
-                :
-                <Ionicons name="ios-arrow-up" size={24} color={Colors.textColor_181_181_181} />
+                folded
+                  ? <Ionicons name="ios-arrow-down" size={24} color={Colors.textColor_181_181_181} />
+                  : <Ionicons name="ios-arrow-up" size={24} color={Colors.textColor_181_181_181} />
               }
             </View>
           </TouchableHighlight>

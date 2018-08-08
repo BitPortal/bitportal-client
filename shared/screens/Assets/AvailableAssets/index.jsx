@@ -1,4 +1,3 @@
-/* @jsx */
 import React, { Component } from 'react'
 import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
@@ -52,7 +51,7 @@ export default class AvailableAssets extends Component {
   // 激活或隐藏钱包
   onValueChange = (value, item) => {
     item.value = value
-    this.setState({ assetsList: this.state.assetsList })
+    this.setState(prevState => ({ assetsList: prevState.assetsList }))
   }
 
   render() {

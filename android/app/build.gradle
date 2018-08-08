@@ -112,7 +112,7 @@ android {
         renderscriptTargetApi 27
         renderscriptSupportModeEnabled true
         versionCode 1
-        versionName "0.1.4"
+        versionName "0.2.0"
         missingDimensionStrategy "RNN.reactNativeVersion", "reactNative55"
         ndk {
             abiFilters "armeabi-v7a", "x86"

@@ -1,46 +1,51 @@
-/* @jsx */
 import React, { Component } from 'react'
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
+import { Image, TouchableOpacity, StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
-import { FontScale, SCREEN_WIDTH } from 'utils/dimens'
+import { connect } from 'react-redux'
 import Dialog from 'components/Dialog'
+import images from 'resources/images'
+import messages from './messages'
 
 const styles = StyleSheet.create({
   container: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: Colors.bgColor_59_59_59
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    backgroundColor: Colors.textColor_white_4
   },
   center: {
     alignItems: 'center',
     justifyContent: 'center'
   },
-  text16: {
-    fontSize: FontScale(16),
-    color: Colors.textColor_255_255_238
+  image: {
+    width: 16,
+    height: 16
   },
   btn: {
+    width: 36,
+    height: 36,
     padding: 10,
-    marginTop: -10,
+    marginTop: -10
   }
 })
 
-export default class Tips extends Component {
+@connect(
+  state => ({
+    locale: state.intl.get('locale')
+  })
+)
 
+export default class Tips extends Component {
   alertTips = () => {
-    Dialog.alert('提示', this.props.tips, { positiveText: '确定' })
+    const { locale } = this.props
+    Dialog.alert(messages[locale].tips_alert_title_tip, this.props.tips, { positiveText: messages[locale].tips_alert_btn_enter })
   }
 
   render() {
-    const { tips } = this.props
     return (
       <TouchableOpacity onPress={this.alertTips} style={styles.btn}>
-        <View style={[styles.container, styles.center]}>
-          <Text style={styles.text16}> ? </Text>
-        </View>
+        <Image source={images.tips} style={styles.image} />
       </TouchableOpacity>
     )
   }
- 
 }

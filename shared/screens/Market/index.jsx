@@ -13,7 +13,6 @@ import { Navigation } from 'react-native-navigation';
 import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from 'constants/market';
 import NavigationBar, { ListButton } from 'components/NavigationBar';
 import { IntlProvider } from 'react-intl';
-import secureStorage from 'utils/secureStorage';
 import ExchangeList from './ExchangeList';
 import { Quotes } from './Quotes';
 import messages from './messages';
@@ -107,7 +106,7 @@ export default class Market extends Component {
     });
   };
 
-  componentWillUpdate() {
+  UNSAFE_componentWillUpdate() {
     LayoutAnimation.easeInEaseOut();
   }
 

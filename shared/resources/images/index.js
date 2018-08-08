@@ -37,7 +37,12 @@ const Images = {
   about_kakao: require('./About_Kakao.png'),
   about_twitter: require('./About_Twitter.png'),
   about_facebook: require('./About_Facebook.png'),
-  about_weibo: require('./About_Weibo.png')
+  about_weibo: require('./About_Weibo.png'),
+  transaction_history: require('./transaction_history.png'),
+  transfer_sender: require('./transfer_sender.png'),
+  transfer_receiver: require('./transfer_receiver.png'),
+  EOSIcon: require('./EOSIcon.png'),
+  tips: require('./tips.png')
 }
 
 export default Images

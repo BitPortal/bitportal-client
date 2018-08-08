@@ -13,7 +13,7 @@ import keystoreSaga from './keystore';
 import votingSaga from './voting';
 import stakeSaga from './stake';
 import transferSaga from './transfer';
-import transferHistorySaga from './transferHistory';
+import transactionSaga from './transaction';
 import ramSaga from './ram';
 import tokenSaga from './token';
 
@@ -31,7 +31,7 @@ const sagas = {
   votingSaga: fork(votingSaga),
   stakeSaga: fork(stakeSaga),
   transferSaga: fork(transferSaga),
-  transferHistorySaga: fork(transferHistorySaga),
+  transactionSaga: fork(transactionSaga),
   ramSaga: fork(ramSaga),
   tokenSaga: fork(tokenSaga)
 };

@@ -8,9 +8,10 @@ import MarketDetails from 'screens/Market/MarketDetails'
 import Welcome from 'screens/Welcome'
 import LightBox from 'screens/LightBox'
 import QRCodeScanner from 'screens/QRCodeScanner'
-import BPWebView from 'components/BPWebView'
+import { BPWebView } from 'components/BPNativeComponents'
 import TransactionRecord from 'screens/TransactionRecord'
 import Assets from 'screens/Assets'
+import ReceiveQRCode from 'screens/Assets/ReceiveQRCode'
 import AssetChart from 'screens/Assets/AssetChart'
 import AssetsTransfer from 'screens/Assets/AssetsTransfer'
 import AvailableAssets from 'screens/Assets/AvailableAssets'
@@ -18,6 +19,7 @@ import Backup from 'screens/Account/Backup'
 import BackupTips from 'screens/Account/BackupTips'
 import AccountImport from 'screens/Account/AccountImport'
 import AccountCreation from 'screens/Account/AccountCreation'
+import AccountSelection from 'screens/Account/AccountSelection'
 import EOSAccountCreation from 'screens/Account/EOSAccountCreation'
 import PrivateKeyCreation from 'screens/Account/PrivateKeyCreation'
 import Discovery from 'screens/Discovery'
@@ -29,7 +31,6 @@ import Bandwidth from 'screens/Resources/Bandwidth'
 import CPU from 'screens/Resources/CPU'
 import Voting from 'screens/Profile/Voting'
 import ProducerDetails from 'screens/Profile/Voting/ProducerDetails'
-import Stake from 'screens/Profile/Stake'
 import About from 'screens/Profile/About'
 import Profile from 'screens/Profile'
 import Contacts from 'screens/Profile/Contacts'
@@ -82,6 +83,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.QRCodeScanner', () => screenComponent(QRCodeScanner, store))
   Navigation.registerComponent('BitPortal.TransactionRecord', () => screenComponent(TransactionRecord, store))
   Navigation.registerComponent('BitPortal.Assets', () => screenComponent(Assets, store))
+  Navigation.registerComponent('BitPortal.ReceiveQRCode', () => screenComponent(ReceiveQRCode, store))
   Navigation.registerComponent('BitPortal.AssetChart', () => screenComponent(AssetChart, store))
   Navigation.registerComponent('BitPortal.AssetsTransfer', () => screenComponent(AssetsTransfer, store))
   Navigation.registerComponent('BitPortal.AvailableAssets', () => screenComponent(AvailableAssets, store))
@@ -98,7 +100,6 @@ export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.Bandwidth', () => screenComponent(Bandwidth, store))
   Navigation.registerComponent('BitPortal.Voting', () => screenComponent(Voting, store))
   Navigation.registerComponent('BitPortal.ProducerDetails', () => screenComponent(ProducerDetails, store))
-  Navigation.registerComponent('BitPortal.Stake', () => screenComponent(Stake, store))
   Navigation.registerComponent('BitPortal.About', () => screenComponent(About, store))
   Navigation.registerComponent('BitPortal.Profile', () => screenComponent(Profile, store))
   Navigation.registerComponent('BitPortal.Contacts', () => screenComponent(Contacts, store))
@@ -119,6 +120,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.BackupTips', () => screenComponent(BackupTips, store))
   Navigation.registerComponent('BitPortal.AccountImport', () => screenComponent(AccountImport, store))
   Navigation.registerComponent('BitPortal.AccountCreation', () => screenComponent(AccountCreation, store))
+  Navigation.registerComponent('BitPortal.AccountSelection', () => screenComponent(AccountSelection, store))
   Navigation.registerComponent('BitPortal.EOSAccountCreation', () => screenComponent(EOSAccountCreation, store))
   Navigation.registerComponent('BitPortal.PrivateKeyCreation', () => screenComponent(PrivateKeyCreation, store))
 }

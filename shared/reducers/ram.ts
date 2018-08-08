@@ -39,7 +39,7 @@ export default handleActions({
   [actions.getRAMMarketFailed] (state) {
     return state.set('loading', false) // .set('error', action.payload)
   },
-  [actions.clearError] (state) {
+  [actions.clearRAMError] (state) {
     return state.set('error', null).set('selling', false).set('buying', false)
   },
   [actions.hideSuccessModal] (state) {

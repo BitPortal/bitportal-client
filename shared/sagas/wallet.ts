@@ -1,14 +1,16 @@
 import { delay } from 'redux-saga'
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { call, put, takeEvery, select } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import { reset } from 'redux-form/immutable'
 import assert from 'assert'
 import * as actions from 'actions/wallet'
 import { resetBalance, getBalanceRequested } from 'actions/balance'
 import { resetKey } from 'actions/keystore'
+import { resetTransaction } from 'actions/transaction'
 import { resetEOSAccount, syncEOSAccount, createEOSAccountSucceeded, getEOSAccountRequested } from 'actions/eosAccount'
 import { getErrorMessage } from 'utils'
 import secureStorage from 'utils/secureStorage'
+import storage from 'utils/storage'
 import { privateToPublic, initEOS, randomKey } from 'core/eos'
 import { getMasterSeed, encrypt, decrypt, getEOSKeys, getEOSWifsByInfo } from 'core/key'
 import { push, pop, popToRoot } from 'utils/location'
@@ -237,17 +239,20 @@ function* logoutRequested(action: Action<LogoutParams>) {
       yield call(decrypt, keystore, password)
     } else if (coin === 'EOS') {
       const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
-      yield call(getEOSWifsByInfo, password, accountInfo, ['owner', 'active'])
+      const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
+      yield call(getEOSWifsByInfo, password, accountInfo, [permission])
     }
 
     const items = yield call(secureStorage.getAllItems)
     for (const item of Object.keys(items)) {
       yield call(secureStorage.removeItem, item)
     }
+    yield call(storage.removeItem, `bitportal.${eosAccountName}-contacts`)
 
     yield put(actions.resetWallet())
     yield put(resetEOSAccount())
     yield put(resetBalance())
+    yield put(resetTransaction())
     yield put(resetKey())
     yield put(actions.logoutSucceeded())
     if (action.payload.componentId) popToRoot(action.payload.componentId)

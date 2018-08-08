@@ -1,13 +1,12 @@
 import assert from 'assert'
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { select, call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/voting'
 import { getEOSAccountRequested } from 'actions/eosAccount'
 import secureStorage from 'utils/secureStorage'
 import { getErrorMessage } from 'utils'
-import { decrypt } from 'core/key'
+import { getEOSWifsByInfo } from 'core/key'
 import { initEOS, sortProducers } from 'core/eos'
-import wif from 'wif'
 
 function* votingRequested(action: Action<VotingParams>) {
   if (!action.payload) return
@@ -16,23 +15,12 @@ function* votingRequested(action: Action<VotingParams>) {
     const eosAccountName = action.payload.eosAccountName
     assert(eosAccountName, 'Please import account!')
     const password = action.payload.password
-    const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
-    assert(accountInfo.permissions && accountInfo.permissions.length, 'EOS account permissions dose not exist!')
-    const permissions = accountInfo.permissions
-    const activePermission = permissions.filter((item: any) => item.perm_name === 'active')
-    assert(activePermission.length && activePermission[0].required_auth && activePermission[0].required_auth.keys && activePermission[0].required_auth.keys.length, 'Active permission dose not exist!')
 
-    const activeWifs = []
-    const activePublicKeys = activePermission[0].required_auth.keys
-    for (const publicKey of activePublicKeys) {
-      const key = publicKey.key
-      const keystore = yield call(secureStorage.getItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_ACTIVE_${key}`, true)
-      if (keystore) {
-        const privateKey = yield call(decrypt, keystore, password)
-        const activeWif = wif.encode(0x80, Buffer.from(privateKey, 'hex'), false)
-        activeWifs.push(activeWif)
-      }
-    }
+    const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
+    const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
+    console.log(permission)
+    const wifs = yield call(getEOSWifsByInfo, password, accountInfo, [permission])
+    const keyProvider = wifs.map((item: any) => item.wif)
 
     const producers = action.payload.producers.sort(sortProducers)
 
@@ -60,7 +48,7 @@ function* votingRequested(action: Action<VotingParams>) {
     }
 
     eos = yield call(initEOS, {
-      keyProvider: activeWifs,
+      keyProvider,
       transactionHeaders: (_: any, callback: any) => callback(null, headers),
       broadcast: false,
       sign: true,
@@ -79,6 +67,7 @@ function* votingRequested(action: Action<VotingParams>) {
     yield put(actions.votingSucceeded(producers))
     yield put(getEOSAccountRequested({ eosAccountName }))
   } catch (e) {
+    console.log(e)
     yield put(actions.votingFailed(getErrorMessage(e)))
   }
 }

@@ -1,14 +1,11 @@
-/* @tsx */
-
 import React, { Component } from 'react'
-import { Text, View, ScrollView } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import SettingItem from 'components/SettingItem'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
-import { FormattedMessage, IntlProvider } from 'react-intl'
+import { IntlProvider } from 'react-intl'
 import { Mediafax, MediafaxIcons, MediafaxUrls } from 'constants/mediafax'
-import Images from 'resources/images'
 import { validateUrl } from 'utils/validate'
 import messages from './messages'
 import styles from './styles'
@@ -23,7 +20,6 @@ import styles from './styles'
 )
 
 export default class MediafaxScreen extends Component {
-
   static get options() {
     return {
       bottomTabs: {
@@ -36,7 +32,7 @@ export default class MediafaxScreen extends Component {
     if (validateUrl(MediafaxUrls[title])) {
       Navigation.push(this.props.componentId, {
         component: {
-          name: `BitPortal.BPWebView`,
+          name: 'BitPortal.BPWebView',
           passProps: {
             title,
             needLinking: true,
@@ -47,7 +43,7 @@ export default class MediafaxScreen extends Component {
     } else {
       Navigation.push(this.props.componentId, {
         component: {
-          name: `BitPortal.BPWebView`,
+          name: 'BitPortal.BPWebView',
           passProps: {
             title,
             name: MediafaxUrls[title]
@@ -64,17 +60,17 @@ export default class MediafaxScreen extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale]["mdf_title_name_nav"]}
+            title={messages[locale].mdf_title_name_nav}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center', paddingTop: 10 }}>
               {Mediafax.map((item, index) => (
-                <SettingItem 
-                  key={index} 
-                  leftImage={MediafaxIcons[item]} 
-                  leftItemTitle={item} 
-                  onPress={() => this.changePage(item)} 
+                <SettingItem
+                  key={index}
+                  leftImage={MediafaxIcons[item]}
+                  leftItemTitle={item}
+                  onPress={() => this.changePage(item)}
                 />
               ))}
             </ScrollView>

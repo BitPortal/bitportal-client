@@ -1,5 +1,3 @@
-/* @jsx */
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'

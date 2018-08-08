@@ -1,8 +1,8 @@
 import React from 'react'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
-import { Text, View, ScrollView, TouchableHighlight, TouchableWithoutFeedback, StyleSheet } from 'react-native'
+import { FontScale, SCREEN_WIDTH } from 'utils/dimens'
+import { Text, View, TouchableHighlight, TouchableWithoutFeedback, StyleSheet } from 'react-native'
 import { SwipeRow } from 'react-native-swipe-list-view'
 import { connect } from 'react-redux'
 
@@ -41,7 +41,7 @@ export const DefaultItem = ({ item, onPress, active, disabled }) => (
   <TouchableWithoutFeedback
     underlayColor={Colors.hoverColor}
     style={styles.container}
-    disabled={disabled ? disabled : false}
+    disabled={disabled || false}
     onPress={() => onPress(item)}
   >
     <View style={[styles.container, styles.between, styles.border, { paddingHorizontal: 32 }]}>
@@ -72,7 +72,6 @@ export const DeleteButton = ({ onPress }) => (
 )
 
 class SwipeItem extends React.Component {
-
   state = {
     isSwiped: false
   }
@@ -94,8 +93,8 @@ class SwipeItem extends React.Component {
   }
 
   render() {
-    const { item, onPress, active, deleteItem } = this.props
-    const { isSwiped } = this.state
+    const { item, active, deleteItem } = this.props
+
     return (
       <SwipeRow
         disableRightSwipe={true}
@@ -111,8 +110,6 @@ class SwipeItem extends React.Component {
       </SwipeRow>
     )
   }
-
 }
 
-export { SwipeItem } 
-
+export { SwipeItem }

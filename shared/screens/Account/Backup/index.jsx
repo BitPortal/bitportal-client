@@ -1,4 +1,3 @@
-/* @jsx */
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {
@@ -79,8 +78,8 @@ export default class Backup extends Component {
                 onPress={() => this.copyPrivateKey()}
                 underlayColor={Colors.textColor_89_185_226}
                 style={[styles.btn, styles.center, {
-                    marginTop: 25,
-                    backgroundColor: isCopied ? Colors.textColor_181_181_181 : Colors.textColor_89_185_226 }]
+                  marginTop: 25,
+                  backgroundColor: isCopied ? Colors.textColor_181_181_181 : Colors.textColor_89_185_226 }]
                       }
               >
                 <Text style={styles.text14}>

@@ -1,13 +1,10 @@
-/* @jsx */
-
 import React, { Component } from 'react'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { Text, View, ScrollView } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import Colors from 'resources/colors'
-import InputItem from 'components/InputItem'
 import { connect } from 'react-redux'
-import { FormattedMessage, IntlProvider } from 'react-intl'
+import { IntlProvider } from 'react-intl'
 import AddContactsForm from 'components/Form/AddContactsForm'
 import messages from './messages'
 import styles from './styles'
@@ -30,20 +27,7 @@ export default class CreateContact extends Component {
     }
   }
 
-  state = {
-    isAccountVaild: true
-  }
-
-  changeNickName = () => {
-
-  }
-
-  saveContact = () => {
-
-  }
-
   render() {
-    const { isAccountVaild } = this.state
     const { locale } = this.props
     return (
       <IntlProvider messages={messages[locale]}>
@@ -53,12 +37,12 @@ export default class CreateContact extends Component {
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
-            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingTop: 20, backgroundColor: Colors.bgColor_48_49_59 }} >
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingTop: 20, backgroundColor: Colors.bgColor_48_49_59 }}>
               <AddContactsForm componentId={this.props.componentId} />
               <View style={styles.keyboard} />
             </ScrollView>
           </View>
-            
+
         </View>
       </IntlProvider>
     )

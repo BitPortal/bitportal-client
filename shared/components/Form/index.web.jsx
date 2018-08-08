@@ -1,5 +1,3 @@
-/* @jsx */
-
 import React from 'react'
 import classNames from 'classnames'
 import style from './style.css'
@@ -7,9 +5,9 @@ import style from './style.css'
 export const FormContainer = ({ children, center }) => (
   <div
     className={classNames({
-        [style.formContainer]: true,
-        [style.center]: !!center
-      })}
+      [style.formContainer]: true,
+      [style.center]: !!center
+    })}
   >
     {children}
   </div>
@@ -18,12 +16,12 @@ export const FormContainer = ({ children, center }) => (
 export const FieldItem = ({ children, type, hasError = false, center, withoutLabel }) => (
   <div
     className={classNames({
-        [style.field]: true,
-        [style.hasError]: hasError,
-        [style.info]: type === 'info',
-        [style.withoutLabel]: !!withoutLabel,
-        [style.center]: !!center
-      })}
+      [style.field]: true,
+      [style.hasError]: hasError,
+      [style.info]: type === 'info',
+      [style.withoutLabel]: !!withoutLabel,
+      [style.center]: !!center
+    })}
   >
     {children}
   </div>
@@ -33,11 +31,11 @@ export const FieldInput = ({ children, symbol, leftSymbol, inactive, status }) =
   <div className={style.fieldInput}>
     <div
       className={classNames({
-          [style.content]: true,
-          [style.hasSymbol]: !!symbol,
-          [style.hasLeftSymbol]: !!leftSymbol,
-          [style.inactive]: !!inactive
-        })}
+        [style.content]: true,
+        [style.hasSymbol]: !!symbol,
+        [style.hasLeftSymbol]: !!leftSymbol,
+        [style.inactive]: !!inactive
+      })}
     >
       {leftSymbol && <span className={style.leftSymbol}>{leftSymbol}</span>}
       {children}

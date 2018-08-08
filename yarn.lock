@@ -579,7 +579,7 @@
   version "10.5.1"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.1.tgz#d578446f4abff5c0b49ade9b4e5274f6badaadfc"
 
-"@types/node@^8.0.24", "@types/node@^8.0.49":
+"@types/node@^8.0.24":
   version "8.10.20"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.20.tgz#fe674ea52e13950ab10954433a7824438aabbcac"
 
@@ -607,12 +607,6 @@
 "@types/react-intl@^2.3.2":
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/@types/react-intl/-/react-intl-2.3.8.tgz#de56b21b67e39df24bc0fc7e67b437976b666919"
-
-"@types/react-native-navigation@^1.1.12":
-  version "1.1.12"
-  resolved "https://registry.yarnpkg.com/@types/react-native-navigation/-/react-native-navigation-1.1.12.tgz#1f43bdf88d39bce2a3c0fdded0befda5083df6ff"
-  dependencies:
-    "@types/react" "*"
 
 "@types/react-native@0.51.1":
   version "0.51.1"
@@ -5611,7 +5605,11 @@ image-size@^0.6.0:
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/image-size/-/image-size-0.6.3.tgz#e7e5c65bb534bd7cdcedd6cb5166272a85f75fb2"
 
-immutable@^3.8.1, immutable@^3.8.2:
+immutable@4.0.0-rc.9:
+  version "4.0.0-rc.9"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.0.0-rc.9.tgz#1e6e0094e649013ec3742d2b5aeeca5eeda4f0bf"
+
+immutable@^3.8.1:
   version "3.8.2"
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.2.tgz#c2439951455bb39913daf281376f1530e104adf3"
 
@@ -8917,6 +8915,10 @@ react-lifecycles-compat@2.0.0:
 react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
+
+react-native-actionsheet@^2.4.2:
+  version "2.4.2"
+  resolved "http://registry.npm.taobao.org/react-native-actionsheet/download/react-native-actionsheet-2.4.2.tgz#6a00dd51a75ef2c8974312130e405af73191500f"
 
 react-native-animatable@^1.2.4:
   version "1.3.0"

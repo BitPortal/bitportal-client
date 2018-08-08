@@ -1,6 +1,3 @@
-/* @jsx */
-/* eslint-disable */
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import style from './style.css'
