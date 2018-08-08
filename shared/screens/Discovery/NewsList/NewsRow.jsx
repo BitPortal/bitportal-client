@@ -9,7 +9,7 @@ export default ({ previewImage, title, subTitle, author, date, onRowPress }) => 
       <Image style={styles.image} source={{ uri: previewImage }} />
       <View style={styles.right}>
         <Text style={styles.title}>{title}</Text>
-        <Text numberOfLines={1} style={styles.subTitle}>{subTitle}</Text>
+        {/* <Text numberOfLines={1} style={styles.subTitle}>{subTitle}</Text> */}
         <View style={styles.infoArea}>
           <Text style={styles.subTitle}>{author}</Text>
           <Text style={styles.subTitle}>{date}</Text>

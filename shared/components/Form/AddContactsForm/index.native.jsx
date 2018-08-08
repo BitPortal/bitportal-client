@@ -23,7 +23,7 @@ const validate = (values) => {
     errors.name = <FormattedMessage id="contacts_txtbox_txt_acchint" />
   }
 
-  if (values.get('memo') && values.get('memo').length > 24) {
+  if (values.get('memo') && values.get('memo').length > 64) {
     errors.memo = <FormattedMessage id="contacts_txtbox_txt_hint" />
   }
 
