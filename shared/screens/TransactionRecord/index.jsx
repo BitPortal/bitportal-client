@@ -231,8 +231,8 @@ export default class TransactionRecord extends Component {
                           {blockHeight}
                         </Text>
                       </Text>
-                      <Text style={styles.text14}><FormattedMessage id="txdtl_title_name_producer" />:</Text>
-                      <Text numberOfLines={1} style={styles.text14}># EOS.IO </Text>
+                      {/* <Text style={styles.text14}><FormattedMessage id="txdtl_title_name_producer" />:</Text>
+                      <Text numberOfLines={1} style={styles.text14}># EOS.IO </Text> */}
                     </View>
                     <View style={{ marginRight: 20, marginTop: 10, alignItems: 'center' }}>
                       <View style={{ padding: 3, backgroundColor: Colors.bgColor_FFFFFF }}>
