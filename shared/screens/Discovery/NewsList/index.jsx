@@ -53,19 +53,21 @@ export default class NewsList extends PureComponent {
 
   render() {
     return (
-      <FlatList
-        data={this.props.data}
-        keyExtractor={this.keyExtractor}
-        ItemSeparatorComponent={this.renderSeparator}
-        showsVerticalScrollIndicator={false}
-        renderItem={this.renderItem}
-        ListHeaderComponent={this.renderHeader}
-        ListFooterComponent={this.renderFoot}
-        onRefresh={this.props.onRefresh}
-        onEndReached={this.props.onEndReached}
-        onEndReachedThreshold={-0.1}
-        refreshing={this.props.refreshing}
-      />
+      <View style={styles.listContainer}>
+        <FlatList
+          data={this.props.data}
+          keyExtractor={this.keyExtractor}
+          ItemSeparatorComponent={this.renderSeparator}
+          showsVerticalScrollIndicator={false}
+          renderItem={this.renderItem}
+          ListHeaderComponent={this.renderHeader}
+          ListFooterComponent={this.renderFoot}
+          onRefresh={this.props.onRefresh}
+          onEndReached={this.props.onEndReached}
+          onEndReachedThreshold={-0.1}
+          refreshing={this.props.refreshing}
+        />
+      </View>
     )
   }
 }
