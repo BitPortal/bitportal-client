@@ -100,3 +100,4 @@ export const getNewsList = (params: any) => cmsFetchBase('GET', '/article', para
 export const getNewsBanner = () => cmsFetchBase('GET', '/banner');
 export const getVersionInfo = () => cmsFetchBase('GET', '/system');
 export const getProducersInfo = (params: any) => cmsFetchBase('GET', '/eosbp', params);
+export const getTokenDetail = (params: any) => cmsFetchBase('GET', '/token', params);

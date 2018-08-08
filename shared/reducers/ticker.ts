@@ -1,6 +1,6 @@
 import Immutable from 'immutable';
 import { handleActions } from 'redux-actions';
-import { QUOTE_ASSETS } from 'constants/market';
+import { QUOTE_ASSETS, DEFAULT_SORT_FILTER } from 'constants/market';
 import * as actions from 'actions/ticker';
 
 const initialState = Immutable.fromJS({
@@ -11,23 +11,25 @@ const initialState = Immutable.fromJS({
   exchangeFilter: 'BINANCE',
   quoteAssetFilter: QUOTE_ASSETS.BINANCE[0],
   sortFilter: {
-    BINANCE: 'quote_volume',
-    BITTREX: 'quote_volume',
-    OKEX: 'quote_volume',
-    HUOBIPRO: 'quote_volume',
-    POLONIEX: 'quote_volume'
+    BINANCE: DEFAULT_SORT_FILTER,
+    BITTREX: DEFAULT_SORT_FILTER,
+    OKEX: DEFAULT_SORT_FILTER,
+    HUOBIPRO: DEFAULT_SORT_FILTER,
+    POLONIEX: DEFAULT_SORT_FILTER,
+    GDAX: DEFAULT_SORT_FILTER
   },
   dataSource: {},
   currencyFilter: null,
   baseAsset: null,
   fromUserPull: false,
-  listedExchange: []
+  listedExchange: [],
+  currentPair: {}
 });
 
 export default handleActions(
   {
     [actions.getTickersRequested](state, action) {
-      console.log('actions.getTickersRequested action.payload', action.payload);
+      // console.log('actions.getTickersRequested action.payload', action.payload);
       return state
         .set('loading', true)
         .set('fromUserPull', !!action.payload.fromUserPull);
@@ -89,11 +91,21 @@ export default handleActions(
       return state.set('currencyFilter', action.payload);
     },
     [actions.selectBaseAsset](state, action) {
-      console.log('actions.selectBaseAsset', action.payload);
+      // console.log('actions.selectBaseAsset', action.payload);
       return state.set('baseAsset', action.payload);
     },
     [actions.deleteListedExchange](state, action) {
       return state.set('listedExchange', []);
+    },
+    [actions.selectCurrentPair](state, action) {
+      // console.log('action.selectCurrentPair', action.payload.toJS());
+      return state.set('currentPair', action.payload);
+    },
+    [actions.setSortFilter](state, action) {
+      return state.updateIn(
+        ['sortFilter', action.payload.exchangeFilter],
+        (sortFilter: any) => action.payload.sortFilter
+      );
     }
   },
   initialState

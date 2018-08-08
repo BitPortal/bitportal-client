@@ -1,46 +1,209 @@
 import React, { Component } from 'react';
 import { FormattedNumber } from 'react-intl';
 import Colors from 'resources/colors';
-import { Text, View, TouchableHighlight, VirtualizedList } from 'react-native';
-import { ASSET_FRACTION } from 'constants/market';
+import { connect } from 'react-redux';
+import {
+  Text,
+  View,
+  TouchableHighlight,
+  VirtualizedList,
+  TouchableOpacity
+} from 'react-native';
+import { sortFilterSelector } from 'selectors/ticker';
+import { bindActionCreators } from 'redux';
+import * as tickerActions from 'actions/ticker';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { ASSET_FRACTION, DEFAULT_SORT_FILTER } from 'constants/market';
 import styles from './styles';
 
-export const HeaderTitle = ({ messages }) => (
-  <View>
-    <View style={[styles.headerTitle]}>
-      <View style={[styles.coin, styles.center, { height: 25 }]}>
-        <Text style={[[styles.text14]]}>{messages.market_title_name_mrtc}</Text>
+@connect(
+  state => ({
+    sortFilter: sortFilterSelector(state),
+    exchangeFilter: state.ticker.get('exchangeFilter')
+  }),
+  dispatch => ({
+    actions: bindActionCreators(
+      {
+        ...tickerActions
+      },
+      dispatch
+    )
+  }),
+  null,
+  { withRef: true }
+)
+export class HeaderTitle extends Component {
+  sortToggle(selector) {
+    const { exchangeFilter, sortFilter } = this.props;
+    switch (true) {
+      case selector === 'percent' && sortFilter === 'price_change_percent_high':
+        this.props.actions.setSortFilter({
+          exchangeFilter,
+          sortFilter: 'price_change_percent_low'
+        });
+        break;
+      case selector === 'percent' && sortFilter === 'price_change_percent_low':
+        this.props.actions.setSortFilter({
+          exchangeFilter,
+          sortFilter: DEFAULT_SORT_FILTER
+        });
+        break;
+      case selector === 'percent':
+        this.props.actions.setSortFilter({
+          exchangeFilter,
+          sortFilter: 'price_change_percent_high'
+        });
+        break;
+      case selector === 'price' && sortFilter === 'current_price_high':
+        this.props.actions.setSortFilter({
+          exchangeFilter,
+          sortFilter: 'current_price_low'
+        });
+        break;
+      case selector === 'price' && sortFilter === 'current_price_low':
+        this.props.actions.setSortFilter({
+          exchangeFilter,
+          sortFilter: DEFAULT_SORT_FILTER
+        });
+        break;
+      case selector === 'price':
+        this.props.actions.setSortFilter({
+          exchangeFilter,
+          sortFilter: 'current_price_high'
+        });
+        break;
+      default:
+        break;
+    }
+  }
+
+  render() {
+    const { messages, sortFilter } = this.props;
+    console.log('TableView sortFilter', sortFilter);
+    return (
+      <View>
+        <View style={[styles.headerTitle]}>
+          {/* <TouchableOpacity> */}
+          <View style={[styles.coin, styles.center, { height: 25 }]}>
+            <Text style={[[styles.text14]]}>
+              {messages.market_title_name_mrtc}
+              {'  '}
+            </Text>
+            {/* <View style={{ flexDirection: 'column' }}>
+                <View style={{ marginVertical: -6 }}>
+                  <Ionicons
+                    name="md-arrow-dropup"
+                    size={20}
+                    color={Colors.textColor_255_255_238}
+                  />
+                </View>
+                <View style={{ marginVertical: -6 }}>
+                  <Ionicons
+                    name="md-arrow-dropdown"
+                    size={20}
+                    color={Colors.textColor_255_255_238}
+                  />
+                </View>
+              </View> */}
+          </View>
+          {/* </TouchableOpacity> */}
+          <TouchableOpacity
+            onPress={() => {
+              this.sortToggle('price');
+            }}
+          >
+            <View
+              style={[
+                styles.price,
+                {
+                  alignItems: 'center',
+                  justifyContent: 'flex-end',
+                  flexDirection: 'row',
+                  paddingRight: 10
+                }
+              ]}
+            >
+              <Text style={[styles.text14, {}]}>
+                {messages.market_title_name_price}
+                {'  '}
+              </Text>
+              <View style={{ flexDirection: 'column' }}>
+                <View style={{ marginVertical: -6 }}>
+                  <Ionicons
+                    name="md-arrow-dropup"
+                    size={20}
+                    color={
+                      sortFilter === 'current_price_low'
+                        ? Colors.textColor_255_255_238
+                        : Colors.textColor_181_181_181
+                    }
+                  />
+                </View>
+                <View style={{ marginVertical: -6 }}>
+                  <Ionicons
+                    name="md-arrow-dropdown"
+                    size={20}
+                    color={
+                      sortFilter === 'current_price_high'
+                        ? Colors.textColor_255_255_238
+                        : Colors.textColor_181_181_181
+                    }
+                  />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this.sortToggle('percent');
+            }}
+          >
+            <View
+              style={[
+                styles.change,
+                {
+                  alignItems: 'center',
+                  justifyContent: 'flex-end',
+                  flexDirection: 'row',
+                  paddingRight: 15
+                }
+              ]}
+            >
+              <Text style={[styles.text14]}>
+                {messages.market_title_name_change}
+                {'  '}
+              </Text>
+              <View style={{ flexDirection: 'column' }}>
+                <View style={{ marginVertical: -6 }}>
+                  <Ionicons
+                    name="md-arrow-dropup"
+                    size={20}
+                    color={
+                      sortFilter === 'price_change_percent_low'
+                        ? Colors.textColor_255_255_238
+                        : Colors.textColor_181_181_181
+                    }
+                  />
+                </View>
+                <View style={{ marginVertical: -6 }}>
+                  <Ionicons
+                    name="md-arrow-dropdown"
+                    size={20}
+                    color={
+                      sortFilter === 'price_change_percent_high'
+                        ? Colors.textColor_255_255_238
+                        : Colors.textColor_181_181_181
+                    }
+                  />
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
-      <View
-        style={[
-          styles.price,
-          {
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            flexDirection: 'row'
-          }
-        ]}
-      >
-        <Text style={[styles.text14, { marginRight: 30 }]}>
-          {messages.market_title_name_price}
-        </Text>
-      </View>
-      <View
-        style={[
-          styles.change,
-          {
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            flexDirection: 'row',
-            paddingRight: 15
-          }
-        ]}
-      >
-        <Text style={[styles.text14]}>{messages.market_title_name_change}</Text>
-      </View>
-    </View>
-  </View>
-);
+    );
+  }
+}
 
 const filterBgColor = (data) => {
   if (data && parseFloat(data) > 0) {

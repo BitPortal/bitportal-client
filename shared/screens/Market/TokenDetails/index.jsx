@@ -2,10 +2,11 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as tokenActions from 'actions/token';
 import { Navigation } from 'react-native-navigation';
 import NavigationBar, { CommonButton } from 'components/NavigationBar';
-import AccordionPanel from 'components/AccordionPanel';
-import { View, ScrollView, Text } from 'react-native';
+import { View, ScrollView, InteractionManager } from 'react-native';
 import { Logo, Description, Details, ListedExchange } from './TokenComponents';
 import styles from './styles';
 
@@ -13,9 +14,17 @@ import styles from './styles';
   state => ({
     locale: state.intl.get('locale'),
     listedExchange: state.ticker.get('listedExchange'),
-    loading: state.ticker.get('loading')
+    loading: state.ticker.get('loading'),
+    baseAsset: state.ticker.get('baseAsset')
   }),
-  null,
+  dispatch => ({
+    actions: bindActionCreators(
+      {
+        ...tokenActions
+      },
+      dispatch
+    )
+  }),
   null,
   { withRef: true }
 )
@@ -28,8 +37,20 @@ export default class TokenDetails extends Component {
     };
   }
 
+  componentWillMount() {
+    InteractionManager.runAfterInteractions(() => {
+      console.log(
+        'running getTokenDetail in componentWillMount',
+        this.props.baseAsset
+      );
+      this.props.actions.getTokenDetailRequested({
+        symbol: this.props.baseAsset
+      });
+    });
+  }
+
   render() {
-    const { listedExchange, loading } = this.props;
+    const { listedExchange, loading, tokenDetails } = this.props;
     return (
       <View style={styles.container}>
         <NavigationBar

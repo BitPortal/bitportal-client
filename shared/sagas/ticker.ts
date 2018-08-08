@@ -41,7 +41,6 @@ function* selectTickersByQuoteAsset(action: Action<string>) {
 
 function* getPairListedExchange(action: Action<TickerParams>) {
   if (!action.payload) return;
-  console.log('getPairListedExchange action.payload', action.payload);
 
   try {
     const data = yield call(api.getTickers, action.payload);

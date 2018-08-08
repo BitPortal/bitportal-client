@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
     // paddingHorizontal: 25,
     backgroundColor: Colors.minorThemeColor,
     // marginBottom: 13
-    flex: 1
+    flex: 1,
+    overflow: 'hidden'
   },
   spaceAround: {
     alignItems: 'center',

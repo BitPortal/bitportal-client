@@ -1,0 +1,38 @@
+{
+  "zh": {
+    "market_cap": "市值",
+    "description": "描述",
+    "circulating_supply": "当前供应",
+    "total_supply": "总供应量",
+    "blockchain": "区块链",
+    "proof_type": "共识算法",
+    "team_location": "团队位置",
+    "first_announced": "最早宣布",
+    "algorithm": "算法",
+    "ico_start": "ICO开始日期",
+    "ico_end": "ICO结束日期",
+    "ico_capital": "总共筹集",
+    "block_time": "区块间隔时间",
+    "volume_24h": "24小时总量",
+    "details": "详情",
+    "listed_exchange": "上架交易所"
+  },
+  "en": {
+    "description": "Description",
+    "market_cap": "Market Cap",
+    "circulating_supply": "Circulating Supply",
+    "total_supply": "Total Supply",
+    "blockchain": "Blockchain",
+    "proof_type": "Proof Type",
+    "team_location": "Team Location",
+    "first_announced": "First Announced",
+    "algorithm": "Algorithm",
+    "ico_start": "ICO Start Date",
+    "ico_end": "ICO End Date",
+    "ico_capital": "Total Raised",
+    "block_time": "Block Time",
+    "volume_24h": "Volume 24H",
+    "details": "Details",
+    "listed_exchange": "Listed Exchange"
+  }
+}

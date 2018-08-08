@@ -57,7 +57,7 @@ class AccordionPanel extends Component {
   }
 
   _setMaxHeight(event) {
-    console.log('nativeEvent MAXheight', event.nativeEvent.layout.height);
+    // console.log('nativeEvent MAXheight', event.nativeEvent.layout.height);
     if (this.state.maxHeight === '') {
       this.setState({
         maxHeight: event.nativeEvent.layout.height
@@ -66,7 +66,7 @@ class AccordionPanel extends Component {
   }
 
   _setMinHeight(event) {
-    console.log('nativeEvent MINheight', event.nativeEvent.layout.height);
+    // console.log('nativeEvent MINheight', event.nativeEvent.layout.height);
     if (this.state.minHeight === '') {
       this.setState({
         minHeight: event.nativeEvent.layout.height
@@ -86,8 +86,9 @@ class AccordionPanel extends Component {
           {
             backgroundColor: Colors.bgColor_41_41_44,
             marginTop: 10,
-            paddingBottom: 20,
-            height: this.state.animation
+            paddingBottom: 40,
+            height: this.state.animation,
+            flex: 1
           }
         ]}
       >
@@ -115,7 +116,7 @@ class AccordionPanel extends Component {
             )}
           </TouchableHighlight>
         </View>
-        <View style={{}} onLayout={this._setMaxHeight}>
+        <View style={{ paddingBottom: 20 }} onLayout={this._setMaxHeight}>
           {this.props.children}
         </View>
       </Animated.View>

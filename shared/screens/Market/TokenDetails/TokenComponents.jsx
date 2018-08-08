@@ -1,179 +1,343 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Text, View, ActivityIndicator } from 'react-native';
 import Colors from 'resources/colors';
 import { filterBgColor } from 'utils';
-import { FormattedNumber } from 'react-intl';
 import AccordionPanel from 'components/AccordionPanel';
 import { EXCHANGE_NAMES } from 'constants/market';
+import { IntlProvider, FormattedMessage, FormattedNumber } from 'react-intl';
+import { tokenTickerSelector } from 'selectors/ticker';
+
 import styles from './styles';
+import messages from './messages';
+
+const NAMES = [
+  'market_cap',
+  'blockchain',
+  'circulating_supply',
+  'total_supply',
+  'proof_type',
+  'team_location',
+  'first_announced',
+  'algorithm',
+  'block_time',
+  'ico_start',
+  'ico_end',
+  'ico_capital'
+];
 
 const Tag = props => (
   <View style={styles.tag}>
     <Text style={{ textAlign: 'center', color: Colors.textColor_89_185_226 }}>
-      {props.tag || 'Tag'}
+      {props.tag}
     </Text>
   </View>
 );
 
-export const Logo = () => (
-  <View style={styles.cardContainer}>
-    <View style={styles.titleWrapper}>
-      <View style={styles.iconPlacerholder}>
-        <Text>LOGO</Text>
-      </View>
-      <View style={{ marginLeft: 10 }}>
-        <Text style={[styles.text18, { fontWeight: 'bold' }]}>Bytom</Text>
-        <Text style={[styles.text16, {}]}>BTM</Text>
-      </View>
-    </View>
-    <View style={[styles.spaceBetween, { paddingVertical: 5 }]}>
-      <Text style={styles.text18}>11,949.00 USD</Text>
-      <View
-        style={[
-          styles.center,
-          {
-            minWidth: 70,
-            borderRadius: 4,
-            padding: 2,
-            backgroundColor: filterBgColor('-7.09')
-          }
-        ]}
-      >
-        <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>
-          <FormattedNumber
-            value="-7.09"
-            maximumFractionDigits={2}
-            minimumFractionDigits={2}
-          />
-          %
-        </Text>
-      </View>
-    </View>
+@connect(
+  state => ({
+    locale: state.intl.get('locale'),
+    token: state.token.get('data'),
+    loading: state.token.get('loading'),
+    ticker: tokenTickerSelector(state),
+    currentPair: state.ticker.get('currentPair')
+  }),
+  null,
+  null,
+  { withRef: true }
+)
+export class Logo extends Component {
+  constructor() {
+    super();
 
-    <View style={[styles.spaceBetween, { marginTop: 4 }]}>
-      <Text style={[styles.text14, { color: Colors.textColor_142_142_147 }]}>
-        Total Cap: 14,930,243,300 USD
-      </Text>
-    </View>
-    <View style={[styles.row, { paddingVertical: 10 }]}>
-      <Tag />
-      <Tag />
-    </View>
-  </View>
-);
+    this.state = { priceChangeAverage: null };
+  }
 
-export const Description = () => (
-  <AccordionPanel title="Description">
-    <View
-      style={{
-        paddingHorizontal: 25,
-        paddingBottom: 30,
-        marginLeft: 4,
-        flex: 1
-      }}
-    >
-      <Text
-        // numberOfLines={2}
-        ellipseMode="clip"
-        style={[
-          styles.text14,
-          {
-            // flex: 1
-            // paddingVertical: 20,
-            // paddingHorizontal: 25,
-            // paddingBottom: 30,
-            // marginLeft: 4
-          }
-        ]}
-      >
-        Bytom is an interactive protocol of multiple byte assets. Heterogeneous
-        byte-assets (indigenous digital currency, digital assets) that operate
-        in different formats Bytom is an interactive protocol of multiple byte
-        assets. Heterogeneous byte-assets (indigenous digital currency, digital
-        assets) that operate in different fo Bytom is an interactive protocol of
-        multiple byte assets. Heterogeneous byte-assets (indigenous digital
-        currency, digital assets) that operate in different formats Bytom is an
-        interactive protocol of multiple byte assets. Heterogeneous byte-assets
-        (indigenous digital currency, digital assets) that operate in different
-        fo Bytom is an interactive protocol of multiple byte assets.
-        Heterogeneous byte-assets (indigenous digital currency, digital assets)
-        that operate in different formats Bytom is an interactive protocol of
-        multiple byte assets. Heterogeneous byte-assets (indigenous digital
-        currency, digital assets) that operate in different fo
-      </Text>
-    </View>
-  </AccordionPanel>
-);
+  componentDidMount() {
+    this.calculatePriceChangeAverage();
+  }
 
-export const Details = () => (
-  <AccordionPanel title="Details">
-    <View
-      style={{
-        paddingHorizontal: 25,
-        // paddingBottom: 30,
-        marginLeft: 4
-      }}
-    >
-      <View style={[styles.spaceBetween, { marginTop: 10 }]}>
-        <Text style={styles.text14}> Locations </Text>
-        <Text style={styles.text14}> Hangzhou </Text>
-      </View>
-      <View style={[styles.spaceBetween, { marginTop: 10 }]}>
-        <Text style={styles.text14}> Total Supply </Text>
-        <Text style={styles.text14}> 1,706,000.000 </Text>
-      </View>
-      <View style={[styles.spaceBetween, { marginTop: 10 }]}>
-        <Text style={styles.text14}> Funds Raised </Text>
-        <Text style={styles.text14}> 8,900 BTC </Text>
-      </View>
-      <View style={[styles.spaceBetween, { marginTop: 10 }]}>
-        <Text style={styles.text14}> Token Cost </Text>
-        <Text style={styles.text14}> 0.4 USD </Text>
-      </View>
-      <View style={[styles.spaceBetween, { marginTop: 10 }]}>
-        <Text style={styles.text14}> KYC Info </Text>
-        <Text style={styles.text14}> None </Text>
-      </View>
-      <View style={[styles.spaceBetween, { marginTop: 10 }]}>
-        <Text style={styles.text14}> ICO Date </Text>
-        <Text style={styles.text14}> 2017.06.20 </Text>
-      </View>
-    </View>
-  </AccordionPanel>
-);
+  calculatePriceChangeAverage() {
+    const { ticker } = this.props;
+    let result = 0;
+    ticker.toJS().forEach((item) => {
+      console.log('item.price_change_percent', item.price_change_percent);
+      result += item.price_change_percent;
+    });
+    result /= ticker.toJS().length;
+    this.setState({ priceChangeAverage: result });
+  }
 
-export const ListedExchange = (props) => {
-  const { data, loading } = props;
-  console.log('listedexchange page', data);
-  return (
-    <AccordionPanel title="Listed Exchange">
-      <View
-        style={{
-          paddingHorizontal: 25,
-          // paddingBottom: 30,
-          marginLeft: 4
-        }}
-      >
-        {loading ? (
-          <View style={styles.loadingSymbol}>
-            <ActivityIndicator />
-          </View>
-        ) : (
-          data.map(item => (
-            <View style={[styles.spaceBetween, { marginTop: 10 }]}>
-              <Text style={styles.text14}>
-                {' '}
-                {EXCHANGE_NAMES[item.exchange]}{' '}
+  calculateListedExchangeinUSD() {}
+
+  render() {
+    const { name_en, name_zh, tags, market_cap, volume_24h } = this.props.token;
+
+    // const { price_change_percent } = this.props.ticker.toJS();
+    const { locale } = this.props;
+    const {
+      price_last,
+      quote_asset,
+      base_asset
+    } = this.props.currentPair.toJS();
+
+    return (
+      <IntlProvider messages={messages[locale]}>
+        <View style={styles.cardContainer}>
+          <View style={styles.titleWrapper}>
+            <View style={styles.iconPlacerholder}>
+              <Text>LOGO</Text>
+            </View>
+            <View style={{ marginLeft: 10 }}>
+              <Text style={[styles.text18, { fontWeight: 'bold' }]}>
+                {locale === 'zh' ? name_zh && name_zh : name_en && name_en}
               </Text>
-              <Text style={styles.text14}>
-                {' '}
-                {`${item.price_last} ${item.quote_asset}`}{' '}
+              <Text style={[styles.text16, {}]}>{base_asset}</Text>
+            </View>
+          </View>
+          <View style={[styles.spaceBetween, { paddingVertical: 5 }]}>
+            <Text style={styles.text18}>{`${price_last} ${quote_asset}`}</Text>
+            <View
+              style={[
+                styles.center,
+                {
+                  minWidth: 70,
+                  borderRadius: 4,
+                  padding: 2,
+                  backgroundColor: filterBgColor(this.state.priceChangeAverage)
+                }
+              ]}
+            >
+              <Text
+                style={[styles.text14, { color: Colors.textColor_255_255_238 }]}
+              >
+                <FormattedNumber
+                  value={this.state.priceChangeAverage}
+                  maximumFractionDigits={2}
+                  minimumFractionDigits={2}
+                />
+                %
               </Text>
             </View>
-          ))
-        )}
-        {/* <View style={[styles.spaceBetween, { marginTop: 10 }]}>
+          </View>
+
+          <View style={[styles.spaceBetween, { marginTop: 4 }]}>
+            <Text
+              style={[styles.text14, { color: Colors.textColor_142_142_147 }]}
+            >
+              {market_cap && <FormattedMessage id="market_cap" />}
+              {market_cap && ` ${market_cap}`}
+            </Text>
+          </View>
+          <View style={[styles.spaceBetween, { marginTop: 4 }]}>
+            <Text
+              style={[styles.text14, { color: Colors.textColor_142_142_147 }]}
+            >
+              {volume_24h && <FormattedMessage id="volume_24h" />}
+              {volume_24h && ` ${volume_24h}`}
+            </Text>
+          </View>
+          <View style={[styles.row, { paddingVertical: 10 }]}>
+            {locale === 'zh' && tags && tags.zh && tags.zh.length !== 0
+              ? tags.zh.map(item => <Tag tag={item} />)
+              : tags
+                && tags.en
+                && tags.en.length !== 0
+                && tags.en.map(item => <Tag tag={item} />)}
+          </View>
+        </View>
+      </IntlProvider>
+    );
+  }
+}
+
+@connect(
+  state => ({
+    locale: state.intl.get('locale'),
+    token: state.token.get('data'),
+    loading: state.token.get('loading')
+  }),
+  null,
+  null,
+  { withRef: true }
+)
+export class Description extends Component {
+  render() {
+    const { description } = this.props.token;
+    const { locale } = this.props;
+    if (
+      locale === 'en'
+      && description
+      && description.en
+      && description.en.length === (undefined || 0)
+    ) {
+      return null;
+    }
+    return (
+      <IntlProvider messages={messages[locale]}>
+        <AccordionPanel title={messages[locale].description}>
+          <View
+            style={{
+              paddingHorizontal: 25,
+              paddingBottom: 30,
+              marginLeft: 4
+            }}
+          >
+            <Text
+              ellipseMode="clip"
+              style={[
+                styles.text14,
+                {
+                  // flex: 1
+                  // paddingVertical: 20,
+                  // paddingHorizontal: 25,
+                  // paddingBottom: 30
+                  // marginLeft: 4
+                }
+              ]}
+            >
+              {locale === 'zh' && description && description.zh.length !== 0
+                ? description.zh
+                : description
+                  && description.en
+                  && description.en.length !== 0
+                  && description.en}
+            </Text>
+          </View>
+        </AccordionPanel>
+      </IntlProvider>
+    );
+  }
+}
+
+@connect(
+  state => ({
+    locale: state.intl.get('locale'),
+    token: state.token.get('data'),
+    loading: state.token.get('loading')
+  }),
+  null,
+  null,
+  { withRef: true }
+)
+export class Details extends Component {
+  render() {
+    const { circulating_supply, total_supply, ...rest } = this.props.token;
+    const { locale } = this.props;
+    return (
+      <IntlProvider messages={messages[locale]}>
+        <AccordionPanel title={messages[locale].details}>
+          <View
+            style={{
+              paddingHorizontal: 25,
+              // paddingBottom: 30,
+              marginLeft: 4
+            }}
+          >
+            {circulating_supply && (
+              <View style={[styles.spaceBetween, { marginTop: 10 }]}>
+                <Text style={styles.text14}>
+                  <FormattedMessage id="circulating_supply" />
+                </Text>
+                <Text style={styles.text14}>
+                  <FormattedNumber value={circulating_supply} />
+                </Text>
+              </View>
+            )}
+            {total_supply && (
+              <View style={[styles.spaceBetween, { marginTop: 10 }]}>
+                <Text style={styles.text14}>
+                  <FormattedMessage id="total_supply" />
+                </Text>
+                <Text style={styles.text14}>
+                  <FormattedNumber value={total_supply} />
+                </Text>
+              </View>
+            )}
+            {Object.keys(rest).map((item) => {
+              if (NAMES.includes(item)) {
+                return (
+                  <View style={[styles.spaceBetween, { marginTop: 10 }]}>
+                    <Text style={styles.text14}>
+                      <FormattedMessage id={item} />
+                    </Text>
+                    <Text style={styles.text14}>{rest[item]}</Text>
+                  </View>
+                );
+              }
+            })}
+            {/* <View style={[styles.spaceBetween, { marginTop: 10 }]}>
+              <Text style={styles.text14}> Locations </Text>
+              <Text style={styles.text14}> Hangzhou </Text>
+            </View>
+            <View style={[styles.spaceBetween, { marginTop: 10 }]}>
+              <Text style={styles.text14}> Total Supply </Text>
+              <Text style={styles.text14}> 1,706,000.000 </Text>
+            </View>
+            <View style={[styles.spaceBetween, { marginTop: 10 }]}>
+              <Text style={styles.text14}> Funds Raised </Text>
+              <Text style={styles.text14}> 8,900 BTC </Text>
+            </View>
+            <View style={[styles.spaceBetween, { marginTop: 10 }]}>
+              <Text style={styles.text14}> Token Cost </Text>
+              <Text style={styles.text14}> 0.4 USD </Text>
+            </View>
+            <View style={[styles.spaceBetween, { marginTop: 10 }]}>
+              <Text style={styles.text14}> KYC Info </Text>
+              <Text style={styles.text14}> None </Text>
+            </View>
+            <View style={[styles.spaceBetween, { marginTop: 10 }]}>
+              <Text style={styles.text14}> ICO Date </Text>
+              <Text style={styles.text14}> 2017.06.20 </Text>
+            </View> */}
+          </View>
+        </AccordionPanel>
+      </IntlProvider>
+    );
+  }
+}
+
+@connect(
+  state => ({
+    locale: state.intl.get('locale'),
+    token: state.token.get('data'),
+    loading: state.token.get('loading')
+  }),
+  null,
+  null,
+  { withRef: true }
+)
+export class ListedExchange extends Component {
+  render() {
+    const { data, loading, locale } = this.props;
+    return (
+      <AccordionPanel title={messages[locale].listed_exchange}>
+        <View
+          style={{
+            paddingHorizontal: 25,
+            marginLeft: 4
+          }}
+        >
+          {loading ? (
+            <View style={styles.loadingSymbol}>
+              <ActivityIndicator />
+            </View>
+          ) : (
+            data.map(item => (
+              <View style={[styles.spaceBetween, { marginTop: 10 }]}>
+                <Text style={styles.text14}>
+                  {' '}
+                  {EXCHANGE_NAMES[item.exchange]}{' '}
+                </Text>
+                <Text style={styles.text14}>
+                  {' '}
+                  {`${item.price_last} ${item.quote_asset}`}{' '}
+                </Text>
+              </View>
+            ))
+          )}
+          {/* <View style={[styles.spaceBetween, { marginTop: 10 }]}>
           <Text style={styles.text14}> Huobi.pro </Text>
           <Text style={styles.text14}> 11,949.00 USD </Text>
         </View>
@@ -185,7 +349,8 @@ export const ListedExchange = (props) => {
           <Text style={styles.text14}> Gate.io </Text>
           <Text style={styles.text14}> 11,949.00 USD </Text>
         </View> */}
-      </View>
-    </AccordionPanel>
-  );
-};
+        </View>
+      </AccordionPanel>
+    );
+  }
+}

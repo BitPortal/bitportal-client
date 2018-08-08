@@ -22,7 +22,9 @@ const filterBgColor = (data) => {
   state => ({
     ticker: exchangeTickerSelector(state),
     baseAsset: state.ticker.get('baseAsset'),
-    quoteAssetFilter: state.ticker.get('quoteAssetFilter')
+    quoteAssetFilter: state.ticker.get('quoteAssetFilter'),
+    token: state.token.get('data'),
+    locale: state.intl.get('locale')
   })
   // dispatch => ({
   //   actions: bindActionCreators(
@@ -37,14 +39,23 @@ const filterBgColor = (data) => {
 )
 export default class CoinInfoCard extends Component {
   render() {
-    const { baseAsset, ticker, item, listedExchange } = this.props;
+    const {
+      baseAsset,
+      ticker,
+      item,
+      listedExchange,
+      locale,
+      token
+    } = this.props;
     const price_change_percent = item.get('price_change_percent');
     const price_last = item.get('price_last');
     const base_volume = item.get('base_volume');
     const quote_volume = item.get('quote_volume');
     const quote_asset = item.get('quote_asset');
     const base_asset = item.get('base_asset');
-    console.log('price_last', price_last, 'base_asset', base_asset);
+    // console.log('price_last', price_last, 'base_asset', base_asset);
+    console.log('this.props.token', this.props.token);
+    const { name_zh, name_en } = token;
     return (
       <View style={styles.cardContainer}>
         <View style={styles.titleWrapper}>
@@ -53,7 +64,7 @@ export default class CoinInfoCard extends Component {
           </View>
           <View style={{ marginLeft: 10 }}>
             <Text style={[styles.text18, { fontWeight: 'bold' }]}>
-              Full Name
+              {locale === 'zh' ? name_zh && name_zh : name_en && name_en}
             </Text>
             <Text style={[styles.text16, {}]}>{base_asset}</Text>
           </View>

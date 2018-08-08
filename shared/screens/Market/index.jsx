@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TableView, { HeaderTitle } from 'screens/Market/TableView';
 import * as tickerActions from 'actions/ticker';
+import * as tokenActions from 'actions/token';
 import { exchangeTickerSelector, sortFilterSelector } from 'selectors/ticker';
 import { bindActionCreators } from 'redux';
 import { View, InteractionManager, LayoutAnimation } from 'react-native';
@@ -31,7 +32,8 @@ import styles from './styles';
   dispatch => ({
     actions: bindActionCreators(
       {
-        ...tickerActions
+        ...tickerActions,
+        ...tokenActions
       },
       dispatch
     )
@@ -80,9 +82,11 @@ export default class Market extends Component {
   // 点击查看币种行情
   pressListItem = (item) => {
     const baseAsset = item.get('base_asset');
-    console.log('pressListItem', item.toJS());
+    // console.log('pressListItem', item.toJS());
     InteractionManager.runAfterInteractions(() => {
+      this.props.actions.selectCurrentPair(item);
       this.props.actions.selectBaseAsset(baseAsset);
+      this.props.actions.getTokenDetailRequested({ symbol: baseAsset });
       Navigation.push(this.props.componentId, {
         component: {
           name: 'BitPortal.MarketDetails',
@@ -94,7 +98,7 @@ export default class Market extends Component {
 
   // 刷新数据
   onRefresh = () => {
-    console.log('onRefresh called');
+    // console.log('onRefresh called');
     this.props.actions.getTickersRequested({
       exchange: this.props.exchangeFilter,
       quote_asset: this.props.quoteAssetFilter,
@@ -125,15 +129,6 @@ export default class Market extends Component {
   }
 
   render() {
-    const storage = async () => {
-      const x = await secureStorage.getItem('EOS_ACCOUNT_INFO_testaccounts');
-      return x;
-    };
-    const result = storage();
-    setTimeout(() => {
-      console.log('getItem', result);
-    }, 4000);
-
     const {
       ticker,
       locale,
@@ -144,16 +139,16 @@ export default class Market extends Component {
       baseAsset
     } = this.props;
 
-    console.log(
-      'exchangeFilter',
-      exchangeFilter,
-      'sortFilter',
-      sortFilter,
-      'quoteAssetFilter',
-      quoteAssetFilter,
-      'baseAsset',
-      baseAsset
-    );
+    // console.log(
+    //   'exchangeFilter',
+    //   exchangeFilter,
+    //   'sortFilter',
+    //   sortFilter,
+    //   'quoteAssetFilter',
+    //   quoteAssetFilter,
+    //   'baseAsset',
+    //   baseAsset
+    // );
 
     return (
       <IntlProvider messages={messages[locale]}>

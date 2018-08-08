@@ -7,9 +7,13 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { FormattedNumber, IntlProvider, FormattedMessage } from 'react-intl';
 import Colors from 'resources/colors';
 import { EXCHANGE_NAMES } from 'constants/market';
+import { ASSET_FRACTION } from 'constants/market';
 import * as tickerActions from 'actions/ticker';
+import messages from './messages';
+
 import styles from './styles';
 
 const MarketElement = ({ onPress, data }) => (
@@ -22,10 +26,15 @@ const MarketElement = ({ onPress, data }) => (
         <View>
           <Text style={styles.text18}> {EXCHANGE_NAMES[data.exchange]} </Text>
         </View>
-        <View>
+        <View style={{ alignItems: 'flex-end', justifyContent: 'center' }}>
           <Text style={[styles.text16]}>
             {' '}
-            {`${data.price_last} ${data.quote_asset}`}{' '}
+            <FormattedNumber
+              value={data.price_last}
+              maximumFractionDigits={ASSET_FRACTION[data.quote_asset]}
+              minimumFractionDigits={ASSET_FRACTION[data.quote_asset]}
+            />
+            {` ${data.quote_asset}`}
           </Text>
           <Text
             style={[
@@ -37,7 +46,13 @@ const MarketElement = ({ onPress, data }) => (
               }
             ]}
           >
-            Vol: {`${data.quote_volume} ${data.quote_asset}`}
+            Vol:{' '}
+            <FormattedNumber
+              value={data.quote_volume}
+              maximumFractionDigits={ASSET_FRACTION[data.quote_asset]}
+              minimumFractionDigits={ASSET_FRACTION[data.quote_asset]}
+            />
+            {` ${data.quote_asset}`}
           </Text>
         </View>
       </View>
@@ -48,7 +63,8 @@ const MarketElement = ({ onPress, data }) => (
 @connect(
   state => ({
     listedExchange: state.ticker.get('listedExchange'),
-    loading: state.ticker.get('loading')
+    loading: state.ticker.get('loading'),
+    locale: state.intl.get('locale')
   }),
   dispatch => ({
     actions: bindActionCreators(
@@ -67,26 +83,30 @@ export default class MarketList extends Component {
   }
 
   render() {
-    const { changeMarket, listedExchange, loading } = this.props;
+    const { changeMarket, listedExchange, loading, locale } = this.props;
     return (
-      <View>
-        <View style={styles.marketElementContainer}>
-          <Text style={styles.headerText}>Listed Exchange</Text>
-        </View>
-        {loading ? (
-          <View style={styles.loadingSymbol}>
-            <ActivityIndicator />
+      <IntlProvider messages={messages[locale]}>
+        <View>
+          <View style={styles.marketElementContainer}>
+            <Text style={styles.headerText}>
+              <FormattedMessage id="listed_exchange" />
+            </Text>
           </View>
-        ) : (
-          listedExchange.map(data => (
-            <MarketElement
-              key={data.market + data.exchange}
-              data={data}
-              onPress={e => changeMarket(e)}
-            />
-          ))
-        )}
-      </View>
+          {loading ? (
+            <View style={styles.loadingSymbol}>
+              <ActivityIndicator />
+            </View>
+          ) : (
+            listedExchange.map(data => (
+              <MarketElement
+                key={data.market + data.exchange}
+                data={data}
+                onPress={e => changeMarket(e)}
+              />
+            ))
+          )}
+        </View>
+      </IntlProvider>
     );
   }
 }
