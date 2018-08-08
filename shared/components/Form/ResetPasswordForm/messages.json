@@ -6,17 +6,17 @@
     "cpwd_hint_txt_txt1" : "忘记密码？",
     "cpwd_hint_txt_txt2": "你可以通过",
     "cpwd_hint_txt_txt3": "导入私钥",
-    "cpwd_hint_txt_txt4": "或Keystore以重置您的密码",
+    
     "cpwd_button_name_change" : "重置",
     "cpwd_title_plchd_privtk" : "请输入您的私钥",
     "cpwd_title_tips_pwd" : "密码是您使⽤BitPortal钱包的相关功能时所需要的凭证。该密码对BitPortal以外的其他应⽤是⽆效的。BitPortal不会以任何形式储存您的密码，若您忘记密码，请重新导⼊钱包以重置。",
     "cpwd_title_plchd_pwd" : "输入密码",
     "cpwd_title_name_pswht" : "密码提示",
-    "cpwd_title_error_odpsd": "旧密码错误",
+    "cpwd_title_error_odpsd": "密码错误",
     "cpwd_title_error_reset": "重置失败",
-    "cpwd_title_empty_psd": "请输入旧密码",
+    "cpwd_title_empty_psd": "请输入当前密码",
     "cpwd_title_empty_newpsd": "请输入新密码",
-    "cpwd_title_empty_rptnewpsd": "与新密码不相同"
+    "cpwd_title_empty_rptnewpsd": "密码不匹配"
   },
   "en": {
     "cpwd_txtbox_title_current" : "Current Password",
@@ -25,7 +25,7 @@
     "cpwd_hint_txt_txt1" : "Forgot your password? ",
     "cpwd_hint_txt_txt2": "You can ",
     "cpwd_hint_txt_txt3": "import the private key",
-    "cpwd_hint_txt_txt4" : " or use memonic to reset the password.",
+    
     "cpwd_button_name_change" : "Reset",
     "cpwd_title_plchd_privtk" : "Please fill your private key...",
     "cpwd_title_tips_pwd" : "Password is your certificate to use the features of BitPortal Wallet. This password is not valid for applications other than BitPortal. BitPortal will not store your password in any form. If you forget your password, please re-import the private key to reset it.",
