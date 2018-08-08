@@ -95,6 +95,7 @@ export default class Contacts extends Component {
   render() {
     const { contacts } = this.state
     const { locale } = this.props
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>

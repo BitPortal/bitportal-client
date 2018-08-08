@@ -52,7 +52,7 @@ function* changePasswordRequested(action: Action<ChangePasswordParams>) {
 
     const eosAccountName = action.payload.eosAccountName
     const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
-    const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
+    const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'OWNER')
     assert(permission, 'No permission!')
     wifs = yield call(getEOSWifsByInfo, oldPassword, accountInfo, [permission])
     assert(wifs.length, 'No EOS private keys!')

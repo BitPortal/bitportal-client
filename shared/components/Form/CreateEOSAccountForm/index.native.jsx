@@ -87,10 +87,6 @@ export default class CreateEOSAccountForm extends Component {
     hasPrivateKey: false
   }
 
-  UNSAFE_componentWillUpdate() {
-    LayoutAnimation.easeInEaseOut()
-  }
-
   showPrivateKey = () => {
     this.setState(prevState => ({ hasPrivateKey: !prevState.hasPrivateKey }))
   }
@@ -101,6 +97,7 @@ export default class CreateEOSAccountForm extends Component {
 
   checkTerms = () => {
     const { locale } = this.props
+
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.BPWebView',
@@ -122,7 +119,7 @@ export default class CreateEOSAccountForm extends Component {
 
   submit = (data) => {
     const componentId = this.props.componentId
-    this.props.actions.createEOSAccountRequested(data.set('componentId', componentId).toJS())
+    this.props.actions.createEOSAccountRequested(data.set('componentId', componentId).delete('confirmedPassword').toJS())
   }
 
   render() {

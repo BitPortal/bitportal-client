@@ -1,6 +1,6 @@
 export const EOS_MAINNET_NODES = [
   'https://api1.eosasia.one',
-  'https://eos-mainnet.bitportal.io/',
+  'https://eos-mainnet.bitportal.io',
   'http://mainnet.genereos.io',
   'http://mainnet.eoscalgary.io',
   'https://api-eos.ono.chat',

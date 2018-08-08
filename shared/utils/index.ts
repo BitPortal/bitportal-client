@@ -54,8 +54,8 @@ export const getErrorMessage = (error: any) => {
     }
   }
 
-  if (error.message && typeOf(error.message) === 'Object' && error.message.code &&  error.message.name &&  error.message.what) {
-    return error.message.what
+  if (error.message && error.message.error && typeOf(error.message.error) === 'Object' && error.message.error.code &&  error.message.error.name &&  error.message.error.what) {
+    return error.message.error.what
   }
 
   return error.message || 'unknown error'
