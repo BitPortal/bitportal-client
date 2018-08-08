@@ -116,12 +116,6 @@ export const eosQrString = (
   token: string
 ) => `eos:${account_name}?amount=${amount || 0}&token=${token || 'EOS'}`;
 
-export const eosQrString = (
-  account_name: string,
-  amount: number,
-  token: string
-) => `eos:${account_name}?amount=${amount || 0}&token=${token || 'EOS'}`;
-
 export const parseEOSQrString = (text: string) => {
   let eosAccountName;
   let amount;
