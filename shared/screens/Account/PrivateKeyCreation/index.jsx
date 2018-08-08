@@ -57,7 +57,7 @@ export default class PrivateKeyCreation extends Component {
     } else {
       Navigation.push(this.props.componentId, {
         component: {
-          name: 'BitPortal.BackupTips'
+          name: 'BitPortal.Backup'
         }
       })
     }

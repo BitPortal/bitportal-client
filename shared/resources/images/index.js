@@ -43,7 +43,8 @@ const Images = {
   transfer_receiver: require('./transfer_receiver.png'),
   EOSIcon: require('./EOSIcon.png'),
   tips: require('./tips.png'),
-  help_center: require('./Profile_Help.png')
+  help_center: require('./Profile_Help.png'),
+  backup_group: require('./Backup_Group.png')
 }
 
 export default Images
