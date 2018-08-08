@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Text, View, ActivityIndicator } from 'react-native';
+import { Text, View, ActivityIndicator, Image } from 'react-native';
 import Colors from 'resources/colors';
 import { filterBgColor } from 'utils';
 import AccordionPanel from 'components/AccordionPanel';
 import { EXCHANGE_NAMES } from 'constants/market';
 import { IntlProvider, FormattedMessage, FormattedNumber } from 'react-intl';
 import { tokenTickerSelector } from 'selectors/ticker';
+import Images from 'resources/images';
 
 import styles from './styles';
 import messages from './messages';
@@ -86,9 +87,7 @@ export class Logo extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.cardContainer}>
           <View style={styles.titleWrapper}>
-            <View style={styles.iconPlacerholder}>
-              <Text>LOGO</Text>
-            </View>
+            <Image style={styles.icon} source={Images.coin_logo_default} />
             <View style={{ marginLeft: 10 }}>
               <Text style={[styles.text18, { fontWeight: 'bold' }]}>
                 {locale === 'zh' ? name_zh && name_zh : name_en && name_en}

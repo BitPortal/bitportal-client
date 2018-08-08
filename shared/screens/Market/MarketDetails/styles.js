@@ -101,12 +101,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 20
   },
-  iconPlacerholder: {
+  icon: {
     width: 50,
     height: 50,
-    backgroundColor: 'red',
-    justifyContent: 'center',
-    alignItems: 'center',
     borderRadius: 25
   },
   loadingSymbol: {
