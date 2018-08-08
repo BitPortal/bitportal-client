@@ -1,16 +1,16 @@
 {
   "zh": {
-    "sts_title_name_settings" : "系统设置",
-    "sts_sec_title_language" : "语言",
-    "sts_sec_title_currency" : "货币单位",
-    "sts_sec_title_theme" : "主题",
+    "sts_title_name_settings": "系统设置",
+    "sts_sec_title_language": "语言",
+    "sts_sec_title_currency": "货币单位",
+    "sts_sec_title_theme": "主题",
     "sts_sec_title_nodesettings": "节点设置"
   },
   "en": {
-    "sts_title_name_settings" : "Settings",
-    "sts_sec_title_language" : "Languages",
-    "sts_sec_title_currency" : "Currency Uint",
-    "sts_sec_title_theme" : "Themes",
+    "sts_title_name_settings": "Settings",
+    "sts_sec_title_language": "Languages",
+    "sts_sec_title_currency": "Currency Unit",
+    "sts_sec_title_theme": "Themes",
     "sts_sec_title_nodesettings": "Node Settings"
   }
 }
