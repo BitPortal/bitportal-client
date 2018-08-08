@@ -27,25 +27,8 @@ export default class AccountImport extends Component {
     }
   }
 
-  changeAccountName = () => {
-
-  }
-
-  enterPrivateKey = () => {
-
-  }
-
-  goToBackUp = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.BackupTips'
-      }
-    })
-  }
-
   render() {
     const { locale } = this.props
-
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -55,7 +38,7 @@ export default class AccountImport extends Component {
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ backgroundColor: Colors.bgColor_48_49_59 }}>
-              <ImportEOSAccountForm onPress={() => this.goToBackUp()} componentId={this.props.componentId} />
+              <ImportEOSAccountForm componentId={this.props.componentId} />
               <View style={styles.keyboard} />
             </ScrollView>
           </View>

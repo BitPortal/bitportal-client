@@ -12,7 +12,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 10,
     paddingTop: 14,
-    backgroundColor: Colors.bgColor_48_49_59
+    backgroundColor: Colors.bgColor_48_49_59,
+    alignItems: 'center',
+    width: SCREEN_WIDTH,
+    height: FontScale(80)
   },
   image: {
     height: 44,
@@ -22,18 +25,18 @@ const styles = StyleSheet.create({
   right: {
     flexDirection: 'column',
     marginLeft: 10,
-    flex: 1,
+    flex: 1
   },
   title: {
     color: Colors.textColor_FFFFEE,
     fontSize: FontScale(15),
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 5
   },
   subTitle: {
     color: Colors.textColor_149_149_149,
     fontSize: FontScale(13),
-    marginBottom: 10,
+    marginTop: 5
   },
   infoArea: {
     flexDirection: 'row',

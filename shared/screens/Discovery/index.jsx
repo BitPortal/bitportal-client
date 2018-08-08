@@ -48,7 +48,7 @@ export default class Discovery extends Component {
         title: item.title,
         // TODO: get some raw text from markdown ?
         subTitle: item.content.substr(0, 30),
-        author: item.publisher,
+        author: item.author && item.author.name,
         date: new Date(item.createdAt).toLocaleDateString(),
         id: item.id,
         mobile_type: item.mobile_type,

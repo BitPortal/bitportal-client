@@ -60,7 +60,7 @@ export default class ExportPrivateKey extends Component {
                       style={styles.input}
                       underlineColorAndroid="transparent"
                       selectionColor={Colors.textColor_181_181_181}
-                      placeholder="owner private key"
+                      placeholder="Private key"
                       placeholderTextColor={Colors.textColor_181_181_181}
                       value={item.wif}
                   />

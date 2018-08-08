@@ -1,7 +1,7 @@
 {
   "zh": {
     "act_fid_title_name": "EOS 账户名",
-    "act_fid_tips_name": "EOS账户名是您EOS账户的唯⼀标识，一个EOS账户名对应⼀个唯⼀的EOS私钥，根据该私钥所属权限获得相应的账户权限。",
+    "act_fid_tips_name": "EOS账户名是您EOS账户的唯⼀标识，一个EOS账户对应不同权限的EOS私钥，根据该私钥所属权限获得相应的账户权限。根据该私钥所属权限获得相应的账户权限。",
     "act_fid_title_password" : "设置密码",
     "act_fid_plachd_password": "输入密码",
     "act_fid_plachd_repeat" : "确认密码",
@@ -9,8 +9,8 @@
     "act_fid_tips_password": "密码是您使⽤BitPortal钱包的相关功能时所需要的凭证。该密码对BitPortal以外的其他应⽤是⽆效的。BitPortal不会以任何形式储存您的密码，若您忘记密码，请重新导⼊钱包以重置。",
     "act_fid_title_invcd": "邀请码",
     "act_fid_plachd_invcd": "输入邀请码",
-    "act_fid_tips_invcd": "因目前EOS账户注册的成本所限，BitPortal将向部分⽤用户提供邀请码进⾏EOS账户注册。若您没有邀请码，您可以通过邀请其他可信账户协助您注册EOS账户。",
-    "act_hint_txt_txt" : "忘记密码？你可以通过导入私钥或Keystore以重置您的密码",
+    "act_fid_tips_invcd": "因目前EOS账户注册的成本所限，BitPortal将向部分⽤用户提供邀请码进⾏EOS账户注册。您可参加BitPortal官方组织的活动获取邀请码。",
+    "act_hint_txt_txt" : "忘记密码？你可以重新导入私钥重置您的密码",
     "act_fid_plachd_key": "请输入您的私钥",
     "act_btn_title_key": "导入私钥",
     "act_btn_title_close": "关闭",
@@ -26,12 +26,12 @@
     "act_fid_limit_name": "EOS账户名不能长于12位字符",
     "act_fid_empty_psd": "请输入密码",
     "act_fid_empty_rptpsd": "请确认密码",
-    "act_fid_error_rptpsd": "密码不相符",
+    "act_fid_error_rptpsd": "密码不匹配",
     "act_fid_empty_invicode": "请输入邀请码"
   },  
   "en": {
     "act_fid_title_name" : "Name Your EOS Account",
-    "act_fid_tips_name": "The EOS account name is the unique identifier of your EOS account. An EOS account name corresponds to a unique EOS private key, and the corresponding account rights are obtained according to the permissions of the private key.",
+    "act_fid_tips_name": "The EOS account name is the unique identifier of your EOS account. An EOS account name corresponds to different EOS private keys with different authorities, and the corresponding account rights are obtained according to the permissions of the private key.",
     "act_fid_title_password" : "Set Password",
     "act_fid_plachd_password": "Set Password",
     "act_fid_plachd_repeat" : "Confirm Password",
@@ -39,8 +39,8 @@
     "act_fid_tips_password": "Password is your certificate to use the features of BitPortal Wallet. This password is not valid for applications other than BitPortal. BitPortal will not store your password in any form. If you forget your password, please re-import the private key to reset it.",
     "act_fid_title_invcd": "Invitation Code",
     "act_fid_plachd_invcd": "Invitation Code",
-    "act_fid_tips_invcd": "Due to the current cost of EOS account registration, BitPortal will implement an invitation registration system, users need invitation code to register new EOS account. If you do not have an invitation code, you can register your EOS account by inviting other trusted accounts.",
-    "act_hint_txt_txt" : "Forgot your password? You can import the private key or use memonic to reset the password.",
+    "act_fid_tips_invcd": "Due to the current cost of EOS account registration, BitPortal will implement an invitation registration system, users need invitation code to register new EOS account. You could participate official BitPortal event to have your invitation code.",
+    "act_hint_txt_txt" : "Forgot your password? You can import the private key to reset the password.",
     "act_fid_plachd_key": "Please fill your private key...",
     "act_btn_title_key": "Already have private key?",
     "act_btn_title_close": "Close",
@@ -56,7 +56,7 @@
     "act_fid_limit_name": "The maximum length of EOS account is 12",
     "act_fid_empty_psd": "Please input bitportal wallet password",
     "act_fid_empty_rptpsd": "Please confirm password",
-    "act_fid_error_rptpsd": "Passwords do not match",
+    "act_fid_error_rptpsd": "Password does not match",
     "act_fid_empty_invicode": "Please input inviteCode"
   }
 }

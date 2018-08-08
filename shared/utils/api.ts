@@ -51,8 +51,12 @@ export const fetchBase = async (
       fetchOptions.body = JSON.stringify(params);
     }
   }
+<<<<<<< HEAD
   console.log('api string', url);
 
+=======
+  console.log('###', url)
+>>>>>>> develop
   return fetch(url, fetchOptions).then((res: any) => {
     if (!res.ok) {
       return res.json().then((e: any) => Promise.reject({ message: e }));
