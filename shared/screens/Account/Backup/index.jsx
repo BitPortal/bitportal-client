@@ -5,6 +5,8 @@ import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { Text, View, Image, ScrollView, TouchableOpacity, TouchableHighlight } from 'react-native'
 import Colors from 'resources/colors'
 import images from 'resources/images'
+import LinearGradientContainer from 'components/LinearGradientContainer'
+import messages from './messages'
 import styles from './styles'
 
 @connect(
@@ -28,21 +30,25 @@ export default class Backup extends Component {
   goToBackup = () => {
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.Backup'
+        name: 'BitPortal.ExportPrivateKey',
+        passProps: {
+          entry: 'backup'
+        }
       }
     })
   }
 
-  goToTutorials = () => {
-
+  skip = () => {
+    Navigation.popToRoot(this.props.componentId)
   }
 
   render() {
+    const { locale } = this.props
     return (
       <View style={styles.container}>
         <NavigationBar
           leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
-          title="Backup"
+          title={messages[locale].bcup_sec_title_nav}
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
@@ -50,11 +56,12 @@ export default class Backup extends Component {
               <View style={{ marginVertical: 20 }}>
                 <Image source={images.backup_group} style={styles.image} />
               </View>
-              <Text style={styles.text14}>The final step: </Text>
-              <Text style={styles.text14}>Back up your account now!</Text>
+              <Text style={styles.text14}>
+                {messages[locale].bcup_sec_title_backup}
+              </Text>
               <View style={{ marginTop: 20 }}>
                 <Text style={[styles.text14, { color: Colors.textColor_181_181_181 }]}>
-                  Backup account: Export mnemonics and copy it to a safe place, never save it on the web. Then try to transfer and transfer the small assets to start using.
+                  {messages[locale].bcup_sec_tips_backup}
                 </Text>
               </View>
               <TouchableHighlight
@@ -62,16 +69,18 @@ export default class Backup extends Component {
                 underlayColor={Colors.textColor_89_185_226}
                 style={[styles.btn, styles.center, { marginTop: 25, backgroundColor: Colors.textColor_89_185_226 }]}
               >
-                <Text style={styles.text14}>
-                  Backup
-                </Text>
+                <LinearGradientContainer type="right" style={[[styles.btn, styles.center]]}>
+                  <Text style={styles.text14}>
+                    {messages[locale].bcup_sec_title_nav}
+                  </Text>
+                </LinearGradientContainer>
               </TouchableHighlight>
               <TouchableOpacity
-                onPress={() => this.goToTutorials()}
-                style={[styles.btn, styles.center, { marginTop: 15 }]}
+                onPress={() => this.skip()}
+                style={[styles.btn, styles.center, { marginTop: 10 }]}
               >
                 <Text style={[styles.text14, { color: Colors.textColor_89_185_226 }]}>
-                  View Backup Detailed Tutorials
+                  {messages[locale].bcup_button_title_skip}
                 </Text>
               </TouchableOpacity>
             </View>
