@@ -23,17 +23,20 @@ const MarketElement = ({ onPress, data }) => (
     <View style={styles.marketElementContainer}>
       <View style={styles.spaceBetween}>
         <View>
-          <Text style={styles.text18}> {EXCHANGE_NAMES[data.exchange]} </Text>
+          <Text style={styles.text18}>
+            {' '}
+            {EXCHANGE_NAMES[data.get('exchange')]}{' '}
+          </Text>
         </View>
         <View style={{ alignItems: 'flex-end', justifyContent: 'center' }}>
           <Text style={[styles.text16]}>
             {' '}
             <FormattedNumber
-              value={data.price_last}
-              maximumFractionDigits={ASSET_FRACTION[data.quote_asset]}
-              minimumFractionDigits={ASSET_FRACTION[data.quote_asset]}
+              value={data.get('price_last')}
+              maximumFractionDigits={ASSET_FRACTION[data.get('quote_asset')]}
+              minimumFractionDigits={ASSET_FRACTION[data.get('quote_asset')]}
             />
-            {` ${data.quote_asset}`}
+            {` ${data.get('quote_asset')}`}
           </Text>
           <Text
             style={[
@@ -47,11 +50,11 @@ const MarketElement = ({ onPress, data }) => (
           >
             Vol:{' '}
             <FormattedNumber
-              value={data.quote_volume}
-              maximumFractionDigits={ASSET_FRACTION[data.quote_asset]}
-              minimumFractionDigits={ASSET_FRACTION[data.quote_asset]}
+              value={data.get('quote_volume')}
+              maximumFractionDigits={ASSET_FRACTION[data.get('quote_asset')]}
+              minimumFractionDigits={ASSET_FRACTION[data.get('quote_asset')]}
             />
-            {` ${data.quote_asset}`}
+            {` ${data.get('quote_asset')}`}
           </Text>
         </View>
       </View>

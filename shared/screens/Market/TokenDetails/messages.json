@@ -15,7 +15,9 @@
     "block_time": "区块间隔时间",
     "volume_24h": "24小时总量",
     "details": "详情",
-    "listed_exchange": "上架交易所"
+    "listed_exchange": "上架交易所",
+    "description_null": "暂缺描述",
+    "details_null": "暂缺详情"
   },
   "en": {
     "description": "Description",
@@ -33,6 +35,8 @@
     "block_time": "Block Time",
     "volume_24h": "Volume 24H",
     "details": "Details",
-    "listed_exchange": "Listed Exchange"
+    "listed_exchange": "Listed Exchange",
+    "description_null": "Description Not Available",
+    "details_null": "Details Not Available"
   }
 }

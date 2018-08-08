@@ -73,7 +73,13 @@ export class Logo extends Component {
   calculateListedExchangeinUSD() {}
 
   render() {
-    const { name_en, name_zh, tags, market_cap, volume_24h } = this.props.token;
+    const {
+      name_en,
+      name_zh,
+      tags,
+      market_cap,
+      volume_24h
+    } = this.props.token.toJS();
 
     // const { price_change_percent } = this.props.ticker.toJS();
     const { locale } = this.props;
@@ -162,17 +168,26 @@ export class Logo extends Component {
   { withRef: true }
 )
 export class Description extends Component {
-  render() {
-    const { description } = this.props.token;
-    const { locale } = this.props;
+  getDescription = (locale) => {
+    const { description } = this.props.token.toJS();
+
     if (
-      locale === 'en'
-      && description
-      && description.en
-      && description.en.length === (undefined || 0)
+      description
+      && description[locale]
+      && description[locale].length !== 0
     ) {
-      return null;
+      return description[locale];
+    } else if (description && description.en && description.en.length !== 0) {
+      return description.en;
+    } else {
+      return messages[locale].description_null;
     }
+  };
+
+  render() {
+    const { description } = this.props.token.toJS();
+    const { locale } = this.props;
+
     return (
       <IntlProvider messages={messages[locale]}>
         <AccordionPanel title={messages[locale].description}>
@@ -196,12 +211,7 @@ export class Description extends Component {
                 }
               ]}
             >
-              {locale === 'zh' && description && description.zh.length !== 0
-                ? description.zh
-                : description
-                  && description.en
-                  && description.en.length !== 0
-                  && description.en}
+              {this.getDescription(locale)}
             </Text>
           </View>
         </AccordionPanel>
@@ -222,7 +232,11 @@ export class Description extends Component {
 )
 export class Details extends Component {
   render() {
-    const { circulating_supply, total_supply, ...rest } = this.props.token;
+    const {
+      circulating_supply,
+      total_supply,
+      ...rest
+    } = this.props.token.toJS();
     const { locale } = this.props;
     return (
       <IntlProvider messages={messages[locale]}>
@@ -234,6 +248,11 @@ export class Details extends Component {
               marginLeft: 4
             }}
           >
+            {!circulating_supply
+            && !total_supply
+            && Object.keys(rest).length === 0 ? (
+              <Text style={styles.text14}>{messages[locale].details_null}</Text>
+              ) : null}
             {circulating_supply && (
               <View style={[styles.spaceBetween, { marginTop: 10 }]}>
                 <Text style={styles.text14}>
@@ -327,11 +346,11 @@ export class ListedExchange extends Component {
               <View style={[styles.spaceBetween, { marginTop: 10 }]}>
                 <Text style={styles.text14}>
                   {' '}
-                  {EXCHANGE_NAMES[item.exchange]}{' '}
+                  {EXCHANGE_NAMES[item.get('exchange')]}{' '}
                 </Text>
                 <Text style={styles.text14}>
                   {' '}
-                  {`${item.price_last} ${item.quote_asset}`}{' '}
+                  {`${item.get('price_last')} ${item.get('quote_asset')}`}{' '}
                 </Text>
               </View>
             ))

@@ -56,14 +56,14 @@ export default class CoinInfoCard extends Component {
     const base_asset = item.get('base_asset');
     // console.log('price_last', price_last, 'base_asset', base_asset);
     console.log('this.props.token', this.props.token);
-    const { name_zh, name_en } = token;
+    const { name_zh, name_en } = token.toJS();
     return (
       <View style={styles.cardContainer}>
         <View style={styles.titleWrapper}>
           <Image style={styles.icon} source={Images.coin_logo_default} />
           <View style={{ marginLeft: 10 }}>
             <Text style={[styles.text18, { fontWeight: 'bold' }]}>
-              {locale === 'zh' ? name_zh && name_zh : name_en && name_en}
+              {locale === 'zh' ? name_zh || name_en : name_en}
             </Text>
             <Text style={[styles.text16, {}]}>{base_asset}</Text>
           </View>

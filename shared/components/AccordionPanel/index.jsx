@@ -12,28 +12,15 @@ import Colors from 'resources/colors';
 import styles from './styles';
 
 class AccordionPanel extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    //Step 3
+    expanded: true,
+    animation: new Animated.Value(),
+    maxHeight: '',
+    minHeight: ''
+  };
 
-    // this.icons = {
-    //   //Step 2
-    //   up: require('./images/Arrowhead-01-128.png'),
-    //   down: require('./images/Arrowhead-Down-01-128.png')
-    // };
-
-    this.state = {
-      //Step 3
-      expanded: true,
-      animation: new Animated.Value(),
-      maxHeight: '',
-      minHeight: ''
-    };
-    this._setMaxHeight = this._setMaxHeight.bind(this);
-    this._setMinHeight = this._setMinHeight.bind(this);
-    this.toggle = this.toggle.bind(this);
-  }
-
-  toggle() {
+  toggle = () => {
     //Step 1
     let initialValue = this.state.expanded
         ? this.state.maxHeight + this.state.minHeight
@@ -54,25 +41,25 @@ class AccordionPanel extends Component {
         toValue: finalValue
       }
     ).start(); //Step 5
-  }
+  };
 
-  _setMaxHeight(event) {
-    // console.log('nativeEvent MAXheight', event.nativeEvent.layout.height);
+  _setMaxHeight = (event) => {
+    console.log('nativeEvent MAXheight', event.nativeEvent.layout.height);
     if (this.state.maxHeight === '') {
       this.setState({
         maxHeight: event.nativeEvent.layout.height
       });
     }
-  }
+  };
 
-  _setMinHeight(event) {
+  _setMinHeight = (event) => {
     // console.log('nativeEvent MINheight', event.nativeEvent.layout.height);
     if (this.state.minHeight === '') {
       this.setState({
         minHeight: event.nativeEvent.layout.height
       });
     }
-  }
+  };
 
   render() {
     const { expanded } = this.state;
@@ -97,10 +84,17 @@ class AccordionPanel extends Component {
             styles.spaceBetween,
             { paddingVertical: 20, paddingHorizontal: 25 }
           ]}
-          onLayout={this._setMinHeight}
+          onLayout={(event) => {
+            this._setMinHeight(event);
+          }}
         >
           <Text style={[styles.headerText]}> {title} </Text>
-          <TouchableHighlight onPress={this.toggle} underlayColor="#f1f1f1">
+          <TouchableHighlight
+            onPress={() => {
+              this.toggle();
+            }}
+            underlayColor="#f1f1f1"
+          >
             {expanded ? (
               <Ionicons
                 name="ios-arrow-up"
@@ -116,7 +110,12 @@ class AccordionPanel extends Component {
             )}
           </TouchableHighlight>
         </View>
-        <View style={{ paddingBottom: 20 }} onLayout={this._setMaxHeight}>
+        <View
+          style={{ paddingBottom: 20 }}
+          onLayout={(event) => {
+            this._setMaxHeight(event);
+          }}
+        >
           {this.props.children}
         </View>
       </Animated.View>

@@ -20,13 +20,13 @@ export default handleActions(
         return state
           .set('loaded', true)
           .set('loading', false)
-          .set('data', {});
+          .set('data', Immutable.fromJS({}));
       }
 
       return state
         .set('loaded', true)
         .set('loading', false)
-        .set('data', action.payload[0]);
+        .set('data', Immutable.fromJS(action.payload[0]));
     },
     [actions.getTokenDetailFailed](state, action) {
       return state.set('error', action.payload).set('loading', false);

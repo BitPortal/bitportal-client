@@ -77,7 +77,7 @@ export default handleActions(
         .set('loaded', true)
         .set('loading', false)
         .set('fromUserPull', false)
-        .set('listedExchange', action.payload);
+        .set('listedExchange', Immutable.fromJS(action.payload));
     },
     [actions.selectTickersByExchange](state, action) {
       return state
@@ -92,14 +92,14 @@ export default handleActions(
     },
     [actions.selectBaseAsset](state, action) {
       // console.log('actions.selectBaseAsset', action.payload);
-      return state.set('baseAsset', action.payload);
+      return state.set('baseAsset', Immutable.fromJS(action.payload));
     },
     [actions.deleteListedExchange](state, action) {
-      return state.set('listedExchange', []);
+      return state.set('listedExchange', Immutable.fromJS([]));
     },
     [actions.selectCurrentPair](state, action) {
       // console.log('action.selectCurrentPair', action.payload.toJS());
-      return state.set('currentPair', action.payload);
+      return state.set('currentPair', Immutable.fromJS(action.payload));
     },
     [actions.setSortFilter](state, action) {
       return state.updateIn(
