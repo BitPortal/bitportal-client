@@ -149,7 +149,7 @@ export const startTabBasedApp = (locale) => {
                 {
                   component: {
                     id: 'BitPortalAssets',
-                    name: 'BitPortal.Backup',
+                    name: 'BitPortal.Assets',
                     options: {
                       topBar: {
                         visible: false,
