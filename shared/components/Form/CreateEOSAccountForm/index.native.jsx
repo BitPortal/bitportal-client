@@ -12,6 +12,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import PasswordStrength from 'components/PasswordStrength'
 import Alert from 'components/Alert'
+import { validateEOSAccountName } from 'utils/validate'
 import { getPasswordStrength } from 'utils'
 import * as walletActions from 'actions/wallet'
 import * as eosAccountActions from 'actions/eosAccount'
@@ -41,8 +42,8 @@ const validate = (values, props) => {
     errors.eosAccountName = messages[locale].act_fid_empty_name
   }
 
-  if (values.get('eosAccountName') && values.get('eosAccountName').length > 12) {
-    errors.eosAccountName = messages[locale].act_fid_limit_name
+  if (!!values.get('eosAccountName') && !validateEOSAccountName(values.get('eosAccountName'))) {
+    errors.eosAccountName = messages[locale].act_fid_plachd_name
   }
 
   if (!values.get('password')) {
@@ -69,7 +70,8 @@ const validate = (values, props) => {
     locale: state.intl.get('locale'),
     wallet: state.wallet,
     eosAccount: state.eosAccount,
-    password: formValueSelector('createEOSAccountForm')(state, 'password')
+    password: formValueSelector('createEOSAccountForm')(state, 'password'),
+    eosAccountName: formValueSelector('createEOSAccountForm')(state, 'eosAccountName')
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -136,6 +138,7 @@ export default class CreateEOSAccountForm extends Component {
             label={messages[locale].act_fid_title_name}
             name="eosAccountName"
             component={TextField}
+            placeholder={messages[locale].act_fid_plachd_name}
             tips={messages[locale].act_fid_tips_name}
             normalize={normalizeEOSAccountName}
           />
