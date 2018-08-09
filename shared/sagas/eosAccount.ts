@@ -1,6 +1,6 @@
 import assert from 'assert'
 import { delay } from 'redux-saga'
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { select, call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import { reset } from 'redux-form/immutable'
 import * as actions from 'actions/eosAccount'
@@ -55,11 +55,22 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
       origin: 'classic'
     }
     const accountInfo = getInitialAccountInfo(eosAccountName, publicKey)
+    const eosAccountCreationInfo = {
+      eosAccountName,
+      publicKey,
+      transactionId: txhash,
+      irreversible: false,
+      backup: false,
+      node: BITPORTAL_API_EOS_URL,
+      timestamp: +Date.now(),
+    }
 
+    yield call(secureStorage.setItem, `EOS_ACCOUNT_CREATION_INFO_${eosAccountName}`, eosAccountCreationInfo, true)
     yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, accountInfo, true)
     yield call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_${permission}_${publicKey}`, keystore, true)
     yield call(secureStorage.setItem, `CLASSIC_WALLET_INFO_EOS_${eosAccountName}`, walletInfo, true)
     yield call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
+    yield put(actions.syncEOSAccountCreationInfo(eosAccountCreationInfo))
     yield put(actions.createEOSAccountSucceeded(accountInfo))
     yield put(createClassicWalletSucceeded(walletInfo))
     yield put(getBalanceRequested({ code: 'eosio.token', account: walletInfo.eosAccountName }))
@@ -143,8 +154,15 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
 
   try {
     const eosAccountName = action.payload.eosAccountName
-    const eos = yield call(initEOS, {})
-    assert(eos.getAccount, 'No eos getAccount method')
+    const eosAccountCreationInfo = yield select((state: RootState) => state.eosAccount.get('eosAccountCreationInfo'))
+
+    let eos
+    if (eosAccountCreationInfo.get('transactionId') && !eosAccountCreationInfo.get('irreversible')) {
+      eos = yield call(initEOS, { httpEndpoint: BITPORTAL_API_EOS_URL })
+    } else {
+      eos = yield call(initEOS, {})
+    }
+
     const info = yield call(eos.getAccount, eosAccountName)
     assert(info && info.account_name, 'Invalid account info')
     yield put(actions.getEOSAccountSucceeded(info))

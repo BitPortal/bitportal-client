@@ -7,6 +7,7 @@ const initialState = Immutable.fromJS({
   isAssetHidden: false,
   backupCompleted: true,
   eosAccountList: [],
+  eosAccountCreationInfo: {},
   loading: false,
   loaded: false,
   error: null
@@ -57,6 +58,9 @@ export default handleActions({
   },
   [actions.syncEOSAccount] (state, action) {
     return state.set('eosAccountList', Immutable.fromJS(action.payload))
+  },
+  [actions.syncEOSAccountCreationInfo] (state, action) {
+    return state.set('eosAccountCreationInfo', Immutable.fromJS(action.payload))
   },
   [actions.clearEOSAccountError] (state) {
     return state.set('error', null)

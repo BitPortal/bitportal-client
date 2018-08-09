@@ -1,14 +1,22 @@
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { select, call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/balance'
 import { getErrorMessage } from 'utils'
+import { BITPORTAL_API_EOS_URL } from 'constants/env'
 import { initEOS } from 'core/eos'
 
 function* getBalanceRequested(action: Action<BalanceParams>) {
   if (!action.payload) return
 
   try {
-    const eos = yield call(initEOS, {})
+    const eosAccountCreationInfo = yield select((state: RootState) => state.eosAccount.get('eosAccountCreationInfo'))
+    let eos
+    if (eosAccountCreationInfo.get('transactionId') && !eosAccountCreationInfo.get('irreversible')) {
+      eos = yield call(initEOS, { httpEndpoint: BITPORTAL_API_EOS_URL })
+    } else {
+      eos = yield call(initEOS, {})
+    }
+
     const data = yield call(eos.getCurrencyBalance, action.payload)
     const name = action.payload.account
     let balances = data.map((item: any) => {
