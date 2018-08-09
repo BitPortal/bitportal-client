@@ -6,8 +6,7 @@
     "expvk_txtbox_title_pvk" : "私钥",
     "expvk_txtbox_title_pvk_owner" : "私钥",
     "expvk_txtbox_title_pvk_active" : "Active权限私钥",
-    "expvk_button_name_copy" : "复制私钥",
-    "expvk_button_name_copied": "已复制"
+    "expvk_button_name_backup" : "已完成备份"
   },
   "en": {
     "expvk_title_name_expvk" : "Export Private Key",
@@ -16,7 +15,6 @@
     "expvk_txtbox_title_pvk" : "Private Key",
     "expvk_txtbox_title_pvk_owner" : "Private Key",
     "expvk_txtbox_title_pvk_active" : "Active Private Key",
-    "expvk_button_name_copy" : "Copy Private Key",
-    "expvk_button_name_copied": "Copied"
+    "expvk_button_name_backup" : "Backup completed!"
   }
 }

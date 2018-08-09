@@ -24,6 +24,7 @@ declare interface Config {
   BITPORTAL_API_UPDATE_LOG_URL: string
   EOS_EXPLORER_URL: string
   BITPORTAL_API_EOS_URL: string
+  BITPORTAL_WEBSITE_URL: string
 }
 
 declare interface RootState {

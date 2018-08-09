@@ -1,9 +1,17 @@
 import React, { PureComponent } from 'react'
 import { FlatList, View, ActivityIndicator, Text } from 'react-native'
 import Colors from 'resources/colors'
+import { connect } from 'react-redux'
 import NewsBanner from '../NewsBanner'
 import NewsRow from './NewsRow'
 import styles from './styles'
+import messages from './messages'
+
+@connect(
+  state => ({
+    locale: state.intl.get('locale')
+  })
+)
 
 export default class NewsList extends PureComponent {
   keyExtractor = item => item.id
@@ -12,7 +20,9 @@ export default class NewsList extends PureComponent {
     <View>
       <NewsBanner componentId={this.props.componentId} />
       <View style={styles.listTitle}>
-        <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}> 资讯 </Text>
+        <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>
+          {messages[this.props.locale].discovery_title_name_news}
+        </Text>
       </View>
     </View>
   )
@@ -37,25 +47,27 @@ export default class NewsList extends PureComponent {
   renderFoot = () => {
     const { loadingMore, nomore } = this.props
     if (loadingMore) return (<ActivityIndicator style={{ marginVertical: 10 }} size="small" color="white" />)
-    if (nomore) return (<Text style={[styles.text14, { marginVertical: 10, alignSelf: 'center' }]}>没有更多数据了</Text>)
+    if (nomore) return (<Text style={[styles.text14, { marginVertical: 10, alignSelf: 'center' }]}>{messages[this.props.locale].discovery_title_info_nomore}</Text>)
     return null
   }
 
   render() {
     return (
-      <FlatList
-        data={this.props.data}
-        keyExtractor={this.keyExtractor}
-        ItemSeparatorComponent={this.renderSeparator}
-        showsVerticalScrollIndicator={false}
-        renderItem={this.renderItem}
-        ListHeaderComponent={this.renderHeader}
-        ListFooterComponent={this.renderFoot}
-        onRefresh={this.props.onRefresh}
-        onEndReached={this.props.onEndReached}
-        onEndReachedThreshold={-0.1}
-        refreshing={this.props.refreshing}
-      />
+      <View style={styles.listContainer}>
+        <FlatList
+          data={this.props.data}
+          keyExtractor={this.keyExtractor}
+          ItemSeparatorComponent={this.renderSeparator}
+          showsVerticalScrollIndicator={false}
+          renderItem={this.renderItem}
+          ListHeaderComponent={this.renderHeader}
+          ListFooterComponent={this.renderFoot}
+          onRefresh={this.props.onRefresh}
+          onEndReached={this.props.onEndReached}
+          onEndReachedThreshold={-0.1}
+          refreshing={this.props.refreshing}
+        />
+      </View>
     )
   }
 }

@@ -107,13 +107,13 @@ export default class AccountList extends Component {
   }
 
   render() {
-    const { locale, name, exporting, error, loggingOut, logoutError } = this.props
+    const { locale, exporting, error, loggingOut, logoutError } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={name}
+            title={messages[locale].act_card_title_nav}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>

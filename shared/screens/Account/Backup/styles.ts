@@ -28,6 +28,10 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     backgroundColor: Colors.bgColor_48_49_59
   },
+  image: {
+    width: 72,
+    height: 90
+  },
   text12: {
     fontSize: FontScale(12),
     color: Colors.textColor_255_255_238

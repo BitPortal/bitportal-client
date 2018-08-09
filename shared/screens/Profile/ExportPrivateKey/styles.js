@@ -41,6 +41,10 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 3
   },
+  topRadius: {
+    borderTopRightRadius: 5,
+    borderTopLeftRadius: 5
+  },
   inputContainer: {
     width: SCREEN_WIDTH - 64,
     height: 60,

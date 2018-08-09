@@ -201,6 +201,7 @@ function* syncWalletRequested() {
 
     yield put(syncEOSAccount(eosAccountList))
     yield put(actions.syncWalletSucceeded({ hdWalletList, classicWalletList, active }))
+
     if (active.eosAccountName) {
       yield put(getEOSAccountRequested({ eosAccountName: active.eosAccountName }))
       yield put(getBalanceRequested({ code: 'eosio.token', account: active.eosAccountName }))

@@ -1,5 +1,10 @@
 import { StyleSheet } from 'react-native'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
+import {
+  FontScale,
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  NAV_BAR_HEIGHT
+} from 'utils/dimens'
 import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
@@ -15,30 +20,32 @@ const styles = StyleSheet.create({
   cardContainer: {
     width: SCREEN_WIDTH,
     minHeight: 100,
-    paddingVertical: 10,
-    paddingHorizontal: 15
+    paddingVertical: 20,
+    paddingHorizontal: 25,
+    backgroundColor: Colors.minorThemeColor,
+    marginBottom: 13
   },
   spaceAround: {
     alignItems: 'center',
     justifyContent: 'space-around',
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   spaceBetween: {
     alignItems: 'center',
     justifyContent: 'space-between',
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   btnContainer: {
     width: SCREEN_WIDTH,
     height: 70,
-    borderTopColor: Colors.borderColor_48_48_46,
-    borderTopWidth: StyleSheet.hairlineWidth
+    borderTopColor: Colors.borderColor_48_48_46
+    // borderTopWidth: StyleSheet.hairlineWidth
   },
   btn: {
     width: 110,
     height: 40,
     borderColor: Colors.borderColor_36_68_78,
-    borderWidth: StyleSheet.hairlineWidth,
+    // borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 2
   },
   center: {
@@ -62,7 +69,7 @@ const styles = StyleSheet.create({
     height: 350,
     paddingVertical: 20,
     marginVertical: 20,
-    backgroundColor: Colors.minorThemeColor
+    backgroundColor: Colors.bgColor_48_49_59
   },
   chart: {
     width: SCREEN_WIDTH,
@@ -71,10 +78,40 @@ const styles = StyleSheet.create({
   marketElementContainer: {
     width: SCREEN_WIDTH,
     minHeight: 55,
-    borderTopColor: Colors.borderColor_48_48_46,
-    borderTopWidth: 2,
-    paddingVertical: 10,
-    paddingHorizontal: 15
+    // borderTopColor: Colors.borderColor_48_48_46,
+    borderBottomColor: Colors.minorThemeColor,
+    // borderTopWidth: 2,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    backgroundColor: Colors.bgColor_48_49_59,
+    borderBottomWidth: 1
+    // justifyContent: 'center'
+  },
+  headerText: {
+    fontSize: FontScale(16),
+    color: Colors.textColor_89_185_226
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  titleWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 20
+  },
+  icon: {
+    width: 50,
+    height: 50,
+    borderRadius: 25
+  },
+  loadingSymbol: {
+    width: SCREEN_WIDTH,
+    height: 100,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })
 

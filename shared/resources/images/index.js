@@ -13,13 +13,22 @@ const Images = {
   seperator: require('./seperator.png'),
   about_logo: require('./About_logo.png'),
   guide_bg: require('./guide_bg.png'),
-  guide_asset: Platform.OS === 'ios' ? require('./guide_asset.png') : require('./guide_asset_android.png'),
+  guide_asset:
+    Platform.OS === 'ios'
+      ? require('./guide_asset.png')
+      : require('./guide_asset_android.png'),
   guide_asset_card: require('./guide_asset_card.png'),
   guide_asset_title: require('./guide_asset_title.png'),
-  guide_market: Platform.OS === 'ios' ? require('./guide_market.png') : require('./guide_market_android.png'),
+  guide_market:
+    Platform.OS === 'ios'
+      ? require('./guide_market.png')
+      : require('./guide_market_android.png'),
   guide_market_card: require('./guide_market_card.png'),
   guide_market_title: require('./guide_market_title.png'),
-  guide_discovery: Platform.OS === 'ios' ? require('./guide_discovery.png') : require('./guide_discovery_android.png'),
+  guide_discovery:
+    Platform.OS === 'ios'
+      ? require('./guide_discovery.png')
+      : require('./guide_discovery_android.png'),
   guide_discovery_card: require('./guide_discovery_card.png'),
   guide_discovery_title: require('./guide_discovery_title.png'),
   eyes_close: require('./eyes_close.png'),
@@ -42,7 +51,10 @@ const Images = {
   transfer_sender: require('./transfer_sender.png'),
   transfer_receiver: require('./transfer_receiver.png'),
   EOSIcon: require('./EOSIcon.png'),
-  tips: require('./tips.png')
+  tips: require('./tips.png'),
+  coin_logo_default: require('./coin_logo_default.png'),
+  help_center: require('./Profile_Help.png'),
+  backup_group: require('./Backup_Group.png')
 }
 
 export default Images

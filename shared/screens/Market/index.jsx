@@ -1,11 +1,15 @@
+/* @tsx */
+
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import TableView, { HeaderTitle } from 'screens/Market/TableView'
 import * as tickerActions from 'actions/ticker'
+import * as tokenActions from 'actions/token'
 import { exchangeTickerSelector, sortFilterSelector } from 'selectors/ticker'
 import { bindActionCreators } from 'redux'
 import { View, InteractionManager, LayoutAnimation } from 'react-native'
 import Modal from 'react-native-modal'
+import { Navigation } from 'react-native-navigation'
 import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from 'constants/market'
 import NavigationBar, { ListButton } from 'components/NavigationBar'
 import { IntlProvider } from 'react-intl'
@@ -21,22 +25,29 @@ import styles from './styles'
     loading: state.ticker.get('loading'),
     exchangeFilter: state.ticker.get('exchangeFilter'),
     sortFilter: sortFilterSelector(state),
-    quoteAssetFilter: state.ticker.get('quoteAssetFilter')
+    quoteAssetFilter: state.ticker.get('quoteAssetFilter'),
+    baseAsset: state.ticker.get('baseAsset')
   }),
   dispatch => ({
-    actions: bindActionCreators({
-      ...tickerActions
-    }, dispatch)
+    actions: bindActionCreators(
+      {
+        ...tickerActions,
+        ...tokenActions
+      },
+      dispatch
+    )
   }),
   null,
   { withRef: true }
 )
-
 export default class Market extends Component {
-  state = {
-    coinName: '',
-    isVisible: false,
-    activeQuoteAsset: null
+  constructor(props, context) {
+    super(props, context)
+    this.state = {
+      coinName: '',
+      isVisible: false,
+      activeQuoteAsset: null
+    }
   }
 
   // 搜索币种
@@ -68,12 +79,25 @@ export default class Market extends Component {
   }
 
   // 点击查看币种行情
-  pressListItem = () => {
-
+  pressListItem = (item) => {
+    const baseAsset = item.get('base_asset')
+    // console.log('pressListItem', item.toJS());
+    InteractionManager.runAfterInteractions(() => {
+      this.props.actions.selectCurrentPair(item)
+      this.props.actions.selectBaseAsset(baseAsset)
+      this.props.actions.getTokenDetailRequested({ symbol: baseAsset })
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.MarketDetails',
+          passProps: { item }
+        }
+      })
+    })
   }
 
   // 刷新数据
   onRefresh = () => {
+    // console.log('onRefresh called');
     this.props.actions.getTickersRequested({
       exchange: this.props.exchangeFilter,
       quote_asset: this.props.quoteAssetFilter,
@@ -87,7 +111,16 @@ export default class Market extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.loading !== this.props.loading || nextProps.locale !== this.props.locale || nextProps.exchangeFilter !== this.props.exchangeFilter || nextProps.sortFilter !== this.props.sortFilter || nextProps.quoteAssetFilter !== this.props.quoteAssetFilter || nextState.isVisible !== this.state.isVisible || nextState.coinName !== this.state.coinName || nextState.activeQuoteAsset !== this.state.activeQuoteAsset
+    return (
+      nextProps.loading !== this.props.loading
+      || nextProps.locale !== this.props.locale
+      || nextProps.exchangeFilter !== this.props.exchangeFilter
+      || nextProps.sortFilter !== this.props.sortFilter
+      || nextProps.quoteAssetFilter !== this.props.quoteAssetFilter
+      || nextState.isVisible !== this.state.isVisible
+      || nextState.coinName !== this.state.coinName
+      || nextState.activeQuoteAsset !== this.state.activeQuoteAsset
+    )
   }
 
   componentDidAppear() {
@@ -95,13 +128,37 @@ export default class Market extends Component {
   }
 
   render() {
-    const { ticker, locale, loading, exchangeFilter, quoteAssetFilter } = this.props
+    const {
+      ticker,
+      locale,
+      loading,
+      exchangeFilter,
+      quoteAssetFilter,
+      sortFilter,
+      baseAsset
+    } = this.props
+
+    // console.log(
+    //   'exchangeFilter',
+    //   exchangeFilter,
+    //   'sortFilter',
+    //   sortFilter,
+    //   'quoteAssetFilter',
+    //   quoteAssetFilter,
+    //   'baseAsset',
+    //   baseAsset
+    // );
 
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            leftButton={<ListButton label={EXCHANGE_NAMES[exchangeFilter]} onPress={() => this.selectExchange()} />}
+            leftButton={
+              <ListButton
+                label={EXCHANGE_NAMES[exchangeFilter]}
+                onPress={() => this.selectExchange()}
+              />
+            }
           />
           <Quotes
             onPress={e => this.changeQuote(e)}
@@ -113,15 +170,18 @@ export default class Market extends Component {
             refreshing={loading}
             onRefresh={() => this.onRefresh()}
             data={ticker}
-            onPress={e => this.pressListItem(e)}
+            onPress={(item) => {
+              this.pressListItem(item)
+            }}
           />
+
           <Modal
             animationIn="fadeIn"
             animationOut="fadeOut"
             style={{ margin: 0 }}
             isVisible={this.state.isVisible}
-            useNativeDriver={true}
-            hideModalContentWhileAnimating={true}
+            useNativeDriver
+            hideModalContentWhileAnimating
             backdropOpacity={0.3}
           >
             <ExchangeList

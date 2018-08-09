@@ -216,6 +216,7 @@ export default class Assets extends Component {
                     RAMQuota={activeEOSAccount.get('ram_quota')}
                     RAMUsage={activeEOSAccount.get('ram_usage')}
                     checkResourcesDetails={this.checkResourcesDetails}
+                    componentId={this.props.componentId}
                     onPress={this.displayReceiceQRCode}
                   />
                   {!activeEOSAccount.get('account_name') && <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_create_eos_account" />} onPress={() => this.createEOSAccount()} extraStyle={{ marginTop: 10, marginBottom: 10 }} />}

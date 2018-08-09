@@ -17,33 +17,45 @@ const ListItem = ({ exchange, onPress, active }) => (
     style={styles.listContainer}
     onPress={() => onPress(exchange)}
   >
-    <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32 }]}>
+    <View
+      style={[styles.listContainer, styles.between, { paddingHorizontal: 32 }]}
+    >
       <Text style={styles.text16}>{EXCHANGE_NAMES[exchange]}</Text>
-      {active && <Ionicons name="ios-checkmark" size={36} color={Colors.bgColor_0_122_255} />}
+      {active && (
+        <Ionicons
+          name="ios-checkmark"
+          size={36}
+          color={Colors.bgColor_0_122_255}
+        />
+      )}
     </View>
   </TouchableHighlight>
 )
 
-const ExchangeList = ({ dismissModal, activeExchange, exchangeList, changeExchange }) => (
+const ExchangeList = ({
+  dismissModal,
+  activeExchange,
+  exchangeList,
+  changeExchange
+}) => (
   <View style={styles.container}>
-    <TouchableOpacity style={[styles.container, { backgroundColor: 'rgba(0,0,0,0.1)' }]} onPress={() => dismissModal()} />
+    <TouchableOpacity
+      style={[styles.container, { backgroundColor: 'rgba(0,0,0,0.1)' }]}
+      onPress={() => dismissModal()}
+    />
     <View style={styles.bgContainer}>
       <ScrollView
         style={{ maxHeight: 400, backgroundColor: Colors.bgColor_48_49_59 }}
         showsVerticalScrollIndicator={false}
       >
-        {
-          exchangeList.map(
-            exchange => (
-              <ListItem
-                key={exchange}
-                exchange={exchange}
-                active={activeExchange === exchange}
-                onPress={() => changeExchange(exchange)}
-              />
-            )
-          )
-        }
+        {exchangeList.map(exchange => (
+          <ListItem
+            key={exchange}
+            exchange={exchange}
+            active={activeExchange === exchange}
+            onPress={() => changeExchange(exchange)}
+          />
+        ))}
       </ScrollView>
     </View>
   </View>

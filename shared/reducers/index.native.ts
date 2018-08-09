@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import { reducer as form } from 'redux-form/immutable'
 import intl from './intl'
 import ticker from './ticker'
-import chart  from './chart'
+import chart from './chart'
 import wallet from './wallet'
 import eosAccount from './eosAccount'
 import keystore from './keystore'
@@ -16,6 +16,7 @@ import transfer from './transfer'
 import transaction from './transaction'
 import bandwidth from './bandwidth'
 import ram from './ram'
+import token from './token'
 
 export default combineReducers({
   form,
@@ -34,5 +35,6 @@ export default combineReducers({
   bandwidth,
   ram,
   transfer,
-  transaction
+  transaction,
+  token
 })
