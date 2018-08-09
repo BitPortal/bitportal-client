@@ -1,8 +1,10 @@
-const multiple = (position: number): number => (!position ? 1 : (10 * multiple(position - 1)))
+import Colors from 'resources/colors'
 
-export const roundDown = (value: number, decimal: number) => (value && (Math.floor(value * multiple(decimal)) / multiple(decimal)))
+const multiple = (position: number): number => (!position ? 1 : 10 * multiple(position - 1))
 
-export const roundUp = (value: number, decimal: number) => (value && (Math.ceil(value * multiple(decimal)) / multiple(decimal)))
+export const roundDown = (value: number, decimal: number) => value && Math.floor(value * multiple(decimal)) / multiple(decimal)
+
+export const roundUp = (value: number, decimal: number) => value && Math.ceil(value * multiple(decimal)) / multiple(decimal)
 
 export const errorLoading = (err: string) => console.error('Dynamic page loading failed: ', err)
 
@@ -10,30 +12,38 @@ export const typeOf = (value: any) => Object.prototype.toString.call(value).slic
 
 const loadedScripts: string[] = []
 
-export const loadScript = (src: string) => {
-  return new Promise((resolve, reject) => {
-    if (~loadedScripts.indexOf(src)) {
+export const loadScript = (src: string) => new Promise((resolve, reject) => {
+  if (~loadedScripts.indexOf(src)) {
+    resolve()
+  } else {
+    const script = document.createElement('script')
+    script.src = src
+    script.addEventListener('load', () => {
+      loadedScripts.push(src)
       resolve()
-    } else {
-      const script = document.createElement('script')
-      script.src = src
-      script.addEventListener('load', () => {
-        loadedScripts.push(src)
-        resolve()
-      })
-      script.addEventListener('error', (e) => {
-        reject(e)
-      })
-      document.head.appendChild(script)
-    }
-  })
-}
+    })
+    script.addEventListener('error', (e) => {
+      reject(e)
+    })
+    document.head.appendChild(script)
+  }
+})
 
 export const getErrorMessage = (error: any) => {
-  if ((typeOf(error) === 'Error' && error.message.indexOf('.cpp') !== -1) || (typeOf(error) === 'Object' && typeof error.message === 'string' &&  error.message.indexOf('.cpp') !== -1)) {
+  if (
+    (typeOf(error) === 'Error' && error.message.indexOf('.cpp') !== -1)
+    || (typeOf(error) === 'Object'
+      && typeof error.message === 'string'
+      && error.message.indexOf('.cpp') !== -1)
+  ) {
     const errorObject = JSON.parse(error.message)
 
-    if (errorObject.error && errorObject.error.details && errorObject.error.details.length && errorObject.error.details[0].message) {
+    if (
+      errorObject.error
+      && errorObject.error.details
+      && errorObject.error.details.length
+      && errorObject.error.details[0].message
+    ) {
       return errorObject.error.details[0].message
     }
 
@@ -45,7 +55,12 @@ export const getErrorMessage = (error: any) => {
   if (typeof error === 'string') {
     const errorObject = JSON.parse(error)
 
-    if (errorObject.error && errorObject.error.details && errorObject.error.details.length && errorObject.error.details[0].message) {
+    if (
+      errorObject.error
+      && errorObject.error.details
+      && errorObject.error.details.length
+      && errorObject.error.details[0].message
+    ) {
       return errorObject.error.details[0].message
     }
 
@@ -54,7 +69,13 @@ export const getErrorMessage = (error: any) => {
     }
   }
 
-  if (error.message && typeOf(error.message) === 'Object' && error.message.code &&  error.message.name &&  error.message.what) {
+  if (
+    error.message
+    && typeOf(error.message) === 'Object'
+    && error.message.code
+    && error.message.name
+    && error.message.what
+  ) {
     return error.message.what
   }
 
@@ -72,10 +93,10 @@ export const decodeKey = (key: string) => JSON.parse(`[${Buffer.from(key, 'hex')
 export const getPasswordStrength = (password: any) => {
   let passwordStrength = 0
 
-  const hasUppercase = (value: string) => (/[A-Z]/.test(value))
-  const hasLowercase = (value: string) => (/[a-z]/.test(value))
-  const hasNumber = (value: string) => (/[0-9]/.test(value))
-  const hasSymbol = (value: string) => (/[$&+,:;=?@#|'<>.^*()%!-]/.test(value))
+  const hasUppercase = (value: string) => /[A-Z]/.test(value)
+  const hasLowercase = (value: string) => /[a-z]/.test(value)
+  const hasNumber = (value: string) => /[0-9]/.test(value)
+  const hasSymbol = (value: string) => /[$&+,:;=?@#|'<>.^*()%!-]/.test(value)
 
   if (password && typeof password === 'string' && password.length >= 6) {
     if (hasLowercase(password)) passwordStrength += 1
@@ -89,7 +110,11 @@ export const getPasswordStrength = (password: any) => {
 
 export const noop = () => {}
 
-export const eosQrString = (account_name: string, amount: number, token: string) => `eos:${account_name}?amount=${amount || 0}&token=${token || 'EOS'}`
+export const eosQrString = (
+  account_name: string,
+  amount: number,
+  token: string
+) => `eos:${account_name}?amount=${amount || 0}&token=${token || 'EOS'}`
 
 export const parseEOSQrString = (text: string) => {
   let eosAccountName
@@ -106,13 +131,23 @@ export const parseEOSQrString = (text: string) => {
       eosAccountName = account.split(':')[1]
 
       if (queryString) {
-        const queryObject: any = queryString.split('&').map((item: any) => {
-          if (item && typeof item === 'string' && item.split('=').length === 2 && item.split('=')[0] && item.split('=')[1]) {
-            return { [item.split('=')[0]]: item.split('=')[1] }
-          }
+        const queryObject: any = queryString
+          .split('&')
+          .map((item: any) => {
+            if (
+              item
+              && typeof item === 'string'
+              && item.split('=').length === 2
+              && item.split('=')[0]
+              && item.split('=')[1]
+            ) {
+              return { [item.split('=')[0]]: item.split('=')[1] }
+            }
 
-          return null
-        }).filter((item: any) => !!item).reduce((items, item) => ({ ...items, ...item }), {})
+            return null
+          })
+          .filter((item: any) => !!item)
+          .reduce((items, item) => ({ ...items, ...item }), {})
 
         amount = queryObject.amount
         token = queryObject.token && queryObject.token.toUpperCase()
@@ -124,5 +159,12 @@ export const parseEOSQrString = (text: string) => {
     }
 
     return null
+  }
+}
+export const filterBgColor = (data: string) => {
+  if (data && parseFloat(data) > 0) {
+    return Colors.bgColor_104_189_57
+  } else if (data && parseFloat(data) < 0) {
+    return Colors.bgColor_255_50_50
   }
 }

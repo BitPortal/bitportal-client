@@ -1,4 +1,9 @@
-import { BITPORTAL_API_REST_URL, BITPORTAL_API_MARKET_URL, BITPORTAL_API_CMS_URL, CURRENCY_RATE_URL } from 'constants/env'
+import {
+  BITPORTAL_API_REST_URL,
+  BITPORTAL_API_MARKET_URL,
+  BITPORTAL_API_CMS_URL,
+  CURRENCY_RATE_URL
+} from 'constants/env'
 import storage from 'utils/storage'
 import { isMobile } from 'utils/platform'
 
@@ -28,11 +33,15 @@ export const fetchBase = async (
   const fetchOptions: any = { method, headers }
 
   if (method === 'GET') {
-    const queryString: string = `${Object.keys(params).map(k => [k, params[k]].map(encodeURIComponent).join('=')).join('&')}`
-    if (queryString) url += '?' + queryString
+    const queryString: string = `${Object.keys(params)
+      .map(k => [k, params[k]].map(encodeURIComponent).join('='))
+      .join('&')}`
+    if (queryString) url += `?${queryString}`
   } else if (method === 'POST' || method === 'PUT') {
     if (headers['Content-Type'] === 'application/x-www-form-urlencoded') {
-      fetchOptions.body = `${Object.keys(params).map(k => [k, params[k]].join('=')).join('&')}`
+      fetchOptions.body = `${Object.keys(params)
+        .map(k => [k, params[k]].join('='))
+        .join('&')}`
     } else if (headers['Content-Type'] === 'multipart/form-data') {
       delete headers['Content-Type']
       const formData = new FormData()
@@ -42,6 +51,7 @@ export const fetchBase = async (
       fetchOptions.body = JSON.stringify(params)
     }
   }
+
   console.log('###', url)
   return fetch(url, fetchOptions).then((res: any) => {
     if (!res.ok) {
@@ -63,14 +73,20 @@ const cmsFetchBase = (
   endPoint: string = '/hello',
   params: object = {},
   options: object = {}
-) => fetchBase(method, endPoint, params, { ...options, baseUrl: BITPORTAL_API_CMS_URL })
+) => fetchBase(method, endPoint, params, {
+  ...options,
+  baseUrl: BITPORTAL_API_CMS_URL
+})
 
 const marketFetchBase = (
   method: FetchMethod = 'GET',
   endPoint: string = '/hello',
   params: object = {},
   options: object = {}
-) => fetchBase(method, endPoint, params, { ...options, baseUrl: BITPORTAL_API_MARKET_URL })
+) => fetchBase(method, endPoint, params, {
+  ...options,
+  baseUrl: BITPORTAL_API_MARKET_URL
+})
 
 export const getTickers = (params?: TickerParams) => marketFetchBase('GET', '/tickers', params)
 export const getChart = (params?: ChartParams) => marketFetchBase('GET', '/chart', params)
@@ -81,5 +97,6 @@ export const getNewsList = (params: any) => cmsFetchBase('GET', '/article', para
 export const getNewsBanner = () => cmsFetchBase('GET', '/banner')
 export const getVersionInfo = () => cmsFetchBase('GET', '/system')
 export const getProducersInfo = (params: any) => cmsFetchBase('GET', '/eosbp', params)
+export const getTokenDetail = (params: any) => cmsFetchBase('GET', '/token', params)
 
 export const createEOSAccount = (params: any) => fetchBase('POST', '/registry/wallets/campaign/eoscreation', params)

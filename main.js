@@ -1,5 +1,6 @@
 // Basic init
 const electron = require('electron')
+
 const { app, BrowserWindow } = electron
 
 // Let electron reloads by itself when webpack watches changes in ./app/
