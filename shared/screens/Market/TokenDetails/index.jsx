@@ -48,7 +48,8 @@ export default class TokenDetails extends Component {
   }
 
   render() {
-    const { listedExchange, loading, tokenDetails } = this.props
+    const { listedExchange, loading } = this.props
+
     return (
       <View style={styles.container}>
         <NavigationBar

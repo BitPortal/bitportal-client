@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Text, View, ActivityIndicator, Image } from 'react-native'
 import Colors from 'resources/colors'
 import { filterBgColor } from 'utils'
@@ -9,7 +8,6 @@ import { EXCHANGE_NAMES } from 'constants/market'
 import { IntlProvider, FormattedMessage, FormattedNumber } from 'react-intl'
 import { tokenTickerSelector } from 'selectors/ticker'
 import Images from 'resources/images'
-
 import styles from './styles'
 import messages from './messages'
 
@@ -185,7 +183,6 @@ export class Description extends Component {
   }
 
   render() {
-    const { description } = this.props.token.toJS()
     const { locale } = this.props
 
     return (
@@ -273,18 +270,15 @@ export class Details extends Component {
                 </Text>
               </View>
             )}
-            {Object.keys(rest).map((item) => {
-              if (NAMES.includes(item)) {
-                return (
-                  <View style={[styles.spaceBetween, { marginTop: 10 }]}>
-                    <Text style={styles.text14}>
-                      <FormattedMessage id={item} />
-                    </Text>
-                    <Text style={styles.text14}>{rest[item]}</Text>
-                  </View>
-                )
-              }
-            })}
+            {Object.keys(rest).map(item => (NAMES.includes(item) ? (
+              <View style={[styles.spaceBetween, { marginTop: 10 }]}>
+                <Text style={styles.text14}>
+                  <FormattedMessage id={item} />
+                </Text>
+                <Text style={styles.text14}>{rest[item]}</Text>
+              </View>
+            ) : null)
+            )}
             {/* <View style={[styles.spaceBetween, { marginTop: 10 }]}>
               <Text style={styles.text14}> Locations </Text>
               <Text style={styles.text14}> Hangzhou </Text>

@@ -10,9 +10,8 @@ import messages from './messages'
 
 import styles from './styles'
 
-const MarketElement = ({ onPress, data }) => (
+const MarketElement = ({ data }) => (
   <TouchableHighlight
-    // onPress={() => onPress(data)}
     underlayColor={Colors.hoverColor}
   >
     <View style={styles.marketElementContainer}>

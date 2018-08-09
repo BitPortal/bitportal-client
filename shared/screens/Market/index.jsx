@@ -133,21 +133,8 @@ export default class Market extends Component {
       locale,
       loading,
       exchangeFilter,
-      quoteAssetFilter,
-      sortFilter,
-      baseAsset
+      quoteAssetFilter
     } = this.props
-
-    // console.log(
-    //   'exchangeFilter',
-    //   exchangeFilter,
-    //   'sortFilter',
-    //   sortFilter,
-    //   'quoteAssetFilter',
-    //   quoteAssetFilter,
-    //   'baseAsset',
-    //   baseAsset
-    // );
 
     return (
       <IntlProvider messages={messages[locale]}>

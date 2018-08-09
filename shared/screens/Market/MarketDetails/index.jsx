@@ -1,5 +1,3 @@
-/* @jsx */
-
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -9,14 +7,10 @@ import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import { exchangeTickerSelector } from 'selectors/ticker'
 import * as chartActions from 'actions/chart'
 import * as tickerActions from 'actions/ticker'
-
-import { EXCHANGE_NAMES } from 'constants/market'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import CoinInfoCard from './CoinInfoCard'
 import MarketList from './MarketList'
-import ChartWrapper from './ChartWrapper'
-
 import styles from './styles'
 import messages from './messages'
 
@@ -38,7 +32,6 @@ const ButtonElement = ({ Title, onPress }) => (
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-
     ticker: exchangeTickerSelector(state),
     baseAsset: state.ticker.get('baseAsset'),
     quoteAssetFilter: state.ticker.get('quoteAssetFilter'),
@@ -106,12 +99,8 @@ export default class MarketDetails extends Component {
       baseAsset,
       quoteAssetFilter,
       item,
-      listedExchange,
-      loading,
-      token,
       locale
     } = this.props
-    console.log()
 
     return (
       <View style={styles.container}>
@@ -122,15 +111,11 @@ export default class MarketDetails extends Component {
               onPress={() => Navigation.pop(this.props.componentId)}
             />
           }
-          // title={`${
-          //   EXCHANGE_NAMES[ticker.get('exchangeFilter')]
-          // } / ${ticker.get('baseAsset')}`}
           title={`${baseAsset} / ${quoteAssetFilter}`}
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <CoinInfoCard item={item} />
-            {/* <ChartWrapper /> */}
             <MarketList changeMarket={e => this.changeMarket(e)} />
           </ScrollView>
         </View>
@@ -145,8 +130,6 @@ export default class MarketDetails extends Component {
             Title={messages[locale].token_details}
             onPress={() => this.changeRoute('TokenDetails')}
           />
-          {/* <ButtonElement Title="Fund Flow" onPress={() => this.changeRoute('FundFlow')} />
-          <ButtonElement Title="Alerts" onPress={() => this.changeRoute('Alerts')} /> */}
         </View>
       </View>
     )

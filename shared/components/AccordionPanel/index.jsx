@@ -1,19 +1,16 @@
 import React, { Component } from 'react'
 import {
-  StyleSheet,
   Text,
   View,
-  Image,
   TouchableHighlight,
   Animated
-} from 'react-native' //Step 1
+} from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import styles from './styles'
 
 class AccordionPanel extends Component {
   state = {
-    //Step 3
     expanded: true,
     animation: new Animated.Value(),
     maxHeight: '',
@@ -21,30 +18,21 @@ class AccordionPanel extends Component {
   }
 
   toggle = () => {
-    //Step 1
-    let initialValue = this.state.expanded
-        ? this.state.maxHeight + this.state.minHeight
-        : this.state.minHeight,
-      finalValue = this.state.expanded
-        ? this.state.minHeight
-        : this.state.maxHeight + this.state.minHeight
+    const initialValue = this.state.expanded ? this.state.maxHeight + this.state.minHeight : this.state.minHeight
+    const finalValue = this.state.expanded ? this.state.minHeight : this.state.maxHeight + this.state.minHeight
 
-    this.setState({
-      expanded: !this.state.expanded //Step 2
-    })
+    this.setState(prevState => ({ expanded: !prevState.expanded }))
 
-    this.state.animation.setValue(initialValue) //Step 3
+    this.state.animation.setValue(initialValue)
     Animated.spring(
-      //Step 4
       this.state.animation,
       {
         toValue: finalValue
       }
-    ).start() //Step 5
+    ).start()
   }
 
   _setMaxHeight = (event) => {
-    console.log('nativeEvent MAXheight', event.nativeEvent.layout.height)
     if (this.state.maxHeight === '') {
       this.setState({
         maxHeight: event.nativeEvent.layout.height
@@ -53,7 +41,6 @@ class AccordionPanel extends Component {
   }
 
   _setMinHeight = (event) => {
-    // console.log('nativeEvent MINheight', event.nativeEvent.layout.height);
     if (this.state.minHeight === '') {
       this.setState({
         minHeight: event.nativeEvent.layout.height
@@ -65,7 +52,6 @@ class AccordionPanel extends Component {
     const { expanded } = this.state
     const { title } = this.props
 
-    //Step 5
     return (
       <Animated.View
         style={[
