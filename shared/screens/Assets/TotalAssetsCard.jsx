@@ -107,7 +107,7 @@ export default class TotalAssetsCard extends Component {
       this.props.actions.hiddenAssetDisplay(store1.hiddenTotalAssets)
     }
     const store2 = await storage.getItem('bitportal.backup', true)
-    if (!store2 || ( store2 && !store2.backupCompleted)) {
+    if (!store2 || (store2 && !store2.backupCompleted)) {
       this.props.actions.completeBackup(false)
     }
   }

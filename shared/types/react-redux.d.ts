@@ -5,10 +5,12 @@ declare module 'react-redux' {
   export type InferableComponentEnhancerWithProps2<TInjectedProps, TNeedsProps> =
     <TComponent extends React.ComponentType<TInjectedProps & TNeedsProps>>(component: TComponent) => TComponent
 
-  export type Connect = <TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, TMergedProps = {}, State = {}>(
+  export interface Connect {
+      <TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, TMergedProps = {}, State = {}>(
         mapStateToProps?: MapStateToPropsParam<TStateProps, TOwnProps, State>,
         mapDispatchToProps?: MapDispatchToPropsParam<TDispatchProps, TOwnProps>,
         mergeProps?: MergeProps<TStateProps, TDispatchProps, TOwnProps, TMergedProps>,
         options?: Options<TStateProps, TOwnProps, TMergedProps>
-      ) => InferableComponentEnhancerWithProps2<TMergedProps, TOwnProps>
+      ): InferableComponentEnhancerWithProps2<TMergedProps, TOwnProps>
+  }
 }

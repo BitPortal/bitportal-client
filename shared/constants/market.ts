@@ -44,7 +44,7 @@ export const DEFAULT_USD_RATE = {
 
 export const DEFAULT_SORT_FILTER = 'quote_volume'
 
-const sort_filters = [
+export const sort_filters = [
   'quote_volume',
   'price_change_percent_low',
   'price_change_percent_high',

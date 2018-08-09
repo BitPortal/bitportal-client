@@ -14,7 +14,7 @@ import voting from './voting'
 import transfer from './transfer'
 import transaction from './transaction'
 import bandwidth from './bandwidth'
-import ram from './ram',
+import ram from './ram'
 import token from './token'
 
 
