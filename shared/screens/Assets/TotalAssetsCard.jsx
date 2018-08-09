@@ -101,7 +101,6 @@ const styles = StyleSheet.create({
 )
 
 export default class TotalAssetsCard extends Component {
-
   async componentWillMount() {
     const store1 = await storage.getItem('bitportal.hiddenTotalAssets', true)
     if (store1 && store1.hiddenTotalAssets) {
@@ -146,7 +145,7 @@ export default class TotalAssetsCard extends Component {
   }
 
   render() {
-    const { isAssetHidden, backupCompleted, totalAssets, CPUInfo, NETInfo, RAMQuota, RAMUsage, accountName, disabled, onPress, locale } = this.props
+    const { isAssetHidden, backupCompleted, totalAssets, CPUInfo, NETInfo, RAMQuota, RAMUsage, accountName, disabled, locale } = this.props
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={{ alignItems: 'center', backgroundColor: Colors.minorThemeColor, paddingVertical: 15 }}>
@@ -155,9 +154,9 @@ export default class TotalAssetsCard extends Component {
               <View style={[styles.linearContainer, styles.paddingStyle]}>
                 <View style={styles.between}>
                   <Text style={styles.text15}> <FormattedMessage id="asset_card_title_ttlast" /> </Text>
-                  { 
-                    !backupCompleted && 
-                    <View style={styles.textRadius}>
+                  {
+                    !backupCompleted
+                    && <View style={styles.textRadius}>
                       <Text style={[styles.text12, { color: Colors.textColor_89_185_226 }]}>
                         <FormattedMessage id="asset_card_title_backup" />
                       </Text>

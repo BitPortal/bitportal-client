@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableHighlight } from 'react-native'
 import Colors from 'resources/colors'
 import styles from './styles'
 
-export default ({ previewImage, title, subTitle, author, date, onRowPress }) => (
+export default ({ previewImage, title, author, date, onRowPress }) => (
   <TouchableHighlight underlayColor={Colors.hoverColor} onPress={onRowPress}>
     <View style={styles.rowContainer}>
       <Image style={styles.image} source={{ uri: previewImage }} />

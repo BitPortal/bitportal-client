@@ -85,7 +85,7 @@ export default class Profile extends Component {
   goForHelp = () => {
     Navigation.push(this.props.componentId, {
       component: {
-        name: `BitPortal.BPWebView`,
+        name: 'BitPortal.BPWebView',
         passProps: {
           uri: `${BITPORTAL_URL}/${this.props.locale}/help?webview=true`,
           title: messages[this.props.locale].prf_sec_titile_help

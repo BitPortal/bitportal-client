@@ -80,8 +80,8 @@ export default class ExportPrivateKey extends Component {
                   )} */}
                 </View>
                 {
-                  entry === 'Backup' && 
-                  <TouchableHighlight
+                  entry === 'Backup'
+                  && <TouchableHighlight
                     onPress={this.backCompleted}
                     underlayColor={Colors.textColor_89_185_226}
                     style={[styles.btn, styles.center, { marginTop: 25 }]}
