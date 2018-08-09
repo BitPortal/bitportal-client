@@ -1,23 +1,23 @@
-import React, { Component } from 'react';
-import { Text, View, Image } from 'react-native';
-import Colors from 'resources/colors';
-import { FormattedNumber } from 'react-intl';
-import { connect } from 'react-redux';
-import { exchangeTickerSelector } from 'selectors/ticker';
-import { bindActionCreators } from 'redux';
-import { ASSET_FRACTION } from 'constants/market';
-import Images from 'resources/images';
-import styles from './styles';
+import React, { Component } from 'react'
+import { Text, View, Image } from 'react-native'
+import Colors from 'resources/colors'
+import { FormattedNumber } from 'react-intl'
+import { connect } from 'react-redux'
+import { exchangeTickerSelector } from 'selectors/ticker'
+import { bindActionCreators } from 'redux'
+import { ASSET_FRACTION } from 'constants/market'
+import Images from 'resources/images'
+import styles from './styles'
 
 const filterBgColor = (data) => {
   if (data && parseFloat(data) > 0) {
-    return Colors.bgColor_104_189_57;
+    return Colors.bgColor_104_189_57
   } else if (data && parseFloat(data) < 0) {
-    return Colors.bgColor_255_50_50;
+    return Colors.bgColor_255_50_50
   }
 
-  return Colors.bgColor_59_59_59;
-};
+  return Colors.bgColor_59_59_59
+}
 
 @connect(
   state => ({
@@ -47,16 +47,16 @@ export default class CoinInfoCard extends Component {
       listedExchange,
       locale,
       token
-    } = this.props;
-    const price_change_percent = item.get('price_change_percent');
-    const price_last = item.get('price_last');
-    const base_volume = item.get('base_volume');
-    const quote_volume = item.get('quote_volume');
-    const quote_asset = item.get('quote_asset');
-    const base_asset = item.get('base_asset');
+    } = this.props
+    const price_change_percent = item.get('price_change_percent')
+    const price_last = item.get('price_last')
+    const base_volume = item.get('base_volume')
+    const quote_volume = item.get('quote_volume')
+    const quote_asset = item.get('quote_asset')
+    const base_asset = item.get('base_asset')
     // console.log('price_last', price_last, 'base_asset', base_asset);
-    console.log('this.props.token', this.props.token);
-    const { name_zh, name_en } = token.toJS();
+    console.log('this.props.token', this.props.token)
+    const { name_zh, name_en } = token.toJS()
     return (
       <View style={styles.cardContainer}>
         <View style={styles.titleWrapper}>
@@ -126,6 +126,6 @@ export default class CoinInfoCard extends Component {
           </Text>
         </View>
       </View>
-    );
+    )
   }
 }

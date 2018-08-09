@@ -1,19 +1,14 @@
-import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  TouchableHighlight,
-  ActivityIndicator
-} from 'react-native';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { FormattedNumber, IntlProvider, FormattedMessage } from 'react-intl';
-import Colors from 'resources/colors';
-import { EXCHANGE_NAMES, ASSET_FRACTION } from 'constants/market';
-import * as tickerActions from 'actions/ticker';
-import messages from './messages';
+import React, { Component } from 'react'
+import { Text, View, TouchableHighlight, ActivityIndicator } from 'react-native'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { FormattedNumber, IntlProvider, FormattedMessage } from 'react-intl'
+import Colors from 'resources/colors'
+import { EXCHANGE_NAMES, ASSET_FRACTION } from 'constants/market'
+import * as tickerActions from 'actions/ticker'
+import messages from './messages'
 
-import styles from './styles';
+import styles from './styles'
 
 const MarketElement = ({ onPress, data }) => (
   <TouchableHighlight
@@ -60,7 +55,7 @@ const MarketElement = ({ onPress, data }) => (
       </View>
     </View>
   </TouchableHighlight>
-);
+)
 
 @connect(
   state => ({
@@ -81,11 +76,11 @@ const MarketElement = ({ onPress, data }) => (
 )
 export default class MarketList extends Component {
   componentWillUnmount() {
-    this.props.actions.deleteListedExchange();
+    this.props.actions.deleteListedExchange()
   }
 
   render() {
-    const { changeMarket, listedExchange, loading, locale } = this.props;
+    const { changeMarket, listedExchange, loading, locale } = this.props
     return (
       <IntlProvider messages={messages[locale]}>
         <View>
@@ -109,6 +104,6 @@ export default class MarketList extends Component {
           )}
         </View>
       </IntlProvider>
-    );
+    )
   }
 }

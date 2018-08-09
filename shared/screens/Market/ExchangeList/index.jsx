@@ -1,15 +1,15 @@
-import React from 'react';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import React from 'react'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import {
   Text,
   View,
   ScrollView,
   TouchableOpacity,
   TouchableHighlight
-} from 'react-native';
-import Colors from 'resources/colors';
-import { EXCHANGE_NAMES } from 'constants/market';
-import styles from './styles';
+} from 'react-native'
+import Colors from 'resources/colors'
+import { EXCHANGE_NAMES } from 'constants/market'
+import styles from './styles'
 
 const ListItem = ({ exchange, onPress, active }) => (
   <TouchableHighlight
@@ -30,7 +30,7 @@ const ListItem = ({ exchange, onPress, active }) => (
       )}
     </View>
   </TouchableHighlight>
-);
+)
 
 const ExchangeList = ({
   dismissModal,
@@ -59,6 +59,6 @@ const ExchangeList = ({
       </ScrollView>
     </View>
   </View>
-);
+)
 
-export default ExchangeList;
+export default ExchangeList

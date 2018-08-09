@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
-import { FormattedNumber } from 'react-intl';
-import Colors from 'resources/colors';
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import { FormattedNumber } from 'react-intl'
+import Colors from 'resources/colors'
+import { connect } from 'react-redux'
 import {
   Text,
   View,
   TouchableHighlight,
   VirtualizedList,
   TouchableOpacity
-} from 'react-native';
-import { sortFilterSelector } from 'selectors/ticker';
-import { bindActionCreators } from 'redux';
-import * as tickerActions from 'actions/ticker';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { FontScale } from 'utils/dimens';
-import { ASSET_FRACTION, DEFAULT_SORT_FILTER } from 'constants/market';
-import styles from './styles';
+} from 'react-native'
+import { sortFilterSelector } from 'selectors/ticker'
+import { bindActionCreators } from 'redux'
+import * as tickerActions from 'actions/ticker'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { FontScale } from 'utils/dimens'
+import { ASSET_FRACTION, DEFAULT_SORT_FILTER } from 'constants/market'
+import styles from './styles'
 
 @connect(
   state => ({
@@ -35,52 +35,52 @@ import styles from './styles';
 )
 export class HeaderTitle extends Component {
   sortToggle(selector) {
-    const { exchangeFilter, sortFilter } = this.props;
+    const { exchangeFilter, sortFilter } = this.props
     switch (true) {
       case selector === 'percent' && sortFilter === 'price_change_percent_high':
         this.props.actions.setSortFilter({
           exchangeFilter,
           sortFilter: 'price_change_percent_low'
-        });
-        break;
+        })
+        break
       case selector === 'percent' && sortFilter === 'price_change_percent_low':
         this.props.actions.setSortFilter({
           exchangeFilter,
           sortFilter: DEFAULT_SORT_FILTER
-        });
-        break;
+        })
+        break
       case selector === 'percent':
         this.props.actions.setSortFilter({
           exchangeFilter,
           sortFilter: 'price_change_percent_high'
-        });
-        break;
+        })
+        break
       case selector === 'price' && sortFilter === 'current_price_high':
         this.props.actions.setSortFilter({
           exchangeFilter,
           sortFilter: 'current_price_low'
-        });
-        break;
+        })
+        break
       case selector === 'price' && sortFilter === 'current_price_low':
         this.props.actions.setSortFilter({
           exchangeFilter,
           sortFilter: DEFAULT_SORT_FILTER
-        });
-        break;
+        })
+        break
       case selector === 'price':
         this.props.actions.setSortFilter({
           exchangeFilter,
           sortFilter: 'current_price_high'
-        });
-        break;
+        })
+        break
       default:
-        break;
+        break
     }
   }
 
   render() {
-    const { messages, sortFilter } = this.props;
-    console.log('TableView sortFilter', sortFilter);
+    const { messages, sortFilter } = this.props
+    console.log('TableView sortFilter', sortFilter)
     return (
       <View>
         <View style={[styles.headerTitle]}>
@@ -110,7 +110,7 @@ export class HeaderTitle extends Component {
           {/* </TouchableOpacity> */}
           <TouchableOpacity
             onPress={() => {
-              this.sortToggle('price');
+              this.sortToggle('price')
             }}
           >
             <View
@@ -156,7 +156,7 @@ export class HeaderTitle extends Component {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              this.sortToggle('percent');
+              this.sortToggle('percent')
             }}
           >
             <View
@@ -202,19 +202,19 @@ export class HeaderTitle extends Component {
           </TouchableOpacity>
         </View>
       </View>
-    );
+    )
   }
 }
 
 const filterBgColor = (data) => {
   if (data && parseFloat(data) > 0) {
-    return Colors.bgColor_104_189_57;
+    return Colors.bgColor_104_189_57
   } else if (data && parseFloat(data) < 0) {
-    return Colors.bgColor_255_50_50;
+    return Colors.bgColor_255_50_50
   }
 
-  return Colors.bgColor_59_59_59;
-};
+  return Colors.bgColor_59_59_59
+}
 
 class ListItem extends Component {
   shouldComponentUpdate(nextProps) {
@@ -223,11 +223,11 @@ class ListItem extends Component {
       || nextProps.data.get('price_last') !== this.props.data.get('price_last')
       || nextProps.data.get('price_change_percent')
         !== this.props.data.get('price_change_percent')
-    );
+    )
   }
 
   render() {
-    const { data, index, itemExtraStyle, onPress } = this.props;
+    const { data, index, itemExtraStyle, onPress } = this.props
 
     return (
       <TouchableHighlight
@@ -303,13 +303,13 @@ class ListItem extends Component {
           </View>
         </View>
       </TouchableHighlight>
-    );
+    )
   }
 }
 
 export default class TableView extends Component {
   render() {
-    const { data, refreshing, onRefresh, onPress } = this.props;
+    const { data, refreshing, onRefresh, onPress } = this.props
     // console.log('TableView', data.toJS());
 
     return (
@@ -328,6 +328,6 @@ export default class TableView extends Component {
           )}
         />
       </View>
-    );
+    )
   }
 }

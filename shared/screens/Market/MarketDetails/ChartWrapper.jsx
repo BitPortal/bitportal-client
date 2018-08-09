@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Text, View, processColor } from 'react-native';
-import { connect } from 'react-redux';
-import Colors from 'resources/colors';
-import { CandleStickChart } from 'react-native-charts-wrapper';
-import styles from './styles';
+import React, { Component } from 'react'
+import { Text, View, processColor } from 'react-native'
+import { connect } from 'react-redux'
+import Colors from 'resources/colors'
+import { CandleStickChart } from 'react-native-charts-wrapper'
+import styles from './styles'
 
 @connect(state => ({
   locale: state.intl.get('locale'),
@@ -11,7 +11,7 @@ import styles from './styles';
 }))
 export default class ChartWrapper extends Component {
   constructor(props, context) {
-    super(props, context);
+    super(props, context)
 
     this.state = {
       legend: {
@@ -106,9 +106,9 @@ export default class ChartWrapper extends Component {
         textColor: processColor('white')
       },
       zoomXValue: 0
-    };
+    }
 
-    this.x = 0;
+    this.x = 0
   }
 
   componentDidMount() {
@@ -141,21 +141,21 @@ export default class ChartWrapper extends Component {
       zoomXValue: {
         $set: 99999
       }
-    }));
+    }))
   }
 
   handleSelect(event) {
-    const entry = event.nativeEvent;
+    const entry = event.nativeEvent
     if (entry == null) {
-      this.setState(prevState => ({ ...prevState, selectedEntry: null }));
+      this.setState(prevState => ({ ...prevState, selectedEntry: null }))
     } else {
       this.setState(prevState => ({
         ...prevState,
         selectedEntry: JSON.stringify(entry)
-      }));
+      }))
     }
 
-    console.log(event.nativeEvent);
+    console.log(event.nativeEvent)
   }
 
   render() {
@@ -203,6 +203,6 @@ export default class ChartWrapper extends Component {
           onChange={event => console.log(event.nativeEvent)}
         />
       </View>
-    );
+    )
   }
 }

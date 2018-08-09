@@ -1,7 +1,7 @@
-import React from 'react';
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
-import Colors from 'resources/colors';
-import styles from './styles';
+import React from 'react'
+import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
+import Colors from 'resources/colors'
+import styles from './styles'
 
 export const Quotes = ({ quoteList, quote, onPress }) => (
   <View style={styles.quoteContainer}>
@@ -9,7 +9,7 @@ export const Quotes = ({ quoteList, quote, onPress }) => (
       <TouchableOpacity
         key={item}
         onPress={() => {
-          onPress(item);
+          onPress(item)
         }}
         style={[
           styles.center,
@@ -26,4 +26,4 @@ export const Quotes = ({ quoteList, quote, onPress }) => (
       </TouchableOpacity>
     ))}
   </View>
-);
+)

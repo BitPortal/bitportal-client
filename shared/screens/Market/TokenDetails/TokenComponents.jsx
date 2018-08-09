@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Text, View, ActivityIndicator, Image } from 'react-native';
-import Colors from 'resources/colors';
-import { filterBgColor } from 'utils';
-import AccordionPanel from 'components/AccordionPanel';
-import { EXCHANGE_NAMES } from 'constants/market';
-import { IntlProvider, FormattedMessage, FormattedNumber } from 'react-intl';
-import { tokenTickerSelector } from 'selectors/ticker';
-import Images from 'resources/images';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { Text, View, ActivityIndicator, Image } from 'react-native'
+import Colors from 'resources/colors'
+import { filterBgColor } from 'utils'
+import AccordionPanel from 'components/AccordionPanel'
+import { EXCHANGE_NAMES } from 'constants/market'
+import { IntlProvider, FormattedMessage, FormattedNumber } from 'react-intl'
+import { tokenTickerSelector } from 'selectors/ticker'
+import Images from 'resources/images'
 
-import styles from './styles';
-import messages from './messages';
+import styles from './styles'
+import messages from './messages'
 
 const NAMES = [
   'market_cap',
@@ -26,7 +26,7 @@ const NAMES = [
   'ico_start',
   'ico_end',
   'ico_capital'
-];
+]
 
 const Tag = props => (
   <View style={styles.tag}>
@@ -34,7 +34,7 @@ const Tag = props => (
       {props.tag}
     </Text>
   </View>
-);
+)
 
 @connect(
   state => ({
@@ -50,24 +50,24 @@ const Tag = props => (
 )
 export class Logo extends Component {
   constructor() {
-    super();
+    super()
 
-    this.state = { priceChangeAverage: null };
+    this.state = { priceChangeAverage: null }
   }
 
   componentDidMount() {
-    this.calculatePriceChangeAverage();
+    this.calculatePriceChangeAverage()
   }
 
   calculatePriceChangeAverage() {
-    const { ticker } = this.props;
-    let result = 0;
+    const { ticker } = this.props
+    let result = 0
     ticker.toJS().forEach((item) => {
-      console.log('item.price_change_percent', item.price_change_percent);
-      result += item.price_change_percent;
-    });
-    result /= ticker.toJS().length;
-    this.setState({ priceChangeAverage: result });
+      console.log('item.price_change_percent', item.price_change_percent)
+      result += item.price_change_percent
+    })
+    result /= ticker.toJS().length
+    this.setState({ priceChangeAverage: result })
   }
 
   calculateListedExchangeinUSD() {}
@@ -79,15 +79,15 @@ export class Logo extends Component {
       tags,
       market_cap,
       volume_24h
-    } = this.props.token.toJS();
+    } = this.props.token.toJS()
 
     // const { price_change_percent } = this.props.ticker.toJS();
-    const { locale } = this.props;
+    const { locale } = this.props
     const {
       price_last,
       quote_asset,
       base_asset
-    } = this.props.currentPair.toJS();
+    } = this.props.currentPair.toJS()
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -153,7 +153,7 @@ export class Logo extends Component {
           </View>
         </View>
       </IntlProvider>
-    );
+    )
   }
 }
 
@@ -169,24 +169,24 @@ export class Logo extends Component {
 )
 export class Description extends Component {
   getDescription = (locale) => {
-    const { description } = this.props.token.toJS();
+    const { description } = this.props.token.toJS()
 
     if (
       description
       && description[locale]
       && description[locale].length !== 0
     ) {
-      return description[locale];
+      return description[locale]
     } else if (description && description.en && description.en.length !== 0) {
-      return description.en;
+      return description.en
     } else {
-      return messages[locale].description_null;
+      return messages[locale].description_null
     }
-  };
+  }
 
   render() {
-    const { description } = this.props.token.toJS();
-    const { locale } = this.props;
+    const { description } = this.props.token.toJS()
+    const { locale } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -216,7 +216,7 @@ export class Description extends Component {
           </View>
         </AccordionPanel>
       </IntlProvider>
-    );
+    )
   }
 }
 
@@ -236,8 +236,8 @@ export class Details extends Component {
       circulating_supply,
       total_supply,
       ...rest
-    } = this.props.token.toJS();
-    const { locale } = this.props;
+    } = this.props.token.toJS()
+    const { locale } = this.props
     return (
       <IntlProvider messages={messages[locale]}>
         <AccordionPanel title={messages[locale].details}>
@@ -282,7 +282,7 @@ export class Details extends Component {
                     </Text>
                     <Text style={styles.text14}>{rest[item]}</Text>
                   </View>
-                );
+                )
               }
             })}
             {/* <View style={[styles.spaceBetween, { marginTop: 10 }]}>
@@ -312,7 +312,7 @@ export class Details extends Component {
           </View>
         </AccordionPanel>
       </IntlProvider>
-    );
+    )
   }
 }
 
@@ -328,7 +328,7 @@ export class Details extends Component {
 )
 export class ListedExchange extends Component {
   render() {
-    const { data, loading, locale } = this.props;
+    const { data, loading, locale } = this.props
     return (
       <AccordionPanel title={messages[locale].listed_exchange}>
         <View
@@ -369,6 +369,6 @@ export class ListedExchange extends Component {
         </View> */}
         </View>
       </AccordionPanel>
-    );
+    )
   }
 }

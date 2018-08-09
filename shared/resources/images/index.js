@@ -1,4 +1,4 @@
-import { Platform } from 'react-native';
+import { Platform } from 'react-native'
 
 const Images = {
   qrCode: require('./qrCode.png'),
@@ -55,6 +55,6 @@ const Images = {
   coin_logo_default: require('./coin_logo_default.png'),
   help_center: require('./Profile_Help.png'),
   backup_group: require('./Backup_Group.png')
-};
+}
 
-export default Images;
+export default Images

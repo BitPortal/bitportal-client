@@ -1,11 +1,11 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native'
 import {
   FontScale,
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
   NAV_BAR_HEIGHT
-} from 'utils/dimens';
-import Colors from 'resources/colors';
+} from 'utils/dimens'
+import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
   container: {
@@ -72,6 +72,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginRight: 10
   }
-});
+})
 
-export default styles;
+export default styles

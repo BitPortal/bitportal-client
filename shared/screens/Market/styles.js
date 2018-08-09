@@ -1,5 +1,5 @@
-import { StyleSheet, Platform } from 'react-native';
-import Colors from 'resources/colors';
+import { StyleSheet, Platform } from 'react-native'
+import Colors from 'resources/colors'
 import {
   FontScale,
   SCREEN_WIDTH,
@@ -7,7 +7,7 @@ import {
   NAV_BAR_HEIGHT,
   TAB_BAR_HEIGHT,
   WidthPercent
-} from 'utils/dimens';
+} from 'utils/dimens'
 
 const styles = StyleSheet.create({
   container: {
@@ -116,6 +116,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: Colors.minorThemeColor
   }
-});
+})
 
-export default styles;
+export default styles

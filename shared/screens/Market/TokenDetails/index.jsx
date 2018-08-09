@@ -1,14 +1,12 @@
-
-
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as tokenActions from 'actions/token';
-import { Navigation } from 'react-native-navigation';
-import NavigationBar, { CommonButton } from 'components/NavigationBar';
-import { View, ScrollView, InteractionManager } from 'react-native';
-import { Logo, Description, Details, ListedExchange } from './TokenComponents';
-import styles from './styles';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as tokenActions from 'actions/token'
+import { Navigation } from 'react-native-navigation'
+import NavigationBar, { CommonButton } from 'components/NavigationBar'
+import { View, ScrollView, InteractionManager } from 'react-native'
+import { Logo, Description, Details, ListedExchange } from './TokenComponents'
+import styles from './styles'
 
 @connect(
   state => ({
@@ -34,7 +32,7 @@ export default class TokenDetails extends Component {
       bottomTabs: {
         visible: false
       }
-    };
+    }
   }
 
   componentWillMount() {
@@ -42,15 +40,15 @@ export default class TokenDetails extends Component {
       console.log(
         'running getTokenDetail in componentWillMount',
         this.props.baseAsset
-      );
+      )
       this.props.actions.getTokenDetailRequested({
         symbol: this.props.baseAsset
-      });
-    });
+      })
+    })
   }
 
   render() {
-    const { listedExchange, loading, tokenDetails } = this.props;
+    const { listedExchange, loading, tokenDetails } = this.props
     return (
       <View style={styles.container}>
         <NavigationBar
@@ -71,6 +69,6 @@ export default class TokenDetails extends Component {
           </ScrollView>
         </View>
       </View>
-    );
+    )
   }
 }
