@@ -20,7 +20,7 @@ export default class NewsList extends PureComponent {
     <View>
       <NewsBanner componentId={this.props.componentId} />
       <View style={styles.listTitle}>
-        <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>  
+        <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>
           {messages[this.props.locale].discovery_title_name_news}
         </Text>
       </View>

@@ -27,11 +27,11 @@ const calculateFormatValue = (timeValue: any) => {
 }
 
 export const formatCycleTime = (value: any) => {
-  if (null == value || value == '') return "0.00 μs"
-  let quoteArr = ["μs","ms","s","min","hrs","day"]
+  if (null == value || value == '') return '0.00 μs'
+  const quoteArr = ['μs','ms','s','min','hrs','day']
   let index = 0, timeValue = parseFloat(value)
   index = calculateIndex(timeValue)
-  let formatValue = calculateFormatValue(timeValue)
+  const formatValue = calculateFormatValue(timeValue)
   if (formatValue.toString().split('.').length <= 1) {
     return formatValue.toFixed(2) + ' ' + quoteArr[index]
   } else {
@@ -40,11 +40,11 @@ export const formatCycleTime = (value: any) => {
 }
 
 export const formatMemorySize = (value: any) => {
-  if (null == value || value == '') return "0.00 byte"
-  let quoteArr = ["byte","KB","MB","GB","TB","PB","EB","ZB","YB"]
+  if (null == value || value == '') return '0.00 byte'
+  const quoteArr = ['byte','KB','MB','GB','TB','PB','EB','ZB','YB']
   let index = 0, srcSize = parseFloat(value)
   index = Math.floor(Math.log(srcSize)/Math.log(1024))
-  let size = srcSize/Math.pow(1024,index)
+  const size = srcSize/Math.pow(1024,index)
   if (size.toString().split('.').length <= 1) {
     return size.toFixed(2) + ' ' + quoteArr[index]
   } else {

@@ -5,7 +5,7 @@ export const EXCHANGES = [
   'HUOBIPRO',
   'POLONIEX',
   'GDAX'
-];
+]
 
 export const EXCHANGE_NAMES = {
   BINANCE: 'Binance',
@@ -14,7 +14,7 @@ export const EXCHANGE_NAMES = {
   OKEX: 'OKEx',
   HUOBIPRO: 'Huobi Pro',
   POLONIEX: 'Poloniex'
-};
+}
 
 export const QUOTE_ASSETS = {
   BINANCE: ['BTC', 'ETH', 'BNB', 'USDT'],
@@ -23,7 +23,7 @@ export const QUOTE_ASSETS = {
   OKEX: ['BTC', 'ETH', 'USDT'],
   HUOBIPRO: ['BTC', 'ETH', 'USDT'],
   POLONIEX: ['BTC', 'ETH', 'XMR', 'USDT']
-};
+}
 
 export const ASSET_FRACTION = {
   BTC: 8,
@@ -35,14 +35,14 @@ export const ASSET_FRACTION = {
   EUR: 2,
   GBP: 2,
   EOS: 4
-};
+}
 
 export const DEFAULT_USD_RATE = {
   USD: 1,
   CNY: 6.4
-};
+}
 
-export const DEFAULT_SORT_FILTER = 'quote_volume';
+export const DEFAULT_SORT_FILTER = 'quote_volume'
 
 const sort_filters = [
   'quote_volume',
@@ -50,4 +50,4 @@ const sort_filters = [
   'price_change_percent_high',
   'current_price_low',
   'current_price_high'
-];
+]

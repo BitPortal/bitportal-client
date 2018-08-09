@@ -303,7 +303,7 @@ export const getEOSWifsByInfo = async (password: string, accountInfo: any, check
   const permissions = accountInfo.permissions
   const eosAccountName = accountInfo.account_name
 
-  let wifs = []
+  const wifs = []
 
   for (const checkPermission of checkPermissions) {
     const currentPermission = permissions.filter((item: any) => item.perm_name === checkPermission.toLowerCase())

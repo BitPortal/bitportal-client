@@ -42,7 +42,7 @@ const removeItem = async (key: string) => {
 
 const getAllItems = async () => {
   try {
-    let items = await SensitiveInfo.getAllItems({
+    const items = await SensitiveInfo.getAllItems({
       sharedPreferencesName: 'BitportalSharedPrefs',
       keychainService: 'BitportalKeychain'
     })

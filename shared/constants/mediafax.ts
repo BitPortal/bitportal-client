@@ -1,8 +1,8 @@
 import Images from 'resources/images'
 
 export const Mediafax = [
-  "Wechat", "Telegram", "Kakao",
-  "Twitter", "Facebook", "Weibo"
+  'Wechat', 'Telegram', 'Kakao',
+  'Twitter', 'Facebook', 'Weibo'
 ]
 
 export const MediafaxIcons = {
@@ -15,10 +15,10 @@ export const MediafaxIcons = {
 }
 
 export const MediafaxUrls = {
-  Wechat: "BitPortal币通/bitportalcn",
-  Telegram: "https://t.me/BitPortal_official_EN",
-  Kakao: "https://open.kakao.com/o/gWAXZTO",
-  Twitter: "https://twitter.com/bit_portal",
-  Facebook: "https://www.facebook.com/BitPortal",
-  Weibo: "BitPortal币通"
+  Wechat: 'BitPortal币通/bitportalcn',
+  Telegram: 'https://t.me/BitPortal_official_EN',
+  Kakao: 'https://open.kakao.com/o/gWAXZTO',
+  Twitter: 'https://twitter.com/bit_portal',
+  Facebook: 'https://www.facebook.com/BitPortal',
+  Weibo: 'BitPortal币通'
 }

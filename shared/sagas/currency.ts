@@ -19,7 +19,7 @@ function* getCurrencyRate(action: Action<GetCurrencyParams>) {
 
       currency = {
         symbol: action.payload.symbol,
-        rate: data.quotes['USDCNY']
+        rate: data.quotes.USDCNY
       }
     }
 

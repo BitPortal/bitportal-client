@@ -5,7 +5,7 @@ import { update } from 'utils/update'
 
 function* getVersionInfo() {
   try {
-    let data = yield call(api.getVersionInfo)
+    const data = yield call(api.getVersionInfo)
     const locale = yield select((state: any) => state.intl.get('locale'))
     update(data[0], locale)
     yield put(actions.getVersionInfoSucceeded(data[0]))

@@ -1,33 +1,33 @@
-import Colors from 'resources/colors';
+import Colors from 'resources/colors'
 
-const multiple = (position: number): number => (!position ? 1 : 10 * multiple(position - 1));
+const multiple = (position: number): number => (!position ? 1 : 10 * multiple(position - 1))
 
-export const roundDown = (value: number, decimal: number) => value && Math.floor(value * multiple(decimal)) / multiple(decimal);
+export const roundDown = (value: number, decimal: number) => value && Math.floor(value * multiple(decimal)) / multiple(decimal)
 
-export const roundUp = (value: number, decimal: number) => value && Math.ceil(value * multiple(decimal)) / multiple(decimal);
+export const roundUp = (value: number, decimal: number) => value && Math.ceil(value * multiple(decimal)) / multiple(decimal)
 
-export const errorLoading = (err: string) => console.error('Dynamic page loading failed: ', err);
+export const errorLoading = (err: string) => console.error('Dynamic page loading failed: ', err)
 
-export const typeOf = (value: any) => Object.prototype.toString.call(value).slice(8, -1);
+export const typeOf = (value: any) => Object.prototype.toString.call(value).slice(8, -1)
 
-const loadedScripts: string[] = [];
+const loadedScripts: string[] = []
 
 export const loadScript = (src: string) => new Promise((resolve, reject) => {
   if (~loadedScripts.indexOf(src)) {
-    resolve();
+    resolve()
   } else {
-    const script = document.createElement('script');
-    script.src = src;
+    const script = document.createElement('script')
+    script.src = src
     script.addEventListener('load', () => {
-      loadedScripts.push(src);
-      resolve();
-    });
+      loadedScripts.push(src)
+      resolve()
+    })
     script.addEventListener('error', (e) => {
-      reject(e);
-    });
-    document.head.appendChild(script);
+      reject(e)
+    })
+    document.head.appendChild(script)
   }
-});
+})
 
 export const getErrorMessage = (error: any) => {
   if (
@@ -36,7 +36,7 @@ export const getErrorMessage = (error: any) => {
       && typeof error.message === 'string'
       && error.message.indexOf('.cpp') !== -1)
   ) {
-    const errorObject = JSON.parse(error.message);
+    const errorObject = JSON.parse(error.message)
 
     if (
       errorObject.error
@@ -44,16 +44,16 @@ export const getErrorMessage = (error: any) => {
       && errorObject.error.details.length
       && errorObject.error.details[0].message
     ) {
-      return errorObject.error.details[0].message;
+      return errorObject.error.details[0].message
     }
 
     if (errorObject.error && errorObject.error.what) {
-      return errorObject.error.what;
+      return errorObject.error.what
     }
   }
 
   if (typeof error === 'string') {
-    const errorObject = JSON.parse(error);
+    const errorObject = JSON.parse(error)
 
     if (
       errorObject.error
@@ -61,11 +61,11 @@ export const getErrorMessage = (error: any) => {
       && errorObject.error.details.length
       && errorObject.error.details[0].message
     ) {
-      return errorObject.error.details[0].message;
+      return errorObject.error.details[0].message
     }
 
     if (errorObject.error && errorObject.error.what) {
-      return errorObject.error.what;
+      return errorObject.error.what
     }
   }
 
@@ -76,59 +76,59 @@ export const getErrorMessage = (error: any) => {
     && error.message.name
     && error.message.what
   ) {
-    return error.message.what;
+    return error.message.what
   }
 
-  return error.message || 'unknown error';
-};
+  return error.message || 'unknown error'
+}
 
 export const encodeKey = (...elements: any[]) => {
-  const key = JSON.stringify([...elements]);
-  const keyTrim = key.substring(1, key.length - 1);
-  return Buffer.from(keyTrim).toString('hex');
-};
+  const key = JSON.stringify([...elements])
+  const keyTrim = key.substring(1, key.length - 1)
+  return Buffer.from(keyTrim).toString('hex')
+}
 
-export const decodeKey = (key: string) => JSON.parse(`[${Buffer.from(key, 'hex').toString('utf8')}]`);
+export const decodeKey = (key: string) => JSON.parse(`[${Buffer.from(key, 'hex').toString('utf8')}]`)
 
 export const getPasswordStrength = (password: any) => {
-  let passwordStrength = 0;
+  let passwordStrength = 0
 
-  const hasUppercase = (value: string) => /[A-Z]/.test(value);
-  const hasLowercase = (value: string) => /[a-z]/.test(value);
-  const hasNumber = (value: string) => /[0-9]/.test(value);
-  const hasSymbol = (value: string) => /[$&+,:;=?@#|'<>.^*()%!-]/.test(value);
+  const hasUppercase = (value: string) => /[A-Z]/.test(value)
+  const hasLowercase = (value: string) => /[a-z]/.test(value)
+  const hasNumber = (value: string) => /[0-9]/.test(value)
+  const hasSymbol = (value: string) => /[$&+,:;=?@#|'<>.^*()%!-]/.test(value)
 
   if (password && typeof password === 'string' && password.length >= 6) {
-    if (hasLowercase(password)) passwordStrength += 1;
-    if (hasUppercase(password)) passwordStrength += 1;
-    if (hasNumber(password)) passwordStrength += 1;
-    if (hasSymbol(password)) passwordStrength += 1;
+    if (hasLowercase(password)) passwordStrength += 1
+    if (hasUppercase(password)) passwordStrength += 1
+    if (hasNumber(password)) passwordStrength += 1
+    if (hasSymbol(password)) passwordStrength += 1
   }
 
-  return passwordStrength;
-};
+  return passwordStrength
+}
 
-export const noop = () => {};
+export const noop = () => {}
 
 export const eosQrString = (
   account_name: string,
   amount: number,
   token: string
-) => `eos:${account_name}?amount=${amount || 0}&token=${token || 'EOS'}`;
+) => `eos:${account_name}?amount=${amount || 0}&token=${token || 'EOS'}`
 
 export const parseEOSQrString = (text: string) => {
-  let eosAccountName;
-  let amount;
-  let token;
+  let eosAccountName
+  let amount
+  let token
 
   if (text && typeof text === 'string') {
-    const account = text.split('?')[0];
-    const queryString = text.split('?')[1];
+    const account = text.split('?')[0]
+    const queryString = text.split('?')[1]
 
     if (account && account.split(':')[1]) {
-      if (account.split(':')[0] !== 'eos') return null;
+      if (account.split(':')[0] !== 'eos') return null
 
-      eosAccountName = account.split(':')[1];
+      eosAccountName = account.split(':')[1]
 
       if (queryString) {
         const queryObject: any = queryString
@@ -141,30 +141,30 @@ export const parseEOSQrString = (text: string) => {
               && item.split('=')[0]
               && item.split('=')[1]
             ) {
-              return { [item.split('=')[0]]: item.split('=')[1] };
+              return { [item.split('=')[0]]: item.split('=')[1] }
             }
 
-            return null;
+            return null
           })
           .filter((item: any) => !!item)
-          .reduce((items, item) => ({ ...items, ...item }), {});
+          .reduce((items, item) => ({ ...items, ...item }), {})
 
-        amount = queryObject.amount;
-        token = queryObject.token && queryObject.token.toUpperCase();
+        amount = queryObject.amount
+        token = queryObject.token && queryObject.token.toUpperCase()
 
-        if (!token) return null;
+        if (!token) return null
       }
 
-      return { eosAccountName, amount, token };
+      return { eosAccountName, amount, token }
     }
 
-    return null;
+    return null
   }
-};
+}
 export const filterBgColor = (data: string) => {
   if (data && parseFloat(data) > 0) {
-    return Colors.bgColor_104_189_57;
+    return Colors.bgColor_104_189_57
   } else if (data && parseFloat(data) < 0) {
-    return Colors.bgColor_255_50_50;
+    return Colors.bgColor_255_50_50
   }
-};
+}
