@@ -70,8 +70,7 @@ const validate = (values, props) => {
     locale: state.intl.get('locale'),
     wallet: state.wallet,
     eosAccount: state.eosAccount,
-    password: formValueSelector('createEOSAccountForm')(state, 'password'),
-    eosAccountName: formValueSelector('createEOSAccountForm')(state, 'eosAccountName')
+    password: formValueSelector('createEOSAccountForm')(state, 'password')
   }),
   dispatch => ({
     actions: bindActionCreators({

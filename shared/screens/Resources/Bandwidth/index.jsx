@@ -55,7 +55,7 @@ export default class Memory extends Component {
                   <Text style={styles.text14}><FormattedMessage id="bdwidth_title_name_total" /></Text>
                   <Text style={styles.text14}>
                     {formatMemorySize(activeEOSAccount.getIn(['net_limit', 'available']))}
-                    /{formatMemorySize(activeEOSAccount.getIn('net_limit', 'max'))}
+                    /{formatMemorySize(activeEOSAccount.getIn(['net_limit', 'max']))}
                   </Text>
                 </View>
                 <View style={[styles.totalContainer, styles.between, { marginTop: 0 }]}>
