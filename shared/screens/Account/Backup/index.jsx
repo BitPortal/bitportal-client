@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { Text, View, Image, ScrollView, TouchableOpacity, TouchableHighlight } from 'react-native'
+import { Text, View, Image, ScrollView, TouchableOpacity, TouchableHighlight, InteractionManager } from 'react-native'
 import Colors from 'resources/colors'
 import images from 'resources/images'
+import Prompt from 'components/Prompt'
 import LinearGradientContainer from 'components/LinearGradientContainer'
 import messages from './messages'
 import styles from './styles'
@@ -27,12 +28,28 @@ export default class Backup extends Component {
     }
   }
 
+  state = {
+    isVisible: false
+  }
+
+  closePrompt = () => {
+    this.setState({ isVisible: false })
+  }
+
+  handleConfirm = () => {
+    this.setState({ isVisible: false }, () => {
+      InteractionManager.runAfterInteractions(() => {
+        // export action ...
+      })
+    })
+  }
+
   goToBackup = () => {
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.ExportPrivateKey',
         passProps: {
-          entry: 'backup'
+          entry: 'Backup'
         }
       }
     })
@@ -65,7 +82,7 @@ export default class Backup extends Component {
                 </Text>
               </View>
               <TouchableHighlight
-                onPress={() => this.goToBackup()}
+                onPress={() => this.setState({ isVisible: true })}
                 underlayColor={Colors.textColor_89_185_226}
                 style={[styles.btn, styles.center, { marginTop: 25, backgroundColor: Colors.textColor_89_185_226 }]}
               >
@@ -85,6 +102,12 @@ export default class Backup extends Component {
               </TouchableOpacity>
             </View>
           </ScrollView>
+          <Prompt
+            isVisible={this.state.isVisible}
+            type="secure-text"
+            callback={this.handleConfirm}
+            dismiss={this.closePrompt}
+          />
         </View>
       </View>
     )

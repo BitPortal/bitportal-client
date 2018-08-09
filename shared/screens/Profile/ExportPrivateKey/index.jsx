@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
 import { Navigation } from 'react-native-navigation'
 import Colors from 'resources/colors'
+import { bindActionCreators } from 'redux'
+import * as eosAccountActions from 'actions/eosAccount'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { Text, View, ScrollView, TextInput } from 'react-native'
+import { Text, View, ScrollView, TouchableHighlight, TextInput } from 'react-native'
+import LinearGradientContainer from 'components/LinearGradientContainer'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
+import storage from 'utils/storage'
 import styles from './styles'
 import messages from './messages'
 
@@ -12,7 +16,11 @@ import messages from './messages'
   state => ({
     locale: state.intl.get('locale')
   }),
-  null,
+  dispatch => ({
+    actions: bindActionCreators({
+      ...eosAccountActions
+    }, dispatch)
+  }),
   null,
   { withRef: true }
 )
@@ -26,9 +34,14 @@ export default class ExportPrivateKey extends Component {
     }
   }
 
-  render() {
-    const { locale, wifs } = this.props
+  backCompleted = async () => {
+    await storage.setItem('bitportal.backup', { backupCompleted: true }, true)
+    this.props.actions.completeBackup(true)
+    Navigation.popToRoot(this.props.componentId)
+  }
 
+  render() {
+    const { locale, wifs, entry } = this.props
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -52,7 +65,7 @@ export default class ExportPrivateKey extends Component {
                   <FormattedMessage id="expvk_txtbox_title_pvk_owner" />
                 </Text>
                 <View style={[styles.inputContainer]}>
-                  {wifs.map(item => <TextInput
+                  {/* {wifs.map(item => <TextInput
                       key={item.wif}
                       editable={false}
                       multiline={true}
@@ -64,8 +77,22 @@ export default class ExportPrivateKey extends Component {
                       placeholderTextColor={Colors.textColor_181_181_181}
                       value={item.wif}
                   />
-                  )}
+                  )} */}
                 </View>
+                {
+                  entry === 'Backup' && 
+                  <TouchableHighlight
+                    onPress={this.backCompleted}
+                    underlayColor={Colors.textColor_89_185_226}
+                    style={[styles.btn, styles.center, { marginTop: 25 }]}
+                  >
+                    <LinearGradientContainer type="right" style={[[styles.btn, styles.center]]}>
+                      <Text style={styles.text14}>
+                        {<FormattedMessage id="expvk_button_name_backup" />}
+                      </Text>
+                    </LinearGradientContainer>
+                  </TouchableHighlight>
+                }
               </View>
             </ScrollView>
           </View>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import CurrencyText from 'components/CurrencyText'
+import { Navigation } from 'react-native-navigation'
 import LinearGradientContainer from 'components/LinearGradientContainer'
 import Colors from 'resources/colors'
 import Images from 'resources/images'
@@ -64,6 +65,11 @@ const styles = StyleSheet.create({
     marginRight: -30,
     paddingVertical: 10
   },
+  textRadius: {
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    backgroundColor: Colors.bgColor_FFFFFF
+  },
   text12: {
     fontSize: FontScale(12),
     color: Colors.textColor_255_255_238
@@ -82,7 +88,8 @@ const styles = StyleSheet.create({
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    isAssetHidden: state.eosAccount.get('isAssetHidden')
+    isAssetHidden: state.eosAccount.get('isAssetHidden'),
+    backupCompleted: state.eosAccount.get('backupCompleted')
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -94,10 +101,15 @@ const styles = StyleSheet.create({
 )
 
 export default class TotalAssetsCard extends Component {
-  async componentDidMount() {
-    const storeInfo = await storage.getItem('bitportal.hiddenTotalAssets', true)
-    if (storeInfo && storeInfo.hiddenTotalAssets) {
-      this.props.actions.hiddenAssetDisplay(storeInfo.hiddenTotalAssets)
+
+  async componentWillMount() {
+    const store1 = await storage.getItem('bitportal.hiddenTotalAssets', true)
+    if (store1 && store1.hiddenTotalAssets) {
+      this.props.actions.hiddenAssetDisplay(store1.hiddenTotalAssets)
+    }
+    const store2 = await storage.getItem('bitportal.backup', true)
+    if (store2 && store2.backupCompleted) {
+      this.props.actions.completeBackup(store2.backupCompleted)
     }
   }
 
@@ -121,17 +133,37 @@ export default class TotalAssetsCard extends Component {
     this.props.actions.hiddenAssetDisplay(!isAssetHidden)
   }
 
+  onPress = () => {
+    if (this.props.backupCompleted) {
+      this.props.onPress()
+    } else {
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.Backup'
+        }
+      })
+    }
+  }
+
   render() {
-    const { isAssetHidden, totalAssets, CPUInfo, NETInfo, RAMQuota, RAMUsage, accountName, disabled, onPress, locale } = this.props
+    const { isAssetHidden, backupCompleted, totalAssets, CPUInfo, NETInfo, RAMQuota, RAMUsage, accountName, disabled, onPress, locale } = this.props
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={{ alignItems: 'center', backgroundColor: Colors.minorThemeColor, paddingVertical: 15 }}>
           <LinearGradientContainer type="right" style={[styles.linearContainer, { marginHorizontal: 32, marginTop: 10 }]}>
-            <TouchableHighlight disabled={disabled} style={styles.linearContainer} underlayColor={Colors.linearUnderlayColor} onPress={() => onPress()}>
+            <TouchableHighlight disabled={disabled} style={styles.linearContainer} underlayColor={Colors.linearUnderlayColor} onPress={this.onPress}>
               <View style={[styles.linearContainer, styles.paddingStyle]}>
-                <Text style={styles.text15}>
-                  <FormattedMessage id="asset_card_title_ttlast" />
-                </Text>
+                <View style={styles.between}>
+                  <Text style={styles.text15}> <FormattedMessage id="asset_card_title_ttlast" /> </Text>
+                  { 
+                    !backupCompleted && 
+                    <View style={styles.textRadius}>
+                      <Text style={[styles.text12, { color: Colors.textColor_89_185_226 }]}>
+                        <FormattedMessage id="asset_card_title_backup" />
+                      </Text>
+                    </View>
+                  }
+                </View>
                 <View style={styles.between}>
                   {
                     isAssetHidden
@@ -139,9 +171,9 @@ export default class TotalAssetsCard extends Component {
                       : <Text style={styles.text24}>
                       ≈
                         <CurrencyText
-                        value={totalAssets}
-                        maximumFractionDigits={2}
-                        minimumFractionDigits={2}
+                          value={totalAssets}
+                          maximumFractionDigits={2}
+                          minimumFractionDigits={2}
                         />
                       </Text>
                   }
