@@ -102,7 +102,7 @@ export default class DelegateBandwidthForm extends Component {
       InteractionManager.runAfterInteractions(() => {
         const data = this.state.data
         const eosAccount = this.props.eosAccount
-        const eosAccountName = eosAccount.get('data').get('account_name')
+        const eosAccountName = eosAccount.getIn(['data', 'account_name'])
         const resource = this.props.resource
 
         if (this.state.activeForm === 'Delegate') {

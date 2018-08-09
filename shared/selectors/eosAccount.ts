@@ -42,7 +42,7 @@ export const eosAccountNameSelector = createSelector(
 
 export const voterInfoSelector = createSelector(
   eosAccountSelector,
-  (account: any) => account.get('data').get('voter_info')
+  (account: any) => account.getIn(['data', 'voter_info'])
 )
 
 export const votedProducersSelector = createSelector(

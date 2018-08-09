@@ -34,8 +34,9 @@ export default class Memory extends Component {
   render() {
     const { locale, eosAccount } = this.props
     const activeEOSAccount = eosAccount.get('data')
-    const percent = activeEOSAccount.get('net_limit').get('available') / activeEOSAccount.get('net_limit').get('max')
-    const refund = activeEOSAccount.get('refund_request') ? activeEOSAccount.get('refund_request').get('net_amount') : '0.0000 EOS'
+    const percent = activeEOSAccount.getIn(['net_limit', 'available']) / activeEOSAccount.getIn(['net_limit', 'max'])
+    const refund = activeEOSAccount.get('refund_request') ? activeEOSAccount.getIn(['refund_request', 'net_amount']) : '0.0000 EOS'
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -53,8 +54,8 @@ export default class Memory extends Component {
                 <View style={[styles.totalContainer, styles.between]}>
                   <Text style={styles.text14}><FormattedMessage id="bdwidth_title_name_total" /></Text>
                   <Text style={styles.text14}>
-                    {formatMemorySize(activeEOSAccount.get('net_limit').get('available'))}
-                    /{formatMemorySize(activeEOSAccount.get('net_limit').get('max'))}
+                    {formatMemorySize(activeEOSAccount.getIn(['net_limit', 'available']))}
+                    /{formatMemorySize(activeEOSAccount.getIn('net_limit', 'max'))}
                   </Text>
                 </View>
                 <View style={[styles.totalContainer, styles.between, { marginTop: 0 }]}>
