@@ -5,7 +5,7 @@ import * as actions from 'actions/eosAccount'
 const initialState = Immutable.fromJS({
   data: {},
   isAssetHidden: false,
-  backupCompleted: false,
+  backupCompleted: true,
   eosAccountList: [],
   loading: false,
   loaded: false,
