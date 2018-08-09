@@ -142,6 +142,7 @@ export default class TotalAssetsCard extends Component {
 
   render() {
     const { isAssetHidden, backupCompleted, totalAssets, CPUInfo, NETInfo, RAMQuota, RAMUsage, accountName, disabled, locale } = this.props
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={{ alignItems: 'center', backgroundColor: Colors.minorThemeColor, paddingVertical: 15 }}>

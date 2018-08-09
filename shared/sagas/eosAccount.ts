@@ -8,7 +8,7 @@ import { getBalanceRequested } from 'actions/balance'
 import { createClassicWalletSucceeded } from 'actions/wallet'
 import secureStorage from 'utils/secureStorage'
 import { BITPORTAL_API_EOS_URL } from 'constants/env'
-import { randomKey, privateToPublic, isValidPrivate, initEOS, getPermissionsByKey } from 'core/eos'
+import { randomKey, privateToPublic, isValidPrivate, initEOS, getPermissionsByKey, getInitialAccountInfo } from 'core/eos'
 import { encrypt } from 'core/key'
 import { getErrorMessage } from 'utils'
 import { popToRoot, push } from 'utils/location'
@@ -44,12 +44,9 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
     const txhash = result.txhash
     assert(txhash, 'No txhash!')
 
-    const eos = yield call(initEOS, { httpEndpoint: BITPORTAL_API_EOS_URL })
-    const accountInfo = yield call(eos.getAccount, eosAccountName)
-
+    const permission = 'OWNER'
     const privateKeyDecodedString = wif.decode(privateKey).privateKey.toString('hex')
     const keystore = yield call(encrypt, privateKeyDecodedString, password, { origin: 'classic', coin: 'EOS' })
-    const permission = 'OWNER'
     const walletInfo = {
       eosAccountName,
       permission,
@@ -57,11 +54,12 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
       timestamp: +Date.now(),
       origin: 'classic'
     }
+    const accountInfo = getInitialAccountInfo(eosAccountName, publicKey)
+
+    yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, accountInfo, true)
     yield call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_${permission}_${publicKey}`, keystore, true)
     yield call(secureStorage.setItem, `CLASSIC_WALLET_INFO_EOS_${eosAccountName}`, walletInfo, true)
     yield call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
-
-    yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, accountInfo, true)
     yield put(actions.createEOSAccountSucceeded(accountInfo))
     yield put(createClassicWalletSucceeded(walletInfo))
     yield put(getBalanceRequested({ code: 'eosio.token', account: walletInfo.eosAccountName }))
@@ -93,13 +91,12 @@ function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
       timestamp: +Date.now(),
       origin: 'classic'
     }
-    const info = accountInfo
 
-    yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, info, true)
+    yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, accountInfo, true)
     yield call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_${permission}_${publicKey}`, keystore, true)
     yield call(secureStorage.setItem, `CLASSIC_WALLET_INFO_EOS_${eosAccountName}`, walletInfo, true)
     yield call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
-    yield put(actions.importEOSAccountSucceeded(info))
+    yield put(actions.importEOSAccountSucceeded(accountInfo))
     yield put(createClassicWalletSucceeded(walletInfo))
     yield put(getBalanceRequested({ code: 'eosio.token', account: walletInfo.eosAccountName }))
 

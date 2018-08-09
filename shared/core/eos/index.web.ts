@@ -56,6 +56,51 @@ const getPermissionsByKey = (publickKey: string, accountInfo: any) => {
   return ownerPermission.length ? ownerPermission : roles
 }
 
+const getInitialAccountInfo = (eosAccountName: string, publicKey: string) => (
+  {
+    account_name: eosAccountName,
+    core_liquid_balance: '0.0000 EOS',
+    cpu_limit: { used: 0, available: 0, max: 0 },
+    cpu_weight: 0,
+    net_limit: { used: 0, available: 0, max: 0 },
+    net_weight: 0,
+    permissions: [
+      {
+        parent: 'owner',
+        perm_name: 'active',
+        required_auth: {
+          accounts: [],
+          keys: [{ key: publicKey, weight: 1 }],
+          threshold: 1,
+          waits: []
+        }
+      },
+      {
+        parent: '',
+        perm_name: 'owner',
+        required_auth: {
+          accounts: [],
+          keys: [{ key: publicKey, weight: 1 }],
+          threshold: 1,
+          waits: []
+        }
+      }
+    ],
+    privileged: false,
+    ram_quota: 0,
+    ram_usage: 0,
+    refund_request: null,
+    self_delegated_bandwidth: null,
+    total_resources: {
+      owner: eosAccountName,
+      cpu_weight: '0.0000 EOS',
+      net_weight: '0.0000 EOS',
+      ram_bytes: 0
+    },
+    voter_info: null
+  }
+)
+
 export {
   initEOS,
   getEOS,
@@ -64,5 +109,6 @@ export {
   randomKey,
   getProducers,
   sortProducers,
-  getPermissionsByKey
+  getPermissionsByKey,
+  getInitialAccountInfo
 }

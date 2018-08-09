@@ -169,6 +169,9 @@ function* createWalletRequested(action: Action<CreateWalletParams>) {
 function* syncWalletRequested() {
   try {
     // const items = yield call(secureStorage.getAllItems)
+    // for (const item of Object.keys(items)) {
+    //   yield call(secureStorage.removeItem, item)
+    // }
     // console.log(items)
 
     const allItems = yield call(secureStorage.getAllItems)
