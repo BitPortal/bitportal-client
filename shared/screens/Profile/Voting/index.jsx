@@ -167,10 +167,6 @@ export default class Voting extends Component {
     this.props.actions.getProducersWithInfoRequested({ json: true, limit: 500 })
   }
 
-  UNSAFE_componentWillUpdate() {
-    LayoutAnimation.easeInEaseOut()
-  }
-
   render() {
     const { locale, producer, eosAccount, voting } = this.props
     const loading = producer.get('loading')

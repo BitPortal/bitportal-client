@@ -29,10 +29,6 @@ export default class NewBanner extends PureComponent {
     this.props.actions.getNewsBannerRequested()
   }
 
-  UNSAFE_componentWillUpdate() {
-    LayoutAnimation.easeInEaseOut()
-  }
-
   onBannerPress = (item) => {
     Navigation.push(this.props.componentId, {
       component: {

@@ -106,10 +106,6 @@ export default class Market extends Component {
     })
   }
 
-  UNSAFE_componentWillUpdate() {
-    LayoutAnimation.easeInEaseOut()
-  }
-
   shouldComponentUpdate(nextProps, nextState) {
     return (
       nextProps.loading !== this.props.loading

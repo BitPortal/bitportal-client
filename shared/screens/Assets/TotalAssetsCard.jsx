@@ -112,10 +112,6 @@ export default class TotalAssetsCard extends Component {
     }
   }
 
-  UNSAFE_componentWillUpdate() {
-    LayoutAnimation.easeInEaseOut()
-  }
-
   checkResources = () => {
     this.props.checkResourcesDetails()
   }

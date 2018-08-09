@@ -28,10 +28,6 @@ export default class ProducerDetails extends Component {
     }
   }
 
-  UNSAFE_componentWillUpdate() {
-    LayoutAnimation.easeInEaseOut()
-  }
-
   render() {
     const { locale, producer, totalProducers } = this.props
     const introduce = producer.getIn(['info', 'introduce', locale])
