@@ -27,4 +27,4 @@ declare interface Token {
   ico_capital?: string
 }
 
-declare type TokenResult = Ticker[]
+declare type TokenResult = Token[]
