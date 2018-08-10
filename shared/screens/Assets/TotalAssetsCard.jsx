@@ -84,12 +84,12 @@ const styles = StyleSheet.create({
   }
 })
 
-
 @connect(
   state => ({
     locale: state.intl.get('locale'),
     isAssetHidden: state.eosAccount.get('isAssetHidden'),
-    backupCompleted: state.eosAccount.get('backupCompleted')
+    backupCompleted: state.eosAccount.getIn(['eosAccountCreationInfo', 'backup']),
+    isNew: !!state.eosAccount.getIn(['eosAccountCreationInfo', 'transactionId']),
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -105,10 +105,6 @@ export default class TotalAssetsCard extends Component {
     const store1 = await storage.getItem('bitportal.hiddenTotalAssets', true)
     if (store1 && store1.hiddenTotalAssets) {
       this.props.actions.hiddenAssetDisplay(store1.hiddenTotalAssets)
-    }
-    const store2 = await storage.getItem('bitportal.backup', true)
-    if (!store2 || (store2 && !store2.backupCompleted)) {
-      this.props.actions.completeBackup(false)
     }
   }
 
@@ -128,31 +124,19 @@ export default class TotalAssetsCard extends Component {
     this.props.actions.hiddenAssetDisplay(!isAssetHidden)
   }
 
-  onPress = () => {
-    if (this.props.backupCompleted) {
-      this.props.onPress()
-    } else {
-      Navigation.push(this.props.componentId, {
-        component: {
-          name: 'BitPortal.Backup'
-        }
-      })
-    }
-  }
-
   render() {
-    const { isAssetHidden, backupCompleted, totalAssets, CPUInfo, NETInfo, RAMQuota, RAMUsage, accountName, disabled, locale } = this.props
+    const { isAssetHidden, backupCompleted, isNew, totalAssets, CPUInfo, NETInfo, RAMQuota, RAMUsage, accountName, disabled, locale, onPress } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={{ alignItems: 'center', backgroundColor: Colors.minorThemeColor, paddingVertical: 15 }}>
           <LinearGradientContainer type="right" style={[styles.linearContainer, { marginHorizontal: 32, marginTop: 10 }]}>
-            <TouchableHighlight disabled={disabled} style={styles.linearContainer} underlayColor={Colors.linearUnderlayColor} onPress={this.onPress}>
+            <TouchableHighlight disabled={disabled} style={styles.linearContainer} underlayColor={Colors.linearUnderlayColor} onPress={onPress}>
               <View style={[styles.linearContainer, styles.paddingStyle]}>
                 <View style={styles.between}>
-                  <Text style={styles.text15}> <FormattedMessage id="asset_card_title_ttlast" /> </Text>
+                  <Text style={styles.text15}><FormattedMessage id="asset_card_title_ttlast" /></Text>
                   {
-                    !backupCompleted
+                    (isNew && !backupCompleted)
                     && <View style={styles.textRadius}>
                       <Text style={[styles.text12, { color: Colors.textColor_89_185_226 }]}>
                         <FormattedMessage id="asset_card_title_backup" />

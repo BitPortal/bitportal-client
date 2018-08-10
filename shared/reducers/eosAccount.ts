@@ -71,7 +71,7 @@ export default handleActions({
   [actions.hiddenAssetDisplay] (state, action) {
     return state.set('isAssetHidden', action.payload)
   },
-  [actions.completeBackup] (state, action) {
-    return state.set('backupCompleted', action.payload)
+  [actions.completeBackup] (state) {
+    return state.setIn(['eosAccountCreationInfo', 'backup'], true)
   },
 }, initialState)

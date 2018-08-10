@@ -6,7 +6,7 @@
     "asset_droplist_button_add": "创建帐户",
     "act_sec_title_create_eos_account": "导入EOS帐户",
     "asset_card_title_ttlast": "总资产",
-    "asset_card_title_backup": "未完成备份"
+    "asset_card_title_backup": "未备份"
   },
   "en": {
     "addpage_title_name_act": "EOS Wallet",

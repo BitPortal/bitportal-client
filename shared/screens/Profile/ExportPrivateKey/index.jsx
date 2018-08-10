@@ -34,25 +34,28 @@ export default class ExportPrivateKey extends Component {
     }
   }
 
-  backCompleted = async () => {
-    await storage.setItem('bitportal.backup', { backupCompleted: true }, true)
-    this.props.actions.completeBackup(true)
-    Navigation.popToRoot(this.props.componentId)
+  onPress = () => {
+    if (this.props.entry === 'backup') {
+      Navigation.popToRoot(this.props.componentId)
+    } else {
+      Navigation.pop(this.props.componentId)
+    }
   }
 
   render() {
-    const { locale, wifs, entry } = this.props
+    const { locale, wifs } = this.props
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale].expvk_title_name_expvk}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={this.onPress} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }}
             >
               <View style={styles.content}>
                 <Text style={[styles.text16, { marginLeft: -1 }]}>
@@ -65,34 +68,23 @@ export default class ExportPrivateKey extends Component {
                   <FormattedMessage id="expvk_txtbox_title_pvk_owner" />
                 </Text>
                 <View style={[styles.inputContainer]}>
-                  {/* {wifs.map(item => <TextInput
-                      key={item.wif}
-                      editable={false}
-                      multiline={true}
-                      autoCorrect={false}
-                      style={styles.input}
-                      underlineColorAndroid="transparent"
-                      selectionColor={Colors.textColor_181_181_181}
-                      placeholder="Private key"
-                      placeholderTextColor={Colors.textColor_181_181_181}
-                      value={item.wif}
-                  />
-                  )} */}
+                  {
+                    wifs.map(item => (
+                      <TextInput
+                        key={item.wif}
+                        editable={false}
+                        multiline={true}
+                        autoCorrect={false}
+                        style={styles.input}
+                        underlineColorAndroid="transparent"
+                        selectionColor={Colors.textColor_181_181_181}
+                        placeholder="Private key"
+                        placeholderTextColor={Colors.textColor_181_181_181}
+                        value={item.wif}
+                      />
+                    ))
+                  }
                 </View>
-                {
-                  entry === 'Backup'
-                  && <TouchableHighlight
-                    onPress={this.backCompleted}
-                    underlayColor={Colors.textColor_89_185_226}
-                    style={[styles.btn, styles.center, { marginTop: 25 }]}
-                  >
-                    <LinearGradientContainer type="right" style={[[styles.btn, styles.center]]}>
-                      <Text style={styles.text14}>
-                        {<FormattedMessage id="expvk_button_name_backup" />}
-                      </Text>
-                    </LinearGradientContainer>
-                  </TouchableHighlight>
-                }
               </View>
             </ScrollView>
           </View>

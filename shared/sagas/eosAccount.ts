@@ -76,7 +76,7 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
     yield put(getBalanceRequested({ code: 'eosio.token', account: walletInfo.eosAccountName }))
 
     yield put(reset('createEOSAccountForm'))
-    if (action.payload.componentId) popToRoot(action.payload.componentId)
+    if (action.payload.componentId) push('BitPortal.Backup', action.payload.componentId)
   } catch (e) {
     yield put(actions.createEOSAccountFailed(getErrorMessage(e)))
   }

@@ -3,6 +3,7 @@ import { call, put, takeEvery, select } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import assert from 'assert'
 import * as actions from 'actions/keystore'
+import { completeBackup } from 'actions/eosAccount'
 import { getErrorMessage, encodeKey } from 'utils'
 import secureStorage from 'utils/secureStorage'
 import { encrypt, getEOSWifsByInfo } from 'core/key'
@@ -99,7 +100,8 @@ function* exportEOSKeyRequested(action: Action<ExportEOSKeyParams>) {
     assert(wifs.length, 'No EOS private keys!')
 
     yield put(actions.exportEOSKeySucceeded())
-    if (action.payload.componentId) push('BitPortal.ExportPrivateKey', action.payload.componentId, { wifs })
+    if (action.payload.componentId) push('BitPortal.ExportPrivateKey', action.payload.componentId, { wifs, entry: 'backup' })
+    yield put(completeBackup())
   } catch (e) {
     yield put(actions.exportEOSKeyFailed(getErrorMessage(e)))
   }
