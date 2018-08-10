@@ -12,7 +12,7 @@ export default EStyleSheet.create({
     alignItems: 'center',
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: Colors.bgColor_48_49_59
+    backgroundColor: Colors.bgColor_30_31_37
   },
   fieldInput: {
     borderBottomWidth: StyleSheet.hairlineWidth,
