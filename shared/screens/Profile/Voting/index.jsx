@@ -163,6 +163,10 @@ export default class Voting extends Component {
     this.setState({ alertMessage: null })
   }
 
+  goBack = () => {
+    Navigation.pop(this.props.componentId)
+  }
+
   componentDidMount() {
     this.props.actions.getProducersWithInfoRequested({ json: true, limit: 500 })
   }
@@ -171,8 +175,8 @@ export default class Voting extends Component {
     const { locale, producer, eosAccount, voting } = this.props
     const loading = producer.get('loading')
     const loaded = producer.get('loaded')
-    const disabled = !this.state.selected.length && !this.props.producer.get('data').get('rows').size
-    const voterInfo = eosAccount.get('data').get('voter_info')
+    const disabled = !this.state.selected.length && !this.props.producer.getIn(['data', 'rows']).size
+    const voterInfo = eosAccount.getIn(['data', 'voter_info'])
     const isVoting = voting.get('loading')
     const error = voting.get('error')
     const showSelected = voting.get('showSelected')
@@ -182,7 +186,7 @@ export default class Voting extends Component {
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale].vt_title_name_vote}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={this.goBack} />}
           />
           <View style={[styles.stakeAmountContainer, styles.between]}>
             <Text style={styles.text14}>
@@ -211,8 +215,8 @@ export default class Voting extends Component {
           </View>
           <View style={styles.scrollContainer}>
             <ProducerList
-              data={producer.get('data').get('rows')}
-              totalVotes={producer.get('data').get('total_producer_vote_weight')}
+              data={producer.getIn(['data', 'rows'])}
+              totalVotes={producer.getIn(['data', 'total_producer_vote_weight'])}
               onRefresh={this.onRefresh}
               refreshing={loading && !loaded}
               onRowPress={this.onRowPress}

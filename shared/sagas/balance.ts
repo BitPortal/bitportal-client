@@ -28,7 +28,7 @@ function* getBalanceRequested(action: Action<BalanceParams>) {
       return { symbol, balance, type, platform }
     })
 
-    if (!balances.length) balances = [{ symbol: 'SYS', balance: '0', type: 'token', platform: 'EOS' }]
+    if (!balances.length) balances = [{ symbol: 'EOS', balance: '0', type: 'token', platform: 'EOS' }]
     yield put(actions.getBalanceSucceeded({ name, balances }))
   } catch (e) {
     yield put(actions.getBalanceFailed(getErrorMessage(e)))

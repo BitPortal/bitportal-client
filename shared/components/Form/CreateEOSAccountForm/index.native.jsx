@@ -88,10 +88,6 @@ export default class CreateEOSAccountForm extends Component {
     hasPrivateKey: false
   }
 
-  UNSAFE_componentWillUpdate() {
-    LayoutAnimation.easeInEaseOut()
-  }
-
   showPrivateKey = () => {
     this.setState(prevState => ({ hasPrivateKey: !prevState.hasPrivateKey }))
   }

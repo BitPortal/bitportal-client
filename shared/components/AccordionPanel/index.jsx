@@ -19,10 +19,6 @@ export default class AccordionPanel extends Component {
     minHeight: ''
   }
 
-  UNSAFE_componentWillUpdate() {
-    LayoutAnimation.easeInEaseOut()
-  }
-
   toggle = () => {
     //Step 1
     // let initialValue = this.state.expanded
