@@ -157,7 +157,7 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
     const eosAccountCreationInfo = yield select((state: RootState) => state.eosAccount.get('eosAccountCreationInfo'))
 
     let eos
-    if (eosAccountCreationInfo.get('transactionId') && !eosAccountCreationInfo.get('irreversible')) {
+    if (eosAccountCreationInfo.get('transactionId') && eosAccountCreationInfo.get('eosAccountName') === eosAccountName && !eosAccountCreationInfo.get('irreversible')) {
       eos = yield call(initEOS, { httpEndpoint: BITPORTAL_API_EOS_URL })
     } else {
       eos = yield call(initEOS, {})

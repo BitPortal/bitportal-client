@@ -84,7 +84,7 @@ export default class Backup extends Component {
     return (
       <View style={styles.container}>
         <NavigationBar
-          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={this.skip} />}
           title={messages[locale].bcup_sec_title_nav}
         />
         <View style={styles.scrollContainer}>
