@@ -21,6 +21,7 @@ import NavigationBar, { CommonTitle, CommonRightButton } from 'components/Naviga
 import SettingItem from 'components/SettingItem'
 import SplashScreen from 'react-native-splash-screen'
 import { checkCamera } from 'utils/permissions'
+import Dialog from 'components/Dialog'
 import styles from './styles'
 import messages from './messages'
 import AccountList from './AccountList'
@@ -75,11 +76,21 @@ export default class Assets extends Component {
   scanQR = async () => {
     const authorized = await checkCamera()
     if (authorized) {
-      Navigation.push(this.props.componentId, {
-        component: {
-          name: 'BitPortal.QRCodeScanner'
-        }
-      })
+      const eosAccountName = this.props.eosAccount.get('data').get('account_name')
+      if (eosAccountName) {
+        Navigation.push(this.props.componentId, {
+          component: {
+            name: 'BitPortal.QRCodeScanner'
+          }
+        })
+      } else {
+        const { locale } = this.props
+        Dialog.alert(
+          messages[locale].asset_alert_name_err, 
+          null, 
+          { negativeText: messages[locale].asset_alert_button_ent }
+        )
+      }
     }
   }
 
