@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
 import {
-  Text,
-  View,
-  TouchableHighlight,
-  Animated
-} from 'react-native'
   Image,
   TouchableOpacity,
   Animated,
-  LayoutAnimation
+  LayoutAnimation,
+  View,
+  Text
 } from 'react-native' //Step 1
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
@@ -27,7 +24,6 @@ export default class AccordionPanel extends Component {
   }
 
   toggle = () => {
-
     //Step 1
     // let initialValue = this.state.expanded
     //     ? this.state.maxHeight + this.state.minHeight
@@ -37,7 +33,6 @@ export default class AccordionPanel extends Component {
     //     : this.state.maxHeight + this.state.minHeight
 
     this.setState(prevState => ({ expanded: !prevState.expanded }))
-
 
     // this.state.animation.setValue(initialValue) //Step 3
     // Animated.spring(
