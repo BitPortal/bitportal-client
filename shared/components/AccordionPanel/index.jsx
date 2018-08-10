@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import {
   Text,
   View,
+  TouchableHighlight,
+  Animated
+} from 'react-native'
   Image,
   TouchableOpacity,
   Animated,
@@ -24,6 +27,7 @@ export default class AccordionPanel extends Component {
   }
 
   toggle = () => {
+
     //Step 1
     // let initialValue = this.state.expanded
     //     ? this.state.maxHeight + this.state.minHeight
@@ -33,6 +37,7 @@ export default class AccordionPanel extends Component {
     //     : this.state.maxHeight + this.state.minHeight
 
     this.setState(prevState => ({ expanded: !prevState.expanded }))
+
 
     // this.state.animation.setValue(initialValue) //Step 3
     // Animated.spring(
