@@ -8,6 +8,11 @@ import { EXCHANGE_NAMES } from 'constants/market'
 import { IntlProvider, FormattedMessage, FormattedNumber } from 'react-intl'
 import { tokenTickerSelector } from 'selectors/ticker'
 import Images from 'resources/images'
+<<<<<<< Updated upstream
+=======
+import { ASSET_FRACTION } from 'constants/market'
+
+>>>>>>> Stashed changes
 import styles from './styles'
 import messages from './messages'
 
@@ -100,7 +105,16 @@ export class Logo extends Component {
             </View>
           </View>
           <View style={[styles.spaceBetween, { paddingVertical: 5 }]}>
-            <Text style={styles.text18}>{`${price_last} ${quote_asset}`}</Text>
+            <Text style={styles.text18}>
+              {
+                <FormattedNumber
+                  value={price_last}
+                  maximumFractionDigits={ASSET_FRACTION[quote_asset]}
+                  minimumFractionDigits={ASSET_FRACTION[quote_asset]}
+                />
+              }
+              {` ${quote_asset}`}
+            </Text>
             <View
               style={[
                 styles.center,
@@ -147,7 +161,7 @@ export class Logo extends Component {
               : tags
                 && tags.en
                 && tags.en.length !== 0
-                && tags.en.map(item => <Tag tag={item} />)}
+                && tags.en.map(item => <Tag key={item} tag={item} />)}
           </View>
         </View>
       </IntlProvider>
@@ -344,7 +358,18 @@ export class ListedExchange extends Component {
                 </Text>
                 <Text style={styles.text14}>
                   {' '}
-                  {`${item.get('price_last')} ${item.get('quote_asset')}`}{' '}
+                  {
+                    <FormattedNumber
+                      value={item.get('price_last')}
+                      maximumFractionDigits={
+                        ASSET_FRACTION[item.get('quote_asset')]
+                      }
+                      minimumFractionDigits={
+                        ASSET_FRACTION[item.get('quote_asset')]
+                      }
+                    />
+                  }
+                  {` ${item.get('quote_asset')}`}{' '}
                 </Text>
               </View>
             ))
