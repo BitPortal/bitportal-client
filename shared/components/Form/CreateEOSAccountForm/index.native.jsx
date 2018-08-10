@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
-import { TouchableOpacity, Text, View } from 'react-native'
+import { TouchableOpacity, Text, View, LayoutAnimation } from 'react-native'
 import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
 import { IntlProvider } from 'react-intl'
 import { FormContainer, TextField, PasswordField, TextAreaField, SubmitButton } from 'components/Form'
@@ -86,6 +86,10 @@ export default class CreateEOSAccountForm extends Component {
   state = {
     unsignAgreement: true,
     hasPrivateKey: false
+  }
+
+  UNSAFE_componentWillUpdate() {
+    LayoutAnimation.easeInEaseOut()
   }
 
   showPrivateKey = () => {
