@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Text, View, ScrollView, InteractionManager, TouchableHighlight } from 'react-native'
+import {
+  Text,
+  View,
+  ScrollView,
+  InteractionManager,
+  TouchableHighlight
+} from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import storage from 'utils/storage'
@@ -17,7 +23,10 @@ import { eosAccountBalanceSelector } from 'selectors/balance'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { eosPriceSelector } from 'selectors/ticker'
 import { IntlProvider, FormattedMessage } from 'react-intl'
-import NavigationBar, { CommonTitle, CommonRightButton } from 'components/NavigationBar'
+import NavigationBar, {
+  CommonTitle,
+  CommonRightButton
+} from 'components/NavigationBar'
 import SettingItem from 'components/SettingItem'
 import SplashScreen from 'react-native-splash-screen'
 import { checkCamera } from 'utils/permissions'
@@ -32,7 +41,9 @@ const getTotalAssets = (eosAccountBalance, eosPrice) => {
   if (!eosAccountBalance) return 0
 
   let balance
-  const baseTokenBalance = eosAccountBalance.filter(balance => balance.get('symbol') === 'SYS' || balance.get('symbol') === 'EOS')
+  const baseTokenBalance = eosAccountBalance.filter(
+    balance => balance.get('symbol') === 'SYS' || balance.get('symbol') === 'EOS'
+  )
 
   if (baseTokenBalance.size) {
     balance = baseTokenBalance.get(0).get('balance')
@@ -52,19 +63,21 @@ const getTotalAssets = (eosAccountBalance, eosPrice) => {
     eosPrice: eosPriceSelector(state)
   }),
   dispatch => ({
-    actions: bindActionCreators({
-      ...walletActions,
-      ...tickerActions,
-      ...balanceActions,
-      ...versionInfoActions,
-      ...currencyActions,
-      ...eosAccountActions
-    }, dispatch)
+    actions: bindActionCreators(
+      {
+        ...walletActions,
+        ...tickerActions,
+        ...balanceActions,
+        ...versionInfoActions,
+        ...currencyActions,
+        ...eosAccountActions
+      },
+      dispatch
+    )
   }),
   null,
   { withRef: true }
 )
-
 export default class Assets extends Component {
   state = {
     isVisible2: false
@@ -179,7 +192,13 @@ export default class Assets extends Component {
   }
 
   render() {
-    const { wallet, eosAccountBalance, locale, eosAccount, eosPrice } = this.props
+    const {
+      wallet,
+      eosAccountBalance,
+      locale,
+      eosAccount,
+      eosPrice
+    } = this.props
     const activeEOSAccount = eosAccount.get('data')
     const hdWalletList = wallet.get('hdWalletList')
     const classicWalletList = wallet.get('classicWalletList')
@@ -189,43 +208,81 @@ export default class Assets extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            leftButton={<CommonTitle title={<FormattedMessage id="addpage_title_name_act" />} />}
-            rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanQR()} />}
+            leftButton={
+              <CommonTitle
+                title={<FormattedMessage id="addpage_title_name_act" />}
+              />
+            }
+            rightButton={
+              <CommonRightButton
+                iconName="md-qr-scanner"
+                onPress={() => this.scanQR()}
+              />
+            }
           />
-          {
-            !walletCount && (
-              <TouchableHighlight underlayColor={Colors.mainThemeColor} onPress={() => this.createNewAccount()} style={[styles.createAccountContainer, styles.center]}>
-                <View style={{ alignItems: 'center' }}>
-                  <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF} />
-                  <Text style={[styles.text14, { color: Colors.textColor_255_255_238, marginTop: 20 }]}>
-                    <FormattedMessage id="addpage_button_name_crt" />
-                  </Text>
-                </View>
-              </TouchableHighlight>
-            )
-          }
-          {
-            !!walletCount && (
-              <View style={styles.scrollContainer}>
-                <ScrollView showsVerticalScrollIndicator={false}>
-                  <TotalAssetsCard
-                    totalAssets={getTotalAssets(eosAccountBalance, eosPrice)}
-                    accountName={activeEOSAccount.get('account_name')}
-                    CPUInfo={activeEOSAccount.get('cpu_limit')}
-                    NETInfo={activeEOSAccount.get('net_limit')}
-                    RAMQuota={activeEOSAccount.get('ram_quota')}
-                    RAMUsage={activeEOSAccount.get('ram_usage')}
-                    checkResourcesDetails={this.checkResourcesDetails}
-                    componentId={this.props.componentId}
-                    onPress={this.displayReceiceQRCode}
-                  />
-                  {!activeEOSAccount.get('account_name') && <SettingItem leftItemTitle={<FormattedMessage id="act_sec_title_create_eos_account" />} onPress={() => this.createEOSAccount()} extraStyle={{ marginTop: 10, marginBottom: 10 }} />}
-                  {!!activeEOSAccount.get('account_name') && <EnableAssets Title={<FormattedMessage id="asset_title_name_ast" />} enableAssets={() => this.enableAssets()} />}
-                  {eosAccountBalance && <BalanceList data={eosAccountBalance} eosPrice={eosPrice} onPress={this.checkAsset} />}
-                </ScrollView>
+          {!walletCount && (
+            <TouchableHighlight
+              underlayColor={Colors.mainThemeColor}
+              onPress={() => this.createNewAccount()}
+              style={[styles.createAccountContainer, styles.center]}
+            >
+              <View style={{ alignItems: 'center' }}>
+                <Ionicons
+                  name="ios-add-outline"
+                  size={40}
+                  color={Colors.bgColor_FFFFFF}
+                />
+                <Text
+                  style={[
+                    styles.text14,
+                    { color: Colors.textColor_255_255_238, marginTop: 20 }
+                  ]}
+                >
+                  <FormattedMessage id="addpage_button_name_crt" />
+                </Text>
               </View>
-            )
-          }
+            </TouchableHighlight>
+          )}
+          {!!walletCount && (
+            <View style={styles.scrollContainer}>
+              <ScrollView showsVerticalScrollIndicator={false}>
+                <TotalAssetsCard
+                  totalAssets={getTotalAssets(eosAccountBalance, eosPrice)}
+                  accountName={activeEOSAccount.get('account_name')}
+                  CPUInfo={activeEOSAccount.get('cpu_limit')}
+                  NETInfo={activeEOSAccount.get('net_limit')}
+                  RAMQuota={activeEOSAccount.get('ram_quota')}
+                  RAMUsage={activeEOSAccount.get('ram_usage')}
+                  checkResourcesDetails={this.checkResourcesDetails}
+                  componentId={this.props.componentId}
+                  onPress={this.displayReceiceQRCode}
+                />
+                {!activeEOSAccount.get('account_name') && (
+                  <SettingItem
+                    leftItemTitle={
+                      <FormattedMessage id="act_sec_title_create_eos_account" />
+                    }
+                    onPress={() => this.createEOSAccount()}
+                    extraStyle={{ marginTop: 10, marginBottom: 10 }}
+                  />
+                )}
+                {!!activeEOSAccount.get('account_name') && (
+                  <EnableAssets
+                    Title={<FormattedMessage id="asset_title_name_ast" />}
+                    enableAssets={() => this.enableAssets()}
+                    componentId={this.props.componentId}
+                  />
+                )}
+                {eosAccountBalance && (
+                  <BalanceList
+                    data={eosAccountBalance}
+                    eosPrice={eosPrice}
+                    onPress={this.checkAsset}
+                  />
+                )}
+              </ScrollView>
+            </View>
+          )}
           <Modal
             animationIn="fadeIn"
             animationOut="fadeOut"
