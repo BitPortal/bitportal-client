@@ -51,3 +51,18 @@ export const sort_filters = [
   'current_price_low',
   'current_price_high'
 ]
+
+export const MARKET_DETAIL_KEYS = [
+  'market_cap',
+  'blockchain',
+  'circulating_supply',
+  'total_supply',
+  'proof_type',
+  'team_location',
+  'first_announced',
+  'algorithm',
+  'block_time',
+  'ico_start',
+  'ico_end',
+  'ico_capital'
+]

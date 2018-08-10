@@ -4,7 +4,11 @@ import { Text, View, ActivityIndicator, Image } from 'react-native'
 import Colors from 'resources/colors'
 import { filterBgColor } from 'utils'
 import AccordionPanel from 'components/AccordionPanel'
-import { EXCHANGE_NAMES, ASSET_FRACTION } from 'constants/market'
+import {
+  EXCHANGE_NAMES,
+  ASSET_FRACTION,
+  MARKET_DETAIL_KEYS
+} from 'constants/market'
 import { IntlProvider, FormattedMessage, FormattedNumber } from 'react-intl'
 import { tokenTickerSelector } from 'selectors/ticker'
 import Images from 'resources/images'
@@ -66,7 +70,7 @@ export default class Details extends Component {
               </View>
             )}
             {Object.keys(rest).map(
-              item => (NAMES.includes(item) ? (
+              item => (MARKET_DETAIL_KEYS.includes(item) ? (
                 <View style={[styles.spaceBetween, { marginTop: 10 }]}>
                   <Text style={styles.text14}>
                     <FormattedMessage id={item} />
