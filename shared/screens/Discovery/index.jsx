@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, LayoutAnimation } from 'react-native'
+import { View } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonTitle } from 'components/NavigationBar'
 import { bindActionCreators } from 'redux'

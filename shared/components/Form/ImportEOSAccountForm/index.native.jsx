@@ -7,7 +7,7 @@ import { FormContainer, TextField, PasswordField, TextAreaField, SubmitButton } 
 import PasswordStrength from 'components/PasswordStrength'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { BITPORTAL_API_TERMS_URL } from 'constants/env'
-import { View, Text, TouchableOpacity, LayoutAnimation } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import { getPasswordStrength } from 'utils'
 import { validateText } from 'utils/validate'
 import { normalizeText } from 'utils/normalize'
