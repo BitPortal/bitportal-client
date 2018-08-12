@@ -176,3 +176,13 @@ declare interface GetEOSKeyAccountsParams {
 declare interface GetEOSKeyAccountsResult {
   account_names: string[]
 }
+
+declare interface SyncEOSAccountCreationInfoResult {
+  eosAccountName: string
+  publicKey: string
+  transactionId: string
+  irreversible: boolean
+  backup: boolean
+  node: string
+  timestamp: number
+}

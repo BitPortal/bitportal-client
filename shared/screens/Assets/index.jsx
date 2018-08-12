@@ -86,8 +86,8 @@ export default class Assets extends Component {
       } else {
         const { locale } = this.props
         Dialog.alert(
-          messages[locale].asset_alert_name_err, 
-          null, 
+          messages[locale].asset_alert_name_err,
+          null,
           { negativeText: messages[locale].asset_alert_button_ent }
         )
       }
