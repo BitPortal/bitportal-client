@@ -6,7 +6,8 @@
     "bcup_button_title_skip": "跳过",
     "logout_popup_exporting": "请稍候",
     "act_export_popup_ivps": "无效的密码",
-    "act_export_popup_faex" : "导出失败"
+    "act_export_popup_faex" : "导出失败",
+    "bcup_button_title_backup": "开始备份"
   },
   "en": {
     "bcup_sec_title_nav": "Back Up",
@@ -15,6 +16,7 @@
     "bcup_button_title_skip": "Skip",
     "logout_popup_exporting": "Loading",
     "act_export_popup_ivps": "Invalid password!",
-    "act_export_popup_faex" : "Export failed!"
+    "act_export_popup_faex" : "Export failed!",
+    "bcup_button_title_backup": "Start Backup"
   }
 }

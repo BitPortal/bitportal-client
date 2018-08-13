@@ -108,7 +108,7 @@ export default class Backup extends Component {
               >
                 <LinearGradientContainer type="right" style={[[styles.btn, styles.center]]}>
                   <Text style={styles.text14}>
-                    {messages[locale].bcup_sec_title_nav}
+                    {messages[locale].bcup_button_title_backup}
                   </Text>
                 </LinearGradientContainer>
               </TouchableHighlight>
