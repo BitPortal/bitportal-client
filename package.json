@@ -88,6 +88,7 @@
     "react-native-qrcode-svg": "^5.0.6",
     "react-native-randombytes": "^3.1.0",
     "react-native-restart": "^0.0.6",
+    "react-native-root-toast": "^3.0.1",
     "react-native-scrollable-tab-view": "^0.8.0",
     "react-native-sensitive-info": "git://github.com/mCodex/react-native-sensitive-info#keystore",
     "react-native-simple-markdown": "^1.1.0",

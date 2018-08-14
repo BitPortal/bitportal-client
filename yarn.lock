@@ -9106,6 +9106,20 @@ react-native-restart@^0.0.6:
   version "0.0.6"
   resolved "http://registry.npm.taobao.org/react-native-restart/download/react-native-restart-0.0.6.tgz#77770d078683947b2c1f2adb876f179269d8443a"
 
+react-native-root-siblings@^3.0.0:
+  version "3.1.0"
+  resolved "http://registry.npm.taobao.org/react-native-root-siblings/download/react-native-root-siblings-3.1.0.tgz#194067d37d4d2c824d923148e53922ee6ac2e06f"
+  dependencies:
+    react-redux "*"
+    static-container "^1.0.0"
+
+react-native-root-toast@^3.0.1:
+  version "3.0.1"
+  resolved "http://registry.npm.taobao.org/react-native-root-toast/download/react-native-root-toast-3.0.1.tgz#ad0a37c46bc72971a229c7784df25147004e5538"
+  dependencies:
+    prop-types "^15.5.10"
+    react-native-root-siblings "^3.0.0"
+
 react-native-scrollable-tab-view@^0.8.0:
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/react-native-scrollable-tab-view/-/react-native-scrollable-tab-view-0.8.0.tgz#5cb1fcfce07bf530a3c81ab51fc5071144edac5c"
@@ -9239,7 +9253,7 @@ react-proxy@^1.1.7:
     lodash "^4.6.1"
     react-deep-force-update "^1.0.0"
 
-react-redux@^5.0.7:
+react-redux@*, react-redux@^5.0.7:
   version "5.0.7"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.7.tgz#0dc1076d9afb4670f993ffaef44b8f8c1155a4c8"
   dependencies:
@@ -10311,6 +10325,10 @@ stackframe@^0.3.1:
 stacktrace-parser@^0.1.3:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/stacktrace-parser/-/stacktrace-parser-0.1.4.tgz#01397922e5f62ecf30845522c95c4fe1d25e7d4e"
+
+static-container@^1.0.0:
+  version "1.2.0"
+  resolved "http://registry.npm.taobao.org/static-container/download/static-container-1.2.0.tgz#1c6e92b869da47d32abe47f45f50bf39661d9c2f"
 
 static-extend@^0.1.1:
   version "0.1.2"
