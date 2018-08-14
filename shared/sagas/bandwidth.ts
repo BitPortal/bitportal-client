@@ -14,7 +14,6 @@ function* delegateBandwidthRequested(action: Action<DelegateBandwidthParams>) {
   if (!action.payload) return
 
   try {
-    yield delay(500)
     const eosAccountName = action.payload.eosAccountName
     const password = action.payload.password
     const quant = action.payload.quant

@@ -20,7 +20,6 @@ function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAc
   if (!action.payload) return
 
   try {
-    yield delay(500)
     const name = action.payload.name
     const eosAccountName = action.payload.eosAccountName
     const password = action.payload.password

@@ -1,6 +1,6 @@
 import assert from 'assert'
 import { delay } from 'redux-saga'
-import { select, call, put, takeEvery } from 'redux-saga/effects'
+import { all, select, call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import { reset } from 'redux-form/immutable'
 import * as actions from 'actions/eosAccount'
@@ -65,17 +65,22 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
       timestamp: +Date.now(),
     }
 
-    yield call(secureStorage.setItem, `EOS_ACCOUNT_CREATION_INFO_${eosAccountName}`, eosAccountCreationInfo, true)
-    yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, accountInfo, true)
-    yield call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_${permission}_${publicKey}`, keystore, true)
-    yield call(secureStorage.setItem, `CLASSIC_WALLET_INFO_EOS_${eosAccountName}`, walletInfo, true)
-    yield call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
-    yield put(actions.syncEOSAccountCreationInfo(eosAccountCreationInfo))
-    yield put(actions.createEOSAccountSucceeded(accountInfo))
-    yield put(createClassicWalletSucceeded(walletInfo))
-    yield put(getBalanceRequested({ code: 'eosio.token', account: walletInfo.eosAccountName }))
+    yield all([
+      call(secureStorage.setItem, `EOS_ACCOUNT_CREATION_INFO_${eosAccountName}`, eosAccountCreationInfo, true),
+      call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, accountInfo, true),
+      call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_${permission}_${publicKey}`, keystore, true),
+      call(secureStorage.setItem, `CLASSIC_WALLET_INFO_EOS_${eosAccountName}`, walletInfo, true),
+      call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
+    ])
 
-    yield put(reset('createEOSAccountForm'))
+    yield all([
+      put(actions.syncEOSAccountCreationInfo(eosAccountCreationInfo)),
+      put(actions.createEOSAccountSucceeded(accountInfo)),
+      put(createClassicWalletSucceeded(walletInfo)),
+      put(getBalanceRequested({ code: 'eosio.token', account: walletInfo.eosAccountName })),
+      put(reset('createEOSAccountForm'))
+    ])
+
     if (action.payload.componentId) push('BitPortal.Backup', action.payload.componentId)
   } catch (e) {
     yield put(actions.createEOSAccountFailed(getErrorMessage(e)))
@@ -103,15 +108,20 @@ function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
       origin: 'classic'
     }
 
-    yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, accountInfo, true)
-    yield call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_${permission}_${publicKey}`, keystore, true)
-    yield call(secureStorage.setItem, `CLASSIC_WALLET_INFO_EOS_${eosAccountName}`, walletInfo, true)
-    yield call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
-    yield put(actions.importEOSAccountSucceeded(accountInfo))
-    yield put(createClassicWalletSucceeded(walletInfo))
-    yield put(getBalanceRequested({ code: 'eosio.token', account: walletInfo.eosAccountName }))
+    yield all([
+      call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, accountInfo, true),
+      call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_${permission}_${publicKey}`, keystore, true),
+      call(secureStorage.setItem, `CLASSIC_WALLET_INFO_EOS_${eosAccountName}`, walletInfo, true),
+      call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
+    ])
 
-    yield put(reset('importEOSAccountForm'))
+    yield all([
+      put(actions.importEOSAccountSucceeded(accountInfo)),
+      put(createClassicWalletSucceeded(walletInfo)),
+      put(getBalanceRequested({ code: 'eosio.token', account: walletInfo.eosAccountName })),
+      put(reset('importEOSAccountForm'))
+    ])
+
     if (action.payload.componentId) popToRoot(action.payload.componentId)
   } catch (e) {
     yield put(actions.importEOSAccountFailed(getErrorMessage(e)))
@@ -122,7 +132,6 @@ function* getEOSKeyAccountsRequested(action: Action<GetEOSKeyAccountsParams>) {
   if (!action.payload) return
 
   try {
-    yield delay(500)
     const privateKey = action.payload.privateKey
     const password = action.payload.password
     const hint = action.payload.hint

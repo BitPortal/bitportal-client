@@ -43,7 +43,6 @@ function* changePasswordRequested(action: Action<ChangePasswordParams>) {
   if (!action.payload) return
 
   try {
-    yield delay(500)
     const oldPassword = action.payload.oldPassword
     const newPassword = action.payload.newPassword
     assert(oldPassword, 'Please input old password!')
