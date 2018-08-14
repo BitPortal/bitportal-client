@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, ScrollView } from 'react-native'
+import { View, ScrollView, Clipboard } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import SettingItem from 'components/SettingItem'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import { Mediafax, MediafaxIcons, MediafaxUrls } from 'constants/mediafax'
 import { validateUrl } from 'utils/validate'
+import Toast from 'components/Toast'
 import messages from './messages'
 import styles from './styles'
 
@@ -41,15 +42,8 @@ export default class MediafaxScreen extends Component {
         }
       })
     } else {
-      Navigation.push(this.props.componentId, {
-        component: {
-          name: 'BitPortal.BPWebView',
-          passProps: {
-            title,
-            name: MediafaxUrls[title]
-          }
-        }
-      })
+      Clipboard.setString(MediafaxUrls[title])
+      Toast('已完成复制')
     }
   }
 
@@ -70,6 +64,7 @@ export default class MediafaxScreen extends Component {
                   key={index}
                   leftImage={MediafaxIcons[item]}
                   leftItemTitle={item}
+                  rightItemTitle={(item === 'Wechat' || item === 'Weibo') && MediafaxUrls[item]}
                   onPress={() => this.changePage(item)}
                 />
               ))}
