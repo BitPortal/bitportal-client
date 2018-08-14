@@ -3,7 +3,7 @@ import { WebView, View, Text, Share, Linking, Clipboard, TouchableHighlight, Pla
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
-import NavigationBar, { CommonButton, LinkingRightButton } from 'components/NavigationBar'
+import NavigationBar, { LinkingRightButton, WebViewLeftButton } from 'components/NavigationBar'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
 import styles from './styles'
@@ -79,6 +79,12 @@ export default class BPWebView extends Component {
     }).catch(err => console.error('An error occurred', err));
   }
 
+  goBack = () => this.webview.goBack()
+
+  goHome = () => Navigation.pop(this.props.componentId)
+
+  goForward = () => this.webview.goForward()
+
   copyName = () => {
     Clipboard.setString(this.props.name)
     this.setState({ isCopied: true })
@@ -111,13 +117,13 @@ export default class BPWebView extends Component {
 
   render() {
     const { needLinking, uri, title, name, locale } = this.props
-    const { isCopied } = this.state
+    const { isCopied, canGoBack, canGoForward } = this.state
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
             title={title}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
+            leftButton={<WebViewLeftButton goBack={this.goBack} goForward={this.goForward} goHome={this.goHome} />}
             rightButton={needLinking && <LinkingRightButton iconName="ios-more" onPress={this.showActionSheet} />}
           />
           <View style={styles.content}>
@@ -125,10 +131,12 @@ export default class BPWebView extends Component {
               uri
               && <WebView
                 source={{ uri }}
+                ref={ e => this.webview = e }
                 renderError={this.renderError}
                 renderLoading={this.renderLoading}
                 startInLoadingState={true}
                 automaticallyAdjustContentInsets={false}
+                onNavigationStateChange={this.onNavigationStateChange}
                 javaScriptEnabled={true}
                 domStorageEnabled={true}
                 decelerationRate="normal"
