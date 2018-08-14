@@ -21,6 +21,10 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH / 2,
     textAlign: 'center'
   },
+  center: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   navButton: {
     minWidth: 100,
     height: 40,
