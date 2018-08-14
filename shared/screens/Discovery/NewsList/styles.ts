@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 10,
     paddingTop: 14,
-    backgroundColor: Colors.bgColor_48_49_59,
+    backgroundColor: Colors.bgColor_30_31_37,
     alignItems: 'center',
     width: SCREEN_WIDTH,
     height: FontScale(80)
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     alignItems: 'flex-start',
     justifyContent: 'center',
-    backgroundColor: Colors.bgColor_48_49_59,
+    backgroundColor: Colors.bgColor_30_31_37,
     marginBottom: 1
   },
   text24: {

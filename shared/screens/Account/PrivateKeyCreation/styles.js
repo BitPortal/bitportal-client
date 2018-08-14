@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     minHeight: 300,
     paddingHorizontal: 32,
     paddingVertical: 20,
-    backgroundColor: Colors.bgColor_48_49_59
+    backgroundColor: Colors.bgColor_30_31_37
   },
   text12: {
     fontSize: FontScale(12),

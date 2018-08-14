@@ -103,7 +103,7 @@ class SwipeItem extends React.Component {
         onRowOpen={this.onRowOpen}
         onRowClose={this.onRowClose}
         closeOnRowPress={true}
-        style={{ backgroundColor: Colors.bgColor_48_49_59 }}
+        style={{ backgroundColor: Colors.bgColor_30_31_37 }}
       >
         <DeleteButton onPress={deleteItem} />
         <DefaultItem item={item} onPress={this.onPressItem} active={active} />

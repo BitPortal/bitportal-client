@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     height: 60,
     marginVertical: 10,
-    backgroundColor: Colors.bgColor_48_49_59
+    backgroundColor: Colors.bgColor_30_31_37
   },
   input: {
     minWidth: 140,

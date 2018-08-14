@@ -79,7 +79,7 @@ export default class Contacts extends Component {
       <SwipeRow
         disableRightSwipe={true}
         rightOpenValue={-100}
-        style={{ backgroundColor: Colors.bgColor_48_49_59 }}
+        style={{ backgroundColor: Colors.bgColor_30_31_37 }}
       >
         <DeleteButton onPress={() => this.deleteContact(data, secId, rowId, rowMap)} />
         <TouchableWithoutFeedback disabled={!this.props.from} style={styles.listItem} onPress={() => this.onRowOpen(data)}>

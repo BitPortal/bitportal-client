@@ -60,7 +60,7 @@ export default class QRCode extends Component {
               }
               {
                 showQRCode
-                && <View style={[styles.qrCodeContainer, styles.center, { backgroundColor: Colors.bgColor_48_49_59 }]}>
+                && <View style={[styles.qrCodeContainer, styles.center, { backgroundColor: Colors.bgColor_30_31_37 }]}>
                   <View style={{ padding: 2, maxWidth: 144, backgroundColor: Colors.bgColor_FFFFFF }}>
                     <QRCodeModule
                       value={qrCodeValue}

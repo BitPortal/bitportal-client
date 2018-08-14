@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     paddingLeft: 32,
     borderBottomColor: Colors.minorThemeColor,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    backgroundColor: Colors.bgColor_48_49_59
+    backgroundColor: Colors.bgColor_30_31_37
   },
   text14: {
     fontSize: FontScale(14),

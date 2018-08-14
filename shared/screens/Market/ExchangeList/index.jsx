@@ -45,7 +45,7 @@ const ExchangeList = ({
     />
     <View style={styles.bgContainer}>
       <ScrollView
-        style={{ maxHeight: 400, backgroundColor: Colors.bgColor_48_49_59 }}
+        style={{ maxHeight: 400, backgroundColor: Colors.bgColor_30_31_37 }}
         showsVerticalScrollIndicator={false}
       >
         {exchangeList.map(exchange => (
