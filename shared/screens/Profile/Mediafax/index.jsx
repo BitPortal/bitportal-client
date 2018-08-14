@@ -42,8 +42,8 @@ export default class MediafaxScreen extends Component {
         }
       })
     } else {
-      Clipboard.setString(MediafaxUrls[title])
-      Toast('已完成复制')
+      Clipboard.setString(`@${MediafaxUrls[title]}`)
+      Toast(messages[this.props.locale].mdf_title_name_copied)
     }
   }
 
@@ -64,7 +64,7 @@ export default class MediafaxScreen extends Component {
                   key={index}
                   leftImage={MediafaxIcons[item]}
                   leftItemTitle={item}
-                  rightItemTitle={(item === 'Wechat' || item === 'Weibo') && MediafaxUrls[item]}
+                  rightItemTitle={(item === 'Wechat' || item === 'Weibo') && `@${MediafaxUrls[item]}`}
                   onPress={() => this.changePage(item)}
                 />
               ))}

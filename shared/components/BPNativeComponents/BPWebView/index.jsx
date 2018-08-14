@@ -79,7 +79,7 @@ export default class BPWebView extends Component {
 
   goHome = () => Navigation.pop(this.props.componentId)
 
-  goForward = () => this.webview.goForward()
+  // goForward = () => this.webview.goForward()
 
   renderError = (e) => {
     if (e === 'WebKitErrorDomain') {
@@ -105,7 +105,7 @@ export default class BPWebView extends Component {
         <View style={styles.container}>
           <NavigationBar
             title={title}
-            leftButton={<WebViewLeftButton goBack={this.goBack} goForward={this.goForward} goHome={this.goHome} />}
+            leftButton={<WebViewLeftButton goBack={this.goBack} goHome={this.goHome} />}
             rightButton={needLinking && <LinkingRightButton iconName="ios-more" onPress={this.showActionSheet} />}
           />
           <View style={styles.content}>
