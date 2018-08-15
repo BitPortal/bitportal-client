@@ -23,7 +23,7 @@
     "lint": "eslint --ext .js --ext .jsx server shared test --fix",
     "mobile": "watchman watch-del-all && rm -fr $TMPDIR/react-* && cross-env NODE_ENV=production node node_modules/react-native/local-cli/cli.js start -- --reset-cache",
     "mobile:test": "rm -fr $TMPDIR/react-* && cross-env NODE_ENV=production APP_ENV=test node node_modules/react-native/local-cli/cli.js start -- --reset-cache",
-    "ios": "react-native run-ios --scheme bitportal-development --port 8080 --simulator='iPhone X'",
+    "ios": "react-native run-ios --scheme bitportal-development --port 8080",
     "ios:staging": "react-native run-ios --scheme bitportal-staging --port 8080",
     "ios:production": "react-native run-ios --scheme bitportal-production --port 8080",
     "android": "ENVFILE=.env.development react-native run-android --port 8081",
