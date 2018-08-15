@@ -13,7 +13,6 @@ function* getEosAsset(action: Action<eosAssetParams>) {
       call(api.getEosAsset, action.payload),
       call(storage.getItem, 'eosAssetListPrefs', true)
     ])
-    console.log('eosAsset saga', eosAssetListPrefs, data)
     data.forEach((item: any) => {
       item.value = false
     })
@@ -62,7 +61,6 @@ function* saveAssetPref(action: Action<eosAssetPref>) {
         }
       ]
     }
-    console.log('saveAssetPref eosAssetListPrefs', eosAssetListPrefs)
     yield call(storage.setItem, 'eosAssetListPrefs', eosAssetListPrefs, true)
     yield put(actions.saveAssetPrefSucceeded(eosAssetListPrefs))
   } catch (e) {

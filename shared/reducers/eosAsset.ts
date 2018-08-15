@@ -17,7 +17,6 @@ export default handleActions(
       return state.set('loading', true)
     },
     [actions.getEosAssetSucceeded](state, action) {
-      console.log('getEosAssetSucceeded', action.payload)
       return state
         .set('loaded', true)
         .set('loading', false)
@@ -33,11 +32,9 @@ export default handleActions(
       return state.set('error', action.payload).set('loading', false)
     },
     [actions.saveAssetPrefSucceeded](state, action) {
-      console.log('reducer actions.saveAssetPref', action.payload)
       return state.set('assetPrefs', Immutable.fromJS(action.payload))
     },
     [actions.getAssetPrefSucceeded](state, action) {
-      console.log('reducer getAssetPref', action.payload)
       return state.set('assetPrefs', Immutable.fromJS(action.payload))
     }
   },

@@ -98,6 +98,5 @@ export const getTokenDetail = (params: any) => cmsFetchBase('GET', '/token', par
 export const getEosAsset = (params: any) => cmsFetchBase('GET', '/eostoken', params)
 
 export const createEOSAccount = (params: any) => {
-  console.log('createEOSAccount params', params)
   fetchBase('POST', '/registry/wallets/campaign/eoscreation', params)
 }
