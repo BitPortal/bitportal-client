@@ -16,7 +16,6 @@ import { IntlProvider } from 'react-intl'
 import * as eosAssetActions from 'actions/eosAsset'
 import { eosAssetListSelector } from 'selectors/eosAsset'
 
-import storage from 'utils/storage'
 import Images from 'resources/images'
 import messages from './messages'
 import styles from './styles'
@@ -59,10 +58,8 @@ const AssetElement = ({ item, onValueChange }) => (
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    eosAsset: state.eosAsset.get('data'),
     loading: state.eosAsset.get('loading'),
-    eosAssetPrefs: eosAssetListSelector(state),
-    assetPrefs: state.eosAsset.get('assetPrefs')
+    eosAssetPrefs: eosAssetListSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators(
@@ -84,11 +81,6 @@ export default class AvailableAssets extends Component {
     }
   }
 
-  state = {
-    assetList: []
-  }
-  //{symbol:TEST, value:true}
-
   async UNSAFE_componentWillMount() {
     this.props.actions.getEosAssetRequested({})
   }
@@ -99,7 +91,7 @@ export default class AvailableAssets extends Component {
   }
 
   render() {
-    const { locale, loading, eosAsset, eosAssetPrefs } = this.props
+    const { locale, loading, eosAssetPrefs } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
