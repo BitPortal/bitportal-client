@@ -54,7 +54,6 @@ export default class SearchBar extends Component {
                   flexDirection: 'row'
                 }}
                 onPress={() => {
-                  console.warn('expanded', this.state.expanded)
                   this.setState(prevState => ({
                     expanded: !prevState.expanded
                   }))
