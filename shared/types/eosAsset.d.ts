@@ -11,6 +11,12 @@ declare interface eosAsset {
   updatedAt: string
   icon_url?: string
   display_priority: number
+  value?: boolean
 }
 
 declare type eosAssetResult = eosAsset[]
+
+declare interface eosAssetPref {
+  value: boolean
+  item: eosAsset[]
+}

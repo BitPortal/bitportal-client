@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
 import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { Text, View, ScrollView, Switch, Image } from 'react-native'
+import {
+  Text,
+  View,
+  ScrollView,
+  Switch,
+  Image,
+  ActivityIndicator
+} from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -31,22 +38,28 @@ const AssetElement = ({ item, onValueChange }) => (
       <Image
         style={styles.icon}
         source={
-          item.icon_url ? { uri: `${item.icon_url}` } : Images.coin_logo_default
+          item.get('icon_url')
+            ? { uri: `${item.get('icon_url')}` }
+            : Images.coin_logo_default
         }
       />
       <Text style={styles.text20}>
         {'   '}
-        {item.symbol}
+        {item.get('symbol')}
       </Text>
     </View>
-    <Switch value={true} onValueChange={e => onValueChange(e, item)} />
+    <Switch
+      value={item.get('value')}
+      onValueChange={e => onValueChange(e, item)}
+    />
   </View>
 )
 
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    eosAsset: state.eosAsset.get('data')
+    eosAsset: state.eosAsset.get('data'),
+    loading: state.eosAsset.get('loading')
   }),
   dispatch => ({
     actions: bindActionCreators(
@@ -74,49 +87,17 @@ export default class AvailableAssets extends Component {
   //{symbol:TEST, value:true}
 
   async UNSAFE_componentWillMount() {
-    const { eosAsset } = this.props
     this.props.actions.getEosAssetRequested({})
-    const tempArr = eosAsset
-      .toJS()
-      .map(item => ({ symbol: item.symbol, value: false }))
-    this.setState({ assetList: tempArr })
-    this.handleAssetList()
-  }
-
-  // async componentDidMount() {
-  //   const accountName = this.props.eosAccount.get('data').get('account_name')
-  //   const objInfo = await storage.getItem(
-  //     `bitportal.${accountName}-contacts`,
-  //     true
-  //   )
-  //   const contacts = objInfo && objInfo.contacts
-  //   if (contacts && contacts.length > 0) {
-  //     this.setState({ contacts })
-  //   }
-  // }
-
-  handleAssetList = async () => {
-    const eosAssetListPrefs = await storage.getItem('eosAssetListPrefs', false)
-    console.log('eosAssetListPrefs', eosAssetListPrefs)
-    if (eosAssetListPrefs) {
-      this.setState({ assetList: eosAssetListPrefs })
-    } else {
-      const tempArr = this.props.eosAsseet
-        .toJS()
-        .map(item => ({ symbol: item.symbol, value: false }))
-    }
   }
 
   // 激活或隐藏钱包
   onValueChange = (value, item) => {
-    item.value = value
-    this.setState(prevState => ({ assetsList: prevState.assetsList }))
+    this.props.actions.saveAssetPref({ value, item })
   }
 
   render() {
-    const { locale } = this.props
-    console.log('this.props.eosAsset', this.props.eosAsset.toJS())
-    const { eosAsset } = this.props
+    const { locale, loading, eosAsset } = this.props
+    console.log('this.props.eosAsset', this.props.eosAsset)
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -130,17 +111,17 @@ export default class AvailableAssets extends Component {
             title={messages[locale].astlist_title_name_astlst}
           />
           <View style={styles.scrollContainer}>
+            {loading && <ActivityIndicator size="small" color="white" />}
             <ScrollView showsVerticalScrollIndicator={false}>
-              {eosAsset
-                .toJS()
-                .map((item, index) => (
-                  <AssetElement
-                    key={index}
-                    item={item}
-                    onValueChange={(e, item) => this.onValueChange(e, item)}
-                  />
-                ))}
+              {eosAsset.map((item, index) => (
+                <AssetElement
+                  key={index}
+                  item={item}
+                  onValueChange={(e, item) => this.onValueChange(e, item)}
+                />
+              ))}
             </ScrollView>
+            )
           </View>
         </View>
       </IntlProvider>

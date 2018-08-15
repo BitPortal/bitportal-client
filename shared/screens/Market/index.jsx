@@ -7,11 +7,12 @@ import * as tickerActions from 'actions/ticker'
 import * as tokenActions from 'actions/token'
 import { exchangeTickerSelector, sortFilterSelector } from 'selectors/ticker'
 import { bindActionCreators } from 'redux'
-import { View, InteractionManager, LayoutAnimation } from 'react-native'
+import { View, InteractionManager, LayoutAnimation, Text } from 'react-native'
 import Modal from 'react-native-modal'
 import { Navigation } from 'react-native-navigation'
 import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from 'constants/market'
 import NavigationBar, { ListButton } from 'components/NavigationBar'
+import SearchBar from 'components/SearchBar'
 import { IntlProvider } from 'react-intl'
 import ExchangeList from './ExchangeList'
 import { Quotes } from './Quotes'
@@ -142,6 +143,7 @@ export default class Market extends Component {
                 onPress={() => this.selectExchange()}
               />
             }
+            rightButton={<SearchBar />}
           />
           <Quotes
             onPress={e => this.changeQuote(e)}

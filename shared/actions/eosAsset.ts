@@ -10,3 +10,6 @@ export const getEosAssetSucceeded = createAction<eosAssetResult>(
 export const getEosAssetFailed = createAction<ErrorMessage>(
   'eosAsset/GET_FAILED'
 )
+export const saveAssetPref = createAction<eosAssetPref>(
+  'eosAsset/SAVE_ASSET_PREF'
+)

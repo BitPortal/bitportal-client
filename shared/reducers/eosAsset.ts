@@ -7,7 +7,9 @@ const initialState = Immutable.fromJS({
   data: [],
   loading: false,
   loaded: false,
-  error: null
+  error: null,
+  assetPrefs: []
+  //TODO change to array
 })
 
 export default handleActions(
@@ -16,21 +18,35 @@ export default handleActions(
       return state.set('loading', true)
     },
     [actions.getEosAssetSucceeded](state, action) {
-      if (action.payload.length === 0) {
-        return state
-          .set('loaded', true)
-          .set('loading', false)
-          .set('data', Immutable.fromJS({}))
-      }
-
+      console.log('getEosAssetSucceeded', action.payload)
       return state
         .set('loaded', true)
         .set('loading', false)
-        .set('data', Immutable.fromJS(action.payload))
+        .set(
+          'data',
+          action.payload.length === 0
+            ? Immutable.fromJS({})
+            : Immutable.fromJS(action.payload)
+        )
+      //parse with existing asset prefs
     },
     [actions.getEosAssetFailed](state, action) {
       return state.set('error', action.payload).set('loading', false)
+    },
+    [actions.saveAssetPref](state, action) {
+      console.log('actions.saveAssetPref', action.payload)
+      return state.set('assetPrefs', action.payload)
     }
+
+    // [actions.saveAssetPref](state, action) {
+    //   return state.update('data', (list: any) => list.map(item => item.set(
+    //     'value',
+    //     !!action.payload[item.get('symbol')]
+    //           && action.payload[item.get('symbol')].value
+    //   )
+    //   )
+    //   )
+    // }
   },
   initialState
 )
