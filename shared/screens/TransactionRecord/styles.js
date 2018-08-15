@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   header2: {
     width: SCREEN_WIDTH - 64,
     height: 60,
-    backgroundColor: Colors.bgColor_48_49_59
+    backgroundColor: Colors.bgColor_30_31_37
   },
   amountContent: {
     padding: 20,
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     height: 180,
     borderBottomLeftRadius: 6,
     borderBottomRightRadius: 6,
-    backgroundColor: Colors.bgColor_48_49_59
+    backgroundColor: Colors.bgColor_30_31_37
   },
   btn: {
     width: 90,

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { View, ScrollView, LayoutAnimation } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'

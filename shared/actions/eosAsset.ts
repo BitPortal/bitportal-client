@@ -13,3 +13,12 @@ export const getEosAssetFailed = createAction<ErrorMessage>(
 export const saveAssetPref = createAction<eosAssetPref>(
   'eosAsset/SAVE_ASSET_PREF'
 )
+export const saveAssetPrefSucceeded = createAction<eosAssetPref>(
+  'eosAsset/SAVE_ASSET_PREF_SUCCEEDED'
+)
+export const getAssetPref = createAction<eosAssetParams>(
+  'eosAsset/GET_ASSET_PREF'
+)
+export const getAssetPrefSucceeded = createAction<eosAssetPrefResult>(
+  'eosAsset/GET_ASSET_PREF_SUCCEEDED'
+)

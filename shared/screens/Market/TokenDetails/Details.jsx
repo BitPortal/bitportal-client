@@ -1,18 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Text, View, ActivityIndicator, Image } from 'react-native'
-import Colors from 'resources/colors'
-import { filterBgColor } from 'utils'
+import { Text, View } from 'react-native'
 import AccordionPanel from 'components/AccordionPanel'
-import {
-  EXCHANGE_NAMES,
-  ASSET_FRACTION,
-  MARKET_DETAIL_KEYS
-} from 'constants/market'
+import { MARKET_DETAIL_KEYS } from 'constants/market'
 import { IntlProvider, FormattedMessage, FormattedNumber } from 'react-intl'
-import { tokenTickerSelector } from 'selectors/ticker'
-import Images from 'resources/images'
-
 import styles from './styles'
 import messages from './messages'
 
@@ -26,6 +17,7 @@ import messages from './messages'
   null,
   { withRef: true }
 )
+
 export default class Details extends Component {
   render() {
     const {
@@ -34,13 +26,13 @@ export default class Details extends Component {
       ...rest
     } = this.props.token.toJS()
     const { locale } = this.props
+
     return (
       <IntlProvider messages={messages[locale]}>
         <AccordionPanel title={messages[locale].details}>
           <View
             style={{
               paddingHorizontal: 25,
-              // paddingBottom: 30,
               marginLeft: 4
             }}
           >

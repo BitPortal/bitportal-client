@@ -14,6 +14,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import * as eosAssetActions from 'actions/eosAsset'
+import { eosAssetListSelector } from 'selectors/eosAsset'
 
 import storage from 'utils/storage'
 import Images from 'resources/images'
@@ -59,7 +60,9 @@ const AssetElement = ({ item, onValueChange }) => (
   state => ({
     locale: state.intl.get('locale'),
     eosAsset: state.eosAsset.get('data'),
-    loading: state.eosAsset.get('loading')
+    loading: state.eosAsset.get('loading'),
+    eosAssetPrefs: eosAssetListSelector(state),
+    assetPrefs: state.eosAsset.get('assetPrefs')
   }),
   dispatch => ({
     actions: bindActionCreators(
@@ -96,8 +99,8 @@ export default class AvailableAssets extends Component {
   }
 
   render() {
-    const { locale, loading, eosAsset } = this.props
-    console.log('this.props.eosAsset', this.props.eosAsset)
+    const { locale, loading, eosAsset, eosAssetPrefs } = this.props
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -113,7 +116,7 @@ export default class AvailableAssets extends Component {
           <View style={styles.scrollContainer}>
             {loading && <ActivityIndicator size="small" color="white" />}
             <ScrollView showsVerticalScrollIndicator={false}>
-              {eosAsset.map((item, index) => (
+              {eosAssetPrefs.map((item, index) => (
                 <AssetElement
                   key={index}
                   item={item}

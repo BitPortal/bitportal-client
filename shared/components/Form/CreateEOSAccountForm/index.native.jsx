@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
-import { TouchableOpacity, Text, View, LayoutAnimation } from 'react-native'
+import { TouchableOpacity, Text, View } from 'react-native'
 import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
 import { IntlProvider } from 'react-intl'
 import { FormContainer, TextField, PasswordField, TextAreaField, SubmitButton } from 'components/Form'
@@ -29,6 +29,16 @@ export const errorMessages = (error, messages) => {
       return messages.act_fid_error_extact
     case 'Invalid private key!':
       return messages.act_fid_error_privatekey
+    case 'Campaign is for invitation only':
+      return 'Campaign is for invitation only'
+    case 'Campaign is for eos only':
+      return 'Campaign is for eos only'
+    case 'Unknown invitation Code':
+      return 'Unknown invitation Code'
+    case 'Coupon code is used':
+      return 'Coupon code is used'
+    case 'Error retrieving data':
+      return 'Error retrieving data'
     default:
       return messages.act_fid_error_failed
   }

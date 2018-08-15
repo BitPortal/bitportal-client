@@ -1,7 +1,5 @@
-/* eslint-disable react/no-array-index-key */
-
 import React, { PureComponent } from 'react'
-import { View, LayoutAnimation } from 'react-native'
+import { View } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { bindActionCreators } from 'redux'
 import * as newsActions from 'actions/news'

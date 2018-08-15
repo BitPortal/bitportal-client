@@ -43,7 +43,6 @@ function* changePasswordRequested(action: Action<ChangePasswordParams>) {
   if (!action.payload) return
 
   try {
-    yield delay(500)
     const oldPassword = action.payload.oldPassword
     const newPassword = action.payload.newPassword
     assert(oldPassword, 'Please input old password!')
@@ -99,15 +98,17 @@ function* exportEOSKeyRequested(action: Action<ExportEOSKeyParams>) {
 
     assert(wifs.length, 'No EOS private keys!')
 
-    yield put(actions.exportEOSKeySucceeded())
-    if (action.payload.componentId) push('BitPortal.ExportPrivateKey', action.payload.componentId, { wifs, entry: 'backup' })
-
+    let entry
     const eosAccountCreationInfo = yield select((state: RootState) => state.eosAccount.get('eosAccountCreationInfo'))
     if (eosAccountCreationInfo.get('transactionId') && eosAccountCreationInfo.get('eosAccountName') === eosAccountName && !eosAccountCreationInfo.get('backup')) {
       const newEOSAccountCreationInfo = eosAccountCreationInfo.set('backup', true).toJS()
       yield call(secureStorage.setItem, `EOS_ACCOUNT_CREATION_INFO_${eosAccountName}`, newEOSAccountCreationInfo, true)
       yield put(completeBackup())
+      entry = 'backup'
     }
+
+    yield put(actions.exportEOSKeySucceeded())
+    if (action.payload.componentId) push('BitPortal.ExportPrivateKey', action.payload.componentId, { wifs, entry })
   } catch (e) {
     yield put(actions.exportEOSKeyFailed(getErrorMessage(e)))
   }

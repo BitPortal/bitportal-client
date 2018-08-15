@@ -9,7 +9,6 @@ const initialState = Immutable.fromJS({
   loaded: false,
   error: null,
   assetPrefs: []
-  //TODO change to array
 })
 
 export default handleActions(
@@ -33,10 +32,10 @@ export default handleActions(
     [actions.getEosAssetFailed](state, action) {
       return state.set('error', action.payload).set('loading', false)
     },
-    [actions.saveAssetPref](state, action) {
-      console.log('actions.saveAssetPref', action.payload)
-      return state.set('assetPrefs', action.payload)
-    }
+    [actions.saveAssetPrefSucceeded](state, action) {
+      console.log('reducer actions.saveAssetPref', action.payload)
+      return state.set('assetPrefs', Immutable.fromJS(action.payload))
+    },
 
     // [actions.saveAssetPref](state, action) {
     //   return state.update('data', (list: any) => list.map(item => item.set(
@@ -47,6 +46,11 @@ export default handleActions(
     //   )
     //   )
     // }
+    // },
+    [actions.getAssetPrefSucceeded](state, action) {
+      console.log('reducer getAssetPref', action.payload)
+      return state.set('assetPrefs', Immutable.fromJS(action.payload))
+    }
   },
   initialState
 )

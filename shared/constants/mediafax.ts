@@ -15,7 +15,7 @@ export const MediafaxIcons = {
 }
 
 export const MediafaxUrls = {
-  Wechat: 'BitPortal币通/bitportalcn',
+  Wechat: 'BitPortal币通',
   Telegram: 'https://t.me/BitPortal_official_EN',
   Kakao: 'https://open.kakao.com/o/gWAXZTO',
   Twitter: 'https://twitter.com/bit_portal',

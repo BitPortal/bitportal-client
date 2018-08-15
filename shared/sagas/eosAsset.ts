@@ -13,20 +13,33 @@ function* getEosAsset(action: Action<eosAssetParams>) {
       call(api.getEosAsset, action.payload),
       call(storage.getItem, 'eosAssetListPrefs', true)
     ])
-    console.log('eosAsset saga', eosAssetListPrefs)
-    if (eosAssetListPrefs) {
-      data.forEach((item: any) => {
-        item.value = eosAssetListPrefs[item.symbol].value
-      })
-    } else {
-      data.forEach((item: any) => {
-        item.value = false
-      })
-    }
-    console.log('parsedData', data)
+    console.log('eosAsset saga', eosAssetListPrefs, data)
+    // if (eosAssetListPrefs) {
+    // data.forEach((item: any) => {
+    //   console.log('forEach', item)
+    //   return (item.value = !!eosAssetListPrefs[item.symbol].value || false)
+    // })
+    // } else {
+    data.forEach((item: any) => {
+      item.value = false
+    })
+    // }
     yield put(actions.getEosAssetSucceeded(data))
   } catch (e) {
     yield put(actions.getEosAssetFailed(e.message))
+  }
+}
+
+function* getAssetPref(action: Action<eosAssetParams>) {
+  try {
+    const eosAssetListPrefs = yield call(
+      storage.getItem,
+      'eosAssetListPrefs',
+      true
+    )
+    yield put(actions.getAssetPrefSucceeded(eosAssetListPrefs || []))
+  } catch (e) {
+    console.log('getAssetPref error', e)
   }
 }
 
@@ -38,10 +51,10 @@ function* saveAssetPref(action: Action<eosAssetPref>) {
       true
     )
     if (eosAssetListPrefs) {
-      const found = eosAssetListPrefs.find(
+      const found = eosAssetListPrefs.findIndex(
         (item: any) => item.symbol === action.payload.item.get('symbol')
       )
-      found
+      found !== -1
         ? (eosAssetListPrefs[found].value = action.payload.value)
         : eosAssetListPrefs.push({
           symbol: action.payload.item.get('symbol'),
@@ -57,7 +70,7 @@ function* saveAssetPref(action: Action<eosAssetPref>) {
     }
     console.log('saveAssetPref eosAssetListPrefs', eosAssetListPrefs)
     yield call(storage.setItem, 'eosAssetListPrefs', eosAssetListPrefs, true)
-    yield put(actions.saveAssetPref(eosAssetListPrefs))
+    yield put(actions.saveAssetPrefSucceeded(eosAssetListPrefs))
   } catch (e) {
     console.log('saveAssetPref error', e)
   }
@@ -66,4 +79,5 @@ function* saveAssetPref(action: Action<eosAssetPref>) {
 export default function* eosAssetSaga() {
   yield takeEvery(String(actions.getEosAssetRequested), getEosAsset)
   yield takeEvery(String(actions.saveAssetPref), saveAssetPref)
+  yield takeEvery(String(actions.getAssetPref), getAssetPref)
 }

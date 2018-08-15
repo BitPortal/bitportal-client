@@ -19,6 +19,7 @@ import * as balanceActions from 'actions/balance'
 import * as versionInfoActions from 'actions/versionInfo'
 import * as currencyActions from 'actions/currency'
 import * as eosAccountActions from 'actions/eosAccount'
+import * as eosAssetActions from 'actions/eosAsset'
 import { eosAccountBalanceSelector } from 'selectors/balance'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { eosPriceSelector } from 'selectors/ticker'
@@ -71,7 +72,8 @@ const getTotalAssets = (eosAccountBalance, eosPrice) => {
         ...balanceActions,
         ...versionInfoActions,
         ...currencyActions,
-        ...eosAccountActions
+        ...eosAccountActions,
+        ...eosAssetActions
       },
       dispatch
     )
@@ -89,7 +91,9 @@ export default class Assets extends Component {
   scanQR = async () => {
     const authorized = await checkCamera()
     if (authorized) {
-      const eosAccountName = this.props.eosAccount.get('data').get('account_name')
+      const eosAccountName = this.props.eosAccount
+        .get('data')
+        .get('account_name')
       if (eosAccountName) {
         Navigation.push(this.props.componentId, {
           component: {
@@ -98,11 +102,9 @@ export default class Assets extends Component {
         })
       } else {
         const { locale } = this.props
-        Dialog.alert(
-          messages[locale].asset_alert_name_err, 
-          null, 
-          { negativeText: messages[locale].asset_alert_button_ent }
-        )
+        Dialog.alert(messages[locale].asset_alert_name_err, null, {
+          negativeText: messages[locale].asset_alert_button_ent
+        })
       }
     }
   }
@@ -180,6 +182,7 @@ export default class Assets extends Component {
     this.props.actions.getVersionInfoRequested()
     this.getCurrencyRate()
     this.props.actions.syncWalletRequested()
+    this.props.actions.getAssetPref()
   }
 
   async componentDidAppear() {

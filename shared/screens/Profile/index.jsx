@@ -41,22 +41,27 @@ export default class Profile extends Component {
     let passProps = {}
     switch (page) {
       case 'Account':
-        if (this.props.wallet.get('data').get('eosAccountName')) {
+        if (this.props.wallet.getIn(['data', 'eosAccountName'])) {
           pageName = 'AccountManager'
-          passProps = this.props.wallet.get('data').toJS()
+          passProps = {
+            origin: this.props.wallet.getIn(['data', 'origin']),
+            bpid: this.props.wallet.getIn(['data', 'bpid']),
+            eosAccountName: this.props.wallet.getIn(['data', 'eosAccountName']),
+            coin: this.props.wallet.getIn(['data', 'coin'])
+          }
         } else {
           return this.dialog()
         }
         break
       case 'Contacts':
-        if (this.props.wallet.get('data').get('eosAccountName')) {
+        if (this.props.wallet.getIn(['data', 'eosAccountName'])) {
           pageName = 'Contacts'
         } else {
           return this.dialog()
         }
         break
       case 'Resources':
-        if (this.props.wallet.get('data').get('eosAccountName')) {
+        if (this.props.wallet.getIn(['data', 'eosAccountName'])) {
           pageName = 'Resources'
         } else {
           return this.dialog()
@@ -87,7 +92,7 @@ export default class Profile extends Component {
       component: {
         name: 'BitPortal.BPWebView',
         passProps: {
-          uri: `${BITPORTAL_WEBSITE_URL}/${this.props.locale}/help?webview=true`,
+          uri: `${BITPORTAL_WEBSITE_URL}/${this.props.locale}/help/?webview=true`,
           title: messages[this.props.locale].prf_sec_titile_help
         }
       }
@@ -102,20 +107,18 @@ export default class Profile extends Component {
         <View style={styles.container}>
           <NavigationBar
             leftButton={<CommonTitle title={<FormattedMessage id="profile_title_name_profile" />} />}
-            rightButton={<CommonRightButton imageSource={Images.transaction_history} onPress={() => this.changePage('TransactionHistory')} />}
+            rightButton={<CommonRightButton imageSource={Images.transaction_history} onPress={this.changePage.bind(this, 'TransactionHistory')} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center' }}>
-              <SettingItem leftImage={Images.profile_voting} leftItemTitle={<FormattedMessage id="prf_sec_titile_vote" />} onPress={() => this.changePage('Voting')} extraStyle={{ marginTop: 10 }} />
-              <SettingItem leftImage={Images.profile_resources} leftItemTitle={<FormattedMessage id="prf_sec_titile_res" />} onPress={() => this.changePage('Resources')} />
-              <SettingItem leftImage={Images.profile_contacts} leftItemTitle={<FormattedMessage id="prf_sec_titile_ctcts" />} onPress={() => this.changePage('Contacts')} />
-              <SettingItem leftImage={Images.profile_account} leftItemTitle={<FormattedMessage id="prf_sec_titile_act" />} onPress={() => this.changePage('Account')} />
-              <SettingItem leftImage={Images.profile_settings} leftItemTitle={<FormattedMessage id="prf_sec_titile_sts" />} onPress={() => this.changePage('Settings')} extraStyle={{ marginTop: 10 }} />
+              <SettingItem leftImage={Images.profile_voting} leftItemTitle={<FormattedMessage id="prf_sec_titile_vote" />} onPress={this.changePage.bind(this, 'Voting')} extraStyle={{ marginTop: 10 }} />
+              <SettingItem leftImage={Images.profile_resources} leftItemTitle={<FormattedMessage id="prf_sec_titile_res" />} onPress={this.changePage.bind(this, 'Resources')} />
+              <SettingItem leftImage={Images.profile_contacts} leftItemTitle={<FormattedMessage id="prf_sec_titile_ctcts" />} onPress={this.changePage.bind(this, 'Contacts')} />
+              <SettingItem leftImage={Images.profile_account} leftItemTitle={<FormattedMessage id="prf_sec_titile_act" />} onPress={this.changePage.bind(this, 'Account')} />
+              <SettingItem leftImage={Images.profile_settings} leftItemTitle={<FormattedMessage id="prf_sec_titile_sts" />} onPress={this.changePage.bind(this, 'Settings')} extraStyle={{ marginTop: 10 }} />
               <SettingItem leftImage={Images.help_center} leftItemTitle={<FormattedMessage id="prf_sec_titile_help" />} onPress={this.goForHelp} />
-              <SettingItem leftImage={Images.profile_mediafax} leftItemTitle={<FormattedMessage id="prf_sec_titile_mdf" />} onPress={() => this.changePage('Mediafax')} />
-              <SettingItem leftImage={Images.profile_about} leftItemTitle={<FormattedMessage id="prf_sec_titile_abt" />} onPress={() => this.changePage('About')} />
-              {/* <SettingItem leftItemTitle={<FormattedMessage id="prf_sec_titiled_ctus" />} onPress={() => this.changePage('ContactUs')} /> */}
-
+              <SettingItem leftImage={Images.profile_mediafax} leftItemTitle={<FormattedMessage id="prf_sec_titile_mdf" />} onPress={this.changePage.bind(this, 'Mediafax')} />
+              <SettingItem leftImage={Images.profile_about} leftItemTitle={<FormattedMessage id="prf_sec_titile_abt" />} onPress={this.changePage.bind(this, 'About')} />
               <Text style={[styles.text14, { marginTop: 25 }]}> <FormattedMessage id="profile_check_txt_version" /> {VersionNumber.appVersion} </Text>
               <Text style={[styles.text14, { marginTop: 5 }]}> <FormattedMessage id="profile_cpyrt_txt_line1" /> </Text>
             </ScrollView>

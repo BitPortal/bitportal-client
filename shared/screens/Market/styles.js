@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: SCREEN_WIDTH,
     height: 70,
-    backgroundColor: Colors.bgColor_48_49_59
+    backgroundColor: Colors.bgColor_30_31_37
   },
   coin: {
     width: WidthPercent(30),
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     width: SCREEN_WIDTH,
     height: 30,
-    backgroundColor: Colors.bgColor_48_49_59,
+    backgroundColor: Colors.bgColor_30_31_37,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

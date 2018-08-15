@@ -20,3 +20,10 @@ declare interface eosAssetPref {
   value: boolean
   item: eosAsset[]
 }
+
+declare interface eosAssetPref {
+  symbol:string
+  value:boolean
+}
+
+declare interface eosAssetPrefReult = eosAssetPref[]

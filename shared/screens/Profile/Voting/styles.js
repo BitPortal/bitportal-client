@@ -24,12 +24,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: Colors.bgColor_000000,
-    backgroundColor: Colors.bgColor_48_49_59
+    backgroundColor: Colors.bgColor_30_31_37
   },
   listItem: {
     width: SCREEN_WIDTH,
     height: 70,
-    backgroundColor: Colors.bgColor_48_49_59
+    backgroundColor: Colors.bgColor_30_31_37
   },
   separator: {
     height: StyleSheet.hairlineWidth,
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.bgColor_FFFFFF,
     borderWidth: 1,
     marginRight: 1,
-    backgroundColor: Colors.bgColor_48_49_59
+    backgroundColor: Colors.bgColor_30_31_37
   },
   btnContainer: {
     width: SCREEN_WIDTH,
