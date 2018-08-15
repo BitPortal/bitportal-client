@@ -17,6 +17,7 @@ import transaction from './transaction'
 import bandwidth from './bandwidth'
 import ram from './ram'
 import token from './token'
+import eosAsset from './eosAsset'
 
 export default combineReducers({
   form,
@@ -36,5 +37,6 @@ export default combineReducers({
   ram,
   transfer,
   transaction,
-  token
+  token,
+  eosAsset
 })

@@ -1,5 +1,10 @@
 import { StyleSheet } from 'react-native'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
+import {
+  FontScale,
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  NAV_BAR_HEIGHT
+} from 'utils/dimens'
 import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
@@ -33,8 +38,12 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: 70,
     marginTop: 1
+  },
+  icon: {
+    width: 50,
+    height: 50,
+    borderRadius: 25
   }
-
 })
 
 export default styles
