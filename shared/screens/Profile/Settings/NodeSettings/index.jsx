@@ -141,10 +141,6 @@ export default class NodeSettings extends Component {
     }
   }
 
-  UNSAFE_componentWillUpdate() {
-    LayoutAnimation.easeInEaseOut()
-  }
-
   render() {
     const { locale } = this.props
     const { CUSTOM_NODES } = this.state

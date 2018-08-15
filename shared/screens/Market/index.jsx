@@ -106,10 +106,6 @@ export default class Market extends Component {
     })
   }
 
-  UNSAFE_componentWillUpdate() {
-    LayoutAnimation.easeInEaseOut()
-  }
-
   shouldComponentUpdate(nextProps, nextState) {
     return (
       nextProps.loading !== this.props.loading
@@ -133,21 +129,8 @@ export default class Market extends Component {
       locale,
       loading,
       exchangeFilter,
-      quoteAssetFilter,
-      sortFilter,
-      baseAsset
+      quoteAssetFilter
     } = this.props
-
-    // console.log(
-    //   'exchangeFilter',
-    //   exchangeFilter,
-    //   'sortFilter',
-    //   sortFilter,
-    //   'quoteAssetFilter',
-    //   quoteAssetFilter,
-    //   'baseAsset',
-    //   baseAsset
-    // );
 
     return (
       <IntlProvider messages={messages[locale]}>

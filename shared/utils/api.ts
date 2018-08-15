@@ -52,7 +52,6 @@ export const fetchBase = async (
     }
   }
 
-  console.log('###', url)
   return fetch(url, fetchOptions).then((res: any) => {
     if (!res.ok) {
       return res.json().then((e: any) => Promise.reject({ message: e }))
@@ -90,14 +89,15 @@ const marketFetchBase = (
 
 export const getTickers = (params?: TickerParams) => marketFetchBase('GET', '/tickers', params)
 export const getChart = (params?: ChartParams) => marketFetchBase('GET', '/chart', params)
-
 export const getCurrencyRate = () => fetchBase('GET', '', {}, { baseUrl: CURRENCY_RATE_URL })
-
 export const getNewsList = (params: any) => cmsFetchBase('GET', '/article', params)
 export const getNewsBanner = () => cmsFetchBase('GET', '/banner')
 export const getVersionInfo = () => cmsFetchBase('GET', '/system')
 export const getProducersInfo = (params: any) => cmsFetchBase('GET', '/eosbp', params)
 export const getTokenDetail = (params: any) => cmsFetchBase('GET', '/token', params)
+<<<<<<< HEAD
 export const getEosAsset = (params: any) => cmsFetchBase('GET', '/eostoken', params)
 
+=======
+>>>>>>> develop
 export const createEOSAccount = (params: any) => fetchBase('POST', '/registry/wallets/campaign/eoscreation', params)

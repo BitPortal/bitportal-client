@@ -1,6 +1,5 @@
 import Immutable from 'immutable'
 import { handleActions } from 'redux-actions'
-import { QUOTE_ASSETS } from 'constants/market'
 import * as actions from 'actions/token'
 
 const initialState = Immutable.fromJS({
@@ -12,7 +11,7 @@ const initialState = Immutable.fromJS({
 
 export default handleActions(
   {
-    [actions.getTokenDetailRequested](state, action) {
+    [actions.getTokenDetailRequested](state) {
       return state.set('loading', true)
     },
     [actions.getTokenDetailSucceeded](state, action) {

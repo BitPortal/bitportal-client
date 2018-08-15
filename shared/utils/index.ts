@@ -69,14 +69,8 @@ export const getErrorMessage = (error: any) => {
     }
   }
 
-  if (
-    error.message
-    && typeOf(error.message) === 'Object'
-    && error.message.code
-    && error.message.name
-    && error.message.what
-  ) {
-    return error.message.what
+  if (error.message && error.message.error && typeOf(error.message.error) === 'Object' && error.message.error.code &&  error.message.error.name &&  error.message.error.what) {
+    return error.message.error.what
   }
 
   return error.message || 'unknown error'
@@ -93,10 +87,10 @@ export const decodeKey = (key: string) => JSON.parse(`[${Buffer.from(key, 'hex')
 export const getPasswordStrength = (password: any) => {
   let passwordStrength = 0
 
-  const hasUppercase = (value: string) => /[A-Z]/.test(value)
-  const hasLowercase = (value: string) => /[a-z]/.test(value)
-  const hasNumber = (value: string) => /[0-9]/.test(value)
-  const hasSymbol = (value: string) => /[$&+,:;=?@#|'<>.^*()%!-]/.test(value)
+  const hasUppercase = (value: string) => (/[A-Z]/.test(value))
+  const hasLowercase = (value: string) => (/[a-z]/.test(value))
+  const hasNumber = (value: string) => (/[0-9]/.test(value))
+  const hasSymbol = (value: string) => (/[$&+,:;=?@#|'<>.^*()%!-]/.test(value))
 
   if (password && typeof password === 'string' && password.length >= 6) {
     if (hasLowercase(password)) passwordStrength += 1

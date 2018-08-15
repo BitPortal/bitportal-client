@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
-import { LayoutAnimation, TouchableOpacity, Text, View } from 'react-native'
+import { TouchableOpacity, Text, View, LayoutAnimation } from 'react-native'
 import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
 import { IntlProvider } from 'react-intl'
 import { FormContainer, TextField, PasswordField, TextAreaField, SubmitButton } from 'components/Form'
@@ -12,6 +12,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import PasswordStrength from 'components/PasswordStrength'
 import Alert from 'components/Alert'
+import { validateEOSAccountName } from 'utils/validate'
 import { getPasswordStrength } from 'utils'
 import * as walletActions from 'actions/wallet'
 import * as eosAccountActions from 'actions/eosAccount'
@@ -41,8 +42,8 @@ const validate = (values, props) => {
     errors.eosAccountName = messages[locale].act_fid_empty_name
   }
 
-  if (values.get('eosAccountName') && values.get('eosAccountName').length > 12) {
-    errors.eosAccountName = messages[locale].act_fid_limit_name
+  if (!!values.get('eosAccountName') && !validateEOSAccountName(values.get('eosAccountName'))) {
+    errors.eosAccountName = messages[locale].act_fid_plachd_name
   }
 
   if (!values.get('password')) {
@@ -87,10 +88,6 @@ export default class CreateEOSAccountForm extends Component {
     hasPrivateKey: false
   }
 
-  UNSAFE_componentWillUpdate() {
-    LayoutAnimation.easeInEaseOut()
-  }
-
   showPrivateKey = () => {
     this.setState(prevState => ({ hasPrivateKey: !prevState.hasPrivateKey }))
   }
@@ -101,6 +98,7 @@ export default class CreateEOSAccountForm extends Component {
 
   checkTerms = () => {
     const { locale } = this.props
+
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.BPWebView',
@@ -122,7 +120,7 @@ export default class CreateEOSAccountForm extends Component {
 
   submit = (data) => {
     const componentId = this.props.componentId
-    this.props.actions.createEOSAccountRequested(data.set('componentId', componentId).toJS())
+    this.props.actions.createEOSAccountRequested(data.set('componentId', componentId).delete('confirmedPassword').toJS())
   }
 
   render() {
@@ -139,6 +137,7 @@ export default class CreateEOSAccountForm extends Component {
             label={messages[locale].act_fid_title_name}
             name="eosAccountName"
             component={TextField}
+            placeholder={messages[locale].act_fid_plachd_name}
             tips={messages[locale].act_fid_tips_name}
             normalize={normalizeEOSAccountName}
           />

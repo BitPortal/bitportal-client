@@ -18,7 +18,6 @@ export const sortFilterSelector = createSelector(
   sortFilterListSelector,
   exchangeFilterSelector,
   (sort: any, exchange: any) => sort.get(exchange)
-
 )
 
 export const exchangeTickerSelector = createSelector(

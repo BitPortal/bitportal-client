@@ -1,19 +1,18 @@
 import React, { Component } from 'react'
 import {
-  StyleSheet,
-  Text,
-  View,
   Image,
-  TouchableHighlight,
-  Animated
+  TouchableOpacity,
+  Animated,
+  LayoutAnimation,
+  View,
+  Text
 } from 'react-native' //Step 1
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import styles from './styles'
 
-class AccordionPanel extends Component {
+export default class AccordionPanel extends Component {
   state = {
-    //Step 3
     expanded: true,
     animation: new Animated.Value(),
     maxHeight: '',
@@ -22,50 +21,45 @@ class AccordionPanel extends Component {
 
   toggle = () => {
     //Step 1
-    let initialValue = this.state.expanded
-        ? this.state.maxHeight + this.state.minHeight
-        : this.state.minHeight,
-      finalValue = this.state.expanded
-        ? this.state.minHeight
-        : this.state.maxHeight + this.state.minHeight
+    // let initialValue = this.state.expanded
+    //     ? this.state.maxHeight + this.state.minHeight
+    //     : this.state.minHeight,
+    //   finalValue = this.state.expanded
+    //     ? this.state.minHeight
+    //     : this.state.maxHeight + this.state.minHeight
 
-    this.setState({
-      expanded: !this.state.expanded //Step 2
-    })
+    this.setState(prevState => ({ expanded: !prevState.expanded }))
 
-    this.state.animation.setValue(initialValue) //Step 3
-    Animated.spring(
-      //Step 4
-      this.state.animation,
-      {
-        toValue: finalValue
-      }
-    ).start() //Step 5
+    // this.state.animation.setValue(initialValue) //Step 3
+    // Animated.spring(
+    //   //Step 4
+    //   this.state.animation,
+    //   {
+    //     toValue: finalValue
+    //   }
+    // ).start() //Step 5
   }
 
   _setMaxHeight = (event) => {
-    console.log('nativeEvent MAXheight', event.nativeEvent.layout.height)
-    if (this.state.maxHeight === '') {
-      this.setState({
-        maxHeight: event.nativeEvent.layout.height
-      })
-    }
+    // if (this.state.maxHeight === '') {
+    //   this.setState({
+    //     maxHeight: event.nativeEvent.layout.height
+    //   })
+    // }
   }
 
   _setMinHeight = (event) => {
-    // console.log('nativeEvent MINheight', event.nativeEvent.layout.height);
-    if (this.state.minHeight === '') {
-      this.setState({
-        minHeight: event.nativeEvent.layout.height
-      })
-    }
+    // if (this.state.minHeight === '') {
+    //   this.setState({
+    //     minHeight: event.nativeEvent.layout.height
+    //   })
+    // }
   }
 
   render() {
     const { expanded } = this.state
     const { title } = this.props
 
-    //Step 5
     return (
       <Animated.View
         style={[
@@ -73,8 +67,8 @@ class AccordionPanel extends Component {
           {
             backgroundColor: Colors.bgColor_41_41_44,
             marginTop: 10,
-            paddingBottom: 40,
-            height: this.state.animation,
+            // paddingBottom: 40,
+            // height: this.state.animation,
             flex: 1
           }
         ]}
@@ -82,45 +76,54 @@ class AccordionPanel extends Component {
         <View
           style={[
             styles.spaceBetween,
-            { paddingVertical: 20, paddingHorizontal: 25 }
+            { paddingVertical: 10, paddingHorizontal: 25 }
           ]}
           onLayout={(event) => {
             this._setMinHeight(event)
           }}
         >
           <Text style={[styles.headerText]}> {title} </Text>
-          <TouchableHighlight
+          <TouchableOpacity
             onPress={() => {
               this.toggle()
             }}
             underlayColor="#f1f1f1"
           >
-            {expanded ? (
-              <Ionicons
-                name="ios-arrow-up"
-                size={30}
-                color={Colors.bgColor_FFFFFF}
-              />
-            ) : (
-              <Ionicons
-                name="ios-arrow-down"
-                size={30}
-                color={Colors.bgColor_FFFFFF}
-              />
-            )}
-          </TouchableHighlight>
+            <View
+              style={{
+                height: 50,
+                width: 50,
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              {expanded ? (
+                <Ionicons
+                  name="ios-arrow-up"
+                  size={30}
+                  color={Colors.bgColor_FFFFFF}
+                />
+              ) : (
+                <Ionicons
+                  name="ios-arrow-down"
+                  size={30}
+                  color={Colors.bgColor_FFFFFF}
+                />
+              )}
+            </View>
+          </TouchableOpacity>
         </View>
-        <View
-          style={{ paddingBottom: 20 }}
-          onLayout={(event) => {
-            this._setMaxHeight(event)
-          }}
-        >
-          {this.props.children}
-        </View>
+        {this.state.expanded && (
+          <View
+            style={{ paddingBottom: 20 }}
+            onLayout={(event) => {
+              this._setMaxHeight(event)
+            }}
+          >
+            {this.props.children}
+          </View>
+        )}
       </Animated.View>
     )
   }
 }
-
-export default AccordionPanel

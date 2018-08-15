@@ -22,6 +22,9 @@ declare interface Config {
   CURRENCY_RATE_URL: string
   BITPORTAL_API_TERMS_URL: string
   BITPORTAL_API_UPDATE_LOG_URL: string
+  EOS_EXPLORER_URL: string
+  BITPORTAL_API_EOS_URL: string
+  BITPORTAL_WEBSITE_URL: string
 }
 
 declare interface RootState {
@@ -283,6 +286,7 @@ declare module 'core/eos' {
     sortProducers: any
     randomKey: any
     getPermissionsByKey: any
+    getInitialAccountInfo: any
   }
 
   const eos: EOS

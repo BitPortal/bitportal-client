@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     width: SCREEN_WIDTH,
-    minHeight: 100,
+    minHeight: 60,
     // maxHeight: 2000,
     // paddingVertical: 20,
     // paddingHorizontal: 25,

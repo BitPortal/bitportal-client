@@ -1,6 +1,7 @@
 import assert from 'assert'
 import Eos from 'eosjs'
 import { EOS_API_URL } from 'constants/env'
+import { EOS_TESTNET_NODES, EOS_MAINNET_CHAIN_ID, EOS_TESTNET_CHAIN_ID } from 'constants/chain'
 import storage from 'utils/storage'
 
 const ecc = Eos.modules.ecc
@@ -8,9 +9,12 @@ let eos: any
 
 const initEOS = async (options: any) => {
   const storeInfo = await storage.getItem('bitportal.activeNode', true)
-  const eosNode = storeInfo && storeInfo.activeNode
-  const chainId = options.chainId || 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
-  eos = Eos({ ...options, chainId, httpEndpoint: eosNode || EOS_API_URL })
+  const eosNode = options.httpEndpoint || (storeInfo && storeInfo.activeNode) || EOS_API_URL
+  const isTestNet = ~EOS_TESTNET_NODES.indexOf(eosNode)
+  const defaultChainId = isTestNet ? EOS_TESTNET_CHAIN_ID : EOS_MAINNET_CHAIN_ID
+  const chainId = options.chainId || defaultChainId
+  const httpEndpoint = eosNode
+  eos = Eos({ ...options, chainId, httpEndpoint })
   return eos
 }
 
@@ -52,6 +56,51 @@ const getPermissionsByKey = (publickKey: string, accountInfo: any) => {
   return ownerPermission.length ? ownerPermission : roles
 }
 
+const getInitialAccountInfo = (eosAccountName: string, publicKey: string) => (
+  {
+    account_name: eosAccountName,
+    core_liquid_balance: '0.0000 EOS',
+    cpu_limit: { used: 0, available: 0, max: 0 },
+    cpu_weight: 0,
+    net_limit: { used: 0, available: 0, max: 0 },
+    net_weight: 0,
+    permissions: [
+      {
+        parent: 'owner',
+        perm_name: 'active',
+        required_auth: {
+          accounts: [],
+          keys: [{ key: publicKey, weight: 1 }],
+          threshold: 1,
+          waits: []
+        }
+      },
+      {
+        parent: '',
+        perm_name: 'owner',
+        required_auth: {
+          accounts: [],
+          keys: [{ key: publicKey, weight: 1 }],
+          threshold: 1,
+          waits: []
+        }
+      }
+    ],
+    privileged: false,
+    ram_quota: 0,
+    ram_usage: 0,
+    refund_request: null,
+    self_delegated_bandwidth: null,
+    total_resources: {
+      owner: eosAccountName,
+      cpu_weight: '0.0000 EOS',
+      net_weight: '0.0000 EOS',
+      ram_bytes: 0
+    },
+    voter_info: null
+  }
+)
+
 export {
   initEOS,
   getEOS,
@@ -60,5 +109,6 @@ export {
   randomKey,
   getProducers,
   sortProducers,
-  getPermissionsByKey
+  getPermissionsByKey,
+  getInitialAccountInfo
 }

@@ -18,7 +18,6 @@ function* votingRequested(action: Action<VotingParams>) {
 
     const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
     const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
-    console.log(permission)
     const wifs = yield call(getEOSWifsByInfo, password, accountInfo, [permission])
     const keyProvider = wifs.map((item: any) => item.wif)
 
@@ -67,7 +66,6 @@ function* votingRequested(action: Action<VotingParams>) {
     yield put(actions.votingSucceeded(producers))
     yield put(getEOSAccountRequested({ eosAccountName }))
   } catch (e) {
-    console.log(e)
     yield put(actions.votingFailed(getErrorMessage(e)))
   }
 }

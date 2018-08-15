@@ -80,25 +80,25 @@ export default class Resources extends Component {
                 onPress={() => this.check('cpu')}
                 title={<FormattedMessage id="reslist_title_name_cpu" />}
                 availableText={<FormattedMessage id="reslist_title_name_ava" />}
-                available={formatCycleTime(activeEOSAccount.get('cpu_limit').get('available'))}
+                available={formatCycleTime(activeEOSAccount.getIn(['cpu_limit', 'available']))}
                 totalText={<FormattedMessage id="reslist_title_name_bwttl" />}
-                total={formatCycleTime(activeEOSAccount.get('cpu_limit').get('max'))}
+                total={formatCycleTime(activeEOSAccount.getIn(['cpu_limit', 'max']))}
                 usageText={<FormattedMessage id="reslist_title_name_usgttl" />}
-                usage={formatCycleTime(activeEOSAccount.get('cpu_limit').get('used'))}
+                usage={formatCycleTime(activeEOSAccount.getIn(['cpu_limit', 'used']))}
                 delegateText={<FormattedMessage id="reslist_title_name_delegate" />}
-                delegate={activeEOSAccount.get('total_resources').get('cpu_weight')}
+                delegate={activeEOSAccount.getIn(['total_resources', 'cpu_weight'])}
               />
               <ResourcesCard
                 onPress={() => this.check('bw')}
                 title={<FormattedMessage id="reslist_title_name_bw" />}
                 availableText={<FormattedMessage id="reslist_title_name_ava" />}
-                available={formatMemorySize(activeEOSAccount.get('net_limit').get('available'))}
+                available={formatMemorySize(activeEOSAccount.getIn(['net_limit', 'available']))}
                 totalText={<FormattedMessage id="reslist_title_name_bwttl" />}
-                total={formatMemorySize(activeEOSAccount.get('net_limit').get('max'))}
+                total={formatMemorySize(activeEOSAccount.getIn(['net_limit', 'max']))}
                 usageText={<FormattedMessage id="reslist_title_name_usgttl" />}
-                usage={formatMemorySize(activeEOSAccount.get('net_limit').get('used'))}
+                usage={formatMemorySize(activeEOSAccount.getIn(['net_limit', 'used']))}
                 delegateText={<FormattedMessage id="reslist_title_name_delegate" />}
-                delegate={activeEOSAccount.get('total_resources').get('net_weight')}
+                delegate={activeEOSAccount.getIn(['total_resources', 'net_weight'])}
               />
               <ResourcesCard
                 colors={Colors.ramColor}

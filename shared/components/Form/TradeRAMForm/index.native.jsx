@@ -97,7 +97,7 @@ export default class TradeRAMForm extends Component {
       InteractionManager.runAfterInteractions(() => {
         const data = this.state.data
         const eosAccount = this.props.eosAccount
-        const eosAccountName = eosAccount.get('data').get('account_name')
+        const eosAccountName = eosAccount.getIn(['data', 'account_name'])
         if (this.state.activeForm === 'Buy') {
           this.props.actions.buyRAMRequested(data.set('eosAccountName', eosAccountName).set('password', password).toJS())
         } else {
@@ -127,8 +127,8 @@ export default class TradeRAMForm extends Component {
     const loading = buying || selling
     const error = ram.get('error')
     const disabled = invalid || pristine || loading
-    const eosBalance = eosAccount.get('data').get('core_liquid_balance') ? eosAccount.get('data').get('core_liquid_balance').split(' ')[0] : '0.0000'
-    const availableRAM = (eosAccount.get('data').get('ram_quota') && eosAccount.get('data').get('ram_usage')) ? (eosAccount.get('data').get('ram_quota') - eosAccount.get('data').get('ram_usage')) : 0
+    const eosBalance = eosAccount.getIn(['data', 'core_liquid_balance']) ? eosAccount.getIn(['data', 'core_liquid_balance']).split(' ')[0] : '0.0000'
+    const availableRAM = (eosAccount.getIn(['data', 'ram_quota']) && eosAccount.getIn(['data', 'ram_usage'])) ? (eosAccount.getIn(['data', 'ram_quota']) - eosAccount.getIn(['data', 'ram_usage'])) : 0
     const availableBalance = this.state.activeForm === 'Buy' ? eosBalance : availableRAM
     const availableBalanceUnit = this.state.activeForm === 'Buy' ? 'EOS' : 'Bytes'
 

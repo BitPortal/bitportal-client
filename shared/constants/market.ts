@@ -44,10 +44,25 @@ export const DEFAULT_USD_RATE = {
 
 export const DEFAULT_SORT_FILTER = 'quote_volume'
 
-const sort_filters = [
+export const sort_filters = [
   'quote_volume',
   'price_change_percent_low',
   'price_change_percent_high',
   'current_price_low',
   'current_price_high'
+]
+
+export const MARKET_DETAIL_KEYS = [
+  'market_cap',
+  'blockchain',
+  'circulating_supply',
+  'total_supply',
+  'proof_type',
+  'team_location',
+  'first_announced',
+  'algorithm',
+  'block_time',
+  'ico_start',
+  'ico_end',
+  'ico_capital'
 ]

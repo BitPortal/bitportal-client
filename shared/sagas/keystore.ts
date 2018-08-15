@@ -3,6 +3,7 @@ import { call, put, takeEvery, select } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import assert from 'assert'
 import * as actions from 'actions/keystore'
+import { completeBackup } from 'actions/eosAccount'
 import { getErrorMessage, encodeKey } from 'utils'
 import secureStorage from 'utils/secureStorage'
 import { encrypt, getEOSWifsByInfo } from 'core/key'
@@ -52,7 +53,7 @@ function* changePasswordRequested(action: Action<ChangePasswordParams>) {
 
     const eosAccountName = action.payload.eosAccountName
     const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
-    const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
+    const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'OWNER')
     assert(permission, 'No permission!')
     wifs = yield call(getEOSWifsByInfo, oldPassword, accountInfo, [permission])
     assert(wifs.length, 'No EOS private keys!')
@@ -78,6 +79,7 @@ function* exportEOSKeyRequested(action: Action<ExportEOSKeyParams>) {
 
   try {
     yield delay(500)
+    const eosAccountName = action.payload.eosAccountName
     const password = action.payload.password
     assert(password, 'Please input password!')
     const origin = action.payload.origin
@@ -89,7 +91,6 @@ function* exportEOSKeyRequested(action: Action<ExportEOSKeyParams>) {
     if (origin === 'hd') {
       // ...
     } else {
-      const eosAccountName = action.payload.eosAccountName
       const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
       const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
       assert(permission, 'No permission!')
@@ -99,7 +100,14 @@ function* exportEOSKeyRequested(action: Action<ExportEOSKeyParams>) {
     assert(wifs.length, 'No EOS private keys!')
 
     yield put(actions.exportEOSKeySucceeded())
-    if (action.payload.componentId) push('BitPortal.ExportPrivateKey', action.payload.componentId, { wifs })
+    if (action.payload.componentId) push('BitPortal.ExportPrivateKey', action.payload.componentId, { wifs, entry: 'backup' })
+
+    const eosAccountCreationInfo = yield select((state: RootState) => state.eosAccount.get('eosAccountCreationInfo'))
+    if (eosAccountCreationInfo.get('transactionId') && eosAccountCreationInfo.get('eosAccountName') === eosAccountName && !eosAccountCreationInfo.get('backup')) {
+      const newEOSAccountCreationInfo = eosAccountCreationInfo.set('backup', true).toJS()
+      yield call(secureStorage.setItem, `EOS_ACCOUNT_CREATION_INFO_${eosAccountName}`, newEOSAccountCreationInfo, true)
+      yield put(completeBackup())
+    }
   } catch (e) {
     yield put(actions.exportEOSKeyFailed(getErrorMessage(e)))
   }

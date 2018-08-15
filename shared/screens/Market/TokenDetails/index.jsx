@@ -5,7 +5,10 @@ import * as tokenActions from 'actions/token'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { View, ScrollView, InteractionManager } from 'react-native'
-import { Logo, Description, Details, ListedExchange } from './TokenComponents'
+import Details from './Details'
+import CoinInfoCard from './CoinInfoCard'
+import Description from './Description'
+import ListedExchange from './ListedExchange'
 import styles from './styles'
 
 @connect(
@@ -48,7 +51,8 @@ export default class TokenDetails extends Component {
   }
 
   render() {
-    const { listedExchange, loading, tokenDetails } = this.props
+    const { listedExchange, loading } = this.props
+
     return (
       <View style={styles.container}>
         <NavigationBar
@@ -62,7 +66,7 @@ export default class TokenDetails extends Component {
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <Logo />
+            <CoinInfoCard />
             <ListedExchange data={listedExchange} loading={loading} />
             <Description />
             <Details />

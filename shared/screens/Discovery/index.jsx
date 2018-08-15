@@ -35,10 +35,6 @@ export default class Discovery extends Component {
     this.props.actions.getNewsListRequested({ startAt: 0, limit: PAGE_LENGTH, loadingMore: false })
   }
 
-  UNSAFE_componentWillUpdate() {
-    LayoutAnimation.easeInEaseOut()
-  }
-
   getNewsListData = () => {
     try {
       const data = this.props.listData.toJS()

@@ -8,7 +8,7 @@ import { FormattedMessage, IntlProvider } from 'react-intl'
 import VersionNumber from 'react-native-version-number'
 import Dialogs from 'components/Dialog'
 import Images from 'resources/images'
-import { BITPORTAL_URL } from 'constants/env'
+import { BITPORTAL_WEBSITE_URL } from 'constants/env'
 import messages from './messages'
 import styles from './styles'
 
@@ -87,7 +87,7 @@ export default class Profile extends Component {
       component: {
         name: 'BitPortal.BPWebView',
         passProps: {
-          uri: `${BITPORTAL_URL}/${this.props.locale}/help?webview=true`,
+          uri: `${BITPORTAL_WEBSITE_URL}/${this.props.locale}/help?webview=true`,
           title: messages[this.props.locale].prf_sec_titile_help
         }
       }

@@ -77,10 +77,6 @@ export default class ImportEOSAccountForm extends Component {
     unsignAgreement: true
   }
 
-  UNSAFE_componentWillUpdate() {
-    LayoutAnimation.easeInEaseOut()
-  }
-
   checkTerms = () => {
     const { locale } = this.props
     Navigation.push(this.props.componentId, {

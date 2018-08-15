@@ -21,10 +21,6 @@ export default class Introduction extends Component {
     folded: false
   }
 
-  UNSAFE_componentWillUpdate() {
-    LayoutAnimation.easeInEaseOut()
-  }
-
   hidden = () => {
     this.setState(prevState => ({ folded: !prevState.folded }))
   }

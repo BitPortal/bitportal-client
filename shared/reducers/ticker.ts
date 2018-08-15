@@ -29,7 +29,6 @@ const initialState = Immutable.fromJS({
 export default handleActions(
   {
     [actions.getTickersRequested](state, action) {
-      // console.log('actions.getTickersRequested action.payload', action.payload);
       return state
         .set('loading', true)
         .set('fromUserPull', !!action.payload.fromUserPull)
@@ -58,10 +57,6 @@ export default handleActions(
         .set('fromUserPull', false)
     },
     [actions.getPairListedExchangeRequested](state, action) {
-      console.log(
-        'actions.getPairListedExchangeRequested action.payload',
-        action.payload
-      )
       return state
         .set('loading', true)
         .set('fromUserPull', !!action.payload.fromUserPull)
@@ -91,20 +86,18 @@ export default handleActions(
       return state.set('currencyFilter', action.payload)
     },
     [actions.selectBaseAsset](state, action) {
-      // console.log('actions.selectBaseAsset', action.payload);
       return state.set('baseAsset', Immutable.fromJS(action.payload))
     },
-    [actions.deleteListedExchange](state, action) {
+    [actions.deleteListedExchange](state) {
       return state.set('listedExchange', Immutable.fromJS([]))
     },
     [actions.selectCurrentPair](state, action) {
-      // console.log('action.selectCurrentPair', action.payload.toJS());
       return state.set('currentPair', Immutable.fromJS(action.payload))
     },
     [actions.setSortFilter](state, action) {
-      return state.updateIn(
+      return state.setIn(
         ['sortFilter', action.payload.exchangeFilter],
-        (sortFilter: any) => action.payload.sortFilter
+        action.payload.sortFilter
       )
     }
   },

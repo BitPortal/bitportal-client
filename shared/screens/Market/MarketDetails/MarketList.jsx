@@ -10,9 +10,8 @@ import messages from './messages'
 
 import styles from './styles'
 
-const MarketElement = ({ onPress, data }) => (
+const MarketElement = ({ data }) => (
   <TouchableHighlight
-    // onPress={() => onPress(data)}
     underlayColor={Colors.hoverColor}
   >
     <View style={styles.marketElementContainer}>
@@ -96,7 +95,7 @@ export default class MarketList extends Component {
           ) : (
             listedExchange.map(data => (
               <MarketElement
-                key={data.market + data.exchange}
+                key={data.get('market') + data.get('exchange')}
                 data={data}
                 onPress={e => changeMarket(e)}
               />

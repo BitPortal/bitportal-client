@@ -4,7 +4,6 @@ import Colors from 'resources/colors'
 import { FormattedNumber } from 'react-intl'
 import { connect } from 'react-redux'
 import { exchangeTickerSelector } from 'selectors/ticker'
-import { bindActionCreators } from 'redux'
 import { ASSET_FRACTION } from 'constants/market'
 import Images from 'resources/images'
 import styles from './styles'
@@ -27,36 +26,25 @@ const filterBgColor = (data) => {
     token: state.token.get('data'),
     locale: state.intl.get('locale')
   })
-  // dispatch => ({
-  //   actions: bindActionCreators(
-  //     {
-  //       ...chartActions
-  //     },
-  //     dispatch
-  //   )
-  // }),
-  // null,
-  // { withRef: true }
 )
+
 export default class CoinInfoCard extends Component {
   render() {
     const {
-      baseAsset,
-      ticker,
       item,
-      listedExchange,
       locale,
       token
     } = this.props
+
     const price_change_percent = item.get('price_change_percent')
     const price_last = item.get('price_last')
     const base_volume = item.get('base_volume')
     const quote_volume = item.get('quote_volume')
     const quote_asset = item.get('quote_asset')
     const base_asset = item.get('base_asset')
-    // console.log('price_last', price_last, 'base_asset', base_asset);
-    console.log('this.props.token', this.props.token)
-    const { name_zh, name_en } = token.toJS()
+    const name_zh = token.get('name_zh')
+    const name_en = token.get('name_en')
+
     return (
       <View style={styles.cardContainer}>
         <View style={styles.titleWrapper}>
@@ -100,7 +88,6 @@ export default class CoinInfoCard extends Component {
             </Text>
           </View>
         </View>
-
         <View style={[styles.spaceBetween, { marginTop: 4 }]}>
           <Text
             style={[styles.text14, { color: Colors.textColor_255_255_238 }]}
