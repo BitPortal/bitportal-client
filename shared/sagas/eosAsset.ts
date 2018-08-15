@@ -14,12 +14,6 @@ function* getEosAsset(action: Action<eosAssetParams>) {
       call(storage.getItem, 'eosAssetListPrefs', true)
     ])
     console.log('eosAsset saga', eosAssetListPrefs, data)
-    // if (eosAssetListPrefs) {
-    // data.forEach((item: any) => {
-    //   console.log('forEach', item)
-    //   return (item.value = !!eosAssetListPrefs[item.symbol].value || false)
-    // })
-    // } else {
     data.forEach((item: any) => {
       item.value = false
     })

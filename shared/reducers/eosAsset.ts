@@ -36,17 +36,6 @@ export default handleActions(
       console.log('reducer actions.saveAssetPref', action.payload)
       return state.set('assetPrefs', Immutable.fromJS(action.payload))
     },
-
-    // [actions.saveAssetPref](state, action) {
-    //   return state.update('data', (list: any) => list.map(item => item.set(
-    //     'value',
-    //     !!action.payload[item.get('symbol')]
-    //           && action.payload[item.get('symbol')].value
-    //   )
-    //   )
-    //   )
-    // }
-    // },
     [actions.getAssetPrefSucceeded](state, action) {
       console.log('reducer getAssetPref', action.payload)
       return state.set('assetPrefs', Immutable.fromJS(action.payload))
