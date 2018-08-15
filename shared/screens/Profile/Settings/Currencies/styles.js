@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: 50,
     paddingHorizontal: 32,
-    backgroundColor: Colors.bgColor_48_49_59
+    backgroundColor: Colors.bgColor_30_31_37
   },
   between: {
     alignItems: 'center',

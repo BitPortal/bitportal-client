@@ -1,8 +1,10 @@
 {
   "zh": {
-    "mdf_title_name_nav" : "社媒"
+    "mdf_title_name_nav" : "社媒",
+    "mdf_title_name_copied" : "已完成复制"
   },
   "en": {
-    "mdf_title_name_nav" : "Media"
+    "mdf_title_name_nav" : "Media",
+    "mdf_title_name_copied" : "Copied"
   }
 }

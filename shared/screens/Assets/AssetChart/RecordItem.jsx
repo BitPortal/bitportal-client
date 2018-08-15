@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
     height: 70,
-    backgroundColor: Colors.bgColor_48_49_59,
+    backgroundColor: Colors.bgColor_30_31_37,
     borderBottomColor: Colors.minorThemeColor,
     borderBottomWidth: StyleSheet.hairlineWidth
   },

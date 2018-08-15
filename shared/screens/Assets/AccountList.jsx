@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderBottomColor: Colors.minorThemeColor,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    backgroundColor: Colors.bgColor_48_49_59
+    backgroundColor: Colors.bgColor_30_31_37
   },
   bgContainer: {
     width: SCREEN_WIDTH,
@@ -68,7 +68,7 @@ export default class AccountList extends Component {
         <View style={styles.container}>
           <TouchableOpacity style={[styles.container, { backgroundColor: 'rgba(0,0,0,0.1)' }]} onPress={() => dismissModal()} />
           <View style={styles.bgContainer}>
-            <ScrollView style={{ maxHeight: 400, backgroundColor: Colors.bgColor_48_49_59 }} showsVerticalScrollIndicator={false}>
+            <ScrollView style={{ maxHeight: 400, backgroundColor: Colors.bgColor_30_31_37 }} showsVerticalScrollIndicator={false}>
               {data.map(item => (<ListItem key={item.get('bpid')} item={item} active={item.get('bpid') === activeAccount.get('bpid')} onPress={() => this.switchAccount(item)} />))}
               {moreData.map(item => (<ListItem key={item.get('eosAccountName')} item={item} active={item.get('eosAccountName') === activeAccount.get('eosAccountName')} onPress={() => this.switchAccount(item)} />))}
             </ScrollView>

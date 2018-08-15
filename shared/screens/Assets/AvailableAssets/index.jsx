@@ -9,7 +9,7 @@ import messages from './messages'
 import styles from './styles'
 
 const AssetElement = ({ item, onValueChange }) => (
-  <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.bgColor_48_49_59 }]}>
+  <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.bgColor_30_31_37 }]}>
     <View style={{ flexDirection: 'row' }}>
       <Text style={styles.text20}> { item.assetName } </Text>
     </View>

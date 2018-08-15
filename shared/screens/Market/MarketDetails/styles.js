@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     height: 350,
     paddingVertical: 20,
     marginVertical: 20,
-    backgroundColor: Colors.bgColor_48_49_59
+    backgroundColor: Colors.bgColor_30_31_37
   },
   chart: {
     width: SCREEN_WIDTH,
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     // borderTopWidth: 2,
     paddingVertical: 15,
     paddingHorizontal: 20,
-    backgroundColor: Colors.bgColor_48_49_59,
+    backgroundColor: Colors.bgColor_30_31_37,
     borderBottomWidth: 1
     // justifyContent: 'center'
   },
