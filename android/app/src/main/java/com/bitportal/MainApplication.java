@@ -1,7 +1,7 @@
 package com.bitportal;
 
 import android.app.Application;
-
+import com.remobile.qrcodeLocalImage.RCTQRCodeLocalImagePackage;
 import com.facebook.react.ReactApplication;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.avishayil.rnrestart.ReactNativeRestartPackage;
@@ -65,7 +65,8 @@ public class MainApplication extends NavigationApplication {
       new RNVersionNumberPackage(),
       new RNDeviceInfo(),
       new ReactNativeRestartPackage(),
-      new PickerPackage()
+      new PickerPackage(),
+      new RCTQRCodeLocalImagePackage()
     );
   }
 

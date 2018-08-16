@@ -111,6 +111,7 @@ android {
         targetSdkVersion 27
         renderscriptTargetApi 27
         renderscriptSupportModeEnabled true
+        vectorDrawables.useSupportLibrary true
         versionCode 1
         versionName "0.2.0"
         missingDimensionStrategy "RNN.reactNativeVersion", "reactNative55"
@@ -185,6 +186,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-qrcode-local-image')
     compile project(':react-native-image-crop-picker')
     compile project(':react-native-restart')
     implementation fileTree(dir: "libs", include: ["*.jar"])

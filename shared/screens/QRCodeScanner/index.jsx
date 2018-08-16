@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import ImagePicker from 'react-native-image-crop-picker'
+import QRDecode from '@remobile/react-native-qrcode-local-image'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { View } from 'react-native'
 import QRCodeScanner from 'react-native-qrcode-scanner'
@@ -13,6 +14,7 @@ import { parseEOSQrString } from 'utils'
 import { FontScale } from 'utils/dimens'
 import Colors from 'resources/colors'
 import { checkPhoto } from 'utils/permissions'
+import Dialog from 'components/Dialog'
 import messages from './messages'
 import styles from './styles'
 
@@ -75,12 +77,13 @@ export default class Scanner extends Component {
   getImageFromPhoto = async () => {
     const authorized = await checkPhoto()
     if (authorized) {
-      ImagePicker.openPicker({
-        width: 300,
-        height: 400,
-        cropping: false
-      }).then(image => {
-        console.log('###', image)
+      ImagePicker.openPicker({ width: 300, height: 400, cropping: false }).then(image => {
+        console.log('###', image, image.path)
+        QRDecode.decode(image.path, (error, result)=>{
+          console.log('###', error, result)
+          if (!!error) Dialog.alert("请确认所选图片中含有二维码", null, { positiveText: '确定' })
+          else this.onSuccess({ data: result })
+        })
       })
     }
   }
