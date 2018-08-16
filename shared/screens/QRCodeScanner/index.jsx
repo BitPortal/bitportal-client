@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
+import ImagePicker from 'react-native-image-crop-picker'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { View } from 'react-native'
 import QRCodeScanner from 'react-native-qrcode-scanner'
@@ -9,6 +10,9 @@ import { change } from 'redux-form/immutable'
 import { IntlProvider } from 'react-intl'
 import * as balanceActions from 'actions/balance'
 import { parseEOSQrString } from 'utils'
+import { FontScale } from 'utils/dimens'
+import Colors from 'resources/colors'
+import { checkPhoto } from 'utils/permissions'
 import messages from './messages'
 import styles from './styles'
 
@@ -68,6 +72,19 @@ export default class Scanner extends Component {
     }
   }
 
+  getImageFromPhoto = async () => {
+    const authorized = await checkPhoto()
+    if (authorized) {
+      ImagePicker.openPicker({
+        width: 300,
+        height: 400,
+        cropping: false
+      }).then(image => {
+        console.log('###', image)
+      })
+    }
+  }
+
   render() {
     const { locale } = this.props
 
@@ -75,8 +92,9 @@ export default class Scanner extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
             title={messages[locale].qrscn_title_name_qrscanner}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
+            rightButton={<CommonButton title={messages[locale].qrscn_button_name_photos} onPress={this.getImageFromPhoto} extraTextStyle={{ fontSize: FontScale(18), color: Colors.textColor_89_185_226 }} />}
           />
           <QRCodeScanner
             ref={(node) => { this.scanner = node }}

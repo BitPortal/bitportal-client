@@ -73,7 +73,7 @@ export const WebViewLeftButton = ({ goBack, goHome }) => (
     {/* <TouchableOpacity style={[{ flex: 1, paddingHorizontal: 5 }, styles.center]} onPress={goForward} >
       <Ionicons name={"md-arrow-forward"} size={24} color={Colors.bgColor_FFFFFF} />
     </TouchableOpacity> */}
-    <TouchableOpacity style={[{ flex: 1, paddingHorizontal: 5 }, styles.center]} onPress={goHome}>
+    <TouchableOpacity style={[{ flex: 1, paddingHorizontal: 5, marginRight: 10 }, styles.center]} onPress={goHome}>
       <Ionicons name={"md-close"} size={24} color={Colors.bgColor_FFFFFF} />
     </TouchableOpacity>
   </View>
