@@ -8,6 +8,7 @@ import 'core-js/fn/symbol/iterator'
 import { StatusBar } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { getInitialLang } from 'selectors/intl'
+import { getInitialContact } from 'selectors/contact'
 import { getInitialCurrency } from 'selectors/currency'
 import { startSingleApp, startTabBasedApp, registerScreens } from 'navigators'
 import storage from 'utils/storage'
@@ -37,18 +38,33 @@ if (ENV === 'production') {
 
 const runApp = async () => {
   let lang = await storage.getItem('bitportal_lang')
+
+  if (!lang) {
+    const deviceLang = DeviceInfo.getDeviceLocale()
+
+    if (deviceLang.indexOf('zh') !== -1) {
+      lang = 'zh'
+    } else {
+      lang = 'en'
+    }
+  }
+
   const currency = await storage.getItem('bitportal_currency', true)
   let symbol, rate
+
   if (currency) {
     symbol = currency.symbol
     rate = currency.rate
   }
-  if (!lang) {
-    lang = DeviceInfo.getDeviceLocale()
-    if (lang.indexOf('zh-') !== -1) lang = 'zh'
-    else lang = 'en'
-  }
-  const store = configure({ intl: getInitialLang(lang), currency: getInitialCurrency(symbol, rate) })
+
+  const contact = await storage.getItem('bitportal_contact', true)
+
+  const store = configure({
+    intl: getInitialLang(lang),
+    contact: getInitialContact(contact),
+    currency: getInitialCurrency(symbol, rate)
+  })
+
   registerScreens(store)
   store.runSaga(sagas)
 

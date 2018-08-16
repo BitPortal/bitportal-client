@@ -20,6 +20,7 @@ import ramSaga from './ram'
 import bandwidthSaga from './bandwidth'
 import tokenSaga from './token'
 import eosAssetSaga from './eosAsset'
+import contactSaga from './contact'
 
 const sagas = {
   intlSaga: fork(intlSaga),
@@ -41,7 +42,8 @@ const sagas = {
   ramSaga: fork(ramSaga),
   bandwidthSaga: fork(bandwidthSaga),
   tokenSaga: fork(tokenSaga),
-  eosAssetSaga: fork(eosAssetSaga)
+  eosAssetSaga: fork(eosAssetSaga),
+  contactSaga: fork(contactSaga)
 }
 
 if (ENV === 'production') {
