@@ -131,7 +131,7 @@ export default class AssetChart extends Component {
                 onRefresh={this.onRefresh}
                 getItem={(items, index) => (items.get ? items.get(index) : items[index])}
                 getItemCount={items => (items.size || 0)}
-                keyExtractor={(item, index) => String(index)}
+                keyExtractor={item => String(item.get('account_action_seq'))}
                 renderItem={({ item }) => <RecordItem key={item.get('account_action_seq')} item={item} onPress={this.checkTransactionRecord} eosAccountName={eosAccountName} />}
                 onEndReached={this.loadMore}
                 onEndReachedThreshold={0.5}

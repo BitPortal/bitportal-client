@@ -33,6 +33,7 @@ import styles from './styles'
   null,
   { withRef: true }
 )
+
 export class HeaderTitle extends Component {
   sortToggle(selector) {
     const { exchangeFilter, sortFilter } = this.props
@@ -319,10 +320,9 @@ export default class TableView extends Component {
           style={styles.list}
           refreshing={refreshing}
           onRefresh={onRefresh}
-          getItem={(items, index) => (items.get ? items.get(index) : items[index])
-          }
+          getItem={(items, index) => (items.get ? items.get(index) : items[index])}
           getItemCount={items => items.count() || 0}
-          keyExtractor={(item, index) => String(index)}
+          keyExtractor={item => String(item.get('symbol'))}
           renderItem={({ item, index }) => (
             <ListItem key={index} data={item} index={index} onPress={onPress} />
           )}
