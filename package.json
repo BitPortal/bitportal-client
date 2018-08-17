@@ -36,6 +36,7 @@
     "tsc": "tsc"
   },
   "dependencies": {
+    "@remobile/react-native-qrcode-local-image": "^1.0.4",
     "bip38": "^2.0.2",
     "bip39": "^2.5.0",
     "bitcoinjs-lib": "^3.3.2",
@@ -79,6 +80,7 @@
     "react-native-eosjs-api": "git+https://github.com/TerenceGe/eosjs-api.git",
     "react-native-eosjs-ecc": "git+https://github.com/TerenceGe/eosjs-ecc.git",
     "react-native-extended-stylesheet": "^0.8.0",
+    "react-native-image-crop-picker": "^0.20.3",
     "react-native-linear-gradient": "^2.4.0",
     "react-native-modal": "^5.4.0",
     "react-native-navbar": "^2.1.0",
