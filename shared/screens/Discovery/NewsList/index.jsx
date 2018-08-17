@@ -14,7 +14,7 @@ import messages from './messages'
 )
 
 export default class NewsList extends PureComponent {
-  keyExtractor = item => item.id
+  keyExtractor = item => String(item.id)
 
   renderHeader = () => (
     <View>

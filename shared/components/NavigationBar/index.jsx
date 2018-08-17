@@ -67,8 +67,8 @@ export const LinkingRightButton = ({ iconName, onPress }) => (
 
 export const WebViewLeftButton = ({ goBack, goHome }) => (
   <View style={[styles.navButton, { flexDirection: 'row', alignItems: 'center' }]}>
-    <TouchableOpacity style={[{ flex: 1, marginLeft: -15, paddingHorizontal: 5 }, styles.center]} onPress={goBack} >
-      <Ionicons name={"md-arrow-back"} size={24} color={Colors.bgColor_FFFFFF} />
+    <TouchableOpacity style={[{ flex: 1, marginLeft: -15, paddingHorizontal: 5 }, styles.center]} onPress={goBack}>
+      <Ionicons name="md-arrow-back" size={24} color={Colors.bgColor_FFFFFF} />
     </TouchableOpacity>
     {/* <TouchableOpacity style={[{ flex: 1, paddingHorizontal: 5 }, styles.center]} onPress={goForward} >
       <Ionicons name={"md-arrow-forward"} size={24} color={Colors.bgColor_FFFFFF} />

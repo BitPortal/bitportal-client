@@ -40,10 +40,6 @@ export default class TokenDetails extends Component {
 
   componentWillMount() {
     InteractionManager.runAfterInteractions(() => {
-      console.log(
-        'running getTokenDetail in componentWillMount',
-        this.props.baseAsset
-      )
       this.props.actions.getTokenDetailRequested({
         symbol: this.props.baseAsset
       })

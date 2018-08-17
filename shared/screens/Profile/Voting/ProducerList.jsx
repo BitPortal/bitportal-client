@@ -78,7 +78,7 @@ export default class ProducerList extends PureComponent {
         style={styles.list}
         getItem={(items, index) => (items.get ? items.get(index) : items[index])}
         getItemCount={items => (items.count() || 0)}
-        keyExtractor={(item, index) => String(index) + item.get('owner')}
+        keyExtractor={item => String(item.get('owner'))}
         showsVerticalScrollIndicator={false}
         onRefresh={this.props.onRefresh}
         refreshing={this.props.refreshing}

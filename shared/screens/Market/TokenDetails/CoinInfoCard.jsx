@@ -46,7 +46,6 @@ export default class CoinInfoCard extends Component {
     const { ticker } = this.props
     let result = 0
     ticker.toJS().forEach((item) => {
-      console.log('item.price_change_percent', item.price_change_percent)
       result += item.price_change_percent
     })
     result /= ticker.toJS().length

@@ -10,6 +10,7 @@ import Modal from 'react-native-modal'
 import { Navigation } from 'react-native-navigation'
 import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from 'constants/market'
 import NavigationBar, { ListButton } from 'components/NavigationBar'
+import SearchBar from 'components/SearchBar'
 import { IntlProvider } from 'react-intl'
 import ExchangeList from './ExchangeList'
 import { Quotes } from './Quotes'
@@ -38,7 +39,6 @@ import styles from './styles'
   null,
   { withRef: true }
 )
-
 export default class Market extends Component {
   state = {
     coinName: '',
@@ -134,6 +134,7 @@ export default class Market extends Component {
                 onPress={this.selectExchange}
               />
             }
+            rightButton={<SearchBar />}
           />
           <Quotes
             onPress={this.changeQuote}

@@ -16,6 +16,7 @@ import transferSaga from './transfer'
 import transactionSaga from './transaction'
 import ramSaga from './ram'
 import tokenSaga from './token'
+import eosAssetSaga from './eosAsset'
 
 const sagas = {
   intlSaga: fork(intlSaga),
@@ -33,7 +34,8 @@ const sagas = {
   transferSaga: fork(transferSaga),
   transactionSaga: fork(transactionSaga),
   ramSaga: fork(ramSaga),
-  tokenSaga: fork(tokenSaga)
+  tokenSaga: fork(tokenSaga),
+  eosAssetSaga: fork(eosAssetSaga)
 }
 
 if (ENV === 'production') {

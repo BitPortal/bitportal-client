@@ -9,7 +9,8 @@ const initialState = Immutable.fromJS({
   eosAccountCreationInfo: {},
   loading: false,
   loaded: false,
-  error: null
+  error: null,
+
 })
 
 export default handleActions({
@@ -44,7 +45,7 @@ export default handleActions({
       })
   },
   [actions.importEOSAccountFailed] (state, action) {
-    return state.set('error', action.payload).set('loading', false)
+    return state.set('importError', action.payload).set('loading', false)
   },
   [actions.getEOSKeyAccountsRequested] (state) {
     return state.set('loading', true)
@@ -53,7 +54,7 @@ export default handleActions({
     return state.set('loaded', true).set('loading', false)
   },
   [actions.getEOSKeyAccountsFailed] (state, action) {
-    return state.set('error', action.payload).set('loading', false)
+    return state.set('getKeyAccountsError', action.payload).set('loading', false)
   },
   [actions.syncEOSAccount] (state, action) {
     return state.set('eosAccountList', Immutable.fromJS(action.payload))
@@ -62,7 +63,7 @@ export default handleActions({
     return state.set('eosAccountCreationInfo', Immutable.fromJS(action.payload))
   },
   [actions.clearEOSAccountError] (state) {
-    return state.set('error', null)
+    return state.set('error', null).set('importError', null).set('getKeyAccountsError', null)
   },
   [actions.resetEOSAccount] () {
     return initialState

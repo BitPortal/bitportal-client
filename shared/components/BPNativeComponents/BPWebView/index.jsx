@@ -113,7 +113,7 @@ export default class BPWebView extends Component {
               uri
               && <WebView
                 source={{ uri }}
-                ref={ e => this.webview = e }
+                ref={e => this.webview = e}
                 renderError={this.renderError}
                 renderLoading={this.renderLoading}
                 startInLoadingState={true}
