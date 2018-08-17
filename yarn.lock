@@ -542,6 +542,10 @@
     reflect-metadata "^0.1.12"
     tslib "^1.8.1"
 
+"@remobile/react-native-qrcode-local-image@^1.0.4":
+  version "1.0.4"
+  resolved "http://registry.npm.taobao.org/@remobile/react-native-qrcode-local-image/download/@remobile/react-native-qrcode-local-image-1.0.4.tgz#471e14ca6be6852578e0ca63c2a8bf67a61b4e47"
+
 "@types/bigi@*":
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/@types/bigi/-/bigi-1.4.2.tgz#8dda60612e689e5769047568d0ce8b8fa83db953"
@@ -9027,6 +9031,10 @@ react-native-extended-stylesheet@^0.8.0:
   dependencies:
     css-mediaquery "^0.1.2"
     object-resolve-path "^1.1.0"
+
+react-native-image-crop-picker@^0.20.3:
+  version "0.20.3"
+  resolved "http://registry.npm.taobao.org/react-native-image-crop-picker/download/react-native-image-crop-picker-0.20.3.tgz#565d69c1764e96abef23871fe4d6d58b1ee35e18"
 
 react-native-linear-gradient@^2.4.0:
   version "2.4.0"

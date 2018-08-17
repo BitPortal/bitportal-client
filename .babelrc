@@ -4,6 +4,7 @@
     "transform-decorators-legacy",
     "transform-object-rest-spread"
   ],
+  "sourceMaps": true,
   "env": {
     "test": {
       "presets": ["env", "react"],
