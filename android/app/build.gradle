@@ -107,9 +107,10 @@ android {
 
     defaultConfig {
         applicationId "com.bitportal"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 27
         renderscriptTargetApi 27
+        multiDexEnabled true 
         renderscriptSupportModeEnabled true
         vectorDrawables.useSupportLibrary true
         versionCode 1
@@ -186,6 +187,7 @@ android {
 }
 
 dependencies {
+    compile 'com.android.support:multidex:1.0.2'
     compile project(':react-native-qrcode-local-image')
     compile project(':react-native-image-crop-picker')
     compile project(':react-native-restart')
