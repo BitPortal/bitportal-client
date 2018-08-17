@@ -19,6 +19,7 @@ import ram from './ram'
 import token from './token'
 import eosAsset from './eosAsset'
 import contact from './contact'
+import eosNode from './eosNode'
 
 export default combineReducers({
   form,
@@ -40,5 +41,6 @@ export default combineReducers({
   transaction,
   token,
   eosAsset,
-  contact
+  contact,
+  eosNode
 })

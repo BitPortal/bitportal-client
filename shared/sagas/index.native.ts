@@ -21,6 +21,7 @@ import bandwidthSaga from './bandwidth'
 import tokenSaga from './token'
 import eosAssetSaga from './eosAsset'
 import contactSaga from './contact'
+import eosNodeSaga from './eosNode'
 
 const sagas = {
   intlSaga: fork(intlSaga),
@@ -43,7 +44,8 @@ const sagas = {
   bandwidthSaga: fork(bandwidthSaga),
   tokenSaga: fork(tokenSaga),
   eosAssetSaga: fork(eosAssetSaga),
-  contactSaga: fork(contactSaga)
+  contactSaga: fork(contactSaga),
+  eosNodeSaga: fork(eosNodeSaga)
 }
 
 if (ENV === 'production') {

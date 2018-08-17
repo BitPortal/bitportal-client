@@ -37,15 +37,14 @@ const styles = StyleSheet.create({
   }
 })
 
-export const DefaultItem = ({ item, onPress, active, disabled }) => (
+export const DefaultItem = ({ data, onPress, active }) => (
   <TouchableWithoutFeedback
     underlayColor={Colors.hoverColor}
     style={styles.container}
-    disabled={disabled || false}
-    onPress={() => onPress(item)}
+    onPress={onPress}
   >
     <View style={[styles.container, styles.between, styles.border, { paddingHorizontal: 32 }]}>
-      <Text style={styles.text16}>{item}</Text>
+      <Text style={styles.text16}>{data.item.url}</Text>
       {active && <Ionicons name="ios-checkmark" size={36} color={Colors.bgColor_0_122_255} />}
     </View>
   </TouchableWithoutFeedback>
@@ -53,7 +52,7 @@ export const DefaultItem = ({ item, onPress, active, disabled }) => (
 
 export const DeleteButton = ({ onPress }) => (
   <TouchableHighlight
-    onPress={() => onPress()}
+    onPress={onPress}
     style={[styles.btn, styles.center]}
     underlayColor={Colors.bgColor_255_71_64}
   >
@@ -88,25 +87,26 @@ class SwipeItem extends React.Component {
     if (this.state.isSwiped) {
       this.setState({ isSwiped: false })
     } else {
-      this.props.onPress()
+      this.props.onPress(this.props.data)
     }
   }
 
   render() {
-    const { item, active, deleteItem } = this.props
+    const { data, active, deleteItem, enableDelete } = this.props
 
     return (
       <SwipeRow
         disableRightSwipe={true}
+        disableLeftSwipe={!enableDelete}
         rightOpenValue={-100}
-        preview={true}
+        preview={enableDelete}
         onRowOpen={this.onRowOpen}
         onRowClose={this.onRowClose}
         closeOnRowPress={true}
         style={{ backgroundColor: Colors.bgColor_30_31_37 }}
       >
         <DeleteButton onPress={deleteItem} />
-        <DefaultItem item={item} onPress={this.onPressItem} active={active} />
+        <DefaultItem data={data} onPress={this.onPressItem} active={active} />
       </SwipeRow>
     )
   }
