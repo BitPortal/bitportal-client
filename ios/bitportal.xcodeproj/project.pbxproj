@@ -80,6 +80,10 @@
 		18849DDD20F700C4008C8BC8 /* RNUMConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = 18849DDC20F700C3008C8BC8 /* RNUMConfigure.m */; };
 		18849DE020F702C0008C8BC8 /* UMPushModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 18849DDE20F702C0008C8BC8 /* UMPushModule.m */; };
 		18A2AA5220F70A4300CD3D3C /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A2AA0C20F70A4300CD3D3C /* libsqlite3.tbd */; };
+		18B2C8E22126866500493D57 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18B2C8E12126866500493D57 /* RSKImageCropper.framework */; };
+		18B2C8E32126866500493D57 /* RSKImageCropper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18B2C8E12126866500493D57 /* RSKImageCropper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		18B2C8E52126866500493D57 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18B2C8E42126866500493D57 /* QBImagePicker.framework */; };
+		18B2C8E62126866500493D57 /* QBImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18B2C8E42126866500493D57 /* QBImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		18EF1C182090760100BF5B70 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18EF1C13209075F600BF5B70 /* Charts.framework */; };
 		18EF1C192090760800BF5B70 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18EF1C13209075F600BF5B70 /* Charts.framework */; };
 		18EF1C1A2090760800BF5B70 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18EF1C13209075F600BF5B70 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -700,7 +704,9 @@
 			dstSubfolderSpec = 10;
 			files = (
 				18EF1CCB2090A04100BF5B70 /* SwiftyJSON.framework in Embed Frameworks */,
+				18B2C8E32126866500493D57 /* RSKImageCropper.framework in Embed Frameworks */,
 				18EF1C1A2090760800BF5B70 /* Charts.framework in Embed Frameworks */,
+				18B2C8E62126866500493D57 /* QBImagePicker.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -795,6 +801,8 @@
 		18849DDE20F702C0008C8BC8 /* UMPushModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMPushModule.m; sourceTree = "<group>"; };
 		18849DDF20F702C0008C8BC8 /* UMPushModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMPushModule.h; sourceTree = "<group>"; };
 		18A2AA0C20F70A4300CD3D3C /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		18B2C8E12126866500493D57 /* RSKImageCropper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		18B2C8E42126866500493D57 /* QBImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18EF1C0C209075F600BF5B70 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = Charts/Charts.xcodeproj; sourceTree = "<group>"; };
 		18EF1CB02090A01F00BF5B70 /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
 		19F3AC824ACC4F94AE750BD7 /* RCTRestart.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTRestart.xcodeproj; path = "../node_modules/react-native-restart/ios/RCTRestart.xcodeproj"; sourceTree = "<group>"; };
@@ -1004,10 +1012,12 @@
 				D023FF8940464E9991C0DC59 /* libRNSensitiveInfo.a in Frameworks */,
 				9E31D36A8C5B48448C2BF665 /* libReactNativeConfig.a in Frameworks */,
 				9509302018DC41A2817622F3 /* libBVLinearGradient.a in Frameworks */,
+				18B2C8E22126866500493D57 /* RSKImageCropper.framework in Frameworks */,
 				65B9E23F4D9E4DB68F5A768C /* libReactNativePermissions.a in Frameworks */,
 				3C4507934177471B93375682 /* libRNRandomBytes.a in Frameworks */,
 				AD83B47857424C849778388D /* libRNCamera.a in Frameworks */,
 				18849DD320F70079008C8BC8 /* UMAnalytics.framework in Frameworks */,
+				18B2C8E52126866500493D57 /* QBImagePicker.framework in Frameworks */,
 				43E5398727FA4DD5AB8E784C /* libRNBlur.a in Frameworks */,
 				8742690AC5034BEA97098A14 /* libRNVersionNumber.a in Frameworks */,
 				18849DD520F70082008C8BC8 /* UMCommon.framework in Frameworks */,
@@ -1740,6 +1750,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				18B2C8E42126866500493D57 /* QBImagePicker.framework */,
+				18B2C8E12126866500493D57 /* RSKImageCropper.framework */,
 				13B07FAE1A68108700A75B9A /* bitportal */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,

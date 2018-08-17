@@ -15,6 +15,7 @@ import { FontScale } from 'utils/dimens'
 import Colors from 'resources/colors'
 import { checkPhoto } from 'utils/permissions'
 import Dialog from 'components/Dialog'
+import Loading from 'components/Loading'
 import messages from './messages'
 import styles from './styles'
 
@@ -39,6 +40,10 @@ export default class Scanner extends Component {
         visible: false
       }
     }
+  }
+
+  state = {
+    isVisible: false
   }
 
   componentDidAppear() {
@@ -78,11 +83,13 @@ export default class Scanner extends Component {
     const authorized = await checkPhoto()
     if (authorized) {
       ImagePicker.openPicker({ width: 300, height: 400, cropping: false }).then(image => {
-        // alert(`${JSON.stringify(image)}--${image.path}`)
+        console.log(`### -- ${image}--${image.path}`)
+        this.setState({ isVisible: true })
         QRDecode.decode(image.path, (error, result)=>{
-          // alert(`${error}--${result}`)
+          console.log(`### --${error}--${result}`)
           if (!!error) Dialog.alert("请确认所选图片中含有二维码", null, { positiveText: '确定' })
           else this.onSuccess({ data: result })
+          this.setState({ isVisible: false })
         })
       })
     }
@@ -104,6 +111,7 @@ export default class Scanner extends Component {
             onRead={this.onSuccess}
             showMarker={true}
           />
+          <Loading isVisible={this.state.isVisible} />
         </View>
       </IntlProvider>
     )
