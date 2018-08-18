@@ -3,7 +3,7 @@ const fs = require('fs')
 const { resolve, join } = require('path')
 const DotENV = require('dotenv-webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const ExtractCssChunks = require("extract-css-chunks-webpack-plugin")
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
@@ -106,7 +106,7 @@ const baseConfig = {
         test: /\.css$/,
         include: resolve(__dirname, 'shared'),
         use: [
-          MiniCssExtractPlugin.loader,
+          ExtractCssChunks.loader,
           {
             loader: 'css-loader',
             query: {
@@ -126,7 +126,7 @@ const baseConfig = {
         test: /\.css$/,
         exclude: resolve(__dirname, 'shared'),
         use: [
-          MiniCssExtractPlugin.loader,
+          ExtractCssChunks.loader,
           {
             loader: 'css-loader',
             query: { minimize: true }
@@ -158,7 +158,7 @@ const baseConfig = {
       path: resolve(__dirname, `.env.${process.env.APP_ENV}`),
       systemvars: true
     }),
-    new MiniCssExtractPlugin({
+    new ExtractCssChunks({
       filename: ifProduction('styles/bundle.css?v=[hash]', 'styles/bundle.css'),
       chunkFilename: ifProduction('styles/[name].chunk.css?v=[chunkhash]', 'styles/[name].chunk.css')
     }),
