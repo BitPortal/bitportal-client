@@ -13,7 +13,6 @@ import producerSage from './producer'
 import versionInfoSaga from './versionInfo'
 import currencySaga from './currency'
 import votingSaga from './voting'
-import stakeSaga from './stake'
 import transferSaga from './transfer'
 import transactionSaga from './transaction'
 import ramSaga from './ram'
@@ -37,7 +36,6 @@ const sagas = {
   versionInfoSaga: fork(versionInfoSaga),
   currencySaga: fork(currencySaga),
   votingSaga: fork(votingSaga),
-  stakeSaga: fork(stakeSaga),
   transferSaga: fork(transferSaga),
   transactionSaga: fork(transactionSaga),
   ramSaga: fork(ramSaga),
