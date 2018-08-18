@@ -1,5 +1,4 @@
 import assert from 'assert'
-import { delay } from 'redux-saga'
 import { all, select, call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import { reset } from 'redux-form/immutable'

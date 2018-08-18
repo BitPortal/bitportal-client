@@ -1,6 +1,5 @@
 import Immutable from 'immutable'
 import { handleActions } from 'redux-actions'
-import { QUOTE_ASSETS } from 'constants/market'
 import * as actions from 'actions/eosAsset'
 
 const initialState = Immutable.fromJS({
@@ -13,10 +12,10 @@ const initialState = Immutable.fromJS({
 
 export default handleActions(
   {
-    [actions.getEosAssetRequested](state, action) {
+    [actions.getEOSAssetRequested](state) {
       return state.set('loading', true)
     },
-    [actions.getEosAssetSucceeded](state, action) {
+    [actions.getEOSAssetSucceeded](state, action) {
       return state
         .set('loaded', true)
         .set('loading', false)
@@ -28,7 +27,7 @@ export default handleActions(
         )
       //parse with existing asset prefs
     },
-    [actions.getEosAssetFailed](state, action) {
+    [actions.getEOSAssetFailed](state, action) {
       return state.set('error', action.payload).set('loading', false)
     },
     [actions.saveAssetPrefSucceeded](state, action) {

@@ -1,5 +1,4 @@
 import { takeEvery, call, select } from 'redux-saga/effects'
-import { Action } from 'redux-actions'
 import * as actions from 'actions/eosNode'
 import storage from 'utils/storage'
 

@@ -1,7 +1,7 @@
 declare interface AddContactParams {
-  id: number
   eosAccountName: string
-  note: string
+  note?: string
+  componentId?: string
 }
 
 declare type DeleteContactParams = number

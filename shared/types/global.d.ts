@@ -41,6 +41,9 @@ declare interface RootState {
   eosAccount?: any
   ram?: any
   transaction?: any
+  contact?: any
+  eosNode?: any
+  eosAsset?: any
 }
 
 declare interface FetchOptions {
