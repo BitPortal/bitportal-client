@@ -5,7 +5,7 @@ export const getInitialCurrency = (presetCurrencySymbol?: string, presetCurrency
   const symbol = presetCurrencySymbol || 'USD'
 
   return Immutable.fromJS({
-    rate: presetCurrencyRate || DEFAULT_USD_RATE[symbol],
-    symbol
+    symbol,
+    rate: presetCurrencyRate || DEFAULT_USD_RATE[symbol]
   })
 }
