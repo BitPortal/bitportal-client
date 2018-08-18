@@ -17,6 +17,7 @@ import transactionSaga from './transaction'
 import ramSaga from './ram'
 import bandwidthSaga from './bandwidth'
 import tokenSaga from './token'
+import eosAssetSaga from './eosAsset'
 import contactSaga from './contact'
 import eosNodeSaga from './eosNode'
 
@@ -38,6 +39,7 @@ const sagas = {
   ramSaga: fork(ramSaga),
   bandwidthSaga: fork(bandwidthSaga),
   tokenSaga: fork(tokenSaga),
+  eosAssetSaga: fork(eosAssetSaga),
   contactSaga: fork(contactSaga),
   eosNodeSaga: fork(eosNodeSaga)
 }
