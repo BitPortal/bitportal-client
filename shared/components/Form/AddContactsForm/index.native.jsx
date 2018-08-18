@@ -8,11 +8,9 @@ import {
   SubmitButton
 } from 'components/Form'
 import { IntlProvider, FormattedMessage } from 'react-intl'
-import { Navigation } from 'react-native-navigation'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import * as eosAccountActions from 'actions/eosAccount'
 import * as contactActions from 'actions/contact'
-import storage from 'utils/storage'
 import messages from './messages'
 
 const validate = (values) => {

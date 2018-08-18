@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { WebView, View, Text, Share, Linking, TouchableHighlight, Platform, ActivityIndicator } from 'react-native'
+import { WebView, View, Text, Share, Linking, Platform, ActivityIndicator } from 'react-native'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
@@ -99,7 +99,8 @@ export default class BPWebView extends Component {
   )
 
   render() {
-    const { needLinking, uri, title, name, locale } = this.props
+    const { needLinking, uri, title, locale } = this.props
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>

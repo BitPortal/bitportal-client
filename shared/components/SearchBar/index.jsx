@@ -1,8 +1,8 @@
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { IntlProvider, FormattedMessage } from 'react-intl'
-import { View, Animated, TouchableOpacity, Text, TextInput } from 'react-native'
+import { IntlProvider } from 'react-intl'
+import { View, Animated, TouchableOpacity, TextInput } from 'react-native'
 import Colors from 'resources/colors'
 import messages from './messages'
 
@@ -14,12 +14,14 @@ import messages from './messages'
   null,
   { withRef: true }
 )
+
 export default class SearchBar extends Component {
-  state = { expanded: false, text: '' }
+  state = { expanded: false }
 
   render() {
     const { styleProps, locale } = this.props
     const { expanded } = this.state
+
     return (
       <IntlProvider messages={messages[locale]}>
         <Animated.View>
@@ -75,7 +77,7 @@ export default class SearchBar extends Component {
                   placeholder={messages[locale].search}
                   placeholderTextColor={Colors.textColor_181_181_181}
                   numberOfLines={1}
-                  onChangeText={text => this.setState({ text })}
+                  onChangeText={() => {}}
                 >
                   {/* <FormattedMessage id="search" /> */}
                 </TextInput>

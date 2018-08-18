@@ -2,15 +2,12 @@ import React, { Component } from 'react'
 import Colors from 'resources/colors'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { View, Text, ListView, TouchableOpacity, InteractionManager } from 'react-native'
+import { View, Text, TouchableOpacity, InteractionManager } from 'react-native'
 import { connect } from 'react-redux'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import { bindActionCreators } from 'redux'
-import { EOS_NODES } from 'constants/chain'
 import { SwipeListView } from 'react-native-swipe-list-view'
 import * as eosNodeActions from 'actions/eosNode'
-import { FontScale } from 'utils/dimens'
-import storage from 'utils/storage'
 import Prompt from 'components/Prompt'
 import Alert from 'components/Alert'
 import { validateUrl } from 'utils/validate'
@@ -20,7 +17,7 @@ import {
   defaultNodesSelector,
   customNodesSelector
 } from 'selectors/eosNode'
-import { DefaultItem, SwipeItem } from './NodeItem'
+import { SwipeItem } from './NodeItem'
 import messages from './messages'
 import styles from './styles'
 
@@ -95,7 +92,7 @@ export default class NodeSettings extends Component {
     Navigation.pop(this.props.componentId)
   }
 
-  renderItem = (rowData, rowMap) => {
+  renderItem = (rowData) => {
     const { activeNode, customNodes } = this.props
 
     return (
@@ -109,11 +106,9 @@ export default class NodeSettings extends Component {
     )
   }
 
-  renderSectionHeader = ({ section: { title, data } }) => {
-    return data.length > 0 ? (
-      <View style={styles.headTitle}><Text style={styles.text14}>{title}</Text></View>
-    ) : null
-  }
+  renderSectionHeader = ({ section: { title, data } }) => (data.length > 0 ? (
+    <View style={styles.headTitle}><Text style={styles.text14}>{title}</Text></View>
+  ) : null)
 
   render() {
     const { locale, defaultNodes, customNodes } = this.props
