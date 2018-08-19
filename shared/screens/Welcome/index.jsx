@@ -9,7 +9,6 @@ import Images from 'resources/images'
 import Colors from 'resources/colors'
 import LinearGradientContainer from 'components/LinearGradientContainer'
 import VersionNumber from 'react-native-version-number'
-import storage from 'utils/storage'
 import styles from './styles'
 
 const NextButton = ({ goToHomePage }) => (
