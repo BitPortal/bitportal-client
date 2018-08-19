@@ -10,3 +10,5 @@ export const getProducersWithInfoRequested = createAction<GetProducersWithInfoPa
 export const getProducersWithInfoSucceeded = createAction<GetProducersWithInfoResult>('producer/GET_ALL_SUCCEEDED')
 export const getProducersWithInfoFailed = createAction<ErrorMessage>('producer/GET_ALL_FAILED')
 export const sortProducers = createAction<string>('producer/SORT')
+export const toggleSelect = createAction<string>('producer/TOGGLE_SELECT')
+export const setSelected = createAction<any>('producer/SET_SELECT')

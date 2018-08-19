@@ -5,6 +5,8 @@ import { reset } from 'redux-form/immutable'
 import * as actions from 'actions/eosAccount'
 import { getBalanceRequested } from 'actions/balance'
 import { createClassicWalletSucceeded } from 'actions/wallet'
+import  { setSelected } from 'actions/producer'
+import { votedProducersSelector } from 'selectors/eosAccount'
 import secureStorage from 'utils/secureStorage'
 import { BITPORTAL_API_EOS_URL } from 'constants/env'
 import { randomKey, privateToPublic, isValidPrivate, initEOS, getPermissionsByKey, getInitialAccountInfo } from 'core/eos'
@@ -175,6 +177,11 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
   }
 }
 
+function* getEOSAccountSucceeded() {
+  const votedProducers = yield select((state: RootState) => votedProducersSelector(state))
+  if (votedProducers) yield put(setSelected(votedProducers))
+}
+
 function* validateEOSAccountRequested(action: Action<ValidateEOSAccountParams>) {
   if (!action.payload) return
 
@@ -210,6 +217,7 @@ export default function* eosAccountSaga() {
   yield takeEvery(String(actions.createEOSAccountRequested), createEOSAccountRequested)
   yield takeEvery(String(actions.importEOSAccountRequested), importEOSAccountRequested)
   yield takeEvery(String(actions.getEOSAccountRequested), getEOSAccountRequested)
+  yield takeEvery(String(actions.getEOSAccountSucceeded), getEOSAccountSucceeded)
   yield takeEvery(String(actions.validateEOSAccountRequested), validateEOSAccountRequested)
   yield takeEvery(String(actions.validateEOSAccountSucceeded), validateEOSAccountSucceeded)
   yield takeEvery(String(actions.validateEOSAccountFailed), validateEOSAccountFailed)

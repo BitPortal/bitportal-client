@@ -1,9 +1,11 @@
 import React, { Component, PureComponent } from 'react'
 import Colors from 'resources/colors'
 import { FormattedNumber, FormattedMessage } from 'react-intl'
-import { Text, View, TouchableHighlight, TouchableOpacity, VirtualizedList } from 'react-native'
+import { Text, View, TouchableHighlight, TouchableOpacity, VirtualizedList, Dimensions, RefreshControl } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import LinearGradientContainer from 'components/LinearGradientContainer'
+import { RecyclerListView, LayoutProvider } from 'recyclerlistview'
+import ImmutableDataProvider from 'utils/immutableDataProvider'
 import styles from './styles'
 
 class ListItem extends Component {
@@ -70,30 +72,52 @@ class ListItem extends Component {
   }
 }
 
-export default class ProducerList extends PureComponent {
+let dataProvider = new ImmutableDataProvider((r1, r2) => {
+  return r1 !== r2
+})
+
+const { width } = Dimensions.get('window')
+
+export default class ProducerList extends Component {
+  static getDerivedStateFromProps(props, state) {
+    return {
+      dataProvider: dataProvider.cloneWithRows(props.data)
+    }
+  }
+
+  state = {
+    dataProvider: dataProvider.cloneWithRows(this.props.data)
+  }
+
+  layoutProvider = new LayoutProvider(
+    index => index,
+    (type, dim) => {
+      dim.width = width
+      dim.height = 70
+    }
+  )
+
+  rowRenderer = (type, item) => (
+    <ListItem
+      key={item.get('owner')}
+      item={item}
+      rank={item.get('rank')}
+      totalVotes={this.props.totalVotes}
+      onRowPress={this.props.onRowPress.bind(this, item)}
+      onMarkPress={this.props.onMarkPress.bind(this, item)}
+      selected={item.get('selected')}
+    />
+  )
+
   render() {
     return (
-      <VirtualizedList
-        data={this.props.data}
+      <RecyclerListView
         style={styles.list}
-        getItem={(items, index) => (items.get ? items.get(index) : items[index])}
-        getItemCount={items => (items.count() || 0)}
-        keyExtractor={item => String(item.get('owner'))}
-        showsVerticalScrollIndicator={false}
-        onRefresh={this.props.onRefresh}
-        refreshing={this.props.refreshing}
-        ItemSeparatorComponent={() => (<View style={styles.separator} />)}
-        renderItem={({ item, index }) => (
-          <ListItem
-            key={item.get('owner')}
-            item={item}
-            rank={index}
-            totalVotes={this.props.totalVotes}
-            onRowPress={() => this.props.onRowPress(item)}
-            onMarkPress={() => this.props.onMarkPress(item)}
-            selected={this.props.selected.indexOf(item.get('owner')) !== -1}
-          />
-        )}
+        refreshControl={<RefreshControl onRefresh={this.props.onRefresh} refreshing={this.props.refreshing} />}
+        layoutProvider={this.layoutProvider}
+        dataProvider={this.state.dataProvider}
+        rowRenderer={this.rowRenderer}
+        renderAheadOffset={14000}
       />
     )
   }

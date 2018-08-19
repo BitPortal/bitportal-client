@@ -46,6 +46,6 @@ export const voterInfoSelector = createSelector(
 )
 
 export const votedProducersSelector = createSelector(
-  voterInfoSelector,
-  (voterInfo: any) => voterInfo.get('producers')
+  eosAccountSelector,
+  (account: any) => account.getIn(['data', 'voter_info', 'producers'])
 )

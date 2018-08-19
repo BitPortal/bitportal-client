@@ -29,7 +29,9 @@ const styles = StyleSheet.create({
   listItem: {
     width: SCREEN_WIDTH,
     height: 70,
-    backgroundColor: Colors.bgColor_30_31_37
+    backgroundColor: Colors.bgColor_30_31_37,
+    borderBottomColor: Colors.bgColor_000000,
+    borderBottomWidth: StyleSheet.hairlineWidth
   },
   separator: {
     height: StyleSheet.hairlineWidth,
