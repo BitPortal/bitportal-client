@@ -31,15 +31,9 @@ export const exchangeTickerSelector = createSelector(
     .filter((item: any) => item.get('quote_asset') === quote_asset)
     .sortBy((item: any) => {
       const result = exchangeTickerSortByHelper(sortfilter)
-      if (sortfilter.includes('low')) {
-        return +item.get(result)
-      } else {
-        return -+item.get(result)
-      }
+      return sortfilter.includes('low') ? +item.get(result) : -+item.get(result)
     })
 )
-
-// .sortBy((item: any) => -+item.get(sortfilter))
 
 const exchangeTickerSortByHelper = (filter: any) => {
   const filters = {

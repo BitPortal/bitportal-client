@@ -1,10 +1,7 @@
 import Immutable from 'immutable'
 import { handleActions } from 'redux-actions'
+import { getInitialContact } from 'selectors/contact'
 import * as actions from 'actions/contact'
-
-const initialState = Immutable.fromJS({
-  data: []
-})
 
 export default handleActions({
   [actions.addContact] (state, action) {
@@ -17,4 +14,4 @@ export default handleActions({
   [actions.deleteContact] (state, action) {
     return state.update('data', (v: any) => v.filter((v: any) => v.get('id') !== action.payload))
   }
-}, initialState)
+}, getInitialContact())

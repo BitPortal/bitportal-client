@@ -10,6 +10,7 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import { getInitialLang } from 'selectors/intl'
 import { getInitialContact } from 'selectors/contact'
 import { getInitialCurrency } from 'selectors/currency'
+import { getInitialEOSNode } from 'selectors/eosNode'
 import { startSingleApp, startTabBasedApp, registerScreens } from 'navigators'
 import storage from 'utils/storage'
 import Provider from 'components/Provider'
@@ -38,41 +39,38 @@ if (ENV === 'production') {
 
 const runApp = async () => {
   let lang = await storage.getItem('bitportal_lang')
-
   if (!lang) {
     const deviceLang = DeviceInfo.getDeviceLocale()
-
-    if (deviceLang.indexOf('zh') !== -1) {
-      lang = 'zh'
-    } else {
-      lang = 'en'
-    }
+    lang = deviceLang.indexOf('zh') !== -1 ? 'zh' : 'en'
   }
-
   const currency = await storage.getItem('bitportal_currency', true)
   let symbol, rate
-
   if (currency) {
     symbol = currency.symbol
     rate = currency.rate
   }
-
   const contact = await storage.getItem('bitportal_contact', true)
+  const eosNode = await storage.getItem('bitportal_eosNode', true)
+  let activeNode, customNodes
+  if (eosNode) {
+    activeNode = eosNode.activeNode
+    customNodes = eosNode.customNodes
+  }
 
   const store = configure({
     intl: getInitialLang(lang),
     contact: getInitialContact(contact),
-    currency: getInitialCurrency(symbol, rate)
+    currency: getInitialCurrency(symbol, rate),
+    eosNode: getInitialEOSNode(activeNode, customNodes)
   })
 
   registerScreens(store)
   store.runSaga(sagas)
 
-  const localInfo = await storage.getItem('bitportal_welcome', true)
+  const localVersion = await storage.getItem('bitportal_version')
   const currentVersion = VersionNumber.appVersion
-  const localVersion =  localInfo && localInfo.localVersion
 
-  if (localVersion && localVersion === currentVersion) {
+  if (localVersion === currentVersion) {
     startTabBasedApp(getInitialLang(lang).get('locale'))
   } else {
     startSingleApp()

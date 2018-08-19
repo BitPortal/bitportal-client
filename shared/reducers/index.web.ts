@@ -10,13 +10,15 @@ import keystore from './keystore'
 import news from './news'
 import balance from './balance'
 import producer from './producer'
+import currency from './currency'
 import voting from './voting'
 import transfer from './transfer'
 import transaction from './transaction'
 import bandwidth from './bandwidth'
 import ram from './ram'
 import token from './token'
-import eosAsset from './eosAsset'
+import contact from './contact'
+import eosNode from './eosNode'
 
 
 export default combineReducers({
@@ -27,15 +29,17 @@ export default combineReducers({
   eosAccount,
   keystore,
   ticker,
+  chart,
   news,
   balance,
   producer,
-  chart,
+  currency,
   voting,
   bandwidth,
   ram,
   transfer,
   transaction,
   token,
-  eosAsset
+  contact,
+  eosNode
 })

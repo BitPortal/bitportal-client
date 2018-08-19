@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
 
-export const getInitialContact = (presetContact?: string) => Immutable.fromJS({
+export const getInitialContact = (presetContact?: any) => Immutable.fromJS({
   data: presetContact || []
 })

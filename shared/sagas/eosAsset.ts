@@ -1,29 +1,25 @@
-import { call, put, takeEvery, select, all } from 'redux-saga/effects'
+import { call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as api from 'utils/api'
 import * as actions from 'actions/eosAsset'
 
 import storage from 'utils/storage'
 
-function* getEosAsset(action: Action<eosAssetParams>) {
-  // if (!action.payload) return
+function* getEOSAsset(action: Action<GetEOSAssetParams>) {
+  if (!action.payload) return
 
   try {
-    const [data, eosAssetListPrefs] = yield all([
-      call(api.getEosAsset, action.payload),
-      call(storage.getItem, 'eosAssetListPrefs', true)
-    ])
+    const data = yield call(api.getEOSAsset, action.payload)
     data.forEach((item: any) => {
       item.value = false
     })
-    // }
-    yield put(actions.getEosAssetSucceeded(data))
+    yield put(actions.getEOSAssetSucceeded(data))
   } catch (e) {
-    yield put(actions.getEosAssetFailed(e.message))
+    yield put(actions.getEOSAssetFailed(e.message))
   }
 }
 
-function* getAssetPref(action: Action<eosAssetParams>) {
+function* getAssetPref() {
   try {
     const eosAssetListPrefs = yield call(
       storage.getItem,
@@ -36,7 +32,12 @@ function* getAssetPref(action: Action<eosAssetParams>) {
   }
 }
 
-function* saveAssetPref(action: Action<eosAssetPref>) {
+function* saveAssetPref(action: Action<SaveEOSAssetPref>) {
+  if (!action.payload) return
+
+  const symbol = action.payload.symbol
+  const value = action.payload.value
+
   try {
     let eosAssetListPrefs = yield call(
       storage.getItem,
@@ -45,19 +46,19 @@ function* saveAssetPref(action: Action<eosAssetPref>) {
     )
     if (eosAssetListPrefs) {
       const found = eosAssetListPrefs.findIndex(
-        (item: any) => item.symbol === action.payload.item.get('symbol')
+        (item: any) => item.symbol === symbol
       )
       found !== -1
-        ? (eosAssetListPrefs[found].value = action.payload.value)
+        ? (eosAssetListPrefs[found].value = value)
         : eosAssetListPrefs.push({
-          symbol: action.payload.item.get('symbol'),
-          value: action.payload.value
+          symbol,
+          value
         })
     } else {
       eosAssetListPrefs = [
         {
-          symbol: action.payload.item.get('symbol'),
-          value: action.payload.value
+          symbol,
+          value
         }
       ]
     }
@@ -69,7 +70,7 @@ function* saveAssetPref(action: Action<eosAssetPref>) {
 }
 
 export default function* eosAssetSaga() {
-  yield takeEvery(String(actions.getEosAssetRequested), getEosAsset)
+  yield takeEvery(String(actions.getEOSAssetRequested), getEOSAsset)
   yield takeEvery(String(actions.saveAssetPref), saveAssetPref)
   yield takeEvery(String(actions.getAssetPref), getAssetPref)
 }

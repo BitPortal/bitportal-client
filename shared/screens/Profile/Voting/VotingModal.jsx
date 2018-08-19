@@ -126,11 +126,6 @@ export default class VotingModal extends Component {
                     <View key={item} style={[styles.item, { alignItems: 'center', flexDirection: 'row', marginTop: 10 }]}>
                       <Text style={[styles.text14, { minWidth: 20 }]}>{index + 1}</Text>
                       <View style={{ flexDirection: 'row', marginLeft: 25 }}>
-                        {/* <View style={[styles.location, styles.center]}>
-                            <Text style={ [styles.text14]}>
-                            {item.get('location')}
-                            </Text>
-                            </View> */}
                         <Text style={[styles.text14, { marginLeft: 10 }]}>{item}</Text>
                       </View>
                     </View>

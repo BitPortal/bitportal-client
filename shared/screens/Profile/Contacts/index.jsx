@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
-import { Text, View, ListView, TouchableWithoutFeedback } from 'react-native'
+import { Text, View, TouchableWithoutFeedback } from 'react-native'
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import * as contactActions from 'actions/contact'
-import storage from 'utils/storage'
 import DeleteButton from './DeleteButton'
 import styles from './styles'
 import messages from './messages'
@@ -55,23 +54,21 @@ export default class Contacts extends Component {
     this.props.actions.deleteContact(rowData.item.id)
   }
 
-  renderItem = (rowData, rowMap) => {
-    return (
-      <SwipeRow
+  renderItem = (rowData, rowMap) => (
+    <SwipeRow
         disableRightSwipe={true}
         rightOpenValue={-100}
         style={{ backgroundColor: Colors.bgColor_30_31_37 }}
-      >
-        <DeleteButton onPress={this.deleteContact.bind(this, rowData, rowMap)} />
-        <TouchableWithoutFeedback disabled={!this.props.onRowPress} style={styles.listItem} onPress={this.onRowPress.bind(this, rowData)}>
-          <View style={[styles.listItem, styles.extraListItem]}>
-            <Text style={styles.text14}>{rowData.item.eosAccountName}</Text>
-            <Text style={styles.text12}>{rowData.item.note}</Text>
-          </View>
-        </TouchableWithoutFeedback>
-      </SwipeRow>
-    )
-  }
+    >
+      <DeleteButton onPress={this.deleteContact.bind(this, rowData, rowMap)} />
+      <TouchableWithoutFeedback disabled={!this.props.onRowPress} style={styles.listItem} onPress={this.onRowPress.bind(this, rowData)}>
+        <View style={[styles.listItem, styles.extraListItem]}>
+          <Text style={styles.text14}>{rowData.item.eosAccountName}</Text>
+          <Text style={styles.text12}>{rowData.item.note}</Text>
+        </View>
+      </TouchableWithoutFeedback>
+    </SwipeRow>
+  )
 
   onRowPress = (rowData) => {
     const { onRowPress } = this.props

@@ -36,7 +36,8 @@
     "jsx-no-lambda": false,
     "no-implicit-dependencies": false,
     "space-in-parens": false,
-    "no-return-await": false
+    "no-return-await": false,
+    "no-else-after-return": [true, "allow-else-if"]
   },
   "rulesDirectory": []
 }

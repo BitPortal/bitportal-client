@@ -254,8 +254,6 @@ function* logoutRequested(action: Action<LogoutParams>) {
     for (const item of Object.keys(items)) {
       yield call(secureStorage.removeItem, item)
     }
-    yield call(storage.removeItem, `bitportal.${eosAccountName}-contacts`)
-
     yield put(actions.resetWallet())
     yield put(resetEOSAccount())
     yield put(resetBalance())

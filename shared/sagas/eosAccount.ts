@@ -1,11 +1,12 @@
 import assert from 'assert'
-import { delay } from 'redux-saga'
 import { all, select, call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import { reset } from 'redux-form/immutable'
 import * as actions from 'actions/eosAccount'
 import { getBalanceRequested } from 'actions/balance'
 import { createClassicWalletSucceeded } from 'actions/wallet'
+import  { setSelected } from 'actions/producer'
+import { votedProducersSelector } from 'selectors/eosAccount'
 import secureStorage from 'utils/secureStorage'
 import { BITPORTAL_API_EOS_URL } from 'constants/env'
 import { randomKey, privateToPublic, isValidPrivate, initEOS, getPermissionsByKey, getInitialAccountInfo } from 'core/eos'
@@ -165,13 +166,8 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
     const eosAccountName = action.payload.eosAccountName
     const eosAccountCreationInfo = yield select((state: RootState) => state.eosAccount.get('eosAccountCreationInfo'))
 
-    let eos
-    if (eosAccountCreationInfo.get('transactionId') && eosAccountCreationInfo.get('eosAccountName') === eosAccountName && !eosAccountCreationInfo.get('irreversible')) {
-      eos = yield call(initEOS, { httpEndpoint: BITPORTAL_API_EOS_URL })
-    } else {
-      eos = yield call(initEOS, {})
-    }
-
+    const useCreationServer =eosAccountCreationInfo.get('transactionId') && eosAccountCreationInfo.get('eosAccountName') === eosAccountName && !eosAccountCreationInfo.get('irreversible')
+    const eos = yield call(initEOS, useCreationServer ? { httpEndpoint: BITPORTAL_API_EOS_URL } : {})
     const info = yield call(eos.getAccount, eosAccountName)
     assert(info && info.account_name, 'Invalid account info')
     yield put(actions.getEOSAccountSucceeded(info))
@@ -179,6 +175,11 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
   } catch (e) {
     yield put(actions.getEOSAccountFailed(e.message))
   }
+}
+
+function* getEOSAccountSucceeded() {
+  const votedProducers = yield select((state: RootState) => votedProducersSelector(state))
+  if (votedProducers) yield put(setSelected(votedProducers))
 }
 
 function* validateEOSAccountRequested(action: Action<ValidateEOSAccountParams>) {
@@ -216,6 +217,7 @@ export default function* eosAccountSaga() {
   yield takeEvery(String(actions.createEOSAccountRequested), createEOSAccountRequested)
   yield takeEvery(String(actions.importEOSAccountRequested), importEOSAccountRequested)
   yield takeEvery(String(actions.getEOSAccountRequested), getEOSAccountRequested)
+  yield takeEvery(String(actions.getEOSAccountSucceeded), getEOSAccountSucceeded)
   yield takeEvery(String(actions.validateEOSAccountRequested), validateEOSAccountRequested)
   yield takeEvery(String(actions.validateEOSAccountSucceeded), validateEOSAccountSucceeded)
   yield takeEvery(String(actions.validateEOSAccountFailed), validateEOSAccountFailed)

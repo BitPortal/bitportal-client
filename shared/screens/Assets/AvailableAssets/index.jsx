@@ -82,12 +82,12 @@ export default class AvailableAssets extends Component {
   }
 
   async UNSAFE_componentWillMount() {
-    this.props.actions.getEosAssetRequested({})
+    this.props.actions.getEOSAssetRequested({})
   }
 
   // 激活或隐藏钱包
   onValueChange = (value, item) => {
-    this.props.actions.saveAssetPref({ value, item })
+    this.props.actions.saveAssetPref({ value, symbol: item.get('symbol') })
   }
 
   render() {

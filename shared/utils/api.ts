@@ -95,8 +95,5 @@ export const getNewsBanner = () => cmsFetchBase('GET', '/banner')
 export const getVersionInfo = () => cmsFetchBase('GET', '/system')
 export const getProducersInfo = (params: any) => cmsFetchBase('GET', '/eosbp', params)
 export const getTokenDetail = (params: any) => cmsFetchBase('GET', '/token', params)
-export const getEosAsset = (params: any) => cmsFetchBase('GET', '/eostoken', params)
-
-export const createEOSAccount = (params: any) => {
-  fetchBase('POST', '/registry/wallets/campaign/eoscreation', params)
-}
+export const getEOSAsset = (params: any) => cmsFetchBase('GET', '/eostoken', params)
+export const createEOSAccount = (params: any) => fetchBase('POST', '/registry/wallets/campaign/eoscreation', params)

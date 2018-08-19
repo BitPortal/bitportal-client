@@ -29,11 +29,10 @@ export default class ProducerDetails extends Component {
   }
 
   render() {
-    const { locale, producer, totalProducers } = this.props
+    const { locale, producer, total_producer_vote_weight } = this.props
     const introduce = producer.getIn(['info', 'introduce', locale])
     const contacts = producer.getIn(['info', 'org', 'social']) || producer.getIn(['info', 'org', 'social_network'])
     const votes = producer.get('total_votes')
-    const totalVotesWeight = totalProducers.get('data').get('total_producer_vote_weight')
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -43,7 +42,7 @@ export default class ProducerDetails extends Component {
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <ScrollView showsVerticalScrollIndicator={false}>
-            <Header producer={producer} votes={(+votes / +totalVotesWeight) * 100} />
+            <Header producer={producer} votes={(+votes / +total_producer_vote_weight) * 100} />
             {!!introduce && <Introduction introduce={introduce} />}
             {!!contacts && <Contacts contacts={contacts} />}
           </ScrollView>

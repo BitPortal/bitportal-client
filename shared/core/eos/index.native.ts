@@ -8,8 +8,8 @@ const ecc = Eos.modules.ecc
 let eos: any
 
 const initEOS = async (options: any) => {
-  const storeInfo = await storage.getItem('bitportal.activeNode', true)
-  const eosNode = options.httpEndpoint || (storeInfo && storeInfo.activeNode) || EOS_API_URL
+  const eosNodeInfo = await storage.getItem('bitportal_eosNode', true)
+  const eosNode = options.httpEndpoint || (eosNodeInfo && eosNodeInfo.activeNode) || EOS_API_URL
   const isTestNet = ~EOS_TESTNET_NODES.indexOf(eosNode)
   const defaultChainId = isTestNet ? EOS_TESTNET_CHAIN_ID : EOS_MAINNET_CHAIN_ID
   const chainId = options.chainId || defaultChainId

@@ -82,12 +82,12 @@ export default class Scanner extends Component {
   getImageFromPhoto = async () => {
     const authorized = await checkPhoto()
     if (authorized) {
-      ImagePicker.openPicker({ width: 300, height: 400, cropping: false }).then(image => {
+      ImagePicker.openPicker({ width: 300, height: 400, cropping: false }).then((image) => {
         console.log(`### -- ${image}--${image.path}`)
         this.setState({ isVisible: true })
-        QRDecode.decode(image.path, (error, result)=>{
+        QRDecode.decode(image.path, (error, result) => {
           console.log(`### --${error}--${result}`)
-          if (!!error) Dialog.alert("请确认所选图片中含有二维码", null, { positiveText: '确定' })
+          if (error) Dialog.alert('请确认所选图片中含有二维码', null, { positiveText: '确定' })
           else this.onSuccess({ data: result })
           this.setState({ isVisible: false })
         })

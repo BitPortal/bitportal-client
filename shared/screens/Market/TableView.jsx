@@ -311,7 +311,6 @@ class ListItem extends Component {
 export default class TableView extends Component {
   render() {
     const { data, refreshing, onRefresh, onPress } = this.props
-    // console.log('TableView', data.toJS());
 
     return (
       <View style={styles.scrollContainer}>
