@@ -96,7 +96,6 @@ export default class ReceiveQRCode extends Component {
                       ? <FormattedMessage id="rcv_qrcode_bottom_copied" />
                       : <FormattedMessage id="rcv_qrcode_bottom_copy" />
                   }
-
                 </Text>
               </View>
 
