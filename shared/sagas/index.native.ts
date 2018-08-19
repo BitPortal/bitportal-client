@@ -10,7 +10,7 @@ import balanceSaga from './balance'
 import loggerSaga from './logger'
 import newsSage from './news'
 import producerSage from './producer'
-import versionInfoSaga from './versionInfo'
+import versionSaga from './version'
 import currencySaga from './currency'
 import votingSaga from './voting'
 import transferSaga from './transfer'
@@ -33,7 +33,7 @@ const sagas = {
   balanceSaga: fork(balanceSaga),
   loggerSaga: fork(loggerSaga),
   producerSage: fork(producerSage),
-  versionInfoSaga: fork(versionInfoSaga),
+  versionSaga: fork(versionSaga),
   currencySaga: fork(currencySaga),
   votingSaga: fork(votingSaga),
   transferSaga: fork(transferSaga),

@@ -66,14 +66,13 @@ export default class Welcome extends Component {
     }
   }
 
-  goToHomePage = async () => {
+  goToHomePage = () => {
     if (this.props.from === 'about') {
       Navigation.pop(this.props.componentId)
-      return
+    } else {
+      this.props.actions.setVersionInfo(VersionNumber.appVersion)
+      startTabBasedApp(this.props.locale)
     }
-
-    await storage.setItem('bitportal_welcome', { localVersion: VersionNumber.appVersion }, true)
-    startTabBasedApp(this.props.locale)
   }
 
   componentDidMount() {

@@ -9,7 +9,7 @@ import keystore from './keystore'
 import news from './news'
 import balance from './balance'
 import producer from './producer'
-import versionInfo from './versionInfo'
+import version from './version'
 import currency from './currency'
 import voting from './voting'
 import transfer from './transfer'
@@ -32,7 +32,7 @@ export default combineReducers({
   news,
   balance,
   producer,
-  versionInfo,
+  version,
   currency,
   voting,
   bandwidth,

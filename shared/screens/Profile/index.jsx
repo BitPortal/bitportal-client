@@ -8,6 +8,7 @@ import { FormattedMessage, IntlProvider } from 'react-intl'
 import VersionNumber from 'react-native-version-number'
 import Dialogs from 'components/Dialog'
 import Images from 'resources/images'
+import { hasEOSAccountSelector } from 'selectors/wallet'
 import { BITPORTAL_WEBSITE_URL } from 'constants/env'
 import messages from './messages'
 import styles from './styles'
@@ -15,7 +16,8 @@ import styles from './styles'
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    wallet: state.wallet
+    wallet: state.wallet,
+    hasEOSAccount: hasEOSAccountSelector(state)
   }),
   null,
   null,
@@ -41,7 +43,7 @@ export default class Profile extends Component {
     let passProps = {}
     switch (page) {
       case 'Account':
-        if (this.props.wallet.getIn(['data', 'eosAccountName'])) {
+        if (this.props.hasEOSAccount) {
           pageName = 'AccountManager'
           passProps = {
             origin: this.props.wallet.getIn(['data', 'origin']),
@@ -54,14 +56,14 @@ export default class Profile extends Component {
         }
         break
       case 'Contacts':
-        if (this.props.wallet.getIn(['data', 'eosAccountName'])) {
+        if (this.props.hasEOSAccount) {
           pageName = 'Contacts'
         } else {
           return this.dialog()
         }
         break
       case 'Resources':
-        if (this.props.wallet.getIn(['data', 'eosAccountName'])) {
+        if (this.props.hasEOSAccount) {
           pageName = 'Resources'
         } else {
           return this.dialog()

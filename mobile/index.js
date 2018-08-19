@@ -67,11 +67,10 @@ const runApp = async () => {
   registerScreens(store)
   store.runSaga(sagas)
 
-  const localInfo = await storage.getItem('bitportal_welcome', true)
+  const localVersion = await storage.getItem('bitportal_version')
   const currentVersion = VersionNumber.appVersion
-  const localVersion =  localInfo && localInfo.localVersion
 
-  if (localVersion && localVersion === currentVersion) {
+  if (localVersion === currentVersion) {
     startTabBasedApp(getInitialLang(lang).get('locale'))
   } else {
     startSingleApp()

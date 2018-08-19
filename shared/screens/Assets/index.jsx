@@ -16,7 +16,7 @@ import Modal from 'react-native-modal'
 import * as walletActions from 'actions/wallet'
 import * as tickerActions from 'actions/ticker'
 import * as balanceActions from 'actions/balance'
-import * as versionInfoActions from 'actions/versionInfo'
+import * as versionActions from 'actions/version'
 import * as currencyActions from 'actions/currency'
 import * as eosAccountActions from 'actions/eosAccount'
 import * as eosAssetActions from 'actions/eosAsset'
@@ -70,7 +70,7 @@ const getTotalAssets = (eosAccountBalance, eosPrice) => {
         ...walletActions,
         ...tickerActions,
         ...balanceActions,
-        ...versionInfoActions,
+        ...versionActions,
         ...currencyActions,
         ...eosAccountActions,
         ...eosAssetActions
