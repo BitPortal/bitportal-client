@@ -19,15 +19,11 @@ import * as balanceActions from 'actions/balance'
 import * as versionActions from 'actions/version'
 import * as currencyActions from 'actions/currency'
 import * as eosAccountActions from 'actions/eosAccount'
-import * as eosAssetActions from 'actions/eosAsset'
 import { eosAccountBalanceSelector } from 'selectors/balance'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { eosPriceSelector } from 'selectors/ticker'
 import { IntlProvider, FormattedMessage } from 'react-intl'
-import NavigationBar, {
-  CommonTitle,
-  CommonRightButton
-} from 'components/NavigationBar'
+import NavigationBar, { CommonTitle, CommonRightButton } from 'components/NavigationBar'
 import SettingItem from 'components/SettingItem'
 import SplashScreen from 'react-native-splash-screen'
 import { checkCamera } from 'utils/permissions'
@@ -72,8 +68,7 @@ const getTotalAssets = (eosAccountBalance, eosPrice) => {
         ...balanceActions,
         ...versionActions,
         ...currencyActions,
-        ...eosAccountActions,
-        ...eosAssetActions
+        ...eosAccountActions
       },
       dispatch
     )
@@ -109,7 +104,18 @@ export default class Assets extends Component {
     }
   }
 
-  enableAssets = () => {}
+  checkAssetList = () => {
+    InteractionManager.runAfterInteractions(() => {
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.AvailableAssets',
+          passProps: {
+            eosAccountName: this.props.eosAccount.get('data').get('account_name')
+          }
+        }
+      })
+    })
+  }
 
   checkAsset = (item) => {
     InteractionManager.runAfterInteractions(() => {
@@ -148,6 +154,14 @@ export default class Assets extends Component {
     })
   }
 
+  importNewAccount = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.AccountImport'
+      }
+    })
+  }
+
   createEOSAccount = () => {
     Navigation.push(this.props.componentId, {
       component: {
@@ -182,7 +196,6 @@ export default class Assets extends Component {
     this.props.actions.getVersionInfoRequested()
     this.getCurrencyRate()
     this.props.actions.syncWalletRequested()
-    this.props.actions.getAssetPref()
   }
 
   async componentDidAppear() {
@@ -206,33 +219,18 @@ export default class Assets extends Component {
   }
 
   render() {
-    const {
-      wallet,
-      eosAccountBalance,
-      locale,
-      eosAccount,
-      eosPrice
-    } = this.props
+    const { wallet, eosAccountBalance, locale, eosAccount, eosPrice } = this.props
     const activeEOSAccount = eosAccount.get('data')
     const hdWalletList = wallet.get('hdWalletList')
     const classicWalletList = wallet.get('classicWalletList')
     const walletCount = hdWalletList.size + classicWalletList.size
-
+    
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            leftButton={
-              <CommonTitle
-                title={<FormattedMessage id="addpage_title_name_act" />}
-              />
-            }
-            rightButton={
-              <CommonRightButton
-                iconName="md-qr-scanner"
-                onPress={() => this.scanQR()}
-              />
-            }
+            leftButton={<CommonTitle title={<FormattedMessage id="addpage_title_name_act" />} />}
+            rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanQR()} />}
           />
           {!walletCount && (
             <TouchableHighlight
@@ -241,18 +239,23 @@ export default class Assets extends Component {
               style={[styles.createAccountContainer, styles.center]}
             >
               <View style={{ alignItems: 'center' }}>
-                <Ionicons
-                  name="ios-add-outline"
-                  size={40}
-                  color={Colors.bgColor_FFFFFF}
-                />
-                <Text
-                  style={[
-                    styles.text14,
-                    { color: Colors.textColor_255_255_238, marginTop: 20 }
-                  ]}
-                >
+                <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF}/>
+                <Text style={[styles.text14, { color: Colors.textColor_255_255_238, marginTop: 20 }]}>
                   <FormattedMessage id="addpage_button_name_crt" />
+                </Text>
+              </View>
+            </TouchableHighlight>
+          )}
+          {!walletCount && (
+            <TouchableHighlight
+              underlayColor={Colors.mainThemeColor}
+              onPress={() => this.importNewAccount()}
+              style={[styles.createAccountContainer, styles.center]}
+            >
+              <View style={{ alignItems: 'center' }}>
+                <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF}/>
+                <Text style={[styles.text14, { color: Colors.textColor_255_255_238, marginTop: 20 }]}>
+                  <FormattedMessage id="act_sec_title_create_eos_account" />
                 </Text>
               </View>
             </TouchableHighlight>
@@ -273,9 +276,7 @@ export default class Assets extends Component {
                 />
                 {!activeEOSAccount.get('account_name') && (
                   <SettingItem
-                    leftItemTitle={
-                      <FormattedMessage id="act_sec_title_create_eos_account" />
-                    }
+                    leftItemTitle={<FormattedMessage id="act_sec_title_create_eos_account" />}
                     onPress={() => this.createEOSAccount()}
                     extraStyle={{ marginTop: 10, marginBottom: 10 }}
                   />
@@ -283,8 +284,7 @@ export default class Assets extends Component {
                 {!!activeEOSAccount.get('account_name') && (
                   <EnableAssets
                     Title={<FormattedMessage id="asset_title_name_ast" />}
-                    enableAssets={() => this.enableAssets()}
-                    componentId={this.props.componentId}
+                    onPress={this.checkAssetList}
                   />
                 )}
                 {eosAccountBalance && (

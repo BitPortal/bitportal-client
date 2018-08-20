@@ -9,7 +9,7 @@ import styles from './styles'
 
 const ListItem = ({ item, onPress, eosPrice, isAssetHidden }) => (
   <TouchableHighlight underlayColor={Colors.hoverColor} style={styles.listContainer} onPress={() => onPress(item)}>
-    <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.minorThemeColor }]}>
+    <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.bgColor_30_31_37 }]}>
       <View style={{ flexDirection: 'row' }}>
         {item.get('symbol') === 'EOS' && <Image source={Images.EOSIcon} style={styles.image} /> }
         <Text style={styles.text20}> {item.get('symbol')} </Text>
@@ -19,27 +19,16 @@ const ListItem = ({ item, onPress, eosPrice, isAssetHidden }) => (
           {
             isAssetHidden
               ? '******'
-              : <FormattedNumber
-              value={item.get('balance')}
-              maximumFractionDigits={4}
-              minimumFractionDigits={4}
-              />
+              : <FormattedNumber value={item.get('balance')} maximumFractionDigits={4} minimumFractionDigits={4}/>
           }
-
         </Text>
         {
           isAssetHidden
-            ? <Text style={[styles.text14, { alignSelf: 'flex-end', color: Colors.textColor_149_149_149 }]}>
-           ******
-            </Text>
+            ? <Text style={[styles.text14, { alignSelf: 'flex-end', color: Colors.textColor_149_149_149 }]}> ****** </Text>
             : <Text style={[styles.text14, { alignSelf: 'flex-end', color: Colors.textColor_149_149_149 }]}>
-            ≈
-              <CurrencyText
-              value={+item.get('balance') * +eosPrice}
-              maximumFractionDigits={2}
-              minimumFractionDigits={2}
-              />
-            </Text>
+              ≈
+                <CurrencyText value={+item.get('balance') * +eosPrice} maximumFractionDigits={2} minimumFractionDigits={2} />
+              </Text>
         }
       </View>
     </View>

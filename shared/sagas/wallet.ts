@@ -8,6 +8,7 @@ import { resetBalance, getBalanceRequested } from 'actions/balance'
 import { resetKey } from 'actions/keystore'
 import { resetTransaction } from 'actions/transaction'
 import { resetEOSAccount, syncEOSAccount, createEOSAccountSucceeded, getEOSAccountRequested, syncEOSAccountCreationInfo } from 'actions/eosAccount'
+import { getAssetPref } from 'actions/eosAsset'
 import { getErrorMessage } from 'utils'
 import secureStorage from 'utils/secureStorage'
 import storage from 'utils/storage'
@@ -208,7 +209,8 @@ function* syncWalletRequested() {
       const eosAccountCreationInfoString = allItems[`EOS_ACCOUNT_CREATION_INFO_${active.eosAccountName}`]
       const eosAccountCreationInfo = eosAccountCreationInfoString && JSON.parse(eosAccountCreationInfoString)
       if (eosAccountCreationInfo) yield put(syncEOSAccountCreationInfo(eosAccountCreationInfo))
-
+      
+      yield put(getAssetPref({ eosAccountName: active.eosAccountName }))
       yield put(getEOSAccountRequested({ eosAccountName: active.eosAccountName }))
       yield put(getBalanceRequested({ code: 'eosio.token', account: active.eosAccountName }))
     }
