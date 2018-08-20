@@ -27,7 +27,7 @@ function* getProducersWithInfoRequested(action: Action<GetProducersWithInfoParam
       producersWithInfo = producers.rows.map((producer: any, index: number) => {
         const owner = producer.owner
         const info = producersInfoObject[owner]
-        return info ? { ...producer, rank: index, info } : { ...producer, rank: index }
+        return info ? { info, ...producer, rank: index } : { ...producer, rank: index }
       })
     } else {
       producersWithInfo = producers

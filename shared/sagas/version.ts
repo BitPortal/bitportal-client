@@ -12,7 +12,7 @@ function* getVersionInfo() {
     const lastVersion = data[0].lastVersion
     update(data[0], locale)
     yield put(actions.getVersionInfoSucceeded(data[0]))
-    await storage.setItem('bitportal_version', lastVersion)
+    yield storage.setItem('bitportal_version', lastVersion)
   } catch (e) {
     yield put(actions.getVersionInfoFailed(e.message))
   }
@@ -20,7 +20,7 @@ function* getVersionInfo() {
 
 function* setVersionInfo(action: Action<string>) {
   if (!action.payload) return
-  await storage.setItem('bitportal_version', action.payload)
+  yield storage.setItem('bitportal_version', action.payload)
 }
 
 export default function* versionSaga() {

@@ -39,7 +39,6 @@ export const errorMessages = (error, messages) => {
     producerList: producerListSelector(state),
     selected: state.producer.get('selected'),
     loading: state.producer.get('loading'),
-    loaded: state.producer.get('loaded'),
     total_producer_vote_weight: state.producer.getIn(['data', 'total_producer_vote_weight']),
     eosAccount: eosAccountSelector(state),
     votedProducers: votedProducersSelector(state),
@@ -168,7 +167,7 @@ export default class Voting extends Component {
   }
 
   render() {
-    const { locale, producerList, total_producer_vote_weight, loading, loaded, selected, eosAccount, voting } = this.props
+    const { locale, producerList, total_producer_vote_weight, loading, selected, eosAccount, voting } = this.props
     const disabled = !selected.size && !producerList.size
     const voterInfo = eosAccount.getIn(['data', 'voter_info'])
     const isVoting = voting.get('loading')

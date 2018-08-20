@@ -180,7 +180,7 @@ const browserConfig = {
   ], './index.tsx'),
   output: {
     ...baseConfig.output,
-    path: resolve('static'),
+    path: resolve('static/web'),
     filename: ifProduction('scripts/bundle.js?v=[hash]', 'scripts/bundle.js'),
     publicPath: '/'
   },
@@ -232,7 +232,7 @@ const serverConfig = {
   entry: './index.js',
   output: {
     ...baseConfig.output,
-    path: resolve('static'),
+    path: resolve('static/web'),
     filename: 'app.js',
     libraryTarget: 'commonjs2',
     publicPath: '/'
@@ -262,7 +262,7 @@ const desktopConfig = {
   ], './index.tsx'),
   output: {
     ...baseConfig.output,
-    path: resolve('bundle'),
+    path: resolve('static/desktop'),
     filename: ifProduction('scripts/bundle.js?v=[hash]', 'scripts/bundle.js')
   },
   plugins: removeEmpty([

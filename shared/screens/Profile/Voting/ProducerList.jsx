@@ -1,10 +1,10 @@
-import React, { Component, PureComponent } from 'react'
+import React, { Component } from 'react'
 import Colors from 'resources/colors'
 import { FormattedNumber, FormattedMessage } from 'react-intl'
-import { Text, View, TouchableHighlight, TouchableOpacity, VirtualizedList, Dimensions, RefreshControl } from 'react-native'
+import { Text, View, TouchableHighlight, TouchableOpacity, Dimensions, RefreshControl } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import LinearGradientContainer from 'components/LinearGradientContainer'
-import { RecyclerListView, LayoutProvider } from 'recyclerlistview'
+import { RecyclerListView, LayoutProvider, DataProvider } from 'recyclerlistview'
 import ImmutableDataProvider from 'utils/immutableDataProvider'
 import styles from './styles'
 
@@ -24,7 +24,7 @@ class ListItem extends Component {
       <TouchableHighlight
         style={styles.listItem}
         underlayColor={Colors.bgColor_000000}
-        onPress={() => onRowPress(item)}
+        onPress={onRowPress.bind(this, item)}
       >
         <View style={[styles.listItem, styles.between, { paddingRight: 32 }]}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -72,14 +72,12 @@ class ListItem extends Component {
   }
 }
 
-let dataProvider = new ImmutableDataProvider((r1, r2) => {
-  return r1.get('owner') !== r2.get('owner') || r1.get('selected') !== r2.get('selected')
-})
+const dataProvider = new ImmutableDataProvider((r1, r2) => r1.get('owner') !== r2.get('owner') || r1.get('selected') !== r2.get('selected'))
 
 const { width } = Dimensions.get('window')
 
 export default class ProducerList extends Component {
-  static getDerivedStateFromProps(props, state) {
+  static getDerivedStateFromProps(props) {
     return {
       dataProvider: dataProvider.cloneWithRows(props.data)
     }
@@ -121,7 +119,6 @@ export default class ProducerList extends Component {
       <RecyclerListView
         style={styles.list}
         ref={this.recyclerListViewRef}
-        scrollsToTop={false}
         refreshControl={<RefreshControl onRefresh={this.props.onRefresh} refreshing={this.props.refreshing} />}
         layoutProvider={this.layoutProvider}
         dataProvider={this.state.dataProvider}

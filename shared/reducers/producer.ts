@@ -69,9 +69,9 @@ export default handleActions({
       return state.update('selected', (v: any) => v.push(action.payload).sort(sortProducers))
     } else if (size <= 30 && selected) {
       return state.update('selected', (v: any) => v.filter((v: any) => v !== action.payload).sort(sortProducers))
-    } else {
-      return state
     }
+
+    return state
   },
   [actions.setSelected] (state, action) {
     return state.set('selected', action.payload)

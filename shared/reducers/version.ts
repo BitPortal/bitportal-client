@@ -20,6 +20,6 @@ export default handleActions({
     return state.set('error', action.payload).set('loading', false)
   },
   [actions.setVersionInfo] (state, action) {
-    return state.update('data', (v: any) => v.set('localVersion', action.paylaod))
+    return state.update('data', (v: any) => v.set('localVersion', action.payload))
   }
 }, initialState)
