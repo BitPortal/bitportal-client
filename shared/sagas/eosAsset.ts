@@ -49,7 +49,6 @@ function* saveAssetPref(action: Action<SaveEOSAssetPref>) {
       EOS_ASSET_LIST = [{ symbol, value }]
     }
     yield call(storage.setItem, `EOS_ASSET_LIST_INFO_${eosAccountName}`, { EOS_ASSET_LIST }, true)
-    let info = yield call(storage.getItem, `EOS_ASSET_LIST_INFO_${eosAccountName}`, true)
     yield put(actions.saveAssetPrefSucceeded(EOS_ASSET_LIST))
   } catch (e) {
     console.log('saveAssetPref error', e)
