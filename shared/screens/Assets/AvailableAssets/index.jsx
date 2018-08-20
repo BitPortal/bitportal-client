@@ -56,7 +56,8 @@ export default class AvailableAssets extends Component {
 
   // 激活或隐藏钱包
   onValueChange = (value, item) => {
-    this.props.actions.saveAssetPref({ value, symbol: item.symbol })
+    const { eosAccountName } = this.props
+    this.props.actions.saveAssetPref({ value, symbol: item.symbol, eosAccountName  })
   }
 
   onRefresh = () => this.props.actions.getEOSAssetRequested({})
@@ -71,7 +72,6 @@ export default class AvailableAssets extends Component {
 
   render() {
     const { locale, loading, eosAssetPrefs } = this.props
-    console.log('####', eosAssetPrefs.toJS())
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>

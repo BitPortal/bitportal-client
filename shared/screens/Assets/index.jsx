@@ -104,7 +104,18 @@ export default class Assets extends Component {
     }
   }
 
-  enableAssets = () => {}
+  checkAssetList = () => {
+    InteractionManager.runAfterInteractions(() => {
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.AvailableAssets',
+          passProps: {
+            eosAccountName: this.props.eosAccount.get('data').get('account_name')
+          }
+        }
+      })
+    })
+  }
 
   checkAsset = (item) => {
     InteractionManager.runAfterInteractions(() => {
@@ -213,7 +224,7 @@ export default class Assets extends Component {
     const hdWalletList = wallet.get('hdWalletList')
     const classicWalletList = wallet.get('classicWalletList')
     const walletCount = hdWalletList.size + classicWalletList.size
-
+    
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -273,8 +284,7 @@ export default class Assets extends Component {
                 {!!activeEOSAccount.get('account_name') && (
                   <EnableAssets
                     Title={<FormattedMessage id="asset_title_name_ast" />}
-                    enableAssets={() => this.enableAssets()}
-                    componentId={this.props.componentId}
+                    onPress={this.checkAssetList}
                   />
                 )}
                 {eosAccountBalance && (

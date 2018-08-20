@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {
   Text,
   View,
-  InteractionManager,
   TouchableOpacity
 } from 'react-native'
 import { Navigation } from 'react-native-navigation'
@@ -12,7 +11,7 @@ import styles from './styles'
 
 export default class EnableAssets extends Component {
   render() {
-    const { Title } = this.props
+    const { Title, onPress } = this.props
 
     return (
       <View
@@ -30,17 +29,7 @@ export default class EnableAssets extends Component {
         >
           <Text style={styles.text14}> {Title} </Text>
         </View>
-        <TouchableOpacity
-          onPress={() => {
-            InteractionManager.runAfterInteractions(() => {
-              Navigation.push(this.props.componentId, {
-                component: {
-                  name: 'BitPortal.AvailableAssets'
-                }
-              })
-            })
-          }}
-        >
+        <TouchableOpacity onPress={onPress}>
           <Ionicons
             name="ios-add-circle-outline"
             size={25}
