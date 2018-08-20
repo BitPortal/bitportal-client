@@ -34,6 +34,7 @@ RCT_EXPORT_METHOD(onEventWithLabel:(NSString *)eventId eventLabel:(NSString *)ev
   if ([eventLabel isKindOfClass:[NSNull class]]) {
     eventLabel = nil;
   }
+//  NSLog(@"###eventID: %@ ----- parameters: %@", eventId, eventLabel);
   [MobClick event:eventId label:eventLabel];
 
 }

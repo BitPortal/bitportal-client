@@ -27,6 +27,7 @@ import NavigationBar, { CommonTitle, CommonRightButton } from 'components/Naviga
 import SettingItem from 'components/SettingItem'
 import SplashScreen from 'react-native-splash-screen'
 import { checkCamera } from 'utils/permissions'
+import { onEventTest } from 'utils/analytics'
 import Dialog from 'components/Dialog'
 import styles from './styles'
 import messages from './messages'
@@ -131,6 +132,7 @@ export default class Assets extends Component {
   }
 
   displayReceiceQRCode = () => {
+    onEventTest()
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.ReceiveQRCode',
