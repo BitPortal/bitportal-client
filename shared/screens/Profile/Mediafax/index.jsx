@@ -29,20 +29,20 @@ export default class MediafaxScreen extends Component {
     }
   }
 
-  changePage = (title) => {
-    if (validateUrl(MediafaxUrls[title])) {
+  changePage = (index, item) => {
+    if (validateUrl(MediafaxUrls[item])) {
       Navigation.push(this.props.componentId, {
         component: {
           name: 'BitPortal.BPWebView',
           passProps: {
-            title,
+            title: messages[this.props.locale][`mdf_title_index_media${index}`],
             needLinking: true,
-            uri: MediafaxUrls[title]
+            uri: MediafaxUrls[item]
           }
         }
       })
     } else {
-      Clipboard.setString(`@${MediafaxUrls[title]}`)
+      Clipboard.setString(`@${MediafaxUrls[item]}`)
       Toast(messages[this.props.locale].mdf_title_name_copied)
     }
   }
@@ -63,9 +63,9 @@ export default class MediafaxScreen extends Component {
                 <SettingItem
                   key={index}
                   leftImage={MediafaxIcons[item]}
-                  leftItemTitle={item}
-                  rightItemTitle={(item === 'Wechat' || item === 'Weibo') && `@${MediafaxUrls[item]}`}
-                  onPress={() => this.changePage(item)}
+                  leftItemTitle={messages[locale][`mdf_title_index_media${index}`]}
+                  rightItemTitle={(item.indexOf('Wechat') !== -1) && `${MediafaxUrls[item]}`}
+                  onPress={() => this.changePage(index, item)}
                 />
               ))}
             </ScrollView>
