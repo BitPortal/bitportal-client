@@ -10,9 +10,6 @@ export const eosAssetListSelector = createSelector(
     const found = assets.findIndex(
       (element: any) => element.get('symbol') === item.get('symbol')
     )
-    return item.set(
-      'value',
-      found !== -1 ? assets.get(found).get('value') : false
-    )
+    return item.set('value', found !== -1 ? assets.get(found).get('value') : false)
   })
 )

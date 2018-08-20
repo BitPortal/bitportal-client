@@ -112,7 +112,7 @@ export default class Profile extends Component {
             rightButton={<CommonRightButton imageSource={Images.transaction_history} onPress={this.changePage.bind(this, 'TransactionHistory')} />}
           />
           <View style={styles.scrollContainer}>
-            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center' }}>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 20, alignItems: 'center' }}>
               <SettingItem leftImage={Images.profile_voting} leftItemTitle={<FormattedMessage id="prf_sec_titile_vote" />} onPress={this.changePage.bind(this, 'Voting')} extraStyle={{ marginTop: 10 }} />
               <SettingItem leftImage={Images.profile_resources} leftItemTitle={<FormattedMessage id="prf_sec_titile_res" />} onPress={this.changePage.bind(this, 'Resources')} />
               <SettingItem leftImage={Images.profile_contacts} leftItemTitle={<FormattedMessage id="prf_sec_titile_ctcts" />} onPress={this.changePage.bind(this, 'Contacts')} />

@@ -19,11 +19,13 @@ declare type GetEOSAssetResult = eosAsset[]
 declare interface SaveEOSAssetPref {
   value: boolean
   symbol: string
+  eosAccountName: string
 }
 
 declare interface GetEOSAssetPrefParams {
-  symbol: string
-  value: boolean
+  eosAccountName: string
 }
+
+
 
 declare type GetEOSAssetPrefResult = SaveEOSAssetPref[]

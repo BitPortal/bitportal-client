@@ -240,7 +240,7 @@ class ListItem extends Component {
         <View style={[styles.listItem, { ...itemExtraStyle }]}>
           <View style={styles.coin}>
             <Text
-              style={[styles.text16, { width: FontScale(25), marginLeft: 10 }]}
+              style={[styles.text16, { minWidth: FontScale(25), paddingRight: 10, marginLeft: 10 }]}
             >
               {index + 1}
             </Text>
