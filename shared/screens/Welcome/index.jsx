@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as versionActions from 'actions/version'
@@ -12,7 +11,6 @@ import Images from 'resources/images'
 import Colors from 'resources/colors'
 import LinearGradientContainer from 'components/LinearGradientContainer'
 import VersionNumber from 'react-native-version-number'
-import * as versionActions from 'actions/version'
 import styles from './styles'
 
 const NextButton = ({ goToHomePage }) => (

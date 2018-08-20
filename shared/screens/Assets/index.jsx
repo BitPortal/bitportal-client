@@ -19,15 +19,11 @@ import * as balanceActions from 'actions/balance'
 import * as versionActions from 'actions/version'
 import * as currencyActions from 'actions/currency'
 import * as eosAccountActions from 'actions/eosAccount'
-import * as eosAssetActions from 'actions/eosAsset'
 import { eosAccountBalanceSelector } from 'selectors/balance'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { eosPriceSelector } from 'selectors/ticker'
 import { IntlProvider, FormattedMessage } from 'react-intl'
-import NavigationBar, {
-  CommonTitle,
-  CommonRightButton
-} from 'components/NavigationBar'
+import NavigationBar, { CommonTitle, CommonRightButton } from 'components/NavigationBar'
 import SettingItem from 'components/SettingItem'
 import SplashScreen from 'react-native-splash-screen'
 import { checkCamera } from 'utils/permissions'
@@ -72,8 +68,7 @@ const getTotalAssets = (eosAccountBalance, eosPrice) => {
         ...balanceActions,
         ...versionActions,
         ...currencyActions,
-        ...eosAccountActions,
-        ...eosAssetActions
+        ...eosAccountActions
       },
       dispatch
     )
@@ -190,7 +185,6 @@ export default class Assets extends Component {
     this.props.actions.getVersionInfoRequested()
     this.getCurrencyRate()
     this.props.actions.syncWalletRequested()
-    this.props.actions.getAssetPref()
   }
 
   async componentDidAppear() {

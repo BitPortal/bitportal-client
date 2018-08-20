@@ -2,7 +2,6 @@ import { call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as api from 'utils/api'
 import * as actions from 'actions/eosAsset'
-
 import storage from 'utils/storage'
 
 function* getEOSAsset(action: Action<GetEOSAssetParams>) {
@@ -10,23 +9,23 @@ function* getEOSAsset(action: Action<GetEOSAssetParams>) {
 
   try {
     const data = yield call(api.getEOSAsset, action.payload)
-    data.forEach((item: any) => {
-      item.value = false
-    })
+    data.forEach((item: any) => { item.value = false })
     yield put(actions.getEOSAssetSucceeded(data))
   } catch (e) {
     yield put(actions.getEOSAssetFailed(e.message))
   }
 }
 
-function* getAssetPref() {
+function* getAssetPref(action: Action<GetEOSAssetPrefParams>) {
+  if (!action.payload) return
+  const eosAccountName = action.payload.eosAccountName
   try {
-    const eosAssetListPrefs = yield call(
-      storage.getItem,
-      'eosAssetListPrefs',
-      true
-    )
-    yield put(actions.getAssetPrefSucceeded(eosAssetListPrefs || []))
+    const eosAssetListInfo = yield call(storage.getItem, `EOS_ASSET_LIST_INFO_${eosAccountName}`, true)
+    let EOS_ASSET_LIST = eosAssetListInfo && eosAssetListInfo.EOS_ASSET_LIST
+    console.log('### --- getAssetPref', eosAccountName, EOS_ASSET_LIST)
+    if (EOS_ASSET_LIST) {
+      yield put(actions.getAssetPrefSucceeded(EOS_ASSET_LIST || []))
+    }
   } catch (e) {
     console.log('getAssetPref error', e)
   }
@@ -37,33 +36,21 @@ function* saveAssetPref(action: Action<SaveEOSAssetPref>) {
 
   const symbol = action.payload.symbol
   const value = action.payload.value
+  const eosAccountName = action.payload.eosAccountName
 
   try {
-    let eosAssetListPrefs = yield call(
-      storage.getItem,
-      'eosAssetListPrefs',
-      true
-    )
-    if (eosAssetListPrefs) {
-      const found = eosAssetListPrefs.findIndex(
-        (item: any) => item.symbol === symbol
-      )
+    let eosAssetListInfo = yield call(storage.getItem, `EOS_ASSET_LIST_INFO_${eosAccountName}`, true)
+    let EOS_ASSET_LIST = eosAssetListInfo && eosAssetListInfo.EOS_ASSET_LIST
+    if (EOS_ASSET_LIST) {
+      const found = EOS_ASSET_LIST.findIndex((item: any) => item.symbol === symbol)
       found !== -1
-        ? (eosAssetListPrefs[found].value = value)
-        : eosAssetListPrefs.push({
-          symbol,
-          value
-        })
+        ? (EOS_ASSET_LIST[found].value = value)
+        : EOS_ASSET_LIST.push({ symbol, value })
     } else {
-      eosAssetListPrefs = [
-        {
-          symbol,
-          value
-        }
-      ]
+      EOS_ASSET_LIST = [{ symbol, value }]
     }
-    yield call(storage.setItem, 'eosAssetListPrefs', eosAssetListPrefs, true)
-    yield put(actions.saveAssetPrefSucceeded(eosAssetListPrefs))
+    yield call(storage.setItem, `EOS_ASSET_LIST_INFO_${eosAccountName}`, { EOS_ASSET_LIST }, true)
+    yield put(actions.saveAssetPrefSucceeded(EOS_ASSET_LIST))
   } catch (e) {
     console.log('saveAssetPref error', e)
   }
