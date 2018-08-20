@@ -73,7 +73,7 @@ class ListItem extends Component {
 }
 
 let dataProvider = new ImmutableDataProvider((r1, r2) => {
-  return r1 !== r2
+  return r1.get('owner') !== r2.get('owner') || r1.get('selected') !== r2.get('selected')
 })
 
 const { width } = Dimensions.get('window')
@@ -89,8 +89,10 @@ export default class ProducerList extends Component {
     dataProvider: dataProvider.cloneWithRows(this.props.data)
   }
 
+  recyclerListViewRef = React.createRef()
+
   layoutProvider = new LayoutProvider(
-    index => index,
+    index => index % 3,
     (type, dim) => {
       dim.width = width
       dim.height = 70
@@ -99,7 +101,6 @@ export default class ProducerList extends Component {
 
   rowRenderer = (type, item) => (
     <ListItem
-      key={item.get('owner')}
       item={item}
       rank={item.get('rank')}
       totalVotes={this.props.totalVotes}
@@ -109,15 +110,22 @@ export default class ProducerList extends Component {
     />
   )
 
+  componentDidMount() {
+    // setTimeout(function() {
+    //   this.recyclerListViewRef.current.scrollToTop()
+    // }.bind(this), 10000)
+  }
+
   render() {
     return (
       <RecyclerListView
         style={styles.list}
+        ref={this.recyclerListViewRef}
+        scrollsToTop={false}
         refreshControl={<RefreshControl onRefresh={this.props.onRefresh} refreshing={this.props.refreshing} />}
         layoutProvider={this.layoutProvider}
         dataProvider={this.state.dataProvider}
         rowRenderer={this.rowRenderer}
-        renderAheadOffset={14000}
       />
     )
   }
