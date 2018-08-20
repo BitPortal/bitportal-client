@@ -19,7 +19,7 @@ const ListItem = ({ item, onPress, eosPrice, isAssetHidden }) => (
           {
             isAssetHidden
               ? '******'
-              : <FormattedNumber value={item.get('balance')} maximumFractionDigits={4} minimumFractionDigits={4}/>
+              : <FormattedNumber value={item.get('balance')} maximumFractionDigits={4} minimumFractionDigits={4} />
           }
         </Text>
         {
@@ -27,8 +27,8 @@ const ListItem = ({ item, onPress, eosPrice, isAssetHidden }) => (
             ? <Text style={[styles.text14, { alignSelf: 'flex-end', color: Colors.textColor_149_149_149 }]}> ****** </Text>
             : <Text style={[styles.text14, { alignSelf: 'flex-end', color: Colors.textColor_149_149_149 }]}>
               ≈
-                <CurrencyText value={+item.get('balance') * +eosPrice} maximumFractionDigits={2} minimumFractionDigits={2} />
-              </Text>
+              <CurrencyText value={+item.get('balance') * +eosPrice} maximumFractionDigits={2} minimumFractionDigits={2} />
+            </Text>
         }
       </View>
     </View>

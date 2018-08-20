@@ -14,9 +14,9 @@ import messages from './messages'
 import styles from './styles'
 
 const AssetElement = ({ item, onValueChange }) => (
-  <View style={[ styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.bgColor_30_31_37 }]}>
+  <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.bgColor_30_31_37 }]}>
     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-      <Image style={styles.icon} source={ item.icon_url ? { uri: `${item.icon_url}` } : Images.coin_logo_default }/>
+      <Image style={styles.icon} source={item.icon_url ? { uri: `${item.icon_url}` } : Images.coin_logo_default} />
       <Text style={styles.text20}>{item.symbol}</Text>
     </View>
     <Switch
@@ -34,7 +34,7 @@ const AssetElement = ({ item, onValueChange }) => (
   }),
   dispatch => ({
     actions: bindActionCreators({
-        ...eosAssetActions 
+      ...eosAssetActions
     }, dispatch)
   }),
   null,
@@ -57,7 +57,7 @@ export default class AvailableAssets extends Component {
   // 激活或隐藏钱包
   onValueChange = (value, item) => {
     const { eosAccountName } = this.props
-    this.props.actions.saveAssetPref({ value, symbol: item.symbol, eosAccountName  })
+    this.props.actions.saveAssetPref({ value, symbol: item.symbol, eosAccountName })
   }
 
   onRefresh = () => this.props.actions.getEOSAssetRequested({})
@@ -67,17 +67,18 @@ export default class AvailableAssets extends Component {
   ItemSeparatorComponent = () => <View style={{ height: 1, width: '100%', backgroundColor: Colors.bgColor_000000 }} />
 
   renderItem = ({ item }) => (
-    <AssetElement item={item} onValueChange={(e) => this.onValueChange(e, item)} />
+    <AssetElement item={item} onValueChange={e => this.onValueChange(e, item)} />
   )
 
   render() {
-    const { locale, loading, eosAssetPrefs } = this.props
+    const { locale, eosAssetPrefs } = this.props
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale].astlist_title_name_astlst}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)}/>}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
             <FlatList

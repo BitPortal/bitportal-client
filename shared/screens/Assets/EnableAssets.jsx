@@ -4,7 +4,6 @@ import {
   View,
   TouchableOpacity
 } from 'react-native'
-import { Navigation } from 'react-native-navigation'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import styles from './styles'

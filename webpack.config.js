@@ -165,7 +165,7 @@ const baseConfig = {
     new CopyWebpackPlugin([
       {
         from: join(__dirname, 'shared/resources/scripts'),
-        to: join(__dirname, 'static/scripts')
+        to: join(__dirname, 'static/web/scripts')
       }
     ], { copyUnmodified: true })
   ])

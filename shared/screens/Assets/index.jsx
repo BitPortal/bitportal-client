@@ -226,7 +226,7 @@ export default class Assets extends Component {
     const hdWalletList = wallet.get('hdWalletList')
     const classicWalletList = wallet.get('classicWalletList')
     const walletCount = hdWalletList.size + classicWalletList.size
-    
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -241,7 +241,7 @@ export default class Assets extends Component {
               style={[styles.createAccountContainer, styles.center]}
             >
               <View style={{ alignItems: 'center' }}>
-                <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF}/>
+                <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF} />
                 <Text style={[styles.text14, { color: Colors.textColor_255_255_238, marginTop: 20 }]}>
                   <FormattedMessage id="addpage_button_name_crt" />
                 </Text>
@@ -255,7 +255,7 @@ export default class Assets extends Component {
               style={[styles.createAccountContainer, styles.center]}
             >
               <View style={{ alignItems: 'center' }}>
-                <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF}/>
+                <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF} />
                 <Text style={[styles.text14, { color: Colors.textColor_255_255_238, marginTop: 20 }]}>
                   <FormattedMessage id="act_sec_title_create_eos_account" />
                 </Text>

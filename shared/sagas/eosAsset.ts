@@ -21,7 +21,7 @@ function* getAssetPref(action: Action<GetEOSAssetPrefParams>) {
   const eosAccountName = action.payload.eosAccountName
   try {
     const eosAssetListInfo = yield call(storage.getItem, `EOS_ASSET_LIST_INFO_${eosAccountName}`, true)
-    let EOS_ASSET_LIST = eosAssetListInfo && eosAssetListInfo.EOS_ASSET_LIST
+    const EOS_ASSET_LIST = eosAssetListInfo && eosAssetListInfo.EOS_ASSET_LIST
     if (EOS_ASSET_LIST) {
       yield put(actions.getAssetPrefSucceeded(EOS_ASSET_LIST || []))
     }
@@ -38,7 +38,7 @@ function* saveAssetPref(action: Action<SaveEOSAssetPref>) {
   const eosAccountName = action.payload.eosAccountName
 
   try {
-    let eosAssetListInfo = yield call(storage.getItem, `EOS_ASSET_LIST_INFO_${eosAccountName}`, true)
+    const eosAssetListInfo = yield call(storage.getItem, `EOS_ASSET_LIST_INFO_${eosAccountName}`, true)
     let EOS_ASSET_LIST = eosAssetListInfo && eosAssetListInfo.EOS_ASSET_LIST
     if (EOS_ASSET_LIST) {
       const found = EOS_ASSET_LIST.findIndex((item: any) => item.symbol === symbol)
