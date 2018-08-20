@@ -6,6 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import LinearGradientContainer from 'components/LinearGradientContainer'
 import { RecyclerListView, LayoutProvider } from 'recyclerlistview'
 import ImmutableDataProvider from 'utils/immutableDataProvider'
+import { SCREEN_WIDTH } from 'utils/dimens'
 import styles from './styles'
 
 class ListItem extends Component {
@@ -76,8 +77,6 @@ let dataProvider = new ImmutableDataProvider((r1, r2) => {
   return r1 !== r2
 })
 
-const { width } = Dimensions.get('window')
-
 export default class ProducerList extends Component {
   static getDerivedStateFromProps(props, state) {
     return {
@@ -92,7 +91,7 @@ export default class ProducerList extends Component {
   layoutProvider = new LayoutProvider(
     index => index,
     (type, dim) => {
-      dim.width = width
+      dim.width = SCREEN_WIDTH
       dim.height = 70
     }
   )

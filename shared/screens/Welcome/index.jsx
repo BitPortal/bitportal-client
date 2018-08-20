@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Swiper from 'react-native-swiper'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as versionActions from 'actions/version'
 import { Navigation } from 'react-native-navigation'
 import { startTabBasedApp } from 'navigators'
 import { View, Text, Image, ImageBackground, TouchableHighlight } from 'react-native'
@@ -51,7 +53,11 @@ const Page3 = ({ goToHomePage }) => (
   state => ({
     locale: state.intl.get('locale')
   }),
-  null,
+  dispatch => ({
+    actions: bindActionCreators({
+      ...versionActions 
+    }, dispatch)
+  }),
   null,
   { withRef: true }
 )

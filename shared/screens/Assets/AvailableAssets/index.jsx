@@ -21,28 +21,9 @@ import messages from './messages'
 import styles from './styles'
 
 const AssetElement = ({ item, onValueChange }) => (
-  <View
-    style={[
-      styles.listContainer,
-      styles.between,
-      { paddingHorizontal: 32, backgroundColor: Colors.bgColor_48_49_59 }
-    ]}
-  >
-    <View
-      style={{
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
-    >
-      <Image
-        style={styles.icon}
-        source={
-          item.get('icon_url')
-            ? { uri: `${item.get('icon_url')}` }
-            : Images.coin_logo_default
-        }
-      />
+  <View style={[ styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.bgColor_48_49_59 }]}>
+    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+      <Image style={styles.icon} source={ item.get('icon_url') ? { uri: `${item.get('icon_url')}` } : Images.coin_logo_default }/>
       <Text style={styles.text20}>
         {'   '}
         {item.get('symbol')}
@@ -62,12 +43,9 @@ const AssetElement = ({ item, onValueChange }) => (
     eosAssetPrefs: eosAssetListSelector(state)
   }),
   dispatch => ({
-    actions: bindActionCreators(
-      {
-        ...eosAssetActions
-      },
-      dispatch
-    )
+    actions: bindActionCreators({
+        ...eosAssetActions 
+    }, dispatch)
   }),
   null,
   { withRef: true }
@@ -97,13 +75,8 @@ export default class AvailableAssets extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            leftButton={
-              <CommonButton
-                iconName="md-arrow-back"
-                onPress={() => Navigation.pop(this.props.componentId)}
-              />
-            }
             title={messages[locale].astlist_title_name_astlst}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)}/>}
           />
           <View style={styles.scrollContainer}>
             {loading && <ActivityIndicator size="small" color="white" />}
