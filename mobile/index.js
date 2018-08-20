@@ -71,7 +71,7 @@ const runApp = async () => {
   const currentVersion = VersionNumber.appVersion
 
   if (localVersion === currentVersion) {
-    startTabBasedApp(getInitialLang(lang).get('locale'))
+    startTabBasedApp(lang)
   } else {
     startSingleApp()
   }
