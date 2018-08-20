@@ -139,9 +139,7 @@ export default class Voting extends Component {
 
   onMarkPress = (producer) => {
     const name = producer.get('owner')
-    if (this.props.selected.size < 30) {
-      this.props.actions.toggleSelect(name)
-    }
+    this.props.actions.toggleSelect(name)
   }
 
   onRefresh = () => {

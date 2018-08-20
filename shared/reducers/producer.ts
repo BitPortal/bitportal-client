@@ -63,7 +63,15 @@ export default handleActions({
   },
   [actions.toggleSelect] (state, action) {
     const selected = state.get('selected').includes(action.payload)
-    return selected ? state.update('selected', (v: any) => v.filter((v: any) => v !== action.payload).sort(sortProducers)) : state.update('selected', (v: any) => v.push(action.payload).sort(sortProducers))
+    const size = state.get('selected').size
+
+    if (size < 30 && !selected) {
+      return state.update('selected', (v: any) => v.push(action.payload).sort(sortProducers))
+    } else if (size <= 30 && selected) {
+      return state.update('selected', (v: any) => v.filter((v: any) => v !== action.payload).sort(sortProducers))
+    } else {
+      return state
+    }
   },
   [actions.setSelected] (state, action) {
     return state.set('selected', action.payload)
