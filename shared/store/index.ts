@@ -1,3 +1,4 @@
+import Immutable from 'immutable'
 import { createStore, applyMiddleware, compose, Store } from 'redux'
 import createSagaMiddleware, { END } from 'redux-saga'
 import { routerMiddleware as createRouterMiddleware } from 'react-router-redux'
@@ -8,6 +9,11 @@ import { ENV } from 'constants/env'
 interface AppStore<S> extends Store<S> {
   runSaga?: any
   close?: any
+}
+
+if (ENV !== 'production') {
+  const installDevTools = require('immutable-devtools')
+  installDevTools(Immutable)
 }
 
 export default function configure(initialState: RootState = {}, history?: any): AppStore<RootState> {
