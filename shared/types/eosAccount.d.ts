@@ -1,52 +1,3 @@
-declare interface EOSAuthorization {
-  actor: string
-  permission: string
-}
-
-declare interface EOSAction {
-  account: string
-  authorization: EOSAuthorization[]
-  name: string
-  data: string
-}
-
-declare interface EOSTransaction {
-  actions: EOSAction[]
-  context_free_actions: any[]
-  delay_sec: number
-  expiration: string
-  max_kcpu_usage: number
-  max_net_usage_words: number
-  ref_block_num: number
-  ref_block_prefix: number
-  region: number
-}
-
-declare interface EOSAccountKey {
-  key: string
-  weight: number
-}
-
-declare interface EOSAccountRequiredAuth {
-  accounts: any[]
-  keys: EOSAccountKey[]
-}
-
-declare interface Permission {
-  parent: string
-  perm_name: string
-  required_auth?: EOSAccountRequiredAuth
-}
-
-declare interface EOSInfo {
-  head_block_id: string
-  head_block_num: number
-  head_block_producer: string
-  head_block_time: string
-  last_irreversible_block_num: number
-  server_version: string
-}
-
 declare interface GetEOSBlockParams {
   block_num_or_id: number
 }
@@ -71,7 +22,25 @@ declare interface GetEOSBlockResult {
 declare interface EOSPushTransactionParams {
   compression: string
   signatures: string[]
-  transaction: EOSTransaction
+  transaction: {
+    actions: {
+      account: string
+      authorization: {
+        actor: string
+        permission: string
+      }[]
+      name: string
+      data: string
+    }[]
+    context_free_actions: any[]
+    delay_sec: number
+    expiration: string
+    max_kcpu_usage: number
+    max_net_usage_words: number
+    ref_block_num: number
+    ref_block_prefix: number
+    region: number
+  }
 }
 
 declare interface EOSPushTransactionResult {
@@ -98,7 +67,17 @@ declare interface CreateEOSAccountParams {
 declare interface CreateEOSAccountResult {
   name: string
   key?: string
-  permissions?: Permission[]
+  permissions?: {
+    parent: string
+    perm_name: string
+    required_auth?: {
+      accounts: any[]
+      keys: {
+        key: string
+        weight: number
+      }[]
+    }
+  }[]
 }
 
 declare interface ImportEOSAccountParams {
@@ -114,7 +93,17 @@ declare interface ImportEOSAccountParams {
 
 declare interface ImportEOSAccountResult {
   name: string
-  permissions?: Permission[]
+  permissions?: {
+    parent: string
+    perm_name: string
+    required_auth?: {
+      accounts: any[]
+      keys: {
+        key: string
+        weight: number
+      }[]
+    }
+  }[]
 }
 
 declare interface SwitchEOSAccountParams {
@@ -128,7 +117,17 @@ declare interface GetEOSAccountParams {
 
 declare interface GetEOSAccountResult {
   account_name: string
-  permissions: Permission[]
+  permissions: {
+    parent: string
+    perm_name: string
+    required_auth?: {
+      accounts: any[]
+      keys: {
+        key: string
+        weight: number
+      }[]
+    }
+  }[]
 }
 
 declare interface AuthEOSAccountParams {
@@ -138,7 +137,17 @@ declare interface AuthEOSAccountParams {
 
 declare interface AuthEOSAccountResult {
   account_name: string
-  permissions: Permission[]
+  permissions: {
+    parent: string
+    perm_name: string
+    required_auth?: {
+      accounts: any[]
+      keys: {
+        key: string
+        weight: number
+      }[]
+    }
+  }[]
 }
 
 declare interface SetEOSAccountPasswordParams {

@@ -15,23 +15,13 @@ export const eosAccountSelector = createSelector(
 
     if (origin === 'hd') {
       const index = list.findIndex((item: any) => item.get('bpid') === bpid)
-
-      if (index !== -1) {
-        return accounts.set('data', list.get(index))
-      } else {
-        return accounts.set('data', Map({}))
-      }
+      return accounts.set('data', index !== -1 ? list.get(index) : Map({}))
     } else if (origin === 'classic') {
       const index = list.findIndex((item: any) => item.get('account_name') === eosAccountName)
-
-      if (index !== -1) {
-        return accounts.set('data', list.get(index))
-      } else {
-        return accounts.set('data', Map({}))
-      }
-    } else {
-      return accounts.set('data', Map({}))
+      return accounts.set('data', index !== -1 ? list.get(index) : Map({}))
     }
+
+    return accounts.set('data', Map({}))
   }
 )
 
@@ -46,6 +36,6 @@ export const voterInfoSelector = createSelector(
 )
 
 export const votedProducersSelector = createSelector(
-  voterInfoSelector,
-  (voterInfo: any) => voterInfo.get('producers')
+  eosAccountSelector,
+  (account: any) => account.getIn(['data', 'voter_info', 'producers'])
 )

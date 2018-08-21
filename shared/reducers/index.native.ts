@@ -9,7 +9,7 @@ import keystore from './keystore'
 import news from './news'
 import balance from './balance'
 import producer from './producer'
-import versionInfo from './versionInfo'
+import version from './version'
 import currency from './currency'
 import voting from './voting'
 import transfer from './transfer'
@@ -19,6 +19,8 @@ import ram from './ram'
 import token from './token'
 import eosAsset from './eosAsset'
 import dApp from './dApp'
+import contact from './contact'
+import eosNode from './eosNode'
 
 export default combineReducers({
   form,
@@ -31,7 +33,7 @@ export default combineReducers({
   news,
   balance,
   producer,
-  versionInfo,
+  version,
   currency,
   voting,
   bandwidth,
@@ -40,5 +42,7 @@ export default combineReducers({
   transaction,
   token,
   eosAsset,
-  dApp
+  dApp,
+  contact,
+  eosNode
 })

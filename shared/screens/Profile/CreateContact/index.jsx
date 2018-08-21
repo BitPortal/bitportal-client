@@ -42,7 +42,6 @@ export default class CreateContact extends Component {
               <View style={styles.keyboard} />
             </ScrollView>
           </View>
-
         </View>
       </IntlProvider>
     )

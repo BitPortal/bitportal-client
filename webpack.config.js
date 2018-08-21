@@ -3,7 +3,7 @@ const fs = require('fs')
 const { resolve, join } = require('path')
 const DotENV = require('dotenv-webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const ExtractCssChunks = require("extract-css-chunks-webpack-plugin")
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
@@ -106,7 +106,7 @@ const baseConfig = {
         test: /\.css$/,
         include: resolve(__dirname, 'shared'),
         use: [
-          MiniCssExtractPlugin.loader,
+          ExtractCssChunks.loader,
           {
             loader: 'css-loader',
             query: {
@@ -126,7 +126,7 @@ const baseConfig = {
         test: /\.css$/,
         exclude: resolve(__dirname, 'shared'),
         use: [
-          MiniCssExtractPlugin.loader,
+          ExtractCssChunks.loader,
           {
             loader: 'css-loader',
             query: { minimize: true }
@@ -158,14 +158,14 @@ const baseConfig = {
       path: resolve(__dirname, `.env.${process.env.APP_ENV}`),
       systemvars: true
     }),
-    new MiniCssExtractPlugin({
+    new ExtractCssChunks({
       filename: ifProduction('styles/bundle.css?v=[hash]', 'styles/bundle.css'),
       chunkFilename: ifProduction('styles/[name].chunk.css?v=[chunkhash]', 'styles/[name].chunk.css')
     }),
     new CopyWebpackPlugin([
       {
         from: join(__dirname, 'shared/resources/scripts'),
-        to: join(__dirname, 'static/scripts')
+        to: join(__dirname, 'static/web/scripts')
       }
     ], { copyUnmodified: true })
   ])
@@ -180,7 +180,7 @@ const browserConfig = {
   ], './index.tsx'),
   output: {
     ...baseConfig.output,
-    path: resolve('static'),
+    path: resolve('static/web'),
     filename: ifProduction('scripts/bundle.js?v=[hash]', 'scripts/bundle.js'),
     publicPath: '/'
   },
@@ -232,7 +232,7 @@ const serverConfig = {
   entry: './index.js',
   output: {
     ...baseConfig.output,
-    path: resolve('static'),
+    path: resolve('static/web'),
     filename: 'app.js',
     libraryTarget: 'commonjs2',
     publicPath: '/'
@@ -262,7 +262,7 @@ const desktopConfig = {
   ], './index.tsx'),
   output: {
     ...baseConfig.output,
-    path: resolve('bundle'),
+    path: resolve('static/desktop'),
     filename: ifProduction('scripts/bundle.js?v=[hash]', 'scripts/bundle.js')
   },
   plugins: removeEmpty([

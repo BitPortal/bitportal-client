@@ -8,6 +8,7 @@ import { FormattedMessage, IntlProvider } from 'react-intl'
 import VersionNumber from 'react-native-version-number'
 import Dialogs from 'components/Dialog'
 import Images from 'resources/images'
+import { hasEOSAccountSelector } from 'selectors/wallet'
 import { BITPORTAL_WEBSITE_URL } from 'constants/env'
 import messages from './messages'
 import styles from './styles'
@@ -15,7 +16,8 @@ import styles from './styles'
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    wallet: state.wallet
+    wallet: state.wallet,
+    hasEOSAccount: hasEOSAccountSelector(state)
   }),
   null,
   null,
@@ -41,7 +43,7 @@ export default class Profile extends Component {
     let passProps = {}
     switch (page) {
       case 'Account':
-        if (this.props.wallet.getIn(['data', 'eosAccountName'])) {
+        if (this.props.hasEOSAccount) {
           pageName = 'AccountManager'
           passProps = {
             origin: this.props.wallet.getIn(['data', 'origin']),
@@ -54,14 +56,14 @@ export default class Profile extends Component {
         }
         break
       case 'Contacts':
-        if (this.props.wallet.getIn(['data', 'eosAccountName'])) {
+        if (this.props.hasEOSAccount) {
           pageName = 'Contacts'
         } else {
           return this.dialog()
         }
         break
       case 'Resources':
-        if (this.props.wallet.getIn(['data', 'eosAccountName'])) {
+        if (this.props.hasEOSAccount) {
           pageName = 'Resources'
         } else {
           return this.dialog()
@@ -110,7 +112,7 @@ export default class Profile extends Component {
             rightButton={<CommonRightButton imageSource={Images.transaction_history} onPress={this.changePage.bind(this, 'TransactionHistory')} />}
           />
           <View style={styles.scrollContainer}>
-            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center' }}>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 20, alignItems: 'center' }}>
               <SettingItem leftImage={Images.profile_voting} leftItemTitle={<FormattedMessage id="prf_sec_titile_vote" />} onPress={this.changePage.bind(this, 'Voting')} extraStyle={{ marginTop: 10 }} />
               <SettingItem leftImage={Images.profile_resources} leftItemTitle={<FormattedMessage id="prf_sec_titile_res" />} onPress={this.changePage.bind(this, 'Resources')} />
               <SettingItem leftImage={Images.profile_contacts} leftItemTitle={<FormattedMessage id="prf_sec_titile_ctcts" />} onPress={this.changePage.bind(this, 'Contacts')} />

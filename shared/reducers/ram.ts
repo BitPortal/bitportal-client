@@ -37,7 +37,7 @@ export default handleActions({
     return state.set('loading', false).set('data', Immutable.fromJS(action.payload))
   },
   [actions.getRAMMarketFailed] (state) {
-    return state.set('loading', false) // .set('error', action.payload)
+    return state.set('loading', false)
   },
   [actions.clearRAMError] (state) {
     return state.set('error', null).set('selling', false).set('buying', false)

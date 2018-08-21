@@ -1,9 +1,12 @@
-import React, { Component, PureComponent } from 'react'
+import React, { Component } from 'react'
 import Colors from 'resources/colors'
 import { FormattedNumber, FormattedMessage } from 'react-intl'
-import { Text, View, TouchableHighlight, TouchableOpacity, VirtualizedList } from 'react-native'
+import { Text, View, TouchableHighlight, TouchableOpacity, RefreshControl } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import LinearGradientContainer from 'components/LinearGradientContainer'
+import { RecyclerListView, LayoutProvider } from 'recyclerlistview'
+import ImmutableDataProvider from 'utils/immutableDataProvider'
+import { SCREEN_WIDTH } from 'utils/dimens'
 import styles from './styles'
 
 class ListItem extends Component {
@@ -22,7 +25,7 @@ class ListItem extends Component {
       <TouchableHighlight
         style={styles.listItem}
         underlayColor={Colors.bgColor_000000}
-        onPress={() => onRowPress(item)}
+        onPress={onRowPress.bind(this, item)}
       >
         <View style={[styles.listItem, styles.between, { paddingRight: 32 }]}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -70,30 +73,55 @@ class ListItem extends Component {
   }
 }
 
-export default class ProducerList extends PureComponent {
+const dataProvider = new ImmutableDataProvider((r1, r2) => r1.get('owner') !== r2.get('owner') || r1.get('selected') !== r2.get('selected'))
+
+export default class ProducerList extends Component {
+  static getDerivedStateFromProps(props) {
+    return {
+      dataProvider: dataProvider.cloneWithRows(props.data)
+    }
+  }
+
+  state = {
+    dataProvider: dataProvider.cloneWithRows(this.props.data)
+  }
+
+  recyclerListViewRef = React.createRef()
+
+  layoutProvider = new LayoutProvider(
+    index => index % 3,
+    (type, dim) => {
+      dim.width = SCREEN_WIDTH
+      dim.height = 70
+    }
+  )
+
+  rowRenderer = (type, item) => (
+    <ListItem
+      item={item}
+      rank={item.get('rank')}
+      totalVotes={this.props.totalVotes}
+      onRowPress={this.props.onRowPress.bind(this, item)}
+      onMarkPress={this.props.onMarkPress.bind(this, item)}
+      selected={item.get('selected')}
+    />
+  )
+
+  componentDidMount() {
+    // setTimeout(function() {
+    //   this.recyclerListViewRef.current.scrollToTop()
+    // }.bind(this), 10000)
+  }
+
   render() {
     return (
-      <VirtualizedList
-        data={this.props.data}
+      <RecyclerListView
         style={styles.list}
-        getItem={(items, index) => (items.get ? items.get(index) : items[index])}
-        getItemCount={items => (items.count() || 0)}
-        keyExtractor={(item, index) => String(index) + item.get('owner')}
-        showsVerticalScrollIndicator={false}
-        onRefresh={this.props.onRefresh}
-        refreshing={this.props.refreshing}
-        ItemSeparatorComponent={() => (<View style={styles.separator} />)}
-        renderItem={({ item, index }) => (
-          <ListItem
-            key={item.get('owner')}
-            item={item}
-            rank={index}
-            totalVotes={this.props.totalVotes}
-            onRowPress={() => this.props.onRowPress(item)}
-            onMarkPress={() => this.props.onMarkPress(item)}
-            selected={this.props.selected.indexOf(item.get('owner')) !== -1}
-          />
-        )}
+        ref={this.recyclerListViewRef}
+        refreshControl={<RefreshControl onRefresh={this.props.onRefresh} refreshing={this.props.refreshing} />}
+        layoutProvider={this.layoutProvider}
+        dataProvider={this.state.dataProvider}
+        rowRenderer={this.rowRenderer}
       />
     )
   }

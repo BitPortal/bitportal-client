@@ -41,6 +41,9 @@ declare interface RootState {
   eosAccount?: any
   ram?: any
   transaction?: any
+  contact?: any
+  eosNode?: any
+  eosAsset?: any
 }
 
 declare interface FetchOptions {
@@ -215,6 +218,16 @@ declare module 'react-native-svg' {
 declare module 'react-native-extended-stylesheet' {
   const file: any
   export = file
+}
+
+declare module 'react-native-swipe-list-view' {
+  interface ReactNativeSwipeListView {
+    SwipeListView: any
+    SwipeRow: any
+  }
+
+  const reactNativeSwipeListView: ReactNativeSwipeListView
+  export = reactNativeSwipeListView
 }
 
 declare module 'components/*' {

@@ -33,6 +33,7 @@ import styles from './styles'
   null,
   { withRef: true }
 )
+
 export class HeaderTitle extends Component {
   sortToggle(selector) {
     const { exchangeFilter, sortFilter } = this.props
@@ -239,7 +240,7 @@ class ListItem extends Component {
         <View style={[styles.listItem, { ...itemExtraStyle }]}>
           <View style={styles.coin}>
             <Text
-              style={[styles.text16, { width: FontScale(25), marginLeft: 10 }]}
+              style={[styles.text16, { minWidth: FontScale(25), paddingRight: 10, marginLeft: 10 }]}
             >
               {index + 1}
             </Text>
@@ -310,7 +311,6 @@ class ListItem extends Component {
 export default class TableView extends Component {
   render() {
     const { data, refreshing, onRefresh, onPress } = this.props
-    // console.log('TableView', data.toJS());
 
     return (
       <View style={styles.scrollContainer}>
@@ -319,10 +319,9 @@ export default class TableView extends Component {
           style={styles.list}
           refreshing={refreshing}
           onRefresh={onRefresh}
-          getItem={(items, index) => (items.get ? items.get(index) : items[index])
-          }
+          getItem={(items, index) => (items.get ? items.get(index) : items[index])}
           getItemCount={items => items.count() || 0}
-          keyExtractor={(item, index) => String(index)}
+          keyExtractor={item => String(item.get('symbol'))}
           renderItem={({ item, index }) => (
             <ListItem key={index} data={item} index={index} onPress={onPress} />
           )}

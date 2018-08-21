@@ -128,8 +128,8 @@ export default class TransferAssetsForm extends Component {
     this.setState({ showPrompt: false })
   }
 
-  callbackFromContacts = (contactInfo) => {
-    this.props.actions.change('transferAssetsForm', 'toAccount', contactInfo.accountName)
+  fillToAccount = (eosAccountName) => {
+    this.props.actions.change('transferAssetsForm', 'toAccount', eosAccountName)
   }
 
   getContactInfo = () => {
@@ -137,8 +137,7 @@ export default class TransferAssetsForm extends Component {
       component: {
         name: 'BitPortal.Contacts',
         passProps: {
-          from: 'AssetsTransfer',
-          callback: this.callbackFromContacts
+          onRowPress: this.fillToAccount
         }
       }
     })

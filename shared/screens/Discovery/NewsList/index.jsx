@@ -11,7 +11,7 @@ import messages from './messages'
   locale: state.intl.get('locale')
 }))
 export default class NewsList extends PureComponent {
-  keyExtractor = item => item.id
+  keyExtractor = item => String(item.id)
 
   renderHeader = () => (
     <View>

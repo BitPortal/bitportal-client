@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
-import { Text, View, ListView, TouchableWithoutFeedback } from 'react-native'
+import { Text, View, TouchableWithoutFeedback } from 'react-native'
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import { eosAccountSelector } from 'selectors/eosAccount'
-import storage from 'utils/storage'
+import * as contactActions from 'actions/contact'
 import DeleteButton from './DeleteButton'
 import styles from './styles'
 import messages from './messages'
@@ -15,9 +16,14 @@ import messages from './messages'
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    eosAccount: eosAccountSelector(state)
+    eosAccount: eosAccountSelector(state),
+    contact: state.contact
   }),
-  null,
+  dispatch => ({
+    actions: bindActionCreators({
+      ...contactActions,
+    }, dispatch)
+  }),
   null,
   { withRef: true }
 )
@@ -31,33 +37,7 @@ export default class Contacts extends Component {
     }
   }
 
-  state = {
-    contacts: []
-  }
-
-  constructor(props, context) {
-    super(props, context)
-    this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
-  }
-
-  async componentDidAppear() {
-    const accountName = this.props.eosAccount.get('data').get('account_name')
-    const objInfo = await storage.getItem(`bitportal.${accountName}-contacts`, true)
-    const contacts = objInfo && objInfo.contacts
-    if (contacts && contacts.length > 0) {
-      this.setState({ contacts })
-    }
-  }
-
-  onRowOpen = (data) => {
-    const { from, callback } = this.props
-    if (from && callback) {
-      callback(data)
-      Navigation.pop(this.props.componentId, { component: { name: `BitPortal.${from}` } })
-    }
-  }
-
-  addContacts = () => {
+  addContact = () => {
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.CreateContact'
@@ -65,56 +45,61 @@ export default class Contacts extends Component {
     })
   }
 
-  deleteContact = async (data, secId, rowId, rowMap) => {
-    rowMap[`${secId}${rowId}`].closeRow()
-    const newData = [...this.state.contacts] // eslint-disable-line react/no-access-state-in-setstate
-    newData.splice(rowId, 1)
-    const accountName = this.props.eosAccount.get('data').get('account_name')
-    await storage.mergeItem(`bitportal.${accountName}-contacts`, { contacts: newData }, true)
-    this.setState({ contacts: newData })
+  goBack = () => {
+    Navigation.pop(this.props.componentId)
   }
 
-  renderRow (data, secId, rowId, rowMap) {
-    return (
-      <SwipeRow
+  deleteContact = (rowData, rowMap) => {
+    rowMap[rowData.item.id].closeRow()
+    this.props.actions.deleteContact(rowData.item.id)
+  }
+
+  renderItem = (rowData, rowMap) => (
+    <SwipeRow
         disableRightSwipe={true}
         rightOpenValue={-100}
         style={{ backgroundColor: Colors.bgColor_30_31_37 }}
-      >
-        <DeleteButton onPress={() => this.deleteContact(data, secId, rowId, rowMap)} />
-        <TouchableWithoutFeedback disabled={!this.props.from} style={styles.listItem} onPress={() => this.onRowOpen(data)}>
-          <View style={[styles.listItem, styles.extraListItem]}>
-            <Text style={styles.text14}> {data.accountName} </Text>
-            <Text style={styles.text12}> {data.memo} </Text>
-          </View>
-        </TouchableWithoutFeedback>
-      </SwipeRow>
-    )
+    >
+      <DeleteButton onPress={this.deleteContact.bind(this, rowData, rowMap)} />
+      <TouchableWithoutFeedback disabled={!this.props.onRowPress} style={styles.listItem} onPress={this.onRowPress.bind(this, rowData)}>
+        <View style={[styles.listItem, styles.extraListItem]}>
+          <Text style={styles.text14}>{rowData.item.eosAccountName}</Text>
+          <Text style={styles.text12}>{rowData.item.note}</Text>
+        </View>
+      </TouchableWithoutFeedback>
+    </SwipeRow>
+  )
+
+  onRowPress = (rowData) => {
+    const { onRowPress } = this.props
+
+    if (onRowPress) {
+      onRowPress(rowData.item.eosAccountName)
+      Navigation.pop(this.props.componentId)
+    }
   }
 
   render() {
-    const { contacts } = this.state
-    const { locale } = this.props
+    const { locale, contact } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale].ctct_title_name_contacts}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
-            rightButton={<CommonRightButton iconName="md-add" onPress={() => this.addContacts()} />}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={this.goBack} />}
+            rightButton={<CommonRightButton iconName="md-add" onPress={this.addContact} />}
           />
           <View style={styles.scrollContainer}>
-            {
-              contacts.length > 0
-              && <SwipeListView
-                contentContainerStyle={{ paddingTop: 10 }}
-                enableEmptySections={true}
-                showsVerticalScrollIndicator={false}
-                dataSource={this.ds.cloneWithRows(contacts)}
-                renderRow={this.renderRow.bind(this)}
-              />
-            }
+            <SwipeListView
+              useFlatList
+              contentContainerStyle={{ paddingTop: 10 }}
+              enableEmptySections={true}
+              showsVerticalScrollIndicator={false}
+              data={contact.get('data').toJS()}
+              renderItem={this.renderItem}
+              keyExtractor={item => String(item.id)}
+            />
           </View>
         </View>
       </IntlProvider>

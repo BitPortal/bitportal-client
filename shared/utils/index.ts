@@ -155,6 +155,7 @@ export const parseEOSQrString = (text: string) => {
     return null
   }
 }
+
 export const filterBgColor = (data: string) => {
   if (data && parseFloat(data) > 0) {
     return Colors.bgColor_104_189_57

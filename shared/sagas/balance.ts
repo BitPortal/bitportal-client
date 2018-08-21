@@ -11,13 +11,8 @@ function* getBalanceRequested(action: Action<BalanceParams>) {
   try {
     const name = action.payload.account
     const eosAccountCreationInfo = yield select((state: RootState) => state.eosAccount.get('eosAccountCreationInfo'))
-
-    let eos
-    if (eosAccountCreationInfo.get('transactionId') && eosAccountCreationInfo.get('eosAccountName') === name && !eosAccountCreationInfo.get('irreversible')) {
-      eos = yield call(initEOS, { httpEndpoint: BITPORTAL_API_EOS_URL })
-    } else {
-      eos = yield call(initEOS, {})
-    }
+    const useCreationServer = eosAccountCreationInfo.get('transactionId') && eosAccountCreationInfo.get('eosAccountName') === name && !eosAccountCreationInfo.get('irreversible')
+    const eos = yield call(initEOS, useCreationServer ? { httpEndpoint: BITPORTAL_API_EOS_URL } : {})
 
     const data = yield call(eos.getCurrencyBalance, action.payload)
     let balances = data.map((item: any) => {

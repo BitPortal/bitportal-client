@@ -44,8 +44,8 @@ export default handleActions(
           let newData = v
 
           for (const ticker of tickers) {
-            const { symbol, ...data } = ticker
-            newData = newData.set(symbol, Immutable.fromJS(data))
+            const { symbol } = ticker
+            newData = newData.set(symbol, Immutable.fromJS(ticker))
           }
 
           return newData

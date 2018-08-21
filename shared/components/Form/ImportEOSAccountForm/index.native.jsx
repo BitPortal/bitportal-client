@@ -102,7 +102,7 @@ export default class ImportEOSAccountForm extends Component {
     const { handleSubmit, invalid, pristine, password, eosAccount, locale } = this.props
     const { unsignAgreement } = this.state
     const loading = eosAccount.get('loading')
-    const error = eosAccount.get('error')
+    const error = eosAccount.get('getKeyAccountsError')
     const disabled = invalid || pristine || loading || unsignAgreement
 
     return (

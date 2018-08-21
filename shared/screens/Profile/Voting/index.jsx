@@ -8,11 +8,11 @@ import { Text, View, TouchableWithoutFeedback, InteractionManager } from 'react-
 import * as producerActions from 'actions/producer'
 import * as votingActions from 'actions/voting'
 import { bindActionCreators } from 'redux'
-import { eosAccountSelector } from 'selectors/eosAccount'
+import { eosAccountSelector, votedProducersSelector } from 'selectors/eosAccount'
 import Prompt from 'components/Prompt'
 import Alert from 'components/Alert'
 import LinearGradientContainer from 'components/LinearGradientContainer'
-import { sortProducers } from 'eos'
+import { producerListSelector } from 'selectors/producer'
 import VotingModal from './VotingModal'
 import ProducerList from './ProducerList'
 import messages from './messages'
@@ -36,8 +36,12 @@ export const errorMessages = (error, messages) => {
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    producer: state.producer,
+    producerList: producerListSelector(state),
+    selected: state.producer.get('selected'),
+    loading: state.producer.get('loading'),
+    total_producer_vote_weight: state.producer.getIn(['data', 'total_producer_vote_weight']),
     eosAccount: eosAccountSelector(state),
+    votedProducers: votedProducersSelector(state),
     voting: state.voting
   }),
   dispatch => ({
@@ -63,7 +67,6 @@ export default class Voting extends Component {
     isVisible: false,
     alertMessage: null,
     item: {},
-    selected: this.props.eosAccount.get('data').get('voter_info') ? this.props.eosAccount.get('data').get('voter_info').get('producers').toJS() : [],
     sortType: 'default'
   }
 
@@ -80,8 +83,9 @@ export default class Voting extends Component {
   }
 
   submitVoting = (password) => {
-    const eosAccountName = this.props.eosAccount.get('data').get('account_name')
-    this.props.actions.votingRequested({ producers: this.state.selected, eosAccountName, password })
+    const eosAccountName = this.props.eosAccount.getIn(['data', 'account_name'])
+    const selected = this.props.selected
+    this.props.actions.votingRequested({ producers: selected.toJS(), eosAccountName, password })
   }
 
   voting = () => {
@@ -126,7 +130,7 @@ export default class Voting extends Component {
         name: 'BitPortal.ProducerDetails',
         passProps: {
           producer,
-          totalProducers: this.props.producer
+          total_producer_vote_weight: this.props.total_producer_vote_weight
         }
       }
     })
@@ -134,21 +138,7 @@ export default class Voting extends Component {
 
   onMarkPress = (producer) => {
     const name = producer.get('owner')
-
-    if (!~this.state.selected.indexOf(name)) {
-      if (this.state.selected.length < 30) {
-        this.setState(prevState => ({
-          selected: [...prevState.selected, name].sort(sortProducers)
-        }))
-      }
-    } else {
-      const index = this.state.selected.indexOf(name)
-      const nextState = [...this.state.selected].sort(sortProducers)
-      nextState.splice(index, 1)
-      this.setState(() => ({
-        selected: nextState
-      }))
-    }
+    this.props.actions.toggleSelect(name)
   }
 
   onRefresh = () => {
@@ -171,11 +161,14 @@ export default class Voting extends Component {
     this.props.actions.getProducersWithInfoRequested({ json: true, limit: 500 })
   }
 
+  componentWillUnmount() {
+    const { votedProducers } = this.props
+    if (votedProducers) this.props.actions.setSelected(votedProducers)
+  }
+
   render() {
-    const { locale, producer, eosAccount, voting } = this.props
-    const loading = producer.get('loading')
-    const loaded = producer.get('loaded')
-    const disabled = !this.state.selected.length && !this.props.producer.getIn(['data', 'rows']).size
+    const { locale, producerList, total_producer_vote_weight, loading, selected, eosAccount, voting } = this.props
+    const disabled = !selected.size && !producerList.size
     const voterInfo = eosAccount.getIn(['data', 'voter_info'])
     const isVoting = voting.get('loading')
     const error = voting.get('error')
@@ -215,19 +208,19 @@ export default class Voting extends Component {
           </View>
           <View style={styles.scrollContainer}>
             <ProducerList
-              data={producer.getIn(['data', 'rows'])}
-              totalVotes={producer.getIn(['data', 'total_producer_vote_weight'])}
+              data={producerList}
+              totalVotes={total_producer_vote_weight}
               onRefresh={this.onRefresh}
-              refreshing={loading && !loaded}
+              refreshing={loading}
               onRowPress={this.onRowPress}
               onMarkPress={this.onMarkPress}
-              selected={this.state.selected}
+              selected={selected}
             />
           </View>
           <View style={[styles.btnContainer, styles.between]}>
             <Text style={styles.text14}><FormattedMessage id="vt_btmsec_name_selected" /></Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={[styles.text14, { marginRight: 15 }]}>{this.state.selected.length}/30</Text>
+              <Text style={[styles.text14, { marginRight: 15 }]}>{selected.size}/30</Text>
               <LinearGradientContainer type="right" colors={disabled ? Colors.disabled : Colors.voteColor} style={styles.voteBtn}>
                 <TouchableWithoutFeedback onPress={disabled ? () => {} : this.vote} style={styles.center} disabled={disabled}>
                   <View>
@@ -244,7 +237,7 @@ export default class Voting extends Component {
             onPress={this.voting}
             isVisible={showSelected}
             dismissModal={this.props.actions.closeSelected}
-            selected={this.state.selected}
+            selected={selected}
             isVoting={isVoting}
           />
           <Alert message={this.state.alertMessage} dismiss={this.closeAlert} />

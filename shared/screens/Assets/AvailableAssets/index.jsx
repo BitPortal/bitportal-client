@@ -1,14 +1,7 @@
 import React, { Component } from 'react'
 import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import {
-  Text,
-  View,
-  ScrollView,
-  Switch,
-  Image,
-  ActivityIndicator
-} from 'react-native'
+import { Text, View, Switch, Image, FlatList } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -16,41 +9,18 @@ import { IntlProvider } from 'react-intl'
 import * as eosAssetActions from 'actions/eosAsset'
 import { eosAssetListSelector } from 'selectors/eosAsset'
 
-import storage from 'utils/storage'
 import Images from 'resources/images'
 import messages from './messages'
 import styles from './styles'
 
 const AssetElement = ({ item, onValueChange }) => (
-  <View
-    style={[
-      styles.listContainer,
-      styles.between,
-      { paddingHorizontal: 32, backgroundColor: Colors.bgColor_48_49_59 }
-    ]}
-  >
-    <View
-      style={{
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
-    >
-      <Image
-        style={styles.icon}
-        source={
-          item.get('icon_url')
-            ? { uri: `${item.get('icon_url')}` }
-            : Images.coin_logo_default
-        }
-      />
-      <Text style={styles.text20}>
-        {'   '}
-        {item.get('symbol')}
-      </Text>
+  <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.bgColor_30_31_37 }]}>
+    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+      <Image style={styles.icon} source={item.icon_url ? { uri: `${item.icon_url}` } : Images.coin_logo_default} />
+      <Text style={styles.text20}>{item.symbol}</Text>
     </View>
     <Switch
-      value={item.get('value')}
+      value={item.value}
       onValueChange={e => onValueChange(e, item)}
     />
   </View>
@@ -59,22 +29,18 @@ const AssetElement = ({ item, onValueChange }) => (
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    eosAsset: state.eosAsset.get('data'),
     loading: state.eosAsset.get('loading'),
-    eosAssetPrefs: eosAssetListSelector(state),
-    assetPrefs: state.eosAsset.get('assetPrefs')
+    eosAssetPrefs: eosAssetListSelector(state)
   }),
   dispatch => ({
-    actions: bindActionCreators(
-      {
-        ...eosAssetActions
-      },
-      dispatch
-    )
+    actions: bindActionCreators({
+      ...eosAssetActions
+    }, dispatch)
   }),
   null,
   { withRef: true }
 )
+
 export default class AvailableAssets extends Component {
   static get options() {
     return {
@@ -84,47 +50,46 @@ export default class AvailableAssets extends Component {
     }
   }
 
-  state = {
-    assetList: []
-  }
-  //{symbol:TEST, value:true}
-
   async UNSAFE_componentWillMount() {
-    this.props.actions.getEosAssetRequested({})
+    this.props.actions.getEOSAssetRequested({})
   }
 
   // 激活或隐藏钱包
   onValueChange = (value, item) => {
-    this.props.actions.saveAssetPref({ value, item })
+    const { eosAccountName } = this.props
+    this.props.actions.saveAssetPref({ value, symbol: item.symbol, eosAccountName })
   }
 
+  onRefresh = () => this.props.actions.getEOSAssetRequested({})
+
+  keyExtractor = item => String(item.id)
+
+  ItemSeparatorComponent = () => <View style={{ height: 1, width: '100%', backgroundColor: Colors.bgColor_000000 }} />
+
+  renderItem = ({ item }) => (
+    <AssetElement item={item} onValueChange={e => this.onValueChange(e, item)} />
+  )
+
   render() {
-    const { locale, loading, eosAsset, eosAssetPrefs } = this.props
+    const { locale, eosAssetPrefs } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            leftButton={
-              <CommonButton
-                iconName="md-arrow-back"
-                onPress={() => Navigation.pop(this.props.componentId)}
-              />
-            }
             title={messages[locale].astlist_title_name_astlst}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
-            {loading && <ActivityIndicator size="small" color="white" />}
-            <ScrollView showsVerticalScrollIndicator={false}>
-              {eosAssetPrefs.map((item, index) => (
-                <AssetElement
-                  key={index}
-                  item={item}
-                  onValueChange={(e, item) => this.onValueChange(e, item)}
-                />
-              ))}
-            </ScrollView>
-            )
+            <FlatList
+              data={eosAssetPrefs.toJS()}
+              keyExtractor={this.keyExtractor}
+              ItemSeparatorComponent={this.renderSeparator}
+              showsVerticalScrollIndicator={false}
+              renderItem={this.renderItem}
+              onRefresh={this.onRefresh}
+              refreshing={this.props.loading}
+            />
           </View>
         </View>
       </IntlProvider>

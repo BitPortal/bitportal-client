@@ -8,23 +8,22 @@ import {
   SubmitButton
 } from 'components/Form'
 import { IntlProvider, FormattedMessage } from 'react-intl'
-import { Navigation } from 'react-native-navigation'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import * as eosAccountActions from 'actions/eosAccount'
-import storage from 'utils/storage'
+import * as contactActions from 'actions/contact'
 import messages from './messages'
 
 const validate = (values) => {
   const errors = {}
 
-  if (!values.get('name')) {
-    errors.name = <FormattedMessage id="contacts_txtbox_txt_acchint2" />
-  } else if (values.get('name').length > 12) {
-    errors.name = <FormattedMessage id="contacts_txtbox_txt_acchint" />
+  if (!values.get('eosAccountName')) {
+    errors.eosAccountName = <FormattedMessage id="contacts_txtbox_txt_acchint2" />
+  } else if (values.get('eosAccountName').length > 12) {
+    errors.eosAccountName = <FormattedMessage id="contacts_txtbox_txt_acchint" />
   }
 
-  if (values.get('memo') && values.get('memo').length > 64) {
-    errors.memo = <FormattedMessage id="contacts_txtbox_txt_hint" />
+  if (values.get('note') && values.get('note').length > 64) {
+    errors.note = <FormattedMessage id="contacts_txtbox_txt_hint" />
   }
 
   return errors
@@ -32,8 +31,8 @@ const validate = (values) => {
 
 const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject) => {
   props.actions.validateEOSAccountRequested({
-    field: 'name',
-    value: props.name,
+    field: 'eosAccountName',
+    value: props.eosAccountName,
     errorMessage: messages[props.locale].contacts_txtbox_txt_invalid,
     resolve,
     reject
@@ -44,37 +43,27 @@ const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject)
   state => ({
     locale: state.intl.get('locale'),
     eosAccount: eosAccountSelector(state),
-    name: formValueSelector('addContactsForm')(state, 'name')
+    eosAccountName: formValueSelector('addContactsForm')(state, 'eosAccountName')
   }),
   dispatch => ({
     actions: bindActionCreators({
-      ...eosAccountActions
+      ...eosAccountActions,
+      ...contactActions
     }, dispatch)
   })
 )
 
-@reduxForm({ form: 'addContactsForm', validate, asyncValidate, asyncBlurFields: ['name'] })
+@reduxForm({
+  form: 'addContactsForm',
+  validate,
+  asyncValidate,
+  asyncBlurFields: ['eosAccountName']
+})
 
 export default class AddContactsForm extends Component {
-  state = {
-    contacts: []
-  }
-
-  submit = async (data) => {
-    const tempObj = { accountName: data.get('name'), memo: data.get('memo') }
-    this.state.contacts.push(tempObj)
-    const accountName = this.props.eosAccount.get('data').get('account_name')
-    await storage.setItem(`bitportal.${accountName}-contacts`, { contacts: this.state.contacts }, true)
-    Navigation.pop(this.props.componentId)
-  }
-
-  async componentDidMount() {
-    const accountName = this.props.eosAccount.get('data').get('account_name')
-    const objInfo = await storage.getItem(`bitportal.${accountName}-contacts`, true)
-    const contacts = objInfo && objInfo.contacts
-    if (contacts && contacts.length > 0) {
-      this.setState({ contacts })
-    }
+  submit = (data) => {
+    const componentId = this.props.componentId
+    this.props.actions.addContact(data.set('componentId', componentId).toJS())
   }
 
   render() {
@@ -86,12 +75,12 @@ export default class AddContactsForm extends Component {
         <FormContainer>
           <Field
             label={<FormattedMessage id="contacts_title_name_acc" />}
-            name="name"
+            name="eosAccountName"
             component={TextField}
           />
           <Field
             label={<FormattedMessage id="contacts_title_name_Note" />}
-            name="memo"
+            name="note"
             component={TextField}
           />
           <SubmitButton

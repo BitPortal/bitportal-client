@@ -10,10 +10,9 @@ import balanceSaga from './balance'
 import loggerSaga from './logger'
 import newsSage from './news'
 import producerSage from './producer'
-import versionInfoSaga from './versionInfo'
+import versionSaga from './version'
 import currencySaga from './currency'
 import votingSaga from './voting'
-import stakeSaga from './stake'
 import transferSaga from './transfer'
 import transactionSaga from './transaction'
 import ramSaga from './ram'
@@ -21,6 +20,8 @@ import bandwidthSaga from './bandwidth'
 import tokenSaga from './token'
 import eosAssetSaga from './eosAsset'
 import dAppSaga from './dApp'
+import contactSaga from './contact'
+import eosNodeSaga from './eosNode'
 
 const sagas = {
   intlSaga: fork(intlSaga),
@@ -33,17 +34,18 @@ const sagas = {
   balanceSaga: fork(balanceSaga),
   loggerSaga: fork(loggerSaga),
   producerSage: fork(producerSage),
-  versionInfoSaga: fork(versionInfoSaga),
+  versionSaga: fork(versionSaga),
   currencySaga: fork(currencySaga),
   votingSaga: fork(votingSaga),
-  stakeSaga: fork(stakeSaga),
   transferSaga: fork(transferSaga),
   transactionSaga: fork(transactionSaga),
   ramSaga: fork(ramSaga),
   bandwidthSaga: fork(bandwidthSaga),
   tokenSaga: fork(tokenSaga),
   eosAssetSaga: fork(eosAssetSaga),
-  dAppSaga: fork(dAppSaga)
+  dAppSaga: fork(dAppSaga),
+  contactSaga: fork(contactSaga),
+  eosNodeSaga: fork(eosNodeSaga)
 }
 
 if (ENV === 'production') {

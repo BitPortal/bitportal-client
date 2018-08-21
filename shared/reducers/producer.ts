@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
 import { handleActions } from 'redux-actions'
 import * as actions from 'actions/producer'
+import { sortProducers } from 'core/eos'
 
 const initialState = Immutable.fromJS({
   data: {
@@ -8,6 +9,7 @@ const initialState = Immutable.fromJS({
     rows: [],
     total_producer_vote_weight: 0
   },
+  selected: [],
   loading: false,
   loaded: false,
   error: null,
@@ -58,5 +60,20 @@ export default handleActions({
     return state.set('sortType', sortType).set('loaded', true).set('loading', false).updateIn(['data', 'rows'], (v: any) => {
       return (v.size && (sortType === 'default' || sortType === 'ranking')) ? v.sortBy((v: any) => sortType === 'default' ? (v.getIn(['info', 'weight']) ? -+v.getIn(['info', 'weight']) : 0) : -+v.get('total_votes')) : v
     })
-  }
+  },
+  [actions.toggleSelect] (state, action) {
+    const selected = state.get('selected').includes(action.payload)
+    const size = state.get('selected').size
+
+    if (size < 30 && !selected) {
+      return state.update('selected', (v: any) => v.push(action.payload).sort(sortProducers))
+    } else if (size <= 30 && selected) {
+      return state.update('selected', (v: any) => v.filter((v: any) => v !== action.payload).sort(sortProducers))
+    }
+
+    return state
+  },
+  [actions.setSelected] (state, action) {
+    return state.set('selected', action.payload)
+  },
 }, initialState)

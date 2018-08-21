@@ -1,6 +1,6 @@
 import Toast from 'react-native-root-toast'
 
-export default (msg, duration, position=Toast.positions.CENTER, color, options = {
+export default (msg, duration, position = Toast.positions.CENTER, color, options = {
   shadow: true,
   animation: true,
   hideOnPress: true,
@@ -8,4 +8,3 @@ export default (msg, duration, position=Toast.positions.CENTER, color, options =
   position,
   visible: true
 }) => Toast.show(msg, { duration: duration, backgroundColor: color || '#000', ...options })
-

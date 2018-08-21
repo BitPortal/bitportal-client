@@ -24,10 +24,10 @@ function* getProducersWithInfoRequested(action: Action<GetProducersWithInfoParam
     if (producersInfo) producersInfoObject = producersInfo.reduce((info: any, producer: any) => ({ ...info, [producer.account_name]: producer }), {})
 
     if (producers && producers.rows.length) {
-      producersWithInfo = producers.rows.map((producer: any) => {
+      producersWithInfo = producers.rows.map((producer: any, index: number) => {
         const owner = producer.owner
         const info = producersInfoObject[owner]
-        return info ? { ...producer, info } : producer
+        return info ? { info, ...producer, rank: index } : { ...producer, rank: index }
       })
     } else {
       producersWithInfo = producers

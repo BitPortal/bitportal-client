@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import VersionNumber from 'react-native-version-number'
 import { bindActionCreators } from 'redux'
-import * as versionInfoActions from 'actions/versionInfo'
+import * as versionActions from 'actions/version'
 import { BITPORTAL_API_TERMS_URL, BITPORTAL_API_UPDATE_LOG_URL } from 'constants/env'
 import Loading from 'components/Loading'
 import { isNewest, showIsLast } from 'utils/update'
@@ -20,11 +20,11 @@ import styles from './styles'
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    versionInfo: state.versionInfo
+    version: state.version
   }),
   dispatch => ({
     actions: bindActionCreators({
-      ...versionInfoActions
+      ...versionActions
     }, dispatch)
   }),
   null,
@@ -71,7 +71,7 @@ export default class About extends Component {
 
   getVersionInfo = () => {
     if (isNewest) {
-      const data = this.props.versionInfo.get('data')
+      const data = this.props.version.get('data')
       const locale = this.props.locale
       showIsLast(data, locale)
     } else {
@@ -115,8 +115,8 @@ export default class About extends Component {
   }
 
   render() {
-    const { locale, versionInfo } = this.props
-    const loading = versionInfo.get('loading')
+    const { locale, version } = this.props
+    const loading = version.get('loading')
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>

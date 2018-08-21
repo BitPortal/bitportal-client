@@ -1,4 +1,4 @@
-declare interface eosAssetParams {}
+declare interface GetEOSAssetParams {}
 
 declare interface eosAsset {
   symbol: string
@@ -14,16 +14,18 @@ declare interface eosAsset {
   value?: boolean
 }
 
-declare type eosAssetResult = eosAsset[]
+declare type GetEOSAssetResult = eosAsset[]
 
-declare interface eosAssetPref {
+declare interface SaveEOSAssetPref {
   value: boolean
-  item: eosAsset[]
+  symbol: string
+  eosAccountName: string
 }
 
-declare interface eosAssetPref {
-  symbol:string
-  value:boolean
+declare interface GetEOSAssetPrefParams {
+  eosAccountName: string
 }
 
-declare interface eosAssetPrefReult = eosAssetPref[]
+
+
+declare type GetEOSAssetPrefResult = SaveEOSAssetPref[]

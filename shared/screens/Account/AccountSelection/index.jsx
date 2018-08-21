@@ -62,7 +62,7 @@ export default class AccountSelection extends Component {
   render() {
     const { locale, keyPermissions, eosPrice, eosAccount } = this.props
     const loading = eosAccount.get('loading')
-    const error = eosAccount.get('error')
+    const error = eosAccount.get('importError')
 
     return (
       <View style={styles.container}>

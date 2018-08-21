@@ -39,6 +39,7 @@ export default class SearchBar extends Component {
   render() {
     const { styleProps, locale } = this.props
     const { expanded } = this.state
+
     return (
       <IntlProvider messages={messages[locale]}>
         <Animated.View
