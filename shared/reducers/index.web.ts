@@ -17,7 +17,7 @@ import bandwidth from './bandwidth'
 import ram from './ram'
 import token from './token'
 import eosAsset from './eosAsset'
-
+import dApp from './dApp'
 
 export default combineReducers({
   router,
@@ -37,5 +37,6 @@ export default combineReducers({
   transfer,
   transaction,
   token,
-  eosAsset
+  eosAsset,
+  dApp
 })

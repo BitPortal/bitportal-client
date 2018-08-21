@@ -7,18 +7,15 @@ import NewsRow from './NewsRow'
 import styles from './styles'
 import messages from './messages'
 
-@connect(
-  state => ({
-    locale: state.intl.get('locale')
-  })
-)
-
+@connect(state => ({
+  locale: state.intl.get('locale')
+}))
 export default class NewsList extends PureComponent {
   keyExtractor = item => item.id
 
   renderHeader = () => (
     <View>
-      <NewsBanner componentId={this.props.componentId} />
+      {/* <NewsBanner componentId={this.props.componentId} /> */}
       <View style={styles.listTitle}>
         <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>
           {messages[this.props.locale].discovery_title_name_news}
@@ -41,13 +38,35 @@ export default class NewsList extends PureComponent {
   )
 
   renderSeparator = () => (
-    <View style={{ height: 1, width: '100%', backgroundColor: Colors.bgColor_000000 }} />
+    <View
+      style={{
+        height: 1,
+        width: '100%',
+        backgroundColor: Colors.bgColor_000000
+      }}
+    />
   )
 
   renderFoot = () => {
     const { loadingMore, nomore } = this.props
-    if (loadingMore) return (<ActivityIndicator style={{ marginVertical: 10 }} size="small" color="white" />)
-    if (nomore) return (<Text style={[styles.text14, { marginVertical: 10, alignSelf: 'center' }]}>{messages[this.props.locale].discovery_title_info_nomore}</Text>)
+    if (loadingMore) {
+      return (
+        <ActivityIndicator
+          style={{ marginVertical: 10 }}
+          size="small"
+          color="white"
+        />
+      )
+    }
+    if (nomore) {
+      return (
+        <Text
+          style={[styles.text14, { marginVertical: 10, alignSelf: 'center' }]}
+        >
+          {messages[this.props.locale].discovery_title_info_nomore}
+        </Text>
+      )
+    }
     return null
   }
 

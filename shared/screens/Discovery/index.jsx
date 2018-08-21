@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonTitle } from 'components/NavigationBar'
 import { bindActionCreators } from 'redux'
 import * as newsActions from 'actions/news'
+import * as dAppActions from 'actions/dApp'
 import { IntlProvider } from 'react-intl'
 import NewsList from './NewsList'
+import NewsBanner from './NewsBanner'
+import DappStore from './DappStore'
 import messages from './messages'
 import styles from './styles'
 
@@ -19,20 +22,29 @@ const PAGE_LENGTH = 10
     isRefreshing: state.news.get('isRefreshing'),
     loadingMore: state.news.get('loadingMore'),
     bannerData: state.news.get('bannerData'),
-    nomore: state.news.get('nomore')
+    nomore: state.news.get('nomore'),
+    dAppList: state.dApp.get('data')
   }),
   dispatch => ({
-    actions: bindActionCreators({
-      ...newsActions
-    }, dispatch)
+    actions: bindActionCreators(
+      {
+        ...newsActions,
+        ...dAppActions
+      },
+      dispatch
+    )
   }),
   null,
   { withRef: true }
 )
-
 export default class Discovery extends Component {
   componentDidMount() {
-    this.props.actions.getNewsListRequested({ startAt: 0, limit: PAGE_LENGTH, loadingMore: false })
+    this.props.actions.getNewsListRequested({
+      startAt: 0,
+      limit: PAGE_LENGTH,
+      loadingMore: false
+    })
+    this.props.actions.getDappListRequested({})
   }
 
   getNewsListData = () => {
@@ -65,7 +77,11 @@ export default class Discovery extends Component {
   }
 
   onRowPress = (item) => {
-    if (item.mobile_type === 'link' && item.mobile_jump_url && item.mobile_jump_url.length > 0) {
+    if (
+      item.mobile_type === 'link'
+      && item.mobile_jump_url
+      && item.mobile_jump_url.length > 0
+    ) {
       Navigation.push(this.props.componentId, {
         component: {
           name: 'BitPortal.BPWebView',
@@ -81,7 +97,7 @@ export default class Discovery extends Component {
           name: 'BitPortal.Markdown',
           passProps: {
             markdown: item.content,
-            title: item.title,
+            title: item.title
           }
         }
       })
@@ -94,7 +110,7 @@ export default class Discovery extends Component {
         name: 'BitPortal.DiscoveryArticle',
         passProps: {
           url: item.jump_url,
-          title: item.title,
+          title: item.title
         }
       }
     })
@@ -105,27 +121,45 @@ export default class Discovery extends Component {
       return
     }
     const length = this.props.listData.toJS().length
-    this.props.actions.getNewsListRequested({ startAt: length, limit: PAGE_LENGTH, loadingMore: true })
+    this.props.actions.getNewsListRequested({
+      startAt: length,
+      limit: PAGE_LENGTH,
+      loadingMore: true
+    })
   }
 
   render() {
-    const { locale, loadingMore, isRefreshing, nomore } = this.props
+    const {
+      locale,
+      loadingMore,
+      isRefreshing,
+      nomore,
+      componentId
+    } = this.props
+    console.log('this.props.dAppList', this.props.dAppList)
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            leftButton={<CommonTitle title={messages[locale].discovery_title_name_dsc} />}
+            leftButton={
+              <CommonTitle title={messages[locale].discovery_title_name_dsc} />
+            }
           />
-          <NewsList
-            data={this.getNewsListData()}
-            onRefresh={this.onRefresh}
-            onEndReached={this.onEndReached}
-            refreshing={isRefreshing}
-            onRowPress={this.onRowPress}
-            nomore={nomore}
-            loadingMore={loadingMore}
-            componentId={this.props.componentId}
-          />
+          <ScrollView>
+            <NewsBanner />
+
+            <DappStore componentId={componentId} />
+            <NewsList
+              data={this.getNewsListData()}
+              onRefresh={this.onRefresh}
+              onEndReached={this.onEndReached}
+              refreshing={isRefreshing}
+              onRowPress={this.onRowPress}
+              nomore={nomore}
+              loadingMore={loadingMore}
+              componentId={componentId}
+            />
+          </ScrollView>
         </View>
       </IntlProvider>
     )

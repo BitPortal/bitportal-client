@@ -36,3 +36,5 @@ export const selectCurrentPair = createAction<string>(
 )
 
 export const setSortFilter = createAction<string>('ticker/SET_SORT_FILTER')
+
+export const setSearchTerm = createAction<string>('ticker/SET_SEARCH_TERM')

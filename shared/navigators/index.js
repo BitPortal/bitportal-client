@@ -24,6 +24,7 @@ import PrivateKeyCreation from 'screens/Account/PrivateKeyCreation'
 import Discovery from 'screens/Discovery'
 import ArticleWebView from 'screens/Discovery/article'
 import Markdown from 'screens/Discovery/markdown'
+import DappList from 'screens/Discovery/DappList'
 import Resources from 'screens/Resources'
 import Memory from 'screens/Resources/Memory'
 import Bandwidth from 'screens/Resources/Bandwidth'
@@ -93,6 +94,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.Discovery', () => screenComponent(Discovery, store))
   Navigation.registerComponent('BitPortal.DiscoveryArticle', () => screenComponent(ArticleWebView, store))
   Navigation.registerComponent('BitPortal.Markdown', () => screenComponent(Markdown, store))
+  Navigation.registerComponent('BitPortal.DappList', () => screenComponent(DappList, store))
   Navigation.registerComponent('BitPortal.Resources', () => screenComponent(Resources, store))
   Navigation.registerComponent('BitPortal.CPU', () => screenComponent(CPU, store))
   Navigation.registerComponent('BitPortal.Memory', () => screenComponent(Memory, store))

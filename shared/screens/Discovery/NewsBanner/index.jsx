@@ -14,14 +14,16 @@ import styles from './styles'
     bannerData: state.news.get('bannerData')
   }),
   dispatch => ({
-    actions: bindActionCreators({
-      ...newsActions
-    }, dispatch)
+    actions: bindActionCreators(
+      {
+        ...newsActions
+      },
+      dispatch
+    )
   }),
   null,
   { withRef: true }
 )
-
 export default class NewBanner extends PureComponent {
   componentDidMount() {
     this.props.actions.getNewsBannerRequested()
@@ -33,7 +35,7 @@ export default class NewBanner extends PureComponent {
         name: 'BitPortal.BPWebView',
         passProps: {
           uri: item.jump_url,
-          title: item.title,
+          title: item.title
         }
       }
     })
@@ -62,6 +64,9 @@ export default class NewBanner extends PureComponent {
           loop={true}
           bounces={true}
           pagingEnabled={true}
+          autoplay
+          autoplayTimeout={5}
+          autoplayDirection
           containerStyle={styles.container}
           dot={<View style={styles.dot} />}
           activeDot={<View style={styles.activeDot} />}

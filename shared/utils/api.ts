@@ -101,3 +101,5 @@ export const createEOSAccount = (params: any) => {
   console.log('createEOSAccount params', params)
   fetchBase('POST', '/registry/wallets/campaign/eoscreation', params)
 }
+
+export const getDappList = (params?: any) => cmsFetchBase('GET', '/eosdapp', params)
