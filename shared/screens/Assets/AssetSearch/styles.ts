@@ -1,10 +1,5 @@
 import { StyleSheet } from 'react-native'
-import {
-  FontScale,
-  SCREEN_WIDTH,
-  SCREEN_HEIGHT,
-  NAV_BAR_HEIGHT
-} from 'utils/dimens'
+import { SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, FontScale, ifIphoneX } from 'utils/dimens'
 import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
@@ -16,6 +11,16 @@ const styles = StyleSheet.create({
   scrollContainer: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT - NAV_BAR_HEIGHT
+  },
+  navContainer: {
+    width: SCREEN_WIDTH,
+    height: NAV_BAR_HEIGHT,
+    backgroundColor: Colors.minorThemeColor,
+    ...ifIphoneX({
+      paddingTop: 24
+    }, {
+      paddingTop: 0
+    })
   },
   between: {
     alignItems: 'center',

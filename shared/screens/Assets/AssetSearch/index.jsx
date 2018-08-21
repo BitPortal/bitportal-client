@@ -6,9 +6,10 @@ import { Navigation } from 'react-native-navigation'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
+import { FontScale } from 'utils/dimens'
 import * as eosAssetActions from 'actions/eosAsset'
-import { eosAssetListSelector } from 'selectors/eosAsset'
-
+import { eosAssetSearchListSelector } from 'selectors/eosAsset'
+import SearchBar from './SearchBar'
 import Images from 'resources/images'
 import messages from './messages'
 import styles from './styles'
@@ -29,8 +30,7 @@ const AssetElement = ({ item, onValueChange }) => (
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    loading: state.eosAsset.get('loading'),
-    eosAssetPrefs: eosAssetListSelector(state)
+    eosAssetSearchList: eosAssetSearchListSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -41,7 +41,7 @@ const AssetElement = ({ item, onValueChange }) => (
   { withRef: true }
 )
 
-export default class AvailableAssets extends Component {
+export default class AssetSearch extends Component {
   static get options() {
     return {
       bottomTabs: {
@@ -50,28 +50,11 @@ export default class AvailableAssets extends Component {
     }
   }
 
-  async UNSAFE_componentWillMount() {
-    this.props.actions.getEOSAssetRequested({})
-  }
-
-  goSearching = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.AssetSearch',
-        passProps: {
-          eosAccountName: this.props.eosAccountName
-        }
-      }
-    })
-  }
-
   // 激活或隐藏钱包
   onValueChange = (value, item) => {
     const { eosAccountName } = this.props
     this.props.actions.saveAssetPref({ value, symbol: item.symbol, eosAccountName })
   }
-
-  onRefresh = () => this.props.actions.getEOSAssetRequested({})
 
   keyExtractor = item => String(item.id)
 
@@ -82,25 +65,26 @@ export default class AvailableAssets extends Component {
   )
 
   render() {
-    const { locale, eosAssetPrefs } = this.props
+    const { locale, searchValue, eosAssetSearchList } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-          <NavigationBar
-            title={messages[locale].astlist_title_name_astlst}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
-            rightButton={<CommonRightButton iconName="ios-search-outline" onPress={this.goSearching} />}
-          />
+          <View style={[styles.navContainer, styles.between, { alignItems: 'flex-end' }]}>
+            <SearchBar value={searchValue} />
+            <CommonButton 
+              title={messages[locale].astsch_title_name_cancel} 
+              onPress={() => Navigation.pop(this.props.componentId)} 
+              extraTextStyle={{ fontSize: FontScale(18), color: Colors.textColor_89_185_226 }} 
+            />
+          </View>
           <View style={styles.scrollContainer}>
             <FlatList
-              data={eosAssetPrefs.toJS()}
+              data={eosAssetSearchList.toJS()}
               keyExtractor={this.keyExtractor}
               ItemSeparatorComponent={this.renderSeparator}
               showsVerticalScrollIndicator={false}
               renderItem={this.renderItem}
-              onRefresh={this.onRefresh}
-              refreshing={this.props.loading}
             />
           </View>
         </View>

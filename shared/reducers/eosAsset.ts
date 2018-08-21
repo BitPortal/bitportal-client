@@ -7,6 +7,7 @@ const initialState = Immutable.fromJS({
   loading: false,
   loaded: false,
   error: null,
+  searchValue: '',
   assetPrefs: []
 })
 
@@ -35,6 +36,9 @@ export default handleActions(
     },
     [actions.getAssetPrefSucceeded](state, action) {
       return state.set('assetPrefs', Immutable.fromJS(action.payload))
+    },
+    [actions.setSearchValue](state, action) {
+      return state.set('searchValue', action.payload)
     }
   },
   initialState
