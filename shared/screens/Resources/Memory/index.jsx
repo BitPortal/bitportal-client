@@ -6,7 +6,11 @@ import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, FormattedNumber, IntlProvider } from 'react-intl'
-import { eosAccountSelector } from 'selectors/eosAccount'
+import {
+  ramQuotaSelector,
+  ramAvailableSelector,
+  ramAvailablePercentSelector
+} from 'selectors/eosAccount'
 import { ramPriceSelector } from 'selectors/ram'
 import TradeRAMForm from 'components/Form/TradeRAMForm'
 import * as ramActions from 'actions/ram'
@@ -19,7 +23,9 @@ import Progress from '../Progress'
   state => ({
     locale: state.intl.get('locale'),
     wallet: state.wallet,
-    eosAccount: eosAccountSelector(state),
+    ramQuota: ramQuotaSelector(state),
+    ramAvailable: ramAvailableSelector(state),
+    ramAvailablePercent: ramAvailablePercentSelector(state),
     ramPrice: ramPriceSelector(state)
   }),
   dispatch => ({
@@ -58,9 +64,7 @@ export default class Memory extends Component {
   }
 
   render() {
-    const { locale, eosAccount, ramPrice } = this.props
-    const activeEOSAccount = eosAccount.get('data')
-    const percent = (activeEOSAccount.get('ram_quota') - activeEOSAccount.get('ram_usage')) / activeEOSAccount.get('ram_quota')
+    const { locale, ramQuota, ramAvailable, ramAvailablePercent, ramPrice } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -75,12 +79,12 @@ export default class Memory extends Component {
               contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }}
             >
               <View style={styles.progressContaner}>
-                <Progress percent={percent} colors={Colors.ramColor} />
+                <Progress percent={ramAvailablePercent} colors={Colors.ramColor} />
                 <View style={[styles.totalContainer, styles.between]}>
                   <Text style={styles.text14}><FormattedMessage id="memory_title_name_total" /></Text>
                   <Text style={styles.text14}>
-                    {formatMemorySize(activeEOSAccount.get('ram_quota') - activeEOSAccount.get('ram_usage'))}
-                    /{formatMemorySize(activeEOSAccount.get('ram_quota'))}
+                    {formatMemorySize(ramAvailable)}
+                    /{formatMemorySize(ramQuota)}
                   </Text>
                 </View>
                 <View style={[styles.totalContainer, styles.between, { marginTop: 0 }]}>

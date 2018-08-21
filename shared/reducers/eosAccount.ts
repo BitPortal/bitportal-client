@@ -40,7 +40,7 @@ export default handleActions({
           return v.push(Immutable.fromJS(action.payload))
         }
 
-        return v.update(index, () => Immutable.fromJS(action.payload))
+        return v.update(index, (v) => v.mergeDeep(Immutable.fromJS(action.payload)))
       })
   },
   [actions.importEOSAccountFailed] (state, action) {

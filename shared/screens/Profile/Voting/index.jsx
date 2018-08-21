@@ -8,7 +8,7 @@ import { Text, View, TouchableWithoutFeedback, InteractionManager } from 'react-
 import * as producerActions from 'actions/producer'
 import * as votingActions from 'actions/voting'
 import { bindActionCreators } from 'redux'
-import { eosAccountSelector, votedProducersSelector } from 'selectors/eosAccount'
+import { eosAccountNameSelector, voterInfoSelector, votedProducersSelector } from 'selectors/eosAccount'
 import Prompt from 'components/Prompt'
 import Alert from 'components/Alert'
 import LinearGradientContainer from 'components/LinearGradientContainer'
@@ -40,7 +40,8 @@ export const errorMessages = (error, messages) => {
     selected: state.producer.get('selected'),
     loading: state.producer.get('loading'),
     total_producer_vote_weight: state.producer.getIn(['data', 'total_producer_vote_weight']),
-    eosAccount: eosAccountSelector(state),
+    eosAccountName: eosAccountNameSelector(state),
+    voterInfo: voterInfoSelector(state),
     votedProducers: votedProducersSelector(state),
     voting: state.voting
   }),
@@ -83,7 +84,7 @@ export default class Voting extends Component {
   }
 
   submitVoting = (password) => {
-    const eosAccountName = this.props.eosAccount.getIn(['data', 'account_name'])
+    const eosAccountName = this.props.eosAccountName
     const selected = this.props.selected
     this.props.actions.votingRequested({ producers: selected.toJS(), eosAccountName, password })
   }
@@ -101,8 +102,8 @@ export default class Voting extends Component {
   }
 
   vote = () => {
-    const { locale } = this.props
-    const eosAccountName = this.props.eosAccount.get('data').get('account_name')
+    const { locale, eosAccountName } = this.props
+
     if (!eosAccountName) {
       this.setState({ alertMessage: messages[locale].vt_button_name_err })
     } else {
@@ -111,8 +112,8 @@ export default class Voting extends Component {
   }
 
   checkResources = () => {
-    const { locale } = this.props
-    const eosAccountName = this.props.eosAccount.get('data').get('account_name')
+    const { locale, eosAccountName } = this.props
+
     if (!eosAccountName) {
       this.setState({ alertMessage: messages[locale].vt_button_name_err })
     } else {
@@ -167,9 +168,8 @@ export default class Voting extends Component {
   }
 
   render() {
-    const { locale, producerList, total_producer_vote_weight, loading, selected, eosAccount, voting } = this.props
+    const { locale, producerList, total_producer_vote_weight, loading, selected, voterInfo, voting } = this.props
     const disabled = !selected.size && !producerList.size
-    const voterInfo = eosAccount.getIn(['data', 'voter_info'])
     const isVoting = voting.get('loading')
     const error = voting.get('error')
     const showSelected = voting.get('showSelected')
