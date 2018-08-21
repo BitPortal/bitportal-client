@@ -15,9 +15,10 @@ import NavigationBar, {
   CommonButton
 } from 'components/NavigationBar'
 import { bindActionCreators } from 'redux'
-import * as newsActions from 'actions/news'
 import * as dAppActions from 'actions/dApp'
+import { searchDappListSelector } from 'selectors/dApp'
 import { IntlProvider } from 'react-intl'
+import SearchBar from 'components/SearchBar'
 
 import Colors from 'resources/colors'
 import Images from 'resources/images'
@@ -89,10 +90,18 @@ class DappListItem extends React.PureComponent {
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    dAppList: state.dApp.get('data'),
-    loading: state.dApp.get('loading')
+    dAppList: searchDappListSelector(state),
+    loading: state.dApp.get('loading'),
+    searchTerm: state.dApp.get('searchTerm')
   }),
-  null,
+  dispatch => ({
+    actions: bindActionCreators(
+      {
+        ...dAppActions
+      },
+      dispatch
+    )
+  }),
   null,
   { withRef: true }
 )
@@ -109,21 +118,36 @@ export default class DappList extends Component {
     )
   }
 
-  keyExtractor = (item, index) => item.id
+  onChangeText = (text) => {
+    this.props.actions.setSearchTerm(text)
+  }
+
+  keyExtractor = item => item.get('id')
+
+  goBack = () => {
+    Navigation.pop(this.props.componentId)
+  }
 
   render() {
-    const { locale, dAppList, loading } = this.props
+    const { locale, dAppList, loading, searchTerm } = this.props
+    console.log('componentId', this.props.componentId)
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
             leftButton={
-              <CommonButton
-                iconName="md-arrow-back"
-                onPress={() => Navigation.pop(this.props.componentId)}
+              <CommonButton iconName="md-arrow-back" onPress={this.goBack} />
+            }
+            title={messages[locale].dApp_list}
+            rightButton={
+              <SearchBar
+                searchTerm={searchTerm}
+                onChangeText={text => this.onChangeText(text)}
+                clearSearch={() => {
+                  this.props.actions.setSearchTerm('')
+                }}
               />
             }
-            title={<CommonTitle title={messages[locale].dApp_list} />}
           />
           <VirtualizedList
             style={styles.listContainer}

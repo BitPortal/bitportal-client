@@ -102,7 +102,6 @@ export default handleActions(
       )
     },
     [actions.setSearchTerm](state, action) {
-      console.log('setSearchTerm', action.payload)
       return state.set('searchTerm', Immutable.fromJS(action.payload))
     }
   },

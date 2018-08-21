@@ -10,20 +10,19 @@ import Colors from 'resources/colors'
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
+    zIndex: 0,
     right: 0,
     width: SCREEN_WIDTH
+    // backgroundColor: 'red'
   },
   searchWrapper: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingRight: 30
+    paddingRight: 10
   },
   searchBox: {
     flexDirection: 'row',
-    flex: 1,
-    borderColor: 'black',
-    backgroundColor: 'black',
     borderWidth: 1,
     borderRadius: 3,
     paddingHorizontal: 10,

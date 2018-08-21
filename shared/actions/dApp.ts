@@ -9,3 +9,4 @@ export const getDappListSucceeded = createAction<TokenResult>(
 export const getDappListFailed = createAction<ErrorMessage>(
   'dApp/GET_LIST_FAILED'
 )
+export const setSearchTerm = createAction<string>('dApp/SET_SEARCH_TERM')

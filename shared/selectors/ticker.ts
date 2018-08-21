@@ -6,7 +6,7 @@ const currencyFilterSelector = (state: RootState) => state.ticker.get('currencyF
 const quoteAssetFilterSelector = (state: RootState) => state.ticker.get('quoteAssetFilter')
 const sortFilterListSelector = (state: RootState) => state.ticker.get('sortFilter')
 const baseAssetSelector = (state: RootState) => state.ticker.get('baseAsset')
-const searchFilterSelector = (state: RootState) => state.ticker.get('searchTerm')
+const searchTermSelector = (state: RootState) => state.ticker.get('searchTerm')
 
 export const eosPriceSelector = (state: RootState) => (state.ticker.get('dataSource').get('BINANCE_SPOT_EOS_USDT')
   ? state.ticker
@@ -26,7 +26,7 @@ export const exchangeTickerSelector = createSelector(
   exchangeFilterSelector,
   quoteAssetFilterSelector,
   sortFilterSelector,
-  searchFilterSelector,
+  searchTermSelector,
   (
     ticker: any,
     exchange: any,
@@ -44,7 +44,9 @@ export const exchangeTickerSelector = createSelector(
     )
     .sortBy((item: any) => {
       const result = exchangeTickerSortByHelper(sortfilter)
-      return sortfilter.includes('low') ? +item.get(result) : -+item.get(result)
+      return sortfilter.includes('low')
+        ? +item.get(result)
+        : -+item.get(result)
     })
 )
 

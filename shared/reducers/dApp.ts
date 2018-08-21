@@ -6,7 +6,8 @@ const initialState = Immutable.fromJS({
   data: [],
   loading: false,
   loaded: false,
-  error: null
+  error: null,
+  searchTerm: ''
 })
 
 export default handleActions(
@@ -27,6 +28,9 @@ export default handleActions(
     },
     [actions.getDappListFailed](state, action) {
       return state.set('error', action.payload).set('loading', false)
+    },
+    [actions.setSearchTerm](state, action) {
+      return state.set('searchTerm', Immutable.fromJS(action.payload))
     }
   },
   initialState

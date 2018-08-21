@@ -139,7 +139,9 @@ export default class DappStore extends PureComponent {
             contentContainerStyle={styles.dAppScrollViewContainer}
           >
             {loading ? (
-              <ActivityIndicator />
+              <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <ActivityIndicator size="large" />
+              </View>
             ) : (
               this.props.dAppList.map((item, index) => (
                 <DappElement
