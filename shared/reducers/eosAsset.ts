@@ -39,6 +39,9 @@ export default handleActions(
     },
     [actions.setSearchValue](state, action) {
       return state.set('searchValue', action.payload)
+    },
+    [actions.resetSearchValue](state) {
+      return state.set('searchValue', '')
     }
   },
   initialState

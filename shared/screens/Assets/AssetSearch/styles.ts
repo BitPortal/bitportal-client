@@ -31,6 +31,10 @@ const styles = StyleSheet.create({
     fontSize: FontScale(20),
     color: Colors.textColor_255_255_238
   },
+  text16: {
+    fontSize: FontScale(16),
+    color: Colors.textColor_181_181_181
+  },
   listContainer: {
     width: SCREEN_WIDTH,
     height: 70,

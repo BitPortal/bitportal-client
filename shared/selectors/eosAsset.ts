@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect'
 import Immutable from 'immutable'
+import _ from 'lodash'
 
 const dataSelector = (state: RootState) => state.eosAsset.get('data')
 const assetPrefsSelector = (state: RootState) => state.eosAsset.get('assetPrefs')
@@ -9,9 +10,7 @@ export const eosAssetListSelector = createSelector(
   dataSelector,
   assetPrefsSelector,
   (data: any, assets: any) => data.map((item: any) => {
-    const found = assets.findIndex(
-      (element: any) => element.get('symbol') === item.get('symbol')
-    )
+    const found = assets.findIndex((element: any) => element.get('symbol') === item.get('symbol'))
     return item.set('value', found !== -1 ? assets.get(found).get('value') : false)
   })
 )
@@ -25,13 +24,10 @@ export const eosAssetSearchListSelector = createSelector(
       const found = assets.findIndex((element: any) => element.get('symbol') === item.get('symbol'))
       return item.set('value', found !== -1 ? assets.get(found).get('value') : false)
     })
-    let eosAssetSearchList = Immutable.fromJS([])
-    assetList.map((item: any) => {
-      if (item.get('symbol').indexOf(searchValue) !== -1) {
-        eosAssetSearchList.push(item)
-        console.log('###', eosAssetSearchList.toJS(), searchValue, item.get('symbol'))
-      }
+    let list =  _.remove(assetList.toJS(), (item: any) => {
+      return item.symbol.toLocaleLowerCase().indexOf(searchValue.toLocaleLowerCase()) !== -1
     })
-    return eosAssetSearchList
+    if (searchValue) return Immutable.fromJS(list)
+    else return Immutable.fromJS([])
   }
 )

@@ -22,6 +22,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row'
   },
+  text16: {
+    fontSize: FontScale(16),
+    color: Colors.textColor_181_181_181
+  },
   text20: {
     fontSize: FontScale(20),
     color: Colors.textColor_255_255_238

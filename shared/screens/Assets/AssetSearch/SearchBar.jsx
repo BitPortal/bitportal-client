@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   textInputStyle: {
     width: SCREEN_WIDTH * 0.6 - 40,
-    height: 30,
+    height: 40,
     marginLeft: Platform.OS === 'ios' ? 11 : 7,
     color: Colors.textColor_FFFFEE,
     fontSize: FontScale(14)

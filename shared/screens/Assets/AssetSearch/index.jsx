@@ -9,8 +9,8 @@ import { IntlProvider } from 'react-intl'
 import { FontScale } from 'utils/dimens'
 import * as eosAssetActions from 'actions/eosAsset'
 import { eosAssetSearchListSelector } from 'selectors/eosAsset'
-import SearchBar from './SearchBar'
 import Images from 'resources/images'
+import SearchBar from './SearchBar'
 import messages from './messages'
 import styles from './styles'
 
@@ -18,7 +18,10 @@ const AssetElement = ({ item, onValueChange }) => (
   <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.bgColor_30_31_37 }]}>
     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
       <Image style={styles.icon} source={item.icon_url ? { uri: `${item.icon_url}` } : Images.coin_logo_default} />
-      <Text style={styles.text20}>{item.symbol}</Text>
+      <View>
+        <Text style={styles.text20}>{item.symbol}</Text>
+        <Text style={styles.text16}>{item.account}</Text>
+      </View>
     </View>
     <Switch
       value={item.value}
@@ -56,6 +59,11 @@ export default class AssetSearch extends Component {
     this.props.actions.saveAssetPref({ value, symbol: item.symbol, eosAccountName })
   }
 
+  cancelSearch = () => {
+    this.props.actions.resetSearchValue()
+    Navigation.pop(this.props.componentId)
+  }
+
   keyExtractor = item => String(item.id)
 
   ItemSeparatorComponent = () => <View style={{ height: 1, width: '100%', backgroundColor: Colors.bgColor_000000 }} />
@@ -74,7 +82,7 @@ export default class AssetSearch extends Component {
             <SearchBar value={searchValue} />
             <CommonButton 
               title={messages[locale].astsch_title_name_cancel} 
-              onPress={() => Navigation.pop(this.props.componentId)} 
+              onPress={this.cancelSearch} 
               extraTextStyle={{ fontSize: FontScale(18), color: Colors.textColor_89_185_226 }} 
             />
           </View>

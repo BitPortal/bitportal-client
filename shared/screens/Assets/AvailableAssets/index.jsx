@@ -8,7 +8,6 @@ import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import * as eosAssetActions from 'actions/eosAsset'
 import { eosAssetListSelector } from 'selectors/eosAsset'
-
 import Images from 'resources/images'
 import messages from './messages'
 import styles from './styles'
@@ -17,7 +16,10 @@ const AssetElement = ({ item, onValueChange }) => (
   <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.bgColor_30_31_37 }]}>
     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
       <Image style={styles.icon} source={item.icon_url ? { uri: `${item.icon_url}` } : Images.coin_logo_default} />
-      <Text style={styles.text20}>{item.symbol}</Text>
+      <View>
+        <Text style={styles.text20}>{item.symbol}</Text>
+        <Text style={styles.text16}>{item.account}</Text>
+      </View>
     </View>
     <Switch
       value={item.value}

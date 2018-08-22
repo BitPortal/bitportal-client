@@ -8,3 +8,4 @@ export const saveAssetPrefSucceeded = createAction<SaveEOSAssetPref>('eosAsset/S
 export const getAssetPref = createAction<GetEOSAssetPrefParams>('eosAsset/GET_ASSET_PREF')
 export const getAssetPrefSucceeded = createAction<GetEOSAssetPrefResult>('eosAsset/GET_ASSET_PREF_SUCCEEDED')
 export const setSearchValue = createAction<string>('eosAsset/SET_SEARCH_VALUE')
+export const resetSearchValue = createAction('eos/RESET_SEARCH_VALUE')
