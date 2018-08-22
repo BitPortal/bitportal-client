@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Colors from 'resources/colors'
 import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
-import { Text, View, Switch, Image, FlatList } from 'react-native'
+import { Text, View, Switch, Image, VirtualizedList } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -12,18 +12,18 @@ import Images from 'resources/images'
 import messages from './messages'
 import styles from './styles'
 
-const AssetElement = ({ item, onValueChange }) => (
+const AssetElement = ({ item, onToggle }) => (
   <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.bgColor_30_31_37 }]}>
     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
       <Image style={styles.icon} source={item.icon_url ? { uri: `${item.icon_url}` } : Images.coin_logo_default} />
       <View>
-        <Text style={styles.text20}>{item.symbol}</Text>
-        <Text style={styles.text16}>{item.account}</Text>
+        <Text style={styles.text20}>{item.get('symbol')}</Text>
+        <Text style={styles.text16}>{item.get('account')}</Text>
       </View>
     </View>
     <Switch
-      value={item.value}
-      onValueChange={e => onValueChange(e, item)}
+      value={item.get('selected')}
+      onValueChange={onToggle}
     />
   </View>
 )
@@ -31,8 +31,9 @@ const AssetElement = ({ item, onValueChange }) => (
 @connect(
   state => ({
     locale: state.intl.get('locale'),
+    eosAssetList: eosAssetListSelector(state),
     loading: state.eosAsset.get('loading'),
-    eosAssetPrefs: eosAssetListSelector(state)
+    loaded: state.eosAsset.get('loaded')
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -52,8 +53,8 @@ export default class AvailableAssets extends Component {
     }
   }
 
-  async UNSAFE_componentWillMount() {
-    this.props.actions.getEOSAssetRequested({})
+  componentDidMount() {
+    this.props.actions.getEOSAssetRequested()
   }
 
   goSearching = () => {
@@ -67,24 +68,19 @@ export default class AvailableAssets extends Component {
     })
   }
 
-  // 激活或隐藏钱包
-  onValueChange = (value, item) => {
-    const { eosAccountName } = this.props
-    this.props.actions.saveAssetPref({ value, symbol: item.symbol, eosAccountName })
+  onToggle = (item) => {
+    const contract = item.get('account')
+    this.props.actions.toggleEOSAsset(contract)
   }
 
-  onRefresh = () => this.props.actions.getEOSAssetRequested({})
-
-  keyExtractor = item => String(item.id)
-
-  ItemSeparatorComponent = () => <View style={{ height: 1, width: '100%', backgroundColor: Colors.bgColor_000000 }} />
+  onRefresh = () => this.props.actions.getEOSAssetRequested()
 
   renderItem = ({ item }) => (
-    <AssetElement item={item} onValueChange={e => this.onValueChange(e, item)} />
+    <AssetElement item={item} onToggle={() => this.onToggle(item)} />
   )
 
   render() {
-    const { locale, eosAssetPrefs } = this.props
+    const { locale, eosAssetList, loading, loaded } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -92,17 +88,16 @@ export default class AvailableAssets extends Component {
           <NavigationBar
             title={messages[locale].astlist_title_name_astlst}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
-            rightButton={<CommonRightButton iconName="ios-search-outline" onPress={this.goSearching} />}
           />
           <View style={styles.scrollContainer}>
-            <FlatList
-              data={eosAssetPrefs.toJS()}
-              keyExtractor={this.keyExtractor}
-              ItemSeparatorComponent={this.renderSeparator}
-              showsVerticalScrollIndicator={false}
-              renderItem={this.renderItem}
+            <VirtualizedList
+              data={eosAssetList}
+              refreshing={loading && !loaded}
               onRefresh={this.onRefresh}
-              refreshing={this.props.loading}
+              getItem={(items, index) => (items.get ? items.get(index) : items[index])}
+              getItemCount={items => (items.size || 0)}
+              keyExtractor={item => String(item.get('account'))}
+              renderItem={this.renderItem}
             />
           </View>
         </View>

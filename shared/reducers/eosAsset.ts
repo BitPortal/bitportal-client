@@ -8,34 +8,28 @@ const initialState = Immutable.fromJS({
   loaded: false,
   error: null,
   searchValue: '',
-  assetPrefs: []
+  selectedAsset: []
 })
 
 export default handleActions(
   {
-    [actions.getEOSAssetRequested](state) {
+    [actions.getEOSAssetRequested] (state) {
       return state.set('loading', true)
     },
-    [actions.getEOSAssetSucceeded](state, action) {
-      return state
-        .set('loaded', true)
-        .set('loading', false)
-        .set(
-          'data',
-          action.payload.length === 0
-            ? Immutable.fromJS({})
-            : Immutable.fromJS(action.payload)
-        )
-      //parse with existing asset prefs
+    [actions.getEOSAssetSucceeded] (state, action) {
+      return state.set('loaded', true).set('loading', false)
+        .set('data', Immutable.fromJS(action.payload))
     },
-    [actions.getEOSAssetFailed](state, action) {
-      return state.set('error', action.payload).set('loading', false)
+    [actions.getEOSAssetFaild] (state, action) {
+      return state.set('loaded', true).set('loading', false)
+        .set('error', action.payload)
     },
-    [actions.saveAssetPrefSucceeded](state, action) {
-      return state.set('assetPrefs', Immutable.fromJS(action.payload))
-    },
-    [actions.getAssetPrefSucceeded](state, action) {
-      return state.set('assetPrefs', Immutable.fromJS(action.payload))
+    [actions.toggleEOSAsset] (state, action) {
+      return state.update('selectedAsset', (v: any) => {
+        const contract = action.payload
+        const selected = v.includes(contract)
+        return selected ? v.filter((v: any) => v !== contract) : v.push(contract)
+      })
     },
     [actions.setSearchValue](state, action) {
       return state.set('searchValue', action.payload)

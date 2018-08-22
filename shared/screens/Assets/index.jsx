@@ -77,6 +77,7 @@ const getTotalAssets = (eosAccountBalance, eosPrice) => {
   null,
   { withRef: true }
 )
+
 export default class Assets extends Component {
   state = {
     isVisible2: false
@@ -106,28 +107,24 @@ export default class Assets extends Component {
   }
 
   checkAssetList = () => {
-    InteractionManager.runAfterInteractions(() => {
-      Navigation.push(this.props.componentId, {
-        component: {
-          name: 'BitPortal.AvailableAssets',
-          passProps: {
-            eosAccountName: this.props.eosAccount.get('data').get('account_name')
-          }
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.AvailableAssets',
+        passProps: {
+          eosAccountName: this.props.eosAccount.get('data').get('account_name')
         }
-      })
+      }
     })
   }
 
   checkAsset = (item) => {
-    InteractionManager.runAfterInteractions(() => {
-      Navigation.push(this.props.componentId, {
-        component: {
-          name: 'BitPortal.AssetChart',
-          passProps: {
-            eosItem: item
-          }
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.AssetChart',
+        passProps: {
+          eosItem: item
         }
-      })
+      }
     })
   }
 
@@ -143,15 +140,12 @@ export default class Assets extends Component {
     })
   }
 
-  // 创建新账户
   createNewAccount = () => {
-    InteractionManager.runAfterInteractions(() => {
-      this.setState({ isVisible2: false }, () => {
-        Navigation.push(this.props.componentId, {
-          component: {
-            name: 'BitPortal.EOSAccountCreation'
-          }
-        })
+    this.setState({ isVisible2: false }, () => {
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.EOSAccountCreation'
+        }
       })
     })
   }
@@ -180,7 +174,6 @@ export default class Assets extends Component {
     })
   }
 
-  // 切换EOS账户
   switchWallet = (info) => {
     this.props.actions.switchWalletRequested(info)
   }
