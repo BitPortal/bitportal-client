@@ -146,7 +146,7 @@ export default class Discovery extends Component {
             }
           />
           <ScrollView>
-            <NewsBanner />
+            <NewsBanner componentId={componentId} />
 
             <DappStore componentId={componentId} />
             <NewsList
