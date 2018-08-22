@@ -104,7 +104,13 @@ export default class Scanner extends Component {
           <NavigationBar
             title={messages[locale].qrscn_title_name_qrscanner}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
-            rightButton={<CommonButton title={messages[locale].qrscn_button_name_photos} onPress={this.getImageFromPhoto} extraTextStyle={{ fontSize: FontScale(18), color: Colors.textColor_89_185_226 }} />}
+            rightButton={
+              <CommonButton 
+                title={messages[locale].qrscn_button_name_photos} 
+                onPress={this.getImageFromPhoto} 
+                extraTextStyle={{ fontSize: FontScale(18), color: Colors.textColor_89_185_226 }} 
+              />
+            }
           />
           <QRCodeScanner
             ref={(node) => { this.scanner = node }}
