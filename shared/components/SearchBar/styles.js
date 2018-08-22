@@ -11,12 +11,12 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     zIndex: 0,
-    right: 0,
-    width: SCREEN_WIDTH
+    right: 0
     // backgroundColor: 'red'
   },
   searchWrapper: {
     flex: 1,
+    justifyContent: 'flex-end',
     flexDirection: 'row',
     alignItems: 'center',
     paddingRight: 10

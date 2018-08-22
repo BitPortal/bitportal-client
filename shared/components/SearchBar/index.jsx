@@ -33,7 +33,8 @@ export default class SearchBar extends Component {
     translateX: new Animated.Value(0),
     searchBoxColor: new Animated.Value(0),
     wrapperColor: new Animated.Value(0),
-    opacity: new Animated.Value(0)
+    opacity: new Animated.Value(0),
+    containerWidth: new Animated.Value(0)
   }
 
   getHeight = (event) => {
@@ -56,6 +57,7 @@ export default class SearchBar extends Component {
     this.state.translateX.setValue(expanded ? 1 : 0)
     this.state.searchBoxColor.setValue(expanded ? 1 : 0)
     this.state.opacity.setValue(expanded ? 1 : 0)
+    this.state.containerWidth.setValue(expanded ? 1 : 0)
     return expanded
       ? Animated.sequence([
         Animated.parallel([
@@ -75,18 +77,32 @@ export default class SearchBar extends Component {
           duration: 250,
           easing: Easing.ease
         }),
-        Animated.timing(this.state.wrapperColor, {
-          toValue: 0,
-          duration: 100,
-          easing: Easing.ease
-        })
+        Animated.parallel([
+          Animated.timing(this.state.wrapperColor, {
+            toValue: 0,
+            duration: 100,
+            easing: Easing.ease
+          }),
+          Animated.timing(this.state.containerWidth, {
+            toValue: 0,
+            duration: 0,
+            easing: Easing.ease
+          })
+        ])
       ]).start()
       : Animated.sequence([
-        Animated.timing(this.state.wrapperColor, {
-          toValue: 1,
-          duration: 100,
-          easing: Easing.ease
-        }),
+        Animated.parallel([
+          Animated.timing(this.state.containerWidth, {
+            toValue: 1,
+            duration: 100,
+            easing: Easing.ease
+          }),
+          Animated.timing(this.state.wrapperColor, {
+            toValue: 1,
+            duration: 100,
+            easing: Easing.ease
+          })
+        ]),
         Animated.timing(this.state.translateX, {
           toValue: 1,
           duration: 250,
@@ -110,7 +126,7 @@ export default class SearchBar extends Component {
   render() {
     const translateX = this.state.translateX.interpolate({
       inputRange: [0, 1],
-      outputRange: ['15%', '80%']
+      outputRange: ['20%', '80%']
     })
     const searchBoxColor = this.state.searchBoxColor.interpolate({
       inputRange: [0, 1],
@@ -120,22 +136,30 @@ export default class SearchBar extends Component {
       inputRange: [0, 1],
       outputRange: ['rgba(32,33,38,0)', 'rgba(32,33,38,1)']
     })
+    const containerWidth = this.state.containerWidth.interpolate({
+      inputRange: [0, 1],
+      outputRange: [SCREEN_WIDTH / 1.5, SCREEN_WIDTH]
+    })
     const { styleProps, locale } = this.props
     const { expanded, opacity } = this.state
 
     return (
       <IntlProvider messages={messages[locale]}>
-        <Animated.View
+        <View
           onLayout={(event) => {
             this.getHeight(event)
           }}
         >
-          <View style={[styles.container, { height: this.state.height }]}>
+          <Animated.View
+            style={[
+              styles.container,
+              { width: containerWidth, height: this.state.height }
+            ]}
+          >
             <Animated.View
               style={[
                 styles.searchWrapper,
                 {
-                  justifyContent: 'flex-end',
                   backgroundColor: wrapperColor
                 }
               ]}
@@ -197,8 +221,8 @@ export default class SearchBar extends Component {
               </Animated.View>
               <View />
             </Animated.View>
-          </View>
-        </Animated.View>
+          </Animated.View>
+        </View>
       </IntlProvider>
     )
   }

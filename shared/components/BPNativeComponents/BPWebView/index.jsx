@@ -1,9 +1,20 @@
 import React, { Component } from 'react'
-import { WebView, View, Text, Share, Linking, Platform, ActivityIndicator } from 'react-native'
+import {
+  WebView,
+  View,
+  Text,
+  Share,
+  Linking,
+  Platform,
+  ActivityIndicator
+} from 'react-native'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
-import NavigationBar, { LinkingRightButton, WebViewLeftButton } from 'components/NavigationBar'
+import NavigationBar, {
+  LinkingRightButton,
+  WebViewLeftButton
+} from 'components/NavigationBar'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
 import styles from './styles'
@@ -26,7 +37,6 @@ const Loading = ({ text }) => (
   null,
   { withRef: true }
 )
-
 export default class BPWebView extends Component {
   static get options() {
     return {
@@ -35,6 +45,8 @@ export default class BPWebView extends Component {
       }
     }
   }
+
+  state = { currentUrl: undefined }
 
   share = () => {
     try {
@@ -53,26 +65,28 @@ export default class BPWebView extends Component {
     switch (index) {
       case 0:
         this.share()
-        break;
+        break
       case 1:
         this.linking()
-        break;
+        break
 
       default:
-        break;
+        break
     }
   }
 
   linking = () => {
     const url = this.props.uri
-    Linking.canOpenURL(url).then((supported) => {
-      if (!supported) {
-        // console.log(`Can't handle url: ${url}`);
-      } else {
-        console.log('open', url);
-        Linking.openURL(url);
-      }
-    }).catch(err => console.error('An error occurred', err));
+    Linking.canOpenURL(url)
+      .then((supported) => {
+        if (!supported) {
+          // console.log(`Can't handle url: ${url}`);
+        } else {
+          console.log('open', url)
+          Linking.openURL(url)
+        }
+      })
+      .catch(err => console.error('An error occurred', err))
   }
 
   goBack = () => this.webview.goBack()
@@ -94,9 +108,12 @@ export default class BPWebView extends Component {
     )
   }
 
-  renderLoading = () => (
-    <Loading />
-  )
+  renderLoading = () => <Loading />
+
+  onNavigationStateChange = (webViewState) => {
+    console.log('url', webViewState, this.props.uri, window)
+    this.setState({ currentUrl: webViewState.url })
+  }
 
   render() {
     const { needLinking, uri, title, locale } = this.props
@@ -106,34 +123,52 @@ export default class BPWebView extends Component {
         <View style={styles.container}>
           <NavigationBar
             title={title}
-            leftButton={<WebViewLeftButton goBack={this.goBack} goHome={this.goHome} />}
-            rightButton={needLinking && <LinkingRightButton iconName="ios-more" onPress={this.showActionSheet} />}
+            leftButton={
+              <WebViewLeftButton goBack={this.goBack} goHome={this.goHome} />
+            }
+            rightButton={
+              needLinking && (
+                <LinkingRightButton
+                  iconName="ios-more"
+                  onPress={this.showActionSheet}
+                />
+              )
+            }
           />
           <View style={styles.content}>
-            {
-              uri
-              && <WebView
+            {uri && (
+              <WebView
                 source={{ uri }}
-                ref={(e) => { this.webview = e }}
+                ref={(e) => {
+                  this.webview = e
+                }}
                 renderError={this.renderError}
                 renderLoading={this.renderLoading}
                 startInLoadingState={true}
                 automaticallyAdjustContentInsets={false}
-                onNavigationStateChange={this.onNavigationStateChange}
+                onNavigationStateChange={(e) => {
+                  this.onNavigationStateChange(e)
+                }}
                 javaScriptEnabled={true}
                 domStorageEnabled={true}
                 decelerationRate="normal"
                 scalesPageToFit={true}
-                nativeConfig={{ props: { backgroundColor: Colors.minorThemeColor, flex: 1 } }}
+                nativeConfig={{
+                  props: { backgroundColor: Colors.minorThemeColor, flex: 1 }
+                }}
               />
-            }
+            )}
             <ActionSheet
-              ref={(o) => { this.actionSheet = o }}
+              ref={(o) => {
+                this.actionSheet = o
+              }}
               title=""
               options={[
                 messages[locale].web_button_name_share,
-                Platform.OS === 'ios' ? messages[locale].web_button_name_linkios : messages[locale].web_button_name_linkandroid,
-                messages[locale].web_button_name_cancel,
+                Platform.OS === 'ios'
+                  ? messages[locale].web_button_name_linkios
+                  : messages[locale].web_button_name_linkandroid,
+                messages[locale].web_button_name_cancel
               ]}
               cancelButtonIndex={2}
               destructiveButtonIndex={1}
