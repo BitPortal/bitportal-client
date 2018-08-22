@@ -61,7 +61,7 @@ public class AnalyticsModule extends ReactContextBaseJavaModule {
         MobclickAgent.onEvent(context, eventId);
     }
     @ReactMethod
-    public void onEventWithLable(String eventId,String eventLabel) {
+    public void onEventWithLabel(String eventId,String eventLabel) {
         MobclickAgent.onEvent(context, eventId, eventLabel);
     }
     @ReactMethod

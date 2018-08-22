@@ -13,8 +13,7 @@ const onEventWithMap = ({ eventId=CREATE_EOS_ACCOUNT, eventData={} }) => (
 )
 
 const onEventTest = () => {
-  alert(JSON.stringify(UMAnalyticsModule))
-  // UMAnalyticsModule.onEventWithLabel(TEST_EVENT_ID, "TEST")
+  UMAnalyticsModule.onEventWithLabel(TEST_EVENT_ID, "TEST")
   // UMAnalyticsModule.onEventWithLabel(`${TEST_EVENT_ID}2`, "TEST")
   // UMAnalyticsModule.onEventWithLabel(`${TEST_EVENT_ID}3`, "TEST")
   // UMAnalyticsModule.onEventWithLabel(`${TEST_EVENT_ID}4`, "TEST")
