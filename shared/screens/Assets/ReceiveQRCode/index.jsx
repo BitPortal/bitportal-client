@@ -6,7 +6,7 @@ import NavigationBar, { CommonButton, CommonRightButton } from 'components/Navig
 import { Text, View, Share, TextInput, Clipboard, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
-import { normalizeUnitByCurrency } from 'utils/normalize'
+import { normalizeUnitByFraction } from 'utils/normalize'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { eosQrString } from 'utils'
 import messages from './messages'
@@ -31,7 +31,7 @@ export default class ReceiveQRCode extends Component {
   // 输入框输入中
   onChangeText = (value) => {
     const previousValue = this.state.value
-    const nextValue = normalizeUnitByCurrency(this.props.symbol)(value, previousValue)
+    const nextValue = normalizeUnitByFraction(4)(value, previousValue)
     this.setState({ value: nextValue })
   }
 
