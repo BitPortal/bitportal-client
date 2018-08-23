@@ -82,7 +82,7 @@ export default class ReceiveQRCode extends Component {
               <View style={[styles.content, styles.center]}>
                 <View style={styles.qrContainer}>
                   <QRCode
-                    value={eosQrString(activeEOSAccount.get('account_name'), this.state.value)}
+                    value={eosQrString(activeEOSAccount.get('account_name'), this.state.value, symbol)}
                     size={140}
                     color="black"
                   />

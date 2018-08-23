@@ -40,8 +40,8 @@ export const errorMessages = (error, messages) => {
 }
 
 const validate = (values, props) => {
-  const { eosAssetBalance } = props
-  const balance = eosAssetBalance && eosAssetBalance.get('balance')
+  const { activeAsset } = props
+  const balance = activeAsset.get('balance')
 
   const errors = {}
 
@@ -77,7 +77,7 @@ const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject)
     locale: state.intl.get('locale'),
     transfer: state.transfer,
     eosAccount: eosAccountSelector(state),
-    eosAssetBalance: activeAssetSelector(state),
+    activeAsset: activeAssetSelector(state),
     eosPrice: eosPriceSelector(state),
     quantity: formValueSelector('transferAssetsForm')(state, 'quantity'),
     toAccount: formValueSelector('transferAssetsForm')(state, 'toAccount')
@@ -103,8 +103,8 @@ export default class TransferAssetsForm extends Component {
   }
 
   showModal = (data) => {
-    const { eosAssetBalance } = this.props
-    const symbol = eosAssetBalance && eosAssetBalance.get('symbol')
+    const { activeAsset } = this.props
+    const symbol = activeAsset.get('symbol')
     this.setState({ quantity: data.get('quantity'), toAccount: data.get('toAccount'), memo: data.get('memo'), symbol }, () => {
       this.props.actions.openTransferModal()
     })
@@ -153,15 +153,16 @@ export default class TransferAssetsForm extends Component {
       symbol: this.state.symbol,
       toAccount: this.state.toAccount,
       memo: this.state.memo,
+      contract: this.props.activeAsset.get('balance'),
       componentId: this.props.componentId
     })
   }
 
   render() {
-    const { handleSubmit, invalid, pristine, eosAssetBalance, eosPrice, quantity, transfer, locale } = this.props
+    const { handleSubmit, invalid, pristine, activeAsset, eosPrice, quantity, transfer, locale } = this.props
     const disabled = invalid || pristine
-    const symbol = eosAssetBalance && eosAssetBalance.get('symbol')
-    const balance = eosAssetBalance && eosAssetBalance.get('balance')
+    const symbol = activeAsset.get('symbol')
+    const balance = activeAsset.get('balance')
     const error = transfer.get('error')
     const showModal = transfer.get('showModal')
     const price = symbol === 'EOS' ? eosPrice : 0
