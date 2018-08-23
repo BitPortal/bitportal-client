@@ -1,7 +1,9 @@
 import assert from 'assert'
-import { put, call, takeEvery, takeLatest } from 'redux-saga/effects'
+import { select, put, call, takeEvery, takeLatest } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/transaction'
+import { activeAssetTransactionsSelector } from 'selectors/transaction'
+import { eosAccountNameSelector } from 'selectors/eosAccount'
 import { initEOS } from 'core/eos'
 import { getErrorMessage } from 'utils'
 
@@ -30,6 +32,27 @@ function* getTransactionsRequested(action: Action<TransactionsParams>) {
   }
 }
 
+function* getTransactionsSucceeded(action: Action<TransactionsResult>) {
+  if (!action.payload) return
+
+  const hasMore = action.payload.hasMore
+
+  if (hasMore) {
+    const loadAll =  yield select((state: RootState) => state.transaction.get('loadAll'))
+
+    if (!loadAll) {
+      const activeAssetTransactions = yield select((state: RootState) => activeAssetTransactionsSelector(state))
+
+      if (!activeAssetTransactions.size) {
+        const eosAccountName = yield select((state: RootState) => eosAccountNameSelector(state))
+        const offset =  yield select((state: RootState) => state.transaction.get('offset'))
+        const position = yield select((state: RootState) => state.transaction.get('position'))
+        yield put(actions.getTransactionsRequested({ eosAccountName, offset, position }))
+      }
+    }
+  }
+}
+
 function* getTransactionDetailRequested(action: Action<TransactionDetailParams>) {
   if (!action.payload) return
 
@@ -47,5 +70,6 @@ function* getTransactionDetailRequested(action: Action<TransactionDetailParams>)
 
 export default function* transactionSaga() {
   yield takeLatest(String(actions.getTransactionsRequested), getTransactionsRequested)
+  yield takeLatest(String(actions.getTransactionsSucceeded), getTransactionsSucceeded)
   yield takeEvery(String(actions.getTransactionDetailRequested), getTransactionDetailRequested)
 }

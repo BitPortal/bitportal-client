@@ -70,7 +70,8 @@ export default class AvailableAssets extends Component {
 
   onToggle = (item) => {
     const contract = item.get('account')
-    this.props.actions.toggleEOSAsset(contract)
+    const symbol = item.get('symbol')
+    this.props.actions.toggleEOSAsset({ contract, symbol })
   }
 
   onRefresh = () => this.props.actions.getEOSAssetRequested()

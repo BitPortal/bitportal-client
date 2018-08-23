@@ -26,9 +26,9 @@ export default handleActions(
     },
     [actions.toggleEOSAsset] (state, action) {
       return state.update('selectedAsset', (v: any) => {
-        const contract = action.payload
-        const selected = v.includes(contract)
-        return selected ? v.filter((v: any) => v !== contract) : v.push(contract)
+        const contract = action.payload.contract
+        const index = v.findIndex((v: any) => v.get('contract') === contract)
+        return index !== -1 ? v.filter((v: any) => v.get('contract') !== contract) : v.push(Immutable.fromJS(action.payload)).sortBy((v: any) => v.get('symbol'))
       })
     },
     [actions.setSearchValue](state, action) {

@@ -49,7 +49,7 @@ export default class TransationHistory extends Component {
   onRefresh = () => {
     const eosAccountName = this.props.eosAccountName
     const offset = this.props.transaction.get('offset')
-    this.props.actions.getTransactionsRequested({ eosAccountName, offset, position: -1 })
+    this.props.actions.getTransactionsRequested({ eosAccountName, offset, position: -1, loadAll: true })
   }
 
   loadMore = () => {
@@ -59,7 +59,7 @@ export default class TransationHistory extends Component {
       const eosAccountName = this.props.eosAccountName
       const offset = this.props.transaction.get('offset')
       const position = this.props.transaction.get('position')
-      this.props.actions.getTransactionsRequested({ eosAccountName, offset, position })
+      this.props.actions.getTransactionsRequested({ eosAccountName, offset, position, loadAll: true })
     }
   }
 

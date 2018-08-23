@@ -10,7 +10,7 @@ import { normalizeEOSAccountName, normalizeUnitByFraction, normalizeMemo } from 
 import * as transferActions from 'actions/transfer'
 import * as eosAccountActions from 'actions/eosAccount'
 import { eosAccountSelector } from 'selectors/eosAccount'
-import { eosAssetBalanceSelector } from 'selectors/balance'
+import { activeAssetSelector } from 'selectors/balance'
 import { eosPriceSelector } from 'selectors/ticker'
 import TransferCard from 'screens/Assets/AssetsTransfer/TransferCard'
 import Prompt from 'components/Prompt'
@@ -77,7 +77,7 @@ const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject)
     locale: state.intl.get('locale'),
     transfer: state.transfer,
     eosAccount: eosAccountSelector(state),
-    eosAssetBalance: eosAssetBalanceSelector(state),
+    eosAssetBalance: activeAssetSelector(state),
     eosPrice: eosPriceSelector(state),
     quantity: formValueSelector('transferAssetsForm')(state, 'quantity'),
     toAccount: formValueSelector('transferAssetsForm')(state, 'toAccount')
@@ -164,6 +164,7 @@ export default class TransferAssetsForm extends Component {
     const balance = eosAssetBalance && eosAssetBalance.get('balance')
     const error = transfer.get('error')
     const showModal = transfer.get('showModal')
+    const price = symbol === 'EOS' ? eosPrice : 0
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -179,7 +180,7 @@ export default class TransferAssetsForm extends Component {
             label={messages[locale].snd_title_name_amt}
             name="quantity"
             component={TextField}
-            rightContent={<CurrencyUnit quantity={+quantity * +eosPrice} />}
+            rightContent={<CurrencyUnit quantity={+quantity * +price} />}
             keyboardType="numeric"
             normalize={normalizeUnitByFraction(4)}
             info={balance && <Text style={styles.balance}>{messages[locale].snd_title_name_bln} {balance} {symbol}</Text>}

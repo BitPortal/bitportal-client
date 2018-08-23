@@ -6,7 +6,9 @@ import { Text, View, TouchableOpacity, VirtualizedList, ActivityIndicator } from
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { FormattedNumber, FormattedMessage, IntlProvider } from 'react-intl'
 import { eosPriceSelector } from 'selectors/ticker'
+import { activeAssetSelector } from 'selectors/balance'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
+import { activeAssetTransactionsSelector } from 'selectors/transaction'
 import CurrencyText from 'components/CurrencyText'
 import * as balanceActions from 'actions/balance'
 import * as transactionActions from 'actions/transaction'
@@ -18,7 +20,13 @@ import styles from './styles'
   state => ({
     locale: state.intl.get('locale'),
     eosPrice: eosPriceSelector(state),
-    transaction: state.transaction,
+    activeAsset: activeAssetSelector(state),
+    loading: state.transaction.get('loading'),
+    loaded: state.transaction.get('loaded'),
+    hasMore: state.transaction.get('hasMore'),
+    offset: state.transaction.get('offset'),
+    position: state.transaction.get('position'),
+    transferHistory: activeAssetTransactionsSelector(state),
     eosAccountName: eosAccountNameSelector(state)
   }),
   dispatch => ({
@@ -41,7 +49,7 @@ export default class AssetChart extends Component {
   }
 
   send = () => {
-    this.props.actions.setActiveAsset(this.props.eosItem.get('symbol'))
+    this.props.actions.setActiveAsset(this.props.activeAsset)
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.AssetsTransfer'
@@ -54,7 +62,7 @@ export default class AssetChart extends Component {
       component: {
         name: 'BitPortal.ReceiveQRCode',
         passProps: {
-          symbol: this.props.eosItem.get('symbol')
+          symbol: this.props.activeAsset.get('symbol')
         }
       }
     })
@@ -72,20 +80,24 @@ export default class AssetChart extends Component {
   }
 
   loadMore = () => {
-    const hasMore = this.props.transaction.get('hasMore')
+    const hasMore = this.props.hasMore
 
     if (hasMore) {
       const eosAccountName = this.props.eosAccountName
-      const offset = this.props.transaction.get('offset')
-      const position = this.props.transaction.get('position')
+      const offset = this.props.offset
+      const position = this.props.position
       this.props.actions.getTransactionsRequested({ eosAccountName, offset, position })
     }
   }
 
   onRefresh = () => {
     const eosAccountName = this.props.eosAccountName
-    const offset = this.props.transaction.get('offset')
-    this.props.actions.getTransactionsRequested({ eosAccountName, offset, position: -1 })
+    const offset = this.props.offset
+    this.props.actions.getTransactionsRequested({
+      eosAccountName,
+      offset,
+      position: -1
+    })
   }
 
   componentDidAppear() {
@@ -93,17 +105,13 @@ export default class AssetChart extends Component {
   }
 
   render() {
-    const { locale, eosItem, eosPrice, transaction, eosAccountName } = this.props
-    const transferHistory = transaction.get('data').filter(transaction => transaction && transaction.getIn(['action_trace', 'act', 'name']) === 'transfer')
-    const loading = transaction.get('loading')
-    const hasMore = transaction.get('hasMore')
-    const loaded = transaction.get('loaded')
+    const { locale, activeAsset, eosPrice, transferHistory, loading, hasMore, loaded, eosAccountName } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={eosItem.get('symbol')}
+            title={activeAsset.get('symbol')}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
@@ -111,7 +119,7 @@ export default class AssetChart extends Component {
               <View style={styles.topContent}>
                 <Text style={[styles.text24, { marginTop: 20 }]}>
                   <FormattedNumber
-                    value={eosItem.get('balance')}
+                    value={activeAsset.get('balance')}
                     maximumFractionDigits={4}
                     minimumFractionDigits={4}
                   />
@@ -119,7 +127,7 @@ export default class AssetChart extends Component {
                 <Text style={[styles.text14, { marginBottom: 20 }]}>
                   ≈
                   <CurrencyText
-                    value={+eosItem.get('balance') * +eosPrice}
+                    value={+activeAsset.get('balance') * +eosPrice}
                     maximumFractionDigits={2}
                     minimumFractionDigits={2}
                   />
