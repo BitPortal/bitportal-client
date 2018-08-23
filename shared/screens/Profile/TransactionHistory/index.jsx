@@ -134,7 +134,7 @@ export default class TransationHistory extends Component {
           <View style={styles.scrollContainer}>
             <RecyclerListView
               style={styles.list}
-              refreshControl={<RefreshControl onRefresh={this.onRefresh} refreshing={loading && !laoded} />}
+              refreshControl={<RefreshControl onRefresh={this.onRefresh} refreshing={loading && !loaded} />}
               layoutProvider={this.layoutProvider}
               dataProvider={transferHistory}
               rowRenderer={this.rowRenderer}
