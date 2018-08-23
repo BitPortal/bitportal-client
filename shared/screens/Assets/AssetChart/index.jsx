@@ -12,6 +12,8 @@ import { activeAssetTransactionsSelector } from 'selectors/transaction'
 import CurrencyText from 'components/CurrencyText'
 import * as balanceActions from 'actions/balance'
 import * as transactionActions from 'actions/transaction'
+import { ASSETS_TOKEN_SEND, ASSETS_TOKEN_RECEIVE, ASSETS_TRX_RECORD } from 'constants/analytics'
+import { onEventWithLabel } from 'utils/analytics'
 import { RecyclerListView, LayoutProvider } from 'recyclerlistview'
 import ImmutableDataProvider from 'utils/immutableDataProvider'
 import { SCREEN_WIDTH } from 'utils/dimens'
@@ -72,6 +74,9 @@ export default class AssetChart extends Component {
   )
 
   send = () => {
+    // Umeng analytics
+    onEventWithLabel(ASSETS_TOKEN_SEND, "资产 - token资产详情 - 发送")
+    this.props.actions.setActiveAsset(this.props.eosItem.get('symbol'))
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.AssetsTransfer'
@@ -80,6 +85,8 @@ export default class AssetChart extends Component {
   }
 
   receive = () => {
+    // Umeng analytics
+    onEventWithLabel(ASSETS_TOKEN_RECEIVE, "资产 - token资产详情 - 接收")
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.ReceiveQRCode',
@@ -91,6 +98,8 @@ export default class AssetChart extends Component {
   }
 
   checkTransactionRecord = (transactionInfo) => {
+    // Umeng analytics
+    onEventWithLabel(ASSETS_TRX_RECORD, "资产 - 资产详情 - 交易记录")
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.TransactionRecord',

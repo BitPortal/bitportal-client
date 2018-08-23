@@ -19,6 +19,8 @@ import {
   ramAvailableSelector
 } from 'selectors/eosAccount'
 import { formatMemorySize, formatCycleTime } from 'utils/format'
+import { onEventWithLabel } from 'utils/analytics'
+import { ASSETS_EOS_RESOURCE_CPU, ASSETS_EOS_RESOURCE_NET, ASSETS_EOS_RESOURCE_RAM } from 'constants/analytics'
 import ResourcesCard from './ResourcesCard'
 import styles from './styles'
 import messages from './messages'
@@ -56,6 +58,7 @@ export default class Resources extends Component {
   check = (type) => {
     switch (type) {
       case 'ram':
+        onEventWithLabel(ASSETS_EOS_RESOURCE_RAM, ' 资产 - EOS资源管理 - 内存容量')
         Navigation.push(this.props.componentId, {
           component: {
             name: 'BitPortal.Memory'
@@ -63,6 +66,7 @@ export default class Resources extends Component {
         })
         break
       case 'bw':
+        onEventWithLabel(ASSETS_EOS_RESOURCE_NET, ' 资产 - EOS资源管理 - 网络带块 ')
         Navigation.push(this.props.componentId, {
           component: {
             name: 'BitPortal.Bandwidth'
@@ -70,6 +74,7 @@ export default class Resources extends Component {
         })
         break
       case 'cpu':
+        onEventWithLabel(ASSETS_EOS_RESOURCE_CPU, ' 资产 - EOS资源管理 - 计算资源 ')
         Navigation.push(this.props.componentId, {
           component: {
             name: 'BitPortal.CPU'
