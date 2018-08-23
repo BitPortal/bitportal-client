@@ -27,7 +27,8 @@ import NavigationBar, { CommonTitle, CommonRightButton } from 'components/Naviga
 import SettingItem from 'components/SettingItem'
 import SplashScreen from 'react-native-splash-screen'
 import { checkCamera } from 'utils/permissions'
-import { onEventTest } from 'utils/analytics'
+import { ASSETS_QR, ASSETS_TOKEN_DETAIL, ASSETS_EOS_RESOURCE, ASSETS_ADD_TOKEN } from 'constants/analytics'
+import { onEventWithLabel } from 'utils/analytics'
 import Dialog from 'components/Dialog'
 import styles from './styles'
 import messages from './messages'
@@ -84,7 +85,7 @@ export default class Assets extends Component {
   }
 
   displayAccountList = () => {}
-
+  
   scanQR = async () => {
     const authorized = await checkCamera()
     if (authorized) {
@@ -107,6 +108,8 @@ export default class Assets extends Component {
   }
 
   checkAssetList = () => {
+    // Umeng analytics
+    onEventWithLabel(ASSETS_ADD_TOKEN, "资产 - 添加token资产")
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.AvailableAssets',
@@ -118,6 +121,8 @@ export default class Assets extends Component {
   }
 
   checkAsset = (item) => {
+    // Umeng analytics
+    onEventWithLabel(ASSETS_TOKEN_DETAIL, "资产 - token资产详情")
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.AssetChart',
@@ -129,7 +134,8 @@ export default class Assets extends Component {
   }
 
   displayReceiceQRCode = () => {
-    onEventTest()
+    // Umeng analytics
+    onEventWithLabel(ASSETS_QR, "资产 - 二维码 / 收款")
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.ReceiveQRCode',
@@ -167,6 +173,8 @@ export default class Assets extends Component {
   }
 
   checkResourcesDetails = () => {
+    // Umeng analytics
+    onEventWithLabel(ASSETS_EOS_RESOURCE, "资产 - EOS资源管理")
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.Resources'

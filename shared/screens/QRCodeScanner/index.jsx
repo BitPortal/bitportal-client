@@ -16,6 +16,8 @@ import Colors from 'resources/colors'
 import { checkPhoto } from 'utils/permissions'
 import Dialog from 'components/Dialog'
 import Loading from 'components/Loading'
+import { ASSETS_SCAN } from 'constants/analytics'
+import { onEventWithMap } from 'utils/analytics'
 import messages from './messages'
 import styles from './styles'
 
@@ -52,6 +54,8 @@ export default class Scanner extends Component {
 
   onSuccess = (e) => {
     const qrInfo = parseEOSQrString(e.data)
+    // Umeng analytics
+    onEventWithMap(ASSETS_SCAN, qrInfo||{})
 
     if (qrInfo) {
       const token = qrInfo.token

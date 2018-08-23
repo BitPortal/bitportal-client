@@ -10,6 +10,8 @@ import Dialogs from 'components/Dialog'
 import Images from 'resources/images'
 import { hasEOSAccountSelector } from 'selectors/wallet'
 import { BITPORTAL_WEBSITE_URL } from 'constants/env'
+import { onEventWithLabel } from 'utils/analytics'
+import { HELP_CENTER, PROFILE } from 'constants/analytics'
 import messages from './messages'
 import styles from './styles'
 
@@ -80,7 +82,8 @@ export default class Profile extends Component {
       default:
         return
     }
-
+    // Umeng analytics
+    onEventWithLabel(PROFILE, pageName)
     Navigation.push(this.props.componentId, {
       component: {
         name: `BitPortal.${pageName}`,
@@ -90,6 +93,8 @@ export default class Profile extends Component {
   }
 
   goForHelp = () => {
+    // Umeng analytics
+    onEventWithLabel(HELP_CENTER, '帮助中心')
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.BPWebView',

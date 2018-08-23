@@ -16,6 +16,8 @@ import { validateEOSAccountName } from 'utils/validate'
 import { getPasswordStrength } from 'utils'
 import * as walletActions from 'actions/wallet'
 import * as eosAccountActions from 'actions/eosAccount'
+import { onEventWithMap } from 'utils/analytics'
+import { ACCOUNT_EOS_CREATE } from 'constants/analytics'
 import messages from './messages'
 import styles from './styles'
 
@@ -129,6 +131,8 @@ export default class CreateEOSAccountForm extends Component {
   }
 
   submit = (data) => {
+    // Umeng analytics
+    onEventWithMap(ACCOUNT_EOS_CREATE, { eosAccountName: data.get('eosAccountName'), inviteCode: data.get('inviteCode') })
     const componentId = this.props.componentId
     this.props.actions.createEOSAccountRequested(data.set('componentId', componentId).delete('confirmedPassword').toJS())
   }

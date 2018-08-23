@@ -11,6 +11,8 @@ import { IntlProvider, FormattedMessage } from 'react-intl'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import * as eosAccountActions from 'actions/eosAccount'
 import * as contactActions from 'actions/contact'
+import { CONTACTS_ADD } from 'constants/analytics'
+import { onEventWithMap } from 'utils/analytics'
 import messages from './messages'
 
 const validate = (values) => {
@@ -62,6 +64,8 @@ const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject)
 
 export default class AddContactsForm extends Component {
   submit = (data) => {
+    // Umeng analytics
+    onEventWithMap(CONTACTS_ADD, data.toJS())
     const componentId = this.props.componentId
     this.props.actions.addContact(data.set('componentId', componentId).toJS())
   }
