@@ -27,6 +27,7 @@ import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.bitportal.core.BPCorePackage;
 import com.umeng.commonsdk.UMConfigure;
 import com.bitportal.umeng.RNUMConfigure;
+import com.bitportal.umeng.DplusReactPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -66,7 +67,8 @@ public class MainApplication extends NavigationApplication {
       new RNDeviceInfo(),
       new ReactNativeRestartPackage(),
       new PickerPackage(),
-      new RCTQRCodeLocalImagePackage()
+      new RCTQRCodeLocalImagePackage(),
+      new DplusReactPackage()
     );
   }
 

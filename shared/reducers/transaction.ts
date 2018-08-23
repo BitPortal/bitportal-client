@@ -14,12 +14,13 @@ const initialState = Immutable.fromJS({
   detailLoading: false,
   detailLoaded: false,
   detailError: null,
-  lastIrreversibleBlock: 0
+  lastIrreversibleBlock: 0,
+  loadAll: false
 })
 
 export default handleActions({
-  [actions.getTransactionsRequested] (state) {
-    return state.set('loading', true)
+  [actions.getTransactionsRequested] (state, action) {
+    return state.set('loading', true).set('loadAll', !!action.payload.loadAll)
   },
   [actions.getTransactionsSucceeded] (state, action) {
     return state.set('loaded', true).set('loading', false)

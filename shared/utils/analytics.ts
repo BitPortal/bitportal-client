@@ -3,23 +3,37 @@ import { NativeModules } from 'react-native'
 
 const UMAnalyticsModule =  NativeModules.UMAnalyticsModule
 
-// event id:
-const TEST_EVENT_ID = 'TEST'
-const CREATE_EOS_ACCOUNT = 'CREATE_EOS_ACCOUNT'
-// const IMPORT_EOS_ACCOUNT = 'IMPORT_EOS_ACCOUNT'
+const date = new Date().toLocaleDateString
 
-const onEventWithMap = ({ eventId=CREATE_EOS_ACCOUNT, eventData={} }) => (
-  UMAnalyticsModule.onEventWithMap(eventId, eventData)
+// custom event:
+
+const onEvent = (eventId: string) => UMAnalyticsModule.onEvent(eventId)
+
+const onEventWithLabel = (eventId: string, eventLabel: string) => (
+  UMAnalyticsModule.onEventWithLabel(eventId, eventLabel)
 )
 
-const onEventTest = () => {
-  UMAnalyticsModule.onEventWithLabel(TEST_EVENT_ID, "TEST")
-  UMAnalyticsModule.onEventWithLabel(`${TEST_EVENT_ID}2`, "TEST")
-  UMAnalyticsModule.onEventWithLabel(`${TEST_EVENT_ID}3`, "TEST")
-  UMAnalyticsModule.onEventWithLabel(`${TEST_EVENT_ID}4`, "TEST")
-}
+const onEventWithMap = (eventId: string, eventData: object) => (
+  UMAnalyticsModule.onEventWithMap(eventId, Object.assign(eventData, { date }))
+)
+
+const onEventWithMapAndCount = (eventId: string, eventData: object, eventNum: string) => (
+  UMAnalyticsModule.onEventWithMapAndCount(eventId, Object.assign(eventData, { date }), eventNum)
+)
+
+// track event:
+
+const onEventTrack = (eventName: string) => UMAnalyticsModule.track(eventName)
+
+const onEventTrackWithMap = (eventName: string, property: object) => (
+  UMAnalyticsModule.trackWithMap(eventName, Object.assign(property, { date }))
+)
 
 export {
-  onEventTest,
-  onEventWithMap
+  onEvent,
+  onEventWithLabel,
+  onEventWithMap,
+  onEventWithMapAndCount,
+  onEventTrack,
+  onEventTrackWithMap
 }

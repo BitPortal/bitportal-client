@@ -7,34 +7,36 @@ const initialState = Immutable.fromJS({
   loading: false,
   loaded: false,
   error: null,
-  assetPrefs: []
+  searchValue: '',
+  selectedAsset: []
 })
 
 export default handleActions(
   {
-    [actions.getEOSAssetRequested](state) {
+    [actions.getEOSAssetRequested] (state) {
       return state.set('loading', true)
     },
-    [actions.getEOSAssetSucceeded](state, action) {
-      return state
-        .set('loaded', true)
-        .set('loading', false)
-        .set(
-          'data',
-          action.payload.length === 0
-            ? Immutable.fromJS({})
-            : Immutable.fromJS(action.payload)
-        )
-      //parse with existing asset prefs
+    [actions.getEOSAssetSucceeded] (state, action) {
+      return state.set('loaded', true).set('loading', false)
+        .set('data', Immutable.fromJS(action.payload))
     },
-    [actions.getEOSAssetFailed](state, action) {
-      return state.set('error', action.payload).set('loading', false)
+    [actions.getEOSAssetFaild] (state, action) {
+      return state.set('loaded', true).set('loading', false)
+        .set('error', action.payload)
     },
-    [actions.saveAssetPrefSucceeded](state, action) {
-      return state.set('assetPrefs', Immutable.fromJS(action.payload))
+    [actions.toggleEOSAsset] (state, action) {
+      return state.update('selectedAsset', (v: any) => {
+        const contract = action.payload.contract
+        const symbol = action.payload.symbol
+        const index = v.findIndex((v: any) => v.get('contract') === contract && v.get('symbol') === symbol)
+        return index !== -1 ? v.delete(index) : v.push(Immutable.fromJS(action.payload)).sortBy((v: any) => v.get('symbol'))
+      })
     },
-    [actions.getAssetPrefSucceeded](state, action) {
-      return state.set('assetPrefs', Immutable.fromJS(action.payload))
+    [actions.setSearchValue](state, action) {
+      return state.set('searchValue', action.payload)
+    },
+    [actions.resetSearchValue](state) {
+      return state.set('searchValue', '')
     }
   },
   initialState

@@ -1,20 +1,31 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { View, Text, VirtualizedList, ActivityIndicator } from 'react-native'
+import { View, Text, ActivityIndicator, RefreshControl } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
 import * as transactionActions from 'actions/transaction'
 import RecordItem from 'screens/Assets/AssetChart/RecordItem'
+import { RecyclerListView, LayoutProvider } from 'recyclerlistview'
+import ImmutableDataProvider from 'utils/immutableDataProvider'
+import { SCREEN_WIDTH } from 'utils/dimens'
 import messages from './messages'
 import styles from './styles'
+
+const dataProvider = new ImmutableDataProvider((r1, r2) => r1.get('account_action_seq') !== r2.get('account_action_seq'))
 
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    transaction: state.transaction,
+    transferHistory: state.transaction.get('data'),
+    loading: state.transaction.get('loading'),
+    hasMore: state.transaction.get('hasMore'),
+    loaded: state.transaction.get('loaded'),
+    hasMore: state.transaction.get('hasMore'),
+    offset: state.transaction.get('offset'),
+    position: state.transaction.get('position'),
     eosAccountName: eosAccountNameSelector(state),
   }),
   dispatch => ({
@@ -35,6 +46,24 @@ export default class TransationHistory extends Component {
     }
   }
 
+  static getDerivedStateFromProps(props) {
+    return {
+      transferHistory: dataProvider.cloneWithRows(props.transferHistory)
+    }
+  }
+
+  state = {
+    transferHistory: dataProvider.cloneWithRows(this.props.transferHistory)
+  }
+
+  layoutProvider = new LayoutProvider(
+    index => index % 3,
+    (type, dim) => {
+      dim.width = SCREEN_WIDTH
+      dim.height = 70
+    }
+  )
+
   checkTransactionRecord = (transactionInfo) => {
     Navigation.push(this.props.componentId, {
       component: {
@@ -48,19 +77,43 @@ export default class TransationHistory extends Component {
 
   onRefresh = () => {
     const eosAccountName = this.props.eosAccountName
-    const offset = this.props.transaction.get('offset')
-    this.props.actions.getTransactionsRequested({ eosAccountName, offset, position: -1 })
+    const offset = this.props.offset
+    this.props.actions.getTransactionsRequested({ eosAccountName, offset, position: -1, loadAll: true })
   }
 
   loadMore = () => {
-    const hasMore = this.props.transaction.get('hasMore')
+    const hasMore = this.props.hasMore
 
     if (hasMore) {
       const eosAccountName = this.props.eosAccountName
-      const offset = this.props.transaction.get('offset')
-      const position = this.props.transaction.get('position')
-      this.props.actions.getTransactionsRequested({ eosAccountName, offset, position })
+      const offset = this.props.offset
+      const position = this.props.position
+      this.props.actions.getTransactionsRequested({ eosAccountName, offset, position, loadAll: true })
     }
+  }
+
+  rowRenderer = (type, item) => {
+    return (
+      <RecordItem key={item.get('account_action_seq')} item={item} onPress={this.checkTransactionRecord} eosAccountName={this.props.eosAccountName} />
+    )
+  }
+
+  renderFooter = () => {
+    const { loaded, hasMore, locale } = this.props
+
+    if (loaded && hasMore) {
+      return (
+        <ActivityIndicator style={{ marginVertical: 10 }} size="small" color="white" />
+      )
+    } else if (loaded) {
+      return (
+        <Text style={{ marginVertical: 10, alignSelf: 'center', color: 'white' }}>
+          {messages[locale].txhis_sec_time_nomore}
+        </Text>
+      )
+    }
+
+    return null
   }
 
   componentDidMount() {
@@ -68,11 +121,8 @@ export default class TransationHistory extends Component {
   }
 
   render() {
-    const { locale, transaction, eosAccountName } = this.props
-    const transferHistory = transaction.get('data')
-    const loading = transaction.get('loading')
-    const hasMore = transaction.get('hasMore')
-    const loaded = transaction.get('loaded')
+    const { locale, loading, loaded, hasMore, eosAccountName } = this.props
+    const { transferHistory } = this.state
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -82,24 +132,15 @@ export default class TransationHistory extends Component {
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
-            <VirtualizedList
-              data={transferHistory}
-              refreshing={loading && !loaded}
-              onRefresh={this.onRefresh}
-              getItem={(items, index) => (items.get ? items.get(index) : items[index])}
-              getItemCount={items => (items.size || 0)}
-              keyExtractor={item => String(item.get('account_action_seq'))}
-              renderItem={({ item }) => <RecordItem key={item.get('account_action_seq')} item={item} onPress={this.checkTransactionRecord} eosAccountName={eosAccountName} />}
+            <RecyclerListView
+              style={styles.list}
+              refreshControl={<RefreshControl onRefresh={this.onRefresh} refreshing={loading && !loaded} />}
+              layoutProvider={this.layoutProvider}
+              dataProvider={transferHistory}
+              rowRenderer={this.rowRenderer}
               onEndReached={this.loadMore}
               onEndReachedThreshold={0.5}
-              ListFooterComponent={
-                (loaded && hasMore)
-                  ? <ActivityIndicator style={{ marginVertical: 10 }} size="small" color="white" />
-                  : (loaded
-                  && <Text style={{ marginVertical: 10, alignSelf: 'center', color: 'white' }}>
-                    {messages[locale].txhis_sec_time_nomore}
-                  </Text>)
-              }
+              renderFooter={this.renderFooter}
             />
           </View>
         </View>

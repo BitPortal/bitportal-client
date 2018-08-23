@@ -5,8 +5,22 @@ import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
-import { eosAccountSelector } from 'selectors/eosAccount'
+import {
+  cpuLimitAvailableSelector,
+  cpuLimitMaxSelector,
+  cpuLimitUsedSelector,
+  totalResourcesCPUWeightSelector,
+  netLimitAvailableSelector,
+  netLimitMaxSelector,
+  netLimitUsedSelector,
+  totalResourcesNETWeightSelector,
+  ramQuotaSelector,
+  ramUsageSelector,
+  ramAvailableSelector
+} from 'selectors/eosAccount'
 import { formatMemorySize, formatCycleTime } from 'utils/format'
+import { onEventWithLabel } from 'utils/analytics'
+import { ASSETS_EOS_RESOURCE_CPU, ASSETS_EOS_RESOURCE_NET, ASSETS_EOS_RESOURCE_RAM } from 'constants/analytics'
 import ResourcesCard from './ResourcesCard'
 import styles from './styles'
 import messages from './messages'
@@ -15,7 +29,17 @@ import messages from './messages'
   state => ({
     locale: state.intl.get('locale'),
     wallet: state.wallet,
-    eosAccount: eosAccountSelector(state)
+    cpuLimitAvailable: cpuLimitAvailableSelector(state),
+    cpuLimitMax: cpuLimitMaxSelector(state),
+    cpuLimitUsed: cpuLimitUsedSelector(state),
+    totalResourcesCPUWeight: totalResourcesCPUWeightSelector(state),
+    netLimitAvailable: netLimitAvailableSelector(state),
+    netLimitMax: netLimitMaxSelector(state),
+    netLimitUsed: netLimitUsedSelector(state),
+    totalResourcesNETWeight: totalResourcesNETWeightSelector(state),
+    ramQuota: ramQuotaSelector(state),
+    ramUsage: ramUsageSelector(state),
+    ramAvailable: ramAvailableSelector(state)
   }),
   null,
   null,
@@ -34,6 +58,7 @@ export default class Resources extends Component {
   check = (type) => {
     switch (type) {
       case 'ram':
+        onEventWithLabel(ASSETS_EOS_RESOURCE_RAM, ' 资产 - EOS资源管理 - 内存容量')
         Navigation.push(this.props.componentId, {
           component: {
             name: 'BitPortal.Memory'
@@ -41,6 +66,7 @@ export default class Resources extends Component {
         })
         break
       case 'bw':
+        onEventWithLabel(ASSETS_EOS_RESOURCE_NET, ' 资产 - EOS资源管理 - 网络带块 ')
         Navigation.push(this.props.componentId, {
           component: {
             name: 'BitPortal.Bandwidth'
@@ -48,6 +74,7 @@ export default class Resources extends Component {
         })
         break
       case 'cpu':
+        onEventWithLabel(ASSETS_EOS_RESOURCE_CPU, ' 资产 - EOS资源管理 - 计算资源 ')
         Navigation.push(this.props.componentId, {
           component: {
             name: 'BitPortal.CPU'
@@ -60,8 +87,20 @@ export default class Resources extends Component {
   }
 
   render() {
-    const { locale, eosAccount } = this.props
-    const activeEOSAccount = eosAccount.get('data')
+    const {
+      locale,
+      cpuLimitAvailable,
+      cpuLimitMax,
+      cpuLimitUsed,
+      totalResourcesCPUWeight,
+      netLimitAvailable,
+      netLimitMax,
+      netLimitUsed,
+      totalResourcesNETWeight,
+      ramQuota,
+      ramUsage,
+      ramAvailable
+    } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -80,36 +119,36 @@ export default class Resources extends Component {
                 onPress={() => this.check('cpu')}
                 title={<FormattedMessage id="reslist_title_name_cpu" />}
                 availableText={<FormattedMessage id="reslist_title_name_ava" />}
-                available={formatCycleTime(activeEOSAccount.getIn(['cpu_limit', 'available']))}
+                available={formatCycleTime(cpuLimitAvailable)}
                 totalText={<FormattedMessage id="reslist_title_name_bwttl" />}
-                total={formatCycleTime(activeEOSAccount.getIn(['cpu_limit', 'max']))}
+                total={formatCycleTime(cpuLimitMax)}
                 usageText={<FormattedMessage id="reslist_title_name_usgttl" />}
-                usage={formatCycleTime(activeEOSAccount.getIn(['cpu_limit', 'used']))}
+                usage={formatCycleTime(cpuLimitUsed)}
                 delegateText={<FormattedMessage id="reslist_title_name_delegate" />}
-                delegate={activeEOSAccount.getIn(['total_resources', 'cpu_weight'])}
+                delegate={totalResourcesCPUWeight}
               />
               <ResourcesCard
                 onPress={() => this.check('bw')}
                 title={<FormattedMessage id="reslist_title_name_bw" />}
                 availableText={<FormattedMessage id="reslist_title_name_ava" />}
-                available={formatMemorySize(activeEOSAccount.getIn(['net_limit', 'available']))}
+                available={formatMemorySize(netLimitAvailable)}
                 totalText={<FormattedMessage id="reslist_title_name_bwttl" />}
-                total={formatMemorySize(activeEOSAccount.getIn(['net_limit', 'max']))}
+                total={formatMemorySize(netLimitMax)}
                 usageText={<FormattedMessage id="reslist_title_name_usgttl" />}
-                usage={formatMemorySize(activeEOSAccount.getIn(['net_limit', 'used']))}
+                usage={formatMemorySize(netLimitUsed)}
                 delegateText={<FormattedMessage id="reslist_title_name_delegate" />}
-                delegate={activeEOSAccount.getIn(['total_resources', 'net_weight'])}
+                delegate={totalResourcesNETWeight}
               />
               <ResourcesCard
                 colors={Colors.ramColor}
                 onPress={() => this.check('ram')}
                 title={<FormattedMessage id="reslist_title_name_ram" />}
                 availableText={<FormattedMessage id="reslist_title_name_ava" />}
-                available={formatMemorySize(activeEOSAccount.get('ram_quota') - activeEOSAccount.get('ram_usage'))}
+                available={formatMemorySize(ramAvailable)}
                 totalText={<FormattedMessage id="reslist_title_name_ramttl" />}
-                total={formatMemorySize(activeEOSAccount.get('ram_quota'))}
+                total={formatMemorySize(ramQuota)}
                 usageText={<FormattedMessage id="reslist_title_name_usgttl" />}
-                usage={formatMemorySize(activeEOSAccount.get('ram_usage'))}
+                usage={formatMemorySize(ramUsage)}
               />
             </ScrollView>
           </View>

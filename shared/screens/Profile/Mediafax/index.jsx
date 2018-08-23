@@ -8,6 +8,8 @@ import { IntlProvider } from 'react-intl'
 import { Mediafax, MediafaxIcons, MediafaxUrls } from 'constants/mediafax'
 import { validateUrl } from 'utils/validate'
 import Toast from 'components/Toast'
+import { SOCIAL_MEDIA } from 'constants/analytics'
+import { onEventWithLabel } from 'utils/analytics'
 import messages from './messages'
 import styles from './styles'
 
@@ -30,6 +32,8 @@ export default class MediafaxScreen extends Component {
   }
 
   changePage = (index, item) => {
+    // Umeng analitics
+    onEventWithLabel(SOCIAL_MEDIA. item)
     if (validateUrl(MediafaxUrls[item])) {
       Navigation.push(this.props.componentId, {
         component: {

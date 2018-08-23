@@ -13,6 +13,7 @@ import TransactionRecord from 'screens/TransactionRecord'
 import Assets from 'screens/Assets'
 import ReceiveQRCode from 'screens/Assets/ReceiveQRCode'
 import AssetChart from 'screens/Assets/AssetChart'
+import AssetSearch from 'screens/Assets/AssetSearch'
 import AssetsTransfer from 'screens/Assets/AssetsTransfer'
 import AvailableAssets from 'screens/Assets/AvailableAssets'
 import Backup from 'screens/Account/Backup'
@@ -85,6 +86,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.Assets', () => screenComponent(Assets, store))
   Navigation.registerComponent('BitPortal.ReceiveQRCode', () => screenComponent(ReceiveQRCode, store))
   Navigation.registerComponent('BitPortal.AssetChart', () => screenComponent(AssetChart, store))
+  Navigation.registerComponent('BitPortal.AssetSearch', () => screenComponent(AssetSearch, store))
   Navigation.registerComponent('BitPortal.AssetsTransfer', () => screenComponent(AssetsTransfer, store))
   Navigation.registerComponent('BitPortal.AvailableAssets', () => screenComponent(AvailableAssets, store))
   Navigation.registerComponent('BitPortal.Market', () => screenComponent(Market, store))

@@ -11,6 +11,7 @@ import { getInitialLang } from 'selectors/intl'
 import { getInitialContact } from 'selectors/contact'
 import { getInitialCurrency } from 'selectors/currency'
 import { getInitialEOSNode } from 'selectors/eosNode'
+import { getInitialEOSAsset } from 'selectors/eosAsset'
 import { startSingleApp, startTabBasedApp, registerScreens } from 'navigators'
 import storage from 'utils/storage'
 import Provider from 'components/Provider'
@@ -56,12 +57,14 @@ const runApp = async () => {
     activeNode = eosNode.activeNode
     customNodes = eosNode.customNodes
   }
+  const selectedEOSAsset = await storage.getItem('bitportal_selectedEOSAsset', true)
 
   const store = configure({
     intl: getInitialLang(lang),
     contact: getInitialContact(contact),
     currency: getInitialCurrency(symbol, rate),
-    eosNode: getInitialEOSNode(activeNode, customNodes)
+    eosNode: getInitialEOSNode(activeNode, customNodes),
+    eosAsset: getInitialEOSAsset(selectedEOSAsset)
   })
 
   registerScreens(store)
