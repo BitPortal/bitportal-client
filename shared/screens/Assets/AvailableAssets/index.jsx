@@ -97,7 +97,7 @@ export default class AvailableAssets extends Component {
               onRefresh={this.onRefresh}
               getItem={(items, index) => (items.get ? items.get(index) : items[index])}
               getItemCount={items => (items.size || 0)}
-              keyExtractor={item => String(item.get('account'))}
+              keyExtractor={item => `${item.get('symbol')}@${item.get('account')}`}
               renderItem={this.renderItem}
             />
           </View>

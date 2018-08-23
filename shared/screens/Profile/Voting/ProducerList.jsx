@@ -107,12 +107,6 @@ export default class ProducerList extends Component {
     />
   )
 
-  componentDidMount() {
-    // setTimeout(function() {
-    //   this.recyclerListViewRef.current.scrollToTop()
-    // }.bind(this), 10000)
-  }
-
   render() {
     return (
       <RecyclerListView

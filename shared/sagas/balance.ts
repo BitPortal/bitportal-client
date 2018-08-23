@@ -73,11 +73,14 @@ function* getEOSAssetBalanceListRequested(action: Action<GetAssetBalanceListPara
     const balanceInfo = data.map((item: any, index: number) => {
       const blockchain = 'EOS'
       const contract = selectedEOSAssetList.getIn([index, 'contract'])
-      let symbol = selectedEOSAssetList.getIn([index, 'symbol'])
+      const symbol = selectedEOSAssetList.getIn([index, 'symbol'])
       let balance = '0.0000'
       if (item && item[0] && typeof item[0] === 'string') {
-        const symbol = item[0].split(' ')[1]
-        const balance = item[0].split(' ')[0]
+        const index = item.findIndex((v: string) => v.indexOf(symbol) !== -1)
+
+        if (index !== -1) {
+          balance = item[index].split(' ')[0]
+        }
       }
       return { symbol, balance, contract, blockchain }
     })

@@ -16,12 +16,14 @@ import Colors from 'resources/colors'
 import { checkPhoto } from 'utils/permissions'
 import Dialog from 'components/Dialog'
 import Loading from 'components/Loading'
+import { eosAssetBalanceSelector } from 'selectors/balance'
 import messages from './messages'
 import styles from './styles'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.get('locale'),
+    eosAssetBalance: eosAssetBalanceSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -52,29 +54,36 @@ export default class Scanner extends Component {
 
   onSuccess = (e) => {
     const qrInfo = parseEOSQrString(e.data)
+    const eosAssetBalance = this.props.eosAssetBalance
 
-    if (qrInfo) {
+    if (qrInfo && eosAssetBalance) {
       const token = qrInfo.token
-      this.props.actions.setActiveAsset(token)
+      const index = eosAssetBalance.findIndex((v: any) => v.get('symbol') === token)
 
-      if (this.props.entry === 'form') {
-        const eosAccountName = qrInfo.eosAccountName
-        const quantity = qrInfo.amount
+      if (index !== -1) {
+        this.props.actions.setActiveAsset(eosAssetBalance.get(index))
 
-        if (eosAccountName) this.props.actions.change('transferAssetsForm', 'toAccount', eosAccountName)
-        if (quantity) this.props.actions.change('transferAssetsForm', 'quantity', quantity)
+        if (this.props.entry === 'form') {
+          const eosAccountName = qrInfo.eosAccountName
+          const quantity = qrInfo.amount
 
-        Navigation.pop(this.props.componentId)
-      } else {
-        Navigation.push(this.props.componentId, {
-          component: {
-            name: 'BitPortal.AssetsTransfer',
-            passProps: {
-              entry: 'scanner',
-              qrInfo
+          if (eosAccountName) this.props.actions.change('transferAssetsForm', 'toAccount', eosAccountName)
+          if (quantity) this.props.actions.change('transferAssetsForm', 'quantity', quantity)
+
+          Navigation.pop(this.props.componentId)
+        } else {
+          Navigation.push(this.props.componentId, {
+            component: {
+              name: 'BitPortal.AssetsTransfer',
+              passProps: {
+                entry: 'scanner',
+                qrInfo
+              }
             }
-          }
-        })
+          })
+        }
+      } else {
+        Dialog.alert(`请添加${token}到您的资产列表`, null, { positiveText: '确定' })
       }
     }
   }
@@ -105,10 +114,10 @@ export default class Scanner extends Component {
             title={messages[locale].qrscn_title_name_qrscanner}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
             rightButton={
-              <CommonButton 
-                title={messages[locale].qrscn_button_name_photos} 
-                onPress={this.getImageFromPhoto} 
-                extraTextStyle={{ fontSize: FontScale(18), color: Colors.textColor_89_185_226 }} 
+              <CommonButton
+                title={messages[locale].qrscn_button_name_photos}
+                onPress={this.getImageFromPhoto}
+                extraTextStyle={{ fontSize: FontScale(18), color: Colors.textColor_89_185_226 }}
               />
             }
           />

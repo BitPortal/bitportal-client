@@ -23,7 +23,7 @@ export const eosAssetListSelector = createSelector(
   eosAssetSelector,
   selectedEOSAssetSelector,
   (asset: any, selected: any) => asset.map((v: any) =>  {
-    const index = selected.findIndex((i: any) => v.get('account') === i.get('contract'))
+    const index = selected.findIndex((i: any) => v.get('account') === i.get('contract') && v.get('symbol') === i.get('symbol'))
     return v.set('selected', index !== -1)
   })
 )

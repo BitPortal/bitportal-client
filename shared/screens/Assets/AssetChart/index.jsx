@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
-import { Text, View, TouchableOpacity, VirtualizedList, ActivityIndicator } from 'react-native'
+import { Text, View, TouchableOpacity, RefreshControl, ActivityIndicator } from 'react-native'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { FormattedNumber, FormattedMessage, IntlProvider } from 'react-intl'
 import { eosPriceSelector } from 'selectors/ticker'
@@ -12,9 +12,14 @@ import { activeAssetTransactionsSelector } from 'selectors/transaction'
 import CurrencyText from 'components/CurrencyText'
 import * as balanceActions from 'actions/balance'
 import * as transactionActions from 'actions/transaction'
+import { RecyclerListView, LayoutProvider } from 'recyclerlistview'
+import ImmutableDataProvider from 'utils/immutableDataProvider'
+import { SCREEN_WIDTH } from 'utils/dimens'
 import messages from './messages'
 import RecordItem from './RecordItem'
 import styles from './styles'
+
+const dataProvider = new ImmutableDataProvider((r1, r2) => r1.get('account_action_seq') !== r2.get('account_action_seq'))
 
 @connect(
   state => ({
@@ -48,8 +53,25 @@ export default class AssetChart extends Component {
     }
   }
 
+  static getDerivedStateFromProps(props) {
+    return {
+      transferHistory: dataProvider.cloneWithRows(props.transferHistory)
+    }
+  }
+
+  state = {
+    transferHistory: dataProvider.cloneWithRows(this.props.transferHistory)
+  }
+
+  layoutProvider = new LayoutProvider(
+    index => index % 3,
+    (type, dim) => {
+      dim.width = SCREEN_WIDTH
+      dim.height = 70
+    }
+  )
+
   send = () => {
-    this.props.actions.setActiveAsset(this.props.activeAsset)
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.AssetsTransfer'
@@ -100,12 +122,37 @@ export default class AssetChart extends Component {
     })
   }
 
-  componentDidAppear() {
+  rowRenderer = (type, item) => {
+    return (
+      <RecordItem key={item.get('account_action_seq')} item={item} onPress={this.checkTransactionRecord} eosAccountName={this.props.eosAccountName} />
+    )
+  }
+
+  renderFooter = () => {
+    const { loaded, hasMore, locale } = this.props
+
+    if (loaded && hasMore) {
+      return (
+        <ActivityIndicator style={{ marginVertical: 10 }} size="small" color="white" />
+      )
+    } else if (loaded) {
+      return (
+        <Text style={{ marginVertical: 10, alignSelf: 'center', color: 'white' }}>
+          {messages[locale].token_title_name_nomore}
+        </Text>
+      )
+    }
+
+    return null
+  }
+
+  componentDidMount() {
     this.onRefresh()
   }
 
   render() {
-    const { locale, activeAsset, eosPrice, transferHistory, loading, hasMore, loaded, eosAccountName } = this.props
+    const { locale, activeAsset, eosPrice, hasMore, loading, loaded, eosAccountName } = this.props
+    const { transferHistory } = this.state
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -133,24 +180,14 @@ export default class AssetChart extends Component {
                   />
                 </Text>
               </View>
-              <VirtualizedList
-                data={transferHistory}
-                refreshing={loading && !loaded}
-                onRefresh={this.onRefresh}
-                getItem={(items, index) => (items.get ? items.get(index) : items[index])}
-                getItemCount={items => (items.size || 0)}
-                keyExtractor={item => String(item.get('account_action_seq'))}
-                renderItem={({ item }) => <RecordItem key={item.get('account_action_seq')} item={item} onPress={this.checkTransactionRecord} eosAccountName={eosAccountName} />}
+              <RecyclerListView
+                refreshControl={<RefreshControl onRefresh={this.onRefresh} refreshing={loading && !loaded} />}
+                layoutProvider={this.layoutProvider}
+                dataProvider={transferHistory}
+                rowRenderer={this.rowRenderer}
                 onEndReached={this.loadMore}
-                onEndReachedThreshold={0.5}
-                ListFooterComponent={
-                  (loaded && hasMore)
-                    ? <ActivityIndicator style={{ marginVertical: 10 }} size="small" color="white" />
-                    : (loaded
-                    && <Text style={{ marginVertical: 10, alignSelf: 'center', color: 'white' }}>
-                      {messages[locale].token_title_name_nomore}
-                    </Text>)
-                }
+                onEndReachedThreshold={-0.5}
+                renderFooter={this.renderFooter}
               />
             </View>
             <View style={[styles.btnContainer, styles.between]}>
