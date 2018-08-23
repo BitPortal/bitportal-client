@@ -1,17 +1,54 @@
+import { List } from 'immutable'
 import { createSelector } from 'reselect'
+import { eosAccountNameSelector } from 'selectors/eosAccount'
+import { eosPriceSelector } from 'selectors/ticker'
+import { selectedEOSAssetSelector } from 'selectors/eosAsset'
 
-const accountSelector = (state: RootState) => state.wallet.get('data').get('eosAccountName')
-const balancerSelector = (state: RootState) => state.balance
-const activeAssetSelector = (state: RootState) => state.balance.get('activeAsset')
+export const tokenBalanceAllDataSelector = (state: RootState) => state.balance.get('tokenBalance')
+export const activeAssetSelector = (state: RootState) => state.balance.get('activeAsset')
+export const activeAssetContractSelector = (state: RootState) => state.balance.getIn(['activeAsset', 'contract'])
+export const eosBalanceAllDataSelector = (state: RootState) => state.balance.get('eosBalance')
 
-export const eosAccountBalanceSelector = createSelector(
-  accountSelector,
-  balancerSelector,
-  (name: string, balance: any) => name ? balance.get('data').filter((item: any) => item.get('eosAccountName') === name).getIn(['0', 'eosAccountBalance']) : null
+export const eosBalanceSelector = createSelector(
+  eosAccountNameSelector,
+  eosBalanceAllDataSelector,
+  (eosAccountName: string, eosBalance: any) => eosAccountName ? eosBalance.get(eosAccountName) : null
+)
+
+export const eosTokenBalanceSelector = createSelector(
+  eosAccountNameSelector,
+  tokenBalanceAllDataSelector,
+  (eosAccountName: string, assetBalance: any) => eosAccountName ? assetBalance.get(eosAccountName) : null
+)
+
+export const selectedEOSTokenBalanceSelector = createSelector(
+  eosTokenBalanceSelector,
+  selectedEOSAssetSelector,
+  (eosTokenBalance: string, selectedEOSAsset: any) => selectedEOSAsset.map((v: any) => {
+    if (eosTokenBalance) {
+      const contract = v.get('contract')
+      const index = eosTokenBalance.findIndex((v: any) => v.get('contract') === contract)
+      return index !== -1 ? v.set('balance', eosTokenBalance.getIn([index, 'balance'])) : v.set('balance', '0.0000')
+    } else {
+      return v.set('balance', '0.0000')
+    }
+  })
 )
 
 export const eosAssetBalanceSelector = createSelector(
-  activeAssetSelector,
-  eosAccountBalanceSelector,
-  (asset: string, balance: any) => (asset && balance) ? balance.filter((item: any) => item.get('symbol') === asset).get(0) : null
+  eosBalanceSelector,
+  selectedEOSTokenBalanceSelector,
+  (eosBalance: string, eosTokenBalance: any) => {
+    if (eosBalance) {
+      return eosTokenBalance ? eosTokenBalance.unshift(eosBalance) : List([eosBalance])
+    }
+
+    return null
+  }
+)
+
+export const eosTotalAssetBalanceSelector = createSelector(
+  eosBalanceSelector,
+  eosPriceSelector,
+  (eosBalance: string, eosPrice: any) => (eosBalance && eosPrice) ? (+eosBalance.get('balance') * +eosPrice) : 0
 )

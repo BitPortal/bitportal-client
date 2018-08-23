@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Colors from 'resources/colors'
 import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
-import { Text, View, Switch, Image, VirtualizedList } from 'react-native'
+import { Text, View, Switch, Image, RefreshControl } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -9,6 +9,9 @@ import { IntlProvider } from 'react-intl'
 import * as eosAssetActions from 'actions/eosAsset'
 import { eosAssetListSelector } from 'selectors/eosAsset'
 import Images from 'resources/images'
+import { RecyclerListView, LayoutProvider } from 'recyclerlistview'
+import ImmutableDataProvider from 'utils/immutableDataProvider'
+import { SCREEN_WIDTH } from 'utils/dimens'
 import messages from './messages'
 import styles from './styles'
 
@@ -27,6 +30,8 @@ const AssetElement = ({ item, onToggle }) => (
     />
   </View>
 )
+
+const dataProvider = new ImmutableDataProvider((r1, r2) => r1.get('account') !== r2.get('account') || r1.get('symbol') !== r2.get('symbol') || r1.get('selected') !== r2.get('selected'))
 
 @connect(
   state => ({
@@ -53,6 +58,24 @@ export default class AvailableAssets extends Component {
     }
   }
 
+  static getDerivedStateFromProps(props) {
+    return {
+      eosAssetList: dataProvider.cloneWithRows(props.eosAssetList)
+    }
+  }
+
+  state = {
+    eosAssetList: dataProvider.cloneWithRows(this.props.eosAssetList)
+  }
+
+  layoutProvider = new LayoutProvider(
+    index => index % 3,
+    (type, dim) => {
+      dim.width = SCREEN_WIDTH
+      dim.height = 70
+    }
+  )
+
   componentDidMount() {
     this.props.actions.getEOSAssetRequested()
   }
@@ -70,17 +93,19 @@ export default class AvailableAssets extends Component {
 
   onToggle = (item) => {
     const contract = item.get('account')
-    this.props.actions.toggleEOSAsset(contract)
+    const symbol = item.get('symbol')
+    this.props.actions.toggleEOSAsset({ contract, symbol })
   }
 
   onRefresh = () => this.props.actions.getEOSAssetRequested()
 
-  renderItem = ({ item }) => (
+  renderItem = (type, item) => (
     <AssetElement item={item} onToggle={() => this.onToggle(item)} />
   )
 
   render() {
-    const { locale, eosAssetList, loading, loaded } = this.props
+    const { locale, loading, loaded } = this.props
+    const { eosAssetList } = this.state
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -90,14 +115,11 @@ export default class AvailableAssets extends Component {
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
-            <VirtualizedList
-              data={eosAssetList}
-              refreshing={loading && !loaded}
-              onRefresh={this.onRefresh}
-              getItem={(items, index) => (items.get ? items.get(index) : items[index])}
-              getItemCount={items => (items.size || 0)}
-              keyExtractor={item => String(item.get('account'))}
-              renderItem={this.renderItem}
+            <RecyclerListView
+              refreshControl={<RefreshControl onRefresh={this.onRefresh} refreshing={loading && !loaded} />}
+              layoutProvider={this.layoutProvider}
+              dataProvider={eosAssetList}
+              rowRenderer={this.renderItem}
             />
           </View>
         </View>
