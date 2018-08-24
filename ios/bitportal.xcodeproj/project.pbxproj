@@ -2727,10 +2727,11 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.bitportal.wallet;
 				PRODUCT_NAME = bitportal;
-				PROVISIONING_PROFILE = "a8c7f90b-4a0f-42aa-ab96-ce9c51117c0c";
+				PROVISIONING_PROFILE = "7352a1df-afe9-475e-abba-e48689b733c9";
 				PROVISIONING_PROFILE_SPECIFIER = "wallet ad hoc profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "bitportal-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -2789,6 +2790,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "wallet ad hoc profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "bitportal-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
