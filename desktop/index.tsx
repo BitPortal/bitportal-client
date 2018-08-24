@@ -1,5 +1,3 @@
-
-
 import 'core-js/es6'
 import React from 'react'
 import ReactDOM from 'react-dom'

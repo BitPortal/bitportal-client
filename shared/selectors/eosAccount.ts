@@ -39,3 +39,65 @@ export const votedProducersSelector = createSelector(
   eosAccountSelector,
   (account: any) => account.getIn(['data', 'voter_info', 'producers'])
 )
+
+export const cpuLimitAvailableSelector = createSelector(
+  eosAccountSelector,
+  (account: any) => account.getIn(['data', 'cpu_limit', 'available'])
+)
+
+export const cpuLimitMaxSelector = createSelector(
+  eosAccountSelector,
+  (account: any) => account.getIn(['data', 'cpu_limit', 'max'])
+)
+
+export const cpuLimitUsedSelector = createSelector(
+  eosAccountSelector,
+  (account: any) => account.getIn(['data', 'cpu_limit', 'used'])
+)
+
+export const totalResourcesCPUWeightSelector = createSelector(
+  eosAccountSelector,
+  (account: any) => account.getIn(['data', 'total_resources', 'cpu_weight'])
+)
+
+export const netLimitAvailableSelector = createSelector(
+  eosAccountSelector,
+  (account: any) => account.getIn(['data', 'net_limit', 'available'])
+)
+
+export const netLimitMaxSelector = createSelector(
+  eosAccountSelector,
+  (account: any) => account.getIn(['data', 'net_limit', 'max'])
+)
+
+export const netLimitUsedSelector = createSelector(
+  eosAccountSelector,
+  (account: any) => account.getIn(['data', 'net_limit', 'used'])
+)
+
+export const totalResourcesNETWeightSelector = createSelector(
+  eosAccountSelector,
+  (account: any) => account.getIn(['data', 'total_resources', 'net_weight'])
+)
+
+export const ramQuotaSelector = createSelector(
+  eosAccountSelector,
+  (account: any) => account.getIn(['data', 'ram_quota'])
+)
+
+export const ramUsageSelector = createSelector(
+  eosAccountSelector,
+  (account: any) => account.getIn(['data', 'ram_usage'])
+)
+
+export const ramAvailableSelector = createSelector(
+  ramQuotaSelector,
+  ramUsageSelector,
+  (quota: number, usage: number) => quota - usage
+)
+
+export const ramAvailablePercentSelector = createSelector(
+  ramQuotaSelector,
+  ramUsageSelector,
+  (quota: number, usage: number) => (quota - usage) / quota
+)

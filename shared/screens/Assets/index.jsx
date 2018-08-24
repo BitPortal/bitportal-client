@@ -19,15 +19,19 @@ import * as balanceActions from 'actions/balance'
 import * as versionActions from 'actions/version'
 import * as currencyActions from 'actions/currency'
 import * as eosAccountActions from 'actions/eosAccount'
-import { eosAccountBalanceSelector } from 'selectors/balance'
-import { eosAccountSelector } from 'selectors/eosAccount'
+import {
+  eosAssetBalanceSelector,
+  eosTotalAssetBalanceSelector
+} from 'selectors/balance'
 import { eosPriceSelector } from 'selectors/ticker'
+import { eosAccountSelector } from 'selectors/eosAccount'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import NavigationBar, { CommonTitle, CommonRightButton } from 'components/NavigationBar'
 import SettingItem from 'components/SettingItem'
 import SplashScreen from 'react-native-splash-screen'
 import { checkCamera } from 'utils/permissions'
-import { onEventTest } from 'utils/analytics'
+import { ASSETS_QR, ASSETS_TOKEN_DETAIL, ASSETS_EOS_RESOURCE, ASSETS_ADD_TOKEN } from 'constants/analytics'
+import { onEventWithLabel } from 'utils/analytics'
 import Dialog from 'components/Dialog'
 import styles from './styles'
 import messages from './messages'
@@ -36,29 +40,13 @@ import EnableAssets from './EnableAssets'
 import BalanceList from './BalanceList'
 import TotalAssetsCard from './TotalAssetsCard'
 
-const getTotalAssets = (eosAccountBalance, eosPrice) => {
-  if (!eosAccountBalance) return 0
-
-  let balance
-  const baseTokenBalance = eosAccountBalance.filter(
-    balance => balance.get('symbol') === 'SYS' || balance.get('symbol') === 'EOS'
-  )
-
-  if (baseTokenBalance.size) {
-    balance = baseTokenBalance.get(0).get('balance')
-  } else {
-    balance = 0
-  }
-
-  return +balance * eosPrice
-}
-
 @connect(
   state => ({
     locale: state.intl.get('locale'),
     wallet: state.wallet,
     eosAccount: eosAccountSelector(state),
-    eosAccountBalance: eosAccountBalanceSelector(state),
+    eosAssetBalance: eosAssetBalanceSelector(state),
+    eosTotalAssetBalance: eosTotalAssetBalanceSelector(state),
     eosPrice: eosPriceSelector(state)
   }),
   dispatch => ({
@@ -77,13 +65,14 @@ const getTotalAssets = (eosAccountBalance, eosPrice) => {
   null,
   { withRef: true }
 )
+
 export default class Assets extends Component {
   state = {
     isVisible2: false
   }
 
   displayAccountList = () => {}
-
+  
   scanQR = async () => {
     const authorized = await checkCamera()
     if (authorized) {
@@ -106,33 +95,32 @@ export default class Assets extends Component {
   }
 
   checkAssetList = () => {
-    InteractionManager.runAfterInteractions(() => {
-      Navigation.push(this.props.componentId, {
-        component: {
-          name: 'BitPortal.AvailableAssets',
-          passProps: {
-            eosAccountName: this.props.eosAccount.get('data').get('account_name')
-          }
+    // Umeng analytics
+    onEventWithLabel(ASSETS_ADD_TOKEN, "资产 - 添加token资产")
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.AvailableAssets',
+        passProps: {
+          eosAccountName: this.props.eosAccount.get('data').get('account_name')
         }
-      })
+      }
     })
   }
 
   checkAsset = (item) => {
-    InteractionManager.runAfterInteractions(() => {
-      Navigation.push(this.props.componentId, {
-        component: {
-          name: 'BitPortal.AssetChart',
-          passProps: {
-            eosItem: item
-          }
-        }
-      })
+    // Umeng analytics
+    onEventWithLabel(ASSETS_TOKEN_DETAIL, "资产 - token资产详情")
+    this.props.actions.setActiveAsset(item)
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.AssetChart'
+      }
     })
   }
 
   displayReceiceQRCode = () => {
-    onEventTest()
+    // Umeng analytics
+    onEventWithLabel(ASSETS_QR, "资产 - 二维码 / 收款")
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.ReceiveQRCode',
@@ -143,15 +131,12 @@ export default class Assets extends Component {
     })
   }
 
-  // 创建新账户
   createNewAccount = () => {
-    InteractionManager.runAfterInteractions(() => {
-      this.setState({ isVisible2: false }, () => {
-        Navigation.push(this.props.componentId, {
-          component: {
-            name: 'BitPortal.EOSAccountCreation'
-          }
-        })
+    this.setState({ isVisible2: false }, () => {
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.EOSAccountCreation'
+        }
       })
     })
   }
@@ -173,6 +158,8 @@ export default class Assets extends Component {
   }
 
   checkResourcesDetails = () => {
+    // Umeng analytics
+    onEventWithLabel(ASSETS_EOS_RESOURCE, "资产 - EOS资源管理")
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.Resources'
@@ -180,7 +167,6 @@ export default class Assets extends Component {
     })
   }
 
-  // 切换EOS账户
   switchWallet = (info) => {
     this.props.actions.switchWalletRequested(info)
   }
@@ -209,19 +195,13 @@ export default class Assets extends Component {
     const eosAccountName = this.props.eosAccount.get('data').get('account_name')
 
     if (eosAccountName) {
-      this.props.actions.getEOSAccountRequested({
-        eosAccountName
-      })
-
-      this.props.actions.getBalanceRequested({
-        code: 'eosio.token',
-        account: eosAccountName
-      })
+      this.props.actions.getEOSAccountRequested({ eosAccountName })
+      this.props.actions.getEOSAssetBalanceListRequested({ eosAccountName })
     }
   }
 
   render() {
-    const { wallet, eosAccountBalance, locale, eosAccount, eosPrice } = this.props
+    const { wallet, eosAssetBalance, eosTotalAssetBalance, locale, eosAccount, eosPrice } = this.props
     const activeEOSAccount = eosAccount.get('data')
     const hdWalletList = wallet.get('hdWalletList')
     const classicWalletList = wallet.get('classicWalletList')
@@ -266,7 +246,7 @@ export default class Assets extends Component {
             <View style={styles.scrollContainer}>
               <ScrollView showsVerticalScrollIndicator={false}>
                 <TotalAssetsCard
-                  totalAssets={getTotalAssets(eosAccountBalance, eosPrice)}
+                  totalAssets={eosTotalAssetBalance}
                   accountName={activeEOSAccount.get('account_name')}
                   CPUInfo={activeEOSAccount.get('cpu_limit')}
                   NETInfo={activeEOSAccount.get('net_limit')}
@@ -288,14 +268,14 @@ export default class Assets extends Component {
                     Title={<FormattedMessage id="asset_title_name_ast" />}
                     onPress={this.checkAssetList}
                   />
-                )}
-                {eosAccountBalance && (
-                  <BalanceList
-                    data={eosAccountBalance}
-                    eosPrice={eosPrice}
-                    onPress={this.checkAsset}
-                  />
-                )}
+                 )}
+                {eosAssetBalance && (
+                   <BalanceList
+                     data={eosAssetBalance}
+                     eosPrice={eosPrice}
+                     onPress={this.checkAsset}
+                   />
+                 )}
               </ScrollView>
             </View>
           )}

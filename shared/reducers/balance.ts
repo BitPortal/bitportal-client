@@ -3,7 +3,8 @@ import { handleActions } from 'redux-actions'
 import * as actions from 'actions/balance'
 
 const initialState = Immutable.fromJS({
-  data: [],
+  tokenBalance: {},
+  eosBalance: {},
   loading: false,
   loaded: false,
   error: null,
@@ -11,27 +12,45 @@ const initialState = Immutable.fromJS({
 })
 
 export default handleActions({
-  [actions.getBalanceRequested] (state) {
+  [actions.getEOSBalanceRequested] (state) {
     return state.set('loading', true)
   },
-  [actions.getBalanceSucceeded] (state, action) {
+  [actions.getEOSBalanceSucceeded] (state, action) {
     return state.set('loaded', true).set('loading', false)
-      .update('data', (v: any) => {
-        const name = action.payload.name
-        const balances = action.payload.balances
-        const index = v.findIndex((item: any) => item.get('eosAccountName') === name)
-
-        if (index === -1) {
-          return v.push(Immutable.fromJS({
-            eosAccountName: name,
-            eosAccountBalance: balances
-          }))
+      .update('eosBalance', (v: any) => v.set(action.payload.eosAccountName, Immutable.fromJS(action.payload.balanceInfo)))
+  },
+  [actions.getEOSBalanceFailed] (state, action) {
+    return state.set('error', action.payload).set('loading', false)
+  },
+  [actions.getEOSAssetBalanceRequested] (state) {
+    return state.set('loading', true)
+  },
+  [actions.getEOSAssetBalanceSucceeded] (state, action) {
+    return state.set('loaded', true).set('loading', false)
+      .update('tokenBalance', (v: any) => {
+        const eosAccountName = action.payload.eosAccountName
+        const balanceInfo = action.payload.balanceInfo
+        if (v.has(eosAccountName)) {
+          return v.update(eosAccountName, (v: any) => {
+            const index = v.findIndex((v: any) => v.get('contract') === balanceInfo.contract)
+            return index === -1 ? v.push(Immutable.fromJS(balanceInfo)) : v.set(index, Immutable.fromJS(balanceInfo))
+          })
+        } else {
+          return v.set(eosAccountName, Immutable.fromJS([balanceInfo]))
         }
-
-        return v.update(index, (v: any) => v.set('eosAccountBalance', Immutable.fromJS(balances)))
       })
   },
-  [actions.getBalanceFailed] (state, action) {
+  [actions.getEOSAssetBalanceFailed] (state, action) {
+    return state.set('error', action.payload).set('loading', false)
+  },
+  [actions.getEOSAssetBalanceListRequested] (state) {
+    return state.set('loading', true)
+  },
+  [actions.getEOSAssetBalanceListSucceeded] (state, action) {
+    return state.set('loaded', true).set('loading', false)
+      .update('tokenBalance', (v: any) => v.set(action.payload.eosAccountName, Immutable.fromJS(action.payload.balanceInfo)))
+  },
+  [actions.getEOSAssetBalanceListFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)
   },
   [actions.setActiveAsset] (state, action) {

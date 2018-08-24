@@ -6,7 +6,7 @@ import NavigationBar, { CommonButton, CommonRightButton } from 'components/Navig
 import { Text, View, Share, TextInput, Clipboard, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
-import { normalizeUnitByCurrency } from 'utils/normalize'
+import { normalizeUnitByFraction } from 'utils/normalize'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { eosQrString } from 'utils'
 import messages from './messages'
@@ -31,7 +31,7 @@ export default class ReceiveQRCode extends Component {
   // 输入框输入中
   onChangeText = (value) => {
     const previousValue = this.state.value
-    const nextValue = normalizeUnitByCurrency(this.props.symbol)(value, previousValue)
+    const nextValue = normalizeUnitByFraction(4)(value, previousValue)
     this.setState({ value: nextValue })
   }
 
@@ -68,6 +68,7 @@ export default class ReceiveQRCode extends Component {
     const { locale, eosAccount, symbol } = this.props
     const { isCopied } = this.state
     const activeEOSAccount = eosAccount.get('data')
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -78,11 +79,10 @@ export default class ReceiveQRCode extends Component {
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center' }}>
-
               <View style={[styles.content, styles.center]}>
                 <View style={styles.qrContainer}>
                   <QRCode
-                    value={eosQrString(activeEOSAccount.get('account_name'), this.state.value)}
+                    value={eosQrString(activeEOSAccount.get('account_name'), this.state.value, symbol)}
                     size={140}
                     color="black"
                   />
@@ -98,7 +98,6 @@ export default class ReceiveQRCode extends Component {
                   }
                 </Text>
               </View>
-
               <View style={[styles.inputContainer, styles.between]}>
                 <Text style={styles.text14}>
                   <FormattedMessage id="rcv_input_left_tips" />

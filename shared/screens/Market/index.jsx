@@ -12,6 +12,8 @@ import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from 'constants/market'
 import NavigationBar, { ListButton } from 'components/NavigationBar'
 import SearchBar from 'components/SearchBar'
 import { IntlProvider } from 'react-intl'
+import { MAEKRT_LIST_SELECTED, QUOTES_LIST_SELECTED, MARKET_TOKEN_DETAIL } from 'constants/analytics'
+import { onEventWithLabel } from 'utils/analytics'
 import ExchangeList from './ExchangeList'
 import { Quotes } from './Quotes'
 import messages from './messages'
@@ -56,6 +58,8 @@ export default class Market extends Component {
   }
 
   changeExchange = (exchange) => {
+    //Umeng analytics
+    onEventWithLabel(MAEKRT_LIST_SELECTED, exchange)
     InteractionManager.runAfterInteractions(() => {
       this.setState({ isVisible: false, activeQuoteAsset: null }, () => {
         this.props.actions.selectTickersByExchange(exchange)
@@ -64,6 +68,8 @@ export default class Market extends Component {
   }
 
   changeQuote = (quote) => {
+    //Umeng analytics
+    onEventWithLabel(QUOTES_LIST_SELECTED, quote)
     this.setState({ activeQuoteAsset: quote }, () => {
       InteractionManager.runAfterInteractions(() => {
         this.props.actions.selectTickersByQuoteAsset(quote)
@@ -72,6 +78,8 @@ export default class Market extends Component {
   }
 
   pressListItem = (item) => {
+    //Umeng analytics
+    onEventWithLabel(MARKET_TOKEN_DETAIL, "行情 - token详情")
     const baseAsset = item.get('base_asset')
     InteractionManager.runAfterInteractions(() => {
       this.props.actions.selectCurrentPair(item)

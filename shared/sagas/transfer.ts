@@ -4,7 +4,7 @@ import { put, call, takeEvery, select } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/transfer'
 import { getEOSAccountRequested } from 'actions/eosAccount'
-import { getBalanceRequested } from 'actions/balance'
+import { getEOSAssetBalanceRequested } from 'actions/balance'
 import { initEOS } from 'core/eos'
 import { getEOSWifsByInfo } from 'core/key'
 import secureStorage from 'utils/secureStorage'
@@ -23,6 +23,7 @@ function* transfer(action: Action<TransferParams>) {
     const quantity = `${(+amount).toFixed(4)} ${symbol}`
     const memo = action.payload.memo || ''
     const password = action.payload.password
+    const contract = action.payload.contract
 
     const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${fromAccount}`, true)
     const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
@@ -40,7 +41,7 @@ function* transfer(action: Action<TransferParams>) {
       push('BitPortal.TransactionRecord', action.payload.componentId, { transactionResult: Immutable.fromJS(transactionResult) })
     }
     yield put(getEOSAccountRequested({ eosAccountName: fromAccount }))
-    yield put(getBalanceRequested({ code: 'eosio.token', account: fromAccount }))
+    yield put(getEOSAssetBalanceRequested({ code: contract, eosAccountName: fromAccount }))
   } catch (e) {
     yield put(actions.transferFailed(getErrorMessage(e)))
   }

@@ -4,14 +4,12 @@ import { Action } from 'redux-actions'
 import { reset } from 'redux-form/immutable'
 import assert from 'assert'
 import * as actions from 'actions/wallet'
-import { resetBalance, getBalanceRequested } from 'actions/balance'
+import { resetBalance, getEOSBalanceRequested, getEOSAssetBalanceListRequested } from 'actions/balance'
 import { resetKey } from 'actions/keystore'
 import { resetTransaction } from 'actions/transaction'
 import { resetEOSAccount, syncEOSAccount, createEOSAccountSucceeded, getEOSAccountRequested, syncEOSAccountCreationInfo } from 'actions/eosAccount'
-import { getAssetPref } from 'actions/eosAsset'
 import { getErrorMessage } from 'utils'
 import secureStorage from 'utils/secureStorage'
-// import storage from 'utils/storage'
 import { privateToPublic, initEOS, randomKey } from 'core/eos'
 import { getMasterSeed, encrypt, decrypt, getEOSKeys, getEOSWifsByInfo } from 'core/key'
 import { push, pop, popToRoot } from 'utils/location'
@@ -78,7 +76,7 @@ function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAc
 
       yield put(createEOSAccountSucceeded(info))
       yield put(actions.createHDWalletSucceeded(walletInfo))
-      yield put(getBalanceRequested({ code: 'eosio.token', account: walletInfo.eosAccountName }))
+      yield put(getEOSBalanceRequested({ eosAccountName: walletInfo.eosAccountName }))
     } else {
       const { id, entropy } = yield call(getMasterSeed)
       const existedWallet = yield call(secureStorage.getItem, `HD_KEYSTORE_${id}`, true)
@@ -127,7 +125,7 @@ function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAc
 
       yield put(createEOSAccountSucceeded(info))
       yield put(actions.createHDWalletSucceeded(walletInfo))
-      yield put(getBalanceRequested({ code: 'eosio.token', account: walletInfo.eosAccountName }))
+      yield put(getEOSBalanceRequested({ eosAccountName: walletInfo.eosAccountName }))
     }
 
     yield put(reset('createWalletAndEOSAccountForm'))
@@ -209,10 +207,10 @@ function* syncWalletRequested() {
       const eosAccountCreationInfoString = allItems[`EOS_ACCOUNT_CREATION_INFO_${active.eosAccountName}`]
       const eosAccountCreationInfo = eosAccountCreationInfoString && JSON.parse(eosAccountCreationInfoString)
       if (eosAccountCreationInfo) yield put(syncEOSAccountCreationInfo(eosAccountCreationInfo))
-      
-      yield put(getAssetPref({ eosAccountName: active.eosAccountName }))
+
       yield put(getEOSAccountRequested({ eosAccountName: active.eosAccountName }))
-      yield put(getBalanceRequested({ code: 'eosio.token', account: active.eosAccountName }))
+      yield put(getEOSBalanceRequested({ eosAccountName: active.eosAccountName }))
+      yield put(getEOSAssetBalanceListRequested({ eosAccountName: active.eosAccountName }))
     }
   } catch (e) {
     yield put(actions.syncWalletFailed(getErrorMessage(e)))

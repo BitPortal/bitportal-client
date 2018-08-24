@@ -5,6 +5,7 @@ import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { View, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
+import { onEventWithLabel } from 'utils/analytics'
 import messages from './messages'
 import styles from './styles'
 
@@ -35,6 +36,8 @@ export default class Setting extends Component {
   }
 
   changeSettings = (page) => {
+    // Umeng analytics
+    onEventWithLabel(`setting_${page.toLowerCase()}`, page)
     Navigation.push(this.props.componentId, {
       component: {
         name: `BitPortal.${page}`

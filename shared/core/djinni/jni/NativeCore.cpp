@@ -6,12 +6,12 @@
 
 namespace djinni_generated {
 
-NativeCore::NativeCore() : ::djinni::JniInterface<::core::Core, NativeCore>("com/bitportal/core/Core$CppProxy") {}
+NativeCore::NativeCore() : ::djinni::JniInterface<::core::Core, NativeCore>("com/bitportal/wallet/core/Core$CppProxy") {}
 
 NativeCore::~NativeCore() = default;
 
 
-CJNIEXPORT void JNICALL Java_com_bitportal_core_Core_00024CppProxy_nativeDestroy(JNIEnv* jniEnv, jobject /*this*/, jlong nativeRef)
+CJNIEXPORT void JNICALL Java_com_bitportal_wallet_core_Core_00024CppProxy_nativeDestroy(JNIEnv* jniEnv, jobject /*this*/, jlong nativeRef)
 {
     try {
         DJINNI_FUNCTION_PROLOGUE1(jniEnv, nativeRef);
@@ -19,7 +19,7 @@ CJNIEXPORT void JNICALL Java_com_bitportal_core_Core_00024CppProxy_nativeDestroy
     } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, )
 }
 
-CJNIEXPORT jobject JNICALL Java_com_bitportal_core_Core_create(JNIEnv* jniEnv, jobject /*this*/)
+CJNIEXPORT jobject JNICALL Java_com_bitportal_wallet_core_Core_create(JNIEnv* jniEnv, jobject /*this*/)
 {
     try {
         DJINNI_FUNCTION_PROLOGUE0(jniEnv);
@@ -28,7 +28,7 @@ CJNIEXPORT jobject JNICALL Java_com_bitportal_core_Core_create(JNIEnv* jniEnv, j
     } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
 }
 
-CJNIEXPORT jstring JNICALL Java_com_bitportal_core_Core_00024CppProxy_native_1pbkdf2(JNIEnv* jniEnv, jobject /*this*/, jlong nativeRef, jstring j_password, jstring j_salt, jint j_iterations, jbyte j_keylen, jstring j_digest)
+CJNIEXPORT jstring JNICALL Java_com_bitportal_wallet_core_Core_00024CppProxy_native_1pbkdf2(JNIEnv* jniEnv, jobject /*this*/, jlong nativeRef, jstring j_password, jstring j_salt, jint j_iterations, jbyte j_keylen, jstring j_digest)
 {
     try {
         DJINNI_FUNCTION_PROLOGUE1(jniEnv, nativeRef);
@@ -42,7 +42,7 @@ CJNIEXPORT jstring JNICALL Java_com_bitportal_core_Core_00024CppProxy_native_1pb
     } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
 }
 
-CJNIEXPORT jstring JNICALL Java_com_bitportal_core_Core_00024CppProxy_native_1scrypt(JNIEnv* jniEnv, jobject /*this*/, jlong nativeRef, jstring j_password, jstring j_salt, jint j_N, jbyte j_r, jbyte j_p, jbyte j_dkLen)
+CJNIEXPORT jstring JNICALL Java_com_bitportal_wallet_core_Core_00024CppProxy_native_1scrypt(JNIEnv* jniEnv, jobject /*this*/, jlong nativeRef, jstring j_password, jstring j_salt, jint j_N, jbyte j_r, jbyte j_p, jbyte j_dkLen)
 {
     try {
         DJINNI_FUNCTION_PROLOGUE1(jniEnv, nativeRef);

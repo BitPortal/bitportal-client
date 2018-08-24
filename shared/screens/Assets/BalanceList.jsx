@@ -10,9 +10,13 @@ import styles from './styles'
 const ListItem = ({ item, onPress, eosPrice, isAssetHidden }) => (
   <TouchableHighlight underlayColor={Colors.hoverColor} style={styles.listContainer} onPress={() => onPress(item)}>
     <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.bgColor_30_31_37 }]}>
-      <View style={{ flexDirection: 'row' }}>
-        {item.get('symbol') === 'EOS' && <Image source={Images.EOSIcon} style={styles.image} /> }
-        <Text style={styles.text20}> {item.get('symbol')} </Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        {
+          item.get('symbol') === 'EOS' 
+          ? <Image source={Images.EOSIcon} style={styles.image} /> 
+          : <Image source={item.get('icon_url') ? { uri: item.get('icon_url') } : Images.coin_logo_default} style={styles.image} /> 
+        }
+        <Text style={styles.text24}>{item.get('symbol')}</Text>
       </View>
       <View>
         <Text style={[styles.text20, { alignSelf: 'flex-end' }]}>
@@ -24,7 +28,7 @@ const ListItem = ({ item, onPress, eosPrice, isAssetHidden }) => (
         </Text>
         {
           isAssetHidden
-            ? <Text style={[styles.text14, { alignSelf: 'flex-end', color: Colors.textColor_149_149_149 }]}> ****** </Text>
+            ? <Text style={[styles.text14, { alignSelf: 'flex-end', color: Colors.textColor_149_149_149 }]}>******</Text>
             : <Text style={[styles.text14, { alignSelf: 'flex-end', color: Colors.textColor_149_149_149 }]}>
               ≈
               <CurrencyText value={+item.get('balance') * +eosPrice} maximumFractionDigits={2} minimumFractionDigits={2} />
@@ -45,18 +49,18 @@ const ListItem = ({ item, onPress, eosPrice, isAssetHidden }) => (
 export default class BalanceList extends Component {
   render() {
     const { data, onPress, eosPrice, isAssetHidden } = this.props
+
     return (
       <View>
         {
-          data.map((item, index) => (
+          data.map((item, index) =>
             <ListItem
               key={index}
               item={item}
               isAssetHidden={isAssetHidden}
               eosPrice={eosPrice}
-              onPress={e => onPress(e)}
+              onPress={onPress}
             />
-          )
           )
         }
       </View>
