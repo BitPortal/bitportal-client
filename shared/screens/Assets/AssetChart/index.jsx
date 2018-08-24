@@ -76,7 +76,7 @@ export default class AssetChart extends Component {
   send = () => {
     // Umeng analytics
     onEventWithLabel(ASSETS_TOKEN_SEND, "资产 - token资产详情 - 发送")
-    this.props.actions.setActiveAsset(this.props.eosItem.get('symbol'))
+    this.props.actions.setActiveAsset(this.props.activeAsset)
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.AssetsTransfer'
