@@ -1,3 +1,4 @@
+import Immutable from 'immutable'
 import { createSelector } from 'reselect'
 import { Map } from 'immutable'
 
@@ -100,4 +101,22 @@ export const ramAvailablePercentSelector = createSelector(
   ramQuotaSelector,
   ramUsageSelector,
   (quota: number, usage: number) => (quota - usage) / quota
+)
+
+export const eosCoreLiquidBalanceSelector = createSelector(
+  eosAccountSelector,
+  (eosAccount: number) => {
+    const core_liquid_balance = eosAccount.getIn(['data', 'core_liquid_balance'])
+
+    if (core_liquid_balance && typeof core_liquid_balance === 'string') {
+      const balance = core_liquid_balance.split(' ')[0]
+      const symbol = core_liquid_balance.split(' ')[1]
+      const blockchain = 'EOS'
+      const contract = 'eosio.token'
+
+      return Immutable.fromJS({ balance, symbol, contract, blockchain })
+    }
+
+    return null
+  }
 )

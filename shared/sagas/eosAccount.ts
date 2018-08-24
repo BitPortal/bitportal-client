@@ -3,10 +3,10 @@ import { all, select, call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import { reset } from 'redux-form/immutable'
 import * as actions from 'actions/eosAccount'
-import { getEOSAssetBalanceRequested } from 'actions/balance'
+import { getEOSBalanceRequested } from 'actions/balance'
 import { createClassicWalletSucceeded } from 'actions/wallet'
 import  { setSelected } from 'actions/producer'
-import { votedProducersSelector } from 'selectors/eosAccount'
+import { votedProducersSelector, eosCoreLiquidBalanceSelector } from 'selectors/eosAccount'
 import secureStorage from 'utils/secureStorage'
 import { BITPORTAL_API_EOS_URL } from 'constants/env'
 import { randomKey, privateToPublic, isValidPrivate, initEOS, getPermissionsByKey, getInitialAccountInfo } from 'core/eos'
@@ -78,7 +78,7 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
       put(actions.syncEOSAccountCreationInfo(eosAccountCreationInfo)),
       put(actions.createEOSAccountSucceeded(accountInfo)),
       put(createClassicWalletSucceeded(walletInfo)),
-      put(getEOSAssetBalanceRequested({ code: 'eosio.token', eosAccountName: walletInfo.eosAccountName })),
+      put(getEOSBalanceRequested({ eosAccountName: walletInfo.eosAccountName })),
       put(reset('createEOSAccountForm'))
     ])
 
@@ -119,7 +119,7 @@ function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
     yield all([
       put(actions.importEOSAccountSucceeded(accountInfo)),
       put(createClassicWalletSucceeded(walletInfo)),
-      put(getEOSAssetBalanceRequested({ code: 'eosio.token', eosAccountName: walletInfo.eosAccountName })),
+      put(getEOSBalanceRequested({ eosAccountName: walletInfo.eosAccountName })),
       put(reset('importEOSAccountForm'))
     ])
 
@@ -177,9 +177,16 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
   }
 }
 
-function* getEOSAccountSucceeded() {
+function* getEOSAccountSucceeded(action: Action<GetEOSAccountResult>) {
   const votedProducers = yield select((state: RootState) => votedProducersSelector(state))
   if (votedProducers) yield put(setSelected(votedProducers))
+
+  const balanceInfo = yield select((state: RootState) => eosCoreLiquidBalanceSelector(state))
+  const eosAccountName = action.payload.eosAccountName
+
+  if (eosAccountName && balanceInfo) {
+    yield put(getEOSBalanceSucceeded({ eosAccountName, balanceInfo: balanceInfo.toJS() }))
+  }
 }
 
 function* validateEOSAccountRequested(action: Action<ValidateEOSAccountParams>) {
