@@ -106,7 +106,7 @@ android {
     buildToolsVersion "27.0.3"
 
     defaultConfig {
-        applicationId "com.bitportal"
+        applicationId "com.bitportal.wallet"
         minSdkVersion 21
         targetSdkVersion 27
         renderscriptTargetApi 27

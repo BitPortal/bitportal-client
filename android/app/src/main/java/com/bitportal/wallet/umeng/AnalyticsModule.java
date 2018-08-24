@@ -1,4 +1,4 @@
-package com.bitportal.umeng;
+package com.bitportal.wallet.umeng;
 
 import java.util.ArrayList;
 import java.util.HashMap;
