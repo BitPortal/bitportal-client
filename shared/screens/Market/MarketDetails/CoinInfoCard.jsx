@@ -18,23 +18,16 @@ const filterBgColor = (data) => {
   return Colors.bgColor_59_59_59
 }
 
-@connect(
-  state => ({
-    ticker: exchangeTickerSelector(state),
-    baseAsset: state.ticker.get('baseAsset'),
-    quoteAssetFilter: state.ticker.get('quoteAssetFilter'),
-    token: state.token.get('data'),
-    locale: state.intl.get('locale')
-  })
-)
-
+@connect(state => ({
+  ticker: exchangeTickerSelector(state),
+  baseAsset: state.ticker.get('baseAsset'),
+  quoteAssetFilter: state.ticker.get('quoteAssetFilter'),
+  token: state.token.get('data'),
+  locale: state.intl.get('locale')
+}))
 export default class CoinInfoCard extends Component {
   render() {
-    const {
-      item,
-      locale,
-      token
-    } = this.props
+    const { item, locale, token } = this.props
 
     const price_change_percent = item.get('price_change_percent')
     const price_last = item.get('price_last')
@@ -51,7 +44,7 @@ export default class CoinInfoCard extends Component {
           <Image style={styles.icon} source={Images.coin_logo_default} />
           <View style={{ marginLeft: 10 }}>
             <Text style={[styles.text18, { fontWeight: 'bold' }]}>
-              {locale === 'zh' ? name_zh || name_en : name_en}
+              {locale === 'zh' ? name_zh.trim() || name_en : name_en}
             </Text>
             <Text style={[styles.text16, {}]}>{base_asset}</Text>
           </View>
