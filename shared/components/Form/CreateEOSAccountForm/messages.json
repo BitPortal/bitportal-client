@@ -35,7 +35,6 @@
     "act_fid_error_uninv": "无效的注册码",
     "act_fid_error_used": "注册码已使用",
     "act_fid_error_retdata": "数据提取错误"
-
   },  
   "en": {
     "act_fid_title_name" : "Name Your EOS Account",
