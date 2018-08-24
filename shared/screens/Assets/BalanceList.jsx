@@ -10,9 +10,13 @@ import styles from './styles'
 const ListItem = ({ item, onPress, eosPrice, isAssetHidden }) => (
   <TouchableHighlight underlayColor={Colors.hoverColor} style={styles.listContainer} onPress={() => onPress(item)}>
     <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.bgColor_30_31_37 }]}>
-      <View style={{ flexDirection: 'row' }}>
-        {item.get('symbol') === 'EOS' && <Image source={Images.EOSIcon} style={styles.image} /> }
-        <Text style={styles.text20}>{item.get('symbol')}</Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        {
+          item.get('symbol') === 'EOS' 
+          ? <Image source={Images.EOSIcon} style={styles.image} /> 
+          : <Image source={item.get('icon_url') ? { uri: item.get('icon_url') } : Images.coin_logo_default} style={styles.image} /> 
+        }
+        <Text style={styles.text24}>{item.get('symbol')}</Text>
       </View>
       <View>
         <Text style={[styles.text20, { alignSelf: 'flex-end' }]}>

@@ -1,4 +1,4 @@
-package com.bitportal.core;
+package com.bitportal.wallet.core;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;

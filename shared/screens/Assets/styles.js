@@ -40,6 +40,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.textColor_255_255_238
   },
+  text24: {
+    fontSize: FontScale(24),
+    fontWeight: 'bold',
+    color: Colors.textColor_255_255_238
+  },
   addAssetsContainer: {
     width: SCREEN_WIDTH,
     height: 50
@@ -63,8 +68,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.mainThemeColor
   },
   image: {
-    width: FontScale(25),
-    height: FontScale(25),
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     marginRight: 10,
   }
 })
