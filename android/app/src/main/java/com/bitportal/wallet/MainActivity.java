@@ -1,7 +1,7 @@
-package com.bitportal;
+package com.bitportal.wallet;
 import android.os.Bundle;
 import org.devio.rn.splashscreen.SplashScreen;
-import com.bitgo.randombytes.RandomBytesPackage;
+
 import com.reactnativenavigation.NavigationActivity;
 import com.umeng.analytics.MobclickAgent;
 

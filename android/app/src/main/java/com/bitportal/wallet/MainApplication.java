@@ -1,8 +1,6 @@
-package com.bitportal;
+package com.bitportal.wallet;
 
-import android.app.Application;
 import com.remobile.qrcodeLocalImage.RCTQRCodeLocalImagePackage;
-import com.facebook.react.ReactApplication;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import com.facebook.react.ReactNativeHost;
@@ -18,20 +16,17 @@ import com.github.wuxudong.rncharts.MPAndroidChartPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.horcrux.svg.SvgPackage;
-import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
-import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
-import com.bitportal.core.BPCorePackage;
+import com.bitportal.wallet.core.BPCorePackage;
 import com.umeng.commonsdk.UMConfigure;
-import com.bitportal.umeng.RNUMConfigure;
-import com.bitportal.umeng.DplusReactPackage;
+import com.bitportal.wallet.umeng.RNUMConfigure;
+import com.bitportal.wallet.umeng.DplusReactPackage;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Vector;
 
 public class MainApplication extends NavigationApplication {
   @Override
