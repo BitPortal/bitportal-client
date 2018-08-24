@@ -72,7 +72,7 @@ export default class Assets extends Component {
   }
 
   displayAccountList = () => {}
-  
+
   scanQR = async () => {
     const authorized = await checkCamera()
     if (authorized) {
@@ -196,6 +196,7 @@ export default class Assets extends Component {
 
     if (eosAccountName) {
       this.props.actions.getEOSAccountRequested({ eosAccountName })
+      this.props.actions.getEOSBalanceRequested({ eosAccountName })
       this.props.actions.getEOSAssetBalanceListRequested({ eosAccountName })
     }
   }
