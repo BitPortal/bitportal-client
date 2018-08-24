@@ -23,7 +23,8 @@ const initialState = Immutable.fromJS({
   baseAsset: null,
   fromUserPull: false,
   listedExchange: [],
-  currentPair: {}
+  currentPair: {},
+  searchTerm: ''
 })
 
 export default handleActions(
@@ -99,6 +100,9 @@ export default handleActions(
         ['sortFilter', action.payload.exchangeFilter],
         action.payload.sortFilter
       )
+    },
+    [actions.setSearchTerm](state, action) {
+      return state.set('searchTerm', Immutable.fromJS(action.payload))
     }
   },
   initialState

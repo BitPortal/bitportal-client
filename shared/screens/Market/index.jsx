@@ -27,7 +27,8 @@ import styles from './styles'
     exchangeFilter: state.ticker.get('exchangeFilter'),
     sortFilter: sortFilterSelector(state),
     quoteAssetFilter: state.ticker.get('quoteAssetFilter'),
-    baseAsset: state.ticker.get('baseAsset')
+    baseAsset: state.ticker.get('baseAsset'),
+    searchTerm: state.ticker.get('searchTerm')
   }),
   dispatch => ({
     actions: bindActionCreators(
@@ -116,11 +117,16 @@ export default class Market extends Component {
       || nextState.isVisible !== this.state.isVisible
       || nextState.coinName !== this.state.coinName
       || nextState.activeQuoteAsset !== this.state.activeQuoteAsset
+      || nextState.searchTerm !== this.props.searchTerm
     )
   }
 
   componentDidAppear() {
     this.onRefresh()
+  }
+
+  onChangeText = (text) => {
+    this.props.actions.setSearchTerm(text)
   }
 
   render() {
@@ -129,7 +135,8 @@ export default class Market extends Component {
       locale,
       loading,
       exchangeFilter,
-      quoteAssetFilter
+      quoteAssetFilter,
+      searchTerm
     } = this.props
 
     return (
@@ -142,7 +149,15 @@ export default class Market extends Component {
                 onPress={this.selectExchange}
               />
             }
-            rightButton={<SearchBar />}
+            rightButton={
+              <SearchBar
+                searchTerm={searchTerm}
+                onChangeText={text => this.onChangeText(text)}
+                clearSearch={() => {
+                  this.props.actions.setSearchTerm('')
+                }}
+              />
+            }
           />
           <Quotes
             onPress={this.changeQuote}
