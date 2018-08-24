@@ -32,15 +32,15 @@ export const errorMessages = (error, messages) => {
     case 'Invalid private key!':
       return messages.act_fid_error_privatekey
     case 'Campaign is for invitation only':
-      return 'Campaign is for invitation only'
+      return messages.act_fid_error_caminv
     case 'Campaign is for eos only':
-      return 'Campaign is for eos only'
+      return messages.act_fid_error_cameos
     case 'Unknown invitation Code':
-      return 'Unknown invitation Code'
+      return messages.act_fid_error_uninv
     case 'Coupon code is used':
-      return 'Coupon code is used'
+      return messages.act_fid_error_used
     case 'Error retrieving data':
-      return 'Error retrieving data'
+      return messages.act_fid_error_retdata
     default:
       return messages.act_fid_error_failed
   }
