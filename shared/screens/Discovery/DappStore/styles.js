@@ -18,7 +18,9 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH / 4,
     height: 90,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginVertical: 5
+    // paddingVertical: 10
   },
   dAppScrollViewContainer: {
     width: SCREEN_WIDTH,
@@ -35,16 +37,25 @@ const styles = StyleSheet.create({
   },
   dAppButton: {
     backgroundColor: Colors.bgColor_27_27_26,
-    height: 60,
-    width: 60,
+    height: 50,
+    width: 50,
     borderRadius: 10
   },
   icon: {
-    height: 60,
-    width: 60,
+    height: 50,
+    width: 50,
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  moreIcon: {
+    height: 50,
+    width: 50,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center'
+    // alignSelf: 'center'
+    // backgroundColor: 'red'
   },
   center: {
     alignItems: 'center',
@@ -74,10 +85,10 @@ const styles = StyleSheet.create({
   },
   title: {
     color: Colors.textColor_FFFFEE,
-    fontSize: FontScale(14),
+    fontSize: FontScale(13),
     fontWeight: 'bold',
-    marginBottom: 5,
-    paddingTop: 10
+    marginVertical: 10
+    // backgroundColor: 'yellow'
   },
   hairLine: {
     height: 2,
