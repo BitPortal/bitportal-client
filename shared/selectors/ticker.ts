@@ -40,7 +40,7 @@ export const exchangeTickerSelector = createSelector(
     .filter(
       (item: any) => (searchTerm.trim() === ''
         ? item
-        : item.get('base_asset').includes(searchTerm))
+        : item.get('base_asset').includes(searchTerm.toUpperCase()))
     )
     .sortBy((item: any) => {
       const result = exchangeTickerSortByHelper(sortfilter)

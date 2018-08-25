@@ -16,22 +16,21 @@ import messages from './messages'
   null,
   { withRef: true }
 )
-
 export default class Description extends Component {
   getDescription = (locale) => {
-    const { description } = this.props.token.toJS()
+    const { token } = this.props
 
     if (
-      description
-      && description[locale]
-      && description[locale].length !== 0
-    ) {
-      return description[locale]
-    } else if (description && description.en && description.en.length !== 0) {
-      return description.en
-    } else {
-      return messages[locale].description_null
-    }
+      token.get('description')
+      && token.get('description').get(locale)
+      && token.get('description').get(locale).length !== 0
+    ) return token.get('description').get(locale)
+    else if (
+      token.get('description')
+      && token.get('description').get('en')
+      && token.get('description').get('en').length !== 0
+    ) return token.get('description').get('en')
+    else return messages[locale].description_null
   }
 
   render() {
@@ -47,12 +46,7 @@ export default class Description extends Component {
               marginLeft: 4
             }}
           >
-            <Text
-              ellipseMode="clip"
-              style={[
-                styles.text14
-              ]}
-            >
+            <Text ellipseMode="clip" style={[styles.text14]}>
               {this.getDescription(locale)}
             </Text>
           </View>
