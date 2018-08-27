@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react'
 import { FlatList, View, ActivityIndicator, Text } from 'react-native'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
-import NewsBanner from '../NewsBanner'
 import NewsRow from './NewsRow'
 import styles from './styles'
 import messages from './messages'
@@ -15,7 +14,6 @@ export default class NewsList extends PureComponent {
 
   renderHeader = () => (
     <View>
-      {/* <NewsBanner componentId={this.props.componentId} /> */}
       <View style={styles.listTitle}>
         <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>
           {messages[this.props.locale].discovery_title_name_news}

@@ -23,7 +23,6 @@ const dataProvider = new ImmutableDataProvider((r1, r2) => r1.get('account_actio
     loading: state.transaction.get('loading'),
     hasMore: state.transaction.get('hasMore'),
     loaded: state.transaction.get('loaded'),
-    hasMore: state.transaction.get('hasMore'),
     offset: state.transaction.get('offset'),
     position: state.transaction.get('position'),
     eosAccountName: eosAccountNameSelector(state),
@@ -92,11 +91,9 @@ export default class TransationHistory extends Component {
     }
   }
 
-  rowRenderer = (type, item) => {
-    return (
-      <RecordItem key={item.get('account_action_seq')} item={item} onPress={this.checkTransactionRecord} eosAccountName={this.props.eosAccountName} />
-    )
-  }
+  rowRenderer = (type, item) => (
+    <RecordItem key={item.get('account_action_seq')} item={item} onPress={this.checkTransactionRecord} eosAccountName={this.props.eosAccountName} />
+  )
 
   renderFooter = () => {
     const { loaded, hasMore, locale } = this.props
@@ -121,7 +118,7 @@ export default class TransationHistory extends Component {
   }
 
   render() {
-    const { locale, loading, loaded, hasMore, eosAccountName } = this.props
+    const { locale, loading, loaded } = this.props
     const { transferHistory } = this.state
 
     return (

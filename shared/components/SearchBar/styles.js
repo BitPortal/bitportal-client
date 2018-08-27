@@ -1,10 +1,4 @@
 import { StyleSheet, Platform } from 'react-native'
-import {
-  FontScale,
-  SCREEN_WIDTH,
-  SCREEN_HEIGHT,
-  TAB_BAR_HEIGHT
-} from 'utils/dimens'
 import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
@@ -35,11 +29,9 @@ const styles = StyleSheet.create({
   },
   textInput: {
     color: Colors.textColor_181_181_181,
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'center',
     paddingBottom: 0,
     paddingTop: 0
+    // backgroundColor: 'red'
   }
 })
 

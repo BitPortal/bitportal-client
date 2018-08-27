@@ -1,6 +1,6 @@
 import { List } from 'immutable'
 import { createSelector } from 'reselect'
-import { eosAccountNameSelector } from 'selectors/eosAccount'
+import { eosAccountNameSelector, eosCoreLiquidBalanceSelector } from 'selectors/eosAccount'
 import { eosPriceSelector } from 'selectors/ticker'
 import { selectedEOSAssetSelector } from 'selectors/eosAsset'
 
@@ -12,7 +12,14 @@ export const eosBalanceAllDataSelector = (state: RootState) => state.balance.get
 export const eosBalanceSelector = createSelector(
   eosAccountNameSelector,
   eosBalanceAllDataSelector,
-  (eosAccountName: string, eosBalance: any) => eosAccountName ? eosBalance.get(eosAccountName) : null
+  eosCoreLiquidBalanceSelector,
+  (eosAccountName: string, eosBalance: any, eosCoreLiquidBalance: any) => {
+    if (eosAccountName) {
+      return eosBalance.get(eosAccountName) || eosCoreLiquidBalance
+    }
+
+    return null
+  }
 )
 
 export const eosTokenBalanceSelector = createSelector(

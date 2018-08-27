@@ -1,7 +1,7 @@
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { IntlProvider, FormattedMessage } from 'react-intl'
+import { IntlProvider } from 'react-intl'
 import {
   View,
   Animated,
@@ -10,11 +10,12 @@ import {
   TextInput,
   Easing,
   Platform,
-  InteractionManager
+  InteractionManager,
+  Keyboard
 } from 'react-native'
 
 import Colors from 'resources/colors'
-import { FontScale, SCREEN_WIDTH } from 'utils/dimens'
+import { SCREEN_WIDTH } from 'utils/dimens'
 import messages from './messages'
 import styles from './styles'
 
@@ -46,6 +47,8 @@ export default class SearchBar extends Component {
 
   clearSearch = () => {
     this.props.clearSearch()
+    Keyboard.dismiss()
+    // this.textInput._root.clear()
   }
 
   animate = () => {
@@ -138,7 +141,7 @@ export default class SearchBar extends Component {
       outputRange: [SCREEN_WIDTH / 1.5, SCREEN_WIDTH]
     })
     const { styleProps, locale } = this.props
-    const { expanded, opacity } = this.state
+    const { opacity } = this.state
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -198,12 +201,14 @@ export default class SearchBar extends Component {
               <Text>{'  '}</Text>
               <Animated.View
                 style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  flex: 1,
                   opacity
                 }}
               >
                 <TextInput
+                  ref={(input) => {
+                    this.textInput = input
+                  }}
                   style={[styles.textInput]}
                   placeholder={
                     Platform.OS === 'ios' ? messages[locale].search : null

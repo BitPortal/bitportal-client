@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput, StyleSheet, Platform } from 'react-native'
+import { View, TextInput, StyleSheet, Platform } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import { SCREEN_WIDTH, FontScale } from 'utils/dimens'
@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
 )
 
 export default class SearchBar extends Component {
-
   onChangeText = (text) => {
     this.props.actions.setSearchValue(text)
   }
@@ -52,7 +51,7 @@ export default class SearchBar extends Component {
   render() {
     const { locale } = this.props
     return (
-      <IntlProvider >
+      <IntlProvider>
         <View style={[styles.searchContainer, { flexDirection: 'row', alignItems: 'center' }]}>
           <Ionicons name="md-search" size={FontScale(22)} color={Colors.textColor_142_142_147} />
           <TextInput
@@ -70,5 +69,4 @@ export default class SearchBar extends Component {
       </IntlProvider>
     )
   }
-
 }

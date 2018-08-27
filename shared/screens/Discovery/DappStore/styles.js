@@ -1,11 +1,6 @@
 import { StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
-import {
-  FontScale,
-  SCREEN_WIDTH,
-  SCREEN_HEIGHT,
-  TAB_BAR_HEIGHT
-} from 'utils/dimens'
+import { FontScale, SCREEN_WIDTH, TAB_BAR_HEIGHT } from 'utils/dimens'
 
 const styles = StyleSheet.create({
   container: {
@@ -20,6 +15,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 5
+    // backgroundColor: 'red'
+
     // paddingVertical: 10
   },
   dAppScrollViewContainer: {
@@ -85,10 +82,9 @@ const styles = StyleSheet.create({
   },
   title: {
     color: Colors.textColor_FFFFEE,
-    fontSize: FontScale(13),
+    fontSize: FontScale(12),
     fontWeight: 'bold',
     marginVertical: 10
-    // backgroundColor: 'yellow'
   },
   hairLine: {
     height: 2,

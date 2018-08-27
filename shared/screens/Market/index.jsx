@@ -79,7 +79,7 @@ export default class Market extends Component {
 
   pressListItem = (item) => {
     //Umeng analytics
-    onEventWithLabel(MARKET_TOKEN_DETAIL, "行情 - token详情")
+    onEventWithLabel(MARKET_TOKEN_DETAIL, '行情 - token详情')
     const baseAsset = item.get('base_asset')
     InteractionManager.runAfterInteractions(() => {
       this.props.actions.selectCurrentPair(item)

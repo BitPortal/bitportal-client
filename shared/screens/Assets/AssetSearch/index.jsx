@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Colors from 'resources/colors'
-import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
+import { CommonButton } from 'components/NavigationBar'
 import { Text, View, Switch, Image, FlatList } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { bindActionCreators } from 'redux'
@@ -80,10 +80,10 @@ export default class AssetSearch extends Component {
         <View style={styles.container}>
           <View style={[styles.navContainer, styles.between, { alignItems: 'flex-end' }]}>
             <SearchBar value={searchValue} />
-            <CommonButton 
-              title={messages[locale].astsch_title_name_cancel} 
-              onPress={this.cancelSearch} 
-              extraTextStyle={{ fontSize: FontScale(18), color: Colors.textColor_89_185_226 }} 
+            <CommonButton
+              title={messages[locale].astsch_title_name_cancel}
+              onPress={this.cancelSearch}
+              extraTextStyle={{ fontSize: FontScale(18), color: Colors.textColor_89_185_226 }}
             />
           </View>
           <View style={styles.scrollContainer}>
