@@ -51,6 +51,7 @@ export const fetchBase = async (
       fetchOptions.body = JSON.stringify(params)
     }
   }
+  console.log('### ', url)
 
   return fetch(url, fetchOptions).then((res: any) => {
     if (!res.ok) {
@@ -96,6 +97,6 @@ export const getVersionInfo = () => cmsFetchBase('GET', '/system')
 export const getProducersInfo = (params: any) => cmsFetchBase('GET', '/eosbp', params)
 export const getTokenDetail = (params: any) => cmsFetchBase('GET', '/token', params)
 
-export const getDappList = (params?: any) => cmsFetchBase('GET', '/eosdapp', params)
+export const getDappList = (params?: any) => cmsFetchBase('GET', '/eosdapp', { ...params, _sort: 'display_priority:desc' })
 export const getEOSAsset = (params: any) => cmsFetchBase('GET', '/eostoken', params)
 export const createEOSAccount = (params: any) => fetchBase('POST', '/registry/wallets/campaign/eoscreation', params)

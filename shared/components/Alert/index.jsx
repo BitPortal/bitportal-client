@@ -5,14 +5,15 @@ export default class AlertModal extends Component {
   UNSAFE_componentWillReceiveProps(nextProps) {
     const delay = this.props.delay || 0
 
-    if (nextProps.message !== this.props.message && nextProps.message) {
+    if (
+      (nextProps.message !== this.props.message && nextProps.message)
+      || (nextProps.subMessage !== this.props.subMessage && nextProps.subMessage)
+    ) {
       this.timer = setTimeout(() => {
         Alert.alert(
           nextProps.message,
-          null,
-          [
-            { text: 'OK', onPress: () => this.props.dismiss() },
-          ],
+          nextProps.subMessage,
+          [{ text: 'OK', onPress: () => this.props.dismiss() }],
           { cancelable: false }
         )
         clearTimeout(this.timer)

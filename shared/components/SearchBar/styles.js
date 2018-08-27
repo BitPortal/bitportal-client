@@ -29,11 +29,9 @@ const styles = StyleSheet.create({
   },
   textInput: {
     color: Colors.textColor_181_181_181,
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'center',
     paddingBottom: 0,
     paddingTop: 0
+    // backgroundColor: 'red'
   }
 })
 

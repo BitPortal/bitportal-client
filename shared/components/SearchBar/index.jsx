@@ -10,7 +10,8 @@ import {
   TextInput,
   Easing,
   Platform,
-  InteractionManager
+  InteractionManager,
+  Keyboard
 } from 'react-native'
 
 import Colors from 'resources/colors'
@@ -46,6 +47,8 @@ export default class SearchBar extends Component {
 
   clearSearch = () => {
     this.props.clearSearch()
+    Keyboard.dismiss()
+    // this.textInput._root.clear()
   }
 
   animate = () => {
@@ -198,12 +201,14 @@ export default class SearchBar extends Component {
               <Text>{'  '}</Text>
               <Animated.View
                 style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  flex: 1,
                   opacity
                 }}
               >
                 <TextInput
+                  ref={(input) => {
+                    this.textInput = input
+                  }}
                   style={[styles.textInput]}
                   placeholder={
                     Platform.OS === 'ios' ? messages[locale].search : null
