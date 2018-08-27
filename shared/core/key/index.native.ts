@@ -23,9 +23,9 @@ import secureStorage from 'utils/secureStorage'
 const { pbkdf2, scrypt } = NativeModules.BPCoreModule
 
 const keccak = (a: any, bits?: any) => {
-  a = Buffer.from(a)
-  if (!bits) bits = 256
-  return createKeccakHash('keccak' + bits).update(a).digest()
+  const buffer = Buffer.from(a)
+  const kbits = bits || 256
+  return createKeccakHash('keccak' + kbits).update(buffer).digest()
 }
 
 const decipherBuffer = (decipher: any, data: any) => {
@@ -147,13 +147,13 @@ export const encrypt = async (input: string, password: string, opts: { origin?: 
     version: 1,
     id: uuidv4({ random }),
     crypto: {
+      kdf,
+      kdfparams,
       ciphertext: ciphertext.toString('hex'),
       cipherparams: {
         iv: iv.toString('hex')
       },
       cipher: opts.cipher || 'aes-128-ctr',
-      kdf,
-      kdfparams,
       mac: mac.toString('hex')
     }
   }
@@ -215,11 +215,7 @@ export const getMasterSeedFromEntropy = async (entropy: string) => {
 export const getMasterSeed = async (mnemonicPhrase: string) => {
   let phrase
 
-  if (mnemonicPhrase) {
-    phrase = mnemonicPhrase
-  } else {
-    phrase = await bip39.generateMnemonic()
-  }
+  phrase = mnemonicPhrase || (await bip39.generateMnemonic())
 
   assert(bip39.validateMnemonic(phrase), 'Invalid mnemonic phrase!')
   const entropy = bip39.mnemonicToEntropy(phrase)

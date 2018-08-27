@@ -56,7 +56,7 @@ export default class NewBanner extends PureComponent {
   render() {
     const { bannerData } = this.props
     const banners = bannerData.toJS()
-    if (!banners || banners.length < 1) return null
+    if (!banners || banners.length < 1) { return null }
     return (
       <View style={styles.container}>
         <Swiper

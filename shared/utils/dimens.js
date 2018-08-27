@@ -11,7 +11,7 @@ export const isIphoneX = () => {
 }
 
 export const ifIphoneX = (iphoneXStyle, regularStyle) => {
-  if (isIphoneX()) return iphoneXStyle
+  if (isIphoneX()) { return iphoneXStyle }
   return regularStyle
 }
 

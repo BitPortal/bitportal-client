@@ -10,7 +10,7 @@ export const normalizeMemo = (value: any, previousValue: any) => (value && (!/(\
 
 export const normalizePasswordText = (value: any, previousValue: any) => (value && ((value.trim().length <= 32 && !/[^\x00-\xff]/.test(value.trim())) ? value.trim() : previousValue))
 
-export const normalizeNickNameText = (value: any, previousValue: string) => (value.split('').reduce((s: any, x: any) => (/[\u4e00-\u9fa5]/.test(x) ? s += 2 : s += 1), 0) > 20 ? previousValue : value.trim())
+export const normalizeNickNameText = (value: any, previousValue: string) => (value.split('').reduce((s: any, x: any) => (/[\u4e00-\u9fa5]/.test(x) ? s + 2 : s + 1), 0) > 20 ? previousValue : value.trim())
 
 export const normalizeTradePassword = (value: any, previousValue: any) => (value && ((/^\d+$/.test(value) && value.length <= 6) ? value.trim() : previousValue))
 

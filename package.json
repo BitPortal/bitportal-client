@@ -32,7 +32,7 @@
     "cover": "nyc --reporter=lcov --reporter=text --reporter=html --require babel-register --extension .js npm test",
     "lint": "npm run lint:js && npm run lint:ts",
     "lint:js": "eslint --ext .js --ext .jsx server shared test --fix",
-    "lint:ts": "tslint --project .",
+    "lint:ts": "tslint --project . --fix",
     "tsc": "tsc"
   },
   "dependencies": {

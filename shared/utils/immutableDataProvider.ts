@@ -48,8 +48,8 @@ export default class ImmutableDataProvider extends DataProvider {
     return this._firstIndexToProcessImmutable
   }
 
-  //No need to override this one
-  //If you already know the first row where rowHasChanged will be false pass it upfront to avoid loop
+  // No need to override this one
+  // If you already know the first row where rowHasChanged will be false pass it upfront to avoid loop
   public cloneWithRows(newData: any, firstModifiedIndex?: number): ImmutableDataProvider {
     const dp = new ImmutableDataProvider(this.rowHasChanged, this.getStableId)
     const newSize = newData.size

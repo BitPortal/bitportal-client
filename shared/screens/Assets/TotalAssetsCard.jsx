@@ -113,8 +113,7 @@ export default class TotalAssetsCard extends Component {
 
   extraColor = (available, limit) => {
     const colorObj = { color: Colors.textColor_255_76_118 }
-    if (available && limit) return available / limit < 0.1 ? colorObj : {}
-    else return {}
+    if (available && limit) { return available / limit < 0.1 ? colorObj : {} } else { return {} }
   }
 
   switchDisplayTotal = async () => {

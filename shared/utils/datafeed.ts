@@ -135,11 +135,12 @@ export class Datafeeds {
       return response.json()
     }).then((data: any) => {
       let nodata = false
+      let newData = data
       if (new Date(rangeStartDate * 1000) < new Date(1511691808000)) {
         nodata = true
-        data = []
+        newData = []
       }
-      const bars = data
+      const bars = newData
       onDataCallback(bars,  { noData: nodata })
     }).catch((arg: any) => {
       console.warn(['getBars(): HTTP error', arg])
