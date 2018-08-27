@@ -3,7 +3,7 @@ import { all, select, call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import { reset } from 'redux-form/immutable'
 import * as actions from 'actions/eosAccount'
-import { getEOSBalanceRequested } from 'actions/balance'
+import { getEOSBalanceRequested, getEOSBalanceSucceeded } from 'actions/balance'
 import { createClassicWalletSucceeded } from 'actions/wallet'
 import  { setSelected } from 'actions/producer'
 import { votedProducersSelector, eosCoreLiquidBalanceSelector } from 'selectors/eosAccount'
@@ -178,11 +178,13 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
 }
 
 function* getEOSAccountSucceeded(action: Action<GetEOSAccountResult>) {
+  if (!action.payload) return
+
   const votedProducers = yield select((state: RootState) => votedProducersSelector(state))
   if (votedProducers) yield put(setSelected(votedProducers))
 
   const balanceInfo = yield select((state: RootState) => eosCoreLiquidBalanceSelector(state))
-  const eosAccountName = action.payload.eosAccountName
+  const eosAccountName = action.payload.account_name
 
   if (eosAccountName && balanceInfo) {
     yield put(getEOSBalanceSucceeded({ eosAccountName, balanceInfo: balanceInfo.toJS() }))

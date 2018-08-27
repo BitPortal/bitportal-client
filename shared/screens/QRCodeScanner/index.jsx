@@ -62,7 +62,7 @@ export default class Scanner extends Component {
 
     if (qrInfo && eosAssetBalance) {
       const token = qrInfo.token
-      const index = eosAssetBalance.findIndex((v: any) => v.get('symbol') === token)
+      const index = eosAssetBalance.findIndex(v => v.get('symbol') === token)
 
       if (index !== -1) {
         this.props.actions.setActiveAsset(eosAssetBalance.get(index))

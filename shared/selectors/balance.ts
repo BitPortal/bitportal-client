@@ -31,7 +31,7 @@ export const eosTokenBalanceSelector = createSelector(
 export const selectedEOSTokenBalanceSelector = createSelector(
   eosTokenBalanceSelector,
   selectedEOSAssetSelector,
-  (eosTokenBalance: string, selectedEOSAsset: any) => selectedEOSAsset.map((v: any) => {
+  (eosTokenBalance: any, selectedEOSAsset: any) => selectedEOSAsset.map((v: any) => {
     if (eosTokenBalance) {
       const contract = v.get('contract')
       const index = eosTokenBalance.findIndex((v: any) => v.get('contract') === contract)
@@ -57,5 +57,5 @@ export const eosAssetBalanceSelector = createSelector(
 export const eosTotalAssetBalanceSelector = createSelector(
   eosBalanceSelector,
   eosPriceSelector,
-  (eosBalance: string, eosPrice: any) => (eosBalance && eosPrice) ? (+eosBalance.get('balance') * +eosPrice) : 0
+  (eosBalance: any, eosPrice: any) => (eosBalance && eosPrice) ? (+eosBalance.get('balance') * +eosPrice) : 0
 )
