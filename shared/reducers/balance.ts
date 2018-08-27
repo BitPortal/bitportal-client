@@ -35,9 +35,9 @@ export default handleActions({
             const index = v.findIndex((v: any) => v.get('contract') === balanceInfo.contract)
             return index === -1 ? v.push(Immutable.fromJS(balanceInfo)) : v.set(index, Immutable.fromJS(balanceInfo))
           })
-        } else {
-          return v.set(eosAccountName, Immutable.fromJS([balanceInfo]))
         }
+
+        return v.set(eosAccountName, Immutable.fromJS([balanceInfo]))
       })
   },
   [actions.getEOSAssetBalanceFailed] (state, action) {

@@ -1,6 +1,5 @@
-import Immutable from 'immutable'
+import Immutable, { Map } from 'immutable'
 import { createSelector } from 'reselect'
-import { Map } from 'immutable'
 
 const walletSelector = (state: RootState) => state.wallet.get('data')
 const accountSelector = (state: RootState) => state.eosAccount
