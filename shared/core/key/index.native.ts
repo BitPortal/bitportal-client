@@ -302,7 +302,7 @@ export const getEOSWifsByInfo = async (password: string, accountInfo: any, check
   const wifs = []
 
   for (const checkPermission of checkPermissions) {
-    const currentPermission = permissions.filter((item: any) => item.perm_name === checkPermission.toLowerCase())
+    const currentPermission = permissions.filter((item: any) => item.perm_name == checkPermission.toLowerCase())
     assert(currentPermission.length && currentPermission[0].required_auth && currentPermission[0].required_auth.keys && currentPermission[0].required_auth.keys.length, 'Current permission dose not exist!')
 
     const publicKeys = currentPermission[0].required_auth.keys
