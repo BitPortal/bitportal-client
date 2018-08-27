@@ -3,7 +3,6 @@ import Colors from 'resources/colors'
 import {
   FontScale,
   SCREEN_WIDTH,
-  SCREEN_HEIGHT,
   TAB_BAR_HEIGHT
 } from 'utils/dimens'
 

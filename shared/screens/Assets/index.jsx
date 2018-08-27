@@ -5,7 +5,6 @@ import {
   Text,
   View,
   ScrollView,
-  InteractionManager,
   TouchableHighlight
 } from 'react-native'
 import { Navigation } from 'react-native-navigation'
@@ -96,7 +95,7 @@ export default class Assets extends Component {
 
   checkAssetList = () => {
     // Umeng analytics
-    onEventWithLabel(ASSETS_ADD_TOKEN, "资产 - 添加token资产")
+    onEventWithLabel(ASSETS_ADD_TOKEN, '资产 - 添加token资产')
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.AvailableAssets',
@@ -109,7 +108,7 @@ export default class Assets extends Component {
 
   checkAsset = (item) => {
     // Umeng analytics
-    onEventWithLabel(ASSETS_TOKEN_DETAIL, "资产 - token资产详情")
+    onEventWithLabel(ASSETS_TOKEN_DETAIL, '资产 - token资产详情')
     this.props.actions.setActiveAsset(item)
     Navigation.push(this.props.componentId, {
       component: {
@@ -120,7 +119,7 @@ export default class Assets extends Component {
 
   displayReceiceQRCode = () => {
     // Umeng analytics
-    onEventWithLabel(ASSETS_QR, "资产 - 二维码 / 收款")
+    onEventWithLabel(ASSETS_QR, '资产 - 二维码 / 收款')
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.ReceiveQRCode',
@@ -159,7 +158,7 @@ export default class Assets extends Component {
 
   checkResourcesDetails = () => {
     // Umeng analytics
-    onEventWithLabel(ASSETS_EOS_RESOURCE, "资产 - EOS资源管理")
+    onEventWithLabel(ASSETS_EOS_RESOURCE, '资产 - EOS资源管理')
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.Resources'
@@ -269,14 +268,14 @@ export default class Assets extends Component {
                     Title={<FormattedMessage id="asset_title_name_ast" />}
                     onPress={this.checkAssetList}
                   />
-                 )}
+                )}
                 {eosAssetBalance && (
-                   <BalanceList
+                <BalanceList
                      data={eosAssetBalance}
                      eosPrice={eosPrice}
                      onPress={this.checkAsset}
-                   />
-                 )}
+                />
+                )}
               </ScrollView>
             </View>
           )}

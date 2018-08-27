@@ -57,7 +57,7 @@ export default class Scanner extends Component {
   onSuccess = (e) => {
     const qrInfo = parseEOSQrString(e.data)
     // Umeng analytics
-    onEventWithMap(ASSETS_SCAN, qrInfo||{})
+    onEventWithMap(ASSETS_SCAN, qrInfo || {})
     const eosAssetBalance = this.props.eosAssetBalance
 
     if (qrInfo && eosAssetBalance) {

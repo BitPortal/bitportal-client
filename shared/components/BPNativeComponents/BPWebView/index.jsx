@@ -46,9 +46,8 @@ export default class BPWebView extends Component {
     }
   }
 
-  state = { 
-    currentUrl: undefined, 
-    canGoBack: false 
+  state = {
+    canGoBack: false
   }
 
   share = () => {
@@ -92,7 +91,7 @@ export default class BPWebView extends Component {
       .catch(err => console.error('An error occurred', err))
   }
 
-  goBack = () => this.state.canGoBack ? this.webview.goBack() : Navigation.pop(this.props.componentId)
+  goBack = () => (this.state.canGoBack ? this.webview.goBack() : Navigation.pop(this.props.componentId))
 
   goHome = () => Navigation.pop(this.props.componentId)
 
@@ -114,9 +113,8 @@ export default class BPWebView extends Component {
   renderLoading = () => <Loading />
 
   onNavigationStateChange = (navState) => {
-    this.setState({ 
-      currentUrl: navState.url,
-      canGoBack: navState.canGoBack 
+    this.setState({
+      canGoBack: navState.canGoBack
     })
   }
 

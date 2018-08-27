@@ -13,7 +13,6 @@ import * as dAppActions from 'actions/dApp'
 import { connect } from 'react-redux'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { parsedDappListSelector } from 'selectors/dApp'
-
 import Colors from 'resources/colors'
 import Images from 'resources/images'
 import styles from './styles'

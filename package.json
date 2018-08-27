@@ -30,8 +30,9 @@
     "desktop": "electron static/desktop/index.html",
     "test": "NODE_ENV=test mocha --icu-data-dir=/usr/local/lib/node_modules/full-icu --require babel-register --require babel-polyfill --require \"raf/polyfill\" --require test/helpers/setup.js --recursive",
     "cover": "nyc --reporter=lcov --reporter=text --reporter=html --require babel-register --extension .js npm test",
-    "eslint": "eslint --ext .js --ext .jsx server shared test --fix",
-    "tslint": "tslint --project .",
+    "lint": "npm run lint:js && npm run lint:ts",
+    "lint:js": "eslint --ext .js --ext .jsx server shared test --fix",
+    "lint:ts": "tslint --project .",
     "tsc": "tsc"
   },
   "dependencies": {

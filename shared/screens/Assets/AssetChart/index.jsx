@@ -75,7 +75,7 @@ export default class AssetChart extends Component {
 
   send = () => {
     // Umeng analytics
-    onEventWithLabel(ASSETS_TOKEN_SEND, "资产 - token资产详情 - 发送")
+    onEventWithLabel(ASSETS_TOKEN_SEND, '资产 - token资产详情 - 发送')
     this.props.actions.setActiveAsset(this.props.activeAsset)
     Navigation.push(this.props.componentId, {
       component: {
@@ -86,7 +86,7 @@ export default class AssetChart extends Component {
 
   receive = () => {
     // Umeng analytics
-    onEventWithLabel(ASSETS_TOKEN_RECEIVE, "资产 - token资产详情 - 接收")
+    onEventWithLabel(ASSETS_TOKEN_RECEIVE, '资产 - token资产详情 - 接收')
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.ReceiveQRCode',
@@ -99,7 +99,7 @@ export default class AssetChart extends Component {
 
   checkTransactionRecord = (transactionInfo) => {
     // Umeng analytics
-    onEventWithLabel(ASSETS_TRX_RECORD, "资产 - 资产详情 - 交易记录")
+    onEventWithLabel(ASSETS_TRX_RECORD, '资产 - 资产详情 - 交易记录')
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.TransactionRecord',
@@ -131,11 +131,9 @@ export default class AssetChart extends Component {
     })
   }
 
-  rowRenderer = (type, item) => {
-    return (
-      <RecordItem key={item.get('account_action_seq')} item={item} onPress={this.checkTransactionRecord} eosAccountName={this.props.eosAccountName} />
-    )
-  }
+  rowRenderer = (type, item) => (
+    <RecordItem key={item.get('account_action_seq')} item={item} onPress={this.checkTransactionRecord} eosAccountName={this.props.eosAccountName} />
+  )
 
   renderFooter = () => {
     const { loaded, hasMore, locale } = this.props
@@ -160,7 +158,7 @@ export default class AssetChart extends Component {
   }
 
   render() {
-    const { locale, activeAsset, eosPrice, hasMore, loading, loaded, eosAccountName } = this.props
+    const { locale, activeAsset, eosPrice, loading, loaded } = this.props
     const { transferHistory } = this.state
 
     return (

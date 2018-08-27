@@ -87,9 +87,9 @@ export default class Voting extends Component {
 
   submitVoting = (password) => {
     // Umeng analytics
-    onEventWithMap(BP_VOTING, { producers: selected.toJS(), eosAccountName })
     const eosAccountName = this.props.eosAccountName
     const selected = this.props.selected
+    onEventWithMap(BP_VOTING, { producers: selected.toJS(), eosAccountName })
     this.props.actions.votingRequested({ producers: selected.toJS(), eosAccountName, password })
   }
 
@@ -131,7 +131,7 @@ export default class Voting extends Component {
 
   onRowPress = (producer) => {
     // Umeng analytics
-    onEventWithLabel(BP_INFO, "节点详情")
+    onEventWithLabel(BP_INFO, '节点详情')
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.ProducerDetails',
