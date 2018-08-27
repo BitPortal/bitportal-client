@@ -1,11 +1,10 @@
 import { call, put, takeEvery, select } from 'redux-saga/effects'
-import { Action } from 'redux-actions'
 import * as api from 'utils/api'
 import * as actions from 'actions/eosAsset'
 import { selectedEOSAssetSelector } from 'selectors/eosAsset'
 import storage from 'utils/storage'
 
-function* getEOSAssetRequested(action: Action<GetEOSAssetParams>) {
+function* getEOSAssetRequested() {
   try {
     const data = yield call(api.getEOSAsset, {})
     yield put(actions.getEOSAssetSucceeded(data))

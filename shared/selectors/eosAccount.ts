@@ -1,6 +1,5 @@
-import Immutable from 'immutable'
+import Immutable, { Map } from 'immutable'
 import { createSelector } from 'reselect'
-import { Map } from 'immutable'
 
 const walletSelector = (state: RootState) => state.wallet.get('data')
 const accountSelector = (state: RootState) => state.eosAccount
@@ -105,7 +104,7 @@ export const ramAvailablePercentSelector = createSelector(
 
 export const eosCoreLiquidBalanceSelector = createSelector(
   eosAccountSelector,
-  (eosAccount: number) => {
+  (eosAccount: any) => {
     const core_liquid_balance = eosAccount.getIn(['data', 'core_liquid_balance'])
 
     if (core_liquid_balance && typeof core_liquid_balance === 'string') {

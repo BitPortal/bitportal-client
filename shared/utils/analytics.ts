@@ -14,11 +14,11 @@ const onEventWithLabel = (eventId: string, eventLabel: string) => (
 )
 
 const onEventWithMap = (eventId: string, eventData: object) => (
-  UMAnalyticsModule.onEventWithMap(eventId, Object.assign(eventData, { date }))
+  UMAnalyticsModule.onEventWithMap(eventId, {...eventData,  date})
 )
 
 const onEventWithMapAndCount = (eventId: string, eventData: object, eventNum: string) => (
-  UMAnalyticsModule.onEventWithMapAndCount(eventId, Object.assign(eventData, { date }), eventNum)
+  UMAnalyticsModule.onEventWithMapAndCount(eventId, {...eventData,  date}, eventNum)
 )
 
 // track event:
@@ -26,7 +26,7 @@ const onEventWithMapAndCount = (eventId: string, eventData: object, eventNum: st
 const onEventTrack = (eventName: string) => UMAnalyticsModule.track(eventName)
 
 const onEventTrackWithMap = (eventName: string, property: object) => (
-  UMAnalyticsModule.trackWithMap(eventName, Object.assign(property, { date }))
+  UMAnalyticsModule.trackWithMap(eventName, {...property,  date})
 )
 
 export {

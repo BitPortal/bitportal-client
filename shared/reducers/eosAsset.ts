@@ -20,7 +20,7 @@ export default handleActions(
       return state.set('loaded', true).set('loading', false)
         .set('data', Immutable.fromJS(action.payload))
     },
-    [actions.getEOSAssetFaild] (state, action) {
+    [actions.getEOSAssetFailed] (state, action) {
       return state.set('loaded', true).set('loading', false)
         .set('error', action.payload)
     },

@@ -68,7 +68,7 @@ function* getEOSAssetBalanceListRequested(action: Action<GetAssetBalanceListPara
     const eos = yield call(initEOS, useCreationServer ? { httpEndpoint: BITPORTAL_API_EOS_URL } : {})
 
     const selectedEOSAssetList = yield select((state: RootState) => selectedEOSAssetSelector(state))
-    const data = yield all(selectedEOSAssetList.toJS().map((selectedEOSAsset: string) => call(eos.getCurrencyBalance, { code: selectedEOSAsset.contract, account: eosAccountName })))
+    const data = yield all(selectedEOSAssetList.toJS().map((selectedEOSAsset: { contract: string }) => call(eos.getCurrencyBalance, { code: selectedEOSAsset.contract, account: eosAccountName })))
 
     const balanceInfo = data.map((item: any, index: number) => {
       const blockchain = 'EOS'

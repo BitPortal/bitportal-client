@@ -21,7 +21,7 @@ import messages from './messages'
 import styles from './styles'
 
 export const errorMessages = (error, messages) => {
-  if (!error) return null
+  if (!error) { return null }
 
   const message = typeof error === 'object' ? error.message : error
 
@@ -170,7 +170,7 @@ export default class Voting extends Component {
 
   componentWillUnmount() {
     const { votedProducers } = this.props
-    if (votedProducers) this.props.actions.setSelected(votedProducers)
+    if (votedProducers) { this.props.actions.setSelected(votedProducers) }
   }
 
   render() {

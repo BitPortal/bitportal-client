@@ -43,8 +43,7 @@ export default class PrivateKeyCreation extends Component {
   }
 
   changeAccountName = (accountName) => {
-    if (accountName === 'meon') this.setState({ isAccountVaild: false })
-    else this.setState({ isAccountVaild: true })
+    if (accountName === 'meon') { this.setState({ isAccountVaild: false }) } else { this.setState({ isAccountVaild: true }) }
   }
 
   changePrivateKey = () => {

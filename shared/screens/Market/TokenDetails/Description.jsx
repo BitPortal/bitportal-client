@@ -24,13 +24,11 @@ export default class Description extends Component {
       token.get('description')
       && token.get('description').get(locale)
       && token.get('description').get(locale).length !== 0
-    ) return token.get('description').get(locale)
-    else if (
+    ) { return token.get('description').get(locale) } else if (
       token.get('description')
       && token.get('description').get('en')
       && token.get('description').get('en').length !== 0
-    ) return token.get('description').get('en')
-    else return messages[locale].description_null
+    ) { return token.get('description').get('en') } else { return messages[locale].description_null }
   }
 
   render() {

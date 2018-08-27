@@ -105,9 +105,9 @@ export const update = (data, locale) => {
   // const minVersion = data.minVersion
   // return alert(`${calculate(lastVersion)}--${calculate(localVersion)}--${calculate(lastVersion) > calculate(localVersion)}`)
   // if (!isRequired(localVersion, minVersion)) return showNoUpdate(locale)
-  if (!needUpdate(localVersion, lastVersion)) return true
-  if (needUpdate(localVersion, lastVersion) && data.force) return showForceUpdate(data, locale)
-  if (needUpdate(localVersion, lastVersion) && !data.force) return showGoToUpdate(data, locale)
+  if (!needUpdate(localVersion, lastVersion)) { return true }
+  if (needUpdate(localVersion, lastVersion) && data.force) { return showForceUpdate(data, locale) }
+  if (needUpdate(localVersion, lastVersion) && !data.force) { return showGoToUpdate(data, locale) }
   return true
 }
 

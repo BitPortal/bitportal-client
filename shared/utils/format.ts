@@ -27,9 +27,10 @@ const calculateFormatValue = (timeValue: any) => {
 }
 
 export const formatCycleTime = (value: any) => {
-  if (null == value || value == '') return '0.00 μs'
+  if (null === value || value === '') return '0.00 μs'
   const quoteArr = ['μs','ms','s','min','hrs','day']
-  let index = 0, timeValue = parseFloat(value)
+  let index = 0
+  const timeValue = parseFloat(value)
   index = calculateIndex(timeValue)
   const formatValue = calculateFormatValue(timeValue)
   if (formatValue.toString().split('.').length <= 1) {
@@ -40,9 +41,10 @@ export const formatCycleTime = (value: any) => {
 }
 
 export const formatMemorySize = (value: any) => {
-  if (null == value || value == '') return '0.00 byte'
+  if (null === value || value === '') return '0.00 byte'
   const quoteArr = ['byte','KB','MB','GB','TB','PB','EB','ZB','YB']
-  let index = 0, srcSize = parseFloat(value)
+  let index = 0
+  const srcSize = parseFloat(value)
   index = Math.floor(Math.log(srcSize)/Math.log(1024))
   const size = srcSize/Math.pow(1024,index)
   if (size.toString().split('.').length <= 1) {

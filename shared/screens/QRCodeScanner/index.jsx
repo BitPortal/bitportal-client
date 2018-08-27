@@ -62,7 +62,7 @@ export default class Scanner extends Component {
 
     if (qrInfo && eosAssetBalance) {
       const token = qrInfo.token
-      const index = eosAssetBalance.findIndex((v: any) => v.get('symbol') === token)
+      const index = eosAssetBalance.findIndex(v => v.get('symbol') === token)
 
       if (index !== -1) {
         this.props.actions.setActiveAsset(eosAssetBalance.get(index))
@@ -71,8 +71,8 @@ export default class Scanner extends Component {
           const eosAccountName = qrInfo.eosAccountName
           const quantity = qrInfo.amount
 
-          if (eosAccountName) this.props.actions.change('transferAssetsForm', 'toAccount', eosAccountName)
-          if (quantity) this.props.actions.change('transferAssetsForm', 'quantity', quantity)
+          if (eosAccountName) { this.props.actions.change('transferAssetsForm', 'toAccount', eosAccountName) }
+          if (quantity) { this.props.actions.change('transferAssetsForm', 'quantity', quantity) }
 
           Navigation.pop(this.props.componentId)
         } else {
@@ -100,8 +100,7 @@ export default class Scanner extends Component {
         this.setState({ isVisible: true })
         QRDecode.decode(image.path, (error, result) => {
           console.log(`### --${error}--${result}`)
-          if (error) Dialog.alert('请确认所选图片中含有二维码', null, { positiveText: '确定' })
-          else this.onSuccess({ data: result })
+          if (error) { Dialog.alert('请确认所选图片中含有二维码', null, { positiveText: '确定' }) } else { this.onSuccess({ data: result }) }
           this.setState({ isVisible: false })
         })
       })

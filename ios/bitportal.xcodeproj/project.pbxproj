@@ -2684,6 +2684,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
@@ -2727,7 +2728,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.bitportal.wallet;
 				PRODUCT_NAME = bitportal;
-				PROVISIONING_PROFILE = "a8c7f90b-4a0f-42aa-ab96-ce9c51117c0c";
+				PROVISIONING_PROFILE = "f9046d5d-2a84-4160-9f1c-6bc3eb1dcf40";
 				PROVISIONING_PROFILE_SPECIFIER = "wallet ad hoc profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "bitportal-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
@@ -2741,7 +2742,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -2785,7 +2786,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.bitportal.wallet;
 				PRODUCT_NAME = bitportal;
-				PROVISIONING_PROFILE = "7352a1df-afe9-475e-abba-e48689b733c9";
+				PROVISIONING_PROFILE = "f9046d5d-2a84-4160-9f1c-6bc3eb1dcf40";
 				PROVISIONING_PROFILE_SPECIFIER = "wallet ad hoc profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "bitportal-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
