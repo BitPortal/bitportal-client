@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   container: {
     height: SCREEN_HEIGHT,
     width: SCREEN_WIDTH,
-    backgroundColor: 'rgba(0, 0, 0, 0.2)'
+    backgroundColor: 'rgba(0, 0, 0, 0)'
   },
   center: {
     alignItems: 'center',
@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
   border: {
     width: 100,
     height: 100,
+    marginTop: -NAV_BAR_HEIGHT,
     borderRadius: 4, 
     padding: 10,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
     left: 0
   },
   backStyle: {
-    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT,
+    height: SCREEN_HEIGHT,
     top: NAV_BAR_HEIGHT
   }
 })

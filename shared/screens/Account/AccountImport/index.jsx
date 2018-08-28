@@ -6,12 +6,14 @@ import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { View, ScrollView } from 'react-native'
 import Colors from 'resources/colors'
 import ImportEOSAccountForm from 'components/Form/ImportEOSAccountForm'
+import Loading from 'components/Loading'
 import messages from './messages'
 import styles from './styles'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.get('locale'),
+    eosAccount: state.eosAccount
   }),
   null,
   null,
@@ -28,7 +30,8 @@ export default class AccountImport extends Component {
   }
 
   render() {
-    const { locale } = this.props
+    const { locale, eosAccount } = this.props
+    const loading = eosAccount.get('loading')
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -42,6 +45,7 @@ export default class AccountImport extends Component {
               <View style={styles.keyboard} />
             </ScrollView>
           </View>
+          <Loading isVisible={loading} />
         </View>
       </IntlProvider>
     )

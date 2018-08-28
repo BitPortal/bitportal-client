@@ -5,12 +5,14 @@ import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import CreateEOSAccountForm from 'components/Form/CreateEOSAccountForm'
 import { IntlProvider } from 'react-intl'
+import Loading from 'components/Loading'
 import messages from './messages'
 import styles from './styles'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.get('locale'),
+    eosAccount: state.eosAccount
   }),
   null,
   null,
@@ -27,7 +29,8 @@ export default class AccountCreation extends Component {
   }
 
   render() {
-    const { locale } = this.props
+    const { locale, eosAccount } = this.props
+    const loading = eosAccount.get('loading')
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -41,6 +44,7 @@ export default class AccountCreation extends Component {
               <View style={styles.keyboard} />
             </ScrollView>
           </View>
+          <Loading isVisible={loading} />
         </View>
       </IntlProvider>
     )
