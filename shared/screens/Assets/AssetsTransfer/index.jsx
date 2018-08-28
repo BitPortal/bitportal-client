@@ -8,12 +8,14 @@ import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import TransferAssetsForm from 'components/Form/TransferAssetsForm'
 import { checkCamera } from 'utils/permissions'
+import Loading from 'components/Loading'
 import styles from './styles'
 import messages from './messages'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.get('locale'),
+    transfer: state.transfer
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -73,8 +75,8 @@ export default class AssetsTransfer extends Component {
   }
 
   render() {
-    const { locale } = this.props
-
+    const { locale, transfer } = this.props
+    const loading = transfer.get('loading')
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -89,6 +91,7 @@ export default class AssetsTransfer extends Component {
               <View style={styles.keyboard} />
             </ScrollView>
           </View>
+          <Loading isVisible={loading} />
         </View>
       </IntlProvider>
     )
