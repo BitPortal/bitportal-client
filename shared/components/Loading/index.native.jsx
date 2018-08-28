@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     marginTop: -NAV_BAR_HEIGHT,
-    borderRadius: 4, 
+    borderRadius: 4,
     padding: 10,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     alignItems: 'center',
@@ -34,9 +34,8 @@ const styles = StyleSheet.create({
 })
 
 export default class Loading extends Component {
-
   render () {
-    const { disabledBorder, extraStyle, isVisible, availableBack, backdropOpacity, text } = this.props
+    const { disabledBorder, extraStyle, isVisible, availableBack, text } = this.props
     const borderStyle = disabledBorder ? {} : styles.border
     const bgStyle = availableBack ? {} : styles.backStyle
     if (!isVisible) return null

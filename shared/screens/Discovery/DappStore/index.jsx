@@ -17,7 +17,6 @@ import { eosAccountNameSelector } from 'selectors/eosAccount'
 import Alert from 'components/Alert'
 import {
   injectIntl,
-  FormattedMessage,
   IntlProvider,
   defineMessages
 } from 'react-intl'

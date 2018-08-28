@@ -96,7 +96,7 @@ export default class Profile extends Component {
     // Umeng analytics
     onEventWithLabel(HELP_CENTER, '帮助中心')
 
-    const locale = this.props.locale == 'zh' ? `${this.props.locale}/` : ''
+    const locale = this.props.locale === 'zh' ? `${this.props.locale}/` : ''
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.BPWebView',
