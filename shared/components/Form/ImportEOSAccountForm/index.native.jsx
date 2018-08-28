@@ -143,7 +143,7 @@ export default class ImportEOSAccountForm extends Component {
               </Text>
             </Text>
           </View>
-          <SubmitButton disabled={disabled} loading={loading} onPress={handleSubmit(this.submit)} text={<FormattedMessage id="import_button_name_nxt" />} />
+          <SubmitButton disabled={disabled} onPress={handleSubmit(this.submit)} text={<FormattedMessage id="import_button_name_nxt" />} />
           <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearEOSAccountError} />
         </FormContainer>
       </IntlProvider>
