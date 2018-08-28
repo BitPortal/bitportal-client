@@ -37,10 +37,10 @@ export default class Loading extends Component {
   render () {
     const { disabledBorder, extraStyle, isVisible, availableBack, backdropOpacity, text } = this.props
     const borderStyle = disabledBorder ? {} : styles.border
-    const availableBack = availableBack ? styles.backStyle : {}
+    const bgStyle = availableBack ? {} : styles.backStyle
     if (!isVisible) return null
     return (
-      <View style={[styles.container, styles.center, styles.positionStyle, extraStyle]}>
+      <View style={[styles.container, styles.center, styles.positionStyle, bgStyle, extraStyle]}>
         <View style={borderStyle}>
           <ActivityIndicator size="small" color="white" />
           {text && <Text style={{ color: 'white', marginTop: 10 }}>{text}</Text>}
