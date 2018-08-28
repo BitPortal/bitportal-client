@@ -16,7 +16,7 @@ const checkCamera = () => new Promise((resolve) => {
         resolve(checkCameraAuthorized(response))
       })
     } else if (response === 'denied') {
-      Dialog.alert('请前往设置开启摄像权限！')
+      Dialog.permissionAlert()
       resolve(false)
     }
   })

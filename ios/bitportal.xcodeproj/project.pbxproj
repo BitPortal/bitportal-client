@@ -25,6 +25,7 @@
 		13B07FC11A68108700A75B9A /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.mm */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		16E64946D5354C92BAF56AD2 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E378031D0A07409DB9E63E29 /* libRNSVG.a */; };
+		1808822A2135447300321418 /* NativeUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 180882292135447300321418 /* NativeUtils.m */; };
 		181BFEAA2129819400810CE2 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18524C732125544300004FBC /* QBImagePicker.framework */; };
 		181BFEAB2129819400810CE2 /* QBImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18524C732125544300004FBC /* QBImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		181BFEAC2129827600810CE2 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18524C752125544300004FBC /* RSKImageCropper.framework */; };
@@ -739,6 +740,8 @@
 		13D51715EF5C4A4B9ED3B4FB /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/ios/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		174D1F3085FC4F789602B4B5 /* libBVLinearGradient.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libBVLinearGradient.a; sourceTree = "<group>"; };
+		180882282135447300321418 /* NativeUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NativeUtils.h; sourceTree = "<group>"; };
+		180882292135447300321418 /* NativeUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NativeUtils.m; sourceTree = "<group>"; };
 		181BFEAF212994AD00810CE2 /* QBImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = "<group>"; };
 		181BFEB0212994AD00810CE2 /* RSKImageCropper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = "<group>"; };
 		1828482B2125643100F2BE57 /* RCTQRCodeLocalImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTQRCodeLocalImage.xcodeproj; path = "../node_modules/@remobile/react-native-qrcode-local-image/ios/RCTQRCodeLocalImage.xcodeproj"; sourceTree = "<group>"; };
@@ -1106,6 +1109,8 @@
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				180882282135447300321418 /* NativeUtils.h */,
+				180882292135447300321418 /* NativeUtils.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.mm */,
@@ -2635,6 +2640,7 @@
 				3454A42E20D0F9C5009964B2 /* ed25519.c in Sources */,
 				1836E61A2090628000C81AED /* DataExtract.swift in Sources */,
 				1836E6102090628000C81AED /* RNBubbleChartManagerBridge.m in Sources */,
+				1808822A2135447300321418 /* NativeUtils.m in Sources */,
 				1836E6232090628000C81AED /* RNPieChartManagerBridge.m in Sources */,
 				1836E6092090628000C81AED /* RNBarChartView.swift in Sources */,
 				1836E6122090628000C81AED /* CandleDataExtract.swift in Sources */,
