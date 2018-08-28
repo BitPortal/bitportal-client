@@ -1,19 +1,12 @@
 {
   "defaultSeverity": "error",
   "extends": ["tslint:latest", "tslint-react", "tslint-config-airbnb", "tslint-config-prettier"],
-  "jsRules": {},
   "rules": {
     "quotemark": [true, "single", "jsx-double"],
     "semicolon": [true, "never"],
     "interface-name": [true, "never-prefix"],
     "variable-name": [true, "ban-keywords"],
-    "ordered-imports": [
-      true,
-      {
-        "import-sources-order": "any",
-        "named-imports-order": "any"
-      }
-    ],
+    "ordered-imports": [true, { "import-sources-order": "any", "named-imports-order": "any" }],
     "curly": [true, "ignore-same-line"],
     "jsx-no-multiline-js": false,
     "jsx-boolean-value": false,
@@ -37,7 +30,13 @@
     "no-implicit-dependencies": false,
     "space-in-parens": false,
     "no-return-await": false,
-    "no-else-after-return": [true, "allow-else-if"]
+    "no-else-after-return": false,
+    "no-increment-decrement": false
   },
-  "rulesDirectory": []
+  "linterOptions": {
+    "exclude": [
+      "**/*.js",
+      "**/*.jsx"
+    ]
+  }
 }

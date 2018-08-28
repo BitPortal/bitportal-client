@@ -69,8 +69,8 @@ export default class AssetsTransfer extends Component {
       const eosAccountName = qrInfo.eosAccountName
       const quantity = qrInfo.amount
 
-      if (eosAccountName) this.props.actions.change('transferAssetsForm', 'toAccount', eosAccountName)
-      if (quantity) this.props.actions.change('transferAssetsForm', 'quantity', quantity)
+      if (eosAccountName) { this.props.actions.change('transferAssetsForm', 'toAccount', eosAccountName) }
+      if (quantity) { this.props.actions.change('transferAssetsForm', 'quantity', quantity) }
     }
   }
 

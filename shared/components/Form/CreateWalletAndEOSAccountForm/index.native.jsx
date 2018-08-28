@@ -10,7 +10,7 @@ import * as walletActions from 'actions/wallet'
 import Alert from 'components/Alert'
 
 export const errorMessages = (error) => {
-  if (!error) return null
+  if (!error) { return null }
 
   const message = typeof error === 'object' ? error.message : error
 

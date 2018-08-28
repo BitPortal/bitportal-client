@@ -14,7 +14,7 @@ import styles from './styles'
 import messages from './messages'
 
 export const errorMessages = (error, messages) => {
-  if (!error) return null
+  if (!error) { return null }
 
   const message = typeof error === 'object' ? error.message : error
 

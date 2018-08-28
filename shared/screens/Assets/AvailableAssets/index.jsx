@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Colors from 'resources/colors'
-import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
+import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { Text, View, Switch, Image, RefreshControl } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { bindActionCreators } from 'redux'

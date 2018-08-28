@@ -34,12 +34,12 @@ export function asyncComponent(getComponent) {
     load() {
       AsyncComponent.loadComponent()
         .then((Component) => {
-          if (this.mounted) this.setState({ Component })
+          if (this.mounted) { this.setState({ Component }) }
         })
     }
 
     UNSAFE_componentWillMount() {
-      if (!this.state.Component) this.load()
+      if (!this.state.Component) { this.load() }
     }
 
     componentDidMount() {

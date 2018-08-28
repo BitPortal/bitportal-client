@@ -18,7 +18,7 @@ import messages from './messages'
 import styles from './styles'
 
 export const errorMessages = (error, messages) => {
-  if (!error) return null
+  if (!error) { return null }
 
   const message = typeof error === 'object' ? error.message : error
 
@@ -65,7 +65,7 @@ export default class AccountList extends Component {
 
   resetPassword = () => {
     // Umeng analutics
-    onEventWithLabel(WALLET_MGT_RESET_PW, "管理钱包 - 重置密码")
+    onEventWithLabel(WALLET_MGT_RESET_PW, '管理钱包 - 重置密码')
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.ResetPassword'
@@ -75,7 +75,7 @@ export default class AccountList extends Component {
 
   exportAccount = (password) => {
     // Umeng analutics
-    onEventWithLabel(WALLET_MGT_EXPORT, "管理钱包 - 导出私钥")
+    onEventWithLabel(WALLET_MGT_EXPORT, '管理钱包 - 导出私钥')
     this.props.actions.exportEOSKeyRequested({
       password,
       componentId: this.props.componentId,
@@ -87,7 +87,7 @@ export default class AccountList extends Component {
 
   logout = (password) => {
     // Umeng analutics
-    onEventWithLabel(WALLET_MGT_LOGOUT, "管理钱包 - 登出")
+    onEventWithLabel(WALLET_MGT_LOGOUT, '管理钱包 - 登出')
     this.props.actions.logoutRequested({
       password,
       componentId: this.props.componentId,

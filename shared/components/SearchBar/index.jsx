@@ -1,18 +1,21 @@
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { IntlProvider, FormattedMessage } from 'react-intl'
+import { IntlProvider } from 'react-intl'
 import {
   View,
   Animated,
   TouchableOpacity,
   Text,
   TextInput,
-  Easing
+  Easing,
+  Platform,
+  InteractionManager,
+  Keyboard
 } from 'react-native'
 
 import Colors from 'resources/colors'
-import { FontScale, SCREEN_WIDTH } from 'utils/dimens'
+import { SCREEN_WIDTH } from 'utils/dimens'
 import messages from './messages'
 import styles from './styles'
 
@@ -29,17 +32,11 @@ import styles from './styles'
 export default class SearchBar extends Component {
   state = {
     expanded: false,
-    height: undefined,
     translateX: new Animated.Value(0),
     searchBoxColor: new Animated.Value(0),
     wrapperColor: new Animated.Value(0),
     opacity: new Animated.Value(0),
     containerWidth: new Animated.Value(0)
-  }
-
-  getHeight = (event) => {
-    const { height } = event.nativeEvent.layout
-    this.setState({ height })
   }
 
   toggleExpanded = () => {
@@ -50,9 +47,12 @@ export default class SearchBar extends Component {
 
   clearSearch = () => {
     this.props.clearSearch()
+    Keyboard.dismiss()
+    // this.textInput._root.clear()
   }
 
   animate = () => {
+    const handle = InteractionManager.createInteractionHandle()
     const { expanded } = this.state
     this.state.translateX.setValue(expanded ? 1 : 0)
     this.state.searchBoxColor.setValue(expanded ? 1 : 0)
@@ -120,7 +120,7 @@ export default class SearchBar extends Component {
             easing: Easing.ease
           })
         ])
-      ]).start()
+      ]).start(() => InteractionManager.clearInteractionHandle(handle))
   }
 
   render() {
@@ -141,89 +141,95 @@ export default class SearchBar extends Component {
       outputRange: [SCREEN_WIDTH / 1.5, SCREEN_WIDTH]
     })
     const { styleProps, locale } = this.props
-    const { expanded, opacity } = this.state
+    const { opacity } = this.state
 
     return (
       <IntlProvider messages={messages[locale]}>
-        <View
-          onLayout={(event) => {
-            this.getHeight(event)
-          }}
+        <Animated.View
+          style={[
+            styles.container,
+            {
+              width: containerWidth
+            }
+          ]}
         >
           <Animated.View
             style={[
-              styles.container,
-              { width: containerWidth, height: this.state.height }
+              styles.searchWrapper,
+              {
+                backgroundColor: wrapperColor
+              }
             ]}
           >
-            <Animated.View
-              style={[
-                styles.searchWrapper,
-                {
-                  backgroundColor: wrapperColor
-                }
-              ]}
-            >
-              <Animated.View style={{ opacity }}>
-                <TouchableOpacity
-                  onPress={() => {
-                    this.toggleExpanded()
-                    this.clearSearch()
-                    this.animate()
-                  }}
-                  style={{ paddingHorizontal: 20 }}
-                >
-                  <Ionicons
-                    name="md-arrow-back"
-                    size={24}
-                    color={Colors.textColor_181_181_181}
-                  />
-                </TouchableOpacity>
-              </Animated.View>
-
-              <Animated.View
-                style={[
-                  styles.searchBox,
-                  styleProps,
-                  {
-                    width: translateX,
-                    backgroundColor: searchBoxColor,
-                    borderColor: searchBoxColor
-                  }
-                ]}
+            <Animated.View style={{ opacity }}>
+              <TouchableOpacity
+                onPress={() => {
+                  this.toggleExpanded()
+                  this.clearSearch()
+                  this.animate()
+                }}
+                style={{ paddingHorizontal: 20 }}
               >
                 <Ionicons
-                  name="ios-search"
-                  onPress={() => {
-                    this.toggleExpanded()
-                    this.animate()
-                  }}
+                  name="md-arrow-back"
                   size={24}
                   color={Colors.textColor_181_181_181}
                 />
-                <Text>{'  '}</Text>
-                <Animated.View
-                  style={{
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    opacity
-                  }}
-                >
-                  <TextInput
-                    style={[styles.textInput]}
-                    placeholder={messages[locale].search}
-                    placeholderTextColor={Colors.textColor_181_181_181}
-                    numberOfLines={1}
-                    onChangeText={text => this.props.onChangeText(text)}
-                    autoCapitalize="characters"
-                  />
-                </Animated.View>
-              </Animated.View>
-              <View />
+              </TouchableOpacity>
             </Animated.View>
+
+            <Animated.View
+              style={[
+                styles.searchBox,
+                styleProps,
+                {
+                  width: translateX,
+                  backgroundColor: searchBoxColor,
+                  borderColor: searchBoxColor
+                }
+              ]}
+            >
+              <Ionicons
+                name="ios-search"
+                onPress={() => {
+                  this.toggleExpanded()
+                  this.animate()
+                }}
+                size={24}
+                color={Colors.textColor_181_181_181}
+              />
+              <Text>{'  '}</Text>
+              <Animated.View
+                style={{
+                  flex: 1,
+                  opacity
+                }}
+              >
+                <TextInput
+                  ref={(input) => {
+                    this.textInput = input
+                  }}
+                  style={[styles.textInput]}
+                  placeholder={
+                    Platform.OS === 'ios' ? messages[locale].search : null
+                  }
+                  placeholderTextColor={Colors.textColor_181_181_181}
+                  numberOfLines={1}
+                  onChangeText={text => this.props.onChangeText(text)}
+                  autoCapitalize="characters"
+                  underlineColorAndroid="transparent"
+                />
+              </Animated.View>
+            </Animated.View>
+            <View />
           </Animated.View>
-        </View>
+        </Animated.View>
       </IntlProvider>
+      // <View>
+      //   <View style={styles.container}>
+      //     <Text>TEST</Text>
+      //   </View>
+      // </View>
     )
   }
 }

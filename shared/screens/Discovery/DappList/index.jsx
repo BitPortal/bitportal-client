@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {
   View,
-  ScrollView,
-  FlatList,
   VirtualizedList,
   TouchableHighlight,
   Text,
@@ -11,7 +9,6 @@ import {
 } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, {
-  CommonTitle,
   CommonButton
 } from 'components/NavigationBar'
 import { bindActionCreators } from 'redux'

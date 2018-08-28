@@ -12,9 +12,9 @@ const ListItem = ({ item, onPress, eosPrice, isAssetHidden }) => (
     <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.bgColor_30_31_37 }]}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         {
-          item.get('symbol') === 'EOS' 
-          ? <Image source={Images.EOSIcon} style={styles.image} /> 
-          : <Image source={item.get('icon_url') ? { uri: item.get('icon_url') } : Images.coin_logo_default} style={styles.image} /> 
+          item.get('symbol') === 'EOS'
+            ? <Image source={Images.EOSIcon} style={styles.image} />
+            : <Image source={item.get('icon_url') ? { uri: item.get('icon_url') } : Images.coin_logo_default} style={styles.image} />
         }
         <Text style={styles.text24}>{item.get('symbol')}</Text>
       </View>
@@ -53,14 +53,13 @@ export default class BalanceList extends Component {
     return (
       <View>
         {
-          data.map((item, index) =>
-            <ListItem
+          data.map((item, index) => <ListItem
               key={index}
               item={item}
               isAssetHidden={isAssetHidden}
               eosPrice={eosPrice}
               onPress={onPress}
-            />
+          />
           )
         }
       </View>

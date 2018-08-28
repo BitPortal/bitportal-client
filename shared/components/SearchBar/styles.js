@@ -1,18 +1,14 @@
 import { StyleSheet, Platform } from 'react-native'
-import {
-  FontScale,
-  SCREEN_WIDTH,
-  SCREEN_HEIGHT,
-  TAB_BAR_HEIGHT
-} from 'utils/dimens'
 import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     zIndex: 0,
-    right: 0
-    // backgroundColor: 'red'
+    right: 0,
+    height: '100%',
+    // backgroundColor: 'red',
+    justifyContent: 'center'
   },
   searchWrapper: {
     flex: 1,
@@ -28,13 +24,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 2,
     marginRight: 5,
-    marginVertical: 2
+    marginVertical: Platform.OS === 'ios' ? 2 : 10,
+    alignItems: 'center'
   },
   textInput: {
     color: Colors.textColor_181_181_181,
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'center'
+    paddingBottom: 0,
+    paddingTop: 0
+    // backgroundColor: 'red'
   }
 })
 

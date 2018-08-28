@@ -2,7 +2,7 @@ import Images from 'resources/images'
 
 export const Mediafax = [
   'Facebook', 'Kakao', 'Telegram', 'Twitter',
-  'Weibo', "WechatOffical", 'WechatService'
+  'Weibo', 'WechatOffical', 'WechatService'
 ]
 
 export const MediafaxIcons = {
@@ -22,5 +22,5 @@ export const MediafaxUrls = {
   Twitter: 'https://twitter.com/bit_portal',
   Facebook: 'https://www.facebook.com/BitPortal',
   Weibo: 'https://weibo.com/u/6541262254',
-  WechatOffical: "@BitPortal币通"
+  WechatOffical: '@BitPortal币通'
 }

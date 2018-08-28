@@ -1,8 +1,16 @@
 {
   "zh": {
-    "more_apps": "更多"
+    "more_apps": "更多",
+    /* "third_party":
+      "标题：您将访问第三方DApp 《%s》内容：提示：您将访问第三方DApp《%s》，该页面及其功能由《%s》直接向您提供，您将同意并遵守由该第三方DApp《%s》的《隐私政策》及《用户协议》。《%s》将直接并独立的向您承担相应责任。", */
+    "no_login": "请先创建或导入钱包",
+    "test": { "id": "test", "defaultMessage": "test" }
   },
   "en": {
-    "more_apps": "More"
+    "more_apps": "More",
+    /* "third_party":
+      " You will visit the third party DApp <%s>. This page and its functions are provided directly to you by <%s>. You will agree to and comply with the <Privacy Policy> and <User Agreement> of the third party DApp <%s>.  <%s> will be directly and independently accountable to you.", */
+    "no_login": "Please create or import an EOS account",
+    "test": { "id": "test", "defaultMessage": "test" }
   }
 }

@@ -17,16 +17,9 @@ import messages from './messages'
   null,
   { withRef: true }
 )
-
 export default class Details extends Component {
   render() {
-    const {
-      circulating_supply,
-      total_supply,
-      ...rest
-    } = this.props.token.toJS()
-    const { locale } = this.props
-
+    const { locale, token } = this.props
     return (
       <IntlProvider messages={messages[locale]}>
         <AccordionPanel title={messages[locale].details}>
@@ -36,40 +29,41 @@ export default class Details extends Component {
               marginLeft: 4
             }}
           >
-            {!circulating_supply
-            && !total_supply
-            && Object.keys(rest).length === 0 ? (
+            {/* {!token.get('circulating_supply') && !token.get('total_supply') ? (
+              // && Object.keys(rest).length === 0
               <Text style={styles.text14}>{messages[locale].details_null}</Text>
-              ) : null}
-            {circulating_supply && (
+            ) : null} */}
+            {token.get('circulating_supply') && (
               <View style={[styles.spaceBetween, { marginTop: 10 }]}>
                 <Text style={styles.text14}>
                   <FormattedMessage id="circulating_supply" />
                 </Text>
                 <Text style={styles.text14}>
-                  <FormattedNumber value={circulating_supply} />
+                  <FormattedNumber value={token.get('circulating_supply')} />
                 </Text>
               </View>
             )}
-            {total_supply && (
+            {token.get('total_supply') && (
               <View style={[styles.spaceBetween, { marginTop: 10 }]}>
                 <Text style={styles.text14}>
                   <FormattedMessage id="total_supply" />
                 </Text>
                 <Text style={styles.text14}>
-                  <FormattedNumber value={total_supply} />
+                  <FormattedNumber value={token.get('total_supply')} />
                 </Text>
               </View>
             )}
-            {Object.keys(rest).map(
-              item => (MARKET_DETAIL_KEYS.includes(item) ? (
-                <View style={[styles.spaceBetween, { marginTop: 10 }]}>
-                  <Text style={styles.text14}>
-                    <FormattedMessage id={item} />
-                  </Text>
-                  <Text style={styles.text14}>{rest[item]}</Text>
-                </View>
-              ) : null)
+            {token.keySeq().map(
+              item => (item !== 'total_supply'
+                && item !== 'circulating_supply'
+                && MARKET_DETAIL_KEYS.includes(item) ? (
+                  <View style={[styles.spaceBetween, { marginTop: 10 }]}>
+                    <Text style={styles.text14}>
+                      <FormattedMessage id={item} />
+                    </Text>
+                    <Text style={styles.text14}>{token.get(item)}</Text>
+                  </View>
+                ) : null)
             )}
           </View>
         </AccordionPanel>

@@ -45,31 +45,17 @@ export default class CoinInfoCard extends Component {
   calculatePriceChangeAverage() {
     const { ticker } = this.props
     let result = 0
-    ticker.toJS().forEach((item) => {
-      result += item.price_change_percent
+    ticker.forEach((item) => {
+      result += item.get('price_change_percent')
     })
-    result /= ticker.toJS().length
+    result /= ticker.count()
     this.setState({ priceChangeAverage: result })
   }
 
   calculateListedExchangeinUSD() {}
 
   render() {
-    const {
-      name_en,
-      name_zh,
-      tags,
-      market_cap,
-      volume_24h
-    } = this.props.token.toJS()
-
-    // const { price_change_percent } = this.props.ticker.toJS();
-    const { locale } = this.props
-    const {
-      price_last,
-      quote_asset,
-      base_asset
-    } = this.props.currentPair.toJS()
+    const { token, currentPair, locale } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -78,21 +64,29 @@ export default class CoinInfoCard extends Component {
             <Image style={styles.icon} source={Images.coin_logo_default} />
             <View style={{ marginLeft: 10 }}>
               <Text style={[styles.text18, { fontWeight: 'bold' }]}>
-                {locale === 'zh' ? name_zh && name_zh : name_en && name_en}
+                {locale === 'zh'
+                  ? token.get('name_zh') && token.get('name_zh').trim()
+                  : token.get('name_en') && token.get('name_en')}
               </Text>
-              <Text style={[styles.text16, {}]}>{base_asset}</Text>
+              <Text style={[styles.text16, {}]}>
+                {currentPair.get('base_asset')}
+              </Text>
             </View>
           </View>
           <View style={[styles.spaceBetween, { paddingVertical: 5 }]}>
             <Text style={styles.text18}>
               {
                 <FormattedNumber
-                  value={price_last}
-                  maximumFractionDigits={ASSET_FRACTION[quote_asset]}
-                  minimumFractionDigits={ASSET_FRACTION[quote_asset]}
+                  value={currentPair.get('price_last')}
+                  maximumFractionDigits={
+                    ASSET_FRACTION[currentPair.get('quote_asset')]
+                  }
+                  minimumFractionDigits={
+                    ASSET_FRACTION[currentPair.get('quote_asset')]
+                  }
                 />
               }
-              {` ${quote_asset}`}
+              {` ${currentPair.get('quote_asset')}`}
             </Text>
             <View
               style={[
@@ -122,25 +116,34 @@ export default class CoinInfoCard extends Component {
             <Text
               style={[styles.text14, { color: Colors.textColor_142_142_147 }]}
             >
-              {market_cap && <FormattedMessage id="market_cap" />}
-              {market_cap && ` ${market_cap}`}
+              {token.get('market_cap') && <FormattedMessage id="market_cap" />}
+              {token.get('market_cap') && ` ${token.get('market_cap')}`}
             </Text>
           </View>
           <View style={[styles.spaceBetween, { marginTop: 4 }]}>
             <Text
               style={[styles.text14, { color: Colors.textColor_142_142_147 }]}
             >
-              {volume_24h && <FormattedMessage id="volume_24h" />}
-              {volume_24h && ` ${volume_24h}`}
+              {token.get('volume_24h') && <FormattedMessage id="volume_24h" />}
+              {token.get('volume_24h') && ` ${token.get('volume_24h')}`}
             </Text>
           </View>
           <View style={[styles.row, { paddingVertical: 10 }]}>
-            {locale === 'zh' && tags && tags.zh && tags.zh.length !== 0
-              ? tags.zh.map(item => <Tag tag={item} />)
-              : tags
-                && tags.en
-                && tags.en.length !== 0
-                && tags.en.map(item => <Tag key={item} tag={item} />)}
+            {locale === 'zh'
+            && token.get('tags')
+            && token.get('tags').get('zh')
+            && token.get('tags').get('zh').length !== 0
+              ? token
+                .get('tags')
+                .get('zh')
+                .map(item => <Tag tag={item} />)
+              : token.get('tags')
+                && token.get('tags').get('en')
+                && token.get('tags').get('en').length !== 0
+                && token
+                  .get('tags')
+                  .get('en')
+                  .map(item => <Tag key={item} tag={item} />)}
           </View>
         </View>
       </IntlProvider>

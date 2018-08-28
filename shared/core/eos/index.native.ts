@@ -43,7 +43,7 @@ const getProducers = (params: any) => {
   })
 }
 
-const sortProducers = (a: any, b: any) => parseInt(Eos.modules.format.encodeName(a, false)) - parseInt(Eos.modules.format.encodeName(b, false))
+const sortProducers = (a: any, b: any) => parseInt(Eos.modules.format.encodeName(a, false), 10) - parseInt(Eos.modules.format.encodeName(b, false), 10)
 
 const getPermissionsByKey = (publickKey: string, accountInfo: any) => {
   assert(accountInfo.permissions && accountInfo.permissions.length, 'EOS account permissions dose not exist!')

@@ -44,6 +44,7 @@ declare interface RootState {
   contact?: any
   eosNode?: any
   eosAsset?: any
+  dApp?: any
 }
 
 declare interface FetchOptions {

@@ -4,6 +4,7 @@ declare interface TransferParams {
   toAccount: string
   quantity: string
   symbol: string
+  contract: string
   memo?: string
   componentId?: string
 }

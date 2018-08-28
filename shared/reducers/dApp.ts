@@ -12,7 +12,7 @@ const initialState = Immutable.fromJS({
 
 export default handleActions(
   {
-    [actions.getDappListRequested](state, action) {
+    [actions.getDappListRequested](state) {
       return state.set('loading', true)
     },
     [actions.getDappListSucceeded](state, action) {

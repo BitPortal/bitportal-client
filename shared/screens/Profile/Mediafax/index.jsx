@@ -33,7 +33,7 @@ export default class MediafaxScreen extends Component {
 
   changePage = (index, item) => {
     // Umeng analitics
-    onEventWithLabel(SOCIAL_MEDIA. item)
+    onEventWithLabel(SOCIAL_MEDIA.item)
     if (validateUrl(MediafaxUrls[item])) {
       Navigation.push(this.props.componentId, {
         component: {
