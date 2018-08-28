@@ -156,7 +156,6 @@ export default class DelegateBandwidthForm extends Component {
             />
             <SubmitButton
               disabled={disabled}
-              loading={loading}
               onPress={handleSubmit(this.submit)}
               text={this.state.activeForm === 'Delegate' ? messages[locale].dlgt_popup_title_dlgt : messages[locale].dlgt_popup_title_undlgt}
             />

@@ -210,7 +210,6 @@ export default class CreateEOSAccountForm extends Component {
           <Text onPress={this.importAccount} style={[styles.text14, { marginVertical: 20, color: Colors.textColor_89_185_226 }]}>
             {messages[locale].act_btn_title_import}
           </Text>
-          <Loading  isVisible={loading} />
           <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearEOSAccountError} />
         </FormContainer>
       </IntlProvider>

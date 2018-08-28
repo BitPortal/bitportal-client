@@ -154,7 +154,6 @@ export default class TradeRAMForm extends Component {
             />}
             <SubmitButton
               disabled={disabled}
-              loading={loading}
               onPress={handleSubmit(this.submit)}
               text={this.state.activeForm === 'Buy' ? messages[locale].tra_popup_title_buy : messages[locale].tra_popup_title_sell}
             />

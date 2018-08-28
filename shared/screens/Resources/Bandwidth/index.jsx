@@ -7,6 +7,7 @@ import { FormattedMessage, IntlProvider } from 'react-intl'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import DelegateBandwidthForm from 'components/Form/DelegateBandwidthForm'
 import { formatMemorySize } from 'utils/format'
+import Loading from 'components/Loading'
 import styles from './styles'
 import messages from './messages'
 import Progress from '../Progress'
@@ -15,6 +16,7 @@ import Progress from '../Progress'
   state => ({
     locale: state.intl.get('locale'),
     wallet: state.wallet,
+    bandwidth: state.bandwidth,
     eosAccount: eosAccountSelector(state)
   }),
   null,
@@ -32,11 +34,13 @@ export default class Memory extends Component {
   }
 
   render() {
-    const { locale, eosAccount } = this.props
+    const { locale, eosAccount, bandwidth } = this.props
     const activeEOSAccount = eosAccount.get('data')
     const percent = activeEOSAccount.getIn(['net_limit', 'available']) / activeEOSAccount.getIn(['net_limit', 'max'])
     const refund = activeEOSAccount.get('refund_request') ? activeEOSAccount.getIn(['refund_request', 'net_amount']) : '0.0000 EOS'
-
+    const delegating = bandwidth.get('delegating')
+    const undelegating = bandwidth.get('undelegating')
+    const loading = delegating || undelegating
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -73,6 +77,7 @@ export default class Memory extends Component {
               </View>
             </ScrollView>
           </View>
+          <Loading isVisible={loading} />
         </View>
       </IntlProvider>
     )
