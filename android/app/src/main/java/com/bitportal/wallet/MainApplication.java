@@ -24,6 +24,7 @@ import com.bitportal.wallet.core.BPCorePackage;
 import com.umeng.commonsdk.UMConfigure;
 import com.bitportal.wallet.umeng.RNUMConfigure;
 import com.bitportal.wallet.umeng.DplusReactPackage;
+import com.bitportal.wallet.nativeutils.NativeUtilsPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -63,7 +64,8 @@ public class MainApplication extends NavigationApplication {
       new ReactNativeRestartPackage(),
       new PickerPackage(),
       new RCTQRCodeLocalImagePackage(),
-      new DplusReactPackage()
+      new DplusReactPackage(),
+      new NativeUtilsPackage()
     );
   }
 
