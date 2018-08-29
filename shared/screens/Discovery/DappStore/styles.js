@@ -33,10 +33,19 @@ const styles = StyleSheet.create({
     marginLeft: 10
   },
   dAppButton: {
-    backgroundColor: Colors.bgColor_27_27_26,
-    height: 50,
-    width: 50,
-    borderRadius: 10
+    // backgroundColor: Colors.bgColor_27_27_26,
+    // backgroundColor: 'red',
+    height: 65,
+    width: 65,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  favoriteStar: {
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 0,
+    right: 2
   },
   icon: {
     height: 50,
@@ -51,8 +60,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center'
-    // alignSelf: 'center'
-    // backgroundColor: 'red'
   },
   center: {
     alignItems: 'center',

@@ -112,7 +112,7 @@ class DappElement extends Component {
           }}
         >
           <View style={styles.moreIcon}>
-            <Ionicons name="md-apps" size={50} />
+            <Image style={styles.icon} source={Images.discovery_more} />
           </View>
         </TouchableOpacity>
         <Text style={[styles.title]}>{messages[locale].more_apps}</Text>
@@ -134,6 +134,15 @@ class DappElement extends Component {
                   : Images.coin_logo_default
               }
             />
+            {item.get('selected') ? (
+              <View style={styles.favoriteStar}>
+                <Ionicons
+                  name="md-star"
+                  size={20}
+                  style={{ opacity: 0.9, color: 'yellow' }}
+                />
+              </View>
+            ) : null}
           </TouchableOpacity>
           <Text numberOfLines={1} style={[styles.title]}>
             {item.get('display_name').get(locale)}
