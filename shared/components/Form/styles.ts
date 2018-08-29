@@ -14,8 +14,19 @@ export default EStyleSheet.create({
     flexDirection: 'column',
     backgroundColor: Colors.bgColor_30_31_37
   },
+  searchContainer: {
+    width: '100%',
+    alignItems: 'center',
+    flexDirection: 'column'
+    // margin: 0,
+    // padding: 0
+    // paddingHorizontal: 32,
+    // paddingTop: 20,
+    // backgroundColor: 'red',
+    // flex: 1
+  },
   fieldInput: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    // borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: Colors.textColor_107_107_107,
     flex: 1,
     flexDirection: 'row',
@@ -29,6 +40,14 @@ export default EStyleSheet.create({
     color: Colors.textColor_255_255_238,
     fontSize: FontScale(14),
     paddingLeft: Platform.OS === 'android' ? -4 : 0
+  },
+  searchInput: {
+    color: Colors.textColor_181_181_181,
+    paddingBottom: 0,
+    paddingTop: 0,
+    flex: 1,
+    height: 40
+    // backgroundColor: 'red'
   },
   areaInput: {
     flex: 1,
@@ -53,7 +72,7 @@ export default EStyleSheet.create({
   },
   label: {
     fontSize: FontScale(14),
-    color: Colors.textColor_255_255_238,
+    color: Colors.textColor_255_255_238
   },
   submitButton: {
     marginTop: 3,

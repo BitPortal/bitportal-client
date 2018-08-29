@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, ScrollView } from 'react-native'
+import { View, ScrollView, InteractionManager } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonTitle } from 'components/NavigationBar'
 import { bindActionCreators } from 'redux'
@@ -39,12 +39,14 @@ const PAGE_LENGTH = 10
 )
 export default class Discovery extends Component {
   componentDidMount() {
-    this.props.actions.getNewsListRequested({
-      startAt: 0,
-      limit: PAGE_LENGTH,
-      loadingMore: false
+    InteractionManager.runAfterInteractions(() => {
+      this.props.actions.getNewsListRequested({
+        startAt: 0,
+        limit: PAGE_LENGTH,
+        loadingMore: false
+      })
+      this.props.actions.getDappListRequested({})
     })
-    this.props.actions.getDappListRequested({})
   }
 
   getNewsListData = () => {

@@ -2,11 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
-import {
-  FormContainer,
-  TextField,
-  SubmitButton
-} from 'components/Form'
+import { FormContainer, TextField, SubmitButton } from 'components/Form'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import * as eosAccountActions from 'actions/eosAccount'
@@ -19,9 +15,13 @@ const validate = (values) => {
   const errors = {}
 
   if (!values.get('eosAccountName')) {
-    errors.eosAccountName = <FormattedMessage id="contacts_txtbox_txt_acchint2" />
+    errors.eosAccountName = (
+      <FormattedMessage id="contacts_txtbox_txt_acchint2" />
+    )
   } else if (values.get('eosAccountName').length > 12) {
-    errors.eosAccountName = <FormattedMessage id="contacts_txtbox_txt_acchint" />
+    errors.eosAccountName = (
+      <FormattedMessage id="contacts_txtbox_txt_acchint" />
+    )
   }
 
   if (values.get('note') && values.get('note').length > 64) {
@@ -45,23 +45,27 @@ const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject)
   state => ({
     locale: state.intl.get('locale'),
     eosAccount: eosAccountSelector(state),
-    eosAccountName: formValueSelector('addContactsForm')(state, 'eosAccountName')
+    eosAccountName: formValueSelector('addContactsForm')(
+      state,
+      'eosAccountName'
+    )
   }),
   dispatch => ({
-    actions: bindActionCreators({
-      ...eosAccountActions,
-      ...contactActions
-    }, dispatch)
+    actions: bindActionCreators(
+      {
+        ...eosAccountActions,
+        ...contactActions
+      },
+      dispatch
+    )
   })
 )
-
 @reduxForm({
   form: 'addContactsForm',
   validate,
   asyncValidate,
   asyncBlurFields: ['eosAccountName']
 })
-
 export default class AddContactsForm extends Component {
   submit = (data) => {
     // Umeng analytics

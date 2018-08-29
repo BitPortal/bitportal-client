@@ -54,7 +54,10 @@ const Images = {
   tips: require('./tips.png'),
   coin_logo_default: require('./coin_logo_default.png'),
   help_center: require('./Profile_Help.png'),
-  backup_group: require('./Backup_Group.png')
+  backup_group: require('./Backup_Group.png'),
+  list_add: require('./list_add.png'),
+  list_remove: require('./list_remove.png'),
+  discovery_more: require('./Discovery_more.jpg')
 }
 
 export default Images

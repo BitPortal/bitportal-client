@@ -44,7 +44,7 @@ export default class CoinInfoCard extends Component {
           <Image style={styles.icon} source={Images.coin_logo_default} />
           <View style={{ marginLeft: 10 }}>
             <Text style={[styles.text18, { fontWeight: 'bold' }]}>
-              {locale === 'zh' ? name_zh.trim() || name_en : name_en}
+              {locale === 'zh' ? name_zh || name_en : name_en}
             </Text>
             <Text style={[styles.text16, {}]}>{base_asset}</Text>
           </View>

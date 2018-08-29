@@ -21,11 +21,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderWidth: 1,
     borderRadius: 3,
-    paddingHorizontal: 10,
     paddingVertical: 2,
     marginRight: 5,
     marginVertical: Platform.OS === 'ios' ? 2 : 10,
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'red'
   },
   textInput: {
     color: Colors.textColor_181_181_181,

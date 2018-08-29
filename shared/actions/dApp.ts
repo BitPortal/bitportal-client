@@ -10,3 +10,4 @@ export const getDappListFailed = createAction<ErrorMessage>(
   'dApp/GET_LIST_FAILED'
 )
 export const setSearchTerm = createAction<string>('dApp/SET_SEARCH_TERM')
+export const toggleFavoriteDapp = createAction<string>('dApp/TOGGLE')

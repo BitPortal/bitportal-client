@@ -15,57 +15,35 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { parsedDappListSelector } from 'selectors/dApp'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
 import Alert from 'components/Alert'
-import {
-  injectIntl,
-  IntlProvider,
-  defineMessages
-} from 'react-intl'
-
+import { injectIntl, IntlProvider } from 'react-intl'
 import Colors from 'resources/colors'
 import Images from 'resources/images'
 import styles from './styles'
 import messages from './messages'
-
-const THIRD_PARTY_MESSAGE = defineMessages({
-  title_en: {
-    id: 'title_en',
-    defaultMessage: 'You will visit the third party DApp{app}\n'
-  },
-  subMessage_en: {
-    id: 'third_party_sub_en',
-    defaultMessage:
-      'You will visit the third party DApp{app}. This page and its functions are provided directly to you by {app}. By visiting, you agree to comply with the Privacy Policy and User Agreement of the third party DApp {app}.  {app} will be directly and independently accountable to you.'
-  },
-  title_zh: {
-    id: 'title_zh',
-    defaultMessage: '您将访问第三方DApp {app}\n'
-  },
-  subMessage_zh: {
-    id: 'third_party_sub_zh',
-    defaultMessage:
-      '提示：您将访问第三方DApp{app}，该页面及其功能由{app}直接向您提供，您将同意并遵守由该第三方DApp{app}的《隐私政策》及《用户协议》。{app}将直接并独立的向您承担相应责任。'
-  }
-})
 
 @injectIntl
 class DappElement extends Component {
   state = { message: undefined, subMessage: undefined, alertAction: undefined }
 
   getAlertMessage = (message, params) => {
-    const { locale, intl } = this.props
+    const { intl } = this.props
     if (message === 'third_party') {
       const newMessage = intl.formatMessage(
-        THIRD_PARTY_MESSAGE[`title_${locale}`],
+        { id: 'third_party_title' },
         { ...params }
       )
       const newMessageSub = intl.formatMessage(
-        THIRD_PARTY_MESSAGE[`subMessage_${locale}`],
+        { id: 'third_party_sub' },
         { ...params }
       )
       this.setState({ message: newMessage, subMessage: newMessageSub })
     } else {
       this.setState({ message })
     }
+  }
+
+  clearMessage = () => {
+    this.setState({ message: undefined, subMessage: undefined })
   }
 
   setAlertAction = (alertAction) => {
@@ -79,7 +57,7 @@ class DappElement extends Component {
     } else if (alertAction === 'toUrl') {
       this.toUrl(item)
     }
-    this.setState({ message: '', subMessage: '' })
+    this.clearMessage()
   }
 
   toPage = (item) => {
@@ -122,7 +100,7 @@ class DappElement extends Component {
 
   render() {
     const { item, locale } = this.props
-    return item.type === 'more' ? (
+    return item.get('type') === 'more' ? (
       <View style={styles.dAppWrapper}>
         <TouchableOpacity
           style={[styles.dAppButton, { backgroundColor: 'transparent' }]}
@@ -133,7 +111,7 @@ class DappElement extends Component {
           }}
         >
           <View style={styles.moreIcon}>
-            <Ionicons name="md-apps" size={50} />
+            <Image style={styles.icon} source={Images.discovery_more} />
           </View>
         </TouchableOpacity>
         <Text style={[styles.title]}>{messages[locale].more_apps}</Text>
@@ -155,6 +133,15 @@ class DappElement extends Component {
                   : Images.coin_logo_default
               }
             />
+            {item.get('selected') ? (
+              <View style={styles.favoriteStar}>
+                <Ionicons
+                  name="md-star"
+                  size={20}
+                  style={{ opacity: 0.9, color: 'yellow' }}
+                />
+              </View>
+            ) : null}
           </TouchableOpacity>
           <Text numberOfLines={1} style={[styles.title]}>
             {item.get('display_name').get(locale)}
@@ -164,6 +151,10 @@ class DappElement extends Component {
             subMessage={this.state.subMessage}
             dismiss={() => {
               this.getAlertAction(this.props.item)
+            }}
+            twoButton={item.get('type') === 'link'}
+            onCancel={() => {
+              this.clearMessage()
             }}
           />
         </View>
@@ -194,44 +185,46 @@ export default class DappStore extends PureComponent {
   render() {
     const { locale, componentId, loading, eosAccountName } = this.props
     return (
-      <View style={styles.container}>
-        <View style={styles.listTitle}>
-          <Text
-            style={[styles.text14, { color: Colors.textColor_255_255_238 }]}
-          >
-            Dapp Store
-          </Text>
-        </View>
-        <View style={styles.hairLine} />
-        <ScrollView
-          horizontal={true}
-          scrollEnabled={false}
-          contentContainerStyle={styles.dAppScrollViewContainer}
-        >
-          {loading ? (
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                flex: 1
-              }}
+      <IntlProvider messages={messages[locale]}>
+        <View style={styles.container}>
+          <View style={styles.listTitle}>
+            <Text
+              style={[styles.text14, { color: Colors.textColor_255_255_238 }]}
             >
-              <ActivityIndicator size="large" />
-            </View>
-          ) : (
-            this.props.dAppList.map((item, index) => (
-              <DappElement
-                item={item}
-                key={index}
-                locale={locale}
-                componentId={componentId}
-                eosAccountName={eosAccountName}
-              />
-            ))
-          )}
-        </ScrollView>
-        <View style={[styles.hairLine, { height: 10 }]} />
-      </View>
+              Dapp Store
+            </Text>
+          </View>
+          <View style={styles.hairLine} />
+          <ScrollView
+            horizontal={true}
+            scrollEnabled={false}
+            contentContainerStyle={styles.dAppScrollViewContainer}
+          >
+            {loading ? (
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flex: 1
+                }}
+              >
+                <ActivityIndicator size="large" />
+              </View>
+            ) : (
+              this.props.dAppList.map((item, index) => (
+                <DappElement
+                  item={item}
+                  key={index}
+                  locale={locale}
+                  componentId={componentId}
+                  eosAccountName={eosAccountName}
+                />
+              ))
+            )}
+          </ScrollView>
+          <View style={[styles.hairLine, { height: 10 }]} />
+        </View>
+      </IntlProvider>
     )
   }
 }

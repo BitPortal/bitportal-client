@@ -7,7 +7,9 @@ const initialState = Immutable.fromJS({
   loading: false,
   loaded: false,
   error: null,
-  searchTerm: ''
+  searchTerm: '',
+  favoriteDapps: [],
+  selected: undefined
 })
 
 export default handleActions(
@@ -31,6 +33,27 @@ export default handleActions(
     },
     [actions.setSearchTerm](state, action) {
       return state.set('searchTerm', Immutable.fromJS(action.payload))
+    },
+    [actions.toggleFavoriteDapp](state, action) {
+      console.log('toggle', action.payload)
+      return state
+        .set('selected', action.payload.selected)
+        .update('favoriteDapps', (item: any) => {
+          const name = action.payload.item.get('name')
+          const index = item.findIndex((elem: any) => elem.get('name') === name)
+          if (index === -1) {
+            return item.push(
+              Immutable.fromJS({
+                ...action.payload.item.toJS(),
+                selected: true
+              })
+
+              // .sortBy(
+              //   (v: any) => v.get('display_priority')
+              // )
+            )
+          } else return item.delete(index)
+        })
     }
   },
   initialState
