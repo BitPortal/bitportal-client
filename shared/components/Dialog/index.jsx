@@ -42,7 +42,7 @@ const permissionAlert = () => {
     onPress: () => console.log('Cancel Pressed'),
     style: 'cancel'
   })
-  
+
   buttons.push({
     text: '前往设置',
     onPress: () => nativeUtils.goSettingPermission(),

@@ -15,7 +15,6 @@ RCT_EXPORT_MODULE();
 //跳转系统设置界面
 RCT_EXPORT_METHOD(goSettingPermission)
 {
-  //  RCTLogInfo(@"type: %@", name);
   NSURL *settingUrl = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
   if ([self isNewSystem]) { // 10.0 以上系统
     [[UIApplication sharedApplication] openURL:settingUrl options:@{} completionHandler:^(BOOL success) {
