@@ -2,27 +2,54 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {
   View,
-  VirtualizedList,
   TouchableHighlight,
   Text,
-  Image
+  Image,
+  SectionList,
+  Modal
 } from 'react-native'
 import { Navigation } from 'react-native-navigation'
-import NavigationBar, {
-  CommonButton
-} from 'components/NavigationBar'
+import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { bindActionCreators } from 'redux'
 import * as dAppActions from 'actions/dApp'
-import { searchDappListSelector } from 'selectors/dApp'
+import {
+  searchDappListSelector,
+  sectionedDappListSelector
+} from 'selectors/dApp'
 import { IntlProvider } from 'react-intl'
 import SearchBar from 'components/SearchBar'
+import { SCREEN_WIDTH } from 'utils/dimens'
+import AddRemoveButton from 'components/AddRemoveButton'
+import AddRemoveButtonAnimation from 'components/AddRemoveButton/animation'
 
 import Colors from 'resources/colors'
 import Images from 'resources/images'
 import messages from './messages'
 import styles from './styles'
 
+@connect(
+  null,
+  dispatch => ({
+    actions: bindActionCreators(
+      {
+        ...dAppActions
+      },
+      dispatch
+    )
+  }),
+  null,
+  { withRef: true }
+)
 class DappListItem extends React.PureComponent {
+  toggleFavorite = (item) => {
+    this.props.showModal()
+    this.props.actions.toggleFavoriteDapp({
+      item,
+      selected: item.get('selected')
+    })
+    setTimeout(() => this.props.hideModal(), 500)
+  }
+
   onPress = (item, locale) => {
     if (item.get('type') === 'link' && item.get('url').match(/http/g)) {
       Navigation.push(this.props.componentId, {
@@ -48,9 +75,7 @@ class DappListItem extends React.PureComponent {
   }
 
   render() {
-    // const { display_name, description, icon_url } = this.props.item
     const { item, locale } = this.props
-    console.log('item', this.props.item)
     return (
       <TouchableHighlight
         underlayColor={Colors.hoverColor}
@@ -71,13 +96,18 @@ class DappListItem extends React.PureComponent {
             <Text style={styles.title}>
               {item.get('display_name').get(locale)}
             </Text>
-            {/* <Text numberOfLines={1} style={styles.subTitle}>{subTitle}</Text> */}
             <View style={styles.infoArea}>
               <Text numberOfLines={1} style={styles.subTitle}>
                 {item.get('description').get(locale)}
               </Text>
             </View>
           </View>
+          <AddRemoveButton
+            value={this.props.selected}
+            onValueChange={() => {
+              this.toggleFavorite(item)
+            }}
+          />
         </View>
       </TouchableHighlight>
     )
@@ -89,7 +119,9 @@ class DappListItem extends React.PureComponent {
     locale: state.intl.get('locale'),
     dAppList: searchDappListSelector(state),
     loading: state.dApp.get('loading'),
-    searchTerm: state.dApp.get('searchTerm')
+    searchTerm: state.dApp.get('searchTerm'),
+    dAppSections: sectionedDappListSelector(state),
+    selected: state.dApp.get('selected')
   }),
   dispatch => ({
     actions: bindActionCreators(
@@ -103,17 +135,41 @@ class DappListItem extends React.PureComponent {
   { withRef: true }
 )
 export default class DappList extends Component {
-  renderItem = ({ item }) => {
+  state = { visible: false }
+
+  showModal = () => {
+    this.setState({ visible: true })
+  }
+
+  hideModal = () => {
+    this.setState({ visible: false })
+  }
+
+  renderItem = ({ item, index, section }) => {
     const { locale } = this.props
-    console.log('renderItem', item, locale)
     return (
       <DappListItem
         item={item}
+        selected={item.get('selected')}
         locale={locale}
         componentId={this.props.componentId}
+        showModal={() => {
+          this.showModal()
+        }}
+        hideModal={() => {
+          this.hideModal()
+        }}
       />
     )
   }
+
+  renderSeparator = () => <View style={styles.itemSeperator} />
+
+  renderSectionHeader = ({ section: { title } }) => (
+    <View style={[styles.sectionHeader]}>
+      <Text style={styles.title}>{messages[this.props.locale][title]}</Text>
+    </View>
+  )
 
   onChangeText = (text) => {
     this.props.actions.setSearchTerm(text)
@@ -126,8 +182,8 @@ export default class DappList extends Component {
   }
 
   render() {
-    const { locale, dAppList, loading, searchTerm } = this.props
-    console.log('componentId', this.props.componentId)
+    const { locale, dAppList, loading, searchTerm, dAppSections } = this.props
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -146,7 +202,7 @@ export default class DappList extends Component {
               />
             }
           />
-          <VirtualizedList
+          {/* <VirtualizedList
             style={styles.listContainer}
             data={dAppList}
             keyExtractor={this.keyExtractor}
@@ -162,7 +218,31 @@ export default class DappList extends Component {
             onEndReached={this.props.onEndReached}
             onEndReachedThreshold={-0.1}
             refreshing={loading}
+          /> */}
+          <SectionList
+            renderItem={this.renderItem}
+            keyExtractor={this.keyExtractor}
+            renderSectionHeader={this.renderSectionHeader}
+            sections={dAppSections}
+            ItemSeparatorComponent={this.renderSeparator}
+            onEndReachedThreshold={-0.1}
+            refreshing={loading}
           />
+          <View>
+            <Modal transparent={true} visible={this.state.visible}>
+              <View
+                style={{
+                  // backgroundColor: 'yellow',
+                  width: SCREEN_WIDTH,
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              >
+                <AddRemoveButtonAnimation value={this.props.selected} />
+              </View>
+            </Modal>
+          </View>
         </View>
       </IntlProvider>
     )

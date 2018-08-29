@@ -48,7 +48,7 @@ export default class SearchBar extends Component {
   clearSearch = () => {
     this.props.clearSearch()
     Keyboard.dismiss()
-    // this.textInput._root.clear()
+    this.textInput.clear()
   }
 
   animate = () => {

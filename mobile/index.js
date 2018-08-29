@@ -12,6 +12,7 @@ import { getInitialContact } from 'selectors/contact'
 import { getInitialCurrency } from 'selectors/currency'
 import { getInitialEOSNode } from 'selectors/eosNode'
 import { getInitialEOSAsset } from 'selectors/eosAsset'
+import { getInitialDapp } from 'selectors/dApp'
 import { startSingleApp, startTabBasedApp, registerScreens } from 'navigators'
 import storage from 'utils/storage'
 import Provider from 'components/Provider'
@@ -45,26 +46,37 @@ const runApp = async () => {
     lang = deviceLang.indexOf('zh') !== -1 ? 'zh' : 'en'
   }
   const currency = await storage.getItem('bitportal_currency', true)
-  let symbol, rate
+  let symbol,
+    rate
   if (currency) {
     symbol = currency.symbol
     rate = currency.rate
   }
   const contact = await storage.getItem('bitportal_contact', true)
   const eosNode = await storage.getItem('bitportal_eosNode', true)
-  let activeNode, customNodes
+  let activeNode,
+    customNodes
   if (eosNode) {
     activeNode = eosNode.activeNode
     customNodes = eosNode.customNodes
   }
-  const selectedEOSAsset = await storage.getItem('bitportal_selectedEOSAsset', true)
+  const selectedEOSAsset = await storage.getItem(
+    'bitportal_selectedEOSAsset',
+    true
+  )
+  // const remove = await storage.removeItem('bitportal_favoriteDapps')
+  const storedFavoriteDapps = await storage.getItem(
+    'bitportal_favoriteDapps',
+    true
+  )
 
   const store = configure({
     intl: getInitialLang(lang),
     contact: getInitialContact(contact),
     currency: getInitialCurrency(symbol, rate),
     eosNode: getInitialEOSNode(activeNode, customNodes),
-    eosAsset: getInitialEOSAsset(selectedEOSAsset)
+    eosAsset: getInitialEOSAsset(selectedEOSAsset),
+    dApp: getInitialDapp(storedFavoriteDapps)
   })
 
   registerScreens(store)
@@ -83,7 +95,7 @@ const runApp = async () => {
 }
 
 const setStatusBarStyle = async () => {
-  const statusBarMode = await storage.getItem('bitportal_status_bar') || Colors.statusBarMode
+  const statusBarMode = (await storage.getItem('bitportal_status_bar')) || Colors.statusBarMode
   StatusBar.setHidden(false, 'fade')
   StatusBar.setBarStyle(statusBarMode, true)
 }

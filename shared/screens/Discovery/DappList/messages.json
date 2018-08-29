@@ -1,8 +1,21 @@
 {
   "zh": {
-    "dApp_list": "Dapp List"
+    "dApp_list": "Dapp List",
+    "game": "游戏",
+    "explorer": "浏览器",
+    "tool": "工具",
+    "system": "系统",
+    "news": "资讯",
+    "other": "其他"
   },
+
   "en": {
-    "dApp_list": "Dapp List"
+    "dApp_list": "Dapp List",
+    "game": "Game",
+    "explorer": "Explorer",
+    "tool": "Tools",
+    "system": "System",
+    "news": "News",
+    "other": "Others"
   }
 }

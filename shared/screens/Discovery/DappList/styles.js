@@ -1,6 +1,12 @@
 import { StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
-import { SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, FontScale } from 'utils/dimens'
+import {
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  NAV_BAR_HEIGHT,
+  TAB_BAR_HEIGHT,
+  FontScale
+} from 'utils/dimens'
 
 const styles = StyleSheet.create({
   container: {
@@ -19,12 +25,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.bgColor_30_31_37,
     alignItems: 'center',
     width: SCREEN_WIDTH,
-    height: FontScale(80),
-    marginBottom: 2
+    height: FontScale(80)
+    // marginBottom: 2
   },
   image: {
-    height: 44,
-    width: 44,
+    height: 50,
+    width: 50,
     borderRadius: 4
   },
   right: {
@@ -37,6 +43,10 @@ const styles = StyleSheet.create({
     fontSize: FontScale(15),
     fontWeight: 'bold',
     marginBottom: 5
+  },
+  itemSeperator: {
+    height: 1,
+    width: SCREEN_WIDTH
   },
   subTitle: {
     color: Colors.textColor_149_149_149,
@@ -55,6 +65,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: Colors.bgColor_30_31_37,
     marginBottom: 1
+  },
+  sectionHeader: {
+    width: SCREEN_WIDTH,
+    height: 40,
+    backgroundColor: Colors.bgColor_30_31_37,
+    marginBottom: 1,
+    marginTop: 10,
+    paddingHorizontal: 20,
+    justifyContent: 'center'
   },
   text24: {
     fontSize: FontScale(24),
