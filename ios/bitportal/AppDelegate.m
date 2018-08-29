@@ -16,6 +16,8 @@
 #import "RNUMConfigure.h"
 #import "UMAnalyticsModule.h"
 #import <UMAnalytics/MobClick.h>
+#import "UMPushModule.h"
+#import <UMPush/UMessage.h>
 
 @implementation AppDelegate
 
@@ -33,5 +35,45 @@
   [SplashScreen show];
   return YES;
 }
+
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+  [UMessage setAutoAlert:NO];
+  if([[[UIDevice currentDevice] systemVersion]intValue] < 10){
+    [UMessage didReceiveRemoteNotification:userInfo];
+    completionHandler(UIBackgroundFetchResultNewData);
+  }
+}
+
+//iOS10新增：处理前台收到通知的代理方法
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler{
+  NSDictionary * userInfo = notification.request.content.userInfo;
+  if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+    //应用处于前台时的远程推送接受
+    //关闭U-Push自带的弹出框
+    [UMessage setAutoAlert:NO];
+    //必须加这句代码
+    [UMessage didReceiveRemoteNotification:userInfo];
+    
+  }else{
+    //应用处于前台时的本地推送接受
+  }
+  //当应用处于前台时提示设置，需要哪个可以设置哪一个
+  completionHandler(UNNotificationPresentationOptionSound|UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionAlert);
+}
+
+//iOS10新增：处理后台点击通知的代理方法
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler{
+  NSDictionary * userInfo = response.notification.request.content.userInfo;
+  if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+    //应用处于后台时的远程推送接受
+    //必须加这句代码
+    [UMessage didReceiveRemoteNotification:userInfo];
+    
+  }else{
+    //应用处于后台时的本地推送接受
+  }
+}
+
 
 @end
