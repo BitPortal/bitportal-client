@@ -58,7 +58,7 @@ export const searchDappListSelector = createSelector(
         .includes(searchTerm.toUpperCase()))
   )
 )
-//[{title:category,data:[item1,item2]}]
+// [{title:category,data:[item1,item2]}]
 export const sectionedDappListSelector = createSelector(
   searchDappListSelector,
   (resultsList: any) => {
