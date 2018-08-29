@@ -294,15 +294,20 @@ export default class DappList extends Component {
             onEndReachedThreshold={-0.1}
             refreshing={loading}
           /> */}
-          <SectionList
-            renderItem={this.renderItem}
-            keyExtractor={this.keyExtractor}
-            renderSectionHeader={this.renderSectionHeader}
-            sections={dAppSections}
-            ItemSeparatorComponent={this.renderSeparator}
-            onEndReachedThreshold={-0.1}
-            refreshing={loading}
-          />
+          <View styles={{ backgroundColor: 'red' }}>
+            <SectionList
+              style={styles.listContainer}
+              renderItem={this.renderItem}
+              keyExtractor={this.keyExtractor}
+              renderSectionHeader={this.renderSectionHeader}
+              sections={dAppSections}
+              ItemSeparatorComponent={this.renderSeparator}
+              // onEndReachedThreshold={-0.1}
+              stickySectionHeadersEnabled={false}
+              refreshing={loading}
+            />
+          </View>
+
           <View>
             <Modal transparent={true} visible={this.state.visible}>
               <View

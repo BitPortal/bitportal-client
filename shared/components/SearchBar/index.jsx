@@ -13,12 +13,40 @@ import {
   InteractionManager,
   Keyboard
 } from 'react-native'
+import { Field, reduxForm } from 'redux-form/immutable'
+import { SearchContainer, FormContainer, SearchField } from 'components/Form'
 
 import Colors from 'resources/colors'
 import { SCREEN_WIDTH } from 'utils/dimens'
 import messages from './messages'
 import styles from './styles'
 
+const validate = (values) => {
+  const errors = {}
+
+  // if (!values.get('eosAccountName')) {
+  //   errors.eosAccountName = (
+  //     <FormattedMessage id="contacts_txtbox_txt_acchint2" />
+  //   )
+  // } else if (values.get('eosAccountName').length > 12) {
+  //   errors.eosAccountName = (
+  //     <FormattedMessage id="contacts_txtbox_txt_acchint" />
+  //   )
+  // }
+  //
+  // if (values.get('note') && values.get('note').length > 64) {
+  //   errors.note = <FormattedMessage id="contacts_txtbox_txt_hint" />
+  // }
+
+  return errors
+}
+
+@reduxForm({
+  form: 'addContactsForm',
+  validate
+  // asyncValidate,
+  // asyncBlurFields: ['eosAccountName']
+})
 @connect(
   state => ({
     locale: state.intl.get('locale')
@@ -27,7 +55,6 @@ import styles from './styles'
   null,
   { withRef: true }
 )
-
 //props:locale, onChangeText, clearSearch
 export default class SearchBar extends Component {
   state = {
@@ -48,7 +75,6 @@ export default class SearchBar extends Component {
   clearSearch = () => {
     this.props.clearSearch()
     Keyboard.dismiss()
-    this.textInput.clear()
   }
 
   animate = () => {
@@ -89,7 +115,9 @@ export default class SearchBar extends Component {
             easing: Easing.ease
           })
         ])
-      ]).start()
+      ]).start(() => {
+        InteractionManager.clearInteractionHandle(handle)
+      })
       : Animated.sequence([
         Animated.parallel([
           Animated.timing(this.state.containerWidth, {
@@ -205,7 +233,7 @@ export default class SearchBar extends Component {
                   opacity
                 }}
               >
-                <TextInput
+                {/* <TextInput
                   ref={(input) => {
                     this.textInput = input
                   }}
@@ -218,7 +246,19 @@ export default class SearchBar extends Component {
                   onChangeText={text => this.props.onChangeText(text)}
                   autoCapitalize="characters"
                   underlineColorAndroid="transparent"
-                />
+                /> */}
+                <SearchContainer>
+                  <Field
+                    name="searchField"
+                    component={SearchField}
+                    onChange={text => this.props.onChangeText(text)}
+                    placeholder={
+                      Platform.OS === 'ios' ? messages[locale].search : null
+                    }
+                    placeholderTextColor={Colors.textColor_181_181_181}
+                    numberOfLines={1}
+                  />
+                </SearchContainer>
               </Animated.View>
             </Animated.View>
             <View />

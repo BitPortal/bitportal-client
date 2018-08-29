@@ -54,7 +54,8 @@ export const searchDappListSelector = createSelector(
       : item
         .get('display_name')
         .get(locale)
-        .includes(searchTerm))
+        .toUpperCase()
+        .includes(searchTerm.toUpperCase()))
   )
 )
 //[{title:category,data:[item1,item2]}]
