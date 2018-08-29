@@ -120,7 +120,6 @@ export default class ResetPasswordForm extends Component {
           </Text>
           <SubmitButton
             disabled={disabled}
-            loading={loading}
             onPress={handleSubmit(this.submit)}
             text={<FormattedMessage id="cpwd_button_name_change" />}
           />

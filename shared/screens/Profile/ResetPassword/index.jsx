@@ -5,12 +5,14 @@ import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import ResetPasswordForm from 'components/Form/ResetPasswordForm'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
+import Loading from 'components/Loading'
 import styles from './styles'
 import messages from './messages'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.get('locale'),
+    keystore: state.keystore
   }),
   null,
   null,
@@ -27,8 +29,8 @@ export default class ResetPassword extends Component {
   }
 
   render() {
-    const { locale, componentId } = this.props
-
+    const { locale, keystore, componentId } = this.props
+    const loading = keystore.get('changing')
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -42,6 +44,7 @@ export default class ResetPassword extends Component {
               <View style={styles.keyboard} />
             </ScrollView>
           </View>
+          <Loading isVisible={loading} />
         </View>
       </IntlProvider>
     )

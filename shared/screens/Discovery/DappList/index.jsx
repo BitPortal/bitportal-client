@@ -220,7 +220,7 @@ export default class DappList extends Component {
     this.setState({ visible: false })
   }
 
-  renderItem = ({ item, index, section }) => {
+  renderItem = ({ item }) => {
     const { locale } = this.props
     return (
       <DappListItem
@@ -257,7 +257,7 @@ export default class DappList extends Component {
   }
 
   render() {
-    const { locale, dAppList, loading, searchTerm, dAppSections } = this.props
+    const { locale, loading, searchTerm, dAppSections } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>

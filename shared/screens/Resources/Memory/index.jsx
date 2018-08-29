@@ -15,6 +15,7 @@ import { ramPriceSelector } from 'selectors/ram'
 import TradeRAMForm from 'components/Form/TradeRAMForm'
 import * as ramActions from 'actions/ram'
 import { formatMemorySize } from 'utils/format'
+import Loading from 'components/Loading'
 import styles from './styles'
 import messages from './messages'
 import Progress from '../Progress'
@@ -23,6 +24,7 @@ import Progress from '../Progress'
   state => ({
     locale: state.intl.get('locale'),
     wallet: state.wallet,
+    ram: state.ram,
     ramQuota: ramQuotaSelector(state),
     ramAvailable: ramAvailableSelector(state),
     ramAvailablePercent: ramAvailablePercentSelector(state),
@@ -65,8 +67,10 @@ export default class Memory extends Component {
   }
 
   render() {
-    const { locale, ramQuota, ramAvailable, ramAvailablePercent, ramPrice } = this.props
-
+    const { locale, ram, ramQuota, ramAvailable, ramAvailablePercent, ramPrice } = this.props
+    const buying = ram.get('buying')
+    const selling = ram.get('selling')
+    const loading = buying || selling
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -111,6 +115,7 @@ export default class Memory extends Component {
               </View>
             </ScrollView>
           </View>
+          <Loading isVisible={loading} />
         </View>
       </IntlProvider>
     )

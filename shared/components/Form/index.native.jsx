@@ -79,12 +79,8 @@ export const TextField = ({
 
 export const SearchField = ({
   input: { onChange, ...restInput },
-  meta: { touched, error },
-  label,
   keyboardType,
   rightContent,
-  tips,
-  info,
   placeholder
 }) => (
   <FieldItem>

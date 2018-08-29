@@ -12,7 +12,7 @@ const initialState = Immutable.fromJS({
 
 export default handleActions({
   [actions.transferRequested] (state) {
-    return state.set('loading', true)
+    return state.set('loading', true).set('showModal', false)
   },
   [actions.transferSucceeded] (state, action) {
     return state.set('loaded', true).set('loading', false)

@@ -7,21 +7,19 @@ import {
   Animated,
   TouchableOpacity,
   Text,
-  TextInput,
   Easing,
   Platform,
   InteractionManager,
   Keyboard
 } from 'react-native'
 import { Field, reduxForm } from 'redux-form/immutable'
-import { SearchContainer, FormContainer, SearchField } from 'components/Form'
-
+import { SearchContainer, SearchField } from 'components/Form'
 import Colors from 'resources/colors'
 import { SCREEN_WIDTH } from 'utils/dimens'
 import messages from './messages'
 import styles from './styles'
 
-const validate = (values) => {
+const validate = () => {
   const errors = {}
 
   // if (!values.get('eosAccountName')) {

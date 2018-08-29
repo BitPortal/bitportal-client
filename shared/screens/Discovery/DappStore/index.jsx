@@ -16,7 +16,6 @@ import { parsedDappListSelector } from 'selectors/dApp'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
 import Alert from 'components/Alert'
 import { injectIntl, IntlProvider } from 'react-intl'
-
 import Colors from 'resources/colors'
 import Images from 'resources/images'
 import styles from './styles'

@@ -95,11 +95,13 @@ export default class Profile extends Component {
   goForHelp = () => {
     // Umeng analytics
     onEventWithLabel(HELP_CENTER, '帮助中心')
+
+    const locale = this.props.locale === 'zh' ? `${this.props.locale}/` : ''
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.BPWebView',
         passProps: {
-          uri: `${BITPORTAL_WEBSITE_URL}/${this.props.locale}/help/?webview=true`,
+          uri: `${BITPORTAL_WEBSITE_URL}/${locale}help/?webview=true`,
           title: messages[this.props.locale].prf_sec_titile_help
         }
       }

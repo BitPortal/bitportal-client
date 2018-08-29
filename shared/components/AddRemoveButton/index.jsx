@@ -1,10 +1,6 @@
 import React, { PureComponent } from 'react'
-import { View, TouchableOpacity, Image } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import { FontScale } from 'utils/dimens'
-import Colors from 'resources/colors'
+import { TouchableOpacity, Image } from 'react-native'
 import Images from 'resources/images'
-
 import styles from './styles'
 
 export default class AddRemoveButton extends PureComponent {

@@ -1,9 +1,6 @@
 import React, { PureComponent } from 'react'
-import { View, Animated, Easing, InteractionManager } from 'react-native'
+import { Animated, InteractionManager } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
-import Colors from 'resources/colors'
-import { SCREEN_WIDTH, FontScale } from 'utils/dimens'
 import styles from './styles'
 
 const AnimatedIcon = Animated.createAnimatedComponent(Ionicons)

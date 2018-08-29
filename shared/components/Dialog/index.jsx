@@ -1,5 +1,6 @@
-import { AlertIOS, Alert } from 'react-native'
+import { AlertIOS, Alert, NativeModules } from 'react-native'
 
+const nativeUtils = NativeModules.NativeUtils
 const actionNegative = 'actionNegative'
 const actionPositive = 'actionPositive'
 
@@ -32,6 +33,24 @@ const alert = (title = '', content = null, options = {}) => new Promise((resolve
 
   Alert.alert(title, content, buttons)
 })
+
+const permissionAlert = () => {
+  const buttons = []
+
+  buttons.push({
+    text: '稍候前往',
+    onPress: () => console.log('Cancel Pressed'),
+    style: 'cancel'
+  })
+
+  buttons.push({
+    text: '前往设置',
+    onPress: () => nativeUtils.goSettingPermission(),
+    style: 'default'
+  })
+
+  Alert.alert('提示', '权限受限', buttons)
+}
 
 const prompt = (title = '', content = null, options = {}) => new Promise((resolve) => {
   const buttons = []
@@ -68,6 +87,7 @@ const prompt = (title = '', content = null, options = {}) => new Promise((resolv
 export default {
   alert,
   prompt,
+  permissionAlert,
   actionPositive,
   actionNegative
 }

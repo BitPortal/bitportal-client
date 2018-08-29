@@ -202,7 +202,6 @@ export default class TransferAssetsForm extends Component {
             memo={this.state.memo}
             symbol={this.state.symbol}
             transfer={this.showPrompt}
-            loading={transfer.get('loading')}
           />
           <Prompt
             isVisible={this.state.showPrompt}
