@@ -42,16 +42,7 @@ export default handleActions(
           const name = action.payload.item.get('name')
           const index = item.findIndex((elem: any) => elem.get('name') === name)
           if (index === -1) {
-            return item.push(
-              Immutable.fromJS({
-                ...action.payload.item.toJS(),
-                selected: true
-              })
-
-              // .sortBy(
-              //   (v: any) => v.get('display_priority')
-              // )
-            )
+            return item.push(action.payload.item.set('selected', true))
           } else return item.delete(index)
         })
     }

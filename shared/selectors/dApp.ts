@@ -63,8 +63,8 @@ export const sectionedDappListSelector = createSelector(
   searchDappListSelector,
   (resultsList: any) => {
     console.log(111)
-    const sections = []
-    resultsList.forEach((item: any, i: any) => {
+    const sections: any[] = []
+    resultsList.forEach((item: any) => {
       const sectionIndex = sections.findIndex(
         e => e.title === item.get('category')
       )
