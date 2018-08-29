@@ -217,15 +217,40 @@ export default class SearchBar extends Component {
                 }
               ]}
             >
-              <Ionicons
-                name="ios-search"
-                onPress={() => {
-                  this.toggleExpanded()
-                  this.animate()
-                }}
-                size={24}
-                color={Colors.textColor_181_181_181}
-              />
+              <View
+                style={
+                  {
+                    // backgroundColor: 'red',
+                    // // marginHorizontal: 10,
+                    // alignItems: 'flex-start',
+                    // justifyContent: 'flex-start'
+                    // backgroundColor: 'red',
+                    // paddingHorizontal: 10,
+                    // flex: 1
+                  }
+                }
+              >
+                <Ionicons
+                  name="ios-search"
+                  onPress={() => {
+                    this.toggleExpanded()
+                    this.animate()
+                  }}
+                  size={24}
+                  color={Colors.textColor_181_181_181}
+                  style={{
+                    // flex: 1,
+                    // backgroundColor: 'red',
+                    paddingHorizontal: 10,
+                    paddingRight: 10,
+                    // paddingRight: 10
+                    // alignItems: 'center',
+                    // justifyContent: 'center'
+                    // alignItems: 'flex-start',
+                    justifyContent: 'flex-start'
+                  }}
+                />
+              </View>
               <Text>{'  '}</Text>
               <Animated.View
                 style={{
