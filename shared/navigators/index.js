@@ -152,7 +152,6 @@ export const startTabBasedApp = (locale) => {
               children: [
                 {
                   component: {
-                    id: 'BitPortalAssets',
                     name: 'BitPortal.Assets',
                     options: {
                       topBar: {
@@ -184,7 +183,6 @@ export const startTabBasedApp = (locale) => {
               children: [
                 {
                   component: {
-                    id: 'BitPortalMarket',
                     name: 'BitPortal.Market',
                     options: {
                       topBar: {
@@ -216,7 +214,6 @@ export const startTabBasedApp = (locale) => {
               children: [
                 {
                   component: {
-                    id: 'BitPortalDiscovery',
                     name: 'BitPortal.Discovery',
                     options: {
                       topBar: {
@@ -248,7 +245,6 @@ export const startTabBasedApp = (locale) => {
               children: [
                 {
                   component: {
-                    id: 'BitPortalProfile',
                     name: 'BitPortal.Profile',
                     options: {
                       topBar: {
@@ -282,43 +278,5 @@ export const startTabBasedApp = (locale) => {
 }
 
 export const setBottomTabsLocale = (locale) => {
-  if (Platform.OS === 'ios') {
-    Navigation.mergeOptions('BitPortalAssets', {
-      bottomTab: {
-        title: messages[locale].general_tab_name_ast,
-        icon: Images.asset,
-        selectedIcon: Images.asset_press,
-        testID: 'BITPORTAL_ASSETS'
-      }
-    })
-
-    Navigation.mergeOptions('BitPortalMarket', {
-      bottomTab: {
-        title: messages[locale].general_tab_name_mkt,
-        icon: Images.market,
-        selectedIcon: Images.market_press,
-        testID: 'BITPORTAL_MARKET'
-      }
-    })
-
-    Navigation.mergeOptions('BitPortalDiscovery', {
-      bottomTab: {
-        title: messages[locale].general_tab_name_dscv,
-        icon: Images.discovery,
-        selectedIcon: Images.discovery_press,
-        testID: 'BITPORTAL_DISCOVERY'
-      }
-    })
-
-    Navigation.mergeOptions('BitPortalProfile', {
-      bottomTab: {
-        title: messages[locale].general_tab_name_prf,
-        icon: Images.profile,
-        selectedIcon: Images.profile_press,
-        testID: 'BITPORTAL_PROFILE'
-      }
-    })
-  } else {
-    startTabBasedApp(locale)
-  }
+  startTabBasedApp(locale)
 }
