@@ -10,7 +10,6 @@ describe('<Spinner />', () => {
   it(`should render the Spinner with className ${style.spinner}`, () => {
     const { getByTestId } = render(<Spinner />)
     const spinner = getByTestId('spinner')
-    console.log(spinner)
     expect(spinner.className).to.equal(style.spinner)
   })
 })
