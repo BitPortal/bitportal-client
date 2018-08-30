@@ -11,7 +11,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const HappyPack = require('happypack')
 const nodeExternals = require('webpack-node-externals')
 const { getIfUtils, removeEmpty } = require('webpack-config-utils')
-const { ifProduction, ifNotProduction, ifNotTest } = getIfUtils(process.env.NODE_ENV)
+const { ifProduction, ifNotProduction, ifNotTest, ifTest } = getIfUtils(process.env.NODE_ENV)
 const happyThreadPool = HappyPack.ThreadPool({ size: 5 })
 
 const baseConfig = {
@@ -128,14 +128,15 @@ const baseConfig = {
               'stage-2',
               ifProduction('react-optimize')
             ]),
-            plugins: [
+            plugins: removeEmpty([
               'syntax-dynamic-import',
               'transform-class-properties',
               'transform-decorators-legacy',
               'react-hot-loader/babel',
               'transform-runtime',
-              'react-hot-loader/babel'
-            ]
+              'react-hot-loader/babel',
+              ifTest('istanbul')
+            ])
           }
         },
         {

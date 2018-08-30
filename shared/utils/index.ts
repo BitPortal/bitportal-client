@@ -32,17 +32,17 @@ export const loadScript = (src: string) => new Promise((resolve, reject) => {
 export const getErrorMessage = (error: any) => {
   if (
     (typeOf(error) === 'Error' && error.message.indexOf('.cpp') !== -1)
-    || (typeOf(error) === 'Object'
-      && typeof error.message === 'string'
-      && error.message.indexOf('.cpp') !== -1)
+      || (typeOf(error) === 'Object'
+          && typeof error.message === 'string'
+          && error.message.indexOf('.cpp') !== -1)
   ) {
     const errorObject = JSON.parse(error.message)
 
     if (
       errorObject.error
-      && errorObject.error.details
-      && errorObject.error.details.length
-      && errorObject.error.details[0].message
+        && errorObject.error.details
+        && errorObject.error.details.length
+        && errorObject.error.details[0].message
     ) {
       return errorObject.error.details[0].message
     }
@@ -57,9 +57,9 @@ export const getErrorMessage = (error: any) => {
 
     if (
       errorObject.error
-      && errorObject.error.details
-      && errorObject.error.details.length
-      && errorObject.error.details[0].message
+        && errorObject.error.details
+        && errorObject.error.details.length
+        && errorObject.error.details[0].message
     ) {
       return errorObject.error.details[0].message
     }
@@ -130,10 +130,10 @@ export const parseEOSQrString = (text: string) => {
           .map((item: any) => {
             if (
               item
-              && typeof item === 'string'
-              && item.split('=').length === 2
-              && item.split('=')[0]
-              && item.split('=')[1]
+                && typeof item === 'string'
+                && item.split('=').length === 2
+                && item.split('=')[0]
+                && item.split('=')[1]
             ) {
               return { [item.split('=')[0]]: item.split('=')[1] }
             }

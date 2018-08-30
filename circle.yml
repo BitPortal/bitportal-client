@@ -5,12 +5,12 @@ general:
 
 machine:
   node:
-    version: 6.6.0
+    version: 9.10.1
 
 dependencies:
   override:
-    - npm install -g mocha && npm install -g full-icu && npm install
+    - npm install -g mocha-webpack && npm install -g full-icu && npm install
 
 test:
   override:
-    - NODE_ENV=test mocha --icu-data-dir=/opt/circleci/nodejs/v6.6.0/lib/node_modules/full-icu --require babel-register --require babel-polyfill --require test/helpers/setup.js --recursive
+    - cross-env NODE_ENV=test APP_ENV=development TARGET=node mocha-webpack --include ./test/helpers/setup.js --recursive
