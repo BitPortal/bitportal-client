@@ -110,7 +110,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 27
         renderscriptTargetApi 27
-        multiDexEnabled true 
+        multiDexEnabled true
         renderscriptSupportModeEnabled true
         vectorDrawables.useSupportLibrary true
         versionCode 1
