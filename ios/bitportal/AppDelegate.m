@@ -22,6 +22,10 @@
 #import "UMAnalyticsModule.h"
 #import <UMAnalytics/MobClick.h>
 
+@interface AppDelegate ()<JPUSHRegisterDelegate>
+
+@end
+
 @implementation AppDelegate
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
