@@ -3,7 +3,7 @@ const fs = require('fs')
 const { resolve, join } = require('path')
 const DotENV = require('dotenv-webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const ExtractCssChunks = require("extract-css-chunks-webpack-plugin")
+const ExtractCssChunks = require('extract-css-chunks-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
@@ -12,6 +12,7 @@ const HappyPack = require('happypack')
 const nodeExternals = require('webpack-node-externals')
 const { getIfUtils, removeEmpty } = require('webpack-config-utils')
 const { ifProduction, ifNotProduction, ifNotTest } = getIfUtils(process.env.NODE_ENV)
+const happyThreadPool = HappyPack.ThreadPool({ size: 5 })
 
 const baseConfig = {
   mode: ifProduction('production', 'development'),
@@ -72,38 +73,17 @@ const baseConfig = {
           resolve(__dirname, 'shared/screens'),
           resolve(__dirname, 'shared/navigators')
         ],
-        use: 'happypack/loader'
+        use: 'happypack/loader?id=scripts'
       },
       {
         test: /\.css$/,
         include: resolve(__dirname, 'shared'),
-        use: removeEmpty([
-          ifNotTest(ExtractCssChunks.loader),
-          {
-            loader: ifNotTest('css-loader', 'css-loader/locals'),
-            query: {
-              minimize: true,
-              modules: true,
-              sourceMap: true,
-              importLoaders: 1,
-              localIdentName: '[local]_[hash:base64:5]'
-            }
-          },
-          {
-            loader: 'postcss-loader'
-          }
-        ])
+        use: removeEmpty([ifNotTest(ExtractCssChunks.loader), 'happypack/loader?id=styles'])
       },
       {
         test: /\.css$/,
         exclude: resolve(__dirname, 'shared'),
-        use: removeEmpty([
-          ifNotTest(ExtractCssChunks.loader),
-          {
-            loader: ifNotTest('css-loader', 'css-loader/locals'),
-            query: { minimize: true }
-          }
-        ])
+        use: removeEmpty([ifNotTest(ExtractCssChunks.loader), 'happypack/loader?id=normalize'])
       },
       {
         test: /\.(ttf|eot|otf|svg|woff(2)?)(\?[a-z0-9]+)?$/,
@@ -135,7 +115,8 @@ const baseConfig = {
       chunkFilename: ifProduction('styles/[name].chunk.css?v=[chunkhash]', 'styles/[name].chunk.css')
     })),
     new HappyPack({
-      threads: 2,
+      id: 'scripts',
+      threadPool: happyThreadPool,
       loaders: [
         {
           loader: 'babel-loader',
@@ -160,6 +141,35 @@ const baseConfig = {
         {
           loader: 'ts-loader',
           query: { happyPackMode: true }
+        }
+      ]
+    }),
+    new HappyPack({
+      id: 'styles',
+      threadPool: happyThreadPool,
+      loaders: [
+        {
+          loader: ifNotTest('css-loader', 'css-loader/locals'),
+          query: {
+            minimize: true,
+            modules: true,
+            sourceMap: true,
+            importLoaders: 1,
+            localIdentName: '[local]_[hash:base64:5]'
+          }
+        },
+        {
+          loader: 'postcss-loader'
+        }
+      ]
+    }),
+    new HappyPack({
+      id: 'normalize',
+      threadPool: happyThreadPool,
+      loaders: [
+        {
+          loader: ifNotTest('css-loader', 'css-loader/locals'),
+          query: { minimize: true }
         }
       ]
     }),

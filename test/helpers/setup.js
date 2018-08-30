@@ -11,6 +11,10 @@ const { JSDOM } = jsdom
 const { document } = (new JSDOM('<!doctype html><html><body></body></html>')).window
 const window = document.defaultView
 
+global.requestAnimationFrame = (callback) => {
+  setTimeout(callback, 0);
+}
+
 global.document = document
 global.window = window
 global.navigator = window.navigator
