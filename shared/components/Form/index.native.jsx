@@ -32,6 +32,19 @@ export const FieldInput = ({ children, rightContent, leftContent, style }) => (
   </View>
 )
 
+export const SearchFieldInput = ({
+  children,
+  rightContent,
+  leftContent,
+  style
+}) => (
+  <View style={[styles.searchFieldInput, style]}>
+    {leftContent && <View>{leftContent}</View>}
+    {children}
+    {rightContent && <View>{rightContent}</View>}
+  </View>
+)
+
 export const FieldInfo = ({ children, style }) => (
   <View style={[styles.fieldInfo, style]}>{children}</View>
 )
@@ -84,7 +97,7 @@ export const SearchField = ({
   placeholder
 }) => (
   <FieldItem>
-    <FieldInput rightContent={rightContent}>
+    <SearchFieldInput rightContent={rightContent}>
       <TextInput
         style={styles.searchInput}
         autoCorrect={false}
@@ -98,7 +111,7 @@ export const SearchField = ({
         onChangeText={onChange}
         {...restInput}
       />
-    </FieldInput>
+    </SearchFieldInput>
     {/* <FieldError>{touched && error}</FieldError> */}
   </FieldItem>
 )

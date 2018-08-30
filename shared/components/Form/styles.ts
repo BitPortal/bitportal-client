@@ -26,7 +26,15 @@ export default EStyleSheet.create({
     // flex: 1
   },
   fieldInput: {
-    // borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: Colors.textColor_107_107_107,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 1,
+    alignItems: 'center'
+  },
+  searchFieldInput: {
     borderBottomColor: Colors.textColor_107_107_107,
     flex: 1,
     flexDirection: 'row',
