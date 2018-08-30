@@ -165,9 +165,12 @@ export const startTabBasedApp = (locale) => {
               ],
               options: {
                 bottomTab: {
-                  title: messages[locale].general_tab_name_ast,
+                  text: messages[locale].general_tab_name_ast,
+                  textColor: 'gray',
+                  selectedTextColor: Colors.textColor_89_185_226,
                   icon: Images.asset,
                   selectedIcon: Images.asset_press,
+                  selectedIconColor: Colors.textColor_89_185_226,
                   testID: 'BITPORTAL_ASSETS'
                 },
                 bottomTabs: {
@@ -194,9 +197,12 @@ export const startTabBasedApp = (locale) => {
               ],
               options: {
                 bottomTab: {
-                  title: messages[locale].general_tab_name_mkt,
+                  text: messages[locale].general_tab_name_mkt,
+                  textColor: 'gray',
+                  selectedTextColor: Colors.textColor_89_185_226,
                   icon: Images.market,
                   selectedIcon: Images.market_press,
+                  selectedIconColor: Colors.textColor_89_185_226,
                   testID: 'BITPORTAL_MARKET'
                 },
                 bottomTabs: {
@@ -223,9 +229,12 @@ export const startTabBasedApp = (locale) => {
               ],
               options: {
                 bottomTab: {
-                  title: messages[locale].general_tab_name_dscv,
+                  text: messages[locale].general_tab_name_dscv,
+                  textColor: 'gray',
+                  selectedTextColor: Colors.textColor_89_185_226,
                   icon: Images.discovery,
                   selectedIcon: Images.discovery_press,
+                  selectedIconColor: Colors.textColor_89_185_226,
                   testID: 'BITPORTAL_DISCOVERY'
                 },
                 bottomTabs: {
@@ -252,9 +261,12 @@ export const startTabBasedApp = (locale) => {
               ],
               options: {
                 bottomTab: {
-                  title: messages[locale].general_tab_name_prf,
+                  text: messages[locale].general_tab_name_prf,
+                  textColor: 'gray',
+                  selectedTextColor: Colors.textColor_89_185_226,
                   icon: Images.profile,
                   selectedIcon: Images.profile_press,
+                  selectedIconColor: Colors.textColor_89_185_226,
                   testID: 'BITPORTAL_PROFILE'
                 },
                 bottomTabs: {

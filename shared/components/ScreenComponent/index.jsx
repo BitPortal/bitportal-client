@@ -1,10 +1,16 @@
 import React, { Component } from 'react'
+import { Navigation } from 'react-native-navigation'
 import Provider from 'components/Provider'
 
 export default function screenComponent(Scene, store) {
   return class ScreenComponent extends Component {
     static options = {
       ...Scene.options
+    }
+
+    constructor(props, context) {
+      super(props, context)
+      Navigation.events().bindComponent(this)
     }
 
     componentDidMount() {
