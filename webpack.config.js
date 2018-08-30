@@ -7,6 +7,8 @@ const ExtractCssChunks = require("extract-css-chunks-webpack-plugin")
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+const HappyPack = require('happypack')
 const { getIfUtils, removeEmpty } = require('webpack-config-utils')
 const { ifProduction, ifNotProduction } = getIfUtils(process.env.NODE_ENV)
 const nodeModules = {}
@@ -76,31 +78,7 @@ const baseConfig = {
           resolve(__dirname, 'shared/screens'),
           resolve(__dirname, 'shared/navigators')
         ],
-        use: [
-          {
-            loader: 'babel-loader',
-            query: {
-              babelrc: false,
-              presets: removeEmpty([
-                ['env', { loose: true, modules: false }],
-                'react',
-                'stage-2',
-                ifProduction('react-optimize')
-              ]),
-              plugins: [
-                'syntax-dynamic-import',
-                'transform-class-properties',
-                'transform-decorators-legacy',
-                'react-hot-loader/babel',
-                'transform-runtime',
-                'react-hot-loader/babel'
-              ]
-            }
-          },
-          {
-            loader: 'ts-loader'
-          }
-        ]
+        use: 'happypack/loader'
       },
       {
         test: /\.css$/,
@@ -161,6 +139,39 @@ const baseConfig = {
     new ExtractCssChunks({
       filename: ifProduction('styles/bundle.css?v=[hash]', 'styles/bundle.css'),
       chunkFilename: ifProduction('styles/[name].chunk.css?v=[chunkhash]', 'styles/[name].chunk.css')
+    }),
+    new HappyPack({
+      threads: 2,
+      loaders: [
+        {
+          loader: 'babel-loader',
+          query: {
+            babelrc: false,
+            presets: removeEmpty([
+              ['env', { loose: true, modules: false }],
+              'react',
+              'stage-2',
+              ifProduction('react-optimize')
+            ]),
+            plugins: [
+              'syntax-dynamic-import',
+              'transform-class-properties',
+              'transform-decorators-legacy',
+              'react-hot-loader/babel',
+              'transform-runtime',
+              'react-hot-loader/babel'
+            ]
+          }
+        },
+        {
+          loader: 'ts-loader',
+          query: { happyPackMode: true }
+        }
+      ]
+    }),
+    new ForkTsCheckerWebpackPlugin({
+      tsconfig: resolve(__dirname, './tsconfig.json'),
+      checkSyntacticErrors: true
     }),
     new CopyWebpackPlugin([
       {
@@ -290,10 +301,35 @@ const desktopConfig = {
   }
 }
 
+const testConfig = {
+  ...baseConfig,
+  target: 'node',
+  // context: resolve('test'),
+  devtool: false,
+  // entry: './index.js',
+  output: {
+    ...baseConfig.output,
+    path: resolve('static/web'),
+    filename: 'app.js',
+    libraryTarget: 'commonjs2',
+    publicPath: '/'
+  },
+  externals: nodeModules,
+  node: {
+    console: false,
+    global: false,
+    process: false,
+    Buffer: false,
+    __filename: false,
+    __dirname: false
+  }
+}
+
 const configs = {
   web: browserConfig,
   node: serverConfig,
-  "electron-renderer": desktopConfig
+  "electron-renderer": desktopConfig,
+  test: testConfig
 }
 
 module.exports = configs[process.env.TARGET]
