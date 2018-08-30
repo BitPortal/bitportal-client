@@ -9,15 +9,9 @@ const ManifestPlugin = require('webpack-manifest-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const HappyPack = require('happypack')
+const nodeExternals = require('webpack-node-externals')
 const { getIfUtils, removeEmpty } = require('webpack-config-utils')
-const { ifProduction, ifNotProduction } = getIfUtils(process.env.NODE_ENV)
-const nodeModules = {}
-
-fs.readdirSync('node_modules')
-  .filter(file => !file.includes('.bin'))
-  .forEach((module) => {
-    nodeModules[module] = `commonjs ${ module }`
-  })
+const { ifProduction, ifNotProduction, ifNotTest } = getIfUtils(process.env.NODE_ENV)
 
 const baseConfig = {
   mode: ifProduction('production', 'development'),
@@ -83,10 +77,10 @@ const baseConfig = {
       {
         test: /\.css$/,
         include: resolve(__dirname, 'shared'),
-        use: [
-          ExtractCssChunks.loader,
+        use: removeEmpty([
+          ifNotTest(ExtractCssChunks.loader),
           {
-            loader: 'css-loader',
+            loader: ifNotTest('css-loader', 'css-loader/locals'),
             query: {
               minimize: true,
               modules: true,
@@ -98,18 +92,18 @@ const baseConfig = {
           {
             loader: 'postcss-loader'
           }
-        ]
+        ])
       },
       {
         test: /\.css$/,
         exclude: resolve(__dirname, 'shared'),
-        use: [
-          ExtractCssChunks.loader,
+        use: removeEmpty([
+          ifNotTest(ExtractCssChunks.loader),
           {
-            loader: 'css-loader',
+            loader: ifNotTest('css-loader', 'css-loader/locals'),
             query: { minimize: true }
           }
-        ]
+        ])
       },
       {
         test: /\.(ttf|eot|otf|svg|woff(2)?)(\?[a-z0-9]+)?$/,
@@ -136,10 +130,10 @@ const baseConfig = {
       path: resolve(__dirname, `.env.${process.env.APP_ENV}`),
       systemvars: true
     }),
-    new ExtractCssChunks({
+    ifNotTest(new ExtractCssChunks({
       filename: ifProduction('styles/bundle.css?v=[hash]', 'styles/bundle.css'),
       chunkFilename: ifProduction('styles/[name].chunk.css?v=[chunkhash]', 'styles/[name].chunk.css')
-    }),
+    })),
     new HappyPack({
       threads: 2,
       loaders: [
@@ -248,7 +242,7 @@ const serverConfig = {
     libraryTarget: 'commonjs2',
     publicPath: '/'
   },
-  externals: nodeModules,
+  externals: [nodeExternals({ whitelist: ['normalize.css/normalize.css'] })],
   node: {
     console: false,
     global: false,
@@ -301,35 +295,10 @@ const desktopConfig = {
   }
 }
 
-const testConfig = {
-  ...baseConfig,
-  target: 'node',
-  // context: resolve('test'),
-  devtool: false,
-  // entry: './index.js',
-  output: {
-    ...baseConfig.output,
-    path: resolve('static/web'),
-    filename: 'app.js',
-    libraryTarget: 'commonjs2',
-    publicPath: '/'
-  },
-  externals: nodeModules,
-  node: {
-    console: false,
-    global: false,
-    process: false,
-    Buffer: false,
-    __filename: false,
-    __dirname: false
-  }
-}
-
 const configs = {
   web: browserConfig,
   node: serverConfig,
-  "electron-renderer": desktopConfig,
-  test: testConfig
+  "electron-renderer": desktopConfig
 }
 
 module.exports = configs[process.env.TARGET]
