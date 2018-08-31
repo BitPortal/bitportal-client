@@ -17,7 +17,7 @@ BitPortal client for web, ios, android, windows, macOS and browser extension
 - [x] [Reselect](https://github.com/reactjs/reselect)
 - [x] [PostCSS](https://github.com/postcss/postcss)
 - [x] [CSS modules](https://github.com/outpunk/postcss-modules)
-- [x] [React Testing Library](https://github.com/kentcdodds/react-testing-library)
+- [x] [Enzyme](https://github.com/airbnb/enzyme)
 - [x] [Webpack](https://webpack.js.org)
 - [x] [Babel](https://babeljs.io/)
 - [x] [Express](https://github.com/expressjs/express)
@@ -77,10 +77,13 @@ $ yarn test
 ## run lint
 ```sh
 # javascript lint
-$ yarn run eslint
+$ yarn run lint:js
 
 # typescript lint
-$ yarn run tslint
+$ yarn run lint:ts
+
+# javascript and typescript lint
+$ yarn run lint
 ```
 
 ## typescript compile
