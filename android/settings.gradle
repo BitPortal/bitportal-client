@@ -1,4 +1,12 @@
 rootProject.name = 'bitportal'
+include ':jcore-react-native'
+project(':jcore-react-native').projectDir = new File(rootProject.projectDir, '../node_modules/jcore-react-native/android')
+
+include ':jpush-react-native'
+project(':jpush-react-native').projectDir = new File(rootProject.projectDir, '../node_modules/jpush-react-native/android')
+
+include ':@remobile/react-native-qrcode-local-image'
+project(':@remobile/react-native-qrcode-local-image').projectDir = new File(rootProject.projectDir, '../node_modules/@remobile/react-native-qrcode-local-image/android')
 include ':react-native-qrcode-local-image'
 project(':react-native-qrcode-local-image').projectDir = new File(settingsDir, '../node_modules/@remobile/react-native-qrcode-local-image/android')
 include ':react-native-image-crop-picker'

@@ -58,6 +58,8 @@
     "immutable": "git+https://github.com/TerenceGe/immutable-js.git",
     "intl": "^1.2.5",
     "isomorphic-fetch": "^2.2.1",
+    "jcore-react-native": "^1.2.9",
+    "jpush-react-native": "^2.2.9",
     "keccak": "^1.4.0",
     "normalize.css": "^7.0.0",
     "qrcode.react": "^0.7.1",

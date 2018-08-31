@@ -5693,6 +5693,24 @@ ini@^1.3.4, ini@~1.3.0:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
 
+inquirer@*:
+  version "6.2.0"
+  resolved "http://registry.npm.taobao.org/inquirer/download/inquirer-6.2.0.tgz#51adcd776f661369dc1e894859c2560a224abdd8"
+  dependencies:
+    ansi-escapes "^3.0.0"
+    chalk "^2.0.0"
+    cli-cursor "^2.1.0"
+    cli-width "^2.0.0"
+    external-editor "^3.0.0"
+    figures "^2.0.0"
+    lodash "^4.17.10"
+    mute-stream "0.0.7"
+    run-async "^2.2.0"
+    rxjs "^6.1.0"
+    string-width "^2.1.0"
+    strip-ansi "^4.0.0"
+    through "^2.3.6"
+
 inquirer@^3.0.6:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-3.3.0.tgz#9dd2f2ad765dcab1ff0443b491442a20ba227dc9"
@@ -6163,6 +6181,10 @@ istanbul-reports@^1.0.0:
   dependencies:
     handlebars "^4.0.3"
 
+jcore-react-native@^1.2.9:
+  version "1.2.9"
+  resolved "http://registry.npm.taobao.org/jcore-react-native/download/jcore-react-native-1.2.9.tgz#eacd99a4e0d09dde5da8c78bf050c1a7bbd235b4"
+
 jest-diff@^22.4.3:
   version "22.4.3"
   resolved "https://registry.yarnpkg.com/jest-diff/-/jest-diff-22.4.3.tgz#e18cc3feff0aeef159d02310f2686d4065378030"
@@ -6238,6 +6260,13 @@ jest-worker@^22.2.2:
 jju@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/jju/-/jju-1.3.0.tgz#dadd9ef01924bc728b03f2f7979bdbd62f7a2aaa"
+
+jpush-react-native@^2.2.9:
+  version "2.2.9"
+  resolved "http://registry.npm.taobao.org/jpush-react-native/download/jpush-react-native-2.2.9.tgz#06f809f40e6e668758e1d891a48ad7cd36b399df"
+  dependencies:
+    inquirer "*"
+    mpatch "^0.1.0"
 
 js-base64@^2.1.9:
   version "2.4.5"
@@ -7218,6 +7247,12 @@ move-concurrently@^1.0.1:
     mkdirp "^0.5.1"
     rimraf "^2.5.4"
     run-queue "^1.0.3"
+
+mpatch@^0.1.0:
+  version "0.1.2"
+  resolved "http://registry.npm.taobao.org/mpatch/download/mpatch-0.1.2.tgz#2b3f89b5b33118d54b9fe9b4a9cfb322842cedae"
+  dependencies:
+    glob "^7.1.2"
 
 ms@2.0.0:
   version "2.0.0"

@@ -46,6 +46,13 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+    <meta-data
+        android:name="JPUSH_APPKEY"
+        android:value="05e8b10824ab700bae78e9eb" />
+    <meta-data
+        android:name="JPUSH_CHANNEL"
+        android:value="Android" />
+
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
     </application>
 

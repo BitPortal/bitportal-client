@@ -25,11 +25,18 @@ import com.umeng.commonsdk.UMConfigure;
 import com.bitportal.wallet.umeng.RNUMConfigure;
 import com.bitportal.wallet.umeng.DplusReactPackage;
 import com.bitportal.wallet.nativeutils.NativeUtilsPackage;
+import cn.jpush.reactnativejpush.JPushPackage;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class MainApplication extends NavigationApplication {
+
+  // 设置为 true 将不会弹出 toast
+  private boolean SHUTDOWN_TOAST = false;
+  // 设置为 true 将不会打印 log
+  private boolean SHUTDOWN_LOG = false;
+
   @Override
   protected ReactNativeHost createReactNativeHost() {
       return new NavigationReactNativeHost(this) {
@@ -65,7 +72,8 @@ public class MainApplication extends NavigationApplication {
       new PickerPackage(),
       new RCTQRCodeLocalImagePackage(),
       new DplusReactPackage(),
-      new NativeUtilsPackage()
+      new NativeUtilsPackage(),
+      new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG)
     );
   }
 

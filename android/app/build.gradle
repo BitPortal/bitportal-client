@@ -115,6 +115,11 @@ android {
         vectorDrawables.useSupportLibrary true
         versionCode 1
         versionName "0.2.0"
+        manifestPlaceholders = [
+                JPUSH_APPKEY: "05e8b10824ab700bae78e9eb",
+                APP_CHANNEL : "default"
+        ]
+
         missingDimensionStrategy "RNN.reactNativeVersion", "reactNative55"
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -187,6 +192,9 @@ android {
 }
 
 dependencies {
+    compile project(':jcore-react-native')
+    compile project(':jpush-react-native')
+    compile project(':@remobile/react-native-qrcode-local-image')
     compile 'com.android.support:multidex:1.0.2'
     compile project(':react-native-qrcode-local-image')
     compile project(':react-native-image-crop-picker')
