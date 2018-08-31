@@ -6,7 +6,7 @@ import { IntlProvider } from 'react-intl'
 import { Field, reduxForm, formValueSelector, change } from 'redux-form/immutable'
 import { Navigation } from 'react-native-navigation'
 import { FormContainer, TextField, TextAreaField, SubmitButton } from 'components/Form'
-import { normalizeEOSAccountName, normalizeUnitByFraction, normalizeMemo } from 'utils/normalize'
+import { normalizeEOSAccountName, normalizeUnitByFraction } from 'utils/normalize'
 import * as transferActions from 'actions/transfer'
 import * as eosAccountActions from 'actions/eosAccount'
 import { eosAccountSelector } from 'selectors/eosAccount'
@@ -190,7 +190,6 @@ export default class TransferAssetsForm extends Component {
             name="memo"
             placeholder={messages[locale].snd_txtbox_txt_rmk}
             component={TextAreaField}
-            normalize={normalizeMemo}
           />
           <SubmitButton disabled={disabled} onPress={handleSubmit(this.showModal)} text={messages[locale].snd_button_name_nxt} />
           <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearTransferError} delay={500} />
