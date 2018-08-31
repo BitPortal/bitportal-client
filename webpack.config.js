@@ -83,7 +83,7 @@ const baseConfig = {
       {
         test: /\.css$/,
         exclude: resolve(__dirname, 'shared'),
-        use: removeEmpty([ifNotTest(ExtractCssChunks.loader), 'happypack/loader?id=normalize'])
+        use: removeEmpty([ifNotTest(ExtractCssChunks.loader), 'happypack/loader?id=externalStyles'])
       },
       {
         test: /\.(ttf|eot|otf|svg|woff(2)?)(\?[a-z0-9]+)?$/,
@@ -165,7 +165,7 @@ const baseConfig = {
       ]
     }),
     new HappyPack({
-      id: 'normalize',
+      id: 'externalStyles',
       threadPool: happyThreadPool,
       loaders: [
         {
