@@ -2,7 +2,29 @@ import React from 'react'
 import classNames from 'classnames'
 import style from './style.css'
 
-export const FormContainer = ({ children, center }) => (
+interface FormContainerProps {
+  center?: boolean
+}
+
+interface FieldItemProps {
+  type: string
+  hasError: boolean
+  center?: boolean
+  withoutLabel?: boolean
+}
+
+interface FieldInputProps {
+  symbol?: string
+  leftSymbol?: string
+  inactive?: boolean
+  status?: JSX.Element | string
+}
+
+interface ServerResultProps {
+  type: 'success' | 'error'
+}
+
+export const FormContainer: React.SFC<FormContainerProps> = ({ children, center }) => (
   <div
     className={classNames({
       [style.formContainer]: true,
@@ -13,7 +35,7 @@ export const FormContainer = ({ children, center }) => (
   </div>
 )
 
-export const FieldItem = ({ children, type, hasError = false, center, withoutLabel }) => (
+export const FieldItem: React.SFC<FieldItemProps> = ({ children, type, hasError = false, center, withoutLabel }) => (
   <div
     className={classNames({
       [style.field]: true,
@@ -27,7 +49,7 @@ export const FieldItem = ({ children, type, hasError = false, center, withoutLab
   </div>
 )
 
-export const FieldInput = ({ children, symbol, leftSymbol, inactive, status }) => (
+export const FieldInput: React.SFC<FieldInputProps> = ({ children, symbol, leftSymbol, inactive, status }) => (
   <div className={style.fieldInput}>
     <div
       className={classNames({
@@ -45,19 +67,19 @@ export const FieldInput = ({ children, symbol, leftSymbol, inactive, status }) =
   </div>
 )
 
-export const FieldError = ({ children }) => (
+export const FieldError: React.SFC = ({ children }) => (
   <div className={style.fieldError}>
     {children}
   </div>
 )
 
-export const ServerError = ({ children }) => (
+export const ServerError: React.SFC = ({ children }) => (
   <div className={style.serverError}>
     {children}
   </div>
 )
 
-export const ServerResult = ({ children, type = 'success' }) => (
+export const ServerResult: React.SFC<ServerResultProps> = ({ children, type = 'success' }) => (
   <div className={classNames({ [style.serverResult]: true, [style.success]: type === 'success', [style.error]: type === 'error' })}>
     {children}
   </div>
