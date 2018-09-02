@@ -58,7 +58,7 @@ const runApp = async () => {
     storage.getItem('bitportal_version')
   ])
 
-  const lang = DeviceInfo.getDeviceLocale().indexOf('zh') !== -1 ? 'zh' : 'en'
+  const lang = localLang || (DeviceInfo.getDeviceLocale().indexOf('zh') !== -1 ? 'zh' : 'en')
   const symbol = currency && currency.symbol
   const rate = currency && currency.rate
   const activeNode = eosNode && eosNode.activeNode
