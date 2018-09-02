@@ -40,35 +40,30 @@ if (ENV === 'production') {
 }
 
 const runApp = async () => {
-  let lang = await storage.getItem('bitportal_lang')
-  if (!lang) {
-    const deviceLang = DeviceInfo.getDeviceLocale()
-    lang = deviceLang.indexOf('zh') !== -1 ? 'zh' : 'en'
-  }
-  const currency = await storage.getItem('bitportal_currency', true)
-  let symbol,
-    rate
-  if (currency) {
-    symbol = currency.symbol
-    rate = currency.rate
-  }
-  const contact = await storage.getItem('bitportal_contact', true)
-  const eosNode = await storage.getItem('bitportal_eosNode', true)
-  let activeNode,
-    customNodes
-  if (eosNode) {
-    activeNode = eosNode.activeNode
-    customNodes = eosNode.customNodes
-  }
-  const selectedEOSAsset = await storage.getItem(
-    'bitportal_selectedEOSAsset',
-    true
-  )
-  // const remove = await storage.removeItem('bitportal_favoriteDapps')
-  const storedFavoriteDapps = await storage.getItem(
-    'bitportal_favoriteDapps',
-    true
-  )
+  const [
+    localLang,
+    currency,
+    contact,
+    eosNode,
+    selectedEOSAsset,
+    storedFavoriteDapps,
+    localVersion
+  ] = await Promise.all([
+    storage.getItem('bitportal_lang'),
+    storage.getItem('bitportal_currency', true),
+    storage.getItem('bitportal_contact', true),
+    storage.getItem('bitportal_eosNode', true),
+    storage.getItem('bitportal_selectedEOSAsset', true),
+    storage.getItem('bitportal_favoriteDapps', true),
+    storage.getItem('bitportal_version')
+  ])
+
+  const lang = DeviceInfo.getDeviceLocale().indexOf('zh') !== -1 ? 'zh' : 'en'
+  const symbol = currency && currency.symbol
+  const rate = currency && currency.rate
+  const activeNode = eosNode && eosNode.activeNode
+  const customNodes = eosNode && eosNode.customNodes
+  const currentVersion = VersionNumber.appVersion
 
   const store = configure({
     intl: getInitialLang(lang),
@@ -81,9 +76,6 @@ const runApp = async () => {
 
   registerScreens(store)
   store.runSaga(sagas)
-
-  const localVersion = await storage.getItem('bitportal_version')
-  const currentVersion = VersionNumber.appVersion
 
   if (localVersion === currentVersion) {
     startTabBasedApp(lang)
