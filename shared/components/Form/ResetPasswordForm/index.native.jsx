@@ -109,7 +109,7 @@ export default class ResetPasswordForm extends Component {
             component={TextField}
           />
           <Text style={styles.text14}>
-            <Text style={{ color: Colors.textColor_89_185_226 }}>
+            <Text style={{ color: Colors.textColor_255_255_238 }}>
               <FormattedMessage id="cpwd_hint_txt_txt1" />
             </Text>
             <FormattedMessage id="cpwd_hint_txt_txt2" />

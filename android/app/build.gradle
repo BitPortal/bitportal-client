@@ -194,7 +194,6 @@ android {
 dependencies {
     compile project(':jcore-react-native')
     compile project(':jpush-react-native')
-    compile project(':@remobile/react-native-qrcode-local-image')
     compile 'com.android.support:multidex:1.0.2'
     compile project(':react-native-qrcode-local-image')
     compile project(':react-native-image-crop-picker')

@@ -135,7 +135,7 @@ export default class AccountList extends Component {
                 extraStyle={{ marginTop: 10 }}
               />
               <SettingItem
-                leftItemTitle={<FormattedMessage id="act_sec_title_rspsw" />}
+                leftItemTitle={<FormattedMessage id="act_sec_title_change" />}
                 onPress={this.resetPassword}
               />
               <SettingItem

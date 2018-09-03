@@ -9,7 +9,7 @@
     "txdtl_title_name_block" : "区块高度",
     "txdtl_title_name_producer" : "超级节点",
     "txdtl_title_button_copy" : "复制",
-    "txdtl_title_button_copied" : "已复制",
+    "txdtl_title_button_copied" : "复制成功",
     "tx_sec_title_sdsuc": "已确认",
     "tx_sec_title_sdfail": "交易失败",
     "txdtl_title_button_ent": "确定"
