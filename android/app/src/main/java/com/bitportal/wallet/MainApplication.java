@@ -26,6 +26,7 @@ import com.bitportal.wallet.umeng.RNUMConfigure;
 import com.bitportal.wallet.umeng.DplusReactPackage;
 import com.bitportal.wallet.nativeutils.NativeUtilsPackage;
 import cn.jpush.reactnativejpush.JPushPackage;
+import cn.jpush.android.api.JPushInterface;
 
 import java.util.Arrays;
 import java.util.List;
@@ -83,6 +84,8 @@ public class MainApplication extends NavigationApplication {
       SoLoader.init(this, /* native exopackage */ false);
       UMConfigure.setLogEnabled(false);
       RNUMConfigure.init(this, "5b46d7f1f43e482296000178", "android channel", UMConfigure.DEVICE_TYPE_PHONE, null);
+      JPushInterface.setDebugMode(true);
+      JPushInterface.init(this);
   }
 
   @Override
