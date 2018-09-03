@@ -37,6 +37,7 @@ const Loading = ({ text }) => (
   null,
   { withRef: true }
 )
+
 export default class BPWebView extends Component {
   static get options() {
     return {

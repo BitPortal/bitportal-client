@@ -45,7 +45,7 @@ export default class Discovery extends Component {
         limit: PAGE_LENGTH,
         loadingMore: false
       })
-      this.props.actions.getDappListRequested({})
+      this.props.actions.getDappListRequested()
     })
   }
 
