@@ -95,7 +95,8 @@ export default class Scanner extends Component {
   getImageFromPhoto = async () => {
     const authorized = await checkPhoto()
     if (authorized) {
-      ImagePicker.openPicker({ width: 300, height: 400, cropping: false }).then((image) => {
+      const options = { smartAlbums: ['UserLibrary', 'PhotoStream'], cropping: false, mediaType: 'photo' }
+      ImagePicker.openPicker(options).then((image) => {
         this.setState({ isVisible: true })
         QRDecode.decode(image.path, (error, result) => {
           this.setState({ isVisible: false })
@@ -119,7 +120,7 @@ export default class Scanner extends Component {
               <CommonButton
                 title={messages[locale].qrscn_button_name_photos}
                 onPress={this.getImageFromPhoto}
-                extraTextStyle={{ fontSize: FontScale(18), color: Colors.textColor_89_185_226 }}
+                extraTextStyle={{ fontSize: FontScale(18), color: Colors.textColor_255_255_238 }}
               />
             }
           />

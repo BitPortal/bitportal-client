@@ -18,16 +18,16 @@ export default class Prompt extends Component {
     if (nextProps.isVisible !== this.props.isVisible && nextProps.isVisible) {
       this.timer = setTimeout(() => {
         AlertIOS.prompt(
-          messages[locale].pmpt_popup_name || nextProps.title,
+          nextProps.title || messages[locale].pmpt_popup_name,
           nextProps.message || null,
           [
             {
-              text: messages[locale].pmpt_popup_can || nextProps.negativeText,
+              text: nextProps.negativeText || messages[locale].pmpt_popup_can,
               onPress: () => nextProps.dismiss(),
               style: 'cancel',
             },
             {
-              text: messages[locale].pmpt_popup_ent || nextProps.positiveText,
+              text: nextProps.positiveText || messages[locale].pmpt_popup_ent,
               onPress: (value) => {
                 nextProps.dismiss()
                 nextProps.callback(value)

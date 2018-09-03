@@ -1,7 +1,7 @@
 {
   "zh": {
 		"import_title_plchd_privtk" : "请输入您的私钥",
-		"import_title_name_pswht": "密码提示",
+		"import_title_name_pswht": "密码提示（可选）",
 		"import_title_name_pwd" : "设置密码",
 		"import_title_plchd_pwd": "输入密码",
 		"import_title_tips_pwd": "密码是您使⽤BitPortal钱包的相关功能时所需要的凭证。该密码对BitPortal以外的其他应⽤是⽆效的。BitPortal不会以任何形式储存您的密码，若您忘记密码，请重新导⼊钱包以重置。",
@@ -23,7 +23,7 @@
 	},
 	"en": {
 		"import_title_plchd_privtk" : "Please fill your private key...",
-		"import_title_name_pswht": "Password Hint",
+		"import_title_name_pswht": "Password Hint (Optional)",
 		"import_title_name_pwd" : "Set password",
 		"import_title_plchd_pwd": "Set password",
 		"import_title_tips_pwd": "Password is your certificate to use the features of BitPortal Wallet. This password is not valid for applications other than BitPortal. BitPortal will not store your password in any form. If you forget your password, please re-import the private key to reset it.",

@@ -137,7 +137,7 @@ export default class ImportEOSAccountForm extends Component {
               <Ionicons name="ios-checkmark-circle" size={24} color={unsignAgreement ? Colors.textColor_181_181_181 : Colors.textColor_89_185_226} />
             </TouchableOpacity>
             <Text numberOfLines={1} style={styles.text14}>
-              {messages[locale].import_txt_title_agrm}{' '}
+              {messages[locale].import_txt_title_agrm}
               <Text numberOfLines={1} onPress={this.checkTerms} style={[styles.text14, { textDecorationLine: 'underline', color: Colors.textColor_89_185_226 }]}>
                 {messages[locale].import_txt_title_term}
               </Text>

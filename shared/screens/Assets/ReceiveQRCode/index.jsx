@@ -9,6 +9,7 @@ import { FormattedMessage, IntlProvider } from 'react-intl'
 import { normalizeUnitByFraction } from 'utils/normalize'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { eosQrString } from 'utils'
+import Toast from 'components/Toast'
 import messages from './messages'
 import styles from './styles'
 
@@ -39,7 +40,7 @@ export default class ReceiveQRCode extends Component {
   copyQrcodeValue = () => {
     if (!this.state.isCopied) {
       Clipboard.setString(this.props.eosAccount.get('data').get('account_name'))
-      this.setState({ isCopied: true })
+      this.setState({ isCopied: true }, () => { Toast(messages[this.props.locale].rcv_qrcode_bottom_copied) })
       this.startTimer()
     }
   }
@@ -48,7 +49,7 @@ export default class ReceiveQRCode extends Component {
   startTimer = () => {
     this.timer = setTimeout(() => {
       this.setState({ isCopied: false })
-    }, 2000)
+    }, 3000)
   }
 
   shareQrcodeContent = () => {
