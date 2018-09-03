@@ -12,6 +12,7 @@ import QRCode from 'react-native-qrcode-svg'
 import LinearGradientContainer from 'components/LinearGradientContainer'
 import Dialog from 'components/Dialog'
 import { EOS_EXPLORER_URL } from 'constants/env'
+import Toast from 'components/Toast'
 import messages from './messages'
 import styles from './styles'
 
@@ -74,7 +75,7 @@ export default class TransactionRecord extends Component {
   clipboard = () => {
     const url = `${EOS_EXPLORER_URL}/transactions/${this.props.transactionInfo.getIn(['action_trace', 'trx_id'])}`
     Clipboard.setString(url)
-    this.setState({ isCopied: true })
+    this.setState({ isCopied: true }, () => { Toast(messages[this.props.locale].txdtl_title_button_copied) })
   }
 
   getInfo = (transactionInfo, transactionResult) => {
