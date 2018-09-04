@@ -20,7 +20,7 @@ import {
 import { onEventWithLabel } from 'utils/analytics'
 import ExchangeList from './ExchangeList'
 import { Quotes } from './Quotes'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 @connect(

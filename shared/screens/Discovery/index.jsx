@@ -10,7 +10,7 @@ import { IntlProvider } from 'react-intl'
 import NewsList from './NewsList'
 import NewsBanner from './NewsBanner'
 import DappStore from './DappStore'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 const PAGE_LENGTH = 10

@@ -23,7 +23,7 @@ import { onEventWithLabel } from 'utils/analytics'
 import { ASSETS_EOS_RESOURCE_CPU, ASSETS_EOS_RESOURCE_NET, ASSETS_EOS_RESOURCE_RAM } from 'constants/analytics'
 import ResourcesCard from './ResourcesCard'
 import styles from './styles'
-import messages from './messages'
+import messages from 'resources/messages'
 
 @connect(
   state => ({

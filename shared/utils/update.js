@@ -90,7 +90,7 @@ const showGoToUpdate = async (data, locale) => {
   }
 }
 
-const calculate = (VersionNumber) => {
+export const calculate = (VersionNumber) => {
   const versions = VersionNumber.split('.')
   return parseInt((versions[0] * 1000000) + (versions[1] * 1000) + versions[2], 10)
 }

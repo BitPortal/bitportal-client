@@ -19,7 +19,7 @@ import Loading from 'components/Loading'
 import { ASSETS_SCAN } from 'constants/analytics'
 import { onEventWithMap } from 'utils/analytics'
 import { eosAssetBalanceSelector } from 'selectors/balance'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 @connect(
