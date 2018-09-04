@@ -6,7 +6,7 @@ import { Text, View, TouchableOpacity, RefreshControl, ActivityIndicator } from 
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { FormattedNumber, FormattedMessage, IntlProvider } from 'react-intl'
 import { eosPriceSelector } from 'selectors/ticker'
-import { activeAssetSelector } from 'selectors/balance'
+import { activeAssetSelector, activeAssetBalanceSelector } from 'selectors/balance'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
 import { activeAssetTransactionsSelector } from 'selectors/transaction'
 import CurrencyText from 'components/CurrencyText'
@@ -28,6 +28,7 @@ const dataProvider = new ImmutableDataProvider((r1, r2) => r1.get('account_actio
     locale: state.intl.get('locale'),
     eosPrice: eosPriceSelector(state),
     activeAsset: activeAssetSelector(state),
+    activeAssetBalance: activeAssetBalanceSelector(state),
     loading: state.transaction.get('loading'),
     loaded: state.transaction.get('loaded'),
     hasMore: state.transaction.get('hasMore'),
@@ -159,7 +160,7 @@ export default class AssetChart extends Component {
   }
 
   render() {
-    const { locale, activeAsset, eosPrice, loading, refresh } = this.props
+    const { locale, activeAsset, activeAssetBalance, eosPrice, loading, refresh } = this.props
     const { transferHistory } = this.state
     const assetPrice = activeAsset.get('symbol') === 'EOS' ? eosPrice : 0
 
@@ -175,7 +176,7 @@ export default class AssetChart extends Component {
               <View style={styles.topContent}>
                 <Text style={[styles.text24, { marginTop: 20 }]}>
                   <FormattedNumber
-                    value={activeAsset.get('balance')}
+                    value={activeAssetBalance}
                     maximumFractionDigits={4}
                     minimumFractionDigits={4}
                   />
@@ -183,7 +184,7 @@ export default class AssetChart extends Component {
                 <Text style={[styles.text14, { marginBottom: 20 }]}>
                   ≈
                   <CurrencyText
-                    value={+activeAsset.get('balance') * +assetPrice}
+                    value={+activeAssetBalance * +assetPrice}
                     maximumFractionDigits={2}
                     minimumFractionDigits={2}
                   />

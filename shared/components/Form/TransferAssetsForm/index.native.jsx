@@ -10,7 +10,7 @@ import { normalizeEOSAccountName, normalizeUnitByFraction } from 'utils/normaliz
 import * as transferActions from 'actions/transfer'
 import * as eosAccountActions from 'actions/eosAccount'
 import { eosAccountSelector } from 'selectors/eosAccount'
-import { activeAssetSelector } from 'selectors/balance'
+import { activeAssetSelector, activeAssetBalanceSelector } from 'selectors/balance'
 import { eosPriceSelector } from 'selectors/ticker'
 import TransferCard from 'screens/Assets/AssetsTransfer/TransferCard'
 import Prompt from 'components/Prompt'
@@ -78,6 +78,7 @@ const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject)
     transfer: state.transfer,
     eosAccount: eosAccountSelector(state),
     activeAsset: activeAssetSelector(state),
+    activeAssetBalance: activeAssetBalanceSelector(state),
     eosPrice: eosPriceSelector(state),
     quantity: formValueSelector('transferAssetsForm')(state, 'quantity'),
     toAccount: formValueSelector('transferAssetsForm')(state, 'toAccount')
@@ -159,10 +160,10 @@ export default class TransferAssetsForm extends Component {
   }
 
   render() {
-    const { handleSubmit, invalid, pristine, activeAsset, eosPrice, quantity, transfer, locale } = this.props
+    const { handleSubmit, invalid, pristine, activeAsset, activeAssetBalance, eosPrice, quantity, transfer, locale } = this.props
     const disabled = invalid || pristine
     const symbol = activeAsset.get('symbol')
-    const balance = activeAsset.get('balance')
+    const balance = activeAssetBalance
     const error = transfer.get('error')
     const showModal = transfer.get('showModal')
     const price = symbol === 'EOS' ? eosPrice : 0

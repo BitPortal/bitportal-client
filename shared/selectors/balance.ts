@@ -59,3 +59,16 @@ export const eosTotalAssetBalanceSelector = createSelector(
   eosPriceSelector,
   (eosBalance: any, eosPrice: any) => (eosBalance && eosPrice) ? (+eosBalance.get('balance') * +eosPrice) : 0
 )
+
+export const activeAssetBalanceSelector = createSelector(
+  eosAssetBalanceSelector,
+  activeAssetContractSelector,
+  (eosAssetBalance: any, contract: any) => {
+    if (eosAssetBalance) {
+      const index = eosAssetBalance.findIndex((v: any) => v.get('contract') === contract)
+      return index !== -1 ? eosAssetBalance.getIn([index, 'balance']) : 0
+    } else {
+      return 0
+    }
+  }
+)
