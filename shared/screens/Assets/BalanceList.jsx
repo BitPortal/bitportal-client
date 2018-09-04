@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import CurrencyText from 'components/CurrencyText'
 import styles from './styles'
 
-const ListItem = ({ item, onPress, eosPrice, isAssetHidden }) => (
+const ListItem = ({ item, onPress, assetPrice, isAssetHidden }) => (
   <TouchableHighlight underlayColor={Colors.hoverColor} style={styles.listContainer} onPress={() => onPress(item)}>
     <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.bgColor_30_31_37 }]}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -31,7 +31,7 @@ const ListItem = ({ item, onPress, eosPrice, isAssetHidden }) => (
             ? <Text style={[styles.text14, { alignSelf: 'flex-end', color: Colors.textColor_149_149_149 }]}>******</Text>
             : <Text style={[styles.text14, { alignSelf: 'flex-end', color: Colors.textColor_149_149_149 }]}>
               ≈
-              <CurrencyText value={+item.get('balance') * +eosPrice} maximumFractionDigits={2} minimumFractionDigits={2} />
+              <CurrencyText value={+item.get('balance') * +assetPrice} maximumFractionDigits={2} minimumFractionDigits={2} />
             </Text>
         }
       </View>
@@ -57,7 +57,7 @@ export default class BalanceList extends Component {
               key={index}
               item={item}
               isAssetHidden={isAssetHidden}
-              eosPrice={eosPrice}
+              assetPrice={item.get('symbol') === 'EOS' ? eosPrice : 0}
               onPress={onPress}
           />
           )
