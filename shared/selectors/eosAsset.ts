@@ -6,13 +6,14 @@ export const getInitialEOSAsset = (presetSelectedAsset?: any) => Immutable.fromJ
   loading: false,
   loaded: false,
   error: null,
-  searchValue: '',
-  selectedAsset: presetSelectedAsset || []
+  selectedAsset: presetSelectedAsset || [],
+  searchResult: []
 })
 
 export const eosAssetSelector = (state: RootState) => state.eosAsset.get('data')
 
 export const selectedEOSAssetSelector = (state: RootState) => state.eosAsset.get('selectedAsset')
+export const searchEOSAssetResultSelector = (state: RootState) => state.eosAsset.get('searchResult')
 
 export const selectedEOSAssetContractSelector = createSelector(
   selectedEOSAssetSelector,
@@ -21,6 +22,15 @@ export const selectedEOSAssetContractSelector = createSelector(
 
 export const eosAssetListSelector = createSelector(
   eosAssetSelector,
+  selectedEOSAssetSelector,
+  (asset: any, selected: any) => asset.map((v: any) =>  {
+    const index = selected.findIndex((i: any) => v.get('account') === i.get('contract') && v.get('symbol') === i.get('symbol'))
+    return v.set('selected', index !== -1)
+  })
+)
+
+export const eosAssetSearchResultListSelector = createSelector(
+  searchEOSAssetResultSelector,
   selectedEOSAssetSelector,
   (asset: any, selected: any) => asset.map((v: any) =>  {
     const index = selected.findIndex((i: any) => v.get('account') === i.get('contract') && v.get('symbol') === i.get('symbol'))

@@ -81,12 +81,16 @@ export default class AvailableAssets extends Component {
   }
 
   goSearching = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.AssetSearch',
-        passProps: {
-          eosAccountName: this.props.eosAccountName
-        }
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.AssetSearch',
+            passProps: {
+              eosAccountName: this.props.eosAccountName
+            }
+          }
+        }]
       }
     })
   }
@@ -113,6 +117,7 @@ export default class AvailableAssets extends Component {
           <NavigationBar
             title={messages[locale].astlist_title_name_astlst}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
+            rightButton={<CommonButton iconName="md-search" onPress={this.goSearching} />}
           />
           <View style={styles.scrollContainer}>
             <RecyclerListView

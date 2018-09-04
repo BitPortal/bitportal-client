@@ -6,9 +6,10 @@ const initialState = Immutable.fromJS({
   data: [],
   loading: false,
   loaded: false,
+  searching: false,
   error: null,
-  searchValue: '',
-  selectedAsset: []
+  selectedAsset: [],
+  searchResult: []
 })
 
 export default handleActions(
@@ -32,11 +33,18 @@ export default handleActions(
         return index !== -1 ? v.delete(index) : v.push(Immutable.fromJS(action.payload)).sortBy((v: any) => v.get('symbol'))
       })
     },
-    [actions.setSearchValue](state, action) {
-      return state.set('searchValue', action.payload)
+    [actions.searchEOSAssetRequested] (state) {
+      return state.set('searching', true)
     },
-    [actions.resetSearchValue](state) {
-      return state.set('searchValue', '')
+    [actions.searchEOSAssetSucceeded] (state, action) {
+      return state.set('searching', false)
+      .set('searchResult', Immutable.fromJS(action.payload))
+    },
+    [actions.searchEOSAssetFailed] (state, action) {
+      return state.set('searching', false)
+    },
+    [actions.clearSearch] (state) {
+      return state.set('searchResult', initialState.get('searchResult')).set('searching', false)
     }
   },
   initialState

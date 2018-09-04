@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   KeyboardType
 } from 'react-native'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import LinearGradientContainer from 'components/LinearGradientContainer'
 import { noop } from 'utils'
 import Colors from 'resources/colors'
@@ -39,6 +40,7 @@ interface TextFieldProps {
   },
   label?: JSX.Element | string,
   keyboardType?: KeyboardType,
+  leftContent?: JSX.Element | string,
   rightContent?: JSX.Element | string,
   tips?: JSX.Element | string,
   info?: JSX.Element | string,
@@ -77,7 +79,7 @@ export const FieldInput: React.SFC<FieldInputProps> = ({ children, rightContent,
   </View>
 )
 
-export const SearchFieldInput: React.SFC<FieldInputProps> = ({
+const SearchFieldInput: React.SFC<FieldInputProps> = ({
   children,
   rightContent,
   leftContent,
@@ -138,11 +140,11 @@ export const TextField: React.SFC<TextFieldProps> = ({
 export const SearchField: React.SFC<TextFieldProps> = ({
   input: { onChange, ...restInput },
   keyboardType,
-  rightContent,
+  leftContent,
   placeholder
 }) => (
   <FieldItem>
-    <SearchFieldInput rightContent={rightContent}>
+    <SearchFieldInput leftContent={leftContent}>
       <TextInput
         style={styles.searchInput}
         autoCorrect={false}

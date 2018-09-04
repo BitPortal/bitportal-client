@@ -10,41 +10,68 @@ import {
   Easing,
   Platform,
   InteractionManager,
-  Keyboard
+  Keyboard,
+  TextInput
 } from 'react-native'
 import { Field, reduxForm } from 'redux-form/immutable'
-import { SearchContainer, SearchField } from 'components/Form'
+import { FieldItem } from 'components/Form'
 import Colors from 'resources/colors'
 import { SCREEN_WIDTH } from 'utils/dimens'
 import messages from './messages'
 import styles from './styles'
 
+const SearchContainer = ({ children }) => (
+  <View style={styles.searchContainer}>{children}</View>
+)
+
+const SearchFieldInput = ({
+  children,
+  rightContent,
+  leftContent,
+  style
+}) => (
+  <View style={[styles.searchFieldInput, style]}>
+    {leftContent && <View>{leftContent}</View>}
+    {children}
+    {rightContent && <View>{rightContent}</View>}
+  </View>
+)
+
+const SearchField = ({
+  input: { onChange, ...restInput },
+  keyboardType,
+  rightContent,
+  placeholder
+}) => (
+  <FieldItem>
+    <SearchFieldInput rightContent={rightContent}>
+      <TextInput
+        style={styles.searchInput}
+        autoCorrect={false}
+        autoCapitalize="none"
+        placeholder={placeholder}
+        placeholderTextColor={Colors.textColor_107_107_107}
+        keyboardType={keyboardType || 'default'}
+        underlineColorAndroid="transparent"
+        selectionColor={Colors.textColor_181_181_181}
+        keyboardAppearance={Colors.keyboardTheme}
+        onChangeText={onChange}
+        {...restInput}
+      />
+    </SearchFieldInput>
+  </FieldItem>
+)
+
 const validate = () => {
   const errors = {}
-
-  // if (!values.get('eosAccountName')) {
-  //   errors.eosAccountName = (
-  //     <FormattedMessage id="contacts_txtbox_txt_acchint2" />
-  //   )
-  // } else if (values.get('eosAccountName').length > 12) {
-  //   errors.eosAccountName = (
-  //     <FormattedMessage id="contacts_txtbox_txt_acchint" />
-  //   )
-  // }
-  //
-  // if (values.get('note') && values.get('note').length > 64) {
-  //   errors.note = <FormattedMessage id="contacts_txtbox_txt_hint" />
-  // }
-
   return errors
 }
 
 @reduxForm({
   form: 'addContactsForm',
   validate
-  // asyncValidate,
-  // asyncBlurFields: ['eosAccountName']
 })
+
 @connect(
   state => ({
     locale: state.intl.get('locale')
@@ -53,6 +80,7 @@ const validate = () => {
   null,
   { withRef: true }
 )
+
 //props:locale, onChangeText, clearSearch
 export default class SearchBar extends Component {
   state = {
