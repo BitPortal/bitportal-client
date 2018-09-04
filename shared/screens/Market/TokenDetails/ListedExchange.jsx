@@ -5,8 +5,8 @@ import AccordionPanel from 'components/AccordionPanel'
 import { EXCHANGE_NAMES, ASSET_FRACTION } from 'constants/market'
 import { FormattedNumber } from 'react-intl'
 
-import styles from './styles'
 import messages from 'resources/messages'
+import styles from './styles'
 
 @connect(
   state => ({

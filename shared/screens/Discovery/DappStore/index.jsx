@@ -18,8 +18,8 @@ import Alert from 'components/Alert'
 import { injectIntl, IntlProvider } from 'react-intl'
 import Colors from 'resources/colors'
 import Images from 'resources/images'
-import styles from './styles'
 import messages from 'resources/messages'
+import styles from './styles'
 
 @injectIntl
 class DappElement extends Component {

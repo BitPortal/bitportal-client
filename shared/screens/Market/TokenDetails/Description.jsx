@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { Text, View } from 'react-native'
 import AccordionPanel from 'components/AccordionPanel'
 import { IntlProvider } from 'react-intl'
-import styles from './styles'
 import messages from 'resources/messages'
+import styles from './styles'
 
 @connect(
   state => ({

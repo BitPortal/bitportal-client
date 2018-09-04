@@ -6,9 +6,9 @@ import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
+import messages from 'resources/messages'
 import Keystore from './Keystore'
 import QRCode from './QRCode'
-import messages from 'resources/messages'
 import styles from './styles'
 
 @connect(

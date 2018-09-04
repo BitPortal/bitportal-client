@@ -2,9 +2,9 @@ import React, { PureComponent } from 'react'
 import { FlatList, View, ActivityIndicator, Text } from 'react-native'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
+import messages from 'resources/messages'
 import NewsRow from './NewsRow'
 import styles from './styles'
-import messages from 'resources/messages'
 
 @connect(state => ({
   locale: state.intl.get('locale')
@@ -40,7 +40,7 @@ export default class NewsList extends PureComponent {
       style={{
         height: 1,
         width: '100%',
-        backgroundColor: Cowlors.bgColor_000000
+        backgroundColor: Colors.bgColor_000000
       }}
     />
   )

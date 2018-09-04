@@ -9,9 +9,9 @@ import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import * as contactActions from 'actions/contact'
+import messages from 'resources/messages'
 import DeleteButton from './DeleteButton'
 import styles from './styles'
-import messages from 'resources/messages'
 
 @connect(
   state => ({

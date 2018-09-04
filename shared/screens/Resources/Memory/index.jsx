@@ -16,8 +16,8 @@ import TradeRAMForm from 'components/Form/TradeRAMForm'
 import * as ramActions from 'actions/ram'
 import { formatMemorySize } from 'utils/format'
 import Loading from 'components/Loading'
-import styles from './styles'
 import messages from 'resources/messages'
+import styles from './styles'
 import Progress from '../Progress'
 
 @connect(

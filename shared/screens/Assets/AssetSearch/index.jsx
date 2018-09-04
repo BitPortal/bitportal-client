@@ -10,8 +10,8 @@ import { FontScale } from 'utils/dimens'
 import * as eosAssetActions from 'actions/eosAsset'
 import { eosAssetSearchListSelector } from 'selectors/eosAsset'
 import Images from 'resources/images'
-import SearchBar from './SearchBar'
 import messages from 'resources/messages'
+import SearchBar from './SearchBar'
 import styles from './styles'
 
 const AssetElement = ({ item, onValueChange }) => (

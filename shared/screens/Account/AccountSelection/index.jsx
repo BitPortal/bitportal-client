@@ -9,9 +9,9 @@ import { eosPriceSelector } from 'selectors/ticker'
 import * as eosAccountActions from 'actions/eosAccount'
 import Alert from 'components/Alert'
 import Loading from 'components/Loading'
+import messages from 'resources/messages'
 import AccountCard from './AccountCard'
 import styles from './styles'
-import messages from 'resources/messages'
 
 export const errorMessages = (error, messages) => {
   if (!error) { return null }

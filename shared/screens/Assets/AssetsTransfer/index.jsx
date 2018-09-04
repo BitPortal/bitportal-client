@@ -9,8 +9,8 @@ import { IntlProvider } from 'react-intl'
 import TransferAssetsForm from 'components/Form/TransferAssetsForm'
 import { checkCamera } from 'utils/permissions'
 import Loading from 'components/Loading'
-import styles from './styles'
 import messages from 'resources/messages'
+import styles from './styles'
 
 @connect(
   state => ({
