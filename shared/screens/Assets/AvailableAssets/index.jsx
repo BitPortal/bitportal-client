@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { Text, View, Switch, Image, RefreshControl } from 'react-native'
+import { Text, View, Switch, Image, ActivityIndicator } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -101,8 +101,6 @@ export default class AvailableAssets extends Component {
     this.props.actions.toggleEOSAsset({ contract, symbol })
   }
 
-  onRefresh = () => this.props.actions.getEOSAssetRequested()
-
   renderItem = (type, item) => (
     <AssetElement item={item} onToggle={() => this.onToggle(item)} />
   )
@@ -120,12 +118,7 @@ export default class AvailableAssets extends Component {
             rightButton={<CommonButton iconName="md-search" onPress={this.goSearching} />}
           />
           <View style={styles.scrollContainer}>
-            <RecyclerListView
-              refreshControl={<RefreshControl onRefresh={this.onRefresh} refreshing={loading && !loaded} />}
-              layoutProvider={this.layoutProvider}
-              dataProvider={eosAssetList}
-              rowRenderer={this.renderItem}
-            />
+            {!(loading && !loaded) ? <RecyclerListView layoutProvider={this.layoutProvider} dataProvider={eosAssetList} rowRenderer={this.renderItem} /> : <ActivityIndicator size="small" color="white" style={{ marginTop: 20 }} />}
           </View>
         </View>
       </IntlProvider>

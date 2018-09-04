@@ -23,10 +23,8 @@ function* getTransactionsRequested(action: Action<TransactionsParams>) {
 
     const hasMore = data.actions && data.actions.length && !!data.actions[0].account_action_seq
     const accountActions = (hasMore ? [...data.actions.slice(2)] : [...data.actions]).reverse().filter((action: any) => action && action.action_trace && action.action_trace.receipt.receiver === eosAccountName)
-    const refresh = position === -1
     const newPosition = data.actions.length ? (data.actions[0].account_action_seq + 1) : position
-
-    yield put(actions.getTransactionsSucceeded({ hasMore, refresh, position: newPosition, actions: accountActions, lastIrreversibleBlock: data.last_irreversible_block }))
+    yield put(actions.getTransactionsSucceeded({ hasMore, position: newPosition, actions: accountActions, lastIrreversibleBlock: data.last_irreversible_block }))
   } catch (e) {
     yield put(actions.getTransactionsFailed(getErrorMessage(e)))
   }

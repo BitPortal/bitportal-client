@@ -33,6 +33,7 @@ const dataProvider = new ImmutableDataProvider((r1, r2) => r1.get('account_actio
     hasMore: state.transaction.get('hasMore'),
     offset: state.transaction.get('offset'),
     position: state.transaction.get('position'),
+    refresh: state.transaction.get('refresh'),
     transferHistory: activeAssetTransactionsSelector(state),
     eosAccountName: eosAccountNameSelector(state)
   }),
@@ -158,7 +159,7 @@ export default class AssetChart extends Component {
   }
 
   render() {
-    const { locale, activeAsset, eosPrice, loading, loaded } = this.props
+    const { locale, activeAsset, eosPrice, loading, refresh } = this.props
     const { transferHistory } = this.state
     const assetPrice = activeAsset.get('symbol') === 'EOS' ? eosPrice : 0
 
@@ -189,7 +190,7 @@ export default class AssetChart extends Component {
                 </Text>
               </View>
               <RecyclerListView
-                refreshControl={<RefreshControl onRefresh={this.onRefresh} refreshing={loading && !loaded} />}
+                refreshControl={<RefreshControl onRefresh={this.onRefresh} refreshing={loading && refresh} />}
                 layoutProvider={this.layoutProvider}
                 dataProvider={transferHistory}
                 rowRenderer={this.rowRenderer}
