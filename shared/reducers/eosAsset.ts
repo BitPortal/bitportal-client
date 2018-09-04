@@ -45,6 +45,9 @@ export default handleActions(
     },
     [actions.clearSearch] (state) {
       return state.set('searchResult', initialState.get('searchResult')).set('searching', false)
+    },
+    [actions.resetEOSAsset] () {
+      return initialState
     }
   },
   initialState

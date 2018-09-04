@@ -7,6 +7,7 @@ import * as actions from 'actions/wallet'
 import { resetBalance, getEOSBalanceRequested, getEOSAssetBalanceListRequested } from 'actions/balance'
 import { resetKey } from 'actions/keystore'
 import { resetTransaction } from 'actions/transaction'
+import { resetEOSAsset } from 'actions/eosAsset'
 import { resetEOSAccount, syncEOSAccount, createEOSAccountSucceeded, getEOSAccountRequested, syncEOSAccountCreationInfo } from 'actions/eosAccount'
 import { getErrorMessage } from 'utils'
 import secureStorage from 'utils/secureStorage'
@@ -256,6 +257,7 @@ function* logoutRequested(action: Action<LogoutParams>) {
     }
     yield put(actions.resetWallet())
     yield put(resetEOSAccount())
+    yield put(resetEOSAsset())
     yield put(resetBalance())
     yield put(resetTransaction())
     yield put(resetKey())
