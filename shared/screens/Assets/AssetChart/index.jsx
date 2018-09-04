@@ -160,6 +160,7 @@ export default class AssetChart extends Component {
   render() {
     const { locale, activeAsset, eosPrice, loading, loaded } = this.props
     const { transferHistory } = this.state
+    const assetPrice = activeAsset.get('symbol') === 'EOS' ? eosPrice : 0
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -181,7 +182,7 @@ export default class AssetChart extends Component {
                 <Text style={[styles.text14, { marginBottom: 20 }]}>
                   ≈
                   <CurrencyText
-                    value={+activeAsset.get('balance') * +eosPrice}
+                    value={+activeAsset.get('balance') * +assetPrice}
                     maximumFractionDigits={2}
                     minimumFractionDigits={2}
                   />
