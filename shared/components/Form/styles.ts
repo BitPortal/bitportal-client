@@ -15,7 +15,7 @@ export default EStyleSheet.create({
     backgroundColor: Colors.bgColor_30_31_37
   },
   searchContainer: {
-    width: '100% - 100',
+    width: '100% - 70',
     paddingRight: 10,
     paddingTop: 4,
     paddingBottom: 4

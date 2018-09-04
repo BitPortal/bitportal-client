@@ -99,7 +99,7 @@ export default class AssetsSearch extends Component {
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale].astlist_title_name_astlst}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.dismissModal(this.props.componentId)} />}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.dismissModal(this.props.componentId)} extraStyle={{ minWidth: 70 }} />}
             rightButton={<SearchEOSAssetForm />}
           />
           <View style={styles.scrollContainer}>

@@ -26,8 +26,8 @@ export default class NavigationBar extends Component {
   }
 }
 
-export const CommonButton = ({ iconName, title, onPress, extraTextStyle }) => (
-  <TouchableOpacity style={styles.navButton} onPress={() => onPress()}>
+export const CommonButton = ({ iconName, title, onPress, extraStyle, extraTextStyle }) => (
+  <TouchableOpacity style={[styles.navButton, extraStyle]} onPress={() => onPress()}>
     <View style={{ zIndex: 100, flexDirection: 'row', alignItems: 'center' }}>
       {iconName && (
         <Ionicons name={iconName} size={24} color={Colors.bgColor_FFFFFF} />
@@ -36,7 +36,7 @@ export const CommonButton = ({ iconName, title, onPress, extraTextStyle }) => (
         style={[
           styles.text20,
           { marginLeft: 10, marginTop: -3 },
-          { ...extraTextStyle }
+          extraTextStyle
         ]}
       >
         {title}
