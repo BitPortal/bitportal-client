@@ -153,7 +153,7 @@ export default class TransferAssetsForm extends Component {
       symbol: this.state.symbol,
       toAccount: this.state.toAccount,
       memo: this.state.memo,
-      contract: this.props.activeAsset.get('balance'),
+      contract: this.props.activeAsset.get('contract'),
       componentId: this.props.componentId
     })
   }

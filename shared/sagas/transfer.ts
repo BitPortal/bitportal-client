@@ -24,13 +24,15 @@ function* transfer(action: Action<TransferParams>) {
     const memo = action.payload.memo || ''
     const password = action.payload.password
     const contract = action.payload.contract
+    assert(contract, 'No contract!')
 
     const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${fromAccount}`, true)
     const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
     const wifs = yield call(getEOSWifsByInfo, password, accountInfo, [permission])
     const keyProvider = wifs.map((item: any) => item.wif)
     const eos = yield call(initEOS, { keyProvider })
-    const transactionResult = yield call(eos.transfer, { quantity, memo, from: fromAccount, to: toAccount })
+    const contractAccount = yield call(eos.contract, contract)
+    const transactionResult = yield call(contractAccount.transfer, { quantity, memo, from: fromAccount, to: toAccount })
 
     yield put(actions.transferSucceeded(transactionResult))
     yield put(reset('transferAssetsForm'))
