@@ -8,10 +8,10 @@ const sortFilterListSelector = (state: RootState) => state.ticker.get('sortFilte
 const baseAssetSelector = (state: RootState) => state.ticker.get('baseAsset')
 const searchTermSelector = (state: RootState) => state.ticker.get('searchTerm')
 
-export const eosPriceSelector = (state: RootState) => (state.ticker.get('dataSource').get('BINANCE_SPOT_EOS_USDT')
+export const eosPriceSelector = (state: RootState) => (state.ticker.get('dataSource').get('POLONIEX_SPOT_EOS_USDT')
   ? state.ticker
     .get('dataSource')
-    .get('BINANCE_SPOT_EOS_USDT')
+    .get('POLONIEX_SPOT_EOS_USDT')
     .get('price_last')
   : 0)
 
