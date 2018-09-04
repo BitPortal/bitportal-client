@@ -9,7 +9,7 @@ import DelegateBandwidthForm from 'components/Form/DelegateBandwidthForm'
 import { formatMemorySize } from 'utils/format'
 import Loading from 'components/Loading'
 import styles from './styles'
-import messages from './messages'
+import messages from 'resources/messages'
 import Progress from '../Progress'
 
 @connect(

@@ -11,7 +11,7 @@ import { eosAccountSelector } from 'selectors/eosAccount'
 import * as contactActions from 'actions/contact'
 import DeleteButton from './DeleteButton'
 import styles from './styles'
-import messages from './messages'
+import messages from 'resources/messages'
 
 @connect(
   state => ({

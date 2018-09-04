@@ -12,7 +12,7 @@ import { eosAccountSelector } from 'selectors/eosAccount'
 import { getPasswordStrength } from 'utils'
 import * as keystoreActions from 'actions/keystore'
 import Colors from 'resources/colors'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 export const errorMessages = (error, messages) => {

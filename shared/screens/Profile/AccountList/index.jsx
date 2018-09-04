@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import WalletCard from './WalletCard'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 @connect(

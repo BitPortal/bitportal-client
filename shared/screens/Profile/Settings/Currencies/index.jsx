@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import { bindActionCreators } from 'redux'
 import * as currencyActions from 'actions/currency'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 @connect(

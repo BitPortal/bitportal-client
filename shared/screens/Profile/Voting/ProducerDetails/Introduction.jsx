@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 @connect(

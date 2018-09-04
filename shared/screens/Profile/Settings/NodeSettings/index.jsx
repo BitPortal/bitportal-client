@@ -18,7 +18,7 @@ import {
   customNodesSelector
 } from 'selectors/eosNode'
 import { SwipeItem } from './NodeItem'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 @connect(

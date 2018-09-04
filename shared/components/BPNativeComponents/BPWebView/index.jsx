@@ -18,7 +18,7 @@ import NavigationBar, {
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
 import styles from './styles'
-import messages from './messages'
+import messages from 'resources/messages'
 
 const Loading = ({ text }) => (
   <View style={[styles.loadContainer, styles.center]}>

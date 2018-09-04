@@ -8,7 +8,7 @@ import { Text, View, ScrollView, TextInput } from 'react-native'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import styles from './styles'
-import messages from './messages'
+import messages from 'resources/messages'
 
 @connect(
   state => ({

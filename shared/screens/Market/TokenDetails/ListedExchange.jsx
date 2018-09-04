@@ -6,7 +6,7 @@ import { EXCHANGE_NAMES, ASSET_FRACTION } from 'constants/market'
 import { FormattedNumber } from 'react-intl'
 
 import styles from './styles'
-import messages from './messages'
+import messages from 'resources/messages'
 
 @connect(
   state => ({

@@ -21,9 +21,9 @@ import {
 import { formatMemorySize, formatCycleTime } from 'utils/format'
 import { onEventWithLabel } from 'utils/analytics'
 import { ASSETS_EOS_RESOURCE_CPU, ASSETS_EOS_RESOURCE_NET, ASSETS_EOS_RESOURCE_RAM } from 'constants/analytics'
+import messages from 'resources/messages'
 import ResourcesCard from './ResourcesCard'
 import styles from './styles'
-import messages from 'resources/messages'
 
 @connect(
   state => ({

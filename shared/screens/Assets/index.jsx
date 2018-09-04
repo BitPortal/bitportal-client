@@ -33,7 +33,7 @@ import { ASSETS_QR, ASSETS_TOKEN_DETAIL, ASSETS_EOS_RESOURCE, ASSETS_ADD_TOKEN }
 import { onEventWithLabel } from 'utils/analytics'
 import Dialog from 'components/Dialog'
 import styles from './styles'
-import messages from './messages'
+import messages from 'resources/messages'
 import AccountList from './AccountList'
 import EnableAssets from './EnableAssets'
 import BalanceList from './BalanceList'

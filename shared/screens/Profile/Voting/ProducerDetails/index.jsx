@@ -7,7 +7,7 @@ import { IntlProvider } from 'react-intl'
 import Header from './Header'
 import Introduction from './Introduction'
 import Contacts from './Contacts'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 @connect(

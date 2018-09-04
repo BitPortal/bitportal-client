@@ -11,7 +11,7 @@ import Alert from 'components/Alert'
 import Loading from 'components/Loading'
 import AccountCard from './AccountCard'
 import styles from './styles'
-import messages from './messages'
+import messages from 'resources/messages'
 
 export const errorMessages = (error, messages) => {
   if (!error) { return null }

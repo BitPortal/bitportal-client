@@ -10,7 +10,7 @@ import TransferAssetsForm from 'components/Form/TransferAssetsForm'
 import { checkCamera } from 'utils/permissions'
 import Loading from 'components/Loading'
 import styles from './styles'
-import messages from './messages'
+import messages from 'resources/messages'
 
 @connect(
   state => ({

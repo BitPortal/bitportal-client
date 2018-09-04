@@ -9,7 +9,7 @@ import { tokenTickerSelector } from 'selectors/ticker'
 import Images from 'resources/images'
 
 import styles from './styles'
-import messages from './messages'
+import messages from 'resources/messages'
 
 const Tag = props => (
   <View style={styles.tag}>

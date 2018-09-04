@@ -13,7 +13,7 @@ import LinearGradientContainer from 'components/LinearGradientContainer'
 import Dialog from 'components/Dialog'
 import { EOS_EXPLORER_URL } from 'constants/env'
 import Toast from 'components/Toast'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 @connect(

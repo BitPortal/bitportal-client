@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import { bindActionCreators } from 'redux'
 import * as eosAssetActions from 'actions/eosAsset'
-import messages from './messages'
+import messages from 'resources/messages'
 
 const styles = StyleSheet.create({
   searchContainer: {

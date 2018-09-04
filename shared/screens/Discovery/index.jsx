@@ -7,10 +7,10 @@ import { bindActionCreators } from 'redux'
 import * as newsActions from 'actions/news'
 import * as dAppActions from 'actions/dApp'
 import { IntlProvider } from 'react-intl'
+import messages from 'resources/messages'
 import NewsList from './NewsList'
 import NewsBanner from './NewsBanner'
 import DappStore from './DappStore'
-import messages from 'resources/messages'
 import styles from './styles'
 
 const PAGE_LENGTH = 10

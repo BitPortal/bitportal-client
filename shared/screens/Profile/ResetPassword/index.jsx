@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import Loading from 'components/Loading'
 import styles from './styles'
-import messages from './messages'
+import messages from 'resources/messages'
 
 @connect(
   state => ({

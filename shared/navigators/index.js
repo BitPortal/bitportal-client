@@ -50,7 +50,7 @@ import ExportPrivateKey from 'screens/Profile/ExportPrivateKey'
 import TransactionHistory from 'screens/Profile/TransactionHistory'
 import Images from 'resources/images'
 import Colors from 'resources/colors'
-import messages from './messages'
+import messages from 'resources/messages'
 
 Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setDefaultOptions({

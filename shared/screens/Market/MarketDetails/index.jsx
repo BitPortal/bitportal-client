@@ -12,7 +12,7 @@ import Colors from 'resources/colors'
 import CoinInfoCard from './CoinInfoCard'
 import MarketList from './MarketList'
 import styles from './styles'
-import messages from './messages'
+import messages from 'resources/messages'
 
 const ButtonElement = ({ Title, onPress }) => (
   <TouchableOpacity

@@ -15,7 +15,7 @@ import * as eosAccountActions from 'actions/eosAccount'
 import Alert from 'components/Alert'
 import Colors from 'resources/colors'
 import { IntlProvider, FormattedMessage } from 'react-intl'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 export const errorMessages = (error, messages) => {

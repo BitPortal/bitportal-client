@@ -18,7 +18,7 @@ import * as walletActions from 'actions/wallet'
 import * as eosAccountActions from 'actions/eosAccount'
 import { onEventWithMap } from 'utils/analytics'
 import { ACCOUNT_EOS_CREATE } from 'constants/analytics'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 export const errorMessages = (error, messages) => {

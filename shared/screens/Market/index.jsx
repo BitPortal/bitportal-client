@@ -18,9 +18,9 @@ import {
   MARKET_TOKEN_DETAIL
 } from 'constants/analytics'
 import { onEventWithLabel } from 'utils/analytics'
+import messages from 'resources/messages'
 import ExchangeList from './ExchangeList'
 import { Quotes } from './Quotes'
-import messages from 'resources/messages'
 import styles from './styles'
 
 @connect(

@@ -14,7 +14,7 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import Prompt from 'components/Prompt'
 import Alert from 'components/Alert'
-import messages from './messages'
+import messages from 'resources/messages'
 
 const styles = EStyleSheet.create({
   buyRAMForm: {

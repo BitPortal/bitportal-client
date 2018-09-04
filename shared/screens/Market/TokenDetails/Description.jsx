@@ -4,7 +4,7 @@ import { Text, View } from 'react-native'
 import AccordionPanel from 'components/AccordionPanel'
 import { IntlProvider } from 'react-intl'
 import styles from './styles'
-import messages from './messages'
+import messages from 'resources/messages'
 
 @connect(
   state => ({

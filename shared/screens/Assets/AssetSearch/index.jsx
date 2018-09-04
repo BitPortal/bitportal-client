@@ -11,7 +11,7 @@ import * as eosAssetActions from 'actions/eosAsset'
 import { eosAssetSearchListSelector } from 'selectors/eosAsset'
 import Images from 'resources/images'
 import SearchBar from './SearchBar'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 const AssetElement = ({ item, onValueChange }) => (

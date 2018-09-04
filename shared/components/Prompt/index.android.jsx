@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import RNDialog from 'react-native-dialog'
 import { connect } from 'react-redux'
-import messages from './messages'
+import messages from 'resources/messages'
 
 @connect(
   state => ({

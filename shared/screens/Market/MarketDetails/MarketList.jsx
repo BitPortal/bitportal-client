@@ -6,7 +6,7 @@ import { FormattedNumber, IntlProvider, FormattedMessage } from 'react-intl'
 import Colors from 'resources/colors'
 import { EXCHANGE_NAMES, ASSET_FRACTION } from 'constants/market'
 import * as tickerActions from 'actions/ticker'
-import messages from './messages'
+import messages from 'resources/messages'
 
 import styles from './styles'
 
