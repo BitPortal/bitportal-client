@@ -43,7 +43,7 @@ function* getTransactionsSucceeded(action: Action<TransactionsResult>) {
     if (!loadAll) {
       const activeAssetTransactions = yield select((state: RootState) => activeAssetTransactionsSelector(state))
 
-      if (!activeAssetTransactions.size) {
+      if (activeAssetTransactions.size < 10) {
         const eosAccountName = yield select((state: RootState) => eosAccountNameSelector(state))
         const offset =  yield select((state: RootState) => state.transaction.get('offset'))
         const position = yield select((state: RootState) => state.transaction.get('position'))
