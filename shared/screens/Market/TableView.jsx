@@ -80,7 +80,6 @@ export class HeaderTitle extends Component {
 
   render() {
     const { messages, sortFilter } = this.props
-    // console.log('TableView sortFilter', sortFilter)
     return (
       <View>
         <View style={[styles.headerTitle]}>

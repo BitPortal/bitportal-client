@@ -87,7 +87,6 @@ export default class MarketDetails extends Component {
 
   // 获得listed exchanges
   onRefresh = () => {
-    console.log('onRefresh called')
     this.props.actions.getPairListedExchangeRequested({
       quote_asset: this.props.quoteAssetFilter,
       base_asset: this.props.baseAsset
@@ -95,12 +94,7 @@ export default class MarketDetails extends Component {
   }
 
   render() {
-    const {
-      baseAsset,
-      quoteAssetFilter,
-      item,
-      locale
-    } = this.props
+    const { baseAsset, quoteAssetFilter, item, locale } = this.props
 
     return (
       <View style={styles.container}>

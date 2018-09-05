@@ -62,7 +62,6 @@ export const searchDappListSelector = createSelector(
 export const sectionedDappListSelector = createSelector(
   searchDappListSelector,
   (resultsList: any) => {
-    console.log(111)
     const sections: any[] = []
     resultsList.forEach((item: any) => {
       const sectionIndex = sections.findIndex(

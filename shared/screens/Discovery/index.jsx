@@ -138,7 +138,6 @@ export default class Discovery extends Component {
       nomore,
       componentId
     } = this.props
-    console.log('this.props.dAppList', this.props.dAppList)
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
