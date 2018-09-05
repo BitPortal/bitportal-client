@@ -8,7 +8,7 @@ const initialState = Immutable.fromJS({
   loaded: false,
   searching: false,
   error: null,
-  selectedAsset: [],
+  toggledAsset: [],
   searchResult: []
 })
 
@@ -26,11 +26,11 @@ export default handleActions(
         .set('error', action.payload)
     },
     [actions.toggleEOSAsset] (state, action) {
-      return state.update('selectedAsset', (v: any) => {
+      return state.update('toggledAsset', (v: any) => {
         const contract = action.payload.contract
         const symbol = action.payload.symbol
         const index = v.findIndex((v: any) => v.get('contract') === contract && v.get('symbol') === symbol)
-        return index !== -1 ? v.delete(index) : v.push(Immutable.fromJS(action.payload)).sortBy((v: any) => v.get('symbol'))
+        return index !== -1 ? v.update(index, (v: any) => v.update('selected', (v: any) => !v).merge(Immutable.fromJS(action.payload))) : v.push(Immutable.fromJS({ ...action.payload, selected: true })).sortBy((v: any) => v.get('symbol'))
       })
     },
     [actions.searchEOSAssetRequested] (state) {
