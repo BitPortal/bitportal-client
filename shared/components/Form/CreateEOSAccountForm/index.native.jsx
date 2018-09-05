@@ -55,7 +55,7 @@ const validate = (values, props) => {
   }
 
   if (!!values.get('eosAccountName') && !validateEOSAccountName(values.get('eosAccountName'))) {
-    errors.eosAccountName = messages[locale].act_fid_plachd_name
+    errors.eosAccountName = messages[locale].act_error_text_invalid_account_name
   }
 
   if (!values.get('password')) {
