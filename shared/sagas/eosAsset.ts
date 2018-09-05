@@ -3,7 +3,7 @@ import { all, call, put, takeEvery, takeLatest, select } from 'redux-saga/effect
 import { Action } from 'redux-actions'
 import * as api from 'utils/api'
 import * as actions from 'actions/eosAsset'
-import { selectedEOSAssetSelector } from 'selectors/eosAsset'
+import { toggledEOSAssetSelector } from 'selectors/eosAsset'
 import storage from 'utils/storage'
 
 function* getEOSAssetRequested(action: Action<GetEOSAssetParams>) {
@@ -33,8 +33,8 @@ function* searchEOSAssetRequested(action: Action<string>) {
 }
 
 function* toggleEOSAsset() {
-  const selectedEOSAsset = yield select((state: RootState) => selectedEOSAssetSelector(state))
-  yield call(storage.setItem, 'bitportal_selectedEOSAsset', selectedEOSAsset.toJS(), true)
+  const toggledEOSAsset = yield select((state: RootState) => toggledEOSAssetSelector(state))
+  yield call(storage.setItem, 'bitportal_toggledEOSAsset', toggledEOSAsset.toJS(), true)
 }
 
 export default function* eosAssetSaga() {

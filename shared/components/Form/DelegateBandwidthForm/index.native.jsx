@@ -12,6 +12,7 @@ import Balance from 'components/Balance'
 import { IntlProvider } from 'react-intl'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { eosAccountSelector } from 'selectors/eosAccount'
+import { eosBalanceSelector } from 'selectors/balance'
 import Prompt from 'components/Prompt'
 import Alert from 'components/Alert'
 import messages from './messages'
@@ -43,8 +44,7 @@ export const errorMessages = (error, messages) => {
 }
 
 const validate = (values, props) => {
-  const { eosAccount } = props
-  const eosBalance = eosAccount.getIn(['data', 'core_liquid_balance']) ? eosAccount.getIn(['data', 'core_liquid_balance']).split(' ')[0] : 0
+  const { eosAccount, eosBalance } = props
   const netWeight = eosAccount.getIn(['data', 'total_resources', 'net_weight']) ? eosAccount.getIn(['data', 'total_resources', 'net_weight']).split(' ')[0] : 0
   const cpuWeight = eosAccount.getIn(['data', 'total_resources', 'cpu_weight']) ? eosAccount.getIn(['data', 'total_resources', 'cpu_weight']).split(' ')[0] : 0
 
@@ -78,6 +78,7 @@ const validate = (values, props) => {
   state => ({
     locale: state.intl.get('locale'),
     eosAccount: eosAccountSelector(state),
+    eosBalance: eosBalanceSelector(state),
     bandwidth: state.bandwidth
   }),
   dispatch => ({
@@ -128,14 +129,13 @@ export default class DelegateBandwidthForm extends Component {
   }
 
   render() {
-    const { handleSubmit, invalid, pristine, bandwidth, locale, eosAccount } = this.props
+    const { handleSubmit, invalid, pristine, bandwidth, locale, eosAccount, eosBalance } = this.props
     const delegating = bandwidth.get('delegating')
     const undelegating = bandwidth.get('undelegating')
     const showSuccess = bandwidth.get('showSuccess')
     const loading = delegating || undelegating
     const error = bandwidth.get('error')
     const disabled = invalid || pristine || loading
-    const eosBalance = eosAccount.getIn(['data', 'core_liquid_balance']) ? eosAccount.getIn(['data', 'core_liquid_balance']).split(' ')[0] : 0
     const netWeight = eosAccount.getIn(['data', 'total_resources', 'net_weight']) ? eosAccount.getIn(['data', 'total_resources', 'net_weight']).split(' ')[0] : 0
     const cpuWeight = eosAccount.getIn(['data', 'total_resources', 'cpu_weight']) ? eosAccount.getIn(['data', 'total_resources', 'cpu_weight']).split(' ')[0] : 0
     const availableBalance = this.state.activeForm === 'Delegate' ? eosBalance : (this.props.resource === 'net' ? netWeight : cpuWeight)

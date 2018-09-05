@@ -12,6 +12,7 @@ import Balance from 'components/Balance'
 import { IntlProvider } from 'react-intl'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { eosAccountSelector } from 'selectors/eosAccount'
+import { eosBalanceSelector } from 'selectors/balance'
 import Prompt from 'components/Prompt'
 import Alert from 'components/Alert'
 import messages from './messages'
@@ -43,8 +44,7 @@ export const errorMessages = (error, messages) => {
 }
 
 const validate = (values, props) => {
-  const { eosAccount } = props
-  const eosBalance = eosAccount.getIn(['data', 'core_liquid_balance']) ? eosAccount.getIn(['data', 'core_liquid_balance']).split(' ')[0] : 0
+  const { eosAccount, eosBalance } = props
   const ramQuota = eosAccount.getIn(['data', 'ram_quota']) || 0
   const ramUsage = eosAccount.getIn(['data', 'ram_usage']) || 0
 
@@ -73,6 +73,7 @@ const validate = (values, props) => {
   state => ({
     locale: state.intl.get('locale'),
     eosAccount: eosAccountSelector(state),
+    eosBalance: eosBalanceSelector(state),
     ram: state.ram
   }),
   dispatch => ({
@@ -120,14 +121,13 @@ export default class TradeRAMForm extends Component {
   }
 
   render() {
-    const { handleSubmit, invalid, pristine, ram, locale, eosAccount } = this.props
+    const { handleSubmit, invalid, pristine, ram, locale, eosAccount, eosBalance } = this.props
     const buying = ram.get('buying')
     const selling = ram.get('selling')
     const showSuccess = ram.get('showSuccess')
     const loading = buying || selling
     const error = ram.get('error')
     const disabled = invalid || pristine || loading
-    const eosBalance = eosAccount.getIn(['data', 'core_liquid_balance']) ? eosAccount.getIn(['data', 'core_liquid_balance']).split(' ')[0] : '0.0000'
     const availableRAM = (eosAccount.getIn(['data', 'ram_quota']) && eosAccount.getIn(['data', 'ram_usage'])) ? (eosAccount.getIn(['data', 'ram_quota']) - eosAccount.getIn(['data', 'ram_usage'])) : 0
     const availableBalance = this.state.activeForm === 'Buy' ? eosBalance : availableRAM
     const availableBalanceUnit = this.state.activeForm === 'Buy' ? 'EOS' : 'Bytes'

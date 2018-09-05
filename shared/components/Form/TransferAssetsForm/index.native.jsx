@@ -41,8 +41,8 @@ export const errorMessages = (error, messages) => {
 }
 
 const validate = (values, props) => {
-  const { activeAsset } = props
-  const balance = activeAsset.get('balance')
+  const { activeAssetBalance } = props
+  const balance = activeAssetBalance
 
   const errors = {}
 
