@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Platform } from 'react-native'
 import { Field, reduxForm } from 'redux-form/immutable'
 import { SearchContainer, SearchField } from 'components/Form'
 import Colors from 'resources/colors'
@@ -26,7 +25,7 @@ export default class SearchEOSAssetForm extends Component {
         <Field
           name="searchTerm"
           component={SearchField}
-          placeholder={Platform.OS === 'ios' ? messages[locale].search : null}
+          placeholder={messages[locale].search}
           placeholderTextColor={Colors.textColor_181_181_181}
           numberOfLines={1}
           leftContent={<Ionicons name="ios-search" size={24} color={Colors.textColor_181_181_181} style={{ paddingHorizontal: 10, paddingRight: 10 }} />}
