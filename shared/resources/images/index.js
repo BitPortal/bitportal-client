@@ -57,7 +57,8 @@ const Images = {
   backup_group: require('./Backup_Group.png'),
   list_add: require('./list_add.png'),
   list_remove: require('./list_remove.png'),
-  discovery_more: require('./Discovery_more.jpg')
+  discovery_more: require('./Discovery_more.jpg'),
+  list_favorite: require('./list_favorite.png')
 }
 
 export default Images

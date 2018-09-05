@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { Navigation } from 'react-native-navigation'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import Alert from 'components/Alert'
 import { injectIntl, IntlProvider } from 'react-intl'
 import Images from 'resources/images'
@@ -121,11 +120,10 @@ export default class DappElement extends Component {
               }
             />
             {item.get('selected') ? (
-              <View style={styles.favoriteStar}>
-                <Ionicons
-                  name="md-star"
-                  size={20}
-                  style={{ opacity: 0.9, color: 'yellow' }}
+              <View style={styles.favoriteWrapper}>
+                <Image
+                  style={styles.favoriteStar}
+                  source={Images.list_favorite}
                 />
               </View>
             ) : null}
