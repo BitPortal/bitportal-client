@@ -9,7 +9,7 @@
     "other": "其他",
     "no_login": "请先创建或导入钱包",
     "third_party_title": "您将访问第三方DApp {app}\n",
-    "third_party_sub": "提示：您将访问第三方DApp{app}，该页面及其功能由{app}直接向您提供，您将同意并遵守由该第三方DApp{app}的《隐私政策》及《用户协议》。{app}将直接并独立的向您承担相应责任。",
+    "third_party_sub": "提示：您将访问第三方DApp {app}，该页面及其功能由{app}直接向您提供，您将同意并遵守由该第三方DApp {app}的《隐私政策》及《用户协议》。{app}将直接并独立的向您承担相应责任。",
     "favorite_limit": "您最多只能添加8个收藏"
   },
 
@@ -22,8 +22,8 @@
     "news": "News",
     "other": "Others",
     "no_login": "Please create or import an EOS account",
-    "third_party_title": "You will visit the third party DApp{app}\n",
-    "third_party_sub": "You will visit the third party DApp{app}. This page and its functions are provided directly to you by {app}. By visiting, you agree to comply with the Privacy Policy and User Agreement of the third party DApp {app}.  {app} will be directly and independently accountable to you.",
+    "third_party_title": "You will visit the third party DApp {app}\n",
+    "third_party_sub": "You will visit the third party DApp {app}. This page and its functions are provided directly to you by {app}. By visiting, you agree to comply with the Privacy Policy and User Agreement of the third party DApp {app}. {app} will be directly and independently accountable to you.",
     "favorite_limit": "You can only add 8 favorites"
   }
 }

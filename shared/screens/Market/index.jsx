@@ -82,7 +82,6 @@ export default class Market extends Component {
   }
 
   pressListItem = (item) => {
-    console.log('pressed')
     //Umeng analytics
     onEventWithLabel(MARKET_TOKEN_DETAIL, '行情 - token详情')
     const baseAsset = item.get('base_asset')
