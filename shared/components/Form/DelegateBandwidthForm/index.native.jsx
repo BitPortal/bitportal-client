@@ -38,9 +38,17 @@ export const errorMessages = (error, messages) => {
       return messages.dlgt_popup_title_mousg
     case 'transaction exceeded the current CPU usage limit imposed on the transaction':
       return messages.dlgt_popup_title_exlimit
+    case 'EOS System Error':
+      return messages.dlgt_popup_title_eossystem
     default:
       return messages.dlgt_popup_title_trafail
   }
+}
+
+export const errorMessageDetail = (error) => {
+  if (!error || typeof error !== 'object') { return null }
+
+  return error.detail
 }
 
 const validate = (values, props) => {
@@ -159,7 +167,7 @@ export default class DelegateBandwidthForm extends Component {
               onPress={handleSubmit(this.submit)}
               text={this.state.activeForm === 'Delegate' ? messages[locale].dlgt_popup_title_dlgt : messages[locale].dlgt_popup_title_undlgt}
             />
-            <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearBandwidthError} />
+            <Alert message={errorMessages(error, messages[locale])} subMessage={errorMessageDetail(error)} dismiss={this.props.actions.clearBandwidthError} />
             <Alert message={!!showSuccess && messages[locale].dlgt_popup_title_trasucc} dismiss={this.props.actions.hideSuccessModal} />
             <Prompt
               isVisible={this.state.isVisible}

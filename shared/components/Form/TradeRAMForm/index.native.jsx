@@ -38,9 +38,17 @@ export const errorMessages = (error, messages) => {
       return messages.tra_popup_title_mousg
     case 'transaction exceeded the current CPU usage limit imposed on the transaction':
       return messages.tra_popup_title_exlimit
+    case 'EOS System Error':
+      return messages.tra_popup_title_eossystem
     default:
       return messages.tra_popup_title_trafail
   }
+}
+
+export const errorMessageDetail = (error) => {
+  if (!error || typeof error !== 'object') { return null }
+
+  return error.detail
 }
 
 const validate = (values, props) => {
@@ -157,7 +165,7 @@ export default class TradeRAMForm extends Component {
               onPress={handleSubmit(this.submit)}
               text={this.state.activeForm === 'Buy' ? messages[locale].tra_popup_title_buy : messages[locale].tra_popup_title_sell}
             />
-            <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearRAMError} />
+            <Alert message={errorMessages(error, messages[locale])} subMessage={errorMessageDetail(error)} dismiss={this.props.actions.clearRAMError} />
             <Alert message={!!showSuccess && messages[locale].tra_popup_title_trasucc} dismiss={this.props.actions.hideSuccessModal} />
             <Prompt
               isVisible={this.state.isVisible}

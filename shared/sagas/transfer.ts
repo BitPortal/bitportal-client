@@ -9,7 +9,7 @@ import { getEOSBalanceRequested, getEOSAssetBalanceRequested } from 'actions/bal
 import { initEOS } from 'core/eos'
 import { getEOSWifsByInfo } from 'core/key'
 import secureStorage from 'utils/secureStorage'
-import { getErrorMessage } from 'utils'
+import { getEOSErrorMessage } from 'utils'
 import { reset } from 'redux-form/immutable'
 import { push } from 'utils/location'
 
@@ -51,7 +51,7 @@ function* transfer(action: Action<TransferParams>) {
       yield put(getEOSAssetBalanceRequested({ code: contract, eosAccountName: fromAccount }))
     }
   } catch (e) {
-    yield put(actions.transferFailed(getErrorMessage(e)))
+    yield put(actions.transferFailed(getEOSErrorMessage(e)))
   }
 }
 
