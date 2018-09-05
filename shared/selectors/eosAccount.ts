@@ -116,6 +116,6 @@ export const eosCoreLiquidBalanceSelector = createSelector(
       return Immutable.fromJS({ balance, symbol, contract, blockchain })
     }
 
-    return null
+    return Immutable.fromJS({ balance: '0.0000', symbol: 'EOS', contract: 'eosio.token', blockchain: 'EOS' })
   }
 )

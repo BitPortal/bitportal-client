@@ -16,7 +16,8 @@ const initialState = Immutable.fromJS({
   detailError: null,
   lastIrreversibleBlock: 0,
   loadAll: false,
-  refresh: true
+  refresh: true,
+  activeAssetIncrements: 0
 })
 
 export default handleActions({
@@ -27,12 +28,19 @@ export default handleActions({
   },
   [actions.getTransactionsSucceeded] (state, action) {
     const refresh = state.get('refresh')
+    const actions = action.payload.actions
+    const activeAssetIncrements = action.payload.activeAssetIncrements
+    const hasMore = action.payload.hasMore
+    const position = action.payload.position
+    const lastIrreversibleBlock = action.payload.lastIrreversibleBlock
 
-    return state.set('loaded', true).set('loading', false)
-      .set('hasMore', action.payload.hasMore)
-      .set('position', action.payload.position)
-      .set('lastIrreversibleBlock', action.payload.lastIrreversibleBlock)
-      .update('data', (v: any) => refresh ? Immutable.fromJS(action.payload.actions) : v.concat(Immutable.fromJS(action.payload.actions)))
+    return state.set('loaded', true)
+      .set('loading', false)
+      .set('hasMore', hasMore)
+      .set('position', position)
+      .set('activeAssetIncrements', activeAssetIncrements)
+      .set('lastIrreversibleBlock', lastIrreversibleBlock)
+      .update('data', (v: any) => refresh ? Immutable.fromJS(actions) : v.concat(Immutable.fromJS(actions)))
   },
   [actions.getTransactionsFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)
