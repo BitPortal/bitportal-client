@@ -8,7 +8,7 @@ import { initEOS } from 'core/eos'
 import { getEOSWifsByInfo } from 'core/key'
 import secureStorage from 'utils/secureStorage'
 import { reset } from 'redux-form/immutable'
-import { getErrorMessage } from 'utils'
+import { getEOSErrorMessage } from 'utils'
 
 function* delegateBandwidthRequested(action: Action<DelegateBandwidthParams>) {
   if (!action.payload) return
@@ -45,7 +45,7 @@ function* delegateBandwidthRequested(action: Action<DelegateBandwidthParams>) {
     yield delay(2000)
     yield put(getEOSAccountRequested({ eosAccountName }))
   } catch (e) {
-    yield put(actions.delegateBandwidthFailed(getErrorMessage(e)))
+    yield put(actions.delegateBandwidthFailed(getEOSErrorMessage(e)))
   }
 }
 
@@ -82,7 +82,7 @@ function* undelegateBandwidthRequested(action: Action<UndelegateBandwidthParams>
     yield put(reset('delegateBandwidthForm'))
     yield put(getEOSAccountRequested({ eosAccountName }))
   } catch (e) {
-    yield put(actions.undelegateBandwidthFailed(getErrorMessage(e)))
+    yield put(actions.undelegateBandwidthFailed(getEOSErrorMessage(e)))
   }
 }
 
