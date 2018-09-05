@@ -29,15 +29,17 @@ export const errorMessages = (error, messages) => {
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
       return messages.snd_title_error_psw
+    case 'EOS System Error':
+      return messages.snd_title_error_eossystem
     default:
-      if (!~String(message).indexOf('net usage of transaction is too high')) {
-        return messages.snd_title_error_hinet
-      } else if (!~String(message).indexOf('cpu usage of transaction is too high')) {
-        return messages.snd_title_error_hicpu
-      }
-
       return messages.snd_txtbox_tras_err
   }
+}
+
+export const errorMessageDetail = (error) => {
+  if (!error || typeof error !== 'object') { return null }
+
+  return error.detail
 }
 
 const validate = (values, props) => {
@@ -200,7 +202,7 @@ export default class TransferAssetsForm extends Component {
             component={TextAreaField}
           />
           <SubmitButton disabled={disabled} onPress={handleSubmit(this.showModal)} text={messages[locale].snd_button_name_nxt} />
-          <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearTransferError} delay={500} />
+          <Alert message={errorMessages(error, messages[locale])} subMessage={errorMessageDetail(error)} dismiss={this.props.actions.clearTransferError} delay={500} />
           <TransferCard
             isVisible={showModal}
             dismiss={this.closeModal}

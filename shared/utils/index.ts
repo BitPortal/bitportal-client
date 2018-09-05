@@ -76,6 +76,54 @@ export const getErrorMessage = (error: any) => {
   return error.message || 'unknown error'
 }
 
+export const getEOSErrorMessage = (error: any) => {
+  if (
+    (typeOf(error) === 'Error' || typeOf(error) === 'Object')
+      && error.message
+      && error.message.indexOf('code') !== -1
+      && error.message.indexOf('name') !== -1
+      && error.message.indexOf('what') !== -1
+      && error.message.indexOf('details') !== -1
+  ) {
+    const message = 'EOS System Error'
+    const errorObject = JSON.parse(error.message)
+    const eosError = errorObject.error
+    if (!eosError) return { message: 'EOS System Error', detail: error }
+
+    const code = eosError.code
+    const name = eosError.name
+    const what = eosError.what
+    const details = eosError.details
+    const detailsMessages =  details && details[0].message
+    const detail = `[${code}] ${name}, ${what}, ${detailsMessages}.`
+    return { message, detail }
+  }
+
+  if (
+    typeof error === 'string'
+      && error
+      && error.indexOf('code') !== -1
+      && error.indexOf('name') !== -1
+      && error.indexOf('what') !== -1
+      && error.indexOf('details') !== -1
+  ) {
+    const message = 'EOS System Error'
+    const errorObject = JSON.parse(error)
+    const eosError = errorObject.error
+    if (!eosError) return { message: 'EOS System Error', detail: error }
+
+    const code = eosError.code
+    const name = eosError.name
+    const what = eosError.what
+    const details = eosError.details
+    const detailsMessages = details && details[0].message
+    const detail = `[${code}] ${name}, ${what}, ${detailsMessages}.`
+    return { message, detail }
+  }
+
+  return error.message || 'unknown error'
+}
+
 export const encodeKey = (...elements: any[]) => {
   const key = JSON.stringify([...elements])
   const keyTrim = key.substring(1, key.length - 1)

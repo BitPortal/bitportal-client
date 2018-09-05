@@ -4,7 +4,7 @@ import { Action } from 'redux-actions'
 import * as actions from 'actions/voting'
 import { getEOSAccountRequested } from 'actions/eosAccount'
 import secureStorage from 'utils/secureStorage'
-import { getErrorMessage } from 'utils'
+import { getEOSErrorMessage } from 'utils'
 import { getEOSWifsByInfo } from 'core/key'
 import { initEOS, sortProducers } from 'core/eos'
 
@@ -66,7 +66,7 @@ function* votingRequested(action: Action<VotingParams>) {
     yield put(actions.votingSucceeded(producers))
     yield put(getEOSAccountRequested({ eosAccountName }))
   } catch (e) {
-    yield put(actions.votingFailed(getErrorMessage(e)))
+    yield put(actions.votingFailed(getEOSErrorMessage(e)))
   }
 }
 

@@ -8,7 +8,7 @@ import { initEOS } from 'core/eos'
 import { getEOSWifsByInfo } from 'core/key'
 import secureStorage from 'utils/secureStorage'
 import { reset } from 'redux-form/immutable'
-import { getErrorMessage } from 'utils'
+import { getEOSErrorMessage } from 'utils'
 
 function* buyRAMRequested(action: Action<BuyRAMParams>) {
   if (!action.payload) return
@@ -34,7 +34,7 @@ function* buyRAMRequested(action: Action<BuyRAMParams>) {
     yield put(reset('tradeRAMForm'))
     yield put(getEOSAccountRequested({ eosAccountName }))
   } catch (e) {
-    yield put(actions.buyRAMFailed(getErrorMessage(e)))
+    yield put(actions.buyRAMFailed(getEOSErrorMessage(e)))
   }
 }
 
@@ -62,7 +62,7 @@ function* sellRAMRequested(action: Action<SellRAMParams>) {
     yield delay(2000)
     yield put(getEOSAccountRequested({ eosAccountName }))
   } catch (e) {
-    yield put(actions.sellRAMFailed(getErrorMessage(e)))
+    yield put(actions.sellRAMFailed(getEOSErrorMessage(e)))
   }
 }
 
@@ -79,7 +79,7 @@ function* getRAMMarketRequested() {
 
     yield put(actions.getRAMMarketSucceeded(data))
   } catch (e) {
-    yield put(actions.getRAMMarketFailed(getErrorMessage(e)))
+    yield put(actions.getRAMMarketFailed(getEOSErrorMessage(e)))
   }
 }
 
