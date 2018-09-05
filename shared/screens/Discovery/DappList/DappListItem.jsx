@@ -35,7 +35,7 @@ export default class DappListItem extends React.PureComponent {
 
   toggleFavorite = (item) => {
     const { favoriteDapps, locale } = this.props
-    if (favoriteDapps.toJS().length > 8 && !item.get('selected')) {
+    if (favoriteDapps.toJS().length >= 8 && !item.get('selected')) {
       return Toast(messages[locale].favorite_limit, 2000, 0)
     } else {
       this.props.showModal()
