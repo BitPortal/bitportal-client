@@ -157,6 +157,8 @@ export default class AssetChart extends Component {
 
   componentDidMount() {
     this.onRefresh()
+    const { activeAsset, eosAccountName } = this.props
+    this.props.actions.getEOSAssetBalanceRequested({ code: activeAsset.get('contract'), eosAccountName })
   }
 
   render() {
