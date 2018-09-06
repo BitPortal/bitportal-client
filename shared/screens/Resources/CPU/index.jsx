@@ -9,8 +9,8 @@ import { eosAccountSelector } from 'selectors/eosAccount'
 import DelegateBandwidthForm from 'components/Form/DelegateBandwidthForm'
 import { formatCycleTime } from 'utils/format'
 import Loading from 'components/Loading'
+import messages from 'resources/messages'
 import styles from './styles'
-import messages from './messages'
 import Progress from '../Progress'
 
 @connect(

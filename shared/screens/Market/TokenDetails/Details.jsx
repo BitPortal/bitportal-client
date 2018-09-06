@@ -4,8 +4,8 @@ import { Text, View } from 'react-native'
 import AccordionPanel from 'components/AccordionPanel'
 import { MARKET_DETAIL_KEYS } from 'constants/market'
 import { IntlProvider, FormattedMessage, FormattedNumber } from 'react-intl'
+import messages from 'resources/messages'
 import styles from './styles'
-import messages from './messages'
 
 @connect(
   state => ({

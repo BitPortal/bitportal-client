@@ -11,7 +11,7 @@ import RecordItem from 'screens/Assets/AssetChart/RecordItem'
 import { RecyclerListView, LayoutProvider } from 'recyclerlistview'
 import ImmutableDataProvider from 'utils/immutableDataProvider'
 import { SCREEN_WIDTH } from 'utils/dimens'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 const dataProvider = new ImmutableDataProvider((r1, r2) => r1.get('account_action_seq') !== r2.get('account_action_seq'))

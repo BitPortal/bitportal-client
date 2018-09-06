@@ -17,7 +17,7 @@ import { Field, reduxForm } from 'redux-form/immutable'
 import { FieldItem } from 'components/Form'
 import Colors from 'resources/colors'
 import { SCREEN_WIDTH } from 'utils/dimens'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 const SearchContainer = ({ children }) => (

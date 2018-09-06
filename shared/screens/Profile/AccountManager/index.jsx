@@ -14,7 +14,7 @@ import { onEventWithLabel } from 'utils/analytics'
 import Loading from 'components/Loading'
 import Alert from 'components/Alert'
 import Prompt from 'components/Prompt'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 export const errorMessages = (error, messages) => {

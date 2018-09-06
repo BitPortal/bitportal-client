@@ -4,7 +4,7 @@ import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import Dialog from 'components/Dialog'
 import images from 'resources/images'
-import messages from './messages'
+import messages from 'resources/messages'
 
 const styles = StyleSheet.create({
   container: {

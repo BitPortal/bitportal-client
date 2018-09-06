@@ -15,7 +15,7 @@ import * as eosAccountActions from 'actions/eosAccount'
 import Alert from 'components/Alert'
 import Colors from 'resources/colors'
 import { IntlProvider, FormattedMessage } from 'react-intl'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 export const errorMessages = (error, messages) => {
@@ -33,11 +33,21 @@ export const errorMessages = (error, messages) => {
 
 const validate = (values) => {
   const errors = {}
-
+  const { locale } = this.props
   if (!values.get('password')) {
     errors.password = <FormattedMessage id="import_title_name_pwd" />
-  } else if (!!values.get('password') && values.get('password').length < 6) {
-    errors.password = <FormattedMessage id="import_txtbox_txt_pwdhint1" />
+  }
+
+  if (!!values.get('password') && values.get('password').length < 6) {
+    errors.password = messages[locale].act_fid_error_pw_min_character
+  }
+
+  if (!!values.get('password') && values.get('password').length > 64) {
+    errors.password = messages[locale].act_fid_error_pw_max_character
+  }
+
+  if (!!values.get('passwordHint') && values.get('passwordHint').length > 64) {
+    errors.passwordHint = messages[locale].act_fid_error_pswtp_max_character
   }
 
   if (!values.get('confirmedPassword')) {

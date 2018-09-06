@@ -9,7 +9,7 @@ import * as eosAccountActions from 'actions/eosAccount'
 import * as contactActions from 'actions/contact'
 import { CONTACTS_ADD } from 'constants/analytics'
 import { onEventWithMap } from 'utils/analytics'
-import messages from './messages'
+import messages from 'resources/messages'
 
 const validate = (values) => {
   const errors = {}

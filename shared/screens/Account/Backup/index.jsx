@@ -11,7 +11,7 @@ import Loading from 'components/Loading'
 import Alert from 'components/Alert'
 import LinearGradientContainer from 'components/LinearGradientContainer'
 import * as keystoreActions from 'actions/keystore'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 export const errorMessages = (error, messages) => {

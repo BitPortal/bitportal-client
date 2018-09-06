@@ -2,7 +2,7 @@ import { Component } from 'react'
 import { Alert } from 'react-native'
 import { connect } from 'react-redux'
 
-import messages from './messages'
+import messages from 'resources/messages'
 
 //PROPS: twoButton (设置两个取消，确定按钮的)，onCancel(取消自己的dismiss函数)
 @connect(

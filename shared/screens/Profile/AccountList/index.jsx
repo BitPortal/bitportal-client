@@ -5,8 +5,8 @@ import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { eosAccountSelector } from 'selectors/eosAccount'
+import messages from 'resources/messages'
 import WalletCard from './WalletCard'
-import messages from './messages'
 import styles from './styles'
 
 @connect(

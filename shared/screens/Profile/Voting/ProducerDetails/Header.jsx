@@ -5,7 +5,7 @@ import { IntlProvider, FormattedNumber, FormattedMessage } from 'react-intl'
 import Colors from 'resources/colors'
 import Images from 'resources/images'
 import LinearGradientContainer from 'components/LinearGradientContainer'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 @connect(

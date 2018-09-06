@@ -15,9 +15,9 @@ import LinearGradientContainer from 'components/LinearGradientContainer'
 import { producerListSelector } from 'selectors/producer'
 import { BP_VOTING, BP_INFO } from 'constants/analytics'
 import { onEventWithMap, onEventWithLabel } from 'utils/analytics'
+import messages from 'resources/messages'
 import VotingModal from './VotingModal'
 import ProducerList from './ProducerList'
-import messages from './messages'
 import styles from './styles'
 
 export const errorMessages = (error, messages) => {

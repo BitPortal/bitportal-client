@@ -18,7 +18,7 @@ import Prompt from 'components/Prompt'
 import Alert from 'components/Alert'
 import ContactIcon from 'components/FormRightContent/TransferContact'
 import CurrencyUnit from 'components/FormRightContent/TransferCurrency'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 export const errorMessages = (error, messages) => {

@@ -14,7 +14,7 @@ import Loading from 'components/Loading'
 import { isNewest, showIsLast } from 'utils/update'
 import { MediafaxUrls } from 'constants/mediafax'
 import { validateUrl } from 'utils/validate'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 @connect(

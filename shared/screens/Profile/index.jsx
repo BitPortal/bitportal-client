@@ -12,7 +12,7 @@ import { hasEOSAccountSelector } from 'selectors/wallet'
 import { BITPORTAL_WEBSITE_URL } from 'constants/env'
 import { onEventWithLabel } from 'utils/analytics'
 import { HELP_CENTER, PROFILE } from 'constants/analytics'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 @connect(

@@ -6,7 +6,7 @@ import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import AddContactsForm from 'components/Form/AddContactsForm'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 @connect(

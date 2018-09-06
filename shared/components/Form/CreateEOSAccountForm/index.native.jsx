@@ -18,7 +18,7 @@ import * as walletActions from 'actions/wallet'
 import * as eosAccountActions from 'actions/eosAccount'
 import { onEventWithMap } from 'utils/analytics'
 import { ACCOUNT_EOS_CREATE } from 'constants/analytics'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 export const errorMessages = (error, messages) => {
@@ -55,11 +55,23 @@ const validate = (values, props) => {
   }
 
   if (!!values.get('eosAccountName') && !validateEOSAccountName(values.get('eosAccountName'))) {
-    errors.eosAccountName = messages[locale].act_fid_plachd_name
+    errors.eosAccountName = messages[locale].act_error_text_invalid_account_name
   }
 
   if (!values.get('password')) {
     errors.password = messages[locale].act_fid_empty_psd
+  }
+
+  if (values.get('password').length < 6) {
+    errors.password = messages[locale].act_fid_error_pw_min_character
+  }
+
+  if (values.get('password').length > 64) {
+    errors.password = messages[locale].act_fid_error_pw_max_character
+  }
+
+  if (values.get('passwordHint').length > 64) {
+    errors.passwordHint = messages[locale].act_fid_error_pswtp_max_character
   }
 
   if (!values.get('confirmedPassword')) {

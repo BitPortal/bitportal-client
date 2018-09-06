@@ -12,7 +12,7 @@ import { eosAccountSelector } from 'selectors/eosAccount'
 import { getPasswordStrength } from 'utils'
 import * as keystoreActions from 'actions/keystore'
 import Colors from 'resources/colors'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 export const errorMessages = (error, messages) => {
@@ -39,6 +39,19 @@ const validate = (values, props) => {
   if (!values.get('newPassword')) {
     errors.newPassword = messages[locale].cpwd_title_empty_newpsd
   }
+
+  if (values.get('newPassword').length < 6) {
+    errors.newPassword = messages[locale].act_fid_error_pw_min_character
+  }
+
+  if (values.get('newPassword').length > 64) {
+    errors.newPassword = messages[locale].act_fid_error_pw_max_character
+  }
+
+  if (values.get('passwordHint').length > 64) {
+    errors.passwordHint = messages[locale].act_fid_error_pswtp_max_character
+  }
+
 
   if (values.get('confirmedNewPassword') !== values.get('newPassword')) {
     errors.confirmedNewPassword = messages[locale].cpwd_title_empty_rptnewpsd

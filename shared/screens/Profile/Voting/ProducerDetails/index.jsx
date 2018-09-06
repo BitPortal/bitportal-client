@@ -4,10 +4,10 @@ import { View, ScrollView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
+import messages from 'resources/messages'
 import Header from './Header'
 import Introduction from './Introduction'
 import Contacts from './Contacts'
-import messages from './messages'
 import styles from './styles'
 
 @connect(

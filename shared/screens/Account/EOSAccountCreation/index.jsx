@@ -6,7 +6,7 @@ import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import CreateEOSAccountForm from 'components/Form/CreateEOSAccountForm'
 import { IntlProvider } from 'react-intl'
 import Loading from 'components/Loading'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 @connect(

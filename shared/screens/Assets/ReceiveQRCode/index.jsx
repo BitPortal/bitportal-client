@@ -10,7 +10,7 @@ import { normalizeUnitByFraction } from 'utils/normalize'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { eosQrString } from 'utils'
 import Toast from 'components/Toast'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 @connect(

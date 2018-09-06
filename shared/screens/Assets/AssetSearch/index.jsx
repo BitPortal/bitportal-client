@@ -13,7 +13,7 @@ import { RecyclerListView, LayoutProvider } from 'recyclerlistview'
 import SearchEOSAssetForm from 'components/Form/SearchEOSAssetForm'
 import ImmutableDataProvider from 'utils/immutableDataProvider'
 import { SCREEN_WIDTH } from 'utils/dimens'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 const AssetElement = ({ item, onToggle }) => (

@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
-import messages from './messages'
+import messages from 'resources/messages'
 
 const styles = EStyleSheet.create({
   container: {

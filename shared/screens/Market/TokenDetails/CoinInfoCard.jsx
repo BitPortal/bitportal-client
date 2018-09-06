@@ -8,8 +8,8 @@ import { IntlProvider, FormattedMessage, FormattedNumber } from 'react-intl'
 import { tokenTickerSelector } from 'selectors/ticker'
 import Images from 'resources/images'
 
+import messages from 'resources/messages'
 import styles from './styles'
-import messages from './messages'
 
 const Tag = props => (
   <View style={styles.tag}>
