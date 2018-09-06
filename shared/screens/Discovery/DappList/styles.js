@@ -4,7 +4,6 @@ import {
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
   NAV_BAR_HEIGHT,
-  TAB_BAR_HEIGHT,
   FontScale
 } from 'utils/dimens'
 

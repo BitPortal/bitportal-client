@@ -18,7 +18,6 @@ import styles from './styles'
 )
 
 export default class Header extends Component {
-
   render() {
     const { locale, producer, votes, pressLink } = this.props
     const weight = +producer.getIn(['info', 'weight'])
@@ -57,7 +56,7 @@ export default class Header extends Component {
                   }
                 </View>
                 {!!teamName && <Text style={[styles.text12, { color: Colors.textColor_white_4, marginLeft: -7 }]}>{'  '}@{owner}</Text>}
-                <Text onPress={() => { pressLink(website || url) }} style={[styles.text16, { textDecorationLine: "underline", color: Colors.textColor_89_185_226 }]}>
+                <Text onPress={() => { pressLink(website || url) }} style={[styles.text16, { textDecorationLine: 'underline', color: Colors.textColor_89_185_226 }]}>
                   {website || url}
                 </Text>
               </View>
