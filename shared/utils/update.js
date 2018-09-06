@@ -1,7 +1,7 @@
 import { Platform, Linking } from 'react-native'
 import VersionNumber from 'react-native-version-number'
 import { Navigation } from 'react-native-navigation'
-import messages from 'screens/LightBox/messages'
+import messages from 'resources/messages'
 
 const actionNegative = 'actionNegative'
 const actionPositive = 'actionPositive'
