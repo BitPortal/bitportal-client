@@ -1,0 +1,18 @@
+{
+  "zh": {
+    "web_title_name_err" : "加载异常",
+    "web_button_name_copy": "复制",
+    "web_button_name_linkios": "在Safari打开",
+    "web_button_name_linkandroid": "在其他浏览器打开",
+    "web_button_name_share": "分享",
+    "web_button_name_cancel": "取消"
+  },
+  "en": {
+    "web_title_name_err" : "Loading Failed",
+    "web_button_name_copy": "Copy",
+    "web_button_name_linkios": "Open in Safari",
+    "web_button_name_linkandroid": "Open in browsers",
+    "web_button_name_share": "Share",
+    "web_button_name_cancel": "Cancel"
+  }
+}

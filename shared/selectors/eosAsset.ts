@@ -6,13 +6,18 @@ export const getInitialEOSAsset = (presetSelectedAsset?: any) => Immutable.fromJ
   loading: false,
   loaded: false,
   error: null,
-  searchValue: '',
-  selectedAsset: presetSelectedAsset || []
+  toggledAsset: presetSelectedAsset || [],
+  searchResult: []
 })
 
 export const eosAssetSelector = (state: RootState) => state.eosAsset.get('data')
+export const toggledEOSAssetSelector = (state: RootState) => state.eosAsset.get('toggledAsset')
+export const searchEOSAssetResultSelector = (state: RootState) => state.eosAsset.get('searchResult')
 
-export const selectedEOSAssetSelector = (state: RootState) => state.eosAsset.get('selectedAsset')
+export const selectedEOSAssetSelector = createSelector(
+  toggledEOSAssetSelector,
+  (toggledEOSAsset: any) => toggledEOSAsset.filter((v: any) => v.get('selected'))
+)
 
 export const selectedEOSAssetContractSelector = createSelector(
   selectedEOSAssetSelector,
@@ -21,6 +26,25 @@ export const selectedEOSAssetContractSelector = createSelector(
 
 export const eosAssetListSelector = createSelector(
   eosAssetSelector,
+  selectedEOSAssetSelector,
+  toggledEOSAssetSelector,
+  (asset: any, selected: any, toggled: any) => {
+    const assetWithSelection = asset.map((v: any) =>  {
+      const index = selected.findIndex((i: any) => v.get('account') === i.get('contract') && v.get('symbol') === i.get('symbol'))
+      return v.set('selected', index !== -1)
+    })
+
+    const toggledNoDefaultAsset = toggled.filter((v: any) => {
+      const index = assetWithSelection.findIndex((i: any) => i.get('account') === v.get('contract') && v.get('symbol') === i.get('symbol'))
+      return index === -1
+    }).map((v: any) => v.set('account', v.get('contract')))
+
+    return assetWithSelection.concat(toggledNoDefaultAsset)
+  }
+)
+
+export const eosAssetSearchResultListSelector = createSelector(
+  searchEOSAssetResultSelector,
   selectedEOSAssetSelector,
   (asset: any, selected: any) => asset.map((v: any) =>  {
     const index = selected.findIndex((i: any) => v.get('account') === i.get('contract') && v.get('symbol') === i.get('symbol'))

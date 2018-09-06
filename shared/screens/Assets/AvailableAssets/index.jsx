@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { Text, View, Switch, Image, RefreshControl } from 'react-native'
+import { Text, View, Switch, Image, ActivityIndicator } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -18,7 +18,7 @@ import styles from './styles'
 const AssetElement = ({ item, onToggle }) => (
   <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.bgColor_30_31_37 }]}>
     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-      <Image style={styles.icon} source={item.icon_url ? { uri: `${item.icon_url}` } : Images.coin_logo_default} />
+      <Image style={styles.icon} source={item.get('icon_url') ? { uri: `${item.get('icon_url')}` } : Images.coin_logo_default} />
       <View>
         <Text style={styles.text20}>{item.get('symbol')}</Text>
         <Text style={styles.text16}>{item.get('account')}</Text>
@@ -81,12 +81,16 @@ export default class AvailableAssets extends Component {
   }
 
   goSearching = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.AssetSearch',
-        passProps: {
-          eosAccountName: this.props.eosAccountName
-        }
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.AssetSearch',
+            passProps: {
+              eosAccountName: this.props.eosAccountName
+            }
+          }
+        }]
       }
     })
   }
@@ -94,10 +98,12 @@ export default class AvailableAssets extends Component {
   onToggle = (item) => {
     const contract = item.get('account')
     const symbol = item.get('symbol')
-    this.props.actions.toggleEOSAsset({ contract, symbol })
+    const current_supply = item.get('current_supply')
+    const max_supply = item.get('max_supply')
+    const icon_url = item.get('icon_url')
+    const rank_url = item.get('rank_url')
+    this.props.actions.toggleEOSAsset({ contract, symbol, current_supply, max_supply, icon_url, rank_url })
   }
-
-  onRefresh = () => this.props.actions.getEOSAssetRequested()
 
   renderItem = (type, item) => (
     <AssetElement item={item} onToggle={() => this.onToggle(item)} />
@@ -113,14 +119,10 @@ export default class AvailableAssets extends Component {
           <NavigationBar
             title={messages[locale].astlist_title_name_astlst}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
+            rightButton={<CommonButton iconName="md-search" onPress={this.goSearching} />}
           />
           <View style={styles.scrollContainer}>
-            <RecyclerListView
-              refreshControl={<RefreshControl onRefresh={this.onRefresh} refreshing={loading && !loaded} />}
-              layoutProvider={this.layoutProvider}
-              dataProvider={eosAssetList}
-              rowRenderer={this.renderItem}
-            />
+            {!(loading && !loaded) ? <RecyclerListView layoutProvider={this.layoutProvider} dataProvider={eosAssetList} rowRenderer={this.renderItem} /> : <ActivityIndicator size="small" color="white" style={{ marginTop: 20 }} />}
           </View>
         </View>
       </IntlProvider>

@@ -15,15 +15,10 @@ export default EStyleSheet.create({
     backgroundColor: Colors.bgColor_30_31_37
   },
   searchContainer: {
-    width: '100%',
-    alignItems: 'center',
-    flexDirection: 'column'
-    // margin: 0,
-    // padding: 0
-    // paddingHorizontal: 32,
-    // paddingTop: 20,
-    // backgroundColor: 'red',
-    // flex: 1
+    width: '100% - 70',
+    paddingRight: 10,
+    paddingTop: 4,
+    paddingBottom: 4
   },
   fieldInput: {
     borderBottomWidth: StyleSheet.hairlineWidth,
@@ -35,11 +30,12 @@ export default EStyleSheet.create({
     alignItems: 'center'
   },
   searchFieldInput: {
-    borderBottomColor: Colors.textColor_107_107_107,
-    flex: 1,
+    height: '100%',
+    justifyContent: 'center',
+    backgroundColor: 'black',
+    borderRadius: 3,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 1,
+    justifyContent: 'flex-start',
     alignItems: 'center'
   },
   input: {
@@ -51,11 +47,8 @@ export default EStyleSheet.create({
   },
   searchInput: {
     color: Colors.textColor_181_181_181,
-    paddingBottom: 0,
-    paddingTop: 0,
-    flex: 1,
-    height: 40
-    // backgroundColor: 'red'
+    height: '100%',
+    flex: 2
   },
   areaInput: {
     flex: 1,

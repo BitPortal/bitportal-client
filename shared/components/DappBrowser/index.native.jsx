@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import {
-  WebView,
   View,
   Text,
   Share,
@@ -8,6 +7,7 @@ import {
   Platform,
   ActivityIndicator
 } from 'react-native'
+import WebViewBridge from 'react-native-webview-bridge-updated'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
@@ -17,8 +17,8 @@ import NavigationBar, {
 } from 'components/NavigationBar'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
-import messages from 'resources/messages'
 import styles from './styles'
+import messages from './messages'
 
 const Loading = ({ text }) => (
   <View style={[styles.loadContainer, styles.center]}>
@@ -38,7 +38,7 @@ const Loading = ({ text }) => (
   { withRef: true }
 )
 
-export default class BPWebView extends Component {
+export default class DappBrowser extends Component {
   static get options() {
     return {
       bottomTabs: {
@@ -60,7 +60,6 @@ export default class BPWebView extends Component {
   }
 
   showActionSheet = () => {
-    // console.log('###', this.actionSheet)
     this.actionSheet.show()
   }
 
@@ -92,7 +91,7 @@ export default class BPWebView extends Component {
       .catch(err => console.error('An error occurred', err))
   }
 
-  goBack = () => (this.state.canGoBack ? this.webview.goBack() : Navigation.pop(this.props.componentId))
+  goBack = () => (this.state.canGoBack ? this.webviewbridge.goBack() : Navigation.pop(this.props.componentId))
 
   goHome = () => Navigation.pop(this.props.componentId)
 
@@ -119,64 +118,84 @@ export default class BPWebView extends Component {
     })
   }
 
+  onBridgeMessage = (message) => {
+    switch (message) {
+      case 'hello from webview':
+        this.webviewbridge.sendToBridge('webviewbridge')
+        break
+      case 'got the message inside webview':
+        console.log('we have got a message from webview! yeah')
+        break
+      default:
+        break
+    }
+  }
+
   render() {
     const { needLinking, uri, title, locale } = this.props
+
+    const injectScript = `
+  (function () {
+    if (WebViewBridge) {
+
+      WebViewBridge.onMessage = function (message) {
+        if (message === "hello from react-native") {
+          WebViewBridge.send("got the message inside webview");
+        }
+      }
+      WebViewBridge.send("hello from webview")
+    }
+  }())
+`
 
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
             title={title}
-            leftButton={
-              <WebViewLeftButton goBack={this.goBack} goHome={this.goHome} />
-            }
-            rightButton={
-              needLinking && (
-                <LinkingRightButton
-                  iconName="ios-more"
-                  onPress={this.showActionSheet}
-                />
-              )
-            }
+            leftButton={<WebViewLeftButton goBack={this.goBack} goHome={this.goHome} />}
+            rightButton={needLinking && <LinkingRightButton iconName="ios-more" onPress={this.showActionSheet} />}
           />
           <View style={styles.content}>
             {uri && (
-              <WebView
-                source={{ uri }}
-                ref={(e) => {
-                  this.webview = e
-                }}
-                renderError={this.renderError}
-                renderLoading={this.renderLoading}
-                startInLoadingState={true}
-                automaticallyAdjustContentInsets={false}
-                onNavigationStateChange={(e) => {
-                  this.onNavigationStateChange(e)
-                }}
-                javaScriptEnabled={true}
-                domStorageEnabled={true}
-                decelerationRate="normal"
-                scalesPageToFit={true}
-                nativeConfig={{
-                  props: { backgroundColor: Colors.minorThemeColor, flex: 1 }
-                }}
-              />
+            <WebViewBridge
+               source={{ uri }}
+               ref={(e) => {
+                 this.webviewbridge = e
+               }}
+               renderError={this.renderError}
+               renderLoading={this.renderLoading}
+               startInLoadingState={true}
+               automaticallyAdjustContentInsets={false}
+               onNavigationStateChange={(e) => {
+                 this.onNavigationStateChange(e)
+               }}
+               javaScriptEnabled={true}
+               domStorageEnabled={true}
+               decelerationRate="normal"
+               scalesPageToFit={true}
+               nativeConfig={{
+                 props: { backgroundColor: Colors.minorThemeColor, flex: 1 }
+               }}
+               onBridgeMessage={this.onBridgeMessage}
+               injectedJavaScript={injectScript}
+            />
             )}
             <ActionSheet
-              ref={(o) => {
-                this.actionSheet = o
-              }}
-              title=""
-              options={[
-                messages[locale].web_button_name_share,
-                Platform.OS === 'ios'
-                  ? messages[locale].web_button_name_linkios
-                  : messages[locale].web_button_name_linkandroid,
-                messages[locale].web_button_name_cancel
-              ]}
-              cancelButtonIndex={2}
-              destructiveButtonIndex={1}
-              onPress={index => this.selectActionSheet(index)}
+          ref={(o) => {
+            this.actionSheet = o
+          }}
+          title=""
+          options={[
+            messages[locale].web_button_name_share,
+            Platform.OS === 'ios'
+              ? messages[locale].web_button_name_linkios
+              : messages[locale].web_button_name_linkandroid,
+            messages[locale].web_button_name_cancel
+          ]}
+          cancelButtonIndex={2}
+          destructiveButtonIndex={1}
+          onPress={index => this.selectActionSheet(index)}
             />
           </View>
         </View>

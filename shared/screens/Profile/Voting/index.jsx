@@ -30,9 +30,17 @@ export const errorMessages = (error, messages) => {
       return messages.vt_popup_title_pwderr
     case 'assertion failure with message: user must stake before they can vote':
       return messages.vt_popup_title_nostaker
+    case 'EOS System Error':
+      return messages.vt_popup_title_eossystem
     default:
       return messages.vt_popup_title_failed
   }
+}
+
+export const errorMessageDetail = (error) => {
+  if (!error || typeof error !== 'object') { return null }
+
+  return error.detail
 }
 
 @connect(
@@ -247,7 +255,7 @@ export default class Voting extends Component {
             isVoting={isVoting}
           />
           <Alert message={this.state.alertMessage} dismiss={this.closeAlert} />
-          <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearVotingError} />
+          <Alert message={errorMessages(error, messages[locale])} subMessage={errorMessageDetail(error)} dismiss={this.props.actions.clearVotingError} />
           <Prompt
             isVisible={this.state.isVisible}
             title={messages[locale].vt_popup_title_pwd}

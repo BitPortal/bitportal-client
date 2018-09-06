@@ -10,40 +10,71 @@ import {
   Easing,
   Platform,
   InteractionManager,
-  Keyboard
+  Keyboard,
+  TextInput
 } from 'react-native'
 import { Field, reduxForm } from 'redux-form/immutable'
-import { SearchContainer, SearchField } from 'components/Form'
+import { FieldItem } from 'components/Form'
 import Colors from 'resources/colors'
 import { SCREEN_WIDTH } from 'utils/dimens'
 import messages from 'resources/messages'
 import styles from './styles'
 
+const SearchContainer = ({ children }) => (
+  <View style={styles.searchContainer}>{children}</View>
+)
+
+const SearchFieldInput = ({ children, rightContent, leftContent, style }) => (
+  <View style={[styles.searchFieldInput, style]}>
+    {leftContent && <View>{leftContent}</View>}
+    {children}
+    {rightContent && <View>{rightContent}</View>}
+  </View>
+)
+
+class SearchField extends Component {
+  createRef = (node) => {
+    this.searchInput = node
+  }
+
+  render() {
+    const {
+      input: { onChange, ...restInput },
+      keyboardType,
+      rightContent,
+      placeholder
+    } = this.props
+    return (
+      <FieldItem>
+        <SearchFieldInput rightContent={rightContent}>
+          <TextInput
+            ref={node => this.createRef(node)}
+            style={styles.searchInput}
+            autoCorrect={false}
+            autoCapitalize="none"
+            placeholder={placeholder}
+            placeholderTextColor={Colors.textColor_107_107_107}
+            keyboardType={keyboardType || 'default'}
+            underlineColorAndroid="transparent"
+            selectionColor={Colors.textColor_181_181_181}
+            keyboardAppearance={Colors.keyboardTheme}
+            onChangeText={onChange}
+            {...restInput}
+          />
+        </SearchFieldInput>
+      </FieldItem>
+    )
+  }
+}
+
 const validate = () => {
   const errors = {}
-
-  // if (!values.get('eosAccountName')) {
-  //   errors.eosAccountName = (
-  //     <FormattedMessage id="contacts_txtbox_txt_acchint2" />
-  //   )
-  // } else if (values.get('eosAccountName').length > 12) {
-  //   errors.eosAccountName = (
-  //     <FormattedMessage id="contacts_txtbox_txt_acchint" />
-  //   )
-  // }
-  //
-  // if (values.get('note') && values.get('note').length > 64) {
-  //   errors.note = <FormattedMessage id="contacts_txtbox_txt_hint" />
-  // }
-
   return errors
 }
 
 @reduxForm({
-  form: 'addContactsForm',
+  form: 'searchBar',
   validate
-  // asyncValidate,
-  // asyncBlurFields: ['eosAccountName']
 })
 @connect(
   state => ({
@@ -53,6 +84,7 @@ const validate = () => {
   null,
   { withRef: true }
 )
+
 //props:locale, onChangeText, clearSearch
 export default class SearchBar extends Component {
   state = {
@@ -70,9 +102,19 @@ export default class SearchBar extends Component {
     }))
   }
 
+  hide = () => {
+    this.setState({ expanded: false })
+  }
+
+  show = () => {
+    this.setState({ expanded: true })
+  }
+
   clearSearch = () => {
+    console.log('clearSearch', this.textInput)
     this.props.clearSearch()
     Keyboard.dismiss()
+    this.textInput.getRenderedComponent().searchInput.clear()
   }
 
   animate = () => {
@@ -190,6 +232,7 @@ export default class SearchBar extends Component {
             <Animated.View style={{ opacity }}>
               <TouchableOpacity
                 onPress={() => {
+                  console.log('this.textInput', this.textInput)
                   this.toggleExpanded()
                   this.clearSearch()
                   this.animate()
@@ -215,40 +258,20 @@ export default class SearchBar extends Component {
                 }
               ]}
             >
-              <View
-                style={
-                  {
-                    // backgroundColor: 'red',
-                    // // marginHorizontal: 10,
-                    // alignItems: 'flex-start',
-                    // justifyContent: 'flex-start'
-                    // backgroundColor: 'red',
-                    // paddingHorizontal: 10,
-                    // flex: 1
-                  }
-                }
-              >
-                <Ionicons
-                  name="ios-search"
-                  onPress={() => {
-                    this.toggleExpanded()
-                    this.animate()
-                  }}
-                  size={24}
-                  color={Colors.textColor_181_181_181}
-                  style={{
-                    // flex: 1,
-                    // backgroundColor: 'red',
-                    paddingHorizontal: 10,
-                    paddingRight: 10,
-                    // paddingRight: 10
-                    // alignItems: 'center',
-                    // justifyContent: 'center'
-                    // alignItems: 'flex-start',
-                    justifyContent: 'flex-start'
-                  }}
-                />
-              </View>
+              <Ionicons
+                name="ios-search"
+                onPress={() => {
+                  this.toggleExpanded()
+                  this.animate()
+                }}
+                size={24}
+                color={Colors.textColor_181_181_181}
+                style={{
+                  paddingHorizontal: 10,
+                  paddingRight: 10,
+                  justifyContent: 'flex-start'
+                }}
+              />
               <Text>{'  '}</Text>
               <Animated.View
                 style={{
@@ -280,19 +303,17 @@ export default class SearchBar extends Component {
                     }
                     placeholderTextColor={Colors.textColor_181_181_181}
                     numberOfLines={1}
+                    ref={(input) => {
+                      this.textInput = input
+                    }}
+                    withRef
                   />
                 </SearchContainer>
               </Animated.View>
             </Animated.View>
-            <View />
           </Animated.View>
         </Animated.View>
       </IntlProvider>
-      // <View>
-      //   <View style={styles.container}>
-      //     <Text>TEST</Text>
-      //   </View>
-      // </View>
     )
   }
 }

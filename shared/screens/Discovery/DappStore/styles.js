@@ -35,17 +35,22 @@ const styles = StyleSheet.create({
   dAppButton: {
     // backgroundColor: Colors.bgColor_27_27_26,
     // backgroundColor: 'red',
-    height: 65,
-    width: 65,
+    height: 50,
+    width: 50,
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center'
   },
-  favoriteStar: {
+  favoriteWrapper: {
     flexDirection: 'row',
     position: 'absolute',
     bottom: 0,
-    right: 2
+    right: 0,
+    borderRadius: 10
+  },
+  favoriteStar: {
+    height: 25,
+    width: 25
   },
   icon: {
     height: 50,

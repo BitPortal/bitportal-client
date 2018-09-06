@@ -1,5 +1,6 @@
 import { all, fork } from 'redux-saga/effects'
 import { ENV } from 'constants/env'
+import formSaga from './form'
 import intlSaga from './intl'
 import tickerSaga from './ticker'
 import chartSaga from './chart'
@@ -23,6 +24,7 @@ import contactSaga from './contact'
 import eosNodeSaga from './eosNode'
 
 const sagas = {
+  formSaga: fork(formSaga),
   intlSaga: fork(intlSaga),
   tickerSaga: fork(tickerSaga),
   chartSaga: fork(chartSaga),

@@ -7,7 +7,7 @@ import storage from 'utils/storage'
 
 function* getDappList(action: Action<TokenParams>) {
   try {
-    const data = yield call(api.getDappList, action.payload)
+    const data = yield call(api.getDappList, { ...action.payload, _sort: 'display_priority:desc' })
     yield put(actions.getDappListSucceeded(data))
   } catch (e) {
     yield put(actions.getDappListFailed(e.message))

@@ -25,6 +25,7 @@ const dataProvider = new ImmutableDataProvider((r1, r2) => r1.get('account_actio
     loaded: state.transaction.get('loaded'),
     offset: state.transaction.get('offset'),
     position: state.transaction.get('position'),
+    refresh: state.transaction.get('refresh'),
     eosAccountName: eosAccountNameSelector(state),
   }),
   dispatch => ({
@@ -118,7 +119,7 @@ export default class TransationHistory extends Component {
   }
 
   render() {
-    const { locale, loading, loaded } = this.props
+    const { locale, loading, refresh } = this.props
     const { transferHistory } = this.state
 
     return (
@@ -131,7 +132,7 @@ export default class TransationHistory extends Component {
           <View style={styles.scrollContainer}>
             <RecyclerListView
               style={styles.list}
-              refreshControl={<RefreshControl onRefresh={this.onRefresh} refreshing={loading && !loaded} />}
+              refreshControl={<RefreshControl onRefresh={this.onRefresh} refreshing={loading && refresh} />}
               layoutProvider={this.layoutProvider}
               dataProvider={transferHistory}
               rowRenderer={this.rowRenderer}

@@ -9,7 +9,7 @@ export const activeAssetSelector = (state: RootState) => state.balance.get('acti
 export const activeAssetContractSelector = (state: RootState) => state.balance.getIn(['activeAsset', 'contract'])
 export const eosBalanceAllDataSelector = (state: RootState) => state.balance.get('eosBalance')
 
-export const eosBalanceSelector = createSelector(
+export const eosBalanceInfoSelector = createSelector(
   eosAccountNameSelector,
   eosBalanceAllDataSelector,
   eosCoreLiquidBalanceSelector,
@@ -20,6 +20,11 @@ export const eosBalanceSelector = createSelector(
 
     return null
   }
+)
+
+export const eosBalanceSelector = createSelector(
+  eosBalanceInfoSelector,
+  (eosBalanceInfo: any) => eosBalanceInfo ? eosBalanceInfo.get('balance') : 0
 )
 
 export const eosTokenBalanceSelector = createSelector(
@@ -43,7 +48,7 @@ export const selectedEOSTokenBalanceSelector = createSelector(
 )
 
 export const eosAssetBalanceSelector = createSelector(
-  eosBalanceSelector,
+  eosBalanceInfoSelector,
   selectedEOSTokenBalanceSelector,
   (eosBalance: string, eosTokenBalance: any) => {
     if (eosBalance) {
@@ -55,7 +60,20 @@ export const eosAssetBalanceSelector = createSelector(
 )
 
 export const eosTotalAssetBalanceSelector = createSelector(
-  eosBalanceSelector,
+  eosBalanceInfoSelector,
   eosPriceSelector,
   (eosBalance: any, eosPrice: any) => (eosBalance && eosPrice) ? (+eosBalance.get('balance') * +eosPrice) : 0
+)
+
+export const activeAssetBalanceSelector = createSelector(
+  eosAssetBalanceSelector,
+  activeAssetContractSelector,
+  (eosAssetBalance: any, contract: any) => {
+    if (eosAssetBalance) {
+      const index = eosAssetBalance.findIndex((v: any) => v.get('contract') === contract)
+      return index !== -1 ? eosAssetBalance.getIn([index, 'balance']) : 0
+    } else {
+      return 0
+    }
+  }
 )

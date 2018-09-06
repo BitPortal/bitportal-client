@@ -9,8 +9,9 @@ import { FormContainer, TextField, TextAreaField, SubmitButton } from 'component
 import { normalizeEOSAccountName, normalizeUnitByFraction } from 'utils/normalize'
 import * as transferActions from 'actions/transfer'
 import * as eosAccountActions from 'actions/eosAccount'
-import { eosAccountSelector } from 'selectors/eosAccount'
-import { activeAssetSelector } from 'selectors/balance'
+import * as balanceActions from 'actions/balance'
+import { eosAccountNameSelector } from 'selectors/eosAccount'
+import { activeAssetSelector, activeAssetBalanceSelector } from 'selectors/balance'
 import { eosPriceSelector } from 'selectors/ticker'
 import TransferCard from 'screens/Assets/AssetsTransfer/TransferCard'
 import Prompt from 'components/Prompt'
@@ -28,20 +29,22 @@ export const errorMessages = (error, messages) => {
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
       return messages.snd_title_error_psw
+    case 'EOS System Error':
+      return messages.snd_title_error_eossystem
     default:
-      if (!~String(message).indexOf('net usage of transaction is too high')) {
-        return messages.snd_title_error_hinet
-      } else if (!~String(message).indexOf('cpu usage of transaction is too high')) {
-        return messages.snd_title_error_hicpu
-      }
-
       return messages.snd_txtbox_tras_err
   }
 }
 
+export const errorMessageDetail = (error) => {
+  if (!error || typeof error !== 'object') { return null }
+
+  return error.detail
+}
+
 const validate = (values, props) => {
-  const { activeAsset } = props
-  const balance = activeAsset.get('balance')
+  const { activeAssetBalance } = props
+  const balance = activeAssetBalance
 
   const errors = {}
 
@@ -76,16 +79,18 @@ const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject)
   state => ({
     locale: state.intl.get('locale'),
     transfer: state.transfer,
-    eosAccount: eosAccountSelector(state),
     activeAsset: activeAssetSelector(state),
+    activeAssetBalance: activeAssetBalanceSelector(state),
     eosPrice: eosPriceSelector(state),
     quantity: formValueSelector('transferAssetsForm')(state, 'quantity'),
-    toAccount: formValueSelector('transferAssetsForm')(state, 'toAccount')
+    toAccount: formValueSelector('transferAssetsForm')(state, 'toAccount'),
+    eosAccountName: eosAccountNameSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
       ...transferActions,
       ...eosAccountActions,
+      ...balanceActions,
       change
     }, dispatch)
   })
@@ -144,7 +149,7 @@ export default class TransferAssetsForm extends Component {
   }
 
   submit = (password) => {
-    const fromAccount = this.props.eosAccount.getIn(['data', 'account_name'])
+    const fromAccount = this.props.eosAccountName
 
     this.props.actions.transferRequested({
       fromAccount,
@@ -153,16 +158,21 @@ export default class TransferAssetsForm extends Component {
       symbol: this.state.symbol,
       toAccount: this.state.toAccount,
       memo: this.state.memo,
-      contract: this.props.activeAsset.get('balance'),
+      contract: this.props.activeAsset.get('contract'),
       componentId: this.props.componentId
     })
   }
 
+  componentDidMount() {
+    const { activeAsset, eosAccountName } = this.props
+    this.props.actions.getEOSAssetBalanceRequested({ code: activeAsset.get('contract'), eosAccountName })
+  }
+
   render() {
-    const { handleSubmit, invalid, pristine, activeAsset, eosPrice, quantity, transfer, locale } = this.props
+    const { handleSubmit, invalid, pristine, activeAsset, activeAssetBalance, eosPrice, quantity, transfer, locale } = this.props
     const disabled = invalid || pristine
     const symbol = activeAsset.get('symbol')
-    const balance = activeAsset.get('balance')
+    const balance = activeAssetBalance
     const error = transfer.get('error')
     const showModal = transfer.get('showModal')
     const price = symbol === 'EOS' ? eosPrice : 0
@@ -192,7 +202,7 @@ export default class TransferAssetsForm extends Component {
             component={TextAreaField}
           />
           <SubmitButton disabled={disabled} onPress={handleSubmit(this.showModal)} text={messages[locale].snd_button_name_nxt} />
-          <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearTransferError} delay={500} />
+          <Alert message={errorMessages(error, messages[locale])} subMessage={errorMessageDetail(error)} dismiss={this.props.actions.clearTransferError} delay={500} />
           <TransferCard
             isVisible={showModal}
             dismiss={this.closeModal}

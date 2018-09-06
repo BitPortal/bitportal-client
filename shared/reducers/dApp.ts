@@ -35,7 +35,6 @@ export default handleActions(
       return state.set('searchTerm', Immutable.fromJS(action.payload))
     },
     [actions.toggleFavoriteDapp](state, action) {
-      console.log('toggle', action.payload)
       return state
         .set('selected', action.payload.selected)
         .update('favoriteDapps', (item: any) => {

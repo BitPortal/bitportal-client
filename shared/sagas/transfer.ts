@@ -1,3 +1,4 @@
+import assert from 'assert'
 import Immutable from 'immutable'
 import { delay } from 'redux-saga'
 import { put, call, takeEvery, select } from 'redux-saga/effects'
@@ -8,7 +9,7 @@ import { getEOSBalanceRequested, getEOSAssetBalanceRequested } from 'actions/bal
 import { initEOS } from 'core/eos'
 import { getEOSWifsByInfo } from 'core/key'
 import secureStorage from 'utils/secureStorage'
-import { getErrorMessage } from 'utils'
+import { getEOSErrorMessage } from 'utils'
 import { reset } from 'redux-form/immutable'
 import { push } from 'utils/location'
 
@@ -24,13 +25,15 @@ function* transfer(action: Action<TransferParams>) {
     const memo = action.payload.memo || ''
     const password = action.payload.password
     const contract = action.payload.contract
+    assert(contract, 'No contract!')
 
     const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${fromAccount}`, true)
     const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
     const wifs = yield call(getEOSWifsByInfo, password, accountInfo, [permission])
     const keyProvider = wifs.map((item: any) => item.wif)
     const eos = yield call(initEOS, { keyProvider })
-    const transactionResult = yield call(eos.transfer, { quantity, memo, from: fromAccount, to: toAccount })
+    const contractAccount = yield call(eos.contract, contract)
+    const transactionResult = yield call(contractAccount.transfer, { quantity, memo, from: fromAccount, to: toAccount })
 
     yield put(actions.transferSucceeded(transactionResult))
     yield put(reset('transferAssetsForm'))
@@ -48,7 +51,7 @@ function* transfer(action: Action<TransferParams>) {
       yield put(getEOSAssetBalanceRequested({ code: contract, eosAccountName: fromAccount }))
     }
   } catch (e) {
-    yield put(actions.transferFailed(getErrorMessage(e)))
+    yield put(actions.transferFailed(getEOSErrorMessage(e)))
   }
 }
 

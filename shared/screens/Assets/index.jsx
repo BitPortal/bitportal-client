@@ -19,7 +19,7 @@ import * as versionActions from 'actions/version'
 import * as currencyActions from 'actions/currency'
 import * as eosAccountActions from 'actions/eosAccount'
 import {
-  eosAssetBalanceSelector,
+  selectedEOSTokenBalanceSelector,
   eosTotalAssetBalanceSelector
 } from 'selectors/balance'
 import { eosPriceSelector } from 'selectors/ticker'
@@ -44,7 +44,7 @@ import TotalAssetsCard from './TotalAssetsCard'
     locale: state.intl.get('locale'),
     wallet: state.wallet,
     eosAccount: eosAccountSelector(state),
-    eosAssetBalance: eosAssetBalanceSelector(state),
+    eosAssetBalance: selectedEOSTokenBalanceSelector(state),
     eosTotalAssetBalance: eosTotalAssetBalanceSelector(state),
     eosPrice: eosPriceSelector(state)
   }),

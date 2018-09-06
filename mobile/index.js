@@ -54,7 +54,7 @@ const runApp = async () => {
     storage.getItem('bitportal_currency', true),
     storage.getItem('bitportal_contact', true),
     storage.getItem('bitportal_eosNode', true),
-    storage.getItem('bitportal_selectedEOSAsset', true),
+    storage.getItem('bitportal_toggledEOSAsset', true),
     storage.getItem('bitportal_favoriteDapps', true),
     storage.getItem('bitportal_version')
   ])

@@ -4,18 +4,15 @@ import Colors from 'resources/colors'
 import Images from 'resources/images'
 import { FormattedNumber } from 'react-intl'
 import { connect } from 'react-redux'
+import { eosCoreLiquidBalanceSelector } from 'selectors/eosAccount'
 import CurrencyText from 'components/CurrencyText'
 import styles from './styles'
 
-const ListItem = ({ item, onPress, eosPrice, isAssetHidden }) => (
+const ListItem = ({ item, onPress, assetPrice, isAssetHidden }) => (
   <TouchableHighlight underlayColor={Colors.hoverColor} style={styles.listContainer} onPress={() => onPress(item)}>
     <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.bgColor_30_31_37 }]}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        {
-          item.get('symbol') === 'EOS'
-            ? <Image source={Images.EOSIcon} style={styles.image} />
-            : <Image source={item.get('icon_url') ? { uri: item.get('icon_url') } : Images.coin_logo_default} style={styles.image} />
-        }
+        {<Image source={item.get('icon_url') ? { uri: item.get('icon_url') } : (item.get('symbol') === 'EOS' ? Images.EOSIcon : Images.coin_logo_default)} style={styles.image} />}
         <Text style={styles.text24}>{item.get('symbol')}</Text>
       </View>
       <View>
@@ -31,7 +28,7 @@ const ListItem = ({ item, onPress, eosPrice, isAssetHidden }) => (
             ? <Text style={[styles.text14, { alignSelf: 'flex-end', color: Colors.textColor_149_149_149 }]}>******</Text>
             : <Text style={[styles.text14, { alignSelf: 'flex-end', color: Colors.textColor_149_149_149 }]}>
               ≈
-              <CurrencyText value={+item.get('balance') * +eosPrice} maximumFractionDigits={2} minimumFractionDigits={2} />
+              <CurrencyText value={+item.get('balance') * +assetPrice} maximumFractionDigits={2} minimumFractionDigits={2} />
             </Text>
         }
       </View>
@@ -42,22 +39,29 @@ const ListItem = ({ item, onPress, eosPrice, isAssetHidden }) => (
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    isAssetHidden: state.eosAccount.get('isAssetHidden')
+    isAssetHidden: state.eosAccount.get('isAssetHidden'),
+    eosCoreLiquidBalance: eosCoreLiquidBalanceSelector(state)
   })
 )
 
 export default class BalanceList extends Component {
   render() {
-    const { data, onPress, eosPrice, isAssetHidden } = this.props
+    const { data, onPress, eosPrice, isAssetHidden, eosCoreLiquidBalance } = this.props
 
     return (
       <View>
+        <ListItem
+          item={eosCoreLiquidBalance}
+          isAssetHidden={isAssetHidden}
+          assetPrice={eosPrice}
+          onPress={onPress}
+        />
         {
           data.map((item, index) => <ListItem
               key={index}
               item={item}
               isAssetHidden={isAssetHidden}
-              eosPrice={eosPrice}
+              assetPrice={0}
               onPress={onPress}
           />
           )

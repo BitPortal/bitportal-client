@@ -42,52 +42,52 @@ export const votedProducersSelector = createSelector(
 
 export const cpuLimitAvailableSelector = createSelector(
   eosAccountSelector,
-  (account: any) => account.getIn(['data', 'cpu_limit', 'available'])
+  (account: any) => account.getIn(['data', 'cpu_limit', 'available']) || 0
 )
 
 export const cpuLimitMaxSelector = createSelector(
   eosAccountSelector,
-  (account: any) => account.getIn(['data', 'cpu_limit', 'max'])
+  (account: any) => account.getIn(['data', 'cpu_limit', 'max']) || 0
 )
 
 export const cpuLimitUsedSelector = createSelector(
   eosAccountSelector,
-  (account: any) => account.getIn(['data', 'cpu_limit', 'used'])
+  (account: any) => account.getIn(['data', 'cpu_limit', 'used']) || 0
 )
 
 export const totalResourcesCPUWeightSelector = createSelector(
   eosAccountSelector,
-  (account: any) => account.getIn(['data', 'total_resources', 'cpu_weight'])
+  (account: any) => account.getIn(['data', 'total_resources', 'cpu_weight']) || '0.0000 EOS'
 )
 
 export const netLimitAvailableSelector = createSelector(
   eosAccountSelector,
-  (account: any) => account.getIn(['data', 'net_limit', 'available'])
+  (account: any) => account.getIn(['data', 'net_limit', 'available']) || 0
 )
 
 export const netLimitMaxSelector = createSelector(
   eosAccountSelector,
-  (account: any) => account.getIn(['data', 'net_limit', 'max'])
+  (account: any) => account.getIn(['data', 'net_limit', 'max']) || 0
 )
 
 export const netLimitUsedSelector = createSelector(
   eosAccountSelector,
-  (account: any) => account.getIn(['data', 'net_limit', 'used'])
+  (account: any) => account.getIn(['data', 'net_limit', 'used']) || 0
 )
 
 export const totalResourcesNETWeightSelector = createSelector(
   eosAccountSelector,
-  (account: any) => account.getIn(['data', 'total_resources', 'net_weight'])
+  (account: any) => account.getIn(['data', 'total_resources', 'net_weight']) ||' 0.0000 EOS'
 )
 
 export const ramQuotaSelector = createSelector(
   eosAccountSelector,
-  (account: any) => account.getIn(['data', 'ram_quota'])
+  (account: any) => account.getIn(['data', 'ram_quota']) || 0
 )
 
 export const ramUsageSelector = createSelector(
   eosAccountSelector,
-  (account: any) => account.getIn(['data', 'ram_usage'])
+  (account: any) => account.getIn(['data', 'ram_usage']) || 0
 )
 
 export const ramAvailableSelector = createSelector(
@@ -116,6 +116,6 @@ export const eosCoreLiquidBalanceSelector = createSelector(
       return Immutable.fromJS({ balance, symbol, contract, blockchain })
     }
 
-    return null
+    return Immutable.fromJS({ balance: '0.0000', symbol: 'EOS', contract: 'eosio.token', blockchain: 'EOS' })
   }
 )

@@ -32,6 +32,26 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
     paddingTop: 0
     // backgroundColor: 'red'
+  },
+  searchContainer: {
+    width: '100%',
+    alignItems: 'center',
+    flexDirection: 'column'
+  },
+  searchFieldInput: {
+    borderBottomColor: Colors.textColor_107_107_107,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 1,
+    alignItems: 'center'
+  },
+  searchInput: {
+    color: Colors.textColor_181_181_181,
+    paddingBottom: 0,
+    paddingTop: 0,
+    flex: 1,
+    height: 40
   }
 })
 

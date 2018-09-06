@@ -8,6 +8,7 @@ import MarketDetails from 'screens/Market/MarketDetails'
 import Welcome from 'screens/Welcome'
 import LightBox from 'screens/LightBox'
 import QRCodeScanner from 'screens/QRCodeScanner'
+import DappBrowser from 'components/DappBrowser'
 import { BPWebView } from 'components/BPNativeComponents'
 import TransactionRecord from 'screens/TransactionRecord'
 import Assets from 'screens/Assets'
@@ -79,6 +80,7 @@ Navigation.events().registerAppLaunchedListener(() => {
 
 export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.Welcome', () => screenComponent(Welcome, store))
+  Navigation.registerComponent('BitPortal.DappBrowser', () => screenComponent(DappBrowser, store))
   Navigation.registerComponent('BitPortal.LightBox', () => screenComponent(LightBox, store))
   Navigation.registerComponent('BitPortal.BPWebView', () => screenComponent(BPWebView, store))
   Navigation.registerComponent('BitPortal.QRCodeScanner', () => screenComponent(QRCodeScanner, store))

@@ -1,0 +1,38 @@
+{
+  "zh": {
+    "snd_title_name_accnm" : "账户名称",
+    "snd_txtbox_acc_warning" : "请输入账户",
+    "snd_txtbox_acc_warning2" : "EOS账户名不能长于12位字符",
+    "snd_txtbox_amn_warning": "请输入数量",
+    "snd_txtbox_amn_warning2": "数量须大于0",
+    "snd_txtbox_bls_warning": "您的余额不足",
+    "snd_txtbox_tras_err": "转账失败!",
+    "snd_title_name_amt" : "数量",
+    "snd_title_name_bln" : "余额:",
+    "snd_txtbox_txt_rmk" : "附言",
+    "snd_button_name_nxt" : "下一步",
+    "snd_title_error_invact" : "账户不存在",
+    "snd_title_error_psw" : "密码错误",
+    "snd_title_error_hinet" : "网络资源不足，请抵押更多的EOS",
+    "snd_title_error_hicpu" : "计算资源不足，请抵押更多的EOS",
+    "snd_title_error_eossystem" : "EOS系统错误"
+  },
+  "en": {
+    "snd_title_name_accnm" : "Account",
+    "snd_txtbox_acc_warning" : "Please input the account",
+    "snd_txtbox_acc_warning2" : "The maximum length of EOS account is 12",
+    "snd_txtbox_amn_warning": "Please input the amount",
+    "snd_txtbox_amn_warning2": "Amount must be more than 0",
+    "snd_txtbox_bls_warning": "Balance is not enough",
+    "snd_txtbox_tras_err": "Transfer Failed!",
+    "snd_title_name_amt" : "Amount",
+    "snd_title_name_bln" : "Balance:",
+    "snd_txtbox_txt_rmk" : "Memo",
+    "snd_button_name_nxt" : "Next",
+    "snd_title_error_invact" : "Account dose not exist!",
+    "snd_title_error_psw" : "Invalid password",
+    "snd_title_error_hinet" : "NET usage of transaction is too high",
+    "snd_title_error_hicpu" : "CPU usage of transaction is too high",
+    "snd_title_error_eossystem" : "EOS System Error"
+  }
+}

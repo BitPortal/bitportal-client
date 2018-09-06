@@ -68,24 +68,28 @@ function* getEOSAssetBalanceListRequested(action: Action<GetAssetBalanceListPara
     const eos = yield call(initEOS, useCreationServer ? { httpEndpoint: BITPORTAL_API_EOS_URL } : {})
 
     const selectedEOSAssetList = yield select((state: RootState) => selectedEOSAssetSelector(state))
-    const data = yield all(selectedEOSAssetList.toJS().map((selectedEOSAsset: { contract: string }) => call(eos.getCurrencyBalance, { code: selectedEOSAsset.contract, account: eosAccountName })))
+    const selectedEOSAssetListArray = selectedEOSAssetList.toJS()
+    for (const asset of selectedEOSAssetListArray) {
+      yield put(actions.getEOSAssetBalanceRequested({ eosAccountName, code: asset.contract }))
+    }
+    // const data = yield all(selectedEOSAssetList.toJS().map((selectedEOSAsset: { contract: string }) => call(eos.getCurrencyBalance, { code: selectedEOSAsset.contract, account: eosAccountName })))
 
-    const balanceInfo = data.map((item: any, index: number) => {
-      const blockchain = 'EOS'
-      const contract = selectedEOSAssetList.getIn([index, 'contract'])
-      const symbol = selectedEOSAssetList.getIn([index, 'symbol'])
-      let balance = '0.0000'
-      if (item && item[0] && typeof item[0] === 'string') {
-        const index = item.findIndex((v: string) => v.indexOf(symbol) !== -1)
+    // const balanceInfo = data.map((item: any, index: number) => {
+    //   const blockchain = 'EOS'
+    //   const contract = selectedEOSAssetList.getIn([index, 'contract'])
+    //   const symbol = selectedEOSAssetList.getIn([index, 'symbol'])
+    //   let balance = '0.0000'
+    //   if (item && item[0] && typeof item[0] === 'string') {
+    //     const index = item.findIndex((v: string) => v.indexOf(symbol) !== -1)
 
-        if (index !== -1) {
-          balance = item[index].split(' ')[0]
-        }
-      }
-      return { symbol, balance, contract, blockchain }
-    })
+    //     if (index !== -1) {
+    //       balance = item[index].split(' ')[0]
+    //     }
+    //   }
+    //   return { symbol, balance, contract, blockchain }
+    // })
 
-    yield put(actions.getEOSAssetBalanceListSucceeded({ eosAccountName, balanceInfo }))
+    // yield put(actions.getEOSAssetBalanceListSucceeded({ eosAccountName, balanceInfo }))
   } catch (e) {
     yield put(actions.getEOSAssetBalanceListFailed(getErrorMessage(e)))
   }
