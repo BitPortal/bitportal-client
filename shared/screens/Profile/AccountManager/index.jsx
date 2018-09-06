@@ -140,8 +140,9 @@ export default class AccountList extends Component {
               />
               <SettingItem
                 leftItemTitle={<FormattedMessage id="act_sec_title_logout" />}
+                rightItemTitle={' '}
                 onPress={this.showLogoutPrompt}
-                extraStyle={{ marginTop: 10 }}
+                extraStyle={{ marginTop: 10, alignItems: 'center', justifyContent: 'center' }}
                 leftTitleStyle={{ color: Colors.textColor_255_76_118 }}
               />
               <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearKeystoreError} delay={500} />
