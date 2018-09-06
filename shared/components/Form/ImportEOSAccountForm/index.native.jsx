@@ -33,15 +33,15 @@ export const errorMessages = (error, messages) => {
 
 const validate = (values) => {
   const errors = {}
-
+  const { locale } = this.props
   if (!values.get('password')) {
     errors.password = <FormattedMessage id="import_title_name_pwd" />
-  } 
+  }
 
   if (!!values.get('password') && values.get('password').length < 6) {
     errors.password = messages[locale].act_fid_error_pw_min_character
   }
-  
+
   if (!!values.get('password') && values.get('password').length > 64) {
     errors.password = messages[locale].act_fid_error_pw_max_character
   }

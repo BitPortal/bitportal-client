@@ -43,7 +43,7 @@ const validate = (values, props) => {
   if (values.get('newPassword').length < 6) {
     errors.newPassword = messages[locale].act_fid_error_pw_min_character
   }
-  
+
   if (values.get('newPassword').length > 64) {
     errors.newPassword = messages[locale].act_fid_error_pw_max_character
   }

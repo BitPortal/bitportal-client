@@ -102,11 +102,10 @@ export default class Scanner extends Component {
           this.setState({ isVisible: false })
           if (error) {
             Dialog.alert(
-              messages[this.props.locale].scan_popup_text_invalid_image, 
-              null, 
+              messages[this.props.locale].scan_popup_text_invalid_image,
+              null,
               { positiveText: messages[this.props.locale].asset_alert_button_ent })
-          }
-          else this.onSuccess({ data: result })
+          } else this.onSuccess({ data: result })
         })
       })
     }

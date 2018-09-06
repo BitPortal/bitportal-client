@@ -4,7 +4,7 @@ import messages from 'resources/messages'
 
 const checkCameraAuthorized = response => response === 'authorized'
 
-const checkCamera = (locale) => new Promise((resolve) => {
+const checkCamera = locale => new Promise((resolve) => {
   Permissions.check('camera').then((response) => {
     // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
     if (checkCameraAuthorized(response)) {
@@ -27,7 +27,7 @@ const checkCamera = (locale) => new Promise((resolve) => {
   })
 })
 
-const checkPhoto = (locale) => new Promise((resolve) => {
+const checkPhoto = locale => new Promise((resolve) => {
   Permissions.check('photo').then((response) => {
     // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
     if (checkCameraAuthorized(response)) {
