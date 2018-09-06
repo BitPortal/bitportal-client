@@ -4,8 +4,8 @@ import { Navigation } from 'react-native-navigation'
 import Alert from 'components/Alert'
 import { injectIntl, IntlProvider } from 'react-intl'
 import Images from 'resources/images'
+import messages from 'resources/messages'
 import styles from './styles'
-import messages from './messages'
 
 @injectIntl
 export default class DappElement extends Component {

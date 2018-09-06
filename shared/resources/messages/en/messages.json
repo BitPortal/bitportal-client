@@ -403,7 +403,7 @@
   "txdtl_title_name_block": "Block",
   "txdtl_title_name_producer": "Producer",
   "txdtl_title_button_copy": "Copy",
-  "txdtl_title_button_copied": "Copy successful",
+  "txdtl_title_button_copied": "Copied",
   "tx_sec_title_sdsuc": "Completed",
   "tx_sec_title_sdfail": "Failed",
   "txdtl_title_button_ent": "Confirm"
