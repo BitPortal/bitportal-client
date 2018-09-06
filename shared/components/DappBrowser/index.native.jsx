@@ -18,7 +18,7 @@ import NavigationBar, {
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
 import styles from './styles'
-import messages from './messages'
+import messages from 'resources/messages'
 
 const Loading = ({ text }) => (
   <View style={[styles.loadContainer, styles.center]}>
@@ -182,20 +182,18 @@ export default class DappBrowser extends Component {
             />
             )}
             <ActionSheet
-          ref={(o) => {
-            this.actionSheet = o
-          }}
-          title=""
-          options={[
-            messages[locale].web_button_name_share,
-            Platform.OS === 'ios'
-              ? messages[locale].web_button_name_linkios
-              : messages[locale].web_button_name_linkandroid,
-            messages[locale].web_button_name_cancel
-          ]}
-          cancelButtonIndex={2}
-          destructiveButtonIndex={1}
-          onPress={index => this.selectActionSheet(index)}
+              ref={(o) => { this.actionSheet = o }}
+              title=""
+              options={[
+                messages[locale].web_button_name_share,
+                Platform.OS === 'ios'
+                  ? messages[locale].web_button_name_linkios
+                  : messages[locale].web_button_name_linkandroid,
+                messages[locale].web_button_name_cancel
+              ]}
+              cancelButtonIndex={2}
+              destructiveButtonIndex={1}
+              onPress={index => this.selectActionSheet(index)}
             />
           </View>
         </View>

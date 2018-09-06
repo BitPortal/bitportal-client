@@ -40,6 +40,15 @@ import styles from './styles'
   { withRef: true }
 )
 export default class DappList extends Component {
+
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
+  }
+
   state = { visible: false }
 
   showModal = () => {

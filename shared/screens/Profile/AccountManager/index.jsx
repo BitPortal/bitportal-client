@@ -144,8 +144,6 @@ export default class AccountList extends Component {
                 extraStyle={{ marginTop: 10 }}
                 leftTitleStyle={{ color: Colors.textColor_255_76_118 }}
               />
-              <Loading isVisible={exporting} text={messages[locale].logout_popup_exporting} />
-              <Loading isVisible={loggingOut} text={messages[locale].logout_popup_deleting} />
               <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearKeystoreError} delay={500} />
               <Alert message={errorMessages(logoutError, messages[locale])} dismiss={this.props.actions.clearLogoutError} delay={500} />
               <Prompt
@@ -169,6 +167,8 @@ export default class AccountList extends Component {
               />
             </ScrollView>
           </View>
+          <Loading isVisible={exporting} text={messages[locale].logout_popup_exporting} />
+          <Loading isVisible={loggingOut} text={messages[locale].logout_popup_deleting} />
         </View>
       </IntlProvider>
     )

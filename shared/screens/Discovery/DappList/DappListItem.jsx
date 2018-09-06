@@ -11,7 +11,7 @@ import Toast from 'components/Toast'
 
 import Colors from 'resources/colors'
 import Images from 'resources/images'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 @injectIntl
