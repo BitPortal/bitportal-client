@@ -73,7 +73,7 @@ export default class Assets extends Component {
   displayAccountList = () => {}
 
   scanQR = async () => {
-    const authorized = await checkCamera()
+    const authorized = await checkCamera(this.props.locale)
     if (authorized) {
       const eosAccountName = this.props.eosAccount
         .get('data')

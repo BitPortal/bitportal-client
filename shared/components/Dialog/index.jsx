@@ -1,4 +1,5 @@
 import { AlertIOS, Alert, NativeModules } from 'react-native'
+import messages from 'resources/messages'
 
 const nativeUtils = NativeModules.NativeUtils
 const actionNegative = 'actionNegative'
@@ -34,22 +35,22 @@ const alert = (title = '', content = null, options = {}) => new Promise((resolve
   Alert.alert(title, content, buttons)
 })
 
-const permissionAlert = () => {
+const permissionAlert = (title, content, locale) => {
   const buttons = []
 
   buttons.push({
-    text: '稍候前往',
+    text: messages[locale].scan_popup_button_cancel,
     onPress: () => console.log('Cancel Pressed'),
     style: 'cancel'
   })
 
   buttons.push({
-    text: '前往设置',
+    text: messages[locale].scan_popup_button_setting,
     onPress: () => nativeUtils.goSettingPermission(),
     style: 'default'
   })
 
-  Alert.alert('提示', '权限受限', buttons)
+  Alert.alert(title, content, buttons)
 }
 
 const prompt = (title = '', content = null, options = {}) => new Promise((resolve) => {

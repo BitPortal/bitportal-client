@@ -36,8 +36,18 @@ const validate = (values) => {
 
   if (!values.get('password')) {
     errors.password = <FormattedMessage id="import_title_name_pwd" />
-  } else if (!!values.get('password') && values.get('password').length < 6) {
-    errors.password = <FormattedMessage id="import_txtbox_txt_pwdhint1" />
+  } 
+
+  if (!!values.get('password') && values.get('password').length < 6) {
+    errors.password = messages[locale].act_fid_error_pw_min_character
+  }
+  
+  if (!!values.get('password') && values.get('password').length > 64) {
+    errors.password = messages[locale].act_fid_error_pw_max_character
+  }
+
+  if (!!values.get('passwordHint') && values.get('passwordHint').length > 64) {
+    errors.passwordHint = messages[locale].act_fid_error_pswtp_max_character
   }
 
   if (!values.get('confirmedPassword')) {

@@ -62,6 +62,18 @@ const validate = (values, props) => {
     errors.password = messages[locale].act_fid_empty_psd
   }
 
+  if (values.get('password').length < 6) {
+    errors.password = messages[locale].act_fid_error_pw_min_character
+  }
+  
+  if (values.get('password').length > 64) {
+    errors.password = messages[locale].act_fid_error_pw_max_character
+  }
+
+  if (values.get('passwordHint').length > 64) {
+    errors.passwordHint = messages[locale].act_fid_error_pswtp_max_character
+  }
+
   if (!values.get('confirmedPassword')) {
     errors.confirmedPassword = messages[locale].act_fid_empty_rptpsd
   }

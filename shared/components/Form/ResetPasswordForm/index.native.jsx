@@ -40,6 +40,19 @@ const validate = (values, props) => {
     errors.newPassword = messages[locale].cpwd_title_empty_newpsd
   }
 
+  if (values.get('newPassword').length < 6) {
+    errors.newPassword = messages[locale].act_fid_error_pw_min_character
+  }
+  
+  if (values.get('newPassword').length > 64) {
+    errors.newPassword = messages[locale].act_fid_error_pw_max_character
+  }
+
+  if (values.get('passwordHint').length > 64) {
+    errors.passwordHint = messages[locale].act_fid_error_pswtp_max_character
+  }
+
+
   if (values.get('confirmedNewPassword') !== values.get('newPassword')) {
     errors.confirmedNewPassword = messages[locale].cpwd_title_empty_rptnewpsd
   }

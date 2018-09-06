@@ -39,7 +39,7 @@ export default class AssetsTransfer extends Component {
     if (this.props.entry === 'scanner') {
       Navigation.pop(this.props.componentId)
     } else {
-      const authorized = await checkCamera()
+      const authorized = await checkCamera(this.props.locale)
       if (authorized) {
         Navigation.push(this.props.componentId, {
           component: {

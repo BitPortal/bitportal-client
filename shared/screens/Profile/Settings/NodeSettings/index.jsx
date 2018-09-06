@@ -126,8 +126,8 @@ export default class NodeSettings extends Component {
               enableEmptySections={true}
               showsVerticalScrollIndicator={false}
               sections={[
-                { title: '默认节点', data: defaultNodes.toJS() },
-                { title: '自定义节点', data: customNodes.toJS() }
+                { title: messages[locale].ndst_label_default_node, data: defaultNodes.toJS() },
+                { title: messages[locale].ndst_label_custom_node, data: customNodes.toJS() }
               ]}
               renderItem={this.renderItem}
               renderSectionHeader={this.renderSectionHeader}
