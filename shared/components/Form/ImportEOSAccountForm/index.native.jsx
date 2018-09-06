@@ -31,9 +31,9 @@ export const errorMessages = (error, messages) => {
   }
 }
 
-const validate = (values) => {
+const validate = (values, props) => {
   const errors = {}
-  const { locale } = this.props
+  const { locale } = props
   if (!values.get('password')) {
     errors.password = <FormattedMessage id="import_title_name_pwd" />
   }
