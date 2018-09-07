@@ -140,7 +140,7 @@ export default class AccountList extends Component {
               />
               <SettingItem
                 leftItemTitle={<FormattedMessage id="act_sec_title_logout" />}
-                rightItemTitle={' '}
+                rightItemTitle=" "
                 onPress={this.showLogoutPrompt}
                 extraStyle={{ marginTop: 10, alignItems: 'center', justifyContent: 'center' }}
                 leftTitleStyle={{ color: Colors.textColor_255_76_118 }}
