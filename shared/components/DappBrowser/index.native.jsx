@@ -15,8 +15,12 @@ import NavigationBar, {
   LinkingRightButton,
   WebViewLeftButton
 } from 'components/NavigationBar'
+import { escapeJSONString, parseMessageId } from 'utils'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
+import messageHandler from 'utils/bridgeMessageHandler'
+import { initEOS } from 'core/eos'
+// import ActionModal from 'components/ActionModal'
 import styles from './styles'
 import messages from './messages'
 
@@ -118,13 +122,30 @@ export default class DappBrowser extends Component {
     })
   }
 
-  onBridgeMessage = (message) => {
-    switch (message) {
-      case 'hello from webview':
-        this.webviewbridge.sendToBridge('webviewbridge')
-        break
-      case 'got the message inside webview':
-        console.log('we have got a message from webview! yeah')
+  onBridgeMessage = async (message) => {
+    let action
+
+    try {
+      action = JSON.parse(message)
+    } catch (error) {
+      const messageId = parseMessageId(message)
+      if (messageId) {
+        this.webviewbridge.sendToBridge(escapeJSONString(JSON.stringify({ messageId, type: 'parseMessageError', payload: { error: { message: 'parseMessageError: error.message' } } })))
+        return
+      }
+    }
+
+    const messageId = action.messageId
+    switch (action.type) {
+      case 'getEOSAccountInfo':
+        try {
+          const account = action.payload.account
+          const eos = await initEOS({})
+          const data = await eos.getAccount(account)
+          this.webviewbridge.sendToBridge(escapeJSONString(JSON.stringify({ messageId, type: 'getEOSAccountInfoSucceeded', payload: { data } })))
+        } catch (error) {
+          this.webviewbridge.sendToBridge(escapeJSONString(JSON.stringify({ messageId, type: 'getEOSAccountInfoFailed', payload: { error } })))
+        }
         break
       default:
         break
@@ -133,20 +154,7 @@ export default class DappBrowser extends Component {
 
   render() {
     const { needLinking, uri, title, locale } = this.props
-
-    const injectScript = `
-  (function () {
-    if (WebViewBridge) {
-
-      WebViewBridge.onMessage = function (message) {
-        if (message === "hello from react-native") {
-          WebViewBridge.send("got the message inside webview");
-        }
-      }
-      WebViewBridge.send("hello from webview")
-    }
-  }())
-`
+    const injectScript = `(function () { ${messageHandler} }())`
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -157,45 +165,33 @@ export default class DappBrowser extends Component {
             rightButton={needLinking && <LinkingRightButton iconName="ios-more" onPress={this.showActionSheet} />}
           />
           <View style={styles.content}>
-            {uri && (
             <WebViewBridge
-               source={{ uri }}
-               ref={(e) => {
-                 this.webviewbridge = e
-               }}
-               renderError={this.renderError}
-               renderLoading={this.renderLoading}
-               startInLoadingState={true}
-               automaticallyAdjustContentInsets={false}
-               onNavigationStateChange={(e) => {
-                 this.onNavigationStateChange(e)
-               }}
-               javaScriptEnabled={true}
-               domStorageEnabled={true}
-               decelerationRate="normal"
-               scalesPageToFit={true}
-               nativeConfig={{
-                 props: { backgroundColor: Colors.minorThemeColor, flex: 1 }
-               }}
-               onBridgeMessage={this.onBridgeMessage}
-               injectedJavaScript={injectScript}
+              source={{ uri }}
+              ref={(e) => { this.webviewbridge = e }}
+              renderError={this.renderError}
+              renderLoading={this.renderLoading}
+              startInLoadingState={true}
+              automaticallyAdjustContentInsets={false}
+              onNavigationStateChange={this.onNavigationStateChange}
+              javaScriptEnabled={true}
+              domStorageEnabled={true}
+              decelerationRate="normal"
+              scalesPageToFit={true}
+              nativeConfig={{ props: { backgroundColor: Colors.minorThemeColor, flex: 1 } }}
+              onBridgeMessage={this.onBridgeMessage}
+              injectedJavaScript={injectScript}
             />
-            )}
             <ActionSheet
-          ref={(o) => {
-            this.actionSheet = o
-          }}
-          title=""
-          options={[
-            messages[locale].web_button_name_share,
-            Platform.OS === 'ios'
-              ? messages[locale].web_button_name_linkios
-              : messages[locale].web_button_name_linkandroid,
-            messages[locale].web_button_name_cancel
-          ]}
-          cancelButtonIndex={2}
-          destructiveButtonIndex={1}
-          onPress={index => this.selectActionSheet(index)}
+              ref={(o) => { this.actionSheet = o }}
+              title=""
+              options={[
+                messages[locale].web_button_name_share,
+                Platform.OS === 'ios' ? messages[locale].web_button_name_linkios : messages[locale].web_button_name_linkandroid,
+                messages[locale].web_button_name_cancel
+              ]}
+              cancelButtonIndex={2}
+              destructiveButtonIndex={1}
+              onPress={this.selectActionSheet}
             />
           </View>
         </View>

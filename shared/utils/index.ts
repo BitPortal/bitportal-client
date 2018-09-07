@@ -124,6 +124,36 @@ export const getEOSErrorMessage = (error: any) => {
   return error.message || 'unknown error'
 }
 
+export const parseEOSErrorMessage = (error) => {
+  const message = error.message
+
+  try {
+    const parsed = JSON.parse(message)
+    return parsed
+  } catch(error) {
+    return message
+  }
+}
+
+export const escapeJSONString = (jsonString) => {
+  return jsonString
+    .replace(/[\\]/g, '\\\\')
+    .replace(/[\"]/g, '\\\"')
+    .replace(/[\']/g, '\\\'')
+    .replace(/[\/]/g, '\\/')
+    .replace(/[\b]/g, '\\b')
+    .replace(/[\f]/g, '\\f')
+    .replace(/[\n]/g, '\\n')
+    .replace(/[\r]/g, '\\r')
+    .replace(/[\t]/g, '\\t')
+}
+
+export const parseMessageId = (text) => {
+  const re = /BITPORAL_BRIDGE_MESSAGE@(\d|\w)+@/g
+  const found = text.match(re)
+  return found && found[0]
+}
+
 export const encodeKey = (...elements: any[]) => {
   const key = JSON.stringify([...elements])
   const keyTrim = key.substring(1, key.length - 1)

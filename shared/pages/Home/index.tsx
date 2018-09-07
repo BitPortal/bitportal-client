@@ -42,38 +42,32 @@ interface State {
 
 export default class Home extends Component<Props, State> {
   state = {
-    price: null
+    eosAccountName: null
   }
 
   componentDidMount() {
-    // this.props.actions.syncWalletRequested()
-    // this.props.actions.getTickersRequested({ exchange: 'BINANCE' })
+    document.addEventListener('bitportalLoaded', () => {
+      const bitportal = window.bitportal
+      window.bitportal = null
+
+      bitportal.getEOSAccountInfo({ account: 'terencegehui' })
+        .then((data) => {
+          this.setState({ eosAccountName: data.account_name })
+        }).catch(error => {
+          alert(JSON.stringify(error))
+        })
+    })
   }
 
   render() {
-    const { locale, ticker } = this.props
+    const { locale } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
         <div className={style.home}>
           <div>
-            Welcome to BitPortal! {test[locale].import_title_name_bpnm}
+            Welcome to BitPortal! {this.state.eosAccountName}
           </div>
-          {ticker.map((item: any) =>
-            <div key={`${item.get('exchange')}_${item.get('market')}`}>
-              {`${item.get('market')}:`}
-              <FormattedNumber
-                value={item.get('price_last')}
-                maximumFractionDigits={8}
-                minimumFractionDigits={8}
-              /> |
-              <FormattedNumber
-                value={item.get('quote_volume')}
-                maximumFractionDigits={2}
-                minimumFractionDigits={2}
-              />
-            </div>
-           )}
         </div>
       </IntlProvider>
     )
