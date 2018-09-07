@@ -2,9 +2,9 @@ import React, { PureComponent } from 'react'
 import { FlatList, View, ActivityIndicator, Text } from 'react-native'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
+import messages from 'resources/messages'
 import NewsRow from './NewsRow'
 import styles from './styles'
-import messages from './messages'
 
 @connect(state => ({
   locale: state.intl.get('locale')

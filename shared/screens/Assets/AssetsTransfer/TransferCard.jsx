@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { FormattedMessage, FormattedNumber, IntlProvider } from 'react-intl'
 import Modal from 'react-native-modal'
 import { noop } from 'utils'
-import messages from './messages'
+import messages from 'resources/messages'
 
 const styles = StyleSheet.create({
   container: {

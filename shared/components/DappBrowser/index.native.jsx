@@ -21,8 +21,8 @@ import ActionSheet from 'react-native-actionsheet'
 import messageHandler from 'utils/bridgeMessageHandler'
 import { initEOS } from 'core/eos'
 // import ActionModal from 'components/ActionModal'
+import messages from 'resources/messages'
 import styles from './styles'
-import messages from './messages'
 
 const Loading = ({ text }) => (
   <View style={[styles.loadContainer, styles.center]}>

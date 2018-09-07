@@ -11,7 +11,7 @@ import { FormattedMessage, IntlProvider } from 'react-intl'
 import { Text, View, TouchableHighlight, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { SCREEN_WIDTH, FontScale } from 'utils/dimens'
 import { formatCycleTime, formatMemorySize } from 'utils/format'
-import messages from './messages'
+import messages from 'resources/messages'
 
 const styles = StyleSheet.create({
   linearContainer: {

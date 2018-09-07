@@ -11,7 +11,7 @@ import {
 } from 'utils/dimens'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import Modal from 'react-native-modal'
-import messages from './messages'
+import messages from 'resources/messages'
 
 const styles = StyleSheet.create({
   container: {

@@ -10,7 +10,7 @@ import { validateUrl } from 'utils/validate'
 import Toast from 'components/Toast'
 import { SOCIAL_MEDIA } from 'constants/analytics'
 import { onEventWithLabel } from 'utils/analytics'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 @connect(

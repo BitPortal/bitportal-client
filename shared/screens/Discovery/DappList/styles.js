@@ -4,7 +4,6 @@ import {
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
   NAV_BAR_HEIGHT,
-  TAB_BAR_HEIGHT,
   FontScale
 } from 'utils/dimens'
 
@@ -15,7 +14,7 @@ const styles = StyleSheet.create({
   listContainer: {
     marginTop: 0,
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - TAB_BAR_HEIGHT,
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT,
     backgroundColor: Colors.mainThemeColor
   },
   rowContainer: {

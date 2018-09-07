@@ -1,7 +1,7 @@
 import { Platform, Linking } from 'react-native'
 import VersionNumber from 'react-native-version-number'
 import { Navigation } from 'react-native-navigation'
-import messages from 'screens/LightBox/messages'
+import messages from 'resources/messages'
 
 const actionNegative = 'actionNegative'
 const actionPositive = 'actionPositive'
@@ -90,7 +90,7 @@ const showGoToUpdate = async (data, locale) => {
   }
 }
 
-const calculate = (VersionNumber) => {
+export const calculate = (VersionNumber) => {
   const versions = VersionNumber.split('.')
   return parseInt((versions[0] * 1000000) + (versions[1] * 1000) + versions[2], 10)
 }

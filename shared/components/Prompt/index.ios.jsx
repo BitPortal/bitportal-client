@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import { AlertIOS } from 'react-native'
 import { connect } from 'react-redux'
-import messages from './messages'
+import messages from 'resources/messages'
 
 @connect(
   state => ({

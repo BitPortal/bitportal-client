@@ -22,6 +22,7 @@ import Colors from 'resources/colors'
 import VersionNumber from 'react-native-version-number'
 import SplashScreen from 'react-native-splash-screen'
 import DeviceInfo from 'react-native-device-info'
+import { calculate } from 'utils/update'
 import { ENV } from 'constants/env'
 import { noop } from 'utils'
 
@@ -47,7 +48,7 @@ const runApp = async () => {
     eosNode,
     selectedEOSAsset,
     storedFavoriteDapps,
-    localVersion
+    remoteVersion
   ] = await Promise.all([
     storage.getItem('bitportal_lang'),
     storage.getItem('bitportal_currency', true),
@@ -63,7 +64,7 @@ const runApp = async () => {
   const rate = currency && currency.rate
   const activeNode = eosNode && eosNode.activeNode
   const customNodes = eosNode && eosNode.customNodes
-  const currentVersion = VersionNumber.appVersion
+  const localVersion = VersionNumber.appVersion
 
   const store = configure({
     intl: getInitialLang(lang),
@@ -76,8 +77,7 @@ const runApp = async () => {
 
   registerScreens(store)
   store.runSaga(sagas)
-
-  if (localVersion === currentVersion) {
+  if (remoteVersion && calculate(remoteVersion) <= calculate(localVersion)) {
     startTabBasedApp(lang)
   } else {
     startSingleApp()

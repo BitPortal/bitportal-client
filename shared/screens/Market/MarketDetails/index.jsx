@@ -9,10 +9,10 @@ import * as chartActions from 'actions/chart'
 import * as tickerActions from 'actions/ticker'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
+import messages from 'resources/messages'
 import CoinInfoCard from './CoinInfoCard'
 import MarketList from './MarketList'
 import styles from './styles'
-import messages from './messages'
 
 const ButtonElement = ({ Title, onPress }) => (
   <TouchableOpacity

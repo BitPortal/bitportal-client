@@ -4,10 +4,10 @@ import { View, ScrollView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
+import messages from 'resources/messages'
 import Header from './Header'
 import Introduction from './Introduction'
 import Contacts from './Contacts'
-import messages from './messages'
 import styles from './styles'
 
 @connect(
@@ -28,6 +28,15 @@ export default class ProducerDetails extends Component {
     }
   }
 
+  pressLink = (uri) => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.BPWebView',
+        passProps: { uri }
+      }
+    })
+  }
+
   render() {
     const { locale, producer, total_producer_vote_weight } = this.props
     const introduce = producer.getIn(['info', 'introduce', locale])
@@ -42,7 +51,7 @@ export default class ProducerDetails extends Component {
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <ScrollView showsVerticalScrollIndicator={false}>
-            <Header producer={producer} votes={(+votes / +total_producer_vote_weight) * 100} />
+            <Header pressLink={this.pressLink} producer={producer} votes={(+votes / +total_producer_vote_weight) * 100} />
             {!!introduce && <Introduction introduce={introduce} />}
             {!!contacts && <Contacts contacts={contacts} />}
           </ScrollView>

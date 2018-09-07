@@ -64,7 +64,7 @@ export default ({ item, onPress, eosAccountName }) => {
   const diffColor = isReceiver ? Colors.textColor_89_185_226 : Colors.textColor_255_98_92
   const quantity = item.getIn(['action_trace', 'act', 'data', 'quantity'])
   const amount = quantity && quantity.split(' ')[0]
-  // const symbol = quantity && quantity.split(' ')[1]
+  const symbol = quantity && quantity.split(' ')[1]
   const displayAccount = isReceiver ? fromAccount : toAccount
   const time = item.get('block_time')
 
@@ -82,13 +82,14 @@ export default ({ item, onPress, eosAccountName }) => {
             <Text style={[styles.text12, { marginTop: 2 }]}><FormattedRelative value={+new Date(`${time}Z`)} /></Text>
           </View>
         </View>
-        <Text style={[styles.text20, { color: diffColor }]}>
+        <Text style={[styles.text14, { color: diffColor }]}>
           {isReceiver ? '+' : '-'}
           <FormattedNumber
             value={amount || 0}
             maximumFractionDigits={4}
             minimumFractionDigits={4}
           />
+          {' '}{symbol}
         </Text>
       </View>
     </TouchableHighlight>

@@ -14,9 +14,8 @@ import { IntlProvider } from 'react-intl'
 import SearchBar from 'components/SearchBar'
 import { SCREEN_WIDTH } from 'utils/dimens'
 import AddRemoveButtonAnimation from 'components/AddRemoveButton/animation'
-
+import messages from 'resources/messages'
 import DappListItem from './DappListItem'
-import messages from './messages'
 import styles from './styles'
 
 @connect(
@@ -41,6 +40,15 @@ import styles from './styles'
   { withRef: true }
 )
 export default class DappList extends Component {
+
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
+  }
+
   state = { visible: false }
 
   showModal = () => {

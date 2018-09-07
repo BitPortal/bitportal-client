@@ -6,8 +6,8 @@ import ResetPasswordForm from 'components/Form/ResetPasswordForm'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import Loading from 'components/Loading'
+import messages from 'resources/messages'
 import styles from './styles'
-import messages from './messages'
 
 @connect(
   state => ({

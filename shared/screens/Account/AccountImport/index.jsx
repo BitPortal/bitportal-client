@@ -7,7 +7,7 @@ import { View, ScrollView } from 'react-native'
 import Colors from 'resources/colors'
 import ImportEOSAccountForm from 'components/Form/ImportEOSAccountForm'
 import Loading from 'components/Loading'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 @connect(

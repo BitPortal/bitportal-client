@@ -7,9 +7,9 @@ import { parsedDappListSelector } from 'selectors/dApp'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
 import { IntlProvider } from 'react-intl'
 import Colors from 'resources/colors'
+import messages from 'resources/messages'
 import DappElement from './DappElement'
 import styles from './styles'
-import messages from './messages'
 
 @connect(
   state => ({

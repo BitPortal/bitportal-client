@@ -19,7 +19,7 @@ import Loading from 'components/Loading'
 import { ASSETS_SCAN } from 'constants/analytics'
 import { onEventWithMap } from 'utils/analytics'
 import { eosAssetBalanceSelector } from 'selectors/balance'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 @connect(
@@ -93,15 +93,19 @@ export default class Scanner extends Component {
   }
 
   getImageFromPhoto = async () => {
-    const authorized = await checkPhoto()
+    const authorized = await checkPhoto(this.props.locale)
     if (authorized) {
       const options = { smartAlbums: ['UserLibrary', 'PhotoStream'], cropping: false, mediaType: 'photo' }
       ImagePicker.openPicker(options).then((image) => {
         this.setState({ isVisible: true })
         QRDecode.decode(image.path, (error, result) => {
           this.setState({ isVisible: false })
-          if (error) Dialog.alert('请确认所选图片中含有二维码', null, { positiveText: '确定' })
-          else this.onSuccess({ data: result })
+          if (error) {
+            Dialog.alert(
+              messages[this.props.locale].scan_popup_text_invalid_image,
+              null,
+              { positiveText: messages[this.props.locale].asset_alert_button_ent })
+          } else this.onSuccess({ data: result })
         })
       })
     }
@@ -129,7 +133,7 @@ export default class Scanner extends Component {
             onRead={this.onSuccess}
             showMarker={true}
           />
-          <Loading isVisible={this.state.isVisible} />
+          <Loading text={messages[locale].scan_text_processing} isVisible={this.state.isVisible} />
         </View>
       </IntlProvider>
     )

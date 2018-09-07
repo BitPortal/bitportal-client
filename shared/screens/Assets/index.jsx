@@ -32,8 +32,8 @@ import { checkCamera } from 'utils/permissions'
 import { ASSETS_QR, ASSETS_TOKEN_DETAIL, ASSETS_EOS_RESOURCE, ASSETS_ADD_TOKEN } from 'constants/analytics'
 import { onEventWithLabel } from 'utils/analytics'
 import Dialog from 'components/Dialog'
+import messages from 'resources/messages'
 import styles from './styles'
-import messages from './messages'
 import AccountList from './AccountList'
 import EnableAssets from './EnableAssets'
 import BalanceList from './BalanceList'
@@ -73,7 +73,7 @@ export default class Assets extends Component {
   displayAccountList = () => {}
 
   scanQR = async () => {
-    const authorized = await checkCamera()
+    const authorized = await checkCamera(this.props.locale)
     if (authorized) {
       const eosAccountName = this.props.eosAccount
         .get('data')
@@ -237,7 +237,7 @@ export default class Assets extends Component {
               <View style={{ alignItems: 'center' }}>
                 <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF} />
                 <Text style={[styles.text14, { color: Colors.textColor_255_255_238, marginTop: 20 }]}>
-                  <FormattedMessage id="act_sec_title_create_eos_account" />
+                  <FormattedMessage id="act_sec_title_import_eos_account" />
                 </Text>
               </View>
             </TouchableHighlight>
@@ -258,7 +258,7 @@ export default class Assets extends Component {
                 />
                 {!activeEOSAccount.get('account_name') && (
                   <SettingItem
-                    leftItemTitle={<FormattedMessage id="act_sec_title_create_eos_account" />}
+                    leftItemTitle={<FormattedMessage id="act_sec_title_import_eos_account" />}
                     onPress={() => this.createEOSAccount()}
                     extraStyle={{ marginTop: 10, marginBottom: 10 }}
                   />

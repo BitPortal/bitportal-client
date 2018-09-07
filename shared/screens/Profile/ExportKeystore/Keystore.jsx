@@ -3,7 +3,7 @@ import Colors from 'resources/colors'
 import { Text, View, ScrollView, TextInput, TouchableHighlight, Clipboard } from 'react-native'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 @connect(

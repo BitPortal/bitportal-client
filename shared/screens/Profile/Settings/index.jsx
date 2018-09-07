@@ -6,7 +6,7 @@ import { View, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { onEventWithLabel } from 'utils/analytics'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 @connect(

@@ -7,7 +7,7 @@ import { FormattedMessage, IntlProvider } from 'react-intl'
 import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
 import { Text, View, ScrollView, TouchableHighlight, TouchableOpacity, StyleSheet } from 'react-native'
 
-import messages from './messages'
+import messages from 'resources/messages'
 
 const styles = StyleSheet.create({
   container: {

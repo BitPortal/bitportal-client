@@ -13,7 +13,7 @@ import LinearGradientContainer from 'components/LinearGradientContainer'
 import Dialog from 'components/Dialog'
 import { EOS_EXPLORER_URL } from 'constants/env'
 import Toast from 'components/Toast'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 @connect(
@@ -246,9 +246,9 @@ export default class TransactionRecord extends Component {
                       <TouchableOpacity
                         disabled={isCopied}
                         onPress={this.clipboard}
-                        style={[styles.btn, styles.center]}
+                        style={[styles.btn, styles.center, { backgroundColor: isCopied ? Colors.textColor_181_181_181 : Colors.textColor_89_185_226 }]}
                       >
-                        <Text style={[styles.text14, { color: Colors.textColor_107_107_107 }]}>
+                        <Text style={[styles.text14, { color: isCopied ? Colors.textColor_107_107_107 : Colors.textColor_255_255_238 }]}>
                           {isCopied ? <FormattedMessage id="txdtl_title_button_copied" /> : <FormattedMessage id="txdtl_title_button_copy" />}
                         </Text>
                       </TouchableOpacity>

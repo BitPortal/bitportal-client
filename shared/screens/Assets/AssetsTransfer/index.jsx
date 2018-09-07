@@ -9,8 +9,8 @@ import { IntlProvider } from 'react-intl'
 import TransferAssetsForm from 'components/Form/TransferAssetsForm'
 import { checkCamera } from 'utils/permissions'
 import Loading from 'components/Loading'
+import messages from 'resources/messages'
 import styles from './styles'
-import messages from './messages'
 
 @connect(
   state => ({
@@ -39,7 +39,7 @@ export default class AssetsTransfer extends Component {
     if (this.props.entry === 'scanner') {
       Navigation.pop(this.props.componentId)
     } else {
-      const authorized = await checkCamera()
+      const authorized = await checkCamera(this.props.locale)
       if (authorized) {
         Navigation.push(this.props.componentId, {
           component: {

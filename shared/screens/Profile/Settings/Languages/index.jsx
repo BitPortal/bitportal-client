@@ -8,7 +8,7 @@ import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { View, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 @connect(

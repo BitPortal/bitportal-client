@@ -14,7 +14,7 @@ import { onEventWithLabel } from 'utils/analytics'
 import Loading from 'components/Loading'
 import Alert from 'components/Alert'
 import Prompt from 'components/Prompt'
-import messages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
 
 export const errorMessages = (error, messages) => {
@@ -140,12 +140,11 @@ export default class AccountList extends Component {
               />
               <SettingItem
                 leftItemTitle={<FormattedMessage id="act_sec_title_logout" />}
+                rightItemTitle={' '}
                 onPress={this.showLogoutPrompt}
-                extraStyle={{ marginTop: 10 }}
+                extraStyle={{ marginTop: 10, alignItems: 'center', justifyContent: 'center' }}
                 leftTitleStyle={{ color: Colors.textColor_255_76_118 }}
               />
-              <Loading isVisible={exporting} text={messages[locale].logout_popup_exporting} />
-              <Loading isVisible={loggingOut} text={messages[locale].logout_popup_deleting} />
               <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearKeystoreError} delay={500} />
               <Alert message={errorMessages(logoutError, messages[locale])} dismiss={this.props.actions.clearLogoutError} delay={500} />
               <Prompt
@@ -169,6 +168,8 @@ export default class AccountList extends Component {
               />
             </ScrollView>
           </View>
+          <Loading isVisible={exporting} text={messages[locale].logout_popup_exporting} />
+          <Loading isVisible={loggingOut} text={messages[locale].logout_popup_deleting} />
         </View>
       </IntlProvider>
     )
