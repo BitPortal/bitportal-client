@@ -26,20 +26,31 @@ function deepEqual(a, b)
   }
 }
 
-for (const locale of supportedLocales) {
-  const messages = fs.readJsonSync(`${outputDir}/${locale}.json`)
-
-  for (const path in messages) {
-    const message = fs.readJsonSync(path)
-
-    if (!deepEqual(message[locale], messages[path])) {
-      fs.ensureFile(path, (error) => {
-        if (error) throw error
-        fs.writeJson(path, { ...message, [locale]: messages[path] }, { spaces: 2 }, (error) => {
-          if (error) throw error
-          console.info(`${path} ${locale} updated!`)
-        })
+const saveFile = (path, locale, content) => {
+  return new Promise(function(reslove, reject) {
+    fs.ensureFile(path, (error) => {
+      if (error) reject(error)
+      fs.writeJson(path, content, { spaces: 2 }, (error) => {
+        if (error) reject(error)
+        console.info(`${path} ${locale} updated!`)
+        reslove(true)
       })
+    })
+  })
+}
+
+const importMessage = async () => {
+  for (const locale of supportedLocales) {
+    const messages = fs.readJsonSync(`${outputDir}/${locale}.json`)
+
+    for (const path in messages) {
+      const message = fs.readJsonSync(path)
+
+      if (!deepEqual(message[locale], messages[path])) {
+        await saveFile(path, locale, { ...message, [locale]: messages[path] })
+      }
     }
   }
 }
+
+importMessage()
