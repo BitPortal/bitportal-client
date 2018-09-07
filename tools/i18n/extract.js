@@ -4,7 +4,7 @@ const path = require('path')
 const supportedLocales = ['zh', 'en']
 const targetFiles = ['messages.json']
 const sourceDir = 'shared'
-const outputDir = 'static/messages'
+const outputDir = 'tools/i18n/output'
 
 const initialMessages = supportedLocales.reduce(
   (messages, locale) => Object.assign(messages, { [locale]: {} }), {}
@@ -16,8 +16,7 @@ const walkSync = (dir, targetFileNames = []) =>
         let newMessages = initialMessages
         if (fs.statSync(filePath).isDirectory()) {
           newMessages = Object.assign({}, walkSync(filePath, targetFileNames))
-        }
-        else if (targetFileNames.length && ~targetFileNames.indexOf(file)) {
+        } else if (targetFileNames.length && ~targetFileNames.indexOf(file)) {
           newMessages = fs.readJsonSync(filePath)
         }
         return supportedLocales.reduce(
