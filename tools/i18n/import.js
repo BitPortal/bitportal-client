@@ -37,7 +37,7 @@ for (const locale of supportedLocales) {
         if (error) throw error
         fs.writeJson(path, { ...message, [locale]: messages[path] }, { spaces: 2 }, (error) => {
           if (error) throw error
-          console.info(`${path} updated!`)
+          console.info(`${path} ${locale} updated!`)
         })
       })
     }
