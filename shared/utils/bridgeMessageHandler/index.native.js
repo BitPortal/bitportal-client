@@ -41,15 +41,11 @@ if (WebViewBridge) {
     const payload = action.payload
 
     switch(action.type) {
-      case 'getEOSAccountInfoSucceeded':
+      case 'actionSucceeded':
         callbacks[messageId].onSuccess(payload.data)
         delete callbacks[messageId]
         break
-      case 'getEOSAccountInfoFailed':
-        callbacks[messageId].onError(payload.error)
-        delete callbacks[messageId]
-        break
-      case 'parseMessageError':
+      case 'actionFailed':
         callbacks[messageId].onError(payload.error)
         delete callbacks[messageId]
         break
@@ -57,9 +53,34 @@ if (WebViewBridge) {
   }
 
   window.bitportal = {
-    getEOSAccountInfo: function({ account }) {
+    getEOSAccountInfo: function(params) {
+      if (!params.account) {
+        throw new Error('"account" is required')
+      }
+
       return new Promise(function(resolve, reject) {
-        sendRequest('getEOSAccountInfo', { account }, function(data) {
+        sendRequest('getEOSAccountInfo', params, function(data) {
+          resolve(data)
+        }, function(error) {
+          reject(error)
+        })
+      })
+    },
+    transferEOSAsset: function(params) {
+      if (!params.amount) {
+        throw new Error('"amount" is required')
+      } else if (!params.symbol) {
+        throw new Error('"symbol" is required')
+      } else if (!params.contract) {
+        throw new Error('"contract" is required')
+      } else if (!params.from) {
+        throw new Error('"from" is required')
+      } else if (!params.to) {
+        throw new Error('"to" is required')
+      }
+
+      return new Promise(function(resolve, reject) {
+        sendRequest('transferEOSAsset', params, function(data) {
           resolve(data)
         }, function(error) {
           reject(error)

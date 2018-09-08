@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
 import {
   View,
   Text,
@@ -15,16 +16,16 @@ import NavigationBar, {
   LinkingRightButton,
   WebViewLeftButton
 } from 'components/NavigationBar'
-import { escapeJSONString, parseMessageId } from 'utils'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
+import * as dappBrwoserActions from 'actions/dappBrowser'
 import messageHandler from 'utils/bridgeMessageHandler'
-import { initEOS } from 'core/eos'
-// import ActionModal from 'components/ActionModal'
+import ActionModal from 'components/ActionModal'
+import Prompt from 'components/Prompt'
 import messages from 'resources/messages'
 import styles from './styles'
 
-const Loading = ({ text }) => (
+const WebViewLoading = ({ text }) => (
   <View style={[styles.loadContainer, styles.center]}>
     <View style={[styles.borderStyle, styles.center]}>
       <ActivityIndicator size="small" color="white" />
@@ -35,9 +36,21 @@ const Loading = ({ text }) => (
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.get('locale'),
+    hasPendingMessage: state.dappBrowser.get('hasPendingMessage'),
+    resolvingMessage: state.dappBrowser.get('resolving'),
+    messageInfoAmount: state.dappBrowser.getIn(['pendingMessage', 'info', 'amount']),
+    messageInfoSymbol: state.dappBrowser.getIn(['pendingMessage', 'info', 'symbol']),
+    messageInfoContract: state.dappBrowser.getIn(['pendingMessage', 'info', 'contract']),
+    messageInfoFromAccount: state.dappBrowser.getIn(['pendingMessage', 'info', 'fromAccount']),
+    messageInfoToAccount: state.dappBrowser.getIn(['pendingMessage', 'info', 'toAccount']),
+    messageInfoMemo: state.dappBrowser.getIn(['pendingMessage', 'info', 'memo']),
   }),
-  null,
+  dispatch => ({
+    actions: bindActionCreators({
+      ...dappBrwoserActions
+    }, dispatch)
+  }),
   null,
   { withRef: true }
 )
@@ -52,7 +65,8 @@ export default class DappBrowser extends Component {
   }
 
   state = {
-    canGoBack: false
+    canGoBack: false,
+    showPrompt: false
   }
 
   share = () => {
@@ -114,7 +128,7 @@ export default class DappBrowser extends Component {
     )
   }
 
-  renderLoading = () => <Loading />
+  renderLoading = () => (<WebViewLoading />)
 
   onNavigationStateChange = (navState) => {
     this.setState({
@@ -122,38 +136,49 @@ export default class DappBrowser extends Component {
     })
   }
 
-  onBridgeMessage = async (message) => {
-    let action
+  onBridgeMessage = (message) => {
+    this.props.actions.receiveMessage(message)
+  }
 
-    try {
-      action = JSON.parse(message)
-    } catch (error) {
-      const messageId = parseMessageId(message)
-      if (messageId) {
-        this.webviewbridge.sendToBridge(escapeJSONString(JSON.stringify({ messageId, type: 'parseMessageError', payload: { error: { message: 'parseMessageError: error.message' } } })))
-        return
-      }
-    }
+  rejectMessage = () => {
+    this.props.actions.rejectMessage()
+  }
 
-    const messageId = action.messageId
-    switch (action.type) {
-      case 'getEOSAccountInfo':
-        try {
-          const account = action.payload.account
-          const eos = await initEOS({})
-          const data = await eos.getAccount(account)
-          this.webviewbridge.sendToBridge(escapeJSONString(JSON.stringify({ messageId, type: 'getEOSAccountInfoSucceeded', payload: { data } })))
-        } catch (error) {
-          this.webviewbridge.sendToBridge(escapeJSONString(JSON.stringify({ messageId, type: 'getEOSAccountInfoFailed', payload: { error } })))
-        }
-        break
-      default:
-        break
-    }
+  resolveMessage = (password) => {
+    this.props.actions.resolveMessage({ password })
+  }
+
+  showPrompt = () => {
+    this.setState({ showPrompt: true })
+  }
+
+  closePrompt = () => {
+    this.setState({ showPrompt: false })
+  }
+
+  componentDidMount() {
+    this.props.actions.initDappBrowser(this.webviewbridge)
+  }
+
+  componentWillUnmount() {
+    this.props.actions.closeDappBrowser()
   }
 
   render() {
-    const { needLinking, uri, title, locale } = this.props
+    const {
+      needLinking,
+      uri,
+      title,
+      locale,
+      hasPendingMessage,
+      resolvingMessage,
+      messageInfoAmount,
+      messageInfoSymbol,
+      messageInfoContract,
+      messageInfoFromAccount,
+      messageInfoToAccount,
+      messageInfoMemo
+    } = this.props
     const injectScript = `(function () { ${messageHandler} }())`
 
     return (
@@ -180,6 +205,23 @@ export default class DappBrowser extends Component {
               nativeConfig={{ props: { backgroundColor: Colors.minorThemeColor, flex: 1 } }}
               onBridgeMessage={this.onBridgeMessage}
               injectedJavaScript={injectScript}
+            />
+            <ActionModal
+              isVisible={hasPendingMessage && !resolvingMessage}
+              dismiss={this.rejectMessage}
+              amount={messageInfoAmount}
+              fromAccount={messageInfoFromAccount}
+              toAccount={messageInfoToAccount}
+              memo={messageInfoMemo}
+              symbol={messageInfoSymbol}
+              contract={messageInfoContract}
+              confirm={this.showPrompt}
+            />
+            <Prompt
+              isVisible={this.state.showPrompt}
+              type="secure-text"
+              callback={this.resolveMessage}
+              dismiss={this.closePrompt}
             />
             <ActionSheet
               ref={(o) => { this.actionSheet = o }}
