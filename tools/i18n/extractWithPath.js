@@ -1,5 +1,6 @@
 const fs = require('fs-extra')
 const path = require('path')
+const childProcess = require('child_process')
 
 const supportedLocales = ['zh', 'en']
 const targetFiles = ['messages.json']
@@ -115,6 +116,7 @@ const generateLocaleFile = (locale) => {
     if (error) throw error
     fs.writeJson(outputFiles[locale], flattenedMessages[locale], { spaces: 2 }, (error) => {
       if (error) throw error
+      childProcess.exec(`open ${outputDir}`)
     })
   })
 }
