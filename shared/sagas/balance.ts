@@ -1,5 +1,5 @@
 import assert from 'assert'
-import { select, call, put, all, takeEvery } from 'redux-saga/effects'
+import { select, call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/balance'
 import { selectedEOSAssetSelector } from 'selectors/eosAsset'
@@ -63,9 +63,9 @@ function* getEOSAssetBalanceListRequested(action: Action<GetAssetBalanceListPara
   try {
     const eosAccountName = action.payload.eosAccountName
 
-    const eosAccountCreationInfo = yield select((state: RootState) => state.eosAccount.get('eosAccountCreationInfo'))
-    const useCreationServer = eosAccountCreationInfo.get('transactionId') && eosAccountCreationInfo.get('eosAccountName') === eosAccountName && !eosAccountCreationInfo.get('irreversible')
-    const eos = yield call(initEOS, useCreationServer ? { httpEndpoint: BITPORTAL_API_EOS_URL } : {})
+    // const eosAccountCreationInfo = yield select((state: RootState) => state.eosAccount.get('eosAccountCreationInfo'))
+    // const useCreationServer = eosAccountCreationInfo.get('transactionId') && eosAccountCreationInfo.get('eosAccountName') === eosAccountName && !eosAccountCreationInfo.get('irreversible')
+    // const eos = yield call(initEOS, useCreationServer ? { httpEndpoint: BITPORTAL_API_EOS_URL } : {})
 
     const selectedEOSAssetList = yield select((state: RootState) => selectedEOSAssetSelector(state))
     const selectedEOSAssetListArray = selectedEOSAssetList.toJS()

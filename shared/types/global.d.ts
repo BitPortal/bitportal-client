@@ -82,6 +82,12 @@ declare interface Window {
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: any
   tvWidget?: any
   process?: Process
+  bitportal: any
+}
+
+declare interface FormMeta {
+  form: string,
+  field: string
 }
 
 declare interface Process extends NodeJS.Process {

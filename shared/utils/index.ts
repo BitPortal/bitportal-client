@@ -124,7 +124,7 @@ export const getEOSErrorMessage = (error: any) => {
   return error.message || 'unknown error'
 }
 
-export const parseEOSErrorMessage = (error) => {
+export const parseEOSErrorMessage = (error: any) => {
   const message = error.message
 
   try {
@@ -135,7 +135,7 @@ export const parseEOSErrorMessage = (error) => {
   }
 }
 
-export const escapeJSONString = (jsonString) => {
+export const escapeJSONString = (jsonString: string) => {
   return jsonString
     .replace(/[\\]/g, '\\\\')
     .replace(/[\"]/g, '\\\"')
@@ -148,7 +148,7 @@ export const escapeJSONString = (jsonString) => {
     .replace(/[\t]/g, '\\t')
 }
 
-export const parseMessageId = (text) => {
+export const parseMessageId = (text: string) => {
   const re = /BITPORAL_BRIDGE_MESSAGE@(\d|\w)+@/g
   const found = text.match(re)
   return found && found[0]

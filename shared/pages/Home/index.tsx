@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
-import { IntlProvider, FormattedNumber } from 'react-intl'
+import { IntlProvider } from 'react-intl'
 import { connect } from 'react-redux'
 import { RouteComponentProps } from 'react-router'
 import * as walletActions from 'actions/wallet'
@@ -8,7 +8,6 @@ import * as tickerActions from 'actions/ticker'
 import * as intlActions from 'actions/intl'
 import { exchangeTickerSelector } from 'selectors/ticker'
 import { hot } from 'react-hot-loader'
-import test from 'components/Form/ImportEOSAccountForm/messages'
 import messages from './messages'
 import style from './style.css'
 
@@ -20,7 +19,7 @@ interface Props extends RouteComponentProps<void> {
 }
 
 interface State {
-  price: any
+  eosAccountName: any
 }
 
 @hot(module)
@@ -51,9 +50,9 @@ export default class Home extends Component<Props, State> {
       window.bitportal = null
 
       bitportal.getEOSAccountInfo({ account: 'terencegehui' })
-        .then((data) => {
+        .then((data: any) => {
           this.setState({ eosAccountName: data.account_name })
-        }).catch(error => {
+        }).catch((error: any) => {
           alert(JSON.stringify(error))
         })
     })

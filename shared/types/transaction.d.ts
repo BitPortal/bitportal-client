@@ -6,10 +6,10 @@ declare interface TransactionsParams {
 
 declare interface TransactionsResult {
   hasMore: boolean
-  refresh: boolean
   position: number
   actions: any
   lastIrreversibleBlock: number
+  activeAssetIncrements: number
 }
 
 declare interface TransactionDetailParams {

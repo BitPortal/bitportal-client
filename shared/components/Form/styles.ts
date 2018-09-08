@@ -31,7 +31,6 @@ export default EStyleSheet.create({
   },
   searchFieldInput: {
     height: '100%',
-    justifyContent: 'center',
     backgroundColor: 'black',
     borderRadius: 3,
     flexDirection: 'row',

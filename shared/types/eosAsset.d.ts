@@ -16,6 +16,8 @@ declare interface eosAsset {
 
 declare type GetEOSAssetResult = eosAsset[]
 
+declare type SearchEOSAssetParsms = string | undefined
+
 declare interface SaveEOSAssetPref {
   value: boolean
   symbol: string
@@ -26,6 +28,8 @@ declare interface GetEOSAssetPrefParams {
   eosAccountName: string
 }
 
-
-
 declare type GetEOSAssetPrefResult = SaveEOSAssetPref[]
+
+declare interface SearchEOSAssetResult {
+  searchTerm: string
+}

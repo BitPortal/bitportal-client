@@ -28,7 +28,7 @@ export default handleActions({
   },
   [actions.getTransactionsSucceeded] (state, action) {
     const refresh = state.get('refresh')
-    const actions = action.payload.actions
+    const eosActions = action.payload.actions
     const activeAssetIncrements = action.payload.activeAssetIncrements
     const hasMore = action.payload.hasMore
     const position = action.payload.position
@@ -40,7 +40,7 @@ export default handleActions({
       .set('position', position)
       .set('activeAssetIncrements', activeAssetIncrements)
       .set('lastIrreversibleBlock', lastIrreversibleBlock)
-      .update('data', (v: any) => refresh ? Immutable.fromJS(actions) : v.concat(Immutable.fromJS(actions)))
+      .update('data', (v: any) => refresh ? Immutable.fromJS(eosActions) : v.concat(Immutable.fromJS(eosActions)))
   },
   [actions.getTransactionsFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)

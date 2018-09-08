@@ -40,7 +40,7 @@ export default handleActions(
       return state.set('searching', false)
       .set('searchResult', Immutable.fromJS(action.payload))
     },
-    [actions.searchEOSAssetFailed] (state, action) {
+    [actions.searchEOSAssetFailed] (state) {
       return state.set('searching', false)
     },
     [actions.clearSearch] (state) {

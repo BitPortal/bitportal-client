@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
   KeyboardType
 } from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import LinearGradientContainer from 'components/LinearGradientContainer'
 import { noop } from 'utils'
 import Colors from 'resources/colors'

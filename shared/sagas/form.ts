@@ -1,8 +1,8 @@
-import { put, takeEvery, select } from 'redux-saga/effects'
-import { Action } from 'redux-actions'
+import { put, takeEvery } from 'redux-saga/effects'
+import { ActionMeta } from 'redux-actions'
 import * as eosAssetActions from 'actions/eosAsset'
 
-function* onChange(action: Action<string, { form: string, field: string }>) {
+function* onChange(action: ActionMeta<SearchEOSAssetParsms, FormMeta>) {
   const { form, field } = action.meta
 
   if (form === 'searchEOSAssetForm' && field === 'searchTerm') {
