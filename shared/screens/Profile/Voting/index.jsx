@@ -177,8 +177,7 @@ export default class Voting extends Component {
   }
 
   componentWillUnmount() {
-    const { votedProducers } = this.props
-    if (votedProducers) { this.props.actions.setSelected(votedProducers) }
+    this.props.actions.setSelected(this.props.votedProducers)
   }
 
   render() {

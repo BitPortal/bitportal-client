@@ -6,6 +6,8 @@ declare interface TransferParams {
   symbol: string
   contract: string
   memo?: string
+  precision?: number
+  permission?: string
   componentId?: string
 }
 

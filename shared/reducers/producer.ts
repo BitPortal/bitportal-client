@@ -74,6 +74,6 @@ export default handleActions({
     return state
   },
   [actions.setSelected] (state, action) {
-    return state.set('selected', action.payload)
+    return state.set('selected', action.payload || Immutable.fromJS([]))
   },
 }, initialState)

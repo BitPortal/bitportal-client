@@ -77,7 +77,8 @@ function* receiveMessage(action: Action<string>) {
         return
       }
 
-      const amount = (+payload.amount).toFixed(4)
+      const precision = payload.precision
+      const amount = (+payload.amount).toFixed(precision)
       const symbol = payload.symbol
       const contract = payload.contract
       const fromAccount = payload.from

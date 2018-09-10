@@ -3,6 +3,8 @@ import Eos from 'eosjs'
 import { EOS_API_URL } from 'constants/env'
 import { EOS_TESTNET_NODES, EOS_MAINNET_CHAIN_ID, EOS_TESTNET_CHAIN_ID } from 'constants/chain'
 import storage from 'utils/storage'
+import secureStorage from 'utils/secureStorage'
+import { getEOSWifsByInfo } from 'core/key'
 
 const ecc = Eos.modules.ecc
 let eos: any
@@ -101,6 +103,99 @@ const getInitialAccountInfo = (eosAccountName: string, publicKey: string) => (
   }
 )
 
+interface VoteEOSProducersParams {
+  eosAccountName: string
+  password: string
+  permission: string
+  producers: string[]
+  proxy: string
+}
+
+const voteEOSProducers = async ({ eosAccountName, password, permission, producers, proxy }: VoteEOSProducersParams) => {
+  assert(eosAccountName, 'No EOS account exist!')
+
+  const accountInfo = await secureStorage.getItem(`EOS_ACCOUNT_INFO_${eosAccountName}`, true)
+  const _permission = permission || 'ACTIVE'
+  const wifs = await getEOSWifsByInfo(password, accountInfo, [_permission])
+  const keyProvider = wifs.map((item: any) => item.wif)
+  const sortedProducers = producers.sort(sortProducers)
+
+  let eos = await initEOS({})
+  const chainInfo = await eos.getInfo({})
+  eos = await initEOS({ chainId: chainInfo.chain_id })
+  const blockInfo = await eos.getBlock(chainInfo.last_irreversible_block_num)
+  const expireInSeconds = 60 * 1
+  const block_num = blockInfo.block_num
+  const ref_block_num = block_num & 0xFFFF
+  const ref_block_prefix = blockInfo.ref_block_prefix
+  const options = {
+    broadcast: false,
+    sign: true,
+    authorization: eosAccountName
+  }
+
+  const headers = {
+    ref_block_num,
+    ref_block_prefix,
+    expiration: new Date(new Date().getTime() + expireInSeconds * 1000).toISOString().split('.')[0],
+    net_usage_words: 0,
+    max_cpu_usage_ms: 0,
+    delay_sec: 0
+  }
+
+  eos = await initEOS({
+    keyProvider,
+    transactionHeaders: (_: any, callback: any) => callback(null, headers),
+    broadcast: false,
+    sign: true,
+    chainId: chainInfo.chainId,
+    // checkChainId: false - enable after merge of https://github.com/EOSIO/eosjs/pull/179
+  })
+  const transactionInfo = await eos.transaction(
+    (tr: any) => tr.voteproducer({ producers: sortedProducers, voter: eosAccountName, proxy: proxy || '' }),
+    options
+  )
+
+  eos = await initEOS({ broadcast: true })
+  await eos.pushTransaction(transactionInfo.transaction)
+}
+
+interface TransferEOSAssetParams {
+  fromAccount: string
+  toAccount: string
+  contract: string
+  amount: string
+  symbol: string
+  precision: number
+  memo: string
+  password: string
+  permission: string
+}
+
+const transferEOSAsset = async ({
+  fromAccount,
+  toAccount,
+  amount,
+  symbol,
+  precision,
+  memo,
+  password,
+  contract,
+  permission
+}: TransferEOSAssetParams) => {
+  assert(contract, 'No contract!')
+  const _precision = precision || 4
+  const quantity = `${(+amount).toFixed(_precision)} ${symbol}`
+  const _permission = permission || 'ACTIVE'
+  const accountInfo = await secureStorage.getItem(`EOS_ACCOUNT_INFO_${fromAccount}`, true)
+  const wifs = await getEOSWifsByInfo(password, accountInfo, [_permission])
+  const keyProvider = wifs.map((item: any) => item.wif)
+  const eos = await initEOS({ keyProvider })
+  const contractAccount = await eos.contract(contract)
+  const transactionResult = await contractAccount.transfer({ quantity, memo: memo || '', from: fromAccount, to: toAccount })
+  return transactionResult
+}
+
 export {
   initEOS,
   getEOS,
@@ -110,5 +205,7 @@ export {
   getProducers,
   sortProducers,
   getPermissionsByKey,
-  getInitialAccountInfo
+  getInitialAccountInfo,
+  voteEOSProducers,
+  transferEOSAsset
 }

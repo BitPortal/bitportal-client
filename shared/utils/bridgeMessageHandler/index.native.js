@@ -69,6 +69,8 @@ if (WebViewBridge) {
     transferEOSAsset: function(params) {
       if (!params.amount) {
         throw new Error('"amount" is required')
+      } else if (!params.precision) {
+        throw new Error('"precision" is required')
       } else if (!params.symbol) {
         throw new Error('"symbol" is required')
       } else if (!params.contract) {
@@ -81,6 +83,21 @@ if (WebViewBridge) {
 
       return new Promise(function(resolve, reject) {
         sendRequest('transferEOSAsset', params, function(data) {
+          resolve(data)
+        }, function(error) {
+          reject(error)
+        })
+      })
+    },
+    voteEOSProducers: function(params) {
+      if (!params.voter) {
+        throw new Error('"voter" is required')
+      } else if (!params.producers) {
+        throw new Error('"producers" is required')
+      }
+
+      return new Promise(function(resolve, reject) {
+        sendRequest('voteEOSProducers', params, function(data) {
           resolve(data)
         }, function(error) {
           reject(error)

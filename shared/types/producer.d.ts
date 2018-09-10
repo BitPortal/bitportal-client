@@ -13,3 +13,17 @@ declare interface GetProducersWithInfoResult {
   more: string
   rows: any[]
 }
+
+declare interface GetProducersParams {
+
+}
+
+declare interface Producer  {
+  name: string
+  location: string
+  producer: string
+  totalVotes: number
+  proxy?: string
+}
+
+declare type GetProducersResult = Producer[]

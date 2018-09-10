@@ -1,14 +1,11 @@
-import assert from 'assert'
 import Immutable from 'immutable'
 import { delay } from 'redux-saga'
-import { put, call, takeEvery, select } from 'redux-saga/effects'
+import { put, call, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/transfer'
 import { getEOSAccountRequested } from 'actions/eosAccount'
 import { getEOSBalanceRequested, getEOSAssetBalanceRequested } from 'actions/balance'
-import { initEOS } from 'core/eos'
-import { getEOSWifsByInfo } from 'core/key'
-import secureStorage from 'utils/secureStorage'
+import { transferEOSAsset } from 'core/eos'
 import { getEOSErrorMessage } from 'utils'
 import { reset } from 'redux-form/immutable'
 import { push } from 'utils/location'
@@ -21,20 +18,13 @@ function* transfer(action: Action<TransferParams>) {
     const toAccount = action.payload.toAccount
     const amount = action.payload.quantity
     const symbol = action.payload.symbol
-    const quantity = `${(+amount).toFixed(4)} ${symbol}`
-    const memo = action.payload.memo || ''
+    const precision = action.payload.precision
+    const memo = action.payload.memo
     const password = action.payload.password
     const contract = action.payload.contract
-    assert(contract, 'No contract!')
+    const permission = action.payload.permission
 
-    const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${fromAccount}`, true)
-    const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
-    const wifs = yield call(getEOSWifsByInfo, password, accountInfo, [permission])
-    const keyProvider = wifs.map((item: any) => item.wif)
-    const eos = yield call(initEOS, { keyProvider })
-    const contractAccount = yield call(eos.contract, contract)
-    const transactionResult = yield call(contractAccount.transfer, { quantity, memo, from: fromAccount, to: toAccount })
-
+    const transactionResult = yield call(transferEOSAsset, { fromAccount, toAccount, amount, symbol, precision, memo, password, contract, permission })
     yield put(actions.transferSucceeded(transactionResult))
     yield put(reset('transferAssetsForm'))
     yield put(actions.closeTransferModal())

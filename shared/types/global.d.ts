@@ -308,6 +308,8 @@ declare module 'core/eos' {
     randomKey: any
     getPermissionsByKey: any
     getInitialAccountInfo: any
+    transferEOSAsset: any
+    voteEOSProducers: any
   }
 
   const eos: EOS
