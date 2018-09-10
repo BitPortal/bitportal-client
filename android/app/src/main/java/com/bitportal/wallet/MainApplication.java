@@ -27,6 +27,7 @@ import com.bitportal.wallet.umeng.DplusReactPackage;
 import com.bitportal.wallet.nativeutils.NativeUtilsPackage;
 import cn.jpush.reactnativejpush.JPushPackage;
 import cn.jpush.android.api.JPushInterface;
+import com.github.alinz.reactnativewebviewbridge.WebViewBridgePackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -74,7 +75,8 @@ public class MainApplication extends NavigationApplication {
       new RCTQRCodeLocalImagePackage(),
       new DplusReactPackage(),
       new NativeUtilsPackage(),
-      new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG)
+      new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
+      new WebViewBridgePackage()
     );
   }
 
