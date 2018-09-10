@@ -14,6 +14,7 @@ import { bindActionCreators } from 'redux'
 import * as tickerActions from 'actions/ticker'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { FontScale } from 'utils/dimens'
+import { filterBgColor } from 'utils'
 import { ASSET_FRACTION, DEFAULT_SORT_FILTER } from 'constants/market'
 import styles from './styles'
 
@@ -203,16 +204,6 @@ export class HeaderTitle extends Component {
       </View>
     )
   }
-}
-
-const filterBgColor = (data) => {
-  if (data && parseFloat(data) > 0) {
-    return Colors.bgColor_104_189_57
-  } else if (data && parseFloat(data) < 0) {
-    return Colors.bgColor_255_50_50
-  }
-
-  return Colors.bgColor_59_59_59
 }
 
 class ListItem extends Component {

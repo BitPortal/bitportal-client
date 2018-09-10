@@ -240,4 +240,5 @@ export const filterBgColor = (data: string) => {
   } else if (data && parseFloat(data) < 0) {
     return Colors.bgColor_255_50_50
   }
+  return Colors.bgColor_59_59_59
 }
