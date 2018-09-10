@@ -4,9 +4,8 @@ import { Action } from 'redux-actions'
 import * as actions from 'actions/dappBrowser'
 import { escapeJSONString, parseMessageId } from 'utils'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
-import { initEOS } from 'core/eos'
-import { getEOSWifsByInfo } from 'core/key'
-import secureStorage from 'utils/secureStorage'
+import { currenctWalletSelector } from 'selectors/wallet'
+import { initEOS, transferEOSAsset } from 'core/eos'
 
 let dappBrowser: any
 
@@ -49,6 +48,29 @@ function* receiveMessage(action: Action<string>) {
     const messageActionType = messageAction.type
 
     switch (messageActionType) {
+    case 'getCurrentWallet':
+      const currentWallet = yield select((state: RootState) => currenctWalletSelector(state))
+
+      if (currentWallet.get('account')) {
+        yield put(actions.sendMessage({
+          messageId,
+          type: 'actionSucceeded',
+          payload: {
+            data: currentWallet.toJS()
+          }
+        }))
+      } else {
+        yield put(actions.sendMessage({
+          messageId,
+          type: 'actionFailed',
+          payload: {
+            error: {
+              message: 'No wallet in bitportal!'
+            }
+          }
+        }))
+      }
+      break
     case 'getEOSAccountInfo':
       const account = payload.account
       const eos = yield call(initEOS, {})
@@ -177,18 +199,23 @@ function* resolveMessage(action: Action<any>) {
           const toAccount = info.get('toAccount')
           const amount = info.get('amount')
           const symbol = info.get('symbol')
-          const quantity = `${(+amount).toFixed(4)} ${symbol}`
+          const precision = info.get('precision')
           const memo = info.get('memo') || ''
           const contract = info.get('contract')
+          const permission = info.get('permission')
           const eosAccountName = yield select((state: RootState) => eosAccountNameSelector(state))
           assert(eosAccountName === fromAccount, `You don\'t have the authority of account ${fromAccount}`)
-          const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${fromAccount}`, true)
-          const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
-          const wifs = yield call(getEOSWifsByInfo, password, accountInfo, [permission])
-          const keyProvider = wifs.map((item: any) => item.wif)
-          const eos = yield call(initEOS, { keyProvider })
-          const contractAccount = yield call(eos.contract, contract)
-          const data = yield call(contractAccount.transfer, { quantity, memo, from: fromAccount, to: toAccount })
+          const data = yield call(transferEOSAsset, {
+            fromAccount,
+            toAccount,
+            amount,
+            symbol,
+            precision,
+            memo,
+            password,
+            contract,
+            permission
+          })
           yield put(actions.sendMessage({
             messageId,
             type: 'actionSucceeded',

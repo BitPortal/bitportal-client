@@ -103,6 +103,15 @@ if (WebViewBridge) {
           reject(error)
         })
       })
+    },
+    getCurrentWallet: function() {
+      return new Promise(function(resolve, reject) {
+        sendRequest('getCurrentWallet', {}, function(data) {
+          resolve(data)
+        }, function(error) {
+          reject(error)
+        })
+      })
     }
   }
 

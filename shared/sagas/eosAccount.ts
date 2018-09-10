@@ -51,6 +51,7 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
     const walletInfo = {
       eosAccountName,
       permission,
+      publicKey,
       coin: 'EOS',
       timestamp: +Date.now(),
       origin: 'classic'
@@ -104,6 +105,7 @@ function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
     const walletInfo = {
       eosAccountName,
       permission,
+      publicKey,
       coin: 'EOS',
       timestamp: +Date.now(),
       origin: 'classic'
