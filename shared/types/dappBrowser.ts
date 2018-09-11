@@ -17,6 +17,6 @@ declare interface BridgeTransferMessageInfo {
 
 declare interface BridgeVoteMessageInfo {
   blockchain: string
-  selectedProducers: any
-  account: string
+  producers: any
+  voter: string
 }

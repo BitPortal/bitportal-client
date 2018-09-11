@@ -45,22 +45,30 @@ export default class Home extends Component<Props, State> {
   }
 
   componentDidMount() {
-    document.addEventListener('bitportalLoaded', () => {
+    document.addEventListener('bitportalapi', () => {
       const bitportal = window.bitportal
       window.bitportal = null
 
-      bitportal.transferEOSAsset({
-        amount: '0.0001',
-        symbol: 'EOS',
-        contract: 'eosio.token',
-        from: 'terencegehui',
-        to: 'mythicalmind',
-        precision: 4
+      bitportal.voteEOSProducers({
+        voter: 'terencegehui',
+        producers: ['eosasia11111', 'eosecoeoseco', 'eoshuobipool']
       }).then((data: any) => {
         alert(JSON.stringify(data))
       }).catch((error: any) => {
         alert(JSON.stringify(error))
       })
+      /* bitportal.transferEOSAsset({
+       *   amount: '0.0001',
+       *   symbol: 'EOS',
+       *   contract: 'eosio.token',
+       *   from: 'terencegehui',
+       *   to: 'mythicalmind',
+       *   precision: 4
+       * }).then((data: any) => {
+       *   alert(JSON.stringify(data))
+       * }).catch((error: any) => {
+       *   alert(JSON.stringify(error))
+       * })*/
 
       /* bitportal.getCurrentWallet().then((data: any) => {
        *   alert(JSON.stringify(data))

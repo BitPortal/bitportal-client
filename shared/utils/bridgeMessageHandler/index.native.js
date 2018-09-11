@@ -115,7 +115,7 @@ if (WebViewBridge) {
     }
   };
 
-  document.dispatchEvent(new Event('bitportalLoaded'));
+  document.dispatchEvent(new Event('bitportalapi'));
 }
 `
 

@@ -6,7 +6,8 @@ import {
   Share,
   Linking,
   Platform,
-  ActivityIndicator
+  ActivityIndicator,
+  InteractionManager
 } from 'react-native'
 import WebViewBridge from 'react-native-webview-bridge-updated'
 import Colors from 'resources/colors'
@@ -45,6 +46,8 @@ const WebViewLoading = ({ text }) => (
     messageInfoFromAccount: state.dappBrowser.getIn(['pendingMessage', 'info', 'fromAccount']),
     messageInfoToAccount: state.dappBrowser.getIn(['pendingMessage', 'info', 'toAccount']),
     messageInfoMemo: state.dappBrowser.getIn(['pendingMessage', 'info', 'memo']),
+    messageInfoVoter: state.dappBrowser.getIn(['pendingMessage', 'info', 'voter']),
+    messageInfoProducers: state.dappBrowser.getIn(['pendingMessage', 'info', 'producers']),
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -145,7 +148,9 @@ export default class DappBrowser extends Component {
   }
 
   resolveMessage = (password) => {
-    this.props.actions.resolveMessage({ password })
+    InteractionManager.runAfterInteractions(() => {
+      this.props.actions.resolveMessage({ password })
+    })
   }
 
   showPrompt = () => {
@@ -177,7 +182,9 @@ export default class DappBrowser extends Component {
       messageInfoContract,
       messageInfoFromAccount,
       messageInfoToAccount,
-      messageInfoMemo
+      messageInfoMemo,
+      messageInfoVoter,
+      messageInfoProducers
     } = this.props
     const injectScript = `(function () { ${messageHandler} }())`
 
@@ -215,6 +222,8 @@ export default class DappBrowser extends Component {
               memo={messageInfoMemo}
               symbol={messageInfoSymbol}
               contract={messageInfoContract}
+              voter={messageInfoVoter}
+              producers={messageInfoProducers}
               confirm={this.showPrompt}
             />
             <Prompt

@@ -5,7 +5,7 @@ import * as actions from 'actions/dappBrowser'
 import { escapeJSONString, parseMessageId } from 'utils'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
 import { currenctWalletSelector } from 'selectors/wallet'
-import { initEOS, transferEOSAsset } from 'core/eos'
+import { initEOS, transferEOSAsset, voteEOSProducers } from 'core/eos'
 
 let dappBrowser: any
 
@@ -15,6 +15,139 @@ function initDappBrowser(action: Action<any>) {
 
 function closeDappBrowser() {
   dappBrowser = null
+}
+
+function* pendTransferEOSAsset(messageActionType: string, payload: any, messageId: string) {
+  const hasPendingMessage = yield select((state: RootState) => state.dappBrowser.get('hasPendingMessage'))
+
+  if (hasPendingMessage) {
+    const pendingMessageActionType = yield select((state: RootState) => state.dappBrowser.getIn(['pendingMessage', 'type']))
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionFailed',
+      payload: {
+        error: {
+          message: `There's a pending request: ${pendingMessageActionType}`
+        }
+      }
+    }))
+    return
+  }
+
+  const precision = payload.precision
+  const amount = (+payload.amount).toFixed(precision)
+  const symbol = payload.symbol
+  const contract = payload.contract
+  const fromAccount = payload.from
+  const toAccount = payload.to
+  const memo = payload.memo
+  const blockchain = 'EOS'
+
+  yield put(actions.pendMessage({
+    messageId,
+    payload,
+    type: messageActionType,
+    info: {
+      amount,
+      symbol,
+      contract,
+      fromAccount,
+      toAccount,
+      memo,
+      blockchain
+    }
+  }))
+}
+
+function* pendVoteEOSProducers(messageActionType: string, payload: any, messageId: string) {
+  const hasPendingMessage = yield select((state: RootState) => state.dappBrowser.get('hasPendingMessage'))
+  if (hasPendingMessage) {
+    const pendingMessageActionType = yield select((state: RootState) => state.dappBrowser.getIn(['pendingMessage', 'type']))
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionFailed',
+      payload: {
+        error: {
+          message: `There's a pending request: ${pendingMessageActionType}`
+        }
+      }
+    }))
+    return
+  }
+
+  const voter = payload.voter
+  const producers = payload.producers
+  const blockchain = 'EOS'
+
+  yield put(actions.pendMessage({
+    messageId,
+    payload,
+    type: messageActionType,
+    info: {
+      voter,
+      producers,
+      blockchain
+    }
+  }))
+}
+
+function* resolveTransferEOSAsset(password: string, info: any, messageId: string) {
+  const fromAccount = info.get('fromAccount')
+  const toAccount = info.get('toAccount')
+  const amount = info.get('amount')
+  const symbol = info.get('symbol')
+  const precision = info.get('precision')
+  const memo = info.get('memo') || ''
+  const contract = info.get('contract')
+  // const permission = info.get('permission')
+  const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
+  const eosAccountName = yield select((state: RootState) => eosAccountNameSelector(state))
+  assert(eosAccountName === fromAccount, `You don\'t have the authority of account ${fromAccount}`)
+  const data = yield call(transferEOSAsset, {
+    fromAccount,
+    toAccount,
+    amount,
+    symbol,
+    precision,
+    memo,
+    password,
+    contract,
+    permission
+  })
+  yield put(actions.sendMessage({
+    messageId,
+    type: 'actionSucceeded',
+    payload: {
+      data
+    }
+  }))
+  yield put(actions.clearMessage())
+}
+
+function* resolveVoteEOSProducers(password: string, info: any, messageId: string) {
+  const voter = info.get('voter')
+  const producers = info.get('producers').toJS()
+  const proxy = info.get('proxy') || ''
+  // const permission = info.get('permission')
+  const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
+  const eosAccountName = yield select((state: RootState) => eosAccountNameSelector(state))
+  assert(eosAccountName === voter, `You don\'t have the authority of account ${voter}`)
+
+  const data = yield call(voteEOSProducers, {
+    eosAccountName,
+    password,
+    producers,
+    proxy,
+    permission
+  })
+  yield put(actions.sendMessage({
+    messageId,
+    type: 'actionSucceeded',
+    payload: {
+      data
+    }
+  }))
+  yield put(actions.clearMessage())
 }
 
 function* receiveMessage(action: Action<string>) {
@@ -84,44 +217,10 @@ function* receiveMessage(action: Action<string>) {
       }))
       break
     case 'transferEOSAsset':
-      const hasPendingMessage = yield select((state: RootState) => state.dappBrowser.get('hasPendingMessage'))
-      if (hasPendingMessage) {
-        const pendingMessageActionType = yield select((state: RootState) => state.dappBrowser.getIn(['pendingMessage', 'type']))
-        yield put(actions.sendMessage({
-          messageId,
-          type: 'actionFailed',
-          payload: {
-            error: {
-              message: `There's a pending request: ${pendingMessageActionType}`
-            }
-          }
-        }))
-        return
-      }
-
-      const precision = payload.precision
-      const amount = (+payload.amount).toFixed(precision)
-      const symbol = payload.symbol
-      const contract = payload.contract
-      const fromAccount = payload.from
-      const toAccount = payload.to
-      const memo = payload.memo
-      const blockchain = 'EOS'
-
-      yield put(actions.pendMessage({
-        messageId,
-        payload,
-        type: messageActionType,
-        info: {
-          amount,
-          symbol,
-          contract,
-          fromAccount,
-          toAccount,
-          memo,
-          blockchain
-        }
-      }))
+      yield pendTransferEOSAsset(messageActionType, payload, messageId)
+      break
+    case 'voteEOSProducers':
+      yield pendVoteEOSProducers(messageActionType, payload, messageId)
       break
     default:
       if (messageId) {
@@ -195,36 +294,10 @@ function* resolveMessage(action: Action<any>) {
 
         switch (messageActionType) {
         case 'transferEOSAsset':
-          const fromAccount = info.get('fromAccount')
-          const toAccount = info.get('toAccount')
-          const amount = info.get('amount')
-          const symbol = info.get('symbol')
-          const precision = info.get('precision')
-          const memo = info.get('memo') || ''
-          const contract = info.get('contract')
-          // const permission = info.get('permission')
-          const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
-          const eosAccountName = yield select((state: RootState) => eosAccountNameSelector(state))
-          assert(eosAccountName === fromAccount, `You don\'t have the authority of account ${fromAccount}`)
-          const data = yield call(transferEOSAsset, {
-            fromAccount,
-            toAccount,
-            amount,
-            symbol,
-            precision,
-            memo,
-            password,
-            contract,
-            permission
-          })
-          yield put(actions.sendMessage({
-            messageId,
-            type: 'actionSucceeded',
-            payload: {
-              data
-            }
-          }))
-          yield put(actions.clearMessage())
+          yield resolveTransferEOSAsset(password, info, messageId)
+          break
+        case 'voteEOSProducers':
+          yield resolveVoteEOSProducers(password, info, messageId)
           break
         default:
           break

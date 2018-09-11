@@ -157,7 +157,8 @@ const voteEOSProducers = async ({ eosAccountName, password, permission, producer
   )
 
   eos = await initEOS({ broadcast: true })
-  await eos.pushTransaction(transactionInfo.transaction)
+  const data = await eos.pushTransaction(transactionInfo.transaction)
+  return data
 }
 
 interface TransferEOSAssetParams {
