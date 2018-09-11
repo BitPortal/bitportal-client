@@ -51,7 +51,7 @@ function* receiveMessage(action: Action<string>) {
     case 'getCurrentWallet':
       const currentWallet = yield select((state: RootState) => currenctWalletSelector(state))
 
-      if (currentWallet.get('account')) {
+      if (currentWallet) {
         yield put(actions.sendMessage({
           messageId,
           type: 'actionSucceeded',
@@ -202,7 +202,8 @@ function* resolveMessage(action: Action<any>) {
           const precision = info.get('precision')
           const memo = info.get('memo') || ''
           const contract = info.get('contract')
-          const permission = info.get('permission')
+          // const permission = info.get('permission')
+          const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
           const eosAccountName = yield select((state: RootState) => eosAccountNameSelector(state))
           assert(eosAccountName === fromAccount, `You don\'t have the authority of account ${fromAccount}`)
           const data = yield call(transferEOSAsset, {

@@ -49,24 +49,24 @@ export default class Home extends Component<Props, State> {
       const bitportal = window.bitportal
       window.bitportal = null
 
-      /* bitportal.transferEOSAsset({
-       *   amount: '0.0001',
-       *   symbol: 'EOS',
-       *   contract: 'eosio.token',
-       *   from: 'mythicalmind',
-       *   to: 'terencegehui',
-       *   precision: 4
-       * }).then((data: any) => {
-       *   alert(JSON.stringify(data))
-       * }).catch((error: any) => {
-       *   alert(JSON.stringify(error))
-       * })*/
-
-      bitportal.getCurrentWallet().then((data: any) => {
+      bitportal.transferEOSAsset({
+        amount: '0.0001',
+        symbol: 'EOS',
+        contract: 'eosio.token',
+        from: 'terencegehui',
+        to: 'mythicalmind',
+        precision: 4
+      }).then((data: any) => {
         alert(JSON.stringify(data))
       }).catch((error: any) => {
         alert(JSON.stringify(error))
       })
+
+      /* bitportal.getCurrentWallet().then((data: any) => {
+       *   alert(JSON.stringify(data))
+       * }).catch((error: any) => {
+       *   alert(JSON.stringify(error))
+       * })*/
     })
   }
 
