@@ -49,14 +49,21 @@ export default class Home extends Component<Props, State> {
       const bitportal = window.bitportal
       window.bitportal = null
 
-      bitportal.voteEOSProducers({
-        voter: 'terencegehui',
-        producers: ['eosasia11111', 'eosecoeoseco', 'eoshuobipool']
-      }).then((data: any) => {
-        alert(JSON.stringify(data))
-      }).catch((error: any) => {
-        alert(JSON.stringify(error))
-      })
+      /* bitportal.getEOSTransaction({
+       *   id: 'a61d51877fff5731df1fdb67dab879085af1d49c43f20698bf3be8f193ea5506'
+       * }).then((data: any) => {
+       *   alert(JSON.stringify(data))
+       * }).catch((error: any) => {
+       *   alert(JSON.stringify(error))
+       * })*/
+      /* bitportal.voteEOSProducers({
+       *   voter: 'terencegehui',
+       *   producers: ['eosasia11111', 'eosecoeoseco', 'eoshuobipool']
+       * }).then((data: any) => {
+       *   alert(JSON.stringify(data))
+       * }).catch((error: any) => {
+       *   alert(JSON.stringify(error))
+       * })*/
       /* bitportal.transferEOSAsset({
        *   amount: '0.0001',
        *   symbol: 'EOS',
@@ -70,11 +77,11 @@ export default class Home extends Component<Props, State> {
        *   alert(JSON.stringify(error))
        * })*/
 
-      /* bitportal.getCurrentWallet().then((data: any) => {
-       *   alert(JSON.stringify(data))
-       * }).catch((error: any) => {
-       *   alert(JSON.stringify(error))
-       * })*/
+      bitportal.getCurrentWallet().then((data: any) => {
+        alert(JSON.stringify(data))
+      }).catch((error: any) => {
+        alert(JSON.stringify(error))
+      })
     })
   }
 

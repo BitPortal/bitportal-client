@@ -66,6 +66,51 @@ if (WebViewBridge) {
         });
       });
     },
+    getEOSCurrencyBalance: function(params) {
+      if (!params.account) {
+        throw new Error('"account" is required');
+      } else if (!params.contract) {
+        throw new Error('"contract" is required');
+      }
+
+      return new Promise(function(resolve, reject) {
+        sendRequest('getEOSCurrencyBalance', params, function(data) {
+          resolve(data);
+        }, function(error) {
+          reject(error);
+        });
+      });
+    },
+    getEOSActions: function(params) {
+      if (!params.offset) {
+        throw new Error('"offset" is required');
+      } else if (!params.account) {
+        throw new Error('"account" is required');
+      } else if (!params.position) {
+        throw new Error('"position" is required');
+      }
+
+      return new Promise(function(resolve, reject) {
+        sendRequest('getEOSActions', params, function(data) {
+          resolve(data);
+        }, function(error) {
+          reject(error);
+        });
+      });
+    },
+    getEOSTransaction: function(params) {
+      if (!params.id) {
+        throw new Error('"offset" is required');
+      }
+
+      return new Promise(function(resolve, reject) {
+        sendRequest('getEOSTransaction', params, function(data) {
+          resolve(data);
+        }, function(error) {
+          reject(error);
+        });
+      });
+    },
     transferEOSAsset: function(params) {
       if (!params.amount) {
         throw new Error('"amount" is required');

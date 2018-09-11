@@ -205,16 +205,63 @@ function* receiveMessage(action: Action<string>) {
       }
       break
     case 'getEOSAccountInfo':
-      const account = payload.account
-      const eos = yield call(initEOS, {})
-      const data = yield call(eos.getAccount, account)
-      yield put(actions.sendMessage({
-        messageId,
-        type: 'actionSucceeded',
-        payload: {
-          data
-        }
-      }))
+      {
+        const account = payload.account
+        const eos = yield call(initEOS, {})
+        const data = yield call(eos.getAccount, account)
+        yield put(actions.sendMessage({
+          messageId,
+          type: 'actionSucceeded',
+          payload: {
+            data
+          }
+        }))
+      }
+      break
+    case 'getEOSCurrencyBalance':
+      {
+        const account = payload.account
+        const contract = payload.contract
+        const eos = yield call(initEOS, {})
+        const data = yield call(eos.getCurrencyBalance, { account, code: contract })
+        yield put(actions.sendMessage({
+          messageId,
+          type: 'actionSucceeded',
+          payload: {
+            data
+          }
+        }))
+      }
+      break
+    case 'getEOSActions':
+      {
+        const account = payload.account
+        const position = payload.position
+        const offset = payload.offset
+        const eos = yield call(initEOS, {})
+        const data = yield call(eos.getActions, { offset, account_name: account, pos: position })
+        yield put(actions.sendMessage({
+          messageId,
+          type: 'actionSucceeded',
+          payload: {
+            data
+          }
+        }))
+      }
+      break
+    case 'getEOSTransaction':
+      {
+        const id = payload.id
+        const eos = yield call(initEOS, {})
+        const data = yield call(eos.getTransaction, { id })
+        yield put(actions.sendMessage({
+          messageId,
+          type: 'actionSucceeded',
+          payload: {
+            data
+          }
+        }))
+      }
       break
     case 'transferEOSAsset':
       yield pendTransferEOSAsset(messageActionType, payload, messageId)
