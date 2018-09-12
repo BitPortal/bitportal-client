@@ -33,15 +33,15 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
-      return messages.tra_popup_title_pwderr
+      return messages.general_error_popup_text_password_incorrect
     case 'account using more than allotted RAM usage':
-      return messages.tra_popup_title_mousg
+      return messages.resource_error_popup_text_ram_insufficient
     case 'transaction exceeded the current CPU usage limit imposed on the transaction':
-      return messages.tra_popup_title_exlimit
+      return messages.resource_error_popup_text_cpu_insufficient
     case 'EOS System Error':
       return messages.tra_popup_title_eossystem
     default:
-      return messages.tra_popup_title_trafail
+      return messages.resource_error_popup_text_transaction_failed
   }
 }
 
@@ -59,19 +59,19 @@ const validate = (values, props) => {
   const errors = {}
 
   if (!+values.get('quant')) {
-    errors.quant = messages[props.locale].tra_popup_title_epteosinput
+    errors.quant = messages[props.locale].resource_error_text_amount
   } else if (+eosBalance < +values.get('quant')) {
-    errors.quant = messages[props.locale].tra_popup_title_enbyteinput
+    errors.quant = messages[props.locale].resource_error_text_balance_insufficient
   } else if (!validateUnitByCurrency('EOS')(values.get('quant'))) {
-    errors.quant = messages[props.locale].tra_popup_title_invalideinput
+    errors.quant = messages[props.locale].resource_error_text_amount_invalid
   }
 
   if (!+values.get('bytes')) {
-    errors.bytes = messages[props.locale].tra_popup_title_eptbyteinput
+    errors.bytes = messages[props.locale].resource_error_text_amount
   } else if ((+ramQuota - +ramUsage) < +values.get('bytes')) {
-    errors.bytes = messages[props.locale].tra_popup_title_enbyteinput
+    errors.bytes = messages[props.locale].resource_error_text_balance_insufficient
   } else if (!validateUnitByFraction(0)(values.get('bytes'))) {
-    errors.bytes = messages[props.locale].tra_popup_title_invalideinput
+    errors.bytes = messages[props.locale].resource_error_text_amount_invalid
   }
 
   return errors
@@ -144,7 +144,7 @@ export default class TradeRAMForm extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.buyRAMForm}>
           <Switch itemList={['Buy', 'Sell']} active={this.state.activeForm} onSwitch={this.switchForm} />
-          <Balance title={messages[locale].tra_popup_title_baln} value={availableBalance} unit={availableBalanceUnit} />
+          <Balance title={messages[locale].resource_label_balance} value={availableBalance} unit={availableBalanceUnit} />
           <FormContainer>
             {this.state.activeForm === 'Buy' && <Field
               name="quant"
@@ -163,15 +163,15 @@ export default class TradeRAMForm extends Component {
             <SubmitButton
               disabled={disabled}
               onPress={handleSubmit(this.submit)}
-              text={this.state.activeForm === 'Buy' ? messages[locale].tra_popup_title_buy : messages[locale].tra_popup_title_sell}
+              text={this.state.activeForm === 'Buy' ? messages[locale].resource_ram_button_buy : messages[locale].resource_ram_button_sell}
             />
             <Alert message={errorMessages(error, messages[locale])} subMessage={errorMessageDetail(error)} dismiss={this.props.actions.clearRAMError} />
-            <Alert message={!!showSuccess && messages[locale].tra_popup_title_trasucc} dismiss={this.props.actions.hideSuccessModal} />
+            <Alert message={!!showSuccess && messages[locale].resource_popup_text_transaction_successful} dismiss={this.props.actions.hideSuccessModal} />
             <Prompt
               isVisible={this.state.isVisible}
-              title={messages[locale].tra_popup_title_pwd}
-              negativeText={messages[locale].tra_popup_buttom_can}
-              positiveText={messages[locale].tra_popup_buttom_ent}
+              title={messages[locale].general_popup_label_password}
+              negativeText={messages[locale].general_popup_button_cancel}
+              positiveText={messages[locale].general_popup_button_confirm}
               type="secure-text"
               callback={this.handleConfirm}
               dismiss={this.closePrompt}

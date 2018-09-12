@@ -9,7 +9,7 @@ let timer
 const isLast = false
 
 // const showNoUpdate = async () => {
-//   await show('当前版本无需更新', '', { negativeText: messages[locale]['prfabtchk_popup_name_confirm'] })
+//   await show('当前版本无需更新', '', { negativeText: messages[locale]['general_popup_button_close'] })
 //   clearTimeout(timer)
 //   return Navigation.dismissLightBox()
 // }
@@ -58,10 +58,10 @@ const goUpdate = (data) => {
 const showForceUpdate = async (data, locale) => {
   const content = data.features && data.features[locale]
   const { action } = await show(
-    messages[locale].prfabtchk_popup_name_new,
+    messages[locale].about_us_update_check_popup_label_discover_new_version,
     content,
     {
-      positiveText: messages[locale].prfabtchk_popup_name_update
+      positiveText: messages[locale].about_us_update_check_popup_button_update
     }
   )
   clearTimeout(timer)
@@ -75,11 +75,11 @@ const showForceUpdate = async (data, locale) => {
 const showGoToUpdate = async (data, locale) => {
   const content = data.features && data.features[locale]
   const { action } = await show(
-    messages[locale].prfabtchk_popup_name_new,
+    messages[locale].about_us_update_check_popup_label_discover_new_version,
     content,
     {
-      negativeText: messages[locale].prfabtchk_popup_name_wait,
-      positiveText: messages[locale].prfabtchk_popup_name_update
+      negativeText: messages[locale].about_us_update_check_popup_button_cancel,
+      positiveText: messages[locale].about_us_update_check_popup_button_update
     }
   )
   clearTimeout(timer)
@@ -113,7 +113,7 @@ export const update = (data, locale) => {
 
 export const showIsLast = async (data, locale) => {
   const content = data.features && data.features[locale]
-  await show(messages[locale].prfabtchk_popup_name_already, content, { negativeText: messages[locale].prfabtchk_popup_name_confirm })
+  await show(messages[locale].about_us_update_check_popup_label_current_latest_version, content, { negativeText: messages[locale].general_popup_button_close })
   clearTimeout(timer)
   Navigation.dismissOverlay('BitPortalLightBox')
 }

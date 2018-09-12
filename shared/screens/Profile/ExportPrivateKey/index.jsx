@@ -47,7 +47,7 @@ export default class ExportPrivateKey extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale].expvk_title_name_expvk}
+            title={messages[locale].export_button_private_key}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={this.onPress} />}
           />
           <View style={styles.scrollContainer}>
@@ -57,13 +57,13 @@ export default class ExportPrivateKey extends Component {
             >
               <View style={styles.content}>
                 <Text style={[styles.text16, { marginLeft: -1 }]}>
-                  <FormattedMessage id="expvk_hint_title_point1" />
+                  <FormattedMessage id="export_private_key_label_note" />
                 </Text>
                 <Text style={[styles.text14, { marginTop: 15 }]} multiline={true}>
-                  <FormattedMessage id="expvk_hint_txt_point1" />
+                  <FormattedMessage id="export_private_key_text_note" />
                 </Text>
                 <Text style={[styles.text16, { marginLeft: -1, marginTop: 30, marginBottom: 10 }]}>
-                  <FormattedMessage id="expvk_txtbox_title_pvk_owner" />
+                  <FormattedMessage id="export_private_key_label_owner_key" />
                 </Text>
                 <View style={[styles.inputContainer]}>
                   {

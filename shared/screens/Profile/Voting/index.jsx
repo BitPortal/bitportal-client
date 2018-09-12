@@ -27,13 +27,13 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
-      return messages.vt_popup_title_pwderr
+      return messages.general_error_popup_text_password_incorrect
     case 'assertion failure with message: user must stake before they can vote':
-      return messages.vt_popup_title_nostaker
+      return messages.voting_error_popup_text_no_stake
     case 'EOS System Error':
       return messages.vt_popup_title_eossystem
     default:
-      return messages.vt_popup_title_failed
+      return messages.voting_error_popup_text_vote_failed
   }
 }
 
@@ -117,7 +117,7 @@ export default class Voting extends Component {
     const { locale, eosAccountName } = this.props
 
     if (!eosAccountName) {
-      this.setState({ alertMessage: messages[locale].vt_button_name_err })
+      this.setState({ alertMessage: messages[locale].general_error_popup_text_no_account })
     } else {
       this.props.actions.showSelected()
     }
@@ -127,7 +127,7 @@ export default class Voting extends Component {
     const { locale, eosAccountName } = this.props
 
     if (!eosAccountName) {
-      this.setState({ alertMessage: messages[locale].vt_button_name_err })
+      this.setState({ alertMessage: messages[locale].general_error_popup_text_no_account })
     } else {
       Navigation.push(this.props.componentId, {
         component: {
@@ -191,7 +191,7 @@ export default class Voting extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale].vt_title_name_vote}
+            title={messages[locale].profile_button_voting}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={this.goBack} />}
           />
           <View style={[styles.stakeAmountContainer, styles.between]}>
@@ -208,7 +208,7 @@ export default class Voting extends Component {
               <TouchableWithoutFeedback style={styles.center} underlayColor="transparent" onPress={this.checkResources}>
                 <View>
                   <Text style={[styles.text14, { marginHorizontal: 10, marginVertical: 2 }]}>
-                    <FormattedMessage id="vt_rscs_button_rscs" />
+                    <FormattedMessage id="voting_button_resources" />
                   </Text>
                 </View>
               </TouchableWithoutFeedback>
@@ -216,7 +216,7 @@ export default class Voting extends Component {
           </View>
           <View style={[styles.titleContainer, styles.between]}>
             <Text style={[styles.text14, { color: Colors.textColor_181_181_181 }]} onPress={this.changeSort}>
-              <FormattedMessage id="vt_sec_title_def" />/<FormattedMessage id="vt_sec_title_rk" />
+              <FormattedMessage id="voting_label_default" />/<FormattedMessage id="voting_label_ranking" />
             </Text>
           </View>
           <View style={styles.scrollContainer}>
@@ -231,14 +231,14 @@ export default class Voting extends Component {
             />
           </View>
           <View style={[styles.btnContainer, styles.between]}>
-            <Text style={styles.text14}><FormattedMessage id="vt_btmsec_name_selected" /></Text>
+            <Text style={styles.text14}><FormattedMessage id="voting_label_selected" /></Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={[styles.text14, { marginRight: 15 }]}>{selected.size}/30</Text>
               <LinearGradientContainer type="right" colors={disabled ? Colors.disabled : Colors.voteColor} style={styles.voteBtn}>
                 <TouchableWithoutFeedback onPress={disabled ? () => {} : this.vote} style={styles.center} disabled={disabled}>
                   <View>
                     <Text style={[styles.text14, { marginHorizontal: 10, marginVertical: 2 }]}>
-                      <FormattedMessage id="vt_button_name_vote" />
+                      <FormattedMessage id="voting_button_vote" />
                     </Text>
                   </View>
                 </TouchableWithoutFeedback>
@@ -257,9 +257,9 @@ export default class Voting extends Component {
           <Alert message={errorMessages(error, messages[locale])} subMessage={errorMessageDetail(error)} dismiss={this.props.actions.clearVotingError} />
           <Prompt
             isVisible={this.state.isVisible}
-            title={messages[locale].vt_popup_title_pwd}
-            negativeText={messages[locale].vt_popup_buttom_can}
-            positiveText={messages[locale].vt_popup_buttom_ent}
+            title={messages[locale].general_popup_label_password}
+            negativeText={messages[locale].general_popup_button_cancel}
+            positiveText={messages[locale].general_popup_button_confirm}
             type="secure-text"
             callback={this.handleConfirm}
             dismiss={this.closePrompt}

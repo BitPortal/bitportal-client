@@ -132,12 +132,12 @@ export default class TotalAssetsCard extends Component {
             <TouchableHighlight disabled={disabled} style={styles.linearContainer} underlayColor={Colors.linearUnderlayColor} onPress={onPress}>
               <View style={[styles.linearContainer, styles.paddingStyle]}>
                 <View style={styles.between}>
-                  <Text style={styles.text15}><FormattedMessage id="asset_card_title_ttlast" /></Text>
+                  <Text style={styles.text15}><FormattedMessage id="assets_label_total_assets" /></Text>
                   {
                     (isNew && !backupCompleted)
                     && <View style={styles.textRadius}>
                       <Text style={[styles.text12, { color: Colors.textColor_89_185_226 }]}>
-                        <FormattedMessage id="asset_card_title_backup" />
+                        <FormattedMessage id="assets_label_private_key_no_backup" />
                       </Text>
                     </View>
                   }

@@ -48,7 +48,7 @@ export default class ActionModal extends Component {
               <TouchableOpacity onPress={dismiss} style={[styles.center, styles.close]}>
                 <Ionicons name="ios-close" size={28} color={Colors.bgColor_FFFFFF} />
               </TouchableOpacity>
-              <Text style={styles.text18}><FormattedMessage id="sndcfm_title_name_cfm" /></Text>
+              <Text style={styles.text18}><FormattedMessage id="send_confirm_title_confirm" /></Text>
               <Text style={styles.text18}>{' '}</Text>
             </View>
             <View style={[styles.header, styles.bottom, { backgroundColor: Colors.minorThemeColor, minHeight: 300 }]}>
@@ -62,7 +62,7 @@ export default class ActionModal extends Component {
               </View>}
               {amount && <View style={[styles.item, styles.between, { marginTop: 10 }]}>
                 <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                  <Text style={[styles.text14, { width: 45 }]}><FormattedMessage id="sndcfm_title_name_send" /></Text>
+                  <Text style={[styles.text14, { width: 45 }]}><FormattedMessage id="send_confirm_label_from " /></Text>
                   <Text style={[styles.text14, { marginLeft: 35, color: Colors.textColor_89_185_226 }]}>
                     <FormattedNumber
                       value={amount || 0}
@@ -83,7 +83,7 @@ export default class ActionModal extends Component {
               </View>}
               {toAccount && <View style={[styles.item, styles.between, { marginTop: 10 }]}>
                 <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                  <Text style={[styles.text14, { width: 45 }]}><FormattedMessage id="sndcfm_title_name_to" /></Text>
+                  <Text style={[styles.text14, { width: 45 }]}><FormattedMessage id="send_confirm_label_to" /></Text>
                   <Text style={[styles.text14, { marginLeft: 35, color: Colors.textColor_89_185_226 }]}>
                     {toAccount}
                   </Text>
@@ -91,7 +91,7 @@ export default class ActionModal extends Component {
               </View>}
               {memo && <View style={[styles.item, styles.between, { marginTop: 10 }]}>
                 <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                  <Text style={[styles.text14, { width: 45 }]}><FormattedMessage id="sndcfm_title_name_rmk" /></Text>
+                  <Text style={[styles.text14, { width: 45 }]}><FormattedMessage id="send_confirm_label_memo" /></Text>
                   <Text style={[styles.text14, { marginLeft: 35, color: Colors.textColor_89_185_226 }]}>
                     {memo}
                   </Text>
@@ -120,7 +120,7 @@ export default class ActionModal extends Component {
                 style={[styles.btn, styles.center, loading ? styles.disabled : {}]}
               >
                 <Text style={[styles.text14]}>
-                  <FormattedMessage id="sndcfm_button_name_ok" />
+                  <FormattedMessage id="send_confirm_button_confirm" />
                 </Text>
                 {loading && <ActivityIndicator style={styles.indicator} size="small" color="white" />}
               </TouchableOpacity>

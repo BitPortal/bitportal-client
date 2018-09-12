@@ -25,9 +25,9 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid private key!':
-      return messages.import_txtbox_txt_invalidown
+      return messages.add_eos_error_popup_text_private_key_invalid
     default:
-      return messages.ast_imp_hint_fail
+      return messages.add_eos_import_error_popup_text_private_key_import_failed
   }
 }
 
@@ -35,33 +35,33 @@ const validate = (values, props) => {
   const errors = {}
   const { locale } = props
   if (!values.get('password')) {
-    errors.password = <FormattedMessage id="import_title_name_pwd" />
+    errors.password = <FormattedMessage id="add_eos_label_set_password" />
   }
 
   if (!!values.get('password') && values.get('password').length < 6) {
-    errors.password = messages[locale].act_fid_error_pw_min_character
+    errors.password = messages[locale].add_eos_error_text_password_min_character
   }
 
   if (!!values.get('password') && values.get('password').length > 64) {
-    errors.password = messages[locale].act_fid_error_pw_max_character
+    errors.password = messages[locale].add_eos_error_text_password_max_character
   }
 
   if (!!values.get('passwordHint') && values.get('passwordHint').length > 64) {
-    errors.passwordHint = messages[locale].act_fid_error_pswtp_max_character
+    errors.passwordHint = messages[locale].add_eos_error_text_password_hint_max_character
   }
 
   if (!values.get('confirmedPassword')) {
-    errors.confirmedPassword = <FormattedMessage id="import_title_name_cfmpwd" />
+    errors.confirmedPassword = <FormattedMessage id="add_eos_error_text_password_blank" />
   }
 
   if (values.get('confirmedPassword') !== values.get('password')) {
-    errors.confirmedPassword = <FormattedMessage id="import_txtbox_txt_pwdhint2" />
+    errors.confirmedPassword = <FormattedMessage id="add_eos_error_text_password_unmatch" />
   }
 
   if (!values.get('privateKey')) {
-    errors.privateKey = <FormattedMessage id="import_txtbox_txt_ownhint" />
+    errors.privateKey = <FormattedMessage id="add_eos_import_error_text_private_key_blank" />
   } else if (!validateText(values.get('privateKey'))) {
-    errors.privateKey = <FormattedMessage id="import_txtbox_txt_invalidown" />
+    errors.privateKey = <FormattedMessage id="add_eos_error_popup_text_private_key_invalid" />
   }
 
   return errors
@@ -119,26 +119,26 @@ export default class ImportEOSAccountForm extends Component {
       <IntlProvider messages={messages[locale]}>
         <FormContainer>
           <Field
-            placeholder={messages[locale].import_title_plchd_privtk}
+            placeholder={messages[locale].add_eos_text_private_key}
             name="privateKey"
             component={TextAreaField}
             normalize={normalizeText}
           />
           <Field
-            label={<FormattedMessage id="import_title_name_pwd" />}
-            tips={messages[locale].import_title_tips_pwd}
-            placeholder={messages[locale].import_title_plchd_pwd}
+            label={<FormattedMessage id="add_eos_label_set_password" />}
+            tips={messages[locale].add_eos_popup_text_password_tips}
+            placeholder={messages[locale].add_eos_text_password}
             name="password"
             component={PasswordField}
             rightContent={<PasswordStrength strength={getPasswordStrength(password)} />}
           />
           <Field
-            placeholder={messages[locale].import_title_plchd_cfmpwd}
+            placeholder={messages[locale].add_eos_text_confirm_password}
             name="confirmedPassword"
             component={PasswordField}
           />
           <Field
-            placeholder={messages[locale].import_title_name_pswht}
+            placeholder={messages[locale].add_eos_text_password_hint}
             name="passwordHint"
             component={TextField}
           />
@@ -147,13 +147,13 @@ export default class ImportEOSAccountForm extends Component {
               <Ionicons name="ios-checkmark-circle" size={24} color={unsignAgreement ? Colors.textColor_181_181_181 : Colors.textColor_89_185_226} />
             </TouchableOpacity>
             <Text numberOfLines={1} style={styles.text14}>
-              {messages[locale].import_txt_title_agrm}
+              {messages[locale].add_eos_text_tos_agree}
               <Text numberOfLines={1} onPress={this.checkTerms} style={[styles.text14, { textDecorationLine: 'underline', color: Colors.textColor_89_185_226 }]}>
-                {messages[locale].import_txt_title_term}
+                {messages[locale].add_eos_link_tos}
               </Text>
             </Text>
           </View>
-          <SubmitButton disabled={disabled} onPress={handleSubmit(this.submit)} text={<FormattedMessage id="import_button_name_nxt" />} />
+          <SubmitButton disabled={disabled} onPress={handleSubmit(this.submit)} text={<FormattedMessage id="add_eos_import_button_import" />} />
           <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearEOSAccountError} />
         </FormContainer>
       </IntlProvider>

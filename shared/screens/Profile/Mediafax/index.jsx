@@ -47,7 +47,7 @@ export default class MediafaxScreen extends Component {
       })
     } else {
       Clipboard.setString(`@${MediafaxUrls[item]}`)
-      Toast(messages[this.props.locale].mdf_title_name_copied)
+      Toast(messages[this.props.locale].copy_text_copy_success)
     }
   }
 
@@ -58,7 +58,7 @@ export default class MediafaxScreen extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale].mdf_title_name_nav}
+            title={messages[locale].profile_button_follow_us}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>

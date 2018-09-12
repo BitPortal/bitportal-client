@@ -37,7 +37,7 @@ export default class Profile extends Component {
 
   dialog = () => {
     const { locale } = this.props
-    Dialogs.alert(messages[locale].profile_button_name_err, null, { negativeText: messages[locale].profile_popup_buttom_ent })
+    Dialogs.alert(messages[locale].general_error_popup_text_no_account, null, { negativeText: messages[locale].general_popup_button_close })
   }
 
   changePage = (page) => {
@@ -102,7 +102,7 @@ export default class Profile extends Component {
         name: 'BitPortal.BPWebView',
         passProps: {
           uri: `${BITPORTAL_WEBSITE_URL}/${locale}help/?webview=true`,
-          title: messages[this.props.locale].prf_sec_titile_help
+          title: messages[this.props.locale].profile_button_help_center
         }
       }
     })
@@ -115,21 +115,21 @@ export default class Profile extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            leftButton={<CommonTitle title={<FormattedMessage id="profile_title_name_profile" />} />}
+            leftButton={<CommonTitle title={<FormattedMessage id="profile_title_profile" />} />}
             rightButton={<CommonRightButton imageSource={Images.transaction_history} onPress={this.changePage.bind(this, 'TransactionHistory')} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 20, alignItems: 'center' }}>
-              <SettingItem leftImage={Images.profile_voting} leftItemTitle={<FormattedMessage id="prf_sec_titile_vote" />} onPress={this.changePage.bind(this, 'Voting')} extraStyle={{ marginTop: 10 }} />
-              <SettingItem leftImage={Images.profile_resources} leftItemTitle={<FormattedMessage id="prf_sec_titile_res" />} onPress={this.changePage.bind(this, 'Resources')} />
-              <SettingItem leftImage={Images.profile_contacts} leftItemTitle={<FormattedMessage id="prf_sec_titile_ctcts" />} onPress={this.changePage.bind(this, 'Contacts')} />
-              <SettingItem leftImage={Images.profile_account} leftItemTitle={<FormattedMessage id="prf_sec_titile_act" />} onPress={this.changePage.bind(this, 'Account')} />
-              <SettingItem leftImage={Images.profile_settings} leftItemTitle={<FormattedMessage id="prf_sec_titile_sts" />} onPress={this.changePage.bind(this, 'Settings')} extraStyle={{ marginTop: 10 }} />
-              <SettingItem leftImage={Images.help_center} leftItemTitle={<FormattedMessage id="prf_sec_titile_help" />} onPress={this.goForHelp} />
-              <SettingItem leftImage={Images.profile_mediafax} leftItemTitle={<FormattedMessage id="prf_sec_titile_mdf" />} onPress={this.changePage.bind(this, 'Mediafax')} />
-              <SettingItem leftImage={Images.profile_about} leftItemTitle={<FormattedMessage id="prf_sec_titile_abt" />} onPress={this.changePage.bind(this, 'About')} />
-              <Text style={[styles.text14, { marginTop: 25 }]}> <FormattedMessage id="profile_check_txt_version" /> {VersionNumber.appVersion} </Text>
-              <Text style={[styles.text14, { marginTop: 5 }]}> <FormattedMessage id="profile_cpyrt_txt_line1" /> </Text>
+              <SettingItem leftImage={Images.profile_voting} leftItemTitle={<FormattedMessage id="profile_button_voting" />} onPress={this.changePage.bind(this, 'Voting')} extraStyle={{ marginTop: 10 }} />
+              <SettingItem leftImage={Images.profile_resources} leftItemTitle={<FormattedMessage id="profile_button_resource" />} onPress={this.changePage.bind(this, 'Resources')} />
+              <SettingItem leftImage={Images.profile_contacts} leftItemTitle={<FormattedMessage id="profile_button_contacts" />} onPress={this.changePage.bind(this, 'Contacts')} />
+              <SettingItem leftImage={Images.profile_account} leftItemTitle={<FormattedMessage id="profile_button_wallet_mgmt" />} onPress={this.changePage.bind(this, 'Account')} />
+              <SettingItem leftImage={Images.profile_settings} leftItemTitle={<FormattedMessage id="profile_button_settings" />} onPress={this.changePage.bind(this, 'Settings')} extraStyle={{ marginTop: 10 }} />
+              <SettingItem leftImage={Images.help_center} leftItemTitle={<FormattedMessage id="profile_button_help_center" />} onPress={this.goForHelp} />
+              <SettingItem leftImage={Images.profile_mediafax} leftItemTitle={<FormattedMessage id="profile_button_follow_us" />} onPress={this.changePage.bind(this, 'Mediafax')} />
+              <SettingItem leftImage={Images.profile_about} leftItemTitle={<FormattedMessage id="profile_button_about_us" />} onPress={this.changePage.bind(this, 'About')} />
+              <Text style={[styles.text14, { marginTop: 25 }]}> <FormattedMessage id="profile_text_version" /> {VersionNumber.appVersion} </Text>
+              <Text style={[styles.text14, { marginTop: 5 }]}> <FormattedMessage id="profile_text_copyright_1" /> </Text>
             </ScrollView>
           </View>
         </View>

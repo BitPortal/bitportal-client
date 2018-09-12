@@ -22,9 +22,9 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
-      return messages.cpwd_title_error_odpsd
+      return messages.change_password_error_popup_text_current_password_incorrect
     default:
-      return messages.cpwd_title_error_reset
+      return messages.change_password_error_popup_text_change_failed
   }
 }
 
@@ -33,27 +33,27 @@ const validate = (values, props) => {
   const { locale } = props
 
   if (!values.get('oldPassword')) {
-    errors.oldPassword = messages[locale].cpwd_title_empty_psd
+    errors.oldPassword = messages[locale].change_password_error_text_current_password_blank
   }
 
   if (!values.get('newPassword')) {
-    errors.newPassword = messages[locale].cpwd_title_empty_newpsd
+    errors.newPassword = messages[locale].change_password_error_text_new_password_blank
   }
 
   if (!!values.get('newPassword') && values.get('newPassword').length < 6) {
-    errors.newPassword = messages[locale].act_fid_error_pw_min_character
+    errors.newPassword = messages[locale].add_eos_error_text_password_min_character
   }
 
   if (!!values.get('newPassword') && values.get('newPassword').length > 64) {
-    errors.newPassword = messages[locale].act_fid_error_pw_max_character
+    errors.newPassword = messages[locale].add_eos_error_text_password_max_character
   }
 
   if (!!values.get('passwordHint') && values.get('passwordHint').length > 64) {
-    errors.passwordHint = messages[locale].act_fid_error_pswtp_max_character
+    errors.passwordHint = messages[locale].add_eos_error_text_password_hint_max_character
   }
 
   if (values.get('confirmedNewPassword') !== values.get('newPassword')) {
-    errors.confirmedNewPassword = messages[locale].cpwd_title_empty_rptnewpsd
+    errors.confirmedNewPassword = messages[locale].change_password_error_text_confirm_new_password_unmatch
   }
 
   return errors
@@ -100,40 +100,40 @@ export default class ResetPasswordForm extends Component {
       <IntlProvider messages={messages[locale]}>
         <FormContainer>
           <Field
-            label={<FormattedMessage id="cpwd_txtbox_title_current" />}
+            label={<FormattedMessage id="change_password_label_current_password" />}
             name="oldPassword"
             component={PasswordField}
           />
           <Field
-            label={<FormattedMessage id="cpwd_txtbox_title_new" />}
+            label={<FormattedMessage id="change_password_label_new_password" />}
             name="newPassword"
             component={PasswordField}
             rightContent={<PasswordStrength strength={getPasswordStrength(newPassword)} />}
           />
           <Field
-            label={<FormattedMessage id="cpwd_txtbox_title_repeat" />}
+            label={<FormattedMessage id="change_password_label_confirm_new_password" />}
             name="confirmedNewPassword"
             component={PasswordField}
           />
           <Field
-            label={<FormattedMessage id="cpwd_title_name_pswht" />}
+            label={<FormattedMessage id="change_password_label_new_password_hint" />}
             name="passwordHint"
             component={TextField}
           />
           <Text style={styles.text14}>
             <Text style={{ color: Colors.textColor_255_255_238 }}>
-              <FormattedMessage id="cpwd_hint_txt_txt1" />
+              <FormattedMessage id="change_password_text_forget_password1" />
             </Text>
-            <FormattedMessage id="cpwd_hint_txt_txt2" />
+            <FormattedMessage id="change_password_text_forget_password2" />
             <Text onPress={this.importPrivateKey} style={{ textDecorationLine: 'underline', color: Colors.textColor_89_185_226 }}>
-              <FormattedMessage id="cpwd_hint_txt_txt3" />
+              <FormattedMessage id="change_password_link_import_private_key" />
             </Text>
-            <FormattedMessage id="cpwd_hint_txt_txt4" />
+            <FormattedMessage id="change_password_text_forget_password3" />
           </Text>
           <SubmitButton
             disabled={disabled}
             onPress={handleSubmit(this.submit)}
-            text={<FormattedMessage id="cpwd_button_name_change" />}
+            text={<FormattedMessage id="change_password_button_change" />}
           />
           <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearKeystoreError} />
         </FormContainer>

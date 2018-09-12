@@ -49,8 +49,8 @@ export default class Header extends Component {
                   {!!weight
                     && <LinearGradientContainer type="right" colors={graColor} style={[styles.center, styles.flag]}>
                       <Text style={[styles.text12, { marginHorizontal: 5, color: Colors.textColor_255_255_238 }]}>
-                        {weight === 1 && <FormattedMessage id="prod_name_tag_cprt" />}
-                        {weight >= 2 && <FormattedMessage id="prod_name_tag_prmt" />}
+                        {weight === 1 && <FormattedMessage id="voting_label_cooperation" />}
+                        {weight >= 2 && <FormattedMessage id="voting_label_promotion" />}
                       </Text>
                     </LinearGradientContainer>
                   }
@@ -64,15 +64,15 @@ export default class Header extends Component {
           </View>
           <View style={[styles.info, { marginVertical: 10 }]}>
             {!!teamLocation && <View style={[styles.between]}>
-              <Text style={styles.text14}><FormattedMessage id="prod_sec_info_teamloc" />:</Text>
+              <Text style={styles.text14}><FormattedMessage id="bp_info_label_team_location" />:</Text>
               <Text style={styles.text14}>{teamLocation}</Text>
             </View>}
             {!!bpLocation && <View style={[styles.between, { marginVertical: 10 }]}>
-              <Text style={styles.text14}><FormattedMessage id="prod_sec_info_bploc" />:</Text>
+              <Text style={styles.text14}><FormattedMessage id="bp_info_label_bp_location" />:</Text>
               <Text style={styles.text14}>{bpLocation}</Text>
             </View>}
             <View style={[styles.between]}>
-              <Text style={styles.text14}><FormattedMessage id="prod_sec_info_score" />:</Text>
+              <Text style={styles.text14}><FormattedMessage id="voting_label_score" />:</Text>
               <Text style={styles.text14}>
                 <FormattedNumber
                   value={totalVotes}

@@ -81,7 +81,7 @@ export default class AssetsTransfer extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale].snd_title_name_snd}
+            title={messages[locale].send_title_send}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
             rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanner()} />}
           />

@@ -45,7 +45,7 @@ const permissionAlert = (title, content, locale) => {
   })
 
   buttons.push({
-    text: messages[locale].scan_popup_button_setting,
+    text: messages[locale].scan_popup_button_enable,
     onPress: () => nativeUtils.goSettingPermission(),
     style: 'default'
   })

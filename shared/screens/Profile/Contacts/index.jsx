@@ -86,7 +86,7 @@ export default class Contacts extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale].ctct_title_name_contacts}
+            title={messages[locale].profile_button_contacts}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={this.goBack} />}
             rightButton={<CommonRightButton iconName="md-add" onPress={this.addContact} />}
           />

@@ -116,16 +116,16 @@ export default class CoinInfoCard extends Component {
             <Text
               style={[styles.text14, { color: Colors.textColor_142_142_147 }]}
             >
-              {token.get('market_cap') && <FormattedMessage id="market_cap" />}
-              {token.get('market_cap') && ` ${token.get('market_cap')}`}
+              {token.get('market_label_market_cap') && <FormattedMessage id="market_label_market_cap" />}
+              {token.get('market_label_market_cap') && ` ${token.get('market_label_market_cap')}`}
             </Text>
           </View>
           <View style={[styles.spaceBetween, { marginTop: 4 }]}>
             <Text
               style={[styles.text14, { color: Colors.textColor_142_142_147 }]}
             >
-              {token.get('volume_24h') && <FormattedMessage id="volume_24h" />}
-              {token.get('volume_24h') && ` ${token.get('volume_24h')}`}
+              {token.get('market_token_detail_label_24h_volumn') && <FormattedMessage id="market_token_detail_label_24h_volumn" />}
+              {token.get('market_token_detail_label_24h_volumn') && ` ${token.get('market_token_detail_label_24h_volumn')}`}
             </Text>
           </View>
           <View style={[styles.row, { paddingVertical: 10 }]}>

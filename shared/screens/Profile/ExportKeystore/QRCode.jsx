@@ -34,17 +34,17 @@ export default class QRCode extends Component {
           >
             <View style={styles.content}>
               <Text style={[styles.text16, { marginLeft: -1 }]}>
-                <FormattedMessage id="expksqrc_hint_title_point1" />
+                <FormattedMessage id="export_keystore_label_qr_code_note" />
               </Text>
               <Text style={[styles.text14, { marginTop: 15 }]} multiline={true}>
-                <FormattedMessage id="expksqrc_hint_txt_point1" />
+                <FormattedMessage id="export_keystore_text_qr_code_note1" />
               </Text>
 
               {
                 !showQRCode
                 && <View style={[styles.qrCodeContainer, styles.center]}>
                   <Text multiline={true} style={[styles.text14, { marginBottom: 45 }]}>
-                    <FormattedMessage id="expksqrc_txtbox_txt_content" />
+                    <FormattedMessage id="export_keystore_text_qr_code_note2" />
                   </Text>
 
                   <TouchableHighlight
@@ -53,7 +53,7 @@ export default class QRCode extends Component {
                     style={[styles.btn, styles.center, { width: 140, backgroundColor: Colors.textColor_89_185_226 }]}
                   >
                     <Text style={styles.text14}>
-                      <FormattedMessage id="expksqrc_button_name_show" />
+                      <FormattedMessage id="export_keystore_button_qr_code_show" />
                     </Text>
                   </TouchableHighlight>
                 </View>

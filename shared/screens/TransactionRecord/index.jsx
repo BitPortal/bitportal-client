@@ -66,16 +66,16 @@ export default class TransactionRecord extends Component {
   copyTxID = () => {
     Clipboard.setString(this.props.transactionInfo.getIn(['action_trace', 'trx_id']))
     Dialog.alert(
-      messages[this.props.locale].txdtl_title_button_copied,
+      messages[this.props.locale].copy_text_copy_success,
       this.props.transactionInfo.getIn(['action_trace', 'trx_id']),
-      { positiveText: messages[this.props.locale].txdtl_title_button_ent }
+      { positiveText: messages[this.props.locale].transaction_detail_button_confirm }
     )
   }
 
   clipboard = () => {
     const url = `${EOS_EXPLORER_URL}/transactions/${this.props.transactionInfo.getIn(['action_trace', 'trx_id'])}`
     Clipboard.setString(url)
-    this.setState({ isCopied: true }, () => { Toast(messages[this.props.locale].txdtl_title_button_copied) })
+    this.setState({ isCopied: true }, () => { Toast(messages[this.props.locale].copy_text_copy_success) })
   }
 
   getInfo = (transactionInfo, transactionResult) => {
@@ -132,8 +132,8 @@ export default class TransactionRecord extends Component {
   // }
 
   // getStatus = (info) => {
-  //   if (info && info.get && !info.get('broadcast') ) return <FormattedMessage id="tx_sec_title_sdfail" />
-  //   else return <FormattedMessage id="tx_sec_title_sdsuc" />
+  //   if (info && info.get && !info.get('broadcast') ) return <FormattedMessage id="transaction_label_status_failed" />
+  //   else return <FormattedMessage id="transaction_label_status_completed" />
   // }
 
   render() {
@@ -153,7 +153,7 @@ export default class TransactionRecord extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale].tx_title_name_txrcd}
+            title={messages[locale].transaction_detail_title_transaction_detail}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.goBack()} />}
           />
           <View style={styles.scrollContainer}>
@@ -175,7 +175,7 @@ export default class TransactionRecord extends Component {
 
                 <View style={[styles.header2, styles.between]}>
                   <View style={[styles.center, { marginHorizontal: 15 }]}>
-                    <Text style={styles.text10}><FormattedMessage id="tx_sec_title_from" /></Text>
+                    <Text style={styles.text10}><FormattedMessage id="transaction_detail_label_from" /></Text>
                     <Text numberOfLines={1} style={styles.text12}>{fromAccount}</Text>
                   </View>
                   <View style={{ marginTop: 15 }}>
@@ -186,13 +186,13 @@ export default class TransactionRecord extends Component {
                     />
                   </View>
                   <View style={[styles.center, { marginHorizontal: 15 }]}>
-                    <Text style={styles.text10}><FormattedMessage id="tx_sec_title_to" /></Text>
+                    <Text style={styles.text10}><FormattedMessage id="transaction_detail_label_to" /></Text>
                     <Text numberOfLines={1} style={styles.text12}>{toAccount}</Text>
                   </View>
                 </View>
                 <View style={styles.amountContent}>
                   <Text style={[styles.text14, { marginLeft: -3, marginBottom: 3 }]}>
-                    <FormattedMessage id="tx_sec_title_amount" />:
+                    <FormattedMessage id="transaction_detail_label_amount" />:
                   </Text>
                   <View style={[styles.between, { alignItems: 'center' }]}>
                     <Text style={styles.text24}>
@@ -205,7 +205,7 @@ export default class TransactionRecord extends Component {
                     <Text style={styles.text14}> {symbol}</Text>
                   </View>
                   <Text style={[styles.text14, { marginLeft: -3, marginTop: 15 }]}>
-                    <FormattedMessage id="tx_sec_button_detail" />:
+                    <FormattedMessage id="transaction_detail_label_memo" />:
                   </Text>
                   <Text style={[styles.text14, { marginLeft: -3, marginTop: 4, marginBottom: 10 }]}># {memo}</Text>
                 </View>
@@ -217,7 +217,7 @@ export default class TransactionRecord extends Component {
                   <View style={[styles.between]}>
                     <View style={{ marginLeft: 20, height: 140, justifyContent: 'space-between' }}>
                       <Text style={[styles.text14, { marginTop: 10 }]}>
-                        <FormattedMessage id="txdtl_title_name_tctID" />:
+                        <FormattedMessage id="transaction_detail_label_transaction_id" />:
                       </Text>
                       <Text onLongPress={this.copyTxID} onPress={() => this.checkBlockInfo('transactions')} numberOfLines={1} style={styles.text14}>
                         # <Text style={{ color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }}>
@@ -225,14 +225,14 @@ export default class TransactionRecord extends Component {
                         </Text>
                       </Text>
                       <Text style={[styles.text14, { marginTop: 15 }]}>
-                        <FormattedMessage id="txdtl_title_name_block" />:
+                        <FormattedMessage id="transaction_detail_label_block" />:
                       </Text>
                       <Text onPress={() => this.checkBlockInfo('blocks')} numberOfLines={1} style={[styles.text14, { marginBottom: 15 }]}>
                         # <Text style={{ color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }}>
                           {blockHeight}
                         </Text>
                       </Text>
-                      {/* <Text style={styles.text14}><FormattedMessage id="txdtl_title_name_producer" />:</Text>
+                      {/* <Text style={styles.text14}><FormattedMessage id="transaction_detail_label_producer" />:</Text>
                       <Text numberOfLines={1} style={styles.text14}># EOS.IO </Text> */}
                     </View>
                     <View style={{ marginRight: 20, marginTop: 10, alignItems: 'center' }}>
@@ -249,7 +249,7 @@ export default class TransactionRecord extends Component {
                         style={[styles.btn, styles.center, { backgroundColor: isCopied ? Colors.textColor_181_181_181 : Colors.textColor_89_185_226 }]}
                       >
                         <Text style={[styles.text14, { color: isCopied ? Colors.textColor_107_107_107 : Colors.textColor_255_255_238 }]}>
-                          {isCopied ? <FormattedMessage id="txdtl_title_button_copied" /> : <FormattedMessage id="txdtl_title_button_copy" />}
+                          {isCopied ? <FormattedMessage id="copy_text_copy_success" /> : <FormattedMessage id="copy_button_copy" />}
                         </Text>
                       </TouchableOpacity>
                     </View>

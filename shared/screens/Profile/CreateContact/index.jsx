@@ -33,7 +33,7 @@ export default class CreateContact extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale].newct_title_name_newct}
+            title={messages[locale].contacts_add_title_add_contact}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>

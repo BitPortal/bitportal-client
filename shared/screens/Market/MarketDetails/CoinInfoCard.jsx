@@ -5,18 +5,9 @@ import { FormattedNumber } from 'react-intl'
 import { connect } from 'react-redux'
 import { exchangeTickerSelector } from 'selectors/ticker'
 import { ASSET_FRACTION } from 'constants/market'
+import { filterBgColor } from 'utils'
 import Images from 'resources/images'
 import styles from './styles'
-
-const filterBgColor = (data) => {
-  if (data && parseFloat(data) > 0) {
-    return Colors.bgColor_104_189_57
-  } else if (data && parseFloat(data) < 0) {
-    return Colors.bgColor_255_50_50
-  }
-
-  return Colors.bgColor_59_59_59
-}
 
 @connect(state => ({
   ticker: exchangeTickerSelector(state),

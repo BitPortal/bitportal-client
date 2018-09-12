@@ -147,7 +147,7 @@ export default class AssetChart extends Component {
     } else if (loaded) {
       return (
         <Text style={{ marginVertical: 10, alignSelf: 'center', color: 'white' }}>
-          {messages[locale].token_title_name_nomore}
+          {messages[locale].transaction_list_text_no_data}
         </Text>
       )
     }
@@ -204,11 +204,11 @@ export default class AssetChart extends Component {
             </View>
             <View style={[styles.btnContainer, styles.between]}>
               <TouchableOpacity style={[styles.center, styles.btn]} onPress={this.send}>
-                <Text style={styles.text14}><FormattedMessage id="token_button_name_send" /></Text>
+                <Text style={styles.text14}><FormattedMessage id="transaction_list_button_send" /></Text>
               </TouchableOpacity>
               <View style={styles.line} />
               <TouchableOpacity style={[styles.center, styles.btn]} onPress={this.receive}>
-                <Text style={styles.text14}><FormattedMessage id="token_button_name_receive" /></Text>
+                <Text style={styles.text14}><FormattedMessage id="transaction_list_button_receive" /></Text>
               </TouchableOpacity>
             </View>
           </View>

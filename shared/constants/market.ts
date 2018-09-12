@@ -53,7 +53,7 @@ export const sort_filters = [
 ]
 
 export const MARKET_DETAIL_KEYS = [
-  'market_cap',
+  'market_label_market_cap',
   'blockchain',
   'circulating_supply',
   'total_supply',

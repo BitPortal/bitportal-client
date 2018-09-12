@@ -35,7 +35,7 @@ export default class ResetPassword extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale].cpwd_title_name_cpwd}
+            title={messages[locale].change_password_title_change_password}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>

@@ -106,7 +106,7 @@ export default class Resources extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale].reslist_title_name_resources}
+            title={messages[locale].profile_button_resource}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
@@ -117,37 +117,37 @@ export default class Resources extends Component {
               <ResourcesCard
                 colors={Colors.cpuColor}
                 onPress={() => this.check('cpu')}
-                title={<FormattedMessage id="reslist_title_name_cpu" />}
-                availableText={<FormattedMessage id="reslist_title_name_ava" />}
+                title={<FormattedMessage id="resource_label_cpu" />}
+                availableText={<FormattedMessage id="resource_label_available" />}
                 available={formatCycleTime(cpuLimitAvailable)}
-                totalText={<FormattedMessage id="reslist_title_name_bwttl" />}
+                totalText={<FormattedMessage id="resource_label_total" />}
                 total={formatCycleTime(cpuLimitMax)}
-                usageText={<FormattedMessage id="reslist_title_name_usgttl" />}
+                usageText={<FormattedMessage id="resource_label_used" />}
                 usage={formatCycleTime(cpuLimitUsed)}
-                delegateText={<FormattedMessage id="reslist_title_name_delegate" />}
+                delegateText={<FormattedMessage id="resource_label_staked" />}
                 delegate={totalResourcesCPUWeight}
               />
               <ResourcesCard
                 onPress={() => this.check('bw')}
-                title={<FormattedMessage id="reslist_title_name_bw" />}
-                availableText={<FormattedMessage id="reslist_title_name_ava" />}
+                title={<FormattedMessage id="resource_label_net" />}
+                availableText={<FormattedMessage id="resource_label_available" />}
                 available={formatMemorySize(netLimitAvailable)}
-                totalText={<FormattedMessage id="reslist_title_name_bwttl" />}
+                totalText={<FormattedMessage id="resource_label_total" />}
                 total={formatMemorySize(netLimitMax)}
-                usageText={<FormattedMessage id="reslist_title_name_usgttl" />}
+                usageText={<FormattedMessage id="resource_label_used" />}
                 usage={formatMemorySize(netLimitUsed)}
-                delegateText={<FormattedMessage id="reslist_title_name_delegate" />}
+                delegateText={<FormattedMessage id="resource_label_staked" />}
                 delegate={totalResourcesNETWeight}
               />
               <ResourcesCard
                 colors={Colors.ramColor}
                 onPress={() => this.check('ram')}
-                title={<FormattedMessage id="reslist_title_name_ram" />}
-                availableText={<FormattedMessage id="reslist_title_name_ava" />}
+                title={<FormattedMessage id="resource_label_ram" />}
+                availableText={<FormattedMessage id="resource_label_available" />}
                 available={formatMemorySize(ramAvailable)}
                 totalText={<FormattedMessage id="reslist_title_name_ramttl" />}
                 total={formatMemorySize(ramQuota)}
-                usageText={<FormattedMessage id="reslist_title_name_usgttl" />}
+                usageText={<FormattedMessage id="resource_label_used" />}
                 usage={formatMemorySize(ramUsage)}
               />
             </ScrollView>

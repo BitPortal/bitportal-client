@@ -16,7 +16,7 @@ export default class NewsList extends PureComponent {
     <View>
       <View style={styles.listTitle}>
         <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>
-          {messages[this.props.locale].discovery_title_name_news}
+          {messages[this.props.locale].discovery_label_news}
         </Text>
       </View>
     </View>
@@ -61,7 +61,7 @@ export default class NewsList extends PureComponent {
         <Text
           style={[styles.text14, { marginVertical: 10, alignSelf: 'center' }]}
         >
-          {messages[this.props.locale].discovery_title_info_nomore}
+          {messages[this.props.locale].discovery_text_no_news}
         </Text>
       )
     }

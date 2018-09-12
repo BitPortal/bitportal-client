@@ -86,8 +86,8 @@ export default class Assets extends Component {
         })
       } else {
         const { locale } = this.props
-        Dialog.alert(messages[locale].asset_alert_name_err, null, {
-          negativeText: messages[locale].asset_alert_button_ent
+        Dialog.alert(messages[locale].general_error_popup_text_no_account, null, {
+          negativeText: messages[locale].general_popup_button_close
         })
       }
     }
@@ -211,7 +211,7 @@ export default class Assets extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            leftButton={<CommonTitle title={<FormattedMessage id="addpage_title_name_act" />} />}
+            leftButton={<CommonTitle title={<FormattedMessage id="assets_title_eos_wallet" />} />}
             rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanQR()} />}
           />
           {!walletCount && (
@@ -223,7 +223,7 @@ export default class Assets extends Component {
               <View style={{ alignItems: 'center' }}>
                 <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF} />
                 <Text style={[styles.text14, { color: Colors.textColor_255_255_238, marginTop: 20 }]}>
-                  <FormattedMessage id="addpage_button_name_crt" />
+                  <FormattedMessage id="assets_no_account_button_create" />
                 </Text>
               </View>
             </TouchableHighlight>
@@ -237,7 +237,7 @@ export default class Assets extends Component {
               <View style={{ alignItems: 'center' }}>
                 <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF} />
                 <Text style={[styles.text14, { color: Colors.textColor_255_255_238, marginTop: 20 }]}>
-                  <FormattedMessage id="act_sec_title_import_eos_account" />
+                  <FormattedMessage id="assets_no_account_button_import" />
                 </Text>
               </View>
             </TouchableHighlight>
@@ -258,14 +258,14 @@ export default class Assets extends Component {
                 />
                 {!activeEOSAccount.get('account_name') && (
                   <SettingItem
-                    leftItemTitle={<FormattedMessage id="act_sec_title_import_eos_account" />}
+                    leftItemTitle={<FormattedMessage id="assets_no_account_button_import" />}
                     onPress={() => this.createEOSAccount()}
                     extraStyle={{ marginTop: 10, marginBottom: 10 }}
                   />
                 )}
                 {!!activeEOSAccount.get('account_name') && (
                   <EnableAssets
-                    Title={<FormattedMessage id="asset_title_name_ast" />}
+                    Title={<FormattedMessage id="assets_label_assets" />}
                     onPress={this.checkAssetList}
                   />
                 )}

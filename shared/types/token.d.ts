@@ -16,8 +16,8 @@ declare interface Token {
   first_announced?: string
   platform?: string
   proof_type?: string
-  volume_24h?: string
-  market_cap?: string
+  market_token_detail_label_24h_volumn?: string
+  market_label_market_cap?: string
   blockchain?: string
   team_location?: string
   algorithm?: string

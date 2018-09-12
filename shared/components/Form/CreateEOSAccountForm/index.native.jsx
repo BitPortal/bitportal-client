@@ -28,21 +28,21 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Account name already exists':
-      return messages.act_fid_error_extact
+      return messages.add_eos_create_error_popup_text_account_name_exist
     case 'Invalid private key!':
-      return messages.act_fid_error_privatekey
+      return messages.add_eos_error_popup_text_private_key_invalid
     case 'Campaign is for invitation only':
-      return messages.act_fid_error_caminv
+      return messages.add_eos_create_error_popup_text_registration_code_invite
     case 'Campaign is for eos only':
-      return messages.act_fid_error_cameos
+      return messages.add_eos_create_error_popup_text_registration_code_eos
     case 'Unknown invitation Code':
-      return messages.act_fid_error_uninv
+      return messages.add_eos_create_error_popup_text_registration_code_invalid
     case 'Coupon code is used':
-      return messages.act_fid_error_used
+      return messages.add_eos_create_error_popup_text_registration_code_used
     case 'Error retrieving data':
-      return messages.act_fid_error_retdata
+      return messages.add_eos_create_error_popup_text_data_extraction_failed
     default:
-      return messages.act_fid_error_failed
+      return messages.add_eos_create_error_popup_text_create_failed
   }
 }
 
@@ -51,39 +51,39 @@ const validate = (values, props) => {
   const { locale } = props
 
   if (!values.get('eosAccountName')) {
-    errors.eosAccountName = messages[locale].act_fid_empty_name
+    errors.eosAccountName = messages[locale].add_eos_create_error_text_account_name_blank
   }
 
   if (!!values.get('eosAccountName') && !validateEOSAccountName(values.get('eosAccountName'))) {
-    errors.eosAccountName = messages[locale].act_error_text_invalid_account_name
+    errors.eosAccountName = messages[locale].add_eos_create_error_text_account_name_invalid
   }
 
   if (!values.get('password')) {
-    errors.password = messages[locale].act_fid_empty_psd
+    errors.password = messages[locale].add_eos_error_text_password_blank
   }
 
   if (!!values.get('password') && values.get('password').length < 6) {
-    errors.password = messages[locale].act_fid_error_pw_min_character
+    errors.password = messages[locale].add_eos_error_text_password_min_character
   }
 
   if (!!values.get('password') && values.get('password').length > 64) {
-    errors.password = messages[locale].act_fid_error_pw_max_character
+    errors.password = messages[locale].add_eos_error_text_password_max_character
   }
 
   if (!!values.get('passwordHint') && values.get('passwordHint').length > 64) {
-    errors.passwordHint = messages[locale].act_fid_error_pswtp_max_character
+    errors.passwordHint = messages[locale].add_eos_error_text_password_hint_max_character
   }
 
   if (!values.get('confirmedPassword')) {
-    errors.confirmedPassword = messages[locale].act_fid_empty_rptpsd
+    errors.confirmedPassword = messages[locale].add_eos_error_text_confirm_password
   }
 
   if (values.get('confirmedPassword') !== values.get('password')) {
-    errors.confirmedPassword = messages[locale].act_fid_error_rptpsd
+    errors.confirmedPassword = messages[locale].add_eos_error_text_password_unmatch
   }
 
   if (!values.get('inviteCode')) {
-    errors.inviteCode = messages[locale].act_fid_empty_invicode
+    errors.inviteCode = messages[locale].add_eos_create_text_registration_code
   }
 
   return errors
@@ -160,34 +160,34 @@ export default class CreateEOSAccountForm extends Component {
       <IntlProvider messages={messages[locale]}>
         <FormContainer>
           <Field
-            label={messages[locale].act_fid_title_name}
+            label={messages[locale].add_eos_create_label_account_name}
             name="eosAccountName"
             component={TextField}
-            placeholder={messages[locale].act_fid_plachd_name}
-            tips={messages[locale].act_fid_tips_name}
+            placeholder={messages[locale].add_eos_create_text_account_name}
+            tips={messages[locale].add_eos_create_popup_text_account_name_tips}
             normalize={normalizeEOSAccountName}
           />
           <Field
-            label={messages[locale].act_fid_title_password}
-            tips={messages[locale].act_fid_tips_password}
-            placeholder={messages[locale].act_fid_plachd_password}
+            label={messages[locale].add_eos_label_set_password}
+            tips={messages[locale].add_eos_popup_text_password_tips}
+            placeholder={messages[locale].add_eos_text_password}
             name="password"
             component={PasswordField}
             rightContent={<PasswordStrength strength={getPasswordStrength(password)} />}
           />
           <Field
-            placeholder={messages[locale].act_fid_plachd_repeat}
+            placeholder={messages[locale].add_eos_text_confirm_password}
             name="confirmedPassword"
             component={PasswordField}
           />
           <Field
-            placeholder={messages[locale].act_fid_plachd_pswtp}
+            placeholder={messages[locale].add_eos_text_password_hint}
             name="passwordHint"
             component={TextField}
           />
           <Field
-            label={messages[locale].act_fid_title_invcd}
-            tips={messages[locale].act_fid_tips_invcd}
+            label={messages[locale].add_eos_create_label_registration_code}
+            tips={messages[locale].add_eos_create_popup_text_registration_code_tips}
             placeholder={messages[locale].act_fid_plachd_invcd}
             name="inviteCode"
             component={TextField}
@@ -195,7 +195,7 @@ export default class CreateEOSAccountForm extends Component {
           {
             hasPrivateKey && (
               <Field
-                placeholder={messages[locale].act_fid_plachd_key}
+                placeholder={messages[locale].add_eos_text_private_key}
                 name="privateKey"
                 normalize={normalizeText}
                 component={TextAreaField}
@@ -204,7 +204,7 @@ export default class CreateEOSAccountForm extends Component {
           }
           <TouchableOpacity style={styles.privateKeyBtn} onPress={this.showPrivateKey}>
             <Text style={styles.text14}>
-              {hasPrivateKey ? messages[locale].act_btn_title_close : messages[locale].act_btn_title_key}
+              {hasPrivateKey ? messages[locale].add_eos_create_button_collapse_private_key : messages[locale].add_eos_create_button_with_private_key}
             </Text>
           </TouchableOpacity>
           <View style={styles.terms}>
@@ -212,15 +212,15 @@ export default class CreateEOSAccountForm extends Component {
               <Ionicons name="ios-checkmark-circle" size={24} color={unsignAgreement ? Colors.textColor_181_181_181 : Colors.textColor_89_185_226} />
             </TouchableOpacity>
             <Text numberOfLines={1} style={styles.text14}>
-              {messages[locale].act_btn_title_agrm}
+              {messages[locale].add_eos_text_tos_agree}
               <Text numberOfLines={1} onPress={this.checkTerms} style={[styles.text14, { textDecorationLine: 'underline', color: Colors.textColor_89_185_226 }]}>
-                {messages[locale].act_btn_title_term}
+                {messages[locale].add_eos_link_tos}
               </Text>
             </Text>
           </View>
-          <SubmitButton disabled={disabled} onPress={handleSubmit(this.submit)} text={messages[locale].act_button_text_create} />
+          <SubmitButton disabled={disabled} onPress={handleSubmit(this.submit)} text={messages[locale].add_eos_create_button_create} />
           <Text onPress={this.importAccount} style={[styles.text14, { marginVertical: 20, color: Colors.textColor_89_185_226 }]}>
-            {messages[locale].act_btn_title_import}
+            {messages[locale].add_eos_create_button_import}
           </Text>
           <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearEOSAccountError} />
         </FormContainer>

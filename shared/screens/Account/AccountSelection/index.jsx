@@ -22,7 +22,7 @@ export const errorMessages = (error, messages) => {
     case 'Unauthorized private key!':
       return messages.ast_imp_hint_unauowner
     default:
-      return messages.ast_imp_hint_fail
+      return messages.add_eos_import_error_popup_text_private_key_import_failed
   }
 }
 
@@ -68,7 +68,7 @@ export default class AccountSelection extends Component {
       <View style={styles.container}>
         <NavigationBar
           leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
-          title={messages[locale].actslt_nav_title_name}
+          title={messages[locale].add_import_success_title_select_account}
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
