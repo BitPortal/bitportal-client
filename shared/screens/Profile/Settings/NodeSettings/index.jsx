@@ -127,7 +127,7 @@ export default class NodeSettings extends Component {
               showsVerticalScrollIndicator={false}
               sections={[
                 { title: messages[locale].settings_node_label_default_node, data: defaultNodes.toJS() },
-                { title: messages[locale].ndst_label_custom_node, data: customNodes.toJS() }
+                { title: messages[locale].settings_node_label_customized_node, data: customNodes.toJS() }
               ]}
               renderItem={this.renderItem}
               renderSectionHeader={this.renderSectionHeader}

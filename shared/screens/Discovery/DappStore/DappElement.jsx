@@ -15,11 +15,11 @@ export default class DappElement extends Component {
     const { intl } = this.props
     if (message === 'third_party') {
       const newMessage = intl.formatMessage(
-        { id: 'third_party_title' },
+        { id: 'discovery_dapp_popup_label_redirect' },
         { ...params }
       )
       const newMessageSub = intl.formatMessage(
-        { id: 'third_party_sub' },
+        { id: 'discovery_dapp_popup_text_redirect' },
         { ...params }
       )
       this.setState({ message: newMessage, subMessage: newMessageSub })
@@ -134,6 +134,8 @@ export default class DappElement extends Component {
           <Alert
             message={this.state.message}
             subMessage={this.state.subMessage}
+            negativeText={messages[locale].discovery_dapp_popup_button_cancel}
+            positiveText={messages[locale].discovery_dapp_popup_button_understand}
             dismiss={() => {
               this.getAlertAction(this.props.item)
             }}

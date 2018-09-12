@@ -105,7 +105,7 @@ export default class DappList extends Component {
             leftButton={
               <CommonButton iconName="md-arrow-back" onPress={this.goBack} />
             }
-            title={messages[locale].dApp_list}
+            title={messages[locale].discovery_dapp_title_dapp_list}
             rightButton={
               <SearchBar
                 searchTerm={searchTerm}

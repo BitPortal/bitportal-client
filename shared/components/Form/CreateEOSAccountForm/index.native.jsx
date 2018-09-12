@@ -83,7 +83,7 @@ const validate = (values, props) => {
   }
 
   if (!values.get('inviteCode')) {
-    errors.inviteCode = messages[locale].add_eos_create_text_registration_code
+    errors.inviteCode = messages[locale].add_eos_create_error_text_registration_code_blank
   }
 
   return errors
@@ -127,7 +127,7 @@ export default class CreateEOSAccountForm extends Component {
       component: {
         name: 'BitPortal.BPWebView',
         passProps: {
-          title: messages[locale].act_fid_title_terms,
+          title: messages[locale].webview_title_tos,
           uri: BITPORTAL_API_TERMS_URL
         }
       }
@@ -188,7 +188,7 @@ export default class CreateEOSAccountForm extends Component {
           <Field
             label={messages[locale].add_eos_create_label_registration_code}
             tips={messages[locale].add_eos_create_popup_text_registration_code_tips}
-            placeholder={messages[locale].act_fid_plachd_invcd}
+            placeholder={messages[locale].add_eos_create_text_registration_code}
             name="inviteCode"
             component={TextField}
           />

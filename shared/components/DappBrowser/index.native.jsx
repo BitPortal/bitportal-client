@@ -125,7 +125,7 @@ export default class DappBrowser extends Component {
     return (
       <View style={[styles.center, styles.content]}>
         <Text style={styles.text18}>
-          <FormattedMessage id="web_title_name_err" />
+          <FormattedMessage id="webview_error_text_load_failed" />
         </Text>
       </View>
     )
@@ -236,9 +236,9 @@ export default class DappBrowser extends Component {
               ref={(o) => { this.actionSheet = o }}
               title=""
               options={[
-                messages[locale].web_button_name_share,
-                Platform.OS === 'ios' ? messages[locale].web_button_name_linkios : messages[locale].web_button_name_linkandroid,
-                messages[locale].web_button_name_cancel
+                messages[locale].webview_button_share,
+                Platform.OS === 'ios' ? messages[locale].webview_button_open_in_safari : messages[locale].webview_button_open_in_browser,
+                messages[locale].webview_button_cancel
               ]}
               cancelButtonIndex={2}
               destructiveButtonIndex={1}
