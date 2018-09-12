@@ -32,7 +32,8 @@
   "add_eos_create_error_text_account_name_invalid": "Account name format is incorrect.",
   "add_eos_create_error_popup_text_account_name_exist": "Account name already exists, please use another account name.",
   "add_eos_create_label_registration_code": "Registration Code",
-  "add_eos_create_text_registration_code": "Please enter registration code.",
+  "add_eos_create_text_registration_code": "Registration Code",
+  "add_eos_create_error_text_registration_code_blank": "Please enter registration code.",
   "add_eos_create_popup_text_registration_code_tips": "Limited by the current cost of EOS account registration, BitPortal will provide registration code to a portion of users to register EOS accounts. You can participate BitPortal official event to obtain your registration code.",
   "add_eos_create_error_popup_text_registration_code_invalid": "Your registration code is invalid.",
   "add_eos_create_error_popup_text_registration_code_used": "Your registration code has been used.",
@@ -170,6 +171,12 @@
   "discovery_label_dapp_more": "更多",
   "discovery_label_news": "News",
   "discovery_text_no_news": "No more news articles",
+  "discovery_dapp_title_dapp_list": "Dapp List",
+  "discovery_dapp_popup_label_redirect": "Please note that you will be redirected to third party Dapp \"{app}\" \n",
+  "discovery_dapp_popup_text_redirect": "You will be redirected to third party Dapp \"{app}\". Your actions and usage on third party Dapp should apply to third party Dapp's Terms of Service and Privacy Policy. \"{app}\" will directly and independently be responsible for your actions and usage.",
+  "discovery_dapp_text_favourite_limit": "You can only add 8 favorites",
+  "discovery_dapp_popup_button_cancel": "Cancel",
+  "discovery_dapp_popup_button_understand": "I've Acknowleged",
 
   "profile_title_profile": "Profile",
   "profile_button_voting": "Producer Voting",
@@ -258,9 +265,9 @@
 
   "settings_button_language": "Language",
   "settings_button_currency": "Default Currency",
-  "sts_sec_title_theme": "Themes",
   "settings_button_node": "Node Settings",
   "settings_node_label_default_node": "Default Node",
+  "settings_node_label_customized_node": "Custom Node",
   "settings_node_button_add_node": "Add Node",
   "settings_node_popup_label_node": "Please enter node:",
   "settings_node_popup_button_cancel": "Cancel",
@@ -278,21 +285,17 @@
   "about_us_update_check_popup_button_update": "Update Now",
   "about_us_update_check_popup_button_cancel": "Update Later",
 
-  "ndst_label_custom_node": "Custom Node",
-  "reslist_title_name_ramttl": "Quota",
+  "webview_title_tos": "Terms of Service",
+  "webview_button_share": "Share",
+  "webview_button_open_in_safari": "Open in Safari",
+  "webview_button_cancel": "Cancel",
+  "webview_button_open_in_browser": "Open in other browsers",
+  "webview_error_text_load_failed": "Loading failed",
+
+
   "ok": "OK",
   "cancel": "Cancel",
-  "web_title_name_err": "Loading failed",
-  "web_button_name_linkios": "Open in Safari",
-  "web_button_name_linkandroid": "Open in other browsers",
-  "web_button_name_share": "Share",
-  "web_button_name_cancel": "Cancel",
- 
-  "act_fid_plachd_invcd": "Registration Code",
-  "act_fid_title_terms": "Terms of Service",
-  "import_nav_title_terms": "Terms of Service",
 
-  "dApp_list": "Dapp List",
   "game": "Game",
   "explorer": "Explorer",
   "tool": "Tools",
@@ -300,9 +303,7 @@
   "news": "News",
   "other": "Others",
   "no_login": "Please create or import an EOS account",
-  "third_party_title": "You will visit the third party DApp{app}\n",
-  "third_party_sub": "You will visit the third party DApp{app}. This page and its functions are provided directly to you by {app}. By visiting, you agree to comply with the Privacy Policy and User Agreement of the third party DApp {app}.  {app} will be directly and independently accountable to you.",
-  "favorite_limit": "You can only add 8 favorites",
+
 
   "description": "Description",
   "circulating_supply": "Current Supply",
@@ -319,6 +320,7 @@
   "details": "Details",
   "description_null": "No description",
   "details_null": "No details",
+
 
   "actlist_title_name_account": "Account",
   "actlist_button_name_create": "Create New",

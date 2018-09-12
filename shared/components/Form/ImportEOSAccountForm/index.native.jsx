@@ -93,7 +93,7 @@ export default class ImportEOSAccountForm extends Component {
       component: {
         name: 'BitPortal.BPWebView',
         passProps: {
-          title: messages[locale].import_nav_title_terms,
+          title: messages[locale].webview_title_tos,
           uri: BITPORTAL_API_TERMS_URL
         }
       }

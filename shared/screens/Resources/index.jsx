@@ -145,7 +145,7 @@ export default class Resources extends Component {
                 title={<FormattedMessage id="resource_label_ram" />}
                 availableText={<FormattedMessage id="resource_label_available" />}
                 available={formatMemorySize(ramAvailable)}
-                totalText={<FormattedMessage id="reslist_title_name_ramttl" />}
+                totalText={<FormattedMessage id="resource_label_total" />}
                 total={formatMemorySize(ramQuota)}
                 usageText={<FormattedMessage id="resource_label_used" />}
                 usage={formatMemorySize(ramUsage)}

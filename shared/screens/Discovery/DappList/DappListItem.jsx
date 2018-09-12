@@ -36,7 +36,7 @@ export default class DappListItem extends React.PureComponent {
   toggleFavorite = (item) => {
     const { favoriteDapps, locale } = this.props
     if (favoriteDapps.toJS().length >= 8 && !item.get('selected')) {
-      return Toast(messages[locale].favorite_limit, 2000, 0)
+      return Toast(messages[locale].discovery_dapp_text_favourite_limit, 2000, 0)
     } else {
       this.props.showModal()
       this.props.actions.toggleFavoriteDapp({
@@ -51,11 +51,11 @@ export default class DappListItem extends React.PureComponent {
     const { intl } = this.props
     if (message === 'third_party') {
       const newMessage = intl.formatMessage(
-        { id: 'third_party_title' },
+        { id: 'discovery_dapp_popup_label_redirect' },
         { ...params }
       )
       const newMessageSub = intl.formatMessage(
-        { id: 'third_party_sub' },
+        { id: 'discovery_dapp_popup_text_redirect' },
         { ...params }
       )
       this.setState({ message: newMessage, subMessage: newMessageSub })
@@ -158,6 +158,8 @@ export default class DappListItem extends React.PureComponent {
             <Alert
               message={this.state.message}
               subMessage={this.state.subMessage}
+              negativeText={messages[locale].discovery_dapp_popup_button_cancel}
+              positiveText={messages[locale].discovery_dapp_popup_button_understand}
               dismiss={() => {
                 this.getAlertAction(this.props.item)
               }}
