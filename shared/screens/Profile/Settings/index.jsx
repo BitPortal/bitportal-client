@@ -52,14 +52,14 @@ export default class Setting extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale].sts_title_name_settings}
+            title={messages[locale].profile_button_settings}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <SettingItem leftItemTitle={<FormattedMessage id="sts_sec_title_language" />} onPress={() => this.changeSettings('Languages')} extraStyle={{ marginTop: 10 }} />
-              <SettingItem leftItemTitle={<FormattedMessage id="sts_sec_title_currency" />} onPress={() => this.changeSettings('Currencies')} />
-              <SettingItem leftItemTitle={<FormattedMessage id="sts_sec_title_nodesettings" />} onPress={() => this.changeSettings('NodeSettings')} />
+              <SettingItem leftItemTitle={<FormattedMessage id="settings_button_language" />} onPress={() => this.changeSettings('Languages')} extraStyle={{ marginTop: 10 }} />
+              <SettingItem leftItemTitle={<FormattedMessage id="settings_button_currency" />} onPress={() => this.changeSettings('Currencies')} />
+              <SettingItem leftItemTitle={<FormattedMessage id="settings_button_node" />} onPress={() => this.changeSettings('NodeSettings')} />
               {/* <SettingItem leftItemTitle={<FormattedMessage id="sts_sec_title_theme" />} onPress={() => {}} /> */}
               {/* <View style={[styles.itemContainer, styles.between, { marginTop: 10 }]}>
                 <Text style={[styles.text16, { marginLeft: -2 }]}> Touch ID </Text>

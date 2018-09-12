@@ -28,11 +28,11 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
-      return messages.snd_title_error_psw
+      return messages.general_error_popup_text_password_incorrect
     case 'EOS System Error':
       return messages.snd_title_error_eossystem
     default:
-      return messages.snd_txtbox_tras_err
+      return messages.send_error_popup_text_send_failed
   }
 }
 
@@ -49,17 +49,17 @@ const validate = (values, props) => {
   const errors = {}
 
   if (!values.get('toAccount')) {
-    errors.toAccount = messages[props.locale].snd_txtbox_acc_warning
+    errors.toAccount = messages[props.locale].send_error_text_account_name
   } else if (values.get('toAccount').length > 12) {
-    errors.toAccount = messages[props.locale].snd_txtbox_acc_warning2
+    errors.toAccount = messages[props.locale].send_error_text_account_name_invalid
   }
 
   if (!values.get('quantity')) {
-    errors.quantity = messages[props.locale].snd_txtbox_amn_warning
+    errors.quantity = messages[props.locale].send_error_text_amount
   } else if (!!values.get('quantity') && values.get('quantity') <= 0) {
-    errors.quantity = messages[props.locale].snd_txtbox_amn_warning2
+    errors.quantity = messages[props.locale].send_error_text_amount_invalid
   } else if (balance && +values.get('quantity') > +balance) {
-    errors.quantity = messages[props.locale].snd_txtbox_bls_warning
+    errors.quantity = messages[props.locale].send_error_text_balance_insufficient
   }
 
   return errors
@@ -69,7 +69,7 @@ const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject)
   props.actions.validateEOSAccountRequested({
     field: 'toAccount',
     value: props.toAccount,
-    errorMessage: messages[props.locale].snd_title_error_invact,
+    errorMessage: messages[props.locale].send_error_popup_text_account_not_exist,
     resolve,
     reject
   })
@@ -181,27 +181,27 @@ export default class TransferAssetsForm extends Component {
       <IntlProvider messages={messages[locale]}>
         <FormContainer>
           <Field
-            label={messages[locale].snd_title_name_accnm}
+            label={messages[locale].send_label_account_name}
             name="toAccount"
             component={TextField}
             rightContent={<ContactIcon onPress={this.getContactInfo} />}
             normalize={normalizeEOSAccountName}
           />
           <Field
-            label={messages[locale].snd_title_name_amt}
+            label={messages[locale].send_label_amount}
             name="quantity"
             component={TextField}
             rightContent={<CurrencyUnit quantity={+quantity * +price} />}
             keyboardType="numeric"
             normalize={normalizeUnitByFraction(4)}
-            info={balance && <Text style={styles.balance}>{messages[locale].snd_title_name_bln} {balance} {symbol}</Text>}
+            info={balance && <Text style={styles.balance}>{messages[locale].send_label_balance} {balance} {symbol}</Text>}
           />
           <Field
             name="memo"
-            placeholder={messages[locale].snd_txtbox_txt_rmk}
+            placeholder={messages[locale].send_text_memo}
             component={TextAreaField}
           />
-          <SubmitButton disabled={disabled} onPress={handleSubmit(this.showModal)} text={messages[locale].snd_button_name_nxt} />
+          <SubmitButton disabled={disabled} onPress={handleSubmit(this.showModal)} text={messages[locale].send_button_send} />
           <Alert message={errorMessages(error, messages[locale])} subMessage={errorMessageDetail(error)} dismiss={this.props.actions.clearTransferError} delay={500} />
           <TransferCard
             isVisible={showModal}

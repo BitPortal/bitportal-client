@@ -70,9 +70,9 @@ export default class NodeSettings extends Component {
     this.setState({ isVisible: false }, () => {
       InteractionManager.runAfterInteractions(() => {
         if (!validateUrl(text)) {
-          this.setState({ alertMessage: messages[this.props.locale].ndst_button_name_errnd })
+          this.setState({ alertMessage: messages[this.props.locale].settings_node_error_popup_text_node_invalid })
         } else if (eosNodes.findIndex(item => item.get('url') === text) !== -1) {
-          this.setState({ alertMessage: messages[this.props.locale].ndst_button_name_dplnd })
+          this.setState({ alertMessage: messages[this.props.locale].settings_node_error_popup_text_node_exist })
         } else if (text) {
           this.props.actions.addCustomNode({ url: text })
         }
@@ -117,7 +117,7 @@ export default class NodeSettings extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale].ndst_title_name_nodesettings}
+            title={messages[locale].settings_button_node}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={this.goBack} />}
           />
           <View style={styles.scrollContainer}>
@@ -126,7 +126,7 @@ export default class NodeSettings extends Component {
               enableEmptySections={true}
               showsVerticalScrollIndicator={false}
               sections={[
-                { title: messages[locale].ndst_label_default_node, data: defaultNodes.toJS() },
+                { title: messages[locale].settings_node_label_default_node, data: defaultNodes.toJS() },
                 { title: messages[locale].ndst_label_custom_node, data: customNodes.toJS() }
               ]}
               renderItem={this.renderItem}
@@ -137,16 +137,16 @@ export default class NodeSettings extends Component {
           <View style={[styles.btnContainer, styles.center]}>
             <TouchableOpacity style={[styles.center, styles.btn]} onPress={this.openPrompt}>
               <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>
-                <FormattedMessage id="ndst_button_name_add" />
+                <FormattedMessage id="settings_node_button_add_node" />
               </Text>
             </TouchableOpacity>
           </View>
           <Alert message={this.state.alertMessage} dismiss={this.closeAlert} />
           <Prompt
             isVisible={this.state.isVisible}
-            title={messages[locale].ndst_title_popup_addNode}
-            negativeText={messages[locale].ndst_setting_popup_can}
-            positiveText={messages[locale].ndst_setting_popup_ent}
+            title={messages[locale].settings_node_popup_label_node}
+            negativeText={messages[locale].settings_node_popup_button_cancel}
+            positiveText={messages[locale].settings_node_popup_button_confirm}
             callback={this.handleConfirm}
             dismiss={this.closePrompt}
             type="plain-text"

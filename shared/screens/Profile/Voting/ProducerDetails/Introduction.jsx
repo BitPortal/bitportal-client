@@ -34,7 +34,7 @@ export default class Introduction extends Component {
           <TouchableHighlight underlayColor={Colors.hoverColor} onPress={this.hidden} style={styles.introTitle}>
             <View style={[styles.introTitle, styles.between, { paddingHorizontal: 32 }]}>
               <Text style={[styles.text16, { color: Colors.textColor_89_185_226 }]}>
-                <FormattedMessage id="prod_sec_name_intro" />
+                <FormattedMessage id="bp_info_label_team_intro" />
               </Text>
               {
                 folded

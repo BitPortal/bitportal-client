@@ -48,7 +48,7 @@ export default class About extends Component {
           component: {
             name: 'BitPortal.BPWebView',
             passProps: {
-              title: messages[locale].abt_sec_title_tou,
+              title: messages[locale].about_us_button_tos,
               uri: BITPORTAL_API_TERMS_URL
             }
           }
@@ -59,7 +59,7 @@ export default class About extends Component {
           component: {
             name: 'BitPortal.BPWebView',
             passProps: {
-              title: messages[locale].abt_sec_title_update,
+              title: messages[locale].about_us_button_update_log,
               uri: BITPORTAL_API_UPDATE_LOG_URL
             }
           }
@@ -121,7 +121,7 @@ export default class About extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale].abt_title_name_about}
+            title={messages[locale].profile_button_about_us}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
@@ -134,28 +134,28 @@ export default class About extends Component {
                   <Image style={styles.image} source={Images.about_logo} resizeMode="contain" />
                 </View>
                 <Text style={[styles.text12, { marginTop: 10 }]}>
-                  <FormattedMessage id="abt_subttl_txt_version" />
+                  <FormattedMessage id="profile_text_version" />
                     : {VersionNumber.appVersion}
                 </Text>
                 <Text multiline={true} style={[styles.text14, { marginTop: 20 }]}>
-                  <FormattedMessage id="abt_describe_txt_des" />
+                  <FormattedMessage id="about_us_text_bitportal" />
                 </Text>
               </View>
               <SettingItem
                 extraStyle={{ marginTop: 10 }}
                 onPress={() => this.changePage('TermsOfService')}
-                leftItemTitle={<FormattedMessage id="abt_sec_title_tou" />}
+                leftItemTitle={<FormattedMessage id="about_us_button_tos" />}
               />
               <SettingItem
-                leftItemTitle={<FormattedMessage id="abt_sec_title_update" />}
+                leftItemTitle={<FormattedMessage id="about_us_button_update_log" />}
                 onPress={() => this.changePage('UpdateLogs')}
               />
               <SettingItem
-                leftItemTitle={<FormattedMessage id="abt_sec_title_check" />}
+                leftItemTitle={<FormattedMessage id="about_us_button_update_check" />}
                 onPress={this.getVersionInfo}
               />
               <SettingItem
-                leftItemTitle={<FormattedMessage id="abt_sec_title_guide" />}
+                leftItemTitle={<FormattedMessage id="about_us_button_product_intro" />}
                 onPress={this.goCheckGuide}
               />
             </ScrollView>

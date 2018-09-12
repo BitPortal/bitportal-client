@@ -100,7 +100,7 @@ export default class DappElement extends Component {
             <Image style={styles.icon} source={Images.discovery_more} />
           </View>
         </TouchableOpacity>
-        <Text style={[styles.title]}>{messages[locale].more_apps}</Text>
+        <Text style={[styles.title]}>{messages[locale].discovery_label_dapp_more}</Text>
       </View>
     ) : (
       <IntlProvider locale={locale}>

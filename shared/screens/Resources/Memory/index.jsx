@@ -75,7 +75,7 @@ export default class Memory extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale].memory_title_name_memory}
+            title={messages[locale].resource_label_ram}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
@@ -86,14 +86,14 @@ export default class Memory extends Component {
               <View style={styles.progressContaner}>
                 <Progress percent={ramAvailablePercent} colors={Colors.ramColor} />
                 <View style={[styles.totalContainer, styles.between]}>
-                  <Text style={styles.text14}><FormattedMessage id="memory_title_name_total" /></Text>
+                  <Text style={styles.text14}><FormattedMessage id="resource_label_available_total" /></Text>
                   <Text style={styles.text14}>
                     {formatMemorySize(ramAvailable)}
                     /{formatMemorySize(ramQuota)}
                   </Text>
                 </View>
                 <View style={[styles.totalContainer, styles.between, { marginTop: 0 }]}>
-                  <Text style={styles.text14}><FormattedMessage id="memory_title_name_ramprice" /></Text>
+                  <Text style={styles.text14}><FormattedMessage id="resource_ram_label_price" /></Text>
                   <Text onPress={this.checkRamPrice} style={styles.text14}>
                     <Text style={{ color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }}>
                       <FormattedNumber
@@ -108,10 +108,10 @@ export default class Memory extends Component {
               </View>
               <TradeRAMForm />
               <View style={styles.tipsContainer}>
-                <Text style={styles.text16}><FormattedMessage id="memory_title_name_tips" /></Text>
-                <Text style={[styles.text14, { marginTop: 15 }]}><FormattedMessage id="memory_title_name_tip1" /></Text>
-                <Text style={[styles.text14, { marginTop: 10 }]}><FormattedMessage id="memory_title_name_tip2" /></Text>
-                <Text style={[styles.text14, { marginTop: 10 }]}><FormattedMessage id="memory_title_name_tip3" /></Text>
+                <Text style={styles.text16}><FormattedMessage id="resource_label_tips" /></Text>
+                <Text style={[styles.text14, { marginTop: 15 }]}><FormattedMessage id="resource_ram_text_tips_1" /></Text>
+                <Text style={[styles.text14, { marginTop: 10 }]}><FormattedMessage id="resource_ram_text_tips_2" /></Text>
+                <Text style={[styles.text14, { marginTop: 10 }]}><FormattedMessage id="resource_ram_text_tips_3" /></Text>
               </View>
             </ScrollView>
           </View>

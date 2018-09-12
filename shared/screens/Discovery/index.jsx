@@ -143,7 +143,7 @@ export default class Discovery extends Component {
         <View style={styles.container}>
           <NavigationBar
             leftButton={
-              <CommonTitle title={messages[locale].discovery_title_name_dsc} />
+              <CommonTitle title={messages[locale].discovery_title_discovery} />
             }
           />
           <ScrollView>

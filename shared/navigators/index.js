@@ -166,7 +166,7 @@ export const startTabBasedApp = (locale) => {
               ],
               options: {
                 bottomTab: {
-                  text: messages[locale].general_tab_name_ast,
+                  text: messages[locale].general_nav_assets,
                   textColor: 'gray',
                   selectedTextColor: Colors.textColor_89_185_226,
                   icon: Images.asset,
@@ -197,7 +197,7 @@ export const startTabBasedApp = (locale) => {
               ],
               options: {
                 bottomTab: {
-                  text: messages[locale].general_tab_name_mkt,
+                  text: messages[locale].general_nav_market,
                   textColor: 'gray',
                   selectedTextColor: Colors.textColor_89_185_226,
                   icon: Images.market,
@@ -228,7 +228,7 @@ export const startTabBasedApp = (locale) => {
               ],
               options: {
                 bottomTab: {
-                  text: messages[locale].general_tab_name_dscv,
+                  text: messages[locale].general_nav_discovery,
                   textColor: 'gray',
                   selectedTextColor: Colors.textColor_89_185_226,
                   icon: Images.discovery,
@@ -259,7 +259,7 @@ export const startTabBasedApp = (locale) => {
               ],
               options: {
                 bottomTab: {
-                  text: messages[locale].general_tab_name_prf,
+                  text: messages[locale].general_nav_profile,
                   textColor: 'gray',
                   selectedTextColor: Colors.textColor_89_185_226,
                   icon: Images.profile,

@@ -35,7 +35,7 @@ export default class ExportKeystore extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale].expks_title_name_expks}
+            title={messages[locale].export_button_keystore}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <ScrollableTabView
@@ -51,8 +51,8 @@ export default class ExportKeystore extends Component {
               />
             )}
           >
-            <Keystore tabLabel={`${messages[locale].expks_tab_title_keystore}`} />
-            <QRCode tabLabel={`${messages[locale].expks_tab_title_QRC}`} />
+            <Keystore tabLabel={`${messages[locale].export_keystore_tab_keystore}`} />
+            <QRCode tabLabel={`${messages[locale].export_keystore_tab_qr_code}`} />
           </ScrollableTabView>
         </View>
       </IntlProvider>

@@ -24,9 +24,9 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
-      return messages.act_export_popup_ivps
+      return messages.general_error_popup_text_password_incorrect
     default:
-      return messages.act_export_popup_faex
+      return messages.export_private_key_error_popup_text_failed
   }
 }
 
@@ -121,7 +121,7 @@ export default class AccountList extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale].act_card_title_nav}
+            title={messages[locale].profile_button_wallet_mgmt}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
@@ -130,16 +130,16 @@ export default class AccountList extends Component {
               contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }}
             >
               <SettingItem
-                leftItemTitle={<FormattedMessage id="act_sec_title_export" />}
+                leftItemTitle={<FormattedMessage id="wallet_mgmt_button_export_private_key" />}
                 onPress={this.showExportPrompt}
                 extraStyle={{ marginTop: 10 }}
               />
               <SettingItem
-                leftItemTitle={<FormattedMessage id="act_sec_title_change" />}
+                leftItemTitle={<FormattedMessage id="wallet_mgmt_button_change_password" />}
                 onPress={this.resetPassword}
               />
               <SettingItem
-                leftItemTitle={<FormattedMessage id="act_sec_title_logout" />}
+                leftItemTitle={<FormattedMessage id="wallet_mgmt_button_sign_out" />}
                 rightItemTitle=" "
                 onPress={this.showLogoutPrompt}
                 extraStyle={{ marginTop: 10, alignItems: 'center', justifyContent: 'center' }}
@@ -149,27 +149,27 @@ export default class AccountList extends Component {
               <Alert message={errorMessages(logoutError, messages[locale])} dismiss={this.props.actions.clearLogoutError} delay={500} />
               <Prompt
                 isVisible={this.state.showExportPrompt}
-                title={messages[locale].act_export_popup_name}
-                negativeText={messages[locale].act_export_popup_can}
-                positiveText={messages[locale].act_export_popup_ent}
+                title={messages[locale].general_popup_label_password}
+                negativeText={messages[locale].general_popup_button_cancel}
+                positiveText={messages[locale].general_popup_button_confirm}
                 type="secure-text"
                 callback={this.exportAccount}
                 dismiss={this.dismissExportPrompt}
               />
               <Prompt
                 isVisible={this.state.showLogoutPrompt}
-                title={messages[locale].act_export_popup_name}
-                message={messages[locale].logout_popup_warning}
-                negativeText={messages[locale].act_export_popup_can}
-                positiveText={messages[locale].act_export_popup_ent}
+                title={messages[locale].general_popup_label_password}
+                message={messages[locale].logout_text_warning}
+                negativeText={messages[locale].general_popup_button_cancel}
+                positiveText={messages[locale].general_popup_button_confirm}
                 type="secure-text"
                 callback={this.logout}
                 dismiss={this.dismissLogoutPrompt}
               />
             </ScrollView>
           </View>
-          <Loading isVisible={exporting} text={messages[locale].logout_popup_exporting} />
-          <Loading isVisible={loggingOut} text={messages[locale].logout_popup_deleting} />
+          <Loading isVisible={exporting} text={messages[locale].export_private_key_text_exporting} />
+          <Loading isVisible={loggingOut} text={messages[locale].logout_text_logging_out} />
         </View>
       </IntlProvider>
     )

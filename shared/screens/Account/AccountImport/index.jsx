@@ -37,7 +37,7 @@ export default class AccountImport extends Component {
         <View style={styles.container}>
           <NavigationBar
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
-            title={messages[locale].import_title_name_impt}
+            title={messages[locale].add_eos_import_title_import}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ backgroundColor: Colors.bgColor_30_31_37 }}>

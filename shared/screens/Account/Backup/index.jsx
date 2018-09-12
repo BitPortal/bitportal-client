@@ -21,9 +21,9 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
-      return messages.act_export_popup_ivps
+      return messages.general_error_popup_text_password_incorrect
     default:
-      return messages.act_export_popup_faex
+      return messages.export_private_key_error_popup_text_failed
   }
 }
 
@@ -85,7 +85,7 @@ export default class Backup extends Component {
       <View style={styles.container}>
         <NavigationBar
           leftButton={<CommonButton iconName="md-arrow-back" onPress={this.skip} />}
-          title={messages[locale].bcup_sec_title_nav}
+          title={messages[locale].add_create_success_title_backup}
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
@@ -94,11 +94,11 @@ export default class Backup extends Component {
                 <Image source={images.backup_group} style={styles.image} />
               </View>
               <Text style={styles.text14}>
-                {messages[locale].bcup_sec_title_backup}
+                {messages[locale].add_create_success_label_backup_private_key}
               </Text>
               <View style={{ marginTop: 20 }}>
                 <Text style={[styles.text14, { color: Colors.textColor_181_181_181 }]}>
-                  {messages[locale].bcup_sec_tips_backup}
+                  {messages[locale].add_create_success_text_backup_private_key}
                 </Text>
               </View>
               <TouchableHighlight
@@ -108,7 +108,7 @@ export default class Backup extends Component {
               >
                 <LinearGradientContainer type="right" style={[[styles.btn, styles.center]]}>
                   <Text style={styles.text14}>
-                    {messages[locale].bcup_button_title_backup}
+                    {messages[locale].add_create_success_button_start_backup}
                   </Text>
                 </LinearGradientContainer>
               </TouchableHighlight>
@@ -117,12 +117,12 @@ export default class Backup extends Component {
                 style={[styles.btn, styles.center, { marginTop: 10 }]}
               >
                 <Text style={[styles.text14, { color: Colors.textColor_89_185_226 }]}>
-                  {messages[locale].bcup_button_title_skip}
+                  {messages[locale].add_create_success_button_skip_backup}
                 </Text>
               </TouchableOpacity>
             </View>
           </ScrollView>
-          <Loading isVisible={exporting} text={messages[locale].logout_popup_exporting} />
+          <Loading isVisible={exporting} text={messages[locale].export_private_key_text_exporting} />
           <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearKeystoreError} delay={500} />
           <Prompt
             isVisible={this.state.isVisible}

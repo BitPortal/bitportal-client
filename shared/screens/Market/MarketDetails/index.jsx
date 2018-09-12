@@ -121,7 +121,7 @@ export default class MarketDetails extends Component {
           ]}
         >
           <ButtonElement
-            Title={messages[locale].token_details}
+            Title={messages[locale].market_token_detail_button_detail}
             onPress={() => this.changeRoute('TokenDetails')}
           />
         </View>

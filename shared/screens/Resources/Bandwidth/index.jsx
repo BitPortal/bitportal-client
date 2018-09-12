@@ -45,7 +45,7 @@ export default class Memory extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale].bdwidth_title_name_bandwidth}
+            title={messages[locale].resource_label_net}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
@@ -56,14 +56,14 @@ export default class Memory extends Component {
               <View style={styles.progressContaner}>
                 <Progress percent={percent} />
                 <View style={[styles.totalContainer, styles.between]}>
-                  <Text style={styles.text14}><FormattedMessage id="bdwidth_title_name_total" /></Text>
+                  <Text style={styles.text14}><FormattedMessage id="resource_label_available_total" /></Text>
                   <Text style={styles.text14}>
                     {formatMemorySize(activeEOSAccount.getIn(['net_limit', 'available']))}
                     /{formatMemorySize(activeEOSAccount.getIn(['net_limit', 'max']))}
                   </Text>
                 </View>
                 <View style={[styles.totalContainer, styles.between, { marginTop: 0 }]}>
-                  <Text style={styles.text14}><FormattedMessage id="bdwidth_title_name_unstaking" /></Text>
+                  <Text style={styles.text14}><FormattedMessage id="resource_label_unstaking" /></Text>
                   <Text style={styles.text14}>
                     {refund}
                   </Text>
@@ -71,9 +71,9 @@ export default class Memory extends Component {
               </View>
               <DelegateBandwidthForm resource="net" />
               <View style={styles.tipsContainer}>
-                <Text style={styles.text16}><FormattedMessage id="bdwidth_title_name_tips" /></Text>
-                <Text style={[styles.text14, { marginTop: 15 }]}><FormattedMessage id="bdwidth_title_name_tip1" /></Text>
-                <Text style={[styles.text14, { marginTop: 10 }]}><FormattedMessage id="bdwidth_title_name_tip2" /></Text>
+                <Text style={styles.text16}><FormattedMessage id="resource_label_tips" /></Text>
+                <Text style={[styles.text14, { marginTop: 15 }]}><FormattedMessage id="resource_net_text_tips_1" /></Text>
+                <Text style={[styles.text14, { marginTop: 10 }]}><FormattedMessage id="resource_net_text_tips_2" /></Text>
               </View>
             </ScrollView>
           </View>

@@ -87,7 +87,7 @@ export class HeaderTitle extends Component {
           {/* <TouchableOpacity> */}
           <View style={[styles.coin, styles.center, { height: 25 }]}>
             <Text style={[[styles.text14]]}>
-              {messages.market_title_name_mrtc}
+              {messages.market_label_market_cap}
               {'  '}
             </Text>
             {/* <View style={{ flexDirection: 'column' }}>
@@ -125,7 +125,7 @@ export class HeaderTitle extends Component {
               ]}
             >
               <Text style={[styles.text14, {}]}>
-                {messages.market_title_name_price}
+                {messages.market_label_price}
                 {'  '}
               </Text>
               <View style={{ flexDirection: 'column' }}>
@@ -171,7 +171,7 @@ export class HeaderTitle extends Component {
               ]}
             >
               <Text style={[styles.text14]}>
-                {messages.market_title_name_change}
+                {messages.market_label_change}
                 {'  '}
               </Text>
               <View style={{ flexDirection: 'column' }}>

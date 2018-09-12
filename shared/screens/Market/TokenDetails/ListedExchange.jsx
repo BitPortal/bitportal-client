@@ -22,7 +22,7 @@ export default class ListedExchange extends Component {
   render() {
     const { data, loading, locale } = this.props
     return (
-      <AccordionPanel title={messages[locale].listed_exchange}>
+      <AccordionPanel title={messages[locale].market_token_detail_label_listed_exchange}>
         <View
           style={{
             paddingHorizontal: 25,

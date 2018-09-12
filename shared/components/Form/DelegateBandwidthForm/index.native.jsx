@@ -33,15 +33,15 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
-      return messages.dlgt_popup_title_pwderr
+      return messages.general_error_popup_text_password_incorrect
     case 'account using more than allotted RAM usage':
-      return messages.dlgt_popup_title_mousg
+      return messages.resource_error_popup_text_ram_insufficient
     case 'transaction exceeded the current CPU usage limit imposed on the transaction':
-      return messages.dlgt_popup_title_exlimit
+      return messages.resource_error_popup_text_cpu_insufficient
     case 'EOS System Error':
       return messages.dlgt_popup_title_eossystem
     default:
-      return messages.dlgt_popup_title_trafail
+      return messages.resource_error_popup_text_transaction_failed
   }
 }
 
@@ -59,9 +59,9 @@ const validate = (values, props) => {
   const errors = {}
 
   if (!+values.get('quant')) {
-    errors.quant = messages[props.locale].dlgt_popup_title_epteosinput
+    errors.quant = messages[props.locale].resource_error_text_amount
   } else if (!validateUnitByCurrency('EOS')(values.get('quant'))){
-    errors.quant = messages[props.locale].dlgt_popup_title_invalideinput
+    errors.quant = messages[props.locale].resource_error_text_amount_invalid
   }
 
   const activeForm = props.bandwidth.get('activeForm')
@@ -69,14 +69,14 @@ const validate = (values, props) => {
 
   if (activeForm === 'Delegate') {
     if (+eosBalance < +values.get('quant')) {
-      errors.quant = messages[props.locale].dlgt_popup_title_enbyteinput
+      errors.quant = messages[props.locale].resource_error_text_balance_insufficient
     }
   } else if (resource === 'net') {
     if (+netWeight < +values.get('quant')) {
-      errors.quant = messages[props.locale].dlgt_popup_title_enbyteinput
+      errors.quant = messages[props.locale].resource_error_text_balance_insufficient
     }
   } else if (+cpuWeight < +values.get('quant')) {
-    errors.quant = messages[props.locale].dlgt_popup_title_enbyteinput
+    errors.quant = messages[props.locale].resource_error_text_balance_insufficient
   }
 
   return errors
@@ -147,7 +147,7 @@ export default class DelegateBandwidthForm extends Component {
     const netWeight = eosAccount.getIn(['data', 'total_resources', 'net_weight']) ? eosAccount.getIn(['data', 'total_resources', 'net_weight']).split(' ')[0] : 0
     const cpuWeight = eosAccount.getIn(['data', 'total_resources', 'cpu_weight']) ? eosAccount.getIn(['data', 'total_resources', 'cpu_weight']).split(' ')[0] : 0
     const availableBalance = this.state.activeForm === 'Delegate' ? eosBalance : (this.props.resource === 'net' ? netWeight : cpuWeight)
-    const balanceTitle = this.state.activeForm === 'Delegate' ? messages[locale].tra_popup_title_baln : messages[locale].tra_popup_title_stked
+    const balanceTitle = this.state.activeForm === 'Delegate' ? messages[locale].resource_label_balance : messages[locale].resource_label_staked
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -165,15 +165,15 @@ export default class DelegateBandwidthForm extends Component {
             <SubmitButton
               disabled={disabled}
               onPress={handleSubmit(this.submit)}
-              text={this.state.activeForm === 'Delegate' ? messages[locale].dlgt_popup_title_dlgt : messages[locale].dlgt_popup_title_undlgt}
+              text={this.state.activeForm === 'Delegate' ? messages[locale].resource_button_stake : messages[locale].resource_button_unstake}
             />
             <Alert message={errorMessages(error, messages[locale])} subMessage={errorMessageDetail(error)} dismiss={this.props.actions.clearBandwidthError} />
-            <Alert message={!!showSuccess && messages[locale].dlgt_popup_title_trasucc} dismiss={this.props.actions.hideSuccessModal} />
+            <Alert message={!!showSuccess && messages[locale].resource_popup_text_transaction_successful} dismiss={this.props.actions.hideSuccessModal} />
             <Prompt
               isVisible={this.state.isVisible}
-              title={messages[locale].dlgt_popup_title_pwd}
-              negativeText={messages[locale].dlgt_popup_buttom_can}
-              positiveText={messages[locale].dlgt_popup_buttom_ent}
+              title={messages[locale].general_popup_label_password}
+              negativeText={messages[locale].general_popup_button_cancel}
+              positiveText={messages[locale].general_popup_button_confirm}
               type="secure-text"
               callback={this.handleConfirm}
               dismiss={this.closePrompt}

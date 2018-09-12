@@ -40,8 +40,8 @@ class ListItem extends Component {
                 {!!weight
                   && <LinearGradientContainer type="right" colors={graColor} style={[styles.center, styles.flag]}>
                     <Text numberOfLines={1} style={[styles.text12, { marginHorizontal: 8, color: Colors.textColor_255_255_238 }]}>
-                      {weight === 1 && <FormattedMessage id="vt_sec_tag_cprt" />}
-                      {weight >= 2 && <FormattedMessage id="vt_sec_tag_prmt" />}
+                      {weight === 1 && <FormattedMessage id="voting_label_cooperation" />}
+                      {weight >= 2 && <FormattedMessage id="voting_label_promotion" />}
                     </Text>
                   </LinearGradientContainer>
                 }

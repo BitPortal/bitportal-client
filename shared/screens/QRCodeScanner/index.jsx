@@ -102,9 +102,9 @@ export default class Scanner extends Component {
           this.setState({ isVisible: false })
           if (error) {
             Dialog.alert(
-              messages[this.props.locale].scan_popup_text_invalid_image,
+              messages[this.props.locale].scan_error_popup_text_unidentified_image,
               null,
-              { positiveText: messages[this.props.locale].asset_alert_button_ent })
+              { positiveText: messages[this.props.locale].general_popup_button_close })
           } else this.onSuccess({ data: result })
         })
       })
@@ -118,11 +118,11 @@ export default class Scanner extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale].qrscn_title_name_qrscanner}
+            title={messages[locale].scan_title_scan}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
             rightButton={
               <CommonButton
-                title={messages[locale].qrscn_button_name_photos}
+                title={messages[locale].scan_button_album}
                 onPress={this.getImageFromPhoto}
                 extraTextStyle={{ fontSize: FontScale(18), color: Colors.textColor_255_255_238 }}
               />

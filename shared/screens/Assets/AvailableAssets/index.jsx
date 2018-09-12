@@ -117,7 +117,7 @@ export default class AvailableAssets extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale].astlist_title_name_astlst}
+            title={messages[locale].assets_list_title_token_list}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
             rightButton={<CommonButton iconName="md-search" onPress={this.goSearching} />}
           />

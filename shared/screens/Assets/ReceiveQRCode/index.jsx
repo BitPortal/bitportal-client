@@ -40,7 +40,7 @@ export default class ReceiveQRCode extends Component {
   copyQrcodeValue = () => {
     if (!this.state.isCopied) {
       Clipboard.setString(this.props.eosAccount.get('data').get('account_name'))
-      this.setState({ isCopied: true }, () => { Toast(messages[this.props.locale].rcv_qrcode_bottom_copied) })
+      this.setState({ isCopied: true }, () => { Toast(messages[this.props.locale].copy_text_copy_success) })
       this.startTimer()
     }
   }
@@ -74,7 +74,7 @@ export default class ReceiveQRCode extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale].rcv_nav_title_name}
+            title={messages[locale].receive_title_receive}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
             rightButton={<CommonRightButton iconName="md-share" onPress={() => this.shareQrcodeContent()} />}
           />
@@ -94,14 +94,14 @@ export default class ReceiveQRCode extends Component {
                 <Text onPress={this.copyQrcodeValue} style={[styles.text14, { color: isCopied ? Colors.textColor_181_181_181 : Colors.textColor_89_185_226 }]}>
                   {
                     isCopied
-                      ? <FormattedMessage id="rcv_qrcode_bottom_copied" />
-                      : <FormattedMessage id="rcv_qrcode_bottom_copy" />
+                      ? <FormattedMessage id="copy_text_copy_success" />
+                      : <FormattedMessage id="copy_button_copy" />
                   }
                 </Text>
               </View>
               <View style={[styles.inputContainer, styles.between]}>
                 <Text style={styles.text14}>
-                  <FormattedMessage id="rcv_input_left_tips" />
+                  <FormattedMessage id="receive_label_receive_amount" />
                 </Text>
                 <TextInput
                   autoCorrect={false}
@@ -110,7 +110,7 @@ export default class ReceiveQRCode extends Component {
                   keyboardType="numeric"
                   selectionColor={Colors.textColor_89_185_226}
                   keyboardAppearance={Colors.keyboardTheme}
-                  placeholder={messages[locale].rcv_input_content_tips}
+                  placeholder={messages[locale].receive_text_receive_amount}
                   placeholderTextColor={Colors.textColor_149_149_149}
                   onChangeText={e => this.onChangeText(e)}
                   value={this.state.value}

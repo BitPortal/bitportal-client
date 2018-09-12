@@ -48,7 +48,7 @@ export default class ExportEntrance extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale].export_title_name_export}
+            title={messages[locale].export_title_export}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
@@ -56,8 +56,8 @@ export default class ExportEntrance extends Component {
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }}
             >
-              <SettingItem leftItemTitle={<FormattedMessage id="exp_sec_title_expks" />} onPress={() => this.exportKeystore()} extraStyle={{ marginTop: 10 }} />
-              <SettingItem leftItemTitle={<FormattedMessage id="exp_sec_title_expvk" />} onPress={() => this.exportPrivateKey()} />
+              <SettingItem leftItemTitle={<FormattedMessage id="export_button_keystore" />} onPress={() => this.exportKeystore()} extraStyle={{ marginTop: 10 }} />
+              <SettingItem leftItemTitle={<FormattedMessage id="export_button_private_key" />} onPress={() => this.exportPrivateKey()} />
             </ScrollView>
           </View>
         </View>

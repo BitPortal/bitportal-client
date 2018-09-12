@@ -85,7 +85,7 @@ export default class MarketList extends Component {
         <View>
           <View style={styles.marketElementContainer}>
             <Text style={styles.headerText}>
-              <FormattedMessage id="listed_exchange" />
+              <FormattedMessage id="market_token_detail_label_listed_exchange" />
             </Text>
           </View>
           {loading ? (

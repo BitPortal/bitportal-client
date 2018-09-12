@@ -45,10 +45,10 @@ export default class Switch extends Component {
   render () {
     const { itemList, active, onSwitch, locale } = this.props
     const transactions = {
-      Buy: messages[locale].switch_popup_title_buy,
-      Sell: messages[locale].switch_popup_title_sell,
-      Delegate: messages[locale].switch_popup_title_dlgt,
-      Undelegate: messages[locale].switch_popup_title_undlgt
+      Buy: messages[locale].resource_ram_button_buy,
+      Sell: messages[locale].resource_ram_button_sell,
+      Delegate: messages[locale].resource_button_stake,
+      Undelegate: messages[locale].resource_button_unstake
     }
     return (
       <IntlProvider messages={messages[locale]}>

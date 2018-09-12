@@ -36,24 +36,24 @@ export default class Keystore extends Component {
             <View style={styles.content}>
 
               <Text style={[styles.text16, { marginLeft: -1 }]}>
-                <FormattedMessage id="expks_hint_title_point1" />
+                <FormattedMessage id="export_keystore_label_note1" />
               </Text>
               <Text style={[styles.text14, { marginTop: 15 }]} multiline={true}>
-                <FormattedMessage id="expks_hint_txt_point1" />
+                <FormattedMessage id="export_keystore_text_note1" />
               </Text>
 
               <Text style={[styles.text16, { marginTop: 15, marginLeft: -1 }]}>
-                <FormattedMessage id="expks_hint_title_point2" />
+                <FormattedMessage id="export_keystore_label_note2" />
               </Text>
               <Text style={[styles.text14, { marginTop: 15 }]} multiline={true}>
-                <FormattedMessage id="expks_hint_txt_point2" />
+                <FormattedMessage id="export_keystore_text_note2" />
               </Text>
 
               <Text style={[styles.text16, { marginTop: 15, marginLeft: -1 }]}>
-                <FormattedMessage id="expks_hint_title_point3" />
+                <FormattedMessage id="export_keystore_label_note3" />
               </Text>
               <Text style={[styles.text14, { marginTop: 15, marginBottom: 15 }]} multiline={true}>
-                <FormattedMessage id="expks_hint_txt_point3" />
+                <FormattedMessage id="export_keystore_text_note3" />
               </Text>
 
               <View style={[styles.inputContainer]}>
@@ -79,7 +79,7 @@ export default class Keystore extends Component {
                 }
               >
                 <Text style={styles.text14}>
-                  { isCopied ? <FormattedMessage id="expks_button_name_copied" /> : <FormattedMessage id="expks_button_name_copy" />}
+                  { isCopied ? <FormattedMessage id="copy_text_copy_success" /> : <FormattedMessage id="copy_button_copy" />}
                 </Text>
               </TouchableHighlight>
 

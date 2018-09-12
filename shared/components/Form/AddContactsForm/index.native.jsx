@@ -16,16 +16,16 @@ const validate = (values) => {
 
   if (!values.get('eosAccountName')) {
     errors.eosAccountName = (
-      <FormattedMessage id="contacts_txtbox_txt_acchint2" />
+      <FormattedMessage id="contacts_add_error_text_account_name" />
     )
   } else if (values.get('eosAccountName').length > 12) {
     errors.eosAccountName = (
-      <FormattedMessage id="contacts_txtbox_txt_acchint" />
+      <FormattedMessage id="contacts_add_error_text_account_name_format_incorrect" />
     )
   }
 
   if (values.get('note') && values.get('note').length > 64) {
-    errors.note = <FormattedMessage id="contacts_txtbox_txt_hint" />
+    errors.note = <FormattedMessage id="contacts_add_error_text_contact_remark_max_character" />
   }
 
   return errors
@@ -35,7 +35,7 @@ const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject)
   props.actions.validateEOSAccountRequested({
     field: 'eosAccountName',
     value: props.eosAccountName,
-    errorMessage: messages[props.locale].contacts_txtbox_txt_invalid,
+    errorMessage: messages[props.locale].contacts_add_error_text_account_name_invalid,
     resolve,
     reject
   })
@@ -82,19 +82,19 @@ export default class AddContactsForm extends Component {
       <IntlProvider messages={messages[locale]}>
         <FormContainer>
           <Field
-            label={<FormattedMessage id="contacts_title_name_acc" />}
+            label={<FormattedMessage id="contacts_add_label_account_name" />}
             name="eosAccountName"
             component={TextField}
           />
           <Field
-            label={<FormattedMessage id="contacts_title_name_Note" />}
+            label={<FormattedMessage id="contacts_add_label_contact_remark" />}
             name="note"
             component={TextField}
           />
           <SubmitButton
             disabled={disabled}
             onPress={handleSubmit(this.submit)}
-            text={<FormattedMessage id="contacts_button_name_save" />}
+            text={<FormattedMessage id="contacts_add_button_add" />}
           />
         </FormContainer>
       </IntlProvider>

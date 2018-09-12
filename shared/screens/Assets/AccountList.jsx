@@ -81,7 +81,7 @@ export default class AccountList extends Component {
             <View style={[styles.listContainer, styles.between, { backgroundColor: Colors.minorThemeColor, justifyContent: 'flex-start', paddingHorizontal: 32 }]}>
               <Ionicons name="ios-add-outline" size={26} color={Colors.textColor_89_185_226} />
               <Text style={[styles.text16, { marginLeft: 10, color: Colors.textColor_89_185_226 }]}>
-                <FormattedMessage id="asset_droplist_button_add" />
+                <FormattedMessage id="assets_dropdown_button_create" />
               </Text>
             </View>
           </TouchableHighlight>
