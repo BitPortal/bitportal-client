@@ -9388,9 +9388,9 @@ react-native-version-number@^0.3.3:
   version "0.3.4"
   resolved "https://registry.yarnpkg.com/react-native-version-number/-/react-native-version-number-0.3.4.tgz#4850e1a40ea719ee43092812d0693f9dc3be5f40"
 
-react-native-webview-bridge-updated@^1.0.9:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/react-native-webview-bridge-updated/-/react-native-webview-bridge-updated-1.0.9.tgz#930b4e6444f4a2b5f3151607c6eb6eba8deda08f"
+"react-native-webview-bridge-updated@git+https://github.com/TerenceGe/react-native-webview-bridge.git":
+  version "1.0.10"
+  resolved "git+https://github.com/TerenceGe/react-native-webview-bridge.git#cd75069218bd505e07fec32f3ab641904f66f933"
   dependencies:
     invariant "2.2.0"
     keymirror "0.1.1"
