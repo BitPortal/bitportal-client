@@ -16,6 +16,8 @@ import messages from 'resources/messages'
 export default class AlertModal extends Component {
   UNSAFE_componentWillReceiveProps(nextProps) {
     const delay = this.props.delay || 0
+    const positiveText = this.props.positiveText
+    const negaticeText = this.props.negaticeText 
 
     if (
       (nextProps.message !== this.props.message && nextProps.message)
@@ -28,11 +30,11 @@ export default class AlertModal extends Component {
             nextProps.subMessage,
             [
               {
-                text: messages[this.props.locale].cancel,
+                text: negaticeText || messages[this.props.locale].cancel,
                 onPress: () => this.props.onCancel()
               },
               {
-                text: messages[this.props.locale].ok,
+                text: positiveText || messages[this.props.locale].ok,
                 onPress: () => this.props.dismiss()
               }
             ],
@@ -47,7 +49,7 @@ export default class AlertModal extends Component {
             nextProps.subMessage,
             [
               {
-                text: messages[this.props.locale].ok,
+                text: positiveText || messages[this.props.locale].ok,
                 onPress: () => this.props.dismiss()
               }
             ],
