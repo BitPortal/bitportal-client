@@ -22,6 +22,7 @@ import dApp from './dApp'
 import contact from './contact'
 import eosNode from './eosNode'
 import dappBrowser from './dappBrowser'
+import appInfo from './appInfo'
 
 export default combineReducers({
   form,
@@ -46,5 +47,6 @@ export default combineReducers({
   dApp,
   contact,
   eosNode,
-  dappBrowser
+  dappBrowser,
+  appInfo
 })

@@ -5,7 +5,7 @@ import 'intl/locale-data/jsonp/en.js'
 import 'intl/locale-data/jsonp/zh.js'
 import 'core-js/es6/symbol'
 import 'core-js/fn/symbol/iterator'
-import { StatusBar } from 'react-native'
+import { StatusBar, Platform } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { getInitialLang } from 'selectors/intl'
 import { getInitialContact } from 'selectors/contact'
@@ -13,6 +13,7 @@ import { getInitialCurrency } from 'selectors/currency'
 import { getInitialEOSNode } from 'selectors/eosNode'
 import { getInitialEOSAsset } from 'selectors/eosAsset'
 import { getInitialDapp } from 'selectors/dApp'
+import { getInitialAppInfo } from 'selectors/appInfo'
 import { startSingleApp, startTabBasedApp, registerScreens } from 'navigators'
 import storage from 'utils/storage'
 import Provider from 'components/Provider'
@@ -65,6 +66,7 @@ const runApp = async () => {
   const activeNode = eosNode && eosNode.activeNode
   const customNodes = eosNode && eosNode.customNodes
   const localVersion = VersionNumber.appVersion
+  const platform = Platform.OS
 
   const store = configure({
     intl: getInitialLang(lang),
@@ -72,7 +74,8 @@ const runApp = async () => {
     currency: getInitialCurrency(symbol, rate),
     eosNode: getInitialEOSNode(activeNode, customNodes),
     eosAsset: getInitialEOSAsset(selectedEOSAsset),
-    dApp: getInitialDapp(storedFavoriteDapps)
+    dApp: getInitialDapp(storedFavoriteDapps),
+    appInfo: getInitialAppInfo(platform, localVersion)
   })
 
   registerScreens(store)

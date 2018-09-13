@@ -77,7 +77,7 @@ export default class Home extends Component<Props, State> {
        *   alert(JSON.stringify(error))
        * })*/
 
-      bitportal.getCurrentWallet().then((data: any) => {
+      bitportal.getAppInfo().then((data: any) => {
         alert(JSON.stringify(data))
       }).catch((error: any) => {
         alert(JSON.stringify(error))

@@ -21,6 +21,7 @@ import eosAsset from './eosAsset'
 import dApp from './dApp'
 import contact from './contact'
 import eosNode from './eosNode'
+import appInfo from './appInfo'
 
 export default combineReducers({
   router,
@@ -44,5 +45,6 @@ export default combineReducers({
   eosAsset,
   dApp,
   contact,
-  eosNode
+  eosNode,
+  appInfo
 })

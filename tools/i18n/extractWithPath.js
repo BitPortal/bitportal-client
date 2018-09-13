@@ -20,6 +20,7 @@ const ignoredDir = [
   'shared/core'
 ]
 
+
 const initialMessages = supportedLocales.reduce(
   (messages, locale) => Object.assign(messages, { [locale]: {} }), {}
 )

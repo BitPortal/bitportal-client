@@ -46,6 +46,7 @@ declare interface RootState {
   eosAsset?: any
   dApp?: any
   dappBrowser?: any
+  appInfo?: any
 }
 
 declare interface FetchOptions {

@@ -157,6 +157,15 @@ if (WebViewBridge) {
           reject(error);
         });
       });
+    },
+    getAppInfo: function() {
+      return new Promise(function(resolve, reject) {
+        sendRequest('getAppInfo', {}, function(data) {
+          resolve(data);
+        }, function(error) {
+          reject(error);
+        });
+      });
     }
   };
 

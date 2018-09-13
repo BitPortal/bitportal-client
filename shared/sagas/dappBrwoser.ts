@@ -182,24 +182,38 @@ function* receiveMessage(action: Action<string>) {
 
     switch (messageActionType) {
     case 'getCurrentWallet':
-      const currentWallet = yield select((state: RootState) => currenctWalletSelector(state))
+      {
+        const currentWallet = yield select((state: RootState) => currenctWalletSelector(state))
 
-      if (currentWallet) {
+        if (currentWallet) {
+          yield put(actions.sendMessage({
+            messageId,
+            type: 'actionSucceeded',
+            payload: {
+              data: currentWallet.toJS()
+            }
+          }))
+        } else {
+          yield put(actions.sendMessage({
+            messageId,
+            type: 'actionFailed',
+            payload: {
+              error: {
+                message: 'No wallet in bitportal!'
+              }
+            }
+          }))
+        }
+      }
+      break
+    case 'getAppInfo':
+      {
+        const appInfo = yield select((state: RootState) => state.appInfo)
         yield put(actions.sendMessage({
           messageId,
           type: 'actionSucceeded',
           payload: {
-            data: currentWallet.toJS()
-          }
-        }))
-      } else {
-        yield put(actions.sendMessage({
-          messageId,
-          type: 'actionFailed',
-          payload: {
-            error: {
-              message: 'No wallet in bitportal!'
-            }
+            data: appInfo.toJS()
           }
         }))
       }
