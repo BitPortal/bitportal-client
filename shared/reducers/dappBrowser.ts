@@ -26,5 +26,8 @@ export default handleActions({
     return state.set('pendingMessage', null)
       .set('hasPendingMessage', false)
       .set('resolving', false)
+  },
+  [actions.closeDappBrowser] () {
+    return initialState
   }
 }, initialState)

@@ -161,7 +161,7 @@ export default class DappBrowser extends Component {
     this.setState({ showPrompt: false })
   }
 
-  componentDidMount() {
+  onLoadStart = () => {
     this.props.actions.initDappBrowser(this.webviewbridge)
   }
 
@@ -212,6 +212,7 @@ export default class DappBrowser extends Component {
               nativeConfig={{ props: { backgroundColor: Colors.minorThemeColor, flex: 1 } }}
               onBridgeMessage={this.onBridgeMessage}
               injectedJavaScript={injectScript}
+              onLoadStart={this.onLoadStart}
             />
             <ActionModal
               isVisible={hasPendingMessage && !resolvingMessage}
