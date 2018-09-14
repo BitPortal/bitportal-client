@@ -17,7 +17,7 @@ export default class AlertModal extends Component {
   UNSAFE_componentWillReceiveProps(nextProps) {
     const delay = this.props.delay || 0
     const positiveText = this.props.positiveText
-    const negaticeText = this.props.negaticeText
+    const negativeText = this.props.negativeText
 
     if (
       (nextProps.message !== this.props.message && nextProps.message)
@@ -30,7 +30,7 @@ export default class AlertModal extends Component {
             nextProps.subMessage,
             [
               {
-                text: negaticeText || messages[this.props.locale].cancel,
+                text: negativeText || messages[this.props.locale].cancel,
                 onPress: () => this.props.onCancel()
               },
               {

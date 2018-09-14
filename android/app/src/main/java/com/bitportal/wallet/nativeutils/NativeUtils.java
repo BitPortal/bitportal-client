@@ -1,5 +1,6 @@
 package com.bitportal.wallet.nativeutils;
 
+import android.content.Context;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -8,13 +9,22 @@ import android.os.Build;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.Promise;
+
+import cn.jpush.android.api.JPushInterface;
+
 
 public class NativeUtils extends ReactContextBaseJavaModule {
+
+    private Context context;
 
     public static final String REACT_CLASS = "NativeUtils";
 
     public NativeUtils(ReactApplicationContext reactContext) {
         super(reactContext);
+        this.context=reactContext;
     }
 
     @Override
@@ -38,6 +48,18 @@ public class NativeUtils extends ReactContextBaseJavaModule {
             localIntent.putExtra("com.android.settings.ApplicationPkgName", mActivity.getPackageName());
         }
         mActivity.startActivity(localIntent);
+    }
+
+    @ReactMethod
+    public void getRegistrationID(Promise promise){
+        try {
+            WritableMap map = Arguments.createMap();
+            map.putString("registrationID", JPushInterface.getRegistrationID(context));
+            promise.resolve(map);
+        } catch (Exception e) {
+            promise.reject(e);
+        }
+
     }
 
 }
