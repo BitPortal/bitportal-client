@@ -58,7 +58,7 @@ export default class ExportPrivateKey extends Component {
   clipboard = () => {
     Clipboard.setString(this.props.wifs && this.props.wifs[0] && this.props.wifs[0].wif)
     this.setState({ isCopied: true }, () => {
-      Toast(messages[this.props.locale].copy_text_copy_success + Clipboard.getString())
+      Toast(messages[this.props.locale].copy_text_copy_success)
       this.setTimer()
     })
   }
