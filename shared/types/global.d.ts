@@ -311,6 +311,8 @@ declare module 'core/eos' {
     getInitialAccountInfo: any
     transferEOSAsset: any
     voteEOSProducers: any
+    pushEOSAction: any
+    signEOSData: any
   }
 
   const eos: EOS

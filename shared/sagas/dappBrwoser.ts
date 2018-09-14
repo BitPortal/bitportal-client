@@ -5,7 +5,13 @@ import * as actions from 'actions/dappBrowser'
 import { escapeJSONString, parseMessageId } from 'utils'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
 import { currenctWalletSelector } from 'selectors/wallet'
-import { initEOS, transferEOSAsset, voteEOSProducers } from 'core/eos'
+import {
+  initEOS,
+  transferEOSAsset,
+  voteEOSProducers,
+  pushEOSAction,
+  signEOSData
+} from 'core/eos'
 
 let dappBrowser: any
 
@@ -91,6 +97,70 @@ function* pendVoteEOSProducers(messageActionType: string, payload: any, messageI
   }))
 }
 
+function* pendPushEOSAction(messageActionType: string, payload: any, messageId: string) {
+  const hasPendingMessage = yield select((state: RootState) => state.dappBrowser.get('hasPendingMessage'))
+  if (hasPendingMessage) {
+    const pendingMessageActionType = yield select((state: RootState) => state.dappBrowser.getIn(['pendingMessage', 'type']))
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionFailed',
+      payload: {
+        error: {
+          message: `There's a pending request: ${pendingMessageActionType}`
+        }
+      }
+    }))
+    return
+  }
+
+  const pushActions = payload.actions
+  const blockchain = 'EOS'
+
+  yield put(actions.pendMessage({
+    messageId,
+    payload,
+    type: messageActionType,
+    info: {
+      blockchain,
+      actions: pushActions
+    }
+  }))
+}
+
+function* pendSignEOSData(messageActionType: string, payload: any, messageId: string) {
+  const hasPendingMessage = yield select((state: RootState) => state.dappBrowser.get('hasPendingMessage'))
+  if (hasPendingMessage) {
+    const pendingMessageActionType = yield select((state: RootState) => state.dappBrowser.getIn(['pendingMessage', 'type']))
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionFailed',
+      payload: {
+        error: {
+          message: `There's a pending request: ${pendingMessageActionType}`
+        }
+      }
+    }))
+    return
+  }
+
+  const account = payload.account
+  const publicKey = payload.publicKey
+  const signData = payload.signData
+  const blockchain = 'EOS'
+
+  yield put(actions.pendMessage({
+    messageId,
+    payload,
+    type: messageActionType,
+    info: {
+      account,
+      publicKey,
+      signData,
+      blockchain
+    }
+  }))
+}
+
 function* resolveTransferEOSAsset(password: string, info: any, messageId: string) {
   const fromAccount = info.get('fromAccount')
   const toAccount = info.get('toAccount')
@@ -139,6 +209,48 @@ function* resolveVoteEOSProducers(password: string, info: any, messageId: string
     producers,
     proxy,
     permission
+  })
+  yield put(actions.sendMessage({
+    messageId,
+    type: 'actionSucceeded',
+    payload: {
+      data
+    }
+  }))
+  yield put(actions.clearMessage())
+}
+
+function* resolvePushEOSAction(password: string, info: any, messageId: string) {
+  const pushActions = info.get('actions').toJS()
+  const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
+  const account = yield select((state: RootState) => eosAccountNameSelector(state))
+
+  const data = yield call(pushEOSAction, {
+    account,
+    password,
+    permission,
+    actions: pushActions
+  })
+  yield put(actions.sendMessage({
+    messageId,
+    type: 'actionSucceeded',
+    payload: {
+      data
+    }
+  }))
+  yield put(actions.clearMessage())
+}
+
+function* resolveSignEOSData(password: string, info: any, messageId: string) {
+  const account = info.get('account')
+  const publicKey = info.get('publicKey')
+  const signData = info.get('signData')
+
+  const data = yield call(signEOSData, {
+    account,
+    password,
+    publicKey,
+    signData
   })
   yield put(actions.sendMessage({
     messageId,
@@ -283,6 +395,12 @@ function* receiveMessage(action: Action<string>) {
     case 'voteEOSProducers':
       yield pendVoteEOSProducers(messageActionType, payload, messageId)
       break
+    case 'pushEOSAction':
+      yield pendPushEOSAction(messageActionType, payload, messageId)
+      break
+    case 'signEOSData':
+      yield pendSignEOSData(messageActionType, payload, messageId)
+      break
     default:
       if (messageId) {
         yield put(actions.sendMessage({
@@ -359,6 +477,12 @@ function* resolveMessage(action: Action<any>) {
           break
         case 'voteEOSProducers':
           yield resolveVoteEOSProducers(password, info, messageId)
+          break
+        case 'pushEOSAction':
+          yield resolvePushEOSAction(password, info, messageId)
+          break
+        case 'signEOSData':
+          yield resolveSignEOSData(password, info, messageId)
           break
         default:
           break

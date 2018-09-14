@@ -30,6 +30,8 @@ export default class ActionModal extends Component {
       memo,
       voter,
       producers,
+      actions,
+      signData,
       loading
     } = this.props
 
@@ -110,6 +112,22 @@ export default class ActionModal extends Component {
                   <Text style={[styles.text14, { width: 45 }]}>selected</Text>
                   <Text style={[styles.text14, { marginLeft: 35, color: Colors.textColor_89_185_226 }]}>
                     {producers.map(producer => `${producer} `)}
+                  </Text>
+                </View>
+              </View>}
+              {actions && <View style={[styles.item, styles.between, { marginTop: 10 }]}>
+                <View style={{ alignItems: 'center', flexDirection: 'row' }}>
+                  <Text style={[styles.text14, { width: 45 }]}>actions</Text>
+                  <Text style={[styles.text14, { marginLeft: 35, color: Colors.textColor_89_185_226 }]}>
+                    {JSON.stringify(actions)}
+                  </Text>
+                </View>
+              </View>}
+              {signData && <View style={[styles.item, styles.between, { marginTop: 10 }]}>
+                <View style={{ alignItems: 'center', flexDirection: 'row' }}>
+                  <Text style={[styles.text14, { width: 45 }]}>Sign Data</Text>
+                  <Text style={[styles.text14, { marginLeft: 35, color: Colors.textColor_89_185_226 }]}>
+                    {signData}
                   </Text>
                 </View>
               </View>}

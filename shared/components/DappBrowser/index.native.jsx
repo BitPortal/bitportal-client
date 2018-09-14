@@ -48,6 +48,8 @@ const WebViewLoading = ({ text }) => (
     messageInfoMemo: state.dappBrowser.getIn(['pendingMessage', 'info', 'memo']),
     messageInfoVoter: state.dappBrowser.getIn(['pendingMessage', 'info', 'voter']),
     messageInfoProducers: state.dappBrowser.getIn(['pendingMessage', 'info', 'producers']),
+    messageInfoActions: state.dappBrowser.getIn(['pendingMessage', 'info', 'actions']),
+    messageInfoSignData: state.dappBrowser.getIn(['pendingMessage', 'info', 'signData']),
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -184,7 +186,9 @@ export default class DappBrowser extends Component {
       messageInfoToAccount,
       messageInfoMemo,
       messageInfoVoter,
-      messageInfoProducers
+      messageInfoProducers,
+      messageInfoActions,
+      messageInfoSignData
     } = this.props
     const injectScript = `(function () { ${messageHandler} }())`
 
@@ -225,6 +229,8 @@ export default class DappBrowser extends Component {
               contract={messageInfoContract}
               voter={messageInfoVoter}
               producers={messageInfoProducers}
+              actions={messageInfoActions}
+              signData={messageInfoSignData}
               confirm={this.showPrompt}
             />
             <Prompt
