@@ -103,14 +103,6 @@ const getInitialAccountInfo = (eosAccountName: string, publicKey: string) => (
   }
 )
 
-interface VoteEOSProducersParams {
-  eosAccountName: string
-  password: string
-  permission: string
-  producers: string[]
-  proxy: string
-}
-
 const voteEOSProducers = async ({ eosAccountName, password, permission, producers, proxy }: VoteEOSProducersParams) => {
   assert(eosAccountName, 'No EOS account exist!')
 
@@ -161,18 +153,6 @@ const voteEOSProducers = async ({ eosAccountName, password, permission, producer
   return data
 }
 
-interface TransferEOSAssetParams {
-  fromAccount: string
-  toAccount: string
-  contract: string
-  amount: string
-  symbol: string
-  precision: number
-  memo: string
-  password: string
-  permission: string
-}
-
 const transferEOSAsset = async ({
   fromAccount,
   toAccount,
@@ -197,6 +177,39 @@ const transferEOSAsset = async ({
   return transactionResult
 }
 
+const pushEOSAction = async ({
+  account,
+  actions,
+  password,
+  permission
+}: PushEOSActionParams) => {
+  const _permission = permission || 'ACTIVE'
+  const accountInfo = await secureStorage.getItem(`EOS_ACCOUNT_INFO_${account}`, true)
+  const wifs = await getEOSWifsByInfo(password, accountInfo, [_permission])
+  const keyProvider = wifs.map((item: any) => item.wif)
+  const eos = await initEOS({ keyProvider })
+  const data = await eos.transaction({
+    actions,
+    broadcast: false,
+    sign: true
+  })
+  return data
+}
+
+const signEOSData = async ({
+  account,
+  publicKey,
+  password,
+  signData
+}: SignEOSDataParams) => {
+  const accountInfo = await secureStorage.getItem(`EOS_ACCOUNT_INFO_${account}`, true)
+  const wifs = await getEOSWifsByInfo(password, accountInfo, ['OWNER', 'ACTIVE'])
+  const keyProvider = wifs.filter((item: any) => item.publicKey === publicKey).map((item: any) => item.wif)
+  const wif = keyProvider[0]
+  return ecc.sign(signData, wif)
+}
+
+
 export {
   initEOS,
   getEOS,
@@ -208,5 +221,7 @@ export {
   getPermissionsByKey,
   getInitialAccountInfo,
   voteEOSProducers,
-  transferEOSAsset
+  transferEOSAsset,
+  pushEOSAction,
+  signEOSData
 }

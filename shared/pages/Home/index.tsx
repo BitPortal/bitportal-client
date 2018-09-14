@@ -76,8 +76,38 @@ export default class Home extends Component<Props, State> {
        * }).catch((error: any) => {
        *   alert(JSON.stringify(error))
        * })*/
-
-      bitportal.getAppInfo().then((data: any) => {
+      /* bitportal.getAppInfo().then((data: any) => {
+       *   alert(JSON.stringify(data))
+       * }).catch((error: any) => {
+       *   alert(JSON.stringify(error))
+       * })*/
+      /* bitportal.pushEOSAction({
+       *   actions: [
+       *     {
+       *       account: 'eosio.token',
+       *       name: 'transfer',
+       *       authorization: [{
+       *         actor: 'terencegehui',
+       *         permission: 'active',
+       *       }],
+       *       data: {
+       *         from: 'terencegehui',
+       *         to: 'mythicalmind',
+       *         quantity: '0.0001 EOS',
+       *         memo: '',
+       *       }
+       *     }
+       *   ]
+       * }).then((data: any) => {
+       *   alert(JSON.stringify(data))
+       * }).catch((error: any) => {
+       *   alert(JSON.stringify(error))
+       * })*/
+      bitportal.signEOSData({
+        account: 'terencegehui',
+        publicKey: 'EOS7HJqPYpjaiMvPo5b5cv8ZCvFGKDLdgjXUzL9tyFG3kgAjoLMfE',
+        signData: 'hello, world'
+      }).then((data: any) => {
         alert(JSON.stringify(data))
       }).catch((error: any) => {
         alert(JSON.stringify(error))

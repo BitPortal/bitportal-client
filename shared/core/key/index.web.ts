@@ -311,7 +311,7 @@ export const getEOSWifsByInfo = async (password: string, accountInfo: any, check
 
       if (keystore) {
         const privateKey = await decrypt(keystore, password)
-        wifs.push({ permission: checkPermission, wif: wif.encode(0x80, Buffer.from(privateKey, 'hex'), false) })
+        wifs.push({ permission: checkPermission, wif: wif.encode(0x80, Buffer.from(privateKey, 'hex'), false), publicKey: key })
       }
     }
   }

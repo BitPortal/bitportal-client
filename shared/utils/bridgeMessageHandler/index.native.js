@@ -149,6 +149,36 @@ if (WebViewBridge) {
         });
       });
     },
+    pushEOSAction: function(params) {
+      if (!params.actions) {
+        throw new Error('"actions" is required');
+      }
+
+      return new Promise(function(resolve, reject) {
+        sendRequest('pushEOSAction', params, function(data) {
+          resolve(data);
+        }, function(error) {
+          reject(error);
+        });
+      });
+    },
+    signEOSData: function(params) {
+      if (!params.account) {
+        throw new Error('"account" is required');
+      } else if (!params.publicKey) {
+        throw new Error('"publicKey" is required');
+      } else if (!params.signData) {
+        throw new Error('"signData" is required');
+      }
+
+      return new Promise(function(resolve, reject) {
+        sendRequest('signEOSData', params, function(data) {
+          resolve(data);
+        }, function(error) {
+          reject(error);
+        });
+      });
+    },
     getCurrentWallet: function() {
       return new Promise(function(resolve, reject) {
         sendRequest('getCurrentWallet', {}, function(data) {
