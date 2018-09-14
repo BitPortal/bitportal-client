@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import {
   Text,
   View,
+  NativeModules,
   ScrollView,
   TouchableHighlight
 } from 'react-native'
@@ -120,6 +121,11 @@ export default class Assets extends Component {
   displayReceiceQRCode = () => {
     // Umeng analytics
     onEventWithLabel(ASSETS_QR, '资产 - 二维码 / 收款')
+
+    NativeModules.NativeUtils.getRegistrationID('getRegistrationID', (registrationID) => {
+      console.log('###', registrationID)
+    })
+
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.ReceiveQRCode',

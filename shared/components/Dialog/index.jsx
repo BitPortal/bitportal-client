@@ -1,7 +1,7 @@
-import { AlertIOS, Alert, NativeModules } from 'react-native'
+import { AlertIOS, Alert } from 'react-native'
+import { goSettingPermission } from 'utils/nativeUtil'
 import messages from 'resources/messages'
 
-const nativeUtils = NativeModules.NativeUtils
 const actionNegative = 'actionNegative'
 const actionPositive = 'actionPositive'
 
@@ -46,7 +46,7 @@ const permissionAlert = (title, content, locale) => {
 
   buttons.push({
     text: messages[locale].scan_popup_button_enable,
-    onPress: () => nativeUtils.goSettingPermission(),
+    onPress: () => goSettingPermission(),
     style: 'default'
   })
 
