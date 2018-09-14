@@ -148,6 +148,7 @@
   "resource_popup_text_transaction_successful": "交易成功",
   "resource_error_popup_text_ram_insufficient": "内存容量（RAM）不足",
   "resource_error_popup_text_cpu_insufficient": "计算资源（CPU）不足",
+  "resource_error_popup_text_eos_system_error": "EOS 系统错误",
   "resource_label_tips": "提示：",
   "resource_cpu_text_tips_1": "1. 计算资源是 EOS 网络中的资源，需要抵押 EOS 以获取。",
   "resource_cpu_text_tips_2": "2. 您可以赎回抵押的 EOS，赎回的资产将在72小时候返回您的账户。",
