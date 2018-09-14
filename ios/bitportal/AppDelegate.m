@@ -30,8 +30,15 @@
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-  NSLog(@"####-%@", [deviceToken description]);
+  // 注册 DeviceToken
   [JPUSHService registerDeviceToken:deviceToken];
+  
+  // 获取 registrationID
+  [JPUSHService registrationIDCompletionHandler:^(int resCode, NSString *registrationID) {
+    NSLog(@"resCode : %d,registrationID: %@",resCode,registrationID);
+    _registrationID = registrationID;
+  }];
+
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo

@@ -159,8 +159,8 @@ export default class About extends Component {
                 onPress={this.goCheckGuide}
               />
             </ScrollView>
-            <Loading isVisible={loading} />
           </View>
+          <Loading isVisible={loading} />
         </View>
       </IntlProvider>
     )

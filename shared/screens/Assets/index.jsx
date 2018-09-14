@@ -120,6 +120,7 @@ export default class Assets extends Component {
   displayReceiceQRCode = () => {
     // Umeng analytics
     onEventWithLabel(ASSETS_QR, '资产 - 二维码 / 收款')
+
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.ReceiveQRCode',

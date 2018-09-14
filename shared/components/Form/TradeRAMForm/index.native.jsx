@@ -39,7 +39,7 @@ export const errorMessages = (error, messages) => {
     case 'transaction exceeded the current CPU usage limit imposed on the transaction':
       return messages.resource_error_popup_text_cpu_insufficient
     case 'EOS System Error':
-      return messages.tra_popup_title_eossystem
+      return messages.resource_error_popup_text_eos_system_error
     default:
       return messages.resource_error_popup_text_transaction_failed
   }

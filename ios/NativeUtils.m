@@ -7,10 +7,13 @@
 //
 
 #import "NativeUtils.h"
+#import "AppDelegate.h"
 
 @implementation NativeUtils
 
 RCT_EXPORT_MODULE();
+
+@synthesize bridge = _bridge;
 
 //跳转系统设置界面
 RCT_EXPORT_METHOD(goSettingPermission)
@@ -26,6 +29,12 @@ RCT_EXPORT_METHOD(goSettingPermission)
       exit(0);
     }
   }
+}
+
+// 获取registrationID
+RCT_EXPORT_METHOD(getRegistrationID:(NSString *)jsString callback:(RCTResponseSenderBlock)callback) {
+  AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+  callback(@[appDelegate.registrationID]);
 }
 
 -(BOOL)isNewSystem{

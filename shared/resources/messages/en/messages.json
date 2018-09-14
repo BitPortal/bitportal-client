@@ -147,6 +147,7 @@
   "resource_popup_text_transaction_successful": "Transaction successful",
   "resource_error_popup_text_ram_insufficient": "Your RAM is insufficient to initiate the transaction.",
   "resource_error_popup_text_cpu_insufficient": "Your CPU is insufficient to initiate the transaction.",
+  "resource_error_popup_text_eos_system_error": "EOS System Error",
   "resource_label_tips": "Tips:",
   "resource_cpu_text_tips_1": "1. CPU is one of the resources in EOS network. You need to stake EOS in order to obtain CPU.",
   "resource_cpu_text_tips_2": "2. You can unstake your staked EOS. Unstaked assets will be credited to your account in 72 hours.",
