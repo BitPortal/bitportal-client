@@ -147,7 +147,7 @@
   "resource_popup_text_transaction_successful": "Transaction successful",
   "resource_error_popup_text_ram_insufficient": "Your RAM is insufficient to initiate the transaction.",
   "resource_error_popup_text_cpu_insufficient": "Your CPU is insufficient to initiate the transaction.",
-  "resource_error_popup_text_eos_system_error": "EOS System Error",
+  "resource_error_popup_text_eos_system_error": "EOS System Error, please try again",
   "resource_label_tips": "Tips:",
   "resource_cpu_text_tips_1": "1. CPU is one of the resources in EOS network. You need to stake EOS in order to obtain CPU.",
   "resource_cpu_text_tips_2": "2. You can unstake your staked EOS. Unstaked assets will be credited to your account in 72 hours.",
@@ -275,6 +275,14 @@
   "settings_node_popup_button_confirm": "Confirm",
   "settings_node_error_popup_text_node_invalid": "Invalid node URL, please re-enter.",
   "settings_node_error_popup_text_node_exist": "The node your added already exists.",
+  
+  "follow_us_label_facebook": "Fackbook",
+  "follow_us_label_kakao": "Kahao",
+  "follow_us_label_telegram": "Telegram",
+  "follow_us_label_twitter": "Twitter",
+  "follow_us_label_weibo": "Weibo",
+  "follow_us_label_wechatofficial": "WeChat Offical",
+  "follow_us_label_wechatservice": "WeChat Service",
 
   "about_us_text_bitportal": "BitPortal, a Portal to the Internet of Value. \nBitPortal is a well designed EOS wallet which offers faster, simpler and safer services to our users.",
   "about_us_button_tos": "Terms of Service",

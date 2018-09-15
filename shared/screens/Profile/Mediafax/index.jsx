@@ -67,7 +67,7 @@ export default class MediafaxScreen extends Component {
                 <SettingItem
                   key={index}
                   leftImage={MediafaxIcons[item]}
-                  leftItemTitle={messages[locale][`mdf_title_index_media${index}`]}
+                  leftItemTitle={messages[locale][`follow_us_label_${item.toLocaleLowerCase()}`]}
                   rightItemTitle={(item.indexOf('Wechat') !== -1) && `${MediafaxUrls[item]}`}
                   onPress={() => this.changePage(index, item)}
                 />
