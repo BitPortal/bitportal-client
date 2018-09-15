@@ -148,7 +148,7 @@
   "resource_popup_text_transaction_successful": "交易成功",
   "resource_error_popup_text_ram_insufficient": "内存容量（RAM）不足",
   "resource_error_popup_text_cpu_insufficient": "计算资源（CPU）不足",
-  "resource_error_popup_text_eos_system_error": "EOS 系统错误",
+  "resource_error_popup_text_eos_system_error": "EOS 系统错误, 请重试",
   "resource_label_tips": "提示：",
   "resource_cpu_text_tips_1": "1. 计算资源是 EOS 网络中的资源，需要抵押 EOS 以获取。",
   "resource_cpu_text_tips_2": "2. 您可以赎回抵押的 EOS，赎回的资产将在72小时候返回您的账户。",
@@ -276,6 +276,14 @@
   "settings_node_popup_button_confirm": "确认",
   "settings_node_error_popup_text_node_invalid": "无效的节点名称，请重新输入",
   "settings_node_error_popup_text_node_exist": "您添加的节点已存在",
+
+  "follow_us_label_facebook": "脸书",
+  "follow_us_label_kakao": "Kahao",
+  "follow_us_label_telegram": "电报",
+  "follow_us_label_twitter": "推特",
+  "follow_us_label_weibo": "微博",
+  "follow_us_label_wechatofficial": "微信公众号",
+  "follow_us_label_wechatservice": "微信客服号",
 
   "about_us_text_bitportal": "BitPortal，价值互联网传送门。\nBitPortal 是一款设计良好的 EOS 钱包，致力于为用户提供更便捷、更安全、更易用的产品和服务。",
   "about_us_button_tos": "服务协议",
