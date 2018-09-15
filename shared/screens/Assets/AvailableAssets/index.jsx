@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { Text, View, Switch, Image, ActivityIndicator } from 'react-native'
+import { Text, View, Switch, ActivityIndicator } from 'react-native'
+import FastImage from 'react-native-fast-image'
 import { Navigation } from 'react-native-navigation'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -18,7 +19,7 @@ import styles from './styles'
 const AssetElement = ({ item, onToggle }) => (
   <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.bgColor_30_31_37 }]}>
     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-      <Image style={styles.icon} source={item.get('icon_url') ? { uri: `${item.get('icon_url')}` } : Images.coin_logo_default} />
+      <FastImage style={styles.icon} source={item.get('icon_url') ? { uri: `${item.get('icon_url')}` } : Images.coin_logo_default} />
       <View>
         <Text style={styles.text20}>{item.get('symbol')}</Text>
         <Text style={styles.text16}>{item.get('account')}</Text>

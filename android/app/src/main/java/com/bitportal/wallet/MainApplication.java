@@ -28,6 +28,7 @@ import com.bitportal.wallet.nativeutils.NativeUtilsPackage;
 import cn.jpush.reactnativejpush.JPushPackage;
 import cn.jpush.android.api.JPushInterface;
 import com.github.alinz.reactnativewebviewbridge.WebViewBridgePackage;
+import com.dylanvann.fastimage.FastImageViewPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -76,7 +77,8 @@ public class MainApplication extends NavigationApplication {
       new DplusReactPackage(),
       new NativeUtilsPackage(),
       new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
-      new WebViewBridgePackage()
+      new WebViewBridgePackage(),
+      new FastImageViewPackage()
     );
   }
 

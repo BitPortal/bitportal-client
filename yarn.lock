@@ -9236,6 +9236,10 @@ react-native-extended-stylesheet@^0.8.0:
     css-mediaquery "^0.1.2"
     object-resolve-path "^1.1.0"
 
+react-native-fast-image@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-5.0.3.tgz#cb53b70a904d908c2c531dcc3d4a77834c9e1c63"
+
 react-native-image-crop-picker@^0.20.3:
   version "0.20.3"
   resolved "http://registry.npm.taobao.org/react-native-image-crop-picker/download/react-native-image-crop-picker-0.20.3.tgz#565d69c1764e96abef23871fe4d6d58b1ee35e18"

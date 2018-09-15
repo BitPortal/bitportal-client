@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { View, Text, Image } from 'react-native'
+import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { IntlProvider, FormattedNumber, FormattedMessage } from 'react-intl'
+import FastImage from 'react-native-fast-image'
 import Colors from 'resources/colors'
 import Images from 'resources/images'
 import LinearGradientContainer from 'components/LinearGradientContainer'
@@ -38,8 +39,8 @@ export default class Header extends Component {
             <View style={{ alignItems: 'center', flexDirection: 'row' }}>
               {
                 logo
-                  ? <Image source={{ uri: `https://storage.googleapis.com/bitportal-cms/bp/${logo}` }} style={styles.icon} />
-                  : <Image source={Images.default_icon} style={styles.icon} />
+                  ? <FastImage source={{ uri: `https://storage.googleapis.com/bitportal-cms/bp/${logo}` }} style={styles.icon} />
+                  : <FastImage source={Images.default_icon} style={styles.icon} />
               }
               <View style={{ marginLeft: 10 }}>
                 <View style={{ alignItems: 'center', flexDirection: 'row' }}>
