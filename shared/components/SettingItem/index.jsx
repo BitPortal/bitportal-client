@@ -3,9 +3,9 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   TouchableHighlight
 } from 'react-native'
+import FastImage from 'react-native-fast-image'
 import { SCREEN_WIDTH, FontScale } from 'utils/dimens'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -74,7 +74,7 @@ export default class SettingItem extends Component {
     const { leftImage, leftTitleStyle } = this.props
     return (
       <View style={[{ flexDirection: 'row' }, styles.center]}>
-        {leftImage && <Image source={leftImage} style={styles.leftImageStyle} />}
+        {leftImage && <FastImage source={leftImage} style={styles.leftImageStyle} />}
         <Text style={[styles.text16, leftTitleStyle]}>
           {leftItemTitle}
         </Text>
