@@ -1,5 +1,6 @@
 import React from 'react'
-import { Text, Image, View, TouchableHighlight, StyleSheet } from 'react-native'
+import { Text, View, TouchableHighlight, StyleSheet } from 'react-native'
+import FastImage from 'react-native-fast-image'
 import Colors from 'resources/colors'
 import Images from 'resources/images'
 import { FormattedNumber, FormattedRelative } from 'react-intl'
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
 
 const GradientIcon = ({ isReceiver }) => (
   <LinearGradientContainer type="right" colors={isReceiver ? Colors.tradeSuccess : Colors.tradeFailed} style={[styles.center, styles.icon]}>
-    <Image source={isReceiver ? Images.transfer_receiver : Images.transfer_sender} style={styles.image} />
+    <FastImage source={isReceiver ? Images.transfer_receiver : Images.transfer_sender} style={styles.image} />
   </LinearGradientContainer>
 )
 

@@ -1,8 +1,8 @@
-
 /* eslint-disable */
 
 import React from 'react'
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, TouchableOpacity } from 'react-native'
+import FastImage from 'react-native-fast-image'
 import Colors from 'resources/colors'
 import Images from 'resources/images'
 
@@ -21,8 +21,7 @@ const styles =  StyleSheet.create({
 export default ({ onPress }) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.iconContainer}>
-      <Image source={Images.profile_contacts} style={styles.image} />
+      <FastImage source={Images.profile_contacts} style={styles.image} />
     </TouchableOpacity>
   )
 }
-
