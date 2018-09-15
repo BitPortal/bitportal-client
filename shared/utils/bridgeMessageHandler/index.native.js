@@ -162,7 +162,7 @@ if (WebViewBridge) {
         });
       });
     },
-    signEOSData: function(params) {
+    eosAuthSign: function(params) {
       if (!params.account) {
         throw new Error('"account" is required');
       } else if (!params.publicKey) {
@@ -172,7 +172,7 @@ if (WebViewBridge) {
       }
 
       return new Promise(function(resolve, reject) {
-        sendRequest('signEOSData', params, function(data) {
+        sendRequest('eosAuthSign', params, function(data) {
           resolve(data);
         }, function(error) {
           reject(error);

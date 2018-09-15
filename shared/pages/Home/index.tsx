@@ -103,7 +103,7 @@ export default class Home extends Component<Props, State> {
        * }).catch((error: any) => {
        *   alert(JSON.stringify(error))
        * })*/
-      bitportal.signEOSData({
+      bitportal.eosAuthSign({
         account: 'terencegehui',
         publicKey: 'EOS7HJqPYpjaiMvPo5b5cv8ZCvFGKDLdgjXUzL9tyFG3kgAjoLMfE',
         signData: 'hello, world'

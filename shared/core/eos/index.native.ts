@@ -196,7 +196,7 @@ const pushEOSAction = async ({
   return data
 }
 
-const signEOSData = async ({
+const eosAuthSign = async ({
   account,
   publicKey,
   password,
@@ -222,5 +222,5 @@ export {
   voteEOSProducers,
   transferEOSAsset,
   pushEOSAction,
-  signEOSData
+  eosAuthSign
 }

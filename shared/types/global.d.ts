@@ -312,7 +312,7 @@ declare module 'core/eos' {
     transferEOSAsset: any
     voteEOSProducers: any
     pushEOSAction: any
-    signEOSData: any
+    eosAuthSign: any
   }
 
   const eos: EOS

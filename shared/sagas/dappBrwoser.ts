@@ -10,7 +10,7 @@ import {
   transferEOSAsset,
   voteEOSProducers,
   pushEOSAction,
-  signEOSData
+  eosAuthSign
 } from 'core/eos'
 
 let dappBrowser: any
@@ -246,7 +246,7 @@ function* resolveSignEOSData(password: string, info: any, messageId: string) {
   const publicKey = info.get('publicKey')
   const signData = info.get('signData')
 
-  const data = yield call(signEOSData, {
+  const signedData = yield call(eosAuthSign, {
     account,
     password,
     publicKey,
@@ -256,7 +256,7 @@ function* resolveSignEOSData(password: string, info: any, messageId: string) {
     messageId,
     type: 'actionSucceeded',
     payload: {
-      data
+      data: { signedData }
     }
   }))
   yield put(actions.clearMessage())
@@ -398,7 +398,7 @@ function* receiveMessage(action: Action<string>) {
     case 'pushEOSAction':
       yield pendPushEOSAction(messageActionType, payload, messageId)
       break
-    case 'signEOSData':
+    case 'eosAuthSign':
       yield pendSignEOSData(messageActionType, payload, messageId)
       break
     default:
@@ -481,7 +481,7 @@ function* resolveMessage(action: Action<any>) {
         case 'pushEOSAction':
           yield resolvePushEOSAction(password, info, messageId)
           break
-        case 'signEOSData':
+        case 'eosAuthSign':
           yield resolveSignEOSData(password, info, messageId)
           break
         default:
