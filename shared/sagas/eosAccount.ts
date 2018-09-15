@@ -11,7 +11,7 @@ import secureStorage from 'utils/secureStorage'
 import { BITPORTAL_API_EOS_URL } from 'constants/env'
 import { randomKey, privateToPublic, isValidPrivate, initEOS, getPermissionsByKey, getInitialAccountInfo } from 'core/eos'
 import { encrypt } from 'core/key'
-import { getErrorMessage } from 'utils'
+import { getErrorMessage, getEOSErrorMessage } from 'utils'
 import { popToRoot, push } from 'utils/location'
 import * as api from 'utils/api'
 import wif from 'wif'
@@ -157,7 +157,7 @@ function* getEOSKeyAccountsRequested(action: Action<GetEOSKeyAccountsParams>) {
     yield put(actions.getEOSKeyAccountsSucceeded(result))
     if (action.payload.componentId) push('BitPortal.AccountSelection', action.payload.componentId, { keyPermissions, publicKey, privateKey, password, hint })
   } catch (e) {
-    yield put(actions.getEOSKeyAccountsFailed(getErrorMessage(e)))
+    yield put(actions.getEOSKeyAccountsFailed(getEOSErrorMessage(e)))
   }
 }
 

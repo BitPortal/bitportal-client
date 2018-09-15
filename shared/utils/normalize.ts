@@ -6,6 +6,8 @@ export const normalizeCaptch = (value: any, previousValue: any) => (value && ((/
 
 export const normalizeText = (value: any, previousValue: any) => (value && (!/\s/.test(value) ? value.trim() : previousValue))
 
+export const normalizePrivateKey = (value: any) => (value && value.replace(/\s/g, ''))
+
 export const normalizeMemo = (value: any, previousValue: any) => (value && (!/(\s|\\|\_|\/|\&|\^|\#|\@|\$|\<|\>|\*|\~|\`|\-|\%)/.test(value) ? value.trim() : previousValue))
 
 export const normalizePasswordText = (value: any, previousValue: any) => (value && ((value.trim().length <= 32 && !/[^\x00-\xff]/.test(value.trim())) ? value.trim() : previousValue))

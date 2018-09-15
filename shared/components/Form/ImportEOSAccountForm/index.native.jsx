@@ -10,7 +10,7 @@ import { BITPORTAL_API_TERMS_URL } from 'constants/env'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { getPasswordStrength } from 'utils'
 import { validateText } from 'utils/validate'
-import { normalizeText } from 'utils/normalize'
+import { normalizePrivateKey } from 'utils/normalize'
 import * as eosAccountActions from 'actions/eosAccount'
 import Alert from 'components/Alert'
 import Colors from 'resources/colors'
@@ -26,9 +26,19 @@ export const errorMessages = (error, messages) => {
   switch (String(message)) {
     case 'Invalid private key!':
       return messages.add_eos_error_popup_text_private_key_invalid
+    case 'No key accounts':
+      return 'No key accounts'
+    case 'EOS System Error':
+      return 'EOS System Error'
     default:
       return messages.add_eos_import_error_popup_text_private_key_import_failed
   }
+}
+
+export const errorMessageDetail = (error) => {
+  if (!error || typeof error !== 'object') { return null }
+
+  return error.detail
 }
 
 const validate = (values, props) => {
@@ -122,7 +132,7 @@ export default class ImportEOSAccountForm extends Component {
             placeholder={messages[locale].add_eos_text_private_key}
             name="privateKey"
             component={TextAreaField}
-            normalize={normalizeText}
+            normalize={normalizePrivateKey}
           />
           <Field
             label={<FormattedMessage id="add_eos_label_set_password" />}
@@ -154,7 +164,7 @@ export default class ImportEOSAccountForm extends Component {
             </Text>
           </View>
           <SubmitButton disabled={disabled} onPress={handleSubmit(this.submit)} text={<FormattedMessage id="add_eos_import_button_import" />} />
-          <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearEOSAccountError} />
+          <Alert message={errorMessages(error, messages[locale])} subMessage={errorMessageDetail(error)} dismiss={this.props.actions.clearEOSAccountError} />
         </FormContainer>
       </IntlProvider>
     )
