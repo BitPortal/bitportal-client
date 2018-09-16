@@ -39,17 +39,7 @@ const WebViewLoading = ({ text }) => (
   state => ({
     locale: state.intl.get('locale'),
     hasPendingMessage: state.dappBrowser.get('hasPendingMessage'),
-    resolvingMessage: state.dappBrowser.get('resolving'),
-    messageInfoAmount: state.dappBrowser.getIn(['pendingMessage', 'info', 'amount']),
-    messageInfoSymbol: state.dappBrowser.getIn(['pendingMessage', 'info', 'symbol']),
-    messageInfoContract: state.dappBrowser.getIn(['pendingMessage', 'info', 'contract']),
-    messageInfoFromAccount: state.dappBrowser.getIn(['pendingMessage', 'info', 'fromAccount']),
-    messageInfoToAccount: state.dappBrowser.getIn(['pendingMessage', 'info', 'toAccount']),
-    messageInfoMemo: state.dappBrowser.getIn(['pendingMessage', 'info', 'memo']),
-    messageInfoVoter: state.dappBrowser.getIn(['pendingMessage', 'info', 'voter']),
-    messageInfoProducers: state.dappBrowser.getIn(['pendingMessage', 'info', 'producers']),
-    messageInfoActions: state.dappBrowser.getIn(['pendingMessage', 'info', 'actions']),
-    messageInfoSignData: state.dappBrowser.getIn(['pendingMessage', 'info', 'signData']),
+    resolvingMessage: state.dappBrowser.get('resolving')
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -178,17 +168,7 @@ export default class DappBrowser extends Component {
       title,
       locale,
       hasPendingMessage,
-      resolvingMessage,
-      messageInfoAmount,
-      messageInfoSymbol,
-      messageInfoContract,
-      messageInfoFromAccount,
-      messageInfoToAccount,
-      messageInfoMemo,
-      messageInfoVoter,
-      messageInfoProducers,
-      messageInfoActions,
-      messageInfoSignData
+      resolvingMessage
     } = this.props
     const injectScript = `(function () { ${messageHandler} }())`
 
@@ -221,16 +201,6 @@ export default class DappBrowser extends Component {
             <ActionModal
               isVisible={hasPendingMessage && !resolvingMessage}
               dismiss={this.rejectMessage}
-              amount={messageInfoAmount}
-              fromAccount={messageInfoFromAccount}
-              toAccount={messageInfoToAccount}
-              memo={messageInfoMemo}
-              symbol={messageInfoSymbol}
-              contract={messageInfoContract}
-              voter={messageInfoVoter}
-              producers={messageInfoProducers}
-              actions={messageInfoActions}
-              signData={messageInfoSignData}
               confirm={this.showPrompt}
             />
             <Prompt

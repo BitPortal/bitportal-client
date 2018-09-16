@@ -1,38 +1,180 @@
-import React, { Component } from 'react'
-import { Text, View, TouchableOpacity, ActivityIndicator } from 'react-native'
+import React, { Component, Fragment } from 'react'
+import { Text, View, TouchableOpacity, TouchableWithoutFeedback, ActivityIndicator, ScrollView } from 'react-native'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { connect } from 'react-redux'
-import { FormattedMessage, FormattedNumber, IntlProvider } from 'react-intl'
+import { FormattedMessage, /* FormattedNumber, */IntlProvider } from 'react-intl'
 import Modal from 'react-native-modal'
+import { messageTypeSelector, messageInfoSelector } from 'selectors/dappBrowser'
 import { noop } from 'utils'
 import styles from './styles'
 import messages from './messages'
 
+const TransferActionItems = ({ info }) => (
+  <Fragment>
+    <View style={styles.item}>
+      <Text style={styles.label}>操作:</Text>
+      <Text style={styles.data}>
+        Payment
+      </Text>
+    </View>
+    <View style={styles.item}>
+      <Text style={styles.label}>合约:</Text>
+      <Text style={styles.data}>
+        {info.get('contract')}
+      </Text>
+    </View>
+    <View style={styles.item}>
+      <Text style={styles.label}>数量:</Text>
+      <Text style={styles.data}>
+        {info.get('amount')} {info.get('symbol')}
+      </Text>
+    </View>
+    <View style={styles.item}>
+      <Text style={styles.label}>支付帐户:</Text>
+      <Text style={styles.data}>
+        {info.get('fromAccount')}
+      </Text>
+    </View>
+    <View style={styles.item}>
+      <Text style={styles.label}>接收帐户:</Text>
+      <Text style={styles.data}>
+        {info.get('toAccount')}
+      </Text>
+    </View>
+    <View style={styles.item}>
+      <Text style={styles.label}>附言:</Text>
+      <Text style={styles.data}>
+        {info.get('memo')}
+      </Text>
+    </View>
+  </Fragment>
+)
+
+const VoteActionItems = ({ info }) => (
+  <Fragment>
+    <View style={styles.item}>
+      <Text style={styles.label}>操作:</Text>
+      <Text style={styles.data}>
+        投票
+      </Text>
+    </View>
+    <View style={styles.item}>
+      <Text style={styles.label}>投票者:</Text>
+      <Text style={styles.data}>
+        {info.get('voter')}
+      </Text>
+    </View>
+    <View style={styles.item}>
+      <Text style={styles.label}>已选节点:</Text>
+      <ScrollView style={styles.dataView}>
+        {info.get('producers').map(producer => <Text key={producer} style={styles.data}>{producer}</Text>)}
+      </ScrollView>
+    </View>
+  </Fragment>
+)
+
+const SignActionItems = ({ info }) => (
+  <Fragment>
+    <View style={styles.item}>
+      <Text style={styles.label}>操作:</Text>
+      <Text style={styles.data}>
+        签名
+      </Text>
+    </View>
+    <View style={styles.item}>
+      <Text style={styles.label}>签名者:</Text>
+      <Text style={styles.data}>
+        {info.get('account')}
+      </Text>
+    </View>
+    <View style={styles.item}>
+      <Text style={styles.label}>公钥:</Text>
+      <Text style={styles.data}>
+        {info.get('publicKey')}
+      </Text>
+    </View>
+    <View style={styles.item}>
+      <Text style={styles.label}>签名内容:</Text>
+      <Text style={styles.data}>
+        {info.get('signData')}
+      </Text>
+    </View>
+  </Fragment>
+)
+
+const PushActionItems = ({ info }) => (
+  <Fragment>
+    <View style={styles.item}>
+      <Text style={styles.label}>操作:</Text>
+      <Text style={styles.data}>
+        执行EOS合约
+      </Text>
+    </View>
+    <View style={styles.item}>
+      <Text style={styles.label}>详情:</Text>
+      <ScrollView style={styles.dataView}>
+        {info.get('actions').map(action => (
+          <View key={`${action.get('account')}-${action.get('name')}`} style={styles.dataViewAction}>
+            <Text style={styles.data}>
+              <Text>帐户</Text>
+              <Text style={styles.highlight}>{action.getIn(['authorization', 0, 'actor'])}</Text>
+              <Text>使用</Text>
+              <Text style={styles.highlight}>{action.getIn(['authorization', 0, 'permission'])}</Text>
+              <Text>权限执行</Text>
+              <Text style={styles.highlight}>{action.get('account')}</Text>
+              <Text>合约的</Text>
+              <Text style={styles.highlight}>{action.get('name')}</Text>
+              <Text>操作, 参数列表:</Text>
+            </Text>
+            <View style={styles.actionData}>
+              {action.get('data').entrySeq().map(item => (
+                <View key={item[0]} style={styles.actionDataItem}>
+                  <Text style={styles.actionDataLabel}>{item[0]}: </Text>
+                  <Text style={styles.actionDataValue}>{item[1]}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        ))}
+      </ScrollView>
+    </View>
+  </Fragment>
+)
+
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.get('locale'),
+    dappBrowser: state.dappBrowser,
+    messageType: messageTypeSelector(state),
+    messageInfo: messageInfoSelector(state)
   })
 )
 
 export default class ActionModal extends Component {
+  renderItems = (messageType, info) => {
+    if (messageType === 'eosAuthSign') {
+      return (<SignActionItems info={info} />)
+    } else if (messageType === 'transferEOSAsset') {
+      return (<TransferActionItems info={info} />)
+    } else if (messageType === 'voteEOSProducers') {
+      return (<VoteActionItems info={info} />)
+    } else if (messageType === 'pushEOSAction') {
+      return (<PushActionItems info={info} />)
+    }
+
+    return null
+  }
+
   render() {
     const {
       isVisible,
       dismiss,
       confirm,
       locale,
-      amount,
-      symbol,
-      fromAccount,
-      toAccount,
-      contract,
-      memo,
-      voter,
-      producers,
-      actions,
-      signData,
-      loading
+      loading,
+      messageType,
+      messageInfo
     } = this.props
 
     return (
@@ -44,104 +186,33 @@ export default class ActionModal extends Component {
         backdropOpacity={0.9}
       >
         <IntlProvider messages={messages[locale]}>
-          <View style={styles.container}>
-            <TouchableOpacity onPress={dismiss} style={{ flex: 1 }} />
-            <View style={[styles.header, styles.between]}>
-              <TouchableOpacity onPress={dismiss} style={[styles.center, styles.close]}>
-                <Ionicons name="ios-close" size={28} color={Colors.bgColor_FFFFFF} />
-              </TouchableOpacity>
-              <Text style={styles.text18}><FormattedMessage id="send_confirm_title_confirm" /></Text>
-              <Text style={styles.text18}>{' '}</Text>
-            </View>
-            <View style={[styles.header, styles.bottom, { backgroundColor: Colors.minorThemeColor, minHeight: 300 }]}>
-              {contract && <View style={[styles.item, styles.between, { marginTop: 20 }]}>
-                <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                  <Text style={[styles.text14, { width: 45 }]}>合约</Text>
-                  <Text style={[styles.text14, { marginLeft: 35, color: Colors.textColor_89_185_226 }]}>
-                    {contract}
-                  </Text>
+          <View style={styles.mask}>
+            <TouchableWithoutFeedback onPress={dismiss}>
+              <View style={styles.outside} />
+            </TouchableWithoutFeedback>
+            <View style={styles.content}>
+              <View style={styles.header} onPress={() => {}}>
+                <TouchableOpacity onPress={dismiss} style={styles.close}>
+                  <Ionicons name="ios-close" size={28} color={Colors.bgColor_FFFFFF} />
+                </TouchableOpacity>
+                <Text style={styles.title}>交易详情</Text>
+              </View>
+              <View style={styles.body}>
+                {this.renderItems(messageType, messageInfo)}
+                <View style={[styles.item, styles.buttonItem]}>
+                  <TouchableOpacity
+                    onPress={!loading ? confirm : noop}
+                    disabled={loading}
+                    underlayColor={Colors.textColor_89_185_226}
+                    style={styles.submitButton}
+                  >
+                    <Text style={styles.submitButtonText}>
+                      <FormattedMessage id="send_confirm_button_confirm" />
+                    </Text>
+                    {loading && <ActivityIndicator style={styles.indicator} size="small" color="white" />}
+                  </TouchableOpacity>
                 </View>
-              </View>}
-              {amount && <View style={[styles.item, styles.between, { marginTop: 10 }]}>
-                <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                  <Text style={[styles.text14, { width: 45 }]}><FormattedMessage id="send_confirm_label_from " /></Text>
-                  <Text style={[styles.text14, { marginLeft: 35, color: Colors.textColor_89_185_226 }]}>
-                    <FormattedNumber
-                      value={amount || 0}
-                      maximumFractionDigits={4}
-                      minimumFractionDigits={4}
-                    />
-                  </Text>
-                </View>
-                <Text style={styles.text14}> {symbol}</Text>
-              </View>}
-              {fromAccount && <View style={[styles.item, styles.between, { marginTop: 10 }]}>
-                <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                  <Text style={[styles.text14, { width: 45 }]}>从</Text>
-                  <Text style={[styles.text14, { marginLeft: 35, color: Colors.textColor_89_185_226 }]}>
-                    {fromAccount}
-                  </Text>
-                </View>
-              </View>}
-              {toAccount && <View style={[styles.item, styles.between, { marginTop: 10 }]}>
-                <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                  <Text style={[styles.text14, { width: 45 }]}><FormattedMessage id="send_confirm_label_to" /></Text>
-                  <Text style={[styles.text14, { marginLeft: 35, color: Colors.textColor_89_185_226 }]}>
-                    {toAccount}
-                  </Text>
-                </View>
-              </View>}
-              {memo && <View style={[styles.item, styles.between, { marginTop: 10 }]}>
-                <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                  <Text style={[styles.text14, { width: 45 }]}><FormattedMessage id="send_confirm_label_memo" /></Text>
-                  <Text style={[styles.text14, { marginLeft: 35, color: Colors.textColor_89_185_226 }]}>
-                    {memo}
-                  </Text>
-                </View>
-              </View>}
-              {voter && <View style={[styles.item, styles.between, { marginTop: 10 }]}>
-                <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                  <Text style={[styles.text14, { width: 45 }]}>voter</Text>
-                  <Text style={[styles.text14, { marginLeft: 35, color: Colors.textColor_89_185_226 }]}>
-                    {voter}
-                  </Text>
-                </View>
-              </View>}
-              {producers && <View style={[styles.item, styles.between, { marginTop: 10 }]}>
-                <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                  <Text style={[styles.text14, { width: 45 }]}>selected</Text>
-                  <Text style={[styles.text14, { marginLeft: 35, color: Colors.textColor_89_185_226 }]}>
-                    {producers.map(producer => `${producer} `)}
-                  </Text>
-                </View>
-              </View>}
-              {actions && <View style={[styles.item, styles.between, { marginTop: 10 }]}>
-                <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                  <Text style={[styles.text14, { width: 45 }]}>actions</Text>
-                  <Text style={[styles.text14, { marginLeft: 35, color: Colors.textColor_89_185_226 }]}>
-                    {JSON.stringify(actions)}
-                  </Text>
-                </View>
-              </View>}
-              {signData && <View style={[styles.item, styles.between, { marginTop: 10 }]}>
-                <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                  <Text style={[styles.text14, { width: 45 }]}>Sign Data</Text>
-                  <Text style={[styles.text14, { marginLeft: 35, color: Colors.textColor_89_185_226 }]}>
-                    {signData}
-                  </Text>
-                </View>
-              </View>}
-              <TouchableOpacity
-                onPress={!loading ? confirm : noop}
-                disabled={loading}
-                underlayColor={Colors.textColor_89_185_226}
-                style={[styles.btn, styles.center, loading ? styles.disabled : {}]}
-              >
-                <Text style={[styles.text14]}>
-                  <FormattedMessage id="send_confirm_button_confirm" />
-                </Text>
-                {loading && <ActivityIndicator style={styles.indicator} size="small" color="white" />}
-              </TouchableOpacity>
+              </View>
             </View>
           </View>
         </IntlProvider>

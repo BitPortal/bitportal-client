@@ -1,67 +1,126 @@
-import { StyleSheet } from 'react-native'
+import EStyleSheet from 'react-native-extended-stylesheet'
 import Colors from 'resources/colors'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, ifIphoneX } from 'utils/dimens'
+import { FontScale, ifIphoneX } from 'utils/dimens'
 
-const styles = StyleSheet.create({
-  container: {
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT
-  },
-  header: {
-    width: SCREEN_WIDTH,
-    height: 50,
-    paddingHorizontal: 32,
-    backgroundColor: Colors.mainThemeColor,
-  },
-  between: {
-    flexDirection: 'row',
-    alignItems: 'center',
+const styles = EStyleSheet.create({
+  mask: {
+    width: '100%',
+    height: '100%',
+    flexDirection: 'column',
     justifyContent: 'space-between'
   },
-  center: {
-    alignItems: 'center',
-    justifyContent: 'center'
+  outside: {
+    width: '100%',
+    flexGrow: 1
   },
-  bottom: {
+  content: {
+    width: '100%',
+    alignSelf: 'flex-end',
     ...ifIphoneX({
       paddingBottom: 34
     }, {
       paddingBottom: 0
     })
   },
-  close: {
-    width: 50,
+  header: {
+    width: '100%',
     height: 50,
-    marginLeft: -20
+    paddingHorizontal: 20,
+    backgroundColor: Colors.mainThemeColor,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  text18: {
+  title: {
     fontSize: FontScale(18),
     color: Colors.textColor_255_255_238
   },
-  text14: {
+  close: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    width: 50,
+    height: 50,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  body: {
+    width: '100%',
+    paddingHorizontal: 20,
+    backgroundColor: Colors.minorThemeColor,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 14
+  },
+  item: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    paddingTop: 8,
+    minHeight: 40
+  },
+  label: {
+    fontSize: FontScale(14),
+    color: Colors.textColor_255_255_238,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: 100
+  },
+  dataView: {
+    width: '100% - 130',
+    maxHeight: 150
+  },
+  dataViewAction: {
+    marginBottom: 20
+  },
+  actionData: {
+    marginTop: 10,
+    marginBottom: 10
+  },
+  actionDataItem: {
+    flex: 1,
+    flexDirection: 'row'
+  },
+  actionDataLabel: {
     fontSize: FontScale(14),
     color: Colors.textColor_255_255_238
   },
-  item: {
-    width: SCREEN_WIDTH - 64,
-    height: 30,
+  actionDataValue: {
+    fontSize: FontScale(14),
+    color: Colors.textColor_255_255_238
   },
-  line: {
-    width: SCREEN_WIDTH - 64,
-    height: 1,
-    backgroundColor: Colors.textColor_181_181_181,
-    marginVertical: 15
+  data: {
+    width: '100% - 130',
+    fontSize: FontScale(14),
+    color: Colors.textColor_255_255_238,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
   },
-  btn: {
-    width: SCREEN_WIDTH - 64,
+  highlight: {
+    fontSize: FontScale(20),
+    fontWeight: 'bold'
+  },
+  buttonItem: {
+    justifyContent: 'center'
+  },
+  submitButton: {
+    width: '100%',
     height: 40,
     borderRadius: 3,
     backgroundColor: Colors.textColor_89_185_226,
-    marginTop: 20,
     marginBottom: 20,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  submitButtonText: {
+    fontSize: FontScale(14),
+    color: Colors.textColor_255_255_238,
   },
   disabled: {
     backgroundColor: Colors.textColor_181_181_181

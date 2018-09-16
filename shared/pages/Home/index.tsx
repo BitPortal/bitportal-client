@@ -62,14 +62,14 @@ export default class Home extends Component<Props, State> {
        * })*/
       /* bitportal.voteEOSProducers({
        *   voter: 'terencegehui',
-       *   producers: ['eosasia11111', 'eosecoeoseco', 'eoshuobipool']
+       *   producers: ['eosasia11111', 'eosecoeoseco', 'eoshuobipool', 'eosasia11111', 'eosecoeoseco', 'eoshuobipool', 'eosasia11111', 'eosecoeoseco', 'eoshuobipool', 'eosasia11111', 'eosecoeoseco', 'eoshuobipool', 'eosasia11111', 'eosecoeoseco', 'eoshuobipool']
        * }).then((data: any) => {
        *   alert(JSON.stringify(data))
        * }).catch((error: any) => {
        *   alert(JSON.stringify(error))
        * })*/
       /* bitportal.transferEOSAsset({
-       *   amount: '0.0001',
+       *   amount: '0.01',
        *   symbol: 'EOS',
        *   contract: 'eosio.token',
        *   from: 'terencegehui',
@@ -85,37 +85,54 @@ export default class Home extends Component<Props, State> {
        * }).catch((error: any) => {
        *   alert(JSON.stringify(error))
        * })*/
-      /* bitportal.pushEOSAction({
-       *   actions: [
-       *     {
-       *       account: 'eosio.token',
-       *       name: 'transfer',
-       *       authorization: [{
-       *         actor: 'terencegehui',
-       *         permission: 'active',
-       *       }],
-       *       data: {
-       *         from: 'terencegehui',
-       *         to: 'mythicalmind',
-       *         quantity: '0.0001 EOS',
-       *         memo: '',
-       *       }
-       *     }
-       *   ]
-       * }).then((data: any) => {
-       *   alert(JSON.stringify(data))
-       * }).catch((error: any) => {
-       *   alert(JSON.stringify(error))
-       * })*/
-      bitportal.eosAuthSign({
-        account: 'terencegehui',
-        publicKey: 'EOS7HJqPYpjaiMvPo5b5cv8ZCvFGKDLdgjXUzL9tyFG3kgAjoLMfE',
-        signData: 'hello, world'
+      bitportal.pushEOSAction({
+        actions: [
+          {
+            account: 'eosio.token',
+            name: 'transfer',
+            authorization: [{
+              actor: 'aaaabbbbcccc',
+              permission: 'active'
+            }],
+            data: {
+              from: 'aaaabbbbcccc',
+              to: 'itokenpocket',
+              quantity: '1.3000 EOS',
+              memo: 'something to say'
+            }
+          },
+          {
+            account: 'eosio',
+            name: 'delegatebw',
+            authorization: [
+              {
+                actor: 'aaaabbbbcccc',
+                permission: 'active'
+              }
+            ],
+            data: {
+              from: 'aaaabbbbcccc',
+              receiver: 'itokenpocket',
+              stake_net_quantity: '0.0100 EOS',
+              stake_cpu_quantity: '0.0100 EOS',
+              transfer: 0
+            }
+          }
+        ]
       }).then((data: any) => {
         alert(JSON.stringify(data))
       }).catch((error: any) => {
         alert(JSON.stringify(error))
       })
+      /* bitportal.eosAuthSign({
+       *   account: 'terencegehui',
+       *   publicKey: 'EOS7HJqPYpjaiMvPo5b5cv8ZCvFGKDLdgjXUzL9tyFG3kgAjoLMfE',
+       *   signData: 'hello, world'
+       * }).then((data: any) => {
+       *   alert(JSON.stringify(data))
+       * }).catch((error: any) => {
+       *   alert(JSON.stringify(error))
+       * })*/
     })
   }
 
