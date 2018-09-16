@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux'
 import * as newsActions from 'actions/news'
 import * as dAppActions from 'actions/dApp'
 import { IntlProvider } from 'react-intl'
+import Colors from 'resources/colors'
 import messages from 'resources/messages'
 import NewsList from './NewsList'
 import NewsBanner from './NewsBanner'
@@ -38,6 +39,14 @@ const PAGE_LENGTH = 10
   { withRef: true }
 )
 export default class Discovery extends Component {
+  static get options() {
+    return {
+      bottomTabs: {
+        backgroundColor: Colors.minorThemeColor
+      }
+    }
+  }
+
   componentDidMount() {
     InteractionManager.runAfterInteractions(() => {
       this.props.actions.getNewsListRequested({

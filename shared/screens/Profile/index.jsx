@@ -12,6 +12,7 @@ import { hasEOSAccountSelector } from 'selectors/wallet'
 import { BITPORTAL_WEBSITE_URL } from 'constants/env'
 import { onEventWithLabel } from 'utils/analytics'
 import { HELP_CENTER, PROFILE } from 'constants/analytics'
+import Colors from 'resources/colors'
 import messages from 'resources/messages'
 import styles from './styles'
 
@@ -27,6 +28,14 @@ import styles from './styles'
 )
 
 export default class Profile extends Component {
+  static get options() {
+    return {
+      bottomTabs: {
+        backgroundColor: Colors.minorThemeColor
+      }
+    }
+  }
+
   checkHistory = () => {
     Navigation.push(this.props.componentId, {
       component: {

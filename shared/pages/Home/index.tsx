@@ -44,6 +44,10 @@ export default class Home extends Component<Props, State> {
     eosAccountName: null
   }
 
+  reload = () => {
+    window.location.reload()
+  }
+
   componentDidMount() {
     document.addEventListener('bitportalapi', () => {
       const bitportal = window.bitportal
@@ -123,6 +127,9 @@ export default class Home extends Component<Props, State> {
         <div className={style.home}>
           <div>
             Welcome to BitPortal! {this.state.eosAccountName}
+          </div>
+          <div>
+            <a onClick={this.reload}>reload</a>
           </div>
         </div>
       </IntlProvider>

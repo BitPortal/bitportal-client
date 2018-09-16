@@ -12,6 +12,7 @@ import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from 'constants/market'
 import NavigationBar, { ListButton } from 'components/NavigationBar'
 import SearchBar from 'components/SearchBar'
 import { IntlProvider } from 'react-intl'
+import Colors from 'resources/colors'
 import {
   MAEKRT_LIST_SELECTED,
   QUOTES_LIST_SELECTED,
@@ -47,6 +48,14 @@ import styles from './styles'
   { withRef: true }
 )
 export default class Market extends Component {
+  static get options() {
+    return {
+      bottomTabs: {
+        backgroundColor: Colors.minorThemeColor
+      }
+    }
+  }
+
   state = {
     coinName: '',
     isVisible: false,

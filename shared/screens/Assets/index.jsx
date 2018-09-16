@@ -66,6 +66,14 @@ import TotalAssetsCard from './TotalAssetsCard'
 )
 
 export default class Assets extends Component {
+  static get options() {
+    return {
+      bottomTabs: {
+        backgroundColor: Colors.minorThemeColor
+      }
+    }
+  }
+
   state = {
     isVisible2: false
   }
