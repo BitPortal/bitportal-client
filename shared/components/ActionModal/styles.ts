@@ -72,7 +72,8 @@ const styles = EStyleSheet.create({
   },
   dataView: {
     width: '100% - 130',
-    maxHeight: 150
+    maxHeight: 150,
+    marginBottom: 20
   },
   dataViewAction: {
     marginBottom: 20
@@ -83,7 +84,8 @@ const styles = EStyleSheet.create({
   },
   actionDataItem: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   actionDataLabel: {
     fontSize: FontScale(14),

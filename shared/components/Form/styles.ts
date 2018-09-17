@@ -35,7 +35,8 @@ export default EStyleSheet.create({
     borderRadius: 3,
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingLeft: 10
   },
   input: {
     flex: 1,

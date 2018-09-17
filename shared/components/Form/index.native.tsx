@@ -5,7 +5,8 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
-  KeyboardType
+  KeyboardType,
+  ReturnKeyType
 } from 'react-native'
 import LinearGradientContainer from 'components/LinearGradientContainer'
 import { noop } from 'utils'
@@ -44,6 +45,8 @@ interface TextFieldProps {
   tips?: JSX.Element | string,
   info?: JSX.Element | string,
   placeholder?: string
+  returnKeyType?: ReturnKeyType
+  onSubmitEditing?: any
 }
 
 interface SubmitButtonProps {
@@ -58,12 +61,16 @@ interface ButtonProps {
   onPress(): void
 }
 
+interface SearchContainer {
+  style?: React.CSSProperties
+}
+
 export const FormContainer: React.SFC = ({ children }) => (
   <View style={styles.formContainer}>{children}</View>
 )
 
-export const SearchContainer: React.SFC = ({ children }) => (
-  <View style={styles.searchContainer}>{children}</View>
+export const SearchContainer: React.SFC<SearchContainer> = ({ children, style }) => (
+  <View style={[styles.searchContainer, style]}>{children}</View>
 )
 
 export const FieldItem: React.SFC = ({ children }) => (
@@ -138,9 +145,11 @@ export const TextField: React.SFC<TextFieldProps> = ({
 
 export const SearchField: React.SFC<TextFieldProps> = ({
   input: { onChange, ...restInput },
-  keyboardType,
-  leftContent,
-  placeholder
+    keyboardType,
+    leftContent,
+    returnKeyType,
+    onSubmitEditing,
+    placeholder
 }) => (
   <FieldItem>
     <SearchFieldInput leftContent={leftContent}>
@@ -155,6 +164,8 @@ export const SearchField: React.SFC<TextFieldProps> = ({
         selectionColor={Colors.textColor_181_181_181}
         keyboardAppearance={Colors.keyboardTheme as KeyboardAppearance}
         onChangeText={onChange}
+        returnKeyType={returnKeyType || 'done'}
+        onSubmitEditing={onSubmitEditing}
         {...restInput}
       />
     </SearchFieldInput>

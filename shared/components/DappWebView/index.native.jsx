@@ -50,7 +50,7 @@ const WebViewLoading = ({ text }) => (
   { withRef: true }
 )
 
-export default class DappBrowser extends Component {
+export default class DappWebView extends Component {
   static get options() {
     return {
       bottomTabs: {

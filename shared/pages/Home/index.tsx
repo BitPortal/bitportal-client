@@ -9,7 +9,7 @@ import * as intlActions from 'actions/intl'
 import { exchangeTickerSelector } from 'selectors/ticker'
 import { hot } from 'react-hot-loader'
 import messages from './messages'
-import style from './style.css'
+import styles from './style.css'
 
 interface Props extends RouteComponentProps<void> {
   locale: Locale
@@ -19,7 +19,8 @@ interface Props extends RouteComponentProps<void> {
 }
 
 interface State {
-  eosAccountName: any
+  loading: boolean
+  bitportalLoaded: boolean
 }
 
 @hot(module)
@@ -40,99 +41,135 @@ interface State {
 )
 
 export default class Home extends Component<Props, State> {
+  bitportal: any
+
   state = {
-    eosAccountName: null
+    loading: false,
+    bitportalLoaded: false
   }
 
-  reload = () => {
-    window.location.reload()
+  eosAuthSign = () => {
+    this.setState({ loading: true })
+
+    this.bitportal.eosAuthSign({
+      account: 'terencegehui',
+      publicKey: 'EOS7HJqPYpjaiMvPo5b5cv8ZCvFGKDLdgjXUzL9tyFG3kgAjoLMfE',
+      signData: 'hello, world'
+    }).then((data: any) => {
+      this.setState({ loading: false })
+      alert(JSON.stringify(data))
+    }).catch((error: any) => {
+      this.setState({ loading: false })
+      alert(JSON.stringify(error))
+    })
+  }
+
+  pushEOSAction = () => {
+    this.setState({ loading: true })
+
+    this.bitportal.pushEOSAction({
+      actions: [
+        {
+          account: 'eosio.token',
+          name: 'transfer',
+          authorization: [{
+            actor: 'terencegehui',
+            permission: 'active'
+          }],
+          data: {
+            from: 'terencegehui',
+            to: 'mythicalmind',
+            quantity: '0.0001 EOS',
+            memo: 'dapp api test'
+          }
+        }
+      ]
+    }).then((data: any) => {
+      this.setState({ loading: false })
+      alert(JSON.stringify(data))
+    }).catch((error: any) => {
+      this.setState({ loading: false })
+      alert(JSON.stringify(error))
+    })
+  }
+
+  transferEOSAsset = () => {
+    this.setState({ loading: true })
+
+    this.bitportal.transferEOSAsset({
+      amount: '0.0001',
+      symbol: 'EOS',
+      contract: 'eosio.token',
+      from: 'terencegehui',
+      to: 'mythicalmind',
+      precision: 4
+    }).then((data: any) => {
+      this.setState({ loading: false })
+      alert(JSON.stringify(data))
+    }).catch((error: any) => {
+      this.setState({ loading: false })
+      alert(JSON.stringify(error))
+    })
+  }
+
+  voteEOSProducers = () => {
+    this.setState({ loading: true })
+
+    this.bitportal.voteEOSProducers({
+      voter: 'terencegehui',
+      producers: [
+        'eosasia11111',
+        'eosecoeoseco',
+        'eoshuobipool',
+        'eoslaomaocom',
+        'eos42freedom',
+        'starteosiobp',
+        'jedaaaaaaaaa',
+        'eosfishrocks',
+        'bitfinexeos1',
+        'eoscannonchn'
+      ]
+    }).then((data: any) => {
+      this.setState({ loading: false })
+      alert(JSON.stringify(data))
+    }).catch((error: any) => {
+      this.setState({ loading: false })
+      alert(JSON.stringify(error))
+    })
+  }
+
+  getEOSTransaction = () => {
+    this.setState({ loading: true })
+
+    this.bitportal.getEOSTransaction({
+      id: 'a61d51877fff5731df1fdb67dab879085af1d49c43f20698bf3be8f193ea5506'
+    }).then((data: any) => {
+      this.setState({ loading: false })
+      alert(JSON.stringify(data))
+    }).catch((error: any) => {
+      this.setState({ loading: false })
+      alert(JSON.stringify(error))
+    })
+  }
+
+  getAppInfo = () => {
+    this.setState({ loading: true })
+
+    this.bitportal.getAppInfo().then((data: any) => {
+      this.setState({ loading: false })
+      alert(JSON.stringify(data))
+    }).catch((error: any) => {
+      this.setState({ loading: false })
+      alert(JSON.stringify(error))
+    })
   }
 
   componentDidMount() {
     document.addEventListener('bitportalapi', () => {
-      const bitportal = window.bitportal
+      this.bitportal = window.bitportal
       window.bitportal = null
 
-      /* bitportal.getEOSTransaction({
-       *   id: 'a61d51877fff5731df1fdb67dab879085af1d49c43f20698bf3be8f193ea5506'
-       * }).then((data: any) => {
-       *   alert(JSON.stringify(data))
-       * }).catch((error: any) => {
-       *   alert(JSON.stringify(error))
-       * })*/
-      /* bitportal.voteEOSProducers({
-       *   voter: 'terencegehui',
-       *   producers: ['eosasia11111', 'eosecoeoseco', 'eoshuobipool', 'eosasia11111', 'eosecoeoseco', 'eoshuobipool', 'eosasia11111', 'eosecoeoseco', 'eoshuobipool', 'eosasia11111', 'eosecoeoseco', 'eoshuobipool', 'eosasia11111', 'eosecoeoseco', 'eoshuobipool']
-       * }).then((data: any) => {
-       *   alert(JSON.stringify(data))
-       * }).catch((error: any) => {
-       *   alert(JSON.stringify(error))
-       * })*/
-      /* bitportal.transferEOSAsset({
-       *   amount: '0.01',
-       *   symbol: 'EOS',
-       *   contract: 'eosio.token',
-       *   from: 'terencegehui',
-       *   to: 'mythicalmind',
-       *   precision: 4
-       * }).then((data: any) => {
-       *   alert(JSON.stringify(data))
-       * }).catch((error: any) => {
-       *   alert(JSON.stringify(error))
-       * })*/
-      /* bitportal.getAppInfo().then((data: any) => {
-       *   alert(JSON.stringify(data))
-       * }).catch((error: any) => {
-       *   alert(JSON.stringify(error))
-       * })*/
-      bitportal.pushEOSAction({
-        actions: [
-          {
-            account: 'eosio.token',
-            name: 'transfer',
-            authorization: [{
-              actor: 'aaaabbbbcccc',
-              permission: 'active'
-            }],
-            data: {
-              from: 'aaaabbbbcccc',
-              to: 'itokenpocket',
-              quantity: '1.3000 EOS',
-              memo: 'something to say'
-            }
-          },
-          {
-            account: 'eosio',
-            name: 'delegatebw',
-            authorization: [
-              {
-                actor: 'aaaabbbbcccc',
-                permission: 'active'
-              }
-            ],
-            data: {
-              from: 'aaaabbbbcccc',
-              receiver: 'itokenpocket',
-              stake_net_quantity: '0.0100 EOS',
-              stake_cpu_quantity: '0.0100 EOS',
-              transfer: 0
-            }
-          }
-        ]
-      }).then((data: any) => {
-        alert(JSON.stringify(data))
-      }).catch((error: any) => {
-        alert(JSON.stringify(error))
-      })
-      /* bitportal.eosAuthSign({
-       *   account: 'terencegehui',
-       *   publicKey: 'EOS7HJqPYpjaiMvPo5b5cv8ZCvFGKDLdgjXUzL9tyFG3kgAjoLMfE',
-       *   signData: 'hello, world'
-       * }).then((data: any) => {
-       *   alert(JSON.stringify(data))
-       * }).catch((error: any) => {
-       *   alert(JSON.stringify(error))
-       * })*/
+      this.setState({ bitportalLoaded: false })
     })
   }
 
@@ -141,12 +178,30 @@ export default class Home extends Component<Props, State> {
 
     return (
       <IntlProvider messages={messages[locale]}>
-        <div className={style.home}>
+        <div className={styles.home}>
           <div>
-            Welcome to BitPortal! {this.state.eosAccountName}
+            Welcome to BitPortal!
           </div>
           <div>
-            <a onClick={this.reload}>reload</a>
+            {this.state.loading && 'loading'}
+          </div>
+          <div>
+            <a onClick={this.eosAuthSign}>eosAuthSign</a>
+          </div>
+          <div>
+            <a onClick={this.pushEOSAction}>pushEOSAction</a>
+          </div>
+          <div>
+            <a onClick={this.transferEOSAsset}>transferEOSAsset</a>
+          </div>
+          <div>
+            <a onClick={this.voteEOSProducers}>voteEOSProducers</a>
+          </div>
+          <div>
+            <a onClick={this.getEOSTransaction}>getEOSTransaction</a>
+          </div>
+          <div>
+            <a onClick={this.getAppInfo}>getAppInfo</a>
           </div>
         </div>
       </IntlProvider>
