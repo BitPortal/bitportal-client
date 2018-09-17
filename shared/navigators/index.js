@@ -23,7 +23,6 @@ import AccountImport from 'screens/Account/AccountImport'
 import AccountCreation from 'screens/Account/AccountCreation'
 import AccountSelection from 'screens/Account/AccountSelection'
 import EOSAccountCreation from 'screens/Account/EOSAccountCreation'
-import PrivateKeyCreation from 'screens/Account/PrivateKeyCreation'
 import Discovery from 'screens/Discovery'
 import ArticleWebView from 'screens/Discovery/article'
 import Markdown from 'screens/Discovery/markdown'
@@ -128,7 +127,6 @@ export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.AccountCreation', () => screenComponent(AccountCreation, store))
   Navigation.registerComponent('BitPortal.AccountSelection', () => screenComponent(AccountSelection, store))
   Navigation.registerComponent('BitPortal.EOSAccountCreation', () => screenComponent(EOSAccountCreation, store))
-  Navigation.registerComponent('BitPortal.PrivateKeyCreation', () => screenComponent(PrivateKeyCreation, store))
 }
 
 export const startSingleApp = () => {

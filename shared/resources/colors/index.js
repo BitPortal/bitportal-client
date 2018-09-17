@@ -4,6 +4,8 @@ const Colors = {
   keyboardTheme: 'dark',
   statusBarMode: 'light-content',
   gradientColors: ['rgb(24,79,174)', 'rgb(0,157,255)'],
+  gradientCardColors: ['rgb(54,127,192)', 'rgb(89,176,214)'],
+  gradientCardColors2: ['rgb(244,75,47)', 'rgb(248,112,98)'],
   ramColor: ['rgb(50, 174, 0)', 'rgb(158, 214, 58)'],
   cpuColor: ['rgb(247, 107, 28)', 'rgb(252, 177, 38)'],
   voteColor: ['rgb(54, 127, 192)', 'rgb(89, 176, 214)'],

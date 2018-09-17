@@ -40,14 +40,6 @@ export default class AccountCreation extends Component {
     })
   }
 
-  createPrivateKey = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.PrivateKeyCreation'
-      }
-    })
-  }
-
   render() {
     return (
       <View style={styles.container}>
