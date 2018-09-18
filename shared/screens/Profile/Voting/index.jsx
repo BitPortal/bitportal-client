@@ -196,9 +196,9 @@ export default class Voting extends Component {
           />
           <View style={[styles.stakeAmountContainer, styles.between]}>
             <Text style={styles.text14}>
-              {'Stake: '}
+              {'Staked: '}
               <FormattedNumber
-                value={voterInfo ? (+voterInfo.get('staked') / 1000) : 0}
+                value={voterInfo ? (+voterInfo.get('staked') / 10000) : 0}
                 maximumFractionDigits={4}
                 minimumFractionDigits={4}
               />
