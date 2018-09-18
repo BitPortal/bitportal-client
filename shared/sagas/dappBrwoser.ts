@@ -2,7 +2,7 @@ import assert from 'assert'
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/dappBrowser'
-import { escapeJSONString, parseMessageId } from 'utils'
+import { escapeJSONString, parseMessageId, typeOf, validateEOSActions } from 'utils'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
 import { currenctWalletSelector } from 'selectors/wallet'
 import {
@@ -442,16 +442,49 @@ function* receiveMessage(action: Action<string>) {
       }
       break
     case 'transferEOSAsset':
-      yield pendTransferEOSAsset(messageActionType, payload, messageId)
+      {
+        const currentWallet = yield select((state: RootState) => currenctWalletSelector(state))
+        assert(currentWallet, 'No wallet in BitPortal!')
+        const amount = payload.amount
+        assert(+amount === +amount, 'Invalid amount.')
+        const precision = payload.precision
+        assert(+precision === +precision && /^\d+$/.test(precision) && +precision >= 0, 'Invalid precision.')
+        const fromAccount = payload.from
+        assert(fromAccount === currentWallet.get('account'), 'Sender account is not in BitPortal.')
+        yield pendTransferEOSAsset(messageActionType, payload, messageId)
+      }
       break
     case 'voteEOSProducers':
-      yield pendVoteEOSProducers(messageActionType, payload, messageId)
+      {
+        const currentWallet = yield select((state: RootState) => currenctWalletSelector(state))
+        assert(currentWallet, 'No wallet in BitPortal!')
+        const voter = payload.voter
+        assert(voter === currentWallet.get('account'), 'Voter is not in BitPortal.')
+        const producers = payload.producers
+        assert(typeOf(producers) === 'Array', 'Invalid producers.')
+        yield pendVoteEOSProducers(messageActionType, payload, messageId)
+      }
       break
     case 'pushEOSAction':
-      yield pendPushEOSAction(messageActionType, payload, messageId)
+      {
+        const currentWallet = yield select((state: RootState) => currenctWalletSelector(state))
+        assert(currentWallet, 'No wallet in BitPortal!')
+        const actions = payload.actions
+        const errorMessage = validateEOSActions(actions, currentWallet.get('account'))
+        assert(!errorMessage, errorMessage)
+        yield pendPushEOSAction(messageActionType, payload, messageId)
+      }
       break
     case 'eosAuthSign':
-      yield pendSignEOSData(messageActionType, payload, messageId)
+      {
+        const currentWallet = yield select((state: RootState) => currenctWalletSelector(state))
+        assert(currentWallet, 'No wallet in BitPortal!')
+        const account = payload.account
+        assert(account === currentWallet.get('account'), 'Account is not in BitPortal.')
+        const publicKey = payload.publicKey
+        assert(publicKey === currentWallet.get('publicKey'), 'Public key is not in BitPortal.')
+        yield pendSignEOSData(messageActionType, payload, messageId)
+      }
       break
     default:
       if (messageId) {
@@ -504,7 +537,7 @@ function* rejectMessage() {
         type: 'actionFailed',
         payload: {
           error: {
-            message: 'action is canceled'
+            message: 'Action is canceled.'
           }
         }
       }))
