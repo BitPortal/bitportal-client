@@ -190,7 +190,7 @@ export default class ActionModal extends Component {
             <TouchableWithoutFeedback onPress={dismiss}>
               <View style={styles.outside} />
             </TouchableWithoutFeedback>
-            <View style={styles.content}>
+            {messageType && <View style={styles.content}>
               <View style={styles.header} onPress={() => {}}>
                 <TouchableOpacity onPress={dismiss} style={styles.close}>
                   <Ionicons name="ios-close" size={28} color={Colors.bgColor_FFFFFF} />
@@ -213,7 +213,7 @@ export default class ActionModal extends Component {
                   </TouchableOpacity>
                 </View>
               </View>
-            </View>
+            </View>}
           </View>
         </IntlProvider>
       </Modal>

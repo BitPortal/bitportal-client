@@ -162,104 +162,156 @@ function* pendSignEOSData(messageActionType: string, payload: any, messageId: st
 }
 
 function* resolveTransferEOSAsset(password: string, info: any, messageId: string) {
-  const fromAccount = info.get('fromAccount')
-  const toAccount = info.get('toAccount')
-  const amount = info.get('amount')
-  const symbol = info.get('symbol')
-  const precision = info.get('precision')
-  const memo = info.get('memo') || ''
-  const contract = info.get('contract')
-  // const permission = info.get('permission')
-  const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
-  const eosAccountName = yield select((state: RootState) => eosAccountNameSelector(state))
-  assert(eosAccountName === fromAccount, `You don\'t have the authority of account ${fromAccount}`)
-  const data = yield call(transferEOSAsset, {
-    fromAccount,
-    toAccount,
-    amount,
-    symbol,
-    precision,
-    memo,
-    password,
-    contract,
-    permission
-  })
-  yield put(actions.sendMessage({
-    messageId,
-    type: 'actionSucceeded',
-    payload: {
-      data
-    }
-  }))
-  yield put(actions.clearMessage())
+  try {
+    const fromAccount = info.get('fromAccount')
+    const toAccount = info.get('toAccount')
+    const amount = info.get('amount')
+    const symbol = info.get('symbol')
+    const precision = info.get('precision')
+    const memo = info.get('memo') || ''
+    const contract = info.get('contract')
+    // const permission = info.get('permission')
+    const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
+    const eosAccountName = yield select((state: RootState) => eosAccountNameSelector(state))
+    assert(eosAccountName === fromAccount, `You don\'t have the authority of account ${fromAccount}`)
+    const data = yield call(transferEOSAsset, {
+      fromAccount,
+      toAccount,
+      amount,
+      symbol,
+      precision,
+      memo,
+      password,
+      contract,
+      permission
+    })
+    yield put(actions.clearMessage())
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionSucceeded',
+      payload: {
+        data
+      }
+    }))
+  } catch (error) {
+    yield put(actions.clearMessage())
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionFailed',
+      payload: {
+        error: {
+          message: error.message || error
+        }
+      }
+    }))
+  }
 }
 
 function* resolveVoteEOSProducers(password: string, info: any, messageId: string) {
-  const voter = info.get('voter')
-  const producers = info.get('producers').toJS()
-  const proxy = info.get('proxy') || ''
-  // const permission = info.get('permission')
-  const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
-  const eosAccountName = yield select((state: RootState) => eosAccountNameSelector(state))
-  assert(eosAccountName === voter, `You don\'t have the authority of account ${voter}`)
+  try {
+    const voter = info.get('voter')
+    const producers = info.get('producers').toJS()
+    const proxy = info.get('proxy') || ''
+    // const permission = info.get('permission')
+    const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
+    const eosAccountName = yield select((state: RootState) => eosAccountNameSelector(state))
+    assert(eosAccountName === voter, `You don\'t have the authority of account ${voter}`)
 
-  const data = yield call(voteEOSProducers, {
-    eosAccountName,
-    password,
-    producers,
-    proxy,
-    permission
-  })
-  yield put(actions.sendMessage({
-    messageId,
-    type: 'actionSucceeded',
-    payload: {
-      data
-    }
-  }))
-  yield put(actions.clearMessage())
+    const data = yield call(voteEOSProducers, {
+      eosAccountName,
+      password,
+      producers,
+      proxy,
+      permission
+    })
+    yield put(actions.clearMessage())
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionSucceeded',
+      payload: {
+        data
+      }
+    }))
+  } catch (error) {
+    yield put(actions.clearMessage())
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionFailed',
+      payload: {
+        error: {
+          message: error.message || error
+        }
+      }
+    }))
+  }
 }
 
 function* resolvePushEOSAction(password: string, info: any, messageId: string) {
-  const pushActions = info.get('actions').toJS()
-  const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
-  const account = yield select((state: RootState) => eosAccountNameSelector(state))
+  try {
+    const pushActions = info.get('actions').toJS()
+    const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
+    const account = yield select((state: RootState) => eosAccountNameSelector(state))
 
-  const data = yield call(pushEOSAction, {
-    account,
-    password,
-    permission,
-    actions: pushActions
-  })
-  yield put(actions.sendMessage({
-    messageId,
-    type: 'actionSucceeded',
-    payload: {
-      data
-    }
-  }))
-  yield put(actions.clearMessage())
+    const data = yield call(pushEOSAction, {
+      account,
+      password,
+      permission,
+      actions: pushActions
+    })
+    yield put(actions.clearMessage())
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionSucceeded',
+      payload: {
+        data
+      }
+    }))
+  } catch (error) {
+    yield put(actions.clearMessage())
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionFailed',
+      payload: {
+        error: {
+          message: error.message || error
+        }
+      }
+    }))
+  }
 }
 
 function* resolveSignEOSData(password: string, info: any, messageId: string) {
-  const account = info.get('account')
-  const publicKey = info.get('publicKey')
-  const signData = info.get('signData')
+  try {
+    const account = info.get('account')
+    const publicKey = info.get('publicKey')
+    const signData = info.get('signData')
 
-  const signedData = yield call(eosAuthSign, {
-    account,
-    password,
-    publicKey,
-    signData
-  })
-  yield put(actions.sendMessage({
-    messageId,
-    type: 'actionSucceeded',
-    payload: {
-      data: { signedData }
-    }
-  }))
-  yield put(actions.clearMessage())
+    const signedData = yield call(eosAuthSign, {
+      account,
+      password,
+      publicKey,
+      signData
+    })
+    yield put(actions.clearMessage())
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionSucceeded',
+      payload: {
+        data: { signedData }
+      }
+    }))
+  } catch (error) {
+    yield put(actions.clearMessage())
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionFailed',
+      payload: {
+        error: {
+          message: error.message || error
+        }
+      }
+    }))
+  }
 }
 
 function* receiveMessage(action: Action<string>) {
@@ -422,7 +474,7 @@ function* receiveMessage(action: Action<string>) {
         type: 'actionFailed',
         payload: {
           error: {
-            message: error.message
+            message: error.message || error
           }
         }
       }))
@@ -443,26 +495,28 @@ function sendMessage(action: Action<any>) {
 function* rejectMessage() {
   if (dappBrowser) {
     const messageId = yield select((state: RootState) => state.dappBrowser.getIn(['pendingMessage', 'messageId']))
+    const resolving = yield select((state: RootState) => state.dappBrowser.get('resolving'))
 
-    if (messageId) {
+    if (messageId && !resolving) {
+      yield put(actions.clearMessage())
       yield put(actions.sendMessage({
         messageId,
         type: 'actionFailed',
         payload: {
           error: {
-            message: 'User canceled the action'
+            message: 'action is canceled'
           }
         }
       }))
     }
-
-    yield put(actions.clearMessage())
   }
 }
 
 function* resolveMessage(action: Action<any>) {
   if (dappBrowser) {
     const pendingMessage = yield select((state: RootState) => state.dappBrowser.get('pendingMessage'))
+    if (!pendingMessage) return
+
     const messageId = pendingMessage.get('messageId')
     const password = action.payload.password
 

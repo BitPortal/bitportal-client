@@ -189,7 +189,7 @@ export default class DappWebView extends Component {
           />
           <View style={styles.content}>
             <WebViewBridge
-              source={{ uri: this.state.uri }}
+              source={{ uri: 'https://build-prguimiryr.now.sh/' }}
               ref={(e) => { this.webviewbridge = e }}
               renderError={this.renderError}
               renderLoading={this.renderLoading}

@@ -19,9 +19,9 @@ export default handleActions({
   [actions.resolveMessageFinished] (state) {
     return state.set('resolving', false)
   },
-  [actions.rejectMessage] (state) {
-    return state.set('resolving', false)
-  },
+  // [actions.rejectMessage] (state) {
+  //   return state.set('resolving', false)
+  // },
   [actions.clearMessage] (state) {
     return state.set('pendingMessage', null)
       .set('hasPendingMessage', false)
