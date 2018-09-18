@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   between: {
-    alignItems: "center",
-    justifyContent: "space-between",
+    alignItems: 'center',
+    justifyContent: 'space-between',
     flexDirection: 'row'
   },
   info: {
@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
 })
 
 class GradiantCardContainer extends Component {
-
   render() {
     const { containerTag, extraStyle } = this.props
     return (
@@ -66,25 +65,23 @@ class GradiantCardContainer extends Component {
       </View>
     )
   }
-
 }
 
 class GradiantCard extends Component {
-
   render() {
     const { title, content, colors, onPress, extraStyle } = this.props
     const defaultColors = Colors.gradientCardColors
     return (
-      <View style={[styles.linearContainer, extraStyle]} >
+      <View style={[styles.linearContainer, extraStyle]}>
         <TouchableWithoutFeedback onPress={onPress}>
           <View>
-            <LinearGradientContainer type="right" colors={colors||defaultColors} style={[styles.between, styles.info, styles.topRadius]}>
+            <LinearGradientContainer type="right" colors={colors || defaultColors} style={[styles.between, styles.info, styles.topRadius]}>
               <Text style={styles.text14}>{title}</Text>
               <Ionicons name="ios-arrow-forward" size={18} color={Colors.bgColor_FFFFFF} />
             </LinearGradientContainer>
             <View style={[styles.content, styles.bottomRadius]}>
-              <Text style={[styles.text12, { marginHorizontal: 2, lineHeight: 15 }]}> 
-                {content} 
+              <Text style={[styles.text12, { marginHorizontal: 2, lineHeight: 15 }]}>
+                {content}
               </Text>
             </View>
           </View>
@@ -92,10 +89,9 @@ class GradiantCard extends Component {
       </View>
     )
   }
-
 }
 
 export {
   GradiantCard,
   GradiantCardContainer
-} 
+}

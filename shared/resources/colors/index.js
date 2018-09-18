@@ -31,6 +31,7 @@ const Colors = {
   bgColor_104_189_57: 'rgb(104,189,57)',
   bgColor_255_50_50: 'rgb(255,50,50)',
   bgColor_255_71_64: 'rgb(255,71,64)',
+  bgColor_239_47_95: 'rgb(239,47,95)',
   overLayColor: 'rgba(0,0,0,0.7)',
   borderColor_41_41_38: 'rgb(41,41,38)',
   borderColor_48_48_46: 'rgb(48,48,46)',

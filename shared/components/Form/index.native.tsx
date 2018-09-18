@@ -103,7 +103,12 @@ export const FieldInfo: React.SFC<FieldInfoProps> = ({ children, style }) => (
 )
 
 export const FieldError: React.SFC = ({ children }) => (
-  <Text style={styles.fieldError}>{children}</Text>
+  <View>
+    <View style={styles.fieldError}>
+      <Text style={styles.text12}>{children}</Text>
+    </View>
+    <View style={styles.arrow} />
+  </View>
 )
 
 export const TextField: React.SFC<TextFieldProps> = ({
@@ -117,11 +122,14 @@ export const TextField: React.SFC<TextFieldProps> = ({
   placeholder
 }) => (
   <FieldItem>
+    {(touched && error) && <FieldError>{touched && error}</FieldError>}
     <FieldInfo>
-      <View style={{ flexDirection: 'row' }}>
-        {label && <Text style={styles.label}>{label}</Text>}
-        {tips && <Tips tips={tips} />}
-      </View>
+      {!(touched && error) &&
+        <View style={styles.between}>
+          {label && <Text style={styles.label}>{label}</Text>}
+          {tips && <Tips tips={tips} />}
+        </View>
+      }
       {info && <View>{info}</View>}
     </FieldInfo>
     <FieldInput rightContent={rightContent}>
@@ -139,7 +147,6 @@ export const TextField: React.SFC<TextFieldProps> = ({
         {...restInput}
       />
     </FieldInput>
-    <FieldError>{touched && error}</FieldError>
   </FieldItem>
 )
 
@@ -176,10 +183,19 @@ export const TextAreaField: React.SFC<TextFieldProps> = ({
   input: { onChange, ...restInput },
   meta: { touched, error },
   label,
+  tips,
   placeholder
 }) => (
   <FieldItem>
-    <Text style={styles.label}>{label}</Text>
+    {(touched && error) && <FieldError>{touched && error}</FieldError>}
+    <FieldInfo>
+      {!(touched && error) &&
+        <View style={styles.between}>
+          {label && <Text style={styles.label}>{label}</Text>}
+          {tips && <Tips tips={tips} />}
+        </View>
+      }
+    </FieldInfo>
     <FieldInput style={{ borderBottomWidth: 0 }}>
       <TextInput
         multiline={true}
@@ -196,7 +212,6 @@ export const TextAreaField: React.SFC<TextFieldProps> = ({
         {...restInput}
       />
     </FieldInput>
-    <FieldError>{touched && error}</FieldError>
   </FieldItem>
 )
 
@@ -210,11 +225,14 @@ export const PasswordField: React.SFC<TextFieldProps> = ({
   info
 }) => (
   <FieldItem>
+    {(touched && error) && <FieldError>{touched && error}</FieldError>}
     <FieldInfo>
-      <View style={{ flexDirection: 'row' }}>
-        {label && <Text style={styles.label}>{label}</Text>}
-        {tips && <Tips tips={tips} />}
-      </View>
+      {!(touched && error) &&
+        <View style={styles.between}>
+          {label && <Text style={styles.label}>{label}</Text>}
+          {tips && <Tips tips={tips} />}
+        </View>
+      }
       {info && <View>{info}</View>}
     </FieldInfo>
     <FieldInput rightContent={rightContent}>
@@ -232,7 +250,6 @@ export const PasswordField: React.SFC<TextFieldProps> = ({
         secureTextEntry={true}
       />
     </FieldInput>
-    <FieldError>{touched && error}</FieldError>
   </FieldItem>
 )
 

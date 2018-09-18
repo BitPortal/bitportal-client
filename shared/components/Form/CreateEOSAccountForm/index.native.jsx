@@ -1,15 +1,11 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Navigation } from 'react-native-navigation'
-import { TouchableOpacity, Text, View } from 'react-native'
+import { LayoutAnimation } from 'react-native'
 import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
 import { IntlProvider } from 'react-intl'
 import { FormContainer, TextField, PasswordField, TextAreaField, SubmitButton } from 'components/Form'
 import { normalizeEOSAccountName, normalizeText } from 'utils/normalize'
-import { BITPORTAL_API_TERMS_URL } from 'constants/env'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import Colors from 'resources/colors'
 import PasswordStrength from 'components/PasswordStrength'
 import Alert from 'components/Alert'
 import { validateEOSAccountName } from 'utils/validate'
@@ -19,7 +15,6 @@ import * as eosAccountActions from 'actions/eosAccount'
 import { onEventWithMap } from 'utils/analytics'
 import { ACCOUNT_EOS_CREATE } from 'constants/analytics'
 import messages from 'resources/messages'
-import styles from './styles'
 
 export const errorMessages = (error, messages) => {
   if (!error) { return null }
@@ -107,39 +102,8 @@ const validate = (values, props) => {
 @reduxForm({ form: 'createEOSAccountForm', validate })
 
 export default class CreateEOSAccountForm extends Component {
-  state = {
-    unsignAgreement: true,
-    hasPrivateKey: false
-  }
-
-  showPrivateKey = () => {
-    this.setState(prevState => ({ hasPrivateKey: !prevState.hasPrivateKey }))
-  }
-
-  signAgreement = () => {
-    this.setState(prevState => ({ unsignAgreement: !prevState.unsignAgreement }))
-  }
-
-  checkTerms = () => {
-    const { locale } = this.props
-
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.BPWebView',
-        passProps: {
-          title: messages[locale].webview_title_tos,
-          uri: BITPORTAL_API_TERMS_URL
-        }
-      }
-    })
-  }
-
-  importAccount = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.AccountImport'
-      }
-    })
+  UNSAFE_componentWillUpdate() {
+    LayoutAnimation.easeInEaseOut()
   }
 
   submit = (data) => {
@@ -151,9 +115,8 @@ export default class CreateEOSAccountForm extends Component {
 
   render() {
     const { handleSubmit, invalid, pristine, eosAccount, locale, password } = this.props
-    const { unsignAgreement, hasPrivateKey } = this.state
     const loading = eosAccount.get('loading')
-    const disabled = invalid || pristine || loading || unsignAgreement
+    const disabled = invalid || pristine || loading
     const error = eosAccount.get('error')
 
     return (
@@ -176,12 +139,14 @@ export default class CreateEOSAccountForm extends Component {
             rightContent={<PasswordStrength strength={getPasswordStrength(password)} />}
           />
           <Field
-            placeholder={messages[locale].add_eos_text_confirm_password}
+            label={messages[locale].add_eos_text_confirm_password}
+            placeholder={messages[locale].add_eos_error_text_confirm_password}
             name="confirmedPassword"
             component={PasswordField}
           />
           <Field
-            placeholder={messages[locale].add_eos_text_password_hint}
+            label={messages[locale].add_eos_text_password_hint}
+            placeholder={messages[locale].add_eos_text_password_hint_blank}
             name="passwordHint"
             component={TextField}
           />
@@ -192,36 +157,16 @@ export default class CreateEOSAccountForm extends Component {
             name="inviteCode"
             component={TextField}
           />
-          {
-            hasPrivateKey && (
-              <Field
-                placeholder={messages[locale].add_eos_text_private_key}
-                name="privateKey"
-                normalize={normalizeText}
-                component={TextAreaField}
-              />
-            )
-          }
-          <TouchableOpacity style={styles.privateKeyBtn} onPress={this.showPrivateKey}>
-            <Text style={styles.text14}>
-              {hasPrivateKey ? messages[locale].add_eos_create_button_collapse_private_key : messages[locale].add_eos_create_button_with_private_key}
-            </Text>
-          </TouchableOpacity>
-          <View style={styles.terms}>
-            <TouchableOpacity style={styles.termsBtn} onPress={this.signAgreement}>
-              <Ionicons name="ios-checkmark-circle" size={24} color={unsignAgreement ? Colors.textColor_181_181_181 : Colors.textColor_89_185_226} />
-            </TouchableOpacity>
-            <Text numberOfLines={1} style={styles.text14}>
-              {messages[locale].add_eos_text_tos_agree}
-              <Text numberOfLines={1} onPress={this.checkTerms} style={[styles.text14, { textDecorationLine: 'underline', color: Colors.textColor_89_185_226 }]}>
-                {messages[locale].add_eos_link_tos}
-              </Text>
-            </Text>
-          </View>
+          <Field
+            label={messages[locale].add_eos_create_button_with_private_key}
+            placeholder={messages[locale].add_eos_text_private_key}
+            name="privateKey"
+            normalize={normalizeText}
+            component={TextAreaField}
+          />
+
           <SubmitButton disabled={disabled} onPress={handleSubmit(this.submit)} text={messages[locale].add_eos_create_button_create} />
-          <Text onPress={this.importAccount} style={[styles.text14, { marginVertical: 20, color: Colors.textColor_89_185_226 }]}>
-            {messages[locale].add_eos_create_button_import}
-          </Text>
+
           <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearEOSAccountError} />
         </FormContainer>
       </IntlProvider>
