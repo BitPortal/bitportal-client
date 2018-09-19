@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {
   View,
+  LayoutAnimation,
   ScrollView,
 } from 'react-native'
 import { Navigation } from 'react-native-navigation'
@@ -23,7 +24,6 @@ import { eosPriceSelector } from 'selectors/ticker'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import NavigationBar, { CommonTitle, CommonRightButton } from 'components/NavigationBar'
-import SettingItem from 'components/SettingItem'
 import SplashScreen from 'react-native-splash-screen'
 import { checkCamera } from 'utils/permissions'
 import { ASSETS_QR, ASSETS_TOKEN_DETAIL, ASSETS_EOS_RESOURCE, ASSETS_ADD_TOKEN } from 'constants/analytics'
@@ -36,6 +36,7 @@ import AccountList from './AccountList'
 import EnableAssets from './EnableAssets'
 import BalanceList from './BalanceList'
 import TotalAssetsCard from './TotalAssetsCard'
+import UserAgreement from './UserAgreement'
 
 @connect(
   state => ({
@@ -73,7 +74,13 @@ export default class Assets extends Component {
   }
 
   state = {
+    type: '',
+    isVisible: false,
     isVisible2: false
+  }
+
+  UNSAFE_componentWillUpdate() {
+    LayoutAnimation.easeInEaseOut()
   }
 
   displayAccountList = () => {}
@@ -147,20 +154,34 @@ export default class Assets extends Component {
     })
   }
 
-  importNewAccount = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.AccountImport'
-      }
+  dismissModal = () => {
+    this.setState({ isVisible: false })
+  }
+
+  acceptUserAgreement = () => {
+    const { type } = this.state
+    let entrance = 'EOSAccountCreation'
+    switch (type) {
+      case 'import':
+        entrance = 'AccountImport'
+        break;
+      case 'create':
+        entrance = 'EOSAccountCreation'
+        break;
+      default:
+        break;
+    }
+    this.setState({ isVisible: false }, () => {
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: `BitPortal.${entrance}`
+        }
+      })
     })
   }
 
-  createEOSAccount = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.EOSAccountCreation'
-      }
-    })
+  showUserAgreement = (type) => {
+    this.setState({ isVisible: true, type })
   }
 
   checkResourcesDetails = () => {
@@ -226,13 +247,32 @@ export default class Assets extends Component {
               <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 10 }}>
 
                 <GradiantCardContainer containerTag="创建新账户" extraStyle={{ marginTop: 10 }}>
-                  <GradiantCard onPress={this.createNewAccount} extraStyle={{ marginBottom: 10 }} title="注册码" content="BitPortal 将向部分用户提供注册码进行 EOS 账户注册。您可参加 BitPortal 官方组织的活动获取注册码。" />
-                  <GradiantCard extraStyle={{ marginBottom: 10 }} title="好友协助" content="好友协助进行注册时，其将消耗一定的 EOS，已购买及抵押部分系统资源。" />
-                  <GradiantCard title="智能合约" content="好友协助进行注册时，其将消耗一定的 EOS，已购买及抵押部分系统资源。" />
+                  <GradiantCard
+                    title="注册码"
+                    extraStyle={{ marginBottom: 10 }}
+                    onPress={() => this.showUserAgreement('create')}
+                    content="BitPortal 将向部分用户提供注册码进行 EOS 账户注册。您可参加 BitPortal 官方组织的活动获取注册码。"
+                  />
+                  <GradiantCard
+                    title="好友协助"
+                    extraStyle={{ marginBottom: 10 }}
+                    onPress={() => this.showUserAgreement('assistance')}
+                    content="好友协助进行注册时，其将消耗一定的 EOS，已购买及抵押部分系统资源。"
+                  />
+                  <GradiantCard
+                    title="智能合约"
+                    onPress={() => this.showUserAgreement('contract')}
+                    content="好友协助进行注册时，其将消耗一定的 EOS，已购买及抵押部分系统资源。"
+                  />
                 </GradiantCardContainer>
 
                 <GradiantCardContainer containerTag="导入已有账户" extraStyle={{ marginTop: 10 }}>
-                  <GradiantCard onPress={this.importNewAccount} colors={Colors.gradientCardColors2} title="私钥导入" content="输入已创建的账户私钥，将 EOS 钱包导入到 BitPortal 中。" />
+                  <GradiantCard
+                    title="私钥导入"
+                    colors={Colors.gradientCardColors2}
+                    onPress={() => this.showUserAgreement('import')}
+                    content="输入已创建的账户私钥，将 EOS 钱包导入到 BitPortal 中。"
+                  />
                 </GradiantCardContainer>
 
               </ScrollView>
@@ -252,13 +292,6 @@ export default class Assets extends Component {
                   componentId={this.props.componentId}
                   onPress={this.displayReceiceQRCode}
                 />
-                {!activeEOSAccount.get('account_name') && (
-                  <SettingItem
-                    leftItemTitle={<FormattedMessage id="assets_no_account_button_import" />}
-                    onPress={() => this.createEOSAccount()}
-                    extraStyle={{ marginTop: 10, marginBottom: 10 }}
-                  />
-                )}
                 {!!activeEOSAccount.get('account_name') && (
                   <EnableAssets
                     Title={<FormattedMessage id="assets_label_assets" />}
@@ -266,11 +299,11 @@ export default class Assets extends Component {
                   />
                 )}
                 {eosAssetBalance && (
-                <BalanceList
-                     data={eosAssetBalance}
-                     eosPrice={eosPrice}
-                     onPress={this.checkAsset}
-                />
+                  <BalanceList
+                    data={eosAssetBalance}
+                    eosPrice={eosPrice}
+                    onPress={this.checkAsset}
+                  />
                 )}
               </ScrollView>
             </View>
@@ -291,6 +324,7 @@ export default class Assets extends Component {
               dismissModal={() => this.setState({ isVisible2: false })}
             />
           </Modal>
+          <UserAgreement acceptUserAgreement={this.acceptUserAgreement} isVisible={this.state.isVisible} dismissModal={this.dismissModal} />
         </View>
       </IntlProvider>
     )

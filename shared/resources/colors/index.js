@@ -11,7 +11,7 @@ const Colors = {
   voteColor: ['rgb(54, 127, 192)', 'rgb(89, 176, 214)'],
   tradeFailed: ['rgb(244, 75, 47)', 'rgb(248, 112, 98)'],
   tradeSuccess: ['rgb(24, 79, 174)', 'rgb(0, 157, 255)'],
-  disabled: ['rgb(181,181,181)', 'rgb(181,181,181)'],
+  disabled: ['rgb(107,107,107)', 'rgb(107,107,107)'],
   recommandColor: ['#184FAE', '#009DFF'],
   cooperateColor: ['#32AE00', '#9ED63A'],
   linearUnderlayColor: 'rgb(24,79,174)',

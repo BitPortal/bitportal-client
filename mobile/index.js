@@ -88,7 +88,7 @@ const runApp = async () => {
   }
 
   SplashScreen.hide()
-  KeyboardManager.setEnableAutoToolbar(true);
+  Platform.OS === 'ios' && KeyboardManager.setEnableAutoToolbar(true);
 }
 
 const setStatusBarStyle = async () => {
