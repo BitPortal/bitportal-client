@@ -1,7 +1,7 @@
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Colors from 'resources/colors'
 import { FontScale } from 'utils/dimens'
-import { Platform } from 'react-native'
+import { Platform, StyleSheet } from 'react-native'
 
 export default EStyleSheet.create({
   formContainer: {
@@ -119,17 +119,23 @@ export default EStyleSheet.create({
     justifyContent: 'center',
     paddingLeft: 10
   },
-  arrow: {
+  triangle: {
+    overflow: 'hidden',
     width: 0,
     height: 0,
-    marginBottom: 4,
-    borderLeftWidth: 6,
-    borderLeftColor: 'transparent',
+    backgroundColor: 'transparent',
     borderRightWidth: 6,
-    borderRightColor: 'transparent',
+    borderLeftWidth: 6,
     borderTopWidth: 6,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderTopColor: Colors.bgColor_239_47_95,
+    marginBottom: 4,
     marginLeft: '90%',
-    borderColor: Colors.bgColor_239_47_95,
+  },
+  errorBorder: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: Colors.bgColor_239_47_95
   },
   text12: {
     fontSize: FontScale(12),

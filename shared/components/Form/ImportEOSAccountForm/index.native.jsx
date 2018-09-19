@@ -39,7 +39,7 @@ const validate = (values, props) => {
   const errors = {}
   const { locale } = props
   if (!values.get('password')) {
-    errors.password = <FormattedMessage id="add_eos_label_set_password" />
+    errors.password = messages[locale].add_eos_label_set_password
   }
 
   if (!!values.get('password') && values.get('password').length < 6) {
@@ -55,17 +55,17 @@ const validate = (values, props) => {
   }
 
   if (!values.get('confirmedPassword')) {
-    errors.confirmedPassword = <FormattedMessage id="add_eos_error_text_password_blank" />
+    errors.confirmedPassword = messages[locale].add_eos_error_text_password_blank
   }
 
   if (values.get('confirmedPassword') !== values.get('password')) {
-    errors.confirmedPassword = <FormattedMessage id="add_eos_error_text_password_unmatch" />
+    errors.confirmedPassword = messages[locale].add_eos_error_text_password_unmatch
   }
 
   if (!values.get('privateKey')) {
-    errors.privateKey = <FormattedMessage id="add_eos_import_error_text_private_key_blank" />
+    errors.privateKey = messages[locale].add_eos_import_error_text_private_key_blank
   } else if (!validateText(values.get('privateKey'))) {
-    errors.privateKey = <FormattedMessage id="add_eos_error_popup_text_private_key_invalid" />
+    errors.privateKey = messages[locale].add_eos_error_popup_text_private_key_invalid
   }
 
   return errors
@@ -102,7 +102,7 @@ export default class ImportEOSAccountForm extends Component {
         <FormContainer>
           <Field
             label={messages[locale].add_eos_import_error_text_private_key}
-            placeholder={messages[locale].add_eos_text_private_key}
+            placeholder={messages[locale].add_eos_import_error_text_private_key_blank}
             name="privateKey"
             component={TextAreaField}
             normalize={normalizePrivateKey}

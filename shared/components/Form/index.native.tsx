@@ -107,7 +107,7 @@ export const FieldError: React.SFC = ({ children }) => (
     <View style={styles.fieldError}>
       <Text style={styles.text12}>{children}</Text>
     </View>
-    <View style={styles.arrow} />
+    <View style={styles.triangle} />
   </View>
 )
 
@@ -132,7 +132,7 @@ export const TextField: React.SFC<TextFieldProps> = ({
       }
       {info && <View>{info}</View>}
     </FieldInfo>
-    <FieldInput rightContent={rightContent}>
+    <FieldInput style={(touched && error) && styles.errorBorder} rightContent={rightContent}>
       <TextInput
         style={styles.input}
         autoCorrect={false}
@@ -196,7 +196,7 @@ export const TextAreaField: React.SFC<TextFieldProps> = ({
         </View>
       }
     </FieldInfo>
-    <FieldInput style={{ borderBottomWidth: 0 }}>
+    <FieldInput style={(touched && error) && styles.errorBorder}>
       <TextInput
         multiline={true}
         numberOfLines={4}
@@ -235,7 +235,7 @@ export const PasswordField: React.SFC<TextFieldProps> = ({
       }
       {info && <View>{info}</View>}
     </FieldInfo>
-    <FieldInput rightContent={rightContent}>
+    <FieldInput style={(touched && error) && styles.errorBorder} rightContent={rightContent}>
       <TextInput
         style={styles.input}
         autoCorrect={false}
