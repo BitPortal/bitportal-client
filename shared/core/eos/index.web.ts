@@ -112,44 +112,25 @@ const voteEOSProducers = async ({ eosAccountName, password, permission, producer
   const keyProvider = wifs.map((item: any) => item.wif)
   const sortedProducers = producers.sort(sortProducers)
 
-  let eos = await initEOS({})
-  const chainInfo = await eos.getInfo({})
-  eos = await initEOS({ chainId: chainInfo.chain_id })
-  const blockInfo = await eos.getBlock(chainInfo.last_irreversible_block_num)
-  const expireInSeconds = 60 * 1
-  const block_num = blockInfo.block_num
-  const ref_block_num = block_num & 0xFFFF
-  const ref_block_prefix = blockInfo.ref_block_prefix
-  const options = {
+  const eos = await initEOS({ keyProvider })
+  const data = await eos.transaction({
+    actions: [{
+      account: 'eosio',
+      name: 'voteproducer',
+      authorization: [{
+        actor: eosAccountName,
+        permission: _permission.toLowerCase()
+      }],
+      data: {
+        voter: eosAccountName,
+        producers: sortedProducers,
+        proxy: proxy || ''
+      }
+    }],
     broadcast: false,
-    sign: true,
-    authorization: eosAccountName
-  }
-
-  const headers = {
-    ref_block_num,
-    ref_block_prefix,
-    expiration: new Date(new Date().getTime() + expireInSeconds * 1000).toISOString().split('.')[0],
-    net_usage_words: 0,
-    max_cpu_usage_ms: 0,
-    delay_sec: 0
-  }
-
-  eos = await initEOS({
-    keyProvider,
-    transactionHeaders: (_: any, callback: any) => callback(null, headers),
-    broadcast: false,
-    sign: true,
-    chainId: chainInfo.chainId,
-    // checkChainId: false - enable after merge of https://github.com/EOSIO/eosjs/pull/179
+    sign: true
   })
-  const transactionInfo = await eos.transaction(
-    (tr: any) => tr.voteproducer({ producers: sortedProducers, voter: eosAccountName, proxy: proxy || '' }),
-    options
-  )
 
-  eos = await initEOS({ broadcast: true })
-  const data = await eos.pushTransaction(transactionInfo.transaction)
   return data
 }
 
@@ -172,9 +153,26 @@ const transferEOSAsset = async ({
   const wifs = await getEOSWifsByInfo(password, accountInfo, [_permission])
   const keyProvider = wifs.map((item: any) => item.wif)
   const eos = await initEOS({ keyProvider })
-  const contractAccount = await eos.contract(contract)
-  const transactionResult = await contractAccount.transfer({ quantity, memo: memo || '', from: fromAccount, to: toAccount })
-  return transactionResult
+  const data = await eos.transaction({
+    actions: [{
+      account: contract,
+      name: 'transfer',
+      authorization: [{
+        actor: fromAccount,
+        permission: _permission.toLowerCase()
+      }],
+      data: {
+        quantity,
+        memo: memo || '',
+        from: fromAccount,
+        to: toAccount
+      }
+    }],
+    broadcast: false,
+    sign: true
+  })
+
+  return data
 }
 
 const pushEOSAction = async ({
