@@ -296,6 +296,11 @@ declare module 'react-native-sensitive-info' {
   export = file
 }
 
+declare module 'serialize-javascript' {
+  const file: any
+  export = file
+}
+
 declare module 'core/eos' {
   interface EOS {
     generateMasterKeys: any

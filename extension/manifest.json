@@ -1,0 +1,19 @@
+{
+  "name": "BitPortal",
+  "version": "0.2.1",
+  "description": "BitPortal browser extension",
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "scripts": ["scripts/background.js"]
+  },
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "manifest_version": 2
+}

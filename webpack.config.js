@@ -26,6 +26,7 @@ const baseConfig = {
       resolve('browser'),
       resolve('desktop'),
       resolve('server'),
+      resolve('extension'),
       'node_modules'
     ],
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
@@ -306,10 +307,58 @@ const desktopConfig = {
   }
 }
 
+const extensionConfig = {
+  ...baseConfig,
+  context: resolve('extension'),
+  entry: {
+    popup: './popup.tsx',
+    background: './background.ts'
+  },
+  resolve: {
+    ...baseConfig.resolve,
+    mainFiles: ['index.extension', ...baseConfig.resolve.mainFiles]
+  },
+  output: {
+    ...baseConfig.output,
+    path: resolve('static/extension'),
+    filename: ifProduction('scripts/[name].js?v=[hash]', 'scripts/[name].js')
+  },
+  plugins: removeEmpty([
+    ...baseConfig.plugins,
+    new HtmlWebpackPlugin({
+      inject: false,
+      minify: { collapseWhitespace: true },
+      template: 'popup.html',
+      appMountId: 'app',
+      mobile: true,
+      chunks: ['popup'],
+      filename: 'popup.html'
+    }),
+    new CopyWebpackPlugin([
+      {
+        from: join(__dirname, 'extension/manifest.json'),
+        to: join(__dirname, 'static/extension/manifest.json')
+      }
+    ], { copyUnmodified: true })
+  ]),
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        uglifyOptions: {
+          mangle: false
+        }
+      })
+    ]
+  }
+}
+
 const configs = {
   web: browserConfig,
   node: serverConfig,
-  "electron-renderer": desktopConfig
+  "electron-renderer": desktopConfig,
+  extension: extensionConfig
 }
 
 module.exports = configs[process.env.TARGET]
