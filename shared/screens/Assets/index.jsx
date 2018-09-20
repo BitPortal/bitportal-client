@@ -155,6 +155,9 @@ export default class Assets extends Component {
       case 'create':
         entrance = 'EOSAccountCreation'
         break;
+      case 'assistance':
+        entrance = 'AccountAssistance'
+        break;
       default:
         break;
     }
