@@ -20,7 +20,6 @@ import AssetsTransfer from 'screens/Assets/AssetsTransfer'
 import AvailableAssets from 'screens/Assets/AvailableAssets'
 import Backup from 'screens/Account/Backup'
 import AccountImport from 'screens/Account/AccountImport'
-import AccountCreation from 'screens/Account/AccountCreation'
 import AccountSelection from 'screens/Account/AccountSelection'
 import EOSAccountCreation from 'screens/Account/EOSAccountCreation'
 import Discovery from 'screens/Discovery'
@@ -41,7 +40,6 @@ import Mediafax from 'screens/Profile/Mediafax'
 import Languages from 'screens/Profile/Settings/Languages'
 import Currencies from 'screens/Profile/Settings/Currencies'
 import NodeSettings from 'screens/Profile/Settings/NodeSettings'
-import AccountList from 'screens/Profile/AccountList'
 import CreateContact from 'screens/Profile/CreateContact'
 import ResetPassword from 'screens/Profile/ResetPassword'
 import AccountManager from 'screens/Profile/AccountManager'
@@ -114,7 +112,6 @@ export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.Languages', () => screenComponent(Languages, store))
   Navigation.registerComponent('BitPortal.Currencies', () => screenComponent(Currencies, store))
   Navigation.registerComponent('BitPortal.NodeSettings', () => screenComponent(NodeSettings, store))
-  Navigation.registerComponent('BitPortal.AccountList', () => screenComponent(AccountList, store))
   Navigation.registerComponent('BitPortal.CreateContact', () => screenComponent(CreateContact, store))
   Navigation.registerComponent('BitPortal.ResetPassword', () => screenComponent(ResetPassword, store))
   Navigation.registerComponent('BitPortal.AccountManager', () => screenComponent(AccountManager, store))
@@ -124,7 +121,6 @@ export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.TransactionHistory', () => screenComponent(TransactionHistory, store))
   Navigation.registerComponent('BitPortal.Backup', () => screenComponent(Backup, store))
   Navigation.registerComponent('BitPortal.AccountImport', () => screenComponent(AccountImport, store))
-  Navigation.registerComponent('BitPortal.AccountCreation', () => screenComponent(AccountCreation, store))
   Navigation.registerComponent('BitPortal.AccountSelection', () => screenComponent(AccountSelection, store))
   Navigation.registerComponent('BitPortal.EOSAccountCreation', () => screenComponent(EOSAccountCreation, store))
 }

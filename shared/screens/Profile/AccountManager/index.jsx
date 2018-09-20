@@ -49,7 +49,7 @@ export const errorMessages = (error, messages) => {
   { withRef: true }
 )
 
-export default class AccountList extends Component {
+export default class AccountManager extends Component {
   static get options() {
     return {
       bottomTabs: {

@@ -9,7 +9,6 @@ import {
 import { Navigation } from 'react-native-navigation'
 import storage from 'utils/storage'
 import Colors from 'resources/colors'
-import Modal from 'react-native-modal'
 import * as walletActions from 'actions/wallet'
 import * as tickerActions from 'actions/ticker'
 import * as balanceActions from 'actions/balance'
@@ -32,7 +31,6 @@ import Dialog from 'components/Dialog'
 import messages from 'resources/messages'
 import { GradiantCard, GradiantCardContainer } from 'components/GradiantCard'
 import styles from './styles'
-import AccountList from './AccountList'
 import EnableAssets from './EnableAssets'
 import BalanceList from './BalanceList'
 import TotalAssetsCard from './TotalAssetsCard'
@@ -75,8 +73,7 @@ export default class Assets extends Component {
 
   state = {
     type: '',
-    isVisible: false,
-    isVisible2: false
+    isVisible: false
   }
 
   UNSAFE_componentWillUpdate() {
@@ -141,16 +138,6 @@ export default class Assets extends Component {
           symbol: 'EOS'
         }
       }
-    })
-  }
-
-  createNewAccount = () => {
-    this.setState({ isVisible2: false }, () => {
-      Navigation.push(this.props.componentId, {
-        component: {
-          name: 'BitPortal.EOSAccountCreation'
-        }
-      })
     })
   }
 
@@ -308,22 +295,6 @@ export default class Assets extends Component {
               </ScrollView>
             </View>
           )}
-          <Modal
-            animationIn="fadeIn"
-            animationOut="fadeOut"
-            style={{ margin: 0 }}
-            isVisible={this.state.isVisible2}
-            backdropOpacity={0}
-          >
-            <AccountList
-              data={hdWalletList}
-              moreData={classicWalletList}
-              activeAccount={wallet.get('data')}
-              onPress={this.switchWallet}
-              createNewAccount={() => this.createNewAccount()}
-              dismissModal={() => this.setState({ isVisible2: false })}
-            />
-          </Modal>
           <UserAgreement acceptUserAgreement={this.acceptUserAgreement} isVisible={this.state.isVisible} dismissModal={this.dismissModal} />
         </View>
       </IntlProvider>
