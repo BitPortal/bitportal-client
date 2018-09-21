@@ -28,19 +28,43 @@ export const errorMessages = (error, messages) => {
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
       return messages.general_error_popup_text_password_incorrect
-    case 'assertion failure with message: user must stake before they can vote':
-      return messages.voting_error_popup_text_no_stake
+    case 'assertion failure with message: insufficient staked net bandWidth':
+      return messages.voting_popup_label_stake_net_insufficient
+    case 'assertion failure with message: insufficient staked cpu bandWidth':
+      return messages.voting_popup_label_stake_cpu_insufficient
     case 'EOS System Error':
-      return messages.vt_popup_title_eossystem
+      if (message.indexOf('assertion failure with message: insufficient staked net bandWidth') !== 1) {
+        return messages.voting_popup_label_stake_net_insufficient
+      } else if (message.indexOf('assertion failure with message: insufficient staked cpu bandWidth') !== 1) {
+        return messages.voting_popup_label_stake_cpu_insufficient
+      } else if (message.indexOf('assertion failure with message: user must stake before they can vote') !== 1) {
+        return messages.voting_popup_label_stake_new_account
+      }
+      return messages.resource_error_popup_text_eos_system_error
     default:
       return messages.voting_error_popup_text_vote_failed
   }
 }
 
-export const errorMessageDetail = (error) => {
-  if (!error || typeof error !== 'object') { return null }
+export const errorMessageDetail = (error, messages) => {
+  if (!error) { return null }
 
-  return error.detail
+  const message = typeof error === 'object' ? error.message : error
+
+  switch (String(message)) {
+    case 'EOS System Error':
+      if (message.indexOf('assertion failure with message: insufficient staked net bandWidth') !== 1) {
+        return messages.voting_popup_text_stake_net_insufficient
+      } else if (message.indexOf('assertion failure with message: insufficient staked cpu bandWidth') !== 1) {
+        return messages.voting_popup_text_stake_cpu_insufficient
+      } else if (message.indexOf('assertion failure with message: user must stake before they can vote') !== 1) {
+        return messages.voting_popup_text_stake_new_account
+      }
+      return messages.resource_error_popup_text_eos_system_error
+    default:
+      return error.detail
+  }
+
 }
 
 @connect(
@@ -254,7 +278,7 @@ export default class Voting extends Component {
             isVoting={isVoting}
           />
           <Alert message={this.state.alertMessage} dismiss={this.closeAlert} />
-          <Alert message={errorMessages(error, messages[locale])} subMessage={errorMessageDetail(error)} dismiss={this.props.actions.clearVotingError} />
+          <Alert message={errorMessages(error, messages[locale])} subMessage={errorMessageDetail(error, messages[locale])} dismiss={this.props.actions.clearVotingError} />
           <Prompt
             isVisible={this.state.isVisible}
             title={messages[locale].general_popup_label_password}

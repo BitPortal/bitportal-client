@@ -39,16 +39,33 @@ export const errorMessages = (error, messages) => {
     case 'transaction exceeded the current CPU usage limit imposed on the transaction':
       return messages.resource_error_popup_text_cpu_insufficient
     case 'EOS System Error':
+      if (message.indexOf('assertion failure with message: insufficient staked net bandWidth') !== 1) {
+        return messages.voting_popup_label_stake_net_insufficient
+      } else if (message.indexOf('assertion failure with message: insufficient staked cpu bandWidth') !== 1) {
+        return messages.voting_popup_label_stake_cpu_insufficient
+      }
       return messages.resource_error_popup_text_eos_system_error
     default:
       return messages.resource_error_popup_text_transaction_failed
   }
 }
 
-export const errorMessageDetail = (error) => {
-  if (!error || typeof error !== 'object') { return null }
+export const errorMessageDetail = (error, messages) => {
+  if (!error) { return null }
 
-  return error.detail
+  const message = typeof error === 'object' ? error.message : error
+
+  switch (String(message)) {
+    case 'EOS System Error':
+      if (message.indexOf('assertion failure with message: insufficient staked net bandWidth') !== 1) {
+        return messages.voting_popup_text_stake_net_insufficient
+      } else if (message.indexOf('assertion failure with message: insufficient staked cpu bandWidth') !== 1) {
+        return messages.voting_popup_text_stake_cpu_insufficient
+      }
+      return messages.resource_error_popup_text_eos_system_error
+    default:
+      return error.detail
+  }
 }
 
 const validate = (values, props) => {
@@ -167,7 +184,7 @@ export default class DelegateBandwidthForm extends Component {
               onPress={handleSubmit(this.submit)}
               text={this.state.activeForm === 'Delegate' ? messages[locale].resource_button_stake : messages[locale].resource_button_unstake}
             />
-            <Alert message={errorMessages(error, messages[locale])} subMessage={errorMessageDetail(error)} dismiss={this.props.actions.clearBandwidthError} />
+            <Alert message={errorMessages(error, messages[locale])} subMessage={errorMessageDetail(error, messages[locale])} dismiss={this.props.actions.clearBandwidthError} />
             <Alert message={!!showSuccess && messages[locale].resource_popup_text_transaction_successful} dismiss={this.props.actions.hideSuccessModal} />
             <Prompt
               isVisible={this.state.isVisible}

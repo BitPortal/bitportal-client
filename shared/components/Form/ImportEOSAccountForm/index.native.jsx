@@ -29,7 +29,7 @@ export const errorMessages = (error, messages) => {
     case 'No key accounts':
       return 'No key accounts'
     case 'EOS System Error':
-      return 'EOS System Error'
+      return messages.resource_error_popup_text_eos_system_error
     default:
       return messages.add_eos_import_error_popup_text_private_key_import_failed
   }
