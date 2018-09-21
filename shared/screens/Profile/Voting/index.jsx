@@ -208,6 +208,7 @@ export default class Voting extends Component {
     const { locale, producerList, total_producer_vote_weight, loading, selected, voterInfo, voting } = this.props
     const disabled = !selected.size && !producerList.size
     const isVoting = voting.get('loading')
+    const showSuccess = voting.get('showSuccess')
     const error = voting.get('error')
     const showSelected = voting.get('showSelected')
 
@@ -278,7 +279,8 @@ export default class Voting extends Component {
             isVoting={isVoting}
           />
           <Alert message={this.state.alertMessage} dismiss={this.closeAlert} />
-          <Alert message={errorMessages(error, messages[locale])} subMessage={errorMessageDetail(error, messages[locale])} dismiss={this.props.actions.clearVotingError} />
+          <Alert delay={500} message={!!showSuccess && messages[locale].voting_popup_text_voting_successful} dismiss={this.props.actions.hideSuccessModal} />
+          <Alert delay={500} message={errorMessages(error, messages[locale])} subMessage={errorMessageDetail(error, messages[locale])} dismiss={this.props.actions.clearVotingError} />
           <Prompt
             isVisible={this.state.isVisible}
             title={messages[locale].general_popup_label_password}

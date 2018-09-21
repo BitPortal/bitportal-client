@@ -211,6 +211,7 @@
   "voting_popup_text_stake_cpu_insufficient": "Your CPU is not insufficient, please go to \"Rescource Management\" to stake. CPU is an EOS system rescource, and it is the factor of ur voting weight.",
   "voting_popup_label_stake_new_account": "Need to stake before voting!",
   "voting_popup_text_stake_new_account": "You have not stake EOS for your vote, please go to \"Rescource Management\" to stake.",
+  "voting_popup_text_voting_successful": "Vote success",
 
   "bp_info_label_team_location": "Team Location",
   "bp_info_label_bp_location": "BP Location",
