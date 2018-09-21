@@ -3,8 +3,8 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { Text, View, ScrollView, TouchableOpacity, TouchableHighlight, InteractionManager } from 'react-native'
-import FastImage from 'react-native-fast-image'
+import { Image, Text, View, ScrollView, TouchableOpacity, TouchableHighlight, InteractionManager } from 'react-native'
+// import FastImage from 'react-native-fast-image'
 import Colors from 'resources/colors'
 import images from 'resources/images'
 import Prompt from 'components/Prompt'
@@ -92,7 +92,7 @@ export default class Backup extends Component {
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={[styles.content, { alignItems: 'center' }]}>
               <View style={{ marginVertical: 20 }}>
-                <FastImage source={images.backup_group} style={styles.image} />
+                <Image source={images.backup_group} style={styles.image} />
               </View>
               <Text style={styles.text14}>
                 {messages[locale].add_create_success_label_backup_private_key}
