@@ -45,6 +45,10 @@
   "add_eos_create_button_import": "계정 불러오기",
   "add_eos_create_error_popup_text_create_failed": "계정 생성에 실패했습니다. 다시 시도해주세요.\n궁긍하신 사항은 info@bitportal.io로 문의해주세요.",
   "add_eos_create_error_popup_text_data_extraction_failed": "데이터를 불러오지 못했습니다.\n다시 시도해주세요.",
+  "add_eos_create_title_create_assistance": "好友协助创建账户",
+  "add_eos_create_button_next": "Next",
+
+
   "add_eos_label_set_password": "비밀번호 입력하기",
   "add_eos_text_password": "비밀번호 설정",
   "add_eos_text_confirm_password": "비밀번호 다시 입력하기",

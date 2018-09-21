@@ -7,7 +7,6 @@ import { IntlProvider } from 'react-intl'
 import { FormContainer, TextField, PasswordField, SubmitButton } from 'components/Form'
 import { normalizeEOSAccountName } from 'utils/normalize'
 import PasswordStrength from 'components/PasswordStrength'
-import Alert from 'components/Alert'
 import { validateEOSAccountName } from 'utils/validate'
 import { getPasswordStrength } from 'utils'
 import * as walletActions from 'actions/wallet'
@@ -15,31 +14,6 @@ import * as eosAccountActions from 'actions/eosAccount'
 import { onEventWithMap } from 'utils/analytics'
 import { ACCOUNT_EOS_CREATE } from 'constants/analytics'
 import messages from 'resources/messages'
-
-export const errorMessages = (error, messages) => {
-  if (!error) { return null }
-
-  const message = typeof error === 'object' ? error.message : error
-
-  switch (String(message)) {
-    case 'Account name already exists':
-      return messages.add_eos_create_error_popup_text_account_name_exist
-    case 'Invalid private key!':
-      return messages.add_eos_error_popup_text_private_key_invalid
-    case 'Campaign is for invitation only':
-      return messages.add_eos_create_error_popup_text_registration_code_invite
-    case 'Campaign is for eos only':
-      return messages.add_eos_create_error_popup_text_registration_code_eos
-    case 'Unknown invitation Code':
-      return messages.add_eos_create_error_popup_text_registration_code_invalid
-    case 'Coupon code is used':
-      return messages.add_eos_create_error_popup_text_registration_code_used
-    case 'Error retrieving data':
-      return messages.add_eos_create_error_popup_text_data_extraction_failed
-    default:
-      return messages.add_eos_create_error_popup_text_create_failed
-  }
-}
 
 const validate = (values, props) => {
   const errors = {}
@@ -105,16 +79,16 @@ export default class CreateEOSAccountAssistanceForm extends Component {
 
   submit = (data) => {
     // Umeng analytics
-    onEventWithMap(ACCOUNT_EOS_CREATE, { eosAccountName: data.get('eosAccountName'), inviteCode: data.get('inviteCode') })
+    onEventWithMap(ACCOUNT_EOS_CREATE, { eosAccountName: data.get('eosAccountName') })
+
     const componentId = this.props.componentId
-    this.props.actions.createEOSAccountRequested(data.set('componentId', componentId).delete('confirmedPassword').toJS())
+    this.props.actions.createEOSAccountAssistanceRequested(data.set('componentId', componentId).delete('confirmedPassword').toJS())
   }
 
   render() {
     const { handleSubmit, invalid, pristine, eosAccount, locale, password } = this.props
     const loading = eosAccount.get('loading')
     const disabled = invalid || pristine || loading
-    const error = eosAccount.get('error')
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -148,9 +122,7 @@ export default class CreateEOSAccountAssistanceForm extends Component {
             component={TextField}
           />
 
-          <SubmitButton disabled={disabled} onPress={handleSubmit(this.submit)} text={messages[locale].add_eos_create_button_create} />
-
-          <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearEOSAccountError} />
+          <SubmitButton disabled={disabled} onPress={handleSubmit(this.submit)} text={messages[locale].add_eos_create_button_next} />
         </FormContainer>
       </IntlProvider>
     )

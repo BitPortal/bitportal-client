@@ -45,6 +45,9 @@
   "add_eos_create_button_import": "Import Account",
   "add_eos_create_error_popup_text_create_failed": "Account creation failed, please try again later. If you have question, please contact us at info@bitportal.io",
   "add_eos_create_error_popup_text_data_extraction_failed": "Data extraction failed, please try again later.",
+  "add_eos_create_title_create_assistance": "好友协助创建账户",
+  "add_eos_create_button_next": "Next",
+
   "add_eos_label_set_password": "Enter Password",
   "add_eos_text_password": "Set Password",
   "add_eos_text_confirm_password": "Confirm Password",

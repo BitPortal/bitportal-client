@@ -36,7 +36,7 @@ export default class AccountAssistance extends Component {
         <View style={styles.container}>
           <NavigationBar
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
-            title={messages[locale].add_eos_create_title_create}
+            title={messages[locale].add_eos_create_title_create_assistance}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>

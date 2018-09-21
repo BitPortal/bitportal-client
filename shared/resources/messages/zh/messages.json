@@ -45,6 +45,10 @@
   "add_eos_create_button_import": "导入账户",
   "add_eos_create_error_popup_text_create_failed": "账户创建失败，请重新创建。如有疑问，请联系 BitPortal 客服（微信号：bitportal_jamie）",
   "add_eos_create_error_popup_text_data_extraction_failed": "数据提取错误，请重新创建",
+  "add_eos_create_title_create_assistance": "好友协助创建账户",
+  "add_eos_create_button_next": "下一步",
+
+
   "add_eos_label_set_password": "设置密码",
   "add_eos_text_password": "输入密码",
   "add_eos_text_confirm_password": "确认密码",
