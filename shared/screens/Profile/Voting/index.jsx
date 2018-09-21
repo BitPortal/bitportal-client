@@ -31,7 +31,7 @@ export const errorMessages = (error, messages) => {
     case 'assertion failure with message: user must stake before they can vote':
       return messages.voting_error_popup_text_no_stake
     case 'EOS System Error':
-      return messages.vt_popup_title_eossystem
+      return messages.resource_error_popup_text_eos_system_error
     default:
       return messages.voting_error_popup_text_vote_failed
   }

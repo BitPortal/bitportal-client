@@ -108,6 +108,7 @@
   "send_error_text_memo_max_character": "Memo exceeds maximum character limit.",
   "send_button_send": "Send",
   "send_error_popup_text_send_failed": "Transaction failed",
+  "send_confirm_title_confirm": "Confirm",
   "send_confirm_label_from ": "From",
   "send_confirm_label_to": "to",
   "send_confirm_label_memo": "Memo",
@@ -189,7 +190,7 @@
   "profile_button_follow_us": "Follow Us",
   "profile_button_about_us": "About Us",
   "profile_text_version": "Version",
-  "profile_text_copyright_1": "Copyright @2018 Patricia Ltd.",
+  "profile_text_copyright_1": "Copyright @2018 Dexlize Foundation",
   "profile_text_copyright_2": "All rights reserved",
 
   "transaction_all_title_transaction": "All Transactions",

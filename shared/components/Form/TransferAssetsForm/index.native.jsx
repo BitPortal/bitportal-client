@@ -30,7 +30,7 @@ export const errorMessages = (error, messages) => {
     case 'Key derivation failed - possibly wrong passphrase':
       return messages.general_error_popup_text_password_incorrect
     case 'EOS System Error':
-      return messages.snd_title_error_eossystem
+      return messages.resource_error_popup_text_eos_system_error
     default:
       return messages.send_error_popup_text_send_failed
   }
