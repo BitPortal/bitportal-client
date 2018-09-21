@@ -165,6 +165,7 @@ export default class Home extends Component<Props, State> {
   }
 
   componentDidMount() {
+    this.props.actions.syncWalletRequested()
     document.addEventListener('bitportalapi', () => {
       this.bitportal = window.bitportal
       window.bitportal = null

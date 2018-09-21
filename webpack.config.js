@@ -312,7 +312,9 @@ const extensionConfig = {
   context: resolve('extension'),
   entry: {
     popup: './popup.tsx',
-    background: './background.ts'
+    background: './background.ts',
+    content: './content.ts',
+    inject: './inject.js'
   },
   resolve: {
     ...baseConfig.resolve,
@@ -321,7 +323,7 @@ const extensionConfig = {
   output: {
     ...baseConfig.output,
     path: resolve('static/extension'),
-    filename: ifProduction('scripts/[name].js?v=[hash]', 'scripts/[name].js')
+    filename: 'scripts/[name].js'
   },
   plugins: removeEmpty([
     ...baseConfig.plugins,

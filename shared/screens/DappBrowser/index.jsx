@@ -62,7 +62,7 @@ export default class DappWebView extends Component {
   state = {
     canGoBack: false,
     showPrompt: false,
-    uri: ''
+    uri: 'https://build-prguimiryr.now.sh/'
   }
 
   share = () => {
@@ -189,7 +189,7 @@ export default class DappWebView extends Component {
           />
           <View style={styles.content}>
             <WebViewBridge
-              source={{ uri: 'https://build-prguimiryr.now.sh/' }}
+              source={{ uri: this.state.uri }}
               ref={(e) => { this.webviewbridge = e }}
               renderError={this.renderError}
               renderLoading={this.renderLoading}

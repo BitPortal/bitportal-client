@@ -18,3 +18,11 @@ wrapStore(store, {
 })
 
 store.runSaga(sagas)
+
+chrome.runtime.onMessage.addListener(
+  (request, sender, sendResponse) => {
+	if(sender.id !== chrome.runtime.id || request.type === 'chromex.dispatch') return
+    console.log(request)
+	return true
+  }
+)
