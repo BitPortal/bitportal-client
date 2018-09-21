@@ -205,6 +205,12 @@
   "voting_button_vote": "投票",
   "voting_error_popup_text_no_stake": "您需要先抵押 EOS 才可参与节点投票",
   "voting_error_popup_text_vote_failed": "投票失败",
+  "voting_popup_label_stake_net_insufficient": "NET资源不足",
+  "voting_popup_text_stake_net_insufficient": "您当前的NET资源不足，请进入\"资源管理\"进行抵押。NET资源是EOS系统资源之一，NET是您投票权重两个因子之一。",
+  "voting_popup_label_stake_cpu_insufficient": "CPU资源不足",
+  "voting_popup_text_stake_cpu_insufficient": "您当前的CPU资源不足，请进入\"资源管理\"进行抵押。CPU资源是EOS系统资源之一，CPU是您投票权重两个因子之一。",
+  "voting_popup_label_stake_new_account": "尚未进行资源抵押",
+  "voting_popup_text_stake_new_account": "您还未有抵押系统资源，无法获得对应投票权重，请进入“资源管理”页面进行抵押。",
 
   "bp_info_label_team_location": "团队位置",
   "bp_info_label_bp_location": "节点位置",
