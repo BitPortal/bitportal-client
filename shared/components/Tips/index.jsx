@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { TouchableOpacity, StyleSheet } from 'react-native'
-import FastImage from 'react-native-fast-image'
+import { Image, TouchableOpacity, StyleSheet } from 'react-native'
+// import FastImage from 'react-native-fast-image'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import Dialog from 'components/Dialog'
@@ -45,7 +45,7 @@ export default class Tips extends Component {
   render() {
     return (
       <TouchableOpacity onPress={this.alertTips} style={styles.btn}>
-        <FastImage source={images.tips} style={styles.image} />
+        <Image source={images.tips} style={styles.image} />
       </TouchableOpacity>
     )
   }

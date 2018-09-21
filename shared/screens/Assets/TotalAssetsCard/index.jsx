@@ -8,8 +8,8 @@ import { bindActionCreators } from 'redux'
 import * as eosAccountActions from 'actions/eosAccount'
 import storage from 'utils/storage'
 import { FormattedMessage, IntlProvider } from 'react-intl'
-import { Text, View, TouchableHighlight, StyleSheet, TouchableOpacity } from 'react-native'
-import FastImage from 'react-native-fast-image'
+import { Image, Text, View, TouchableHighlight, StyleSheet, TouchableOpacity } from 'react-native'
+// import FastImage from 'react-native-fast-image'
 import { SCREEN_WIDTH, FontScale } from 'utils/dimens'
 import { formatCycleTime, formatMemorySize } from 'utils/format'
 import messages from 'resources/messages'
@@ -159,14 +159,14 @@ export default class TotalAssetsCard extends Component {
                   <TouchableOpacity style={[styles.center, styles.btn]} onPress={this.switchDisplayTotal}>
                     {
                       isAssetHidden
-                        ? <FastImage source={Images.eyes_close} style={styles.image} />
-                        : <FastImage source={Images.eyes_open} style={styles.image} />
+                        ? <Image source={Images.eyes_close} style={styles.image} />
+                        : <Image source={Images.eyes_open} style={styles.image} />
                     }
                   </TouchableOpacity>
                 </View>
                 <View style={styles.between}>
                   {!!accountName && <Text style={styles.text15}>{accountName}</Text>}
-                  {!!accountName && <FastImage style={{ width: 16, height: 16 }} source={Images.qrCode} />}
+                  {!!accountName && <Image style={{ width: 16, height: 16 }} source={Images.qrCode} />}
                 </View>
               </View>
             </TouchableHighlight>
