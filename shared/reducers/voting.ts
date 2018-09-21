@@ -7,6 +7,7 @@ const initialState = Immutable.fromJS({
   loading: false,
   loaded: false,
   error: null,
+  showSuccess: false,
   showSelected: false
 })
 
@@ -15,7 +16,10 @@ export default handleActions({
     return state.set('loading', true)
   },
   [actions.votingSucceeded] (state, action) {
-    return state.set('loaded', true).set('loading', false).set('data', Immutable.fromJS(action.payload)).set('showSelected', false)
+    return state.set('loaded', true).set('loading', false)
+                .set('data', Immutable.fromJS(action.payload))
+                .set('showSelected', false)
+                .set('showSuccess', true)
   },
   [actions.votingFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)
@@ -28,5 +32,8 @@ export default handleActions({
   },
   [actions.closeSelected] (state) {
     return !state.get('error') ? state.set('showSelected', false) : state
+  },
+  [actions.hideSuccessModal] (state) {
+    return state.set('showSuccess', false)
   }
 }, initialState)
