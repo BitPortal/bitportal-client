@@ -8,6 +8,7 @@ import { resetBalance, getEOSBalanceRequested, getEOSAssetBalanceListRequested }
 import { resetKey } from 'actions/keystore'
 import { resetTransaction } from 'actions/transaction'
 import { resetEOSAsset } from 'actions/eosAsset'
+import { clearProducer } from 'actions/producer'
 import { resetEOSAccount, syncEOSAccount, createEOSAccountSucceeded, getEOSAccountRequested, syncEOSAccountCreationInfo } from 'actions/eosAccount'
 import { getErrorMessage } from 'utils'
 import secureStorage from 'utils/secureStorage'
@@ -264,6 +265,7 @@ function* logoutRequested(action: Action<LogoutParams>) {
     yield put(resetBalance())
     yield put(resetTransaction())
     yield put(resetKey())
+    yield put(clearProducer())
     yield put(actions.logoutSucceeded())
     if (action.payload.componentId) popToRoot(action.payload.componentId)
   } catch (e) {
