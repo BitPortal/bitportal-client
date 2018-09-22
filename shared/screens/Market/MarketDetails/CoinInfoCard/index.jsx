@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Image, Text, View } from 'react-native'
-// import FastImage from 'react-native-fast-image'
+import { Text, View } from 'react-native'
+import FastImage from 'react-native-fast-image'
 import Colors from 'resources/colors'
 import { FormattedNumber } from 'react-intl'
 import { connect } from 'react-redux'
@@ -33,7 +33,7 @@ export default class CoinInfoCard extends Component {
     return (
       <View style={styles.cardContainer}>
         <View style={styles.titleWrapper}>
-          <Image style={styles.icon} source={Images.coin_logo_default} />
+          <FastImage style={styles.icon} source={Images.coin_logo_default} />
           <View style={{ marginLeft: 10 }}>
             <Text style={[styles.text18, { fontWeight: 'bold' }]}>
               {locale === 'zh' ? name_zh || name_en : name_en}

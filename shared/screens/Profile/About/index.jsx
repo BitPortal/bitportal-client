@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Image, Text, View, ScrollView } from 'react-native'
-// import FastImage from 'react-native-fast-image'
+import { Text, View, ScrollView } from 'react-native'
+import FastImage from 'react-native-fast-image'
 import { Navigation } from 'react-native-navigation'
 import Images from 'resources/images'
 import SettingItem from 'components/SettingItem'
@@ -132,7 +132,7 @@ export default class About extends Component {
             >
               <View style={styles.content}>
                 <View style={[styles.image, { borderRadius: 15 }]}>
-                  <Image style={styles.image} source={Images.about_logo} resizeMode="contain" />
+                  <FastImage style={styles.image} source={Images.about_logo} resizeMode="contain" />
                 </View>
                 <Text style={[styles.text12, { marginTop: 10 }]}>
                   <FormattedMessage id="profile_text_version" />
