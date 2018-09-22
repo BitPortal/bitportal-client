@@ -88,7 +88,7 @@
     "react-native-eosjs-api": "git+https://github.com/TerenceGe/eosjs-api.git",
     "react-native-eosjs-ecc": "git+https://github.com/TerenceGe/eosjs-ecc.git",
     "react-native-extended-stylesheet": "^0.8.0",
-    "react-native-fast-image": "^5.0.3",
+    "react-native-fast-image": "git+https://github.com/TerenceGe/react-native-fast-image.git",
     "react-native-image-crop-picker": "^0.20.3",
     "react-native-linear-gradient": "^2.4.0",
     "react-native-modal": "^5.4.0",
