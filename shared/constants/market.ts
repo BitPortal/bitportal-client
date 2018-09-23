@@ -1,7 +1,7 @@
 export const EXCHANGES = [
 //  'BINANCE',
-  'BITTREX',
   'OKEX',
+  'BITTREX',
 //  'HUOBIPRO',
   'POLONIEX',
   'GDAX'
