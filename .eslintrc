@@ -66,7 +66,8 @@
     "react/jsx-one-expression-per-line": [0],
     "no-else-return": [0],
     "react/destructuring-assignment": [0],
-    "prefer-arrow-callback": [0]
+    "prefer-arrow-callback": [0],
+    "no-prototype-builtins": [0]
   },
   "env": {
     "browser": true,

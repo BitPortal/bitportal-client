@@ -38,7 +38,7 @@ function* transfer(action: Action<TransferParams>) {
     if (contract === 'eosio.token') {
       yield put(getEOSBalanceRequested({ eosAccountName: fromAccount }))
     } else {
-      yield put(getEOSAssetBalanceRequested({ code: contract, eosAccountName: fromAccount }))
+      yield put(getEOSAssetBalanceRequested({ symbol, code: contract, eosAccountName: fromAccount }))
     }
   } catch (e) {
     yield put(actions.transferFailed(getEOSErrorMessage(e)))

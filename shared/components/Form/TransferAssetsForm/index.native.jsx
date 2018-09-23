@@ -165,7 +165,7 @@ export default class TransferAssetsForm extends Component {
 
   componentDidMount() {
     const { activeAsset, eosAccountName } = this.props
-    this.props.actions.getEOSAssetBalanceRequested({ code: activeAsset.get('contract'), eosAccountName })
+    this.props.actions.getEOSAssetBalanceRequested({ code: activeAsset.get('contract'), eosAccountName, symbol: activeAsset.get('symbol') })
   }
 
   render() {
