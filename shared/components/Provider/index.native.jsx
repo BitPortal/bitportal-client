@@ -4,11 +4,9 @@ import { IntlProvider, addLocaleData } from 'react-intl'
 import { Text } from 'react-native'
 import en from 'react-intl/locale-data/en'
 import zh from 'react-intl/locale-data/zh'
-import ko from 'react-intl/locale-data/ko'
 
 addLocaleData(en)
 addLocaleData(zh)
-addLocaleData(ko)
 
 const mapStateToProps = state => ({
   locale: state.intl.get('locale'),

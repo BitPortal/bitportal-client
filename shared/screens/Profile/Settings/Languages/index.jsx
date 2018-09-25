@@ -70,13 +70,6 @@ export default class Languages extends Component {
                 rightImageName={locale === 'zh' && 'md-checkmark'}
                 onPress={this.switchLanguage.bind(this, 'zh')}
               />
-              <SettingItem
-                leftItemTitle="韩文"
-                iconColor={Colors.bgColor_0_122_255}
-                rightItemTitle={locale === 'ko' ? null : ' '}
-                rightImageName={locale === 'ko' && 'md-checkmark'}
-                onPress={this.switchLanguage.bind(this, 'ko')}
-              />
             </ScrollView>
           </View>
         </View>

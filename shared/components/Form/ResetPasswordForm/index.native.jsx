@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { IntlProvider } from 'react-intl'
+import { FormattedMessage, IntlProvider } from 'react-intl'
 import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
 import { FormContainer, TextField, PasswordField, SubmitButton } from 'components/Form'
 import { Text } from 'react-native'
@@ -100,40 +100,40 @@ export default class ResetPasswordForm extends Component {
       <IntlProvider messages={messages[locale]}>
         <FormContainer>
           <Field
-            label={messages[locale].change_password_label_current_password}
+            label={<FormattedMessage id="change_password_label_current_password" />}
             name="oldPassword"
             component={PasswordField}
           />
           <Field
-            label={messages[locale].change_password_label_new_password}
+            label={<FormattedMessage id="change_password_label_new_password" />}
             name="newPassword"
             component={PasswordField}
             rightContent={<PasswordStrength strength={getPasswordStrength(newPassword)} />}
           />
           <Field
-            label={messages[locale].change_password_label_confirm_new_password}
+            label={<FormattedMessage id="change_password_label_confirm_new_password" />}
             name="confirmedNewPassword"
             component={PasswordField}
           />
           <Field
-            label={messages[locale].change_password_label_new_password_hint}
+            label={<FormattedMessage id="change_password_label_new_password_hint" />}
             name="passwordHint"
             component={TextField}
           />
           <Text style={styles.text14}>
             <Text style={{ color: Colors.textColor_255_255_238 }}>
-              {messages[locale].change_password_text_forget_password1}
+              <FormattedMessage id="change_password_text_forget_password1" />
             </Text>
-            {messages[locale].change_password_text_forget_password2}
+            <FormattedMessage id="change_password_text_forget_password2" />
             <Text onPress={this.importPrivateKey} style={{ textDecorationLine: 'underline', color: Colors.textColor_89_185_226 }}>
-              {messages[locale].change_password_link_import_private_key}
+              <FormattedMessage id="change_password_link_import_private_key" />
             </Text>
-            {messages[locale].change_password_text_forget_password3}
+            <FormattedMessage id="change_password_text_forget_password3" />
           </Text>
           <SubmitButton
             disabled={disabled}
             onPress={handleSubmit(this.submit)}
-            text={messages[locale].change_password_button_change}
+            text={<FormattedMessage id="change_password_button_change" />}
           />
           <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearKeystoreError} />
         </FormContainer>

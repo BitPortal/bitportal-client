@@ -4,6 +4,7 @@ import { Navigation } from 'react-native-navigation'
 import { IntlProvider } from 'react-intl'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { View, ScrollView } from 'react-native'
+import Colors from 'resources/colors'
 import ImportEOSAccountForm from 'components/Form/ImportEOSAccountForm'
 import Loading from 'components/Loading'
 import messages from 'resources/messages'
@@ -39,7 +40,7 @@ export default class AccountImport extends Component {
             title={messages[locale].add_eos_import_title_import}
           />
           <View style={styles.scrollContainer}>
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ backgroundColor: Colors.bgColor_30_31_37 }}>
               <ImportEOSAccountForm componentId={this.props.componentId} />
               <View style={styles.keyboard} />
             </ScrollView>

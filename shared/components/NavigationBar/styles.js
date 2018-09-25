@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   containerStyle: {
     width: SCREEN_WIDTH,
     height: NAV_BAR_HEIGHT,
-    backgroundColor: Colors.mainThemeColor,
+    backgroundColor: Colors.minorThemeColor,
     justifyContent: 'center',
     ...ifIphoneX({
       paddingTop: 24
