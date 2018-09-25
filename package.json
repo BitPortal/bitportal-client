@@ -41,7 +41,6 @@
   },
   "dependencies": {
     "@remobile/react-native-qrcode-local-image": "^1.0.4",
-    "add": "^2.0.6",
     "bip38": "^2.0.2",
     "bip39": "^2.5.0",
     "bitcoinjs-lib": "^3.3.2",
@@ -129,8 +128,7 @@
     "transit-js": "^0.8.846",
     "universal-cookie-express": "^2.1.2",
     "uuid": "^3.0.1",
-    "wif": "^2.0.6",
-    "yarn": "^1.9.4"
+    "wif": "^2.0.6"
   },
   "devDependencies": {
     "@types/bitcoinjs-lib": "^3.3.3",
