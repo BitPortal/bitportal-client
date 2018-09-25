@@ -1,18 +1,58 @@
 {
   "zh": {
-    "send_title_send": "发送",
-    "send_confirm_title_confirm": "交易确认",
-    "send_confirm_label_from ": "发送",
-    "send_confirm_label_to": "至",
-    "send_confirm_label_memo": "附言",
-    "send_confirm_button_confirm": "确认"
+    "general_action_modal_text_action": "操作",
+    "general_action_modal_text_transaction": "交易详情",
+
+    "transfer_action_modal_text_payment": "转账",
+    "transfer_action_modal_text_contract": "合约",
+    "transfer_action_modal_text_amount": "数量",
+    "transfer_action_modal_text_payment_account": "支付账户",
+    "transfer_action_modal_text_receiving_account": "Receiving Account",
+    "transfer_action_modal_text_memo": "附言",
+
+    "voting_action_modal_text_vote": "投票",
+    "voting_action_modal_text_voter": "投票者",
+    "voting_action_modal_text_selected_node": "已选节点",
+
+    "sign_action_modal_text_sign": "签名",
+    "sign_action_modal_text_signer": "签名者",
+    "sign_action_modal_text_public_key": "公钥",
+    "sign_action_modal_text_signed_content": "签名内容",
+
+    "contract_action_modal_text_execute": "执行EOS合约",
+    "contract_action_modal_text_details": "详情",
+    "contract_action_modal_text_account": "帐户",
+    "contract_action_modal_text_use": "使用",
+    "contract_action_modal_text_access": "执行权限",
+    "contract_action_modal_text_contract": "合约的",
+    "contract_action_modal_text_list": "操作, 参数列表"
   },
   "en": {
-    "send_title_send": "Send",
-    "send_confirm_title_confirm": "Confirm",
-    "send_confirm_label_from ": "Send",
-    "send_confirm_label_to": "to",
-    "send_confirm_label_memo": "Memo",
-    "send_confirm_button_confirm": "OK"
+    "general_action_modal_text_action": "Action",
+    "general_action_modal_text_transaction": "Transaction Details",
+
+    "transfer_action_modal_text_payment": "Payment",
+    "transfer_action_modal_text_contract": "Contract",
+    "transfer_action_modal_text_amount": "Amount",
+    "transfer_action_modal_text_payment_account": "Payment Account",
+    "transfer_action_modal_text_receiving_account": "Receiving Account",
+    "transfer_action_modal_text_memo": "Memo",
+
+    "voting_action_modal_text_vote": "Vote",
+    "voting_action_modal_text_voter": "Voter",
+    "voting_action_modal_text_selected_node": "Selected Node",
+
+    "sign_action_modal_text_sign": "Sign",
+    "sign_action_modal_text_signer": "Signer",
+    "sign_action_modal_text_public_key": "Public Key",
+    "sign_action_modal_text_signed_content": "Signed Content",
+
+    "contract_action_modal_text_execute": "Execute EOS Contract",
+    "contract_action_modal_text_details": "Details",
+    "contract_action_modal_text_account": "Account",
+    "contract_action_modal_text_use": "Use",
+    "contract_action_modal_text_access": "Execute Access",
+    "contract_action_modal_text_contract": "Contract",
+    "contract_action_modal_text_list": "Action, parameter list"
   }
 }
