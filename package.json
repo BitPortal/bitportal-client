@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "@remobile/react-native-qrcode-local-image": "^1.0.4",
+    "add": "^2.0.6",
     "bip38": "^2.0.2",
     "bip39": "^2.5.0",
     "bitcoinjs-lib": "^3.3.2",
@@ -90,6 +91,7 @@
     "react-native-extended-stylesheet": "^0.8.0",
     "react-native-fast-image": "git+https://github.com/TerenceGe/react-native-fast-image.git",
     "react-native-image-crop-picker": "^0.20.3",
+    "react-native-keyboard-manager": "^4.0.13-10",
     "react-native-linear-gradient": "^2.4.0",
     "react-native-modal": "^5.4.0",
     "react-native-navbar": "^2.1.0",
@@ -129,7 +131,8 @@
     "transit-js": "^0.8.846",
     "universal-cookie-express": "^2.1.2",
     "uuid": "^3.0.1",
-    "wif": "^2.0.6"
+    "wif": "^2.0.6",
+    "yarn": "^1.9.4"
   },
   "devDependencies": {
     "@types/bitcoinjs-lib": "^3.3.3",

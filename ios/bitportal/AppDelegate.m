@@ -35,7 +35,7 @@
   
   // 获取 registrationID
   [JPUSHService registrationIDCompletionHandler:^(int resCode, NSString *registrationID) {
-    NSLog(@"resCode : %d,registrationID: %@",resCode,registrationID);
+//    NSLog(@"resCode : %d,registrationID: %@",resCode,registrationID);
     _registrationID = registrationID;
   }];
 

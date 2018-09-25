@@ -10,7 +10,6 @@ const Images = {
   profile_press: require('./Profile_Press.png'),
   discovery: require('./Discovery.png'),
   discovery_press: require('./Discovery_Press.png'),
-  seperator: require('./seperator.png'),
   about_logo: require('./About_logo.png'),
   guide_bg: require('./guide_bg.png'),
   guide_asset:
@@ -58,7 +57,9 @@ const Images = {
   list_add: require('./list_add.png'),
   list_remove: require('./list_remove.png'),
   discovery_more: require('./Discovery_more.jpg'),
-  list_favorite: require('./list_favorite.png')
+  list_favorite: require('./list_favorite.png'),
+  agreement_unsign: require('./agreement_unsign.png'),
+  agreement_sign: require('./agreement_sign.png')
 }
 
 export default Images
