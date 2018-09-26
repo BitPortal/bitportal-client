@@ -100,3 +100,7 @@ export const getDappList = (params: any) => cmsFetchBase('GET', '/eosdapp', para
 export const getEOSAsset = (params: any) => cmsFetchBase('GET', '/eostoken', params)
 export const createEOSAccount = (params: any) => fetchBase('POST', '/registry/wallets/campaign/eoscreation', params)
 export const importEOSAccount = (params: any) => fetchBase('POST', '/registry/wallets/import', params)
+
+export const traceTransaction = (params: any) => fetchBase('POST', '/transaction', params)
+export const traceStake = (params: any) => fetchBase('POST', '/stake', params)
+export const traceVotes = (params: any) => fetchBase('POST', '/votes', params)
