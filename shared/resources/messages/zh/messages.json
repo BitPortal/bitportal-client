@@ -109,8 +109,8 @@
   "send_button_send": "发送",
   "send_error_popup_text_send_failed": "发送失败",
   "send_confirm_title_confirm": "确认信息",
-  "send_confirm_label_from ": "从",
-  "send_confirm_label_to": "至",
+  "send_confirm_label_from": "转账",
+  "send_confirm_label_to": "收款人",
   "send_confirm_label_memo": "附言",
   "send_confirm_button_confirm": "确认",
 

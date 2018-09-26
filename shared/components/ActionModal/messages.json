@@ -25,7 +25,11 @@
     "contract_action_modal_text_use": "使用",
     "contract_action_modal_text_access": "执行权限",
     "contract_action_modal_text_contract": "合约的",
-    "contract_action_modal_text_list": "操作, 参数列表"
+    "contract_action_modal_text_list": "操作, 参数列表",
+
+    "contract_action_modal_text_transaction": "交易详情",
+    
+    "send_confirm_button_confirm": "确认"
   },
   "en": {
     "general_action_modal_text_action": "Action",
@@ -53,6 +57,10 @@
     "contract_action_modal_text_use": "Use",
     "contract_action_modal_text_access": "Execute Access",
     "contract_action_modal_text_contract": "Contract",
-    "contract_action_modal_text_list": "Action, parameter list"
+    "contract_action_modal_text_list": "Action, parameter list",
+
+    "contract_action_modal_text_transaction": "Transaction Details",
+
+    "send_confirm_button_confirm": "Confirm"
   }
 }
