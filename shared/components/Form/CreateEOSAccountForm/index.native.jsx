@@ -6,7 +6,7 @@ import { TouchableOpacity, Text, View } from 'react-native'
 import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
 import { IntlProvider } from 'react-intl'
 import { FormContainer, TextField, PasswordField, TextAreaField, SubmitButton } from 'components/Form'
-import { normalizeEOSAccountName, normalizeText } from 'utils/normalize'
+import { normalizeEOSAccountName, normalizeRegistrationCode, normalizePrivateKey } from 'utils/normalize'
 import { BITPORTAL_API_TERMS_URL } from 'constants/env'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
@@ -189,7 +189,7 @@ export default class CreateEOSAccountForm extends Component {
             label={messages[locale].add_eos_create_label_registration_code}
             tips={messages[locale].add_eos_create_popup_text_registration_code_tips}
             placeholder={messages[locale].add_eos_create_text_registration_code}
-            normalize={normalizeText}
+            normalize={normalizeRegistrationCode}
             name="inviteCode"
             component={TextField}
           />
@@ -198,7 +198,7 @@ export default class CreateEOSAccountForm extends Component {
               <Field
                 placeholder={messages[locale].add_eos_text_private_key}
                 name="privateKey"
-                normalize={normalizeText}
+                normalize={normalizePrivateKey}
                 component={TextAreaField}
               />
             )
