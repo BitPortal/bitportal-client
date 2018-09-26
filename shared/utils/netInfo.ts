@@ -17,26 +17,26 @@ const alertInfo = (type: any, locale: any) => {
         null,
         { negativeText: messages[locale].general_popup_button_close }
       )
-      break;
+      break
     case 'wifi':
-      break;
+      break
     case 'cellular':
-      break;
+      break
     case 'unknown':
-      break;
+      break
     default:
-      break;
+      break
   }
 }
 
 const handleConnectionInfoChange = (connectionInfo: any, locale: string) => {
   console.log('###', connectionInfo)
-  let type = connectionInfo && connectionInfo.type
+  const type = connectionInfo && connectionInfo.type
   alertInfo(type, locale)
   NetInfo.removeEventListener(
     'connectionChange',
     (info) => handleConnectionInfoChange(info, locale)
   )
-};
+}
 
 export { startListenNetInfo }
