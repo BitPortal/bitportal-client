@@ -146,6 +146,7 @@ function* pendSignEOSData(messageActionType: string, payload: any, messageId: st
   const account = payload.account
   const publicKey = payload.publicKey
   const signData = payload.signData
+  const isHash = payload.isHash || false
   const blockchain = 'EOS'
 
   yield put(actions.pendMessage({
@@ -156,6 +157,7 @@ function* pendSignEOSData(messageActionType: string, payload: any, messageId: st
       account,
       publicKey,
       signData,
+      isHash,
       blockchain
     }
   }))
@@ -285,12 +287,14 @@ function* resolveSignEOSData(password: string, info: any, messageId: string) {
     const account = info.get('account')
     const publicKey = info.get('publicKey')
     const signData = info.get('signData')
+    const isHash = info.get('isHash')
 
     const signedData = yield call(eosAuthSign, {
       account,
       password,
       publicKey,
-      signData
+      signData,
+      isHash
     })
     yield put(actions.clearMessage())
     yield put(actions.sendMessage({

@@ -30,4 +30,5 @@ declare interface SignEOSDataParams {
   publicKey: string
   password: string
   signData: string
+  isHash: boolean
 }

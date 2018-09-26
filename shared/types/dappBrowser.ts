@@ -31,4 +31,5 @@ declare interface BridgeSignDataMessageInfo {
   signData: string
   account: string
   publicKey: string
+  isHash: boolean
 }

@@ -198,13 +198,14 @@ const eosAuthSign = async ({
   account,
   publicKey,
   password,
-  signData
+  signData,
+  isHash
 }: SignEOSDataParams) => {
   const accountInfo = await secureStorage.getItem(`EOS_ACCOUNT_INFO_${account}`, true)
   const wifs = await getEOSWifsByInfo(password, accountInfo, ['OWNER', 'ACTIVE'])
   const keyProvider = wifs.filter((item: any) => item.publicKey === publicKey).map((item: any) => item.wif)
   const wif = keyProvider[0]
-  return ecc.sign(signData, wif)
+  return isHash ? ecc.Signature.signHash(signData, wif).toString() : ecc.sign(Buffer.from(signData, 'utf8'), wif)
 }
 
 export {
