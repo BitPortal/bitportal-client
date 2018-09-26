@@ -14,8 +14,8 @@ import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, {
-  LinkingRightButton,
-  WebViewLeftButton
+  WebViewLeftButton,
+  LinkingRightButton
 } from 'components/NavigationBar'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
@@ -108,8 +108,6 @@ export default class DappWebView extends Component {
 
   goHome = () => Navigation.pop(this.props.componentId)
 
-  // goForward = () => this.webview.goForward()
-
   renderError = (e) => {
     if (e === 'WebKitErrorDomain') {
       return null
@@ -163,10 +161,10 @@ export default class DappWebView extends Component {
 
   render() {
     const {
-      needLinking,
-      uri,
       title,
       locale,
+      uri,
+      needLinking,
       hasPendingMessage,
       resolvingMessage
     } = this.props
@@ -178,11 +176,18 @@ export default class DappWebView extends Component {
           <NavigationBar
             title={title}
             leftButton={<WebViewLeftButton goBack={this.goBack} goHome={this.goHome} />}
-            rightButton={needLinking && <LinkingRightButton iconName="ios-more" onPress={this.showActionSheet} />}
+            rightButton={
+              needLinking && (
+                <LinkingRightButton
+                  iconName="ios-more"
+                  onPress={this.showActionSheet}
+                />
+              )
+            }
           />
           <View style={styles.content}>
             <WebViewBridge
-              source={{ uri }}
+              source={{ uri: uri }}
               ref={(e) => { this.webviewbridge = e }}
               renderError={this.renderError}
               renderLoading={this.renderLoading}

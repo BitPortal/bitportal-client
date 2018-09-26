@@ -62,7 +62,7 @@ export default class DappElement extends Component {
   toUrl = (item) => {
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.BPWebView',
+        name: 'BitPortal.DappWebView',
         passProps: {
           uri: item.get('url'),
           title: item.get('display_name').get(this.props.locale)
