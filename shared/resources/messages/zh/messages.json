@@ -10,6 +10,7 @@
   "general_nav_discovery": "发现",
   "general_nav_profile": "我的",
   "general_error_popup_text_no_account": "您还未添加账户，请先添加账户再进行该操作",
+  "general_error_popup_text_network_unconnected": "无网络连接，请检查您的网络",
 
   "search_text_search": "搜索",
   "search_button_cancel": "取消",
