@@ -31,6 +31,7 @@ import SplashScreen from 'react-native-splash-screen'
 import { checkCamera } from 'utils/permissions'
 import { ASSETS_QR, ASSETS_TOKEN_DETAIL, ASSETS_EOS_RESOURCE, ASSETS_ADD_TOKEN } from 'constants/analytics'
 import { onEventWithLabel } from 'utils/analytics'
+import { startListenNetInfo } from 'utils/netInfo'
 import Dialog from 'components/Dialog'
 import messages from 'resources/messages'
 import styles from './styles'
@@ -189,6 +190,7 @@ export default class Assets extends Component {
 
   async componentDidMount() {
     SplashScreen.hide()
+    startListenNetInfo(this.props.locale)
     this.props.actions.getVersionInfoRequested()
     this.getCurrencyRate()
     this.props.actions.syncWalletRequested()

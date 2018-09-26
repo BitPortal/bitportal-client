@@ -189,6 +189,7 @@ export default class CreateEOSAccountForm extends Component {
             label={messages[locale].add_eos_create_label_registration_code}
             tips={messages[locale].add_eos_create_popup_text_registration_code_tips}
             placeholder={messages[locale].add_eos_create_text_registration_code}
+            normalize={normalizeText}
             name="inviteCode"
             component={TextField}
           />
