@@ -7,7 +7,7 @@
     "transfer_action_modal_text_contract": "合约",
     "transfer_action_modal_text_amount": "数量",
     "transfer_action_modal_text_payment_account": "支付账户",
-    "transfer_action_modal_text_receiving_account": "Receiving Account",
+    "transfer_action_modal_text_receiving_account": "收款账号",
     "transfer_action_modal_text_memo": "附言",
 
     "voting_action_modal_text_vote": "投票",
@@ -23,9 +23,9 @@
     "contract_action_modal_text_details": "详情",
     "contract_action_modal_text_account": "帐户",
     "contract_action_modal_text_use": "使用",
-    "contract_action_modal_text_access": "执行权限",
+    "contract_action_modal_text_access": "权限执行",
     "contract_action_modal_text_contract": "合约的",
-    "contract_action_modal_text_list": "操作, 参数列表",
+    "contract_action_modal_text_list": "操作。 参数列表",
 
     "contract_action_modal_text_transaction": "交易详情",
     
@@ -53,11 +53,11 @@
 
     "contract_action_modal_text_execute": "Execute EOS Contract",
     "contract_action_modal_text_details": "Details",
-    "contract_action_modal_text_account": "Account",
-    "contract_action_modal_text_use": "Use",
-    "contract_action_modal_text_access": "Execute Access",
-    "contract_action_modal_text_contract": "Contract",
-    "contract_action_modal_text_list": "Action, parameter list",
+    "contract_action_modal_text_account": "Account ",
+    "contract_action_modal_text_use": " use ",
+    "contract_action_modal_text_access": " permission excute to access ",
+    "contract_action_modal_text_contract": " contract ",
+    "contract_action_modal_text_list": "action. \n parameter list",
 
     "contract_action_modal_text_transaction": "Transaction Details",
 

@@ -24,6 +24,7 @@ import dAppSaga from './dApp'
 import contactSaga from './contact'
 import eosNodeSaga from './eosNode'
 import dappBrwoserSaga from './dappBrwoser'
+import traceSaga from './trace'
 
 const sagas = {
   formSaga: fork(formSaga),
@@ -49,7 +50,8 @@ const sagas = {
   dAppSaga: fork(dAppSaga),
   contactSaga: fork(contactSaga),
   eosNodeSaga: fork(eosNodeSaga),
-  dappBrwoserSaga: fork(dappBrwoserSaga)
+  dappBrwoserSaga: fork(dappBrwoserSaga),
+  traceSaga: fork(traceSaga)
 }
 
 if (ENV === 'production') {

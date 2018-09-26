@@ -9,6 +9,7 @@ import { transferEOSAsset } from 'core/eos'
 import { getEOSErrorMessage } from 'utils'
 import { reset } from 'redux-form/immutable'
 import { push } from 'utils/location'
+import { traceTransaction } from 'actions/trace'
 
 function* transfer(action: Action<TransferParams>) {
   if (!action.payload) return
@@ -40,6 +41,17 @@ function* transfer(action: Action<TransferParams>) {
     } else {
       yield put(getEOSAssetBalanceRequested({ symbol, code: contract, eosAccountName: fromAccount }))
     }
+
+    // trace transaction
+    const traceParams = {
+      amount,
+      userId: null,
+      walletId: fromAccount,
+      assetType: symbol,
+      toAddr: toAccount
+    }
+    yield put(traceTransaction(traceParams))
+    
   } catch (e) {
     yield put(actions.transferFailed(getEOSErrorMessage(e)))
   }
