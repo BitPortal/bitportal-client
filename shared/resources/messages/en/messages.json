@@ -109,8 +109,8 @@
   "send_button_send": "Send",
   "send_error_popup_text_send_failed": "Transaction failed",
   "send_confirm_title_confirm": "Confirm",
-  "send_confirm_label_from ": "From",
-  "send_confirm_label_to": "to",
+  "send_confirm_label_from": "Send",
+  "send_confirm_label_to": "Receiver",
   "send_confirm_label_memo": "Memo",
   "send_confirm_button_confirm": "Confirm",
 
