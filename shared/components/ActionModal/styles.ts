@@ -104,7 +104,6 @@ const styles = EStyleSheet.create({
     alignItems: 'center'
   },
   highlight: {
-    fontSize: FontScale(20),
     fontWeight: 'bold'
   },
   buttonItem: {

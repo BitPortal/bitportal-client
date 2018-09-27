@@ -118,13 +118,11 @@ const PushActionItems = ({ info, locale }) => (
           <View key={`${action.get('account')}-${action.get('name')}`} style={styles.dataViewAction}>
             <Text style={styles.data}>
               <Text>{messages[locale].contract_action_modal_text_account}</Text>
-              <Text style={styles.highlight}> {action.getIn(['authorization', 0, 'actor'])}{'\n'}</Text>
-              <Text>{messages[locale].contract_action_modal_text_use}</Text>
-              <Text style={styles.highlight}> {action.getIn(['authorization', 0, 'permission'])} </Text>
-              <Text>{messages[locale].contract_action_modal_text_access}</Text>
-              <Text style={styles.highlight}> {action.get('account')} </Text>
+              <Text style={styles.highlight}> {`${action.getIn(['authorization', 0, 'actor'])}@${action.getIn(['authorization', 0, 'permission'])}`}{'\n'}</Text>
               <Text>{messages[locale].contract_action_modal_text_contract}</Text>
-              <Text style={styles.highlight}> {action.get('name')} </Text>
+              <Text style={styles.highlight}> {action.get('account')}{'\n'}</Text>
+              <Text>{messages[locale].contract_action_modal_text_action}</Text>
+              <Text style={styles.highlight}> {action.get('name')}{'\n'}</Text>
               <Text>{messages[locale].contract_action_modal_text_list}:</Text>
             </Text>
             <View style={styles.actionData}>
