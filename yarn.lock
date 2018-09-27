@@ -9248,8 +9248,8 @@ react-native-extended-stylesheet@^0.8.0:
     object-resolve-path "^1.1.0"
 
 "react-native-fast-image@git+https://github.com/TerenceGe/react-native-fast-image.git":
-  version "5.0.3"
-  resolved "git+https://github.com/TerenceGe/react-native-fast-image.git#7f7e9392326a0bfc9b0f0ba3a3d2c0a9aa6a9ed5"
+  version "5.0.4"
+  resolved "git+https://github.com/TerenceGe/react-native-fast-image.git#a2a668413f8817c6a6730310bd58c483c3856520"
 
 react-native-image-crop-picker@^0.20.3:
   version "0.20.3"

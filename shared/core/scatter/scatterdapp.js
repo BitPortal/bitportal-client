@@ -5,8 +5,8 @@
 // import Network from './models/Network'
 // import IdGenerator from './util/IdGenerator'
 // import PluginRepository from './plugins/PluginRepository'
-// const ecc = require('eosjs-ecc')
-// import {strippedHost} from './util/GenericTools'
+// import ecc from 'eosjs-ecc'
+// import { strippedHost } from './util/GenericTools'
 
 // const throws = (msg) => {
 //   throw new Error(msg)
@@ -49,9 +49,9 @@
 // const _subscribe = () => {
 //   stream.listenWith(msg => {
 //     if(!msg || !msg.hasOwnProperty('type')) return false
-//     for(let i=0 i < resolvers.length i++) {
+//     for (let i=0; i < resolvers.length; i++) {
 //       if (resolvers[i].id === msg.resolver) {
-//         if(msg.type === 'error') resolvers[i].reject(msg.payload)
+//         if (msg.type === 'error') resolvers[i].reject(msg.payload)
 //         else resolvers[i].resolve(msg.payload)
 //         resolvers = resolvers.slice(i, 1)
 //       }
@@ -95,15 +95,12 @@
 //  * has no access to the extension.
 //  */
 // export default class Scatterdapp {
-
 //   constructor(_stream, _options){
 //     currentVersion = parseFloat(_options.version)
 //     this.useIdentity(_options.identity)
 //     stream = _stream
 //     resolvers = []
-
 //     setupSigProviders(this)
-
 //     _subscribe()
 //   }
 
@@ -165,7 +162,7 @@
 //    * Signs out the identity.
 //    * @returns {Promise.<TResult>}
 //    */
-//   forgetIdentity(){
+//   forgetIdentity() {
 //     throwIfNoIdentity()
 //     return _send(NetworkMessageTypes.FORGET_IDENTITY, {}).then(() => {
 //       this.identity = null
@@ -198,5 +195,4 @@
 //       isHash
 //     }, true)
 //   }
-
 // }
