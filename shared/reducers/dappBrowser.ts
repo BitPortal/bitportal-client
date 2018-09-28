@@ -1,11 +1,13 @@
 import Immutable from 'immutable'
 import { handleActions } from 'redux-actions'
 import * as actions from 'actions/dappBrowser'
+import { escapeJSONString } from 'utils'
 
 const initialState = Immutable.fromJS({
   pendingMessage: null,
   hasPendingMessage: false,
-  resolving: false
+  resolving: false,
+  sendingMessage: null
 })
 
 export default handleActions({
@@ -19,15 +21,10 @@ export default handleActions({
   [actions.resolveMessageFinished] (state) {
     return state.set('resolving', false)
   },
-  // [actions.rejectMessage] (state) {
-  //   return state.set('resolving', false)
-  // },
-  [actions.clearMessage] (state) {
-    return state.set('pendingMessage', null)
-      .set('hasPendingMessage', false)
-      .set('resolving', false)
+  [actions.sendMessage] (state, action) {
+    return state.set('sendingMessage', escapeJSONString(JSON.stringify(action.payload)))
   },
-  [actions.closeDappBrowser] () {
+  [actions.clearMessage] () {
     return initialState
   }
 }, initialState)

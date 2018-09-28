@@ -2,7 +2,7 @@ import assert from 'assert'
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/dappBrowser'
-import { escapeJSONString, parseMessageId, typeOf, validateEOSActions } from 'utils'
+import { parseMessageId, typeOf, validateEOSActions } from 'utils'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
 import { currenctWalletSelector } from 'selectors/wallet'
 import {
@@ -12,16 +12,6 @@ import {
   pushEOSAction,
   eosAuthSign
 } from 'core/eos'
-
-let dappBrowser: any
-
-function initDappBrowser(action: Action<any>) {
-  dappBrowser = action.payload
-}
-
-function closeDappBrowser() {
-  dappBrowser = null
-}
 
 function* pendTransferEOSAsset(messageActionType: string, payload: any, messageId: string) {
   const hasPendingMessage = yield select((state: RootState) => state.dappBrowser.get('hasPendingMessage'))
@@ -519,86 +509,69 @@ function* receiveMessage(action: Action<string>) {
   }
 }
 
-function sendMessage(action: Action<any>) {
-  if (dappBrowser) {
-    dappBrowser.sendToBridge(
-      escapeJSONString(
-        JSON.stringify(action.payload)
-      )
-    )
+function* rejectMessage() {
+  const messageId = yield select((state: RootState) => state.dappBrowser.getIn(['pendingMessage', 'messageId']))
+  const resolving = yield select((state: RootState) => state.dappBrowser.get('resolving'))
+
+  if (messageId && !resolving) {
+    yield put(actions.clearMessage())
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionFailed',
+      payload: {
+        error: {
+          message: 'Action is canceled.'
+        }
+      }
+    }))
   }
 }
 
-function* rejectMessage() {
-  if (dappBrowser) {
-    const messageId = yield select((state: RootState) => state.dappBrowser.getIn(['pendingMessage', 'messageId']))
-    const resolving = yield select((state: RootState) => state.dappBrowser.get('resolving'))
+function* resolveMessage(action: Action<any>) {
+  const pendingMessage = yield select((state: RootState) => state.dappBrowser.get('pendingMessage'))
+  if (!pendingMessage) return
 
-    if (messageId && !resolving) {
-      yield put(actions.clearMessage())
+  const messageId = pendingMessage.get('messageId')
+  const password = action.payload.password
+
+  if (messageId) {
+    try {
+      const messageActionType = pendingMessage.get('type')
+      const info = pendingMessage.get('info')
+
+      switch (messageActionType) {
+      case 'transferEOSAsset':
+        yield resolveTransferEOSAsset(password, info, messageId)
+        break
+      case 'voteEOSProducers':
+        yield resolveVoteEOSProducers(password, info, messageId)
+        break
+      case 'pushEOSAction':
+        yield resolvePushEOSAction(password, info, messageId)
+        break
+      case 'eosAuthSign':
+        yield resolveSignEOSData(password, info, messageId)
+        break
+      default:
+        break
+      }
+    } catch (error) {
       yield put(actions.sendMessage({
         messageId,
         type: 'actionFailed',
         payload: {
           error: {
-            message: 'Action is canceled.'
+            message: error.message
           }
         }
       }))
-    }
-  }
-}
 
-function* resolveMessage(action: Action<any>) {
-  if (dappBrowser) {
-    const pendingMessage = yield select((state: RootState) => state.dappBrowser.get('pendingMessage'))
-    if (!pendingMessage) return
-
-    const messageId = pendingMessage.get('messageId')
-    const password = action.payload.password
-
-    if (messageId) {
-      try {
-        const messageActionType = pendingMessage.get('type')
-        const info = pendingMessage.get('info')
-
-        switch (messageActionType) {
-        case 'transferEOSAsset':
-          yield resolveTransferEOSAsset(password, info, messageId)
-          break
-        case 'voteEOSProducers':
-          yield resolveVoteEOSProducers(password, info, messageId)
-          break
-        case 'pushEOSAction':
-          yield resolvePushEOSAction(password, info, messageId)
-          break
-        case 'eosAuthSign':
-          yield resolveSignEOSData(password, info, messageId)
-          break
-        default:
-          break
-        }
-      } catch (error) {
-        yield put(actions.sendMessage({
-          messageId,
-          type: 'actionFailed',
-          payload: {
-            error: {
-              message: error.message
-            }
-          }
-        }))
-
-        yield put(actions.clearMessage())
-      }
+      yield put(actions.clearMessage())
     }
   }
 }
 
 export default function* dappBrowserSaga() {
-  yield takeEvery(String(actions.initDappBrowser), initDappBrowser)
-  yield takeEvery(String(actions.closeDappBrowser), closeDappBrowser)
-  yield takeEvery(String(actions.sendMessage), sendMessage)
   yield takeEvery(String(actions.receiveMessage), receiveMessage)
   yield takeEvery(String(actions.rejectMessage), rejectMessage)
   yield takeEvery(String(actions.resolveMessage), resolveMessage)

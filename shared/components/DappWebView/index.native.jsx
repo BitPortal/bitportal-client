@@ -14,8 +14,8 @@ import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, {
-  WebViewLeftButton,
-  LinkingRightButton
+  LinkingRightButton,
+  WebViewLeftButton
 } from 'components/NavigationBar'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
@@ -39,7 +39,8 @@ const WebViewLoading = ({ text }) => (
   state => ({
     locale: state.intl.get('locale'),
     hasPendingMessage: state.dappBrowser.get('hasPendingMessage'),
-    resolvingMessage: state.dappBrowser.get('resolving')
+    resolvingMessage: state.dappBrowser.get('resolving'),
+    sendingMessage: state.dappBrowser.get('sendingMessage')
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -56,6 +57,20 @@ export default class DappWebView extends Component {
       bottomTabs: {
         visible: false
       }
+    }
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.sendingMessage !== prevState.sendingMessage) {
+      return { sendingMessage: nextProps.sendingMessage }
+    } else {
+      return null
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.sendingMessage && prevProps.sendingMessage !== this.props.sendingMessage && this.webviewbridge) {
+      this.webviewbridge.sendToBridge(this.props.sendingMessage)
     }
   }
 
@@ -151,30 +166,24 @@ export default class DappWebView extends Component {
     this.setState({ showPrompt: false })
   }
 
-  onLoadStart = () => {
-    if (Platform.OS !== 'ios') {
-      this.props.actions.initDappBrowser(this.webviewbridge)
-    }
-  }
+  onSubmitEditing = (event) => {
+    const searchText = event.nativeEvent.text
 
-  componentDidMount() {
-    if (Platform.OS === 'ios') {
-      this.props.actions.initDappBrowser(this.webviewbridge)
+    if (searchText === this.state.uri) {
+      this.webviewbridge.reload()
+    } else {
+      this.setState({ uri: searchText })
     }
-  }
-
-  componentWillUnmount() {
-    this.props.actions.closeDappBrowser()
   }
 
   render() {
     const {
       title,
       locale,
-      uri,
-      needLinking,
       hasPendingMessage,
-      resolvingMessage
+      resolvingMessage,
+      needLinking,
+      uri
     } = this.props
     const injectScript = `(function () { ${messageHandler} }())`
 
@@ -195,44 +204,43 @@ export default class DappWebView extends Component {
           />
           <View style={styles.content}>
             <WebViewBridge
-              source={{ uri: uri }}
-              ref={(e) => { this.webviewbridge = e }}
-              renderError={this.renderError}
-              renderLoading={this.renderLoading}
-              startInLoadingState={true}
-              automaticallyAdjustContentInsets={false}
-              onNavigationStateChange={this.onNavigationStateChange}
-              javaScriptEnabled={true}
-              domStorageEnabled={true}
-              decelerationRate="normal"
-              scalesPageToFit={true}
-              nativeConfig={{ props: { backgroundColor: Colors.minorThemeColor, flex: 1 } }}
-              onBridgeMessage={this.onBridgeMessage}
-              injectedJavaScript={injectScript}
-              onLoadStart={this.onLoadStart}
+            source={{ uri }}
+            ref={(e) => { this.webviewbridge = e }}
+            renderError={this.renderError}
+            renderLoading={this.renderLoading}
+            startInLoadingState={true}
+            automaticallyAdjustContentInsets={false}
+            onNavigationStateChange={this.onNavigationStateChange}
+            javaScriptEnabled={true}
+            domStorageEnabled={true}
+            decelerationRate="normal"
+            scalesPageToFit={true}
+            nativeConfig={{ props: { backgroundColor: Colors.minorThemeColor, flex: 1 } }}
+            onBridgeMessage={this.onBridgeMessage}
+            injectedJavaScript={injectScript}
             />
             <ActionModal
-              isVisible={hasPendingMessage && !resolvingMessage}
-              dismiss={this.rejectMessage}
-              confirm={this.showPrompt}
+            isVisible={hasPendingMessage && !resolvingMessage}
+            dismiss={this.rejectMessage}
+            confirm={this.showPrompt}
             />
             <Prompt
-              isVisible={this.state.showPrompt}
-              type="secure-text"
-              callback={this.resolveMessage}
-              dismiss={this.closePrompt}
+            isVisible={this.state.showPrompt}
+            type="secure-text"
+            callback={this.resolveMessage}
+            dismiss={this.closePrompt}
             />
             <ActionSheet
-              ref={(o) => { this.actionSheet = o }}
-              title=""
-              options={[
-                messages[locale].webview_button_share,
-                Platform.OS === 'ios' ? messages[locale].webview_button_open_in_safari : messages[locale].webview_button_open_in_browser,
-                messages[locale].webview_button_cancel
-              ]}
-              cancelButtonIndex={2}
-              destructiveButtonIndex={1}
-              onPress={this.selectActionSheet}
+            ref={(o) => { this.actionSheet = o }}
+            title=""
+            options={[
+              messages[locale].webview_button_share,
+              Platform.OS === 'ios' ? messages[locale].webview_button_open_in_safari : messages[locale].webview_button_open_in_browser,
+              messages[locale].webview_button_cancel
+            ]}
+            cancelButtonIndex={2}
+            destructiveButtonIndex={1}
+            onPress={this.selectActionSheet}
             />
           </View>
         </View>

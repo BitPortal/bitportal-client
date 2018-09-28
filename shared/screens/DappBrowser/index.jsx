@@ -39,7 +39,8 @@ const WebViewLoading = ({ text }) => (
   state => ({
     locale: state.intl.get('locale'),
     hasPendingMessage: state.dappBrowser.get('hasPendingMessage'),
-    resolvingMessage: state.dappBrowser.get('resolving')
+    resolvingMessage: state.dappBrowser.get('resolving'),
+    sendingMessage: state.dappBrowser.get('sendingMessage')
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -56,6 +57,20 @@ export default class DappWebView extends Component {
       bottomTabs: {
         visible: false
       }
+    }
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.sendingMessage !== prevState.sendingMessage) {
+      return { sendingMessage: nextProps.sendingMessage }
+    } else {
+      return null
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.sendingMessage && prevProps.sendingMessage !== this.props.sendingMessage && this.webviewbridge) {
+      this.webviewbridge.sendToBridge(this.props.sendingMessage)
     }
   }
 
@@ -154,28 +169,12 @@ export default class DappWebView extends Component {
 
   onSubmitEditing = (event) => {
     const searchText = event.nativeEvent.text
-    console.log(this.webviewbridge)
+
     if (searchText === this.state.uri) {
       this.webviewbridge.reload()
     } else {
       this.setState({ uri: searchText })
     }
-  }
-
-  onLoadStart = () => {
-    if (Platform.OS !== 'ios') {
-      this.props.actions.initDappBrowser(this.webviewbridge)
-    }
-  }
-
-  componentDidMount() {
-    if (Platform.OS === 'ios') {
-      this.props.actions.initDappBrowser(this.webviewbridge)
-    }
-  }
-
-  componentWillUnmount() {
-    this.props.actions.closeDappBrowser()
   }
 
   render() {
@@ -211,7 +210,6 @@ export default class DappWebView extends Component {
               nativeConfig={{ props: { backgroundColor: Colors.minorThemeColor, flex: 1 } }}
               onBridgeMessage={this.onBridgeMessage}
               injectedJavaScript={injectScript}
-              onLoadStart={this.onLoadStart}
             />
             <ActionModal
               isVisible={hasPendingMessage && !resolvingMessage}
