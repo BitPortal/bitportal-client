@@ -64,7 +64,6 @@ export const errorMessageDetail = (error, messages) => {
     default:
       return error.detail
   }
-
 }
 
 @connect(
