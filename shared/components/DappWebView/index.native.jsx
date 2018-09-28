@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
   InteractionManager
 } from 'react-native'
-import WebViewBridge from 'react-native-webview-bridge-updated'
+import WebViewBridge from 'react-native-webview-bridge'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
@@ -150,8 +150,12 @@ export default class DappWebView extends Component {
   closePrompt = () => {
     this.setState({ showPrompt: false })
   }
+  /*
+   *   onLoadStart = () => {
+   *     this.props.actions.initDappBrowser(this.webviewbridge)
+   *   }*/
 
-  onLoadStart = () => {
+  componentDidMount() {
     this.props.actions.initDappBrowser(this.webviewbridge)
   }
 

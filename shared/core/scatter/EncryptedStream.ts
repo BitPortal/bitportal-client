@@ -42,7 +42,7 @@ export class EncryptedStream {
    * @param to - The stream to send messages to
    */
   send(data: any, to: string): void {
-    const newData = data
+    let newData = data
 	const addSender = () => { newData.from = this.eventName }
 	const encryptIfSynced = () => { newData = (this.synced) ? AES.encrypt(newData, this.key) : newData }
 
@@ -56,7 +56,7 @@ export class EncryptedStream {
    * Sync handler, binds a callback function that is called when the stream syncs with another.
    * @param fn - A function to be called upon sync
    */
-  onSync(fn) {
+  onSync(fn: any) {
 	this.syncFn = fn
   }
 
@@ -85,7 +85,7 @@ export class EncryptedStream {
    * Gets called when this stream receives a 'sync' messages.
    * @param msg - The sync message
    */
-  private ackSync(msg) {
+  private ackSync(msg: any) {
 	this.send({ type:'synced' }, msg.from)
 	this.key = msg.handshake
 	this.synced = true

@@ -109,7 +109,7 @@
     "react-native-swiper": "^1.5.13",
     "react-native-vector-icons": "^4.5.0",
     "react-native-version-number": "^0.3.3",
-    "react-native-webview-bridge-updated": "git+https://github.com/TerenceGe/react-native-webview-bridge.git",
+    "react-native-webview-bridge": "git+https://github.com/TerenceGe/react-native-webview-bridge.git",
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
     "react-router-config": "^1.0.0-beta.4",
