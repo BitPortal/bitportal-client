@@ -204,43 +204,43 @@ export default class DappWebView extends Component {
           />
           <View style={styles.content}>
             <WebViewBridge
-            source={{ uri }}
-            ref={(e) => { this.webviewbridge = e }}
-            renderError={this.renderError}
-            renderLoading={this.renderLoading}
-            startInLoadingState={true}
-            automaticallyAdjustContentInsets={false}
-            onNavigationStateChange={this.onNavigationStateChange}
-            javaScriptEnabled={true}
-            domStorageEnabled={true}
-            decelerationRate="normal"
-            scalesPageToFit={true}
-            nativeConfig={{ props: { backgroundColor: Colors.minorThemeColor, flex: 1 } }}
-            onBridgeMessage={this.onBridgeMessage}
-            injectedJavaScript={injectScript}
+              source={{ uri }}
+              ref={(e) => { this.webviewbridge = e }}
+              renderError={this.renderError}
+              renderLoading={this.renderLoading}
+              startInLoadingState={true}
+              automaticallyAdjustContentInsets={false}
+              onNavigationStateChange={this.onNavigationStateChange}
+              javaScriptEnabled={true}
+              domStorageEnabled={true}
+              decelerationRate="normal"
+              scalesPageToFit={true}
+              nativeConfig={{ props: { backgroundColor: Colors.minorThemeColor, flex: 1 } }}
+              onBridgeMessage={this.onBridgeMessage}
+              injectedJavaScript={injectScript}
             />
             <ActionModal
-            isVisible={hasPendingMessage && !resolvingMessage}
-            dismiss={this.rejectMessage}
-            confirm={this.showPrompt}
+              isVisible={hasPendingMessage && !resolvingMessage}
+              dismiss={this.rejectMessage}
+              confirm={this.showPrompt}
             />
             <Prompt
-            isVisible={this.state.showPrompt}
-            type="secure-text"
-            callback={this.resolveMessage}
-            dismiss={this.closePrompt}
+              isVisible={this.state.showPrompt}
+              type="secure-text"
+              callback={this.resolveMessage}
+              dismiss={this.closePrompt}
             />
             <ActionSheet
-            ref={(o) => { this.actionSheet = o }}
-            title=""
-            options={[
-              messages[locale].webview_button_share,
-              Platform.OS === 'ios' ? messages[locale].webview_button_open_in_safari : messages[locale].webview_button_open_in_browser,
-              messages[locale].webview_button_cancel
-            ]}
-            cancelButtonIndex={2}
-            destructiveButtonIndex={1}
-            onPress={this.selectActionSheet}
+              ref={(o) => { this.actionSheet = o }}
+              title=""
+              options={[
+                messages[locale].webview_button_share,
+                Platform.OS === 'ios' ? messages[locale].webview_button_open_in_safari : messages[locale].webview_button_open_in_browser,
+                messages[locale].webview_button_cancel
+              ]}
+              cancelButtonIndex={2}
+              destructiveButtonIndex={1}
+              onPress={this.selectActionSheet}
             />
           </View>
         </View>
