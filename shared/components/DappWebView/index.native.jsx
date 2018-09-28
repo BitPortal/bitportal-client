@@ -150,13 +150,17 @@ export default class DappWebView extends Component {
   closePrompt = () => {
     this.setState({ showPrompt: false })
   }
-  /*
-   *   onLoadStart = () => {
-   *     this.props.actions.initDappBrowser(this.webviewbridge)
-   *   }*/
+
+  onLoadStart = () => {
+    if (Platform.OS !== 'ios') {
+      this.props.actions.initDappBrowser(this.webviewbridge)
+    }
+  }
 
   componentDidMount() {
-    this.props.actions.initDappBrowser(this.webviewbridge)
+    if (Platform.OS === 'ios') {
+      this.props.actions.initDappBrowser(this.webviewbridge)
+    }
   }
 
   componentWillUnmount() {
