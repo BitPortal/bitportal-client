@@ -84,7 +84,6 @@ let throwIfNoIdentity = new WeakMap()
 
 const proxy = (dummy, handler) => new Proxy(dummy, handler)
 
-
 const requestParser = async (signargs, network) => {
   const eos = Eos({ httpEndpoint: network.fullhost(), chainId: network.chainId })
 

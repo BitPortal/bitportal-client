@@ -10,7 +10,7 @@ export default class IdGenerator {
      * @param size - The length of the string to generate
      * @returns {string} - The generated random string
      */
-  static text(size){
+  static text(size) {
     let text = '';
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     for (let i = 0; i < size; i++) text += possible.charAt(Math.floor(IdGenerator.rand() * possible.length));
@@ -22,7 +22,7 @@ export default class IdGenerator {
      * @param size - The length of the number to generate
      * @returns {string} - The generated random number ( as a string )
      */
-  static numeric(size){
+  static numeric(size) {
     const add = 1;
     let max = 12 - add;
 

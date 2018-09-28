@@ -37,7 +37,6 @@ const throwIfNoIdentity = () => {
   if (!publicKey) throws('There is no identity with an account set on your Scatter instance.')
 }
 
-
 /***
  * Messages do not come back on the same thread.
  * To accomplish a future promise structure this method
@@ -145,7 +144,9 @@ export default class Scatterdapp {
     // If the `signature` is an object, it's an error message
     if (typeof signature === 'object') return signature
 
-    try { if (ecc.verify(signature, strippedHost(), publicKey)) return signature } catch (e) {
+    try {
+      if (ecc.verify(signature, strippedHost(), publicKey)) return signature
+    } catch (e) {
       this.identity = null
       publicKey = ''
       throws('Could not authenticate identity')

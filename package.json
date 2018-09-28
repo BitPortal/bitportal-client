@@ -125,6 +125,7 @@
     "scrypt-async": "^2.0.0",
     "secp256k1": "^3.5.0",
     "serialize-javascript": "^1.3.0",
+    "sjcl": "^1.0.7",
     "transit-immutable-js": "^0.6.0",
     "transit-js": "^0.8.846",
     "universal-cookie-express": "^2.1.2",
