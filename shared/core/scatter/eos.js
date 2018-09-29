@@ -102,9 +102,11 @@ const requestParser = async (signargs, network) => {
       new Promise(resolve => setTimeout(() => resolve('no cache'), 500))
     ])
 
-    if (cachedABI === 'object' && cachedABI.timestamp > +new Date((await eos.getAccount(contractAccount)).last_code_update)) abis[contractAccount] = eos.fc.abiCache.abi(contractAccount, cachedABI.abi)
-
-    else {
+    if (
+      cachedABI === 'object' && cachedABI.timestamp > +new Date((await eos.getAccount(contractAccount)).last_code_update)
+    ) {
+      abis[contractAccount] = eos.fc.abiCache.abi(contractAccount, cachedABI.abi)
+    } else {
       abis[contractAccount] = (await eos.contract(contractAccount)).fc
       const savableAbi = JSON.parse(JSON.stringify(abis[contractAccount]))
       delete savableAbi.schema
@@ -117,7 +119,7 @@ const requestParser = async (signargs, network) => {
     }
   }))
 
-  return Promise.all(signargs.transaction.actions.map(async (action) => {
+  return await Promise.all(signargs.transaction.actions.map(async (action) => {
     const contractAccountName = action.account
 
     const abi = abis[contractAccountName]
@@ -293,7 +295,7 @@ export default class EOS extends Plugin {
               throwIfNoIdentity()
 
               // Friendly formatting
-              signargs.messages = await requestParser(signargs, network)
+              signargs.messages = true || await requestParser(signargs, network)
 
               const payload = Object.assign(signargs, { domain: strippedHost(), network, requiredFields })
               const result = await messageSender(NetworkMessageTypes.REQUEST_SIGNATURE, payload)

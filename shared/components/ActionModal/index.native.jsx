@@ -140,6 +140,43 @@ const PushActionItems = ({ info, locale }) => (
   </Fragment>
 )
 
+const SignatureActionItems = ({ info, locale }) => (
+  <Fragment>
+    <View style={styles.item}>
+      <Text style={styles.label}>{messages[locale].general_action_modal_text_action}:</Text>
+      <Text style={styles.data}>
+        {messages[locale].contract_action_modal_text_execute}
+      </Text>
+    </View>
+    <View style={styles.item}>
+      <Text style={styles.label}>{messages[locale].contract_action_modal_text_details}:</Text>
+      <ScrollView style={styles.dataView}>
+        {info.getIn(['transaction', 'actions']).map(action => (
+           <View key={`${action.get('account')}-${action.get('name')}`} style={styles.dataViewAction}>
+             <Text style={styles.data}>
+               <Text>{messages[locale].contract_action_modal_text_account}</Text>
+               <Text style={styles.highlight}> {`${action.getIn(['authorization', 0, 'actor'])}@${action.getIn(['authorization', 0, 'permission'])}`}{'\n'}</Text>
+               <Text>{messages[locale].contract_action_modal_text_contract}</Text>
+               <Text style={styles.highlight}> {action.get('account')}{'\n'}</Text>
+               <Text>{messages[locale].contract_action_modal_text_action}</Text>
+               <Text style={styles.highlight}> {action.get('name')}{'\n'}</Text>
+               <Text>{messages[locale].contract_action_modal_text_list}:</Text>
+             </Text>
+             <View style={styles.actionData}>
+               {action.get('data').entrySeq().map(item => (
+                  <View key={item[0]} style={styles.actionDataItem}>
+                    <Text style={styles.actionDataLabel}>{item[0]}: </Text>
+                    <Text style={styles.actionDataValue}>{item[1]}</Text>
+                  </View>
+                ))}
+             </View>
+           </View>
+         ))}
+      </ScrollView>
+    </View>
+  </Fragment>
+)
+
 @connect(
   state => ({
     locale: state.intl.get('locale'),
@@ -159,6 +196,8 @@ export default class ActionModal extends Component {
       return (<VoteActionItems info={info} locale={this.props.locale} />)
     } else if (messageType === 'pushEOSAction') {
       return (<PushActionItems info={info} locale={this.props.locale} />)
+    } else if (messageType === 'requestSignature') {
+      return (<SignatureActionItems info={info} locale={this.props.locale} />)
     }
 
     return null

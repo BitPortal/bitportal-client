@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   InteractionManager
 } from 'react-native'
+import RNFS from 'react-native-fs'
 import WebViewBridge from 'react-native-webview-bridge'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
@@ -19,7 +20,6 @@ import NavigationBar, {
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
 import * as dappBrwoserActions from 'actions/dappBrowser'
-import messageHandler from 'utils/bridgeMessageHandler'
 import ActionModal from 'components/ActionModal'
 import Prompt from 'components/Prompt'
 import SearchWebsiteForm from 'components/Form/SearchWebsiteForm'
@@ -177,6 +177,13 @@ export default class DappWebView extends Component {
     }
   }
 
+  componentDidMount() {
+    RNFS.readFile(RNFS.MainBundlePath + '/inject.js', 'utf8')
+      .then((contents) => {
+        this.setState({ additionalScripts: contents })
+      })
+  }
+
   render() {
     const {
       title,
@@ -184,7 +191,6 @@ export default class DappWebView extends Component {
       hasPendingMessage,
       resolvingMessage
     } = this.props
-    const injectScript = `(function () { ${messageHandler} }())`
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -195,7 +201,7 @@ export default class DappWebView extends Component {
             rightButton={<SearchWebsiteForm onSubmitEditing={this.onSubmitEditing} />}
           />
           <View style={styles.content}>
-            <WebViewBridge
+            {!!this.state.additionalScripts && <WebViewBridge
               source={{ uri: this.state.uri }}
               ref={(e) => { this.webviewbridge = e }}
               renderError={this.renderError}
@@ -209,8 +215,8 @@ export default class DappWebView extends Component {
               scalesPageToFit={true}
               nativeConfig={{ props: { backgroundColor: Colors.minorThemeColor, flex: 1 } }}
               onBridgeMessage={this.onBridgeMessage}
-              injectedJavaScript={injectScript}
-            />
+              injectedJavaScript={this.state.additionalScripts}
+            />}
             <ActionModal
               isVisible={hasPendingMessage && !resolvingMessage}
               dismiss={this.rejectMessage}

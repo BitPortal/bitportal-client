@@ -1,4 +1,5 @@
 import assert from 'assert'
+import { delay } from 'redux-saga'
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/dappBrowser'
@@ -10,7 +11,8 @@ import {
   transferEOSAsset,
   voteEOSProducers,
   pushEOSAction,
-  eosAuthSign
+  eosAuthSign,
+  signature
 } from 'core/eos'
 
 function* pendTransferEOSAsset(messageActionType: string, payload: any, messageId: string) {
@@ -148,6 +150,40 @@ function* pendSignEOSData(messageActionType: string, payload: any, messageId: st
       publicKey,
       signData,
       isHash,
+      blockchain
+    }
+  }))
+}
+
+function* pendRequestSignature(messageActionType: string, payload: any, messageId: string) {
+  const hasPendingMessage = yield select((state: RootState) => state.dappBrowser.get('hasPendingMessage'))
+  if (hasPendingMessage) {
+    const pendingMessageActionType = yield select((state: RootState) => state.dappBrowser.getIn(['pendingMessage', 'type']))
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionFailed',
+      payload: {
+        error: {
+          message: `There's a pending request: ${pendingMessageActionType}`
+        }
+      }
+    }))
+    return
+  }
+
+  const requiredFields = payload.requiredFields
+  const buf = payload.buf
+  const transaction = payload.transaction
+  const blockchain = 'EOS'
+
+  yield put(actions.pendMessage({
+    messageId,
+    payload,
+    type: messageActionType,
+    info: {
+      requiredFields,
+      buf,
+      transaction,
       blockchain
     }
   }))
@@ -296,6 +332,41 @@ function* resolveSignEOSData(password: string, info: any, messageId: string) {
     }))
   } catch (error) {
     yield put(actions.clearMessage())
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionFailed',
+      payload: {
+        error: {
+          message: error.message || error
+        }
+      }
+    }))
+  }
+}
+
+function* resolveRequestSignature(password: string, info: any, messageId: string) {
+  try {
+    const buf = info.get('buf').toJS()
+    const publicKey = yield select((state: RootState) => state.wallet.get('data').get('publicKey'))
+    const account = yield select((state: RootState) => eosAccountNameSelector(state))
+
+    const signatures = yield call(signature, {
+      account,
+      publicKey,
+      password,
+      buf
+    })
+    yield put(actions.clearMessage())
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionSucceeded',
+      payload: {
+        data: { signatures, returnedFields: [] }
+      }
+    }))
+  } catch (error) {
+    yield put(actions.clearMessage())
+    yield delay(500)
     yield put(actions.sendMessage({
       messageId,
       type: 'actionFailed',
@@ -480,6 +551,79 @@ function* receiveMessage(action: Action<string>) {
         yield pendSignEOSData(messageActionType, payload, messageId)
       }
       break
+    case 'getOrRequestIdentity':
+      {
+        const currentWallet = yield select((state: RootState) => currenctWalletSelector(state))
+        assert(currentWallet, 'No wallet in BitPortal!')
+        yield put(actions.sendMessage({
+          messageId,
+          type: 'actionSucceeded',
+          payload: {
+            data: {
+              hash: '4872c19edc4f2caab405fb8b071d1bb6694adf8586d3c651a96eb06dbd0ad983',
+              kyc: false,
+              name: 'RandomRaccoon433334',
+              publicKey: currentWallet.get('publicKey'),
+              accounts: [{
+                authority: currentWallet.get('permission'),
+                blockchain: 'eos',
+                publicKey: currentWallet.get('publicKey'),
+                name: currentWallet.get('account')
+              }]
+            }
+          }
+        }))
+      }
+      break
+    case 'abiCache':
+      {
+        const currentWallet = yield select((state: RootState) => currenctWalletSelector(state))
+        assert(currentWallet, 'No wallet in BitPortal!')
+        console.log(payload)
+        const eos = yield call(initEOS, { chainId: payload.chainId })
+        const contract = yield call(eos.contract, payload.abiContractName)
+        yield put(actions.sendMessage({
+          messageId,
+          type: 'actionSucceeded',
+          payload: {
+            data: { ...contract.fc, timestamp: +new Date(), account_name: payload.abiContractName }
+          }
+        }))
+      }
+      break
+    case 'requestSignature':
+      {
+        const currentWallet = yield select((state: RootState) => currenctWalletSelector(state))
+        assert(currentWallet, 'No wallet in BitPortal!')
+        const actions = payload.transaction.actions
+        const eos = yield call(initEOS, { chainId: payload.network.chainId })
+        const newActions = []
+        for (let action of actions) {
+          const contract = yield call(eos.contract, action.account)
+          newActions.push({ ...action, data: contract.fc.fromBuffer(action.name, action.data) })
+        }
+        const errorMessage = validateEOSActions(newActions, currentWallet.get('account'))
+        assert(!errorMessage, errorMessage)
+        yield pendRequestSignature(messageActionType, {
+          ...payload,
+          transaction: { ...payload.transaction, actions: newActions },
+          account: currentWallet.get('account'),
+          publicKey: currentWallet.get('publicKey')
+        }, messageId)
+      }
+      break
+    case 'forgetIdentity':
+    case 'requestAddNetwork':
+      {
+        yield put(actions.sendMessage({
+          messageId,
+          type: 'actionSucceeded',
+          payload: {
+            data: 'success'
+          }
+        }))
+      }
+      break
     default:
       if (messageId) {
         yield put(actions.sendMessage({
@@ -515,6 +659,7 @@ function* rejectMessage() {
 
   if (messageId && !resolving) {
     yield put(actions.clearMessage())
+    yield delay(500)
     yield put(actions.sendMessage({
       messageId,
       type: 'actionFailed',
@@ -551,6 +696,9 @@ function* resolveMessage(action: Action<any>) {
         break
       case 'eosAuthSign':
         yield resolveSignEOSData(password, info, messageId)
+        break
+      case 'requestSignature':
+        yield resolveRequestSignature(password, info, messageId)
         break
       default:
         break

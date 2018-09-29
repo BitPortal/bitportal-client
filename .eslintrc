@@ -68,7 +68,8 @@
     "react/destructuring-assignment": [0],
     "prefer-arrow-callback": [0],
     "no-prototype-builtins": [0],
-    "no-new": [0]
+    "no-new": [0],
+    "no-return-await": [0]
   },
   "env": {
     "browser": true,

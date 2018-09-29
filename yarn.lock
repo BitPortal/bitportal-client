@@ -2254,6 +2254,10 @@ balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
 
+base-64@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/base-64/-/base-64-0.1.0.tgz#780a99c84e7d600260361511c4877613bf24f6bb"
+
 base-x@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/base-x/-/base-x-1.1.0.tgz#42d3d717474f9ea02207f6d1aa1f426913eeb7ac"
@@ -9250,6 +9254,13 @@ react-native-extended-stylesheet@^0.8.0:
 "react-native-fast-image@git+https://github.com/TerenceGe/react-native-fast-image.git":
   version "5.0.4"
   resolved "git+https://github.com/TerenceGe/react-native-fast-image.git#a2a668413f8817c6a6730310bd58c483c3856520"
+
+react-native-fs@^2.11.17:
+  version "2.11.17"
+  resolved "https://registry.yarnpkg.com/react-native-fs/-/react-native-fs-2.11.17.tgz#045b9edfd478acaa80fc03a163577749a4ed17d8"
+  dependencies:
+    base-64 "^0.1.0"
+    utf8 "^2.1.1"
 
 react-native-image-crop-picker@^0.20.3:
   version "0.20.3"

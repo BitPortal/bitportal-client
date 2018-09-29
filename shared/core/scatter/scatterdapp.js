@@ -1,12 +1,13 @@
 import ecc from 'eosjs-ecc'
-import NetworkMessage from './NetworkMessage'
+// import NetworkMessage from './NetworkMessage'
 import * as NetworkMessageTypes from './NetworkMessageTypes'
-import * as PairingTags from './PairingTags'
+// import * as PairingTags from './PairingTags'
 import Error from './Error'
 import Network from './Network'
-import IdGenerator from './IdGenerator'
+// import IdGenerator from './IdGenerator'
 import PluginRepository from './PluginRepository'
 import { strippedHost } from './GenericTools'
+import { send as _send, subscribe as _subscribe } from './bridge'
 
 const throws = (msg) => {
   throw new Error(msg)
@@ -16,25 +17,25 @@ const throws = (msg) => {
  * This is just a helper to manage resolving fake-async
  * requests using browser messaging.
  */
-class DanglingResolver {
-  constructor(_id, _resolve, _reject){
-    this.id = _id
-    this.resolve = _resolve
-    this.reject = _reject
-  }
-}
+// class DanglingResolver {
+//   constructor(_id, _resolve, _reject){
+//     this.id = _id
+//     this.resolve = _resolve
+//     this.reject = _reject
+//   }
+// }
 
 // Removing properties from exposed scatterdapp object
 // Pseudo privacy
-let stream = new WeakMap()
-let resolvers = new WeakMap()
+// const stream = new WeakMap()
+// const resolvers = new WeakMap()
 const network = new WeakMap()
 let publicKey = new WeakMap()
-let currentVersion = new WeakMap()
-let requiredVersion = new WeakMap()
+// let currentVersion = new WeakMap()
+// let requiredVersion = new WeakMap()
 
 const throwIfNoIdentity = () => {
-  if (!publicKey) throws('There is no identity with an account set on your Scatter instance.')
+  // if (!publicKey) throws('There is no identity with an account set on your Scatter instance.')
 }
 
 /***
@@ -42,18 +43,18 @@ const throwIfNoIdentity = () => {
  * To accomplish a future promise structure this method
  * catches all incoming messages and dispenses
  * them to the open promises. */
-const _subscribe = () => {
-  stream.listenWith((msg) => {
-    if (!msg || !msg.hasOwnProperty('type')) return false
-    for (let i = 0; i < resolvers.length; i++) {
-      if (resolvers[i].id === msg.resolver) {
-        if (msg.type === 'error') resolvers[i].reject(msg.payload)
-        else resolvers[i].resolve(msg.payload)
-        resolvers = resolvers.slice(i, 1)
-      }
-    }
-  })
-}
+// const _subscribe = () => {
+//   stream.listenWith((msg) => {
+//     if (!msg || !msg.hasOwnProperty('type')) return false
+//     for (let i = 0; i < resolvers.length; i++) {
+//       if (resolvers[i].id === msg.resolver) {
+//         if (msg.type === 'error') resolvers[i].reject(msg.payload)
+//         else resolvers[i].resolve(msg.payload)
+//         resolvers = resolvers.slice(i, 1)
+//       }
+//     }
+//   })
+// }
 
 /***
  * Turns message sending between the application
@@ -61,20 +62,20 @@ const _subscribe = () => {
  * @param _type
  * @param _payload
  */
-const _send = (_type, _payload) => new Promise((resolve, reject) => {
-  // Version requirements
-  if (!!requiredVersion && requiredVersion > currentVersion){
-    const message = new NetworkMessage(NetworkMessageTypes.REQUEST_VERSION_UPDATE, {}, -1)
-    stream.send(message, PairingTags.SCATTER)
-    reject(Error.requiresUpgrade())
-    return false
-  }
+// const _send = (_type, _payload) => new Promise((resolve, reject) => {
+//   // Version requirements
+//   if (!!requiredVersion && requiredVersion > currentVersion){
+//     const message = new NetworkMessage(NetworkMessageTypes.REQUEST_VERSION_UPDATE, {}, -1)
+//     stream.send(message, PairingTags.SCATTER)
+//     reject(Error.requiresUpgrade())
+//     return false
+//   }
 
-  const id = IdGenerator.numeric(24)
-  const message = new NetworkMessage(_type, _payload, id)
-  resolvers.push(new DanglingResolver(id, resolve, reject))
-  stream.send(message, PairingTags.SCATTER)
-})
+//   const id = IdGenerator.numeric(24)
+//   const message = new NetworkMessage(_type, _payload, id)
+//   resolvers.push(new DanglingResolver(id, resolve, reject))
+//   stream.send(message, PairingTags.SCATTER)
+// })
 
 const setupSigProviders = (context) => {
   PluginRepository.signatureProviders().map((sigProvider) => {
@@ -89,11 +90,13 @@ const setupSigProviders = (context) => {
  * has no access to the extension.
  */
 export default class Scatterdapp {
-  constructor(_stream, _options){
-    currentVersion = parseFloat(_options.version)
+  constructor(_options){
+    // currentVersion = parseFloat(_options.version)
     this.useIdentity(_options.identity)
-    stream = _stream
-    resolvers = []
+    this.isExtension = true
+    this.connect = () => new Promise(resolve => resolve(true))
+    // stream = _stream
+    // resolvers = []
     setupSigProviders(this)
     _subscribe()
   }
@@ -171,9 +174,9 @@ export default class Scatterdapp {
    * scatter requests will fail and notify the user of the reason.
    * @param _version
    */
-  requireVersion(_version){
-    requiredVersion = _version
-  }
+  // requireVersion(_version){
+  //   requiredVersion = _version
+  // }
 
   /***
    * Requests a signature for arbitrary data.

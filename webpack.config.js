@@ -45,8 +45,8 @@ const baseConfig = {
         enforce: 'pre',
         exclude: [
           resolve(__dirname, 'node_modules'),
-          resolve(__dirname, 'resources/scripts'),
-          resolve(__dirname, 'resources/charting_library'),
+          resolve(__dirname, 'shared/resources/scripts'),
+          resolve(__dirname, 'shared/resources/charting_library'),
           resolve(__dirname, 'shared/screens'),
           resolve(__dirname, 'shared/navigators')
         ]
@@ -69,8 +69,8 @@ const baseConfig = {
         test: /\.(t|j)sx?$/,
         exclude: [
           resolve(__dirname, 'node_modules'),
-          resolve(__dirname, 'resources/scripts'),
-          resolve(__dirname, 'resources/charting_library'),
+          resolve(__dirname, 'shared/resources/scripts'),
+          resolve(__dirname, 'shared/resources/charting_library'),
           resolve(__dirname, 'shared/screens'),
           resolve(__dirname, 'shared/navigators')
         ],
@@ -356,11 +356,23 @@ const extensionConfig = {
   }
 }
 
+const injectConfig = {
+  ...baseConfig,
+  context: resolve('shared'),
+  entry: 'core/scatter/inject.js',
+  output: {
+    ...baseConfig.output,
+    path: resolve('ios/bitportal'),
+    filename: 'inject.js'
+  }
+}
+
 const configs = {
   web: browserConfig,
   node: serverConfig,
   "electron-renderer": desktopConfig,
-  extension: extensionConfig
+  extension: extensionConfig,
+  inject: injectConfig
 }
 
 module.exports = configs[process.env.TARGET]
