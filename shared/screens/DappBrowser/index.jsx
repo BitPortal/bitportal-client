@@ -178,7 +178,7 @@ export default class DappWebView extends Component {
   }
 
   componentDidMount() {
-    RNFS.readFile(RNFS.MainBundlePath + '/inject.js', 'utf8')
+    RNFS.readFile(`${RNFS.MainBundlePath}/inject.js`, 'utf8')
       .then((contents) => {
         this.setState({ additionalScripts: contents })
       })

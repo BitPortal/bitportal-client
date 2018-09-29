@@ -152,26 +152,26 @@ const SignatureActionItems = ({ info, locale }) => (
       <Text style={styles.label}>{messages[locale].contract_action_modal_text_details}:</Text>
       <ScrollView style={styles.dataView}>
         {info.getIn(['transaction', 'actions']).map(action => (
-           <View key={`${action.get('account')}-${action.get('name')}`} style={styles.dataViewAction}>
-             <Text style={styles.data}>
-               <Text>{messages[locale].contract_action_modal_text_account}</Text>
-               <Text style={styles.highlight}> {`${action.getIn(['authorization', 0, 'actor'])}@${action.getIn(['authorization', 0, 'permission'])}`}{'\n'}</Text>
-               <Text>{messages[locale].contract_action_modal_text_contract}</Text>
-               <Text style={styles.highlight}> {action.get('account')}{'\n'}</Text>
-               <Text>{messages[locale].contract_action_modal_text_action}</Text>
-               <Text style={styles.highlight}> {action.get('name')}{'\n'}</Text>
-               <Text>{messages[locale].contract_action_modal_text_list}:</Text>
-             </Text>
-             <View style={styles.actionData}>
-               {action.get('data').entrySeq().map(item => (
-                  <View key={item[0]} style={styles.actionDataItem}>
-                    <Text style={styles.actionDataLabel}>{item[0]}: </Text>
-                    <Text style={styles.actionDataValue}>{item[1]}</Text>
-                  </View>
-                ))}
-             </View>
-           </View>
-         ))}
+          <View key={`${action.get('account')}-${action.get('name')}`} style={styles.dataViewAction}>
+            <Text style={styles.data}>
+              <Text>{messages[locale].contract_action_modal_text_account}</Text>
+              <Text style={styles.highlight}> {`${action.getIn(['authorization', 0, 'actor'])}@${action.getIn(['authorization', 0, 'permission'])}`}{'\n'}</Text>
+              <Text>{messages[locale].contract_action_modal_text_contract}</Text>
+              <Text style={styles.highlight}> {action.get('account')}{'\n'}</Text>
+              <Text>{messages[locale].contract_action_modal_text_action}</Text>
+              <Text style={styles.highlight}> {action.get('name')}{'\n'}</Text>
+              <Text>{messages[locale].contract_action_modal_text_list}:</Text>
+            </Text>
+            <View style={styles.actionData}>
+              {action.get('data').entrySeq().map(item => (
+                <View key={item[0]} style={styles.actionDataItem}>
+                  <Text style={styles.actionDataLabel}>{item[0]}: </Text>
+                  <Text style={styles.actionDataValue}>{item[1]}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        ))}
       </ScrollView>
     </View>
   </Fragment>

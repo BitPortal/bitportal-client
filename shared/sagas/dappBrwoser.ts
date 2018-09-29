@@ -598,7 +598,7 @@ function* receiveMessage(action: Action<string>) {
         const actions = payload.transaction.actions
         const eos = yield call(initEOS, { chainId: payload.network.chainId })
         const newActions = []
-        for (let action of actions) {
+        for (const action of actions) {
           const contract = yield call(eos.contract, action.account)
           newActions.push({ ...action, data: contract.fc.fromBuffer(action.name, action.data) })
         }
