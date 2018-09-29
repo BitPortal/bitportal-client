@@ -20,7 +20,6 @@ import NavigationBar, {
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
 import * as dappBrwoserActions from 'actions/dappBrowser'
-import messageHandler from 'utils/bridgeMessageHandler'
 import ActionModal from 'components/ActionModal'
 import Prompt from 'components/Prompt'
 import messages from 'resources/messages'
@@ -183,9 +182,9 @@ export default class DappWebView extends Component {
       hasPendingMessage,
       resolvingMessage,
       needLinking,
-      uri
+      uri,
+      inject
     } = this.props
-    const injectScript = `(function () { ${messageHandler} }())`
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -217,7 +216,7 @@ export default class DappWebView extends Component {
               scalesPageToFit={true}
               nativeConfig={{ props: { backgroundColor: Colors.minorThemeColor, flex: 1 } }}
               onBridgeMessage={this.onBridgeMessage}
-              injectedJavaScript={injectScript}
+              injectedJavaScript={inject}
             />
             <ActionModal
               isVisible={hasPendingMessage && !resolvingMessage}

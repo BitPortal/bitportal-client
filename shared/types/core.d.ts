@@ -32,3 +32,12 @@ declare interface SignEOSDataParams {
   signData: string
   isHash: boolean
 }
+
+declare interface SignatureParams {
+  account: string
+  publicKey: string
+  password: string
+  buf: {
+    data: any
+  }
+}

@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
   InteractionManager
 } from 'react-native'
-import RNFS from 'react-native-fs'
+
 import WebViewBridge from 'react-native-webview-bridge'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
@@ -177,19 +177,13 @@ export default class DappWebView extends Component {
     }
   }
 
-  componentDidMount() {
-    RNFS.readFile(`${RNFS.MainBundlePath}/inject.js`, 'utf8')
-      .then((contents) => {
-        this.setState({ additionalScripts: contents })
-      })
-  }
-
   render() {
     const {
       title,
       locale,
       hasPendingMessage,
-      resolvingMessage
+      resolvingMessage,
+      inject
     } = this.props
 
     return (
@@ -201,7 +195,7 @@ export default class DappWebView extends Component {
             rightButton={<SearchWebsiteForm onSubmitEditing={this.onSubmitEditing} />}
           />
           <View style={styles.content}>
-            {!!this.state.additionalScripts && <WebViewBridge
+            <WebViewBridge
               source={{ uri: this.state.uri }}
               ref={(e) => { this.webviewbridge = e }}
               renderError={this.renderError}
@@ -215,8 +209,8 @@ export default class DappWebView extends Component {
               scalesPageToFit={true}
               nativeConfig={{ props: { backgroundColor: Colors.minorThemeColor, flex: 1 } }}
               onBridgeMessage={this.onBridgeMessage}
-              injectedJavaScript={this.state.additionalScripts}
-            />}
+              injectedJavaScript={inject}
+            />
             <ActionModal
               isVisible={hasPendingMessage && !resolvingMessage}
               dismiss={this.rejectMessage}

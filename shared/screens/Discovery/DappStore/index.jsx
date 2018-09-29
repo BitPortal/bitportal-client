@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { parsedDappListSelector } from 'selectors/dApp'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
 import { IntlProvider } from 'react-intl'
+import { loadInject } from 'utils/inject'
 import Colors from 'resources/colors'
 import messages from 'resources/messages'
 import DappElement from './DappElement'
@@ -31,15 +32,22 @@ import styles from './styles'
   { withRef: true }
 )
 export default class DappStore extends PureComponent {
-  showDappBrowser = () => {
+  showDappBrowser = async () => {
+    const inject = await loadInject()
+
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.DappBrowser',
         passProps: {
-          uri: 'https://build-hsehfjdqjt.now.sh/'
+          uri: 'https://build-hsehfjdqjt.now.sh/',
+          inject
         }
       }
     })
+  }
+
+  async componentDidMount() {
+    await loadInject()
   }
 
   render() {

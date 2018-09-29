@@ -6,6 +6,7 @@ import { Navigation } from 'react-native-navigation'
 import { bindActionCreators } from 'redux'
 import * as dAppActions from 'actions/dApp'
 import { IntlProvider, injectIntl } from 'react-intl'
+import { loadInject } from 'utils/inject'
 import AddRemoveButton from 'components/AddRemoveButton'
 import Alert from 'components/Alert'
 import Toast from 'components/Toast'
@@ -95,13 +96,16 @@ export default class DappListItem extends React.PureComponent {
     })
   }
 
-  toUrl = (item) => {
+  toUrl = async (item) => {
+    const inject = await loadInject()
+
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.DappWebView',
         passProps: {
           uri: item.get('url'),
-          title: item.get('display_name').get(this.props.locale)
+          title: item.get('display_name').get(this.props.locale),
+          inject
         }
       }
     })

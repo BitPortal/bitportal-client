@@ -213,7 +213,7 @@ const signature = async ({
   publicKey,
   password,
   buf
-}: any) => {
+}: SignatureParams) => {
   const accountInfo = await secureStorage.getItem(`EOS_ACCOUNT_INFO_${account}`, true)
   const wifs = await getEOSWifsByInfo(password, accountInfo, ['OWNER', 'ACTIVE'])
   const keyProvider = wifs.filter((item: any) => item.publicKey === publicKey).map((item: any) => item.wif)

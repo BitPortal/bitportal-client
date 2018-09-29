@@ -414,3 +414,8 @@ declare module 'bip39' {
   const bip39: any
   export default bip39
 }
+
+declare module 'react-native-fs' {
+  const fs: any
+  export default fs
+}
