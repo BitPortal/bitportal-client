@@ -364,6 +364,29 @@ const injectConfig = {
     ...baseConfig.output,
     path: resolve('ios/bitportal'),
     filename: 'inject.js'
+  },
+  plugins: [
+    ...baseConfig.plugins,
+    new CopyWebpackPlugin([
+      {
+        from: join(__dirname, 'ios/bitportal/inject.js'),
+        to: join(__dirname, 'android/app/src/main/assets/raw/inject.js')
+      }
+    ], { copyUnmodified: true })
+  ],
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        uglifyOptions: {
+          mangle: false,
+          output: {
+            comments: false
+          }
+        }
+      })
+    ]
   }
 }
 
