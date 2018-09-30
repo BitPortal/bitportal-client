@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { parsedDappListSelector } from 'selectors/dApp'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
 import { IntlProvider } from 'react-intl'
-import { loadInject } from 'utils/inject'
+import { loadInjectSync } from 'utils/inject'
 import Colors from 'resources/colors'
 import messages from 'resources/messages'
 import DappElement from './DappElement'
@@ -32,8 +32,8 @@ import styles from './styles'
   { withRef: true }
 )
 export default class DappStore extends PureComponent {
-  showDappBrowser = async () => {
-    const inject = await loadInject()
+  showDappBrowser = () => {
+    const inject = loadInjectSync()
 
     Navigation.push(this.props.componentId, {
       component: {
@@ -44,10 +44,6 @@ export default class DappStore extends PureComponent {
         }
       }
     })
-  }
-
-  async componentDidMount() {
-    await loadInject()
   }
 
   render() {

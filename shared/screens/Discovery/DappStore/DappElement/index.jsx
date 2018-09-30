@@ -4,7 +4,7 @@ import { Navigation } from 'react-native-navigation'
 import Alert from 'components/Alert'
 import { injectIntl, IntlProvider } from 'react-intl'
 import FastImage from 'react-native-fast-image'
-import { loadInject } from 'utils/inject'
+import { loadInjectSync } from 'utils/inject'
 import Images from 'resources/images'
 import messages from 'resources/messages'
 import styles from './styles'
@@ -60,8 +60,8 @@ export default class DappElement extends Component {
     })
   }
 
-  toUrl = async (item) => {
-    const inject = await loadInject()
+  toUrl = (item) => {
+    const inject = loadInjectSync()
 
     Navigation.push(this.props.componentId, {
       component: {

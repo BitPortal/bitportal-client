@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux'
 import * as newsActions from 'actions/news'
 import * as dAppActions from 'actions/dApp'
 import { IntlProvider } from 'react-intl'
+import { loadInject } from 'utils/inject'
 import Colors from 'resources/colors'
 import messages from 'resources/messages'
 import NewsList from './NewsList'
@@ -47,7 +48,7 @@ export default class Discovery extends Component {
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     InteractionManager.runAfterInteractions(() => {
       this.props.actions.getNewsListRequested({
         startAt: 0,
@@ -56,6 +57,8 @@ export default class Discovery extends Component {
       })
       this.props.actions.getDappListRequested()
     })
+
+    await loadInject()
   }
 
   getNewsListData = () => {
