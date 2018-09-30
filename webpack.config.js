@@ -362,25 +362,15 @@ const injectConfig = {
   entry: 'core/scatter/inject.js',
   output: {
     ...baseConfig.output,
-    path: resolve('ios/bitportal'),
     filename: 'inject.js'
   },
-  plugins: [
-    ...baseConfig.plugins,
-    new CopyWebpackPlugin([
-      {
-        from: join(__dirname, 'ios/bitportal/inject.js'),
-        to: join(__dirname, 'android/app/src/main/assets/raw/inject.js')
-      }
-    ], { copyUnmodified: true })
-  ],
   optimization: {
     minimizer: [
       new UglifyJsPlugin({
         cache: true,
         parallel: true,
         uglifyOptions: {
-          mangle: false,
+          mangle: true,
           output: {
             comments: false
           }
@@ -390,12 +380,29 @@ const injectConfig = {
   }
 }
 
+const injectIOSConfig = {
+  ...injectConfig,
+  output: {
+    ...injectConfig.output,
+    path: resolve('ios/bitportal')
+  }
+}
+
+const injectAndroidConfig = {
+  ...injectConfig,
+  output: {
+    ...injectConfig.output,
+    path: resolve('android/app/src/main/assets/raw')
+  }
+}
+
 const configs = {
   web: browserConfig,
   node: serverConfig,
   "electron-renderer": desktopConfig,
   extension: extensionConfig,
-  inject: injectConfig
+  injectIOS: injectIOSConfig,
+  injectAndroid: injectAndroidConfig
 }
 
 module.exports = configs[process.env.TARGET]
