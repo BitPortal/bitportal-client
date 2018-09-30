@@ -6,10 +6,10 @@
 // import * as NetworkMessageTypes from './NetworkMessageTypes'
 if (WebViewBridge) {
   const Scatterdapp = require('./scatterdapp').default
-  // const send = require('./bridge').send
+  const bitportal = require('./bridge').default
+  window.bitportal = bitportal
+  document.dispatchEvent(new CustomEvent('bitportalapi'))
 
-  // send('getOrRequestIdentity').then((identity) => {
-  // })
   window.scatter = new Scatterdapp({})
   window.scatter.getIdentity().then(() => {
     document.dispatchEvent(new CustomEvent('scatterLoaded'))
