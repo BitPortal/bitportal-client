@@ -1,5 +1,3 @@
-/* @tsx */
-
 import 'core-js/es6'
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -27,7 +25,7 @@ store.runSaga(sagas)
 
 const renderApp = (routes: RouteConfig[]) => {
   (preloadedState ? ReactDOM.hydrate : ReactDOM.render)(
-    <AppContainer warnings={false}>
+    <AppContainer>
       <CookiesProvider>
         <Provider store={store}>
           <ConnectedRouter history={browserHistory}>

@@ -1,5 +1,3 @@
-/* @tsx */
-
 import { Component } from 'react'
 
 let titles: string[] = []
@@ -27,10 +25,7 @@ export interface State {
 }
 
 export default class Title extends Component<Props, State> {
-  constructor(props: Props, context: object) {
-    super(props, context)
-    this.state = { index: titles.push('') - 1 }
-  }
+  state: State = { index: titles.push('') - 1 }
 
   componentDidMount() {
     titles = titles.filter(n => n)

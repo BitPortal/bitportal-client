@@ -24,10 +24,10 @@ base_dir=$(cd "`dirname "0"`" && pwd)
 java_dir=$(echo $java_package | tr . /)
 
 # output directories for generated src
-cpp_out="$base_dir/core/djinni/cpp"
-objc_out="$base_dir/core/djinni/objc"
-jni_out="$base_dir/core/djinni/jni"
-java_out="$base_dir/core/djinni/java/$java_dir"
+cpp_out="$base_dir/shared/core/djinni/cpp"
+objc_out="$base_dir/shared/core/djinni/objc"
+jni_out="$base_dir/shared/core/djinni/jni"
+java_out="$base_dir/shared/core/djinni/java/$java_dir"
 
 # clean generated src dirs
 rm -rf $cpp_out

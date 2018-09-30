@@ -1,5 +1,10 @@
-import { StyleSheet, Platform } from 'react-native'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, WidthPercent } from 'utils/dimens'
+import { StyleSheet } from 'react-native'
+import {
+  FontScale,
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  NAV_BAR_HEIGHT
+} from 'utils/dimens'
 import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
@@ -17,24 +22,25 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row'
   },
-  text14: {
-    fontSize: FontScale(14),
-    color: Colors.textColor_89_185_226
+  text16: {
+    fontSize: FontScale(16),
+    color: Colors.textColor_181_181_181
   },
   text20: {
     fontSize: FontScale(20),
-    color: Colors.textColor_255_255_238
-  },
-  text24: {
-    fontSize: FontScale(24),
     color: Colors.textColor_255_255_238
   },
   listContainer: {
     width: SCREEN_WIDTH,
     height: 70,
     marginTop: 1
+  },
+  icon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 10
   }
-  
 })
 
 export default styles

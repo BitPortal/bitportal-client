@@ -4,10 +4,12 @@ import * as actions from 'actions/eosAccount'
 
 const initialState = Immutable.fromJS({
   data: {},
+  isAssetHidden: false,
   eosAccountList: [],
+  eosAccountCreationInfo: {},
   loading: false,
   loaded: false,
-  error: null
+  error: null,
 })
 
 export default handleActions({
@@ -30,16 +32,41 @@ export default handleActions({
       .set('data', Immutable.fromJS(action.payload))
       .update('eosAccountList', (v: any) => v.push(Immutable.fromJS(action.payload)))
   },
+  [actions.getEOSAccountSucceeded] (state, action) {
+    return state.set('loaded', true).set('loading', false)
+      .update('eosAccountList', (v: any) => {
+        const index = v.findIndex((item: any) => item.get('account_name') === action.payload.account_name)
+        return index === -1 ? v.push(Immutable.fromJS(action.payload)) : v.set(index, Immutable.fromJS(action.payload))
+      })
+  },
   [actions.importEOSAccountFailed] (state, action) {
-    return state.set('error', action.payload).set('loading', false)
+    return state.set('importError', action.payload).set('loading', false)
+  },
+  [actions.getEOSKeyAccountsRequested] (state) {
+    return state.set('loading', true)
+  },
+  [actions.getEOSKeyAccountsSucceeded] (state) {
+    return state.set('loaded', true).set('loading', false)
+  },
+  [actions.getEOSKeyAccountsFailed] (state, action) {
+    return state.set('getKeyAccountsError', action.payload).set('loading', false)
   },
   [actions.syncEOSAccount] (state, action) {
     return state.set('eosAccountList', Immutable.fromJS(action.payload))
   },
-  [actions.clearError] (state, action) {
-    return state.set('error', null)
+  [actions.syncEOSAccountCreationInfo] (state, action) {
+    return state.set('eosAccountCreationInfo', Immutable.fromJS(action.payload))
+  },
+  [actions.clearEOSAccountError] (state) {
+    return state.set('error', null).set('importError', null).set('getKeyAccountsError', null)
   },
   [actions.resetEOSAccount] () {
     return initialState
-  }
+  },
+  [actions.hiddenAssetDisplay] (state, action) {
+    return state.set('isAssetHidden', action.payload)
+  },
+  [actions.completeBackup] (state) {
+    return state.setIn(['eosAccountCreationInfo', 'backup'], true)
+  },
 }, initialState)

@@ -5,7 +5,7 @@ declare interface ImportKeyParams {
 }
 
 declare interface ImportKeyResult {
-  hdWalletName: string
   publicKey: string
   coin: string
+  walletId: string
 }

@@ -484,7 +484,7 @@ Datafeeds.SymbolsStorage.prototype._onExchangeDataReceived = function(exchangeNa
         legs: [fullName],
         has_intraday: hasIntraday,
         has_no_volume: tableField(data, 'has-no-volume', symbolIndex),
-        listed_exchange: listedExchange,
+        market_token_detail_label_listed_exchange: listedExchange,
         exchange: tradedExchange,
         minmov: tableField(data, 'minmovement', symbolIndex) || tableField(data, 'minmov', symbolIndex),
         minmove2: tableField(data, 'minmove2', symbolIndex) || tableField(data, 'minmov2', symbolIndex),

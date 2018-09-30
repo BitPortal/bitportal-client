@@ -1,17 +1,19 @@
-/* @jsx */
-/* eslint-disable */
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import style from './style.css'
 
+interface Props {
+  locale: Locale
+  strength: number
+}
+
 @connect(
-  state => ({
+  (state: RootState) => ({
     locale: state.intl.get('locale')
   })
 )
 
-export default class PasswordStrength extends Component<{}, {}> {
+export default class PasswordStrength extends Component<Props, {}> {
   render() {
     const { strength, locale } = this.props
 

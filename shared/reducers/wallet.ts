@@ -57,10 +57,10 @@ export default handleActions({
   [actions.logoutFailed] (state, action) {
     return state.set('loggingOut', false).set('logoutError', action.payload)
   },
-  [actions.clearLogoutError] (state, action) {
+  [actions.clearLogoutError] (state) {
     return state.set('logoutError', null)
   },
-  [actions.clearError] (state, action) {
+  [actions.clearWalletError] (state) {
     return state.set('error', null)
   },
   [actions.resetWallet] () {

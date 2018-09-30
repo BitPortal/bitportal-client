@@ -1,5 +1,5 @@
 import { StyleSheet, Platform } from 'react-native'
-import { SCREEN_HEIGHT, SCREEN_WIDTH, FontScale, NAV_BAR_HEIGHT, ifIphoneX } from 'utils/dimens'
+import { SCREEN_WIDTH, FontScale, NAV_BAR_HEIGHT, ifIphoneX } from 'utils/dimens'
 import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
@@ -10,20 +10,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     ...ifIphoneX({
       paddingTop: 24
-    },{
+    }, {
       paddingTop: 0
     })
   },
   textTitle: {
     fontSize: FontScale(20),
     color: Colors.textColor_FFFFEE,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    width: SCREEN_WIDTH / 2,
+    textAlign: 'center'
+  },
+  center: {
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   navButton: {
-    minWidth: 100, 
-    height: 40, 
+    minWidth: 100,
+    height: 40,
     paddingTop: Platform.OS === 'ios' ? 6 : 4,
-    paddingLeft: 32, 
+    paddingLeft: 32,
     alignItems: 'flex-start',
     justifyContent: 'center'
   },

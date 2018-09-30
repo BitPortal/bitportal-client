@@ -10,35 +10,53 @@ declare const TradingView: any
 
 declare const Datafeeds: any
 
-declare const String: any
-
 // interfaces
 
 declare interface Config {
   ENV: string
   BITPORTAL_API_REST_URL: string
+  BITPORTAL_API_MARKET_URL: string
   BITPORTAL_API_CMS_URL: string
   BITPORTAL_API_WEBSOCKET_URL: string
   EOS_API_URL: string
+  CURRENCY_RATE_URL: string
+  BITPORTAL_API_TERMS_URL: string
+  BITPORTAL_API_UPDATE_LOG_URL: string
+  EOS_EXPLORER_URL: string
+  BITPORTAL_API_EOS_URL: string
+  BITPORTAL_WEBSITE_URL: string
 }
 
 declare interface RootState {
   router?: any
   modal?: any
   ui?: any
-  form: any
-  intl: any
-  ticker: any
-  assets: any
-  balance: any
-  wallet: any
-  vote: any
+  form?: any
+  intl?: any
+  ticker?: any
+  assets?: any
+  balance?: any
+  wallet?: any
+  producer?: any
+  eosAccount?: any
+  ram?: any
+  transaction?: any
+  contact?: any
+  eosNode?: any
+  eosAsset?: any
+  dApp?: any
+  dappBrowser?: any
+  appInfo?: any
 }
 
 declare interface FetchOptions {
-  headers: object
-  method: FetchMethod
-  body?: string | FormData
+  baseUrl?: string
+  auth?: boolean
+  headers?: {
+    Accept?: string
+    'Content-Type'?: string
+    Authorization?: string | null
+  }
 }
 
 declare interface SuccessResponse {
@@ -66,6 +84,12 @@ declare interface Window {
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: any
   tvWidget?: any
   process?: Process
+  bitportal: any
+}
+
+declare interface FormMeta {
+  form: string,
+  field: string
 }
 
 declare interface Process extends NodeJS.Process {
@@ -90,6 +114,11 @@ declare module '*.css' {
 }
 
 declare module '*.png' {
+  const file: any
+  export = file
+}
+
+declare module '*.json' {
   const file: any
   export = file
 }
@@ -119,7 +148,7 @@ declare module 'transit-immutable-js' {
   export = transit
 }
 
-declare module 'redux-form/es/immutable' {
+declare module 'redux-form/immutable' {
   interface Form {
     reducer: any
     change: any
@@ -200,6 +229,16 @@ declare module 'react-native-extended-stylesheet' {
   export = file
 }
 
+declare module 'react-native-swipe-list-view' {
+  interface ReactNativeSwipeListView {
+    SwipeListView: any
+    SwipeRow: any
+  }
+
+  const reactNativeSwipeListView: ReactNativeSwipeListView
+  export = reactNativeSwipeListView
+}
+
 declare module 'components/*' {
   const file: any
   export = file
@@ -208,6 +247,18 @@ declare module 'components/*' {
 declare module 'utils/*' {
   const file: any
   export = file
+}
+
+declare module 'utils/location' {
+  interface LocationActions {
+    pop: any
+    push: any
+    popToRoot: any
+    setExtraLocale: any
+  }
+
+  const locationActions: LocationActions
+  export = locationActions
 }
 
 declare module 'resources/icons/*' {
@@ -235,11 +286,6 @@ declare module 'react-native-eosjs-ecc' {
   export = file
 }
 
-declare module 'bip39' {
-  const file: any
-  export = file
-}
-
 declare module 'ethereumjs-wallet*' {
   const file: any
   export = file
@@ -250,23 +296,50 @@ declare module 'react-native-sensitive-info' {
   export = file
 }
 
-declare module 'eos/*' {
+declare module 'serialize-javascript' {
   const file: any
   export = file
 }
 
-declare module 'eos' {
+declare module 'core/eos' {
   interface EOS {
     generateMasterKeys: any
-    initAccount: any
     privateToPublic: any
     deriveKeys: any
     getLocalAccounts: any
     getEOS: any
+    isValidPrivate: any
+    initEOS: any
+    sortProducers: any
+    randomKey: any
+    getPermissionsByKey: any
+    getInitialAccountInfo: any
+    transferEOSAsset: any
+    voteEOSProducers: any
+    pushEOSAction: any
+    eosAuthSign: any
+    signature: any
   }
 
   const eos: EOS
   export = eos
+}
+
+declare module 'core/key' {
+  interface KeyManagement {
+    validateEntropy: any
+    getEOSKeys: any
+    getMasterSeed: any
+    getMasterSeedFromEntropy: any
+    decrypt: any
+    encrypt: any
+    getIdFromSeed: any
+    getIdFromEntropy: any
+    getEOSWifsByInfo: any
+  }
+
+  const key: KeyManagement
+  export = key
 }
 
 declare module 'bitcoin' {
@@ -285,4 +358,64 @@ declare module 'ethereum' {
 
   const ethereum: Ethereum
   export = ethereum
+}
+
+declare module 'hdkey' {
+  const file: any
+  export = file
+}
+
+declare module 'react-native-bip39' {
+  const file: any
+  export = file
+}
+
+declare module 'bs58' {
+  const file: any
+  export = file
+}
+
+declare module 'secp256k1' {
+  const file: any
+  export = file
+}
+
+declare module 'uuid*' {
+  const file: any
+  export = file
+}
+
+declare module 'keccak' {
+  const file: any
+  export = file
+}
+
+declare module 'react-native-randombytes' {
+  const file: any
+  export = file
+}
+
+declare module 'scrypt-async' {
+  const file: any
+  export = file
+}
+
+declare module 'randombytes' {
+  const file: any
+  export = file
+}
+
+declare module 'wif' {
+  const wif: any
+  export default wif
+}
+
+declare module 'bip39' {
+  const bip39: any
+  export default bip39
+}
+
+declare module 'react-native-fs' {
+  const fs: any
+  export default fs
 }

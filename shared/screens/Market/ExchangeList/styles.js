@@ -1,9 +1,9 @@
-import { StyleSheet, Platform } from 'react-native'
+import { StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
-import { 
-  FontScale, 
-  SCREEN_WIDTH, 
-  SCREEN_HEIGHT, 
+import {
+  FontScale,
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
   NAV_BAR_HEIGHT
 } from 'utils/dimens'
 
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderBottomColor: Colors.minorThemeColor,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    backgroundColor: Colors.bgColor_48_49_59
+    backgroundColor: Colors.bgColor_30_31_37
   },
   bgContainer: {
     width: SCREEN_WIDTH,

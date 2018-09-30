@@ -1,36 +1,94 @@
-/* @tsx */
-
-import { AlertIOS, Platform } from 'react-native'
+import { AlertIOS, Alert } from 'react-native'
+import { goSettingPermission } from 'utils/nativeUtil'
+import messages from 'resources/messages'
 
 const actionNegative = 'actionNegative'
 const actionPositive = 'actionPositive'
 
-const prompt = (title = '', content = null, options = {}) => {
+const alert = (title = '', content = null, options = {}) => new Promise((resolve) => {
+  const buttons = []
 
-  return new Promise((resolve, reject) => {
-    let buttons = []
-    let inputType = null
+  if (options.negativeText) {
+    buttons.push({
+      text: options.negativeText || 'cancel',
+      onPress: () => console.log('Cancel Pressed'),
+      style: options.negativeTextStyle || 'cancel'
+    })
+  }
 
-    if (options.negativeText) {
-      buttons.push({ text: options.negativeText, onPress: () => {} })
-    }
+  if (options.positiveText) {
+    buttons.push({
+      text: options.positiveText || 'OK',
+      onPress: text => resolve({ action: actionPositive, text }),
+      style: options.positiveTextStyle || 'default'
+    })
+  }
 
-    if (options.positiveText) {
-      inputType = 'secure-text'
-      buttons.push({ text: options.positiveText, onPress: (text) => resolve({ action: actionPositive, text }) })
-    }
+  if (buttons.length === 0) {
+    buttons.push({
+      text: options.positiveText || 'OK',
+      onPress: () => console.log('Ok Pressed'),
+      style: options.positiveTextStyle || 'default'
+    })
+  }
 
-    if (buttons.length == 0) {
-      buttons.push({ text: 'ok', onPress: () => {} })
-    }
+  Alert.alert(title, content, buttons)
+})
 
-    AlertIOS.prompt(title, content, buttons, inputType)
+const permissionAlert = (title, content, locale) => {
+  const buttons = []
+
+  buttons.push({
+    text: messages[locale].scan_popup_button_cancel,
+    onPress: () => console.log('Cancel Pressed'),
+    style: 'cancel'
   })
+
+  buttons.push({
+    text: messages[locale].scan_popup_button_enable,
+    onPress: () => goSettingPermission(),
+    style: 'default'
+  })
+
+  Alert.alert(title, content, buttons)
 }
 
+const prompt = (title = '', content = null, options = {}) => new Promise((resolve) => {
+  const buttons = []
+  let inputType = null
+
+  if (options.negativeText) {
+    buttons.push({
+      text: options.negativeText || 'cancel',
+      onPress: () => resolve({ action: actionNegative }),
+      style: options.negativeTextStyle || 'cancel'
+    })
+  }
+
+  if (options.positiveText) {
+    inputType = options.disableSecureText ? options.disableSecureText : 'secure-text'
+    buttons.push({
+      text: options.positiveText || 'OK',
+      onPress: text => resolve({ action: actionPositive, text }),
+      style: options.positiveTextStyle || 'default'
+    })
+  }
+
+  if (buttons.length === 0) {
+    buttons.push({
+      text: options.positiveText || 'OK',
+      onPress: resolve({ action: actionNegative }),
+      style: options.positiveTextStyle || 'default'
+    })
+  }
+
+  AlertIOS.prompt(title, content, buttons, inputType)
+})
 
 export default {
+  alert,
   prompt,
+  permissionAlert,
   actionPositive,
   actionNegative
 }

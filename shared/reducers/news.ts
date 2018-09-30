@@ -5,10 +5,10 @@ const PAGE_LENGTH = 10
 
 const initialState = Immutable.fromJS({
   listData: [],
-  listLoading: false,
   listError: null,
   nomore: false,
   isRefreshing: false,
+  loadingMore: false,
 
   bannerData: [],
   bannerLoading: false,
@@ -17,33 +17,33 @@ const initialState = Immutable.fromJS({
 
 export default handleActions({
   [actions.getNewsListRequested] (state, action) {
-    return state.set('listLoading', true)
+    if (action.payload.loadingMore) return state.set('loadingMore', true)
+    return state.set('isRefreshing', true)
   },
   [actions.getNewsListSucceeded] (state, action) {
-    const length = Immutable.fromJS(action.payload.data).size;
+    const length = Immutable.fromJS(action.payload.data).size
     if (length === 0) {
       return state
         .set('nomore', true)
-        .set('listLoading', false)
+        .set('isRefreshing', false)
+        .set('loadingMore', false)
     }
-    if (action.payload.isRefresh) {
+    if (action.payload.loadingMore) {
       return state
-        .set('listData', Immutable.fromJS(action.payload.data))
+        .set('listData', (data: any) => data.concat(Immutable.fromJS(action.payload.data)))
         .set('nomore', length < PAGE_LENGTH)
-        .set('listLoading', false)
+        .set('loadingMore', false)
     }
     return state
-      .update('listData', data => {
-        return data.concat(Immutable.fromJS(action.payload.data))
-      })
+      .update('listData', () => Immutable.fromJS(action.payload.data))
       .set('nomore', length < PAGE_LENGTH)
-      .set('listLoading', false)
+      .set('isRefreshing', false)
   },
   [actions.getNewsListFailed] (state, action) {
-    return state.set('listError', action.payload)
+    return state.set('listError', action.payload).set('isRefreshing', false).set('loadingMore', false)
   },
 
-  [actions.getNewsBannerRequested] (state, action) {
+  [actions.getNewsBannerRequested] (state) {
     return state.set('bannerLoading', true)
   },
   [actions.getNewsBannerSucceeded] (state, action) {
@@ -51,7 +51,7 @@ export default handleActions({
       .set('bannerData', Immutable.fromJS(action.payload))
       .set('bannerLoading', false)
   },
-  [actions.getNewsBannerError] (state, action) {
+  [actions.getNewsBannerFailed] (state, action) {
     return state.set('bannerError', action.payload)
   }
 }, initialState)

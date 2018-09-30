@@ -10,7 +10,7 @@ module.exports = {
     return require.resolve('react-native-typescript-transformer')
   },
   getSourceExts() {
-    return ['js', 'mobile.js', 'jsx', 'mobile.jsx', 'ts', 'mobile.ts', 'tsx', 'mobile.tsx']
+    return ['js', 'jsx', 'ts', 'tsx']
   },
   getBlacklistRE () {
     return blacklist([/react-native\/local-cli\/core\/__fixtures__.*/])

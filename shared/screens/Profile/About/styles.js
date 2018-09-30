@@ -1,5 +1,5 @@
-import { StyleSheet, Platform } from 'react-native'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, ifIphoneX } from 'utils/dimens'
+import { StyleSheet } from 'react-native'
+import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
 import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT-NAV_BAR_HEIGHT
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT
   },
   between: {
     alignItems: 'center',
@@ -26,12 +26,12 @@ const styles = StyleSheet.create({
     minHeight: 100,
     paddingVertical: 25,
     paddingHorizontal: 32,
-    backgroundColor: Colors.minorThemeColor,  
+    backgroundColor: Colors.minorThemeColor,
     alignItems: 'center'
   },
   image: {
     width: 75,
-    height: 75
+    height: 116
   },
   text12: {
     fontSize: FontScale(12),
@@ -40,11 +40,6 @@ const styles = StyleSheet.create({
   text14: {
     fontSize: FontScale(14),
     color: Colors.textColor_255_255_238
-  },
-  text18: {
-    fontSize: FontScale(18),
-    color: Colors.textColor_FFFFEE,
-    fontWeight: 'bold'
   }
 })
 

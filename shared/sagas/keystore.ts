@@ -1,13 +1,14 @@
 import { delay } from 'redux-saga'
-import { call, put, takeEvery } from 'redux-saga/effects'
+import { call, put, takeEvery, select } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import assert from 'assert'
 import * as actions from 'actions/keystore'
+import { completeBackup } from 'actions/eosAccount'
 import { getErrorMessage, encodeKey } from 'utils'
 import secureStorage from 'utils/secureStorage'
-import { Navigation } from 'react-native-navigation'
-import { getMasterSeed, decrypt, getEOSKeys } from 'key'
-import { isValidPrivate, privateToPublic } from 'eos'
+import { encrypt, getEOSWifsByInfo } from 'core/key'
+import { isValidPrivate, privateToPublic } from 'core/eos'
+import { push, pop } from 'utils/location'
 import wif from 'wif'
 
 function* importEOSKeyRequested(action: Action<ImportEOSKeyParams>) {
@@ -16,6 +17,7 @@ function* importEOSKeyRequested(action: Action<ImportEOSKeyParams>) {
   try {
     const privateKey = action.payload.key
     const walletId = action.payload.walletId
+    const hdWalletName = action.payload.hdWalletName
     const coin = 'EOS'
     assert(isValidPrivate(privateKey), 'Invalid EOS private key!')
     const publicKey = yield call(privateToPublic, privateKey)
@@ -25,7 +27,7 @@ function* importEOSKeyRequested(action: Action<ImportEOSKeyParams>) {
     if (!publicKeys) {
       publicKeys = [{ publicKey, hdWalletName, coin }]
     } else {
-      const existedKey = publicKeys.filter(item => item.publicKey === publicKey)
+      const existedKey = publicKeys.filter((item: any) => item.publicKey === publicKey)
       assert(!existedKey.length, 'Public key has been imported!')
       publicKeys.push({ publicKey, walletId, coin })
     }
@@ -37,76 +39,77 @@ function* importEOSKeyRequested(action: Action<ImportEOSKeyParams>) {
   }
 }
 
+function* changePasswordRequested(action: Action<ChangePasswordParams>) {
+  if (!action.payload) return
+
+  try {
+    const oldPassword = action.payload.oldPassword
+    const newPassword = action.payload.newPassword
+    assert(oldPassword, 'Please input old password!')
+    assert(newPassword, 'Please input new password!')
+
+    let wifs = []
+
+    const eosAccountName = action.payload.eosAccountName
+    const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
+    const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'OWNER')
+    assert(permission, 'No permission!')
+    wifs = yield call(getEOSWifsByInfo, oldPassword, accountInfo, [permission])
+    assert(wifs.length, 'No EOS private keys!')
+
+    for (const wifInfo of wifs) {
+      const permission = wifInfo.permission
+      const privateKey = wifInfo.wif
+      const publicKey = yield call(privateToPublic, privateKey)
+      const privateKeyDecodedString = wif.decode(privateKey).privateKey.toString('hex')
+      const keystore = yield call(encrypt, privateKeyDecodedString, newPassword, { origin: 'classic', coin: 'EOS' })
+      yield call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_${permission}_${publicKey}`, keystore, true)
+    }
+
+    yield put(actions.changePasswordSucceeded())
+    if (action.payload.componentId) pop(action.payload.componentId)
+  } catch (e) {
+    yield put(actions.changePasswordFailed(getErrorMessage(e)))
+  }
+}
+
 function* exportEOSKeyRequested(action: Action<ExportEOSKeyParams>) {
   if (!action.payload) return
 
   try {
     yield delay(500)
+    const eosAccountName = action.payload.eosAccountName
     const password = action.payload.password
     assert(password, 'Please input password!')
     const origin = action.payload.origin
     assert(origin, 'Missing origin!')
+    assert(origin === 'classic', 'Only support classic origin now!')
 
-    let ownerWifs = []
-    let activeWifs = []
+    let wifs = []
+
     if (origin === 'hd') {
-      const bpid = action.payload.bpid
-      const keystore = yield call(secureStorage.getItem, `HD_KEYSTORE_${bpid}`, true)
-      assert(keystore, 'Missing keystore!')
-      const entropy = yield call(decrypt, keystore, password)
-      assert(entropy, 'Missing entropy!')
-      const eosKeys = yield call(getEOSKeys, entropy, true)
-      ownerWifs = [eosKeys.keys.owner.privateKey.wif]
-      activeWifs = [eosKeys.keys.active.privateKey.wif]
+      // ...
     } else {
-      const eosAccountName = action.payload.eosAccountName
       const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
-
-      assert(accountInfo.permissions && accountInfo.permissions.length, 'EOS account permissions dose not exist!')
-      const permissions = accountInfo.permissions
-      const ownerPermission = permissions.filter(item => item.perm_name === 'owner')
-      assert(ownerPermission.length && ownerPermission[0].required_auth && ownerPermission[0].required_auth.keys && ownerPermission[0].required_auth.keys.length, 'Owner permission dose not exist!')
-      const activePermission = permissions.filter(item => item.perm_name === 'active')
-      assert(activePermission.length && activePermission[0].required_auth && activePermission[0].required_auth.keys && activePermission[0].required_auth.keys.length, 'Active permission dose not exist!')
-
-      const ownerPublicKeys = ownerPermission[0].required_auth.keys
-      for (const publicKey of ownerPublicKeys) {
-        const key = publicKey.key
-        const keystore = yield call(secureStorage.getItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_OWNER_${key}`, true)
-        if (keystore) {
-          const privateKey = yield call(decrypt, keystore, password)
-          const ownerWif = wif.encode(0x80, Buffer.from(privateKey, 'hex'), false)
-          ownerWifs.push(ownerWif)
-        }
-      }
-
-      const activePublicKeys = activePermission[0].required_auth.keys
-      for (const publicKey of activePublicKeys) {
-        const key = publicKey.key
-        const keystore = yield call(secureStorage.getItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_ACTIVE_${key}`, true)
-        if (keystore) {
-          const privateKey = yield call(decrypt, keystore, password)
-          const activeWif = wif.encode(0x80, Buffer.from(privateKey, 'hex'), false)
-          activeWifs.push(activeWif)
-        }
-      }
+      const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
+      assert(permission, 'No permission!')
+      wifs = yield call(getEOSWifsByInfo, password, accountInfo, [permission])
     }
 
-    assert(ownerWifs.length + activeWifs.length, 'No EOS private keys!')
+    assert(wifs.length, 'No EOS private keys!')
+
+    let entry
+    const eosAccountCreationInfo = yield select((state: RootState) => state.eosAccount.get('eosAccountCreationInfo'))
+    if (eosAccountCreationInfo.get('transactionId') && eosAccountCreationInfo.get('eosAccountName') === eosAccountName && !eosAccountCreationInfo.get('backup')) {
+      const newEOSAccountCreationInfo = eosAccountCreationInfo.set('backup', true).toJS()
+      yield call(secureStorage.setItem, `EOS_ACCOUNT_CREATION_INFO_${eosAccountName}`, newEOSAccountCreationInfo, true)
+      yield put(completeBackup())
+      entry = 'backup'
+    }
 
     yield put(actions.exportEOSKeySucceeded())
-    Navigation.handleDeepLink({
-	  link: '*',
-	  payload: {
-		method: 'push',
-		params: {
-          screen: 'BitPortal.ExportPrivateKey',
-          passProps: { ownerWifs, activeWifs }
-        }
-	  }
-    })
+    if (action.payload.componentId) push('BitPortal.ExportPrivateKey', action.payload.componentId, { wifs, entry })
   } catch (e) {
-    console.log(e)
     yield put(actions.exportEOSKeyFailed(getErrorMessage(e)))
   }
 }
@@ -124,5 +127,6 @@ function* syncKeyRequested() {
 export default function* keySaga() {
   yield takeEvery(String(actions.importEOSKeyRequested), importEOSKeyRequested)
   yield takeEvery(String(actions.exportEOSKeyRequested), exportEOSKeyRequested)
+  yield takeEvery(String(actions.changePasswordRequested), changePasswordRequested)
   yield takeEvery(String(actions.syncKeyRequested), syncKeyRequested)
 }

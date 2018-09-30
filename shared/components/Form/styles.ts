@@ -1,31 +1,54 @@
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Colors from 'resources/colors'
 import { FontScale } from 'utils/dimens'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 
 export default EStyleSheet.create({
   formContainer: {
     width: '100%',
     paddingHorizontal: 32,
-    paddingVertical: 20,
+    paddingTop: 20,
+    paddingBottom: 20,
     alignItems: 'center',
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: Colors.bgColor_48_49_59
+    backgroundColor: Colors.bgColor_30_31_37
+  },
+  searchContainer: {
+    width: '100% - 70',
+    paddingRight: 10,
+    paddingTop: 4,
+    paddingBottom: 4
   },
   fieldInput: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.textColor_181_181_181,
+    borderBottomColor: Colors.textColor_107_107_107,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 1
+    padding: 1,
+    alignItems: 'center'
+  },
+  searchFieldInput: {
+    height: '100%',
+    backgroundColor: 'black',
+    borderRadius: 3,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingLeft: 10
   },
   input: {
     flex: 1,
-    height: 40,
+    height: FontScale(40),
     color: Colors.textColor_255_255_238,
-    fontSize: FontScale(14)
+    fontSize: FontScale(14),
+    paddingLeft: Platform.OS === 'android' ? -4 : 0
+  },
+  searchInput: {
+    color: Colors.textColor_181_181_181,
+    height: '100%',
+    flex: 2
   },
   areaInput: {
     flex: 1,
@@ -42,9 +65,15 @@ export default EStyleSheet.create({
     flexDirection: 'column',
     width: '100%'
   },
-  text14: {
+  fieldInfo: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  label: {
     fontSize: FontScale(14),
-    color: Colors.textColor_89_185_226
+    color: Colors.textColor_255_255_238
   },
   submitButton: {
     marginTop: 3,
@@ -63,9 +92,6 @@ export default EStyleSheet.create({
   },
   indicator: {
     marginLeft: 10
-  },
-  disabled: {
-    backgroundColor: Colors.textColor_181_181_181
   },
   submitButtonText: {
     color: 'white',

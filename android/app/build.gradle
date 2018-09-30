@@ -106,13 +106,21 @@ android {
     buildToolsVersion "27.0.3"
 
     defaultConfig {
-        applicationId "com.bitportal"
-        minSdkVersion 16
+        applicationId "com.bitportal.wallet"
+        minSdkVersion 21
         targetSdkVersion 27
         renderscriptTargetApi 27
+        multiDexEnabled true
         renderscriptSupportModeEnabled true
+        vectorDrawables.useSupportLibrary true
         versionCode 1
-        versionName "1.0.0"
+        versionName "0.2.3"
+        manifestPlaceholders = [
+                JPUSH_APPKEY: "05e8b10824ab700bae78e9eb",
+                APP_CHANNEL : "default"
+        ]
+
+        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative55"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -122,6 +130,11 @@ android {
                 arguments "-DANDROID_TOOLCHAIN=clang", "-DANDROID_STL=c++_shared"
             }
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     signingConfigs {
@@ -152,7 +165,7 @@ android {
         main {
             java {
                 srcDirs = [
-                        "../../core/djinni/java",
+                        "../../shared/core/djinni/java",
                         "src/main/java"
                 ]
             }
@@ -179,7 +192,19 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-fast-crypto')
+    compile project(':react-native-fs')
+    compile project(':react-native-fast-image')
+    compile project(':jcore-react-native')
+    compile project(':jpush-react-native')
+    compile 'com.android.support:multidex:1.0.2'
+    compile project(':react-native-qrcode-local-image')
+    compile project(':react-native-image-crop-picker')
+    compile project(':react-native-restart')
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "com.android.support:appcompat-v7:25.4.0"
+    implementation "com.facebook.react:react-native:+"
+    implementation project(':react-native-navigation')
+    compile project(':react-native-device-info')
     compile project(':react-native-version-number')
     compile project(':react-native-blur')
     compile project(':react-native-camera')
@@ -192,6 +217,7 @@ dependencies {
     compile project(':react-native-vector-icons')
     compile project(':react-native-navigation')
     compile project(':react-native-svg')
+    compile project(':react-native-webview-bridge')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:27.1.1"
     compile "com.android.support:support-v4:27.1.1"

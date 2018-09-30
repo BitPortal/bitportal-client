@@ -1,4 +1,4 @@
-import App from 'containers/App'
+import App from 'pages'
 import NoMatch from 'components/NoMatch'
 import {
   Home

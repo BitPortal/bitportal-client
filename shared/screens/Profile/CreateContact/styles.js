@@ -1,11 +1,10 @@
-import { StyleSheet, Platform } from 'react-native'
+import { StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
-import { 
-  FontScale, 
-  SCREEN_WIDTH, 
-  SCREEN_HEIGHT, 
-  NAV_BAR_HEIGHT, 
-  TAB_BAR_HEIGHT
+import {
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  NAV_BAR_HEIGHT,
+  KEYBOARD_HEIGHT
 } from 'utils/dimens'
 
 const styles = StyleSheet.create({
@@ -16,27 +15,19 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT-NAV_BAR_HEIGHT
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT
   },
   content: {
     width: SCREEN_WIDTH,
     minHeight: 300,
     paddingHorizontal: 32,
     paddingVertical: 20,
-    backgroundColor: Colors.bgColor_48_49_59
+    backgroundColor: Colors.bgColor_30_31_37
   },
-  btn: {
-    width: SCREEN_WIDTH-64,
-    height: 40,
-    borderRadius: 3
-  },
-  center: {
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  text14: {
-    fontSize: FontScale(14),
-    color: Colors.textColor_255_255_238
+  keyboard: {
+    width: SCREEN_WIDTH,
+    height: KEYBOARD_HEIGHT,
+    backgroundColor: Colors.bgColor_30_31_37
   }
 })
 
