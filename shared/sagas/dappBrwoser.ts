@@ -365,17 +365,17 @@ function* resolveRequestSignature(password: string, info: any, messageId: string
       }
     }))
   } catch (error) {
-    yield put(actions.clearMessage())
-    yield delay(500)
-    yield put(actions.sendMessage({
-      messageId,
-      type: 'actionFailed',
-      payload: {
-        error: {
-          message: error.message || error
-        }
-      }
-    }))
+    // yield put(actions.clearMessage())
+    yield put(actions.resolveMessageFailed(error.message))
+    // yield put(actions.sendMessage({
+    //   messageId,
+    //   type: 'actionFailed',
+    //   payload: {
+    //     error: {
+    //       message: error.message || error
+    //     }
+    //   }
+    // }))
   }
 }
 
@@ -595,10 +595,11 @@ function* receiveMessage(action: Action<string>) {
       {
         const currentWallet = yield select((state: RootState) => currenctWalletSelector(state))
         assert(currentWallet, 'No wallet in BitPortal!')
-        const actions = payload.transaction.actions
+        const transactionActions = payload.transaction.actions
+        yield put(actions.loadContract())
         const eos = yield call(initEOS, { chainId: payload.network.chainId })
         const newActions = []
-        for (const action of actions) {
+        for (const action of transactionActions) {
           const contract = yield call(eos.contract, action.account)
           newActions.push({ ...action, data: contract.fc.fromBuffer(action.name, action.data) })
         }

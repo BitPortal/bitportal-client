@@ -9,7 +9,6 @@ import {
   ActivityIndicator,
   InteractionManager
 } from 'react-native'
-
 import WebViewBridge from 'react-native-webview-bridge'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
@@ -22,6 +21,8 @@ import ActionSheet from 'react-native-actionsheet'
 import * as dappBrwoserActions from 'actions/dappBrowser'
 import ActionModal from 'components/ActionModal'
 import Prompt from 'components/Prompt'
+import Loading from 'components/Loading'
+import Alert from 'components/Alert'
 import SearchWebsiteForm from 'components/Form/SearchWebsiteForm'
 import messages from 'resources/messages'
 import styles from './styles'
@@ -35,12 +36,27 @@ const WebViewLoading = ({ text }) => (
   </View>
 )
 
+export const errorMessages = (error) => {
+  if (!error) { return null }
+
+  const message = typeof error === 'object' ? error.message : error
+
+  switch (String(message)) {
+    case 'Key derivation failed - possibly wrong passphrase':
+      return '密码错误'
+    default:
+      return '签名失败'
+  }
+}
+
 @connect(
   state => ({
     locale: state.intl.get('locale'),
     hasPendingMessage: state.dappBrowser.get('hasPendingMessage'),
     resolvingMessage: state.dappBrowser.get('resolving'),
-    sendingMessage: state.dappBrowser.get('sendingMessage')
+    sendingMessage: state.dappBrowser.get('sendingMessage'),
+    loadingContract: state.dappBrowser.get('loadingContract'),
+    error: state.dappBrowser.get('error')
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -183,6 +199,8 @@ export default class DappWebView extends Component {
       locale,
       hasPendingMessage,
       resolvingMessage,
+      loadingContract,
+      error,
       inject
     } = this.props
 
@@ -216,6 +234,7 @@ export default class DappWebView extends Component {
               dismiss={this.rejectMessage}
               confirm={this.showPrompt}
             />
+            <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearPasswordError} delay={500} />
             <Prompt
               isVisible={this.state.showPrompt}
               type="secure-text"
@@ -235,6 +254,10 @@ export default class DappWebView extends Component {
               onPress={this.selectActionSheet}
             />
           </View>
+          <Loading
+            isVisible={resolvingMessage || loadingContract}
+            text={(resolvingMessage && '签名中') || (loadingContract && '获取合约')}
+          />
         </View>
       </IntlProvider>
     )
