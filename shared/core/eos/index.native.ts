@@ -54,8 +54,9 @@ const getPermissionsByKey = (publickKey: string, accountInfo: any) => {
   const eosAccountName = accountInfo.account_name
   const balance = accountInfo.core_liquid_balance ? accountInfo.core_liquid_balance.split(' ')[0] : 0
   const roles = permissions.filter((permission: any) => permission.required_auth && permission.required_auth.keys.filter((key: any) => key && key.key === publickKey).length).map((permission: any) => ({ balance, accountInfo, accountName: eosAccountName, permission: permission.perm_name }))
-  const ownerPermission = roles.filter((role: any) => role.permission === 'owner')
-  return ownerPermission.length ? ownerPermission : roles
+  // const ownerPermission = roles.filter((role: any) => role.permission === 'owner')
+  // return ownerPermission.length ? ownerPermission : roles
+  return roles
 }
 
 const getInitialAccountInfo = (eosAccountName: string, publicKey: string) => (
