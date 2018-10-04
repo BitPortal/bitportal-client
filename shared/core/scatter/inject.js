@@ -10,8 +10,10 @@ if (WebViewBridge) {
   window.bitportal = bitportal
   document.dispatchEvent(new CustomEvent('bitportalapi'))
 
-  window.scatter = new Scatterdapp({})
-  window.scatter.getIdentity().then(() => {
+  let scatter = new Scatterdapp({})
+  scatter.getIdentity().then(() => {
+    window.scatter = scatter
+    scatter = null
     document.dispatchEvent(new CustomEvent('scatterLoaded'))
   })
 }
