@@ -31,8 +31,8 @@ const throws = (msg) => {
 // const resolvers = new WeakMap()
 const network = new WeakMap()
 let publicKey = new WeakMap()
-// let currentVersion = new WeakMap()
-// let requiredVersion = new WeakMap()
+let currentVersion = new WeakMap()
+let requiredVersion = new WeakMap()
 
 const throwIfNoIdentity = () => {
   // if (!publicKey) throws('There is no identity with an account set on your Scatter instance.')
@@ -91,7 +91,7 @@ const setupSigProviders = (context) => {
  */
 export default class Scatterdapp {
   constructor(_options){
-    // currentVersion = parseFloat(_options.version)
+    currentVersion = parseFloat('6.1.9')
     this.useIdentity(_options.identity)
     this.isExtension = true
     this.connect = () => new Promise(resolve => resolve(true))
@@ -121,6 +121,10 @@ export default class Scatterdapp {
    * @param fields - You can specify required fields such as ['email', 'country', 'firstname']
    */
   getIdentity(fields = {}){
+    if (!!requiredVersion && requiredVersion > currentVersion) {
+      console.log('Please update the scatter')
+    }
+
     return _send(NetworkMessageTypes.GET_OR_REQUEST_IDENTITY, {
       network: network,
       fields
@@ -174,9 +178,9 @@ export default class Scatterdapp {
    * scatter requests will fail and notify the user of the reason.
    * @param _version
    */
-  // requireVersion(_version){
-  //   requiredVersion = _version
-  // }
+  requireVersion(_version){
+    requiredVersion = _version
+  }
 
   /***
    * Requests a signature for arbitrary data.

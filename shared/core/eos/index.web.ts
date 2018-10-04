@@ -222,6 +222,22 @@ const signature = async ({
   return [ecc.sign(Buffer.from(buf.data, 'utf8'), wif)]
 }
 
+const verify = async ({
+  account,
+  permission,
+  password,
+  signature,
+  data,
+  publicKey
+}: VerifyParams) => {
+  const _permission = permission || 'ACTIVE'
+  const accountInfo = await secureStorage.getItem(`EOS_ACCOUNT_INFO_${account}`, true)
+  const wifs = await getEOSWifsByInfo(password, accountInfo, [_permission])
+  const keyProvider = wifs.filter((item: any) => item.publicKey === publicKey).map((item: any) => item.wif)
+  const wif = keyProvider[0]
+  return ecc.verify(signature, data, wif)
+}
+
 export {
   initEOS,
   getEOS,
@@ -236,5 +252,6 @@ export {
   transferEOSAsset,
   pushEOSAction,
   eosAuthSign,
-  signature
+  signature,
+  verify
 }

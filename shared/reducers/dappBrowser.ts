@@ -9,7 +9,8 @@ const initialState = Immutable.fromJS({
   loadingContract: false,
   resolving: false,
   sendingMessage: null,
-  error: null
+  error: null,
+  host: null
 })
 
 export default handleActions({
@@ -35,6 +36,9 @@ export default handleActions({
   },
   [actions.clearPasswordError] (state) {
     return state.set('error', null)
+  },
+  [actions.setHost] (state, action) {
+    return state.set('host', action.payload)
   },
   [actions.clearMessage] () {
     return initialState

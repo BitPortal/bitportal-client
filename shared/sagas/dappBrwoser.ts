@@ -12,7 +12,8 @@ import {
   voteEOSProducers,
   pushEOSAction,
   eosAuthSign,
-  signature
+  signature,
+  // verify
 } from 'core/eos'
 
 function* pendTransferEOSAsset(messageActionType: string, payload: any, messageId: string) {
@@ -327,7 +328,7 @@ function* resolveSignEOSData(password: string, info: any, messageId: string) {
       messageId,
       type: 'actionSucceeded',
       payload: {
-        data: { signedData }
+        data: signedData
       }
     }))
   } catch (error) {
@@ -623,6 +624,17 @@ function* receiveMessage(action: Action<string>) {
             data: 'success'
           }
         }))
+      }
+      break
+    case 'authenticate':
+      {
+        const currentWallet = yield select((state: RootState) => currenctWalletSelector(state))
+        assert(currentWallet, 'No wallet in BitPortal!')
+        const account = currentWallet.get('account')
+        // const permission = currentWallet.get('permission')
+        const publicKey = payload.publicKey
+        const data = yield select((state: RootState) => state.dappBrowser.get('host'))
+        yield pendSignEOSData('eosAuthSign', { account, publicKey, signData: data }, messageId)
       }
       break
     default:

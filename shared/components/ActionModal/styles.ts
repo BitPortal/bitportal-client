@@ -85,7 +85,8 @@ const styles = EStyleSheet.create({
   actionDataItem: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    flexWrap: 'wrap'
   },
   actionDataLabel: {
     fontSize: FontScale(14),

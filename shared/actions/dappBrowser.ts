@@ -10,3 +10,4 @@ export const resolveMessageFailed = createAction<ErrorMessage>('dappBrwoser/RESO
 export const loadContract = createAction('dappBrwoser/LOAD_CONTRACT')
 export const clearMessage = createAction('dappBrwoser/CLEAR_MESSAGE')
 export const clearPasswordError = createAction('dappBrwoser/CLEAR_PASSWORD_ERROR')
+export const setHost = createAction('dappBrwoser/SET_HOST')

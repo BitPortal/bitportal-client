@@ -133,6 +133,7 @@
     "transit-immutable-js": "^0.6.0",
     "transit-js": "^0.8.846",
     "universal-cookie-express": "^2.1.2",
+    "url-parse": "^1.4.3",
     "uuid": "^3.0.1",
     "wif": "^2.0.6"
   },

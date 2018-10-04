@@ -19,13 +19,17 @@ import NavigationBar, {
 } from 'components/NavigationBar'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
+import Url from 'url-parse'
 import * as dappBrwoserActions from 'actions/dappBrowser'
 import ActionModal from 'components/ActionModal'
 import Prompt from 'components/Prompt'
 import Loading from 'components/Loading'
 import Alert from 'components/Alert'
-import messages from 'resources/messages'
+import globalMessages from 'resources/messages'
+import localMessages from './messages'
 import styles from './styles'
+
+const messages = { ...globalMessages, ...localMessages }
 
 const WebViewLoading = ({ text }) => (
   <View style={[styles.loadContainer, styles.center]}>
@@ -155,6 +159,11 @@ export default class DappWebView extends Component {
   renderLoading = () => (<WebViewLoading />)
 
   onNavigationStateChange = (navState) => {
+    const url = new Url(navState.url)
+    const hostname = url.hostname
+    const host = hostname.indexOf('www.') === 0 ? hostname.replace('www.', '') : hostname
+    this.props.actions.setHost(host)
+
     this.setState({
       canGoBack: navState.canGoBack
     })
@@ -264,7 +273,7 @@ export default class DappWebView extends Component {
           </View>
           <Loading
             isVisible={resolvingMessage || loadingContract}
-            text={(resolvingMessage && '签名中') || (loadingContract && '获取合约')}
+            text={(resolvingMessage && <FormattedMessage id="webview_signing" />) || (loadingContract && <FormattedMessage id="webview_fetching_contract" />)}
           />
         </View>
       </IntlProvider>

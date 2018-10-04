@@ -1,0 +1,10 @@
+{
+  "en": {
+    "webview_fetching_contract": "fetching contract",
+    "webview_signing": "signing"
+  },
+   "zh": {
+     "webview_fetching_contract": "加载合约",
+     "webview_signing": "签名中"
+  }
+}
