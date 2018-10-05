@@ -91,10 +91,8 @@ const setupSigProviders = (context) => {
  */
 export default class Scatterdapp {
   constructor(_options){
-    currentVersion = 6.1
+    currentVersion = parseFloat(_options.version)
     this.useIdentity(_options.identity)
-    this.isExtension = true
-    this.connect = () => new Promise(resolve => resolve(true))
     // stream = _stream
     // resolvers = []
     setupSigProviders(this)

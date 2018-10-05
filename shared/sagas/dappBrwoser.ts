@@ -621,7 +621,7 @@ function* receiveMessage(action: Action<string>) {
           messageId,
           type: 'actionSucceeded',
           payload: {
-            data: 'success'
+            data: true
           }
         }))
       }
