@@ -6,15 +6,14 @@
 // import * as NetworkMessageTypes from './NetworkMessageTypes'
 if (WebViewBridge) {
   const Scatterdapp = require('./scatterdapp').default
+  let scatter = new Scatterdapp({ version: '6.1.10', identity: null })
+  scatter.getIdentity().then(() => {
+    window.scatter = scatter
+    scatter = null
+    document.dispatchEvent(new CustomEvent('scatterLoaded'))
+  })
+
   const bitportal = require('./bridge').default
   window.bitportal = bitportal
   document.dispatchEvent(new CustomEvent('bitportalapi'))
-
-  window.scatter = new Scatterdapp({ version: '6.1.10', identity: null })
-  document.dispatchEvent(new CustomEvent('scatterLoaded'))
-  // scatter.getIdentity().then(() => {
-  //   window.scatter = scatter
-  //   window.ScatterEOS = scatter
-  //   scatter = null
-  // })
 }

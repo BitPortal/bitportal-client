@@ -40,16 +40,16 @@ const WebViewLoading = ({ text }) => (
   </View>
 )
 
-export const errorMessages = (error) => {
+export const errorMessages = (error, messages) => {
   if (!error) { return null }
 
   const message = typeof error === 'object' ? error.message : error
 
   switch (String(message)) {
     case 'Key derivation failed - possibly wrong passphrase':
-      return '密码错误'
+      return messages.webview_invalid_password
     default:
-      return '签名失败'
+      return messages.webview_signing_failed
   }
 }
 

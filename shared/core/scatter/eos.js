@@ -1,5 +1,5 @@
-import Eos from 'eosjs'
-import * as ricardianParser from './eos-rc-parser'
+// import Eos from 'eosjs'
+// import * as ricardianParser from './eos-rc-parser'
 import Plugin from './Plugin'
 import * as PluginTypes from './PluginTypes'
 import * as NetworkMessageTypes from './NetworkMessageTypes'
@@ -8,7 +8,7 @@ import Error from './Error'
 import Network from './Network'
 import ObjectHelpers from './ObjectHelpers'
 
-const { ecc } = Eos.modules
+// const { ecc } = Eos.modules
 
 const strippedHost = () => {
   let host = location.hostname;
@@ -84,66 +84,66 @@ let throwIfNoIdentity = new WeakMap()
 
 const proxy = (dummy, handler) => new Proxy(dummy, handler)
 
-const requestParser = async (signargs, network) => {
-  const eos = Eos({ httpEndpoint: network.fullhost(), chainId: network.chainId })
+// const requestParser = async (signargs, network) => {
+//   const eos = Eos({ httpEndpoint: network.fullhost(), chainId: network.chainId })
 
-  const contracts = signargs.transaction.actions.map(action => action.account)
-    .reduce((acc, contract) => {
-      if (!acc.includes(contract)) acc.push(contract)
-      return acc
-    }, [])
+//   const contracts = signargs.transaction.actions.map(action => action.account)
+//     .reduce((acc, contract) => {
+//       if (!acc.includes(contract)) acc.push(contract)
+//       return acc
+//     }, [])
 
-  // const staleAbi = +new Date() - (1000 * 60 * 60 * 24 * 2)
-  const abis = {}
+//   // const staleAbi = +new Date() - (1000 * 60 * 60 * 24 * 2)
+//   const abis = {}
 
-  await Promise.all(contracts.map(async (contractAccount) => {
-    const cachedABI = await Promise.race([
-      messageSender(NetworkMessageTypes.ABI_CACHE, { abiContractName: contractAccount, abiGet: true, chainId: network.chainId }),
-      new Promise(resolve => setTimeout(() => resolve('no cache'), 500))
-    ])
+//   await Promise.all(contracts.map(async (contractAccount) => {
+//     const cachedABI = await Promise.race([
+//       messageSender(NetworkMessageTypes.ABI_CACHE, { abiContractName: contractAccount, abiGet: true, chainId: network.chainId }),
+//       new Promise(resolve => setTimeout(() => resolve('no cache'), 500))
+//     ])
 
-    if (
-      cachedABI === 'object' && cachedABI.timestamp > +new Date((await eos.getAccount(contractAccount)).last_code_update)
-    ) {
-      abis[contractAccount] = eos.fc.abiCache.abi(contractAccount, cachedABI.abi)
-    } else {
-      abis[contractAccount] = (await eos.contract(contractAccount)).fc
-      const savableAbi = JSON.parse(JSON.stringify(abis[contractAccount]))
-      delete savableAbi.schema
-      delete savableAbi.structs
-      delete savableAbi.types
-      savableAbi.timestamp = +new Date()
+//     if (
+//       cachedABI === 'object' && cachedABI.timestamp > +new Date((await eos.getAccount(contractAccount)).last_code_update)
+//     ) {
+//       abis[contractAccount] = eos.fc.abiCache.abi(contractAccount, cachedABI.abi)
+//     } else {
+//       abis[contractAccount] = (await eos.contract(contractAccount)).fc
+//       const savableAbi = JSON.parse(JSON.stringify(abis[contractAccount]))
+//       delete savableAbi.schema
+//       delete savableAbi.structs
+//       delete savableAbi.types
+//       savableAbi.timestamp = +new Date()
 
-      await messageSender(NetworkMessageTypes.ABI_CACHE,
-        { abiContractName: contractAccount, abi: savableAbi, abiGet: false, chainId: network.chainId })
-    }
-  }))
+//       await messageSender(NetworkMessageTypes.ABI_CACHE,
+//         { abiContractName: contractAccount, abi: savableAbi, abiGet: false, chainId: network.chainId })
+//     }
+//   }))
 
-  return await Promise.all(signargs.transaction.actions.map(async (action) => {
-    const contractAccountName = action.account
+//   return await Promise.all(signargs.transaction.actions.map(async (action) => {
+//     const contractAccountName = action.account
 
-    const abi = abis[contractAccountName]
+//     const abi = abis[contractAccountName]
 
-    const typeName = abi.abi.actions.find(x => x.name === action.name).type
-    const data = abi.fromBuffer(typeName, action.data)
-    const actionAbi = abi.abi.actions.find(fcAction => fcAction.name === action.name)
-    let ricardian = actionAbi ? actionAbi.ricardian_contract : null
+//     const typeName = abi.abi.actions.find(x => x.name === action.name).type
+//     const data = abi.fromBuffer(typeName, action.data)
+//     const actionAbi = abi.abi.actions.find(fcAction => fcAction.name === action.name)
+//     let ricardian = actionAbi ? actionAbi.ricardian_contract : null
 
-    if (ricardian){
-      const htmlFormatting = { h1: 'div class="ricardian-action"', h2: 'div class="ricardian-description"' }
-      const signer = action.authorization.length === 1 ? action.authorization[0].actor : null
-      ricardian = ricardianParser.parse(action.name, data, ricardian, signer, htmlFormatting)
-    }
+//     if (ricardian){
+//       const htmlFormatting = { h1: 'div class="ricardian-action"', h2: 'div class="ricardian-description"' }
+//       const signer = action.authorization.length === 1 ? action.authorization[0].actor : null
+//       ricardian = ricardianParser.parse(action.name, data, ricardian, signer, htmlFormatting)
+//     }
 
-    return {
-      data,
-      code: action.account,
-      type: action.name,
-      authorization: action.authorization,
-      ricardian
-    }
-  }))
-}
+//     return {
+//       data,
+//       code: action.account,
+//       type: action.name,
+//       authorization: action.authorization,
+//       ricardian
+//     }
+//   }))
+// }
 
 export default class EOS extends Plugin {
   constructor(){ super(Blockchains.EOS, PluginTypes.BLOCKCHAIN_SUPPORT) }
@@ -208,33 +208,33 @@ export default class EOS extends Plugin {
   //   })
   // }
 
-  privateToPublic(privateKey){ return ecc.privateToPublic(privateKey) }
+  // privateToPublic(privateKey){ return ecc.privateToPublic(privateKey) }
 
-  validPrivateKey(privateKey){ return ecc.isValidPrivate(privateKey) }
+  // validPrivateKey(privateKey){ return ecc.isValidPrivate(privateKey) }
 
-  validPublicKey(publicKey){ return ecc.isValidPublic(publicKey) }
+  // validPublicKey(publicKey){ return ecc.isValidPublic(publicKey) }
 
-  randomPrivateKey(){ return ecc.randomKey() }
+  // randomPrivateKey(){ return ecc.randomKey() }
 
   convertsTo(){
     return []
   }
 
-  from_eth(privateKey){
-    return ecc.PrivateKey.fromHex(Buffer.from(privateKey, 'hex')).toString()
-  }
+  // from_eth(privateKey){
+  //   return ecc.PrivateKey.fromHex(Buffer.from(privateKey, 'hex')).toString()
+  // }
 
-  async getBalances(account, network, code = 'eosio.token', table = 'accounts'){
-    const eos = Eos({ httpEndpoint: `${network.protocol}://${network.hostport()}`, chainId: network.chainId })
-    await eos.contract(code)
-    return eos.getTableRows({
-      json: true,
-      code,
-      scope: account.name,
-      table,
-      limit: 5000
-    }).then(res => res.rows.map(row => row.balance.split(' ').reverse()))
-  }
+  // async getBalances(account, network, code = 'eosio.token', table = 'accounts'){
+  //   const eos = Eos({ httpEndpoint: `${network.protocol}://${network.hostport()}`, chainId: network.chainId })
+  //   await eos.contract(code)
+  //   return eos.getTableRows({
+  //     json: true,
+  //     code,
+  //     scope: account.name,
+  //     table,
+  //     limit: 5000
+  //   }).then(res => res.rows.map(row => row.balance.split(' ').reverse()))
+  // }
 
   actionParticipants(payload){
     return ObjectHelpers.flatten(
@@ -244,20 +244,20 @@ export default class EOS extends Plugin {
     )
   }
 
-  signer(bgContext, payload, publicKey, callback, arbitrary = false, isHash = false){
-    bgContext.publicToPrivate((privateKey) => {
-      if (!privateKey){
-        callback(null)
-        return false
-      }
+  // signer(bgContext, payload, publicKey, callback, arbitrary = false, isHash = false){
+  //   bgContext.publicToPrivate((privateKey) => {
+  //     if (!privateKey){
+  //       callback(null)
+  //       return false
+  //     }
 
-      let sig
-      if (arbitrary && isHash) sig = ecc.Signature.signHash(payload.data, privateKey).toString()
-      else sig = ecc.sign(Buffer.from(arbitrary ? payload.data : payload.buf.data, 'utf8'), privateKey)
+  //     let sig
+  //     if (arbitrary && isHash) sig = ecc.Signature.signHash(payload.data, privateKey).toString()
+  //     else sig = ecc.sign(Buffer.from(arbitrary ? payload.data : payload.buf.data, 'utf8'), privateKey)
 
-      callback(sig)
-    }, publicKey)
-  }
+  //     callback(sig)
+  //   }, publicKey)
+  // }
 
   signatureProvider(...args){
     messageSender = args[0]
@@ -295,7 +295,7 @@ export default class EOS extends Plugin {
               throwIfNoIdentity()
 
               // Friendly formatting
-              signargs.messages = true || await requestParser(signargs, network)
+              signargs.messages = true // || await requestParser(signargs, network)
 
               const payload = Object.assign(signargs, { domain: strippedHost(), network, requiredFields })
               const result = await messageSender(NetworkMessageTypes.REQUEST_SIGNATURE, payload)

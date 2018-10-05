@@ -362,7 +362,8 @@ const injectConfig = {
   entry: 'core/scatter/inject.js',
   output: {
     ...baseConfig.output,
-    filename: 'inject.js'
+    filename: 'inject.js',
+    path: resolve('ios/bitportal')
   },
   optimization: {
     minimizer: [
@@ -380,29 +381,12 @@ const injectConfig = {
   }
 }
 
-const injectIOSConfig = {
-  ...injectConfig,
-  output: {
-    ...injectConfig.output,
-    path: resolve('ios/bitportal')
-  }
-}
-
-const injectAndroidConfig = {
-  ...injectConfig,
-  output: {
-    ...injectConfig.output,
-    path: resolve('android/app/src/main/assets/raw')
-  }
-}
-
 const configs = {
   web: browserConfig,
   node: serverConfig,
   "electron-renderer": desktopConfig,
   extension: extensionConfig,
-  injectIOS: injectIOSConfig,
-  injectAndroid: injectAndroidConfig
+  inject: injectConfig
 }
 
 module.exports = configs[process.env.TARGET]
