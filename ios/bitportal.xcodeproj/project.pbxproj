@@ -119,7 +119,6 @@
 		3454A42F20D0F9C5009964B2 /* curve25519-donna-helpers.c in Sources */ = {isa = PBXBuildFile; fileRef = 3454A3B020D0F9C5009964B2 /* curve25519-donna-helpers.c */; };
 		3454A43020D0F9C5009964B2 /* ed25519-keccak.c in Sources */ = {isa = PBXBuildFile; fileRef = 3454A3B120D0F9C5009964B2 /* ed25519-keccak.c */; };
 		3454A43120D0F9C5009964B2 /* ed25519-sha3.c in Sources */ = {isa = PBXBuildFile; fileRef = 3454A3B420D0F9C5009964B2 /* ed25519-sha3.c */; };
-		3454A43220D0F9C5009964B2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3454A3B720D0F9C5009964B2 /* README.md */; };
 		3454A43320D0F9C5009964B2 /* ed25519-donna-basepoint-table.c in Sources */ = {isa = PBXBuildFile; fileRef = 3454A3B920D0F9C5009964B2 /* ed25519-donna-basepoint-table.c */; };
 		3454A43420D0F9C5009964B2 /* modm-donna-32bit.c in Sources */ = {isa = PBXBuildFile; fileRef = 3454A3BD20D0F9C5009964B2 /* modm-donna-32bit.c */; };
 		3454A43520D0F9C5009964B2 /* curve25519-donna-32bit.c in Sources */ = {isa = PBXBuildFile; fileRef = 3454A3C020D0F9C5009964B2 /* curve25519-donna-32bit.c */; };
@@ -129,7 +128,6 @@
 		3454A43D20D0F9C5009964B2 /* bignum.c in Sources */ = {isa = PBXBuildFile; fileRef = 3454A3D120D0F9C5009964B2 /* bignum.c */; };
 		3454A43E20D0F9C5009964B2 /* CONTRIBUTORS in Resources */ = {isa = PBXBuildFile; fileRef = 3454A3D420D0F9C5009964B2 /* CONTRIBUTORS */; };
 		3454A43F20D0F9C5009964B2 /* segwit_addr.c in Sources */ = {isa = PBXBuildFile; fileRef = 3454A3D520D0F9C5009964B2 /* segwit_addr.c */; };
-		3454A44020D0F9C5009964B2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3454A3D620D0F9C5009964B2 /* README.md */; };
 		3454A44120D0F9C5009964B2 /* ripemd160.c in Sources */ = {isa = PBXBuildFile; fileRef = 3454A3DA20D0F9C5009964B2 /* ripemd160.c */; };
 		3454A44220D0F9C5009964B2 /* setup.py in Resources */ = {isa = PBXBuildFile; fileRef = 3454A3DB20D0F9C5009964B2 /* setup.py */; };
 		3454A44320D0F9C5009964B2 /* groestl.c in Sources */ = {isa = PBXBuildFile; fileRef = 3454A3DD20D0F9C5009964B2 /* groestl.c */; };
@@ -2694,10 +2692,8 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3454A43E20D0F9C5009964B2 /* CONTRIBUTORS in Resources */,
-				3454A43220D0F9C5009964B2 /* README.md in Resources */,
 				11931EBAE2B04D07A075EE73 /* Entypo.ttf in Resources */,
 				3454A41920D0F9C5009964B2 /* nist256p1.table in Resources */,
-				3454A44020D0F9C5009964B2 /* README.md in Resources */,
 				0779ACBE821F41BABD68F497 /* EvilIcons.ttf in Resources */,
 				3454A42420D0F9C5009964B2 /* LICENSE in Resources */,
 				C8705FDCE59943B1ADAC3B7A /* Feather.ttf in Resources */,
@@ -2730,7 +2726,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2921,7 +2917,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.bitportal.wallet;
 				PRODUCT_NAME = bitportal;
-				PROVISIONING_PROFILE = "8cd75e73-9ada-45e4-88af-19ea0bff69ab";
+				PROVISIONING_PROFILE = "21b31255-b7bd-43d9-a0a3-4944760a000b";
 				PROVISIONING_PROFILE_SPECIFIER = "wallet ad hoc profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "bitportal-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
@@ -2986,7 +2982,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.bitportal.wallet;
 				PRODUCT_NAME = bitportal;
-				PROVISIONING_PROFILE = "8cd75e73-9ada-45e4-88af-19ea0bff69ab";
+				PROVISIONING_PROFILE = "21b31255-b7bd-43d9-a0a3-4944760a000b";
 				PROVISIONING_PROFILE_SPECIFIER = "wallet ad hoc profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "bitportal-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;

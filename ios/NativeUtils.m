@@ -34,7 +34,10 @@ RCT_EXPORT_METHOD(goSettingPermission)
 // 获取registrationID
 RCT_EXPORT_METHOD(getRegistrationID:(NSString *)jsString callback:(RCTResponseSenderBlock)callback) {
   AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-  callback(@[appDelegate.registrationID]);
+  NSLog(@"###--- %@", appDelegate.registrationID);
+  if (appDelegate.registrationID) {
+    callback(@[appDelegate.registrationID]);
+  }
 }
 
 -(BOOL)isNewSystem{
