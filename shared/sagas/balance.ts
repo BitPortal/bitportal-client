@@ -34,16 +34,17 @@ function* getEOSBalanceRequested(action: Action<GetAssetBalanceParams>) {
     // notification subscribe
     const language = yield select((state: RootState) => state.intl.get('locale'))
     const registerationID = yield call(getRegisterationID)
-    console.log('###--37', registerationID)
+    
     const params = {
       language,
       deviceToken: registerationID,
-      bpId: null,
+      bpId: '',
       chainType: symbol,
       walletId: eosAccountName,
-      topic: null,
+      topic: '',
       platform: `mobile_${Platform.OS}`
     }
+    // console.log('###---yy ', JSON.stringify(params))
     yield put(subscribe(params))
 
   } catch (e) {

@@ -7,7 +7,7 @@ function* subscribe(action: Action<SubscribeParams>) {
   if (!action.payload) return
 
   try {
-    const data = yield call(api.traceStake, action.payload)
+    const data = yield call(api.subscribe, action.payload)
     console.log('###--11', data)
   } catch (e) {
     console.log('###--13', e)
@@ -18,7 +18,7 @@ function* unsubscribe(action: Action<UnsubscribeParams>) {
   if (!action.payload) return
 
   try {
-    const data = yield call(api.traceVotes, action.payload)
+    const data = yield call(api.unsubscribe, action.payload)
     console.log('###--22', data)
   } catch (e) {
     console.log('###--24', e)

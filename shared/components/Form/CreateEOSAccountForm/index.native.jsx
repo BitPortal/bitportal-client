@@ -8,7 +8,6 @@ import { IntlProvider } from 'react-intl'
 import { FormContainer, TextField, PasswordField, TextAreaField, SubmitButton } from 'components/Form'
 import { normalizeEOSAccountName, normalizeRegistrationCode, normalizePrivateKey } from 'utils/normalize'
 import { BITPORTAL_API_TERMS_URL } from 'constants/env'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import PasswordStrength from 'components/PasswordStrength'
 import Alert from 'components/Alert'
@@ -19,6 +18,8 @@ import * as eosAccountActions from 'actions/eosAccount'
 import { onEventWithMap } from 'utils/analytics'
 import { ACCOUNT_EOS_CREATE } from 'constants/analytics'
 import messages from 'resources/messages'
+import FastImage from 'react-native-fast-image'
+import Images from 'resources/images'
 import styles from './styles'
 
 export const errorMessages = (error, messages) => {
@@ -210,7 +211,7 @@ export default class CreateEOSAccountForm extends Component {
           </TouchableOpacity>
           <View style={styles.terms}>
             <TouchableOpacity style={styles.termsBtn} onPress={this.signAgreement}>
-              <Ionicons name="ios-checkmark-circle" size={24} color={unsignAgreement ? Colors.textColor_181_181_181 : Colors.textColor_89_185_226} />
+              <FastImage source={unsignAgreement ? Images.unsign_agreement : Images.sign_agreement} style={styles.image} />
             </TouchableOpacity>
             <Text numberOfLines={1} style={styles.text14}>
               {messages[locale].add_eos_text_tos_agree}

@@ -58,7 +58,9 @@ const Images = {
   list_add: require('./list_add.png'),
   list_remove: require('./list_remove.png'),
   discovery_more: require('./Discovery_more.jpg'),
-  list_favorite: require('./list_favorite.png')
+  list_favorite: require('./list_favorite.png'),
+  sign_agreement: require('./agreement_sign.png'),
+  unsign_agreement: require('./agreement_unsign.png')
 }
 
 export default Images
