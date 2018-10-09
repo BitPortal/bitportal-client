@@ -49,7 +49,7 @@ const runApp = async () => {
     eosNode,
     selectedEOSAsset,
     storedFavoriteDapps,
-    remoteVersion
+    currentVersion
   ] = await Promise.all([
     storage.getItem('bitportal_lang'),
     storage.getItem('bitportal_currency', true),
@@ -80,7 +80,7 @@ const runApp = async () => {
 
   registerScreens(store)
   store.runSaga(sagas)
-  if (remoteVersion && calculate(remoteVersion) <= calculate(localVersion)) {
+  if (currentVersion && calculate(currentVersion) >= calculate(localVersion)) {
     startTabBasedApp(lang)
   } else {
     startSingleApp()
