@@ -236,7 +236,7 @@ export default class Scatterdapp {
 
   getVersion(){
     return new Promise((resolve) => {
-      resolve('6.1.9')
+      resolve('9.3.0')
     })
   }
 

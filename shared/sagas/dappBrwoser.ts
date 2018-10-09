@@ -568,7 +568,6 @@ function* receiveMessage(action: Action<string>) {
               accounts: [{
                 authority: currentWallet.get('permission'),
                 blockchain: 'eos',
-                publicKey: currentWallet.get('publicKey'),
                 name: currentWallet.get('account')
               }]
             }

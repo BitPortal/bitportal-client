@@ -1,12 +1,10 @@
 /* global WebViewBridge */
 
-// import { EncryptedStream } from './EncryptedStream'
-// import IdGenerator from './IdGenerator'
-// import * as PairingTags from './PairingTags'
-// import * as NetworkMessageTypes from './NetworkMessageTypes'
+import Scatterdapp from './scatterdapp'
+
 if (WebViewBridge) {
-  const Scatterdapp = require('./scatterdapp').default
-  let scatter = new Scatterdapp({ version: '6.1.10', identity: null })
+  let scatter = new Scatterdapp({ version: '9.3.0', identity: null })
+
   scatter.getIdentity().then(() => {
     window.scatter = scatter
     scatter = null

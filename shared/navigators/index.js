@@ -156,6 +156,7 @@ export const startTabBasedApp = (locale) => {
               children: [
                 {
                   component: {
+                    id: 'BitPortal.Assets',
                     name: 'BitPortal.Assets',
                     options: {
                       topBar: {
@@ -187,6 +188,7 @@ export const startTabBasedApp = (locale) => {
               children: [
                 {
                   component: {
+                    id: 'BitPortal.Market',
                     name: 'BitPortal.Market',
                     options: {
                       topBar: {
@@ -218,6 +220,7 @@ export const startTabBasedApp = (locale) => {
               children: [
                 {
                   component: {
+                    id: 'BitPortal.Discovery',
                     name: 'BitPortal.Discovery',
                     options: {
                       topBar: {
@@ -249,6 +252,7 @@ export const startTabBasedApp = (locale) => {
               children: [
                 {
                   component: {
+                    id: 'BitPortal.Profile',
                     name: 'BitPortal.Profile',
                     options: {
                       topBar: {
@@ -282,5 +286,55 @@ export const startTabBasedApp = (locale) => {
 }
 
 export const setBottomTabsLocale = (locale) => {
-  startTabBasedApp(locale)
+  if (Platform.OS === 'ios') {
+    Navigation.mergeOptions('BitPortal.Assets', {
+      bottomTab: {
+        text: messages[locale].general_nav_assets,
+        textColor: 'gray',
+        selectedTextColor: Colors.textColor_89_185_226,
+        icon: Images.asset,
+        selectedIcon: Images.asset_press,
+        selectedIconColor: Colors.textColor_89_185_226,
+        testID: 'BITPORTAL_ASSETS'
+      }
+    })
+
+    Navigation.mergeOptions('BitPortal.Market', {
+      bottomTab: {
+        text: messages[locale].general_nav_market,
+        textColor: 'gray',
+        selectedTextColor: Colors.textColor_89_185_226,
+        icon: Images.market,
+        selectedIcon: Images.market_press,
+        selectedIconColor: Colors.textColor_89_185_226,
+        testID: 'BITPORTAL_MARKET'
+      }
+    })
+
+    Navigation.mergeOptions('BitPortal.Discovery', {
+      bottomTab: {
+        text: messages[locale].general_nav_discovery,
+        textColor: 'gray',
+        selectedTextColor: Colors.textColor_89_185_226,
+        icon: Images.discovery,
+        selectedIcon: Images.discovery_press,
+        selectedIconColor: Colors.textColor_89_185_226,
+        testID: 'BITPORTAL_DISCOVERY'
+      }
+    })
+
+    Navigation.mergeOptions('BitPortal.Profile', {
+      bottomTab: {
+        text: messages[locale].general_nav_profile,
+        textColor: 'gray',
+        selectedTextColor: Colors.textColor_89_185_226,
+        icon: Images.profile,
+        selectedIcon: Images.profile_press,
+        selectedIconColor: Colors.textColor_89_185_226,
+        testID: 'BITPORTAL_PROFILE'
+      }
+    })
+  } else {
+    startTabBasedApp(locale)
+  }
 }
