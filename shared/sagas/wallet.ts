@@ -214,7 +214,7 @@ function* syncWalletRequested() {
       if (eosAccountCreationInfo) yield put(syncEOSAccountCreationInfo(eosAccountCreationInfo))
 
       yield put(getEOSAccountRequested({ eosAccountName: active.eosAccountName }))
-      yield put(getEOSBalanceRequested({ eosAccountName: active.eosAccountName }))
+      // yield put(getEOSBalanceRequested({ eosAccountName: active.eosAccountName }))
       yield put(getEOSAssetBalanceListRequested({ eosAccountName: active.eosAccountName }))
     }
   } catch (e) {

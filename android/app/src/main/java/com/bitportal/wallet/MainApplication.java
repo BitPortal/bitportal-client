@@ -29,6 +29,7 @@ import cn.jpush.reactnativejpush.JPushPackage;
 import cn.jpush.android.api.JPushInterface;
 import com.github.alinz.reactnativewebviewbridge.WebViewBridgePackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
+import com.rnfs.RNFSPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -78,7 +79,8 @@ public class MainApplication extends NavigationApplication {
       new NativeUtilsPackage(),
       new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
       new WebViewBridgePackage(),
-      new FastImageViewPackage()
+      new FastImageViewPackage(),
+      new RNFSPackage()
     );
   }
 

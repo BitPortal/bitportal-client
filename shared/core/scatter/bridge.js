@@ -1,3 +1,5 @@
+/* global WebViewBridge */
+
 const parseMessageId = function(text) {
   const re = /BITPORAL_BRIDGE_MESSAGE@(\\d|\\w)+@/g
   const found = text.match(re)
@@ -11,69 +13,50 @@ const uuid = function() {
   return `BITPORAL_BRIDGE_MESSAGE@${s4()}_${s4()}_${s4()}_${s4()}_${s4()}_${new Date().getTime()}@`
 }
 
-const callbacks = {}
+const resolvers = {}
 
-const sendMessage = (event, message) => {
-  document.dispatchEvent(new CustomEvent(`${event}_request`, { detail: { message } }))
-}
-
-const sendRequest = function(type, payload, onSuccess, onError) {
-  onSuccess = onSuccess || function(){}
-  onError = onError || function(){}
-  const messageId = uuid()
-  callbacks[messageId] = { onSuccess, onError }
-  sendMessage(type, JSON.stringify({ messageId, type, payload }))
-}
-
-const onMessage = (message) => {
-  let action
-
-  try {
-    action = JSON.parse(message)
-  } catch (error) {
-    const messageId = parseMessageId(message)
-    if (messageId) {
-      callbacks[messageId].onError({ message: error.message })
-      delete callbacks[messageId]
-    }
-    return
-  }
-
-  const messageId = action.messageId
-  const payload = action.payload
-
-  switch (action.type) {
-    case 'actionSucceeded':
-      callbacks[messageId].onSuccess(payload.data)
-      delete callbacks[messageId]
-      break
-    case 'actionFailed':
-      callbacks[messageId].onError(payload.error)
-      delete callbacks[messageId]
-      break
-    default:
-      break
-  }
-}
-
-const supportedActions = [
-  'getEOSAccountInfo',
-  'getEOSCurrencyBalance',
-  'getEOSActions',
-  'getEOSTransaction',
-  'transferEOSAsset',
-  'voteEOSProducers',
-  'pushEOSAction',
-  'eosAuthSign',
-  'getCurrentWallet',
-  'getAppInfo'
-]
-
-supportedActions.forEach((action) => {
-  document.addEventListener(`${action}_response`, function(e) {
-    onMessage(e.detail.message)
+export const send = function(type, payload) {
+  return new Promise(function(resolve, reject) {
+    resolve = resolve || function(){}
+    reject = reject || function(){}
+    const messageId = uuid()
+    resolvers[messageId] = { resolve, reject }
+    WebViewBridge.send(JSON.stringify({ messageId, type, payload }))
   })
-})
+}
+
+export const subscribe = function() {
+  WebViewBridge.onMessage = function(message) {
+    let action
+
+    try {
+      action = JSON.parse(message)
+    } catch (error) {
+      const messageId = parseMessageId(message)
+      if (messageId) {
+        resolvers[messageId].reject({ message: error.message })
+        delete resolvers[messageId]
+      }
+      return
+    }
+
+    const messageId = action.messageId
+    const payload = action.payload
+
+    switch (action.type) {
+      case 'actionSucceeded':
+        resolvers[messageId].resolve(payload.data)
+        delete resolvers[messageId]
+        break
+      case 'actionFailed':
+        resolvers[messageId].reject(payload.error)
+        delete resolvers[messageId]
+        break
+      default:
+        break
+    }
+  }
+}
 
 const bitportal = {
   getEOSAccountInfo: function(params) {
@@ -81,13 +64,7 @@ const bitportal = {
       throw new Error('"account" is required')
     }
 
-    return new Promise(function(resolve, reject) {
-      sendRequest('getEOSAccountInfo', params, function(data) {
-        resolve(data)
-      }, function(error) {
-        reject(error)
-      })
-    })
+    return send('getEOSAccountInfo', params)
   },
   getEOSCurrencyBalance: function(params) {
     if (!params.account) {
@@ -96,13 +73,7 @@ const bitportal = {
       throw new Error('"contract" is required')
     }
 
-    return new Promise(function(resolve, reject) {
-      sendRequest('getEOSCurrencyBalance', params, function(data) {
-        resolve(data)
-      }, function(error) {
-        reject(error)
-      })
-    })
+    return send('getEOSCurrencyBalance', params)
   },
   getEOSActions: function(params) {
     if (!params.offset) {
@@ -113,26 +84,14 @@ const bitportal = {
       throw new Error('"position" is required')
     }
 
-    return new Promise(function(resolve, reject) {
-      sendRequest('getEOSActions', params, function(data) {
-        resolve(data)
-      }, function(error) {
-        reject(error)
-      })
-    })
+    return send('getEOSActions', params)
   },
   getEOSTransaction: function(params) {
     if (!params.id) {
       throw new Error('"offset" is required')
     }
 
-    return new Promise(function(resolve, reject) {
-      sendRequest('getEOSTransaction', params, function(data) {
-        resolve(data)
-      }, function(error) {
-        reject(error)
-      })
-    })
+    return send('getEOSTransaction', params)
   },
   transferEOSAsset: function(params) {
     if (!params.amount) {
@@ -149,13 +108,7 @@ const bitportal = {
       throw new Error('"to" is required')
     }
 
-    return new Promise(function(resolve, reject) {
-      sendRequest('transferEOSAsset', params, function(data) {
-        resolve(data)
-      }, function(error) {
-        reject(error)
-      })
-    })
+    return send('transferEOSAsset', params)
   },
   voteEOSProducers: function(params) {
     if (!params.voter) {
@@ -164,26 +117,14 @@ const bitportal = {
       throw new Error('"producers" is required')
     }
 
-    return new Promise(function(resolve, reject) {
-      sendRequest('voteEOSProducers', params, function(data) {
-        resolve(data)
-      }, function(error) {
-        reject(error)
-      })
-    })
+    return send('voteEOSProducers', params)
   },
   pushEOSAction: function(params) {
     if (!params.actions) {
       throw new Error('"actions" is required')
     }
 
-    return new Promise(function(resolve, reject) {
-      sendRequest('pushEOSAction', params, function(data) {
-        resolve(data)
-      }, function(error) {
-        reject(error)
-      })
-    })
+    return send('pushEOSAction', params)
   },
   eosAuthSign: function(params) {
     if (!params.account) {
@@ -194,31 +135,13 @@ const bitportal = {
       throw new Error('"signData" is required')
     }
 
-    return new Promise(function(resolve, reject) {
-      sendRequest('eosAuthSign', params, function(data) {
-        resolve(data)
-      }, function(error) {
-        reject(error)
-      })
-    })
+    return send('eosAuthSign', params)
   },
   getCurrentWallet: function() {
-    return new Promise(function(resolve, reject) {
-      sendRequest('getCurrentWallet', {}, function(data) {
-        resolve(data)
-      }, function(error) {
-        reject(error)
-      })
-    })
+    return send('getCurrentWallet')
   },
   getAppInfo: function() {
-    return new Promise(function(resolve, reject) {
-      sendRequest('getAppInfo', {}, function(data) {
-        resolve(data)
-      }, function(error) {
-        reject(error)
-      })
-    })
+    return send('getAppInfo')
   }
 }
 

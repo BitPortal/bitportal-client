@@ -54,8 +54,9 @@ const getPermissionsByKey = (publickKey: string, accountInfo: any) => {
   const eosAccountName = accountInfo.account_name
   const balance = accountInfo.core_liquid_balance ? accountInfo.core_liquid_balance.split(' ')[0] : 0
   const roles = permissions.filter((permission: any) => permission.required_auth && permission.required_auth.keys.filter((key: any) => key && key.key === publickKey).length).map((permission: any) => ({ balance, accountInfo, accountName: eosAccountName, permission: permission.perm_name }))
-  const ownerPermission = roles.filter((role: any) => role.permission === 'owner')
-  return ownerPermission.length ? ownerPermission : roles
+  // const ownerPermission = roles.filter((role: any) => role.permission === 'owner')
+  // return ownerPermission.length ? ownerPermission : roles
+  return roles
 }
 
 const getInitialAccountInfo = (eosAccountName: string, publicKey: string) => (
@@ -208,6 +209,35 @@ const eosAuthSign = async ({
   return isHash ? ecc.Signature.signHash(signData, wif).toString() : ecc.sign(Buffer.from(signData, 'utf8'), wif)
 }
 
+const signature = async ({
+  account,
+  publicKey,
+  password,
+  buf
+}: SignatureParams) => {
+  const accountInfo = await secureStorage.getItem(`EOS_ACCOUNT_INFO_${account}`, true)
+  const wifs = await getEOSWifsByInfo(password, accountInfo, ['OWNER', 'ACTIVE'])
+  const keyProvider = wifs.filter((item: any) => item.publicKey === publicKey).map((item: any) => item.wif)
+  const wif = keyProvider[0]
+  return [ecc.sign(Buffer.from(buf.data, 'utf8'), wif)]
+}
+
+const verify = async ({
+  account,
+  permission,
+  password,
+  signature,
+  data,
+  publicKey
+}: VerifyParams) => {
+  const _permission = permission || 'ACTIVE'
+  const accountInfo = await secureStorage.getItem(`EOS_ACCOUNT_INFO_${account}`, true)
+  const wifs = await getEOSWifsByInfo(password, accountInfo, [_permission])
+  const keyProvider = wifs.filter((item: any) => item.publicKey === publicKey).map((item: any) => item.wif)
+  const wif = keyProvider[0]
+  return ecc.verify(signature, data, wif)
+}
+
 export {
   initEOS,
   getEOS,
@@ -221,5 +251,7 @@ export {
   voteEOSProducers,
   transferEOSAsset,
   pushEOSAction,
-  eosAuthSign
+  eosAuthSign,
+  signature,
+  verify
 }

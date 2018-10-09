@@ -1,8 +1,9 @@
 import assert from 'assert'
+import { delay } from 'redux-saga'
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/dappBrowser'
-import { escapeJSONString, parseMessageId, typeOf, validateEOSActions } from 'utils'
+import { parseMessageId, typeOf, validateEOSActions } from 'utils'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
 import { currenctWalletSelector } from 'selectors/wallet'
 import {
@@ -10,18 +11,10 @@ import {
   transferEOSAsset,
   voteEOSProducers,
   pushEOSAction,
-  eosAuthSign
+  eosAuthSign,
+  signature,
+  // verify
 } from 'core/eos'
-
-let dappBrowser: any
-
-function initDappBrowser(action: Action<any>) {
-  dappBrowser = action.payload
-}
-
-function closeDappBrowser() {
-  dappBrowser = null
-}
 
 function* pendTransferEOSAsset(messageActionType: string, payload: any, messageId: string) {
   const hasPendingMessage = yield select((state: RootState) => state.dappBrowser.get('hasPendingMessage'))
@@ -158,6 +151,40 @@ function* pendSignEOSData(messageActionType: string, payload: any, messageId: st
       publicKey,
       signData,
       isHash,
+      blockchain
+    }
+  }))
+}
+
+function* pendRequestSignature(messageActionType: string, payload: any, messageId: string) {
+  const hasPendingMessage = yield select((state: RootState) => state.dappBrowser.get('hasPendingMessage'))
+  if (hasPendingMessage) {
+    const pendingMessageActionType = yield select((state: RootState) => state.dappBrowser.getIn(['pendingMessage', 'type']))
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionFailed',
+      payload: {
+        error: {
+          message: `There's a pending request: ${pendingMessageActionType}`
+        }
+      }
+    }))
+    return
+  }
+
+  const requiredFields = payload.requiredFields
+  const buf = payload.buf
+  const transaction = payload.transaction
+  const blockchain = 'EOS'
+
+  yield put(actions.pendMessage({
+    messageId,
+    payload,
+    type: messageActionType,
+    info: {
+      requiredFields,
+      buf,
+      transaction,
       blockchain
     }
   }))
@@ -301,7 +328,7 @@ function* resolveSignEOSData(password: string, info: any, messageId: string) {
       messageId,
       type: 'actionSucceeded',
       payload: {
-        data: { signedData }
+        data: signedData
       }
     }))
   } catch (error) {
@@ -315,6 +342,41 @@ function* resolveSignEOSData(password: string, info: any, messageId: string) {
         }
       }
     }))
+  }
+}
+
+function* resolveRequestSignature(password: string, info: any, messageId: string) {
+  try {
+    const buf = info.get('buf').toJS()
+    const publicKey = yield select((state: RootState) => state.wallet.get('data').get('publicKey'))
+    const account = yield select((state: RootState) => eosAccountNameSelector(state))
+
+    const signatures = yield call(signature, {
+      account,
+      publicKey,
+      password,
+      buf
+    })
+    yield put(actions.clearMessage())
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionSucceeded',
+      payload: {
+        data: { signatures, returnedFields: [] }
+      }
+    }))
+  } catch (error) {
+    // yield put(actions.clearMessage())
+    yield put(actions.resolveMessageFailed(error.message))
+    // yield put(actions.sendMessage({
+    //   messageId,
+    //   type: 'actionFailed',
+    //   payload: {
+    //     error: {
+    //       message: error.message || error
+    //     }
+    //   }
+    // }))
   }
 }
 
@@ -490,6 +552,91 @@ function* receiveMessage(action: Action<string>) {
         yield pendSignEOSData(messageActionType, payload, messageId)
       }
       break
+    case 'getOrRequestIdentity':
+      {
+        const currentWallet = yield select((state: RootState) => currenctWalletSelector(state))
+        assert(currentWallet, 'No wallet in BitPortal!')
+        yield put(actions.sendMessage({
+          messageId,
+          type: 'actionSucceeded',
+          payload: {
+            data: {
+              hash: '4872c19edc4f2caab405fb8b071d1bb6694adf8586d3c651a96eb06dbd0ad983',
+              kyc: false,
+              name: 'RandomRaccoon433334',
+              publicKey: currentWallet.get('publicKey'),
+              accounts: [{
+                authority: currentWallet.get('permission'),
+                blockchain: 'eos',
+                publicKey: currentWallet.get('publicKey'),
+                name: currentWallet.get('account')
+              }]
+            }
+          }
+        }))
+      }
+      break
+    case 'abiCache':
+      {
+        const currentWallet = yield select((state: RootState) => currenctWalletSelector(state))
+        assert(currentWallet, 'No wallet in BitPortal!')
+        console.log(payload)
+        const eos = yield call(initEOS, { chainId: payload.chainId })
+        const contract = yield call(eos.contract, payload.abiContractName)
+        yield put(actions.sendMessage({
+          messageId,
+          type: 'actionSucceeded',
+          payload: {
+            data: { ...contract.fc, timestamp: +new Date(), account_name: payload.abiContractName }
+          }
+        }))
+      }
+      break
+    case 'requestSignature':
+      {
+        const currentWallet = yield select((state: RootState) => currenctWalletSelector(state))
+        assert(currentWallet, 'No wallet in BitPortal!')
+        const transactionActions = payload.transaction.actions
+        yield put(actions.loadContract())
+        const eos = yield call(initEOS, { chainId: payload.network.chainId })
+        const newActions = []
+        for (const action of transactionActions) {
+          const contract = yield call(eos.contract, action.account)
+          newActions.push({ ...action, data: contract.fc.fromBuffer(action.name, action.data) })
+        }
+        const errorMessage = validateEOSActions(newActions, currentWallet.get('account'))
+        assert(!errorMessage, errorMessage)
+        yield pendRequestSignature(messageActionType, {
+          ...payload,
+          transaction: { ...payload.transaction, actions: newActions },
+          account: currentWallet.get('account'),
+          publicKey: currentWallet.get('publicKey')
+        }, messageId)
+      }
+      break
+    case 'forgetIdentity':
+    case 'requestAddNetwork':
+      {
+        yield put(actions.sendMessage({
+          messageId,
+          type: 'actionSucceeded',
+          payload: {
+            data: true
+          }
+        }))
+      }
+      break
+    case 'authenticate':
+      {
+        const currentWallet = yield select((state: RootState) => currenctWalletSelector(state))
+        assert(currentWallet, 'No wallet in BitPortal!')
+        const account = currentWallet.get('account')
+        // const permission = currentWallet.get('permission')
+        const publicKey = payload.publicKey
+        const data = yield select((state: RootState) => state.dappBrowser.get('host'))
+        yield pendSignEOSData('eosAuthSign', { account, publicKey, signData: data }, messageId)
+      }
+      break
     default:
       if (messageId) {
         yield put(actions.sendMessage({
@@ -519,86 +666,73 @@ function* receiveMessage(action: Action<string>) {
   }
 }
 
-function sendMessage(action: Action<any>) {
-  if (dappBrowser) {
-    dappBrowser.sendToBridge(
-      escapeJSONString(
-        JSON.stringify(action.payload)
-      )
-    )
+function* rejectMessage() {
+  const messageId = yield select((state: RootState) => state.dappBrowser.getIn(['pendingMessage', 'messageId']))
+  const resolving = yield select((state: RootState) => state.dappBrowser.get('resolving'))
+
+  if (messageId && !resolving) {
+    yield put(actions.clearMessage())
+    yield delay(500)
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionFailed',
+      payload: {
+        error: {
+          message: 'Action is canceled.'
+        }
+      }
+    }))
   }
 }
 
-function* rejectMessage() {
-  if (dappBrowser) {
-    const messageId = yield select((state: RootState) => state.dappBrowser.getIn(['pendingMessage', 'messageId']))
-    const resolving = yield select((state: RootState) => state.dappBrowser.get('resolving'))
+function* resolveMessage(action: Action<any>) {
+  const pendingMessage = yield select((state: RootState) => state.dappBrowser.get('pendingMessage'))
+  if (!pendingMessage) return
 
-    if (messageId && !resolving) {
-      yield put(actions.clearMessage())
+  const messageId = pendingMessage.get('messageId')
+  const password = action.payload.password
+
+  if (messageId) {
+    try {
+      const messageActionType = pendingMessage.get('type')
+      const info = pendingMessage.get('info')
+
+      switch (messageActionType) {
+      case 'transferEOSAsset':
+        yield resolveTransferEOSAsset(password, info, messageId)
+        break
+      case 'voteEOSProducers':
+        yield resolveVoteEOSProducers(password, info, messageId)
+        break
+      case 'pushEOSAction':
+        yield resolvePushEOSAction(password, info, messageId)
+        break
+      case 'eosAuthSign':
+        yield resolveSignEOSData(password, info, messageId)
+        break
+      case 'requestSignature':
+        yield resolveRequestSignature(password, info, messageId)
+        break
+      default:
+        break
+      }
+    } catch (error) {
       yield put(actions.sendMessage({
         messageId,
         type: 'actionFailed',
         payload: {
           error: {
-            message: 'Action is canceled.'
+            message: error.message
           }
         }
       }))
-    }
-  }
-}
 
-function* resolveMessage(action: Action<any>) {
-  if (dappBrowser) {
-    const pendingMessage = yield select((state: RootState) => state.dappBrowser.get('pendingMessage'))
-    if (!pendingMessage) return
-
-    const messageId = pendingMessage.get('messageId')
-    const password = action.payload.password
-
-    if (messageId) {
-      try {
-        const messageActionType = pendingMessage.get('type')
-        const info = pendingMessage.get('info')
-
-        switch (messageActionType) {
-        case 'transferEOSAsset':
-          yield resolveTransferEOSAsset(password, info, messageId)
-          break
-        case 'voteEOSProducers':
-          yield resolveVoteEOSProducers(password, info, messageId)
-          break
-        case 'pushEOSAction':
-          yield resolvePushEOSAction(password, info, messageId)
-          break
-        case 'eosAuthSign':
-          yield resolveSignEOSData(password, info, messageId)
-          break
-        default:
-          break
-        }
-      } catch (error) {
-        yield put(actions.sendMessage({
-          messageId,
-          type: 'actionFailed',
-          payload: {
-            error: {
-              message: error.message
-            }
-          }
-        }))
-
-        yield put(actions.clearMessage())
-      }
+      yield put(actions.clearMessage())
     }
   }
 }
 
 export default function* dappBrowserSaga() {
-  yield takeEvery(String(actions.initDappBrowser), initDappBrowser)
-  yield takeEvery(String(actions.closeDappBrowser), closeDappBrowser)
-  yield takeEvery(String(actions.sendMessage), sendMessage)
   yield takeEvery(String(actions.receiveMessage), receiveMessage)
   yield takeEvery(String(actions.rejectMessage), rejectMessage)
   yield takeEvery(String(actions.resolveMessage), resolveMessage)

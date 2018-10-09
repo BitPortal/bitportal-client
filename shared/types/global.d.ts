@@ -318,6 +318,8 @@ declare module 'core/eos' {
     voteEOSProducers: any
     pushEOSAction: any
     eosAuthSign: any
+    signature: any
+    verify: any
   }
 
   const eos: EOS
@@ -412,4 +414,9 @@ declare module 'wif' {
 declare module 'bip39' {
   const bip39: any
   export default bip39
+}
+
+declare module 'react-native-fs' {
+  const fs: any
+  export default fs
 }

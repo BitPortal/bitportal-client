@@ -114,7 +114,7 @@ android {
         renderscriptSupportModeEnabled true
         vectorDrawables.useSupportLibrary true
         versionCode 1
-        versionName "0.2.3"
+        versionName "0.3.1"
         manifestPlaceholders = [
                 JPUSH_APPKEY: "05e8b10824ab700bae78e9eb",
                 APP_CHANNEL : "default"
@@ -192,6 +192,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-fs')
     compile project(':react-native-fast-image')
     compile project(':jcore-react-native')
     compile project(':jpush-react-native')
@@ -216,7 +217,7 @@ dependencies {
     compile project(':react-native-vector-icons')
     compile project(':react-native-navigation')
     compile project(':react-native-svg')
-    compile project(':react-native-webview-bridge-updated')
+    compile project(':react-native-webview-bridge')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:27.1.1"
     compile "com.android.support:support-v4:27.1.1"
