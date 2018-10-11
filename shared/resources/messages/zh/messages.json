@@ -53,7 +53,7 @@
   "add_eos_popup_text_password_tips": "密码是您使用 BitPortal 钱包的相关功能时所需要的凭证。该密码对 BitPortal 以外的其他应用是无效的。BitPortal 不会以任何形式储存您的密码。若您忘记密码，请重新导入私钥以重置。",
   "add_eos_error_text_password_blank": "请输入密码",
   "add_eos_error_text_confirm_password": "请确认密码",
-  "add_eos_error_text_password_min_character": "密码最少为6位字符", 
+  "add_eos_error_text_password_min_character": "密码最少为6位字符",
   "add_eos_error_text_password_max_character": "密码最多为64位字符",
   "add_eos_error_text_password_unmatch": "密码不匹配",
   "add_eos_error_text_password_hint_max_character": "密码提示最多为64位字符",
@@ -118,7 +118,7 @@
   "transaction_list_button_send": "发送",
   "transaction_list_button_receive": "接收",
   "transaction_list_text_no_data": "暂无更多交易记录",
-  "transaction_detail_title_transaction_detail": "交易详情",  
+  "transaction_detail_title_transaction_detail": "交易详情",
   "transaction_detail_label_from": "从",
   "transaction_detail_label_to": "至",
   "transaction_detail_label_amount": "数量",
@@ -221,7 +221,7 @@
 
   "contacts_add_title_add_contact": "添加联系人",
   "contacts_add_label_account_name": "账户名",
-  "contacts_add_error_text_account_name_invalid": "账户名无效，请重新输入",  
+  "contacts_add_error_text_account_name_invalid": "账户名无效，请重新输入",
   "contacts_add_error_text_account_name_format_incorrect": "账户名格式错误",
   "contacts_add_error_text_account_name": "请输入账户名",
   "contacts_add_label_contact_remark": "联系人备注：",
@@ -231,7 +231,7 @@
   "wallet_mgmt_button_export_private_key": "导出私钥",
   "wallet_mgmt_button_change_password": "重置密码",
   "wallet_mgmt_button_sign_out": "登出",
-  
+
   "export_title_export": "导出",
   "export_button_keystore": "导出 Keystore",
   "export_button_private_key": "导出私钥",
@@ -340,5 +340,4 @@
   "actlist_title_name_account": "账户",
   "actlist_button_name_create": "新建账户",
   "actlist_button_name_import": "导入账户"
-
 }

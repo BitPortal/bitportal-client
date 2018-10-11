@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   View,
   Text,
@@ -7,83 +7,88 @@ import {
   ActivityIndicator,
   KeyboardType,
   ReturnKeyType
-} from 'react-native'
-import LinearGradientContainer from 'components/LinearGradientContainer'
-import { noop } from 'utils'
-import Colors from 'resources/colors'
-import Tips from 'components/Tips'
-import styles from './styles'
+} from "react-native";
+import LinearGradientContainer from "components/LinearGradientContainer";
+import { noop } from "utils";
+import Colors from "resources/colors";
+import Tips from "components/Tips";
+import styles from "./styles";
 
-type KeyboardAppearance = 'default' | 'light' | 'dark'
+type KeyboardAppearance = "default" | "light" | "dark";
 
 interface FieldInputProps {
-  rightContent?: JSX.Element | string
-  leftContent?: JSX.Element | string
-  style?: React.CSSProperties
+  rightContent?: JSX.Element | string;
+  leftContent?: JSX.Element | string;
+  style?: React.CSSProperties;
 }
 
 interface FieldInfoProps {
-  style?: React.CSSProperties
+  style?: React.CSSProperties;
 }
 
 interface FieldInfoProps {
-  style?: React.CSSProperties
+  style?: React.CSSProperties;
 }
 
 interface TextFieldProps {
   input: {
-    onChange(text: string): void
-  },
+    onChange(text: string): void;
+  };
   meta: {
-    touched: boolean
-    error: string
-  },
-  label?: JSX.Element | string,
-  keyboardType?: KeyboardType,
-  leftContent?: JSX.Element | string,
-  rightContent?: JSX.Element | string,
-  tips?: JSX.Element | string,
-  info?: JSX.Element | string,
-  placeholder?: string
-  returnKeyType?: ReturnKeyType
-  onSubmitEditing?: any
+    touched: boolean;
+    error: string;
+  };
+  label?: JSX.Element | string;
+  keyboardType?: KeyboardType;
+  leftContent?: JSX.Element | string;
+  rightContent?: JSX.Element | string;
+  tips?: JSX.Element | string;
+  info?: JSX.Element | string;
+  placeholder?: string;
+  returnKeyType?: ReturnKeyType;
+  onSubmitEditing?: any;
 }
 
 interface SubmitButtonProps {
-  disabled: boolean
-  loading: boolean
-  text: string
-  onPress(): void
+  disabled: boolean;
+  loading: boolean;
+  text: string;
+  onPress(): void;
 }
 
 interface ButtonProps {
-  text: string
-  onPress(): void
+  text: string;
+  onPress(): void;
 }
 
 interface SearchContainer {
-  style?: React.CSSProperties
+  style?: React.CSSProperties;
 }
 
 export const FormContainer: React.SFC = ({ children }) => (
   <View style={styles.formContainer}>{children}</View>
-)
+);
 
 export const SearchContainer: React.SFC<SearchContainer> = ({ children, style }) => (
   <View style={[styles.searchContainer, style]}>{children}</View>
-)
+);
 
 export const FieldItem: React.SFC = ({ children }) => (
   <View style={styles.fieldItem}>{children}</View>
-)
+);
 
-export const FieldInput: React.SFC<FieldInputProps> = ({ children, rightContent, leftContent, style }) => (
+export const FieldInput: React.SFC<FieldInputProps> = ({
+  children,
+  rightContent,
+  leftContent,
+  style
+}) => (
   <View style={[styles.fieldInput, style]}>
     {leftContent && <View>{leftContent}</View>}
     {children}
     {rightContent && <View>{rightContent}</View>}
   </View>
-)
+);
 
 const SearchFieldInput: React.SFC<FieldInputProps> = ({
   children,
@@ -96,15 +101,15 @@ const SearchFieldInput: React.SFC<FieldInputProps> = ({
     {children}
     {rightContent && <View>{rightContent}</View>}
   </View>
-)
+);
 
 export const FieldInfo: React.SFC<FieldInfoProps> = ({ children, style }) => (
   <View style={[styles.fieldInfo, style]}>{children}</View>
-)
+);
 
 export const FieldError: React.SFC = ({ children }) => (
   <Text style={styles.fieldError}>{children}</Text>
-)
+);
 
 export const TextField: React.SFC<TextFieldProps> = ({
   input: { onChange, ...restInput },
@@ -118,7 +123,7 @@ export const TextField: React.SFC<TextFieldProps> = ({
 }) => (
   <FieldItem>
     <FieldInfo>
-      <View style={{ flexDirection: 'row' }}>
+      <View style={{ flexDirection: "row" }}>
         {label && <Text style={styles.label}>{label}</Text>}
         {tips && <Tips tips={tips} />}
       </View>
@@ -131,7 +136,7 @@ export const TextField: React.SFC<TextFieldProps> = ({
         autoCapitalize="none"
         placeholder={placeholder}
         placeholderTextColor={Colors.textColor_107_107_107}
-        keyboardType={keyboardType || 'default'}
+        keyboardType={keyboardType || "default"}
         underlineColorAndroid="transparent"
         selectionColor={Colors.textColor_181_181_181}
         keyboardAppearance={Colors.keyboardTheme as KeyboardAppearance}
@@ -141,15 +146,15 @@ export const TextField: React.SFC<TextFieldProps> = ({
     </FieldInput>
     <FieldError>{touched && error}</FieldError>
   </FieldItem>
-)
+);
 
 export const SearchField: React.SFC<TextFieldProps> = ({
   input: { onChange, ...restInput },
-    keyboardType,
-    leftContent,
-    returnKeyType,
-    onSubmitEditing,
-    placeholder
+  keyboardType,
+  leftContent,
+  returnKeyType,
+  onSubmitEditing,
+  placeholder
 }) => (
   <FieldItem>
     <SearchFieldInput leftContent={leftContent}>
@@ -159,18 +164,18 @@ export const SearchField: React.SFC<TextFieldProps> = ({
         autoCapitalize="none"
         placeholder={placeholder}
         placeholderTextColor={Colors.textColor_107_107_107}
-        keyboardType={keyboardType || 'default'}
+        keyboardType={keyboardType || "default"}
         underlineColorAndroid="transparent"
         selectionColor={Colors.textColor_181_181_181}
         keyboardAppearance={Colors.keyboardTheme as KeyboardAppearance}
         onChangeText={onChange}
-        returnKeyType={returnKeyType || 'done'}
+        returnKeyType={returnKeyType || "done"}
         onSubmitEditing={onSubmitEditing}
         {...restInput}
       />
     </SearchFieldInput>
   </FieldItem>
-)
+);
 
 export const TextAreaField: React.SFC<TextFieldProps> = ({
   input: { onChange, ...restInput },
@@ -198,7 +203,7 @@ export const TextAreaField: React.SFC<TextFieldProps> = ({
     </FieldInput>
     <FieldError>{touched && error}</FieldError>
   </FieldItem>
-)
+);
 
 export const PasswordField: React.SFC<TextFieldProps> = ({
   input: { onChange, ...restInput },
@@ -211,7 +216,7 @@ export const PasswordField: React.SFC<TextFieldProps> = ({
 }) => (
   <FieldItem>
     <FieldInfo>
-      <View style={{ flexDirection: 'row' }}>
+      <View style={{ flexDirection: "row" }}>
         {label && <Text style={styles.label}>{label}</Text>}
         {tips && <Tips tips={tips} />}
       </View>
@@ -234,9 +239,14 @@ export const PasswordField: React.SFC<TextFieldProps> = ({
     </FieldInput>
     <FieldError>{touched && error}</FieldError>
   </FieldItem>
-)
+);
 
-export const SubmitButton: React.SFC<SubmitButtonProps> = ({ disabled, loading, onPress, text }) => (
+export const SubmitButton: React.SFC<SubmitButtonProps> = ({
+  disabled,
+  loading,
+  onPress,
+  text
+}) => (
   <FieldItem>
     <TouchableOpacity onPress={!disabled ? onPress : noop} disabled={disabled}>
       <LinearGradientContainer
@@ -245,17 +255,11 @@ export const SubmitButton: React.SFC<SubmitButtonProps> = ({ disabled, loading, 
         style={[styles.submitButton]}
       >
         <Text style={styles.submitButtonText}>{text}</Text>
-        {loading && (
-          <ActivityIndicator
-            style={styles.indicator}
-            size="small"
-            color="white"
-          />
-        )}
+        {loading && <ActivityIndicator style={styles.indicator} size="small" color="white" />}
       </LinearGradientContainer>
     </TouchableOpacity>
   </FieldItem>
-)
+);
 
 export const Button: React.SFC<ButtonProps> = ({ onPress, text }) => (
   <FieldItem>
@@ -263,4 +267,4 @@ export const Button: React.SFC<ButtonProps> = ({ onPress, text }) => (
       <Text style={styles.buttonText}>{text}</Text>
     </TouchableOpacity>
   </FieldItem>
-)
+);

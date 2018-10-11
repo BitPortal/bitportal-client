@@ -1,18 +1,18 @@
-import React, { Component } from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import { Navigation } from 'react-native-navigation'
-import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
-import { exchangeTickerSelector } from 'selectors/ticker'
-import * as chartActions from 'actions/chart'
-import * as tickerActions from 'actions/ticker'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import Colors from 'resources/colors'
-import messages from 'resources/messages'
-import CoinInfoCard from './CoinInfoCard'
-import MarketList from './MarketList'
-import styles from './styles'
+import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { Navigation } from 'react-native-navigation';
+import NavigationBar, { CommonButton } from 'components/NavigationBar';
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { exchangeTickerSelector } from 'selectors/ticker';
+import * as chartActions from 'actions/chart';
+import * as tickerActions from 'actions/ticker';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Colors from 'resources/colors';
+import messages from 'resources/messages';
+import CoinInfoCard from './CoinInfoCard';
+import MarketList from './MarketList';
+import styles from './styles';
 
 const ButtonElement = ({ Title, onPress }) => (
   <TouchableOpacity
@@ -27,7 +27,7 @@ const ButtonElement = ({ Title, onPress }) => (
 
     <Text style={[styles.text14, { color: 'white' }]}> {Title}</Text>
   </TouchableOpacity>
-)
+);
 
 @connect(
   state => ({
@@ -57,12 +57,12 @@ export default class MarketDetails extends Component {
       bottomTabs: {
         visible: false
       }
-    }
+    };
   }
 
   changeMarket = (data) => {
-    console.log(JSON.stringify(data))
-  }
+    console.log(JSON.stringify(data));
+  };
 
   changeRoute = (screen) => {
     Navigation.push(this.props.componentId, {
@@ -70,19 +70,19 @@ export default class MarketDetails extends Component {
         name: `BitPortal.${screen}`,
         passProps: { tokenDetails: this.props.token }
       }
-    })
-  }
+    });
+  };
 
   componentDidMount() {
     this.props.actions.getChartRequested({
       symbol_id: 'BITSTAMP_SPOT_BTC_USD',
       period_id: '1HRS',
       limit: 24
-    })
+    });
   }
 
   componentDidAppear() {
-    this.onRefresh()
+    this.onRefresh();
   }
 
   // 获得listed exchanges
@@ -90,11 +90,11 @@ export default class MarketDetails extends Component {
     this.props.actions.getPairListedExchangeRequested({
       quote_asset: this.props.quoteAssetFilter,
       base_asset: this.props.baseAsset
-    })
-  }
+    });
+  };
 
   render() {
-    const { baseAsset, quoteAssetFilter, item, locale } = this.props
+    const { baseAsset, quoteAssetFilter, item, locale } = this.props;
 
     return (
       <View style={styles.container}>
@@ -126,6 +126,6 @@ export default class MarketDetails extends Component {
           />
         </View>
       </View>
-    )
+    );
   }
 }
