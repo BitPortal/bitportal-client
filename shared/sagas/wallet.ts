@@ -16,6 +16,8 @@ import storage from 'utils/storage'
 import { privateToPublic, initEOS, randomKey } from 'core/eos'
 import { getMasterSeed, encrypt, decrypt, getEOSKeys, getEOSWifsByInfo } from 'core/key'
 import { push, pop, popToRoot } from 'utils/location'
+import { unsubscribe } from 'actions/notification'
+import { getRegisterationID } from 'utils/nativeUtil'
 import wif from 'wif'
 
 function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAccountParams>) {
@@ -212,7 +214,7 @@ function* syncWalletRequested() {
       if (eosAccountCreationInfo) yield put(syncEOSAccountCreationInfo(eosAccountCreationInfo))
 
       yield put(getEOSAccountRequested({ eosAccountName: active.eosAccountName }))
-      yield put(getEOSBalanceRequested({ eosAccountName: active.eosAccountName }))
+      // yield put(getEOSBalanceRequested({ eosAccountName: active.eosAccountName }))
       yield put(getEOSAssetBalanceListRequested({ eosAccountName: active.eosAccountName }))
     }
   } catch (e) {
@@ -267,6 +269,17 @@ function* logoutRequested(action: Action<LogoutParams>) {
     yield put(resetKey())
     yield put(clearProducer())
     yield put(actions.logoutSucceeded())
+
+    // unsubscribe
+    const registerationID = yield call(getRegisterationID)
+    const params = {
+      deviceToken: registerationID,
+      chainType: coin,
+      walletId: eosAccountName
+    }
+    // console.log('###---yy ', JSON.stringify(params))
+    yield put(unsubscribe(params))
+
     if (action.payload.componentId) popToRoot(action.payload.componentId)
   } catch (e) {
     yield put(actions.logoutFailed(getErrorMessage(e)))

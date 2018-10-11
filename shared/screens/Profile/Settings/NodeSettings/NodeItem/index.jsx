@@ -99,6 +99,7 @@ class SwipeItem extends React.Component {
         disableRightSwipe={true}
         disableLeftSwipe={!enableDelete}
         rightOpenValue={-100}
+        previewOpenValue={-100}
         preview={enableDelete}
         onRowOpen={this.onRowOpen}
         onRowClose={this.onRowClose}

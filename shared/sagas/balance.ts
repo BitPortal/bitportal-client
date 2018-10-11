@@ -6,6 +6,9 @@ import { selectedEOSAssetSelector } from 'selectors/eosAsset'
 import { getErrorMessage } from 'utils'
 import { BITPORTAL_API_EOS_URL } from 'constants/env'
 import { initEOS } from 'core/eos'
+import { subscribe } from 'actions/notification'
+import { Platform } from 'react-native'
+import { getRegisterationID } from 'utils/nativeUtil'
 
 function* getEOSBalanceRequested(action: Action<GetAssetBalanceParams>) {
   if (!action.payload) return
@@ -27,6 +30,23 @@ function* getEOSBalanceRequested(action: Action<GetAssetBalanceParams>) {
     const contract = code
     const balanceInfo = { symbol, balance, contract, blockchain }
     yield put(actions.getEOSBalanceSucceeded({ eosAccountName, balanceInfo }))
+
+    // notification subscribe
+    const language = yield select((state: RootState) => state.intl.get('locale'))
+    const registerationID = yield call(getRegisterationID)
+    
+    const params = {
+      language,
+      deviceToken: registerationID,
+      bpId: '',
+      chainType: symbol,
+      walletId: eosAccountName,
+      topic: '',
+      platform: `mobile_${Platform.OS}`
+    }
+    // console.log('###---yy ', JSON.stringify(params))
+    yield put(subscribe(params))
+
   } catch (e) {
     yield put(actions.getEOSBalanceFailed(getErrorMessage(e)))
   }

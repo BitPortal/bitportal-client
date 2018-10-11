@@ -51,7 +51,7 @@ export const fetchBase = async (
       fetchOptions.body = JSON.stringify(params);
     }
   }
-  // console.log('### ', url)
+  console.log("###---xx ", url);
 
   return fetch(url, fetchOptions).then((res: any) => {
     if (!res.ok) {
@@ -90,21 +90,37 @@ const marketFetchBase = (
     baseUrl: "http://localhost:4041/api/v2/"
   });
 
-export const getTickers = (params?: TickerParams) => marketFetchBase("GET", "/tickers", params);
-export const getChart = (params?: ChartParams) => marketFetchBase("GET", "/chart", params);
-export const getCurrencyRate = () => fetchBase("GET", "", {}, { baseUrl: CURRENCY_RATE_URL });
-export const getNewsList = (params: any) => cmsFetchBase("GET", "/article", params);
+export const getTickers = (params?: TickerParams) =>
+  marketFetchBase("GET", "/tickers", params);
+export const getChart = (params?: ChartParams) =>
+  marketFetchBase("GET", "/chart", params);
+export const getCurrencyRate = () =>
+  fetchBase("GET", "", {}, { baseUrl: CURRENCY_RATE_URL });
+export const getNewsList = (params: any) =>
+  cmsFetchBase("GET", "/article", params);
 export const getNewsBanner = () => cmsFetchBase("GET", "/banner");
 export const getVersionInfo = () => cmsFetchBase("GET", "/system");
-export const getProducersInfo = (params: any) => cmsFetchBase("GET", "/eosbp", params);
-export const getTokenDetail = (params: any) => cmsFetchBase("GET", "/token", params);
-export const getDappList = (params: any) => cmsFetchBase("GET", "/eosdapp", params);
-export const getEOSAsset = (params: any) => cmsFetchBase("GET", "/eostoken", params);
+export const getProducersInfo = (params: any) =>
+  cmsFetchBase("GET", "/eosbp", params);
+export const getTokenDetail = (params: any) =>
+  cmsFetchBase("GET", "/token", params);
+export const getDappList = (params: any) =>
+  cmsFetchBase("GET", "/eosdapp", params);
+export const getEOSAsset = (params: any) =>
+  cmsFetchBase("GET", "/eostoken", params);
 export const createEOSAccount = (params: any) =>
   fetchBase("POST", "/registry/wallets/campaign/eoscreation", params);
 export const importEOSAccount = (params: any) =>
   fetchBase("POST", "/registry/wallets/import", params);
 
-export const traceTransaction = (params: any) => fetchBase("POST", "/transaction", params);
-export const traceStake = (params: any) => fetchBase("POST", "/stake", params);
-export const traceVotes = (params: any) => fetchBase("POST", "/votes", params);
+export const subscribe = (params: any) =>
+  marketFetchBase("POST", "/notification/subscribe", params);
+export const unsubscribe = (params: any) =>
+  marketFetchBase("POST", "/notification/unsubscribe", params);
+
+export const traceTransaction = (params: any) =>
+  marketFetchBase("POST", "/transaction", params);
+export const traceStake = (params: any) =>
+  marketFetchBase("POST", "/stake", params);
+export const traceVotes = (params: any) =>
+  marketFetchBase("POST", "/votes", params);

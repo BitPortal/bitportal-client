@@ -1,4 +1,4 @@
-import ecc from 'eosjs-ecc'
+// import ecc from 'eosjs-ecc'
 // import NetworkMessage from './NetworkMessage'
 import * as NetworkMessageTypes from './NetworkMessageTypes'
 // import * as PairingTags from './PairingTags'
@@ -6,7 +6,7 @@ import Error from './Error'
 import Network from './Network'
 // import IdGenerator from './IdGenerator'
 import PluginRepository from './PluginRepository'
-import { strippedHost } from './GenericTools'
+// import { strippedHost } from './GenericTools'
 import { send as _send, subscribe as _subscribe } from './bridge'
 
 const throws = (msg) => {
@@ -31,8 +31,8 @@ const throws = (msg) => {
 // const resolvers = new WeakMap()
 const network = new WeakMap()
 let publicKey = new WeakMap()
-// let currentVersion = new WeakMap()
-// let requiredVersion = new WeakMap()
+let currentVersion = new WeakMap()
+let requiredVersion = new WeakMap()
 
 const throwIfNoIdentity = () => {
   // if (!publicKey) throws('There is no identity with an account set on your Scatter instance.')
@@ -91,10 +91,9 @@ const setupSigProviders = (context) => {
  */
 export default class Scatterdapp {
   constructor(_options){
-    // currentVersion = parseFloat(_options.version)
+    currentVersion = parseFloat(_options.version)
     this.useIdentity(_options.identity)
     this.isExtension = true
-    this.connect = () => new Promise(resolve => resolve(true))
     // stream = _stream
     // resolvers = []
     setupSigProviders(this)
@@ -121,6 +120,10 @@ export default class Scatterdapp {
    * @param fields - You can specify required fields such as ['email', 'country', 'firstname']
    */
   getIdentity(fields = {}){
+    if (!!requiredVersion && requiredVersion > currentVersion) {
+      console.log('Please update the scatter')
+    }
+
     return _send(NetworkMessageTypes.GET_OR_REQUEST_IDENTITY, {
       network: network,
       fields
@@ -147,13 +150,14 @@ export default class Scatterdapp {
     // If the `signature` is an object, it's an error message
     if (typeof signature === 'object') return signature
 
-    try {
-      if (ecc.verify(signature, strippedHost(), publicKey)) return signature
-    } catch (e) {
-      this.identity = null
-      publicKey = ''
-      throws('Could not authenticate identity')
-    }
+    return signature
+    // try {
+    //   if (ecc.verify(signature, strippedHost(), publicKey)) return signature
+    // } catch (e) {
+    //   this.identity = null
+    //   publicKey = ''
+    //   throws('Could not authenticate identity')
+    // }
   }
 
   /***
@@ -174,9 +178,9 @@ export default class Scatterdapp {
    * scatter requests will fail and notify the user of the reason.
    * @param _version
    */
-  // requireVersion(_version){
-  //   requiredVersion = _version
-  // }
+  requireVersion(_version){
+    requiredVersion = _version
+  }
 
   /***
    * Requests a signature for arbitrary data.
@@ -192,5 +196,51 @@ export default class Scatterdapp {
       whatfor,
       isHash
     }, true)
+  }
+
+  getIdentityFromPermissions(){
+    if (!!requiredVersion && requiredVersion > currentVersion) {
+      console.log('Please update the scatter')
+    }
+
+    return _send(NetworkMessageTypes.GET_OR_REQUEST_IDENTITY, {})
+      .then(async (identity) => {
+        this.useIdentity(identity)
+        return identity
+      })
+  }
+
+  async isInstalled(){
+    return new Promise((resolve) => {
+      resolve(true)
+    })
+  }
+
+  disconnect(){
+    return new Promise((resolve) => {
+      resolve(true)
+    })
+  }
+
+  isConnected(){
+    return new Promise((resolve) => {
+      resolve(true)
+    })
+  }
+
+  isPaired(){
+    return new Promise((resolve) => {
+      resolve(true)
+    })
+  }
+
+  getVersion(){
+    return new Promise((resolve) => {
+      resolve('9.3.0')
+    })
+  }
+
+  connect() {
+    return new Promise(resolve => resolve(true))
   }
 }

@@ -319,6 +319,7 @@ declare module 'core/eos' {
     pushEOSAction: any
     eosAuthSign: any
     signature: any
+    verify: any
   }
 
   const eos: EOS

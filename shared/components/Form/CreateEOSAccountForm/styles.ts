@@ -20,10 +20,15 @@ export default EStyleSheet.create({
   },
   termsBtn: {
     padding: 15,
+    paddingRight: 10,
     marginLeft: -30,
   },
   text14: {
     fontSize: FontScale(14),
     color: Colors.textColor_181_181_181
+  },
+  image: {
+    width: FontScale(16),
+    height: FontScale(16)
   }
 })

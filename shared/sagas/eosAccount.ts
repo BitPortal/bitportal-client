@@ -3,7 +3,7 @@ import { all, select, call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import { reset } from 'redux-form/immutable'
 import * as actions from 'actions/eosAccount'
-import { getEOSBalanceRequested, getEOSBalanceSucceeded } from 'actions/balance'
+import { getEOSBalanceSucceeded } from 'actions/balance'
 import { createClassicWalletSucceeded } from 'actions/wallet'
 import  { setSelected } from 'actions/producer'
 import { votedProducersSelector, eosCoreLiquidBalanceSelector } from 'selectors/eosAccount'
@@ -79,7 +79,7 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
       put(actions.syncEOSAccountCreationInfo(eosAccountCreationInfo)),
       put(actions.createEOSAccountSucceeded(accountInfo)),
       put(createClassicWalletSucceeded(walletInfo)),
-      put(getEOSBalanceRequested({ eosAccountName: walletInfo.eosAccountName })),
+      put(actions.getEOSAccountRequested({ eosAccountName: walletInfo.eosAccountName })),
       put(reset('createEOSAccountForm'))
     ])
 
@@ -121,7 +121,7 @@ function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
     yield all([
       put(actions.importEOSAccountSucceeded(accountInfo)),
       put(createClassicWalletSucceeded(walletInfo)),
-      put(getEOSBalanceRequested({ eosAccountName: walletInfo.eosAccountName })),
+      put(actions.getEOSAccountRequested({ eosAccountName: walletInfo.eosAccountName })),
       put(reset('importEOSAccountForm'))
     ])
 

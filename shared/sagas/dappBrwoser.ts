@@ -12,7 +12,8 @@ import {
   voteEOSProducers,
   pushEOSAction,
   eosAuthSign,
-  signature
+  signature,
+  // verify
 } from 'core/eos'
 
 function* pendTransferEOSAsset(messageActionType: string, payload: any, messageId: string) {
@@ -327,7 +328,7 @@ function* resolveSignEOSData(password: string, info: any, messageId: string) {
       messageId,
       type: 'actionSucceeded',
       payload: {
-        data: { signedData }
+        data: signedData
       }
     }))
   } catch (error) {
@@ -365,17 +366,17 @@ function* resolveRequestSignature(password: string, info: any, messageId: string
       }
     }))
   } catch (error) {
-    yield put(actions.clearMessage())
-    yield delay(500)
-    yield put(actions.sendMessage({
-      messageId,
-      type: 'actionFailed',
-      payload: {
-        error: {
-          message: error.message || error
-        }
-      }
-    }))
+    // yield put(actions.clearMessage())
+    yield put(actions.resolveMessageFailed(error.message))
+    // yield put(actions.sendMessage({
+    //   messageId,
+    //   type: 'actionFailed',
+    //   payload: {
+    //     error: {
+    //       message: error.message || error
+    //     }
+    //   }
+    // }))
   }
 }
 
@@ -567,7 +568,6 @@ function* receiveMessage(action: Action<string>) {
               accounts: [{
                 authority: currentWallet.get('permission'),
                 blockchain: 'eos',
-                publicKey: currentWallet.get('publicKey'),
                 name: currentWallet.get('account')
               }]
             }
@@ -595,10 +595,11 @@ function* receiveMessage(action: Action<string>) {
       {
         const currentWallet = yield select((state: RootState) => currenctWalletSelector(state))
         assert(currentWallet, 'No wallet in BitPortal!')
-        const actions = payload.transaction.actions
+        const transactionActions = payload.transaction.actions
+        yield put(actions.loadContract())
         const eos = yield call(initEOS, { chainId: payload.network.chainId })
         const newActions = []
-        for (const action of actions) {
+        for (const action of transactionActions) {
           const contract = yield call(eos.contract, action.account)
           newActions.push({ ...action, data: contract.fc.fromBuffer(action.name, action.data) })
         }
@@ -619,9 +620,20 @@ function* receiveMessage(action: Action<string>) {
           messageId,
           type: 'actionSucceeded',
           payload: {
-            data: 'success'
+            data: true
           }
         }))
+      }
+      break
+    case 'authenticate':
+      {
+        const currentWallet = yield select((state: RootState) => currenctWalletSelector(state))
+        assert(currentWallet, 'No wallet in BitPortal!')
+        const account = currentWallet.get('account')
+        // const permission = currentWallet.get('permission')
+        const publicKey = payload.publicKey
+        const data = yield select((state: RootState) => state.dappBrowser.get('host'))
+        yield pendSignEOSData('eosAuthSign', { account, publicKey, signData: data }, messageId)
       }
       break
     default:

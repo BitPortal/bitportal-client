@@ -19,11 +19,17 @@ import NavigationBar, {
 } from 'components/NavigationBar'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
+import Url from 'url-parse'
 import * as dappBrwoserActions from 'actions/dappBrowser'
 import ActionModal from 'components/ActionModal'
 import Prompt from 'components/Prompt'
-import messages from 'resources/messages'
+import Loading from 'components/Loading'
+import Alert from 'components/Alert'
+import globalMessages from 'resources/messages'
+import localMessages from './messages'
 import styles from './styles'
+
+const messages = { ...globalMessages, ...localMessages }
 
 const WebViewLoading = ({ text }) => (
   <View style={[styles.loadContainer, styles.center]}>
@@ -34,12 +40,27 @@ const WebViewLoading = ({ text }) => (
   </View>
 )
 
+export const errorMessages = (error, messages) => {
+  if (!error) { return null }
+
+  const message = typeof error === 'object' ? error.message : error
+
+  switch (String(message)) {
+    case 'Key derivation failed - possibly wrong passphrase':
+      return messages.webview_invalid_password
+    default:
+      return messages.webview_signing_failed
+  }
+}
+
 @connect(
   state => ({
     locale: state.intl.get('locale'),
     hasPendingMessage: state.dappBrowser.get('hasPendingMessage'),
     resolvingMessage: state.dappBrowser.get('resolving'),
-    sendingMessage: state.dappBrowser.get('sendingMessage')
+    sendingMessage: state.dappBrowser.get('sendingMessage'),
+    loadingContract: state.dappBrowser.get('loadingContract'),
+    error: state.dappBrowser.get('error')
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -138,6 +159,11 @@ export default class DappWebView extends Component {
   renderLoading = () => (<WebViewLoading />)
 
   onNavigationStateChange = (navState) => {
+    const url = new Url(navState.url)
+    const hostname = url.hostname
+    const host = hostname.indexOf('www.') === 0 ? hostname.replace('www.', '') : hostname
+    this.props.actions.setHost(host)
+
     this.setState({
       canGoBack: navState.canGoBack
     })
@@ -181,6 +207,8 @@ export default class DappWebView extends Component {
       locale,
       hasPendingMessage,
       resolvingMessage,
+      loadingContract,
+      error,
       needLinking,
       uri,
       inject
@@ -223,6 +251,7 @@ export default class DappWebView extends Component {
               dismiss={this.rejectMessage}
               confirm={this.showPrompt}
             />
+            <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearPasswordError} delay={500} />
             <Prompt
               isVisible={this.state.showPrompt}
               type="secure-text"
@@ -242,6 +271,10 @@ export default class DappWebView extends Component {
               onPress={this.selectActionSheet}
             />
           </View>
+          <Loading
+            isVisible={resolvingMessage || loadingContract}
+            text={(resolvingMessage && <FormattedMessage id="webview_signing" />) || (loadingContract && <FormattedMessage id="webview_fetching_contract" />)}
+          />
         </View>
       </IntlProvider>
     )

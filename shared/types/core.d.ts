@@ -41,3 +41,12 @@ declare interface SignatureParams {
     data: any
   }
 }
+
+declare interface VerifyParams {
+  account: string
+  permission: string
+  password: string
+  signature: string
+  data: string
+  publicKey: string
+}

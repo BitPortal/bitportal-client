@@ -83,62 +83,114 @@ Navigation.events().registerAppLaunchedListener(() => {
 });
 
 export const registerScreens = store => {
-  Navigation.registerComponent("BitPortal.Welcome", () => screenComponent(Welcome, store));
-  Navigation.registerComponent("BitPortal.DappWebView", () => screenComponent(DappWebView, store));
-  Navigation.registerComponent("BitPortal.DappBrowser", () => screenComponent(DappBrowser, store));
-  Navigation.registerComponent("BitPortal.LightBox", () => screenComponent(LightBox, store));
-  Navigation.registerComponent("BitPortal.BPWebView", () => screenComponent(BPWebView, store));
+  Navigation.registerComponent("BitPortal.Welcome", () =>
+    screenComponent(Welcome, store)
+  );
+  Navigation.registerComponent("BitPortal.DappWebView", () =>
+    screenComponent(DappWebView, store)
+  );
+  Navigation.registerComponent("BitPortal.DappBrowser", () =>
+    screenComponent(DappBrowser, store)
+  );
+  Navigation.registerComponent("BitPortal.LightBox", () =>
+    screenComponent(LightBox, store)
+  );
+  Navigation.registerComponent("BitPortal.BPWebView", () =>
+    screenComponent(BPWebView, store)
+  );
   Navigation.registerComponent("BitPortal.QRCodeScanner", () =>
     screenComponent(QRCodeScanner, store)
   );
   Navigation.registerComponent("BitPortal.TransactionRecord", () =>
     screenComponent(TransactionRecord, store)
   );
-  Navigation.registerComponent("BitPortal.Assets", () => screenComponent(Assets, store));
+  Navigation.registerComponent("BitPortal.Assets", () =>
+    screenComponent(Assets, store)
+  );
   Navigation.registerComponent("BitPortal.ReceiveQRCode", () =>
     screenComponent(ReceiveQRCode, store)
   );
-  Navigation.registerComponent("BitPortal.AssetChart", () => screenComponent(AssetChart, store));
-  Navigation.registerComponent("BitPortal.AssetSearch", () => screenComponent(AssetSearch, store));
+  Navigation.registerComponent("BitPortal.AssetChart", () =>
+    screenComponent(AssetChart, store)
+  );
+  Navigation.registerComponent("BitPortal.AssetSearch", () =>
+    screenComponent(AssetSearch, store)
+  );
   Navigation.registerComponent("BitPortal.AssetsTransfer", () =>
     screenComponent(AssetsTransfer, store)
   );
   Navigation.registerComponent("BitPortal.AvailableAssets", () =>
     screenComponent(AvailableAssets, store)
   );
-  Navigation.registerComponent("BitPortal.Market", () => screenComponent(Market, store));
-  Navigation.registerComponent("BitPortal.FundFlow", () => screenComponent(FundFlow, store));
+  Navigation.registerComponent("BitPortal.Market", () =>
+    screenComponent(Market, store)
+  );
+  Navigation.registerComponent("BitPortal.FundFlow", () =>
+    screenComponent(FundFlow, store)
+  );
   Navigation.registerComponent("BitPortal.TokenDetails", () =>
     screenComponent(TokenDetails, store)
   );
   Navigation.registerComponent("BitPortal.MarketDetails", () =>
     screenComponent(MarketDetails, store)
   );
-  Navigation.registerComponent("BitPortal.Discovery", () => screenComponent(Discovery, store));
+  Navigation.registerComponent("BitPortal.Discovery", () =>
+    screenComponent(Discovery, store)
+  );
   Navigation.registerComponent("BitPortal.DiscoveryArticle", () =>
     screenComponent(ArticleWebView, store)
   );
-  Navigation.registerComponent("BitPortal.Markdown", () => screenComponent(Markdown, store));
-  Navigation.registerComponent("BitPortal.DappList", () => screenComponent(DappList, store));
-  Navigation.registerComponent("BitPortal.Resources", () => screenComponent(Resources, store));
-  Navigation.registerComponent("BitPortal.CPU", () => screenComponent(CPU, store));
-  Navigation.registerComponent("BitPortal.Memory", () => screenComponent(Memory, store));
-  Navigation.registerComponent("BitPortal.Bandwidth", () => screenComponent(Bandwidth, store));
-  Navigation.registerComponent("BitPortal.Voting", () => screenComponent(Voting, store));
+  Navigation.registerComponent("BitPortal.Markdown", () =>
+    screenComponent(Markdown, store)
+  );
+  Navigation.registerComponent("BitPortal.DappList", () =>
+    screenComponent(DappList, store)
+  );
+  Navigation.registerComponent("BitPortal.Resources", () =>
+    screenComponent(Resources, store)
+  );
+  Navigation.registerComponent("BitPortal.CPU", () =>
+    screenComponent(CPU, store)
+  );
+  Navigation.registerComponent("BitPortal.Memory", () =>
+    screenComponent(Memory, store)
+  );
+  Navigation.registerComponent("BitPortal.Bandwidth", () =>
+    screenComponent(Bandwidth, store)
+  );
+  Navigation.registerComponent("BitPortal.Voting", () =>
+    screenComponent(Voting, store)
+  );
   Navigation.registerComponent("BitPortal.ProducerDetails", () =>
     screenComponent(ProducerDetails, store)
   );
-  Navigation.registerComponent("BitPortal.About", () => screenComponent(About, store));
-  Navigation.registerComponent("BitPortal.Profile", () => screenComponent(Profile, store));
-  Navigation.registerComponent("BitPortal.Contacts", () => screenComponent(Contacts, store));
-  Navigation.registerComponent("BitPortal.Settings", () => screenComponent(Settings, store));
-  Navigation.registerComponent("BitPortal.Mediafax", () => screenComponent(Mediafax, store));
-  Navigation.registerComponent("BitPortal.Languages", () => screenComponent(Languages, store));
-  Navigation.registerComponent("BitPortal.Currencies", () => screenComponent(Currencies, store));
+  Navigation.registerComponent("BitPortal.About", () =>
+    screenComponent(About, store)
+  );
+  Navigation.registerComponent("BitPortal.Profile", () =>
+    screenComponent(Profile, store)
+  );
+  Navigation.registerComponent("BitPortal.Contacts", () =>
+    screenComponent(Contacts, store)
+  );
+  Navigation.registerComponent("BitPortal.Settings", () =>
+    screenComponent(Settings, store)
+  );
+  Navigation.registerComponent("BitPortal.Mediafax", () =>
+    screenComponent(Mediafax, store)
+  );
+  Navigation.registerComponent("BitPortal.Languages", () =>
+    screenComponent(Languages, store)
+  );
+  Navigation.registerComponent("BitPortal.Currencies", () =>
+    screenComponent(Currencies, store)
+  );
   Navigation.registerComponent("BitPortal.NodeSettings", () =>
     screenComponent(NodeSettings, store)
   );
-  Navigation.registerComponent("BitPortal.AccountList", () => screenComponent(AccountList, store));
+  Navigation.registerComponent("BitPortal.AccountList", () =>
+    screenComponent(AccountList, store)
+  );
   Navigation.registerComponent("BitPortal.CreateContact", () =>
     screenComponent(CreateContact, store)
   );
@@ -160,7 +212,9 @@ export const registerScreens = store => {
   Navigation.registerComponent("BitPortal.TransactionHistory", () =>
     screenComponent(TransactionHistory, store)
   );
-  Navigation.registerComponent("BitPortal.Backup", () => screenComponent(Backup, store));
+  Navigation.registerComponent("BitPortal.Backup", () =>
+    screenComponent(Backup, store)
+  );
   Navigation.registerComponent("BitPortal.AccountImport", () =>
     screenComponent(AccountImport, store)
   );
@@ -176,7 +230,9 @@ export const registerScreens = store => {
   Navigation.registerComponent("BitPortal.PrivateKeyCreation", () =>
     screenComponent(PrivateKeyCreation, store)
   );
-  Navigation.registerComponent("BitPortal.TokenPage", () => screenComponent(TokenPage, store));
+  Navigation.registerComponent("BitPortal.TokenPage", () =>
+    screenComponent(TokenPage, store)
+  );
 };
 
 export const startSingleApp = () => {
@@ -204,6 +260,7 @@ export const startTabBasedApp = locale => {
               children: [
                 {
                   component: {
+                    id: "BitPortal.Assets",
                     name: "BitPortal.Assets",
                     options: {
                       topBar: {
@@ -235,6 +292,7 @@ export const startTabBasedApp = locale => {
               children: [
                 {
                   component: {
+                    id: "BitPortal.Market",
                     name: "BitPortal.Market",
                     options: {
                       topBar: {
@@ -266,6 +324,7 @@ export const startTabBasedApp = locale => {
               children: [
                 {
                   component: {
+                    id: "BitPortal.Discovery",
                     name: "BitPortal.Discovery",
                     options: {
                       topBar: {
@@ -297,6 +356,7 @@ export const startTabBasedApp = locale => {
               children: [
                 {
                   component: {
+                    id: "BitPortal.Profile",
                     name: "BitPortal.Profile",
                     options: {
                       topBar: {
@@ -330,5 +390,55 @@ export const startTabBasedApp = locale => {
 };
 
 export const setBottomTabsLocale = locale => {
-  startTabBasedApp(locale);
+  if (Platform.OS === "ios") {
+    Navigation.mergeOptions("BitPortal.Assets", {
+      bottomTab: {
+        text: messages[locale].general_nav_assets,
+        textColor: "gray",
+        selectedTextColor: Colors.textColor_89_185_226,
+        icon: Images.asset,
+        selectedIcon: Images.asset_press,
+        selectedIconColor: Colors.textColor_89_185_226,
+        testID: "BITPORTAL_ASSETS"
+      }
+    });
+
+    Navigation.mergeOptions("BitPortal.Market", {
+      bottomTab: {
+        text: messages[locale].general_nav_market,
+        textColor: "gray",
+        selectedTextColor: Colors.textColor_89_185_226,
+        icon: Images.market,
+        selectedIcon: Images.market_press,
+        selectedIconColor: Colors.textColor_89_185_226,
+        testID: "BITPORTAL_MARKET"
+      }
+    });
+
+    Navigation.mergeOptions("BitPortal.Discovery", {
+      bottomTab: {
+        text: messages[locale].general_nav_discovery,
+        textColor: "gray",
+        selectedTextColor: Colors.textColor_89_185_226,
+        icon: Images.discovery,
+        selectedIcon: Images.discovery_press,
+        selectedIconColor: Colors.textColor_89_185_226,
+        testID: "BITPORTAL_DISCOVERY"
+      }
+    });
+
+    Navigation.mergeOptions("BitPortal.Profile", {
+      bottomTab: {
+        text: messages[locale].general_nav_profile,
+        textColor: "gray",
+        selectedTextColor: Colors.textColor_89_185_226,
+        icon: Images.profile,
+        selectedIcon: Images.profile_press,
+        selectedIconColor: Colors.textColor_89_185_226,
+        testID: "BITPORTAL_PROFILE"
+      }
+    });
+  } else {
+    startTabBasedApp(locale);
+  }
 };
