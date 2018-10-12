@@ -2,15 +2,14 @@
   "plugins": ["react", "prettier"],
   "parser": "babel-eslint",
   "parserOptions": {
+    "ecmaFeatures": {
+      "legacyDecorators": false
+    },
     "ecmaVersion": 6
   },
-  "extends": [
-    "plugin:react/recommended",
-    "airbnb",
-    "plugin:prettier/recommended"
-  ],
+  "extends": ["plugin:react/recommended", "airbnb", "plugin:prettier/recommended"],
   "rules": {
-    "max-len": [0],
+    "max-len": ["error", { "code": 120 }],
     "prettier/prettier": [0],
     "react/jsx-filename-extension": [0],
     "react/require-extension": [0],

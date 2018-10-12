@@ -35,53 +35,6 @@
 		181BFEB1212994AD00810CE2 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 181BFEAF212994AD00810CE2 /* QBImagePicker.framework */; };
 		181BFEB2212994AD00810CE2 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 181BFEB0212994AD00810CE2 /* RSKImageCropper.framework */; };
 		18284831212564E300F2BE57 /* libRCTQRCodeLocalImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 182848302125643100F2BE57 /* libRCTQRCodeLocalImage.a */; };
-		1836E6052090628000C81AED /* BalloonMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5C92090628000C81AED /* BalloonMarker.swift */; };
-		1836E6062090628000C81AED /* BarDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5CB2090628000C81AED /* BarDataExtract.swift */; };
-		1836E6072090628000C81AED /* RNBarChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5CC2090628000C81AED /* RNBarChartManager.swift */; };
-		1836E6082090628000C81AED /* RNBarChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5CD2090628000C81AED /* RNBarChartManagerBridge.m */; };
-		1836E6092090628000C81AED /* RNBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5CE2090628000C81AED /* RNBarChartView.swift */; };
-		1836E60A2090628000C81AED /* RNBarChartViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5CF2090628000C81AED /* RNBarChartViewBase.swift */; };
-		1836E60B2090628000C81AED /* RNHorizontalBarChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5D02090628000C81AED /* RNHorizontalBarChartManager.swift */; };
-		1836E60C2090628000C81AED /* RNHorizontalBarChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5D12090628000C81AED /* RNHorizontalBarChartManagerBridge.m */; };
-		1836E60D2090628000C81AED /* RNHorizontalBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5D22090628000C81AED /* RNHorizontalBarChartView.swift */; };
-		1836E60E2090628000C81AED /* BubbleDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5D42090628000C81AED /* BubbleDataExtract.swift */; };
-		1836E60F2090628000C81AED /* RNBubbleChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5D52090628000C81AED /* RNBubbleChartManager.swift */; };
-		1836E6102090628000C81AED /* RNBubbleChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5D62090628000C81AED /* RNBubbleChartManagerBridge.m */; };
-		1836E6112090628000C81AED /* RNBubbleChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5D72090628000C81AED /* RNBubbleChartView.swift */; };
-		1836E6122090628000C81AED /* CandleDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5D92090628000C81AED /* CandleDataExtract.swift */; };
-		1836E6132090628000C81AED /* RNCandleStickChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5DA2090628000C81AED /* RNCandleStickChartManager.swift */; };
-		1836E6142090628000C81AED /* RNCandleStickChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5DB2090628000C81AED /* RNCandleStickChartManagerBridge.m */; };
-		1836E6152090628000C81AED /* RNCandleStickChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5DC2090628000C81AED /* RNCandleStickChartView.swift */; };
-		1836E6162090628000C81AED /* CombinedDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5DE2090628000C81AED /* CombinedDataExtract.swift */; };
-		1836E6172090628000C81AED /* RNCombinedChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5DF2090628000C81AED /* RNCombinedChartManager.swift */; };
-		1836E6182090628000C81AED /* RNCombinedChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5E02090628000C81AED /* RNCombinedChartManagerBridge.m */; };
-		1836E6192090628000C81AED /* RNCombinedChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5E12090628000C81AED /* RNCombinedChartView.swift */; };
-		1836E61A2090628000C81AED /* DataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5E22090628000C81AED /* DataExtract.swift */; };
-		1836E61B2090628000C81AED /* ChartDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5E42090628000C81AED /* ChartDateFormatter.swift */; };
-		1836E61C2090628000C81AED /* LargeValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5E52090628000C81AED /* LargeValueFormatter.swift */; };
-		1836E61D2090628000C81AED /* LineDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5E72090628000C81AED /* LineDataExtract.swift */; };
-		1836E61E2090628000C81AED /* RNLineChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5E82090628000C81AED /* RNLineChartManager.swift */; };
-		1836E61F2090628000C81AED /* RNLineChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5E92090628000C81AED /* RNLineChartManagerBridge.m */; };
-		1836E6202090628000C81AED /* RNLineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5EA2090628000C81AED /* RNLineChartView.swift */; };
-		1836E6212090628000C81AED /* PieDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5EC2090628000C81AED /* PieDataExtract.swift */; };
-		1836E6222090628000C81AED /* RNPieChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5ED2090628000C81AED /* RNPieChartManager.swift */; };
-		1836E6232090628000C81AED /* RNPieChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5EE2090628000C81AED /* RNPieChartManagerBridge.m */; };
-		1836E6242090628000C81AED /* RNPieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5EF2090628000C81AED /* RNPieChartView.swift */; };
-		1836E6252090628000C81AED /* RadarDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5F12090628000C81AED /* RadarDataExtract.swift */; };
-		1836E6262090628000C81AED /* RNRadarChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5F22090628000C81AED /* RNRadarChartManager.swift */; };
-		1836E6272090628000C81AED /* RNRadarChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5F32090628000C81AED /* RNRadarChartManagerBridge.m */; };
-		1836E6282090628000C81AED /* RNRadarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5F42090628000C81AED /* RNRadarChartView.swift */; };
-		1836E6292090628000C81AED /* RNBarLineChartBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5F52090628000C81AED /* RNBarLineChartBaseManager.swift */; };
-		1836E62A2090628000C81AED /* RNBarLineChartViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5F72090628000C81AED /* RNBarLineChartViewBase.swift */; };
-		1836E62B2090628000C81AED /* RNChartViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5F92090628000C81AED /* RNChartViewBase.swift */; };
-		1836E62C2090628000C81AED /* RNYAxisChartViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5FB2090628000C81AED /* RNYAxisChartViewBase.swift */; };
-		1836E62D2090628000C81AED /* RNScatterChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5FD2090628000C81AED /* RNScatterChartManager.swift */; };
-		1836E62E2090628000C81AED /* RNScatterChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5FE2090628000C81AED /* RNScatterChartManagerBridge.m */; };
-		1836E62F2090628000C81AED /* RNScatterChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E5FF2090628000C81AED /* RNScatterChartView.swift */; };
-		1836E6302090628000C81AED /* ScatterDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E6002090628000C81AED /* ScatterDataExtract.swift */; };
-		1836E6312090628000C81AED /* BridgeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E6022090628000C81AED /* BridgeUtils.swift */; };
-		1836E6322090628000C81AED /* ChartDataSetConfigUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E6032090628000C81AED /* ChartDataSetConfigUtils.swift */; };
-		1836E6332090628000C81AED /* EntryToDictionaryUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836E6042090628000C81AED /* EntryToDictionaryUtils.swift */; };
 		18849DD320F70079008C8BC8 /* UMAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18849DD220F70079008C8BC8 /* UMAnalytics.framework */; };
 		18849DD520F70082008C8BC8 /* UMCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18849DD420F70082008C8BC8 /* UMCommon.framework */; };
 		18849DD720F7008B008C8BC8 /* UMPush.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18849DD620F7008B008C8BC8 /* UMPush.framework */; };
@@ -806,56 +759,6 @@
 		181BFEAF212994AD00810CE2 /* QBImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = "<group>"; };
 		181BFEB0212994AD00810CE2 /* RSKImageCropper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = "<group>"; };
 		1828482B2125643100F2BE57 /* RCTQRCodeLocalImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTQRCodeLocalImage.xcodeproj; path = "../node_modules/@remobile/react-native-qrcode-local-image/ios/RCTQRCodeLocalImage.xcodeproj"; sourceTree = "<group>"; };
-		1836E5C92090628000C81AED /* BalloonMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalloonMarker.swift; sourceTree = "<group>"; };
-		1836E5CB2090628000C81AED /* BarDataExtract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarDataExtract.swift; sourceTree = "<group>"; };
-		1836E5CC2090628000C81AED /* RNBarChartManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNBarChartManager.swift; sourceTree = "<group>"; };
-		1836E5CD2090628000C81AED /* RNBarChartManagerBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNBarChartManagerBridge.m; sourceTree = "<group>"; };
-		1836E5CE2090628000C81AED /* RNBarChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNBarChartView.swift; sourceTree = "<group>"; };
-		1836E5CF2090628000C81AED /* RNBarChartViewBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNBarChartViewBase.swift; sourceTree = "<group>"; };
-		1836E5D02090628000C81AED /* RNHorizontalBarChartManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNHorizontalBarChartManager.swift; sourceTree = "<group>"; };
-		1836E5D12090628000C81AED /* RNHorizontalBarChartManagerBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNHorizontalBarChartManagerBridge.m; sourceTree = "<group>"; };
-		1836E5D22090628000C81AED /* RNHorizontalBarChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNHorizontalBarChartView.swift; sourceTree = "<group>"; };
-		1836E5D42090628000C81AED /* BubbleDataExtract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleDataExtract.swift; sourceTree = "<group>"; };
-		1836E5D52090628000C81AED /* RNBubbleChartManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNBubbleChartManager.swift; sourceTree = "<group>"; };
-		1836E5D62090628000C81AED /* RNBubbleChartManagerBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNBubbleChartManagerBridge.m; sourceTree = "<group>"; };
-		1836E5D72090628000C81AED /* RNBubbleChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNBubbleChartView.swift; sourceTree = "<group>"; };
-		1836E5D92090628000C81AED /* CandleDataExtract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandleDataExtract.swift; sourceTree = "<group>"; };
-		1836E5DA2090628000C81AED /* RNCandleStickChartManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNCandleStickChartManager.swift; sourceTree = "<group>"; };
-		1836E5DB2090628000C81AED /* RNCandleStickChartManagerBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNCandleStickChartManagerBridge.m; sourceTree = "<group>"; };
-		1836E5DC2090628000C81AED /* RNCandleStickChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNCandleStickChartView.swift; sourceTree = "<group>"; };
-		1836E5DE2090628000C81AED /* CombinedDataExtract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CombinedDataExtract.swift; sourceTree = "<group>"; };
-		1836E5DF2090628000C81AED /* RNCombinedChartManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNCombinedChartManager.swift; sourceTree = "<group>"; };
-		1836E5E02090628000C81AED /* RNCombinedChartManagerBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNCombinedChartManagerBridge.m; sourceTree = "<group>"; };
-		1836E5E12090628000C81AED /* RNCombinedChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNCombinedChartView.swift; sourceTree = "<group>"; };
-		1836E5E22090628000C81AED /* DataExtract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataExtract.swift; sourceTree = "<group>"; };
-		1836E5E42090628000C81AED /* ChartDateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartDateFormatter.swift; sourceTree = "<group>"; };
-		1836E5E52090628000C81AED /* LargeValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LargeValueFormatter.swift; sourceTree = "<group>"; };
-		1836E5E72090628000C81AED /* LineDataExtract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineDataExtract.swift; sourceTree = "<group>"; };
-		1836E5E82090628000C81AED /* RNLineChartManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNLineChartManager.swift; sourceTree = "<group>"; };
-		1836E5E92090628000C81AED /* RNLineChartManagerBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNLineChartManagerBridge.m; sourceTree = "<group>"; };
-		1836E5EA2090628000C81AED /* RNLineChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNLineChartView.swift; sourceTree = "<group>"; };
-		1836E5EC2090628000C81AED /* PieDataExtract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieDataExtract.swift; sourceTree = "<group>"; };
-		1836E5ED2090628000C81AED /* RNPieChartManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNPieChartManager.swift; sourceTree = "<group>"; };
-		1836E5EE2090628000C81AED /* RNPieChartManagerBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNPieChartManagerBridge.m; sourceTree = "<group>"; };
-		1836E5EF2090628000C81AED /* RNPieChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNPieChartView.swift; sourceTree = "<group>"; };
-		1836E5F12090628000C81AED /* RadarDataExtract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadarDataExtract.swift; sourceTree = "<group>"; };
-		1836E5F22090628000C81AED /* RNRadarChartManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNRadarChartManager.swift; sourceTree = "<group>"; };
-		1836E5F32090628000C81AED /* RNRadarChartManagerBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNRadarChartManagerBridge.m; sourceTree = "<group>"; };
-		1836E5F42090628000C81AED /* RNRadarChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNRadarChartView.swift; sourceTree = "<group>"; };
-		1836E5F52090628000C81AED /* RNBarLineChartBaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNBarLineChartBaseManager.swift; sourceTree = "<group>"; };
-		1836E5F62090628000C81AED /* RNBarLineChartManagerBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNBarLineChartManagerBridge.h; sourceTree = "<group>"; };
-		1836E5F72090628000C81AED /* RNBarLineChartViewBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNBarLineChartViewBase.swift; sourceTree = "<group>"; };
-		1836E5F82090628000C81AED /* RNChartManagerBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNChartManagerBridge.h; sourceTree = "<group>"; };
-		1836E5F92090628000C81AED /* RNChartViewBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNChartViewBase.swift; sourceTree = "<group>"; };
-		1836E5FA2090628000C81AED /* RNYAxisChartManagerBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNYAxisChartManagerBridge.h; sourceTree = "<group>"; };
-		1836E5FB2090628000C81AED /* RNYAxisChartViewBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNYAxisChartViewBase.swift; sourceTree = "<group>"; };
-		1836E5FD2090628000C81AED /* RNScatterChartManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNScatterChartManager.swift; sourceTree = "<group>"; };
-		1836E5FE2090628000C81AED /* RNScatterChartManagerBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNScatterChartManagerBridge.m; sourceTree = "<group>"; };
-		1836E5FF2090628000C81AED /* RNScatterChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNScatterChartView.swift; sourceTree = "<group>"; };
-		1836E6002090628000C81AED /* ScatterDataExtract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScatterDataExtract.swift; sourceTree = "<group>"; };
-		1836E6022090628000C81AED /* BridgeUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BridgeUtils.swift; sourceTree = "<group>"; };
-		1836E6032090628000C81AED /* ChartDataSetConfigUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartDataSetConfigUtils.swift; sourceTree = "<group>"; };
-		1836E6042090628000C81AED /* EntryToDictionaryUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryToDictionaryUtils.swift; sourceTree = "<group>"; };
 		1836E6352090630E00C81AED /* bitportal-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "bitportal-Bridging-Header.h"; sourceTree = "<group>"; };
 		18524C732125544300004FBC /* QBImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18524C752125544300004FBC /* RSKImageCropper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1213,7 +1116,6 @@
 				13B07FB71A68108700A75B9A /* main.mm */,
 				1836E6352090630E00C81AED /* bitportal-Bridging-Header.h */,
 				181BFEAE212994AD00810CE2 /* ImageCropPickerSDK */,
-				1836E5C82090628000C81AED /* ReactNativeCharts */,
 			);
 			name = bitportal;
 			sourceTree = "<group>";
@@ -1331,143 +1233,6 @@
 				1836E3E5208F022700C81AED /* libSplashScreen.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		1836E5C82090628000C81AED /* ReactNativeCharts */ = {
-			isa = PBXGroup;
-			children = (
-				1836E5C92090628000C81AED /* BalloonMarker.swift */,
-				1836E5CA2090628000C81AED /* bar */,
-				1836E5D32090628000C81AED /* bubble */,
-				1836E5D82090628000C81AED /* candlestick */,
-				1836E5DD2090628000C81AED /* combine */,
-				1836E5E22090628000C81AED /* DataExtract.swift */,
-				1836E5E32090628000C81AED /* formatters */,
-				1836E5E62090628000C81AED /* line */,
-				1836E5EB2090628000C81AED /* pie */,
-				1836E5F02090628000C81AED /* radar */,
-				1836E5F52090628000C81AED /* RNBarLineChartBaseManager.swift */,
-				1836E5F62090628000C81AED /* RNBarLineChartManagerBridge.h */,
-				1836E5F72090628000C81AED /* RNBarLineChartViewBase.swift */,
-				1836E5F82090628000C81AED /* RNChartManagerBridge.h */,
-				1836E5F92090628000C81AED /* RNChartViewBase.swift */,
-				1836E5FA2090628000C81AED /* RNYAxisChartManagerBridge.h */,
-				1836E5FB2090628000C81AED /* RNYAxisChartViewBase.swift */,
-				1836E5FC2090628000C81AED /* scatter */,
-				1836E6012090628000C81AED /* utils */,
-			);
-			path = ReactNativeCharts;
-			sourceTree = "<group>";
-		};
-		1836E5CA2090628000C81AED /* bar */ = {
-			isa = PBXGroup;
-			children = (
-				1836E5CB2090628000C81AED /* BarDataExtract.swift */,
-				1836E5CC2090628000C81AED /* RNBarChartManager.swift */,
-				1836E5CD2090628000C81AED /* RNBarChartManagerBridge.m */,
-				1836E5CE2090628000C81AED /* RNBarChartView.swift */,
-				1836E5CF2090628000C81AED /* RNBarChartViewBase.swift */,
-				1836E5D02090628000C81AED /* RNHorizontalBarChartManager.swift */,
-				1836E5D12090628000C81AED /* RNHorizontalBarChartManagerBridge.m */,
-				1836E5D22090628000C81AED /* RNHorizontalBarChartView.swift */,
-			);
-			path = bar;
-			sourceTree = "<group>";
-		};
-		1836E5D32090628000C81AED /* bubble */ = {
-			isa = PBXGroup;
-			children = (
-				1836E5D42090628000C81AED /* BubbleDataExtract.swift */,
-				1836E5D52090628000C81AED /* RNBubbleChartManager.swift */,
-				1836E5D62090628000C81AED /* RNBubbleChartManagerBridge.m */,
-				1836E5D72090628000C81AED /* RNBubbleChartView.swift */,
-			);
-			path = bubble;
-			sourceTree = "<group>";
-		};
-		1836E5D82090628000C81AED /* candlestick */ = {
-			isa = PBXGroup;
-			children = (
-				1836E5D92090628000C81AED /* CandleDataExtract.swift */,
-				1836E5DA2090628000C81AED /* RNCandleStickChartManager.swift */,
-				1836E5DB2090628000C81AED /* RNCandleStickChartManagerBridge.m */,
-				1836E5DC2090628000C81AED /* RNCandleStickChartView.swift */,
-			);
-			path = candlestick;
-			sourceTree = "<group>";
-		};
-		1836E5DD2090628000C81AED /* combine */ = {
-			isa = PBXGroup;
-			children = (
-				1836E5DE2090628000C81AED /* CombinedDataExtract.swift */,
-				1836E5DF2090628000C81AED /* RNCombinedChartManager.swift */,
-				1836E5E02090628000C81AED /* RNCombinedChartManagerBridge.m */,
-				1836E5E12090628000C81AED /* RNCombinedChartView.swift */,
-			);
-			path = combine;
-			sourceTree = "<group>";
-		};
-		1836E5E32090628000C81AED /* formatters */ = {
-			isa = PBXGroup;
-			children = (
-				1836E5E42090628000C81AED /* ChartDateFormatter.swift */,
-				1836E5E52090628000C81AED /* LargeValueFormatter.swift */,
-			);
-			path = formatters;
-			sourceTree = "<group>";
-		};
-		1836E5E62090628000C81AED /* line */ = {
-			isa = PBXGroup;
-			children = (
-				1836E5E72090628000C81AED /* LineDataExtract.swift */,
-				1836E5E82090628000C81AED /* RNLineChartManager.swift */,
-				1836E5E92090628000C81AED /* RNLineChartManagerBridge.m */,
-				1836E5EA2090628000C81AED /* RNLineChartView.swift */,
-			);
-			path = line;
-			sourceTree = "<group>";
-		};
-		1836E5EB2090628000C81AED /* pie */ = {
-			isa = PBXGroup;
-			children = (
-				1836E5EC2090628000C81AED /* PieDataExtract.swift */,
-				1836E5ED2090628000C81AED /* RNPieChartManager.swift */,
-				1836E5EE2090628000C81AED /* RNPieChartManagerBridge.m */,
-				1836E5EF2090628000C81AED /* RNPieChartView.swift */,
-			);
-			path = pie;
-			sourceTree = "<group>";
-		};
-		1836E5F02090628000C81AED /* radar */ = {
-			isa = PBXGroup;
-			children = (
-				1836E5F12090628000C81AED /* RadarDataExtract.swift */,
-				1836E5F22090628000C81AED /* RNRadarChartManager.swift */,
-				1836E5F32090628000C81AED /* RNRadarChartManagerBridge.m */,
-				1836E5F42090628000C81AED /* RNRadarChartView.swift */,
-			);
-			path = radar;
-			sourceTree = "<group>";
-		};
-		1836E5FC2090628000C81AED /* scatter */ = {
-			isa = PBXGroup;
-			children = (
-				1836E5FD2090628000C81AED /* RNScatterChartManager.swift */,
-				1836E5FE2090628000C81AED /* RNScatterChartManagerBridge.m */,
-				1836E5FF2090628000C81AED /* RNScatterChartView.swift */,
-				1836E6002090628000C81AED /* ScatterDataExtract.swift */,
-			);
-			path = scatter;
-			sourceTree = "<group>";
-		};
-		1836E6012090628000C81AED /* utils */ = {
-			isa = PBXGroup;
-			children = (
-				1836E6022090628000C81AED /* BridgeUtils.swift */,
-				1836E6032090628000C81AED /* ChartDataSetConfigUtils.swift */,
-				1836E6042090628000C81AED /* EntryToDictionaryUtils.swift */,
-			);
-			path = utils;
 			sourceTree = "<group>";
 		};
 		1836E658209063D300C81AED /* Frameworks */ = {
@@ -2787,44 +2552,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				3454A43720D0F9C5009964B2 /* nem.c in Sources */,
-				1836E60A2090628000C81AED /* RNBarChartViewBase.swift in Sources */,
-				1836E62D2090628000C81AED /* RNScatterChartManager.swift in Sources */,
 				3454A44320D0F9C5009964B2 /* groestl.c in Sources */,
-				1836E6332090628000C81AED /* EntryToDictionaryUtils.swift in Sources */,
-				1836E61F2090628000C81AED /* RNLineChartManagerBridge.m in Sources */,
-				1836E60B2090628000C81AED /* RNHorizontalBarChartManager.swift in Sources */,
-				1836E6292090628000C81AED /* RNBarLineChartBaseManager.swift in Sources */,
-				1836E6152090628000C81AED /* RNCandleStickChartView.swift in Sources */,
 				3454A42C20D0F9C5009964B2 /* curve25519-donna-scalarmult-base.c in Sources */,
 				3454A43320D0F9C5009964B2 /* ed25519-donna-basepoint-table.c in Sources */,
 				3454A43520D0F9C5009964B2 /* curve25519-donna-32bit.c in Sources */,
 				3454A43D20D0F9C5009964B2 /* bignum.c in Sources */,
-				1836E6282090628000C81AED /* RNRadarChartView.swift in Sources */,
 				3454A45B20D0F9C5009964B2 /* poly1305-donna.c in Sources */,
 				3454A45820D0F9C5009964B2 /* aestab.c in Sources */,
-				1836E6322090628000C81AED /* ChartDataSetConfigUtils.swift in Sources */,
 				3454A44420D0F9C5009964B2 /* nist256p1.c in Sources */,
-				1836E6052090628000C81AED /* BalloonMarker.swift in Sources */,
 				3454A42B20D0F9C5009964B2 /* rfc6979.c in Sources */,
-				1836E61D2090628000C81AED /* LineDataExtract.swift in Sources */,
 				3454A43020D0F9C5009964B2 /* ed25519-keccak.c in Sources */,
-				1836E6062090628000C81AED /* BarDataExtract.swift in Sources */,
-				1836E60D2090628000C81AED /* RNHorizontalBarChartView.swift in Sources */,
-				1836E6242090628000C81AED /* RNPieChartView.swift in Sources */,
 				3454A47820D0FD34009964B2 /* DJIProxyCaches.mm in Sources */,
-				1836E61C2090628000C81AED /* LargeValueFormatter.swift in Sources */,
-				1836E60F2090628000C81AED /* RNBubbleChartManager.swift in Sources */,
-				1836E6312090628000C81AED /* BridgeUtils.swift in Sources */,
 				3454A42F20D0F9C5009964B2 /* curve25519-donna-helpers.c in Sources */,
-				1836E6072090628000C81AED /* RNBarChartManager.swift in Sources */,
 				3454A45C20D0F9C5009964B2 /* chacha20poly1305.c in Sources */,
-				1836E6212090628000C81AED /* PieDataExtract.swift in Sources */,
 				3454A45020D0F9C5009964B2 /* blake2s.c in Sources */,
 				3454A44F20D0F9C5009964B2 /* address.c in Sources */,
-				1836E60C2090628000C81AED /* RNHorizontalBarChartManagerBridge.m in Sources */,
 				3454A44620D0F9C5009964B2 /* memzero.c in Sources */,
-				1836E60E2090628000C81AED /* BubbleDataExtract.swift in Sources */,
-				1836E6202090628000C81AED /* RNLineChartView.swift in Sources */,
 				3454A41720D0F9C5009964B2 /* hmac.c in Sources */,
 				3454A45620D0F9C5009964B2 /* aescrypt.c in Sources */,
 				18849DDD20F700C4008C8BC8 /* RNUMConfigure.m in Sources */,
@@ -2832,64 +2575,39 @@
 				3454A45220D0F9C5009964B2 /* base58.c in Sources */,
 				3454A43420D0F9C5009964B2 /* modm-donna-32bit.c in Sources */,
 				3454A41B20D0F9C5009964B2 /* hasher.c in Sources */,
-				1836E61B2090628000C81AED /* ChartDateFormatter.swift in Sources */,
 				3454A45320D0F9C5009964B2 /* ecdsa.c in Sources */,
 				3454A43C20D0F9C5009964B2 /* secp256k1.c in Sources */,
 				3454A46E20D0FA0C009964B2 /* BPCoreModule.mm in Sources */,
-				1836E6192090628000C81AED /* RNCombinedChartView.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				1836E6252090628000C81AED /* RadarDataExtract.swift in Sources */,
 				3454A42320D0F9C5009964B2 /* rand.c in Sources */,
 				13B07FC11A68108700A75B9A /* main.mm in Sources */,
 				3454A43120D0F9C5009964B2 /* ed25519-sha3.c in Sources */,
 				3454A45420D0F9C5009964B2 /* pbkdf2.c in Sources */,
-				1836E6142090628000C81AED /* RNCandleStickChartManagerBridge.m in Sources */,
 				3454A41520D0F9C5009964B2 /* crypto.c in Sources */,
-				1836E6172090628000C81AED /* RNCombinedChartManager.swift in Sources */,
 				3454A45A20D0F9C5009964B2 /* rfc7539.c in Sources */,
 				3454A42D20D0F9C5009964B2 /* ed25519-donna-32bit-tables.c in Sources */,
 				3454A44E20D0F9C5009964B2 /* bip32.c in Sources */,
 				3454A41A20D0F9C5009964B2 /* base32.c in Sources */,
-				1836E6302090628000C81AED /* ScatterDataExtract.swift in Sources */,
 				3454A45720D0F9C5009964B2 /* aes_modes.c in Sources */,
 				3454A46D20D0FA0C009964B2 /* BPCore+Private.mm in Sources */,
 				3454A42920D0F9C5009964B2 /* cash_addr.c in Sources */,
-				1836E6112090628000C81AED /* RNBubbleChartView.swift in Sources */,
 				3454A44120D0F9C5009964B2 /* ripemd160.c in Sources */,
 				3454A43620D0F9C5009964B2 /* ed25519-donna-impl-base.c in Sources */,
-				1836E6132090628000C81AED /* RNCandleStickChartManager.swift in Sources */,
-				1836E61E2090628000C81AED /* RNLineChartManager.swift in Sources */,
-				1836E62A2090628000C81AED /* RNBarLineChartViewBase.swift in Sources */,
 				3454A44C20D0F9C5009964B2 /* blake2b.c in Sources */,
 				3454A41620D0F9C5009964B2 /* bip39.c in Sources */,
 				3454A42A20D0F9C5009964B2 /* curves.c in Sources */,
 				3454A45120D0F9C5009964B2 /* sha3.c in Sources */,
 				3454A42E20D0F9C5009964B2 /* ed25519.c in Sources */,
-				1836E61A2090628000C81AED /* DataExtract.swift in Sources */,
-				1836E6102090628000C81AED /* RNBubbleChartManagerBridge.m in Sources */,
 				1808822A2135447300321418 /* NativeUtils.m in Sources */,
-				1836E6232090628000C81AED /* RNPieChartManagerBridge.m in Sources */,
-				1836E6092090628000C81AED /* RNBarChartView.swift in Sources */,
-				1836E6122090628000C81AED /* CandleDataExtract.swift in Sources */,
-				1836E6162090628000C81AED /* CombinedDataExtract.swift in Sources */,
 				3454A42720D0F9C5009964B2 /* blake256.c in Sources */,
 				3454A42520D0F9C5009964B2 /* rc4.c in Sources */,
 				3454A41820D0F9C5009964B2 /* sha2.c in Sources */,
 				3454A44D20D0F9C5009964B2 /* script.c in Sources */,
 				18849DE020F702C0008C8BC8 /* UMPushModule.m in Sources */,
 				3454A47920D0FD34009964B2 /* DJIError.mm in Sources */,
-				1836E62E2090628000C81AED /* RNScatterChartManagerBridge.m in Sources */,
 				3454A45920D0F9C5009964B2 /* chacha_merged.c in Sources */,
-				1836E6222090628000C81AED /* RNPieChartManager.swift in Sources */,
 				18849DDA20F700B5008C8BC8 /* UMAnalyticsModule.m in Sources */,
-				1836E6272090628000C81AED /* RNRadarChartManagerBridge.m in Sources */,
-				1836E62B2090628000C81AED /* RNChartViewBase.swift in Sources */,
 				3454A45D20D0F9C5009964B2 /* core_impl.cpp in Sources */,
-				1836E6182090628000C81AED /* RNCombinedChartManagerBridge.m in Sources */,
-				1836E62F2090628000C81AED /* RNScatterChartView.swift in Sources */,
-				1836E62C2090628000C81AED /* RNYAxisChartViewBase.swift in Sources */,
-				1836E6082090628000C81AED /* RNBarChartManagerBridge.m in Sources */,
-				1836E6262090628000C81AED /* RNRadarChartManager.swift in Sources */,
 				3454A43F20D0F9C5009964B2 /* segwit_addr.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

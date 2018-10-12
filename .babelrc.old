@@ -1,0 +1,14 @@
+{
+  "presets": ["@babel/preset-env", "module:metro-react-native-babel-preset"],
+  "plugins": [
+    ["@babel/plugin-proposal-decorators", { "decoratorsBeforeExport": true }],
+    "@babel/plugin-proposal-object-rest-spread"
+  ],
+  "sourceMaps": true,
+  "env": {
+    "test": {
+      "presets": ["env", "react"],
+      "plugins": [["module-resolver", { "root": ["./shared"] }]]
+    }
+  }
+}

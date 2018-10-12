@@ -1,44 +1,24 @@
-import React, {
-  Component
-} from 'react';
-import {
-  Text,
-  View,
-  processColor
-} from 'react-native';
-import { connect } from 'react-redux';
-import Colors from 'resources/colors';
-import { CandleStickChart } from 'react-native-charts-wrapper';
-import styles from './styles';
+import React, { Component } from "react";
+import { Text, View, processColor } from "react-native";
+import { connect } from "react-redux";
+import Colors from "resources/colors";
+import { CandleStickChart } from "react-native-charts-wrapper";
+import styles from "./styles";
 
-@connect(
-  state => ({
-    locale: state.intl.get(
-      'locale'
-    ),
-    chartData: state.chart.get(
-      'data'
-    )
-  })
-)
+@connect(state => ({
+  locale: state.intl.get("locale"),
+  chartData: state.chart.get("data")
+}))
 export default class TokenChart extends Component {
-  constructor(
-    props,
-    context
-  ) {
-    super(
-      props,
-      context
-    );
+  constructor(props, context) {
+    super(props, context);
 
     this.state = {
       legend: {
         enabled: false,
         textSize: 14,
-        form:
-          'CIRCLE',
-        position:
-          'BELOW_CHART_RIGHT',
+        form: "CIRCLE",
+        position: "BELOW_CHART_RIGHT",
         wordWrapEnabled: true
       },
       data: {
@@ -334,26 +314,16 @@ export default class TokenChart extends Component {
                 close: 90.52
               }
             ],
-            label:
-              '',
+            label: "",
             config: {
-              highlightColor: processColor(
-                'darkgray'
-              ),
-              shadowColor: processColor(
-                'black'
-              ),
+              highlightColor: processColor("darkgray"),
+              shadowColor: processColor("black"),
               shadowWidth: 1,
               shadowColorSameAsCandle: true,
               drawValues: false,
-              increasingColor: processColor(
-                Colors.chartIncreaseColor
-              ),
-              increasingPaintStyle:
-                'fill',
-              decreasingColor: processColor(
-                Colors.chartDecreaseColor
-              )
+              increasingColor: processColor(Colors.chartIncreaseColor),
+              increasingPaintStyle: "fill",
+              decreasingColor: processColor(Colors.chartDecreaseColor)
             },
             xAxis: {},
             yAxis: {}
@@ -362,12 +332,8 @@ export default class TokenChart extends Component {
       },
       marker: {
         enabled: true,
-        markerColor: processColor(
-          '#2c3e50'
-        ),
-        textColor: processColor(
-          'white'
-        )
+        markerColor: processColor("#2c3e50"),
+        textColor: processColor("white")
       },
       zoomXValue: 0
     };
@@ -376,97 +342,60 @@ export default class TokenChart extends Component {
   }
 
   componentDidMount() {
-    this.setState(
-      prevState => ({
-        ...prevState,
-        xAxis: {
-          $set: {
-            drawLabels: true,
-            drawGridLines: false,
-            axisLineColor: processColor(
-              Colors.textColor_181_181_181
-            ),
-            position:
-              'BOTTOM',
-            textColor: processColor(
-              Colors.textColor_181_181_181
-            ),
+    this.setState(prevState => ({
+      ...prevState,
+      xAxis: {
+        $set: {
+          drawLabels: true,
+          drawGridLines: false,
+          axisLineColor: processColor(Colors.textColor_181_181_181),
+          position: "BOTTOM",
+          textColor: processColor(Colors.textColor_181_181_181),
+          textSize: 12
+        }
+      },
+      yAxis: {
+        $set: {
+          left: {
+            enabled: false
+          },
+          right: {
+            valueFormatter: "",
+            axisLineColor: processColor(Colors.textColor_181_181_181),
+            gridLineWidth: 0,
+            textColor: processColor(Colors.textColor_181_181_181),
             textSize: 12
           }
-        },
-        yAxis: {
-          $set: {
-            left: {
-              enabled: false
-            },
-            right: {
-              valueFormatter:
-                '',
-              axisLineColor: processColor(
-                Colors.textColor_181_181_181
-              ),
-              gridLineWidth: 0,
-              textColor: processColor(
-                Colors.textColor_181_181_181
-              ),
-              textSize: 12
-            }
-          }
-        },
-        zoomXValue: {
-          $set: 99999
         }
-      })
-    );
+      },
+      zoomXValue: {
+        $set: 99999
+      }
+    }));
   }
 
-  handleSelect(
-    event
-  ) {
+  handleSelect(event) {
     const entry = event.nativeEvent;
-    if (
-      entry
-      == null
-    ) {
-      this.setState(
-        prevState => ({
-          ...prevState,
-          selectedEntry: null
-        })
-      );
+    if (entry == null) {
+      this.setState(prevState => ({
+        ...prevState,
+        selectedEntry: null
+      }));
     } else {
-      this.setState(
-        prevState => ({
-          ...prevState,
-          selectedEntry: JSON.stringify(
-            entry
-          )
-        })
-      );
+      this.setState(prevState => ({
+        ...prevState,
+        selectedEntry: JSON.stringify(entry)
+      }));
     }
 
-    console.log(
-      event.nativeEvent
-    );
+    console.log(event.nativeEvent);
   }
 
   render() {
     return (
-      <View
-        style={
-          styles.container
-        }
-      >
-        <View
-          style={
-            styles.cardContainer
-          }
-        >
-          <View
-            style={
-              styles.chartContainer
-            }
-          >
+      <View style={styles.container}>
+        <View style={styles.cardContainer}>
+          <View style={styles.chartContainer}>
             <View
               style={[
                 styles.spaceBetween,
@@ -479,40 +408,34 @@ export default class TokenChart extends Component {
                 style={[
                   styles.text14,
                   {
-                    color:
-                      Colors.textColor_142_142_147
+                    color: Colors.textColor_142_142_147
                   }
                 ]}
               >
-                {' '}
-                H:
-                11,949.00{' '}
+                {" "}
+                H: 11,949.00{" "}
               </Text>
               <Text
                 style={[
                   styles.text14,
                   {
-                    color:
-                      Colors.textColor_142_142_147
+                    color: Colors.textColor_142_142_147
                   }
                 ]}
               >
-                {' '}
-                L:
-                11,949.00{' '}
+                {" "}
+                L: 11,949.00{" "}
               </Text>
               <Text
                 style={[
                   styles.text14,
                   {
-                    color:
-                      Colors.textColor_142_142_147
+                    color: Colors.textColor_142_142_147
                   }
                 ]}
               >
-                {' '}
-                C:
-                11,949.00{' '}
+                {" "}
+                C: 11,949.00{" "}
               </Text>
             </View>
             <View
@@ -522,85 +445,42 @@ export default class TokenChart extends Component {
             >
               <Text
                 style={{
-                  color:
-                    'white'
+                  color: "white"
                 }}
               >
-                selected
-                entry
+                selected entry
               </Text>
               <Text
                 style={{
-                  color:
-                    'white'
+                  color: "white"
                 }}
               >
-                {
-                  this
-                    .state
-                    .selectedEntry
-                }
+                {this.state.selectedEntry}
               </Text>
             </View>
             <CandleStickChart
-              style={
-                styles.chart
-              }
-              data={
-                this
-                  .state
-                  .data
-              }
-              marker={
-                this
-                  .state
-                  .marker
-              }
+              style={styles.chart}
+              data={this.state.data}
+              marker={this.state.marker}
               chartDescription={{
-                text:
-                  ''
+                text: ""
               }}
-              legend={
-                this
-                  .state
-                  .legend
-              }
-              xAxis={
-                this
-                  .state
-                  .xAxis
-              }
-              yAxis={
-                this
-                  .state
-                  .yAxis
-              }
-              maxVisibleValueCount={
-                16
-              }
-              pinchZoom={
-                false
-              }
-              doubleTapToZoomEnabled={
-                false
-              }
-              autoScaleMinMaxEnabled={
-                true
-              }
+              legend={this.state.legend}
+              xAxis={this.state.xAxis}
+              yAxis={this.state.yAxis}
+              maxVisibleValueCount={16}
+              pinchZoom={false}
+              doubleTapToZoomEnabled={false}
+              autoScaleMinMaxEnabled={true}
               zoom={{
                 scaleX: 2,
                 scaleY: 1,
                 xValue: 400000,
                 yValue: 1
               }}
-              onSelect={this.handleSelect.bind(
-                this
-              )}
+              onSelect={this.handleSelect.bind(this)}
               ref="chart"
-              onChange={event => console.log(
-                event.nativeEvent
-              )
-              }
+              onChange={event => console.log(event.nativeEvent)}
             />
           </View>
         </View>
