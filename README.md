@@ -26,7 +26,6 @@ BitPortal client for web, ios, android, windows, macOS and browser extension
 ## get repo
 ```sh
 $ git clone https://github.com/BitPortal/bitportal-client.git
-$ git submodule update --init --recursive
 ```
 
 ## install
