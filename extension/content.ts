@@ -39,9 +39,9 @@ store.ready().then(() => {
   injectScript()
 
   supportedActions.forEach((action) => {
-    document.addEventListener(`${action}_request`, function(e) {
+    document.addEventListener(`${action}_request`, function() {
       // chrome.runtime.sendMessage(e.detail.message, response => console.log(response))
-      store.dispatch(walletActions.syncWalletRequested({ message: e.detail.message }))
+      store.dispatch(walletActions.syncWalletRequested())
     })
   })
 })

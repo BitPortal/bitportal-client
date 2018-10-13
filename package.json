@@ -11,6 +11,10 @@
     "lint",
     "tsc"
   ],
+  "skpm": {
+    "main": "sketch/BitPortal.sketchplugin",
+    "manifest": "sketch/manifest.json"
+  },
   "scripts": {
     "web": "cross-env NODE_ENV=development APP_ENV=development TARGET=web webpack-dev-server -d --history-api-fallback --inline --progress --port 3009 --host dev.bitportal.io",
     "mobile": "watchman watch-del-all && rm -fr $TMPDIR/react-* && cross-env NODE_ENV=production node node_modules/react-native/local-cli/cli.js start -- --reset-cache",
@@ -39,7 +43,8 @@
     "lint": "npm run lint:js && npm run lint:ts",
     "lint:js": "eslint --ext .js --ext .jsx server shared test --fix",
     "lint:ts": "tslint --project . --fix",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "sketch": "skpm-build --watch --run"
   },
   "dependencies": {
     "@remobile/react-native-qrcode-local-image": "^1.0.4",
@@ -136,8 +141,11 @@
     "wif": "^2.0.6"
   },
   "devDependencies": {
+    "@skpm/builder": "^0.4.0",
     "@types/bitcoinjs-lib": "^3.3.3",
     "@types/chai": "^4.1.4",
+    "@types/chroma-js": "^1.4.0",
+    "@types/chrome": "^0.0.74",
     "@types/classnames": "^2.2.3",
     "@types/history": "^4.6.1",
     "@types/query-string": "^5.0.1",
@@ -151,6 +159,7 @@
     "@types/react-router-config": "^1.0.4",
     "@types/react-router-dom": "^4.2.7",
     "@types/react-router-redux": "^5.0.8",
+    "@types/react-sketchapp": "^0.12.4",
     "@types/redux-actions": "TerenceGe/types-redux-actions",
     "@types/redux-form": "^7.3.1",
     "autoprefixer": "^8.2.0",
@@ -183,6 +192,7 @@
     "chai": "^4.1.2",
     "chai-enzyme": "^1.0.0-beta.1",
     "cheerio": "^1.0.0-rc.2",
+    "chroma-js": "^1.4.0",
     "copy-webpack-plugin": "^4.5.1",
     "cross-env": "^5.1.4",
     "css-loader": "^0.28.11",
@@ -225,6 +235,8 @@
     "raf": "^3.4.0",
     "react-css-modules": "^3.7.10",
     "react-native-typescript-transformer": "git+https://github.com/TerenceGe/react-native-typescript-transformer.git",
+    "react-sketchapp": "^2.1.1",
+    "react-test-renderer": "^16.5.2",
     "redbox-react": "^1.5.0",
     "rimraf": "^2.5.4",
     "sinon": "^1.17.6",
