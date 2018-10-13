@@ -117,6 +117,7 @@ declare interface GetEOSAccountParams {
 
 declare interface GetEOSAccountResult {
   account_name: string
+  core_liquid_balance: string
   permissions: {
     parent: string
     perm_name: string

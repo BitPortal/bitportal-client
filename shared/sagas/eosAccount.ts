@@ -187,8 +187,9 @@ function* getEOSAccountSucceeded(action: Action<GetEOSAccountResult>) {
 
   const balanceInfo = yield select((state: RootState) => eosCoreLiquidBalanceSelector(state))
   const eosAccountName = action.payload.account_name
+  const coreLiquidBalance = action.payload.core_liquid_balance
 
-  if (eosAccountName && balanceInfo) {
+  if (eosAccountName && coreLiquidBalance && balanceInfo) {
     yield put(getEOSBalanceSucceeded({ eosAccountName, balanceInfo: balanceInfo.toJS() }))
   }
 }
