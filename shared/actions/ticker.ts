@@ -29,7 +29,7 @@ export const selectBaseAsset = createAction<string>('ticker/SELECT_BASE_ASSET')
 export const deleteListedExchange = createAction(
   'ticker/DELETE_LISTED_EXCHANGE'
 )
-export const selectCurrentPair = createAction<string>(
+export const selectCurrentSymbol = createAction<string>(
   'ticker/SELECT_CURRENT_PAIR'
 )
 export const setSortFilter = createAction<string>('ticker/SET_SORT_FILTER')

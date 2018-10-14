@@ -1,489 +1,188 @@
 import React, { Component } from "react";
-import { Text, View, processColor } from "react-native";
+import {
+  AppRegistry,
+  Text,
+  View,
+  Button,
+  processColor,
+  TouchableWithoutFeedback,
+  InteractionManager,
+  ActivityIndicator
+} from "react-native";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import * as chartActions from "actions/chart";
+import {
+  formatChartDatasetSelector,
+  yAxisSelector,
+  xAxisSelector
+} from "selectors/chart";
+import { LineChart } from "react-native-charts-wrapper";
+
 import Colors from "resources/colors";
-import { CandleStickChart } from "react-native-charts-wrapper";
+import { RANGES } from "constants/chart";
+
+import {
+  FontScale,
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  NAV_BAR_HEIGHT,
+  FLOATING_CARD_WIDTH,
+  FLOATING_CARD_BORDER_RADIUS
+} from "utils/dimens";
 import styles from "./styles";
+
+const CHART_DESCRIPTION = {
+  text: "Bitportal",
+  textColor: processColor("rgba(255,255,255,0.3)")
+};
+const petrel = "rgb(59, 145, 153)";
 
 @connect(state => ({
   locale: state.intl.get("locale"),
-  chartData: state.chart.get("data")
+  chartData: state.chart.get("data"),
+  loading: state.chart.get("loading"),
+  data: formatChartDatasetSelector(state),
+  yAxis: yAxisSelector(state),
+  xAxis: xAxisSelector(state)
 }))
 export default class TokenChart extends Component {
   constructor(props, context) {
     super(props, context);
 
     this.state = {
-      legend: {
-        enabled: false,
-        textSize: 14,
-        form: "CIRCLE",
-        position: "BELOW_CHART_RIGHT",
-        wordWrapEnabled: true
-      },
-      data: {
-        dataSets: [
-          {
-            values: [
-              {
-                shadowH: 101.76,
-                shadowL: 100.1,
-                open: 100.78,
-                close: 90.12
-              },
-              {
-                shadowH: 101.58,
-                shadowL: 100.27,
-                open: 101.31,
-                close: 101.12
-              },
-              {
-                shadowH: 102.24,
-                shadowL: 100.15,
-                open: 101.41,
-                close: 101.17
-              },
-              {
-                shadowH: 102.28,
-                shadowL: 101.5,
-                open: 102.24,
-                close: 102.23
-              },
-              {
-                shadowH: 102.91,
-                shadowL: 101.78,
-                open: 101.91,
-                close: 102.52
-              },
-              {
-                shadowH: 105.18,
-                shadowL: 103.85,
-                open: 103.96,
-                close: 104.58
-              },
-              {
-                shadowH: 106.31,
-                shadowL: 104.59,
-                open: 104.61,
-                close: 105.97
-              },
-              {
-                shadowH: 106.47,
-                shadowL: 104.96,
-                open: 105.52,
-                close: 105.8
-              },
-              {
-                shadowH: 106.5,
-                shadowL: 105.19,
-                open: 106.34,
-                close: 105.92
-              },
-              {
-                shadowH: 107.65,
-                shadowL: 105.1401,
-                open: 105.93,
-                close: 105.91
-              },
-              {
-                shadowH: 107.29,
-                shadowL: 105.21,
-                open: 105.25,
-                close: 106.72
-              },
-              {
-                shadowH: 107.07,
-                shadowL: 105.9,
-                open: 106.48,
-                close: 106.13
-              },
-              {
-                shadowH: 106.25,
-                shadowL: 104.89,
-                open: 105.47,
-                close: 105.67
-              },
-              {
-                shadowH: 106.19,
-                shadowL: 105.06,
-                open: 106,
-                close: 105.19
-              },
-              {
-                shadowH: 107.79,
-                shadowL: 104.88,
-                open: 104.89,
-                close: 107.7
-              },
-              {
-                shadowH: 110.42,
-                shadowL: 108.6,
-                open: 108.65,
-                close: 109.56
-              },
-              {
-                shadowH: 109.9,
-                shadowL: 108.88,
-                open: 109.72,
-                close: 108.99
-              },
-              {
-                shadowH: 110,
-                shadowL: 108.2,
-                open: 108.78,
-                close: 109.99
-              },
-              {
-                shadowH: 112.19,
-                shadowL: 110.27,
-                open: 110.42,
-                close: 111.08
-              },
-              {
-                shadowH: 110.73,
-                shadowL: 109.42,
-                open: 109.51,
-                close: 109.81
-              },
-              {
-                shadowH: 110.98,
-                shadowL: 109.2,
-                open: 110.23,
-                close: 110.96
-              },
-              {
-                shadowH: 110.42,
-                shadowL: 108.121,
-                open: 109.95,
-                close: 108.54
-              },
-              {
-                shadowH: 109.77,
-                shadowL: 108.17,
-                open: 108.91,
-                close: 108.66
-              },
-              {
-                shadowH: 110.61,
-                shadowL: 108.83,
-                open: 108.97,
-                close: 109.04
-              },
-              {
-                shadowH: 110.5,
-                shadowL: 108.66,
-                open: 109.34,
-                close: 110.44
-              },
-              {
-                shadowH: 112.34,
-                shadowL: 110.8,
-                open: 110.8,
-                close: 112.0192
-              },
-              {
-                shadowH: 112.39,
-                shadowL: 111.33,
-                open: 111.62,
-                close: 112.1
-              },
-              {
-                shadowH: 112.3,
-                shadowL: 109.73,
-                open: 112.11,
-                close: 109.85
-              },
-              {
-                shadowH: 108.95,
-                shadowL: 106.94,
-                open: 108.89,
-                close: 107.48
-              },
-              {
-                shadowH: 108,
-                shadowL: 106.23,
-                open: 107.88,
-                close: 106.91
-              },
-              {
-                shadowH: 108.09,
-                shadowL: 106.06,
-                open: 106.64,
-                close: 107.13
-              },
-              {
-                shadowH: 106.93,
-                shadowL: 105.52,
-                open: 106.93,
-                close: 105.97
-              },
-              {
-                shadowH: 106.48,
-                shadowL: 104.62,
-                open: 105.01,
-                close: 105.68
-              },
-              {
-                shadowH: 105.65,
-                shadowL: 104.51,
-                open: 105,
-                close: 105.08
-              },
-              {
-                shadowH: 105.3,
-                shadowL: 103.91,
-                open: 103.91,
-                close: 104.35
-              },
-              {
-                shadowH: 98.71,
-                shadowL: 95.68,
-                open: 96,
-                close: 97.82
-              },
-              {
-                shadowH: 97.88,
-                shadowL: 94.25,
-                open: 97.61,
-                close: 94.8075
-              },
-              {
-                shadowH: 94.72,
-                shadowL: 92.51,
-                open: 93.99,
-                close: 93.75
-              },
-              {
-                shadowH: 94.08,
-                shadowL: 92.4,
-                open: 93.965,
-                close: 93.65
-              },
-              {
-                shadowH: 95.74,
-                shadowL: 93.68,
-                open: 94.2,
-                close: 95.18
-              },
-              {
-                shadowH: 95.9,
-                shadowL: 93.82,
-                open: 95.2,
-                close: 94.19
-              },
-              {
-                shadowH: 94.07,
-                shadowL: 92.68,
-                open: 94,
-                close: 93.24
-              },
-              {
-                shadowH: 93.45,
-                shadowL: 91.85,
-                open: 93.37,
-                close: 92.72
-              },
-              {
-                shadowH: 93.77,
-                shadowL: 92.59,
-                open: 93,
-                close: 92.82
-              },
-              {
-                shadowH: 93.57,
-                shadowL: 92.11,
-                open: 93.33,
-                close: 93.39
-              },
-              {
-                shadowH: 93.57,
-                shadowL: 92.46,
-                open: 93.48,
-                close: 92.51
-              },
-              {
-                shadowH: 92.78,
-                shadowL: 89.47,
-                open: 92.72,
-                close: 90.32
-              },
-              {
-                shadowH: 91.67,
-                shadowL: 90,
-                open: 90,
-                close: 90.52
-              }
-            ],
-            label: "",
-            config: {
-              highlightColor: processColor("darkgray"),
-              shadowColor: processColor("black"),
-              shadowWidth: 1,
-              shadowColorSameAsCandle: true,
-              drawValues: false,
-              increasingColor: processColor(Colors.chartIncreaseColor),
-              increasingPaintStyle: "fill",
-              decreasingColor: processColor(Colors.chartDecreaseColor)
-            },
-            xAxis: {},
-            yAxis: {}
-          }
-        ]
-      },
       marker: {
         enabled: true,
-        markerColor: processColor("#2c3e50"),
+        digits: 2,
+        backgroundTint: processColor("teal"),
+        markerColor: processColor("#F0C0FF8C"),
         textColor: processColor("white")
       },
-      zoomXValue: 0
+
+      legend: { enabled: false }
+      // visibleRange: {x: {min: 1, max: 2}}
     };
-
-    this.x = 0;
   }
 
-  componentDidMount() {
-    this.setState(prevState => ({
-      ...prevState,
-      xAxis: {
-        $set: {
-          drawLabels: true,
-          drawGridLines: false,
-          axisLineColor: processColor(Colors.textColor_181_181_181),
-          position: "BOTTOM",
-          textColor: processColor(Colors.textColor_181_181_181),
-          textSize: 12
-        }
-      },
-      yAxis: {
-        $set: {
-          left: {
-            enabled: false
-          },
-          right: {
-            valueFormatter: "",
-            axisLineColor: processColor(Colors.textColor_181_181_181),
-            gridLineWidth: 0,
-            textColor: processColor(Colors.textColor_181_181_181),
-            textSize: 12
-          }
-        }
-      },
-      zoomXValue: {
-        $set: 99999
-      }
-    }));
-  }
+  componentDidMount() {}
 
   handleSelect(event) {
     const entry = event.nativeEvent;
     if (entry == null) {
-      this.setState(prevState => ({
-        ...prevState,
-        selectedEntry: null
-      }));
+      this.setState({ ...this.state, selectedEntry: null });
     } else {
-      this.setState(prevState => ({
-        ...prevState,
-        selectedEntry: JSON.stringify(entry)
-      }));
+      this.setState({ ...this.state, selectedEntry: JSON.stringify(entry) });
     }
 
     console.log(event.nativeEvent);
   }
 
   render() {
+    const { loading, data } = this.props;
+    console.log("data", data.dataSets[0].values);
     return (
       <View style={styles.container}>
         <View style={styles.cardContainer}>
           <View style={styles.chartContainer}>
-            <View
-              style={[
-                styles.spaceBetween,
-                {
-                  marginTop: 10
-                }
-              ]}
-            >
-              <Text
-                style={[
-                  styles.text14,
-                  {
-                    color: Colors.textColor_142_142_147
-                  }
-                ]}
-              >
-                {" "}
-                H: 11,949.00{" "}
-              </Text>
-              <Text
-                style={[
-                  styles.text14,
-                  {
-                    color: Colors.textColor_142_142_147
-                  }
-                ]}
-              >
-                {" "}
-                L: 11,949.00{" "}
-              </Text>
-              <Text
-                style={[
-                  styles.text14,
-                  {
-                    color: Colors.textColor_142_142_147
-                  }
-                ]}
-              >
-                {" "}
-                C: 11,949.00{" "}
-              </Text>
-            </View>
-            <View
-              style={{
-                height: 80
-              }}
-            >
-              <Text
-                style={{
-                  color: "white"
-                }}
-              >
-                selected entry
-              </Text>
-              <Text
-                style={{
-                  color: "white"
-                }}
-              >
-                {this.state.selectedEntry}
-              </Text>
-            </View>
-            <CandleStickChart
-              style={styles.chart}
-              data={this.state.data}
-              marker={this.state.marker}
-              chartDescription={{
-                text: ""
-              }}
-              legend={this.state.legend}
-              xAxis={this.state.xAxis}
-              yAxis={this.state.yAxis}
-              maxVisibleValueCount={16}
-              pinchZoom={false}
-              doubleTapToZoomEnabled={false}
-              autoScaleMinMaxEnabled={true}
-              zoom={{
-                scaleX: 2,
-                scaleY: 1,
-                xValue: 400000,
-                yValue: 1
-              }}
-              onSelect={this.handleSelect.bind(this)}
-              ref="chart"
-              onChange={event => console.log(event.nativeEvent)}
-            />
+            {loading ? (
+              <View style={styles.centerFlex}>
+                <ActivityIndicator size={"large"} />
+              </View>
+            ) : (
+              <LineChart
+                style={{ flex: 1 }}
+                data={this.props.data}
+                chartDescription={{ text: "" }}
+                legend={this.state.legend}
+                marker={this.state.marker}
+                xAxis={this.props.xAxis}
+                yAxis={this.props.yAxis}
+                // drawGridBackground={false}
+                // borderColor={processColor("transparent")}
+                // borderWidth={0}
+                drawBorders={false}
+                autoScaleMinMaxEnabled={true}
+                // touchEnabled={true}
+                // dragEnabled={true}
+                // scaleEnabled={true}
+                scaleXEnabled={true}
+                scaleYEnabled={false}
+                pinchZoom={true}
+                doubleTapToZoomEnabled={true}
+                highlightPerTapEnabled={true}
+                highlightPerDragEnabled={true}
+                chartDescription={CHART_DESCRIPTION}
+                // visibleRange={this.state.visibleRange}
+                dragDecelerationEnabled={true}
+                dragDecelerationFrictionCoef={0.99}
+                ref="chartt"
+                keepPositionOnRotation={false}
+                onSelect={this.handleSelect.bind(this)}
+                onChange={event => console.log(event.nativeEvent)}
+                viewPortOffsets={{ left: 0, top: 10, right: 0, bottom: 5 }}
+              />
+            )}
           </View>
+          <RangeBar />
         </View>
+      </View>
+    );
+  }
+}
+
+@connect(
+  state => ({
+    locale: state.intl.get("locale"),
+    token: state.token.get("data"),
+    loading: state.chart.get("loading"),
+    range: state.chart.get("range")
+    // ticker: tokenTickerSelector(state),
+  }),
+  dispatch => ({
+    actions: bindActionCreators(
+      {
+        ...chartActions
+      },
+      dispatch
+    )
+  }),
+  null,
+  { withRef: true }
+)
+class RangeBar extends Component {
+  changeChartRange = range => {
+    InteractionManager.runAfterInteractions(() => {
+      this.props.actions.changeChartRange(range);
+    });
+  };
+  render() {
+    const { range } = this.props;
+    return (
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          paddingHorizontal: 30,
+          paddingVertical: 10,
+          width: FLOATING_CARD_WIDTH
+        }}
+      >
+        {RANGES.map(e => (
+          <TouchableWithoutFeedback
+            key={e}
+            onPress={() => {
+              this.changeChartRange(e);
+            }}
+          >
+            <View key={e}>
+              <Text
+                style={{ color: range === e ? "blue" : "white", fontSize: 12 }}
+              >
+                {e}
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
+        ))}
       </View>
     );
   }

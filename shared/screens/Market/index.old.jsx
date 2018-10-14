@@ -1,39 +1,39 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import TableView, { HeaderTitle } from 'screens/Market/TableView';
-import * as tickerActions from 'actions/ticker';
-import * as tokenActions from 'actions/token';
-import { exchangeTickerSelector, sortFilterSelector } from 'selectors/ticker';
-import { bindActionCreators } from 'redux';
-import { View, InteractionManager } from 'react-native';
-import Modal from 'react-native-modal';
-import { Navigation } from 'react-native-navigation';
-import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from 'constants/market';
-import NavigationBar, { ListButton } from 'components/NavigationBar';
-import SearchBar from 'components/SearchBar';
-import { IntlProvider } from 'react-intl';
-import Colors from 'resources/colors';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import TableView, { HeaderTitle } from "screens/Market/TableView";
+import * as tickerActions from "actions/ticker";
+import * as tokenActions from "actions/token";
+import { exchangeTickerSelector, sortFilterSelector } from "selectors/ticker";
+import { bindActionCreators } from "redux";
+import { View, InteractionManager } from "react-native";
+import Modal from "react-native-modal";
+import { Navigation } from "react-native-navigation";
+import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from "constants/market";
+import NavigationBar, { ListButton } from "components/NavigationBar";
+import SearchBar from "components/SearchBar";
+import { IntlProvider } from "react-intl";
+import Colors from "resources/colors";
 import {
   MAEKRT_LIST_SELECTED,
   QUOTES_LIST_SELECTED,
   MARKET_TOKEN_DETAIL
-} from 'constants/analytics';
-import { onEventWithLabel } from 'utils/analytics';
-import messages from 'resources/messages';
-import ExchangeList from './ExchangeList';
-import { Quotes } from './Quotes';
-import styles from './styles';
+} from "constants/analytics";
+import { onEventWithLabel } from "utils/analytics";
+import messages from "resources/messages";
+import ExchangeList from "./ExchangeList";
+import { Quotes } from "./Quotes";
+import styles from "./styles";
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.get("locale"),
     ticker: exchangeTickerSelector(state),
-    loading: state.ticker.get('loading'),
-    exchangeFilter: state.ticker.get('exchangeFilter'),
+    loading: state.ticker.get("loading"),
+    exchangeFilter: state.ticker.get("exchangeFilter"),
     sortFilter: sortFilterSelector(state),
-    quoteAssetFilter: state.ticker.get('quoteAssetFilter'),
-    baseAsset: state.ticker.get('baseAsset'),
-    searchTerm: state.ticker.get('searchTerm')
+    quoteAssetFilter: state.ticker.get("quoteAssetFilter"),
+    baseAsset: state.ticker.get("baseAsset"),
+    searchTerm: state.ticker.get("searchTerm")
   }),
   dispatch => ({
     actions: bindActionCreators(
@@ -57,12 +57,12 @@ export default class Market extends Component {
   }
 
   state = {
-    coinName: '',
+    coinName: "",
     isVisible: false,
     activeQuoteAsset: null
   };
 
-  searchCoin = (coinName) => {
+  searchCoin = coinName => {
     this.setState({ coinName });
   };
 
@@ -70,7 +70,7 @@ export default class Market extends Component {
     this.setState({ isVisible: true });
   };
 
-  changeExchange = (exchange) => {
+  changeExchange = exchange => {
     //Umeng analytics
     onEventWithLabel(MAEKRT_LIST_SELECTED, exchange);
     InteractionManager.runAfterInteractions(() => {
@@ -80,7 +80,7 @@ export default class Market extends Component {
     });
   };
 
-  changeQuote = (quote) => {
+  changeQuote = quote => {
     //Umeng analytics
     onEventWithLabel(QUOTES_LIST_SELECTED, quote);
     this.setState({ activeQuoteAsset: quote }, () => {
@@ -90,17 +90,17 @@ export default class Market extends Component {
     });
   };
 
-  pressListItem = (item) => {
+  pressListItem = item => {
     //Umeng analytics
-    onEventWithLabel(MARKET_TOKEN_DETAIL, '行情 - token详情');
-    const baseAsset = item.get('base_asset');
+    onEventWithLabel(MARKET_TOKEN_DETAIL, "行情 - token详情");
+    const baseAsset = item.get("base_asset");
     InteractionManager.runAfterInteractions(() => {
       this.props.actions.selectCurrentPair(item);
       this.props.actions.selectBaseAsset(baseAsset);
       this.props.actions.getTokenDetailRequested({ symbol: baseAsset });
       Navigation.push(this.props.componentId, {
         component: {
-          name: 'BitPortal.MarketDetails',
+          name: "BitPortal.MarketDetails",
           passProps: { item }
         }
       });
@@ -122,15 +122,15 @@ export default class Market extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     return (
-      nextProps.loading !== this.props.loading
-      || nextProps.locale !== this.props.locale
-      || nextProps.exchangeFilter !== this.props.exchangeFilter
-      || nextProps.sortFilter !== this.props.sortFilter
-      || nextProps.quoteAssetFilter !== this.props.quoteAssetFilter
-      || nextState.isVisible !== this.state.isVisible
-      || nextState.coinName !== this.state.coinName
-      || nextState.activeQuoteAsset !== this.state.activeQuoteAsset
-      || nextState.searchTerm !== this.props.searchTerm
+      nextProps.loading !== this.props.loading ||
+      nextProps.locale !== this.props.locale ||
+      nextProps.exchangeFilter !== this.props.exchangeFilter ||
+      nextProps.sortFilter !== this.props.sortFilter ||
+      nextProps.quoteAssetFilter !== this.props.quoteAssetFilter ||
+      nextState.isVisible !== this.state.isVisible ||
+      nextState.coinName !== this.state.coinName ||
+      nextState.activeQuoteAsset !== this.state.activeQuoteAsset ||
+      nextState.searchTerm !== this.props.searchTerm
     );
   }
 
@@ -138,7 +138,7 @@ export default class Market extends Component {
     this.onRefresh();
   }
 
-  onChangeText = (text) => {
+  onChangeText = text => {
     this.props.actions.setSearchTerm(text);
   };
 
@@ -167,7 +167,7 @@ export default class Market extends Component {
                 searchTerm={searchTerm}
                 onChangeText={text => this.onChangeText(text)}
                 clearSearch={() => {
-                  this.props.actions.setSearchTerm('');
+                  this.props.actions.setSearchTerm("");
                 }}
               />
             }

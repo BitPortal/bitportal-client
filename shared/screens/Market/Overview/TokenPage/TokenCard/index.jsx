@@ -16,9 +16,7 @@ import styles from "./styles";
 
 const Tag = props => (
   <View style={styles.tag}>
-    <Text style={{ fontSize: 12, textAlign: "center", color: Colors.textColor_255_255_238 }}>
-      {props.tag}
-    </Text>
+    <Text style={{ fontSize: 12, textAlign: "center", color: Colors.textColor_255_255_238 }}>{props.tag}</Text>
   </View>
 );
 
@@ -34,28 +32,6 @@ const Tag = props => (
   { withRef: true }
 )
 export default class TokenCard extends Component {
-  constructor() {
-    super();
-
-    this.state = { priceChangeAverage: null };
-  }
-
-  componentDidMount() {
-    // this.calculatePriceChangeAverage();
-  }
-
-  // calculatePriceChangeAverage() {
-  //   const { ticker } = this.props;
-  //   let result = 0;
-  //   ticker.forEach(item => {
-  //     result += item.get("price_change_percent");
-  //   });
-  //   result /= ticker.count();
-  //   this.setState({ priceChangeAverage: result });
-  // }
-
-  calculateListedExchangeinUSD() {}
-
   render() {
     const { token, ticker, locale } = this.props;
 
@@ -78,12 +54,7 @@ export default class TokenCard extends Component {
                       : token.get("name_en") && token.get("name_en")}
                   </Text>
                 </View>
-                <View
-                  style={[
-                    styles.row,
-                    { maxWidth: 150, flexWrap: "wrap", justifyContent: "flex-end" }
-                  ]}
-                >
+                <View style={[styles.row, { maxWidth: 150, flexWrap: "wrap", justifyContent: "flex-end" }]}>
                   {locale === "zh" &&
                   token.get("tags") &&
                   token.get("tags").get("zh") &&
@@ -102,7 +73,7 @@ export default class TokenCard extends Component {
                 </View>
               </View>
             </View>
-            <View style={[styles.spaceBetween, { paddingVertical: 5 }]}>
+            <View style={[styles.spaceBetween]}>
               <Text style={styles.text26}>
                 {`$ `}
                 {
@@ -122,35 +93,13 @@ export default class TokenCard extends Component {
             <View style={styles.row}>
               <View style={styles.innerCardContainer}>
                 <Text style={[styles.keyText]}>Market Cap</Text>
-                <Text style={{ color: "white" }}>
-                  {`$${abbreviate(ticker.get("market_cap_usd"), 2)}`}
-                </Text>
+                <Text style={{ color: "white" }}>{`$${abbreviate(ticker.get("market_cap_usd"), 2)}`}</Text>
               </View>
               <View style={styles.innerCardContainer}>
                 <Text style={styles.keyText}>Market Cap</Text>
-                <Text style={{ color: "white" }}>
-                  {`$${abbreviate(ticker.get("volume_24h_usd"), 2)}`}
-                </Text>
+                <Text style={{ color: "white" }}>{`$${abbreviate(ticker.get("volume_24h_usd"), 2)}`}</Text>
               </View>
             </View>
-
-            {/* <View style={[styles.spaceBetween, { marginTop: 4 }]}>
-              <Text style={[styles.text14, { color: Colors.textColor_142_142_147 }]}>
-                {token.get("market_label_market_cap") && (
-                  <FormattedMessage id="market_label_market_cap" />
-                )}
-                {token.get("market_label_market_cap") && ` ${token.get("market_label_market_cap")}`}
-              </Text>
-            </View>
-            <View style={[styles.spaceBetween, { marginTop: 4 }]}>
-              <Text style={[styles.text14, { color: Colors.textColor_142_142_147 }]}>
-                {token.get("market_token_detail_label_24h_volumn") && (
-                  <FormattedMessage id="market_token_detail_label_24h_volumn" />
-                )}
-                {token.get("market_token_detail_label_24h_volumn") &&
-                  ` ${token.get("market_token_detail_label_24h_volumn")}`}
-              </Text>
-            </View> */}
           </View>
         </View>
       </IntlProvider>
@@ -161,16 +110,14 @@ export default class TokenCard extends Component {
 const PercentageChange = props => {
   const { value, timePeriod } = props;
   return (
-    <View style={[styles.center, { margin: 1 }]}>
+    <View style={[styles.row, { margin: 1 }]}>
       <Text style={[styles.text14, { color: filterBgColor(value), fontWeight: "bold" }]}>
         {value > 0 ? "+" : null}
         <FormattedNumber value={value} maximumFractionDigits={2} minimumFractionDigits={2} />%{"  "}
-        <View style={styles.miniTag}>
-          <Text style={{ fontSize: 12, textAlign: "center", color: Colors.textColor_255_255_238 }}>
-            {timePeriod}
-          </Text>
-        </View>
       </Text>
+      <View style={styles.miniTag}>
+        <Text style={{ fontSize: 12, textAlign: "center", color: Colors.textColor_255_255_238 }}>{timePeriod}</Text>
+      </View>
     </View>
   );
 };

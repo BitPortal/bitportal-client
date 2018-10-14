@@ -39,7 +39,11 @@ export default class TokenDetails extends Component {
             title="Description"
             description={token.get("description").get(locale)}
           />
-          <DetailPanel messages={messages[locale]} title="Token Details" token={token}>
+          <DetailPanel
+            messages={messages[locale]}
+            title="Token Details"
+            token={token}
+          >
             {token.get("circulating_supply") && (
               <View>
                 <View style={[styles.spaceBetween, { marginVertical: 10 }]}>
@@ -71,7 +75,7 @@ export default class TokenDetails extends Component {
                 item !== "total_supply" &&
                 item !== "circulating_supply" &&
                 MARKET_DETAIL_KEYS.includes(item) ? (
-                  <View>
+                  <View key={item}>
                     <View style={[styles.spaceBetween, { marginVertical: 10 }]}>
                       <Text style={styles.keyText}>
                         <FormattedMessage id={item} />
@@ -100,7 +104,9 @@ const DescriptionPanel = props => {
           </View>
           <View style={styles.hairlineSpacer} />
           <View style={styles.textContainer}>
-            <Text style={[styles.text14, { textAlign: "justify" }]}>{description}</Text>
+            <Text style={[styles.text14, { textAlign: "justify" }]}>
+              {description}
+            </Text>
           </View>
         </View>
       </View>

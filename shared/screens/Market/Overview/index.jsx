@@ -4,20 +4,26 @@ import tickerData from "screens/Market/tickerData.json";
 import { Navigation } from "react-native-navigation";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { sortFilterSelector } from "selectors/ticker";
+import { sortFilterSelector, tickerSelector } from "selectors/ticker";
 import * as tokenActions from "actions/token";
+import * as tickerActions from "actions/ticker";
+import * as chartActions from "actions/chart";
 import MarketList from "./MarketList";
 import MarketBar from "./MarketBar";
 
 @connect(
   state => ({
     sortFilter: sortFilterSelector(state),
-    exchangeFilter: state.ticker.get("exchangeFilter")
+    exchangeFilter: state.ticker.get("exchangeFilter"),
+    ticker: tickerSelector(state),
+    chartType: state.chart.get("chartType")
   }),
   dispatch => ({
     actions: bindActionCreators(
       {
-        ...tokenActions
+        ...tokenActions,
+        ...tickerActions,
+        ...chartActions
       },
       dispatch
     )
@@ -26,13 +32,24 @@ import MarketBar from "./MarketBar";
   { withRef: true }
 )
 class Overview extends Component {
+  componentWillMount() {
+    InteractionManager.runAfterInteractions(() => {
+      this.props.actions.getTickersRequested({});
+    });
+  }
+
   pressListItem = item => {
     //Umeng analytics
-    // const symbol = item.get('symbol');
+    const symbol = item.get("symbol");
+    const { chartType } = this.props;
     InteractionManager.runAfterInteractions(() => {
-      // this.props.actions.selectCurrentPair(item);
+      // this.props.actions.selectCurrentSymbol(item);
       // this.props.actions.selectBaseAsset(baseAsset);
-      this.props.actions.getTokenDetailRequested({ symbol: item.get("symbol") });
+      this.props.actions.getTokenDetailRequested({
+        symbol
+      });
+      this.props.actions.selectCurrentSymbol(symbol);
+      this.props.actions.getChartRequested({ symbol, chartType });
       Navigation.push(this.props.componentId, {
         component: {
           name: "BitPortal.TokenPage",
@@ -43,10 +60,11 @@ class Overview extends Component {
   };
 
   render() {
+    const { ticker } = this.props;
     return (
       <View>
         <MarketBar />
-        <MarketList data={tickerData} onPress={this.pressListItem} />
+        <MarketList data={ticker} onPress={this.pressListItem} />
       </View>
     );
   }

@@ -103,7 +103,7 @@ export default class Market extends Component {
   //   onEventWithLabel(MARKET_TOKEN_DETAIL, '行情 - token详情');
   //   const baseAsset = item.get('base_asset');
   //   InteractionManager.runAfterInteractions(() => {
-  //     this.props.actions.selectCurrentPair(item);
+  //     this.props.actions.selectCurrentSymbol(item);
   //     this.props.actions.selectBaseAsset(baseAsset);
   //     this.props.actions.getTokenDetailRequested({ symbol: baseAsset });
   //     Navigation.push(this.props.componentId, {
