@@ -5,11 +5,11 @@ const androidX = ['MI 8 SE']
 
 export const isIphoneX = () => {
   const dimen = Dimensions.get('window')
-  
+
   if (Platform.OS === 'ios') {
     return !Platform.isPad && !Platform.isTVOS && (dimen.height === 812 || dimen.width === 812)
   } else {
-    return _.findIndex(androidX, (o) => (DeviceInfo.getUserAgent().indexOf(o) !== -1)) !== -1 
+    return _.findIndex(androidX, o => (DeviceInfo.getUserAgent().indexOf(o) !== -1)) !== -1
   }
 }
 
