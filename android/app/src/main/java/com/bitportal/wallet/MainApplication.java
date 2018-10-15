@@ -27,7 +27,6 @@ import com.bitportal.wallet.nativeutils.NativeUtilsPackage;
 import cn.jpush.reactnativejpush.JPushPackage;
 import cn.jpush.android.api.JPushInterface;
 import com.github.alinz.reactnativewebviewbridge.WebViewBridgePackage;
-import com.dylanvann.fastimage.FastImageViewPackage;
 import com.rnfs.RNFSPackage;
 
 import java.util.Arrays;
