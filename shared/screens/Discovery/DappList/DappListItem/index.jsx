@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { View, TouchableHighlight, Text } from 'react-native'
-import FastImage from 'react-native-fast-image'
+import BPImage from 'components/BPNativeComponents/BPImage'
 import { Navigation } from 'react-native-navigation'
 import { bindActionCreators } from 'redux'
 import * as dAppActions from 'actions/dApp'
@@ -136,7 +136,7 @@ export default class DappListItem extends React.PureComponent {
           }}
         >
           <View style={styles.rowContainer}>
-            <FastImage
+            <BPImage
               style={styles.image}
               source={
                 item.get('icon_url')
