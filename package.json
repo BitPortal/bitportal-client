@@ -85,7 +85,6 @@
     "react-native-bip39": "git+https://github.com/TerenceGe/bip39.git",
     "react-native-blur": "^3.2.2",
     "react-native-camera": "^1.1.2",
-    "react-native-charts-wrapper": "^0.4.3",
     "react-native-config": "^0.11.5",
     "react-native-crypto": "^2.1.2",
     "react-native-device-info": "^0.21.5",

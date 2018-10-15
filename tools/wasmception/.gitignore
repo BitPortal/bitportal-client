@@ -1,0 +1,6 @@
+build/
+src/
+dist/
+sysroot/
+.vscode/
+wasmception-*-bin.tar.gz
