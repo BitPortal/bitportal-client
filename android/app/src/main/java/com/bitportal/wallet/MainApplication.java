@@ -62,7 +62,6 @@ public class MainApplication extends NavigationApplication {
       new SvgPackage(),
       new SplashScreenReactPackage(),
       new VectorIconsPackage(),
-      new MPAndroidChartPackage(),
       new LinearGradientPackage(),
       new ReactNativeConfigPackage(),
       new RandomBytesPackage(),
