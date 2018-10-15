@@ -1,13 +1,16 @@
 import { Platform, Dimensions, StatusBar } from 'react-native'
+import DeviceInfo from 'react-native-device-info'
+import _ from 'lodash'
+const androidX = ['MI 8 SE']
 
 export const isIphoneX = () => {
   const dimen = Dimensions.get('window')
-  return (
-    Platform.OS === 'ios'
-    && !Platform.isPad
-    && !Platform.isTVOS
-    && (dimen.height === 812 || dimen.width === 812)
-  )
+  
+  if (Platform.OS === 'ios') {
+    return !Platform.isPad && !Platform.isTVOS && (dimen.height === 812 || dimen.width === 812)
+  } else {
+    return _.findIndex(androidX, (o) => (DeviceInfo.getUserAgent().indexOf(o) !== -1)) !== -1 
+  }
 }
 
 export const ifIphoneX = (iphoneXStyle, regularStyle) => {
