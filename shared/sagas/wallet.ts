@@ -270,6 +270,8 @@ function* logoutRequested(action: Action<LogoutParams>) {
     yield put(clearProducer())
     yield put(actions.logoutSucceeded())
 
+    if (action.payload.componentId) popToRoot(action.payload.componentId)
+
     // unsubscribe
     const registerationID = yield call(getRegisterationID)
     const params = {
@@ -280,7 +282,6 @@ function* logoutRequested(action: Action<LogoutParams>) {
     // console.log('###---yy ', JSON.stringify(params))
     yield put(unsubscribe(params))
 
-    if (action.payload.componentId) popToRoot(action.payload.componentId)
   } catch (e) {
     yield put(actions.logoutFailed(getErrorMessage(e)))
   }

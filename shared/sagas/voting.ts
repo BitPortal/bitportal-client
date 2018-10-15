@@ -24,7 +24,7 @@ function* votingRequested(action: Action<VotingParams>) {
     // trace votes
     const voterInfo = yield select((state: RootState) => voterInfoSelector(state))
     const votesInfo = {
-      userId: null,
+      userId: "",
       walletId: eosAccountName,
       bpList: producers,
       amount: voterInfo ? (+voterInfo.get('staked') / 10000).toFixed(4) : 0

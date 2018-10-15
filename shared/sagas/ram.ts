@@ -37,7 +37,7 @@ function* buyRAMRequested(action: Action<BuyRAMParams>) {
 
     // trace stake
     const traceParams = {
-      userId: null,
+      userId: "",
       walletId: eosAccountName,
       type: 'buy',
       assetType: 'RAM',
@@ -76,7 +76,7 @@ function* sellRAMRequested(action: Action<SellRAMParams>) {
 
     // trace stake
     const traceParams = {
-      userId: null,
+      userId: "",
       walletId: eosAccountName,
       type: 'sell',
       assetType: 'RAM',
