@@ -9681,8 +9681,8 @@ react-native-extended-stylesheet@^0.8.0:
     object-resolve-path "^1.1.0"
 
 "react-native-fast-image@git+https://github.com/TerenceGe/react-native-fast-image.git":
-  version "5.0.4"
-  resolved "git+https://github.com/TerenceGe/react-native-fast-image.git#a2a668413f8817c6a6730310bd58c483c3856520"
+  version "5.0.12"
+  resolved "git+https://github.com/TerenceGe/react-native-fast-image.git#418344f7bb01357a8dcf993375972a0ba165ffb3"
 
 react-native-fs@^2.11.17:
   version "2.11.17"
