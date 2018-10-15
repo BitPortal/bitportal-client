@@ -2,10 +2,21 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Text, View, ActivityIndicator } from "react-native";
 import AccordionPanel from "components/AccordionPanel";
+import DescriptionPanel from "components/DescriptionPanel";
 import { MARKET_DETAIL_KEYS } from "constants/market";
 import { IntlProvider, FormattedMessage, FormattedNumber } from "react-intl";
 import messages from "resources/messages";
 import styles from "./styles";
+
+const obj = {
+  foo: {
+    bar: {
+      baz() {
+        return 42;
+      }
+    }
+  }
+};
 
 @connect(
   state => ({
@@ -22,7 +33,7 @@ import styles from "./styles";
 export default class TokenDetails extends Component {
   render() {
     const { locale, token, loading } = this.props;
-    console.log("tokendetails", token);
+    console.log("tokendetails", token, token.keySeq());
     return loading ? (
       <View>
         <DetailPanel>
@@ -37,13 +48,20 @@ export default class TokenDetails extends Component {
           <DescriptionPanel
             messages={messages}
             title="Description"
-            description={token.get("description").get(locale)}
+            // description={"hello"}
+            description={token.get("description")?.get(locale)}
           />
           <DetailPanel
             messages={messages[locale]}
             title="Token Details"
             token={token}
           >
+            {token.size === 0 && (
+              <Text style={styles.text14}>
+                {"\n"}
+                Details Not Available
+              </Text>
+            )}
             {token.get("circulating_supply") && (
               <View>
                 <View style={[styles.spaceBetween, { marginVertical: 10 }]}>
@@ -93,26 +111,26 @@ export default class TokenDetails extends Component {
   }
 }
 
-const DescriptionPanel = props => {
-  const { messages, title, description, loading } = props;
-  return description ? (
-    <IntlProvider messages={messages}>
-      <View style={styles.container}>
-        <View style={styles.cardContainer}>
-          <View style={styles.detailPanelTitle}>
-            <Text style={styles.text16}>{title}</Text>
-          </View>
-          <View style={styles.hairlineSpacer} />
-          <View style={styles.textContainer}>
-            <Text style={[styles.text14, { textAlign: "justify" }]}>
-              {description}
-            </Text>
-          </View>
-        </View>
-      </View>
-    </IntlProvider>
-  ) : null;
-};
+// const DescriptionPanel = props => {
+//   const { messages, title, description, loading } = props;
+//   return description ? (
+//     <IntlProvider messages={messages}>
+//       <View style={styles.container}>
+//         <View style={styles.cardContainer}>
+//           <View style={styles.detailPanelTitle}>
+//             <Text style={styles.text16}>{title}</Text>
+//           </View>
+//           <View style={styles.hairlineSpacer} />
+//           <View style={styles.textContainer}>
+//             <Text style={[styles.text14, { textAlign: "justify" }]}>
+//               {description}
+//             </Text>
+//           </View>
+//         </View>
+//       </View>
+//     </IntlProvider>
+//   ) : null;
+// };
 
 const DetailPanel = props => {
   const { messages, title, loading } = props;

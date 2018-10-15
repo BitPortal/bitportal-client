@@ -77,9 +77,17 @@ export default class TokenChart extends Component {
     console.log(event.nativeEvent);
   }
 
+  handleData = () => {
+    return this.props.data &&
+      this.props.data.dataSets &&
+      this.props.data.dataSets.values.length != 0
+      ? this.props.data
+      : this.props.data;
+  };
+
   render() {
     const { loading, data } = this.props;
-    console.log("data", data.dataSets[0].values);
+    console.log("data", this.props.data.dataSets[0].values.length === 0);
     return (
       <View style={styles.container}>
         <View style={styles.cardContainer}>
@@ -87,6 +95,10 @@ export default class TokenChart extends Component {
             {loading ? (
               <View style={styles.centerFlex}>
                 <ActivityIndicator size={"large"} />
+              </View>
+            ) : this.props.data.dataSets[0].values.length === 0 ? (
+              <View style={styles.centerFlex}>
+                <Text>Chart Not Available</Text>
               </View>
             ) : (
               <LineChart

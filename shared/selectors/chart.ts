@@ -10,28 +10,21 @@ const allDataSelector = (state: RootState) => state.chart.get("data");
 const dataSourceSelector = createSelector(
   allDataSelector,
   chartTypeSelector,
-  (data: any, chartType: any) => {
-    // console.log(
-    //   "dataSourceSelector",
-    //   data.toJS(),
-    //   chartType,
-    //   data.get(chartType)
-    // );
-    return data.get(chartType);
-  }
+  (data: any, chartType: any) => data.get(chartType)
 );
 
 export const formatChartLengthSelector = createSelector(
   chartRangeSelector,
   dataSourceSelector,
   (range: any, data: any) => {
-    console.log("yoo", data, range);
     const time = new Date();
-    return data
+    const result = data
       .filter(
         e => (e.get("time") * 1000 >= time - TIME_CONSTRAINT[range] ? e : null)
       )
       .reverse();
+    console.log("yoo", data, range, result);
+    return result.size > 9 ? result : [];
   }
 );
 
@@ -40,7 +33,7 @@ export const formatChartDatasetSelector = createSelector(
   chartTypeSelector,
   (chart: any, chartType: any) => {
     const f = chartType === "histoday" ? "YYYY-MM-DD" : "MM-DD-HH:mm";
-    const values = chart.map((e, i) => {
+    values = chart.map((e, i) => {
       return {
         x: i,
         y: e.get("close"),

@@ -1,5 +1,9 @@
 {
   "presets": ["@babel/preset-env", "react-native"],
-  "plugins": [["@babel/plugin-proposal-decorators", { "legacy": true }], "@babel/plugin-proposal-object-rest-spread"],
+  "plugins": [
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-proposal-optional-chaining"
+  ],
   "sourceMaps": true
 }

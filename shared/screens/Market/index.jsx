@@ -4,6 +4,7 @@ import TableView, { HeaderTitle } from "screens/Market/TableView";
 import * as tickerActions from "actions/ticker";
 import * as tokenActions from "actions/token";
 import { exchangeTickerSelector, sortFilterSelector } from "selectors/ticker";
+import { eosAccountNameSelector } from "selectors/eosAccount";
 import { bindActionCreators } from "redux";
 import { View, InteractionManager } from "react-native";
 import Modal from "react-native-modal";
@@ -42,7 +43,8 @@ import MarketContent from "./MarketContent";
     quoteAssetFilter: state.ticker.get("quoteAssetFilter"),
     baseAsset: state.ticker.get("baseAsset"),
     searchTerm: state.ticker.get("searchTerm"),
-    marketCategory: state.ticker.get("marketCategory")
+    marketCategory: state.ticker.get("marketCategory"),
+    eosAccountName: eosAccountNameSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators(
@@ -205,6 +207,7 @@ export default class Market extends Component {
             backdropOpacity={0.3}
           >
             <CategoryList
+              loggedIn={this.props.eosAccountName}
               categoryList={MARKET_CATEGORIES}
               activeCategory={marketCategory}
               changeCategory={this.changeCategory}

@@ -1,7 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { IntlProvider } from "react-intl";
-import { FontScale, FLOATING_CARD_WIDTH, FLOATING_CARD_BORDER_RADIUS } from "utils/dimens";
+import {
+  FontScale,
+  FLOATING_CARD_WIDTH,
+  FLOATING_CARD_BORDER_RADIUS
+} from "utils/dimens";
 import Colors from "resources/colors";
 
 const styles = StyleSheet.create({
@@ -76,8 +80,8 @@ const styles = StyleSheet.create({
 });
 
 const DescriptionPanel = props => {
-  const { title, description, loading } = props;
-  return description ? (
+  const { title, description, loading, messages } = props;
+  return (
     <View style={styles.container}>
       <View style={styles.cardContainer}>
         <View style={styles.detailPanelTitle}>
@@ -85,11 +89,13 @@ const DescriptionPanel = props => {
         </View>
         <View style={styles.hairlineSpacer} />
         <View style={styles.textContainer}>
-          <Text style={[styles.text14, { textAlign: "justify" }]}>{description}</Text>
+          <Text style={[styles.text14, { textAlign: "justify" }]}>
+            {description ? description : "Description Not Available"}
+          </Text>
         </View>
       </View>
     </View>
-  ) : null;
+  );
 };
 
 export default DescriptionPanel;

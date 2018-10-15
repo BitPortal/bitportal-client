@@ -11,7 +11,9 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const HappyPack = require("happypack");
 const nodeExternals = require("webpack-node-externals");
 const { getIfUtils, removeEmpty } = require("webpack-config-utils");
-const { ifProduction, ifNotProduction, ifNotTest, ifTest } = getIfUtils(process.env.NODE_ENV);
+const { ifProduction, ifNotProduction, ifNotTest, ifTest } = getIfUtils(
+  process.env.NODE_ENV
+);
 const happyThreadPool = HappyPack.ThreadPool({ size: 5 });
 
 const baseConfig = {
@@ -21,7 +23,10 @@ const baseConfig = {
       "scripts/[modulehash].module.wasm?v=[modulehash]",
       "scripts/[modulehash].module.wasm"
     ),
-    chunkFilename: ifProduction("scripts/[name].chunk.js?v=[chunkhash]", "scripts/[name].chunk.js")
+    chunkFilename: ifProduction(
+      "scripts/[name].chunk.js?v=[chunkhash]",
+      "scripts/[name].chunk.js"
+    )
   },
   resolve: {
     modules: [
@@ -82,19 +87,27 @@ const baseConfig = {
       {
         test: /\.css$/,
         include: resolve(__dirname, "shared"),
-        use: removeEmpty([ifNotTest(ExtractCssChunks.loader), "happypack/loader?id=styles"])
+        use: removeEmpty([
+          ifNotTest(ExtractCssChunks.loader),
+          "happypack/loader?id=styles"
+        ])
       },
       {
         test: /\.css$/,
         exclude: resolve(__dirname, "shared"),
-        use: removeEmpty([ifNotTest(ExtractCssChunks.loader), "happypack/loader?id=externalStyles"])
+        use: removeEmpty([
+          ifNotTest(ExtractCssChunks.loader),
+          "happypack/loader?id=externalStyles"
+        ])
       },
       {
         test: /\.(ttf|eot|otf|svg|woff(2)?)(\?[a-z0-9]+)?$/,
         include: resolve(__dirname, "shared/resources/fonts"),
         loader: "url-loader",
         options: {
-          ...(process.env.TARGET !== "electron-renderer" ? { limit: 1024 } : null),
+          ...(process.env.TARGET !== "electron-renderer"
+            ? { limit: 1024 }
+            : null),
           name: "fonts/[name].[ext]"
         }
       },
@@ -103,7 +116,9 @@ const baseConfig = {
         include: resolve(__dirname, "shared/resources/images"),
         loader: "url-loader",
         options: {
-          ...(process.env.TARGET !== "electron-renderer" ? { limit: 10240 } : null),
+          ...(process.env.TARGET !== "electron-renderer"
+            ? { limit: 10240 }
+            : null),
           name: "images/[name].[ext]?v=[hash:base64:5]"
         }
       }
@@ -116,8 +131,14 @@ const baseConfig = {
     }),
     ifNotTest(
       new ExtractCssChunks({
-        filename: ifProduction("styles/bundle.css?v=[hash]", "styles/bundle.css"),
-        chunkFilename: ifProduction("styles/[name].chunk.css?v=[chunkhash]", "styles/[name].chunk.css")
+        filename: ifProduction(
+          "styles/bundle.css?v=[hash]",
+          "styles/bundle.css"
+        ),
+        chunkFilename: ifProduction(
+          "styles/[name].chunk.css?v=[chunkhash]",
+          "styles/[name].chunk.css"
+        )
       })
     ),
     new HappyPack({
@@ -139,6 +160,7 @@ const baseConfig = {
               "@babel/plugin-syntax-dynamic-import",
               "@babel/plugin-proposal-class-properties",
               "@babel/plugin-transform-runtime",
+              "@babel/plugin-proposal-optional-chaining",
               "react-hot-loader/babel",
               ifTest("istanbul")
             ])
@@ -198,7 +220,10 @@ const baseConfig = {
 const browserConfig = {
   ...baseConfig,
   context: resolve("browser"),
-  entry: ifNotProduction(["react-hot-loader/patch", "./index.tsx"], "./index.tsx"),
+  entry: ifNotProduction(
+    ["react-hot-loader/patch", "./index.tsx"],
+    "./index.tsx"
+  ),
   output: {
     ...baseConfig.output,
     path: resolve("static/web"),
@@ -227,7 +252,9 @@ const browserConfig = {
   plugins: removeEmpty([
     ...baseConfig.plugins,
     ifNotProduction(new webpack.HotModuleReplacementPlugin()),
-    ifProduction(new webpack.NormalModuleReplacementPlugin(/routes\/sync/, "routes/async")),
+    ifProduction(
+      new webpack.NormalModuleReplacementPlugin(/routes\/sync/, "routes/async")
+    ),
     ifProduction(new ManifestPlugin({ isChunk: true })),
     new HtmlWebpackPlugin({
       inject: false,
@@ -274,7 +301,10 @@ const desktopConfig = {
   ...baseConfig,
   target: "electron-renderer",
   context: resolve("desktop"),
-  entry: ifNotProduction(["react-hot-loader/patch", "./index.tsx"], "./index.tsx"),
+  entry: ifNotProduction(
+    ["react-hot-loader/patch", "./index.tsx"],
+    "./index.tsx"
+  ),
   output: {
     ...baseConfig.output,
     path: resolve("static/desktop"),

@@ -14,7 +14,7 @@ const initialState = Immutable.fromJS({
   loaded: false,
   error: null,
   exchangeFilter: EXCHANGES[0],
-  marketCategory: MARKET_CATEGORIES[0],
+  marketCategory: MARKET_CATEGORIES[0].name,
   quoteAssetFilter: QUOTE_ASSETS[EXCHANGES[0]][0],
   sortFilter: EXCHANGES.reduce(
     (filters, exchange) => ({ ...filters, [exchange]: DEFAULT_SORT_FILTER }),
