@@ -1,24 +1,26 @@
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { FontScale } from 'utils/dimens'
 
 export default EStyleSheet.create({
   passwordStrength: {
     height: 20,
-    minWidth: 20,
+    width: 20,
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center'
   },
-  text14: {
-    fontSize: FontScale(14)
+  block: {
+    width: 15,
+    height: 4,
+    marginLeft: 5,
+    marginTop: 2
   },
   weak: {
-    color: 'rgb(255, 9, 0)'
+    backgroundColor: '#ff4740'
   },
   middle: {
-    color: 'rgb(255, 190, 0)'
+    backgroundColor: '#ffbe00'
   },
   strong: {
-    color: 'rgb(54, 128, 192)'
+    backgroundColor: '#59b9e2'
   }
 })

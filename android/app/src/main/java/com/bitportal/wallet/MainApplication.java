@@ -12,7 +12,6 @@ import com.bitgo.randombytes.RandomBytesPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
-import com.github.wuxudong.rncharts.MPAndroidChartPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.horcrux.svg.SvgPackage;
@@ -28,6 +27,7 @@ import com.bitportal.wallet.nativeutils.NativeUtilsPackage;
 import cn.jpush.reactnativejpush.JPushPackage;
 import cn.jpush.android.api.JPushInterface;
 import com.github.alinz.reactnativewebviewbridge.WebViewBridgePackage;
+import com.rnfs.RNFSPackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
 
 import java.util.Arrays;
@@ -62,7 +62,6 @@ public class MainApplication extends NavigationApplication {
       new SvgPackage(),
       new SplashScreenReactPackage(),
       new VectorIconsPackage(),
-      new MPAndroidChartPackage(),
       new LinearGradientPackage(),
       new ReactNativeConfigPackage(),
       new RandomBytesPackage(),
@@ -78,7 +77,8 @@ public class MainApplication extends NavigationApplication {
       new NativeUtilsPackage(),
       new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
       new WebViewBridgePackage(),
-      new FastImageViewPackage()
+      new FastImageViewPackage(),
+      new RNFSPackage()
     );
   }
 

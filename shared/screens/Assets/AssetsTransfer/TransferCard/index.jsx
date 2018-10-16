@@ -109,7 +109,7 @@ export default class TransferCard extends Component {
             <View style={[styles.header, styles.bottom, { backgroundColor: Colors.minorThemeColor, minHeight: 300 }]}>
               <View style={[styles.item, styles.between, { marginTop: 24 }]}>
                 <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                  <Text style={[styles.text14, { width: 45 }]}> <FormattedMessage id="send_confirm_label_from " /> </Text>
+                  <Text style={[styles.text14, { width: 60 }]}> <FormattedMessage id="send_confirm_label_from" /> </Text>
                   <Text style={[styles.text14, { marginLeft: 35, color: Colors.textColor_89_185_226 }]}>
                     <FormattedNumber
                       value={quantity || 0}
@@ -122,7 +122,7 @@ export default class TransferCard extends Component {
               </View>
               <View style={[styles.item, styles.between, { marginTop: 10 }]}>
                 <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                  <Text style={[styles.text14, { width: 45 }]}> <FormattedMessage id="send_confirm_label_to" /> </Text>
+                  <Text style={[styles.text14, { width: 60 }]}> <FormattedMessage id="send_confirm_label_to" /> </Text>
                   <Text style={[styles.text14, { marginLeft: 35, color: Colors.textColor_89_185_226 }]}>
                     {toAccount}
                   </Text>
@@ -131,7 +131,7 @@ export default class TransferCard extends Component {
               <View style={styles.line} />
               <View style={[styles.item, styles.between, { marginTop: -10 }]}>
                 <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                  <Text style={[styles.text14, { width: 45 }]}> <FormattedMessage id="send_confirm_label_memo" /> </Text>
+                  <Text style={[styles.text14, { width: 60 }]}> <FormattedMessage id="send_confirm_label_memo" /> </Text>
                   <Text numberOfLines={1} style={[styles.text14, { marginLeft: 35, color: Colors.textColor_89_185_226 }]}>
                     {memo}
                   </Text>

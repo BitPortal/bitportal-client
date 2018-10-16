@@ -32,7 +32,7 @@ export default handleActions({
         const balanceInfo = action.payload.balanceInfo
         if (v.has(eosAccountName)) {
           return v.update(eosAccountName, (v: any) => {
-            const index = v.findIndex((v: any) => v.get('contract') === balanceInfo.contract)
+            const index = v.findIndex((v: any) => v.get('contract') === balanceInfo.contract && v.get('symbol') === balanceInfo.symbol)
             return index === -1 ? v.push(Immutable.fromJS(balanceInfo)) : v.set(index, Immutable.fromJS(balanceInfo))
           })
         }

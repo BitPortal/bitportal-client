@@ -4,4 +4,4 @@ import { getInitialAppInfo } from 'selectors/appInfo'
 
 export default handleActions({
 
-}, getInitialAppInfo)
+}, getInitialAppInfo())

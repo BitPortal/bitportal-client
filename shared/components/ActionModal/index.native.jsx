@@ -10,40 +10,40 @@ import { noop } from 'utils'
 import styles from './styles'
 import messages from './messages'
 
-const TransferActionItems = ({ info }) => (
+const TransferActionItems = ({ info, locale }) => (
   <Fragment>
     <View style={styles.item}>
-      <Text style={styles.label}>操作:</Text>
+      <Text style={styles.label}>{messages[locale].general_action_modal_text_action}:</Text>
       <Text style={styles.data}>
-        Payment
+        {messages[locale].transfer_action_modal_text_payment}
       </Text>
     </View>
     <View style={styles.item}>
-      <Text style={styles.label}>合约:</Text>
+      <Text style={styles.label}>{messages[locale].transfer_action_modal_text_contract}:</Text>
       <Text style={styles.data}>
         {info.get('contract')}
       </Text>
     </View>
     <View style={styles.item}>
-      <Text style={styles.label}>数量:</Text>
+      <Text style={styles.label}>{messages[locale].transfer_action_modal_text_amount}:</Text>
       <Text style={styles.data}>
         {info.get('amount')} {info.get('symbol')}
       </Text>
     </View>
     <View style={styles.item}>
-      <Text style={styles.label}>支付帐户:</Text>
+      <Text style={styles.label}>{messages[locale].transfer_action_modal_text_payment_account}:</Text>
       <Text style={styles.data}>
         {info.get('fromAccount')}
       </Text>
     </View>
     <View style={styles.item}>
-      <Text style={styles.label}>接收帐户:</Text>
+      <Text style={styles.label}>{messages[locale].transfer_action_modal_text_receiving_account}:</Text>
       <Text style={styles.data}>
         {info.get('toAccount')}
       </Text>
     </View>
     <View style={styles.item}>
-      <Text style={styles.label}>附言:</Text>
+      <Text style={styles.label}>{messages[locale].transfer_action_modal_text_memo}:</Text>
       <Text style={styles.data}>
         {info.get('memo')}
       </Text>
@@ -51,22 +51,22 @@ const TransferActionItems = ({ info }) => (
   </Fragment>
 )
 
-const VoteActionItems = ({ info }) => (
+const VoteActionItems = ({ info, locale }) => (
   <Fragment>
     <View style={styles.item}>
-      <Text style={styles.label}>操作:</Text>
+      <Text style={styles.label}>{messages[locale].general_action_modal_text_action}:</Text>
       <Text style={styles.data}>
-        投票
+        {messages[locale].voting_action_modal_text_vote}
       </Text>
     </View>
     <View style={styles.item}>
-      <Text style={styles.label}>投票者:</Text>
+      <Text style={styles.label}>{messages[locale].voting_action_modal_text_voter}:</Text>
       <Text style={styles.data}>
         {info.get('voter')}
       </Text>
     </View>
     <View style={styles.item}>
-      <Text style={styles.label}>已选节点:</Text>
+      <Text style={styles.label}>{messages[locale].voting_action_modal_text_selected_node}:</Text>
       <ScrollView style={styles.dataView}>
         {info.get('producers').map(producer => <Text key={producer} style={styles.data}>{producer}</Text>)}
       </ScrollView>
@@ -74,28 +74,28 @@ const VoteActionItems = ({ info }) => (
   </Fragment>
 )
 
-const SignActionItems = ({ info }) => (
+const SignActionItems = ({ info, locale }) => (
   <Fragment>
     <View style={styles.item}>
-      <Text style={styles.label}>操作:</Text>
+      <Text style={styles.label}>{messages[locale].general_action_modal_text_action}:</Text>
       <Text style={styles.data}>
-        签名
+        {messages[locale].sign_action_modal_text_sign}
       </Text>
     </View>
     <View style={styles.item}>
-      <Text style={styles.label}>签名者:</Text>
+      <Text style={styles.label}>{messages[locale].sign_action_modal_text_signer}:</Text>
       <Text style={styles.data}>
         {info.get('account')}
       </Text>
     </View>
     <View style={styles.item}>
-      <Text style={styles.label}>公钥:</Text>
+      <Text style={styles.label}>{messages[locale].sign_action_modal_text_public_key}:</Text>
       <Text style={styles.data}>
         {info.get('publicKey')}
       </Text>
     </View>
     <View style={styles.item}>
-      <Text style={styles.label}>签名内容:</Text>
+      <Text style={styles.label}>{messages[locale].sign_action_modal_text_signed_content}:</Text>
       <Text style={styles.data}>
         {info.get('signData')}
       </Text>
@@ -103,29 +103,64 @@ const SignActionItems = ({ info }) => (
   </Fragment>
 )
 
-const PushActionItems = ({ info }) => (
+const PushActionItems = ({ info, locale }) => (
   <Fragment>
     <View style={styles.item}>
-      <Text style={styles.label}>操作:</Text>
+      <Text style={styles.label}>{messages[locale].general_action_modal_text_action}:</Text>
       <Text style={styles.data}>
-        执行EOS合约
+        {messages[locale].contract_action_modal_text_execute}
       </Text>
     </View>
     <View style={styles.item}>
-      <Text style={styles.label}>详情:</Text>
+      <Text style={styles.label}>{messages[locale].contract_action_modal_text_details}:</Text>
       <ScrollView style={styles.dataView}>
         {info.get('actions').map(action => (
           <View key={`${action.get('account')}-${action.get('name')}`} style={styles.dataViewAction}>
             <Text style={styles.data}>
-              <Text>帐户</Text>
-              <Text style={styles.highlight}>{action.getIn(['authorization', 0, 'actor'])}</Text>
-              <Text>使用</Text>
-              <Text style={styles.highlight}>{action.getIn(['authorization', 0, 'permission'])}</Text>
-              <Text>权限执行</Text>
-              <Text style={styles.highlight}>{action.get('account')}</Text>
-              <Text>合约的</Text>
-              <Text style={styles.highlight}>{action.get('name')}</Text>
-              <Text>操作, 参数列表:</Text>
+              <Text>{messages[locale].contract_action_modal_text_account}</Text>
+              <Text style={styles.highlight}> {`${action.getIn(['authorization', 0, 'actor'])}@${action.getIn(['authorization', 0, 'permission'])}`}{'\n'}</Text>
+              <Text>{messages[locale].contract_action_modal_text_contract}</Text>
+              <Text style={styles.highlight}> {action.get('account')}{'\n'}</Text>
+              <Text>{messages[locale].contract_action_modal_text_action}</Text>
+              <Text style={styles.highlight}> {action.get('name')}{'\n'}</Text>
+              <Text>{messages[locale].contract_action_modal_text_list}:</Text>
+            </Text>
+            <View style={styles.actionData}>
+              {action.get('data').entrySeq().map(item => (
+                <View key={item[0]} style={styles.actionDataItem}>
+                  <Text style={styles.actionDataLabel}>{item[0]}: </Text>
+                  <Text style={styles.actionDataValue}>{item[1]}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        ))}
+      </ScrollView>
+    </View>
+  </Fragment>
+)
+
+const SignatureActionItems = ({ info, locale }) => (
+  <Fragment>
+    <View style={styles.item}>
+      <Text style={styles.label}>{messages[locale].general_action_modal_text_action}:</Text>
+      <Text style={styles.data}>
+        {messages[locale].contract_action_modal_text_execute}
+      </Text>
+    </View>
+    <View style={styles.item}>
+      <Text style={styles.label}>{messages[locale].contract_action_modal_text_details}:</Text>
+      <ScrollView style={styles.dataView}>
+        {info.getIn(['transaction', 'actions']).map(action => (
+          <View key={`${action.get('account')}-${action.get('name')}`} style={styles.dataViewAction}>
+            <Text style={styles.data}>
+              <Text>{messages[locale].contract_action_modal_text_account}</Text>
+              <Text style={styles.highlight}> {`${action.getIn(['authorization', 0, 'actor'])}@${action.getIn(['authorization', 0, 'permission'])}`}{'\n'}</Text>
+              <Text>{messages[locale].contract_action_modal_text_contract}</Text>
+              <Text style={styles.highlight}> {action.get('account')}{'\n'}</Text>
+              <Text>{messages[locale].contract_action_modal_text_action}</Text>
+              <Text style={styles.highlight}> {action.get('name')}{'\n'}</Text>
+              <Text>{messages[locale].contract_action_modal_text_list}:</Text>
             </Text>
             <View style={styles.actionData}>
               {action.get('data').entrySeq().map(item => (
@@ -154,13 +189,15 @@ const PushActionItems = ({ info }) => (
 export default class ActionModal extends Component {
   renderItems = (messageType, info) => {
     if (messageType === 'eosAuthSign') {
-      return (<SignActionItems info={info} />)
+      return (<SignActionItems info={info} locale={this.props.locale} />)
     } else if (messageType === 'transferEOSAsset') {
-      return (<TransferActionItems info={info} />)
+      return (<TransferActionItems info={info} locale={this.props.locale} />)
     } else if (messageType === 'voteEOSProducers') {
-      return (<VoteActionItems info={info} />)
+      return (<VoteActionItems info={info} locale={this.props.locale} />)
     } else if (messageType === 'pushEOSAction') {
-      return (<PushActionItems info={info} />)
+      return (<PushActionItems info={info} locale={this.props.locale} />)
+    } else if (messageType === 'requestSignature') {
+      return (<SignatureActionItems info={info} locale={this.props.locale} />)
     }
 
     return null
@@ -195,7 +232,7 @@ export default class ActionModal extends Component {
                 <TouchableOpacity onPress={dismiss} style={styles.close}>
                   <Ionicons name="ios-close" size={28} color={Colors.bgColor_FFFFFF} />
                 </TouchableOpacity>
-                <Text style={styles.title}>交易详情</Text>
+                <Text style={styles.title}>{messages[locale].contract_action_modal_text_transaction}</Text>
               </View>
               <View style={styles.body}>
                 {this.renderItems(messageType, messageInfo)}

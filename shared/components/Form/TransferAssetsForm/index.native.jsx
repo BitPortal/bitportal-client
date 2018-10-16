@@ -30,7 +30,7 @@ export const errorMessages = (error, messages) => {
     case 'Key derivation failed - possibly wrong passphrase':
       return messages.general_error_popup_text_password_incorrect
     case 'EOS System Error':
-      return messages.snd_title_error_eossystem
+      return messages.resource_error_popup_text_eos_system_error
     default:
       return messages.send_error_popup_text_send_failed
   }
@@ -165,7 +165,7 @@ export default class TransferAssetsForm extends Component {
 
   componentDidMount() {
     const { activeAsset, eosAccountName } = this.props
-    this.props.actions.getEOSAssetBalanceRequested({ code: activeAsset.get('contract'), eosAccountName })
+    this.props.actions.getEOSAssetBalanceRequested({ code: activeAsset.get('contract'), eosAccountName, symbol: activeAsset.get('symbol') })
   }
 
   render() {

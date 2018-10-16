@@ -86,7 +86,6 @@ export default class Profile extends Component {
       case 'Settings':
       case 'ContactUs':
       case 'TransactionHistory':
-      case 'DappBrowser':
         pageName = page
         break
       default:
@@ -130,7 +129,6 @@ export default class Profile extends Component {
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 20, alignItems: 'center' }}>
-              <SettingItem leftImage={Images.profile_voting} leftItemTitle="DappBrowser" onPress={this.changePage.bind(this, 'DappBrowser')} extraStyle={{ marginTop: 10 }} />
               <SettingItem leftImage={Images.profile_voting} leftItemTitle={<FormattedMessage id="profile_button_voting" />} onPress={this.changePage.bind(this, 'Voting')} extraStyle={{ marginTop: 10 }} />
               <SettingItem leftImage={Images.profile_resources} leftItemTitle={<FormattedMessage id="profile_button_resource" />} onPress={this.changePage.bind(this, 'Resources')} />
               <SettingItem leftImage={Images.profile_contacts} leftItemTitle={<FormattedMessage id="profile_button_contacts" />} onPress={this.changePage.bind(this, 'Contacts')} />
@@ -140,7 +138,7 @@ export default class Profile extends Component {
               <SettingItem leftImage={Images.profile_mediafax} leftItemTitle={<FormattedMessage id="profile_button_follow_us" />} onPress={this.changePage.bind(this, 'Mediafax')} />
               <SettingItem leftImage={Images.profile_about} leftItemTitle={<FormattedMessage id="profile_button_about_us" />} onPress={this.changePage.bind(this, 'About')} />
               <Text style={[styles.text14, { marginTop: 25 }]}> <FormattedMessage id="profile_text_version" /> {VersionNumber.appVersion} </Text>
-              <Text style={[styles.text14, { marginTop: 5 }]}> <FormattedMessage id="profile_text_copyright_1" /> </Text>
+              <Text style={[styles.text14, { marginTop: 5 }]}><FormattedMessage id="profile_text_copyright_1" /></Text>
             </ScrollView>
           </View>
         </View>

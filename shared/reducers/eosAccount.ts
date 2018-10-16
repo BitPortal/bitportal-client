@@ -6,7 +6,6 @@ const initialState = Immutable.fromJS({
   data: {},
   isAssetHidden: false,
   eosAccountList: [],
-  eosTempAccountInfo: {},
   eosAccountCreationInfo: {},
   loading: false,
   loaded: false,
@@ -69,11 +68,5 @@ export default handleActions({
   },
   [actions.completeBackup] (state) {
     return state.setIn(['eosAccountCreationInfo', 'backup'], true)
-  },
-  [actions.createEOSAccountAssistanceRequested] (state) {
-    return state.set('loading', true)
-  },
-  [actions.createEOSAccountAssistanceSucceeded] (state, action) {
-    return state.set('loading', false).set('eosTempAccountInfo', Immutable.fromJS(action.payload))
   },
 }, initialState)

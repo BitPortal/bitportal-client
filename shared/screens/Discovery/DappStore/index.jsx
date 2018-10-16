@@ -1,11 +1,13 @@
 import React, { PureComponent } from 'react'
-import { View, Text, ScrollView, ActivityIndicator } from 'react-native'
+import { View, Text, ScrollView, ActivityIndicator, TouchableWithoutFeedback } from 'react-native'
 import { bindActionCreators } from 'redux'
+import { Navigation } from 'react-native-navigation'
 import * as dAppActions from 'actions/dApp'
 import { connect } from 'react-redux'
 import { parsedDappListSelector } from 'selectors/dApp'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
 import { IntlProvider } from 'react-intl'
+import { loadInjectSync } from 'utils/inject'
 import Colors from 'resources/colors'
 import messages from 'resources/messages'
 import DappElement from './DappElement'
@@ -30,18 +32,34 @@ import styles from './styles'
   { withRef: true }
 )
 export default class DappStore extends PureComponent {
+  showDappBrowser = () => {
+    const inject = loadInjectSync()
+
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.DappBrowser',
+        passProps: {
+          uri: 'https://build-hsehfjdqjt.now.sh/',
+          inject
+        }
+      }
+    })
+  }
+
   render() {
     const { locale, componentId, loading, eosAccountName } = this.props
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-          <View style={styles.listTitle}>
-            <Text
-              style={[styles.text14, { color: Colors.textColor_255_255_238 }]}
-            >
-              Dapp Store
-            </Text>
-          </View>
+          <TouchableWithoutFeedback onLongPress={this.showDappBrowser}>
+            <View style={styles.listTitle}>
+              <Text
+                style={[styles.text14, { color: Colors.textColor_255_255_238 }]}
+              >
+                Dapp Store
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
           <View style={styles.hairLine} />
           <ScrollView
             horizontal={true}

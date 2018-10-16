@@ -6,8 +6,7 @@ const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
-    backgroundColor: Colors.mainThemeColor,
-    alignItems: 'center'
+    backgroundColor: Colors.minorThemeColor
   },
   headerContainer: {
     width: SCREEN_WIDTH,

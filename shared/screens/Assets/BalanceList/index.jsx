@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View, TouchableHighlight } from 'react-native'
-import FastImage from 'react-native-fast-image'
+import BPImage from 'components/BPNativeComponents/BPImage'
 import Colors from 'resources/colors'
 import Images from 'resources/images'
 import { FormattedNumber } from 'react-intl'
@@ -13,7 +13,7 @@ const ListItem = ({ item, onPress, assetPrice, isAssetHidden }) => (
   <TouchableHighlight underlayColor={Colors.hoverColor} style={styles.listContainer} onPress={() => onPress(item)}>
     <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.bgColor_30_31_37 }]}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        {<FastImage source={item.get('icon_url') ? { uri: item.get('icon_url') } : (item.get('symbol') === 'EOS' ? Images.EOSIcon : Images.coin_logo_default)} style={styles.image} />}
+        {<BPImage source={item.get('icon_url') ? { uri: item.get('icon_url') } : (item.get('symbol') === 'EOS' ? Images.EOSIcon : Images.coin_logo_default)} style={styles.image} />}
         <Text style={styles.text24}>{item.get('symbol')}</Text>
       </View>
       <View>

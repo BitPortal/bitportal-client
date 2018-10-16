@@ -64,15 +64,6 @@ declare interface CreateEOSAccountParams {
   hint?: string
 }
 
-declare interface CreateEOSAccountAssistanceParams {
-  eosAccountName: string
-  privateKey?: string
-  bpid?: string
-  password: string
-  componentId?: string
-  hint?: string
-}
-
 declare interface CreateEOSAccountResult {
   name: string
   key?: string
@@ -87,13 +78,6 @@ declare interface CreateEOSAccountResult {
       }[]
     }
   }[]
-}
-
-declare interface CreateEOSAccountAssistanceResult {
-  eosAccountName: string,
-  publicKey: string,
-  password: string,
-  timestamp: number
 }
 
 declare interface ImportEOSAccountParams {
@@ -133,6 +117,7 @@ declare interface GetEOSAccountParams {
 
 declare interface GetEOSAccountResult {
   account_name: string
+  core_liquid_balance: string
   permissions: {
     parent: string
     perm_name: string
