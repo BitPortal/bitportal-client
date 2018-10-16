@@ -89,6 +89,30 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
   }
 }
 
+function* createEOSAccountAssistanceRequested(action: Action<CreateEOSAccountAssistanceParams>) {
+  if (!action.payload) return
+  try {
+    const eosAccountName = action.payload.eosAccountName
+    const password = action.payload.password
+    const privateKey = yield call(randomKey)
+    const publicKey = yield call(privateToPublic, privateKey)
+
+    const eosTempAccountInfo = {
+      eosAccountName,
+      publicKey,
+      password,
+      timestamp: +Date.now(),
+    }
+
+    yield call(secureStorage.setItem, `EOS_TEMP_ACCOUNT_INFO_${eosAccountName}`, eosTempAccountInfo, true)
+    yield put(actions.createEOSAccountAssistanceSucceeded(eosTempAccountInfo))
+
+    if (action.payload.componentId) push('BitPortal.AccountOrder', action.payload.componentId)
+  } catch (e) {
+    yield put(actions.createEOSAccountFailed(getErrorMessage(e)))
+  }
+}
+
 function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
   if (!action.payload) return
 
@@ -234,4 +258,5 @@ export default function* eosAccountSaga() {
   yield takeEvery(String(actions.validateEOSAccountSucceeded), validateEOSAccountSucceeded)
   yield takeEvery(String(actions.validateEOSAccountFailed), validateEOSAccountFailed)
   yield takeEvery(String(actions.getEOSKeyAccountsRequested), getEOSKeyAccountsRequested)
+  yield takeEvery(String(actions.createEOSAccountAssistanceRequested), createEOSAccountAssistanceRequested)
 }

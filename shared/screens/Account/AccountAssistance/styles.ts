@@ -4,9 +4,7 @@ import { SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, KEYBOARD_HEIGHT } from 'ut
 
 const styles = StyleSheet.create({
   container: {
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT,
-    backgroundColor: Colors.mainThemeColor
+
   },
   scrollContainer: {
     width: SCREEN_WIDTH,

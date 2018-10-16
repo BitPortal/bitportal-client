@@ -10,7 +10,7 @@ import {
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT,
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT,
     backgroundColor: Colors.mainThemeColor
   },
   center: {
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   keyboard: {
     width: SCREEN_WIDTH,
     height: KEYBOARD_HEIGHT,
-    backgroundColor: Colors.bgColor_30_31_37
+    backgroundColor: Colors.mainThemeColor
   }
 })
 
