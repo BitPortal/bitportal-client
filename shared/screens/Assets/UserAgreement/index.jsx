@@ -151,8 +151,8 @@ export default class UserAgreement extends Component {
                   <TouchableOpacity onPress={this.signAgreement} style={styles.sign}>
                     {
                       signed
-                        ? <FastImage source={Images.agreement_sign} style={styles.image} />
-                        : <FastImage source={Images.agreement_unsign} style={styles.image} />
+                        ? <FastImage source={Images.sign_agreement} style={styles.image} />
+                        : <FastImage source={Images.unsign_agreement} style={styles.image} />
                     }
                   </TouchableOpacity>
                   <Text style={[styles.text14, { marginLeft: -10 }]}>
