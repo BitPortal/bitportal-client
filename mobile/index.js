@@ -22,7 +22,8 @@ import sagas from 'sagas'
 import Colors from 'resources/colors'
 import VersionNumber from 'react-native-version-number'
 import SplashScreen from 'react-native-splash-screen'
-import DeviceInfo from 'react-native-device-info'
+import KeyboardManager from 'react-native-keyboard-manager'
+import { getLocaleLanguage } from 'utils/language'
 import { calculate } from 'utils/update'
 import { ENV } from 'constants/env'
 import { noop } from 'utils'
@@ -49,7 +50,7 @@ const runApp = async () => {
     eosNode,
     selectedEOSAsset,
     storedFavoriteDapps,
-    currentVersion
+    remoteVersion
   ] = await Promise.all([
     storage.getItem('bitportal_lang'),
     storage.getItem('bitportal_currency', true),
@@ -60,7 +61,7 @@ const runApp = async () => {
     storage.getItem('bitportal_version')
   ])
 
-  const lang = localLang || (DeviceInfo.getDeviceLocale().indexOf('zh') !== -1 ? 'zh' : 'en')
+  const lang = localLang || getLocaleLanguage()
   const symbol = currency && currency.symbol
   const rate = currency && currency.rate
   const activeNode = eosNode && eosNode.activeNode
@@ -80,13 +81,14 @@ const runApp = async () => {
 
   registerScreens(store)
   store.runSaga(sagas)
-  if (currentVersion && calculate(currentVersion) >= calculate(localVersion)) {
+  if (remoteVersion && calculate(remoteVersion) <= calculate(localVersion)) {
     startTabBasedApp(lang)
   } else {
     startSingleApp()
   }
 
   SplashScreen.hide()
+  Platform.OS === 'ios' && KeyboardManager.setEnableAutoToolbar(true);
 }
 
 const setStatusBarStyle = async () => {

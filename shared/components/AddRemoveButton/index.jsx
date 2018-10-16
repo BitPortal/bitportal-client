@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { TouchableOpacity } from 'react-native'
-import BPImage from 'components/BPNativeComponents/BPImage'
+import FastImage from 'react-native-fast-image'
 import Images from 'resources/images'
 import styles from './styles'
 
@@ -12,7 +12,7 @@ export default class AddRemoveButton extends PureComponent {
           style={{ padding: 10 }}
           onPress={this.props.onValueChange}
         >
-          <BPImage style={styles.image} source={Images.list_add} />
+          <FastImage style={styles.image} source={Images.list_add} />
         </TouchableOpacity>
       )
     } else {
@@ -21,7 +21,7 @@ export default class AddRemoveButton extends PureComponent {
           style={{ padding: 10 }}
           onPress={this.props.onValueChange}
         >
-          <BPImage style={styles.image} source={Images.list_remove} />
+          <FastImage style={styles.image} source={Images.list_remove} />
         </TouchableOpacity>
       )
     }

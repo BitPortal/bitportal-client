@@ -10,7 +10,6 @@ declare interface GetEOSBalanceResult {
 declare interface GetAssetBalanceParams {
   eosAccountName: string
   code: string
-  symbol: string
 }
 
 declare interface GetAssetBalanceResult {

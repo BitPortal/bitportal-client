@@ -6,7 +6,6 @@ import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
-import { transferTransactionsSelector } from 'selectors/transaction'
 import * as transactionActions from 'actions/transaction'
 import RecordItem from 'screens/Assets/AssetChart/RecordItem'
 import { RecyclerListView, LayoutProvider } from 'recyclerlistview'
@@ -20,7 +19,7 @@ const dataProvider = new ImmutableDataProvider((r1, r2) => r1.get('account_actio
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    transferHistory: transferTransactionsSelector(state),
+    transferHistory: state.transaction.get('data'),
     loading: state.transaction.get('loading'),
     hasMore: state.transaction.get('hasMore'),
     loaded: state.transaction.get('loaded'),

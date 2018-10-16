@@ -9,9 +9,7 @@
         "browser/*",
         "mobile/*",
         "desktop/*",
-        "server/*",
-        "extension/*",
-        "sketch/*"
+        "server/*"
       ]
     },
     "outDir": "build",
@@ -37,9 +35,7 @@
     "browser",
     "mobile",
     "desktop",
-    "server",
-    "extension",
-    "sketch"
+    "server"
   ],
   "exclude": [
     "static",

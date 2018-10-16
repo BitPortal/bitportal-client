@@ -1,13 +1,13 @@
 import React from 'react'
 import { View, Text, TouchableHighlight } from 'react-native'
-import BPImage from 'components/BPNativeComponents/BPImage'
+import FastImage from 'react-native-fast-image'
 import Colors from 'resources/colors'
 import styles from './styles'
 
 export default ({ previewImage, title, author, date, onRowPress }) => (
   <TouchableHighlight underlayColor={Colors.hoverColor} onPress={onRowPress}>
     <View style={styles.rowContainer}>
-      <BPImage style={styles.image} source={{ uri: previewImage }} />
+      <FastImage style={styles.image} source={{ uri: previewImage }} />
       <View style={styles.right}>
         <Text style={styles.title}>{title}</Text>
         {/* <Text numberOfLines={1} style={styles.subTitle}>{subTitle}</Text> */}

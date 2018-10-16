@@ -3,8 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import Alert from 'components/Alert'
 import { injectIntl, IntlProvider } from 'react-intl'
-import BPImage from 'components/BPNativeComponents/BPImage'
-import { loadInjectSync } from 'utils/inject'
+import FastImage from 'react-native-fast-image'
 import Images from 'resources/images'
 import messages from 'resources/messages'
 import styles from './styles'
@@ -61,15 +60,12 @@ export default class DappElement extends Component {
   }
 
   toUrl = (item) => {
-    const inject = loadInjectSync()
-
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.DappWebView',
+        name: 'BitPortal.BPWebView',
         passProps: {
           uri: item.get('url'),
-          title: item.get('display_name').get(this.props.locale),
-          inject
+          title: item.get('display_name').get(this.props.locale)
         }
       }
     })
@@ -102,7 +98,7 @@ export default class DappElement extends Component {
           }}
         >
           <View style={styles.moreIcon}>
-            <BPImage style={styles.icon} source={Images.discovery_more} />
+            <FastImage style={styles.icon} source={Images.discovery_more} />
           </View>
         </TouchableOpacity>
         <Text style={[styles.title]}>{messages[locale].discovery_label_dapp_more}</Text>
@@ -116,7 +112,7 @@ export default class DappElement extends Component {
               this.onPress(item, locale)
             }}
           >
-            <BPImage
+            <FastImage
               style={styles.icon}
               source={
                 item.get('icon_url')
@@ -126,7 +122,7 @@ export default class DappElement extends Component {
             />
             {item.get('selected') ? (
               <View style={styles.favoriteWrapper}>
-                <BPImage
+                <FastImage
                   style={styles.favoriteStar}
                   source={Images.list_favorite}
                 />

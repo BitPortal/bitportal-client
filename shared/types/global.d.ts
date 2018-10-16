@@ -16,7 +16,6 @@ declare interface Config {
   ENV: string
   BITPORTAL_API_REST_URL: string
   BITPORTAL_API_MARKET_URL: string
-  BITPROTAL_API_TRACE_URL: string
   BITPORTAL_API_CMS_URL: string
   BITPORTAL_API_WEBSOCKET_URL: string
   EOS_API_URL: string
@@ -297,11 +296,6 @@ declare module 'react-native-sensitive-info' {
   export = file
 }
 
-declare module 'serialize-javascript' {
-  const file: any
-  export = file
-}
-
 declare module 'core/eos' {
   interface EOS {
     generateMasterKeys: any
@@ -319,8 +313,6 @@ declare module 'core/eos' {
     voteEOSProducers: any
     pushEOSAction: any
     eosAuthSign: any
-    signature: any
-    verify: any
   }
 
   const eos: EOS
@@ -415,9 +407,4 @@ declare module 'wif' {
 declare module 'bip39' {
   const bip39: any
   export default bip39
-}
-
-declare module 'react-native-fs' {
-  const fs: any
-  export default fs
 }

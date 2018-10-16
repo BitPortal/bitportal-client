@@ -1,27 +1,27 @@
 export const EXCHANGES = [
-//  'BINANCE',
-  'OKEX',
+  'BINANCE',
   'BITTREX',
-//  'HUOBIPRO',
+  'OKEX',
+  'HUOBIPRO',
   'POLONIEX',
   'GDAX'
 ]
 
 export const EXCHANGE_NAMES = {
-//  BINANCE: 'Binance',
+  BINANCE: 'Binance',
   GDAX: 'GDAX',
   BITTREX: 'Bittrex',
   OKEX: 'OKEx',
-//  HUOBIPRO: 'Huobi Pro',
+  HUOBIPRO: 'Huobi Pro',
   POLONIEX: 'Poloniex'
 }
 
 export const QUOTE_ASSETS = {
-//  BINANCE: ['BTC', 'ETH', 'BNB', 'USDT'],
+  BINANCE: ['BTC', 'ETH', 'BNB', 'USDT'],
   GDAX: ['BTC', 'USD', 'EUR', 'GBP'],
   BITTREX: ['BTC', 'ETH', 'USDT'],
   OKEX: ['BTC', 'ETH', 'USDT'],
-//  HUOBIPRO: ['BTC', 'ETH', 'USDT'],
+  HUOBIPRO: ['BTC', 'ETH', 'USDT'],
   POLONIEX: ['BTC', 'ETH', 'XMR', 'USDT']
 }
 

@@ -1,7 +1,6 @@
 import {
   BITPORTAL_API_REST_URL,
   BITPORTAL_API_MARKET_URL,
-  BITPROTAL_API_TRACE_URL,
   BITPORTAL_API_CMS_URL,
   CURRENCY_RATE_URL
 } from 'constants/env'
@@ -52,7 +51,7 @@ export const fetchBase = async (
       fetchOptions.body = JSON.stringify(params)
     }
   }
-  console.log('###---xx ', url)
+  // console.log('### ', url)
 
   return fetch(url, fetchOptions).then((res: any) => {
     if (!res.ok) {
@@ -89,16 +88,6 @@ const marketFetchBase = (
   baseUrl: BITPORTAL_API_MARKET_URL
 })
 
-const traceFetchBase = (
-  method: FetchMethod = 'GET',
-  endPoint: string = '/hello',
-  params: object = {},
-  options: object = {}
-) => fetchBase(method, endPoint, params, {
-  ...options,
-  baseUrl: BITPROTAL_API_TRACE_URL
-})
-
 export const getTickers = (params?: TickerParams) => marketFetchBase('GET', '/tickers', params)
 export const getChart = (params?: ChartParams) => marketFetchBase('GET', '/chart', params)
 export const getCurrencyRate = () => fetchBase('GET', '', {}, { baseUrl: CURRENCY_RATE_URL })
@@ -111,10 +100,3 @@ export const getDappList = (params: any) => cmsFetchBase('GET', '/eosdapp', para
 export const getEOSAsset = (params: any) => cmsFetchBase('GET', '/eostoken', params)
 export const createEOSAccount = (params: any) => fetchBase('POST', '/registry/wallets/campaign/eoscreation', params)
 export const importEOSAccount = (params: any) => fetchBase('POST', '/registry/wallets/import', params)
-
-export const subscribe = (params: any) => traceFetchBase('POST', '/notification/subscribe', params)
-export const unsubscribe = (params: any) => traceFetchBase('POST', '/notification/unsubscribe', params)
-
-export const traceTransaction = (params: any) => traceFetchBase('POST', '/transaction', params)
-export const traceStake = (params: any) => traceFetchBase('POST', '/stake', params)
-export const traceVotes = (params: any) => traceFetchBase('POST', '/votes', params)

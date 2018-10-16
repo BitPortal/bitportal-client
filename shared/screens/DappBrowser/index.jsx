@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
   InteractionManager
 } from 'react-native'
-import WebViewBridge from 'react-native-webview-bridge'
+import WebViewBridge from 'react-native-webview-bridge-updated'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
@@ -18,18 +18,13 @@ import NavigationBar, {
 } from 'components/NavigationBar'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
-import Url from 'url-parse'
 import * as dappBrwoserActions from 'actions/dappBrowser'
+import messageHandler from 'utils/bridgeMessageHandler'
 import ActionModal from 'components/ActionModal'
 import Prompt from 'components/Prompt'
-import Loading from 'components/Loading'
-import Alert from 'components/Alert'
 import SearchWebsiteForm from 'components/Form/SearchWebsiteForm'
-import globalMessages from 'resources/messages'
-import localMessages from './messages'
+import messages from 'resources/messages'
 import styles from './styles'
-
-const messages = { ...globalMessages, ...localMessages }
 
 const WebViewLoading = ({ text }) => (
   <View style={[styles.loadContainer, styles.center]}>
@@ -40,27 +35,11 @@ const WebViewLoading = ({ text }) => (
   </View>
 )
 
-export const errorMessages = (error, messages) => {
-  if (!error) { return null }
-
-  const message = typeof error === 'object' ? error.message : error
-
-  switch (String(message)) {
-    case 'Key derivation failed - possibly wrong passphrase':
-      return messages.webview_invalid_password
-    default:
-      return messages.webview_signing_failed
-  }
-}
-
 @connect(
   state => ({
     locale: state.intl.get('locale'),
     hasPendingMessage: state.dappBrowser.get('hasPendingMessage'),
-    resolvingMessage: state.dappBrowser.get('resolving'),
-    sendingMessage: state.dappBrowser.get('sendingMessage'),
-    loadingContract: state.dappBrowser.get('loadingContract'),
-    error: state.dappBrowser.get('error')
+    resolvingMessage: state.dappBrowser.get('resolving')
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -80,24 +59,10 @@ export default class DappWebView extends Component {
     }
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.sendingMessage !== prevState.sendingMessage) {
-      return { sendingMessage: nextProps.sendingMessage }
-    } else {
-      return null
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.sendingMessage && prevProps.sendingMessage !== this.props.sendingMessage && this.webviewbridge) {
-      this.webviewbridge.sendToBridge(this.props.sendingMessage)
-    }
-  }
-
   state = {
     canGoBack: false,
     showPrompt: false,
-    uri: 'https://build-prguimiryr.now.sh/'
+    uri: ''
   }
 
   share = () => {
@@ -160,11 +125,6 @@ export default class DappWebView extends Component {
   renderLoading = () => (<WebViewLoading />)
 
   onNavigationStateChange = (navState) => {
-    const url = new Url(navState.url)
-    const hostname = url.hostname
-    const host = hostname.indexOf('www.') === 0 ? hostname.replace('www.', '') : hostname
-    this.props.actions.setHost(host)
-
     this.setState({
       canGoBack: navState.canGoBack
     })
@@ -192,9 +152,13 @@ export default class DappWebView extends Component {
     this.setState({ showPrompt: false })
   }
 
+  onLoadStart = () => {
+    this.props.actions.initDappBrowser(this.webviewbridge)
+  }
+
   onSubmitEditing = (event) => {
     const searchText = event.nativeEvent.text
-
+    console.log(this.webviewbridge)
     if (searchText === this.state.uri) {
       this.webviewbridge.reload()
     } else {
@@ -202,16 +166,18 @@ export default class DappWebView extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.actions.closeDappBrowser()
+  }
+
   render() {
     const {
       title,
       locale,
       hasPendingMessage,
-      resolvingMessage,
-      loadingContract,
-      error,
-      inject
+      resolvingMessage
     } = this.props
+    const injectScript = `(function () { ${messageHandler} }())`
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -236,14 +202,14 @@ export default class DappWebView extends Component {
               scalesPageToFit={true}
               nativeConfig={{ props: { backgroundColor: Colors.minorThemeColor, flex: 1 } }}
               onBridgeMessage={this.onBridgeMessage}
-              injectedJavaScript={inject}
+              injectedJavaScript={injectScript}
+              onLoadStart={this.onLoadStart}
             />
             <ActionModal
               isVisible={hasPendingMessage && !resolvingMessage}
               dismiss={this.rejectMessage}
               confirm={this.showPrompt}
             />
-            <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearPasswordError} delay={500} />
             <Prompt
               isVisible={this.state.showPrompt}
               type="secure-text"
@@ -263,10 +229,6 @@ export default class DappWebView extends Component {
               onPress={this.selectActionSheet}
             />
           </View>
-          <Loading
-            isVisible={resolvingMessage || loadingContract}
-            text={(resolvingMessage && <FormattedMessage id="webview_signing" />) || (loadingContract && <FormattedMessage id="webview_fetching_contract" />)}
-          />
         </View>
       </IntlProvider>
     )

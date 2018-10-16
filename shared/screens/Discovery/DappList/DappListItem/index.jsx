@@ -1,12 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { View, TouchableHighlight, Text } from 'react-native'
-import BPImage from 'components/BPNativeComponents/BPImage'
+import FastImage from 'react-native-fast-image'
 import { Navigation } from 'react-native-navigation'
 import { bindActionCreators } from 'redux'
 import * as dAppActions from 'actions/dApp'
 import { IntlProvider, injectIntl } from 'react-intl'
-import { loadInjectSync } from 'utils/inject'
 import AddRemoveButton from 'components/AddRemoveButton'
 import Alert from 'components/Alert'
 import Toast from 'components/Toast'
@@ -97,15 +96,12 @@ export default class DappListItem extends React.PureComponent {
   }
 
   toUrl = (item) => {
-    const inject = loadInjectSync()
-
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.DappWebView',
+        name: 'BitPortal.BPWebView',
         passProps: {
           uri: item.get('url'),
-          title: item.get('display_name').get(this.props.locale),
-          inject
+          title: item.get('display_name').get(this.props.locale)
         }
       }
     })
@@ -136,7 +132,7 @@ export default class DappListItem extends React.PureComponent {
           }}
         >
           <View style={styles.rowContainer}>
-            <BPImage
+            <FastImage
               style={styles.image}
               source={
                 item.get('icon_url')

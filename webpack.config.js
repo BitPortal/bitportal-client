@@ -26,7 +26,6 @@ const baseConfig = {
       resolve('browser'),
       resolve('desktop'),
       resolve('server'),
-      resolve('extension'),
       'node_modules'
     ],
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
@@ -45,8 +44,8 @@ const baseConfig = {
         enforce: 'pre',
         exclude: [
           resolve(__dirname, 'node_modules'),
-          resolve(__dirname, 'shared/resources/scripts'),
-          resolve(__dirname, 'shared/resources/charting_library'),
+          resolve(__dirname, 'resources/scripts'),
+          resolve(__dirname, 'resources/charting_library'),
           resolve(__dirname, 'shared/screens'),
           resolve(__dirname, 'shared/navigators')
         ]
@@ -69,8 +68,8 @@ const baseConfig = {
         test: /\.(t|j)sx?$/,
         exclude: [
           resolve(__dirname, 'node_modules'),
-          resolve(__dirname, 'shared/resources/scripts'),
-          resolve(__dirname, 'shared/resources/charting_library'),
+          resolve(__dirname, 'resources/scripts'),
+          resolve(__dirname, 'resources/charting_library'),
           resolve(__dirname, 'shared/screens'),
           resolve(__dirname, 'shared/navigators')
         ],
@@ -307,86 +306,10 @@ const desktopConfig = {
   }
 }
 
-const extensionConfig = {
-  ...baseConfig,
-  context: resolve('extension'),
-  entry: {
-    popup: './popup.tsx',
-    background: './background.ts',
-    content: './content.ts',
-    inject: './inject.js'
-  },
-  resolve: {
-    ...baseConfig.resolve,
-    mainFiles: ['index.extension', ...baseConfig.resolve.mainFiles]
-  },
-  output: {
-    ...baseConfig.output,
-    path: resolve('static/extension'),
-    filename: 'scripts/[name].js'
-  },
-  plugins: removeEmpty([
-    ...baseConfig.plugins,
-    new HtmlWebpackPlugin({
-      inject: false,
-      minify: { collapseWhitespace: true },
-      template: 'popup.html',
-      appMountId: 'app',
-      mobile: true,
-      chunks: ['popup'],
-      filename: 'popup.html'
-    }),
-    new CopyWebpackPlugin([
-      {
-        from: join(__dirname, 'extension/manifest.json'),
-        to: join(__dirname, 'static/extension/manifest.json')
-      }
-    ], { copyUnmodified: true })
-  ]),
-  optimization: {
-    minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        uglifyOptions: {
-          mangle: false
-        }
-      })
-    ]
-  }
-}
-
-const injectConfig = {
-  ...baseConfig,
-  context: resolve('shared'),
-  entry: 'core/scatter/inject.js',
-  output: {
-    ...baseConfig.output,
-    filename: 'inject.js',
-    path: resolve('ios/bitportal')
-  },
-  optimization: {
-    minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        uglifyOptions: {
-          mangle: true,
-          output: {
-            comments: false
-          }
-        }
-      })
-    ]
-  }
-}
-
 const configs = {
   web: browserConfig,
   node: serverConfig,
-  "electron-renderer": desktopConfig,
-  extension: extensionConfig,
-  inject: injectConfig
+  "electron-renderer": desktopConfig
 }
 
 module.exports = configs[process.env.TARGET]

@@ -3,7 +3,7 @@ import { all, select, call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import { reset } from 'redux-form/immutable'
 import * as actions from 'actions/eosAccount'
-import { getEOSBalanceSucceeded } from 'actions/balance'
+import { getEOSBalanceRequested, getEOSBalanceSucceeded } from 'actions/balance'
 import { createClassicWalletSucceeded } from 'actions/wallet'
 import  { setSelected } from 'actions/producer'
 import { votedProducersSelector, eosCoreLiquidBalanceSelector } from 'selectors/eosAccount'
@@ -79,11 +79,35 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
       put(actions.syncEOSAccountCreationInfo(eosAccountCreationInfo)),
       put(actions.createEOSAccountSucceeded(accountInfo)),
       put(createClassicWalletSucceeded(walletInfo)),
-      put(actions.getEOSAccountRequested({ eosAccountName: walletInfo.eosAccountName })),
+      put(getEOSBalanceRequested({ eosAccountName: walletInfo.eosAccountName })),
       put(reset('createEOSAccountForm'))
     ])
 
     if (action.payload.componentId) push('BitPortal.Backup', action.payload.componentId)
+  } catch (e) {
+    yield put(actions.createEOSAccountFailed(getErrorMessage(e)))
+  }
+}
+
+function* createEOSAccountAssistanceRequested(action: Action<CreateEOSAccountAssistanceParams>) {
+  if (!action.payload) return
+  try {
+    const eosAccountName = action.payload.eosAccountName
+    const password = action.payload.password
+    const privateKey = yield call(randomKey)
+    const publicKey = yield call(privateToPublic, privateKey)
+
+    const eosTempAccountInfo = {
+      eosAccountName,
+      publicKey,
+      password,
+      timestamp: +Date.now(),
+    }
+
+    yield call(secureStorage.setItem, `EOS_TEMP_ACCOUNT_INFO_${eosAccountName}`, eosTempAccountInfo, true)
+    yield put(actions.createEOSAccountAssistanceSucceeded(eosTempAccountInfo))
+
+    if (action.payload.componentId) push('BitPortal.AccountOrder', action.payload.componentId)
   } catch (e) {
     yield put(actions.createEOSAccountFailed(getErrorMessage(e)))
   }
@@ -121,7 +145,7 @@ function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
     yield all([
       put(actions.importEOSAccountSucceeded(accountInfo)),
       put(createClassicWalletSucceeded(walletInfo)),
-      put(actions.getEOSAccountRequested({ eosAccountName: walletInfo.eosAccountName })),
+      put(getEOSBalanceRequested({ eosAccountName: walletInfo.eosAccountName })),
       put(reset('importEOSAccountForm'))
     ])
 
@@ -168,7 +192,7 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
     const eosAccountName = action.payload.eosAccountName
     const eosAccountCreationInfo = yield select((state: RootState) => state.eosAccount.get('eosAccountCreationInfo'))
 
-    const useCreationServer = eosAccountCreationInfo.get('transactionId') && eosAccountCreationInfo.get('eosAccountName') === eosAccountName && !eosAccountCreationInfo.get('irreversible')
+    const useCreationServer =eosAccountCreationInfo.get('transactionId') && eosAccountCreationInfo.get('eosAccountName') === eosAccountName && !eosAccountCreationInfo.get('irreversible')
     const eos = yield call(initEOS, useCreationServer ? { httpEndpoint: BITPORTAL_API_EOS_URL } : {})
     const info = yield call(eos.getAccount, eosAccountName)
     assert(info && info.account_name, 'Invalid account info')
@@ -187,9 +211,8 @@ function* getEOSAccountSucceeded(action: Action<GetEOSAccountResult>) {
 
   const balanceInfo = yield select((state: RootState) => eosCoreLiquidBalanceSelector(state))
   const eosAccountName = action.payload.account_name
-  const coreLiquidBalance = action.payload.core_liquid_balance
 
-  if (eosAccountName && coreLiquidBalance && balanceInfo) {
+  if (eosAccountName && balanceInfo) {
     yield put(getEOSBalanceSucceeded({ eosAccountName, balanceInfo: balanceInfo.toJS() }))
   }
 }
@@ -234,4 +257,5 @@ export default function* eosAccountSaga() {
   yield takeEvery(String(actions.validateEOSAccountSucceeded), validateEOSAccountSucceeded)
   yield takeEvery(String(actions.validateEOSAccountFailed), validateEOSAccountFailed)
   yield takeEvery(String(actions.getEOSKeyAccountsRequested), getEOSKeyAccountsRequested)
+  yield takeEvery(String(actions.createEOSAccountAssistanceRequested), createEOSAccountAssistanceRequested)
 }

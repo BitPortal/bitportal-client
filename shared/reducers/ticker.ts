@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import { handleActions } from 'redux-actions'
-import { QUOTE_ASSETS, DEFAULT_SORT_FILTER, EXCHANGES } from 'constants/market'
+import { QUOTE_ASSETS, DEFAULT_SORT_FILTER } from 'constants/market'
 import * as actions from 'actions/ticker'
 
 const initialState = Immutable.fromJS({
@@ -8,9 +8,16 @@ const initialState = Immutable.fromJS({
   loading: false,
   loaded: false,
   error: null,
-  exchangeFilter: EXCHANGES[0],
-  quoteAssetFilter: QUOTE_ASSETS[EXCHANGES[0]][0],
-  sortFilter: EXCHANGES.reduce(((filters, exchange) => ({ ...filters, [exchange]: DEFAULT_SORT_FILTER })), {}),
+  exchangeFilter: 'BINANCE',
+  quoteAssetFilter: QUOTE_ASSETS.BINANCE[0],
+  sortFilter: {
+    BINANCE: DEFAULT_SORT_FILTER,
+    BITTREX: DEFAULT_SORT_FILTER,
+    OKEX: DEFAULT_SORT_FILTER,
+    HUOBIPRO: DEFAULT_SORT_FILTER,
+    POLONIEX: DEFAULT_SORT_FILTER,
+    GDAX: DEFAULT_SORT_FILTER
+  },
   dataSource: {},
   currencyFilter: null,
   baseAsset: null,

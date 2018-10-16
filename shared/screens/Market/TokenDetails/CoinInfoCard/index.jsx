@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Text, View } from 'react-native'
-import BPImage from 'components/BPNativeComponents/BPImage'
+import FastImage from 'react-native-fast-image'
 import Colors from 'resources/colors'
 import { filterBgColor } from 'utils'
 import { ASSET_FRACTION } from 'constants/market'
@@ -62,7 +62,7 @@ export default class CoinInfoCard extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.cardContainer}>
           <View style={styles.titleWrapper}>
-            <BPImage style={styles.icon} source={Images.coin_logo_default} />
+            <FastImage style={styles.icon} source={Images.coin_logo_default} />
             <View style={{ marginLeft: 10 }}>
               <Text style={[styles.text18, { fontWeight: 'bold' }]}>
                 {locale === 'zh'

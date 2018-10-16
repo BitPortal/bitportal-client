@@ -85,8 +85,7 @@ const styles = EStyleSheet.create({
   actionDataItem: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap'
+    justifyContent: 'space-between'
   },
   actionDataLabel: {
     fontSize: FontScale(14),
@@ -105,6 +104,7 @@ const styles = EStyleSheet.create({
     alignItems: 'center'
   },
   highlight: {
+    fontSize: FontScale(20),
     fontWeight: 'bold'
   },
   buttonItem: {

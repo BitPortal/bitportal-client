@@ -3,15 +3,14 @@ import { NativeModules, Platform } from 'react-native'
 
 const NativeUtils =  NativeModules.NativeUtils
 
-export const getRegisterationID = () => {
+
+export const getRegisterationID = async () => {
   if (Platform.OS === 'ios') {
-    return new Promise((resolve) => {
-      NativeUtils.getRegistrationID('getRegistrationID', (registrationID: string) => {
-        resolve(registrationID)
-      })
+    NativeUtils.getRegistrationID('getRegistrationID', (registrationID: string) => {
+      return registrationID
     })
   } else {
-    return NativeUtils.getRegistrationID().then((data: any) => {
+    NativeUtils.getRegistrationID().then((data: any) => {
       return data.registrationID
     })
   }

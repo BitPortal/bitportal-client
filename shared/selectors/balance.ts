@@ -39,8 +39,7 @@ export const selectedEOSTokenBalanceSelector = createSelector(
   (eosTokenBalance: any, selectedEOSAsset: any) => selectedEOSAsset.map((v: any) => {
     if (eosTokenBalance) {
       const contract = v.get('contract')
-      const symbol = v.get('symbol')
-      const index = eosTokenBalance.findIndex((v: any) => v.get('contract') === contract && v.get('symbol') === symbol)
+      const index = eosTokenBalance.findIndex((v: any) => v.get('contract') === contract)
       return index !== -1 ? v.set('balance', eosTokenBalance.getIn([index, 'balance'])) : v.set('balance', '0.0000')
     }
 
@@ -68,12 +67,10 @@ export const eosTotalAssetBalanceSelector = createSelector(
 
 export const activeAssetBalanceSelector = createSelector(
   eosAssetBalanceSelector,
-  activeAssetSelector,
-  (eosAssetBalance: any, activeAsset: any) => {
+  activeAssetContractSelector,
+  (eosAssetBalance: any, contract: any) => {
     if (eosAssetBalance) {
-      const contract = activeAsset.get('contract')
-      const symbol = activeAsset.get('symbol')
-      const index = eosAssetBalance.findIndex((v: any) => v.get('contract') === contract && v.get('symbol') === symbol)
+      const index = eosAssetBalance.findIndex((v: any) => v.get('contract') === contract)
       return index !== -1 ? eosAssetBalance.getIn([index, 'balance']) : 0
     } else {
       return 0

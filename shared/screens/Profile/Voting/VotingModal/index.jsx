@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
 export default class VotingModal extends Component {
   render() {
     const { isVisible, dismissModal, selected, locale, onPress, isVoting } = this.props
-    if (!isVisible) return null
+
     return (
       <Modal
         animationIn="slideInUp"

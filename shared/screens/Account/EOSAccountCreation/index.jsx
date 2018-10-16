@@ -19,7 +19,7 @@ import styles from './styles'
   { withRef: true }
 )
 
-export default class AccountCreation extends Component {
+export default class EOSAccountCreation extends Component {
   static get options() {
     return {
       bottomTabs: {

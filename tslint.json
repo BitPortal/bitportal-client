@@ -31,8 +31,7 @@
     "space-in-parens": false,
     "no-return-await": false,
     "no-else-after-return": false,
-    "no-increment-decrement": false,
-    "object-shorthand-properties-first": false
+    "no-increment-decrement": false
   },
   "linterOptions": {
     "exclude": [

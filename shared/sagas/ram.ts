@@ -9,7 +9,6 @@ import { getEOSWifsByInfo } from 'core/key'
 import secureStorage from 'utils/secureStorage'
 import { reset } from 'redux-form/immutable'
 import { getEOSErrorMessage } from 'utils'
-import { traceStake } from 'actions/trace'
 
 function* buyRAMRequested(action: Action<BuyRAMParams>) {
   if (!action.payload) return
@@ -34,17 +33,6 @@ function* buyRAMRequested(action: Action<BuyRAMParams>) {
     yield put(actions.buyRAMSucceeded({}))
     yield put(reset('tradeRAMForm'))
     yield put(getEOSAccountRequested({ eosAccountName }))
-
-    // trace stake
-    const traceParams = {
-      userId: '',
-      walletId: eosAccountName,
-      type: 'buy',
-      assetType: 'RAM',
-      amount: asset
-    }
-    yield put(traceStake(traceParams))
-
   } catch (e) {
     yield put(actions.buyRAMFailed(getEOSErrorMessage(e)))
   }
@@ -73,17 +61,6 @@ function* sellRAMRequested(action: Action<SellRAMParams>) {
     yield put(getEOSAccountRequested({ eosAccountName }))
     yield delay(2000)
     yield put(getEOSAccountRequested({ eosAccountName }))
-
-    // trace stake
-    const traceParams = {
-      userId: '',
-      walletId: eosAccountName,
-      type: 'sell',
-      assetType: 'RAM',
-      amount: bytes
-    }
-    yield put(traceStake(traceParams))
-
   } catch (e) {
     yield put(actions.sellRAMFailed(getEOSErrorMessage(e)))
   }

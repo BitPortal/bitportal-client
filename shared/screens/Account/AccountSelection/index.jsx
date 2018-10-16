@@ -84,9 +84,9 @@ export default class AccountSelection extends Component {
             />
             )}
           </ScrollView>
+          <Loading isVisible={loading} text={messages[locale].export_private_key_text_exporting} />
           <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearEOSAccountError} />
         </View>
-        <Loading isVisible={loading} text={messages[locale].export_private_key_text_exporting} />
       </View>
     )
   }

@@ -64,22 +64,16 @@ export default class TransactionRecord extends Component {
   }
 
   copyTxID = () => {
-    let txsId
-    if (this.props.transactionInfo) txsId = this.props.transactionInfo.getIn(['action_trace', 'trx_id'])
-    else txsId = this.props.transactionResult.get('transaction_id')
-    Clipboard.setString(txsId)
+    Clipboard.setString(this.props.transactionInfo.getIn(['action_trace', 'trx_id']))
     Dialog.alert(
       messages[this.props.locale].copy_text_copy_success,
-      txsId,
+      this.props.transactionInfo.getIn(['action_trace', 'trx_id']),
       { positiveText: messages[this.props.locale].transaction_detail_button_confirm }
     )
   }
 
   clipboard = () => {
-    let txsId
-    if (this.props.transactionInfo) txsId = this.props.transactionInfo.getIn(['action_trace', 'trx_id'])
-    else txsId = this.props.transactionResult.get('transaction_id')
-    const url = `${EOS_EXPLORER_URL}/transactions/${txsId}`
+    const url = `${EOS_EXPLORER_URL}/transactions/${this.props.transactionInfo.getIn(['action_trace', 'trx_id'])}`
     Clipboard.setString(url)
     this.setState({ isCopied: true }, () => { Toast(messages[this.props.locale].copy_text_copy_success) })
   }

@@ -9,7 +9,6 @@ import { getEOSWifsByInfo } from 'core/key'
 import secureStorage from 'utils/secureStorage'
 import { reset } from 'redux-form/immutable'
 import { getEOSErrorMessage } from 'utils'
-import { traceStake } from 'actions/trace'
 
 function* delegateBandwidthRequested(action: Action<DelegateBandwidthParams>) {
   if (!action.payload) return
@@ -45,17 +44,6 @@ function* delegateBandwidthRequested(action: Action<DelegateBandwidthParams>) {
     yield put(getEOSAccountRequested({ eosAccountName }))
     yield delay(2000)
     yield put(getEOSAccountRequested({ eosAccountName }))
-
-    // trace stake
-    const traceParams = {
-      userId: null,
-      walletId: eosAccountName,
-      type: 'stake',
-      assetType: resource === 'net' ? 'NET' : 'CPU',
-      amount: asset
-    }
-    yield put(traceStake(traceParams))
-
   } catch (e) {
     yield put(actions.delegateBandwidthFailed(getEOSErrorMessage(e)))
   }
@@ -93,17 +81,6 @@ function* undelegateBandwidthRequested(action: Action<UndelegateBandwidthParams>
     yield put(actions.undelegateBandwidthSucceeded({}))
     yield put(reset('delegateBandwidthForm'))
     yield put(getEOSAccountRequested({ eosAccountName }))
-
-    // trace stake
-    const traceParams = {
-      userId: null,
-      walletId: eosAccountName,
-      type: 'unstake',
-      assetType: resource === 'net' ? 'NET' : 'CPU',
-      amount: asset
-    }
-    yield put(traceStake(traceParams))
-
   } catch (e) {
     yield put(actions.undelegateBandwidthFailed(getEOSErrorMessage(e)))
   }

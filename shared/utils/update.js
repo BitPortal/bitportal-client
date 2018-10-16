@@ -84,7 +84,6 @@ const showGoToUpdate = async (data, locale) => {
   )
   clearTimeout(timer)
   if (action === actionPositive) {
-    Navigation.dismissOverlay('BitPortalLightBox')
     return goUpdate(data)
   } else if (action === actionNegative) {
     return Navigation.dismissOverlay('BitPortalLightBox')
