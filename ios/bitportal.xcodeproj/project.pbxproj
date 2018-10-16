@@ -35,6 +35,7 @@
 		181BFEB1212994AD00810CE2 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 181BFEAF212994AD00810CE2 /* QBImagePicker.framework */; };
 		181BFEB2212994AD00810CE2 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 181BFEB0212994AD00810CE2 /* RSKImageCropper.framework */; };
 		18284831212564E300F2BE57 /* libRCTQRCodeLocalImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 182848302125643100F2BE57 /* libRCTQRCodeLocalImage.a */; };
+		1865A8C221758AD000CE1997 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1865A8C421758AD000CE1997 /* InfoPlist.strings */; };
 		18849DD320F70079008C8BC8 /* UMAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18849DD220F70079008C8BC8 /* UMAnalytics.framework */; };
 		18849DD520F70082008C8BC8 /* UMCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18849DD420F70082008C8BC8 /* UMCommon.framework */; };
 		18849DD720F7008B008C8BC8 /* UMPush.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18849DD620F7008B008C8BC8 /* UMPush.framework */; };
@@ -669,6 +670,9 @@
 		1828482B2125643100F2BE57 /* RCTQRCodeLocalImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTQRCodeLocalImage.xcodeproj; path = "../node_modules/@remobile/react-native-qrcode-local-image/ios/RCTQRCodeLocalImage.xcodeproj"; sourceTree = "<group>"; };
 		18524C732125544300004FBC /* QBImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18524C752125544300004FBC /* RSKImageCropper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1865A8C321758AD000CE1997 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1865A8C721758EA900CE1997 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		1865A8C821758EAE00CE1997 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		18849DD220F70079008C8BC8 /* UMAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMAnalytics.framework; sourceTree = "<group>"; };
 		18849DD420F70082008C8BC8 /* UMCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMCommon.framework; sourceTree = "<group>"; };
 		18849DD620F7008B008C8BC8 /* UMPush.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMPush.framework; sourceTree = "<group>"; };
@@ -1014,6 +1018,7 @@
 				180882292135447300321418 /* NativeUtils.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				1865A8C421758AD000CE1997 /* InfoPlist.strings */,
 				13B07FB71A68108700A75B9A /* main.mm */,
 				181BFEAE212994AD00810CE2 /* ImageCropPickerSDK */,
 			);
@@ -1666,6 +1671,8 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
+				ko,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
@@ -2300,6 +2307,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				1865A8C221758AD000CE1997 /* InfoPlist.strings in Resources */,
 				3454A43E20D0F9C5009964B2 /* CONTRIBUTORS in Resources */,
 				11931EBAE2B04D07A075EE73 /* Entypo.ttf in Resources */,
 				3454A41920D0F9C5009964B2 /* nist256p1.table in Resources */,
@@ -2408,6 +2416,20 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		1865A8C421758AD000CE1997 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1865A8C321758AD000CE1997 /* en */,
+				1865A8C721758EA900CE1997 /* zh-Hans */,
+				1865A8C821758EAE00CE1997 /* ko */,
+			);
+			name = InfoPlist.strings;
+			path = bitportal;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -2416,8 +2438,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = bitportal/bitportal.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
@@ -2467,7 +2489,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.bitportal.wallet;
 				PRODUCT_NAME = bitportal;
 				PROVISIONING_PROFILE = "21b31255-b7bd-43d9-a0a3-4944760a000b";
-				PROVISIONING_PROFILE_SPECIFIER = "wall development profile";
+				PROVISIONING_PROFILE_SPECIFIER = "wallet ad hoc profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "bitportal-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2481,8 +2503,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = bitportal/bitportal.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WFW5A3K678;
@@ -2523,6 +2545,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/bitportal\"",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2531,7 +2554,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.bitportal.wallet;
 				PRODUCT_NAME = bitportal;
 				PROVISIONING_PROFILE = "21b31255-b7bd-43d9-a0a3-4944760a000b";
-				PROVISIONING_PROFILE_SPECIFIER = "wall development profile";
+				PROVISIONING_PROFILE_SPECIFIER = "wallet ad hoc profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "bitportal-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2542,6 +2565,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -2585,6 +2609,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
