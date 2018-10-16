@@ -2,13 +2,16 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {
+  Text,
   View,
-  LayoutAnimation,
   ScrollView,
+  TouchableHighlight
 } from 'react-native'
 import { Navigation } from 'react-native-navigation'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import storage from 'utils/storage'
 import Colors from 'resources/colors'
+import Modal from 'react-native-modal'
 import * as walletActions from 'actions/wallet'
 import * as tickerActions from 'actions/ticker'
 import * as balanceActions from 'actions/balance'
@@ -23,18 +26,19 @@ import { eosPriceSelector } from 'selectors/ticker'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import NavigationBar, { CommonTitle, CommonRightButton } from 'components/NavigationBar'
+import SettingItem from 'components/SettingItem'
 import SplashScreen from 'react-native-splash-screen'
 import { checkCamera } from 'utils/permissions'
 import { ASSETS_QR, ASSETS_TOKEN_DETAIL, ASSETS_EOS_RESOURCE, ASSETS_ADD_TOKEN } from 'constants/analytics'
 import { onEventWithLabel } from 'utils/analytics'
+import { startListenNetInfo } from 'utils/netInfo'
 import Dialog from 'components/Dialog'
 import messages from 'resources/messages'
-import { GradiantCard, GradiantCardContainer } from 'components/GradiantCard'
 import styles from './styles'
+import AccountList from './AccountList'
 import EnableAssets from './EnableAssets'
 import BalanceList from './BalanceList'
 import TotalAssetsCard from './TotalAssetsCard'
-import UserAgreement from './UserAgreement'
 
 @connect(
   state => ({
@@ -72,12 +76,7 @@ export default class Assets extends Component {
   }
 
   state = {
-    type: '',
-    isVisible: false
-  }
-
-  UNSAFE_componentWillUpdate() {
-    LayoutAnimation.easeInEaseOut()
+    isVisible2: false
   }
 
   displayAccountList = () => {}
@@ -141,37 +140,30 @@ export default class Assets extends Component {
     })
   }
 
-  dismissModal = () => {
-    this.setState({ isVisible: false })
-  }
-
-  acceptUserAgreement = () => {
-    const { type } = this.state
-    let entrance = 'EOSAccountCreation'
-    switch (type) {
-      case 'import':
-        entrance = 'AccountImport'
-        break;
-      case 'create':
-        entrance = 'EOSAccountCreation'
-        break;
-      case 'assistance':
-        entrance = 'AccountAssistance'
-        break;
-      default:
-        break;
-    }
-    this.setState({ isVisible: false }, () => {
+  createNewAccount = () => {
+    this.setState({ isVisible2: false }, () => {
       Navigation.push(this.props.componentId, {
         component: {
-          name: `BitPortal.${entrance}`
+          name: 'BitPortal.EOSAccountCreation'
         }
       })
     })
   }
 
-  showUserAgreement = (type) => {
-    this.setState({ isVisible: true, type })
+  importNewAccount = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.AccountImport'
+      }
+    })
+  }
+
+  createEOSAccount = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.EOSAccountCreation'
+      }
+    })
   }
 
   checkResourcesDetails = () => {
@@ -198,6 +190,7 @@ export default class Assets extends Component {
 
   async componentDidMount() {
     SplashScreen.hide()
+    startListenNetInfo(this.props.locale)
     this.props.actions.getVersionInfoRequested()
     this.getCurrencyRate()
     this.props.actions.syncWalletRequested()
@@ -213,7 +206,6 @@ export default class Assets extends Component {
 
     if (eosAccountName) {
       this.props.actions.getEOSAccountRequested({ eosAccountName })
-      this.props.actions.getEOSBalanceRequested({ eosAccountName })
       this.props.actions.getEOSAssetBalanceListRequested({ eosAccountName })
     }
   }
@@ -233,40 +225,32 @@ export default class Assets extends Component {
             rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanQR()} />}
           />
           {!walletCount && (
-            <View style={styles.scrollContainer}>
-              <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 10 }}>
-
-                <GradiantCardContainer containerTag="创建新账户" extraStyle={{ marginTop: 10 }}>
-                  <GradiantCard
-                    title="注册码"
-                    extraStyle={{ marginBottom: 10 }}
-                    onPress={() => this.showUserAgreement('create')}
-                    content="BitPortal 将向部分用户提供注册码进行 EOS 账户注册。您可参加 BitPortal 官方组织的活动获取注册码。"
-                  />
-                  <GradiantCard
-                    title="好友协助"
-                    extraStyle={{ marginBottom: 10 }}
-                    onPress={() => this.showUserAgreement('assistance')}
-                    content="好友协助进行注册时，其将消耗一定的 EOS，已购买及抵押部分系统资源。"
-                  />
-                  <GradiantCard
-                    title="智能合约"
-                    onPress={() => this.showUserAgreement('contract')}
-                    content="好友协助进行注册时，其将消耗一定的 EOS，已购买及抵押部分系统资源。"
-                  />
-                </GradiantCardContainer>
-
-                <GradiantCardContainer containerTag="导入已有账户" extraStyle={{ marginTop: 10 }}>
-                  <GradiantCard
-                    title="私钥导入"
-                    colors={Colors.gradientCardColors2}
-                    onPress={() => this.showUserAgreement('import')}
-                    content="输入已创建的账户私钥，将 EOS 钱包导入到 BitPortal 中。"
-                  />
-                </GradiantCardContainer>
-
-              </ScrollView>
-            </View>
+            <TouchableHighlight
+              underlayColor={Colors.mainThemeColor}
+              onPress={() => this.createNewAccount()}
+              style={[styles.createAccountContainer, styles.center]}
+            >
+              <View style={{ alignItems: 'center' }}>
+                <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF} />
+                <Text style={[styles.text14, { color: Colors.textColor_255_255_238, marginTop: 20 }]}>
+                  <FormattedMessage id="assets_no_account_button_create" />
+                </Text>
+              </View>
+            </TouchableHighlight>
+          )}
+          {!walletCount && (
+            <TouchableHighlight
+              underlayColor={Colors.mainThemeColor}
+              onPress={() => this.importNewAccount()}
+              style={[styles.createAccountContainer, styles.center]}
+            >
+              <View style={{ alignItems: 'center' }}>
+                <Ionicons name="ios-add-outline" size={40} color={Colors.bgColor_FFFFFF} />
+                <Text style={[styles.text14, { color: Colors.textColor_255_255_238, marginTop: 20 }]}>
+                  <FormattedMessage id="assets_no_account_button_import" />
+                </Text>
+              </View>
+            </TouchableHighlight>
           )}
           {!!walletCount && (
             <View style={styles.scrollContainer}>
@@ -282,6 +266,13 @@ export default class Assets extends Component {
                   componentId={this.props.componentId}
                   onPress={this.displayReceiceQRCode}
                 />
+                {!activeEOSAccount.get('account_name') && (
+                  <SettingItem
+                    leftItemTitle={<FormattedMessage id="assets_no_account_button_import" />}
+                    onPress={() => this.createEOSAccount()}
+                    extraStyle={{ marginTop: 10, marginBottom: 10 }}
+                  />
+                )}
                 {!!activeEOSAccount.get('account_name') && (
                   <EnableAssets
                     Title={<FormattedMessage id="assets_label_assets" />}
@@ -289,16 +280,31 @@ export default class Assets extends Component {
                   />
                 )}
                 {eosAssetBalance && (
-                  <BalanceList
-                    data={eosAssetBalance}
-                    eosPrice={eosPrice}
-                    onPress={this.checkAsset}
-                  />
+                <BalanceList
+                     data={eosAssetBalance}
+                     eosPrice={eosPrice}
+                     onPress={this.checkAsset}
+                />
                 )}
               </ScrollView>
             </View>
           )}
-          <UserAgreement acceptUserAgreement={this.acceptUserAgreement} isVisible={this.state.isVisible} dismissModal={this.dismissModal} />
+          <Modal
+            animationIn="fadeIn"
+            animationOut="fadeOut"
+            style={{ margin: 0 }}
+            isVisible={this.state.isVisible2}
+            backdropOpacity={0}
+          >
+            <AccountList
+              data={hdWalletList}
+              moreData={classicWalletList}
+              activeAccount={wallet.get('data')}
+              onPress={this.switchWallet}
+              createNewAccount={() => this.createNewAccount()}
+              dismissModal={() => this.setState({ isVisible2: false })}
+            />
+          </Modal>
         </View>
       </IntlProvider>
     )

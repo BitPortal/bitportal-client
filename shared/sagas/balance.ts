@@ -6,6 +6,9 @@ import { selectedEOSAssetSelector } from 'selectors/eosAsset'
 import { getErrorMessage } from 'utils'
 import { BITPORTAL_API_EOS_URL } from 'constants/env'
 import { initEOS } from 'core/eos'
+import { subscribe } from 'actions/notification'
+import { Platform } from 'react-native'
+import { getRegisterationID } from 'utils/nativeUtil'
 
 function* getEOSBalanceRequested(action: Action<GetAssetBalanceParams>) {
   if (!action.payload) return
@@ -27,6 +30,23 @@ function* getEOSBalanceRequested(action: Action<GetAssetBalanceParams>) {
     const contract = code
     const balanceInfo = { symbol, balance, contract, blockchain }
     yield put(actions.getEOSBalanceSucceeded({ eosAccountName, balanceInfo }))
+
+    // notification subscribe
+    const language = yield select((state: RootState) => state.intl.get('locale'))
+    const registerationID = yield call(getRegisterationID)
+    
+    const params = {
+      language,
+      deviceToken: registerationID,
+      bpId: '',
+      chainType: symbol,
+      walletId: eosAccountName,
+      topic: '',
+      platform: `mobile_${Platform.OS}`
+    }
+    // console.log('###---yy ', JSON.stringify(params))
+    yield put(subscribe(params))
+
   } catch (e) {
     yield put(actions.getEOSBalanceFailed(getErrorMessage(e)))
   }
@@ -38,16 +58,18 @@ function* getEOSAssetBalanceRequested(action: Action<GetAssetBalanceParams>) {
   try {
     const eosAccountName = action.payload.eosAccountName
     const code = action.payload.code
+    const symbol = action.payload.symbol
 
     const eosAccountCreationInfo = yield select((state: RootState) => state.eosAccount.get('eosAccountCreationInfo'))
     const useCreationServer = eosAccountCreationInfo.get('transactionId') && eosAccountCreationInfo.get('eosAccountName') === eosAccountName && !eosAccountCreationInfo.get('irreversible')
     const eos = yield call(initEOS, useCreationServer ? { httpEndpoint: BITPORTAL_API_EOS_URL } : {})
 
     const data = yield call(eos.getCurrencyBalance, { code, account: eosAccountName })
-    assert(data && data[0] && typeof data[0] === 'string', 'No balance!')
+    assert(data && data.length, 'No balance!')
+    const balanceData = data.filter((item: string) => item.split(' ')[1] === symbol)
+    assert(balanceData.length, 'No balance!')
 
-    const symbol = data[0].split(' ')[1]
-    const balance = data[0].split(' ')[0]
+    const balance = balanceData[0].split(' ')[0]
     const blockchain = 'EOS'
     const contract = code
     const balanceInfo = { symbol, balance, contract, blockchain }
@@ -70,7 +92,7 @@ function* getEOSAssetBalanceListRequested(action: Action<GetAssetBalanceListPara
     const selectedEOSAssetList = yield select((state: RootState) => selectedEOSAssetSelector(state))
     const selectedEOSAssetListArray = selectedEOSAssetList.toJS()
     for (const asset of selectedEOSAssetListArray) {
-      yield put(actions.getEOSAssetBalanceRequested({ eosAccountName, code: asset.contract }))
+      yield put(actions.getEOSAssetBalanceRequested({ eosAccountName, code: asset.contract, symbol: asset.symbol }))
     }
     // const data = yield all(selectedEOSAssetList.toJS().map((selectedEOSAsset: { contract: string }) => call(eos.getCurrencyBalance, { code: selectedEOSAsset.contract, account: eosAccountName })))
 

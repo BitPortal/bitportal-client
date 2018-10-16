@@ -2,7 +2,7 @@ declare interface BridgeMessage {
   type: string
   payload: any
   messageId: string
-  info: BridgeTransferMessageInfo | BridgeVoteMessageInfo | BridgePushActionsMessageInfo | BridgeSignDataMessageInfo
+  info: BridgeTransferMessageInfo | BridgeVoteMessageInfo | BridgePushActionsMessageInfo | BridgeSignDataMessageInfo | BridgeSignatureMessageInfo
 }
 
 declare interface BridgeTransferMessageInfo {
@@ -31,4 +31,11 @@ declare interface BridgeSignDataMessageInfo {
   signData: string
   account: string
   publicKey: string
+  isHash: boolean
+}
+
+declare interface BridgeSignatureMessageInfo {
+  requiredFields: any
+  buf: any
+  transaction: any
 }

@@ -19,13 +19,12 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT,
-    backgroundColor: Colors.mainThemeColor
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT
   },
   keyboard: {
     width: SCREEN_WIDTH,
     height: KEYBOARD_HEIGHT,
-    backgroundColor: Colors.mainThemeColor
+    backgroundColor: Colors.bgColor_30_31_37
   }
 })
 

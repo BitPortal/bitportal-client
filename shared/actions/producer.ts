@@ -12,3 +12,4 @@ export const getProducersWithInfoFailed = createAction<ErrorMessage>('producer/G
 export const sortProducers = createAction<string>('producer/SORT')
 export const toggleSelect = createAction<string>('producer/TOGGLE_SELECT')
 export const setSelected = createAction<any>('producer/SET_SELECT')
+export const clearProducer = createAction('producer/CLEAR')

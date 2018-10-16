@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import {
-  WebView,
   View,
   Text,
   Share,
@@ -8,6 +7,7 @@ import {
   Platform,
   ActivityIndicator
 } from 'react-native'
+import WebViewBridge from 'react-native-webview-bridge'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
@@ -141,7 +141,7 @@ export default class BPWebView extends Component {
           />
           <View style={styles.content}>
             {uri && (
-              <WebView
+              <WebViewBridge
                 source={{ uri }}
                 ref={(e) => {
                   this.webview = e

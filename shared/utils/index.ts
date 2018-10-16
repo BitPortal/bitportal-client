@@ -242,3 +242,25 @@ export const filterBgColor = (data: string) => {
   }
   return Colors.bgColor_59_59_59
 }
+
+export const validateEOSActions = (actions: any, account: string) => {
+  let errorMessage = ''
+
+  actions.forEach((action: any) => {
+    if (typeof action.account !== 'string' || typeof action.name !== 'string' || typeOf(action.data) !== 'Object' || typeOf(action.authorization) !== 'Array') {
+      errorMessage = 'Invalid actions'
+    }
+
+    const authorizations = action.authorization
+
+    authorizations.forEach((authorization: any) => {
+      if (typeOf(authorization) !== 'Object') {
+        errorMessage = 'Invalid authorization'
+      } else if (authorization.actor !== account) {
+        errorMessage = 'Authorization actor is not in BitPortal.'
+      }
+    })
+  })
+
+  return errorMessage
+}

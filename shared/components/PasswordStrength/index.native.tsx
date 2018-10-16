@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import styles from './styles'
 
 const getLevel = (strength: number) => {
@@ -19,9 +19,9 @@ const PasswordStrength = ({ strength }: { strength: number }) => {
 
   return (
     <View style={styles.passwordStrength}>
-      <Text style={[styles.text14, styles[level]]}>
-        { getLevel(strength) }
-      </Text>
+      <View style={[styles.block, styles[level]]} />
+      <View style={[styles.block, styles[level]]} />
+      <View style={[styles.block, styles[level]]} />
     </View>
   )
 }

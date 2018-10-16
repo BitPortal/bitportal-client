@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
-import FastImage from 'react-native-fast-image'
+import BPImage from 'components/BPNativeComponents/BPImage'
 import Colors from 'resources/colors'
 import Images from 'resources/images'
 
@@ -21,7 +21,7 @@ const styles =  StyleSheet.create({
 export default ({ onPress }) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.iconContainer}>
-      <FastImage source={Images.profile_contacts} style={styles.image} />
+      <BPImage source={Images.profile_contacts} style={styles.image} />
     </TouchableOpacity>
   )
 }

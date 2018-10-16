@@ -2,8 +2,10 @@ import { call, put, select, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/voting'
 import { getEOSAccountRequested } from 'actions/eosAccount'
+import { traceVotes } from 'actions/trace'
 import { getEOSErrorMessage } from 'utils'
 import { voteEOSProducers } from 'core/eos'
+import { voterInfoSelector } from 'selectors/eosAccount'
 
 function* votingRequested(action: Action<VotingParams>) {
   if (!action.payload) return
@@ -18,6 +20,16 @@ function* votingRequested(action: Action<VotingParams>) {
     yield call(voteEOSProducers, { eosAccountName, password, permission, producers, proxy })
     yield put(actions.votingSucceeded(producers))
     yield put(getEOSAccountRequested({ eosAccountName }))
+
+    // trace votes
+    const voterInfo = yield select((state: RootState) => voterInfoSelector(state))
+    const votesInfo = {
+      userId: '',
+      walletId: eosAccountName,
+      bpList: producers,
+      amount: voterInfo ? (+voterInfo.get('staked') / 10000).toFixed(4) : 0
+    }
+    yield put(traceVotes(votesInfo))
   } catch (e) {
     yield put(actions.votingFailed(getEOSErrorMessage(e)))
   }
