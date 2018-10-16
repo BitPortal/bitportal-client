@@ -21,12 +21,6 @@ const styles = StyleSheet.create({
   image: {
     width: 16,
     height: 16
-  },
-  btn: {
-    width: 36,
-    height: 36,
-    padding: 10,
-    marginTop: -10
   }
 })
 
@@ -44,7 +38,7 @@ export default class Tips extends Component {
 
   render() {
     return (
-      <TouchableOpacity onPress={this.alertTips} style={styles.btn}>
+      <TouchableOpacity onPress={this.alertTips}>
         <BPImage source={images.tips} style={styles.image} />
       </TouchableOpacity>
     )

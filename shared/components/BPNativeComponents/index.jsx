@@ -1,4 +1,5 @@
 import BPImage from './BPImage'
 import BPWebView from './BPWebView'
+import BPGradientButton from './BPGradientButton'
 
-export { BPImage, BPWebView }
+export { BPGradientButton, BPImage, BPWebView }

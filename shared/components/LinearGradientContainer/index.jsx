@@ -67,7 +67,7 @@ export default class LinearGradientContainer extends Component {
         start={this.start}
         end={this.end}
         locations={[0, 1]}
-        colors={colors || Colors.gradientColors}
+        colors={colors || Colors.gradientCardColors}
         style={[styles.defaultStyle, style]}
       >
         {this.props.children}
