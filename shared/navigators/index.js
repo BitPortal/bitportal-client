@@ -23,6 +23,7 @@ import AccountOrder from 'screens/Account/AccountOrder'
 import AccountImport from 'screens/Account/AccountImport'
 import AccountSelection from 'screens/Account/AccountSelection'
 import AccountAssistance from 'screens/Account/AccountAssistance'
+import AccountAssistancePayment from 'screens/Account/AccountAssistancePayment'
 import EOSAccountCreation from 'screens/Account/EOSAccountCreation'
 import Discovery from 'screens/Discovery'
 import ArticleWebView from 'screens/Discovery/article'
@@ -126,6 +127,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.AccountImport', () => screenComponent(AccountImport, store))
   Navigation.registerComponent('BitPortal.AccountSelection', () => screenComponent(AccountSelection, store))
   Navigation.registerComponent('BitPortal.AccountAssistance', () => screenComponent(AccountAssistance, store))
+  Navigation.registerComponent('BitPortal.AccountAssistancePayment', () => screenComponent(AccountAssistancePayment, store))
   Navigation.registerComponent('BitPortal.EOSAccountCreation', () => screenComponent(EOSAccountCreation, store))
 }
 

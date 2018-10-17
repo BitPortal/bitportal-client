@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
+import { Text, View, ScrollView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
-import QRCode from 'react-native-qrcode-svg'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import LinearGradientContainer from 'components/LinearGradientContainer'
 import { IntlProvider } from 'react-intl'
 import Loading from 'components/Loading'
 import messages from 'resources/messages'
-import Colors from 'resources/colors'
 import { bindActionCreators } from 'redux'
 import * as eosAccountActions from 'actions/eosAccount'
 import { BPGradientButton } from 'components/BPNativeComponents'
@@ -29,7 +26,7 @@ import styles from './styles'
   { withRef: true }
 )
 
-export default class AccountOrder extends Component {
+export default class AccountAssistancePayment extends Component {
   static get options() {
     return {
       bottomTabs: {
@@ -38,13 +35,8 @@ export default class AccountOrder extends Component {
     }
   }
 
-  refreshOrderInfo = () => {
+  payOrder = () => {
 
-  }
-
-  deleteOrder = () => {
-    const componentId = this.props.componentId
-    this.props.actions.cancelEOSAccountAssistanceRequestd({ componentId })
   }
 
   render() {
@@ -63,33 +55,13 @@ export default class AccountOrder extends Component {
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.contentContainer}>
-                <Text style={styles.text14}>
-                  创建账户需要消耗 EOS，请您找拥有 EOS 余额的可信账户扫描下方二维码帮您支付本次创建的费用。
-                </Text>
-                <LinearGradientContainer type="left" colors={Colors.gradientCardColors3} style={styles.gradient}>
-                  <Text style={styles.text14}>
-                    在注册完成后请仔细核对及时备份您的私钥，以避免被盗风险。
-                  </Text>
-                </LinearGradientContainer>
-                <View style={styles.qrCodeContainer}>
-                  <QRCode
-                    value={'{ type: assistanceCreation }'}
-                    size={100}
-                    color="black"
-                  />
-                </View>
                 <InputItem label="账户名称" value={eosAccountName} />
                 <InputItem label="Owner Key" value={publicKey} />
                 <InputItem label="Active Key" value={publicKey} />
                 <View style={styles.btnContainer}>
-                  <TouchableOpacity onPress={this.deleteOrder} style={styles.btn}>
+                  <BPGradientButton onPress={this.payOrder}>
                     <Text style={styles.text14}>
-                      取消创建
-                    </Text>
-                  </TouchableOpacity>
-                  <BPGradientButton onPress={this.refreshOrderInfo} extraStyle={{ marginLeft: 10 }}>
-                    <Text style={styles.text14}>
-                      查询状态
+                      注册EOS账户
                     </Text>
                   </BPGradientButton>
                 </View>

@@ -58,24 +58,21 @@ export default class Scanner extends Component {
     const qrInfo = parseEOSQrString(e.data)
     // Umeng analytics
     onEventWithMap(ASSETS_SCAN, qrInfo || {})
-    const eosAssetBalance = this.props.eosAssetBalance
 
+    const eosAssetBalance = this.props.eosAssetBalance
     if (qrInfo && eosAssetBalance) {
       const token = qrInfo.token
       const index = eosAssetBalance.findIndex(v => v.get('symbol') === token)
 
       if (index !== -1) {
         this.props.actions.setActiveAsset(eosAssetBalance.get(index))
-
         if (this.props.entry === 'form') {
           const eosAccountName = qrInfo.eosAccountName
           const quantity = qrInfo.amount
-
           if (eosAccountName) { this.props.actions.change('transferAssetsForm', 'toAccount', eosAccountName) }
           if (quantity) { this.props.actions.change('transferAssetsForm', 'quantity', quantity) }
-
           Navigation.pop(this.props.componentId)
-        } else {
+        } else if (this.props.entry === 'assets') {
           Navigation.push(this.props.componentId, {
             component: {
               name: 'BitPortal.AssetsTransfer',

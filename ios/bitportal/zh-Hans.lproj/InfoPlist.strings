@@ -11,3 +11,4 @@
 "NSAppleMusicUsageDescription" = "访问媒体资料库";
 "NSMotionUsageDescription" = "开启运动健身权限";
 "NSSpeechRecognitionUsageDescription" = "开启语音识别权限";
+"NSCalendarsUsageDescription" = "访问日历权限";

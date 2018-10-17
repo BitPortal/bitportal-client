@@ -72,6 +72,9 @@ export default EStyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center'
   },
+  info: {
+    marginBottom: 10
+  },
   between: {
     flex: 1,
     flexDirection: 'row',
