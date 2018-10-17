@@ -279,7 +279,7 @@ function* logoutRequested(action: Action<LogoutParams>) {
       chainType: coin,
       walletId: eosAccountName
     }
-    console.log('###---yy ', JSON.stringify(params))
+    // console.log('###---yy ', JSON.stringify(params))
     yield put(unsubscribe(params))
 
   } catch (e) {

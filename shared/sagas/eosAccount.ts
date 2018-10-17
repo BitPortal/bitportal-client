@@ -5,6 +5,7 @@ import { reset } from 'redux-form/immutable'
 import * as actions from 'actions/eosAccount'
 import { getEOSBalanceSucceeded } from 'actions/balance'
 import { createClassicWalletSucceeded } from 'actions/wallet'
+import { traceImport } from 'actions/trace'
 import  { setSelected } from 'actions/producer'
 import { votedProducersSelector, eosCoreLiquidBalanceSelector } from 'selectors/eosAccount'
 import secureStorage from 'utils/secureStorage'
@@ -173,6 +174,18 @@ function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
     ])
 
     if (action.payload.componentId) popToRoot(action.payload.componentId)
+
+    // trace import
+    const params = {
+      bpId: '',
+      walletId: eosAccountName,
+      chainType: 'eos',
+      ownerKey: publicKey,
+      activeKey: publicKey,
+      note: ''
+    }
+    yield put(traceImport(params))
+
   } catch (e) {
     yield put(actions.importEOSAccountFailed(getErrorMessage(e)))
   }
@@ -241,11 +254,9 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
       topic: '',
       platform: `mobile_${Platform.OS}`
     }
-    console.log('###---yy225 ', JSON.stringify(params))
     yield put(subscribe(params))
 
   } catch (e) {
-    console.log('###---yy229 ', e.message)
     yield put(actions.getEOSAccountFailed(e.message))
   }
 }

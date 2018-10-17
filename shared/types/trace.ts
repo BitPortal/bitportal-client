@@ -22,3 +22,12 @@ declare interface TraceVotesParams {
   bpList: any[]
   amount?: any
 }
+
+declare interface TraceImportParams {
+  bpId?: any
+  walletId?: string
+  chainType?: string
+  ownerKey?: string
+  activeKey?: string
+  note?: any
+}
