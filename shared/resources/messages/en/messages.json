@@ -10,6 +10,7 @@
   "general_nav_discovery": "Discovery",
   "general_nav_profile": "Profile",
   "general_error_popup_text_no_account": "You have not added an account. Please add an account before taking any further steps.",
+  "general_error_popup_text_network_unconnected": "No network connection. Please check your network",
 
   "search_text_search": "Search",
   "search_button_cancel": "Cancel",
@@ -47,7 +48,7 @@
   "add_eos_create_error_popup_text_data_extraction_failed": "Data extraction failed, please try again later.",
   "add_eos_create_title_create_assistance": "好友协助创建账户",
   "add_eos_create_button_next": "Next",
-
+  
   "add_eos_label_set_password": "Enter Password",
   "add_eos_text_password": "Set Password",
   "add_eos_text_confirm_password": "Confirm Password",
@@ -113,8 +114,9 @@
   "send_error_text_memo_max_character": "Memo exceeds maximum character limit.",
   "send_button_send": "Send",
   "send_error_popup_text_send_failed": "Transaction failed",
-  "send_confirm_label_from ": "From",
-  "send_confirm_label_to": "to",
+  "send_confirm_title_confirm": "Confirm",
+  "send_confirm_label_from": "Send",
+  "send_confirm_label_to": "Receiver",
   "send_confirm_label_memo": "Memo",
   "send_confirm_button_confirm": "Confirm",
 
@@ -174,7 +176,7 @@
 
   "discovery_title_discovery": "Discovery",
   "discovery_label_dapp_store": "Dapp Store",
-  "discovery_label_dapp_more": "更多",
+  "discovery_label_dapp_more": "More",
   "discovery_label_news": "News",
   "discovery_text_no_news": "No more news articles",
   "discovery_dapp_title_dapp_list": "Dapp List",
@@ -194,7 +196,7 @@
   "profile_button_follow_us": "Follow Us",
   "profile_button_about_us": "About Us",
   "profile_text_version": "Version",
-  "profile_text_copyright_1": "Copyright @2018 Patricia Ltd.",
+  "profile_text_copyright_1": "Copyright @2018 Dexlize Foundation",
   "profile_text_copyright_2": "All rights reserved",
 
   "transaction_all_title_transaction": "All Transactions",
@@ -209,6 +211,13 @@
   "voting_button_vote": "Vote",
   "voting_error_popup_text_no_stake": "You need to stake EOS before voting producers.",
   "voting_error_popup_text_vote_failed": "Voting failed",
+  "voting_popup_label_stake_net_insufficient": "NET insufficient",
+  "voting_popup_text_stake_net_insufficient": "Your NET is not insufficient, please go to \"Rescource Management\" to stake. NET is an EOS system rescource, and it is the factor of ur voting weight.",
+  "voting_popup_label_stake_cpu_insufficient": "CPU insufficient",
+  "voting_popup_text_stake_cpu_insufficient": "Your CPU is not insufficient, please go to \"Rescource Management\" to stake. CPU is an EOS system rescource, and it is the factor of ur voting weight.",
+  "voting_popup_label_stake_new_account": "Need to stake before voting!",
+  "voting_popup_text_stake_new_account": "You have not stake EOS for your vote, please go to \"Rescource Management\" to stake.",
+  "voting_popup_text_voting_successful": "Vote success",
 
   "bp_info_label_team_location": "Team Location",
   "bp_info_label_bp_location": "BP Location",

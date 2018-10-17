@@ -15,6 +15,10 @@ import { getErrorMessage, getEOSErrorMessage } from 'utils'
 import { popToRoot, push } from 'utils/location'
 import * as api from 'utils/api'
 import wif from 'wif'
+import { subscribe } from 'actions/notification'
+import { Platform } from 'react-native'
+import { getRegisterationID, getDeviceID } from 'utils/nativeUtil'
+
 
 function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
   if (!action.payload) return
@@ -198,7 +202,31 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
     assert(info && info.account_name, 'Invalid account info')
     yield put(actions.getEOSAccountSucceeded(info))
     yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, info, true)
+
+    // notification subscribe
+    const language = yield select((state: RootState) => state.intl.get('locale'))
+    const registerationID = yield call(getRegisterationID)
+    const deviceId = yield call(getDeviceID)
+    const code = 'eosio.token'
+    const data = yield call(eos.getCurrencyBalance, { code, account: eosAccountName })
+    assert(data && data[0] && typeof data[0] === 'string', 'No balance!')
+    const symbol = data[0].split(' ')[1]
+
+    const params = {
+      language,
+      deviceId,
+      deviceToken: registerationID,
+      bpId: '',
+      chainType: symbol,
+      walletId: eosAccountName,
+      topic: '',
+      platform: `mobile_${Platform.OS}`
+    }
+    console.log('###---yy225 ', JSON.stringify(params))
+    yield put(subscribe(params))
+
   } catch (e) {
+    console.log('###---yy229 ', e.message)
     yield put(actions.getEOSAccountFailed(e.message))
   }
 }

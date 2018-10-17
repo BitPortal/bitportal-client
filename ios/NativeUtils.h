@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <React/RCTBridgeModule.h>
 #import <React/RCTLog.h>
+#import "SSKeychain.h"
+
+#define KeyChainDeviceId @"KeychainDeviceId" // 手机keychain id
+#define KeyChainService @"org.dexlize.bitportal" // apple id (com.bitportal.wallet)
+
 
 @interface NativeUtils : NSObject <RCTBridgeModule>
 
