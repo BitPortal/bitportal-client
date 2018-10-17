@@ -10,6 +10,7 @@
   "general_nav_discovery": "发现",
   "general_nav_profile": "我的",
   "general_error_popup_text_no_account": "您还未添加账户，请先添加账户再进行该操作",
+  "general_error_popup_text_network_unconnected": "无网络连接，请检查您的网络",
 
   "search_text_search": "搜索",
   "search_button_cancel": "取消",
@@ -47,17 +48,16 @@
   "add_eos_create_error_popup_text_data_extraction_failed": "数据提取错误，请重新创建",
   "add_eos_create_title_create_assistance": "好友协助创建账户",
   "add_eos_create_button_next": "下一步",
-
-
+  
   "add_eos_label_set_password": "设置密码",
   "add_eos_text_password": "输入密码",
   "add_eos_text_confirm_password": "确认密码",
   "add_eos_text_password_hint": "密码提示（选填）",
+  "add_eos_text_password_hint_blank": "请输入密码提示",
   "add_eos_popup_text_password_tips": "密码是您使用 BitPortal 钱包的相关功能时所需要的凭证。该密码对 BitPortal 以外的其他应用是无效的。BitPortal 不会以任何形式储存您的密码。若您忘记密码，请重新导入私钥以重置。",
   "add_eos_error_text_password_blank": "请输入密码",
   "add_eos_error_text_confirm_password": "请确认密码",
-  "add_eos_text_password_hint_blank": "请输入密码提示",
-  "add_eos_error_text_password_min_character": "密码最少为6位字符",
+  "add_eos_error_text_password_min_character": "密码最少为6位字符", 
   "add_eos_error_text_password_max_character": "密码最多为64位字符",
   "add_eos_error_text_password_unmatch": "密码不匹配",
   "add_eos_error_text_password_hint_max_character": "密码提示最多为64位字符",
@@ -115,8 +115,8 @@
   "send_button_send": "发送",
   "send_error_popup_text_send_failed": "发送失败",
   "send_confirm_title_confirm": "确认信息",
-  "send_confirm_label_from": "发送",
-  "send_confirm_label_to": "至",
+  "send_confirm_label_from": "转账",
+  "send_confirm_label_to": "收款人",
   "send_confirm_label_memo": "附言",
   "send_confirm_button_confirm": "确认",
 
@@ -196,7 +196,7 @@
   "profile_button_follow_us": "关注我们",
   "profile_button_about_us": "关于我们",
   "profile_text_version": "当前版本",
-  "profile_text_copyright_1": "Copyright @2018 Patricia Ltd.",
+  "profile_text_copyright_1": "Copyright @2018 Dexlize Foundation",
   "profile_text_copyright_2": "All rights reserved",
 
   "transaction_all_title_transaction": "全部交易",
@@ -211,6 +211,13 @@
   "voting_button_vote": "投票",
   "voting_error_popup_text_no_stake": "您需要先抵押 EOS 才可参与节点投票",
   "voting_error_popup_text_vote_failed": "投票失败",
+  "voting_popup_label_stake_net_insufficient": "NET资源不足",
+  "voting_popup_text_stake_net_insufficient": "您当前的NET资源不足，请进入\"资源管理\"进行抵押。NET资源是EOS系统资源之一，NET是您投票权重两个因子之一。",
+  "voting_popup_label_stake_cpu_insufficient": "CPU资源不足",
+  "voting_popup_text_stake_cpu_insufficient": "您当前的CPU资源不足，请进入\"资源管理\"进行抵押。CPU资源是EOS系统资源之一，CPU是您投票权重两个因子之一。",
+  "voting_popup_label_stake_new_account": "尚未进行资源抵押",
+  "voting_popup_text_stake_new_account": "您还未有抵押系统资源，无法获得对应投票权重，请进入“资源管理”页面进行抵押。",
+  "voting_popup_text_voting_successful": "投票成功",
 
   "bp_info_label_team_location": "团队位置",
   "bp_info_label_bp_location": "节点位置",
