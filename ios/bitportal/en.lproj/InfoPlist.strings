@@ -11,3 +11,4 @@
 "NSAppleMusicUsageDescription" = "Enable media access";
 "NSMotionUsageDescription" = "Enable fitness access";
 "NSSpeechRecognitionUsageDescription" = "Enable microphone access";
+"NSCalendarsUsageDescription" = "Enable calendars access";

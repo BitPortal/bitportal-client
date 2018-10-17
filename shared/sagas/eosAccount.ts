@@ -108,12 +108,31 @@ function* createEOSAccountAssistanceRequested(action: Action<CreateEOSAccountAss
       timestamp: +Date.now(),
     }
 
-    yield call(secureStorage.setItem, `EOS_TEMP_ACCOUNT_INFO_${eosAccountName}`, eosTempAccountInfo, true)
+    yield call(secureStorage.setItem, `EOS_TEMP_ACCOUNT_INFO`, eosTempAccountInfo, true)
     yield put(actions.createEOSAccountAssistanceSucceeded(eosTempAccountInfo))
 
     if (action.payload.componentId) push('BitPortal.AccountOrder', action.payload.componentId)
   } catch (e) {
     yield put(actions.createEOSAccountFailed(getErrorMessage(e)))
+  }
+}
+
+function* cancelEOSAccountAssistanceRequestd(action: any) {
+  try {
+    yield call(secureStorage.removeItem, `EOS_TEMP_ACCOUNT_INFO`)
+    if (action.payload.componentId) popToRoot(action.payload.componentId)
+  } catch (e) {
+
+  }
+}
+
+function* showAssistanceAccountInfo(action: any) {
+  try {
+    const eosTempAccountInfo = yield call(secureStorage.getItem, `EOS_TEMP_ACCOUNT_INFO`, true)
+    yield put(actions.createEOSAccountAssistanceSucceeded(eosTempAccountInfo))
+    if (action.payload.componentId) push('BitPortal.AccountOrder', action.payload.componentId)
+  } catch (e) {
+
   }
 }
 
@@ -287,4 +306,6 @@ export default function* eosAccountSaga() {
   yield takeEvery(String(actions.validateEOSAccountFailed), validateEOSAccountFailed)
   yield takeEvery(String(actions.getEOSKeyAccountsRequested), getEOSKeyAccountsRequested)
   yield takeEvery(String(actions.createEOSAccountAssistanceRequested), createEOSAccountAssistanceRequested)
+  yield takeEvery(String(actions.cancelEOSAccountAssistanceRequestd), cancelEOSAccountAssistanceRequestd)
+  yield takeEvery(String(actions.showAssistanceAccountInfo), showAssistanceAccountInfo)
 }

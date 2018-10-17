@@ -130,7 +130,7 @@ export const TextField: React.SFC<TextFieldProps> = ({
           {tips && <Tips tips={tips} />}
         </View>
       }
-      {info && <View>{info}</View>}
+      {info && <View style={styles.info}>{info}</View>}
     </FieldInfo>
     <FieldInput style={(touched && error) && styles.errorBorder} rightContent={rightContent}>
       <TextInput

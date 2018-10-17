@@ -24,3 +24,5 @@ export const getEOSKeyAccountsFailed = createAction<ErrorMessage>('eosAccount/GE
 export const createEOSAccountAssistanceRequested = createAction<CreateEOSAccountAssistanceParams>('eosAccount/CREATE_ASSISTANCE_REQUESTED')
 export const createEOSAccountAssistanceSucceeded = createAction<CreateEOSAccountAssistanceResult>('eosAccount/CREATE_ASSISTANCE_SUCCEEDED')
 export const createEOSAccountAssistanceFailed = createAction<ErrorMessage>('eosAccount/CREATE_ASSISTANCE_FAILED')
+export const cancelEOSAccountAssistanceRequestd = createAction('eosAccount/CANCEL_ASSISTANCE')
+export const showAssistanceAccountInfo = createAction('eosAccount/SHOW_TEMP_ACCOUNT_INFO')
