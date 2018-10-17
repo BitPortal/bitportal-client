@@ -67,7 +67,7 @@ export default class DappElement extends Component {
 
     const { eosAccountName } = this.props
     // Umeng analitics
-    onEventWithMap(DAPP_STORE, { 
+    onEventWithMap(DAPP_STORE, {
       dappName: item.get('display_name').get(this.props.locale),
       walletId: eosAccountName
     })
