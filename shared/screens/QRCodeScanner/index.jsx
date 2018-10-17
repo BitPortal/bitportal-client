@@ -83,7 +83,6 @@ export default class Scanner extends Component {
             }
           })
         }
-
       } else {
         Dialog.alert(`请添加${token}到您的资产列表`, null, { positiveText: '确定' })
       }

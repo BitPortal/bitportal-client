@@ -28,6 +28,7 @@ import { checkCamera } from 'utils/permissions'
 import { ASSETS_QR, ASSETS_TOKEN_DETAIL, ASSETS_EOS_RESOURCE, ASSETS_ADD_TOKEN } from 'constants/analytics'
 import { onEventWithLabel } from 'utils/analytics'
 import { startListenNetInfo } from 'utils/netInfo'
+import secureStorage from 'utils/secureStorage'
 import Dialog from 'components/Dialog'
 import messages from 'resources/messages'
 import { GradiantCard, GradiantCardContainer } from 'components/GradiantCard'
@@ -86,9 +87,7 @@ export default class Assets extends Component {
   scanQR = async () => {
     const authorized = await checkCamera(this.props.locale)
     if (authorized) {
-      const eosAccountName = this.props.eosAccount
-        .get('data')
-        .get('account_name')
+      const eosAccountName = this.props.eosAccount.get('data').get('account_name')
       if (eosAccountName) {
         Navigation.push(this.props.componentId, {
           component: {
@@ -172,8 +171,22 @@ export default class Assets extends Component {
     })
   }
 
-  showUserAgreement = (type) => {
-    this.setState({ isVisible: true, type })
+  showUserAgreement = async (type) => {
+    const eosTempAccountInfo = await secureStorage.getItem('EOS_TEMP_ACCOUNT_INFO', true)
+    if (eosTempAccountInfo) {
+      const { action } = await Dialog.alert('您有一个未激活成功的账户，是否查看', null, {
+        negativeText: '稍候查看',
+        positiveText: '立即前往'
+      })
+      if (action === Dialog.actionPositive) {
+        const componentId = this.props.componentId
+        this.props.actions.showAssistanceAccountInfo({ componentId })
+      } else {
+        return null
+      }
+    } else {
+      this.setState({ isVisible: true, type })
+    }
   }
 
   checkResourcesDetails = () => {

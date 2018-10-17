@@ -9,6 +9,8 @@ import { IntlProvider } from 'react-intl'
 import Loading from 'components/Loading'
 import messages from 'resources/messages'
 import Colors from 'resources/colors'
+import { bindActionCreators } from 'redux'
+import * as eosAccountActions from 'actions/eosAccount'
 import { BPGradientButton } from 'components/BPNativeComponents'
 import InputItem from './InputItem'
 import styles from './styles'
@@ -18,7 +20,11 @@ import styles from './styles'
     locale: state.intl.get('locale'),
     eosAccount: state.eosAccount
   }),
-  null,
+  dispatch => ({
+    actions: bindActionCreators({
+      ...eosAccountActions
+    }, dispatch)
+  }),
   null,
   { withRef: true }
 )
@@ -37,7 +43,8 @@ export default class AccountOrder extends Component {
   }
 
   deleteOrder = () => {
-
+    const componentId = this.props.componentId
+    this.props.actions.cancelEOSAccountAssistanceRequestd({ componentId })
   }
 
   render() {
@@ -46,7 +53,6 @@ export default class AccountOrder extends Component {
     const eosTempAccountInfo = eosAccount.get('eosTempAccountInfo')
     const eosAccountName = eosTempAccountInfo.get && eosTempAccountInfo.get('eosAccountName')
     const publicKey = eosTempAccountInfo.get && eosTempAccountInfo.get('publicKey')
-
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -67,7 +73,7 @@ export default class AccountOrder extends Component {
                 </LinearGradientContainer>
                 <View style={styles.qrCodeContainer}>
                   <QRCode
-                    value="test"
+                    value={'{ type: assistanceCreation }'}
                     size={100}
                     color="black"
                   />
