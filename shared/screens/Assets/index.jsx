@@ -15,7 +15,7 @@ import * as balanceActions from 'actions/balance'
 import * as versionActions from 'actions/version'
 import * as currencyActions from 'actions/currency'
 import * as eosAccountActions from 'actions/eosAccount'
-import * as walletActions from 'actions/wallet'
+
 import {
   selectedEOSTokenBalanceSelector,
   eosTotalAssetBalanceSelector
