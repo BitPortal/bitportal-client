@@ -20,6 +20,8 @@ export const MARKET_TOKEN_DETAIL = 'market_token_detail' // 行情 - token详情
 export const BP_VOTING = 'bp_voting' // 节点投票
 export const BP_INFO = 'bp_info' // 节点详情
 
+export const DAPP_STORE = 'dapp_store' // 点击dapp
+
 export const CONTACTS_ADD = 'contacts_add' // 添加联系人
 
 export const WALLET_MGT_EXPORT = 'wallet_mgt_export' // 管理钱包 - 导出私钥

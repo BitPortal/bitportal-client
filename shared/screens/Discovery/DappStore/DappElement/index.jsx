@@ -7,6 +7,8 @@ import BPImage from 'components/BPNativeComponents/BPImage'
 import { loadInjectSync } from 'utils/inject'
 import Images from 'resources/images'
 import messages from 'resources/messages'
+import { onEventWithMap } from 'utils/analytics'
+import { DAPP_STORE } from 'constants/analytics'
 import styles from './styles'
 
 @injectIntl
@@ -62,6 +64,13 @@ export default class DappElement extends Component {
 
   toUrl = (item) => {
     const inject = loadInjectSync()
+
+    const { eosAccountName } = this.props
+    // Umeng analitics
+    onEventWithMap(DAPP_STORE, { 
+      dappName: item.get('display_name').get(this.props.locale),
+      walletId: eosAccountName
+    })
 
     Navigation.push(this.props.componentId, {
       component: {
