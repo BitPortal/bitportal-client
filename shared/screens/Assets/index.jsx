@@ -14,6 +14,7 @@ import * as balanceActions from 'actions/balance'
 import * as versionActions from 'actions/version'
 import * as currencyActions from 'actions/currency'
 import * as eosAccountActions from 'actions/eosAccount'
+import * as walletActions from 'actions/wallet'
 import {
   selectedEOSTokenBalanceSelector,
   eosTotalAssetBalanceSelector
@@ -52,7 +53,8 @@ import UserAgreement from './UserAgreement'
         ...balanceActions,
         ...versionActions,
         ...currencyActions,
-        ...eosAccountActions
+        ...eosAccountActions,
+        ...walletActions
       },
       dispatch
     )
@@ -195,7 +197,7 @@ export default class Assets extends Component {
     }
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     SplashScreen.hide()
     startListenNetInfo(this.props.locale)
     this.props.actions.getVersionInfoRequested()
