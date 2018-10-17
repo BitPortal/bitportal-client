@@ -9,6 +9,7 @@ import {
 import { Navigation } from 'react-native-navigation'
 import storage from 'utils/storage'
 import Colors from 'resources/colors'
+import * as walletActions from 'actions/wallet'
 import * as tickerActions from 'actions/ticker'
 import * as balanceActions from 'actions/balance'
 import * as versionActions from 'actions/version'
@@ -48,6 +49,7 @@ import UserAgreement from './UserAgreement'
   dispatch => ({
     actions: bindActionCreators(
       {
+        ...walletActions,
         ...tickerActions,
         ...balanceActions,
         ...versionActions,
@@ -90,7 +92,8 @@ export default class Assets extends Component {
       if (eosAccountName) {
         Navigation.push(this.props.componentId, {
           component: {
-            name: 'BitPortal.QRCodeScanner'
+            name: 'BitPortal.QRCodeScanner',
+            entry: 'assets'
           }
         })
       } else {

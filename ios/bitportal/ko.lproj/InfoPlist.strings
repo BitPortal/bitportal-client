@@ -5,9 +5,10 @@
   Created by apple on 2018/10/16.
   Copyright © 2018年 Facebook. All rights reserved.
 */
-"NSPhotoLibraryUsageDescription" = "test2";
-"NSBluetoothPeripheralUsageDescription" = "";
-"NSCameraUsageDescription" = "test1";
-"NSAppleMusicUsageDescription" = "";
-"NSMotionUsageDescription" = "";
-"NSSpeechRecognitionUsageDescription" = "";
+"NSPhotoLibraryUsageDescription" = "Enable album access";
+"NSBluetoothPeripheralUsageDescription" = "Enable bluetooth access";
+"NSCameraUsageDescription" = "Enable camera access";
+"NSAppleMusicUsageDescription" = "Enable media access";
+"NSMotionUsageDescription" = "Enable fitness access";
+"NSSpeechRecognitionUsageDescription" = "Enable microphone access";
+"NSCalendarsUsageDescription" = "Enable calendars access";
