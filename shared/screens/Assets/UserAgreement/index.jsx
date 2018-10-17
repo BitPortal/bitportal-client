@@ -4,7 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Modal from 'react-native-modal'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
+import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT } from 'utils/dimens'
 import { Text, View, TouchableOpacity, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import messages from 'resources/messages'
 import FastImage from 'react-native-fast-image'
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   },
   bgContainer: {
     width: SCREEN_WIDTH,
-    marginTop: NAV_BAR_HEIGHT - SCREEN_HEIGHT,
+    marginTop: NAV_BAR_HEIGHT + TAB_BAR_HEIGHT - SCREEN_HEIGHT,
     paddingHorizontal: 15
   },
   center: {
