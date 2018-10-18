@@ -47,14 +47,14 @@ export const CommonButton = ({ iconName, title, onPress, extraStyle, extraTextSt
 )
 
 export const CommonTitle = ({ title }) => (
-  <View style={styles.navButton}>
+  <View style={[styles.navButton]}>
     <Text style={styles.text20}>{title}</Text>
   </View>
 )
 
 export const CommonRightButton = ({ iconName, imageSource, onPress }) => (
   <TouchableOpacity style={styles.navButton} onPress={() => onPress()}>
-    <View style={{ alignSelf: 'flex-end', marginRight: 32 }}>
+    <View style={{ alignSelf: 'flex-end', marginRight: 20 }}>
       {iconName && (
         <Ionicons name={iconName} size={24} color={Colors.bgColor_FFFFFF} />
       )}
@@ -67,7 +67,7 @@ export const CommonRightButton = ({ iconName, imageSource, onPress }) => (
 
 export const LinkingRightButton = ({ iconName, onPress }) => (
   <TouchableOpacity style={styles.navButton} onPress={onPress}>
-    <View style={{ alignSelf: 'flex-end', marginRight: 32 }}>
+    <View style={{ alignSelf: 'flex-end', marginRight: 20 }}>
       {iconName && (
         <Ionicons name={iconName} size={24} color={Colors.bgColor_FFFFFF} />
       )}
