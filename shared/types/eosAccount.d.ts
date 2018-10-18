@@ -90,9 +90,11 @@ declare interface CreateEOSAccountResult {
 }
 
 declare interface CreateEOSAccountAssistanceResult {
-  eosAccountName: string,
-  publicKey: string,
-  password: string,
+  eosAccountName: string
+  ownerPublicKey: string
+  activePublicKey: string
+  ownerKeystore: string
+  activeKeystore: string
   timestamp: number
 }
 

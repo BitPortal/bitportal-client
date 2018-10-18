@@ -20,7 +20,6 @@ import { subscribe } from 'actions/notification'
 import { Platform } from 'react-native'
 import { getRegisterationID, getDeviceID } from 'utils/nativeUtil'
 
-
 function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
   if (!action.payload) return
 
@@ -102,15 +101,20 @@ function* createEOSAccountAssistanceRequested(action: Action<CreateEOSAccountAss
     const privateKey = yield call(randomKey)
     const publicKey = yield call(privateToPublic, privateKey)
 
-    const eosTempAccountInfo = {
+    const privateKeyDecodedString = wif.decode(privateKey).privateKey.toString('hex')
+    const keystore = yield call(encrypt, privateKeyDecodedString, password, { origin: 'classic', coin: 'EOS' })
+
+    const eosAccountCreationRequestInfo = {
       eosAccountName,
-      publicKey,
-      password,
+      ownerPublicKey: publicKey,
+      activePublicKey: publicKey,
+      ownerKeystore: keystore,
+      activeKeystore: keystore,
       timestamp: +Date.now(),
     }
 
-    yield call(secureStorage.setItem, `EOS_TEMP_ACCOUNT_INFO`, eosTempAccountInfo, true)
-    yield put(actions.createEOSAccountAssistanceSucceeded(eosTempAccountInfo))
+    yield call(secureStorage.setItem, `EOS_ACCOUNT_CREATION_REQUEST_INFO`, eosAccountCreationRequestInfo, true)
+    yield put(actions.createEOSAccountAssistanceSucceeded(eosAccountCreationRequestInfo))
 
     if (action.payload.componentId) push('BitPortal.AccountOrder', action.payload.componentId)
   } catch (e) {
@@ -120,7 +124,7 @@ function* createEOSAccountAssistanceRequested(action: Action<CreateEOSAccountAss
 
 function* cancelEOSAccountAssistanceRequestd(action: any) {
   try {
-    yield call(secureStorage.removeItem, `EOS_TEMP_ACCOUNT_INFO`)
+    yield call(secureStorage.removeItem, `EOS_ACCOUNT_CREATION_REQUEST_INFO`)
     if (action.payload.componentId) popToRoot(action.payload.componentId)
   } catch (e) {
 
@@ -129,8 +133,8 @@ function* cancelEOSAccountAssistanceRequestd(action: any) {
 
 function* showAssistanceAccountInfo(action: any) {
   try {
-    const eosTempAccountInfo = yield call(secureStorage.getItem, `EOS_TEMP_ACCOUNT_INFO`, true)
-    yield put(actions.createEOSAccountAssistanceSucceeded(eosTempAccountInfo))
+    const eosAccountCreationRequestInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_CREATION_REQUEST_INFO`, true)
+    yield put(actions.createEOSAccountAssistanceSucceeded(eosAccountCreationRequestInfo))
     if (action.payload.componentId) push('BitPortal.AccountOrder', action.payload.componentId)
   } catch (e) {
 

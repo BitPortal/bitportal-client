@@ -174,8 +174,8 @@ export default class Assets extends Component {
   }
 
   showUserAgreement = async (type) => {
-    const eosTempAccountInfo = await secureStorage.getItem('EOS_TEMP_ACCOUNT_INFO', true)
-    if (eosTempAccountInfo) {
+    const eosAccountCreationRequestInfo = await secureStorage.getItem('EOS_ACCOUNT_CREATION_REQUEST_INFO', true)
+    if (eosAccountCreationRequestInfo) {
       const { action } = await Dialog.alert('您有一个未激活成功的账户，是否查看', null, {
         negativeText: '稍候查看',
         positiveText: '立即前往'

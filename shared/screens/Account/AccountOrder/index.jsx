@@ -50,9 +50,10 @@ export default class AccountOrder extends Component {
   render() {
     const { locale, eosAccount } = this.props
     const loading = eosAccount.get('loading')
-    const eosTempAccountInfo = eosAccount.get('eosTempAccountInfo')
-    const eosAccountName = eosTempAccountInfo.get && eosTempAccountInfo.get('eosAccountName')
-    const publicKey = eosTempAccountInfo.get && eosTempAccountInfo.get('publicKey')
+    const eosAccountName = eosAccount.getIn(['eosAccountCreationRequestInfo', 'eosAccountName'])
+    const ownerPublicKey = eosAccount.getIn(['eosAccountCreationRequestInfo', 'ownerPublicKey'])
+    const activePublicKey = eosAccount.getIn(['eosAccountCreationRequestInfo', 'activePublicKey'])
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -79,8 +80,8 @@ export default class AccountOrder extends Component {
                   />
                 </View>
                 <InputItem label="账户名称" value={eosAccountName} />
-                <InputItem label="Owner Key" value={publicKey} />
-                <InputItem label="Active Key" value={publicKey} />
+                <InputItem label="Owner Key" value={ownerPublicKey} />
+                <InputItem label="Active Key" value={activePublicKey} />
                 <View style={styles.btnContainer}>
                   <TouchableOpacity onPress={this.deleteOrder} style={styles.btn}>
                     <Text style={styles.text14}>
