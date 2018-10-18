@@ -54,7 +54,7 @@ export default class DappStore extends PureComponent {
           <TouchableWithoutFeedback onLongPress={this.showDappBrowser}>
             <View style={styles.listTitle}>
               <Text
-                style={[styles.text14, { color: Colors.textColor_255_255_238 }]}
+                style={[styles.text14, { fontWeight: 'bold', color: Colors.textColor_255_255_238 }]}
               >
                 Dapp Store
               </Text>

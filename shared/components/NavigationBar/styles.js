@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     minWidth: 100,
     height: 40,
     paddingTop: Platform.OS === 'ios' ? 6 : 4,
-    paddingLeft: 32,
+    paddingLeft: 20,
     alignItems: 'flex-start',
     justifyContent: 'center'
   },

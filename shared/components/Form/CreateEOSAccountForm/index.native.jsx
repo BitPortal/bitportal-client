@@ -20,7 +20,6 @@ export const errorMessages = (error, messages) => {
   if (!error) { return null }
 
   const message = typeof error === 'object' ? error.message : error
-
   switch (String(message)) {
     case 'Account name already exists':
       return messages.add_eos_create_error_popup_text_account_name_exist
