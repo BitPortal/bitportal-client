@@ -7,10 +7,10 @@ import { getEOSBalanceSucceeded } from 'actions/balance'
 import { createClassicWalletSucceeded } from 'actions/wallet'
 import { traceImport } from 'actions/trace'
 import  { setSelected } from 'actions/producer'
-import { votedProducersSelector, eosCoreLiquidBalanceSelector } from 'selectors/eosAccount'
+import { votedProducersSelector, eosCoreLiquidBalanceSelector, eosAccountNameSelector } from 'selectors/eosAccount'
 import secureStorage from 'utils/secureStorage'
 import { BITPORTAL_API_EOS_URL } from 'constants/env'
-import { randomKey, privateToPublic, isValidPrivate, initEOS, getPermissionsByKey, getInitialAccountInfo } from 'core/eos'
+import { randomKey, privateToPublic, isValidPrivate, initEOS, getPermissionsByKey, getInitialAccountInfo, createEOSAccount } from 'core/eos'
 import { encrypt } from 'core/key'
 import { getErrorMessage, getEOSErrorMessage } from 'utils'
 import { popToRoot, push } from 'utils/location'
@@ -311,6 +311,24 @@ function validateEOSAccountFailed(action: Action<ValidateEOSAccountRejection>) {
   reject({ [field]: message })
 }
 
+function* createEOSAccountForOthersRequested(action: Action<CreateEOSAccountForOthersParams>) {
+  if (!action.payload) return
+
+  try {
+    const eosAccountName = action.payload.eosAccountName
+    const ownerPublicKey = action.payload.ownerPublicKey
+    const activePublicKey = action.payload.activePublicKey
+    const password = action.payload.password
+    const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
+    const creator = yield select((state: RootState) => eosAccountNameSelector(state))
+
+    const result = yield call(createEOSAccount, { creator, eosAccountName, ownerPublicKey, activePublicKey, password, permission })
+    yield put(actions.createEOSAccountForOthersSucceeded(result))
+  } catch (e) {
+    yield put(actions.createEOSAccountForOthersFailed(getEOSErrorMessage(e)))
+  }
+}
+
 export default function* eosAccountSaga() {
   yield takeEvery(String(actions.createEOSAccountRequested), createEOSAccountRequested)
   yield takeEvery(String(actions.importEOSAccountRequested), importEOSAccountRequested)
@@ -323,4 +341,5 @@ export default function* eosAccountSaga() {
   yield takeEvery(String(actions.createEOSAccountAssistanceRequested), createEOSAccountAssistanceRequested)
   yield takeEvery(String(actions.cancelEOSAccountAssistanceRequestd), cancelEOSAccountAssistanceRequestd)
   yield takeEvery(String(actions.showAssistanceAccountInfo), showAssistanceAccountInfo)
+  yield takeEvery(String(actions.createEOSAccountForOthersRequested), createEOSAccountForOthersRequested)
 }

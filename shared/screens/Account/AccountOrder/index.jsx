@@ -53,6 +53,7 @@ export default class AccountOrder extends Component {
     const eosAccountName = eosAccount.getIn(['eosAccountCreationRequestInfo', 'eosAccountName'])
     const ownerPublicKey = eosAccount.getIn(['eosAccountCreationRequestInfo', 'ownerPublicKey'])
     const activePublicKey = eosAccount.getIn(['eosAccountCreationRequestInfo', 'activePublicKey'])
+    const qrcode = JSON.stringify({ account: eosAccountName, owner: ownerPublicKey, active: activePublicKey })
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -74,7 +75,7 @@ export default class AccountOrder extends Component {
                 </LinearGradientContainer>
                 <View style={styles.qrCodeContainer}>
                   <QRCode
-                    value={'{ type: assistanceCreation }'}
+                    value={qrcode}
                     size={100}
                     color="black"
                   />

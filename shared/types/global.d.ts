@@ -321,6 +321,7 @@ declare module 'core/eos' {
     eosAuthSign: any
     signature: any
     verify: any
+    createEOSAccount: any
   }
 
   const eos: EOS

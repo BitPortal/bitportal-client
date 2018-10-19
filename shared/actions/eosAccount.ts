@@ -21,8 +21,13 @@ export const completeBackup = createAction('eosAccount/COMPLETE_BACKUP')
 export const getEOSKeyAccountsRequested = createAction<GetEOSKeyAccountsParams>('eosAccount/GET_KEY_ACCOUNTS_REQUESTED')
 export const getEOSKeyAccountsSucceeded = createAction<GetEOSKeyAccountsResult>('eosAccount/GET_KEY_ACCOUNTS_SUCCEEDED')
 export const getEOSKeyAccountsFailed = createAction<ErrorMessage>('eosAccount/GET_KEY_ACCOUNTS_FAILED')
+
 export const createEOSAccountAssistanceRequested = createAction<CreateEOSAccountAssistanceParams>('eosAccount/CREATE_ASSISTANCE_REQUESTED')
 export const createEOSAccountAssistanceSucceeded = createAction<CreateEOSAccountAssistanceResult>('eosAccount/CREATE_ASSISTANCE_SUCCEEDED')
 export const createEOSAccountAssistanceFailed = createAction<ErrorMessage>('eosAccount/CREATE_ASSISTANCE_FAILED')
 export const cancelEOSAccountAssistanceRequestd = createAction('eosAccount/CANCEL_ASSISTANCE')
 export const showAssistanceAccountInfo = createAction('eosAccount/SHOW_TEMP_ACCOUNT_INFO')
+
+export const createEOSAccountForOthersRequested = createAction<CreateEOSAccountForOthersParams>('eosAccount/CREATE_FOR_OTHERS_REQUESTED')
+export const createEOSAccountForOthersSucceeded = createAction<CreateEOSAccountForOthersResult>('eosAccount/CREATE_FOR_OTHERS_SUCCEEDED')
+export const createEOSAccountForOthersFailed = createAction<ErrorMessage>('eosAccount/CREATE_FOR_OTHERS_FAILED')

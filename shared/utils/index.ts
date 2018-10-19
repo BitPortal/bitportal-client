@@ -264,3 +264,13 @@ export const validateEOSActions = (actions: any, account: string) => {
 
   return errorMessage
 }
+
+export const isJsonString = (str: string) => {
+  try {
+    JSON.parse(str)
+  } catch (e) {
+    return false
+  }
+
+  return true
+}

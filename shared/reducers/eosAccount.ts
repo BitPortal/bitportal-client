@@ -11,6 +11,7 @@ const initialState = Immutable.fromJS({
   loading: false,
   loaded: false,
   error: null,
+  showSuccess: false
 })
 
 export default handleActions({
@@ -59,7 +60,7 @@ export default handleActions({
     return state.set('eosAccountCreationInfo', Immutable.fromJS(action.payload))
   },
   [actions.clearEOSAccountError] (state) {
-    return state.set('error', null).set('importError', null).set('getKeyAccountsError', null)
+    return state.set('error', null).set('importError', null).set('getKeyAccountsError', null).set('showSuccess', false)
   },
   [actions.resetEOSAccount] () {
     return initialState
@@ -75,5 +76,14 @@ export default handleActions({
   },
   [actions.createEOSAccountAssistanceSucceeded] (state, action) {
     return state.set('loading', false).set('eosAccountCreationRequestInfo', Immutable.fromJS(action.payload))
+  },
+  [actions.createEOSAccountForOthersRequested] (state) {
+    return state.set('loading', true)
+  },
+  [actions.createEOSAccountForOthersSucceeded] (state) {
+    return state.set('loading', false).set('showSuccess', true)
+  },
+  [actions.createEOSAccountForOthersFailed] (state, action) {
+    return state.set('error', action.payload).set('loading', false)
   }
 }, initialState)

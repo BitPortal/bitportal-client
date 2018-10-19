@@ -214,3 +214,27 @@ declare interface SyncEOSAccountCreationInfoResult {
   node: string
   timestamp: number
 }
+
+declare interface CreateEOSAccountForOthersParams {
+  eosAccountName: string
+  ownerPublicKey: string
+  activePublicKey: string
+  password: string
+  permission: string
+  componentId?: string
+}
+
+declare interface CreateEOSAccountForOthersResult {
+  name: string
+  permissions?: {
+    parent: string
+    perm_name: string
+    required_auth?: {
+      accounts: any[]
+      keys: {
+        key: string
+        weight: number
+      }[]
+    }
+  }[]
+}
