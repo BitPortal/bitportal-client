@@ -19,6 +19,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
+import com.reactnativenavigation.react.ReactGateway;
 import com.bitportal.wallet.core.BPCorePackage;
 import com.umeng.commonsdk.UMConfigure;
 import com.bitportal.wallet.umeng.RNUMConfigure;
@@ -41,13 +42,14 @@ public class MainApplication extends NavigationApplication {
   private boolean SHUTDOWN_LOG = false;
 
   @Override
-  protected ReactNativeHost createReactNativeHost() {
-      return new NavigationReactNativeHost(this) {
+  protected ReactGateway createReactGateway() {
+      ReactNativeHost host = new NavigationReactNativeHost(this, isDebug(), createAdditionalReactPackages()) {
           @Override
           protected String getJSMainModuleName() {
               return "index";
           }
       };
+      return new ReactGateway(this, isDebug(), host);
   }
 
   @Override

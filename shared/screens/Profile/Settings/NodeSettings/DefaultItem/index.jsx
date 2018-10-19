@@ -45,7 +45,7 @@ export default class DefaultItem extends Component {
   }
 
   async componentDidMount() {
-    if (this.props.data.item.url) this.checkStatus()
+    if (this.props.data.item.url) this.checkStatus(this.props.data.item.url)
     this.timer = setInterval(() => {
       if (this.props.data.item.url) this.checkStatus(this.props.data.item.url)
     }, 5000)
@@ -73,7 +73,7 @@ export default class DefaultItem extends Component {
         <View style={[styles.container, styles.between, styles.border, { paddingHorizontal: 20 }]}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={[styles.redius, { backgroundColor: pingInfo.color }]} />
-            <Text style={[styles.text10, { marginLeft: 10, color: pingInfo.color }]}> { pingInfo.value }ms </Text>
+            <Text style={[styles.text10, { maxWidth: FontScale(40), flex: 1, marginLeft: 10, color: pingInfo.color }]}> { pingInfo.value }ms </Text>
             <Text style={[styles.text14, { marginLeft: 10 }]}>{data.item.url}</Text>
           </View>
           {active && <Ionicons name="ios-checkmark" size={36} color={Colors.bgColor_0_122_255} />}
