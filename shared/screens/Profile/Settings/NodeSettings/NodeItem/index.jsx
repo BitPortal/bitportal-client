@@ -1,21 +1,13 @@
 import React from 'react'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { FontScale, SCREEN_WIDTH } from 'utils/dimens'
-import { Text, View, TouchableHighlight, TouchableWithoutFeedback, StyleSheet } from 'react-native'
+import { SCREEN_WIDTH } from 'utils/dimens'
+import { TouchableHighlight, StyleSheet } from 'react-native'
 import { SwipeRow } from 'react-native-swipe-list-view'
 import { connect } from 'react-redux'
+import DefaultItem from '../DefaultItem'
 
 const styles = StyleSheet.create({
-  container: {
-    width: SCREEN_WIDTH,
-    height: 64,
-    backgroundColor: Colors.minorThemeColor
-  },
-  border: {
-    borderBottomColor: Colors.bgColor_000000,
-    borderBottomWidth: StyleSheet.hairlineWidth
-  },
   btn: {
     width: 100,
     height: 64,
@@ -25,30 +17,9 @@ const styles = StyleSheet.create({
   center: {
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  between: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row'
-  },
-  text16: {
-    fontSize: FontScale(16),
-    color: Colors.textColor_255_255_238
   }
 })
 
-export const DefaultItem = ({ data, onPress, active }) => (
-  <TouchableWithoutFeedback
-    underlayColor={Colors.hoverColor}
-    style={styles.container}
-    onPress={onPress}
-  >
-    <View style={[styles.container, styles.between, styles.border, { paddingHorizontal: 32 }]}>
-      <Text style={styles.text16}>{data.item.url}</Text>
-      {active && <Ionicons name="ios-checkmark" size={36} color={Colors.bgColor_0_122_255} />}
-    </View>
-  </TouchableWithoutFeedback>
-)
 
 export const DeleteButton = ({ onPress }) => (
   <TouchableHighlight

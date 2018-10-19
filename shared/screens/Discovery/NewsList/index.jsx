@@ -15,7 +15,7 @@ export default class NewsList extends PureComponent {
   renderHeader = () => (
     <View>
       <View style={styles.listTitle}>
-        <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>
+        <Text style={[styles.text14, { fontWeight: 'bold', color: Colors.textColor_255_255_238 }]}>
           {messages[this.props.locale].discovery_label_news}
         </Text>
       </View>

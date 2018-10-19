@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: 50,
     backgroundColor: Colors.bgColor_30_31_37,
-    paddingHorizontal: 32
+    paddingHorizontal: 20
   },
   center: {
     alignItems: 'center',
