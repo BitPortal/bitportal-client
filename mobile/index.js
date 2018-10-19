@@ -15,6 +15,7 @@ import { getInitialEOSAsset } from 'selectors/eosAsset'
 import { getInitialDapp } from 'selectors/dApp'
 import { getInitialAppInfo } from 'selectors/appInfo'
 import { startSingleApp, startTabBasedApp, registerScreens } from 'navigators'
+import { Navigation } from 'react-native-navigation'
 import storage from 'utils/storage'
 import Provider from 'components/Provider'
 import configure from 'store'
@@ -97,5 +98,30 @@ const setStatusBarStyle = async () => {
   StatusBar.setBarStyle(statusBarMode, true)
 }
 
-runApp()
+Navigation.events().registerAppLaunchedListener(() => {
+  Navigation.setDefaultOptions({
+    topBar: {
+      visible: false,
+      animate: false,
+      height: 0
+    },
+    layout: {
+      screenBackgroundColor: Colors.mainThemeColor,
+      backgroundColor: Colors.minorThemeColor,
+      orientation: ['portrait']
+    },
+    bottomTabs: {
+      visible: true,
+      drawBehind: true,
+      animate: Platform.OS !== 'ios',
+      backgroundColor: Colors.minorThemeColor,
+      tabColor: 'gray',
+      selectedTabColor: Colors.textColor_89_185_226,
+      hideShadow: false,
+      titleDisplayMode: 'alwaysShow'
+    }
+  })
+  runApp()
+})
+
 setStatusBarStyle()

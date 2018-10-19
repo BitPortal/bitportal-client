@@ -54,31 +54,6 @@ import Images from 'resources/images'
 import Colors from 'resources/colors'
 import messages from 'resources/messages'
 
-Navigation.events().registerAppLaunchedListener(() => {
-  Navigation.setDefaultOptions({
-    topBar: {
-      visible: false,
-      animate: false,
-      height: 0
-    },
-    layout: {
-      screenBackgroundColor: Colors.mainThemeColor,
-      backgroundColor: Colors.minorThemeColor,
-      orientation: ['portrait']
-    },
-    bottomTabs: {
-      visible: true,
-      drawBehind: true,
-      animate: Platform.OS !== 'ios',
-      backgroundColor: Colors.minorThemeColor,
-      tabColor: 'gray',
-      selectedTabColor: Colors.textColor_89_185_226,
-      hideShadow: false,
-      titleDisplayMode: 'alwaysShow'
-    }
-  })
-})
-
 export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.Welcome', () => screenComponent(Welcome, store))
   Navigation.registerComponent('BitPortal.DappWebView', () => screenComponent(DappWebView, store))
