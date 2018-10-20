@@ -85,5 +85,14 @@ export default handleActions({
   },
   [actions.createEOSAccountForOthersFailed] (state, action) {
     return state.set('error', action.payload).set('loading', false)
+  },
+  [actions.checkEOSAccountCreationStatusRequested] (state) {
+    return state.set('loading', true)
+  },
+  [actions.checkEOSAccountCreationStatusSucceeded] (state) {
+    return state.set('loading', false).set('showSuccess', true)
+  },
+  [actions.checkEOSAccountCreationStatusFailed] (state, action) {
+    return state.set('error', action.payload).set('loading', false)
   }
 }, initialState)

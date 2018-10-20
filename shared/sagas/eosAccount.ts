@@ -9,7 +9,7 @@ import { traceImport } from 'actions/trace'
 import  { setSelected } from 'actions/producer'
 import { votedProducersSelector, eosCoreLiquidBalanceSelector, eosAccountNameSelector } from 'selectors/eosAccount'
 import secureStorage from 'utils/secureStorage'
-import { BITPORTAL_API_EOS_URL } from 'constants/env'
+import { BITPORTAL_API_EOS_URL, EOS_API_URL } from 'constants/env'
 import { randomKey, privateToPublic, isValidPrivate, initEOS, getPermissionsByKey, getInitialAccountInfo, createEOSAccount } from 'core/eos'
 import { encrypt } from 'core/key'
 import { getErrorMessage, getEOSErrorMessage } from 'utils'
@@ -113,8 +113,10 @@ function* createEOSAccountAssistanceRequested(action: Action<CreateEOSAccountAss
       timestamp: +Date.now(),
     }
 
-    yield call(secureStorage.setItem, `EOS_ACCOUNT_CREATION_REQUEST_INFO`, eosAccountCreationRequestInfo, true)
-    yield put(actions.createEOSAccountAssistanceSucceeded(eosAccountCreationRequestInfo))
+    yield all([
+      call(secureStorage.setItem, `EOS_ACCOUNT_CREATION_REQUEST_INFO`, eosAccountCreationRequestInfo, true),
+      put(actions.createEOSAccountAssistanceSucceeded(eosAccountCreationRequestInfo))
+    ])
 
     if (action.payload.componentId) push('BitPortal.AccountOrder', action.payload.componentId)
   } catch (e) {
@@ -329,6 +331,64 @@ function* createEOSAccountForOthersRequested(action: Action<CreateEOSAccountForO
   }
 }
 
+function* checkEOSAccountCreationStatusRequested(action: Action<CheckEOSAccountStatusParams>) {
+  if (!action.payload) return
+
+  try {
+    const eosAccountCreationRequestInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_CREATION_REQUEST_INFO`, true)
+    const  {
+      eosAccountName,
+      ownerPublicKey,
+      activePublicKey,
+      ownerKeystore,
+      // activeKeystore
+    } = eosAccountCreationRequestInfo
+
+    const eos = yield call(initEOS, {})
+    const accountInfo = yield call(eos.getAccount, eosAccountName)
+
+    const walletInfo = {
+      eosAccountName,
+      permission: 'OWNER',
+      publicKey: ownerPublicKey,
+      coin: 'EOS',
+      timestamp: +Date.now(),
+      origin: 'classic'
+    }
+
+    const eosAccountCreationInfo = {
+      eosAccountName,
+      publicKey: ownerPublicKey,
+      transactionId: '',
+      irreversible: false,
+      backup: false,
+      node: EOS_API_URL,
+      timestamp: +Date.now()
+    }
+
+    yield all([
+      call(secureStorage.setItem, `EOS_ACCOUNT_CREATION_INFO_${eosAccountName}`, eosAccountCreationInfo, true),
+      put(actions.syncEOSAccountCreationInfo(eosAccountCreationInfo)),
+      call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, accountInfo, true),
+      call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_OWNER_${ownerPublicKey}`, ownerKeystore, true),
+      call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_ACTIVE_${activePublicKey}`, activePublicKey, true),
+      call(secureStorage.setItem, `CLASSIC_WALLET_INFO_EOS_${eosAccountName}`, walletInfo, true),
+      call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
+    ])
+
+    yield all([
+      put(actions.importEOSAccountSucceeded(accountInfo)),
+      put(createClassicWalletSucceeded(walletInfo)),
+      put(actions.getEOSAccountRequested({ eosAccountName: walletInfo.eosAccountName }))
+    ])
+
+    yield put(actions.checkEOSAccountCreationStatusSucceeded(accountInfo))
+    if (action.payload.componentId) popToRoot(action.payload.componentId)
+  } catch (e) {
+    yield put(actions.checkEOSAccountCreationStatusFailed(getEOSErrorMessage(e)))
+  }
+}
+
 export default function* eosAccountSaga() {
   yield takeEvery(String(actions.createEOSAccountRequested), createEOSAccountRequested)
   yield takeEvery(String(actions.importEOSAccountRequested), importEOSAccountRequested)
@@ -342,4 +402,5 @@ export default function* eosAccountSaga() {
   yield takeEvery(String(actions.cancelEOSAccountAssistanceRequestd), cancelEOSAccountAssistanceRequestd)
   yield takeEvery(String(actions.showAssistanceAccountInfo), showAssistanceAccountInfo)
   yield takeEvery(String(actions.createEOSAccountForOthersRequested), createEOSAccountForOthersRequested)
+  yield takeEvery(String(actions.checkEOSAccountCreationStatusRequested), checkEOSAccountCreationStatusRequested)
 }

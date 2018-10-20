@@ -2492,8 +2492,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = bitportal/bitportal.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
@@ -2545,8 +2545,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.bitportal.wallet;
 				PRODUCT_NAME = bitportal;
-				PROVISIONING_PROFILE = "21b31255-b7bd-43d9-a0a3-4944760a000b";
-				PROVISIONING_PROFILE_SPECIFIER = "wall development profile";
+				PROVISIONING_PROFILE = "8cd75e73-9ada-45e4-88af-19ea0bff69ab";
+				PROVISIONING_PROFILE_SPECIFIER = "wallet ad hoc profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "bitportal-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2560,8 +2560,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = bitportal/bitportal.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WFW5A3K678;
@@ -2613,8 +2613,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.bitportal.wallet;
 				PRODUCT_NAME = bitportal;
-				PROVISIONING_PROFILE = "21b31255-b7bd-43d9-a0a3-4944760a000b";
-				PROVISIONING_PROFILE_SPECIFIER = "wall development profile";
+				PROVISIONING_PROFILE = "8cd75e73-9ada-45e4-88af-19ea0bff69ab";
+				PROVISIONING_PROFILE_SPECIFIER = "wallet ad hoc profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "bitportal-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";

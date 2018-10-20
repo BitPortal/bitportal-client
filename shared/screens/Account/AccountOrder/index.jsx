@@ -39,7 +39,8 @@ export default class AccountOrder extends Component {
   }
 
   refreshOrderInfo = () => {
-
+    const componentId = this.props.componentId
+    this.props.actions.checkEOSAccountCreationStatusRequested({ componentId })
   }
 
   deleteOrder = () => {

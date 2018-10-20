@@ -20,6 +20,8 @@ export const errorMessages = (error/* , messages*/) => {
   const message = typeof error === 'object' ? error.message : error
 
   switch (String(message)) {
+    case 'Key derivation failed - possibly wrong passphrase':
+      return 'Invalid password'
     case 'EOS System Error':
       return 'EOS System Error'
     default:

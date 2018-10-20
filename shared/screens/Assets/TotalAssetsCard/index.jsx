@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     locale: state.intl.get('locale'),
     isAssetHidden: state.eosAccount.get('isAssetHidden'),
     backupCompleted: state.eosAccount.getIn(['eosAccountCreationInfo', 'backup']),
-    isNew: !!state.eosAccount.getIn(['eosAccountCreationInfo', 'transactionId']),
+    isNew: !!state.eosAccount.getIn(['eosAccountCreationInfo', 'eosAccountName']),
   }),
   dispatch => ({
     actions: bindActionCreators({

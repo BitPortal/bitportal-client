@@ -31,3 +31,7 @@ export const showAssistanceAccountInfo = createAction('eosAccount/SHOW_TEMP_ACCO
 export const createEOSAccountForOthersRequested = createAction<CreateEOSAccountForOthersParams>('eosAccount/CREATE_FOR_OTHERS_REQUESTED')
 export const createEOSAccountForOthersSucceeded = createAction<CreateEOSAccountForOthersResult>('eosAccount/CREATE_FOR_OTHERS_SUCCEEDED')
 export const createEOSAccountForOthersFailed = createAction<ErrorMessage>('eosAccount/CREATE_FOR_OTHERS_FAILED')
+
+export const checkEOSAccountCreationStatusRequested = createAction<CheckEOSAccountStatusParams>('eosAccount/CHECK_CREATION_STATUS_REQUESTED')
+export const checkEOSAccountCreationStatusSucceeded = createAction<CheckEOSAccountStatusResult>('eosAccount/CHECK_CREATION_STATUS_SUCCEEDED')
+export const checkEOSAccountCreationStatusFailed = createAction<ErrorMessage>('eosAccount/CHECK_CREATION_STATUS_FAILED')
