@@ -238,6 +238,45 @@ const verify = async ({
   return ecc.verify(signature, data, wif)
 }
 
+const createEOSAccount = async ({
+  creator,
+  eosAccountName,
+  ownerPublicKey,
+  activePublicKey,
+  password,
+  permission
+}: CreateEOSAccountParams) => {
+  const _permission = permission || 'ACTIVE'
+  const accountInfo = await secureStorage.getItem(`EOS_ACCOUNT_INFO_${creator}`, true)
+  const wifs = await getEOSWifsByInfo(password, accountInfo, [_permission])
+  const keyProvider = wifs.map((item: any) => item.wif)
+  const eos = await initEOS({ keyProvider })
+  const data = await eos.transaction((tr: any) => {
+    tr.newaccount({
+      creator,
+      name: eosAccountName,
+      owner: ownerPublicKey,
+      active: activePublicKey
+    })
+
+    tr.buyrambytes({
+      payer: creator,
+      receiver: eosAccountName,
+      bytes: 8192
+    })
+
+    tr.delegatebw({
+      from: creator,
+      receiver: eosAccountName,
+      stake_net_quantity: '0.1000 EOS',
+      stake_cpu_quantity: '0.1000 EOS',
+      transfer: 0
+    })
+  })
+
+  return data
+}
+
 export {
   initEOS,
   getEOS,
@@ -253,5 +292,6 @@ export {
   pushEOSAction,
   eosAuthSign,
   signature,
-  verify
+  verify,
+  createEOSAccount
 }

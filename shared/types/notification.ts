@@ -1,6 +1,7 @@
 
 declare interface SubscribeParams {
   deviceToken?: string,
+  deviceId?: string,
   bpId?: any,
   chainType?: string,
   walletId?: string,

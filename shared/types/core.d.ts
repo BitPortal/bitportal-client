@@ -50,3 +50,12 @@ declare interface VerifyParams {
   data: string
   publicKey: string
 }
+
+declare interface CreateEOSAccountParams {
+  creator: string
+  account: string
+  permission: string
+  password: string
+  ownerPublicKey: string
+  activePublicKey: string
+}

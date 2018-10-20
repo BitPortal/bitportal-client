@@ -11128,6 +11128,11 @@ react-native-image-crop-picker@^0.20.3:
   resolved "http://registry.npm.taobao.org/react-native-image-crop-picker/download/react-native-image-crop-picker-0.20.3.tgz#565d69c1764e96abef23871fe4d6d58b1ee35e18"
   integrity sha512-jzaU/1HnLJhRgV5oSBfIvLKU15OdCxAl0KtAHzdJfnyP4cbG5hJjhtXAN3pqz2Z7qH1kJgVPvkifrO+Hvqmumg==
 
+react-native-keyboard-manager@^4.0.13-10:
+  version "4.0.13-10"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-manager/-/react-native-keyboard-manager-4.0.13-10.tgz#ec0a156edac846350f7374760406bae0dfec8744"
+  integrity sha512-h3YmuJrL2teEeTm4t9jYUn5InMx7yvX2JfvOTQufrpFElLYuJ+QtYaRZpsT/arx8SzzjXUNHTl4xWYvXRhWDNQ==
+
 react-native-linear-gradient@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.4.0.tgz#51d8ea12bb72a59bede9edc87b694b16b64cf435"

@@ -19,11 +19,12 @@ import AssetSearch from 'screens/Assets/AssetSearch'
 import AssetsTransfer from 'screens/Assets/AssetsTransfer'
 import AvailableAssets from 'screens/Assets/AvailableAssets'
 import Backup from 'screens/Account/Backup'
+import AccountOrder from 'screens/Account/AccountOrder'
 import AccountImport from 'screens/Account/AccountImport'
-import AccountCreation from 'screens/Account/AccountCreation'
 import AccountSelection from 'screens/Account/AccountSelection'
+import AccountAssistance from 'screens/Account/AccountAssistance'
+import AccountAssistancePayment from 'screens/Account/AccountAssistancePayment'
 import EOSAccountCreation from 'screens/Account/EOSAccountCreation'
-import PrivateKeyCreation from 'screens/Account/PrivateKeyCreation'
 import Discovery from 'screens/Discovery'
 import ArticleWebView from 'screens/Discovery/article'
 import Markdown from 'screens/Discovery/markdown'
@@ -42,7 +43,6 @@ import Mediafax from 'screens/Profile/Mediafax'
 import Languages from 'screens/Profile/Settings/Languages'
 import Currencies from 'screens/Profile/Settings/Currencies'
 import NodeSettings from 'screens/Profile/Settings/NodeSettings'
-import AccountList from 'screens/Profile/AccountList'
 import CreateContact from 'screens/Profile/CreateContact'
 import ResetPassword from 'screens/Profile/ResetPassword'
 import AccountManager from 'screens/Profile/AccountManager'
@@ -53,31 +53,6 @@ import TransactionHistory from 'screens/Profile/TransactionHistory'
 import Images from 'resources/images'
 import Colors from 'resources/colors'
 import messages from 'resources/messages'
-
-Navigation.events().registerAppLaunchedListener(() => {
-  Navigation.setDefaultOptions({
-    topBar: {
-      visible: false,
-      animate: false,
-      height: 0
-    },
-    layout: {
-      screenBackgroundColor: Colors.mainThemeColor,
-      backgroundColor: Colors.minorThemeColor,
-      orientation: ['portrait']
-    },
-    bottomTabs: {
-      visible: true,
-      drawBehind: true,
-      animate: Platform.OS !== 'ios',
-      backgroundColor: Colors.minorThemeColor,
-      tabColor: 'gray',
-      selectedTabColor: Colors.textColor_89_185_226,
-      hideShadow: false,
-      titleDisplayMode: 'alwaysShow'
-    }
-  })
-})
 
 export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.Welcome', () => screenComponent(Welcome, store))
@@ -115,7 +90,6 @@ export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.Languages', () => screenComponent(Languages, store))
   Navigation.registerComponent('BitPortal.Currencies', () => screenComponent(Currencies, store))
   Navigation.registerComponent('BitPortal.NodeSettings', () => screenComponent(NodeSettings, store))
-  Navigation.registerComponent('BitPortal.AccountList', () => screenComponent(AccountList, store))
   Navigation.registerComponent('BitPortal.CreateContact', () => screenComponent(CreateContact, store))
   Navigation.registerComponent('BitPortal.ResetPassword', () => screenComponent(ResetPassword, store))
   Navigation.registerComponent('BitPortal.AccountManager', () => screenComponent(AccountManager, store))
@@ -124,11 +98,12 @@ export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.ExportPrivateKey', () => screenComponent(ExportPrivateKey, store))
   Navigation.registerComponent('BitPortal.TransactionHistory', () => screenComponent(TransactionHistory, store))
   Navigation.registerComponent('BitPortal.Backup', () => screenComponent(Backup, store))
+  Navigation.registerComponent('BitPortal.AccountOrder', () => screenComponent(AccountOrder, store))
   Navigation.registerComponent('BitPortal.AccountImport', () => screenComponent(AccountImport, store))
-  Navigation.registerComponent('BitPortal.AccountCreation', () => screenComponent(AccountCreation, store))
   Navigation.registerComponent('BitPortal.AccountSelection', () => screenComponent(AccountSelection, store))
+  Navigation.registerComponent('BitPortal.AccountAssistance', () => screenComponent(AccountAssistance, store))
+  Navigation.registerComponent('BitPortal.AccountAssistancePayment', () => screenComponent(AccountAssistancePayment, store))
   Navigation.registerComponent('BitPortal.EOSAccountCreation', () => screenComponent(EOSAccountCreation, store))
-  Navigation.registerComponent('BitPortal.PrivateKeyCreation', () => screenComponent(PrivateKeyCreation, store))
 }
 
 export const startSingleApp = () => {

@@ -96,6 +96,7 @@
     "react-native-fast-image": "git+https://github.com/TerenceGe/react-native-fast-image.git",
     "react-native-fs": "^2.11.17",
     "react-native-image-crop-picker": "^0.20.3",
+    "react-native-keyboard-manager": "^4.0.13-10",
     "react-native-linear-gradient": "^2.4.0",
     "react-native-modal": "^5.4.0",
     "react-native-navbar": "^2.1.0",

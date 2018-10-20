@@ -1,0 +1,14 @@
+/* 
+  InfoPlist.strings
+  bitportal
+
+  Created by apple on 2018/10/16.
+  Copyright © 2018年 Facebook. All rights reserved.
+*/
+"NSPhotoLibraryUsageDescription" = "开启相册权限";
+"NSBluetoothPeripheralUsageDescription" = "开启蓝牙权限";
+"NSCameraUsageDescription" = "开启摄像权限";
+"NSAppleMusicUsageDescription" = "访问媒体资料库";
+"NSMotionUsageDescription" = "开启运动健身权限";
+"NSSpeechRecognitionUsageDescription" = "开启语音识别权限";
+"NSCalendarsUsageDescription" = "访问日历权限";

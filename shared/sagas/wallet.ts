@@ -17,7 +17,7 @@ import { privateToPublic, initEOS, randomKey } from 'core/eos'
 import { getMasterSeed, encrypt, decrypt, getEOSKeys, getEOSWifsByInfo } from 'core/key'
 import { push, pop, popToRoot } from 'utils/location'
 import { unsubscribe } from 'actions/notification'
-import { getRegisterationID } from 'utils/nativeUtil'
+import { getDeviceID } from 'utils/nativeUtil'
 import wif from 'wif'
 
 function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAccountParams>) {
@@ -172,9 +172,6 @@ function* createWalletRequested(action: Action<CreateWalletParams>) {
 function* syncWalletRequested() {
   try {
     // const items = yield call(secureStorage.getAllItems)
-    // for (const item of Object.keys(items)) {
-    //   yield call(secureStorage.removeItem, item)
-    // }
     // console.log(items)
 
     const allItems = yield call(secureStorage.getAllItems)
@@ -273,9 +270,9 @@ function* logoutRequested(action: Action<LogoutParams>) {
     if (action.payload.componentId) popToRoot(action.payload.componentId)
 
     // unsubscribe
-    const registerationID = yield call(getRegisterationID)
+    const deviceId = yield call(getDeviceID)
     const params = {
-      deviceToken: registerationID,
+      deviceId,
       chainType: coin,
       walletId: eosAccountName
     }

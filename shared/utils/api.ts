@@ -52,7 +52,7 @@ export const fetchBase = async (
       fetchOptions.body = JSON.stringify(params)
     }
   }
-  console.log('###---xx ', url)
+  // console.log('###---yy ', url)
 
   return fetch(url, fetchOptions).then((res: any) => {
     if (!res.ok) {
@@ -118,3 +118,4 @@ export const unsubscribe = (params: any) => traceFetchBase('POST', '/notificatio
 export const traceTransaction = (params: any) => traceFetchBase('POST', '/transaction', params)
 export const traceStake = (params: any) => traceFetchBase('POST', '/stake', params)
 export const traceVotes = (params: any) => traceFetchBase('POST', '/votes', params)
+export const traceImport = (params: any) => traceFetchBase('POST', '/registry/wallets/import', params)

@@ -7,7 +7,7 @@ export const ASSETS_TOKEN_RECEIVE = 'assets_token_receive' // 资产 - token资�
 export const ASSETS_TRX_RECORD = 'assets_trx_record' // 资产 - 资产详情 - 交易记录
 export const ASSETS_EOS_RESOURCE = 'assets_EOS_resource' // 资产 - EOS资源管理
 export const ASSETS_EOS_RESOURCE_CPU = 'assets_EOS_resource_CPU' // 资产 - EOS资源管理 - 计算资源
-export const ASSETS_EOS_RESOURCE_NET = 'assets_EOS_resource_NET' // 资产 - EOS资源管理 - 网络带块 
+export const ASSETS_EOS_RESOURCE_NET = 'assets_EOS_resource_NET' // 资产 - EOS资源管理 - 网络带宽 
 export const ASSETS_EOS_RESOURCE_RAM = 'assets_EOS_resource_RAM' // 资产 - EOS资源管理 - 内存容量
 export const ASSETS_ADD_TOKEN = 'assets_add_token' // 资产 - 添加token资产
 
@@ -19,6 +19,8 @@ export const MARKET_TOKEN_DETAIL = 'market_token_detail' // 行情 - token详情
 
 export const BP_VOTING = 'bp_voting' // 节点投票
 export const BP_INFO = 'bp_info' // 节点详情
+
+export const DAPP_STORE = 'dapp_store' // 点击dapp
 
 export const CONTACTS_ADD = 'contacts_add' // 添加联系人
 
