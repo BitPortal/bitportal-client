@@ -7,6 +7,7 @@ import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import LinearGradientContainer from 'components/LinearGradientContainer'
 import { IntlProvider } from 'react-intl'
 import Loading from 'components/Loading'
+import Alert from 'components/Alert'
 import messages from 'resources/messages'
 import Colors from 'resources/colors'
 import { bindActionCreators } from 'redux'
@@ -14,6 +15,25 @@ import * as eosAccountActions from 'actions/eosAccount'
 import { BPGradientButton } from 'components/BPNativeComponents'
 import InputItem from './InputItem'
 import styles from './styles'
+
+export const errorMessages = (error/* , messages*/) => {
+  if (!error) { return null }
+
+  const message = typeof error === 'object' ? error.message : error
+
+  switch (String(message)) {
+    // case 'EOS System Error':
+      // return 'EOS System Error'
+    default:
+      return '尚未激活!'
+  }
+}
+/*
+ * export const errorMessageDetail = (error) => {
+ *   if (!error || typeof error !== 'object') { return null }
+ *
+ *   return error.detail
+ * }*/
 
 @connect(
   state => ({
@@ -51,6 +71,7 @@ export default class AccountOrder extends Component {
   render() {
     const { locale, eosAccount } = this.props
     const loading = eosAccount.get('loading')
+    const error = eosAccount.get('error')
     const eosAccountName = eosAccount.getIn(['eosAccountCreationRequestInfo', 'eosAccountName'])
     const ownerPublicKey = eosAccount.getIn(['eosAccountCreationRequestInfo', 'ownerPublicKey'])
     const activePublicKey = eosAccount.getIn(['eosAccountCreationRequestInfo', 'activePublicKey'])
@@ -99,6 +120,7 @@ export default class AccountOrder extends Component {
               </View>
             </ScrollView>
           </View>
+          <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearEOSAccountError} />
           <Loading isVisible={loading} />
         </View>
       </IntlProvider>
