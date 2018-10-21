@@ -1,21 +1,16 @@
 import React, { Component } from 'react';
-import { FormattedNumber } from 'react-intl';
 import Colors from 'resources/colors';
 import { connect } from 'react-redux';
 import {
   Text,
   View,
-  TouchableHighlight,
-  VirtualizedList,
   TouchableOpacity
 } from 'react-native';
 import { sortFilterSelector } from 'selectors/ticker';
 import { bindActionCreators } from 'redux';
 import * as tickerActions from 'actions/ticker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { FontScale } from 'utils/dimens';
-import { filterBgColor } from 'utils';
-import { ASSET_FRACTION, DEFAULT_SORT_FILTER } from 'constants/market';
+import { DEFAULT_SORT_FILTER } from 'constants/market';
 import messages from 'resources/messages';
 import styles from './styles';
 
@@ -36,7 +31,7 @@ import styles from './styles';
   null,
   { withRef: true }
 )
-export class MarketBar extends Component {
+class MarketBar extends Component {
   sortToggle(selector) {
     const { exchangeFilter, sortFilter } = this.props;
     switch (true) {

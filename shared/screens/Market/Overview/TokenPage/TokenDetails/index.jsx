@@ -1,22 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Text, View, ActivityIndicator } from "react-native";
-import AccordionPanel from "components/AccordionPanel";
 import DescriptionPanel from "components/DescriptionPanel";
 import { MARKET_DETAIL_KEYS } from "constants/market";
 import { IntlProvider, FormattedMessage, FormattedNumber } from "react-intl";
 import messages from "resources/messages";
 import styles from "./styles";
 
-const obj = {
-  foo: {
-    bar: {
-      baz() {
-        return 42;
-      }
-    }
-  }
-};
 
 @connect(
   state => ({

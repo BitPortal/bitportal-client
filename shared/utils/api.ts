@@ -1,11 +1,13 @@
 import {
   BITPORTAL_API_REST_URL,
   BITPORTAL_API_MARKET_URL,
+  BITPROTAL_API_TRACE_URL,
   BITPORTAL_API_CMS_URL,
   CURRENCY_RATE_URL
 } from "constants/env";
 import storage from "utils/storage";
 import { isMobile } from "utils/platform";
+import { Platform } from "react-native";
 
 if (!isMobile) require("isomorphic-fetch");
 
@@ -52,17 +54,23 @@ export const fetchBase = async (
     }
   }
   console.log("###---xx ", url);
+  console.log(111, fetchOptions, url);
 
   return fetch(url, fetchOptions).then((res: any) => {
+    console.log(222);
     if (!res.ok) {
       return res.json().then((e: any) => Promise.reject({ message: e }));
     }
+    console.log(333);
 
     const contentType = res.headers.get("content-type");
 
     if (/json/.test(contentType)) {
+      console.log(444);
+
       return res.json();
     }
+    console.log(555);
 
     return null;
   });
@@ -87,11 +95,28 @@ const marketFetchBase = (
 ) =>
   fetchBase(method, endPoint, params, {
     ...options,
-    baseUrl: "http://localhost:4041/api/v2"
+
+    baseUrl:
+      Platform.OS === "ios"
+        ? "http://localhost:4041/api/v2"
+        : "http://10.0.2.2:4041/api/v2"
   });
 
-export const getTickers = (params?: TickerParams) =>
-  marketFetchBase("GET", "/tickers", params);
+const traceFetchBase = (
+  method: FetchMethod = "GET",
+  endPoint: string = "/hello",
+  params: object = {},
+  options: object = {}
+) =>
+  fetchBase(method, endPoint, params, {
+    ...options,
+    baseUrl: BITPROTAL_API_TRACE_URL
+  });
+
+export const getTickers = (params?: TickerParams) => {
+  console.log("getTickers");
+  return marketFetchBase("GET", "/tickers", params);
+};
 export const getChart = (params: ChartParams) => {
   const { chartType, ...excludeChartType } = params;
   return marketFetchBase("GET", `/charts/${chartType}`, excludeChartType);
@@ -116,13 +141,15 @@ export const importEOSAccount = (params: any) =>
   fetchBase("POST", "/registry/wallets/import", params);
 
 export const subscribe = (params: any) =>
-  marketFetchBase("POST", "/notification/subscribe", params);
+  traceFetchBase("POST", "/notification/subscribe", params);
 export const unsubscribe = (params: any) =>
-  marketFetchBase("POST", "/notification/unsubscribe", params);
+  traceFetchBase("POST", "/notification/unsubscribe", params);
 
 export const traceTransaction = (params: any) =>
-  marketFetchBase("POST", "/transaction", params);
+  traceFetchBase("POST", "/transaction", params);
 export const traceStake = (params: any) =>
-  marketFetchBase("POST", "/stake", params);
+  traceFetchBase("POST", "/stake", params);
 export const traceVotes = (params: any) =>
-  marketFetchBase("POST", "/votes", params);
+  traceFetchBase("POST", "/votes", params);
+export const traceImport = (params: any) =>
+  traceFetchBase("POST", "/registry/wallets/import", params);

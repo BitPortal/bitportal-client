@@ -17,10 +17,6 @@ import Prompt from "components/Prompt";
 import Alert from "components/Alert";
 import messages from "resources/messages";
 import {
-  FontScale,
-  SCREEN_WIDTH,
-  SCREEN_HEIGHT,
-  NAV_BAR_HEIGHT,
   FLOATING_CARD_WIDTH,
   FLOATING_CARD_BORDER_RADIUS,
   FLOATING_CARD_MARGIN_BOTTOM
@@ -55,11 +51,15 @@ export const errorMessages = (error, messages) => {
       return messages.resource_error_popup_text_cpu_insufficient;
     case "EOS System Error":
       if (
-        message.indexOf("assertion failure with message: insufficient staked net bandWidth") !== 1
+        message.indexOf(
+          "assertion failure with message: insufficient staked net bandWidth"
+        ) !== 1
       ) {
         return messages.voting_popup_label_stake_net_insufficient;
       } else if (
-        message.indexOf("assertion failure with message: insufficient staked cpu bandWidth") !== 1
+        message.indexOf(
+          "assertion failure with message: insufficient staked cpu bandWidth"
+        ) !== 1
       ) {
         return messages.voting_popup_label_stake_cpu_insufficient;
       }
@@ -79,11 +79,15 @@ export const errorMessageDetail = (error, messages) => {
   switch (String(message)) {
     case "EOS System Error":
       if (
-        message.indexOf("assertion failure with message: insufficient staked net bandWidth") !== 1
+        message.indexOf(
+          "assertion failure with message: insufficient staked net bandWidth"
+        ) !== 1
       ) {
         return messages.voting_popup_text_stake_net_insufficient;
       } else if (
-        message.indexOf("assertion failure with message: insufficient staked cpu bandWidth") !== 1
+        message.indexOf(
+          "assertion failure with message: insufficient staked cpu bandWidth"
+        ) !== 1
       ) {
         return messages.voting_popup_text_stake_cpu_insufficient;
       }
@@ -115,14 +119,17 @@ const validate = (values, props) => {
 
   if (activeForm === "Delegate") {
     if (+eosBalance < +values.get("quant")) {
-      errors.quant = messages[props.locale].resource_error_text_balance_insufficient;
+      errors.quant =
+        messages[props.locale].resource_error_text_balance_insufficient;
     }
   } else if (resource === "net") {
     if (+netWeight < +values.get("quant")) {
-      errors.quant = messages[props.locale].resource_error_text_balance_insufficient;
+      errors.quant =
+        messages[props.locale].resource_error_text_balance_insufficient;
     }
   } else if (+cpuWeight < +values.get("quant")) {
-    errors.quant = messages[props.locale].resource_error_text_balance_insufficient;
+    errors.quant =
+      messages[props.locale].resource_error_text_balance_insufficient;
   }
 
   return errors;
@@ -211,11 +218,23 @@ export default class DelegateBandwidthForm extends Component {
     const loading = delegating || undelegating;
     const error = bandwidth.get("error");
     const disabled = invalid || pristine || loading;
-    const netWeight = eosAccount.getIn(["data", "total_resources", "net_weight"])
-      ? eosAccount.getIn(["data", "total_resources", "net_weight"]).split(" ")[0]
+    const netWeight = eosAccount.getIn([
+      "data",
+      "total_resources",
+      "net_weight"
+    ])
+      ? eosAccount
+          .getIn(["data", "total_resources", "net_weight"])
+          .split(" ")[0]
       : 0;
-    const cpuWeight = eosAccount.getIn(["data", "total_resources", "cpu_weight"])
-      ? eosAccount.getIn(["data", "total_resources", "cpu_weight"]).split(" ")[0]
+    const cpuWeight = eosAccount.getIn([
+      "data",
+      "total_resources",
+      "cpu_weight"
+    ])
+      ? eosAccount
+          .getIn(["data", "total_resources", "cpu_weight"])
+          .split(" ")[0]
       : 0;
     const availableBalance =
       this.state.activeForm === "Delegate"
@@ -260,7 +279,10 @@ export default class DelegateBandwidthForm extends Component {
               dismiss={this.props.actions.clearBandwidthError}
             />
             <Alert
-              message={!!showSuccess && messages[locale].resource_popup_text_transaction_successful}
+              message={
+                !!showSuccess &&
+                messages[locale].resource_popup_text_transaction_successful
+              }
               dismiss={this.props.actions.hideSuccessModal}
             />
             <Prompt

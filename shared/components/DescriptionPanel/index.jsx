@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { IntlProvider } from "react-intl";
 import {
   FontScale,
   FLOATING_CARD_WIDTH,
@@ -80,7 +79,7 @@ const styles = StyleSheet.create({
 });
 
 const DescriptionPanel = props => {
-  const { title, description, loading, messages } = props;
+  const { title, description } = props;
   return (
     <View style={styles.container}>
       <View style={styles.cardContainer}>
@@ -90,7 +89,7 @@ const DescriptionPanel = props => {
         <View style={styles.hairlineSpacer} />
         <View style={styles.textContainer}>
           <Text style={[styles.text14, { textAlign: "justify" }]}>
-            {description ? description : "Description Not Available"}
+            {description || "Description Not Available"}
           </Text>
         </View>
       </View>

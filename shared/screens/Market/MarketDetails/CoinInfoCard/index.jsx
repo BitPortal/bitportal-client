@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import { Text, View } from 'react-native';
-import FastImage from 'react-native-fast-image';
-import Colors from 'resources/colors';
-import { FormattedNumber } from 'react-intl';
-import { connect } from 'react-redux';
-import { exchangeTickerSelector } from 'selectors/ticker';
-import { ASSET_FRACTION } from 'constants/market';
-import { filterBgColor } from 'utils';
-import Images from 'resources/images';
-import styles from './styles';
+import React, { Component } from 'react'
+import { Text, View } from 'react-native'
+import BPImage from 'components/BPNativeComponents/BPImage'
+import Colors from 'resources/colors'
+import { FormattedNumber } from 'react-intl'
+import { connect } from 'react-redux'
+import { exchangeTickerSelector } from 'selectors/ticker'
+import { ASSET_FRACTION } from 'constants/market'
+import { filterBgColor } from 'utils'
+import Images from 'resources/images'
+import styles from './styles'
 
 @connect(state => ({
   ticker: exchangeTickerSelector(state),
@@ -33,7 +33,7 @@ export default class CoinInfoCard extends Component {
     return (
       <View style={styles.cardContainer}>
         <View style={styles.titleWrapper}>
-          <FastImage style={styles.icon} source={Images.coin_logo_default} />
+          <BPImage style={styles.icon} source={Images.coin_logo_default} />
           <View style={{ marginLeft: 10 }}>
             <Text style={[styles.text18, { fontWeight: 'bold' }]}>
               {locale === 'zh' ? 'name_zh' || 'name_en' : 'name_en'}

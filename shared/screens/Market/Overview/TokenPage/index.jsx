@@ -62,7 +62,7 @@ export default class TokenPage extends Component {
   }
 
   render() {
-    const { item, loading } = this.props;
+    const { item } = this.props;
     return (
       <View style={styles.container}>
         <NavigationBar

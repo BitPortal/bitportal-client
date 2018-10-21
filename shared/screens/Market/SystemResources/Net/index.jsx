@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { Text, View, ScrollView } from "react-native";
-import { Navigation } from "react-native-navigation";
-import NavigationBar, { CommonButton } from "components/NavigationBar";
 import { connect } from "react-redux";
 import { FormattedMessage, IntlProvider } from "react-intl";
 import { eosAccountSelector } from "selectors/eosAccount";

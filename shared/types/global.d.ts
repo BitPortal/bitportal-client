@@ -16,6 +16,7 @@ declare interface Config {
   ENV: string
   BITPORTAL_API_REST_URL: string
   BITPORTAL_API_MARKET_URL: string
+  BITPROTAL_API_TRACE_URL: string
   BITPORTAL_API_CMS_URL: string
   BITPORTAL_API_WEBSOCKET_URL: string
   EOS_API_URL: string
@@ -321,6 +322,7 @@ declare module "core/eos" {
     eosAuthSign: any
     signature: any
     verify: any
+    createEOSAccount: any
   }
 
   const eos: EOS

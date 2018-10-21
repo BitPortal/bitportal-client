@@ -7,18 +7,13 @@
     },
     "ecmaVersion": 6
   },
-  "extends": [
-    "plugin:react/recommended",
-    "airbnb",
-    "plugin:prettier/recommended"
-  ],
+  "extends": ["plugin:react/recommended", "airbnb", "plugin:prettier/recommended"],
   "rules": {
-    "max-len": ["error", { "code": 120 }],
+    "max-len": [0],
     "prettier/prettier": [0],
     "react/jsx-filename-extension": [0],
     "react/require-extension": [0],
     "semi": [0],
-    "comma-dangle": [0],
     "comma-dangle": [0],
     "import/prefer-default-export": [0],
     "react/jsx-no-bind": [0],

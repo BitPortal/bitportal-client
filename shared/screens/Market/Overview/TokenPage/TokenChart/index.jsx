@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import {
-  AppRegistry,
   Text,
   View,
-  Button,
   processColor,
   TouchableWithoutFeedback,
   InteractionManager,
@@ -18,15 +16,8 @@ import {
   xAxisSelector
 } from "selectors/chart";
 import { LineChart } from "react-native-charts-wrapper";
-
-import Colors from "resources/colors";
 import { RANGES } from "constants/chart";
-
 import {
-  FontScale,
-  SCREEN_WIDTH,
-  SCREEN_HEIGHT,
-  NAV_BAR_HEIGHT,
   FLOATING_CARD_WIDTH,
   FLOATING_CARD_BORDER_RADIUS
 } from "utils/dimens";
@@ -36,7 +27,6 @@ const CHART_DESCRIPTION = {
   text: "Bitportal",
   textColor: processColor("rgba(255,255,255,0.3)")
 };
-const petrel = "rgb(59, 145, 153)";
 
 @connect(state => ({
   locale: state.intl.get("locale"),
@@ -66,44 +56,41 @@ export default class TokenChart extends Component {
 
   componentDidMount() {}
 
-  handleSelect(event) {
-    const entry = event.nativeEvent;
-    if (entry == null) {
-      this.setState({ ...this.state, selectedEntry: null });
-    } else {
-      this.setState({ ...this.state, selectedEntry: JSON.stringify(entry) });
-    }
+  // handleSelect(event) {
+  //   const entry = event.nativeEvent;
+  //   if (entry == null) {
+  //     this.setState({ ...this.state, selectedEntry: null });
+  //   } else {
+  //     this.setState({ ...this.state, selectedEntry: JSON.stringify(entry) });
+  //   }
+  //
+  //   console.log(event.nativeEvent);
+  // }
 
-    console.log(event.nativeEvent);
-  }
-
-  handleData = () => {
-    return this.props.data &&
+  handleData = () => this.props.data &&
       this.props.data.dataSets &&
-      this.props.data.dataSets.values.length != 0
+      this.props.data.dataSets.values.length !== 0
       ? this.props.data
       : this.props.data;
-  };
 
   render() {
     const { loading, data } = this.props;
-    console.log("data", this.props.data.dataSets[0].values.length === 0);
     return (
       <View style={styles.container}>
         <View style={styles.cardContainer}>
           <View style={styles.chartContainer}>
             {loading ? (
               <View style={styles.centerFlex}>
-                <ActivityIndicator size={"large"} />
+                <ActivityIndicator size="large" />
               </View>
-            ) : this.props.data.dataSets[0].values.length === 0 ? (
+            ) : data.dataSets[0].values.length === 0 ? (
               <View style={styles.centerFlex}>
                 <Text>Chart Not Available</Text>
               </View>
             ) : (
               <LineChart
                 style={{ flex: 1 }}
-                data={this.props.data}
+                data={data}
                 chartDescription={{ text: "" }}
                 legend={this.state.legend}
                 marker={this.state.marker}
@@ -129,7 +116,7 @@ export default class TokenChart extends Component {
                 dragDecelerationFrictionCoef={0.99}
                 ref="chartt"
                 keepPositionOnRotation={false}
-                onSelect={this.handleSelect.bind(this)}
+                // onSelect={this.handleSelect.bind(this)}
                 onChange={event => console.log(event.nativeEvent)}
                 viewPortOffsets={{ left: 0, top: 10, right: 0, bottom: 5 }}
               />
@@ -167,6 +154,7 @@ class RangeBar extends Component {
       this.props.actions.changeChartRange(range);
     });
   };
+
   render() {
     const { range } = this.props;
     return (
@@ -188,7 +176,7 @@ class RangeBar extends Component {
           >
             <View key={e}>
               <Text
-                style={{ color: range === e ? "blue" : "white", fontSize: 12 }}
+                style={{ color: range === e ? "rgb(55,128,193)" : "white", fontSize: 12 }}
               >
                 {e}
               </Text>

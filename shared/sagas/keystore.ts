@@ -100,7 +100,7 @@ function* exportEOSKeyRequested(action: Action<ExportEOSKeyParams>) {
 
     let entry
     const eosAccountCreationInfo = yield select((state: RootState) => state.eosAccount.get('eosAccountCreationInfo'))
-    if (eosAccountCreationInfo.get('transactionId') && eosAccountCreationInfo.get('eosAccountName') === eosAccountName && !eosAccountCreationInfo.get('backup')) {
+    if (eosAccountCreationInfo.get('eosAccountName') === eosAccountName && !eosAccountCreationInfo.get('backup')) {
       const newEOSAccountCreationInfo = eosAccountCreationInfo.set('backup', true).toJS()
       yield call(secureStorage.setItem, `EOS_ACCOUNT_CREATION_INFO_${eosAccountName}`, newEOSAccountCreationInfo, true)
       yield put(completeBackup())

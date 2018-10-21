@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import TableView, { HeaderTitle } from "screens/Market/TableView";
 import * as tickerActions from "actions/ticker";
 import * as tokenActions from "actions/token";
 import { exchangeTickerSelector, sortFilterSelector } from "selectors/ticker";
@@ -8,11 +7,7 @@ import { eosAccountNameSelector } from "selectors/eosAccount";
 import { bindActionCreators } from "redux";
 import { View, InteractionManager } from "react-native";
 import Modal from "react-native-modal";
-import { Navigation } from "react-native-navigation";
 import {
-  EXCHANGES,
-  EXCHANGE_NAMES,
-  QUOTE_ASSETS,
   MARKET_CATEGORIES,
   MARKET_CATEGORY_NAMES
 } from "constants/market";
@@ -21,14 +16,10 @@ import SearchBar from "components/SearchBar";
 import { IntlProvider } from "react-intl";
 import Colors from "resources/colors";
 import {
-  MAEKRT_LIST_SELECTED,
   QUOTES_LIST_SELECTED,
-  MARKET_TOKEN_DETAIL
 } from "constants/analytics";
 import { onEventWithLabel } from "utils/analytics";
 import messages from "resources/messages";
-import ExchangeList from "./ExchangeList";
-import { Quotes } from "./Quotes";
 import styles from "./styles";
 import CategoryList from "./CategoryList";
 import MarketContent from "./MarketContent";
@@ -154,11 +145,7 @@ export default class Market extends Component {
 
   render() {
     const {
-      ticker,
       locale,
-      loading,
-      exchangeFilter,
-      quoteAssetFilter,
       searchTerm,
       marketCategory,
       componentId
@@ -184,18 +171,6 @@ export default class Market extends Component {
               />
             }
           />
-          {/* <Quotes
-            onPress={this.changeQuote}
-            quote={this.state.activeQuoteAsset || quoteAssetFilter}
-            quoteList={QUOTE_ASSETS[exchangeFilter]}
-          /> */}
-          {/* <HeaderTitle messages={messages[locale]} />
-          <TableView
-            refreshing={loading}
-            onRefresh={this.onRefresh}
-            data={ticker}
-            onPress={this.pressListItem}
-          /> */}
           <MarketContent componentId={componentId} category={marketCategory} />
           <Modal
             animationIn="fadeIn"

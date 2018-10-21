@@ -5,11 +5,8 @@ import FastImage from "react-native-fast-image";
 import Colors from "resources/colors";
 import { filterBgColor } from "utils";
 import { ASSET_FRACTION } from "constants/market";
-import { IntlProvider, FormattedMessage, FormattedNumber } from "react-intl";
-import { tokenTickerSelector } from "selectors/ticker";
+import { IntlProvider, FormattedNumber } from "react-intl";
 import abbreviate from "number-abbreviate";
-
-import Images from "resources/images";
 
 import messages from "resources/messages";
 import styles from "./styles";
@@ -52,7 +49,7 @@ export default class TokenCard extends Component {
             <View style={styles.titleWrapper}>
               <FastImage
                 style={styles.icon}
-                source={token.get("") || Images.coin_logo_default}
+                source={{uri:`https://cdn.bitportal.io/tokenicon/128/color/${token.get("symbol")?.toLowerCase()}.png`}}
               />
               <View
                 style={{

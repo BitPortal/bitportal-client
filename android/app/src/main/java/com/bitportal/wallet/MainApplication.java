@@ -12,7 +12,6 @@ import com.bitgo.randombytes.RandomBytesPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import br.com.classapp.RNSensitiveInfo.RNSensitiveInfoPackage;
-import com.github.wuxudong.rncharts.MPAndroidChartPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.horcrux.svg.SvgPackage;
@@ -20,6 +19,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
+import com.reactnativenavigation.react.ReactGateway;
 import com.bitportal.wallet.core.BPCorePackage;
 import com.umeng.commonsdk.UMConfigure;
 import com.bitportal.wallet.umeng.RNUMConfigure;
@@ -28,8 +28,11 @@ import com.bitportal.wallet.nativeutils.NativeUtilsPackage;
 import cn.jpush.reactnativejpush.JPushPackage;
 import cn.jpush.android.api.JPushInterface;
 import com.github.alinz.reactnativewebviewbridge.WebViewBridgePackage;
-import com.dylanvann.fastimage.FastImageViewPackage;
 import com.rnfs.RNFSPackage;
+import com.dylanvann.fastimage.FastImageViewPackage;
+import com.facebook.react.bridge.ReadableNativeArray;
+import com.facebook.react.bridge.ReadableNativeMap;
+import com.github.wuxudong.rncharts.MPAndroidChartPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,13 +45,14 @@ public class MainApplication extends NavigationApplication {
   private boolean SHUTDOWN_LOG = false;
 
   @Override
-  protected ReactNativeHost createReactNativeHost() {
-      return new NavigationReactNativeHost(this) {
+  protected ReactGateway createReactGateway() {
+      ReactNativeHost host = new NavigationReactNativeHost(this, isDebug(), createAdditionalReactPackages()) {
           @Override
           protected String getJSMainModuleName() {
               return "index";
           }
       };
+      return new ReactGateway(this, isDebug(), host);
   }
 
   @Override
@@ -63,7 +67,6 @@ public class MainApplication extends NavigationApplication {
       new SvgPackage(),
       new SplashScreenReactPackage(),
       new VectorIconsPackage(),
-      new MPAndroidChartPackage(),
       new LinearGradientPackage(),
       new ReactNativeConfigPackage(),
       new RandomBytesPackage(),
@@ -80,7 +83,8 @@ public class MainApplication extends NavigationApplication {
       new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
       new WebViewBridgePackage(),
       new FastImageViewPackage(),
-      new RNFSPackage()
+      new RNFSPackage(),
+      new MPAndroidChartPackage()
     );
   }
 
@@ -92,6 +96,8 @@ public class MainApplication extends NavigationApplication {
       RNUMConfigure.init(this, "5b46d7f1f43e482296000178", "android channel", UMConfigure.DEVICE_TYPE_PHONE, null);
       JPushInterface.setDebugMode(true);
       JPushInterface.init(this);
+      ReadableNativeArray.setUseNativeAccessor(true);
+      ReadableNativeMap.setUseNativeAccessor(true);
   }
 
   @Override

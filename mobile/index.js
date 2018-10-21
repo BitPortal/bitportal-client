@@ -15,6 +15,7 @@ import { getInitialEOSAsset } from 'selectors/eosAsset'
 import { getInitialDapp } from 'selectors/dApp'
 import { getInitialAppInfo } from 'selectors/appInfo'
 import { startSingleApp, startTabBasedApp, registerScreens } from 'navigators'
+import { Navigation } from 'react-native-navigation'
 import storage from 'utils/storage'
 import Provider from 'components/Provider'
 import configure from 'store'
@@ -22,7 +23,8 @@ import sagas from 'sagas'
 import Colors from 'resources/colors'
 import VersionNumber from 'react-native-version-number'
 import SplashScreen from 'react-native-splash-screen'
-import DeviceInfo from 'react-native-device-info'
+import KeyboardManager from 'react-native-keyboard-manager'
+import { getLocaleLanguage } from 'utils/language'
 import { calculate } from 'utils/update'
 import { ENV } from 'constants/env'
 import { noop } from 'utils'
@@ -49,7 +51,7 @@ const runApp = async () => {
     eosNode,
     selectedEOSAsset,
     storedFavoriteDapps,
-    currentVersion
+    remoteVersion
   ] = await Promise.all([
     storage.getItem('bitportal_lang'),
     storage.getItem('bitportal_currency', true),
@@ -60,7 +62,7 @@ const runApp = async () => {
     storage.getItem('bitportal_version')
   ])
 
-  const lang = localLang || (DeviceInfo.getDeviceLocale().indexOf('zh') !== -1 ? 'zh' : 'en')
+  const lang = localLang || getLocaleLanguage()
   const symbol = currency && currency.symbol
   const rate = currency && currency.rate
   const activeNode = eosNode && eosNode.activeNode
@@ -80,13 +82,14 @@ const runApp = async () => {
 
   registerScreens(store)
   store.runSaga(sagas)
-  if (currentVersion && calculate(currentVersion) >= calculate(localVersion)) {
+  if (remoteVersion && calculate(remoteVersion) <= calculate(localVersion)) {
     startTabBasedApp(lang)
   } else {
     startSingleApp()
   }
 
   SplashScreen.hide()
+  Platform.OS === 'ios' && KeyboardManager.setEnableAutoToolbar(true);
 }
 
 const setStatusBarStyle = async () => {
@@ -95,5 +98,31 @@ const setStatusBarStyle = async () => {
   StatusBar.setBarStyle(statusBarMode, true)
 }
 
-runApp()
+Navigation.events().registerAppLaunchedListener(() => {
+  Navigation.setDefaultOptions({
+    modalPresentationStyle:'fullScreen',
+    topBar: {
+      visible: false,
+      animate: false,
+      height: 0
+    },
+    layout: {
+      screenBackgroundColor: Colors.mainThemeColor,
+      backgroundColor: Colors.minorThemeColor,
+      orientation: ['portrait']
+    },
+    bottomTabs: {
+      visible: true,
+      drawBehind: true,
+      animate: Platform.OS !== 'ios',
+      backgroundColor: Colors.minorThemeColor,
+      tabColor: 'gray',
+      selectedTabColor: Colors.textColor_89_185_226,
+      hideShadow: false,
+      titleDisplayMode: 'alwaysShow'
+    }
+  })
+  runApp()
+})
+
 setStatusBarStyle()

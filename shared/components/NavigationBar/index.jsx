@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import NavBar from 'react-native-navbar'
 import { TouchableOpacity, View, Text } from 'react-native'
-import FastImage from 'react-native-fast-image'
+import BPImage from 'components/BPNativeComponents/BPImage'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import styles from './styles'
@@ -47,19 +47,19 @@ export const CommonButton = ({ iconName, title, onPress, extraStyle, extraTextSt
 )
 
 export const CommonTitle = ({ title }) => (
-  <View style={styles.navButton}>
+  <View style={[styles.navButton]}>
     <Text style={styles.text20}>{title}</Text>
   </View>
 )
 
 export const CommonRightButton = ({ iconName, imageSource, onPress }) => (
   <TouchableOpacity style={styles.navButton} onPress={() => onPress()}>
-    <View style={{ alignSelf: 'flex-end', marginRight: 32 }}>
+    <View style={{ alignSelf: 'flex-end', marginRight: 20 }}>
       {iconName && (
         <Ionicons name={iconName} size={24} color={Colors.bgColor_FFFFFF} />
       )}
       {imageSource && (
-        <FastImage source={imageSource} style={{ width: 24, height: 24 }} />
+        <BPImage source={imageSource} style={{ width: 24, height: 24 }} />
       )}
     </View>
   </TouchableOpacity>
@@ -67,7 +67,7 @@ export const CommonRightButton = ({ iconName, imageSource, onPress }) => (
 
 export const LinkingRightButton = ({ iconName, onPress }) => (
   <TouchableOpacity style={styles.navButton} onPress={onPress}>
-    <View style={{ alignSelf: 'flex-end', marginRight: 32 }}>
+    <View style={{ alignSelf: 'flex-end', marginRight: 20 }}>
       {iconName && (
         <Ionicons name={iconName} size={24} color={Colors.bgColor_FFFFFF} />
       )}

@@ -114,13 +114,13 @@ android {
         renderscriptSupportModeEnabled true
         vectorDrawables.useSupportLibrary true
         versionCode 1
-        versionName "0.3.1"
+        versionName "0.3.2"
         manifestPlaceholders = [
                 JPUSH_APPKEY: "05e8b10824ab700bae78e9eb",
                 APP_CHANNEL : "default"
         ]
 
-        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative55"
+        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative56"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -191,9 +191,20 @@ android {
     }
 }
 
+configurations.all {
+    resolutionStrategy {
+        eachDependency { DependencyResolveDetails details ->
+            if (details.requested.name == 'android-jsc') {
+                details.useTarget group: details.requested.group, name: 'android-jsc-intl', version: 'r225067'
+            }
+        }
+    }
+}
+
 dependencies {
-    compile project(':react-native-fs')
+    implementation project(':react-native-charts-wrapper')
     compile project(':react-native-fast-image')
+    compile project(':react-native-fs')
     compile project(':jcore-react-native')
     compile project(':jpush-react-native')
     compile 'com.android.support:multidex:1.0.2'
@@ -212,7 +223,6 @@ dependencies {
     compile project(':react-native-linear-gradient')
     compile project(':react-native-config')
     compile project(':react-native-sensitive-info')
-    compile project(':react-native-charts-wrapper')
     compile project(':react-native-splash-screen')
     compile project(':react-native-vector-icons')
     compile project(':react-native-navigation')

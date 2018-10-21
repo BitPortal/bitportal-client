@@ -1,18 +1,21 @@
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Colors from 'resources/colors'
 import { FontScale } from 'utils/dimens'
-import { StyleSheet, Platform } from 'react-native'
+import { Platform, StyleSheet } from 'react-native'
 
 export default EStyleSheet.create({
   formContainer: {
-    width: '100%',
-    paddingHorizontal: 32,
-    paddingTop: 20,
-    paddingBottom: 20,
-    alignItems: 'center',
     flex: 1,
+    width: '100% - 30',
+    marginHorizontal: 15,
+    marginVertical: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+    alignItems: 'center',
     flexDirection: 'column',
-    backgroundColor: Colors.bgColor_30_31_37
+    backgroundColor: Colors.minorThemeColor
   },
   searchContainer: {
     width: '100% - 70',
@@ -21,12 +24,13 @@ export default EStyleSheet.create({
     paddingBottom: 4
   },
   fieldInput: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.textColor_107_107_107,
+    borderRadius: 5,
+    backgroundColor: Colors.bgColor_48_49_59,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 1,
+    paddingHorizontal: 10,
     alignItems: 'center'
   },
   searchFieldInput: {
@@ -55,21 +59,28 @@ export default EStyleSheet.create({
     color: Colors.textColor_255_255_238,
     fontSize: FontScale(14),
     marginTop: 10,
-    minHeight: 80,
-    padding: 10,
-    borderRadius: 2,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: Colors.textColor_181_181_181
+    minHeight: 60,
+    borderRadius: 5
   },
   fieldItem: {
     flexDirection: 'column',
-    width: '100%'
+    width: '100%',
+    marginBottom: 20
   },
   fieldInfo: {
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
+  },
+  info: {
+    marginBottom: 10
+  },
+  between: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10
   },
   label: {
     fontSize: FontScale(14),
@@ -96,7 +107,7 @@ export default EStyleSheet.create({
   submitButtonText: {
     color: 'white',
     textAlign: 'center',
-    fontSize: FontScale(14)
+    fontSize: FontScale(14) 
   },
   buttonText: {
     color: Colors.textColor_89_185_226,
@@ -104,9 +115,33 @@ export default EStyleSheet.create({
     fontSize: FontScale(14)
   },
   fieldError: {
-    color: '#ff4740',
-    minHeight: 20,
-    marginVertical: 4,
-    fontSize: FontScale(14)
+    borderRadius: 5,
+    backgroundColor: Colors.bgColor_239_47_95,
+    flex: 1,
+    height: 30,
+    justifyContent: 'center',
+    paddingLeft: 10
+  },
+  triangle: {
+    overflow: 'hidden',
+    width: 0,
+    height: 0,
+    backgroundColor: 'transparent',
+    borderRightWidth: 6,
+    borderLeftWidth: 6,
+    borderTopWidth: 6,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderTopColor: Colors.bgColor_239_47_95,
+    marginBottom: 4,
+    marginLeft: '90%',
+  },
+  errorBorder: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: Colors.bgColor_239_47_95
+  },
+  text12: {
+    fontSize: FontScale(12),
+    color: Colors.textColor_255_255_238
   }
 })

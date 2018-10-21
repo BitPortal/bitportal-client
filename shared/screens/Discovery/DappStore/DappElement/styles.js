@@ -95,7 +95,6 @@ const styles = StyleSheet.create({
   title: {
     color: Colors.textColor_FFFFEE,
     fontSize: FontScale(12),
-    fontWeight: 'bold',
     marginVertical: 10
   },
   hairLine: {

@@ -29,13 +29,14 @@ const styles = StyleSheet.create({
   },
   title: {
     color: Colors.textColor_FFFFEE,
-    fontSize: FontScale(15),
-    fontWeight: 'bold',
+    fontSize: FontScale(14),
+    fontWeight: '400',
     marginBottom: 5
   },
   subTitle: {
     color: Colors.textColor_149_149_149,
     fontSize: FontScale(13),
+    fontWeight: '100',
     marginTop: 5
   },
   infoArea: {

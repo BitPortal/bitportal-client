@@ -9,11 +9,9 @@ import * as tickerActions from "actions/ticker";
 import * as tokenActions from "actions/token";
 import FastImage from "react-native-fast-image";
 
-import { FontScale } from "utils/dimens";
 import abbreviate from "number-abbreviate";
 import { filterBgColor } from "utils";
-import { ASSET_FRACTION, DEFAULT_SORT_FILTER } from "constants/market";
-import Images from "resources/images";
+import { ASSET_FRACTION } from "constants/market";
 import styles from "./styles";
 
 class ListItem extends Component {
@@ -48,7 +46,7 @@ class ListItem extends Component {
             <FastImage
               style={styles.icon}
               // source={token.get("") || Images.coin_logo_default}
-              source={Images.coin_logo_default}
+              source={{uri:`https://cdn.bitportal.io/tokenicon/32/color/${item.get("symbol").toLowerCase()}.png`}}
             />
           </View>
 
@@ -167,7 +165,7 @@ export default class MarketList extends Component {
   }
 
   render() {
-    const { data, ticker, loading, onPress } = this.props;
+    const { ticker, loading, onPress } = this.props;
     console.log("marketlist", ticker);
     return (
       <View style={styles.scrollContainer}>

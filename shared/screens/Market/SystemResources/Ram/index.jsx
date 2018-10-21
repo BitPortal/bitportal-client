@@ -3,7 +3,6 @@ import { bindActionCreators } from "redux";
 import { Text, View, ScrollView } from "react-native";
 import { Navigation } from "react-native-navigation";
 import Colors from "resources/colors";
-import NavigationBar, { CommonButton } from "components/NavigationBar";
 import { connect } from "react-redux";
 import { FormattedMessage, FormattedNumber, IntlProvider } from "react-intl";
 import {

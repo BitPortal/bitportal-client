@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, InteractionManager } from "react-native";
-import tickerData from "screens/Market/tickerData.json";
+import { View, InteractionManager } from "react-native";
 import { Navigation } from "react-native-navigation";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";

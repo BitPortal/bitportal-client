@@ -64,6 +64,15 @@ declare interface CreateEOSAccountParams {
   hint?: string
 }
 
+declare interface CreateEOSAccountAssistanceParams {
+  eosAccountName: string
+  privateKey?: string
+  bpid?: string
+  password: string
+  componentId?: string
+  hint?: string
+}
+
 declare interface CreateEOSAccountResult {
   name: string
   key?: string
@@ -78,6 +87,15 @@ declare interface CreateEOSAccountResult {
       }[]
     }
   }[]
+}
+
+declare interface CreateEOSAccountAssistanceResult {
+  eosAccountName: string
+  ownerPublicKey: string
+  activePublicKey: string
+  ownerKeystore: string
+  activeKeystore: string
+  timestamp: number
 }
 
 declare interface ImportEOSAccountParams {
@@ -117,6 +135,7 @@ declare interface GetEOSAccountParams {
 
 declare interface GetEOSAccountResult {
   account_name: string
+  core_liquid_balance: string
   permissions: {
     parent: string
     perm_name: string
@@ -194,4 +213,47 @@ declare interface SyncEOSAccountCreationInfoResult {
   backup: boolean
   node: string
   timestamp: number
+}
+
+declare interface CreateEOSAccountForOthersParams {
+  eosAccountName: string
+  ownerPublicKey: string
+  activePublicKey: string
+  password: string
+  permission: string
+  componentId?: string
+}
+
+declare interface CreateEOSAccountForOthersResult {
+  name: string
+  permissions?: {
+    parent: string
+    perm_name: string
+    required_auth?: {
+      accounts: any[]
+      keys: {
+        key: string
+        weight: number
+      }[]
+    }
+  }[]
+}
+
+declare interface CheckEOSAccountStatusParams {
+  componentId?: string
+}
+
+declare interface CheckEOSAccountStatusResult {
+  name: string
+  permissions?: {
+    parent: string
+    perm_name: string
+    required_auth?: {
+      accounts: any[]
+      keys: {
+        key: string
+        weight: number
+      }[]
+    }
+  }[]
 }

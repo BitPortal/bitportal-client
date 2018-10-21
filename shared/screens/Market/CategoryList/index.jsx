@@ -47,7 +47,8 @@ const CategoryList = ({
   changeCategory,
   loggedIn
 }) => {
-  handleOnPressLogic = category => {
+
+handleOnPressLogic = category => {
     if ((category.login_required && loggedIn) || !category.login_required) {
       return changeCategory(category.name);
     } else return;

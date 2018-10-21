@@ -2,22 +2,14 @@ import * as React from "react";
 import {
   View,
   Text,
-  StyleSheet,
   Dimensions,
-  TouchableOpacity,
   Animated,
   I18nManager
 } from "react-native";
 import { TabView, TabBar, SceneMap } from "react-native-tab-view";
 import LinearGradientContainer from "components/LinearGradientContainer";
 import {
-  FontScale,
-  SCREEN_WIDTH,
-  SCREEN_HEIGHT,
-  NAV_BAR_HEIGHT,
   FLOATING_CARD_WIDTH,
-  FLOATING_CARD_BORDER_RADIUS,
-  FLOATING_CARD_MARGIN_BOTTOM
 } from "utils/dimens";
 import Cpu from "./Cpu";
 import Ram from "./Ram";
@@ -26,9 +18,6 @@ import Net from "./Net";
 import styles from "./styles";
 
 // const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradientContainer);
-
-const FirstRoute = () => <View style={[styles.container, { backgroundColor: "#ff4081" }]} />;
-const SecondRoute = () => <View style={[styles.container, { backgroundColor: "#673ab7" }]} />;
 
 export default class SystemResources extends React.Component {
   state = {

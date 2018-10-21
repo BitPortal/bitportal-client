@@ -25,6 +25,7 @@ allprojects {
         maven { url "https://jitpack.io" }
         maven { url "https://maven.google.com" }
         maven { url "$rootDir/../node_modules/react-native/android" }
+        maven { url "$rootDir/../node_modules/jsc-android/dist"}
     }
 }
 
@@ -43,7 +44,7 @@ subprojects { subproject ->
                 variantFilter { variant ->
                     def names = variant.flavors*.name
                     // To check for a certain build type, use variant.buildType.name == "<buildType>"
-                    if (names.contains("reactNative51") || names.contains("reactNative56")) {
+                    if (names.contains("reactNative51") || names.contains("reactNative55")) {
                         // Gradle ignores any variants that satisfy the conditions above.
                         setIgnore(true)
                     }

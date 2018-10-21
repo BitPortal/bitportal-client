@@ -1,10 +1,6 @@
-import { StyleSheet, Platform } from "react-native";
 import Colors from "resources/colors";
 import {
-  FontScale,
   SCREEN_WIDTH,
-  SCREEN_HEIGHT,
-  NAV_BAR_HEIGHT,
   FLOATING_CARD_WIDTH,
   FLOATING_CARD_BORDER_RADIUS,
   FLOATING_CARD_MARGIN_BOTTOM
@@ -26,18 +22,6 @@ const styles = {
     // alignItems: "center",
     marginBottom: FLOATING_CARD_MARGIN_BOTTOM
   },
-  // {
-  //   backgroundColor: '#2196f3',
-  //   elevation: 4,
-  //   shadowColor: 'black',
-  //   shadowOpacity: 0.1,
-  //   shadowRadius: StyleSheet.hairlineWidth,
-  //   shadowOffset: {
-  //     height: StyleSheet.hairlineWidth,
-  //   },
-  //   // We don't need zIndex on Android, disable it since it's buggy
-  //   zIndex: Platform.OS === 'android' ? 0 : 1,
-  // }
   singleTab: {
     // height: 30,
     // width: 30,

@@ -5,13 +5,12 @@ import 'intl/locale-data/jsonp/zh.js'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { ConnectedRouter } from 'react-router-redux'
-import { renderRoutes, RouteConfig } from 'react-router-config'
+import { renderRoutes } from 'react-router-config'
 import { createMemoryHistory } from 'history'
 import { Store } from 'react-chrome-redux'
 import Transit from 'transit-immutable-js'
 import Provider from 'components/Provider'
 import routes from 'routes'
-import sagas from 'sagas'
 
 const memoryHistory = createMemoryHistory()
 

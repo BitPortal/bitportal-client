@@ -5,7 +5,7 @@ import * as versionActions from 'actions/version'
 import { Navigation } from 'react-native-navigation'
 import { startTabBasedApp } from 'navigators'
 import { View, Text, ImageBackground, TouchableHighlight } from 'react-native'
-import FastImage from 'react-native-fast-image'
+import BPImage from 'components/BPNativeComponents/BPImage'
 import Swiper from 'react-native-swiper'
 import SplashScreen from 'react-native-splash-screen'
 import Images from 'resources/images'
@@ -25,27 +25,27 @@ const NextButton = ({ goToHomePage }) => (
 const Page1 = () => (
   <View style={[styles.pageContainer, styles.center]}>
     <ImageBackground source={Images.guide_asset} resizeMode="contain" style={styles.imageBg}>
-      <FastImage source={Images.guide_asset_card} resizeMode="contain" style={styles.imageCard} />
+      <BPImage source={Images.guide_asset_card} resizeMode="contain" style={styles.imageCard} />
     </ImageBackground>
-    <FastImage source={Images.guide_asset_title} resizeMode="contain" style={styles.imageTitle} />
+    <BPImage source={Images.guide_asset_title} resizeMode="contain" style={styles.imageTitle} />
   </View>
 )
 
 const Page2 = () => (
   <View style={[styles.pageContainer, styles.center]}>
     <ImageBackground source={Images.guide_market} resizeMode="contain" style={styles.imageBg}>
-      <FastImage source={Images.guide_market_card} resizeMode="contain" style={styles.imageCard2} />
+      <BPImage source={Images.guide_market_card} resizeMode="contain" style={styles.imageCard2} />
     </ImageBackground>
-    <FastImage source={Images.guide_market_title} resizeMode="contain" style={styles.imageTitle} />
+    <BPImage source={Images.guide_market_title} resizeMode="contain" style={styles.imageTitle} />
   </View>
 )
 
 const Page3 = ({ goToHomePage }) => (
   <View style={[styles.pageContainer, styles.center]}>
     <ImageBackground source={Images.guide_discovery} resizeMode="contain" style={styles.imageBg}>
-      <FastImage source={Images.guide_discovery_card} resizeMode="contain" style={styles.imageCard3} />
+      <BPImage source={Images.guide_discovery_card} resizeMode="contain" style={styles.imageCard3} />
     </ImageBackground>
-    <FastImage source={Images.guide_discovery_title} resizeMode="contain" style={styles.imageTitle} />
+    <BPImage source={Images.guide_discovery_title} resizeMode="contain" style={styles.imageTitle} />
     <NextButton goToHomePage={goToHomePage} />
   </View>
 )

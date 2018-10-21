@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { TouchableOpacity, StyleSheet } from 'react-native'
-import FastImage from 'react-native-fast-image'
+import BPImage from 'components/BPNativeComponents/BPImage'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import Dialog from 'components/Dialog'
@@ -21,12 +21,6 @@ const styles = StyleSheet.create({
   image: {
     width: 16,
     height: 16
-  },
-  btn: {
-    width: 36,
-    height: 36,
-    padding: 10,
-    marginTop: -10
   }
 })
 
@@ -44,8 +38,8 @@ export default class Tips extends Component {
 
   render() {
     return (
-      <TouchableOpacity onPress={this.alertTips} style={styles.btn}>
-        <FastImage source={images.tips} style={styles.image} />
+      <TouchableOpacity onPress={this.alertTips}>
+        <BPImage source={images.tips} style={styles.image} />
       </TouchableOpacity>
     )
   }

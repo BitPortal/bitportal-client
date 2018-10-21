@@ -10,7 +10,7 @@ import QRCodeScanner from 'react-native-qrcode-scanner'
 import { change } from 'redux-form/immutable'
 import { IntlProvider } from 'react-intl'
 import * as balanceActions from 'actions/balance'
-import { parseEOSQrString } from 'utils'
+import { parseEOSQrString, isJsonString } from 'utils'
 import { FontScale } from 'utils/dimens'
 import Colors from 'resources/colors'
 import { checkPhoto } from 'utils/permissions'
@@ -55,39 +55,47 @@ export default class Scanner extends Component {
   }
 
   onSuccess = (e) => {
-    const qrInfo = parseEOSQrString(e.data)
-    // Umeng analytics
-    onEventWithMap(ASSETS_SCAN, qrInfo || {})
-    const eosAssetBalance = this.props.eosAssetBalance
+    if (isJsonString(e.data)) {
+      const { account, owner, active } = JSON.parse(e.data)
 
-    if (qrInfo && eosAssetBalance) {
-      const token = qrInfo.token
-      const index = eosAssetBalance.findIndex(v => v.get('symbol') === token)
-
-      if (index !== -1) {
-        this.props.actions.setActiveAsset(eosAssetBalance.get(index))
-
-        if (this.props.entry === 'form') {
-          const eosAccountName = qrInfo.eosAccountName
-          const quantity = qrInfo.amount
-
-          if (eosAccountName) { this.props.actions.change('transferAssetsForm', 'toAccount', eosAccountName) }
-          if (quantity) { this.props.actions.change('transferAssetsForm', 'quantity', quantity) }
-
-          Navigation.pop(this.props.componentId)
-        } else {
-          Navigation.push(this.props.componentId, {
-            component: {
-              name: 'BitPortal.AssetsTransfer',
-              passProps: {
-                entry: 'scanner',
-                qrInfo
-              }
-            }
-          })
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.AccountAssistancePayment',
+          passProps: { account, owner, active }
         }
-      } else {
-        Dialog.alert(`请添加${token}到您的资产列表`, null, { positiveText: '确定' })
+      })
+    } else {
+      const qrInfo = parseEOSQrString(e.data)
+      // Umeng analytics
+      onEventWithMap(ASSETS_SCAN, qrInfo || {})
+
+      const eosAssetBalance = this.props.eosAssetBalance
+      if (qrInfo && eosAssetBalance) {
+        const token = qrInfo.token
+        const index = eosAssetBalance.findIndex(v => v.get('symbol') === token)
+
+        if (index !== -1) {
+          this.props.actions.setActiveAsset(eosAssetBalance.get(index))
+          if (this.props.entry === 'form') {
+            const eosAccountName = qrInfo.eosAccountName
+            const quantity = qrInfo.amount
+            if (eosAccountName) { this.props.actions.change('transferAssetsForm', 'toAccount', eosAccountName) }
+            if (quantity) { this.props.actions.change('transferAssetsForm', 'quantity', quantity) }
+            Navigation.pop(this.props.componentId)
+          } else if (this.props.entry === 'assets') {
+            Navigation.push(this.props.componentId, {
+              component: {
+                name: 'BitPortal.AssetsTransfer',
+                passProps: {
+                  entry: 'scanner',
+                  qrInfo
+                }
+              }
+            })
+          }
+        } else {
+          Dialog.alert(`请添加${token}到您的资产列表`, null, { positiveText: '确定' })
+        }
       }
     }
   }

@@ -17,10 +17,6 @@ import Prompt from "components/Prompt";
 import Alert from "components/Alert";
 import messages from "resources/messages";
 import {
-  FontScale,
-  SCREEN_WIDTH,
-  SCREEN_HEIGHT,
-  NAV_BAR_HEIGHT,
   FLOATING_CARD_WIDTH,
   FLOATING_CARD_BORDER_RADIUS,
   FLOATING_CARD_MARGIN_BOTTOM

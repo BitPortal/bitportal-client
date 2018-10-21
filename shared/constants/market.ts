@@ -17,13 +17,13 @@ export const EXCHANGE_NAMES = {
 };
 
 export const MARKET_CATEGORIES = [
-  { name: "DEXLIZE", login_required: false },
+  // { name: "DEXLIZE", login_required: false },
   { name: "OVERVIEW", login_required: false },
   { name: "SYSTEM", login_required: true }
 ];
 
 export const MARKET_CATEGORY_NAMES = {
-  DEXLIZE: "Dexlize",
+  // DEXLIZE: "Dexlize",
   OVERVIEW: "Overview",
   SYSTEM: "System Resources"
 };

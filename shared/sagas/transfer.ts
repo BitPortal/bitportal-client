@@ -45,7 +45,7 @@ function* transfer(action: Action<TransferParams>) {
     // trace transaction
     const traceParams = {
       amount,
-      userId: null,
+      userId: '',
       walletId: fromAccount,
       assetType: symbol,
       toAddr: toAccount
