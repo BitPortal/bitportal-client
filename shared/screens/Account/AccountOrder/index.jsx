@@ -23,7 +23,7 @@ export const errorMessages = (error/* , messages*/) => {
 
   switch (String(message)) {
     // case 'EOS System Error':
-      // return 'EOS System Error'
+    // return 'EOS System Error'
     default:
       return '尚未激活!'
   }
