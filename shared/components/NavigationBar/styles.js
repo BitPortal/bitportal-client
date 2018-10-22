@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: NAV_BAR_HEIGHT,
     backgroundColor: Colors.mainThemeColor,
-<<<<<<< HEAD
+
     marginBottom: 5,
     justifyContent: "center",
     ...ifIphoneX(
@@ -18,14 +18,7 @@ const styles = StyleSheet.create({
         paddingTop: 0
       }
     )
-=======
-    justifyContent: 'center',
-    ...ifIphoneX({
-      paddingTop: 24
-    }, {
-      paddingTop: 0
-    })
->>>>>>> develop
+
   },
   textTitle: {
     fontSize: FontScale(18),
@@ -41,18 +34,13 @@ const styles = StyleSheet.create({
   navButton: {
     minWidth: 100,
     height: 40,
-<<<<<<< HEAD
+
     paddingTop: Platform.OS === "ios" ? 6 : 4,
     paddingLeft: 32,
     // marginBottom: 20,
     alignItems: "flex-start",
     justifyContent: "center"
-=======
-    paddingTop: Platform.OS === 'ios' ? 6 : 4,
-    paddingLeft: 20,
-    alignItems: 'flex-start',
-    justifyContent: 'center'
->>>>>>> develop
+
   },
   text20: {
     fontSize: FontScale(20),

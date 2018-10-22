@@ -53,12 +53,7 @@ export const fetchBase = async (
       fetchOptions.body = JSON.stringify(params);
     }
   }
-<<<<<<< HEAD
   console.log("###---xx ", url);
-  console.log(111, fetchOptions, url);
-=======
-  // console.log('###---yy ', url)
->>>>>>> develop
 
   return fetch(url, fetchOptions).then((res: any) => {
     console.log(222);

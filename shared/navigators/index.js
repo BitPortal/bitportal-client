@@ -105,10 +105,8 @@ export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.AccountAssistance', () => screenComponent(AccountAssistance, store))
   Navigation.registerComponent('BitPortal.AccountAssistancePayment', () => screenComponent(AccountAssistancePayment, store))
   Navigation.registerComponent('BitPortal.EOSAccountCreation', () => screenComponent(EOSAccountCreation, store))
-<<<<<<< HEAD
   Navigation.registerComponent("BitPortal.TokenPage", () => screenComponent(TokenPage, store));
-=======
->>>>>>> develop
+
 }
 
 export const startSingleApp = () => {
