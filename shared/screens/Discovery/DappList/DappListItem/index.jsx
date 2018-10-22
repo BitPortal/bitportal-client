@@ -149,7 +149,7 @@ export default class DappListItem extends React.PureComponent {
                 {item.get('display_name').get(locale)}
               </Text>
               <View style={styles.infoArea}>
-                <Text numberOfLines={1} style={styles.subTitle}>
+                <Text numberOfLines={3} style={styles.subTitle}>
                   {item.get('description').get(locale)}
                 </Text>
               </View>
