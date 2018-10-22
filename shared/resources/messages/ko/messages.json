@@ -46,6 +46,7 @@
   "add_eos_create_error_popup_text_create_failed": "계정 생성에 실패했습니다. 다시 시도해주세요.\n궁긍하신 사항은 info@bitportal.io로 문의해주세요.",
   "add_eos_create_error_popup_text_data_extraction_failed": "데이터를 불러오지 못했습니다.\n다시 시도해주세요.",
   "add_eos_create_title_create_assistance": "好友协助创建账户",
+  "add_eos_create_title_smart_contact": "智能合约创建账户",
   "add_eos_create_button_next": "Next",
 
 

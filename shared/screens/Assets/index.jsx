@@ -161,6 +161,9 @@ export default class Assets extends Component {
       case 'assistance':
         entrance = 'AccountAssistance'
         break;
+      case 'contract':
+        entrance = 'AccountSmartContact'
+        break;
       default:
         break;
     }

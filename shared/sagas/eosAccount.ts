@@ -98,6 +98,7 @@ function* createEOSAccountAssistanceRequested(action: Action<CreateEOSAccountAss
   try {
     const eosAccountName = action.payload.eosAccountName
     const password = action.payload.password
+    const path = action.payload.path
     const privateKey = yield call(randomKey)
     const publicKey = yield call(privateToPublic, privateKey)
 
@@ -111,6 +112,7 @@ function* createEOSAccountAssistanceRequested(action: Action<CreateEOSAccountAss
       ownerKeystore: keystore,
       activeKeystore: keystore,
       timestamp: +Date.now(),
+      path,
     }
 
     yield all([
@@ -118,7 +120,7 @@ function* createEOSAccountAssistanceRequested(action: Action<CreateEOSAccountAss
       put(actions.createEOSAccountAssistanceSucceeded(eosAccountCreationRequestInfo))
     ])
 
-    if (action.payload.componentId) push('BitPortal.AccountOrder', action.payload.componentId)
+    if (action.payload.componentId) push(`BitPortal.${path}`, action.payload.componentId)
   } catch (e) {
     yield put(actions.createEOSAccountFailed(getErrorMessage(e)))
   }
@@ -137,7 +139,8 @@ function* showAssistanceAccountInfo(action: any) {
   try {
     const eosAccountCreationRequestInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_CREATION_REQUEST_INFO`, true)
     yield put(actions.createEOSAccountAssistanceSucceeded(eosAccountCreationRequestInfo))
-    if (action.payload.componentId) push('BitPortal.AccountOrder', action.payload.componentId)
+    const path = eosAccountCreationRequestInfo.path
+    if (action.payload.componentId) push(`BitPortal.${path}`, action.payload.componentId)
   } catch (e) {
 
   }

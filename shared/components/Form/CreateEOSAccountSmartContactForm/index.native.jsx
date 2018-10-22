@@ -51,6 +51,7 @@ const validate = (values, props) => {
     errors.confirmedPassword = messages[locale].add_eos_error_text_password_unmatch
   }
 
+
   return errors
 }
 
@@ -59,7 +60,7 @@ const validate = (values, props) => {
     locale: state.intl.get('locale'),
     wallet: state.wallet,
     eosAccount: state.eosAccount,
-    password: formValueSelector('createEOSAccountAssistanceForm')(state, 'password')
+    password: formValueSelector('CreateEOSAccountSmartContactForm')(state, 'password')
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -69,9 +70,9 @@ const validate = (values, props) => {
   })
 )
 
-@reduxForm({ form: 'createEOSAccountAssistanceForm', validate })
+@reduxForm({ form: 'CreateEOSAccountSmartContactForm', validate })
 
-export default class CreateEOSAccountAssistanceForm extends Component {
+export default class CreateEOSAccountSmartContactForm extends Component {
   UNSAFE_componentWillUpdate() {
     LayoutAnimation.easeInEaseOut()
   }
@@ -82,7 +83,7 @@ export default class CreateEOSAccountAssistanceForm extends Component {
 
     const componentId = this.props.componentId
     this.props.actions.createEOSAccountAssistanceRequested(
-      data.set('componentId', componentId).set('path', 'AccountAssistanceOrder').delete('confirmedPassword').toJS()
+      data.set('componentId', componentId).set('path', 'AccountSmartContactOrder').delete('confirmedPassword').toJS()
     )
   }
 

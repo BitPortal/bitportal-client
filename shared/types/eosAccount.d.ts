@@ -71,6 +71,7 @@ declare interface CreateEOSAccountAssistanceParams {
   password: string
   componentId?: string
   hint?: string
+  path?: string
 }
 
 declare interface CreateEOSAccountResult {
