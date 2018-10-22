@@ -770,8 +770,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+<<<<<<< HEAD
 				EF162AFC217C9692004F8AE2 /* SwiftyJSON.framework in Embed Frameworks */,
 				EF162AF8217C9692004F8AE2 /* Charts.framework in Embed Frameworks */,
+=======
+>>>>>>> develop
 				181BFEAD2129827600810CE2 /* RSKImageCropper.framework in Embed Frameworks */,
 				181BFEAB2129819400810CE2 /* QBImagePicker.framework in Embed Frameworks */,
 			);
@@ -1131,7 +1134,10 @@
 				C53482AFA582482480C3FBA7 /* libimageCropPicker.a in Frameworks */,
 				AF56E8C3428C4F48B12DFC68 /* libRCTJCoreModule.a in Frameworks */,
 				18F282992177351C00DEB13F /* UMPush.framework in Frameworks */,
+<<<<<<< HEAD
 				EF162AF7217C9692004F8AE2 /* Charts.framework in Frameworks */,
+=======
+>>>>>>> develop
 				5F9778491BB64567B1906360 /* libRCTJPushModule.a in Frameworks */,
 				4D3E192C76DB455FB2A83058 /* libz.tbd in Frameworks */,
 				4077FA79AD0344B59132A336 /* CoreTelephony.framework in Frameworks */,
@@ -2054,8 +2060,11 @@
 			buildRules = (
 			);
 			dependencies = (
+<<<<<<< HEAD
 				EF162AFA217C9692004F8AE2 /* PBXTargetDependency */,
 				EF162AFE217C9692004F8AE2 /* PBXTargetDependency */,
+=======
+>>>>>>> develop
 			);
 			name = bitportal;
 			productName = "Hello World";
@@ -2095,11 +2104,14 @@
 				Base,
 				"zh-Hans",
 				ko,
+<<<<<<< HEAD
 				de,
 				ja,
 				es,
 				pl,
 				fr,
+=======
+>>>>>>> develop
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
@@ -2110,10 +2122,13 @@
 					ProjectRef = 6A826FB4BCC24A12852034E9 /* BVLinearGradient.xcodeproj */;
 				},
 				{
+<<<<<<< HEAD
 					ProductGroup = EF162AED217C9627004F8AE2 /* Products */;
 					ProjectRef = EF162AEC217C9627004F8AE2 /* Charts.xcodeproj */;
 				},
 				{
+=======
+>>>>>>> develop
 					ProductGroup = 1865A73A21745DFE00CE1997 /* Products */;
 					ProjectRef = 754647FCC10D42E79662A42B /* FastImage.xcodeproj */;
 				},
@@ -2249,10 +2264,13 @@
 					ProductGroup = 1836E3E1208F022700C81AED /* Products */;
 					ProjectRef = BB3B885DAB124587870B4E7A /* SplashScreen.xcodeproj */;
 				},
+<<<<<<< HEAD
 				{
 					ProductGroup = EF162AD4217C9616004F8AE2 /* Products */;
 					ProjectRef = EF162AD3217C9616004F8AE2 /* SwiftyJSON.xcodeproj */;
 				},
+=======
+>>>>>>> develop
 			);
 			projectRoot = "";
 			targets = (
@@ -2863,6 +2881,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18F2826C2177351C00DEB13F /* cash_addr.c in Sources */,
+<<<<<<< HEAD
 				EF162ABC217C9484004F8AE2 /* BarDataExtract.swift in Sources */,
 				EF162AC1217C9484004F8AE2 /* RNHorizontalBarChartView.swift in Sources */,
 				18F282702177351C00DEB13F /* ed25519-donna-32bit-tables.c in Sources */,
@@ -2907,10 +2926,35 @@
 				EF162AB4217C9484004F8AE2 /* RNPieChartManagerBridge.m in Sources */,
 				EF162AC4217C9484004F8AE2 /* RNCombinedChartManager.swift in Sources */,
 				EF162ACA217C9484004F8AE2 /* ScatterDataExtract.swift in Sources */,
+=======
+				18F282702177351C00DEB13F /* ed25519-donna-32bit-tables.c in Sources */,
+				18F282802177351C00DEB13F /* ripemd160.c in Sources */,
+				18F282972177351C00DEB13F /* core_impl.cpp in Sources */,
+				18F282742177351C00DEB13F /* ed25519-sha3.c in Sources */,
+				18F2827B2177351C00DEB13F /* secp256k1.c in Sources */,
+				18F282882177351C00DEB13F /* bip32.c in Sources */,
+				18F2829D2177351D00DEB13F /* UMAnalyticsModule.m in Sources */,
+				18F2826B2177351C00DEB13F /* blake256.c in Sources */,
+				18F2827A2177351C00DEB13F /* nem.c in Sources */,
+				18F282902177351C00DEB13F /* aescrypt.c in Sources */,
+				18F282822177351C00DEB13F /* groestl.c in Sources */,
+				18F282A12177351D00DEB13F /* DJIError.mm in Sources */,
+				18F2826E2177351C00DEB13F /* rfc6979.c in Sources */,
+				18F282922177351C00DEB13F /* aestab.c in Sources */,
+				18F2828F2177351C00DEB13F /* aeskey.c in Sources */,
+				18F282912177351C00DEB13F /* aes_modes.c in Sources */,
+				18F2828A2177351C00DEB13F /* blake2s.c in Sources */,
+				18F282792177351C00DEB13F /* ed25519-donna-impl-base.c in Sources */,
+				18F282892177351C00DEB13F /* address.c in Sources */,
+				18F2829A2177351D00DEB13F /* RNUMConfigure.m in Sources */,
+				18F282712177351C00DEB13F /* ed25519.c in Sources */,
+				18F2828B2177351C00DEB13F /* sha3.c in Sources */,
+>>>>>>> develop
 				18F282772177351C00DEB13F /* modm-donna-32bit.c in Sources */,
 				18F282952177351C00DEB13F /* poly1305-donna.c in Sources */,
 				18F282652177351C00DEB13F /* base32.c in Sources */,
 				18F282782177351C00DEB13F /* curve25519-donna-32bit.c in Sources */,
+<<<<<<< HEAD
 				EF162AA0217C9484004F8AE2 /* RNYAxisChartViewBase.swift in Sources */,
 				18F282832177351C00DEB13F /* nist256p1.c in Sources */,
 				18F2828D2177351C00DEB13F /* ecdsa.c in Sources */,
@@ -2940,22 +2984,44 @@
 				EF162ACE217C9484004F8AE2 /* RNRadarChartManager.swift in Sources */,
 				18F282872177351C00DEB13F /* script.c in Sources */,
 				EF162ACB217C9484004F8AE2 /* RadarDataExtract.swift in Sources */,
+=======
+				18F282832177351C00DEB13F /* nist256p1.c in Sources */,
+				18F2828D2177351C00DEB13F /* ecdsa.c in Sources */,
+				18F282A02177351D00DEB13F /* DJIProxyCaches.mm in Sources */,
+				18F282632177351C00DEB13F /* sha2.c in Sources */,
+				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				18F282732177351C00DEB13F /* ed25519-keccak.c in Sources */,
+				13B07FC11A68108700A75B9A /* main.mm in Sources */,
+				18F282692177351C00DEB13F /* rc4.c in Sources */,
+				18F282622177351C00DEB13F /* hmac.c in Sources */,
+				18F282932177351C00DEB13F /* chacha_merged.c in Sources */,
+				18F2825F2177351C00DEB13F /* SSKeychain.m in Sources */,
+				18F2826F2177351C00DEB13F /* curve25519-donna-scalarmult-base.c in Sources */,
+				18F282612177351C00DEB13F /* bip39.c in Sources */,
+				18F282602177351C00DEB13F /* crypto.c in Sources */,
+				18F282872177351C00DEB13F /* script.c in Sources */,
+>>>>>>> develop
 				18F2829E2177351D00DEB13F /* BPCore+Private.mm in Sources */,
 				18F282852177351C00DEB13F /* memzero.c in Sources */,
 				18F282722177351C00DEB13F /* curve25519-donna-helpers.c in Sources */,
 				18F282942177351C00DEB13F /* rfc7539.c in Sources */,
 				18F2828E2177351C00DEB13F /* pbkdf2.c in Sources */,
 				18F2828C2177351C00DEB13F /* base58.c in Sources */,
+<<<<<<< HEAD
 				EF162ACF217C9484004F8AE2 /* CandleDataExtract.swift in Sources */,
 				EF162ABB217C9484004F8AE2 /* RNBarChartViewBase.swift in Sources */,
 				EF162AAB217C9484004F8AE2 /* RNBarLineChartViewBase.swift in Sources */,
 				18F282662177351C00DEB13F /* hasher.c in Sources */,
 				EF162AB3217C9484004F8AE2 /* RNPieChartView.swift in Sources */,
+=======
+				18F282662177351C00DEB13F /* hasher.c in Sources */,
+>>>>>>> develop
 				18F2829F2177351D00DEB13F /* BPCoreModule.mm in Sources */,
 				18F282962177351C00DEB13F /* chacha20poly1305.c in Sources */,
 				18F282672177351C00DEB13F /* rand.c in Sources */,
 				1808822A2135447300321418 /* NativeUtils.m in Sources */,
 				18F282982177351C00DEB13F /* UMPushModule.m in Sources */,
+<<<<<<< HEAD
 				EF162AA5217C9484004F8AE2 /* RNChartViewBase.swift in Sources */,
 				EF162AAC217C9484004F8AE2 /* ChartDateFormatter.swift in Sources */,
 				18F282762177351C00DEB13F /* ed25519-donna-basepoint-table.c in Sources */,
@@ -2972,11 +3038,19 @@
 				EF162ACD217C9484004F8AE2 /* RNRadarChartView.swift in Sources */,
 				EF162AB6217C9484004F8AE2 /* RNPieChartManager.swift in Sources */,
 				EF162AB8217C9484004F8AE2 /* RNBubbleChartView.swift in Sources */,
+=======
+				18F282762177351C00DEB13F /* ed25519-donna-basepoint-table.c in Sources */,
+				18F2826D2177351C00DEB13F /* curves.c in Sources */,
+				18F282862177351C00DEB13F /* blake2b.c in Sources */,
+				18F2827C2177351C00DEB13F /* bignum.c in Sources */,
+				18F2827E2177351C00DEB13F /* segwit_addr.c in Sources */,
+>>>>>>> develop
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+<<<<<<< HEAD
 /* Begin PBXTargetDependency section */
 		EF162AFA217C9692004F8AE2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2989,6 +3063,21 @@
 			targetProxy = EF162AFD217C9692004F8AE2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+=======
+/* Begin PBXVariantGroup section */
+		1865A8C421758AD000CE1997 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1865A8C321758AD000CE1997 /* en */,
+				1865A8C721758EA900CE1997 /* zh-Hans */,
+				1865A8C821758EAE00CE1997 /* ko */,
+			);
+			name = InfoPlist.strings;
+			path = bitportal;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+>>>>>>> develop
 
 /* Begin PBXVariantGroup section */
 		1865A8C421758AD000CE1997 /* InfoPlist.strings */ = {

@@ -47,7 +47,7 @@ export default class TransactionRecord extends Component {
     const { transactionInfo, transactionResult } = this.props
     const { blockHeight, transactionId } = this.getInfo(transactionInfo, transactionResult)
     // transactions  --  blocks
-    const number = type === 'transactions' ? transactionId : blockHeight
+    const number = type === 'tx' ? transactionId : blockHeight
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.BPWebView',
@@ -79,7 +79,7 @@ export default class TransactionRecord extends Component {
     let txsId
     if (this.props.transactionInfo) txsId = this.props.transactionInfo.getIn(['action_trace', 'trx_id'])
     else txsId = this.props.transactionResult.get('transaction_id')
-    const url = `${EOS_EXPLORER_URL}/transactions/${txsId}`
+    const url = `${EOS_EXPLORER_URL}/tx/${txsId}`
     Clipboard.setString(url)
     this.setState({ isCopied: true }, () => { Toast(messages[this.props.locale].copy_text_copy_success) })
   }
@@ -225,7 +225,7 @@ export default class TransactionRecord extends Component {
                       <Text style={[styles.text14, { marginTop: 10 }]}>
                         <FormattedMessage id="transaction_detail_label_transaction_id" />:
                       </Text>
-                      <Text onLongPress={this.copyTxID} onPress={() => this.checkBlockInfo('transactions')} numberOfLines={1} style={styles.text14}>
+                      <Text onLongPress={this.copyTxID} onPress={() => this.checkBlockInfo('tx')} numberOfLines={1} style={styles.text14}>
                         # <Text style={{ color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }}>
                           {transactionId && `${transactionId.slice(0, 7)}....${transactionId.slice(-7)}`}
                         </Text>
@@ -233,7 +233,7 @@ export default class TransactionRecord extends Component {
                       <Text style={[styles.text14, { marginTop: 15 }]}>
                         <FormattedMessage id="transaction_detail_label_block" />:
                       </Text>
-                      <Text onPress={() => this.checkBlockInfo('blocks')} numberOfLines={1} style={[styles.text14, { marginBottom: 15 }]}>
+                      <Text onPress={() => this.checkBlockInfo('block')} numberOfLines={1} style={[styles.text14, { marginBottom: 15 }]}>
                         # <Text style={{ color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }}>
                           {blockHeight}
                         </Text>
