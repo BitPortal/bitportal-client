@@ -181,8 +181,8 @@ export default class Assets extends Component {
     const eosAccountCreationRequestInfo = await secureStorage.getItem('EOS_ACCOUNT_CREATION_REQUEST_INFO', true)
     if (eosAccountCreationRequestInfo) {
       const { action } = await Dialog.alert(
-        messages[locale].assets_popup_label_pending_create_order, 
-        messages[locale].assets_popup_text_pending_create_order, 
+        messages[locale].assets_popup_label_pending_create_order,
+        messages[locale].assets_popup_text_pending_create_order,
         {
           negativeText: messages[locale].general_popup_button_cancel,
           positiveText: messages[locale].assets_popup_button_check_order
