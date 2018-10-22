@@ -45,8 +45,17 @@
   "add_eos_create_button_import": "계정 불러오기",
   "add_eos_create_error_popup_text_create_failed": "계정 생성에 실패했습니다. 다시 시도해주세요.\n궁긍하신 사항은 info@bitportal.io로 문의해주세요.",
   "add_eos_create_error_popup_text_data_extraction_failed": "데이터를 불러오지 못했습니다.\n다시 시도해주세요.",
-  "add_eos_create_title_create_assistance": "好友协助创建账户",
-  "add_eos_create_title_smart_contact": "智能合约创建账户",
+  "add_eos_create_friend_assistance_title_friend_assistance": "Create with Friend Assistance",
+  "add_eos_create_friend_assistance_text_tip1": "1. 创建账户需要消耗 EOS，请您找拥有 EOS 余额的账户扫描下方二维码帮您支付本次创建的费用。",
+  "add_eos_create_friend_assistance_text_tip2": "2. 在注册完成后请仔细核对及时备份您的私钥，以避免被盗风险。",
+  "add_eos_create_friend_assistance_label_account": "账户名称",
+  "add_eos_create_friend_assistance_label_owner": "Owner Public Key",
+  "add_eos_create_friend_assistance_label_active": "Active Public Key",
+  "add_eos_create_smart_contract_title_smart_contract": "Create with Smart Contract",
+  "add_eos_create_smart_contract_text_tip1": "1. 目前仅有部分交易所支持该方式进行注册，请使用支持添加转账Memo的交易所进行转账，以防资产丢失！",
+  "add_eos_create_smart_contract_text_tip2": "2. 倾向合约中转入至少2 EOS 已完成账号创建。合约会抵押部分 EOS 换取计算资源及网络带宽，剩余部分将会购买等值内存容量，并将这些资源存入该账户中。",
+  "add_eos_create_smart_contract_label_contract_account_name": "Contract Account Name",
+  "add_eos_create_smart_contract_label_contract_memo": "Contract Memo",
   "add_eos_create_button_next": "Next",
 
 
@@ -308,7 +317,7 @@
   "webview_error_text_load_failed": "로딩 실패",
 
 
-  "ok": "완료",
+  "confirm": "완료",
   "cancel": "취소",
 
   "game": "게임",

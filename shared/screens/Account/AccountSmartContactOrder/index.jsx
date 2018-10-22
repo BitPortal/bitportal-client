@@ -93,21 +93,21 @@ export default class AccountSmartContactOrder extends Component {
         <View style={styles.container}>
           <NavigationBar
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
-            title={messages[locale].add_eos_create_title_smart_contact}
+            title={messages[locale].add_eos_create_smart_contract_title_smart_contract}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.contentContainer}>
                 <LinearGradientContainer type="left" colors={Colors.gradientCardColors3} style={styles.gradient}>
                   <Text style={[styles.text14, { lineHeight: 20 }]}>
-                    1. 目前仅有部分交易所支持该方式进行注册，请不要使用交易所向该合约地址转币，以防资产丢失!
+                    {messages[locale].add_eos_create_smart_contract_text_tip1}
                   </Text>
                   <Text style={[styles.text14, { marginTop: 10, lineHeight: 20 }]}>
-                    2. 请向合约中转入至少 2EOS 以完成账号创建。合约会抵押部分 EOS 换取计算资源及网络宽带，剩余部分将会购买等值内存容量，并将这些资源存入该账户中。
+                    {messages[locale].add_eos_create_smart_contract_text_tip2}
                   </Text>
                 </LinearGradientContainer>
-                <InputItem label="合约名称" value="signupeoseos" />
-                <InputItem label="合约备注" value={`${eosAccountName}_${ownerPublicKey}`} />
+                <InputItem label={messages[locale].add_eos_create_smart_contract_label_contract_account_name} value="signupeoseos" />
+                <InputItem label={messages[locale].add_eos_create_smart_contract_label_contract_memo} value={`${eosAccountName}_${ownerPublicKey}`} />
                 <LinearGradientContainer type="left" colors={Colors.gradientCardColors3} style={styles.gradient}>
                   <Text style={[styles.text14, { lineHeight: 20 }]}>
                     注明：{'\n'}

@@ -34,7 +34,7 @@ export default class AlertModal extends Component {
                 onPress: () => this.props.onCancel()
               },
               {
-                text: positiveText || messages[this.props.locale].ok,
+                text: positiveText || messages[this.props.locale].confirm,
                 onPress: () => this.props.dismiss()
               }
             ],
@@ -49,7 +49,7 @@ export default class AlertModal extends Component {
             nextProps.subMessage,
             [
               {
-                text: positiveText || messages[this.props.locale].ok,
+                text: positiveText || messages[this.props.locale].confirm,
                 onPress: () => this.props.dismiss()
               }
             ],

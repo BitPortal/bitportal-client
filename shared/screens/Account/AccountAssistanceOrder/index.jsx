@@ -82,17 +82,17 @@ export default class AccountAssistanceOrder extends Component {
         <View style={styles.container}>
           <NavigationBar
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
-            title={messages[locale].add_eos_create_title_create_assistance}
+            title={messages[locale].add_eos_create_friend_assistance_title_friend_assistance}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.contentContainer}>
-                <Text style={styles.text14}>
-                  创建账户需要消耗 EOS，请您找拥有 EOS 余额的可信账户扫描下方二维码帮您支付本次创建的费用。
-                </Text>
                 <LinearGradientContainer type="left" colors={Colors.gradientCardColors3} style={styles.gradient}>
-                  <Text style={styles.text14}>
-                    在注册完成后请仔细核对及时备份您的私钥，以避免被盗风险。
+                  <Text style={[styles.text14, { lineHeight: 20 }]}>
+                    {messages[locale].add_eos_create_friend_assistance_text_tip1}
+                  </Text>
+                  <Text style={[styles.text14, { marginTop: 10, lineHeight: 20 }]}>
+                    {messages[locale].add_eos_create_friend_assistance_text_tip2}
                   </Text>
                 </LinearGradientContainer>
                 <View style={styles.qrCodeContainer}>
@@ -102,9 +102,9 @@ export default class AccountAssistanceOrder extends Component {
                     color="black"
                   />
                 </View>
-                <InputItem label="账户名称" value={eosAccountName} />
-                <InputItem label="Owner Key" value={ownerPublicKey} />
-                <InputItem label="Active Key" value={activePublicKey} />
+                <InputItem label={messages[locale].add_eos_create_friend_assistance_label_account} value={eosAccountName} />
+                <InputItem label={messages[locale].add_eos_create_friend_assistance_label_owner} value={ownerPublicKey} />
+                <InputItem label={messages[locale].add_eos_create_friend_assistance_label_active} value={activePublicKey} />
                 <View style={styles.btnContainer}>
                   <TouchableOpacity onPress={this.deleteOrder} style={styles.btn}>
                     <Text style={styles.text14}>

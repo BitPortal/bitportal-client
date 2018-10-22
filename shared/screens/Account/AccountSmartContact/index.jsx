@@ -36,7 +36,7 @@ export default class AccountSmartContact extends Component {
         <View style={styles.container}>
           <NavigationBar
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
-            title={messages[locale].add_eos_create_title_smart_contact}
+            title={messages[locale].add_eos_create_smart_contract_title_smart_contract}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
