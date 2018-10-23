@@ -24,6 +24,10 @@ export const errorMessages = (error/* , messages*/) => {
   switch (String(message)) {
     // case 'EOS System Error':
     // return 'EOS System Error'
+    case 'Owner public key dose not match!':
+      return 'Owner public key dose not match!'
+    case 'Active public key dose not match!':
+      return 'Active public key dose not match!'
     default:
       return '尚未激活!'
   }
