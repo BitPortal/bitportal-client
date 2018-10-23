@@ -112,12 +112,12 @@ export default class AccountAssistanceOrder extends Component {
                 <View style={styles.btnContainer}>
                   <TouchableOpacity onPress={this.deleteOrder} style={styles.btn}>
                     <Text style={styles.text14}>
-                      取消创建
+                      {messages[locale].add_eos_create_smart_contract_button_cancel}
                     </Text>
                   </TouchableOpacity>
                   <BPGradientButton onPress={this.refreshOrderInfo} extraStyle={{ marginLeft: 10 }}>
                     <Text style={styles.text14}>
-                      查询状态
+                      {messages[locale].add_eos_create_smart_contract_button_checkstatus}
                     </Text>
                   </BPGradientButton>
                 </View>

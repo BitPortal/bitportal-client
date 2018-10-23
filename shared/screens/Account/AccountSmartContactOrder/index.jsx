@@ -110,26 +110,21 @@ export default class AccountSmartContactOrder extends Component {
                 <InputItem label={messages[locale].add_eos_create_smart_contract_label_contract_memo} value={`${eosAccountName}_${ownerPublicKey}`} />
                 <LinearGradientContainer type="left" colors={Colors.gradientCardColors3} style={styles.gradient}>
                   <Text style={[styles.text14, { lineHeight: 20 }]}>
-                    注明：{'\n'}
-                    该创建方式是使用DAppub团队部署的智能合约进行创建，在创建过程中不涉及人工操作。
-                    如由于用户操作不当导致资产损失，TP无法帮助用户找回。
+                    {messages[locale].add_eos_create_smart_contract_text_tip3}
                   </Text>
-                  <Text style={[styles.text14, { alignSelf: 'flex-start', marginTop: 10, lineHeight: 20 }]}>
-                    合约开源地址：{'\n'}
-                  </Text>
-                  <Text onPress={this.checkContact} style={[styles.text14, { alignSelf: 'flex-start', marginTop: -20, lineHeight: 20, textDecorationLine: 'underline', color: Colors.textColor_255_255_238 }]}>
+                  <Text onPress={this.checkContact} style={[styles.text14, { alignSelf: 'flex-start', lineHeight: 20, textDecorationLine: 'underline', color: Colors.textColor_255_255_238 }]}>
                     https://github.com/dappub/signupeoseos
                   </Text>
                 </LinearGradientContainer>
                 <View style={styles.btnContainer}>
                   <TouchableOpacity onPress={this.deleteOrder} style={styles.btn}>
                     <Text style={styles.text14}>
-                      取消创建
+                      {messages[locale].add_eos_create_smart_contract_button_cancel}
                     </Text>
                   </TouchableOpacity>
                   <BPGradientButton onPress={this.refreshOrderInfo} extraStyle={{ marginLeft: 10 }}>
                     <Text style={styles.text14}>
-                      查询状态
+                      {messages[locale].add_eos_create_smart_contract_button_checkstatus}
                     </Text>
                   </BPGradientButton>
                 </View>

@@ -14,6 +14,18 @@ import * as eosAccountActions from 'actions/eosAccount'
 import { onEventWithMap } from 'utils/analytics'
 import { ACCOUNT_EOS_CREATE } from 'constants/analytics'
 import messages from 'resources/messages'
+import Alert from 'components/Alert'
+
+export const errorMessages = (error, messages) => {
+  if (!error) { return null }
+
+  const message = typeof error === 'object' ? error.message : error
+  switch (String(message)) {
+    case 'Account name already exists':
+      return messages.add_eos_create_error_popup_text_account_name_exist
+    default:
+  }
+}
 
 const validate = (values, props) => {
   const errors = {}
@@ -91,6 +103,7 @@ export default class CreateEOSAccountSmartContactForm extends Component {
     const { handleSubmit, invalid, pristine, eosAccount, locale, password } = this.props
     const loading = eosAccount.get('loading')
     const disabled = invalid || pristine || loading
+    const error = eosAccount.get('error')
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -125,6 +138,7 @@ export default class CreateEOSAccountSmartContactForm extends Component {
           />
 
           <SubmitButton disabled={disabled} onPress={handleSubmit(this.submit)} text={messages[locale].add_eos_create_button_next} />
+          <Alert message={errorMessages(error, messages[locale], this.props)} dismiss={this.props.actions.clearEOSAccountError} />
         </FormContainer>
       </IntlProvider>
     )

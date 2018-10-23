@@ -71,9 +71,13 @@
   "add_eos_create_smart_contract_title_smart_contract": "智能合约创建账户",
   "add_eos_create_smart_contract_text_tip1": "1. 目前仅有部分交易所支持该方式进行注册，请使用支持添加转账Memo的交易所进行转账，以防资产丢失！",
   "add_eos_create_smart_contract_text_tip2": "2. 倾向合约中转入至少2 EOS 已完成账号创建。合约会抵押部分 EOS 换取计算资源及网络带宽，剩余部分将会购买等值内存容量，并将这些资源存入该账户中。",
+  "add_eos_create_smart_contract_text_tip3": "注意：\n该创建方式是使用DAppub团队部署的智能合约进行创建，在创建过程中不涉及人工操作。若因用户操作不当导致资产损失，BitPortal将无法帮助用户找回。 \n合约开源地址：",
   "add_eos_create_smart_contract_label_contract_account_name": "合约账户名",
   "add_eos_create_smart_contract_label_contract_memo": "合约备注",
   "add_eos_create_button_next": "下一步",
+  "add_eos_create_smart_contract_button_cancel": "取消创建",
+  "add_eos_create_smart_contract_button_checkstatus": "检查订单状态",
+
   
   "add_eos_label_set_password": "设置密码",
   "add_eos_text_password": "输入密码",
