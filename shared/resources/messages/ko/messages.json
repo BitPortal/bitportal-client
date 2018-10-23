@@ -74,6 +74,9 @@
   "add_eos_create_smart_contract_label_contract_account_name": "Contract Account Name",
   "add_eos_create_smart_contract_label_contract_memo": "Contract Memo",
   "add_eos_create_button_next": "Next",
+  "add_eos_label_password_strength_weak": "Weak",
+  "add_eos_label_password_strength_medium": "Medium",
+  "add_eos_label_password_strength_strong": "Strong",
   "add_eos_create_smart_contract_button_cancel": "Cancel",
   "add_eos_create_smart_contract_button_checkstatus": "Check status",
 

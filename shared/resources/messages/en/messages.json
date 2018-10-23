@@ -46,7 +46,7 @@
   "add_eos_create_text_account_name": "12 Characters, Consist of 1-5 and a-z",
   "add_eos_create_popup_text_account_name_tips": "EOS account name is a unique identifier of your EOS account. An EOS account corresponds to an EOS private key with different access. According to the access of the private, an account obatains corresponding account access.",
   "add_eos_create_error_text_account_name_blank": "Please enter account name",
-  "add_eos_create_error_text_account_name_invalid": "Account name format is incorrect.",
+  "add_eos_create_error_text_account_name_invalid": "The account name should be 12 characters consist of 1-5 and a-z.",
   "add_eos_create_error_popup_text_account_name_exist": "Account name already exists, please use another account name.",
   "add_eos_create_label_registration_code": "Registration Code",
   "add_eos_create_text_registration_code": "Registration Code",
@@ -75,6 +75,9 @@
   "add_eos_create_smart_contract_label_contract_account_name": "Contract Account Name",
   "add_eos_create_smart_contract_label_contract_memo": "Contract Memo",
   "add_eos_create_button_next": "Next",
+  "add_eos_label_password_strength_weak": "Weak",
+  "add_eos_label_password_strength_medium": "Medium",
+  "add_eos_label_password_strength_strong": "Strong",
   "add_eos_create_smart_contract_button_cancel": "Cancel",
   "add_eos_create_smart_contract_button_checkstatus": "Check status",
   

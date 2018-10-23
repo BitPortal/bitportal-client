@@ -46,7 +46,7 @@
   "add_eos_create_text_account_name": "12位，由数字1-5、字母 a-z 构成",
   "add_eos_create_popup_text_account_name_tips": "EOS 账户名是您 EOS 账户的唯一标识，一个 EOS 账户对应不同权限的 EOS 私钥，根据该私钥所属权限获得相应的账户权限。",
   "add_eos_create_error_text_account_name_blank": "请输入账户名",
-  "add_eos_create_error_text_account_name_invalid": "账户名格式错误",
+  "add_eos_create_error_text_account_name_invalid": "账户名应是由数字1-5、小写字母 a-z 构成的12位字符",
   "add_eos_create_error_popup_text_account_name_exist": "账户名已存在，请尝试其他的账户名",
   "add_eos_create_label_registration_code": "注册码",
   "add_eos_create_text_registration_code": "输入注册码",
@@ -75,6 +75,9 @@
   "add_eos_create_smart_contract_label_contract_account_name": "合约账户名",
   "add_eos_create_smart_contract_label_contract_memo": "合约备注",
   "add_eos_create_button_next": "下一步",
+  "add_eos_label_password_strength_weak": "弱",
+  "add_eos_label_password_strength_medium": "中",
+  "add_eos_label_password_strength_strong": "强",
   "add_eos_create_smart_contract_button_cancel": "取消创建",
   "add_eos_create_smart_contract_button_checkstatus": "检查订单状态",
 
