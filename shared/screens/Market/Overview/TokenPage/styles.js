@@ -1,6 +1,6 @@
-import { StyleSheet } from "react-native";
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from "utils/dimens";
-import Colors from "resources/colors";
+import { StyleSheet } from 'react-native'
+import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
+import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
   container: {
@@ -20,9 +20,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.minorThemeColor
   },
   spaceBetween: {
-    alignItems: "center",
-    justifyContent: "space-between",
-    flexDirection: "row"
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row'
   },
   text14: {
     fontSize: FontScale(14),
@@ -41,8 +41,8 @@ const styles = StyleSheet.create({
     color: Colors.textColor_89_185_226
   },
   titleWrapper: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingVertical: 20
   },
   icon: {
@@ -51,11 +51,11 @@ const styles = StyleSheet.create({
     borderRadius: 25
   },
   center: {
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   row: {
-    flexDirection: "row"
+    flexDirection: 'row'
     // alignItems: 'center'
     // justifyContent: 'center'
   },
@@ -66,6 +66,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginRight: 10
   }
-});
+})
 
-export default styles;
+export default styles

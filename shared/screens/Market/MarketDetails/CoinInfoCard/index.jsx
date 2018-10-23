@@ -19,7 +19,7 @@ import styles from './styles'
 }))
 export default class CoinInfoCard extends Component {
   render() {
-    const { item, locale, token } = this.props;
+    const { item, locale } = this.props
 
     // const price_change_percent = item.get('price_change_percent')
     // const price_last = item.get('price_last')
@@ -61,22 +61,13 @@ export default class CoinInfoCard extends Component {
               }
             ]}
           >
-            <Text
-              style={[styles.text14, { color: Colors.textColor_255_255_238 }]}
-            >
-              <FormattedNumber
-                value={item.percent_change_1h}
-                maximumFractionDigits={2}
-                minimumFractionDigits={2}
-              />
-              %
+            <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>
+              <FormattedNumber value={item.percent_change_1h} maximumFractionDigits={2} minimumFractionDigits={2} />%
             </Text>
           </View>
         </View>
         <View style={[styles.spaceBetween, { marginTop: 4 }]}>
-          <Text
-            style={[styles.text14, { color: Colors.textColor_255_255_238 }]}
-          >
+          <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>
             Vol:{' '}
             <FormattedNumber
               value={item.volume_24h_usd}
@@ -85,9 +76,7 @@ export default class CoinInfoCard extends Component {
             />{' '}
             {'quote_asset'}
           </Text>
-          <Text
-            style={[styles.text14, { color: Colors.textColor_255_255_238 }]}
-          >
+          <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>
             {' '}
             <FormattedNumber
               value={item.volume_24h_usd}
@@ -98,6 +87,6 @@ export default class CoinInfoCard extends Component {
           </Text>
         </View>
       </View>
-    );
+    )
   }
 }

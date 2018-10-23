@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native'
 import {
   FontScale,
   SCREEN_WIDTH,
@@ -6,14 +6,14 @@ import {
   NAV_BAR_HEIGHT,
   FLOATING_CARD_WIDTH,
   FLOATING_CARD_BORDER_RADIUS
-} from "utils/dimens";
-import Colors from "resources/colors";
+} from 'utils/dimens'
+import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
     backgroundColor: Colors.mainThemeColor,
-    alignItems: "center",
+    alignItems: 'center',
     marginBottom: 10
   },
   scrollContainer: {
@@ -35,13 +35,13 @@ const styles = StyleSheet.create({
     width: FLOATING_CARD_WIDTH / 2 - 25,
     marginVertical: 15,
     marginHorizontal: 5,
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   spaceBetween: {
-    alignItems: "center",
-    justifyContent: "space-between",
-    flexDirection: "row"
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row'
   },
   text14: {
     fontSize: FontScale(14),
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   text26: {
     fontSize: FontScale(26),
-    fontWeight: "bold",
+    fontWeight: 'bold',
     color: Colors.textColor_255_255_238
   },
   keyText: {
@@ -69,8 +69,8 @@ const styles = StyleSheet.create({
     color: Colors.textColor_89_185_226
   },
   titleWrapper: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingBottom: 15,
     paddingTop: 20
   },
@@ -80,19 +80,19 @@ const styles = StyleSheet.create({
     borderRadius: 25
   },
   center: {
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: 'center',
+    justifyContent: 'center'
     // margin: 1
   },
   row: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center"
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   column: {
-    flexDirection: "column",
+    flexDirection: 'column',
     // alignItems: "center"
-    justifyContent: "center"
+    justifyContent: 'center'
     // backgroundColor: "red"
   },
   tag: {
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     borderRadius: 6,
     padding: 0,
-    justifyContent: "center",
+    justifyContent: 'center',
     borderColor: Colors.borderColor_41_41_38,
     borderWidth: 1,
     marginTop: 5,
@@ -111,10 +111,10 @@ const styles = StyleSheet.create({
   miniTag: {
     minWidth: 30,
     borderRadius: 6,
-    justifyContent: "center",
+    justifyContent: 'center',
 
     backgroundColor: Colors.borderColor_41_41_38
   }
-});
+})
 
-export default styles;
+export default styles

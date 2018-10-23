@@ -162,24 +162,9 @@ export default class ChartWrapper extends Component {
     return (
       <View style={styles.chartContainer}>
         <View style={[styles.spaceBetween, { marginTop: 10 }]}>
-          <Text
-            style={[styles.text14, { color: Colors.textColor_142_142_147 }]}
-          >
-            {' '}
-            H: 11,949.00{' '}
-          </Text>
-          <Text
-            style={[styles.text14, { color: Colors.textColor_142_142_147 }]}
-          >
-            {' '}
-            L: 11,949.00{' '}
-          </Text>
-          <Text
-            style={[styles.text14, { color: Colors.textColor_142_142_147 }]}
-          >
-            {' '}
-            C: 11,949.00{' '}
-          </Text>
+          <Text style={[styles.text14, { color: Colors.textColor_142_142_147 }]}> H: 11,949.00 </Text>
+          <Text style={[styles.text14, { color: Colors.textColor_142_142_147 }]}> L: 11,949.00 </Text>
+          <Text style={[styles.text14, { color: Colors.textColor_142_142_147 }]}> C: 11,949.00 </Text>
         </View>
         <View style={{ height: 80 }}>
           <Text style={{ color: 'white' }}>selected entry</Text>

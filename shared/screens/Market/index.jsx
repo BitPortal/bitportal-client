@@ -1,40 +1,35 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import * as tickerActions from "actions/ticker";
-import * as tokenActions from "actions/token";
-import { exchangeTickerSelector, sortFilterSelector } from "selectors/ticker";
-import { eosAccountNameSelector } from "selectors/eosAccount";
-import { bindActionCreators } from "redux";
-import { View, InteractionManager } from "react-native";
-import Modal from "react-native-modal";
-import {
-  MARKET_CATEGORIES,
-  MARKET_CATEGORY_NAMES
-} from "constants/market";
-import NavigationBar, { ListButton } from "components/NavigationBar";
-import SearchBar from "components/SearchBar";
-import { IntlProvider } from "react-intl";
-import Colors from "resources/colors";
-import {
-  QUOTES_LIST_SELECTED,
-} from "constants/analytics";
-import { onEventWithLabel } from "utils/analytics";
-import messages from "resources/messages";
-import styles from "./styles";
-import CategoryList from "./CategoryList";
-import MarketContent from "./MarketContent";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import * as tickerActions from 'actions/ticker'
+import * as tokenActions from 'actions/token'
+import { exchangeTickerSelector, sortFilterSelector } from 'selectors/ticker'
+import { eosAccountNameSelector } from 'selectors/eosAccount'
+import { bindActionCreators } from 'redux'
+import { View, InteractionManager } from 'react-native'
+import Modal from 'react-native-modal'
+import { MARKET_CATEGORIES, MARKET_CATEGORY_NAMES } from 'constants/market'
+import NavigationBar, { ListButton } from 'components/NavigationBar'
+import SearchBar from 'components/SearchBar'
+import { IntlProvider } from 'react-intl'
+import Colors from 'resources/colors'
+import { QUOTES_LIST_SELECTED } from 'constants/analytics'
+import { onEventWithLabel } from 'utils/analytics'
+import messages from 'resources/messages'
+import styles from './styles'
+import CategoryList from './CategoryList'
+import MarketContent from './MarketContent'
 
 @connect(
   state => ({
-    locale: state.intl.get("locale"),
+    locale: state.intl.get('locale'),
     ticker: exchangeTickerSelector(state),
-    loading: state.ticker.get("loading"),
-    exchangeFilter: state.ticker.get("exchangeFilter"),
+    loading: state.ticker.get('loading'),
+    exchangeFilter: state.ticker.get('exchangeFilter'),
     sortFilter: sortFilterSelector(state),
-    quoteAssetFilter: state.ticker.get("quoteAssetFilter"),
-    baseAsset: state.ticker.get("baseAsset"),
-    searchTerm: state.ticker.get("searchTerm"),
-    marketCategory: state.ticker.get("marketCategory"),
+    quoteAssetFilter: state.ticker.get('quoteAssetFilter'),
+    baseAsset: state.ticker.get('baseAsset'),
+    searchTerm: state.ticker.get('searchTerm'),
+    marketCategory: state.ticker.get('marketCategory'),
     eosAccountName: eosAccountNameSelector(state)
   }),
   dispatch => ({
@@ -55,41 +50,41 @@ export default class Market extends Component {
       bottomTabs: {
         backgroundColor: Colors.minorThemeColor
       }
-    };
+    }
   }
 
   state = {
-    coinName: "",
+    coinName: '',
     isVisible: false,
     activeQuoteAsset: null
-  };
+  }
 
   searchCoin = coinName => {
-    this.setState({ coinName });
-  };
+    this.setState({ coinName })
+  }
 
   selectExchange = () => {
-    this.setState({ isVisible: true });
-  };
+    this.setState({ isVisible: true })
+  }
 
   changeCategory = category => {
     //Umeng analytics
     InteractionManager.runAfterInteractions(() => {
       this.setState({ isVisible: false }, () => {
-        this.props.actions.setMarketCategory(category);
-      });
-    });
-  };
+        this.props.actions.setMarketCategory(category)
+      })
+    })
+  }
 
   changeQuote = quote => {
     //Umeng analytics
-    onEventWithLabel(QUOTES_LIST_SELECTED, quote);
+    onEventWithLabel(QUOTES_LIST_SELECTED, quote)
     this.setState({ activeQuoteAsset: quote }, () => {
       InteractionManager.runAfterInteractions(() => {
-        this.props.actions.selectTickersByQuoteAsset(quote);
-      });
-    });
-  };
+        this.props.actions.selectTickersByQuoteAsset(quote)
+      })
+    })
+  }
   //
   // pressListItem = (item) => {
   //   //Umeng analytics
@@ -114,12 +109,12 @@ export default class Market extends Component {
       // quote_asset: this.props.quoteAssetFilter,
       // sort: this.props.sortFilter,
       limit: 200
-    });
-  };
+    })
+  }
 
   closeExchangeList = () => {
-    this.setState({ isVisible: false });
-  };
+    this.setState({ isVisible: false })
+  }
 
   shouldComponentUpdate(nextProps, nextState) {
     return (
@@ -132,41 +127,31 @@ export default class Market extends Component {
       nextState.coinName !== this.state.coinName ||
       nextState.activeQuoteAsset !== this.state.activeQuoteAsset ||
       nextState.searchTerm !== this.props.searchTerm
-    );
+    )
   }
 
   componentDidAppear() {
-    this.onRefresh();
+    this.onRefresh()
   }
 
   onChangeText = text => {
-    this.props.actions.setSearchTerm(text);
-  };
+    this.props.actions.setSearchTerm(text)
+  }
 
   render() {
-    const {
-      locale,
-      searchTerm,
-      marketCategory,
-      componentId
-    } = this.props;
+    const { locale, searchTerm, marketCategory, componentId } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            leftButton={
-              <ListButton
-                label={MARKET_CATEGORY_NAMES[marketCategory]}
-                onPress={this.selectExchange}
-              />
-            }
+            leftButton={<ListButton label={MARKET_CATEGORY_NAMES[marketCategory]} onPress={this.selectExchange} />}
             rightButton={
               <SearchBar
                 searchTerm={searchTerm}
                 onChangeText={text => this.onChangeText(text)}
                 clearSearch={() => {
-                  this.props.actions.setSearchTerm("");
+                  this.props.actions.setSearchTerm('')
                 }}
               />
             }
@@ -191,6 +176,6 @@ export default class Market extends Component {
           </Modal>
         </View>
       </IntlProvider>
-    );
+    )
   }
 }

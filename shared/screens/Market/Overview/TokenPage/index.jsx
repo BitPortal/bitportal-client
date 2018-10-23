@@ -1,23 +1,23 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as tokenActions from "actions/token";
-import * as chartActions from "actions/chart";
-import { Navigation } from "react-native-navigation";
-import NavigationBar, { CommonButton } from "components/NavigationBar";
-import { View, ScrollView, InteractionManager } from "react-native";
-import TokenCard from "./TokenCard";
-import TokenChart from "./TokenChart";
-import TokenDetails from "./TokenDetails";
-import styles from "./styles";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as tokenActions from 'actions/token'
+import * as chartActions from 'actions/chart'
+import { Navigation } from 'react-native-navigation'
+import NavigationBar, { CommonButton } from 'components/NavigationBar'
+import { View, ScrollView, InteractionManager } from 'react-native'
+import TokenCard from './TokenCard'
+import TokenChart from './TokenChart'
+import TokenDetails from './TokenDetails'
+import styles from './styles'
 
 @connect(
   state => ({
-    locale: state.intl.get("locale"),
-    listedExchange: state.ticker.get("listedExchange"),
-    loading: state.ticker.get("loading"),
-    baseAsset: state.ticker.get("baseAsset"),
-    chartType: state.chart.get("chartType")
+    locale: state.intl.get('locale'),
+    listedExchange: state.ticker.get('listedExchange'),
+    loading: state.ticker.get('loading'),
+    baseAsset: state.ticker.get('baseAsset'),
+    chartType: state.chart.get('chartType')
   }),
   dispatch => ({
     actions: bindActionCreators(
@@ -39,40 +39,35 @@ export default class TokenPage extends Component {
       bottomTabs: {
         visible: false
       }
-    };
+    }
   }
 
-  componentWillMount() {
-    const symbol = this.props.item.get("symbol");
+  UNSAFE_componentWillMount() {
+    const symbol = this.props.item.get('symbol')
     InteractionManager.runAfterInteractions(() => {
       this.props.actions.getTokenDetailRequested({
         symbol
-      });
+      })
       this.props.actions.getChartRequested({
         symbol,
         chartType: this.props.chartType
-      });
-    });
+      })
+    })
   }
 
   componentWillUnmount() {
     InteractionManager.runAfterInteractions(() => {
-      this.props.actions.clearChart({});
-    });
+      this.props.actions.clearChart({})
+    })
   }
 
   render() {
-    const { item } = this.props;
+    const { item } = this.props
     return (
       <View style={styles.container}>
         <NavigationBar
-          leftButton={
-            <CommonButton
-              iconName="md-arrow-back"
-              onPress={() => Navigation.pop(this.props.componentId)}
-            />
-          }
-          title={item.get("symbol")}
+          leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
+          title={item.get('symbol')}
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
@@ -82,6 +77,6 @@ export default class TokenPage extends Component {
           </ScrollView>
         </View>
       </View>
-    );
+    )
   }
 }

@@ -1,31 +1,31 @@
-import { StyleSheet, Platform } from "react-native";
-import Colors from "resources/colors";
+import { StyleSheet, Platform } from 'react-native'
+import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
   container: {
-    position: "absolute",
+    position: 'absolute',
     zIndex: 0,
     right: 0,
-    height: "100%",
+    height: '100%',
     // backgroundColor: 'red',
-    justifyContent: "center"
+    justifyContent: 'center'
   },
   searchWrapper: {
     flex: 1,
-    justifyContent: "flex-end",
-    flexDirection: "row",
-    alignItems: "center",
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingRight: 10
   },
   searchBox: {
-    flexDirection: "row",
+    flexDirection: 'row',
     borderWidth: 1,
     borderRadius: 10,
     paddingVertical: 2,
     marginRight: 5,
-    marginVertical: Platform.OS === "ios" ? 2 : 10,
-    alignItems: "center",
-    backgroundColor: "red"
+    marginVertical: Platform.OS === 'ios' ? 2 : 10,
+    alignItems: 'center',
+    backgroundColor: 'red'
   },
   textInput: {
     color: Colors.textColor_181_181_181,
@@ -34,17 +34,17 @@ const styles = StyleSheet.create({
     // backgroundColor: 'red'
   },
   searchContainer: {
-    width: "100%",
-    alignItems: "center",
-    flexDirection: "column"
+    width: '100%',
+    alignItems: 'center',
+    flexDirection: 'column'
   },
   searchFieldInput: {
     borderBottomColor: Colors.textColor_107_107_107,
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     padding: 1,
-    alignItems: "center"
+    alignItems: 'center'
   },
   searchInput: {
     color: Colors.textColor_181_181_181,
@@ -53,6 +53,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 40
   }
-});
+})
 
-export default styles;
+export default styles

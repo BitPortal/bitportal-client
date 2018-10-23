@@ -1,18 +1,17 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Text, View, ActivityIndicator } from "react-native";
-import DescriptionPanel from "components/DescriptionPanel";
-import { MARKET_DETAIL_KEYS } from "constants/market";
-import { IntlProvider, FormattedMessage, FormattedNumber } from "react-intl";
-import messages from "resources/messages";
-import styles from "./styles";
-
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Text, View, ActivityIndicator } from 'react-native'
+import DescriptionPanel from 'components/DescriptionPanel'
+import { MARKET_DETAIL_KEYS } from 'constants/market'
+import { IntlProvider, FormattedMessage, FormattedNumber } from 'react-intl'
+import messages from 'resources/messages'
+import styles from './styles'
 
 @connect(
   state => ({
-    locale: state.intl.get("locale"),
-    token: state.token.get("data"),
-    loading: state.token.get("loading")
+    locale: state.intl.get('locale'),
+    token: state.token.get('data'),
+    loading: state.token.get('loading')
   }),
   null,
   null,
@@ -22,8 +21,8 @@ import styles from "./styles";
 )
 export default class TokenDetails extends Component {
   render() {
-    const { locale, token, loading } = this.props;
-    console.log("tokendetails", token, token.keySeq());
+    const { locale, token, loading } = this.props
+    console.log('tokendetails', token, token.keySeq())
     return loading ? (
       <View>
         <DetailPanel>
@@ -39,40 +38,36 @@ export default class TokenDetails extends Component {
             messages={messages}
             title="Description"
             // description={"hello"}
-            description={token.get("description")?.get(locale)}
+            description={token.get('description')?.get(locale)}
           />
-          <DetailPanel
-            messages={messages[locale]}
-            title="Token Details"
-            token={token}
-          >
+          <DetailPanel messages={messages[locale]} title="Token Details" token={token}>
             {token.size === 0 && (
               <Text style={styles.text14}>
-                {"\n"}
+                {'\n'}
                 Details Not Available
               </Text>
             )}
-            {token.get("circulating_supply") && (
+            {token.get('circulating_supply') && (
               <View>
                 <View style={[styles.spaceBetween, { marginVertical: 10 }]}>
                   <Text style={styles.keyText}>
                     <FormattedMessage id="circulating_supply" />
                   </Text>
                   <Text style={styles.text14}>
-                    <FormattedNumber value={token.get("circulating_supply")} />
+                    <FormattedNumber value={token.get('circulating_supply')} />
                   </Text>
                 </View>
                 <View style={styles.hairlineSpacer} />
               </View>
             )}
-            {token.get("total_supply") && (
+            {token.get('total_supply') && (
               <View>
                 <View style={[styles.spaceBetween, { marginVertical: 10 }]}>
                   <Text style={styles.keyText}>
                     <FormattedMessage id="total_supply" />
                   </Text>
                   <Text style={styles.text14}>
-                    <FormattedNumber value={token.get("total_supply")} />
+                    <FormattedNumber value={token.get('total_supply')} />
                   </Text>
                 </View>
                 <View style={styles.hairlineSpacer} />
@@ -80,9 +75,7 @@ export default class TokenDetails extends Component {
             )}
             {token.keySeq().map(
               item =>
-                item !== "total_supply" &&
-                item !== "circulating_supply" &&
-                MARKET_DETAIL_KEYS.includes(item) ? (
+                item !== 'total_supply' && item !== 'circulating_supply' && MARKET_DETAIL_KEYS.includes(item) ? (
                   <View key={item}>
                     <View style={[styles.spaceBetween, { marginVertical: 10 }]}>
                       <Text style={styles.keyText}>
@@ -97,7 +90,7 @@ export default class TokenDetails extends Component {
           </DetailPanel>
         </View>
       </IntlProvider>
-    );
+    )
   }
 }
 
@@ -123,7 +116,7 @@ export default class TokenDetails extends Component {
 // };
 
 const DetailPanel = props => {
-  const { messages, title, loading } = props;
+  const { messages, title } = props
   return (
     <IntlProvider messages={messages}>
       <View style={styles.container}>
@@ -140,5 +133,5 @@ const DetailPanel = props => {
         </View>
       </View>
     </IntlProvider>
-  );
-};
+  )
+}

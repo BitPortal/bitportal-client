@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native'
 import {
   FontScale,
   SCREEN_WIDTH,
@@ -6,15 +6,15 @@ import {
   NAV_BAR_HEIGHT,
   FLOATING_CARD_WIDTH,
   FLOATING_CARD_BORDER_RADIUS
-} from "utils/dimens";
-import Colors from "resources/colors";
+} from 'utils/dimens'
+import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
     // height: SCREEN_HEIGHT,
     backgroundColor: Colors.mainThemeColor,
-    alignItems: "center",
+    alignItems: 'center',
     marginBottom: 10
   },
   scrollContainer: {
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     width: FLOATING_CARD_WIDTH,
-    alignItems: "center",
+    alignItems: 'center',
     minHeight: 200,
     // paddingVertical: 10,
     // paddingHorizontal: 25,
@@ -40,9 +40,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.bgColor_30_31_37
   },
   spaceBetween: {
-    alignItems: "center",
-    justifyContent: "space-between",
-    flexDirection: "row"
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row'
   },
   text14: {
     fontSize: FontScale(14),
@@ -61,8 +61,8 @@ const styles = StyleSheet.create({
     color: Colors.textColor_89_185_226
   },
   titleWrapper: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingVertical: 20
   },
   icon: {
@@ -71,16 +71,16 @@ const styles = StyleSheet.create({
     borderRadius: 25
   },
   center: {
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   centerFlex: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   row: {
-    flexDirection: "row"
+    flexDirection: 'row'
     // alignItems: 'center'
     // justifyContent: 'center'
   },
@@ -92,6 +92,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginRight: 10
   }
-});
+})
 
-export default styles;
+export default styles

@@ -1,17 +1,13 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import {
-  FontScale,
-  FLOATING_CARD_WIDTH,
-  FLOATING_CARD_BORDER_RADIUS
-} from "utils/dimens";
-import Colors from "resources/colors";
+import React from 'react'
+import { View, Text, StyleSheet } from 'react-native'
+import { FontScale, FLOATING_CARD_WIDTH, FLOATING_CARD_BORDER_RADIUS } from 'utils/dimens'
+import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
   container: {
     // width: FLOATING_CARD_WIDTH,
     backgroundColor: Colors.mainThemeColor,
-    alignItems: "center",
+    alignItems: 'center',
     marginBottom: 10
   },
   cardContainer: {
@@ -43,8 +39,8 @@ const styles = StyleSheet.create({
     color: Colors.textColor_80_80_80
   },
   titleWrapper: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingVertical: 20
   },
   icon: {
@@ -54,11 +50,11 @@ const styles = StyleSheet.create({
   },
   center: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   row: {
-    flexDirection: "row"
+    flexDirection: 'row'
     // alignItems: 'center'
     // justifyContent: 'center'
   },
@@ -68,18 +64,18 @@ const styles = StyleSheet.create({
   },
   hairlineSpacer: {
     height: 1,
-    width: "100%",
-    backgroundColor: "black",
+    width: '100%',
+    backgroundColor: 'black',
     opacity: 0.3
   },
   textContainer: {
     paddingVertical: 13,
-    textAlign: "center"
+    textAlign: 'center'
   }
-});
+})
 
 const DescriptionPanel = props => {
-  const { title, description } = props;
+  const { title, description } = props
   return (
     <View style={styles.container}>
       <View style={styles.cardContainer}>
@@ -88,13 +84,11 @@ const DescriptionPanel = props => {
         </View>
         <View style={styles.hairlineSpacer} />
         <View style={styles.textContainer}>
-          <Text style={[styles.text14, { textAlign: "justify" }]}>
-            {description || "Description Not Available"}
-          </Text>
+          <Text style={[styles.text14, { textAlign: 'justify' }]}>{description || 'Description Not Available'}</Text>
         </View>
       </View>
     </View>
-  );
-};
+  )
+}
 
-export default DescriptionPanel;
+export default DescriptionPanel

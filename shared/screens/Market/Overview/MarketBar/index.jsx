@@ -1,18 +1,14 @@
-import React, { Component } from 'react';
-import Colors from 'resources/colors';
-import { connect } from 'react-redux';
-import {
-  Text,
-  View,
-  TouchableOpacity
-} from 'react-native';
-import { sortFilterSelector } from 'selectors/ticker';
-import { bindActionCreators } from 'redux';
-import * as tickerActions from 'actions/ticker';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { DEFAULT_SORT_FILTER } from 'constants/market';
-import messages from 'resources/messages';
-import styles from './styles';
+import React, { Component } from 'react'
+import Colors from 'resources/colors'
+import { connect } from 'react-redux'
+import { Text, View, TouchableOpacity } from 'react-native'
+import { sortFilterSelector } from 'selectors/ticker'
+import { bindActionCreators } from 'redux'
+import * as tickerActions from 'actions/ticker'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { DEFAULT_SORT_FILTER } from 'constants/market'
+import messages from 'resources/messages'
+import styles from './styles'
 
 @connect(
   state => ({
@@ -33,51 +29,51 @@ import styles from './styles';
 )
 class MarketBar extends Component {
   sortToggle(selector) {
-    const { exchangeFilter, sortFilter } = this.props;
+    const { exchangeFilter, sortFilter } = this.props
     switch (true) {
       case selector === 'percent' && sortFilter === 'price_change_percent_high':
         this.props.actions.setSortFilter({
           exchangeFilter,
           sortFilter: 'price_change_percent_low'
-        });
-        break;
+        })
+        break
       case selector === 'percent' && sortFilter === 'price_change_percent_low':
         this.props.actions.setSortFilter({
           exchangeFilter,
           sortFilter: DEFAULT_SORT_FILTER
-        });
-        break;
+        })
+        break
       case selector === 'percent':
         this.props.actions.setSortFilter({
           exchangeFilter,
           sortFilter: 'price_change_percent_high'
-        });
-        break;
+        })
+        break
       case selector === 'price' && sortFilter === 'current_price_high':
         this.props.actions.setSortFilter({
           exchangeFilter,
           sortFilter: 'current_price_low'
-        });
-        break;
+        })
+        break
       case selector === 'price' && sortFilter === 'current_price_low':
         this.props.actions.setSortFilter({
           exchangeFilter,
           sortFilter: DEFAULT_SORT_FILTER
-        });
-        break;
+        })
+        break
       case selector === 'price':
         this.props.actions.setSortFilter({
           exchangeFilter,
           sortFilter: 'current_price_high'
-        });
-        break;
+        })
+        break
       default:
-        break;
+        break
     }
   }
 
   render() {
-    const { sortFilter, locale } = this.props;
+    const { sortFilter, locale } = this.props
     return (
       <View style={styles.container}>
         <View style={[styles.headerTitle]}>
@@ -107,7 +103,7 @@ class MarketBar extends Component {
           {/* </TouchableOpacity> */}
           <TouchableOpacity
             onPress={() => {
-              this.sortToggle('price');
+              this.sortToggle('price')
             }}
           >
             <View
@@ -131,9 +127,7 @@ class MarketBar extends Component {
                     name="md-arrow-dropup"
                     size={20}
                     color={
-                      sortFilter === 'current_price_low'
-                        ? Colors.textColor_255_255_238
-                        : Colors.textColor_181_181_181
+                      sortFilter === 'current_price_low' ? Colors.textColor_255_255_238 : Colors.textColor_181_181_181
                     }
                   />
                 </View>
@@ -142,9 +136,7 @@ class MarketBar extends Component {
                     name="md-arrow-dropdown"
                     size={20}
                     color={
-                      sortFilter === 'current_price_high'
-                        ? Colors.textColor_255_255_238
-                        : Colors.textColor_181_181_181
+                      sortFilter === 'current_price_high' ? Colors.textColor_255_255_238 : Colors.textColor_181_181_181
                     }
                   />
                 </View>
@@ -153,7 +145,7 @@ class MarketBar extends Component {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              this.sortToggle('percent');
+              this.sortToggle('percent')
             }}
           >
             <View
@@ -199,8 +191,8 @@ class MarketBar extends Component {
           </TouchableOpacity>
         </View>
       </View>
-    );
+    )
   }
 }
 
-export default MarketBar;
+export default MarketBar

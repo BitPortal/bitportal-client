@@ -11,16 +11,11 @@ import messages from 'resources/messages'
 import styles from './styles'
 
 const MarketElement = ({ data }) => (
-  <TouchableHighlight
-    underlayColor={Colors.hoverColor}
-  >
+  <TouchableHighlight underlayColor={Colors.hoverColor}>
     <View style={styles.marketElementContainer}>
       <View style={styles.spaceBetween}>
         <View>
-          <Text style={styles.text18}>
-            {' '}
-            {EXCHANGE_NAMES[data.get('exchange')]}{' '}
-          </Text>
+          <Text style={styles.text18}> {EXCHANGE_NAMES[data.get('exchange')]} </Text>
         </View>
         <View style={{ alignItems: 'flex-end', justifyContent: 'center' }}>
           <Text style={[styles.text16]}>

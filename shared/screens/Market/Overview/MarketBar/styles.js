@@ -1,5 +1,5 @@
-import { StyleSheet, Platform } from "react-native";
-import Colors from "resources/colors";
+import { StyleSheet, Platform } from 'react-native'
+import Colors from 'resources/colors'
 import {
   FontScale,
   SCREEN_WIDTH,
@@ -9,34 +9,34 @@ import {
   FLOATING_CARD_WIDTH,
   FLOATING_CARD_BORDER_RADIUS,
   WidthPercent
-} from "utils/dimens";
+} from 'utils/dimens'
 
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
     // height: SCREEN_HEIGHT,
     backgroundColor: Colors.mainThemeColor,
-    alignItems: "center"
+    alignItems: 'center'
   },
   headerTitle: {
     width: FLOATING_CARD_WIDTH,
     height: 30,
     backgroundColor: Colors.bgColor_30_31_37,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     borderBottomWidth: 1,
     borderBottomColor: Colors.minorThemeColor,
     borderRadius: FLOATING_CARD_BORDER_RADIUS,
     marginBottom: 10
   },
   center: {
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   text20: {
     fontSize: FontScale(20),
-    fontWeight: "bold",
+    fontWeight: 'bold',
     color: Colors.textColor_FFFFEE
   },
   text13: {
@@ -64,13 +64,13 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     borderWidth: 1,
     borderColor: Colors.borderColor_41_41_38,
-    flexDirection: "row",
-    alignItems: "center"
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   textInputStyle: {
     width: ((SCREEN_WIDTH - 30) * 2) / 3 - 40,
     height: 40,
-    marginLeft: Platform.OS === "ios" ? 11 : 7,
+    marginLeft: Platform.OS === 'ios' ? 11 : 7,
     color: Colors.textColor_FFFFEE,
     fontSize: FontScale(17)
   },
@@ -82,9 +82,9 @@ const styles = StyleSheet.create({
   listItem: {
     borderBottomWidth: 1,
     borderBottomColor: Colors.minorThemeColor,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     width: SCREEN_WIDTH,
     height: 70,
     backgroundColor: Colors.bgColor_30_31_37
@@ -92,8 +92,8 @@ const styles = StyleSheet.create({
   coin: {
     width: WidthPercent(30),
     height: 42,
-    alignItems: "center",
-    flexDirection: "row"
+    alignItems: 'center',
+    flexDirection: 'row'
   },
   price: {
     width: WidthPercent(40)
@@ -105,9 +105,9 @@ const styles = StyleSheet.create({
   quoteContainer: {
     width: SCREEN_WIDTH,
     height: 40,
-    flexDirection: "row",
+    flexDirection: 'row',
     backgroundColor: Colors.minorThemeColor
   }
-});
+})
 
-export default styles;
+export default styles

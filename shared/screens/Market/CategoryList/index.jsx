@@ -1,63 +1,36 @@
-import React from "react";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import {
-  Text,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  TouchableHighlight
-} from "react-native";
-import Colors from "resources/colors";
-import { MARKET_CATEGORY_NAMES } from "constants/market";
-import styles from "./styles";
+import React from 'react'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { Text, View, ScrollView, TouchableOpacity, TouchableHighlight } from 'react-native'
+import Colors from 'resources/colors'
+import { MARKET_CATEGORY_NAMES } from 'constants/market'
+import styles from './styles'
 
 const ListItem = ({ category, onPress, active, loginRequired, loggedIn }) => (
-  <TouchableHighlight
-    underlayColor={Colors.hoverColor}
-    style={styles.listContainer}
-    onPress={() => onPress(category)}
-  >
-    <View
-      style={[styles.listContainer, styles.between, { paddingHorizontal: 32 }]}
-    >
+  <TouchableHighlight underlayColor={Colors.hoverColor} style={styles.listContainer} onPress={() => onPress(category)}>
+    <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32 }]}>
       {loginRequired && !loggedIn ? (
-        <Text style={[styles.text16, { color: "grey" }]}>
-          {MARKET_CATEGORY_NAMES[category]}
-        </Text>
+        <Text style={[styles.text16, { color: 'grey' }]}>{MARKET_CATEGORY_NAMES[category]}</Text>
       ) : (
         <Text style={[styles.text16]}>{MARKET_CATEGORY_NAMES[category]}</Text>
       )}
       {/* <Text style={[styles.text16]}>{MARKET_CATEGORY_NAMES[category]}</Text> */}
 
-      {active && (
-        <Ionicons
-          name="ios-checkmark"
-          size={36}
-          color={Colors.bgColor_0_122_255}
-        />
-      )}
+      {active && <Ionicons name="ios-checkmark" size={36} color={Colors.bgColor_0_122_255} />}
     </View>
   </TouchableHighlight>
-);
+)
 
-const CategoryList = ({
-  dismissModal,
-  activeCategory,
-  categoryList,
-  changeCategory,
-  loggedIn
-}) => {
-
-handleOnPressLogic = category => {
+const CategoryList = ({ dismissModal, activeCategory, categoryList, changeCategory, loggedIn }) => {
+  handleOnPressLogic = category => {
     if ((category.login_required && loggedIn) || !category.login_required) {
-      return changeCategory(category.name);
-    } else return;
-  };
+      return changeCategory(category.name)
+    } else return
+  }
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        style={[styles.container, { backgroundColor: "rgba(0,0,0,0.1)" }]}
+        style={[styles.container, { backgroundColor: 'rgba(0,0,0,0.1)' }]}
         onPress={() => dismissModal()}
       />
       <View style={styles.bgContainer}>
@@ -73,14 +46,14 @@ handleOnPressLogic = category => {
               loggedIn={loggedIn}
               active={activeCategory === category.name}
               onPress={() => {
-                this.handleOnPressLogic(category);
+                this.handleOnPressLogic(category)
               }}
             />
           ))}
         </ScrollView>
       </View>
     </View>
-  );
-};
+  )
+}
 
-export default CategoryList;
+export default CategoryList

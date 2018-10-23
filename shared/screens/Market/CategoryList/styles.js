@@ -1,6 +1,6 @@
-import { StyleSheet } from "react-native";
-import Colors from "resources/colors";
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from "utils/dimens";
+import { StyleSheet } from 'react-native'
+import Colors from 'resources/colors'
+import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
 
 const styles = StyleSheet.create({
   container: {
@@ -19,15 +19,15 @@ const styles = StyleSheet.create({
     marginTop: NAV_BAR_HEIGHT - SCREEN_HEIGHT
   },
   between: {
-    alignItems: "center",
-    justifyContent: "space-between",
-    flexDirection: "row"
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row'
   },
   text16: {
     fontSize: FontScale(16),
-    fontWeight: "normal",
+    fontWeight: 'normal',
     color: Colors.textColor_255_255_238
   }
-});
+})
 
-export default styles;
+export default styles

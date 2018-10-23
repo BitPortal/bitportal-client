@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native'
 import {
   FontScale,
   SCREEN_WIDTH,
@@ -6,14 +6,14 @@ import {
   NAV_BAR_HEIGHT,
   FLOATING_CARD_WIDTH,
   FLOATING_CARD_BORDER_RADIUS
-} from "utils/dimens";
-import Colors from "resources/colors";
+} from 'utils/dimens'
+import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
   container: {
     // width: FLOATING_CARD_WIDTH,
     backgroundColor: Colors.mainThemeColor,
-    alignItems: "center",
+    alignItems: 'center',
     marginBottom: 10
   },
   scrollContainer: {
@@ -29,9 +29,9 @@ const styles = StyleSheet.create({
     borderRadius: FLOATING_CARD_BORDER_RADIUS
   },
   spaceBetween: {
-    alignItems: "center",
-    justifyContent: "space-between",
-    flexDirection: "row"
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row'
   },
   text14: {
     fontSize: FontScale(14),
@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
     color: Colors.textColor_80_80_80
   },
   titleWrapper: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingVertical: 20
   },
   icon: {
@@ -65,11 +65,11 @@ const styles = StyleSheet.create({
   },
   center: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   row: {
-    flexDirection: "row"
+    flexDirection: 'row'
     // alignItems: 'center'
     // justifyContent: 'center'
   },
@@ -87,14 +87,14 @@ const styles = StyleSheet.create({
   },
   hairlineSpacer: {
     height: 1,
-    width: "100%",
-    backgroundColor: "black",
+    width: '100%',
+    backgroundColor: 'black',
     opacity: 0.3
   },
   textContainer: {
     paddingVertical: 13,
-    textAlign: "center"
+    textAlign: 'center'
   }
-});
+})
 
-export default styles;
+export default styles

@@ -1,29 +1,25 @@
-import React, { Component } from "react";
-import { bindActionCreators } from "redux";
-import { Text, View, ScrollView } from "react-native";
-import { Navigation } from "react-native-navigation";
-import Colors from "resources/colors";
-import { connect } from "react-redux";
-import { FormattedMessage, FormattedNumber, IntlProvider } from "react-intl";
-import {
-  ramQuotaSelector,
-  ramAvailableSelector,
-  ramAvailablePercentSelector
-} from "selectors/eosAccount";
-import { ramPriceSelector } from "selectors/ram";
-import TradeRAMForm from "components/Form/TradeRAMForm/index.new";
+import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
+import { Text, View, ScrollView } from 'react-native'
+import { Navigation } from 'react-native-navigation'
+import Colors from 'resources/colors'
+import { connect } from 'react-redux'
+import { FormattedMessage, FormattedNumber, IntlProvider } from 'react-intl'
+import { ramQuotaSelector, ramAvailableSelector, ramAvailablePercentSelector } from 'selectors/eosAccount'
+import { ramPriceSelector } from 'selectors/ram'
+import TradeRAMForm from 'components/Form/TradeRAMForm/index.new'
 
-import * as ramActions from "actions/ram";
-import { formatMemorySize } from "utils/format";
-import Loading from "components/Loading";
-import messages from "resources/messages";
-import DescriptionPanel from "components/DescriptionPanel";
-import styles from "./styles";
-import ResourceBar from "../ResourceBar";
+import * as ramActions from 'actions/ram'
+import { formatMemorySize } from 'utils/format'
+import Loading from 'components/Loading'
+import messages from 'resources/messages'
+import DescriptionPanel from 'components/DescriptionPanel'
+import styles from './styles'
+import ResourceBar from '../ResourceBar'
 
 @connect(
   state => ({
-    locale: state.intl.get("locale"),
+    locale: state.intl.get('locale'),
     wallet: state.wallet,
     ram: state.ram,
     ramQuota: ramQuotaSelector(state),
@@ -48,39 +44,39 @@ export default class Memory extends Component {
       bottomTabs: {
         visible: false
       }
-    };
+    }
   }
 
   componentDidMount() {
-    this.props.actions.getRAMMarketRequested();
+    this.props.actions.getRAMMarketRequested()
   }
 
   checkRamPrice = () => {
-    const uri = "https://eosmonitor.io/";
+    const uri = 'https://eosmonitor.io/'
     Navigation.push(this.props.componentId, {
       component: {
-        name: "BitPortal.BPWebView",
+        name: 'BitPortal.BPWebView',
         passProps: {
           title: uri,
           needLinking: true,
           uri
         }
       }
-    });
-  };
+    })
+  }
 
   render() {
-    const { locale, ram, ramQuota, ramAvailable, ramAvailablePercent, ramPrice } = this.props;
-    const buying = ram.get("buying");
-    const selling = ram.get("selling");
-    const loading = buying || selling;
+    const { locale, ram, ramQuota, ramAvailable, ramAvailablePercent, ramPrice } = this.props
+    const buying = ram.get('buying')
+    const selling = ram.get('selling')
+    const loading = buying || selling
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <View style={styles.scrollContainer}>
             <ScrollView
               showsVerticalScrollIndicator={false}
-              contentContainerStyle={{ alignItems: "center", paddingBottom: 20 }}
+              contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }}
             >
               <View style={styles.progressContaner}>
                 <ResourceBar percent={ramAvailablePercent} colors={Colors.ramColor} />
@@ -100,15 +96,11 @@ export default class Memory extends Component {
                     <Text
                       style={{
                         color: Colors.textColor_89_185_226,
-                        textDecorationLine: "underline"
+                        textDecorationLine: 'underline'
                       }}
                     >
-                      <FormattedNumber
-                        value={+ramPrice * 1024}
-                        maximumFractionDigits={4}
-                        minimumFractionDigits={4}
-                      />
-                    </Text>{" "}
+                      <FormattedNumber value={+ramPrice * 1024} maximumFractionDigits={4} minimumFractionDigits={4} />
+                    </Text>{' '}
                     EOS/KB
                   </Text>
                 </View>
@@ -123,6 +115,6 @@ export default class Memory extends Component {
           <Loading isVisible={loading} />
         </View>
       </IntlProvider>
-    );
+    )
   }
 }

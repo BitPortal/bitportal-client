@@ -1,7 +1,7 @@
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { IntlProvider } from 'react-intl';
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { IntlProvider } from 'react-intl'
 import {
   View,
   Animated,
@@ -12,17 +12,15 @@ import {
   InteractionManager,
   Keyboard,
   TextInput
-} from 'react-native';
-import { Field, reduxForm } from 'redux-form/immutable';
-import { FieldItem } from 'components/Form';
-import Colors from 'resources/colors';
-import { SCREEN_WIDTH } from 'utils/dimens';
-import messages from 'resources/messages';
-import styles from './styles';
+} from 'react-native'
+import { Field, reduxForm } from 'redux-form/immutable'
+import { FieldItem } from 'components/Form'
+import Colors from 'resources/colors'
+import { SCREEN_WIDTH } from 'utils/dimens'
+import messages from 'resources/messages'
+import styles from './styles'
 
-const SearchContainer = ({ children }) => (
-  <View style={styles.searchContainer}>{children}</View>
-);
+const SearchContainer = ({ children }) => <View style={styles.searchContainer}>{children}</View>
 
 const SearchFieldInput = ({ children, rightContent, leftContent, style }) => (
   <View style={[styles.searchFieldInput, style]}>
@@ -30,12 +28,12 @@ const SearchFieldInput = ({ children, rightContent, leftContent, style }) => (
     {children}
     {rightContent && <View>{rightContent}</View>}
   </View>
-);
+)
 
 class SearchField extends Component {
-  createRef = (node) => {
-    this.searchInput = node;
-  };
+  createRef = node => {
+    this.searchInput = node
+  }
 
   render() {
     const {
@@ -43,7 +41,7 @@ class SearchField extends Component {
       keyboardType,
       rightContent,
       placeholder
-    } = this.props;
+    } = this.props
     return (
       <FieldItem>
         <SearchFieldInput rightContent={rightContent}>
@@ -63,14 +61,14 @@ class SearchField extends Component {
           />
         </SearchFieldInput>
       </FieldItem>
-    );
+    )
   }
 }
 
 const validate = () => {
-  const errors = {};
-  return errors;
-};
+  const errors = {}
+  return errors
+}
 
 @reduxForm({
   form: 'searchBar',
@@ -94,122 +92,122 @@ export default class SearchBar extends Component {
     wrapperColor: new Animated.Value(0),
     opacity: new Animated.Value(0),
     containerWidth: new Animated.Value(0)
-  };
+  }
 
   toggleExpanded = () => {
     this.setState(prevState => ({
       expanded: !prevState.expanded
-    }));
-  };
+    }))
+  }
 
   hide = () => {
-    this.setState({ expanded: false });
-  };
+    this.setState({ expanded: false })
+  }
 
   show = () => {
-    this.setState({ expanded: true });
-  };
+    this.setState({ expanded: true })
+  }
 
   clearSearch = () => {
-    console.log('clearSearch', this.textInput);
-    this.props.clearSearch();
-    Keyboard.dismiss();
-    this.textInput.getRenderedComponent().searchInput.clear();
-  };
+    console.log('clearSearch', this.textInput)
+    this.props.clearSearch()
+    Keyboard.dismiss()
+    this.textInput.getRenderedComponent().searchInput.clear()
+  }
 
   animate = () => {
-    const handle = InteractionManager.createInteractionHandle();
-    const { expanded } = this.state;
-    this.state.translateX.setValue(expanded ? 1 : 0);
-    this.state.searchBoxColor.setValue(expanded ? 1 : 0);
-    this.state.opacity.setValue(expanded ? 1 : 0);
-    this.state.containerWidth.setValue(expanded ? 1 : 0);
+    const handle = InteractionManager.createInteractionHandle()
+    const { expanded } = this.state
+    this.state.translateX.setValue(expanded ? 1 : 0)
+    this.state.searchBoxColor.setValue(expanded ? 1 : 0)
+    this.state.opacity.setValue(expanded ? 1 : 0)
+    this.state.containerWidth.setValue(expanded ? 1 : 0)
     return expanded
       ? Animated.sequence([
-        Animated.parallel([
-          Animated.timing(this.state.searchBoxColor, {
+          Animated.parallel([
+            Animated.timing(this.state.searchBoxColor, {
+              toValue: 0,
+              duration: 250,
+              easing: Easing.ease
+            }),
+            Animated.timing(this.state.opacity, {
+              toValue: 0,
+              duration: 250,
+              easing: Easing.ease
+            })
+          ]),
+          Animated.timing(this.state.translateX, {
             toValue: 0,
             duration: 250,
             easing: Easing.ease
           }),
-          Animated.timing(this.state.opacity, {
-            toValue: 0,
-            duration: 250,
-            easing: Easing.ease
-          })
-        ]),
-        Animated.timing(this.state.translateX, {
-          toValue: 0,
-          duration: 250,
-          easing: Easing.ease
-        }),
-        Animated.parallel([
-          Animated.timing(this.state.wrapperColor, {
-            toValue: 0,
-            duration: 100,
-            easing: Easing.ease
-          }),
-          Animated.timing(this.state.containerWidth, {
-            toValue: 0,
-            duration: 0,
-            easing: Easing.ease
-          })
-        ])
-      ]).start(() => {
-        InteractionManager.clearInteractionHandle(handle);
-      })
+          Animated.parallel([
+            Animated.timing(this.state.wrapperColor, {
+              toValue: 0,
+              duration: 100,
+              easing: Easing.ease
+            }),
+            Animated.timing(this.state.containerWidth, {
+              toValue: 0,
+              duration: 0,
+              easing: Easing.ease
+            })
+          ])
+        ]).start(() => {
+          InteractionManager.clearInteractionHandle(handle)
+        })
       : Animated.sequence([
-        Animated.parallel([
-          Animated.timing(this.state.containerWidth, {
-            toValue: 1,
-            duration: 100,
-            easing: Easing.ease
-          }),
-          Animated.timing(this.state.wrapperColor, {
-            toValue: 1,
-            duration: 100,
-            easing: Easing.ease
-          })
-        ]),
-        Animated.timing(this.state.translateX, {
-          toValue: 1,
-          duration: 250,
-          easing: Easing.ease
-        }),
-        Animated.parallel([
-          Animated.timing(this.state.searchBoxColor, {
+          Animated.parallel([
+            Animated.timing(this.state.containerWidth, {
+              toValue: 1,
+              duration: 100,
+              easing: Easing.ease
+            }),
+            Animated.timing(this.state.wrapperColor, {
+              toValue: 1,
+              duration: 100,
+              easing: Easing.ease
+            })
+          ]),
+          Animated.timing(this.state.translateX, {
             toValue: 1,
             duration: 250,
             easing: Easing.ease
           }),
-          Animated.timing(this.state.opacity, {
-            toValue: 1,
-            duration: 250,
-            easing: Easing.ease
-          })
-        ])
-      ]).start(() => InteractionManager.clearInteractionHandle(handle));
-  };
+          Animated.parallel([
+            Animated.timing(this.state.searchBoxColor, {
+              toValue: 1,
+              duration: 250,
+              easing: Easing.ease
+            }),
+            Animated.timing(this.state.opacity, {
+              toValue: 1,
+              duration: 250,
+              easing: Easing.ease
+            })
+          ])
+        ]).start(() => InteractionManager.clearInteractionHandle(handle))
+  }
 
   render() {
     const translateX = this.state.translateX.interpolate({
       inputRange: [0, 1],
       outputRange: ['20%', '80%']
-    });
+    })
     const searchBoxColor = this.state.searchBoxColor.interpolate({
       inputRange: [0, 1],
       outputRange: [Colors.mainThemeColor, 'rgb(0,0,0)']
-    });
+    })
     const wrapperColor = this.state.wrapperColor.interpolate({
       inputRange: [0, 1],
       outputRange: ['rgba(15,16,19,0)', 'rgba(15,16,19,1)']
-    });
+    })
     const containerWidth = this.state.containerWidth.interpolate({
       inputRange: [0, 1],
       outputRange: [SCREEN_WIDTH / 1.5, SCREEN_WIDTH]
-    });
-    const { styleProps, locale } = this.props;
-    const { opacity } = this.state;
+    })
+    const { styleProps, locale } = this.props
+    const { opacity } = this.state
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -232,18 +230,14 @@ export default class SearchBar extends Component {
             <Animated.View style={{ opacity }}>
               <TouchableOpacity
                 onPress={() => {
-                  console.log('this.textInput', this.textInput);
-                  this.toggleExpanded();
-                  this.clearSearch();
-                  this.animate();
+                  console.log('this.textInput', this.textInput)
+                  this.toggleExpanded()
+                  this.clearSearch()
+                  this.animate()
                 }}
                 style={{ paddingHorizontal: 20 }}
               >
-                <Ionicons
-                  name="md-arrow-back"
-                  size={24}
-                  color={Colors.textColor_181_181_181}
-                />
+                <Ionicons name="md-arrow-back" size={24} color={Colors.textColor_181_181_181} />
               </TouchableOpacity>
             </Animated.View>
 
@@ -261,8 +255,8 @@ export default class SearchBar extends Component {
               <Ionicons
                 name="ios-search"
                 onPress={() => {
-                  this.toggleExpanded();
-                  this.animate();
+                  this.toggleExpanded()
+                  this.animate()
                 }}
                 size={24}
                 color={Colors.textColor_181_181_181}
@@ -298,13 +292,11 @@ export default class SearchBar extends Component {
                     name="searchField"
                     component={SearchField}
                     onChange={text => this.props.onChangeText(text)}
-                    placeholder={
-                      Platform.OS === 'ios' ? messages[locale].search : null
-                    }
+                    placeholder={Platform.OS === 'ios' ? messages[locale].search : null}
                     placeholderTextColor={Colors.textColor_181_181_181}
                     numberOfLines={1}
-                    ref={(input) => {
-                      this.textInput = input;
+                    ref={input => {
+                      this.textInput = input
                     }}
                     withRef
                   />
@@ -314,6 +306,6 @@ export default class SearchBar extends Component {
           </Animated.View>
         </Animated.View>
       </IntlProvider>
-    );
+    )
   }
 }
