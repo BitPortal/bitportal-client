@@ -341,7 +341,7 @@ function* checkEOSAccountCreationStatusRequested(action: Action<CheckEOSAccountS
       ownerPublicKey,
       activePublicKey,
       ownerKeystore,
-      // activeKeystore
+      activeKeystore
     } = eosAccountCreationRequestInfo
 
     const eos = yield call(initEOS, {})
@@ -371,7 +371,7 @@ function* checkEOSAccountCreationStatusRequested(action: Action<CheckEOSAccountS
       put(actions.syncEOSAccountCreationInfo(eosAccountCreationInfo)),
       call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, accountInfo, true),
       call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_OWNER_${ownerPublicKey}`, ownerKeystore, true),
-      call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_ACTIVE_${activePublicKey}`, activePublicKey, true),
+      call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_ACTIVE_${activePublicKey}`, activeKeystore, true),
       call(secureStorage.setItem, `CLASSIC_WALLET_INFO_EOS_${eosAccountName}`, walletInfo, true),
       call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
     ])

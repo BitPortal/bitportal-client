@@ -2,7 +2,7 @@ const Colors = {
   mainThemeColor: 'rgb(15,16,19)',
   minorThemeColor: 'rgb(32,33,38)',
   keyboardTheme: 'dark',
-  statusBarMode: 'light-content',
+  statusBarMode: 'default',
   gradientColors: ['rgb(24,79,174)', 'rgb(0,157,255)'],
   gradientCardColors: ['rgb(54,127,192)', 'rgb(89,176,214)'],
   gradientCardColors2: ['rgb(244,75,47)', 'rgb(248,112,98)'],

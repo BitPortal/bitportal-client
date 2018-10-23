@@ -8,11 +8,8 @@ import { bindActionCreators } from 'redux'
 import { View, InteractionManager } from 'react-native'
 import Modal from 'react-native-modal'
 import { Navigation } from 'react-native-navigation'
-import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from 'constants/market'
-import NavigationBar, { ListButton } from 'components/NavigationBar'
-import SearchBar from 'components/SearchBar'
+import { EXCHANGES, QUOTE_ASSETS } from 'constants/market'
 import { IntlProvider } from 'react-intl'
-import Colors from 'resources/colors'
 import {
   MAEKRT_LIST_SELECTED,
   QUOTES_LIST_SELECTED,
@@ -50,8 +47,18 @@ import styles from './styles'
 export default class Market extends Component {
   static get options() {
     return {
-      bottomTabs: {
-        backgroundColor: Colors.minorThemeColor
+      topBar: {
+        title: {
+          text: 'Market'
+        },
+        searchBar: true,
+        searchBarHiddenWhenScrolling: true,
+        searchBarPlaceholder: 'Search',
+        largeTitle: {
+          visible: true,
+          fontSize: 30,
+          fontFamily: 'SFNSDisplay'
+        }
       }
     }
   }
@@ -148,30 +155,12 @@ export default class Market extends Component {
       locale,
       loading,
       exchangeFilter,
-      quoteAssetFilter,
-      searchTerm
+      quoteAssetFilter
     } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-          <NavigationBar
-            leftButton={
-              <ListButton
-                label={EXCHANGE_NAMES[exchangeFilter]}
-                onPress={this.selectExchange}
-              />
-            }
-            rightButton={
-              <SearchBar
-                searchTerm={searchTerm}
-                onChangeText={text => this.onChangeText(text)}
-                clearSearch={() => {
-                  this.props.actions.setSearchTerm('')
-                }}
-              />
-            }
-          />
           <Quotes
             onPress={this.changeQuote}
             quote={this.state.activeQuoteAsset || quoteAssetFilter}

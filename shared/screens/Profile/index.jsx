@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Text, View, ScrollView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import SettingItem from 'components/SettingItem'
-import NavigationBar, { CommonTitle, CommonRightButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import VersionNumber from 'react-native-version-number'
@@ -12,7 +11,6 @@ import { hasEOSAccountSelector } from 'selectors/wallet'
 import { BITPORTAL_WEBSITE_URL } from 'constants/env'
 import { onEventWithLabel } from 'utils/analytics'
 import { HELP_CENTER, PROFILE } from 'constants/analytics'
-import Colors from 'resources/colors'
 import messages from 'resources/messages'
 import styles from './styles'
 
@@ -30,8 +28,15 @@ import styles from './styles'
 export default class Profile extends Component {
   static get options() {
     return {
-      bottomTabs: {
-        backgroundColor: Colors.minorThemeColor
+      topBar: {
+        title: {
+          text: 'Profile'
+        },
+        largeTitle: {
+          visible: true,
+          fontSize: 30,
+          fontFamily: 'SFNSDisplay'
+        }
       }
     }
   }
@@ -123,10 +128,6 @@ export default class Profile extends Component {
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-          <NavigationBar
-            leftButton={<CommonTitle title={<FormattedMessage id="profile_title_profile" />} />}
-            rightButton={<CommonRightButton imageSource={Images.transaction_history} onPress={this.changePage.bind(this, 'TransactionHistory')} />}
-          />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 20, alignItems: 'center' }}>
               <SettingItem leftImage={Images.profile_voting} leftItemTitle={<FormattedMessage id="profile_button_voting" />} onPress={this.changePage.bind(this, 'Voting')} extraStyle={{ marginTop: 10 }} />

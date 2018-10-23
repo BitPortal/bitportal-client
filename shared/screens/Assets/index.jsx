@@ -15,7 +15,6 @@ import * as balanceActions from 'actions/balance'
 import * as versionActions from 'actions/version'
 import * as currencyActions from 'actions/currency'
 import * as eosAccountActions from 'actions/eosAccount'
-
 import {
   selectedEOSTokenBalanceSelector,
   eosTotalAssetBalanceSelector
@@ -23,7 +22,6 @@ import {
 import { eosPriceSelector } from 'selectors/ticker'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { IntlProvider, FormattedMessage } from 'react-intl'
-import NavigationBar, { CommonTitle, CommonRightButton } from 'components/NavigationBar'
 import SplashScreen from 'react-native-splash-screen'
 import { checkCamera } from 'utils/permissions'
 import { ASSETS_QR, ASSETS_TOKEN_DETAIL, ASSETS_EOS_RESOURCE, ASSETS_ADD_TOKEN } from 'constants/analytics'
@@ -69,8 +67,15 @@ import UserAgreement from './UserAgreement'
 export default class Assets extends Component {
   static get options() {
     return {
-      bottomTabs: {
-        backgroundColor: Colors.minorThemeColor
+      topBar: {
+        title: {
+          text: '钱包'
+        },
+        largeTitle: {
+          visible: true,
+          fontSize: 30,
+          fontFamily: 'SFNSDisplay'
+        }
       }
     }
   }
@@ -245,10 +250,6 @@ export default class Assets extends Component {
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-          <NavigationBar
-            leftButton={<CommonTitle title={<FormattedMessage id="assets_title_eos_wallet" />} />}
-            rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanQR()} />}
-          />
           {!walletCount && (
             <View style={styles.scrollContainer}>
               <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 10 }}>

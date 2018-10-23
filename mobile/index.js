@@ -100,27 +100,19 @@ const setStatusBarStyle = async () => {
 
 Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setDefaultOptions({
-    topBar: {
-      visible: false,
-      animate: false,
-      height: 0
-    },
     layout: {
-      screenBackgroundColor: Colors.mainThemeColor,
-      backgroundColor: Colors.minorThemeColor,
+      backgroundColor: 'white',
       orientation: ['portrait']
     },
     bottomTabs: {
       visible: true,
-      drawBehind: true,
-      animate: Platform.OS !== 'ios',
-      backgroundColor: Colors.minorThemeColor,
-      tabColor: 'gray',
-      selectedTabColor: Colors.textColor_89_185_226,
-      hideShadow: false,
-      titleDisplayMode: 'alwaysShow'
+      drawBehind: false,
+      animate: false,
+      backgroundColor: '#F7F7F7',
+      translucent: false
     }
   })
+
   runApp()
 })
 

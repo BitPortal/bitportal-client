@@ -320,3 +320,18 @@ export const getEOSWifsByInfo = async (password: string, accountInfo: any, check
 
   return wifs
 }
+
+export const validateEOSPublicKeyByInfo = async (accountInfo: any, checkPermission: string, checkKey: string) => {
+  assert(accountInfo.permissions && accountInfo.permissions.length, 'EOS account permissions dose not exist!')
+  assert(accountInfo.account_name, 'EOS account name dose not exist!')
+  assert(checkPermission, 'Invalid checkPermission!')
+  assert(checkKey, 'Invalid checkKey!')
+
+  const permissions = accountInfo.permissions
+  const currentPermission = permissions.find((item: any) => item.perm_name === checkPermission.toLowerCase())
+  assert(currentPermission.required_auth && currentPermission.required_auth.keys && currentPermission.required_auth.keys.length, 'Current permission dose not exist!')
+
+  const publicKeys = currentPermission.required_auth.keys
+  const keyInfo = publicKeys.find((item: any) => item.key === checkKey)
+  return !!keyInfo && !!keyInfo.key
+}

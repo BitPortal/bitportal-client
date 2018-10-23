@@ -2,13 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { View, ScrollView, InteractionManager } from 'react-native'
 import { Navigation } from 'react-native-navigation'
-import NavigationBar, { CommonTitle } from 'components/NavigationBar'
 import { bindActionCreators } from 'redux'
 import * as newsActions from 'actions/news'
 import * as dAppActions from 'actions/dApp'
 import { IntlProvider } from 'react-intl'
 import { loadInject } from 'utils/inject'
-import Colors from 'resources/colors'
 import messages from 'resources/messages'
 import NewsList from './NewsList'
 import NewsBanner from './NewsBanner'
@@ -42,8 +40,18 @@ const PAGE_LENGTH = 10
 export default class Discovery extends Component {
   static get options() {
     return {
-      bottomTabs: {
-        backgroundColor: Colors.minorThemeColor
+      topBar: {
+        title: {
+          text: 'Discovery'
+        },
+        searchBar: true,
+        searchBarHiddenWhenScrolling: true,
+        searchBarPlaceholder: 'Search',
+        largeTitle: {
+          visible: true,
+          fontSize: 30,
+          fontFamily: 'SFNSDisplay'
+        }
       }
     }
   }
@@ -153,11 +161,6 @@ export default class Discovery extends Component {
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-          <NavigationBar
-            leftButton={
-              <CommonTitle title={messages[locale].discovery_title_discovery} />
-            }
-          />
           <ScrollView>
             <NewsBanner componentId={componentId} />
 
