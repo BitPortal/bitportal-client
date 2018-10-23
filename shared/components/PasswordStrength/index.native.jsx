@@ -21,7 +21,6 @@ const getLevel = (strength, locale) => {
 )
 
 export default class PasswordStrength extends Component {
-  
   render() {
     const { strength, locale } = this.props
     if (!strength) return null
@@ -33,5 +32,4 @@ export default class PasswordStrength extends Component {
       </View>
     )
   }
-
 }
