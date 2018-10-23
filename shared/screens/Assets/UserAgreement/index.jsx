@@ -81,8 +81,8 @@ const styles = StyleSheet.create({
     fontSize: FontScale(14),
     color: Colors.textColor_181_181_181
   },
-  text18: {
-    fontSize: FontScale(18),
+  text16: {
+    fontSize: FontScale(16),
     color: Colors.textColor_255_255_238
   }
 })
@@ -130,7 +130,7 @@ export default class UserAgreement extends Component {
 
                 <View style={[styles.between, { marginBottom: 20 }]}>
                   <Text> {''} </Text>
-                  <Text style={styles.text18}> 服务与隐私条款 </Text>
+                  <Text style={styles.text16}> {messages[locale].assets_tos_popup_label_tos} </Text>
                   <TouchableOpacity onPress={dismissModal} style={styles.close}>
                     <Ionicons name="ios-close" size={28} color={Colors.bgColor_FFFFFF} />
                   </TouchableOpacity>
@@ -156,7 +156,7 @@ export default class UserAgreement extends Component {
                     }
                   </TouchableOpacity>
                   <Text style={[styles.text14, { marginLeft: -10 }]}>
-                    我已仔细阅读并同意服务条款和隐私政策
+                    {messages[locale].assets_tos_popup_text_agree}
                   </Text>
                 </View>
 
@@ -164,7 +164,7 @@ export default class UserAgreement extends Component {
                   <TouchableWithoutFeedback disabled={!signed} onPress={acceptUserAgreement}>
                     <View style={[styles.btn, styles.center]}>
                       <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>
-                        继续
+                        {messages[locale].assets_tos_popup_button_next}
                       </Text>
                     </View>
                   </TouchableWithoutFeedback>

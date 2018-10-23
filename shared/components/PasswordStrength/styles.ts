@@ -12,13 +12,13 @@ export default EStyleSheet.create({
   text14: {
     fontSize: FontScale(14)
   },
-  weak: {
+  1: {
     color: 'rgb(255, 9, 0)'
   },
-  middle: {
+  2: {
     color: 'rgb(255, 190, 0)'
   },
-  strong: {
+  3: {
     color: 'rgb(54, 128, 192)'
   }
 })

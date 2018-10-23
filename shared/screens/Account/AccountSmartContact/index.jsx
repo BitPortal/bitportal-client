@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { View, ScrollView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
-import CreateEOSAccountAssistanceForm from 'components/Form/CreateEOSAccountAssistanceForm'
+import CreateEOSAccountSmartContactForm from 'components/Form/CreateEOSAccountSmartContactForm'
 import { IntlProvider } from 'react-intl'
 import Loading from 'components/Loading'
 import messages from 'resources/messages'
@@ -19,7 +19,7 @@ import styles from './styles'
   { withRef: true }
 )
 
-export default class AccountAssistance extends Component {
+export default class AccountSmartContact extends Component {
   static get options() {
     return {
       bottomTabs: {
@@ -36,11 +36,11 @@ export default class AccountAssistance extends Component {
         <View style={styles.container}>
           <NavigationBar
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
-            title={messages[locale].add_eos_create_friend_assistance_title_friend_assistance}
+            title={messages[locale].add_eos_create_smart_contract_title_smart_contract}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <CreateEOSAccountAssistanceForm componentId={this.props.componentId} />
+              <CreateEOSAccountSmartContactForm componentId={this.props.componentId} />
               <View style={styles.keyboard} />
             </ScrollView>
           </View>
