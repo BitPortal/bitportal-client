@@ -339,6 +339,7 @@ declare module 'core/key' {
     getIdFromSeed: any
     getIdFromEntropy: any
     getEOSWifsByInfo: any
+    validateEOSPublicKeyByInfo: any
   }
 
   const key: KeyManagement

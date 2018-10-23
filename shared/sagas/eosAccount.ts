@@ -11,7 +11,7 @@ import { votedProducersSelector, eosCoreLiquidBalanceSelector, eosAccountNameSel
 import secureStorage from 'utils/secureStorage'
 import { BITPORTAL_API_EOS_URL, EOS_API_URL } from 'constants/env'
 import { randomKey, privateToPublic, isValidPrivate, initEOS, getPermissionsByKey, getInitialAccountInfo, createEOSAccount } from 'core/eos'
-import { encrypt } from 'core/key'
+import { encrypt, validateEOSPublicKeyByInfo } from 'core/key'
 import { getErrorMessage, getEOSErrorMessage } from 'utils'
 import { popToRoot, push } from 'utils/location'
 import * as api from 'utils/api'
@@ -344,11 +344,16 @@ function* checkEOSAccountCreationStatusRequested(action: Action<CheckEOSAccountS
       ownerPublicKey,
       activePublicKey,
       ownerKeystore,
-      // activeKeystore
+      activeKeystore
     } = eosAccountCreationRequestInfo
 
     const eos = yield call(initEOS, {})
     const accountInfo = yield call(eos.getAccount, eosAccountName)
+
+    const validateOwnerKey = yield call(validateEOSPublicKeyByInfo, accountInfo, 'OWNER', ownerPublicKey)
+    assert(validateOwnerKey, 'Owner public key dose not match!')
+    const validateActiveKey = yield call(validateEOSPublicKeyByInfo, accountInfo, 'ACTIVE', activePublicKey)
+    assert(validateActiveKey, 'Active public key dose not match!')
 
     const walletInfo = {
       eosAccountName,
@@ -374,7 +379,7 @@ function* checkEOSAccountCreationStatusRequested(action: Action<CheckEOSAccountS
       put(actions.syncEOSAccountCreationInfo(eosAccountCreationInfo)),
       call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, accountInfo, true),
       call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_OWNER_${ownerPublicKey}`, ownerKeystore, true),
-      call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_ACTIVE_${activePublicKey}`, activePublicKey, true),
+      call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_ACTIVE_${activePublicKey}`, activeKeystore, true),
       call(secureStorage.setItem, `CLASSIC_WALLET_INFO_EOS_${eosAccountName}`, walletInfo, true),
       call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
     ])
