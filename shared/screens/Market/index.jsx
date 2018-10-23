@@ -40,9 +40,7 @@ import styles from './styles'
       },
       dispatch
     )
-  }),
-  null,
-  { withRef: true }
+  })
 )
 export default class Market extends Component {
   static get options() {
@@ -68,6 +66,8 @@ export default class Market extends Component {
     isVisible: false,
     activeQuoteAsset: null
   }
+
+  subscription = Navigation.events().bindComponent(this)
 
   searchCoin = (coinName) => {
     this.setState({ coinName })

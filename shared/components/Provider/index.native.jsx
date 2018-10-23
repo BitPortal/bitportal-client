@@ -5,6 +5,7 @@ import { Text } from 'react-native'
 import en from 'react-intl/locale-data/en'
 import zh from 'react-intl/locale-data/zh'
 import ko from 'react-intl/locale-data/ko'
+import messages from 'resources/messages'
 
 addLocaleData(en)
 addLocaleData(zh)
@@ -12,6 +13,7 @@ addLocaleData(ko)
 
 const mapStateToProps = state => ({
   locale: state.intl.get('locale'),
+  messages: messages[state.intl.get('locale')],
   textComponent: Text
 })
 

@@ -1,6 +1,6 @@
-import zh from './zh/messages'
-import en from './en/messages'
-import ko from './ko/messages'
+import zh from './zh'
+import en from './en'
+import ko from './ko'
 
 export default {
   zh,

@@ -14,7 +14,7 @@ import { getInitialEOSNode } from 'selectors/eosNode'
 import { getInitialEOSAsset } from 'selectors/eosAsset'
 import { getInitialDapp } from 'selectors/dApp'
 import { getInitialAppInfo } from 'selectors/appInfo'
-import { startSingleApp, startTabBasedApp, registerScreens } from 'navigators'
+import { startApp, startSingleApp, startTabBasedApp, registerScreens } from 'navigators'
 import { Navigation } from 'react-native-navigation'
 import storage from 'utils/storage'
 import Provider from 'components/Provider'
@@ -30,18 +30,6 @@ import { ENV } from 'constants/env'
 import { noop } from 'utils'
 
 EStyleSheet.build({})
-
-if (ENV === 'production') {
-  global.console = {
-    info: noop,
-    log: noop,
-    warn: noop,
-    debug: noop,
-    error: noop
-  }
-
-  require('ErrorUtils').setGlobalHandler(noop)
-}
 
 const runApp = async () => {
   const [
@@ -80,7 +68,7 @@ const runApp = async () => {
     appInfo: getInitialAppInfo(platform, localVersion)
   })
 
-  registerScreens(store)
+  registerScreens(store, Provider)
   store.runSaga(sagas)
   if (remoteVersion && calculate(remoteVersion) <= calculate(localVersion)) {
     startTabBasedApp(lang)
@@ -89,7 +77,7 @@ const runApp = async () => {
   }
 
   SplashScreen.hide()
-  Platform.OS === 'ios' && KeyboardManager.setEnableAutoToolbar(true);
+  Platform.OS === 'ios' && KeyboardManager.setEnableAutoToolbar(true)
 }
 
 const setStatusBarStyle = async () => {
@@ -98,22 +86,7 @@ const setStatusBarStyle = async () => {
   StatusBar.setBarStyle(statusBarMode, true)
 }
 
-Navigation.events().registerAppLaunchedListener(() => {
-  Navigation.setDefaultOptions({
-    layout: {
-      backgroundColor: 'white',
-      orientation: ['portrait']
-    },
-    bottomTabs: {
-      visible: true,
-      drawBehind: false,
-      animate: false,
-      backgroundColor: '#F7F7F7',
-      translucent: false
-    }
-  })
-
+startApp(() => {
   runApp()
+  setStatusBarStyle()
 })
-
-setStatusBarStyle()

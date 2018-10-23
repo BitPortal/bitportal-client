@@ -1,5 +1,4 @@
 import { Navigation } from 'react-native-navigation'
-import screenComponent from 'components/ScreenComponent'
 import Market from 'screens/Market'
 import FundFlow from 'screens/Market/FundFlow'
 import TokenDetails from 'screens/Market/TokenDetails'
@@ -11,7 +10,7 @@ import DappWebView from 'components/DappWebView'
 import DappBrowser from 'screens/DappBrowser'
 import { BPWebView } from 'components/BPNativeComponents'
 import TransactionRecord from 'screens/TransactionRecord'
-import Assets from 'screens/Assets'
+import Wallet from 'screens/Wallet'
 import ReceiveQRCode from 'screens/Assets/ReceiveQRCode'
 import AssetChart from 'screens/Assets/AssetChart'
 import AssetSearch from 'screens/Assets/AssetSearch'
@@ -52,56 +51,80 @@ import TransactionHistory from 'screens/Profile/TransactionHistory'
 import Images from 'resources/images'
 import messages from 'resources/messages'
 
-export const registerScreens = (store) => {
-  Navigation.registerComponent('BitPortal.Welcome', () => screenComponent(Welcome, store))
-  Navigation.registerComponent('BitPortal.DappWebView', () => screenComponent(DappWebView, store))
-  Navigation.registerComponent('BitPortal.DappBrowser', () => screenComponent(DappBrowser, store))
-  Navigation.registerComponent('BitPortal.LightBox', () => screenComponent(LightBox, store))
-  Navigation.registerComponent('BitPortal.BPWebView', () => screenComponent(BPWebView, store))
-  Navigation.registerComponent('BitPortal.QRCodeScanner', () => screenComponent(QRCodeScanner, store))
-  Navigation.registerComponent('BitPortal.TransactionRecord', () => screenComponent(TransactionRecord, store))
-  Navigation.registerComponent('BitPortal.Assets', () => screenComponent(Assets, store))
-  Navigation.registerComponent('BitPortal.ReceiveQRCode', () => screenComponent(ReceiveQRCode, store))
-  Navigation.registerComponent('BitPortal.AssetChart', () => screenComponent(AssetChart, store))
-  Navigation.registerComponent('BitPortal.AssetSearch', () => screenComponent(AssetSearch, store))
-  Navigation.registerComponent('BitPortal.AssetsTransfer', () => screenComponent(AssetsTransfer, store))
-  Navigation.registerComponent('BitPortal.AvailableAssets', () => screenComponent(AvailableAssets, store))
-  Navigation.registerComponent('BitPortal.Market', () => screenComponent(Market, store))
-  Navigation.registerComponent('BitPortal.FundFlow', () => screenComponent(FundFlow, store))
-  Navigation.registerComponent('BitPortal.TokenDetails', () => screenComponent(TokenDetails, store))
-  Navigation.registerComponent('BitPortal.MarketDetails', () => screenComponent(MarketDetails, store))
-  Navigation.registerComponent('BitPortal.Discovery', () => screenComponent(Discovery, store))
-  Navigation.registerComponent('BitPortal.DiscoveryArticle', () => screenComponent(ArticleWebView, store))
-  Navigation.registerComponent('BitPortal.Markdown', () => screenComponent(Markdown, store))
-  Navigation.registerComponent('BitPortal.DappList', () => screenComponent(DappList, store))
-  Navigation.registerComponent('BitPortal.Resources', () => screenComponent(Resources, store))
-  Navigation.registerComponent('BitPortal.CPU', () => screenComponent(CPU, store))
-  Navigation.registerComponent('BitPortal.Memory', () => screenComponent(Memory, store))
-  Navigation.registerComponent('BitPortal.Bandwidth', () => screenComponent(Bandwidth, store))
-  Navigation.registerComponent('BitPortal.Voting', () => screenComponent(Voting, store))
-  Navigation.registerComponent('BitPortal.ProducerDetails', () => screenComponent(ProducerDetails, store))
-  Navigation.registerComponent('BitPortal.About', () => screenComponent(About, store))
-  Navigation.registerComponent('BitPortal.Profile', () => screenComponent(Profile, store))
-  Navigation.registerComponent('BitPortal.Contacts', () => screenComponent(Contacts, store))
-  Navigation.registerComponent('BitPortal.Settings', () => screenComponent(Settings, store))
-  Navigation.registerComponent('BitPortal.Mediafax', () => screenComponent(Mediafax, store))
-  Navigation.registerComponent('BitPortal.Languages', () => screenComponent(Languages, store))
-  Navigation.registerComponent('BitPortal.Currencies', () => screenComponent(Currencies, store))
-  Navigation.registerComponent('BitPortal.NodeSettings', () => screenComponent(NodeSettings, store))
-  Navigation.registerComponent('BitPortal.CreateContact', () => screenComponent(CreateContact, store))
-  Navigation.registerComponent('BitPortal.ResetPassword', () => screenComponent(ResetPassword, store))
-  Navigation.registerComponent('BitPortal.AccountManager', () => screenComponent(AccountManager, store))
-  Navigation.registerComponent('BitPortal.ExportEntrance', () => screenComponent(ExportEntrance, store))
-  Navigation.registerComponent('BitPortal.ExportKeystore', () => screenComponent(ExportKeystore, store))
-  Navigation.registerComponent('BitPortal.ExportPrivateKey', () => screenComponent(ExportPrivateKey, store))
-  Navigation.registerComponent('BitPortal.TransactionHistory', () => screenComponent(TransactionHistory, store))
-  Navigation.registerComponent('BitPortal.Backup', () => screenComponent(Backup, store))
-  Navigation.registerComponent('BitPortal.AccountOrder', () => screenComponent(AccountOrder, store))
-  Navigation.registerComponent('BitPortal.AccountImport', () => screenComponent(AccountImport, store))
-  Navigation.registerComponent('BitPortal.AccountSelection', () => screenComponent(AccountSelection, store))
-  Navigation.registerComponent('BitPortal.AccountAssistance', () => screenComponent(AccountAssistance, store))
-  Navigation.registerComponent('BitPortal.AccountAssistancePayment', () => screenComponent(AccountAssistancePayment, store))
-  Navigation.registerComponent('BitPortal.EOSAccountCreation', () => screenComponent(EOSAccountCreation, store))
+export const registerScreens = (store, Provider) => {
+  Navigation.registerComponentWithRedux('BitPortal.Welcome', () => Welcome, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.DappWebView', () => DappWebView, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.DappBrowser', () => DappBrowser, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.LightBox', () => LightBox, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.BPWebView', () => BPWebView, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.QRCodeScanner', () => QRCodeScanner, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.TransactionRecord', () => TransactionRecord, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Wallet', () => Wallet, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ReceiveQRCode', () => ReceiveQRCode, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.AssetChart', () => AssetChart, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.AssetSearch', () => AssetSearch, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.AssetsTransfer', () => AssetsTransfer, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.AvailableAssets', () => AvailableAssets, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Market', () => Market, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.FundFlow', () => FundFlow, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.TokenDetails', () => TokenDetails, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.MarketDetails', () => MarketDetails, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Discovery', () => Discovery, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.DiscoveryArticle', () => ArticleWebView, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Markdown', () => Markdown, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.DappList', () => DappList, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Resources', () => Resources, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.CPU', () => CPU, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Memory', () => Memory, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Bandwidth', () => Bandwidth, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Voting', () => Voting, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ProducerDetails', () => ProducerDetails, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.About', () => About, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Profile', () => Profile, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Contacts', () => Contacts, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Settings', () => Settings, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Mediafax', () => Mediafax, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Languages', () => Languages, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Currencies', () => Currencies, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.NodeSettings', () => NodeSettings, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.CreateContact', () => CreateContact, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ResetPassword', () => ResetPassword, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.AccountManager', () => AccountManager, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ExportEntrance', () => ExportEntrance, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ExportKeystore', () => ExportKeystore, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ExportPrivateKey', () => ExportPrivateKey, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.TransactionHistory', () => TransactionHistory, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Backup', () => Backup, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.AccountOrder', () => AccountOrder, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.AccountImport', () => AccountImport, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.AccountSelection', () => AccountSelection, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.AccountAssistance', () => AccountAssistance, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.AccountAssistancePayment', () => AccountAssistancePayment, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.EOSAccountCreation', () => EOSAccountCreation, Provider, store)
+}
+
+export const startApp = (callback) => {
+  Navigation.setDefaultOptions({
+    topBar: {
+      background: {
+        translucent: false,
+        color: '#F7F7F7'
+      }
+    },
+    layout: {
+      backgroundColor: '#F0EFF5',
+      orientation: ['portrait']
+    },
+    bottomTabs: {
+      visible: true,
+      drawBehind: false,
+      animate: false,
+      backgroundColor: '#F7F7F7',
+      translucent: false
+    }
+  })
+
+  callback()
 }
 
 export const startSingleApp = () => {
@@ -130,8 +153,8 @@ export const startTabBasedApp = (locale) => {
               children: [
                 {
                   component: {
-                    id: 'BitPortal.Assets',
-                    name: 'BitPortal.Assets'
+                    id: 'BitPortal.Wallet',
+                    name: 'BitPortal.Wallet'
                   }
                 }
               ],
@@ -224,7 +247,7 @@ export const startTabBasedApp = (locale) => {
 }
 
 export const setBottomTabsLocale = (locale) => {
-  Navigation.mergeOptions('BitPortal.Assets', {
+  Navigation.mergeOptions('BitPortal.Wallet', {
     bottomTab: {
       text: messages[locale].general_nav_assets,
       textColor: '#9D9D9D',
