@@ -75,7 +75,7 @@ export default ({ item, onPress, eosAccountName }) => {
       underlayColor={Colors.hoverColor}
       onPress={() => onPress(item)}
     >
-      <View style={[styles.container, styles.between, { paddingHorizontal: 32 }]}>
+      <View style={[styles.container, styles.between, { paddingHorizontal: 20 }]}>
         <View style={{ alignItems: 'center', flexDirection: 'row' }}>
           <GradientIcon isReceiver={isReceiver} />
           <View style={{ marginLeft: 10 }}>

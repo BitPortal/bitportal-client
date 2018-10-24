@@ -18,7 +18,7 @@ import messages from 'resources/messages'
 import styles from './styles'
 
 const AssetElement = ({ item, onToggle }) => (
-  <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.bgColor_30_31_37 }]}>
+  <View style={[styles.listContainer, styles.between, { paddingHorizontal: 20, backgroundColor: Colors.bgColor_30_31_37 }]}>
     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
       <BPImage style={styles.icon} source={item.get('icon_url') ? { uri: `${item.get('icon_url')}` } : Images.coin_logo_default} />
       <View>

@@ -13,6 +13,7 @@ import Colors from 'resources/colors'
 import { bindActionCreators } from 'redux'
 import * as eosAccountActions from 'actions/eosAccount'
 import { BPGradientButton } from 'components/BPNativeComponents'
+import Dialog from 'components/Dialog'
 import InputItem from './InputItem'
 import styles from './styles'
 
@@ -67,9 +68,21 @@ export default class AccountAssistanceOrder extends Component {
     this.props.actions.checkEOSAccountCreationStatusRequested({ componentId })
   }
 
-  deleteOrder = () => {
-    const componentId = this.props.componentId
-    this.props.actions.cancelEOSAccountAssistanceRequestd({ componentId })
+  deleteOrder = async () => {
+    const { action } = await Dialog.alert(
+      "取消创建此账户",
+      "取消创建将删除此账户订单信息，请确定不再激活此账户或更换激活方式后再确认删除。",
+      {
+        negativeText: "考虑看看",
+        positiveText: "删除订单"
+      }
+    )
+    if (action === Dialog.actionPositive) {
+      const componentId = this.props.componentId
+      this.props.actions.cancelEOSAccountAssistanceRequestd({ componentId })
+    } else {
+      return null
+    }
   }
 
   render() {

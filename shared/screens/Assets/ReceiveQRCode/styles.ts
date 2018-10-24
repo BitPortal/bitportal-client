@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: SCREEN_WIDTH,
-    paddingHorizontal: 32,
+    paddingHorizontal: 20,
     height: 60,
     marginVertical: 10,
     backgroundColor: Colors.bgColor_30_31_37

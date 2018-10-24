@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   itemContainer: {
     width: SCREEN_WIDTH,
     height: 50,
-    paddingHorizontal: 32,
+    paddingHorizontal: 20,
     backgroundColor: Colors.bgColor_30_31_37
   },
   between: {

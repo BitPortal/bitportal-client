@@ -16,12 +16,12 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: 44,
     backgroundColor: Colors.minorThemeColor,
-    paddingHorizontal: 32
+    paddingHorizontal: 20
   },
   titleContainer: {
     width: SCREEN_WIDTH,
     height: 30,
-    paddingHorizontal: 32,
+    paddingHorizontal: 20,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: Colors.bgColor_000000,
     backgroundColor: Colors.bgColor_30_31_37
