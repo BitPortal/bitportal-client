@@ -52,6 +52,17 @@ const styles = StyleSheet.create({
     height: 25,
     width: 25
   },
+  hotNewWrapper: {
+    flexDirection: 'row',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    borderRadius: 10
+  },
+  hotNewTag: {
+    height: 12,
+    width: 30
+  },
   icon: {
     height: 50,
     width: 50,

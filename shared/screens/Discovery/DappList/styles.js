@@ -1,11 +1,6 @@
 import { StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
-import {
-  SCREEN_WIDTH,
-  SCREEN_HEIGHT,
-  NAV_BAR_HEIGHT,
-  FontScale
-} from 'utils/dimens'
+import { SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, FontScale } from 'utils/dimens'
 
 const styles = StyleSheet.create({
   container: {
@@ -41,8 +36,7 @@ const styles = StyleSheet.create({
   title: {
     color: Colors.textColor_FFFFEE,
     fontSize: FontScale(15),
-    fontWeight: 'bold',
-    marginBottom: 5
+    fontWeight: 'bold'
   },
   itemSeperator: {
     height: 1,
@@ -70,6 +64,8 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: 40,
     backgroundColor: Colors.bgColor_30_31_37,
+    // backgroundColor: 'red',
+
     marginBottom: 1,
     marginTop: 10,
     paddingHorizontal: 20,
