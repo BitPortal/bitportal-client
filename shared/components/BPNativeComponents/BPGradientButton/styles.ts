@@ -7,6 +7,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 3
+  },
+  center: {
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })
 

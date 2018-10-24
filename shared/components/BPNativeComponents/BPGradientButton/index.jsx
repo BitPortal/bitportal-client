@@ -12,7 +12,7 @@ export default class BPGradientButton extends Component{
         <LinearGradientContainer
           type="right"
           colors={disabled ? Colors.disabled : null}
-          style={[styles.container, extraStyle]}
+          style={[styles.center, { width: '100%', height: '100%', borderRadius: 3 }, extraStyle]}
         >
           {children}
         </LinearGradientContainer>

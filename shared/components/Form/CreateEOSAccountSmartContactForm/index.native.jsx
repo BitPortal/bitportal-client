@@ -13,8 +13,8 @@ import * as walletActions from 'actions/wallet'
 import * as eosAccountActions from 'actions/eosAccount'
 import { onEventWithMap } from 'utils/analytics'
 import { ACCOUNT_EOS_CREATE } from 'constants/analytics'
-import Alert from 'components/Alert'
 import messages from 'resources/messages'
+import Alert from 'components/Alert'
 
 export const errorMessages = (error, messages) => {
   if (!error) { return null }
@@ -24,7 +24,6 @@ export const errorMessages = (error, messages) => {
     case 'Account name already exists':
       return messages.add_eos_create_error_popup_text_account_name_exist
     default:
-      return messages.resource_error_popup_text_eos_system_error
   }
 }
 
@@ -64,6 +63,7 @@ const validate = (values, props) => {
     errors.confirmedPassword = messages[locale].add_eos_error_text_password_unmatch
   }
 
+
   return errors
 }
 
@@ -72,7 +72,7 @@ const validate = (values, props) => {
     locale: state.intl.get('locale'),
     wallet: state.wallet,
     eosAccount: state.eosAccount,
-    password: formValueSelector('createEOSAccountAssistanceForm')(state, 'password')
+    password: formValueSelector('CreateEOSAccountSmartContactForm')(state, 'password')
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -82,9 +82,9 @@ const validate = (values, props) => {
   })
 )
 
-@reduxForm({ form: 'createEOSAccountAssistanceForm', validate })
+@reduxForm({ form: 'CreateEOSAccountSmartContactForm', validate })
 
-export default class CreateEOSAccountAssistanceForm extends Component {
+export default class CreateEOSAccountSmartContactForm extends Component {
   UNSAFE_componentWillUpdate() {
     LayoutAnimation.easeInEaseOut()
   }
@@ -95,7 +95,7 @@ export default class CreateEOSAccountAssistanceForm extends Component {
 
     const componentId = this.props.componentId
     this.props.actions.createEOSAccountAssistanceRequested(
-      data.set('componentId', componentId).set('path', 'AccountAssistanceOrder').delete('confirmedPassword').toJS()
+      data.set('componentId', componentId).set('path', 'AccountSmartContactOrder').delete('confirmedPassword').toJS()
     )
   }
 
@@ -138,7 +138,7 @@ export default class CreateEOSAccountAssistanceForm extends Component {
           />
 
           <SubmitButton disabled={disabled} onPress={handleSubmit(this.submit)} text={messages[locale].add_eos_create_button_next} />
-          <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearEOSAccountError} />
+          <Alert message={errorMessages(error, messages[locale], this.props)} dismiss={this.props.actions.clearEOSAccountError} />
         </FormContainer>
       </IntlProvider>
     )
