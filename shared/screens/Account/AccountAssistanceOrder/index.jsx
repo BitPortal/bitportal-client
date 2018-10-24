@@ -70,11 +70,11 @@ export default class AccountAssistanceOrder extends Component {
 
   deleteOrder = async () => {
     const { action } = await Dialog.alert(
-      "取消创建此账户",
-      "取消创建将删除此账户订单信息，请确定不再激活此账户或更换激活方式后再确认删除。",
+      '取消创建此账户',
+      '取消创建将删除此账户订单信息，请确定不再激活此账户或更换激活方式后再确认删除。',
       {
-        negativeText: "考虑看看",
-        positiveText: "删除订单"
+        negativeText: '考虑看看',
+        positiveText: '删除订单'
       }
     )
     if (action === Dialog.actionPositive) {
