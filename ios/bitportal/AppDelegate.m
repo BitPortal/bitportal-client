@@ -90,7 +90,7 @@
   }
   [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
   [JPUSHService setupWithOption:launchOptions appKey:@"05e8b10824ab700bae78e9eb"
-                        channel:@"app store" apsForProduction:false];
+                        channel:@"app store" apsForProduction:true];
 
   NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
   [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
