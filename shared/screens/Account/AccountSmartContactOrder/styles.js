@@ -31,6 +31,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 20,
   },
+  between: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row'
+  },
   qrCodeContainer: {
     borderRadius: 12,
     backgroundColor: Colors.bgColor_FFFFFF,
@@ -49,18 +54,24 @@ const styles = StyleSheet.create({
     fontSize: FontScale(14),
     color: Colors.textColor_255_255_238
   },
-  areaInput: {
-    flex: 1,
-    minHeight: FontScale(40),
-    padding: 10,
+  content: {
+    width: '85%',
+    minHeight: FontScale(28),
+    padding: 5,
+    paddingLeft: 10,
+    backgroundColor: Colors.mainThemeColor,
     alignItems: 'center',
-    color: Colors.textColor_white_2,
-    fontSize: FontScale(14)
+    justifyContent: 'flex-start',
+    flexDirection: 'row'
+  },
+  copy: {
+    padding: 10,
+    marginLeft: 10,
   },
   btnContainer: {
+    flex: 1,
     marginVertical: 20,
     flexDirection: 'row',
-    flex: 1,
     minHeight: 40
   },
   btn: {
