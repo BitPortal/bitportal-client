@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import Colors from 'resources/colors'
 import styles from './styles'
 
-export default ({ label, value,  copyLabel, onPress }) => (
+export default ({ label, value, copyLabel, onPress }) => (
   <View style={styles.inputContainer}>
     <Text style={styles.label}>{label}</Text>
     <View style={[styles.between]}>

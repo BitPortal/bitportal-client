@@ -91,7 +91,7 @@ export default class AccountSmartContactOrder extends Component {
     const { eosAccount } = this.props
     const eosAccountName = eosAccount.getIn(['eosAccountCreationRequestInfo', 'eosAccountName'])
     const ownerPublicKey = eosAccount.getIn(['eosAccountCreationRequestInfo', 'ownerPublicKey'])
-    Clipboard.setString(eosAccountName+'-'+ownerPublicKey)
+    Clipboard.setString(`${eosAccountName}-${ownerPublicKey}`)
     Toast(messages[this.props.locale].copy_text_copy_success)
   }
 
@@ -134,15 +134,15 @@ export default class AccountSmartContactOrder extends Component {
                     {messages[locale].add_eos_create_smart_contract_text_tip2}
                   </Text>
                 </LinearGradientContainer>
-                <InputItem 
-                  label={messages[locale].add_eos_create_smart_contract_label_contract_account_name} 
-                  value="signupeoseos" 
+                <InputItem
+                  label={messages[locale].add_eos_create_smart_contract_label_contract_account_name}
+                  value="signupeoseos"
                   copyLabel={messages[locale].copy_button_copy}
                   onPress={this.copyContactName}
                 />
-                <InputItem 
-                  label={messages[locale].add_eos_create_smart_contract_label_contract_memo} 
-                  value={contactMemo} 
+                <InputItem
+                  label={messages[locale].add_eos_create_smart_contract_label_contract_memo}
+                  value={contactMemo}
                   copyLabel={messages[locale].copy_button_copy}
                   onPress={this.copyContactMemo}
                 />

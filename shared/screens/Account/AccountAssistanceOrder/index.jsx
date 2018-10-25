@@ -135,21 +135,21 @@ export default class AccountAssistanceOrder extends Component {
                     color="black"
                   />
                 </View>
-                <InputItem 
-                  label={messages[locale].add_eos_create_friend_assistance_label_account} 
-                  value={eosAccountName} 
+                <InputItem
+                  label={messages[locale].add_eos_create_friend_assistance_label_account}
+                  value={eosAccountName}
                   copyLabel={messages[locale].copy_button_copy}
                   onPress={this.copyAccountName}
                 />
-                <InputItem 
-                  label={messages[locale].add_eos_create_friend_assistance_label_owner} 
-                  value={ownerPublicKey} 
+                <InputItem
+                  label={messages[locale].add_eos_create_friend_assistance_label_owner}
+                  value={ownerPublicKey}
                   copyLabel={messages[locale].copy_button_copy}
                   onPress={this.copyPublicKey}
                 />
-                <InputItem 
-                  label={messages[locale].add_eos_create_friend_assistance_label_active} 
-                  value={activePublicKey} 
+                <InputItem
+                  label={messages[locale].add_eos_create_friend_assistance_label_active}
+                  value={activePublicKey}
                   copyLabel={messages[locale].copy_button_copy}
                   onPress={this.copyPublicKey}
                 />
