@@ -18,7 +18,7 @@ import Toast from 'components/Toast'
 import InputItem from './InputItem'
 import styles from './styles'
 
-export const errorMessages = (error/* , messages*/) => {
+export const errorMessages = (error, messages) => {
   if (!error) { return null }
 
   const message = typeof error === 'object' ? error.message : error
@@ -27,11 +27,11 @@ export const errorMessages = (error/* , messages*/) => {
     // case 'EOS System Error':
     // return 'EOS System Error'
     case 'Owner public key dose not match!':
-      return 'Owner public key dose not match!'
+      return messages.add_eos_create_error_account_created
     case 'Active public key dose not match!':
-      return 'Active public key dose not match!'
+      return messages.add_eos_create_error_account_created
     default:
-      return '尚未激活!'
+      return messages.add_eos_create_error_account_inactive
   }
 }
 /*
