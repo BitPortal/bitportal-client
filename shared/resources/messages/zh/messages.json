@@ -107,6 +107,8 @@
   "add_eos_import_error_text_private_key_blank": "请输入私钥",
   "add_eos_import_error_popup_text_private_key_import_failed": "私钥导入失败",
   "add_eos_import_button_import": "导入",
+  "add_eos_create_error_account_created": "该账户名已被抢注，请尝试其他账户名！",
+  "add_eos_create_error_account_inactive": "尚未激活！",
   "add_create_success_title_backup": "备份私钥",
   "add_create_success_label_backup_private_key": "请备份您的私钥",
   "add_create_success_text_backup_private_key": "请使用安全的方式记下您的私钥并妥善保管。请不要与他人共享您的私钥信息，否则将极有可能导致资产丢失。",

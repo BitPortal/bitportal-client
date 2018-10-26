@@ -106,6 +106,8 @@
   "add_eos_import_error_text_private_key_blank": "Please enter private key.",
   "add_eos_import_error_popup_text_private_key_import_failed": "Import private key failed.",
   "add_eos_import_button_import": "Import",
+  "add_eos_create_error_account_created": "The account name has been squatted, please try another one!",
+  "add_eos_create_error_account_inactive": "Not Activated yet!",
   "add_create_success_title_backup": "Back Up Private Key",
   "add_create_success_label_backup_private_key": "Please Back Up Your Pirvate Key",
   "add_create_success_text_backup_private_key": "Please back up your pirvate key and keep it safely. Please do not share your private key information with others, which could result in assets loss.",

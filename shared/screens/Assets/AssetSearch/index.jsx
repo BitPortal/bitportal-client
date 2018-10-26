@@ -98,7 +98,6 @@ export default class AssetsSearch extends Component {
   render() {
     const { locale, searching } = this.props
     const { eosAssetList } = this.state
-    console.log("###--", eosAssetList.get&&eosAssetList.get('size'))
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
