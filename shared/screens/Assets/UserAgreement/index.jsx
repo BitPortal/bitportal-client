@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     width: '100%',
     height: 300,
-    padding: 20,
     backgroundColor: Colors.bgColor_48_49_59
   },
   close: {
@@ -139,7 +138,7 @@ export default class UserAgreement extends Component {
                 </View>
 
                 <View style={styles.agreement}>
-                 <WebView
+                  <WebView
                     source={{ uri: BITPORTAL_API_TERMS_URL }}
                     javaScriptEnabled={true}
                     startInLoadingState={true}

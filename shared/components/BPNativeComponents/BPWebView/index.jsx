@@ -105,7 +105,7 @@ export default class BPWebView extends Component {
     return (
       <View style={[styles.center, styles.content]}>
         <Text style={styles.text18}>
-           {messages[this.props.locale].webview_error_text_load_failed}
+          {messages[this.props.locale].webview_error_text_load_failed}
         </Text>
       </View>
     )
