@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT - NAV_BAR_HEIGHT
-  },
+  }, 
   content: {
     width: SCREEN_WIDTH,
     minHeight: 300,
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   keyboard: {
     width: SCREEN_WIDTH,
     height: KEYBOARD_HEIGHT,
-    backgroundColor: Colors.bgColor_30_31_37
+    backgroundColor: Colors.mainThemeColor
   }
 })
 
