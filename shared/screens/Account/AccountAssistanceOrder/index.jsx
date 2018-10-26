@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
+import { Text, View, ScrollView, TouchableOpacity, Clipboard } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import QRCode from 'react-native-qrcode-svg'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
@@ -13,6 +13,8 @@ import Colors from 'resources/colors'
 import { bindActionCreators } from 'redux'
 import * as eosAccountActions from 'actions/eosAccount'
 import { BPGradientButton } from 'components/BPNativeComponents'
+import Dialog from 'components/Dialog'
+import Toast from 'components/Toast'
 import InputItem from './InputItem'
 import styles from './styles'
 
@@ -67,9 +69,36 @@ export default class AccountAssistanceOrder extends Component {
     this.props.actions.checkEOSAccountCreationStatusRequested({ componentId })
   }
 
-  deleteOrder = () => {
-    const componentId = this.props.componentId
-    this.props.actions.cancelEOSAccountAssistanceRequestd({ componentId })
+  deleteOrder = async () => {
+    const { locale } = this.props
+    const { action } = await Dialog.alert(
+      messages[locale].assets_popup_label_delete_order,
+      messages[locale].assets_popup_text_pending_create_order,
+      {
+        negativeText: messages[locale].assets_popup_text_delete_order_cnacel,
+        positiveText: messages[locale].assets_popup_text_delete_order_confirm
+      }
+    )
+    if (action === Dialog.actionPositive) {
+      const componentId = this.props.componentId
+      this.props.actions.cancelEOSAccountAssistanceRequestd({ componentId })
+    } else {
+      return null
+    }
+  }
+
+  copyAccountName = () => {
+    const { eosAccount } = this.props
+    const eosAccountName = eosAccount.getIn(['eosAccountCreationRequestInfo', 'eosAccountName'])
+    Clipboard.setString(eosAccountName)
+    Toast(messages[this.props.locale].copy_text_copy_success)
+  }
+
+  copyPublicKey = () => {
+    const { eosAccount } = this.props
+    const ownerPublicKey = eosAccount.getIn(['eosAccountCreationRequestInfo', 'ownerPublicKey'])
+    Clipboard.setString(ownerPublicKey)
+    Toast(messages[this.props.locale].copy_text_copy_success)
   }
 
   render() {
@@ -106,9 +135,24 @@ export default class AccountAssistanceOrder extends Component {
                     color="black"
                   />
                 </View>
-                <InputItem label={messages[locale].add_eos_create_friend_assistance_label_account} value={eosAccountName} />
-                <InputItem label={messages[locale].add_eos_create_friend_assistance_label_owner} value={ownerPublicKey} />
-                <InputItem label={messages[locale].add_eos_create_friend_assistance_label_active} value={activePublicKey} />
+                <InputItem
+                  label={messages[locale].add_eos_create_friend_assistance_label_account}
+                  value={eosAccountName}
+                  copyLabel={messages[locale].copy_button_copy}
+                  onPress={this.copyAccountName}
+                />
+                <InputItem
+                  label={messages[locale].add_eos_create_friend_assistance_label_owner}
+                  value={ownerPublicKey}
+                  copyLabel={messages[locale].copy_button_copy}
+                  onPress={this.copyPublicKey}
+                />
+                <InputItem
+                  label={messages[locale].add_eos_create_friend_assistance_label_active}
+                  value={activePublicKey}
+                  copyLabel={messages[locale].copy_button_copy}
+                  onPress={this.copyPublicKey}
+                />
                 <View style={styles.btnContainer}>
                   <TouchableOpacity onPress={this.deleteOrder} style={styles.btn}>
                     <Text style={styles.text14}>

@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   content: {
     width: SCREEN_WIDTH,
     minHeight: 300,
-    paddingHorizontal: 32,
+    paddingHorizontal: 20,
     paddingVertical: 20,
     backgroundColor: Colors.bgColor_30_31_37
   },

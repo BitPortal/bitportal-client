@@ -88,7 +88,7 @@ const runApp = async () => {
     startSingleApp()
   }
 
-  SplashScreen.hide()
+  // SplashScreen.hide()
   Platform.OS === 'ios' && KeyboardManager.setEnableAutoToolbar(true);
 }
 

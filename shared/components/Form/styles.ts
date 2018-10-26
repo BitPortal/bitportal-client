@@ -119,7 +119,9 @@ export default EStyleSheet.create({
     backgroundColor: Colors.bgColor_239_47_95,
     flex: 1,
     height: 30,
-    justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
     paddingLeft: 10
   },
   triangle: {

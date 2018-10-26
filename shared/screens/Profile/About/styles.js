@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     minHeight: 100,
     paddingVertical: 25,
-    paddingHorizontal: 32,
+    paddingHorizontal: 20,
     backgroundColor: Colors.minorThemeColor,
     alignItems: 'center'
   },
