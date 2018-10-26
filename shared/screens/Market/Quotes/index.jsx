@@ -15,8 +15,8 @@ export const Quotes = ({ quoteList, quote, onPress }) => (
           styles.center,
           {
             flex: 1,
-            borderBottomColor: Colors.borderColor_89_185_226,
-            borderBottomWidth: quote === item ? StyleSheet.hairlineWidth * 6 : 0
+            borderBottomColor: quote === item ? Colors.borderColor_89_185_226 : Colors.mainThemeColor,
+            borderBottomWidth: quote === item ? StyleSheet.hairlineWidth * 6 : 1
           }
         ]}
       >

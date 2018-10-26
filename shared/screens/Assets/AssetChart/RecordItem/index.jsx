@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: 70,
     backgroundColor: Colors.bgColor_30_31_37,
-    borderBottomColor: Colors.minorThemeColor,
+    borderBottomColor: Colors.mainThemeColor,
     borderBottomWidth: StyleSheet.hairlineWidth
   },
   between: {

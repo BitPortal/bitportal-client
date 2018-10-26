@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Colors from 'resources/colors'
-import NavigationBar, { CommonButton } from 'components/NavigationBar'
+import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
 import { Text, View, Switch, ActivityIndicator } from 'react-native'
 import BPImage from 'components/BPNativeComponents/BPImage'
 import { Navigation } from 'react-native-navigation'
@@ -120,7 +120,7 @@ export default class AvailableAssets extends Component {
           <NavigationBar
             title={messages[locale].assets_list_title_token_list}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
-            rightButton={<CommonButton iconName="md-search" onPress={this.goSearching} />}
+            rightButton={<CommonRightButton iconName="md-search" onPress={this.goSearching} />}
           />
           <View style={styles.scrollContainer}>
             {!(loading && !loaded) ? <RecyclerListView layoutProvider={this.layoutProvider} dataProvider={eosAssetList} rowRenderer={this.renderItem} /> : <ActivityIndicator size="small" color="white" style={{ marginTop: 20 }} />}

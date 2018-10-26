@@ -19,6 +19,7 @@ export default EStyleSheet.create({
   },
   searchContainer: {
     width: '100% - 70',
+    minHeight: FontScale(28),
     paddingRight: 10,
     paddingTop: 4,
     paddingBottom: 4
@@ -34,7 +35,8 @@ export default EStyleSheet.create({
     alignItems: 'center'
   },
   searchFieldInput: {
-    height: '100%',
+    minHeight: FontScale(24),
+    paddingVertical: 10,
     backgroundColor: 'black',
     borderRadius: 3,
     flexDirection: 'row',
