@@ -48,7 +48,7 @@
   "add_eos_create_error_popup_text_data_extraction_failed": "Data extraction failed, please try again later.",
   "add_eos_create_title_create_assistance": "好友协助创建账户",
   "add_eos_create_button_next": "Next",
-  
+
   "add_eos_label_set_password": "Enter Password",
   "add_eos_text_password": "Set Password",
   "add_eos_text_confirm_password": "Confirm Password",
@@ -351,5 +351,19 @@
 
   "actlist_title_name_account": "Account",
   "actlist_button_name_create": "Create New",
-  "actlist_button_name_import": "Import Account"
+  "actlist_button_name_import": "Import Account",
+
+  "market_menu_button_overview": "Overview",
+  "market_menu_button_systemresource": "System Resources",
+  "market_list_text_marketcap": "Market Cap",
+  "market_list_text_mcap": "M Cap",
+  "market_coincard_text_h": "H",
+  "market_coincard_text_d": "D",
+  "market_chart_text_h": "H",
+  "market_chart_text_d": "D",
+  "market_chart_text_w": "W",
+  "market_chart_text_m": "M",
+  "market_chart_text_y": "Y",
+  "market_chart_text_all": "ALL",
+  "market_chart_text_notavailable": "Chart Not Available"
 }

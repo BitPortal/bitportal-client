@@ -48,7 +48,7 @@ export default class Net extends Component {
           <View style={styles.scrollContainer}>
             <ScrollView
               showsVerticalScrollIndicator={false}
-              contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }}
+              contentContainerStyle={{ alignItems: 'center', paddingBottom: 100 }}
             >
               <View style={styles.progressContaner}>
                 <ResourceBar percent={percent} />

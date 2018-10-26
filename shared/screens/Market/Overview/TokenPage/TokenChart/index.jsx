@@ -5,8 +5,11 @@ import { bindActionCreators } from 'redux'
 import * as chartActions from 'actions/chart'
 import { formatChartDatasetSelector, yAxisSelector, xAxisSelector } from 'selectors/chart'
 import { LineChart } from 'react-native-charts-wrapper'
-import { RANGES } from 'constants/chart'
+import { RANGES, CHART_RANGES } from 'constants/chart'
 import { FLOATING_CARD_WIDTH } from 'utils/dimens'
+import { IntlProvider, FormattedMessage } from 'react-intl'
+
+import messages from 'resources/messages'
 import styles from './styles'
 
 const CHART_DESCRIPTION = {
@@ -59,56 +62,60 @@ export default class TokenChart extends Component {
       : this.props.data
 
   render() {
-    const { loading, data } = this.props
+    const { loading, data, locale } = this.props
     return (
-      <View style={styles.container}>
-        <View style={styles.cardContainer}>
-          <View style={styles.chartContainer}>
-            {loading ? (
-              <View style={styles.centerFlex}>
-                <ActivityIndicator size="large" />
-              </View>
-            ) : data.dataSets[0].values.length === 0 ? (
-              <View style={styles.centerFlex}>
-                <Text>Chart Not Available</Text>
-              </View>
-            ) : (
-              <LineChart
-                style={{ flex: 1 }}
-                data={data}
-                legend={this.state.legend}
-                marker={this.state.marker}
-                xAxis={this.props.xAxis}
-                yAxis={this.props.yAxis}
-                // drawGridBackground={false}
-                // borderColor={processColor("transparent")}
-                // borderWidth={0}
-                drawBorders={false}
-                autoScaleMinMaxEnabled={true}
-                // touchEnabled={true}
-                // dragEnabled={true}
-                // scaleEnabled={true}
-                scaleXEnabled={true}
-                scaleYEnabled={false}
-                pinchZoom={true}
-                doubleTapToZoomEnabled={true}
-                highlightPerTapEnabled={true}
-                highlightPerDragEnabled={true}
-                chartDescription={CHART_DESCRIPTION}
-                // visibleRange={this.state.visibleRange}
-                dragDecelerationEnabled={true}
-                dragDecelerationFrictionCoef={0.99}
-                ref="chartt"
-                keepPositionOnRotation={false}
-                // onSelect={this.handleSelect.bind(this)}
-                onChange={event => console.log(event.nativeEvent)}
-                viewPortOffsets={{ left: 0, top: 10, right: 0, bottom: 5 }}
-              />
-            )}
+      <IntlProvider messages={messages[locale]}>
+        <View style={styles.container}>
+          <View style={styles.cardContainer}>
+            <View style={styles.chartContainer}>
+              {loading ? (
+                <View style={styles.centerFlex}>
+                  <ActivityIndicator size="large" />
+                </View>
+              ) : data.dataSets[0].values.length === 0 ? (
+                <View style={styles.centerFlex}>
+                  <Text style={styles.text14}>
+                    <FormattedMessage id="market_chart_text_notavailable" />
+                  </Text>
+                </View>
+              ) : (
+                <LineChart
+                  style={{ flex: 1 }}
+                  data={data}
+                  legend={this.state.legend}
+                  marker={this.state.marker}
+                  xAxis={this.props.xAxis}
+                  yAxis={this.props.yAxis}
+                  // drawGridBackground={false}
+                  // borderColor={processColor("transparent")}
+                  // borderWidth={0}
+                  drawBorders={false}
+                  autoScaleMinMaxEnabled={true}
+                  // touchEnabled={true}
+                  // dragEnabled={true}
+                  // scaleEnabled={true}
+                  scaleXEnabled={true}
+                  scaleYEnabled={false}
+                  pinchZoom={true}
+                  doubleTapToZoomEnabled={true}
+                  highlightPerTapEnabled={true}
+                  highlightPerDragEnabled={true}
+                  chartDescription={CHART_DESCRIPTION}
+                  // visibleRange={this.state.visibleRange}
+                  dragDecelerationEnabled={true}
+                  dragDecelerationFrictionCoef={0.99}
+                  ref="chartt"
+                  keepPositionOnRotation={false}
+                  // onSelect={this.handleSelect.bind(this)}
+                  onChange={event => console.log(event.nativeEvent)}
+                  viewPortOffsets={{ left: 0, top: 10, right: 0, bottom: 5 }}
+                />
+              )}
+            </View>
+            <RangeBar />
           </View>
-          <RangeBar />
         </View>
-      </View>
+      </IntlProvider>
     )
   }
 }
@@ -140,30 +147,34 @@ class RangeBar extends Component {
   }
 
   render() {
-    const { range } = this.props
+    const { range, locale } = this.props
     return (
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          paddingHorizontal: 30,
-          paddingVertical: 10,
-          width: FLOATING_CARD_WIDTH
-        }}
-      >
-        {RANGES.map(e => (
-          <TouchableWithoutFeedback
-            key={e}
-            onPress={() => {
-              this.changeChartRange(e)
-            }}
-          >
-            <View key={e}>
-              <Text style={{ color: range === e ? 'rgb(55,128,193)' : 'white', fontSize: 12 }}>{e}</Text>
-            </View>
-          </TouchableWithoutFeedback>
-        ))}
-      </View>
+      <IntlProvider messages={messages[locale]}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            paddingHorizontal: 30,
+            paddingVertical: 10,
+            width: FLOATING_CARD_WIDTH
+          }}
+        >
+          {RANGES.map(e => (
+            <TouchableWithoutFeedback
+              key={e}
+              onPress={() => {
+                this.changeChartRange(e)
+              }}
+            >
+              <View key={e}>
+                <Text style={{ color: range === e ? 'rgb(55,128,193)' : 'white', fontSize: 12 }}>
+                  <FormattedMessage id={`market_chart_text_${CHART_RANGES[e]}`} />
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+          ))}
+        </View>
+      </IntlProvider>
     )
   }
 }

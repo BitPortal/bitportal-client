@@ -1,14 +1,14 @@
 import Immutable from 'immutable'
 import { handleActions } from 'redux-actions'
 import * as actions from 'actions/chart'
-import { CHART_RANGES, RANGE_TO_CHART_TYPE } from 'constants/chart'
+import { RANGES, RANGE_TO_CHART_TYPE } from 'constants/chart'
 
 const initialState = Immutable.fromJS({
   data: { histominute: [], histohour: [], histoday: [] },
   loading: false,
   loaded: false,
   error: null,
-  range: CHART_RANGES['1M'],
+  range: RANGES[3],
   chartType: RANGE_TO_CHART_TYPE['1M']
 })
 

@@ -94,7 +94,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // justifyContent: 'center',
     flexDirection: 'row'
-    // backgroundColor: 'red'
+    // backgroundColor: 'yellow'
+    // flexWrap: 'wrap'
+  },
+  nameWrapper: {
+    flexWrap: 'wrap',
+    flex: 1
   },
   price: {
     width: WidthPercent(25)

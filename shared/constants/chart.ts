@@ -1,12 +1,12 @@
 export const RANGES = ['1H', '1D', '1W', '1M', '1Y', 'ALL']
 
 export const CHART_RANGES = {
-  '1H': '1H',
-  '1D': '1D',
-  '1W': '1W',
-  '1M': '1M',
-  '1Y': '1Y',
-  ALL: 'ALL'
+  '1H': 'h',
+  '1D': 'd',
+  '1W': 'w',
+  '1M': 'm',
+  '1Y': 'y',
+  ALL: 'all'
 }
 
 export const RANGE_TO_CHART_TYPE = {

@@ -9,11 +9,22 @@ import * as tickerActions from 'actions/ticker'
 import * as tokenActions from 'actions/token'
 import FastImage from 'react-native-fast-image'
 
+import { FontScale } from 'utils/dimens'
 import abbreviate from 'number-abbreviate'
 import { filterBgColor } from 'utils'
-import { ASSET_FRACTION } from 'constants/market'
+import { ASSET_FRACTION, DEFAULT_SORT_FILTER } from 'constants/market'
+import Images from 'resources/images'
+import messages from 'resources/messages'
 import styles from './styles'
 
+@connect(
+  state => ({
+    locale: state.intl.get('locale')
+  }),
+  null,
+  null,
+  { withRef: true }
+)
 class ListItem extends Component {
   shouldComponentUpdate(nextProps) {
     return (
@@ -27,17 +38,23 @@ class ListItem extends Component {
   }
 
   render() {
-    const { item, index, itemExtraStyle, onPress } = this.props
+    const { locale, item, index, itemExtraStyle, onPress } = this.props
     const price_usd = item.get('price_usd')
-
+    console.log('itemm', item.toJS())
     return (
       <TouchableHighlight key={index} underlayColor={Colors.hoverColor} onPress={() => onPress(item)}>
         <View style={[styles.listItem, { ...itemExtraStyle }]}>
           <View style={{ paddingRight: 10, marginLeft: 10 }}>
-            <FastImage
+            {/* <FastImage
               style={styles.icon}
               // source={token.get("") || Images.coin_logo_default}
-              source={{ uri: `https://cdn.bitportal.io/tokenicon/32/color/${item.get('symbol').toLowerCase()}.png` }}
+              source={Images.coin_logo_default}
+            /> */}
+            <FastImage
+              style={styles.icon}
+              source={{
+                uri: `https://cdn.bitportal.io/tokenicon/32/color/${item.get('symbol')?.toLowerCase()}.png`
+              }}
             />
           </View>
 
@@ -48,10 +65,14 @@ class ListItem extends Component {
           >
             <View style={styles.coin}>
               <Text style={[styles.text17, { marginRight: 5 }]}>{item.get('symbol')}</Text>
-              <Text style={[styles.text14, { marginRight: 1 }]}>{item.get('name')}</Text>
+              <Text numberOfLines={1} style={[styles.nameWrapper, styles.text14, { marginRight: 1 }]}>
+                {item.get('name')}
+              </Text>
             </View>
             <View style={styles.coin}>
-              <Text style={[styles.text14, { marginRight: 5 }]}>M Cap</Text>
+              <Text style={[styles.text14, { marginRight: 5 }]}>
+                {locale === 'en' ? 'M Cap' : messages[locale].market_label_market_cap}
+              </Text>
               <Text style={[styles.text14, { marginRight: 1 }]}>{abbreviate(item.get('market_cap_usd'), 2)}</Text>
             </View>
           </View>
@@ -148,7 +169,7 @@ export default class MarketList extends Component {
   }
 
   render() {
-    const { ticker, loading, onPress } = this.props
+    const { data, ticker, loading, onPress } = this.props
     console.log('marketlist', ticker)
     return (
       <View style={styles.scrollContainer}>

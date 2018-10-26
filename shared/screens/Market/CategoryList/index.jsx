@@ -19,6 +19,7 @@ const ListItem = ({ category, onPress, active, loginRequired, loggedIn }) => (
     </View>
   </TouchableHighlight>
 )
+/* eslint-disable */
 
 const CategoryList = ({ dismissModal, activeCategory, categoryList, changeCategory, loggedIn }) => {
   handleOnPressLogic = category => {
@@ -26,6 +27,7 @@ const CategoryList = ({ dismissModal, activeCategory, categoryList, changeCatego
       return changeCategory(category.name)
     } else return
   }
+  /* eslint-enable */
 
   return (
     <View style={styles.container}>

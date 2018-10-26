@@ -5,7 +5,7 @@ import FastImage from 'react-native-fast-image'
 import Colors from 'resources/colors'
 import { filterBgColor } from 'utils'
 import { ASSET_FRACTION } from 'constants/market'
-import { IntlProvider, FormattedNumber } from 'react-intl'
+import { IntlProvider, FormattedNumber, FormattedMessage } from 'react-intl'
 import abbreviate from 'number-abbreviate'
 
 import messages from 'resources/messages'
@@ -99,18 +99,31 @@ export default class TokenCard extends Component {
                 }
               </Text>
               <View style={[styles.column, { alignItems: 'flex-end' }]}>
-                <PercentageChange value={ticker.get('percent_change_1h')} timePeriod="1H" />
-                <PercentageChange value={ticker.get('percent_change_24h')} timePeriod="24H" />
-                <PercentageChange value={ticker.get('percent_change_7d')} timePeriod="7D" />
+                <PercentageChange
+                  value={ticker.get('percent_change_1h')}
+                  timePeriod={`1${messages[locale].market_coincard_text_h}`}
+                />
+                <PercentageChange
+                  value={ticker.get('percent_change_24h')}
+                  timePeriod={`1${messages[locale].market_coincard_text_d}`}
+                />
+                <PercentageChange
+                  value={ticker.get('percent_change_7d')}
+                  timePeriod={`1${messages[locale].market_chart_text_w}`}
+                />
               </View>
             </View>
             <View style={styles.row}>
               <View style={styles.innerCardContainer}>
-                <Text style={[styles.keyText]}>Market Cap</Text>
+                <Text style={[styles.keyText]}>
+                  <FormattedMessage id="market_label_market_cap" />
+                </Text>
                 <Text style={{ color: 'white' }}>{`$${abbreviate(ticker.get('market_cap_usd'), 2)}`}</Text>
               </View>
               <View style={styles.innerCardContainer}>
-                <Text style={styles.keyText}>Market Cap</Text>
+                <Text style={styles.keyText}>
+                  <FormattedMessage id="market_label_market_cap" />
+                </Text>
                 <Text style={{ color: 'white' }}>{`$${abbreviate(ticker.get('volume_24h_usd'), 2)}`}</Text>
               </View>
             </View>

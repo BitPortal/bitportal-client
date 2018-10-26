@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native'
 import {
   FontScale,
   SCREEN_WIDTH,
@@ -7,8 +7,8 @@ import {
   FLOATING_CARD_WIDTH,
   FLOATING_CARD_BORDER_RADIUS,
   FLOATING_CARD_MARGIN_BOTTOM
-} from "utils/dimens";
-import Colors from "resources/colors";
+} from 'utils/dimens'
+import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
   container: {
@@ -19,15 +19,16 @@ const styles = StyleSheet.create({
   scrollContainer: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT - NAV_BAR_HEIGHT
+    // backgroundColor: 'red'
   },
   between: {
-    alignItems: "center",
-    justifyContent: "space-between",
-    flexDirection: "row"
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row'
   },
   center: {
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   text14: {
     fontSize: FontScale(14),
@@ -61,6 +62,6 @@ const styles = StyleSheet.create({
     borderRadius: FLOATING_CARD_BORDER_RADIUS,
     backgroundColor: Colors.minorThemeColor
   }
-});
+})
 
-export default styles;
+export default styles

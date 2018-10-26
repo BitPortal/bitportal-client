@@ -36,11 +36,15 @@ export default class TokenDetails extends Component {
         <View>
           <DescriptionPanel
             messages={messages}
-            title="Description"
+            title={messages[locale].description}
             // description={"hello"}
             description={token.get('description')?.get(locale)}
           />
-          <DetailPanel messages={messages[locale]} title="Token Details" token={token}>
+          <DetailPanel
+            messages={messages[locale]}
+            title={messages[locale].market_token_detail_button_detail}
+            token={token}
+          >
             {token.size === 0 && (
               <Text style={styles.text14}>
                 {'\n'}

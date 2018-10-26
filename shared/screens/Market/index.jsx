@@ -147,13 +147,15 @@ export default class Market extends Component {
           <NavigationBar
             leftButton={<ListButton label={MARKET_CATEGORY_NAMES[marketCategory]} onPress={this.selectExchange} />}
             rightButton={
-              <SearchBar
-                searchTerm={searchTerm}
-                onChangeText={text => this.onChangeText(text)}
-                clearSearch={() => {
-                  this.props.actions.setSearchTerm('')
-                }}
-              />
+              marketCategory === 'SYSTEM' ? null : (
+                <SearchBar
+                  searchTerm={searchTerm}
+                  onChangeText={text => this.onChangeText(text)}
+                  clearSearch={() => {
+                    this.props.actions.setSearchTerm('')
+                  }}
+                />
+              )
             }
           />
           <MarketContent componentId={componentId} category={marketCategory} />

@@ -48,7 +48,7 @@
   "add_eos_create_error_popup_text_data_extraction_failed": "数据提取错误，请重新创建",
   "add_eos_create_title_create_assistance": "好友协助创建账户",
   "add_eos_create_button_next": "下一步",
-  
+
   "add_eos_label_set_password": "设置密码",
   "add_eos_text_password": "输入密码",
   "add_eos_text_confirm_password": "确认密码",
@@ -156,13 +156,16 @@
   "resource_error_popup_text_cpu_insufficient": "计算资源（CPU）不足",
   "resource_error_popup_text_eos_system_error": "EOS 系统错误, 请重试",
   "resource_label_tips": "提示：",
+  "resource_cpu_text_tips": "1. 计算资源是 EOS 网络中的资源，需要抵押 EOS 以获取。\n\n2. 您可以赎回抵押的 EOS，赎回的资产将在72小时候返回您的账户。",
   "resource_cpu_text_tips_1": "1. 计算资源是 EOS 网络中的资源，需要抵押 EOS 以获取。",
   "resource_cpu_text_tips_2": "2. 您可以赎回抵押的 EOS，赎回的资产将在72小时候返回您的账户。",
+  "resource_net_text_tips": "1. 网络带宽是 EOS 网络中的资源，需要抵押 EOS 以获取。\n\n2. 您可以赎回抵押的 EOS，赎回的资产将在72小时候返回您的账户。",
   "resource_net_text_tips_1": "1. 网络带宽是 EOS 网络中的资源，需要抵押 EOS 以获取。",
   "resource_net_text_tips_2": "2. 您可以赎回抵押的 EOS，赎回的资产将在72小时候返回您的账户。",
   "resource_ram_label_price": "价格：",
   "resource_ram_button_buy": "买入",
   "resource_ram_button_sell": "卖出",
+  "resource_ram_text_tips": "1. 内存容量是 EOS 网络中的资源，获取时需要使用 EOS 进行购买。\n\n2. 你可以随时购买或者卖出您所拥有的内存容量。\n\n3. 内存容量的交易将要缴纳 (x+199)/200 的费用，x 为您的交易额。",
   "resource_ram_text_tips_1": "1. 内存容量是 EOS 网络中的资源，获取时需要使用 EOS 进行购买。",
   "resource_ram_text_tips_2": "2. 你可以随时购买或者卖出您所拥有的内存容量。",
   "resource_ram_text_tips_3": "3. 内存容量的交易将要缴纳 (x+199)/200 的费用，x 为您的交易额。",
@@ -348,5 +351,19 @@
 
   "actlist_title_name_account": "账户",
   "actlist_button_name_create": "新建账户",
-  "actlist_button_name_import": "导入账户"
+  "actlist_button_name_import": "导入账户",
+
+  "market_menu_button_overview": "总览",
+  "market_menu_button_systemresource": "系统资源",
+  "market_list_text_marketcap": "总市值",
+  "market_list_text_mcap": "总市值",
+  "market_coincard_text_h": "时",
+  "market_coincard_text_d": "日",
+  "market_chart_text_h": "时",
+  "market_chart_text_d": "日",
+  "market_chart_text_w": "周",
+  "market_chart_text_m": "月",
+  "market_chart_text_y": "年",
+  "market_chart_text_all": "全",
+  "market_chart_text_notavailable": "图表暂不可用"
 }
