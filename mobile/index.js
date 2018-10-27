@@ -22,9 +22,8 @@ import configure from 'store'
 import sagas from 'sagas'
 import Colors from 'resources/colors'
 import VersionNumber from 'react-native-version-number'
-import SplashScreen from 'react-native-splash-screen'
-import KeyboardManager from 'react-native-keyboard-manager'
-import { getLocaleLanguage } from 'utils/language'
+// import KeyboardManager from 'react-native-keyboard-manager'
+// import { getLocaleLanguage } from 'utils/language'
 import { calculate } from 'utils/update'
 import { ENV } from 'constants/env'
 import { noop } from 'utils'
@@ -50,7 +49,7 @@ const runApp = async () => {
     storage.getItem('bitportal_version')
   ])
 
-  const lang = localLang || getLocaleLanguage()
+  const lang = localLang || 'zh' // getLocaleLanguage()
   const symbol = currency && currency.symbol
   const rate = currency && currency.rate
   const activeNode = eosNode && eosNode.activeNode
@@ -76,8 +75,7 @@ const runApp = async () => {
     startSingleApp()
   }
 
-  SplashScreen.hide()
-  Platform.OS === 'ios' && KeyboardManager.setEnableAutoToolbar(true)
+  // Platform.OS === 'ios' && KeyboardManager.setEnableAutoToolbar(true)
 }
 
 const setStatusBarStyle = async () => {

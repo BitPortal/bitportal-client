@@ -230,16 +230,6 @@ declare module 'react-native-extended-stylesheet' {
   export = file
 }
 
-declare module 'react-native-swipe-list-view' {
-  interface ReactNativeSwipeListView {
-    SwipeListView: any
-    SwipeRow: any
-  }
-
-  const reactNativeSwipeListView: ReactNativeSwipeListView
-  export = reactNativeSwipeListView
-}
-
 declare module 'components/*' {
   const file: any
   export = file

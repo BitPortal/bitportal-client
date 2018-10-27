@@ -4,31 +4,20 @@ const styles = EStyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
-    backgroundColor: 'white'
-  },
-  contentContainer: {
-    paddingTop: 0
-  },
-  swiperContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    height: 220
+    backgroundColor: 'white',
+    flex: 1
   },
   swiper: {
-    width: '100% - 24',
-    height: 220,
-    flex: 1,
-    overflow: 'visible',
-    paddingVertical: 16
+    borderColor: '#CBCBCB',
+    borderBottomWidth: 0,
+    height: 220
   },
   slideContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 0,
-    borderColor: 'red',
-    paddingHorizontal: 4
+    paddingLeft: 4,
+    paddingRight: 4
   },
   slide: {
     backgroundColor: 'blue',
@@ -38,8 +27,8 @@ const styles = EStyleSheet.create({
   },
   slideBackground: {
     flex: 1,
-    width: null,
-    height: null,
+    // width: null,
+    // height: null,
     borderRadius: 10
   },
   slideText: {
@@ -65,10 +54,6 @@ const styles = EStyleSheet.create({
   actionButtonText: {
     color: '#007AFF',
     fontSize: 17
-  },
-  tableView: {
-    flex: 1,
-    height: 180
   }
 })
 

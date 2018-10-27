@@ -1,39 +1,18 @@
-import { StyleSheet } from 'react-native'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT } from 'utils/dimens'
-import Colors from 'resources/colors'
+import EStyleSheet from 'react-native-extended-stylesheet'
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   container: {
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT,
-    backgroundColor: Colors.mainThemeColor
+    width: '100%',
+    height: '100%',
+    paddingTop: 0
   },
-  scrollContainer: {
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - TAB_BAR_HEIGHT
+  tableView: {
+    width: '100%',
+    height: '100% - 270'
   },
-  navButton: {
-    minWidth: 100,
-    height: 40,
-    paddingTop: 6,
-    marginLeft: 10
-  },
-  center: {
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  text14: {
-    fontSize: FontScale(14),
-    color: Colors.textColor_181_181_181
-  },
-  text16: {
-    fontSize: FontScale(16),
-    color: Colors.textColor_255_255_238
-  },
-  text24: {
-    fontSize: FontScale(24),
-    color: Colors.textColor_255_255_238,
-    fontWeight: 'bold'
+  footer: {
+    height: 30,
+    width: '100%'
   }
 })
 

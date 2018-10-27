@@ -108,6 +108,7 @@
 		3446CAB220E8F39F00ACA3C8 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3446CAAF20E8EB1E00ACA3C8 /* libReactNativeNavigation.a */; };
 		347F033D215F4B9D007B7431 /* inject.js in Resources */ = {isa = PBXBuildFile; fileRef = 347F033C215F4B9D007B7431 /* inject.js */; };
 		34903D5D215E2FAB0032F08A /* libReact-Native-Webview-Bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34903D5C215E2F9D0032F08A /* libReact-Native-Webview-Bridge.a */; };
+		34D2FCFC2184A6EF00D50DC6 /* libRNTableView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 346B6074218064490037CD55 /* libRNTableView.a */; };
 		3C4507934177471B93375682 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE5CE8E4DC4D17BDEAF27C /* libRNRandomBytes.a */; };
 		4077FA79AD0344B59132A336 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEC2D3945DC40A5BA3B3E50 /* CoreTelephony.framework */; };
 		43E5398727FA4DD5AB8E784C /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B86296E851D9480F9E6147E9 /* libRNBlur.a */; };
@@ -451,6 +452,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 7B49FEBB1E95090800DEB3EA;
 			remoteInfo = ReactNativeNavigationTests;
+		};
+		346B6073218064490037CD55 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7CA0824C85CF411D81D71994 /* RNTableView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 873769951B7CD6E900F7C3C2;
+			remoteInfo = RNTableView;
 		};
 		3472432720B0B65C008D018F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -844,6 +852,7 @@
 		47CDB62F8CE244FFAF5141FB /* libRNCamera.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCamera.a; sourceTree = "<group>"; };
 		4CEC2D3945DC40A5BA3B3E50 /* CoreTelephony.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
+		5EDC738F416D4EE690D11190 /* libRNTableView.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNTableView.a; sourceTree = "<group>"; };
 		5F6EC61CB1F246A29B1C589D /* libSplashScreen.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSplashScreen.a; sourceTree = "<group>"; };
 		63C330A6E7DB472694F6CC51 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		6A826FB4BCC24A12852034E9 /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
@@ -853,6 +862,7 @@
 		754647FCC10D42E79662A42B /* FastImage.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = FastImage.xcodeproj; path = "../node_modules/react-native-fast-image/ios/FastImage.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7A59F0F22268405F910DAEE0 /* libRCTRestart.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTRestart.a; sourceTree = "<group>"; };
+		7CA0824C85CF411D81D71994 /* RNTableView.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNTableView.xcodeproj; path = "../node_modules/react-native-tableview/RNTableView.xcodeproj"; sourceTree = "<group>"; };
 		7E266F30BB5544C48714E51F /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		88E898A8F89E428EB8826709 /* Foundation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -894,6 +904,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34D2FCFC2184A6EF00D50DC6 /* libRNTableView.a in Frameworks */,
 				34903D5D215E2FAB0032F08A /* libReact-Native-Webview-Bridge.a in Frameworks */,
 				18B18429213675180037A46D /* UserNotifications.framework in Frameworks */,
 				18284831212564E300F2BE57 /* libRCTQRCodeLocalImage.a in Frameworks */,
@@ -1213,6 +1224,7 @@
 				030AAA2E52B849E8BCC4782E /* libRNFS.a */,
 				15F6731AE30C4EA99A2EFF54 /* libFastImage.a */,
 				119A225CA6FE4E6B947FDB82 /* libReactNativeKeyboardManager.a */,
+				5EDC738F416D4EE690D11190 /* libRNTableView.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -1517,6 +1529,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		346B6070218064490037CD55 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				346B6074218064490037CD55 /* libRNTableView.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		347F0332215F4750007B7431 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1598,6 +1618,7 @@
 				D1F0DB79F92C4E969F2C6ACB /* RNFS.xcodeproj */,
 				754647FCC10D42E79662A42B /* FastImage.xcodeproj */,
 				721257168F454099810D6D12 /* ReactNativeKeyboardManager.xcodeproj */,
+				7CA0824C85CF411D81D71994 /* RNTableView.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1847,6 +1868,10 @@
 				{
 					ProductGroup = 1875EE10205F676F00E4A12C /* Products */;
 					ProjectRef = 893DAF850B9A49529528429B /* RNSVG.xcodeproj */;
+				},
+				{
+					ProductGroup = 346B6070218064490037CD55 /* Products */;
+					ProjectRef = 7CA0824C85CF411D81D71994 /* RNTableView.xcodeproj */;
 				},
 				{
 					ProductGroup = 1800997C206392B3009374CD /* Products */;
@@ -2175,6 +2200,13 @@
 			fileType = wrapper.cfbundle;
 			path = ReactNativeNavigationTests.xctest;
 			remoteRef = 3446CAB020E8EB1E00ACA3C8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		346B6074218064490037CD55 /* libRNTableView.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNTableView.a;
+			remoteRef = 346B6073218064490037CD55 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3472432820B0B65C008D018F /* libjsinspector.a */ = {
@@ -2528,6 +2560,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fs/**",
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-tableview/RNTableView/**",
 				);
 				INFOPLIST_FILE = bitportal/Info.plist;
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
@@ -2535,6 +2568,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/bitportal\"",
 					"\"$(SRCROOT)/bitportal\"",
 					"\"$(SRCROOT)/bitportal\"",
 				);
@@ -2595,6 +2629,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fs/**",
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 					"$(SRCROOT)/../node_modules/react-native-keyboard-manager/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-tableview/RNTableView/**",
 				);
 				INFOPLIST_FILE = bitportal/Info.plist;
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
@@ -2602,6 +2637,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/bitportal\"",
 					"\"$(SRCROOT)/bitportal\"",
 					"\"$(SRCROOT)/bitportal\"",
 				);
