@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { View, ScrollView, Text, Dimensions, TouchableOpacity } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import FastImage from 'react-native-fast-image'
+import SplashScreen from 'react-native-splash-screen'
 import * as walletActions from 'actions/wallet'
 import * as tickerActions from 'actions/ticker'
 import * as balanceActions from 'actions/balance'
@@ -87,10 +88,10 @@ export default class Wallet extends Component {
 
   componentDidMount() {
     this.props.actions.syncWalletRequested()
+    SplashScreen.hide()
   }
 
-  componentDidAppear() {
-  }
+  componentDidAppear() {}
 
   _renderItem ({ item, index }) {
     const imageList = [require('resources/images/BTCCard.png'), require('resources/images/ETHCard.png'), require('resources/images/BTCCard.png')]
