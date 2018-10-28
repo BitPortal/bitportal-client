@@ -3,7 +3,12 @@
     "react"
   ],
   "parser": "babel-eslint",
-  "parserOptions": { "ecmaVersion": 6 },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "legacyDecorators": true
+    }
+  },
   "extends": [
     "plugin:react/recommended","airbnb"
   ],

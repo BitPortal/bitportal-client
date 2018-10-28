@@ -192,6 +192,7 @@ android {
 }
 
 dependencies {
+    compile project(':@remobile_react-native-qrcode-local-image')
     compile project(':react-native-fast-image')
     compile project(':react-native-fs')
     compile project(':jcore-react-native')

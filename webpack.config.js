@@ -125,19 +125,16 @@ const baseConfig = {
             babelrc: false,
             presets: removeEmpty([
               ['env', { loose: true, modules: false }],
-              'react',
-              'stage-2',
-              ifProduction('react-optimize')
+              'react'
             ]),
-            plugins: removeEmpty([
+            plugins: [
               'syntax-dynamic-import',
               'transform-class-properties',
               'transform-decorators-legacy',
               'react-hot-loader/babel',
               'transform-runtime',
-              'react-hot-loader/babel',
-              ifTest('istanbul')
-            ])
+              'react-hot-loader/babel'
+            ]
           }
         },
         {

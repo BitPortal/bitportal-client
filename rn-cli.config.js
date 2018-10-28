@@ -1,18 +1,17 @@
-const blacklist = require('metro/src/blacklist')
 const nodeLibs = require('node-libs-react-native')
+const path = require('path')
 
 module.exports = {
-  extraNodeModules: {
-    ...nodeLibs,
-    vm: require.resolve('vm-browserify')
+  resolver: {
+    extraNodeModules: {
+      ...nodeLibs,
+      vm: require.resolve('vm-browserify')
+    },
+    sourceExts: ['js', 'jsx', 'ts', 'tsx', 'json']
   },
-  getTransformModulePath() {
-    return require.resolve('react-native-typescript-transformer')
-  },
-  getSourceExts() {
-    return ['js', 'jsx', 'ts', 'tsx']
-  },
-  getBlacklistRE () {
-    return blacklist([/react-native\/local-cli\/core\/__fixtures__.*/])
+  transformer: {
+    enableBabelRCLookup: true,
+    enableBabelRuntime: true
+  //   babelTransformerPath: require.resolve('react-native-typescript-transformer')
   }
 }

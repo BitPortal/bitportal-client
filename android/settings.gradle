@@ -1,4 +1,6 @@
 rootProject.name = 'bitportal'
+include ':@remobile_react-native-qrcode-local-image'
+project(':@remobile_react-native-qrcode-local-image').projectDir = new File(rootProject.projectDir, '../node_modules/@remobile/react-native-qrcode-local-image/android')
 include ':react-native-fast-image'
 project(':react-native-fast-image').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fast-image/android')
 include ':react-native-fs'
