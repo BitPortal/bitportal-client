@@ -198,7 +198,7 @@ export default class SearchBar extends Component {
     })
     const searchBoxColor = this.state.searchBoxColor.interpolate({
       inputRange: [0, 1],
-      outputRange: [Colors.minorThemeColor, 'rgb(0,0,0)']
+      outputRange: [Colors.mainThemeColor, 'rgb(0,0,0)']
     })
     const wrapperColor = this.state.wrapperColor.interpolate({
       inputRange: [0, 1],

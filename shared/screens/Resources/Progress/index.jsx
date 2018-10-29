@@ -25,9 +25,10 @@ export default class Progress extends Component {
     const truePercent = isNaN(parseInt(percent, 10)) ? 0 : percent
     return (
       <View style={[styles.container, { backgroundColor: Colors.mainThemeColor }, { ...extraStyle }]}>
-        <LinearGradientContainer 
-          type="right" colors={colors} 
-          style={[styles.container, { width: percent * (SCREEN_WIDTH - 40) }]} 
+        <LinearGradientContainer
+          type="right"
+colors={colors}
+          style={[styles.container, { width: percent * (SCREEN_WIDTH - 40) }]}
         />
         <Text style={[styles.text12, { marginLeft: mrLeft }]}>
           {parseInt(truePercent * 100, 10)}%

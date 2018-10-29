@@ -56,7 +56,7 @@ export default class DappElement extends Component {
         name: item.get('url'),
         passProps: {
           // markdown: item.content,
-          title: item.get('display_name').get(this.props.locale)||item.get('display_name').get('en')
+          title: item.get('display_name').get(this.props.locale) || item.get('display_name').get('en')
         }
       }
     })
@@ -68,7 +68,7 @@ export default class DappElement extends Component {
     const { eosAccountName } = this.props
     // Umeng analitics
     onEventWithMap(DAPP_STORE, {
-      dappName: item.get('display_name').get(this.props.locale)||item.get('display_name').get('en'),
+      dappName: item.get('display_name').get(this.props.locale) || item.get('display_name').get('en'),
       walletId: eosAccountName
     })
 
@@ -77,7 +77,7 @@ export default class DappElement extends Component {
         name: 'BitPortal.DappWebView',
         passProps: {
           uri: item.get('url'),
-          title: item.get('display_name').get(this.props.locale)||item.get('display_name').get('en'),
+          title: item.get('display_name').get(this.props.locale) || item.get('display_name').get('en'),
           inject
         }
       }
@@ -90,7 +90,7 @@ export default class DappElement extends Component {
       this.getAlertMessage(messages[locale].no_login, false)
     } else if (item.get('type') === 'link' && item.get('url').match(/http/g)) {
       this.getAlertMessage('third_party', {
-        app: item.get('display_name').get(locale)||item.get('display_name').get('en')
+        app: item.get('display_name').get(locale) || item.get('display_name').get('en')
       })
       this.setAlertAction('toUrl')
     } else {
@@ -143,7 +143,7 @@ export default class DappElement extends Component {
             ) : null}
           </TouchableOpacity>
           <Text numberOfLines={1} style={[styles.title]}>
-            {item.get('display_name').get(locale)||item.get('display_name').get('en')}
+            {item.get('display_name').get(locale) || item.get('display_name').get('en')}
           </Text>
           <Alert
             message={this.state.message}
