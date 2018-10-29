@@ -11,8 +11,7 @@ export default EStyleSheet.create({
     marginVertical: 10,
     paddingHorizontal: 20,
     paddingVertical: 20,
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
+    borderRadius: 12,
     alignItems: 'center',
     flexDirection: 'column',
     backgroundColor: Colors.minorThemeColor

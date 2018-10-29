@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
   progressContaner: {
     paddingVertical: 20,
-    paddingHorizontal: 32,
+    paddingHorizontal: 20,
     width: SCREEN_WIDTH,
     minHeight: 80,
     backgroundColor: Colors.minorThemeColor
