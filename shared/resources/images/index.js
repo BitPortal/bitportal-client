@@ -52,7 +52,8 @@ const Images = {
   sign_agreement: require('./agreement_sign.png'),
   unsign_agreement: require('./agreement_unsign.png'),
   list_hot: require('./list_hot.png'),
-  list_new: require('./list_new.png')
+  list_new: require('./list_new.png'),
+  dapp_logo_default: require('./dapp_logo_default.png')
 }
 
 export default Images

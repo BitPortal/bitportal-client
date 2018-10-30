@@ -121,7 +121,7 @@ export default class DappElement extends Component {
           >
             <BPImage
               style={styles.icon}
-              source={item.get('icon_url') ? { uri: `${item.get('icon_url')}` } : Images.coin_logo_default}
+              source={item.get('icon_url') ? { uri: `${item.get('icon_url')}` } : Images.dapp_logo_default}
             />
             {item.get('selected') ? (
               <View style={styles.favoriteWrapper}>
