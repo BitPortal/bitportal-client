@@ -103,7 +103,7 @@ export default class TokenChart extends Component {
                   chartDescription={CHART_DESCRIPTION}
                   // visibleRange={this.state.visibleRange}
                   dragDecelerationEnabled={true}
-                  dragDecelerationFrictionCoef={0.99}
+                  dragDecelerationFrictionCoef={0.89}
                   ref="chartt"
                   keepPositionOnRotation={false}
                   // onSelect={this.handleSelect.bind(this)}
