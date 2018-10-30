@@ -3,13 +3,15 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { View, ScrollView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
-import NavigationBar, { CommonButton } from 'components/NavigationBar'
+import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
 import Colors from 'resources/colors'
 import { eosPriceSelector } from 'selectors/ticker'
 import * as eosAccountActions from 'actions/eosAccount'
 import Alert from 'components/Alert'
 import Loading from 'components/Loading'
 import messages from 'resources/messages'
+import Images from 'resources/images'
+import Dialog from 'components/Dialog'
 import AccountCard from './AccountCard'
 import styles from './styles'
 
@@ -59,6 +61,15 @@ export default class AccountSelection extends Component {
     this.props.actions.importEOSAccountRequested({ eosAccountName, permission, accountInfo, publicKey, privateKey, password, hint, componentId })
   }
 
+  showHint = () => {
+    const { locale } = this.props
+    Dialog.alert(
+      messages[locale].general_popup_label_tips, 
+      messages[locale].add_eos_hint_popup_text_private_key, 
+      { positiveText: messages[locale].general_popup_button_close }
+    )
+  }
+
   render() {
     const { locale, keyPermissions, eosPrice, eosAccount } = this.props
     const loading = eosAccount.get('loading')
@@ -69,6 +80,7 @@ export default class AccountSelection extends Component {
         <NavigationBar
           leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           title={messages[locale].add_import_success_title_select_account}
+          rightButton={<CommonRightButton imageSource={Images.help_center} onPress={this.showHint} />}
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>

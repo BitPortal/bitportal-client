@@ -115,6 +115,7 @@
   "add_create_success_button_start_backup": "备份",
   "add_create_success_button_skip_backup": "跳过此步骤",
   "add_import_success_title_select_account": "选择账户",
+  "add_eos_hint_popup_text_private_key": "Owner 权限说明：账号主权限, 声明这个账号的最终归属。只有极少数事务需要使用到 Owner 权限。建议将该权限的私钥进行冷存储。不要分享给任何人。 Owner Key 可以用来恢复所有其他权限。 \nActive权限说明：活动权限。顾名思议，这个权限 ，一般用来做一些转账、投票、发起事务等常规操作。",
 
   "assets_label_total_assets": "总资产",
   "assets_label_assets": "资产",
