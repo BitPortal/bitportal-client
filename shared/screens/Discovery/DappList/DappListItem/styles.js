@@ -1,11 +1,6 @@
 import { StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
-import {
-  SCREEN_WIDTH,
-  SCREEN_HEIGHT,
-  NAV_BAR_HEIGHT,
-  FontScale
-} from 'utils/dimens'
+import { SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, FontScale } from 'utils/dimens'
 
 const styles = StyleSheet.create({
   container: {
@@ -27,6 +22,10 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: FontScale(80)
     // marginBottom: 2
+  },
+  iconWrapper: {
+    height: 50,
+    width: 50
   },
   image: {
     height: 50,
@@ -65,6 +64,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: Colors.bgColor_30_31_37,
     marginBottom: 1
+  },
+  hotNewWrapper: {
+    flexDirection: 'row',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    borderRadius: 10
+  },
+  hotNewTag: {
+    height: 12,
+    width: 30
   },
   sectionHeader: {
     width: SCREEN_WIDTH,
