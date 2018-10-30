@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     color: Colors.textColor_181_181_181,
-    marginTop: Platform.OS === 'ios' ? 22 : 0,
+    marginTop: Platform.OS === 'ios' ? 0 : 0,
     paddingTop: Platform.OS === 'ios' ? 0 : -10,
     width: '100%',
     height: FontScale(28)
