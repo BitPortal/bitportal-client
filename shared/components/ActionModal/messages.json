@@ -64,5 +64,38 @@
     "contract_action_modal_text_transaction": "Transaction Details",
 
     "send_confirm_button_confirm": "Confirm"
-  }
+  },
+  "ko": {
+    "general_action_modal_text_action": "액션",
+     "general_action_modal_text_transaction": "거래 세부 사항",
+ 
+     "transfer_action_modal_text_payment": "지불",
+     "transfer_action_modal_text_contract": "계약",
+     "transfer_action_modal_text_amount": "금액",
+     "transfer_action_modal_text_payment_account": "지불 계좌",
+     "transfer_action_modal_text_receiving_account": "수신 계정",
+     "transfer_action_modal_text_memo": "메모",
+ 
+     "voting_action_modal_text_vote": "투표",
+     "voting_action_modal_text_voter": "투표",
+     "voting_action_modal_text_selected_node": "선택한 노드",
+ 
+     "sign_action_modal_text_sign": "서명",
+     "sign_action_modal_text_signer": "서명자",
+     "sign_action_modal_text_public_key": "공개 키",
+     "sign_action_modal_text_signed_content": "서명 된 콘텐츠",
+ 
+     "contract_action_modal_text_execute": "EOS 계약 실행",
+     "contract_action_modal_text_details": "세부 정보",
+     "contract_action_modal_text_account": "계정: ",
+     "contract_action_modal_text_use": "사용 ",
+     "contract_action_modal_text_access": "액세스 권한 \nexcute ",
+     "contract_action_modal_text_contract": "계약: ",
+     "contract_action_modal_text_action": "조치: ",
+     "contract_action_modal_text_list": "\n매개 변수 목록",
+ 
+     "contract_action_modal_text_transaction": "거래 세부 사항",
+ 
+     "send_confirm_button_confirm": "확인"
+   } 
 }

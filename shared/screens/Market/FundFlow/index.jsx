@@ -48,7 +48,7 @@ export default class TokenDetails extends Component {
             showsVerticalScrollIndicator={false}
           >
             <Logo />
-            <View style={{ width: SCREEN_WIDTH, height: 160, backgroundColor: Colors.bgColor_59_59_59 }} />
+            <View style={{ width: SCREEN_WIDTH, height: 160, backgroundColor: Colors.bgColor_48_49_59 }} />
             <FlowInfo />
             <ListedExchange dataArr={this.state.dataArr} />
           </ScrollView>

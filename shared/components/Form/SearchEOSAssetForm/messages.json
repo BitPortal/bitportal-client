@@ -4,5 +4,8 @@
   },
   "en": {
     "search": "Search all EOS tokens"
-  }
+  },
+  "ko": {
+    "search": "S모든 EOS 토큰 검색"
+   } 
 }

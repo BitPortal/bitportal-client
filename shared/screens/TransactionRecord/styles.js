@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   header: {
     width: SCREEN_WIDTH - 64,
     height: 30,
-    paddingHorizontal: 32,
+    paddingHorizontal: 20,
     borderTopLeftRadius: 6,
     borderTopRightRadius: 6
   },

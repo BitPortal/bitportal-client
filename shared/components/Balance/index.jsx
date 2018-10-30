@@ -9,7 +9,7 @@ const styles = EStyleSheet.create({
     width: '100%',
     height: 70,
     paddingTop: 20,
-    paddingHorizontal: 32,
+    paddingHorizontal: 20,
     backgroundColor: Colors.bgColor_30_31_37
   },
   between: {

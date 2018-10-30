@@ -11,7 +11,7 @@ import styles from './styles'
 
 const ListItem = ({ item, onPress, assetPrice, isAssetHidden }) => (
   <TouchableHighlight underlayColor={Colors.hoverColor} style={styles.listContainer} onPress={() => onPress(item)}>
-    <View style={[styles.listContainer, styles.between, { paddingHorizontal: 32, backgroundColor: Colors.bgColor_30_31_37 }]}>
+    <View style={[styles.listContainer, styles.between, { paddingHorizontal: 20, backgroundColor: Colors.bgColor_30_31_37 }]}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         {<BPImage source={item.get('icon_url') ? { uri: item.get('icon_url') } : (item.get('symbol') === 'EOS' ? Images.EOSIcon : Images.coin_logo_default)} style={styles.image} />}
         <Text style={styles.text24}>{item.get('symbol')}</Text>

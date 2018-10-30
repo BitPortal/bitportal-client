@@ -1,25 +1,22 @@
 import React from 'react'
-import { View, Text, TextInput } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import Colors from 'resources/colors'
 import styles from './styles'
 
-export default ({ label, value }) => (
+export default ({ label, value, copyLabel, onPress }) => (
   <View style={styles.inputContainer}>
     <Text style={styles.label}>{label}</Text>
-    <View style={{ backgroundColor: Colors.mainThemeColor }}>
-      <TextInput
-        editable={false}
-        multiline={true}
-        numberOfLines={4}
-        style={styles.areaInput}
-        autoCorrect={false}
-        autoCapitalize="none"
-        placeholderTextColor={Colors.textColor_107_107_107}
-        underlineColorAndroid="transparent"
-        selectionColor={Colors.textColor_181_181_181}
-        keyboardAppearance={Colors.keyboardTheme}
-        value={value}
-      />
+    <View style={[styles.between]}>
+      <View style={styles.content}>
+        <Text numberOfLines={3} style={[styles.text14, { color: Colors.textColor_white_2 }]}>
+          {value}
+        </Text>
+      </View>
+      <TouchableOpacity onPress={onPress} style={styles.copy}>
+        <Text style={[styles.text14, { textAlign: 'left', color: Colors.textColor_89_185_226 }]}>
+          {copyLabel}
+        </Text>
+      </TouchableOpacity>
     </View>
   </View>
 )

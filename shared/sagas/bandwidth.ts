@@ -48,7 +48,7 @@ function* delegateBandwidthRequested(action: Action<DelegateBandwidthParams>) {
 
     // trace stake
     const traceParams = {
-      userId: null,
+      userId: '',
       walletId: eosAccountName,
       type: 'stake',
       assetType: resource === 'net' ? 'NET' : 'CPU',
@@ -96,7 +96,7 @@ function* undelegateBandwidthRequested(action: Action<UndelegateBandwidthParams>
 
     // trace stake
     const traceParams = {
-      userId: null,
+      userId: '',
       walletId: eosAccountName,
       type: 'unstake',
       assetType: resource === 'net' ? 'NET' : 'CPU',

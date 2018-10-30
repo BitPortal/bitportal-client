@@ -80,13 +80,13 @@ const styles = StyleSheet.create({
   },
   listItem: {
     borderBottomWidth: 1,
-    borderBottomColor: Colors.minorThemeColor,
+    borderBottomColor: Colors.mainThemeColor,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     width: SCREEN_WIDTH,
     height: 70,
-    backgroundColor: Colors.bgColor_30_31_37
+    backgroundColor: Colors.minorThemeColor
   },
   coin: {
     width: WidthPercent(30),
@@ -103,12 +103,12 @@ const styles = StyleSheet.create({
   headerTitle: {
     width: SCREEN_WIDTH,
     height: 30,
-    backgroundColor: Colors.bgColor_30_31_37,
+    backgroundColor: Colors.minorThemeColor,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     borderBottomWidth: 1,
-    borderBottomColor: Colors.minorThemeColor
+    borderBottomColor: Colors.mainThemeColor
   },
   quoteContainer: {
     width: SCREEN_WIDTH,
