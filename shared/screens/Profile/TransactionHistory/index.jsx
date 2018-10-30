@@ -138,7 +138,7 @@ export default class TransationHistory extends Component {
               dataProvider={transferHistory}
               rowRenderer={this.rowRenderer}
               onEndReached={this.loadMore}
-              onEndReachedThreshold={0.5}
+              onEndReachedThreshold={-0.5}
               renderFooter={this.renderFooter}
             />
           </View>

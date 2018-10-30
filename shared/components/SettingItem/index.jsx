@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: SCREEN_WIDTH,
     height: 50,
-    backgroundColor: Colors.bgColor_30_31_37,
+    backgroundColor: Colors.minorThemeColor,
     paddingHorizontal: 20
   },
   center: {

@@ -20,13 +20,13 @@ const styles = StyleSheet.create({
   header: {
     width: SCREEN_WIDTH,
     height: 90,
-    paddingHorizontal: 32,
+    paddingHorizontal: 20,
     backgroundColor: Colors.minorThemeColor,
   },
   info: {
     width: SCREEN_WIDTH,
     minHeight: 80,
-    paddingHorizontal: 32,
+    paddingHorizontal: 20,
     paddingVertical: 20,
     backgroundColor: Colors.minorThemeColor,
   },

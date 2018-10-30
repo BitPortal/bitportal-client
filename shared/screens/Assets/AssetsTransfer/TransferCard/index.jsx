@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   header: {
     width: SCREEN_WIDTH,
     height: 50,
-    paddingHorizontal: 32,
+    paddingHorizontal: 20,
     backgroundColor: Colors.mainThemeColor,
   },
   between: {

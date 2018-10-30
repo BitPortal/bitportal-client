@@ -3,6 +3,7 @@ import { call, put, takeEvery, select } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import { reset } from 'redux-form/immutable'
 import assert from 'assert'
+import SplashScreen from 'react-native-splash-screen'
 import * as actions from 'actions/wallet'
 import { resetBalance, getEOSBalanceRequested, getEOSAssetBalanceListRequested } from 'actions/balance'
 import { resetKey } from 'actions/keystore'
@@ -214,8 +215,10 @@ function* syncWalletRequested() {
       // yield put(getEOSBalanceRequested({ eosAccountName: active.eosAccountName }))
       yield put(getEOSAssetBalanceListRequested({ eosAccountName: active.eosAccountName }))
     }
+    SplashScreen.hide()
   } catch (e) {
     yield put(actions.syncWalletFailed(getErrorMessage(e)))
+    SplashScreen.hide()
   }
 }
 

@@ -20,14 +20,14 @@ const styles = StyleSheet.create({
   content: {
     width: SCREEN_WIDTH,
     minHeight: 300,
-    paddingHorizontal: 32,
+    paddingHorizontal: 20,
     paddingVertical: 20,
     backgroundColor: Colors.bgColor_30_31_37
   },
   keyboard: {
     width: SCREEN_WIDTH,
     height: KEYBOARD_HEIGHT,
-    backgroundColor: Colors.bgColor_30_31_37
+    backgroundColor: Colors.mainThemeColor
   }
 })
 

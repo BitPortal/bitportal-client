@@ -17,10 +17,12 @@ import AssetSearch from 'screens/Assets/AssetSearch'
 import AssetsTransfer from 'screens/Assets/AssetsTransfer'
 import AvailableAssets from 'screens/Assets/AvailableAssets'
 import Backup from 'screens/Account/Backup'
-import AccountOrder from 'screens/Account/AccountOrder'
 import AccountImport from 'screens/Account/AccountImport'
 import AccountSelection from 'screens/Account/AccountSelection'
 import AccountAssistance from 'screens/Account/AccountAssistance'
+import AccountSmartContact from 'screens/Account/AccountSmartContact'
+import AccountAssistanceOrder from 'screens/Account/AccountAssistanceOrder'
+import AccountSmartContactOrder from 'screens/Account/AccountSmartContactOrder'
 import AccountAssistancePayment from 'screens/Account/AccountAssistancePayment'
 import EOSAccountCreation from 'screens/Account/EOSAccountCreation'
 import Discovery from 'screens/Discovery'
@@ -93,10 +95,12 @@ export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.ExportPrivateKey', () => screenComponent(ExportPrivateKey, store))
   Navigation.registerComponent('BitPortal.TransactionHistory', () => screenComponent(TransactionHistory, store))
   Navigation.registerComponent('BitPortal.Backup', () => screenComponent(Backup, store))
-  Navigation.registerComponent('BitPortal.AccountOrder', () => screenComponent(AccountOrder, store))
   Navigation.registerComponent('BitPortal.AccountImport', () => screenComponent(AccountImport, store))
   Navigation.registerComponent('BitPortal.AccountSelection', () => screenComponent(AccountSelection, store))
   Navigation.registerComponent('BitPortal.AccountAssistance', () => screenComponent(AccountAssistance, store))
+  Navigation.registerComponent('BitPortal.AccountSmartContact', () => screenComponent(AccountSmartContact, store))
+  Navigation.registerComponent('BitPortal.AccountAssistanceOrder', () => screenComponent(AccountAssistanceOrder, store))
+  Navigation.registerComponent('BitPortal.AccountSmartContactOrder', () => screenComponent(AccountSmartContactOrder, store))
   Navigation.registerComponent('BitPortal.AccountAssistancePayment', () => screenComponent(AccountAssistancePayment, store))
   Navigation.registerComponent('BitPortal.EOSAccountCreation', () => screenComponent(EOSAccountCreation, store))
   Navigation.registerComponent("BitPortal.TokenPage", () => screenComponent(TokenPage, store));

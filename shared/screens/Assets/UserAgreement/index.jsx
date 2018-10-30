@@ -5,11 +5,12 @@ import Modal from 'react-native-modal'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT } from 'utils/dimens'
-import { Text, View, TouchableOpacity, StyleSheet, TouchableWithoutFeedback } from 'react-native'
+import { Text, View, TouchableOpacity, StyleSheet, WebView, TouchableWithoutFeedback } from 'react-native'
 import messages from 'resources/messages'
 import FastImage from 'react-native-fast-image'
 import Images from 'resources/images'
 import LinearGradientContainer from 'components/LinearGradientContainer'
+import { BITPORTAL_API_TERMS_URL } from 'constants/env'
 
 const styles = StyleSheet.create({
   container: {
@@ -47,8 +48,7 @@ const styles = StyleSheet.create({
   agreement: {
     borderRadius: 5,
     width: '100%',
-    minHeight: 100,
-    padding: 20,
+    height: 300,
     backgroundColor: Colors.bgColor_48_49_59
   },
   close: {
@@ -57,11 +57,12 @@ const styles = StyleSheet.create({
   },
   accept: {
     alignItems: 'center',
-    marginVertical: 20,
+    marginVertical: 5,
     flexDirection: 'row',
   },
   sign: {
     paddingHorizontal: 15,
+    paddingVertical: 15,
     marginLeft: -15,
   },
   image: {
@@ -81,8 +82,8 @@ const styles = StyleSheet.create({
     fontSize: FontScale(14),
     color: Colors.textColor_181_181_181
   },
-  text18: {
-    fontSize: FontScale(18),
+  text16: {
+    fontSize: FontScale(16),
     color: Colors.textColor_255_255_238
   }
 })
@@ -130,21 +131,18 @@ export default class UserAgreement extends Component {
 
                 <View style={[styles.between, { marginBottom: 20 }]}>
                   <Text> {''} </Text>
-                  <Text style={styles.text18}> 服务与隐私条款 </Text>
+                  <Text style={styles.text16}> {messages[locale].assets_tos_popup_label_tos} </Text>
                   <TouchableOpacity onPress={dismissModal} style={styles.close}>
                     <Ionicons name="ios-close" size={28} color={Colors.bgColor_FFFFFF} />
                   </TouchableOpacity>
                 </View>
 
                 <View style={styles.agreement}>
-                  <Text style={[styles.text12, { lineHeight: 17 }]}>
-                    尊敬的用户：{'\n'} {'  '}感谢您选择BitPortal服务。《BitPortal服务协议》（以下简称“本协议”）
-                    由上海帕特里夏网络科技有限公司（以下简称“帕特里夏”或“我们”）和用户（以下简称“您”或“用户”）
-                    签订，本协议在您与帕特里夏之间具有合同上的法律效力。{'\n'} {'  '}帕特里夏在此特别提醒您在使用BitPortal
-                    （以下简称“BitPortal” 或“本软件”）之前，请认真阅读《BitPortal服务协议》及后文提到的相关
-                    协议，尤其是本协议规定的“免责及责任限制”等条款将以加粗的形式体现，确保您充分理解本协议中各条
-                    款，并自主考虑风险。
-                  </Text>
+                  <WebView
+                    source={{ uri: BITPORTAL_API_TERMS_URL }}
+                    javaScriptEnabled={true}
+                    startInLoadingState={true}
+                  />
                 </View>
 
                 <View style={styles.accept}>
@@ -156,7 +154,7 @@ export default class UserAgreement extends Component {
                     }
                   </TouchableOpacity>
                   <Text style={[styles.text14, { marginLeft: -10 }]}>
-                    我已仔细阅读并同意服务条款和隐私政策
+                    {messages[locale].assets_tos_popup_text_agree}
                   </Text>
                 </View>
 
@@ -164,7 +162,7 @@ export default class UserAgreement extends Component {
                   <TouchableWithoutFeedback disabled={!signed} onPress={acceptUserAgreement}>
                     <View style={[styles.btn, styles.center]}>
                       <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>
-                        继续
+                        {messages[locale].assets_tos_popup_button_next}
                       </Text>
                     </View>
                   </TouchableWithoutFeedback>

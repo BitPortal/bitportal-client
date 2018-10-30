@@ -24,7 +24,6 @@ import { eosPriceSelector } from 'selectors/ticker'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import NavigationBar, { CommonTitle, CommonRightButton } from 'components/NavigationBar'
-import SplashScreen from 'react-native-splash-screen'
 import { checkCamera } from 'utils/permissions'
 import { ASSETS_QR, ASSETS_TOKEN_DETAIL, ASSETS_EOS_RESOURCE, ASSETS_ADD_TOKEN } from 'constants/analytics'
 import { onEventWithLabel } from 'utils/analytics'
@@ -94,7 +93,9 @@ export default class Assets extends Component {
         Navigation.push(this.props.componentId, {
           component: {
             name: 'BitPortal.QRCodeScanner',
-            entry: 'assets'
+            passProps: {
+              entry: 'assets'
+            }
           }
         })
       } else {
@@ -161,6 +162,9 @@ export default class Assets extends Component {
       case 'assistance':
         entrance = 'AccountAssistance'
         break;
+      case 'contract':
+        entrance = 'AccountSmartContact'
+        break;
       default:
         break;
     }
@@ -174,12 +178,17 @@ export default class Assets extends Component {
   }
 
   showUserAgreement = async (type) => {
+    const { locale } = this.props
     const eosAccountCreationRequestInfo = await secureStorage.getItem('EOS_ACCOUNT_CREATION_REQUEST_INFO', true)
     if (eosAccountCreationRequestInfo) {
-      const { action } = await Dialog.alert('您有一个未激活成功的账户，是否查看', null, {
-        negativeText: '稍候查看',
-        positiveText: '立即前往'
-      })
+      const { action } = await Dialog.alert(
+        messages[locale].assets_popup_label_pending_create_order,
+        messages[locale].assets_popup_text_pending_create_order,
+        {
+          negativeText: messages[locale].general_popup_button_cancel,
+          positiveText: messages[locale].assets_popup_button_check_order
+        }
+      )
       if (action === Dialog.actionPositive) {
         const componentId = this.props.componentId
         this.props.actions.showAssistanceAccountInfo({ componentId })
@@ -207,14 +216,12 @@ export default class Assets extends Component {
 
   getCurrencyRate = async () => {
     const currency = await storage.getItem('bitportal_currency', true)
-
     if (currency && currency.symbol) {
       this.props.actions.getCurrencyRateRequested({ symbol: currency.symbol })
     }
   }
 
-  componentDidMount() {
-    SplashScreen.hide()
+  componentWillMount() {
     startListenNetInfo(this.props.locale)
     this.props.actions.getVersionInfoRequested()
     this.getCurrencyRate()
@@ -253,32 +260,32 @@ export default class Assets extends Component {
             <View style={styles.scrollContainer}>
               <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 10 }}>
 
-                <GradiantCardContainer containerTag="创建新账户" extraStyle={{ marginTop: 10 }}>
+                <GradiantCardContainer containerTag={messages[locale].assets_label_create_account} extraStyle={{ marginTop: 10 }}>
                   <GradiantCard
-                    title="注册码"
+                    title={messages[locale].assets_label_create_account_registration_code}
                     extraStyle={{ marginBottom: 10 }}
                     onPress={() => this.showUserAgreement('create')}
-                    content="BitPortal 将向部分用户提供注册码进行 EOS 账户注册。您可参加 BitPortal 官方组织的活动获取注册码。"
+                    content={messages[locale].assets_text_create_account_registration_code}
                   />
                   <GradiantCard
-                    title="好友协助"
+                    title={messages[locale].assets_label_create_account_friend_assistance}
                     extraStyle={{ marginBottom: 10 }}
                     onPress={() => this.showUserAgreement('assistance')}
-                    content="好友协助进行注册时，其将消耗一定的 EOS，已购买及抵押部分系统资源。"
+                    content={messages[locale].assets_text_create_account_friend_assistance}
                   />
                   <GradiantCard
-                    title="智能合约"
+                    title={messages[locale].assets_label_create_account_smart_contract}
                     onPress={() => this.showUserAgreement('contract')}
-                    content="好友协助进行注册时，其将消耗一定的 EOS，已购买及抵押部分系统资源。"
+                    content={messages[locale].assets_text_create_account_smart_contract}
                   />
                 </GradiantCardContainer>
 
-                <GradiantCardContainer containerTag="导入已有账户" extraStyle={{ marginTop: 10 }}>
+                <GradiantCardContainer containerTag={messages[locale].assets_label_import_account} extraStyle={{ marginTop: 10 }}>
                   <GradiantCard
-                    title="私钥导入"
+                    title={messages[locale].assets_label_import_account_import_private_key}
                     colors={Colors.gradientCardColors2}
                     onPress={() => this.showUserAgreement('import')}
-                    content="输入已创建的账户私钥，将 EOS 钱包导入到 BitPortal 中。"
+                    content={messages[locale].assets_text_import_account_import_private_key}
                   />
                 </GradiantCardContainer>
 

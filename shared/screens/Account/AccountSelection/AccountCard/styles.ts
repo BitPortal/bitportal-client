@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   paddingStyle: {
-    paddingHorizontal: 32
+    paddingHorizontal: 20
   },
   textRadius: {
     borderRadius: 8,

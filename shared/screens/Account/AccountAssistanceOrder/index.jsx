@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
+import { Text, View, ScrollView, TouchableOpacity, Clipboard } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import QRCode from 'react-native-qrcode-svg'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
@@ -13,10 +13,12 @@ import Colors from 'resources/colors'
 import { bindActionCreators } from 'redux'
 import * as eosAccountActions from 'actions/eosAccount'
 import { BPGradientButton } from 'components/BPNativeComponents'
+import Dialog from 'components/Dialog'
+import Toast from 'components/Toast'
 import InputItem from './InputItem'
 import styles from './styles'
 
-export const errorMessages = (error/* , messages*/) => {
+export const errorMessages = (error, messages) => {
   if (!error) { return null }
 
   const message = typeof error === 'object' ? error.message : error
@@ -24,8 +26,12 @@ export const errorMessages = (error/* , messages*/) => {
   switch (String(message)) {
     // case 'EOS System Error':
     // return 'EOS System Error'
+    case 'Owner public key dose not match!':
+      return messages.add_eos_create_error_account_created
+    case 'Active public key dose not match!':
+      return messages.add_eos_create_error_account_created
     default:
-      return '尚未激活!'
+      return messages.add_eos_create_error_account_inactive
   }
 }
 /*
@@ -49,7 +55,7 @@ export const errorMessages = (error/* , messages*/) => {
   { withRef: true }
 )
 
-export default class AccountOrder extends Component {
+export default class AccountAssistanceOrder extends Component {
   static get options() {
     return {
       bottomTabs: {
@@ -63,9 +69,36 @@ export default class AccountOrder extends Component {
     this.props.actions.checkEOSAccountCreationStatusRequested({ componentId })
   }
 
-  deleteOrder = () => {
-    const componentId = this.props.componentId
-    this.props.actions.cancelEOSAccountAssistanceRequestd({ componentId })
+  deleteOrder = async () => {
+    const { locale } = this.props
+    const { action } = await Dialog.alert(
+      messages[locale].assets_popup_label_delete_order,
+      messages[locale].assets_popup_text_pending_create_order,
+      {
+        negativeText: messages[locale].assets_popup_text_delete_order_cnacel,
+        positiveText: messages[locale].assets_popup_text_delete_order_confirm
+      }
+    )
+    if (action === Dialog.actionPositive) {
+      const componentId = this.props.componentId
+      this.props.actions.cancelEOSAccountAssistanceRequestd({ componentId })
+    } else {
+      return null
+    }
+  }
+
+  copyAccountName = () => {
+    const { eosAccount } = this.props
+    const eosAccountName = eosAccount.getIn(['eosAccountCreationRequestInfo', 'eosAccountName'])
+    Clipboard.setString(eosAccountName)
+    Toast(messages[this.props.locale].copy_text_copy_success)
+  }
+
+  copyPublicKey = () => {
+    const { eosAccount } = this.props
+    const ownerPublicKey = eosAccount.getIn(['eosAccountCreationRequestInfo', 'ownerPublicKey'])
+    Clipboard.setString(ownerPublicKey)
+    Toast(messages[this.props.locale].copy_text_copy_success)
   }
 
   render() {
@@ -82,17 +115,17 @@ export default class AccountOrder extends Component {
         <View style={styles.container}>
           <NavigationBar
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
-            title={messages[locale].add_eos_create_title_create_assistance}
+            title={messages[locale].add_eos_create_friend_assistance_title_friend_assistance}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.contentContainer}>
-                <Text style={styles.text14}>
-                  创建账户需要消耗 EOS，请您找拥有 EOS 余额的可信账户扫描下方二维码帮您支付本次创建的费用。
-                </Text>
                 <LinearGradientContainer type="left" colors={Colors.gradientCardColors3} style={styles.gradient}>
-                  <Text style={styles.text14}>
-                    在注册完成后请仔细核对及时备份您的私钥，以避免被盗风险。
+                  <Text style={[styles.text14, { lineHeight: 20 }]}>
+                    {messages[locale].add_eos_create_friend_assistance_text_tip1}
+                  </Text>
+                  <Text style={[styles.text14, { marginTop: 10, lineHeight: 20 }]}>
+                    {messages[locale].add_eos_create_friend_assistance_text_tip2}
                   </Text>
                 </LinearGradientContainer>
                 <View style={styles.qrCodeContainer}>
@@ -102,18 +135,33 @@ export default class AccountOrder extends Component {
                     color="black"
                   />
                 </View>
-                <InputItem label="账户名称" value={eosAccountName} />
-                <InputItem label="Owner Key" value={ownerPublicKey} />
-                <InputItem label="Active Key" value={activePublicKey} />
+                <InputItem
+                  label={messages[locale].add_eos_create_friend_assistance_label_account}
+                  value={eosAccountName}
+                  copyLabel={messages[locale].copy_button_copy}
+                  onPress={this.copyAccountName}
+                />
+                <InputItem
+                  label={messages[locale].add_eos_create_friend_assistance_label_owner}
+                  value={ownerPublicKey}
+                  copyLabel={messages[locale].copy_button_copy}
+                  onPress={this.copyPublicKey}
+                />
+                <InputItem
+                  label={messages[locale].add_eos_create_friend_assistance_label_active}
+                  value={activePublicKey}
+                  copyLabel={messages[locale].copy_button_copy}
+                  onPress={this.copyPublicKey}
+                />
                 <View style={styles.btnContainer}>
                   <TouchableOpacity onPress={this.deleteOrder} style={styles.btn}>
                     <Text style={styles.text14}>
-                      取消创建
+                      {messages[locale].add_eos_create_smart_contract_button_cancel}
                     </Text>
                   </TouchableOpacity>
                   <BPGradientButton onPress={this.refreshOrderInfo} extraStyle={{ marginLeft: 10 }}>
                     <Text style={styles.text14}>
-                      查询状态
+                      {messages[locale].add_eos_create_smart_contract_button_checkstatus}
                     </Text>
                   </BPGradientButton>
                 </View>

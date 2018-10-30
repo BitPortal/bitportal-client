@@ -22,6 +22,10 @@ interface FieldInfoProps {
   style?: React.CSSProperties
 }
 
+interface FieldErrorProps {
+  tips?: JSX.Element | string
+}
+
 interface TextFieldProps {
   input: {
     onChange(text: string): void
@@ -85,10 +89,11 @@ export const FieldInfo: React.SFC<FieldInfoProps> = ({ children, style }) => (
   <View style={[styles.fieldInfo, style]}>{children}</View>
 )
 
-export const FieldError: React.SFC = ({ children }) => (
+export const FieldError: React.SFC<FieldErrorProps> = ({ children, tips }) => (
   <View>
-    <View style={styles.fieldError}>
+    <View style={[styles.fieldError, { paddingRight: 10 }]}>
       <Text style={styles.text12}>{children}</Text>
+      {tips && <Tips tips={tips} />}
     </View>
     <View style={styles.triangle} />
   </View>

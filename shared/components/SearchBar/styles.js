@@ -1,5 +1,6 @@
 import { StyleSheet, Platform } from 'react-native'
 import Colors from 'resources/colors'
+import { FontScale } from 'utils/dimens'
 
 const styles = StyleSheet.create({
   container: {
@@ -35,12 +36,13 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     width: '100%',
+    height: FontScale(28),
+    flex: 1,
     alignItems: 'center',
     flexDirection: 'column'
   },
   searchFieldInput: {
     borderBottomColor: Colors.textColor_107_107_107,
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 1,
@@ -48,10 +50,10 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     color: Colors.textColor_181_181_181,
-    paddingBottom: 0,
-    paddingTop: 0,
-    flex: 1,
-    height: 40
+    marginTop: Platform.OS === 'ios' ? 0 : 0,
+    paddingTop: Platform.OS === 'ios' ? 0 : -10,
+    width: '100%',
+    height: FontScale(28)
   }
 })
 
