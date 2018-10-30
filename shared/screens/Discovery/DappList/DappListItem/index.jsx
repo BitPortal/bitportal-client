@@ -52,14 +52,8 @@ export default class DappListItem extends React.PureComponent {
   getAlertMessage = (message, params) => {
     const { intl } = this.props
     if (message === 'third_party') {
-      const newMessage = intl.formatMessage(
-        { id: 'discovery_dapp_popup_label_redirect' },
-        { ...params }
-      )
-      const newMessageSub = intl.formatMessage(
-        { id: 'discovery_dapp_popup_text_redirect' },
-        { ...params }
-      )
+      const newMessage = intl.formatMessage({ id: 'discovery_dapp_popup_label_redirect' }, { ...params })
+      const newMessageSub = intl.formatMessage({ id: 'discovery_dapp_popup_text_redirect' }, { ...params })
       this.setState({ message: newMessage, subMessage: newMessageSub })
     } else {
       this.setState({ message })
@@ -136,14 +130,24 @@ export default class DappListItem extends React.PureComponent {
           }}
         >
           <View style={styles.rowContainer}>
-            <BPImage
-              style={styles.image}
-              source={
-                item.get('icon_url')
-                  ? { uri: `${item.get('icon_url')}` }
-                  : Images.coin_logo_default
-              }
-            />
+            <View style={styles.iconWrapper}>
+              <BPImage
+                style={styles.image}
+                source={item.get('icon_url') ? { uri: `${item.get('icon_url')}` } : Images.dapp_logo_default}
+              />
+              {item.get('is_hot') ? (
+                <View style={styles.hotNewWrapper}>
+                  {/* <BPImage style={styles.favoriteStar} source={Images.list_favorite} /> */}
+                  <BPImage style={styles.hotNewTag} source={Images.list_hot} />
+                </View>
+              ) : null}
+              {item.get('is_new') ? (
+                <View style={styles.hotNewWrapper}>
+                  {/* <BPImage style={styles.favoriteStar} source={Images.list_favorite} /> */}
+                  <BPImage style={styles.hotNewTag} source={Images.list_new} />
+                </View>
+              ) : null}
+            </View>
             <View style={styles.right}>
               <Text style={styles.title}>
                 {item.get('display_name').get(locale) || item.get('display_name').get('en')}

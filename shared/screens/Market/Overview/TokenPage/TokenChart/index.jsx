@@ -103,7 +103,7 @@ export default class TokenChart extends Component {
                   chartDescription={CHART_DESCRIPTION}
                   // visibleRange={this.state.visibleRange}
                   dragDecelerationEnabled={true}
-                  dragDecelerationFrictionCoef={0.99}
+                  dragDecelerationFrictionCoef={0.89}
                   ref="chartt"
                   keepPositionOnRotation={false}
                   // onSelect={this.handleSelect.bind(this)}
@@ -150,23 +150,17 @@ class RangeBar extends Component {
     const { range, locale } = this.props
     return (
       <IntlProvider messages={messages[locale]}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            paddingHorizontal: 30,
-            paddingVertical: 10,
-            width: FLOATING_CARD_WIDTH
-          }}
-        >
+        <View style={styles.rangeBar}>
           {RANGES.map(e => (
             <TouchableWithoutFeedback
               key={e}
               onPress={() => {
                 this.changeChartRange(e)
               }}
+
+              // style={styles.rangeButtonWrapper}
             >
-              <View key={e}>
+              <View key={e} style={styles.rangeButtonWrapper}>
                 <Text style={{ color: range === e ? 'rgb(55,128,193)' : 'white', fontSize: 12 }}>
                   <FormattedMessage id={`market_chart_text_${CHART_RANGES[e]}`} />
                 </Text>

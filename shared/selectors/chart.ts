@@ -28,10 +28,10 @@ export const formatChartDatasetSelector = createSelector(
   (chart: any, chartType: any) => {
     const f = chartType === 'histoday' ? 'YYYY-MM-DD' : 'MM-DD-HH:mm'
     values = chart.map((e, i) => ({
-        x: i,
-        y: e.get('close'),
-        marker: `${moment(e.get('time') * 1000).format(f)}\n${e.get('close')}`
-      }))
+      x: i,
+      y: e.get('close'),
+      marker: `${moment(e.get('time') * 1000).format(f)}\n${e.get('close')}`
+    }))
     return {
       dataSets: [
         {
@@ -64,7 +64,7 @@ export const formatChartDatasetSelector = createSelector(
 )
 
 export const yAxisSelector = createSelector(formatChartLengthSelector, (chart: any) => {
-  const axisMaximum = Math.max(...chart.map(e => e.get('close')))
+  const axisMaximum = Math.max(...chart.map(e => e.get('close'))) * 1.01
   return {
     left: {
       drawGridLines: true,

@@ -39,6 +39,16 @@ const styles = StyleSheet.create({
     // marginVertical: 20,
     backgroundColor: Colors.bgColor_30_31_37
   },
+  rangeBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 30,
+    paddingVertical: 4,
+    width: FLOATING_CARD_WIDTH
+  },
+  rangeButtonWrapper: {
+    padding: 6
+  },
   spaceBetween: {
     alignItems: 'center',
     justifyContent: 'space-between',
