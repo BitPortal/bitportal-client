@@ -89,17 +89,19 @@ const styles = StyleSheet.create({
     locale: state.intl.get('locale'),
     isAssetHidden: state.eosAccount.get('isAssetHidden'),
     backupCompleted: state.eosAccount.getIn(['eosAccountCreationInfo', 'backup']),
-    isNew: !!state.eosAccount.getIn(['eosAccountCreationInfo', 'eosAccountName']),
+    isNew: !!state.eosAccount.getIn(['eosAccountCreationInfo', 'eosAccountName'])
   }),
   dispatch => ({
-    actions: bindActionCreators({
-      ...eosAccountActions
-    }, dispatch)
+    actions: bindActionCreators(
+      {
+        ...eosAccountActions
+      },
+      dispatch
+    )
   }),
   null,
   { withRef: true }
 )
-
 export default class TotalAssetsCard extends Component {
   async componentWillMount() {
     const store1 = await storage.getItem('bitportal.hiddenTotalAssets', true)
@@ -114,7 +116,11 @@ export default class TotalAssetsCard extends Component {
 
   extraColor = (available, limit) => {
     const colorObj = { color: Colors.textColor_255_76_118 }
-    if (available && limit) { return available / limit < 0.1 ? colorObj : {} } else { return {} }
+    if (available && limit) {
+      return available / limit < 0.1 ? colorObj : {}
+    } else {
+      return {}
+    }
   }
 
   switchDisplayTotal = async () => {
@@ -124,44 +130,62 @@ export default class TotalAssetsCard extends Component {
   }
 
   render() {
-    const { isAssetHidden, backupCompleted, isNew, totalAssets, CPUInfo, NETInfo, RAMQuota, RAMUsage, accountName, disabled, locale, onPress } = this.props
+    const {
+      isAssetHidden,
+      backupCompleted,
+      isNew,
+      totalAssets,
+      CPUInfo,
+      NETInfo,
+      RAMQuota,
+      RAMUsage,
+      accountName,
+      disabled,
+      locale,
+      onPress
+    } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={{ alignItems: 'center', backgroundColor: Colors.minorThemeColor, paddingVertical: 15 }}>
-          <LinearGradientContainer type="right" style={[styles.linearContainer, { marginHorizontal: 32, marginTop: 10 }]}>
-            <TouchableWithoutFeedback disabled={disabled} style={styles.linearContainer} underlayColor={Colors.linearUnderlayColor} onPress={onPress}>
+          <LinearGradientContainer
+            type="right"
+            style={[styles.linearContainer, { marginHorizontal: 32, marginTop: 10 }]}
+          >
+            <TouchableWithoutFeedback
+              disabled={disabled}
+              style={styles.linearContainer}
+              underlayColor={Colors.linearUnderlayColor}
+              onPress={onPress}
+            >
               <View style={[styles.linearContainer, styles.paddingStyle]}>
                 <View style={styles.between}>
-                  <Text style={styles.text15}><FormattedMessage id="assets_label_total_assets" /></Text>
-                  {
-                    (isNew && !backupCompleted)
-                    && <View style={styles.textRadius}>
-                      <Text style={[styles.text12, { color: Colors.textColor_89_185_226 }]}>
-                        <FormattedMessage id="assets_label_private_key_no_backup" />
-                      </Text>
-                    </View>
-                  }
+                  <Text style={styles.text15}>
+                    <FormattedMessage id="assets_label_total_assets" />
+                  </Text>
+                  {isNew &&
+                    !backupCompleted && (
+                      <View style={styles.textRadius}>
+                        <Text style={[styles.text12, { color: Colors.textColor_89_185_226 }]}>
+                          <FormattedMessage id="assets_label_private_key_no_backup" />
+                        </Text>
+                      </View>
+                    )}
                 </View>
                 <View style={styles.between}>
-                  {
-                    isAssetHidden
-                      ? <Text style={styles.text24}>******</Text>
-                      : <Text style={styles.text24}>
-                      ≈
-                        <CurrencyText
-                          value={totalAssets}
-                          maximumFractionDigits={2}
-                          minimumFractionDigits={2}
-                        />
-                      </Text>
-                  }
+                  {isAssetHidden ? (
+                    <Text style={styles.text24}>******</Text>
+                  ) : (
+                    <Text style={styles.text24}>
+                      ≈<CurrencyText value={totalAssets} maximumFractionDigits={2} minimumFractionDigits={2} />
+                    </Text>
+                  )}
                   <TouchableOpacity style={[styles.center, styles.btn]} onPress={this.switchDisplayTotal}>
-                    {
-                      isAssetHidden
-                        ? <BPImage source={Images.eyes_close} style={styles.image} />
-                        : <BPImage source={Images.eyes_open} style={styles.image} />
-                    }
+                    {isAssetHidden ? (
+                      <BPImage source={Images.eyes_close} style={styles.image} />
+                    ) : (
+                      <BPImage source={Images.eyes_open} style={styles.image} />
+                    )}
                   </TouchableOpacity>
                 </View>
                 <View style={styles.between}>
@@ -175,22 +199,45 @@ export default class TotalAssetsCard extends Component {
             <View style={{ alignItems: 'center' }}>
               <View style={[styles.resourcesContainer, styles.between, { paddingVertical: 15 }]}>
                 <View style={styles.center}>
-                  <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>CPU</Text>
-                  <Text onPress={this.checkResources} style={[styles.text12, this.extraColor(CPUInfo.get('available'), CPUInfo.get('max')), { paddingHorizontal: 2 }]}>
+                  <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>
+                    CPU
+                  </Text>
+                  <Text
+                    onPress={this.checkResources}
+                    style={[
+                      styles.text12,
+                      this.extraColor(CPUInfo.get('available'), CPUInfo.get('max')),
+                      { paddingHorizontal: 2 }
+                    ]}
+                  >
                     {formatCycleTime(CPUInfo.get('available'))}
                   </Text>
                 </View>
                 <View style={styles.divider} />
                 <View style={styles.center}>
-                  <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>NET</Text>
-                  <Text onPress={this.checkResources} style={[styles.text12, this.extraColor(NETInfo.get('available'), NETInfo.get('max')), { paddingHorizontal: 2 }]}>
+                  <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>
+                    NET
+                  </Text>
+                  <Text
+                    onPress={this.checkResources}
+                    style={[
+                      styles.text12,
+                      this.extraColor(NETInfo.get('available'), NETInfo.get('max')),
+                      { paddingHorizontal: 2 }
+                    ]}
+                  >
                     {formatMemorySize(NETInfo.get('available'))}
                   </Text>
                 </View>
                 <View style={styles.divider} />
                 <View style={styles.center}>
-                  <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>RAM</Text>
-                  <Text onPress={this.checkResources} style={[styles.text12, this.extraColor(RAMQuota - RAMUsage, RAMQuota), { paddingHorizontal: 2 }]}>
+                  <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>
+                    RAM
+                  </Text>
+                  <Text
+                    onPress={this.checkResources}
+                    style={[styles.text12, this.extraColor(RAMQuota - RAMUsage, RAMQuota), { paddingHorizontal: 2 }]}
+                  >
                     {formatMemorySize(RAMQuota - RAMUsage)}
                   </Text>
                 </View>

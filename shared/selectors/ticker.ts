@@ -9,11 +9,11 @@ const baseAssetSelector = (state: RootState) => state.ticker.get('baseAsset')
 const searchTermSelector = (state: RootState) => state.ticker.get('searchTerm')
 
 export const eosPriceSelector = (state: RootState) =>
-  state.ticker.get('dataSource').get('OKEX_SPOT_EOS_USDT')
+  state.ticker.get('dataSource').get('EOS')
     ? state.ticker
         .get('dataSource')
-        .get('OKEX_SPOT_EOS_USDT')
-        .get('price_last')
+        .get('EOS')
+        .get('price_usd')
     : 0
 
 export const sortFilterSelector = createSelector(

@@ -2,17 +2,14 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import Colors from 'resources/colors'
 import { FontScale } from 'utils/dimens'
 import { Platform, StyleSheet } from 'react-native'
+import { FontScale, FLOATING_CARD_WIDTH, FLOATING_CARD_BORDER_RADIUS } from 'utils/dimens'
 
 export default EStyleSheet.create({
   formContainer: {
     flex: 1,
-    width: '100% - 30',
-    marginHorizontal: 15,
-    marginVertical: 10,
+    width: '100%',
     paddingHorizontal: 20,
     paddingVertical: 20,
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
     alignItems: 'center',
     flexDirection: 'column',
     backgroundColor: Colors.minorThemeColor
@@ -107,7 +104,7 @@ export default EStyleSheet.create({
   submitButtonText: {
     color: 'white',
     textAlign: 'center',
-    fontSize: FontScale(14) 
+    fontSize: FontScale(14)
   },
   buttonText: {
     color: Colors.textColor_89_185_226,
@@ -134,7 +131,7 @@ export default EStyleSheet.create({
     borderRightColor: 'transparent',
     borderTopColor: Colors.bgColor_239_47_95,
     marginBottom: 4,
-    marginLeft: '90%',
+    marginLeft: '90%'
   },
   errorBorder: {
     borderWidth: StyleSheet.hairlineWidth,
