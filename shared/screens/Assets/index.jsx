@@ -93,7 +93,9 @@ export default class Assets extends Component {
         Navigation.push(this.props.componentId, {
           component: {
             name: 'BitPortal.QRCodeScanner',
-            entry: 'assets'
+            passProps: {
+              entry: 'assets'
+            }
           }
         })
       } else {
