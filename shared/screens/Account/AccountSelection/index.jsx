@@ -64,8 +64,8 @@ export default class AccountSelection extends Component {
   showHint = () => {
     const { locale } = this.props
     Dialog.alert(
-      messages[locale].general_popup_label_tips, 
-      messages[locale].add_eos_hint_popup_text_private_key, 
+      messages[locale].general_popup_label_tips,
+      messages[locale].add_eos_hint_popup_text_private_key,
       { positiveText: messages[locale].general_popup_button_close }
     )
   }
