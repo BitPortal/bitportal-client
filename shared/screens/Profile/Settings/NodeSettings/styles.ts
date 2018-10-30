@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   btnContainer: {
     width: SCREEN_WIDTH,
     height: TAB_BAR_HEIGHT,
-    paddingHorizontal: 32,
+    paddingHorizontal: 20,
     backgroundColor: Colors.mainThemeColor,
     ...ifIphoneX({
       paddingBottom: 34

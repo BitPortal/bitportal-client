@@ -71,7 +71,7 @@ export default class Languages extends Component {
                 onPress={this.switchLanguage.bind(this, 'zh')}
               />
               <SettingItem
-                leftItemTitle="韩文"
+                leftItemTitle="한국어"
                 iconColor={Colors.bgColor_0_122_255}
                 rightItemTitle={locale === 'ko' ? null : ' '}
                 rightImageName={locale === 'ko' && 'md-checkmark'}

@@ -15,7 +15,7 @@ import NavigationBar, {
   LinkingRightButton,
   WebViewLeftButton
 } from 'components/NavigationBar'
-import { FormattedMessage, IntlProvider } from 'react-intl'
+import { IntlProvider } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
 import messages from 'resources/messages'
 import styles from './styles'
@@ -105,7 +105,7 @@ export default class BPWebView extends Component {
     return (
       <View style={[styles.center, styles.content]}>
         <Text style={styles.text18}>
-          <FormattedMessage id="webview_error_text_load_failed" />
+          {messages[this.props.locale].webview_error_text_load_failed}
         </Text>
       </View>
     )

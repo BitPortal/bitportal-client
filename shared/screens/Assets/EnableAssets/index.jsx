@@ -17,7 +17,7 @@ export default class EnableAssets extends Component {
         style={[
           styles.addAssetsContainer,
           styles.between,
-          { paddingHorizontal: 32, backgroundColor: Colors.minorThemeColor }
+          { paddingHorizontal: 20, backgroundColor: Colors.minorThemeColor }
         ]}
       >
         <View

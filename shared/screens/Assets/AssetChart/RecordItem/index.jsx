@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: 70,
     backgroundColor: Colors.bgColor_30_31_37,
-    borderBottomColor: Colors.minorThemeColor,
+    borderBottomColor: Colors.mainThemeColor,
     borderBottomWidth: StyleSheet.hairlineWidth
   },
   between: {
@@ -75,7 +75,7 @@ export default ({ item, onPress, eosAccountName }) => {
       underlayColor={Colors.hoverColor}
       onPress={() => onPress(item)}
     >
-      <View style={[styles.container, styles.between, { paddingHorizontal: 32 }]}>
+      <View style={[styles.container, styles.between, { paddingHorizontal: 20 }]}>
         <View style={{ alignItems: 'center', flexDirection: 'row' }}>
           <GradientIcon isReceiver={isReceiver} />
           <View style={{ marginLeft: 10 }}>

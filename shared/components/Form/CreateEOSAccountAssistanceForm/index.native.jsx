@@ -24,7 +24,7 @@ export const errorMessages = (error, messages) => {
     case 'Account name already exists':
       return messages.add_eos_create_error_popup_text_account_name_exist
     default:
-      return messages.resource_error_popup_text_eos_system_error
+      return null
   }
 }
 

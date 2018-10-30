@@ -45,6 +45,7 @@ function* transfer(action: Action<TransferParams>) {
     // trace transaction
     const traceParams = {
       amount,
+      memo,
       userId: '',
       walletId: fromAccount,
       assetType: symbol,

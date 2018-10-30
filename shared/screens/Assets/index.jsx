@@ -24,7 +24,6 @@ import { eosPriceSelector } from 'selectors/ticker'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import NavigationBar, { CommonTitle, CommonRightButton } from 'components/NavigationBar'
-import SplashScreen from 'react-native-splash-screen'
 import { checkCamera } from 'utils/permissions'
 import { ASSETS_QR, ASSETS_TOKEN_DETAIL, ASSETS_EOS_RESOURCE, ASSETS_ADD_TOKEN } from 'constants/analytics'
 import { onEventWithLabel } from 'utils/analytics'
@@ -94,7 +93,9 @@ export default class Assets extends Component {
         Navigation.push(this.props.componentId, {
           component: {
             name: 'BitPortal.QRCodeScanner',
-            entry: 'assets'
+            passProps: {
+              entry: 'assets'
+            }
           }
         })
       } else {
@@ -215,14 +216,12 @@ export default class Assets extends Component {
 
   getCurrencyRate = async () => {
     const currency = await storage.getItem('bitportal_currency', true)
-
     if (currency && currency.symbol) {
       this.props.actions.getCurrencyRateRequested({ symbol: currency.symbol })
     }
   }
 
-  componentDidMount() {
-    SplashScreen.hide()
+  componentWillMount() {
     startListenNetInfo(this.props.locale)
     this.props.actions.getVersionInfoRequested()
     this.getCurrencyRate()

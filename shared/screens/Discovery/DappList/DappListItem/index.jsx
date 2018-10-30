@@ -98,7 +98,7 @@ export default class DappListItem extends React.PureComponent {
         name: 'BitPortal.DappWebView',
         passProps: {
           uri: item.get('url'),
-          title: item.get('display_name').get(this.props.locale),
+          title: item.get('display_name').get(this.props.locale) || item.get('display_name').get('en'),
           inject
         }
       }
@@ -111,7 +111,7 @@ export default class DappListItem extends React.PureComponent {
       this.getAlertMessage(messages[locale].no_login, false)
     } else if (item.get('type') === 'link' && item.get('url').match(/http/g)) {
       this.getAlertMessage('third_party', {
-        app: item.get('display_name').get(locale)
+        app: item.get('display_name').get(locale) || item.get('display_name').get('en')
       })
       this.setAlertAction('toUrl')
     } else {
@@ -149,10 +149,12 @@ export default class DappListItem extends React.PureComponent {
               ) : null}
             </View>
             <View style={styles.right}>
-              <Text style={styles.title}>{item.get('display_name').get(locale)}</Text>
+              <Text style={styles.title}>
+                {item.get('display_name').get(locale) || item.get('display_name').get('en')}
+              </Text>
               <View style={styles.infoArea}>
                 <Text numberOfLines={3} style={styles.subTitle}>
-                  {item.get('description').get(locale)}
+                  {item.get('description').get(locale) || item.get('description').get('en')}
                 </Text>
               </View>
             </View>

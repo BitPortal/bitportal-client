@@ -97,9 +97,7 @@ export default class SearchBar extends Component {
   }
 
   toggleExpanded = () => {
-    this.setState(prevState => ({
-      expanded: !prevState.expanded
-    }))
+    this.setState(prevState => ({ expanded: !prevState.expanded }))
   }
 
   hide = () => {
@@ -111,7 +109,6 @@ export default class SearchBar extends Component {
   }
 
   clearSearch = () => {
-    console.log('clearSearch', this.textInput)
     this.props.clearSearch()
     Keyboard.dismiss()
     this.textInput.getRenderedComponent().searchInput.clear()
@@ -198,7 +195,7 @@ export default class SearchBar extends Component {
     })
     const searchBoxColor = this.state.searchBoxColor.interpolate({
       inputRange: [0, 1],
-      outputRange: [Colors.minorThemeColor, 'rgb(0,0,0)']
+      outputRange: [Colors.mainThemeColor, 'rgb(0,0,0)']
     })
     const wrapperColor = this.state.wrapperColor.interpolate({
       inputRange: [0, 1],
@@ -213,31 +210,15 @@ export default class SearchBar extends Component {
 
     return (
       <IntlProvider messages={messages[locale]}>
-        <Animated.View
-          style={[
-            styles.container,
-            {
-              width: containerWidth
-            }
-          ]}
-        >
-          <Animated.View
-            style={[
-              styles.searchWrapper,
-              {
-                backgroundColor: wrapperColor
-              }
-            ]}
-          >
+        <Animated.View style={[styles.container, { width: containerWidth }]}>
+          <Animated.View style={[styles.searchWrapper, { backgroundColor: wrapperColor }]}>
             <Animated.View style={{ opacity }}>
-              <TouchableOpacity
+              <TouchableOpacity style={{ paddingHorizontal: 20 }}
                 onPress={() => {
-                  console.log('this.textInput', this.textInput)
                   this.toggleExpanded()
                   this.clearSearch()
                   this.animate()
                 }}
-                style={{ paddingHorizontal: 20 }}
               >
                 <Ionicons
                   name="md-arrow-back"
@@ -248,24 +229,21 @@ export default class SearchBar extends Component {
             </Animated.View>
 
             <Animated.View
-              style={[
-                styles.searchBox,
-                styleProps,
-                {
-                  width: translateX,
-                  backgroundColor: searchBoxColor,
-                  borderColor: searchBoxColor
-                }
+              style={[styles.searchBox, styleProps, {
+                width: translateX,
+                backgroundColor: searchBoxColor,
+                borderColor: searchBoxColor
+              }
               ]}
             >
               <Ionicons
                 name="ios-search"
+                size={24}
+                color={Colors.textColor_181_181_181}
                 onPress={() => {
                   this.toggleExpanded()
                   this.animate()
                 }}
-                size={24}
-                color={Colors.textColor_181_181_181}
                 style={{
                   paddingHorizontal: 10,
                   paddingRight: 10,
@@ -273,12 +251,7 @@ export default class SearchBar extends Component {
                 }}
               />
               <Text>{'  '}</Text>
-              <Animated.View
-                style={{
-                  flex: 1,
-                  opacity
-                }}
-              >
+              <Animated.View style={{ flex: 1, opacity }}>
                 {/* <TextInput
                   ref={(input) => {
                     this.textInput = input
@@ -298,14 +271,10 @@ export default class SearchBar extends Component {
                     name="searchField"
                     component={SearchField}
                     onChange={text => this.props.onChangeText(text)}
-                    placeholder={
-                      Platform.OS === 'ios' ? messages[locale].search : null
-                    }
+                    placeholder={Platform.OS === 'ios' ? messages[locale].search : null}
                     placeholderTextColor={Colors.textColor_181_181_181}
                     numberOfLines={1}
-                    ref={(input) => {
-                      this.textInput = input
-                    }}
+                    ref={(input) => { this.textInput = input }}
                     withRef
                   />
                 </SearchContainer>

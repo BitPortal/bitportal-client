@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     height: 8,
     borderRadius: 1,
     margin: 3,
-    backgroundColor: Colors.bgColor_59_59_59
+    backgroundColor: Colors.bgColor_48_49_59
   },
   activeDot: {
     width: 8,

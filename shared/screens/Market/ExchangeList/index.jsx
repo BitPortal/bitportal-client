@@ -18,7 +18,7 @@ const ListItem = ({ exchange, onPress, active }) => (
     onPress={() => onPress(exchange)}
   >
     <View
-      style={[styles.listContainer, styles.between, { paddingHorizontal: 32 }]}
+      style={[styles.listContainer, styles.between, { paddingHorizontal: 20 }]}
     >
       <Text style={styles.text16}>{EXCHANGE_NAMES[exchange]}</Text>
       {active && (

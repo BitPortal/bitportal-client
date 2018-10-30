@@ -33,7 +33,7 @@ export default class Contacts extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={[styles.intro, { marginTop: 10 }]}>
           <TouchableHighlight underlayColor={Colors.hoverColor} onPress={this.hidden} style={styles.introTitle}>
-            <View style={[styles.introTitle, styles.between, { paddingHorizontal: 32 }]}>
+            <View style={[styles.introTitle, styles.between, { paddingHorizontal: 20 }]}>
               <Text style={[styles.text16, { color: Colors.textColor_89_185_226 }]}>
                 <FormattedMessage id="bp_info_label_social_media" />
               </Text>
