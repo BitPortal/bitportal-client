@@ -22,7 +22,6 @@ import styles from './styles'
 export default class TokenDetails extends Component {
   render() {
     const { locale, token, loading } = this.props
-    console.log('tokendetails', token, token.keySeq())
     return loading ? (
       <View>
         <DetailPanel>

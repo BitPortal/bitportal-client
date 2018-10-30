@@ -26,7 +26,6 @@ export default class SystemResources extends React.Component {
   // </View>
 
   renderIndicator = props => {
-    console.log('renderIndicator', props)
     const { position, navigationState } = props
     const width = FLOATING_CARD_WIDTH / 3
     const translateX = Animated.multiply(

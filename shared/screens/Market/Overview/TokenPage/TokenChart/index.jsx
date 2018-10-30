@@ -107,7 +107,7 @@ export default class TokenChart extends Component {
                   ref="chartt"
                   keepPositionOnRotation={false}
                   // onSelect={this.handleSelect.bind(this)}
-                  onChange={event => console.log(event.nativeEvent)}
+                  onChange={event => {}}
                   viewPortOffsets={{ left: 0, top: 10, right: 0, bottom: 5 }}
                 />
               )}

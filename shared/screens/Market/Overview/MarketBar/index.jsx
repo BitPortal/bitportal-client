@@ -119,7 +119,7 @@ class MarketBar extends Component {
             >
               <Text style={[styles.text14, {}]}>
                 {messages[locale].market_label_price}
-                {'  '}
+                {' ($) '}
               </Text>
               <View style={{ flexDirection: 'column' }}>
                 <View style={{ marginVertical: -6 }}>
@@ -159,10 +159,7 @@ class MarketBar extends Component {
                 }
               ]}
             >
-              <Text style={[styles.text14]}>
-                {messages[locale].market_label_change}
-                {'  '}
-              </Text>
+              <Text style={[styles.text14]}>{messages[locale].market_label_change} </Text>
               <View style={{ flexDirection: 'column' }}>
                 <View style={{ marginVertical: -6 }}>
                   <Ionicons

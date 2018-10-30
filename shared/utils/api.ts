@@ -94,8 +94,7 @@ const marketFetchBase = (
 ) =>
   fetchBase(method, endPoint, params, {
     ...options,
-
-    baseUrl: Platform.OS === 'ios' ? 'http://localhost:4041/api/v2' : 'http://10.0.2.2:4041/api/v2'
+    baseUrl: 'http://market.corp.bitportal.io/api/v2'
   })
 
 const traceFetchBase = (

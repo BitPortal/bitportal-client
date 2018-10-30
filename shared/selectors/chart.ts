@@ -2,6 +2,7 @@ import { createSelector } from 'reselect'
 import { CHART_RANGES, TIME_CONSTRAINT } from 'constants/chart'
 import { processColor } from 'react-native'
 import moment from 'moment'
+import console = require('console')
 
 const chartRangeSelector = (state: RootState) => state.chart.get('range')
 const chartTypeSelector = (state: RootState) => state.chart.get('chartType')
@@ -17,7 +18,6 @@ export const formatChartLengthSelector = createSelector(
   (range: any, data: any) => {
     const time = new Date()
     const result = data.filter(e => (e.get('time') * 1000 >= time - TIME_CONSTRAINT[range] ? e : null)).reverse()
-    console.log('yoo', data, range, result)
     return result.size > 9 ? result : []
   }
 )
@@ -64,7 +64,8 @@ export const formatChartDatasetSelector = createSelector(
 )
 
 export const yAxisSelector = createSelector(formatChartLengthSelector, (chart: any) => {
-  const axisMaximum = Math.max(...chart.map(e => e.get('close'))) * 1.01
+  const axisMaximum = Math.max(chart.map(e => e.get('close'))) * 1.01
+
   return {
     left: {
       drawGridLines: true,

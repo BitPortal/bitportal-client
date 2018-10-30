@@ -16,10 +16,7 @@ function* getChart(action: Action<ChartParams>) {
 
 function* changeChartRange(action: Action<string>) {
   const chartType = yield select((state: RootState) => state.chart.get('chartType'))
-  const symbol = yield select((state: RootState) => {
-    console.log('changeChartRange', state.ticker.toJS())
-    return state.ticker.get('currentSymbol')
-  })
+  const symbol = yield select((state: RootState) => state.ticker.get('currentSymbol'))
 
   yield put(actions.getChartRequested({ symbol, chartType }))
 }

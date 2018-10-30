@@ -5,7 +5,6 @@ import SystemResources from 'screens/Market/SystemResources'
 
 class MarketContent extends Component {
   render() {
-    console.log('marketContent', this.props.componentId)
     const { category } = this.props
     if (category === 'OVERVIEW') return <Overview componentId={this.props.componentId} />
     else if (category === 'DEXLIZE') return <Dexlize />

@@ -66,11 +66,7 @@ export const eosAssetBalanceSelector = createSelector(
 export const eosTotalAssetBalanceSelector = createSelector(
   eosBalanceInfoSelector,
   eosPriceSelector,
-  (eosBalance: any, eosPrice: any) => {
-    console.log('eosss', eosBalance, eosPrice)
-
-    return eosBalance && eosPrice ? +eosBalance.get('balance') * +eosPrice : 0
-  }
+  (eosBalance: any, eosPrice: any) => (eosBalance && eosPrice ? +eosBalance.get('balance') * +eosPrice : 0)
 )
 
 export const activeAssetBalanceSelector = createSelector(

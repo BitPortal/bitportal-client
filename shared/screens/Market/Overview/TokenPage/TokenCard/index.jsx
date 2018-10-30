@@ -39,7 +39,6 @@ const Tag = props => (
 export default class TokenCard extends Component {
   render() {
     const { token, ticker, locale } = this.props
-    console.log('TokenCard', this.props, token.size === 0)
     const tags = token.get('tags')
 
     return (

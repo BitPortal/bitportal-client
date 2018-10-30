@@ -40,7 +40,6 @@ class ListItem extends Component {
   render() {
     const { locale, item, index, itemExtraStyle, onPress } = this.props
     const price_usd = item.get('price_usd')
-    console.log('itemm', item.toJS())
     return (
       <TouchableHighlight key={index} underlayColor={Colors.hoverColor} onPress={() => onPress(item)}>
         <View style={[styles.listItem, { ...itemExtraStyle }]}>
@@ -169,8 +168,7 @@ export default class MarketList extends Component {
   }
 
   render() {
-    const { data, ticker, loading, onPress } = this.props
-    console.log('marketlist', ticker)
+    const { ticker, loading, onPress } = this.props
     return (
       <View style={styles.scrollContainer}>
         <VirtualizedList

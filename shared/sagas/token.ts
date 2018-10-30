@@ -4,7 +4,6 @@ import * as api from 'utils/api'
 import * as actions from 'actions/token'
 
 function* getTokenDetail(action: Action<TokenParams>) {
-  console.log('in TokenDetail saga')
   if (!action.payload) return
 
   try {
