@@ -174,6 +174,8 @@ export default class Market extends Component {
               activeCategory={marketCategory}
               changeCategory={this.changeCategory}
               dismissModal={this.closeExchangeList}
+              locale={this.props.locale}
+              messages={messages}
             />
           </Modal>
         </View>

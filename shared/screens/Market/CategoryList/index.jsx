@@ -2,6 +2,8 @@ import React from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Text, View, ScrollView, TouchableOpacity, TouchableHighlight } from 'react-native'
 import Colors from 'resources/colors'
+import Dialog from 'components/Dialog'
+
 import { MARKET_CATEGORY_NAMES } from 'constants/market'
 import styles from './styles'
 
@@ -21,11 +23,14 @@ const ListItem = ({ category, onPress, active, loginRequired, loggedIn }) => (
 )
 /* eslint-disable */
 
-const CategoryList = ({ dismissModal, activeCategory, categoryList, changeCategory, loggedIn }) => {
+const CategoryList = ({ dismissModal, activeCategory, categoryList, changeCategory, loggedIn, locale, messages }) => {
   handleOnPressLogic = category => {
     if ((category.login_required && loggedIn) || !category.login_required) {
       return changeCategory(category.name)
-    } else return
+    } else
+      return Dialog.alert(messages[locale].general_error_popup_text_no_account, null, {
+        negativeText: messages[locale].general_popup_button_close
+      })
   }
   /* eslint-enable */
 
