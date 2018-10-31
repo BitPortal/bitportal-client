@@ -1,0 +1,1514 @@
+{
+  "$PAC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/$pac.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/$pac.png" }
+  },
+  "ABT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/abt.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/abt.png" }
+  },
+  "ACT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/act.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/act.png" }
+  },
+  "ACTN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/actn.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/actn.png" }
+  },
+  "ADA": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ada.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ada.png" }
+  },
+  "ADX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/adx.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/adx.png" }
+  },
+  "AE": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ae.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ae.png" }
+  },
+  "AEON": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/aeon.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/aeon.png" }
+  },
+  "AGI": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/agi.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/agi.png" }
+  },
+  "AGRS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/agrs.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/agrs.png" }
+  },
+  "AION": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/aion.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/aion.png" }
+  },
+  "AMB": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/amb.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/amb.png" }
+  },
+  "AMP": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/amp.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/amp.png" }
+  },
+  "ANT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ant.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ant.png" }
+  },
+  "APEX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/apex.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/apex.png" }
+  },
+  "APPC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/appc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/appc.png" }
+  },
+  "ARDR": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ardr.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ardr.png" }
+  },
+  "ARG": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/arg.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/arg.png" }
+  },
+  "ARK": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ark.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ark.png" }
+  },
+  "ARN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/arn.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/arn.png" }
+  },
+  "ARY": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ary.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ary.png" }
+  },
+  "AST": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ast.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ast.png" }
+  },
+  "ATM": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/atm.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/atm.png" }
+  },
+  "AUTO": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/auto.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/auto.png" }
+  },
+  "BAT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/bat.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/bat.png" }
+  },
+  "BAY": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/bay.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/bay.png" }
+  },
+  "BCBC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/bcbc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/bcbc.png" }
+  },
+  "BCC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/bcc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/bcc.png" }
+  },
+  "BCD": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/bcd.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/bcd.png" }
+  },
+  "BCH": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/bch.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/bch.png" }
+  },
+  "BCN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/bcn.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/bcn.png" }
+  },
+  "BCO": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/bco.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/bco.png" }
+  },
+  "BCPT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/bcpt.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/bcpt.png" }
+  },
+  "BDL": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/bdl.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/bdl.png" }
+  },
+  "BELA": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/bela.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/bela.png" }
+  },
+  "BIX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/bix.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/bix.png" }
+  },
+  "BLCN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/blcn.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/blcn.png" }
+  },
+  "BLK": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/blk.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/blk.png" }
+  },
+  "BLOCK": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/block.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/block.png" }
+  },
+  "BLZ": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/blz.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/blz.png" }
+  },
+  "BNB": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/bnb.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/bnb.png" }
+  },
+  "BNT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/bnt.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/bnt.png" }
+  },
+  "BNTY": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/bnty.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/bnty.png" }
+  },
+  "BOS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/bos.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/bos.png" }
+  },
+  "BPT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/bpt.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/bpt.png" }
+  },
+  "BQ": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/bq.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/bq.png" }
+  },
+  "BRD": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/brd.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/brd.png" }
+  },
+  "BSD": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/bsd.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/bsd.png" }
+  },
+  "BTC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/btc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/btc.png" }
+  },
+  "BTCD": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/btcd.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/btcd.png" }
+  },
+  "BTCP": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/btcp.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/btcp.png" }
+  },
+  "BTCZ": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/btcz.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/btcz.png" }
+  },
+  "BTDX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/btdx.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/btdx.png" }
+  },
+  "BTG": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/btg.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/btg.png" }
+  },
+  "BTM": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/btm.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/btm.png" }
+  },
+  "BTS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/bts.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/bts.png" }
+  },
+  "BTX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/btx.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/btx.png" }
+  },
+  "BURST": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/burst.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/burst.png" }
+  },
+  "CALL": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/call.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/call.png" }
+  },
+  "CDN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/cdn.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/cdn.png" }
+  },
+  "CDT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/cdt.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/cdt.png" }
+  },
+  "CENZ": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/cenz.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/cenz.png" }
+  },
+  "CHAT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/chat.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/chat.png" }
+  },
+  "CHIPS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/chips.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/chips.png" }
+  },
+  "CIX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/cix.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/cix.png" }
+  },
+  "CLAM": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/clam.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/clam.png" }
+  },
+  "CLOAK": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/cloak.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/cloak.png" }
+  },
+  "CMM": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/cmm.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/cmm.png" }
+  },
+  "CMT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/cmt.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/cmt.png" }
+  },
+  "CND": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/cnd.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/cnd.png" }
+  },
+  "CNX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/cnx.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/cnx.png" }
+  },
+  "CNY": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/cny.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/cny.png" }
+  },
+  "COB": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/cob.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/cob.png" }
+  },
+  "COLX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/colx.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/colx.png" }
+  },
+  "COQUI": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/coqui.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/coqui.png" }
+  },
+  "CRED": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/cred.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/cred.png" }
+  },
+  "CRPT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/crpt.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/crpt.png" }
+  },
+  "CRW": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/crw.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/crw.png" }
+  },
+  "CS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/cs.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/cs.png" }
+  },
+  "CTR": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ctr.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ctr.png" }
+  },
+  "CTXC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ctxc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ctxc.png" }
+  },
+  "CVC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/cvc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/cvc.png" }
+  },
+  "DASH": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/dash.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/dash.png" }
+  },
+  "DAT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/dat.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/dat.png" }
+  },
+  "DATA": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/data.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/data.png" }
+  },
+  "DBC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/dbc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/dbc.png" }
+  },
+  "DCN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/dcn.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/dcn.png" }
+  },
+  "DCR": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/dcr.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/dcr.png" }
+  },
+  "DEEZ": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/deez.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/deez.png" }
+  },
+  "DENT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/dent.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/dent.png" }
+  },
+  "DEW": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/dew.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/dew.png" }
+  },
+  "DGB": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/dgb.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/dgb.png" }
+  },
+  "DGD": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/dgd.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/dgd.png" }
+  },
+  "DLT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/dlt.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/dlt.png" }
+  },
+  "DNR": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/dnr.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/dnr.png" }
+  },
+  "DNT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/dnt.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/dnt.png" }
+  },
+  "DOCK": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/dock.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/dock.png" }
+  },
+  "DOGE": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/doge.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/doge.png" }
+  },
+  "DRGN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/drgn.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/drgn.png" }
+  },
+  "DROP": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/drop.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/drop.png" }
+  },
+  "DTA": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/dta.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/dta.png" }
+  },
+  "DTH": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/dth.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/dth.png" }
+  },
+  "DTR": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/dtr.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/dtr.png" }
+  },
+  "EBST": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ebst.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ebst.png" }
+  },
+  "ECA": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/eca.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/eca.png" }
+  },
+  "EDG": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/edg.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/edg.png" }
+  },
+  "EDO": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/edo.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/edo.png" }
+  },
+  "EDOGE": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/edoge.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/edoge.png" }
+  },
+  "ELA": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ela.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ela.png" }
+  },
+  "ELF": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/elf.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/elf.png" }
+  },
+  "ELIX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/elix.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/elix.png" }
+  },
+  "ELLA": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ella.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ella.png" }
+  },
+  "EMC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/emc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/emc.png" }
+  },
+  "EMC2": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/emc2.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/emc2.png" }
+  },
+  "ENG": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/eng.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/eng.png" }
+  },
+  "ENJ": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/enj.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/enj.png" }
+  },
+  "EOS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/eos.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/eos.png" }
+  },
+  "EQLI": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/eqli.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/eqli.png" }
+  },
+  "EQUA": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/equa.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/equa.png" }
+  },
+  "ETC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/etc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/etc.png" }
+  },
+  "ETH": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/eth.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/eth.png" }
+  },
+  "ETHOS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ethos.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ethos.png" }
+  },
+  "ETN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/etn.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/etn.png" }
+  },
+  "ETP": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/etp.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/etp.png" }
+  },
+  "EUR": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/eur.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/eur.png" }
+  },
+  "EVX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/evx.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/evx.png" }
+  },
+  "EXMO": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/exmo.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/exmo.png" }
+  },
+  "EXP": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/exp.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/exp.png" }
+  },
+  "FAIR": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/fair.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/fair.png" }
+  },
+  "FCT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/fct.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/fct.png" }
+  },
+  "FIL": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/fil.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/fil.png" }
+  },
+  "FJC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/fjc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/fjc.png" }
+  },
+  "FLDC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/fldc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/fldc.png" }
+  },
+  "FLO": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/flo.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/flo.png" }
+  },
+  "FSN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/fsn.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/fsn.png" }
+  },
+  "FTC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ftc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ftc.png" }
+  },
+  "FUEL": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/fuel.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/fuel.png" }
+  },
+  "FUN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/fun.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/fun.png" }
+  },
+  "GAME": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/game.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/game.png" }
+  },
+  "GAS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/gas.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/gas.png" }
+  },
+  "GBP": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/gbp.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/gbp.png" }
+  },
+  "GBX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/gbx.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/gbx.png" }
+  },
+  "GBYTE": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/gbyte.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/gbyte.png" }
+  },
+  "GENERIC": {
+    "32": {
+      "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/generic.png"
+    },
+    "128": {
+      "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/generic.png"
+    }
+  },
+  "GLXT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/glxt.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/glxt.png" }
+  },
+  "GMR": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/gmr.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/gmr.png" }
+  },
+  "GNO": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/gno.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/gno.png" }
+  },
+  "GNT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/gnt.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/gnt.png" }
+  },
+  "GRC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/grc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/grc.png" }
+  },
+  "GRS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/grs.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/grs.png" }
+  },
+  "GSC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/gsc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/gsc.png" }
+  },
+  "GTO": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/gto.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/gto.png" }
+  },
+  "GUP": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/gup.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/gup.png" }
+  },
+  "GUSD": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/gusd.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/gusd.png" }
+  },
+  "GVT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/gvt.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/gvt.png" }
+  },
+  "GXS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/gxs.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/gxs.png" }
+  },
+  "GZR": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/gzr.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/gzr.png" }
+  },
+  "HIGHT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/hight.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/hight.png" }
+  },
+  "HODL": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/hodl.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/hodl.png" }
+  },
+  "HPB": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/hpb.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/hpb.png" }
+  },
+  "HSR": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/hsr.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/hsr.png" }
+  },
+  "HT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ht.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ht.png" }
+  },
+  "HTML": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/html.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/html.png" }
+  },
+  "HUC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/huc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/huc.png" }
+  },
+  "HUSH": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/hush.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/hush.png" }
+  },
+  "ICN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/icn.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/icn.png" }
+  },
+  "ICX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/icx.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/icx.png" }
+  },
+  "IGNIS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ignis.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ignis.png" }
+  },
+  "INK": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ink.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ink.png" }
+  },
+  "INS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ins.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ins.png" }
+  },
+  "ION": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ion.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ion.png" }
+  },
+  "IOP": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/iop.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/iop.png" }
+  },
+  "IOST": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/iost.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/iost.png" }
+  },
+  "IOTX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/iotx.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/iotx.png" }
+  },
+  "ITC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/itc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/itc.png" }
+  },
+  "JNT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/jnt.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/jnt.png" }
+  },
+  "JPY": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/jpy.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/jpy.png" }
+  },
+  "KCS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/kcs.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/kcs.png" }
+  },
+  "KIN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/kin.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/kin.png" }
+  },
+  "KMD": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/kmd.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/kmd.png" }
+  },
+  "KNC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/knc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/knc.png" }
+  },
+  "KRB": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/krb.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/krb.png" }
+  },
+  "LBC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/lbc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/lbc.png" }
+  },
+  "LEND": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/lend.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/lend.png" }
+  },
+  "LINK": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/link.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/link.png" }
+  },
+  "LKK": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/lkk.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/lkk.png" }
+  },
+  "LOOM": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/loom.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/loom.png" }
+  },
+  "LRC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/lrc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/lrc.png" }
+  },
+  "LSK": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/lsk.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/lsk.png" }
+  },
+  "LTC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ltc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ltc.png" }
+  },
+  "LUN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/lun.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/lun.png" }
+  },
+  "MAID": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/maid.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/maid.png" }
+  },
+  "MANA": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/mana.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/mana.png" }
+  },
+  "MCAP": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/mcap.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/mcap.png" }
+  },
+  "MCO": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/mco.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/mco.png" }
+  },
+  "MDA": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/mda.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/mda.png" }
+  },
+  "MDS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/mds.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/mds.png" }
+  },
+  "MED": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/med.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/med.png" }
+  },
+  "MIOTA": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/miota.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/miota.png" }
+  },
+  "MITH": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/mith.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/mith.png" }
+  },
+  "MKR": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/mkr.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/mkr.png" }
+  },
+  "MLN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/mln.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/mln.png" }
+  },
+  "MNX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/mnx.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/mnx.png" }
+  },
+  "MNZ": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/mnz.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/mnz.png" }
+  },
+  "MOAC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/moac.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/moac.png" }
+  },
+  "MOD": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/mod.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/mod.png" }
+  },
+  "MONA": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/mona.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/mona.png" }
+  },
+  "MSR": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/msr.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/msr.png" }
+  },
+  "MTH": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/mth.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/mth.png" }
+  },
+  "MTL": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/mtl.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/mtl.png" }
+  },
+  "MUSIC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/music.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/music.png" }
+  },
+  "MZC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/mzc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/mzc.png" }
+  },
+  "NANO": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/nano.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/nano.png" }
+  },
+  "NAS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/nas.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/nas.png" }
+  },
+  "NAV": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/nav.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/nav.png" }
+  },
+  "NCASH": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ncash.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ncash.png" }
+  },
+  "NDZ": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ndz.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ndz.png" }
+  },
+  "NEBL": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/nebl.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/nebl.png" }
+  },
+  "NEO": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/neo.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/neo.png" }
+  },
+  "NEOS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/neos.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/neos.png" }
+  },
+  "NEU": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/neu.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/neu.png" }
+  },
+  "NEXO": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/nexo.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/nexo.png" }
+  },
+  "NGC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ngc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ngc.png" }
+  },
+  "NIO": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/nio.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/nio.png" }
+  },
+  "NLC2": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/nlc2.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/nlc2.png" }
+  },
+  "NLG": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/nlg.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/nlg.png" }
+  },
+  "NMC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/nmc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/nmc.png" }
+  },
+  "NPXS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/npxs.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/npxs.png" }
+  },
+  "NULS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/nuls.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/nuls.png" }
+  },
+  "NXS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/nxs.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/nxs.png" }
+  },
+  "NXT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/nxt.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/nxt.png" }
+  },
+  "OAX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/oax.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/oax.png" }
+  },
+  "OK": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ok.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ok.png" }
+  },
+  "OMG": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/omg.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/omg.png" }
+  },
+  "OMNI": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/omni.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/omni.png" }
+  },
+  "ONT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ont.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ont.png" }
+  },
+  "OOT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/oot.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/oot.png" }
+  },
+  "OST": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ost.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ost.png" }
+  },
+  "OX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ox.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ox.png" }
+  },
+  "PART": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/part.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/part.png" }
+  },
+  "PASC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/pasc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/pasc.png" }
+  },
+  "PASL": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/pasl.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/pasl.png" }
+  },
+  "PAY": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/pay.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/pay.png" }
+  },
+  "PAYX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/payx.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/payx.png" }
+  },
+  "PINK": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/pink.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/pink.png" }
+  },
+  "PIRL": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/pirl.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/pirl.png" }
+  },
+  "PIVX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/pivx.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/pivx.png" }
+  },
+  "PLR": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/plr.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/plr.png" }
+  },
+  "POA": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/poa.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/poa.png" }
+  },
+  "POE": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/poe.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/poe.png" }
+  },
+  "POLY": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/poly.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/poly.png" }
+  },
+  "POT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/pot.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/pot.png" }
+  },
+  "POWR": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/powr.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/powr.png" }
+  },
+  "PPC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ppc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ppc.png" }
+  },
+  "PPP": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ppp.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ppp.png" }
+  },
+  "PPT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ppt.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ppt.png" }
+  },
+  "PRL": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/prl.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/prl.png" }
+  },
+  "PURA": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/pura.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/pura.png" }
+  },
+  "QASH": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/qash.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/qash.png" }
+  },
+  "QIWI": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/qiwi.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/qiwi.png" }
+  },
+  "QLC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/qlc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/qlc.png" }
+  },
+  "QRL": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/qrl.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/qrl.png" }
+  },
+  "QSP": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/qsp.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/qsp.png" }
+  },
+  "QTUM": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/qtum.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/qtum.png" }
+  },
+  "R": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/r.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/r.png" }
+  },
+  "RADS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/rads.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/rads.png" }
+  },
+  "RAP": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/rap.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/rap.png" }
+  },
+  "RCN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/rcn.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/rcn.png" }
+  },
+  "RDD": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/rdd.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/rdd.png" }
+  },
+  "RDN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/rdn.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/rdn.png" }
+  },
+  "REP": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/rep.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/rep.png" }
+  },
+  "REQ": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/req.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/req.png" }
+  },
+  "RHOC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/rhoc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/rhoc.png" }
+  },
+  "RIC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ric.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ric.png" }
+  },
+  "RISE": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/rise.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/rise.png" }
+  },
+  "RLC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/rlc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/rlc.png" }
+  },
+  "RPX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/rpx.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/rpx.png" }
+  },
+  "RUB": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/rub.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/rub.png" }
+  },
+  "RVN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/rvn.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/rvn.png" }
+  },
+  "SAFE": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/safe.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/safe.png" }
+  },
+  "SALT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/salt.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/salt.png" }
+  },
+  "SAN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/san.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/san.png" }
+  },
+  "SBD": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/sbd.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/sbd.png" }
+  },
+  "SBERBANK": {
+    "32": {
+      "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/sberbank.png"
+    },
+    "128": {
+      "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/sberbank.png"
+    }
+  },
+  "SC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/sc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/sc.png" }
+  },
+  "SHIFT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/shift.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/shift.png" }
+  },
+  "SIB": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/sib.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/sib.png" }
+  },
+  "SKY": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/sky.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/sky.png" }
+  },
+  "SLR": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/slr.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/slr.png" }
+  },
+  "SLS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/sls.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/sls.png" }
+  },
+  "SMART": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/smart.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/smart.png" }
+  },
+  "SNGLS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/sngls.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/sngls.png" }
+  },
+  "SNM": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/snm.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/snm.png" }
+  },
+  "SNT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/snt.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/snt.png" }
+  },
+  "SOC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/soc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/soc.png" }
+  },
+  "SPANK": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/spank.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/spank.png" }
+  },
+  "SPHTX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/sphtx.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/sphtx.png" }
+  },
+  "SRN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/srn.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/srn.png" }
+  },
+  "START": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/start.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/start.png" }
+  },
+  "STEEM": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/steem.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/steem.png" }
+  },
+  "STORJ": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/storj.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/storj.png" }
+  },
+  "STORM": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/storm.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/storm.png" }
+  },
+  "STQ": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/stq.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/stq.png" }
+  },
+  "STRAT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/strat.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/strat.png" }
+  },
+  "SUB": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/sub.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/sub.png" }
+  },
+  "SUMO": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/sumo.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/sumo.png" }
+  },
+  "SYS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/sys.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/sys.png" }
+  },
+  "TAAS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/taas.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/taas.png" }
+  },
+  "TAU": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/tau.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/tau.png" }
+  },
+  "TEL": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/tel.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/tel.png" }
+  },
+  "TEN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ten.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ten.png" }
+  },
+  "TERN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/tern.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/tern.png" }
+  },
+  "THETA": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/theta.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/theta.png" }
+  },
+  "TIX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/tix.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/tix.png" }
+  },
+  "TKN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/tkn.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/tkn.png" }
+  },
+  "TNB": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/tnb.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/tnb.png" }
+  },
+  "TNC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/tnc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/tnc.png" }
+  },
+  "TNT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/tnt.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/tnt.png" }
+  },
+  "TRIG": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/trig.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/trig.png" }
+  },
+  "TRTL": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/trtl.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/trtl.png" }
+  },
+  "TRX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/trx.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/trx.png" }
+  },
+  "TUSD": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/tusd.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/tusd.png" }
+  },
+  "TZC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/tzc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/tzc.png" }
+  },
+  "UBQ": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/ubq.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/ubq.png" }
+  },
+  "UNITY": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/unity.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/unity.png" }
+  },
+  "USD": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/usd.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/usd.png" }
+  },
+  "USDT": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/usdt.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/usdt.png" }
+  },
+  "UTK": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/utk.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/utk.png" }
+  },
+  "VERI": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/veri.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/veri.png" }
+  },
+  "VET": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/vet.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/vet.png" }
+  },
+  "VIA": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/via.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/via.png" }
+  },
+  "VIB": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/vib.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/vib.png" }
+  },
+  "VIBE": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/vibe.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/vibe.png" }
+  },
+  "VIVO": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/vivo.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/vivo.png" }
+  },
+  "VRC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/vrc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/vrc.png" }
+  },
+  "VRSC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/vrsc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/vrsc.png" }
+  },
+  "VTC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/vtc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/vtc.png" }
+  },
+  "WABI": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/wabi.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/wabi.png" }
+  },
+  "WAN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/wan.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/wan.png" }
+  },
+  "WAVES": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/waves.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/waves.png" }
+  },
+  "WAX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/wax.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/wax.png" }
+  },
+  "WGR": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/wgr.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/wgr.png" }
+  },
+  "WICC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/wicc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/wicc.png" }
+  },
+  "WINGS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/wings.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/wings.png" }
+  },
+  "WPR": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/wpr.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/wpr.png" }
+  },
+  "WTC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/wtc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/wtc.png" }
+  },
+  "XAS": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/xas.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/xas.png" }
+  },
+  "XBC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/xbc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/xbc.png" }
+  },
+  "XBY": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/xby.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/xby.png" }
+  },
+  "XCP": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/xcp.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/xcp.png" }
+  },
+  "XDN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/xdn.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/xdn.png" }
+  },
+  "XEM": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/xem.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/xem.png" }
+  },
+  "XIN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/xin.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/xin.png" }
+  },
+  "XLM": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/xlm.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/xlm.png" }
+  },
+  "XMG": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/xmg.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/xmg.png" }
+  },
+  "XMO": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/xmo.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/xmo.png" }
+  },
+  "XMR": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/xmr.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/xmr.png" }
+  },
+  "XMY": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/xmy.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/xmy.png" }
+  },
+  "XP": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/xp.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/xp.png" }
+  },
+  "XPA": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/xpa.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/xpa.png" }
+  },
+  "XPM": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/xpm.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/xpm.png" }
+  },
+  "XRP": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/xrp.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/xrp.png" }
+  },
+  "XSG": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/xsg.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/xsg.png" }
+  },
+  "XTZ": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/xtz.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/xtz.png" }
+  },
+  "XUC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/xuc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/xuc.png" }
+  },
+  "XVC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/xvc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/xvc.png" }
+  },
+  "XVG": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/xvg.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/xvg.png" }
+  },
+  "XZC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/xzc.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/xzc.png" }
+  },
+  "YOYOW": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/yoyow.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/yoyow.png" }
+  },
+  "ZCL": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/zcl.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/zcl.png" }
+  },
+  "ZEC": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/zec.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/zec.png" }
+  },
+  "ZEL": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/zel.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/zel.png" }
+  },
+  "ZEN": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/zen.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/zen.png" }
+  },
+  "ZIL": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/zil.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/zil.png" }
+  },
+  "ZILLA": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/zilla.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/zilla.png" }
+  },
+  "ZRX": {
+    "32": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/32/color/zrx.png" },
+    "128": { "color": "https://storage.googleapis.com/bitportal-cms/tokenicon/128/color/zrx.png" }
+  }
+}

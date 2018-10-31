@@ -27,7 +27,9 @@ const styles = EStyleSheet.create({
 })
 
 export const errorMessages = (error, messages) => {
-  if (!error) { return null }
+  if (!error) {
+    return null
+  }
 
   const message = typeof error === 'object' ? error.message : error
 
@@ -51,7 +53,9 @@ export const errorMessages = (error, messages) => {
 }
 
 export const errorMessageDetail = (error, messages) => {
-  if (!error) { return null }
+  if (!error) {
+    return null
+  }
 
   const message = typeof error === 'object' ? error.message : error
 
@@ -70,14 +74,18 @@ export const errorMessageDetail = (error, messages) => {
 
 const validate = (values, props) => {
   const { eosAccount, eosBalance } = props
-  const netWeight = eosAccount.getIn(['data', 'total_resources', 'net_weight']) ? eosAccount.getIn(['data', 'total_resources', 'net_weight']).split(' ')[0] : 0
-  const cpuWeight = eosAccount.getIn(['data', 'total_resources', 'cpu_weight']) ? eosAccount.getIn(['data', 'total_resources', 'cpu_weight']).split(' ')[0] : 0
+  const netWeight = eosAccount.getIn(['data', 'total_resources', 'net_weight'])
+    ? eosAccount.getIn(['data', 'total_resources', 'net_weight']).split(' ')[0]
+    : 0
+  const cpuWeight = eosAccount.getIn(['data', 'total_resources', 'cpu_weight'])
+    ? eosAccount.getIn(['data', 'total_resources', 'cpu_weight']).split(' ')[0]
+    : 0
 
   const errors = {}
 
   if (!+values.get('quant')) {
     errors.quant = messages[props.locale].resource_error_text_amount
-  } else if (!validateUnitByCurrency('EOS')(values.get('quant'))){
+  } else if (!validateUnitByCurrency('EOS')(values.get('quant'))) {
     errors.quant = messages[props.locale].resource_error_text_amount_invalid
   }
 
@@ -107,23 +115,24 @@ const validate = (values, props) => {
     bandwidth: state.bandwidth
   }),
   dispatch => ({
-    actions: bindActionCreators({
-      ...bandwidthActions,
-      reset
-    }, dispatch)
+    actions: bindActionCreators(
+      {
+        ...bandwidthActions,
+        reset
+      },
+      dispatch
+    )
   })
 )
-
 @reduxForm({ form: 'delegateBandwidthForm', validate })
-
 export default class DelegateBandwidthForm extends Component {
   state = { activeForm: 'Delegate', isVisible: false, data: null }
 
-  submit = (data) => {
+  submit = data => {
     this.setState({ isVisible: true, data })
   }
 
-  handleConfirm = (password) => {
+  handleConfirm = password => {
     this.setState({ isVisible: false }, () => {
       InteractionManager.runAfterInteractions(() => {
         const data = this.state.data
@@ -132,15 +141,27 @@ export default class DelegateBandwidthForm extends Component {
         const resource = this.props.resource
 
         if (this.state.activeForm === 'Delegate') {
-          this.props.actions.delegateBandwidthRequested(data.set('resource', resource).set('eosAccountName', eosAccountName).set('password', password).toJS())
+          this.props.actions.delegateBandwidthRequested(
+            data
+              .set('resource', resource)
+              .set('eosAccountName', eosAccountName)
+              .set('password', password)
+              .toJS()
+          )
         } else {
-          this.props.actions.undelegateBandwidthRequested(data.set('resource', resource).set('eosAccountName', eosAccountName).set('password', password).toJS())
+          this.props.actions.undelegateBandwidthRequested(
+            data
+              .set('resource', resource)
+              .set('eosAccountName', eosAccountName)
+              .set('password', password)
+              .toJS()
+          )
         }
       })
     })
   }
 
-  switchForm = (form) => {
+  switchForm = form => {
     if (form !== this.state.activeForm) {
       this.props.actions.setActiveForm(form)
       this.setState({ activeForm: form })
@@ -161,10 +182,18 @@ export default class DelegateBandwidthForm extends Component {
     const loading = delegating || undelegating
     const error = bandwidth.get('error')
     const disabled = invalid || pristine || loading
-    const netWeight = eosAccount.getIn(['data', 'total_resources', 'net_weight']) ? eosAccount.getIn(['data', 'total_resources', 'net_weight']).split(' ')[0] : 0
-    const cpuWeight = eosAccount.getIn(['data', 'total_resources', 'cpu_weight']) ? eosAccount.getIn(['data', 'total_resources', 'cpu_weight']).split(' ')[0] : 0
-    const availableBalance = this.state.activeForm === 'Delegate' ? eosBalance : (this.props.resource === 'net' ? netWeight : cpuWeight)
-    const balanceTitle = this.state.activeForm === 'Delegate' ? messages[locale].resource_label_balance : messages[locale].resource_label_staked
+    const netWeight = eosAccount.getIn(['data', 'total_resources', 'net_weight'])
+      ? eosAccount.getIn(['data', 'total_resources', 'net_weight']).split(' ')[0]
+      : 0
+    const cpuWeight = eosAccount.getIn(['data', 'total_resources', 'cpu_weight'])
+      ? eosAccount.getIn(['data', 'total_resources', 'cpu_weight']).split(' ')[0]
+      : 0
+    const availableBalance =
+      this.state.activeForm === 'Delegate' ? eosBalance : this.props.resource === 'net' ? netWeight : cpuWeight
+    const balanceTitle =
+      this.state.activeForm === 'Delegate'
+        ? messages[locale].resource_label_balance
+        : messages[locale].resource_label_staked
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -182,10 +211,21 @@ export default class DelegateBandwidthForm extends Component {
             <SubmitButton
               disabled={disabled}
               onPress={handleSubmit(this.submit)}
-              text={this.state.activeForm === 'Delegate' ? messages[locale].resource_button_stake : messages[locale].resource_button_unstake}
+              text={
+                this.state.activeForm === 'Delegate'
+                  ? messages[locale].resource_button_stake
+                  : messages[locale].resource_button_unstake
+              }
             />
-            <Alert message={errorMessages(error, messages[locale])} subMessage={errorMessageDetail(error, messages[locale])} dismiss={this.props.actions.clearBandwidthError} />
-            <Alert message={!!showSuccess && messages[locale].resource_popup_text_transaction_successful} dismiss={this.props.actions.hideSuccessModal} />
+            <Alert
+              message={errorMessages(error, messages[locale])}
+              subMessage={errorMessageDetail(error, messages[locale])}
+              dismiss={this.props.actions.clearBandwidthError}
+            />
+            <Alert
+              message={!!showSuccess && messages[locale].resource_popup_text_transaction_successful}
+              dismiss={this.props.actions.hideSuccessModal}
+            />
             <Prompt
               isVisible={this.state.isVisible}
               title={messages[locale].general_popup_label_password}

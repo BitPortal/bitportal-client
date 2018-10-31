@@ -9,8 +9,8 @@ const styles = EStyleSheet.create({
     width: '100%',
     height: 70,
     paddingTop: 20,
-    paddingHorizontal: 20,
-    backgroundColor: Colors.bgColor_30_31_37
+    paddingHorizontal: 32,
+    backgroundColor: Colors.minorThemeColor
   },
   between: {
     justifyContent: 'space-between',
@@ -25,9 +25,7 @@ const styles = EStyleSheet.create({
 
 export default ({ title, value, unit }) => (
   <View style={[styles.container, styles.between]}>
-    <Text style={styles.text14}>
-      {title}
-    </Text>
+    <Text style={styles.text14}>{title}</Text>
     <Text style={styles.text14}>
       {value} {unit}
     </Text>

@@ -1,13 +1,6 @@
 import { StyleSheet, Platform } from 'react-native'
 import Colors from 'resources/colors'
-import {
-  FontScale,
-  SCREEN_WIDTH,
-  SCREEN_HEIGHT,
-  NAV_BAR_HEIGHT,
-  TAB_BAR_HEIGHT,
-  WidthPercent
-} from 'utils/dimens'
+import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, WidthPercent } from 'utils/dimens'
 
 const styles = StyleSheet.create({
   container: {

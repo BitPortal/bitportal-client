@@ -120,7 +120,7 @@ android {
                 APP_CHANNEL : "default"
         ]
 
-        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative55"
+        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative56"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -191,7 +191,18 @@ android {
     }
 }
 
+configurations.all {
+    resolutionStrategy {
+        eachDependency { DependencyResolveDetails details ->
+            if (details.requested.name == 'android-jsc') {
+                details.useTarget group: details.requested.group, name: 'android-jsc-intl', version: 'r225067'
+            }
+        }
+    }
+}
+
 dependencies {
+    implementation project(':react-native-charts-wrapper')
     compile project(':react-native-fast-image')
     compile project(':react-native-fs')
     compile project(':jcore-react-native')

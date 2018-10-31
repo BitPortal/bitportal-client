@@ -30,18 +30,8 @@ export default class NavigationBar extends Component {
 export const CommonButton = ({ iconName, title, onPress, extraStyle, extraTextStyle }) => (
   <TouchableOpacity style={[styles.navButton, extraStyle]} onPress={() => onPress()}>
     <View style={{ zIndex: 100, flexDirection: 'row', alignItems: 'center' }}>
-      {iconName && (
-        <Ionicons name={iconName} size={24} color={Colors.bgColor_FFFFFF} />
-      )}
-      <Text
-        style={[
-          styles.text20,
-          { marginLeft: 10, marginTop: -3 },
-          extraTextStyle
-        ]}
-      >
-        {title}
-      </Text>
+      {iconName && <Ionicons name={iconName} size={24} color={Colors.bgColor_FFFFFF} />}
+      <Text style={[styles.text20, { marginLeft: 10, marginTop: -3 }, extraTextStyle]}>{title}</Text>
     </View>
   </TouchableOpacity>
 )
@@ -55,12 +45,8 @@ export const CommonTitle = ({ title }) => (
 export const CommonRightButton = ({ iconName, imageSource, onPress }) => (
   <TouchableOpacity style={styles.navButton} onPress={() => onPress()}>
     <View style={{ alignSelf: 'flex-end', marginRight: 20 }}>
-      {iconName && (
-        <Ionicons name={iconName} size={24} color={Colors.bgColor_FFFFFF} />
-      )}
-      {imageSource && (
-        <BPImage source={imageSource} style={{ width: 24, height: 24 }} />
-      )}
+      {iconName && <Ionicons name={iconName} size={24} color={Colors.bgColor_FFFFFF} />}
+      {imageSource && <BPImage source={imageSource} style={{ width: 24, height: 24 }} />}
     </View>
   </TouchableOpacity>
 )
@@ -68,36 +54,20 @@ export const CommonRightButton = ({ iconName, imageSource, onPress }) => (
 export const LinkingRightButton = ({ iconName, onPress }) => (
   <TouchableOpacity style={styles.navButton} onPress={onPress}>
     <View style={{ alignSelf: 'flex-end', marginRight: 20 }}>
-      {iconName && (
-        <Ionicons name={iconName} size={24} color={Colors.bgColor_FFFFFF} />
-      )}
+      {iconName && <Ionicons name={iconName} size={24} color={Colors.bgColor_FFFFFF} />}
     </View>
   </TouchableOpacity>
 )
 
 export const WebViewLeftButton = ({ goBack, goHome }) => (
-  <View
-    style={[styles.navButton, { flexDirection: 'row', alignItems: 'center' }]}
-  >
-    <TouchableOpacity
-      style={[
-        { flex: 1, marginLeft: -15, paddingHorizontal: 5 },
-        styles.center
-      ]}
-      onPress={goBack}
-    >
+  <View style={[styles.navButton, { flexDirection: 'row', alignItems: 'center' }]}>
+    <TouchableOpacity style={[{ flex: 1, marginLeft: -15, paddingHorizontal: 5 }, styles.center]} onPress={goBack}>
       <Ionicons name="md-arrow-back" size={24} color={Colors.bgColor_FFFFFF} />
     </TouchableOpacity>
     {/* <TouchableOpacity style={[{ flex: 1, paddingHorizontal: 5 }, styles.center]} onPress={goForward} >
       <Ionicons name={"md-arrow-forward"} size={24} color={Colors.bgColor_FFFFFF} />
     </TouchableOpacity> */}
-    <TouchableOpacity
-      style={[
-        { flex: 1, paddingHorizontal: 5, marginRight: 10 },
-        styles.center
-      ]}
-      onPress={goHome}
-    >
+    <TouchableOpacity style={[{ flex: 1, paddingHorizontal: 5, marginRight: 10 }, styles.center]} onPress={goHome}>
       <Ionicons name="md-close" size={24} color={Colors.bgColor_FFFFFF} />
     </TouchableOpacity>
   </View>
@@ -114,11 +84,7 @@ export const ListButton = ({ label, onPress }) => (
           marginTop: 3
         }}
       >
-        <Ionicons
-          name="md-play"
-          size={10}
-          color={Colors.textColor_255_255_238}
-        />
+        <Ionicons name="md-play" size={10} color={Colors.textColor_255_255_238} />
       </View>
     </View>
   </TouchableOpacity>

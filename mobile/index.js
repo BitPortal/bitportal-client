@@ -100,6 +100,7 @@ const setStatusBarStyle = async () => {
 
 Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setDefaultOptions({
+    modalPresentationStyle:'fullScreen',
     topBar: {
       visible: false,
       animate: false,

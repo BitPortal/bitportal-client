@@ -8,17 +8,47 @@ const sortFilterListSelector = (state: RootState) => state.ticker.get('sortFilte
 const baseAssetSelector = (state: RootState) => state.ticker.get('baseAsset')
 const searchTermSelector = (state: RootState) => state.ticker.get('searchTerm')
 
-export const eosPriceSelector = (state: RootState) => (state.ticker.get('dataSource').get('OKEX_SPOT_EOS_USDT')
-  ? state.ticker
-    .get('dataSource')
-    .get('OKEX_SPOT_EOS_USDT')
-    .get('price_last')
-  : 0)
+export const eosPriceSelector = (state: RootState) =>
+  state.ticker.get('dataSource').get('EOS')
+    ? state.ticker
+        .get('dataSource')
+        .get('EOS')
+        .get('price_usd')
+    : 0
 
 export const sortFilterSelector = createSelector(
   sortFilterListSelector,
   exchangeFilterSelector,
   (sort: any, exchange: any) => sort.get(exchange)
+)
+
+export const tickerSelector = createSelector(
+  dataSourceSelector,
+  sortFilterSelector,
+  searchTermSelector,
+
+  (ticker: any, sortFilter: any, searchTerm: any) =>
+    ticker
+      .valueSeq()
+      .filter(
+        (item: any) =>
+          searchTerm.trim() === ''
+            ? item
+            : item.get('symbol').includes(searchTerm.toUpperCase()) ||
+              item
+                .get('name')
+                .toUpperCase()
+                .includes(searchTerm.toUpperCase()) ||
+              item
+                .get('name')
+                .toUpperCase()
+                .replace(/ +/g, '')
+                .includes(searchTerm.toUpperCase())
+      )
+      .sortBy((item: any) => {
+        const result = exchangeTickerSortByHelper(sortFilter)
+        return sortFilter.includes('low') ? +item.get(result) : -+item.get(result)
+      })
 )
 
 export const exchangeTickerSelector = createSelector(
@@ -27,36 +57,27 @@ export const exchangeTickerSelector = createSelector(
   quoteAssetFilterSelector,
   sortFilterSelector,
   searchTermSelector,
-  (
-    ticker: any,
-    exchange: any,
-    quote_asset: any,
-    sortfilter: any,
-    searchTerm: any
-  ) => ticker
-    .valueSeq()
-    .filter((item: any) => item.get('exchange') === exchange)
-    .filter((item: any) => item.get('quote_asset') === quote_asset)
-    .filter(
-      (item: any) => (searchTerm.trim() === ''
-        ? item
-        : item.get('base_asset').includes(searchTerm.toUpperCase()))
-    )
-    .sortBy((item: any) => {
-      const result = exchangeTickerSortByHelper(sortfilter)
-      return sortfilter.includes('low')
-        ? +item.get(result)
-        : -+item.get(result)
-    })
+  (ticker: any, exchange: any, quote_asset: any, sortfilter: any, searchTerm: any) =>
+    ticker
+      .valueSeq()
+      .filter((item: any) => item.get('exchange') === exchange)
+      .filter((item: any) => item.get('quote_asset') === quote_asset)
+      .filter(
+        (item: any) => (searchTerm.trim() === '' ? item : item.get('base_asset').includes(searchTerm.toUpperCase()))
+      )
+      .sortBy((item: any) => {
+        const result = exchangeTickerSortByHelper(sortfilter)
+        return sortfilter.includes('low') ? +item.get(result) : -+item.get(result)
+      })
 )
 
 const exchangeTickerSortByHelper = (filter: any) => {
   const filters = {
-    quote_volume: 'quote_volume',
-    price_change_percent_low: 'price_change_percent',
-    price_change_percent_high: 'price_change_percent',
-    current_price_low: 'price_last',
-    current_price_high: 'price_last'
+    market_cap_usd: 'market_cap_usd',
+    price_change_percent_low: 'percent_change_1h',
+    price_change_percent_high: 'percent_change_1h',
+    current_price_low: 'price_usd',
+    current_price_high: 'price_usd'
   }
   return filters[filter]
 }
@@ -70,7 +91,5 @@ export const currencyTickerSelector = createSelector(
 export const tokenTickerSelector = createSelector(
   dataSourceSelector,
   baseAssetSelector,
-  (ticker: any, base_asset: any) => ticker
-    .valueSeq()
-    .filter((item: any) => item.get('base_asset') === base_asset)
+  (ticker: any, base_asset: any) => ticker.valueSeq().filter((item: any) => item.get('base_asset') === base_asset)
 )

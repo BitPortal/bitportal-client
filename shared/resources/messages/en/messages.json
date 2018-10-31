@@ -84,7 +84,7 @@
   "add_eos_label_password_strength_strong": "Strong",
   "add_eos_create_smart_contract_button_cancel": "Cancel",
   "add_eos_create_smart_contract_button_checkstatus": "Check status",
-  
+
   "add_eos_label_set_password": "Enter Password",
   "add_eos_text_password": "Set Password",
   "add_eos_text_confirm_password": "Confirm Password",
@@ -195,13 +195,16 @@
   "resource_error_popup_text_cpu_insufficient": "Your CPU is insufficient to initiate the transaction.",
   "resource_error_popup_text_eos_system_error": "EOS System Error, please try again",
   "resource_label_tips": "Tips:",
+  "resource_cpu_text_tips": "1. CPU is one of the resources in EOS network. You need to stake EOS in order to obtain CPU.\n\n2. You can unstake your staked EOS. Unstaked assets will be credited to your account in 72 hours.",
   "resource_cpu_text_tips_1": "1. CPU is one of the resources in EOS network. You need to stake EOS in order to obtain CPU.",
   "resource_cpu_text_tips_2": "2. You can unstake your staked EOS. Unstaked assets will be credited to your account in 72 hours.",
+  "resource_net_text_tips": "1. NET is one of the resources in EOS network. You need to stake EOS in order to obtain NET.\n\n2. You can unstake your staked EOS. Unstaked assets will be credited to your account in 72 hours.",
   "resource_net_text_tips_1": "1. NET is one of the resources in EOS network. You need to stake EOS in order to obtain NET.",
   "resource_net_text_tips_2": "2. You can unstake your staked EOS. Unstaked assets will be credited to your account in 72 hours.",
   "resource_ram_label_price": "Price:",
   "resource_ram_button_buy": "Buy",
   "resource_ram_button_sell": "Sell",
+  "resource_ram_text_tips": "1. RAM is one of the resources in EOS network. You need to buy with EOS in order to obtain RAM.\n\n2. You can buy or sell RAM anytime.\n\n3. Trading RAM requires a fee charge of (x+199)/200, x is your trading volume.",
   "resource_ram_text_tips_1": "1. RAM is one of the resources in EOS network. You need to buy with EOS in order to obtain RAM.",
   "resource_ram_text_tips_2": "2. You can buy or sell RAM anytime.",
   "resource_ram_text_tips_3": "3. Trading RAM requires a fee charge of (x+199)/200, x is your trading volume.",
@@ -354,7 +357,6 @@
   "webview_button_open_in_browser": "Open in other browsers",
   "webview_error_text_load_failed": "Loading failed",
 
-
   "confirm": "OK",
   "cancel": "Cancel",
 
@@ -369,7 +371,6 @@
   "news": "News",
   "other": "Others",
   "no_login": "Please create or import an EOS account",
-
 
   "description": "Description",
   "circulating_supply": "Current Supply",
@@ -387,9 +388,21 @@
   "description_null": "No description",
   "details_null": "No details",
 
-
   "actlist_title_name_account": "Account",
   "actlist_button_name_create": "Create New",
-  "actlist_button_name_import": "Import Account"
+  "actlist_button_name_import": "Import Account",
 
+  "market_menu_button_overview": "Overview",
+  "market_menu_button_systemresource": "System Resources",
+  "market_list_text_marketcap": "Market Cap",
+  "market_list_text_mcap": "M Cap",
+  "market_coincard_text_h": "H",
+  "market_coincard_text_d": "D",
+  "market_chart_text_h": "H",
+  "market_chart_text_d": "D",
+  "market_chart_text_w": "W",
+  "market_chart_text_m": "M",
+  "market_chart_text_y": "Y",
+  "market_chart_text_all": "ALL",
+  "market_chart_text_notavailable": "Chart Not Available"
 }

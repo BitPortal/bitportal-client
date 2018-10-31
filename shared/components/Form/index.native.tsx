@@ -1,13 +1,5 @@
 import React from 'react'
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ActivityIndicator,
-  KeyboardType,
-  ReturnKeyType
-} from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, KeyboardType, ReturnKeyType } from 'react-native'
 import LinearGradientContainer from 'components/LinearGradientContainer'
 import { noop } from 'utils'
 import Colors from 'resources/colors'
@@ -37,17 +29,17 @@ interface FieldErrorProps {
 interface TextFieldProps {
   input: {
     onChange(text: string): void
-  },
+  }
   meta: {
     touched: boolean
     error: string
-  },
-  label?: JSX.Element | string,
-  keyboardType?: KeyboardType,
-  leftContent?: JSX.Element | string,
-  rightContent?: JSX.Element | string,
-  tips?: JSX.Element | string,
-  info?: JSX.Element | string,
+  }
+  label?: JSX.Element | string
+  keyboardType?: KeyboardType
+  leftContent?: JSX.Element | string
+  rightContent?: JSX.Element | string
+  tips?: JSX.Element | string
+  info?: JSX.Element | string
   placeholder?: string
   returnKeyType?: ReturnKeyType
   onSubmitEditing?: any
@@ -69,17 +61,13 @@ interface SearchContainer {
   style?: React.CSSProperties
 }
 
-export const FormContainer: React.SFC = ({ children }) => (
-  <View style={styles.formContainer}>{children}</View>
-)
+export const FormContainer: React.SFC = ({ children }) => <View style={styles.formContainer}>{children}</View>
 
 export const SearchContainer: React.SFC<SearchContainer> = ({ children, style }) => (
   <View style={[styles.searchContainer, style]}>{children}</View>
 )
 
-export const FieldItem: React.SFC = ({ children }) => (
-  <View style={styles.fieldItem}>{children}</View>
-)
+export const FieldItem: React.SFC = ({ children }) => <View style={styles.fieldItem}>{children}</View>
 
 export const FieldInput: React.SFC<FieldInputProps> = ({ children, rightContent, leftContent, style }) => (
   <View style={[styles.fieldInput, style]}>
@@ -89,12 +77,7 @@ export const FieldInput: React.SFC<FieldInputProps> = ({ children, rightContent,
   </View>
 )
 
-const SearchFieldInput: React.SFC<FieldInputProps> = ({
-  children,
-  rightContent,
-  leftContent,
-  style
-}) => (
+const SearchFieldInput: React.SFC<FieldInputProps> = ({ children, rightContent, leftContent, style }) => (
   <View style={[styles.searchFieldInput, style]}>
     {leftContent && <View>{leftContent}</View>}
     {children}
@@ -127,22 +110,17 @@ export const TextField: React.SFC<TextFieldProps> = ({
   placeholder
 }) => (
   <FieldItem>
-    {
-      (touched && error) && 
-      <FieldError tips={tips}>
-        {touched && error}
-      </FieldError>
-    }
+    {touched && error && <FieldError>{touched && error}</FieldError>}
     <FieldInfo>
-      {!(touched && error) &&
+      {!(touched && error) && (
         <View style={styles.between}>
           {label && <Text style={styles.label}>{label}</Text>}
           {tips && <Tips tips={tips} />}
         </View>
-      }
+      )}
       {info && <View style={styles.info}>{info}</View>}
     </FieldInfo>
-    <FieldInput style={(touched && error) && styles.errorBorder} rightContent={rightContent}>
+    <FieldInput style={touched && error && styles.errorBorder} rightContent={rightContent}>
       <TextInput
         style={styles.input}
         autoCorrect={false}
@@ -162,11 +140,11 @@ export const TextField: React.SFC<TextFieldProps> = ({
 
 export const SearchField: React.SFC<TextFieldProps> = ({
   input: { onChange, ...restInput },
-    keyboardType,
-    leftContent,
-    returnKeyType,
-    onSubmitEditing,
-    placeholder
+  keyboardType,
+  leftContent,
+  returnKeyType,
+  onSubmitEditing,
+  placeholder
 }) => (
   <FieldItem>
     <SearchFieldInput leftContent={leftContent}>
@@ -197,21 +175,16 @@ export const TextAreaField: React.SFC<TextFieldProps> = ({
   placeholder
 }) => (
   <FieldItem>
-    {
-      (touched && error) && 
-      <FieldError tips={tips}>
-        {touched && error}
-      </FieldError>
-    }
+    {touched && error && <FieldError>{touched && error}</FieldError>}
     <FieldInfo>
-      {!(touched && error) &&
+      {!(touched && error) && (
         <View style={styles.between}>
           {label && <Text style={styles.label}>{label}</Text>}
           {tips && <Tips tips={tips} />}
         </View>
-      }
+      )}
     </FieldInfo>
-    <FieldInput style={(touched && error) && styles.errorBorder}>
+    <FieldInput style={touched && error && styles.errorBorder}>
       <TextInput
         multiline={true}
         numberOfLines={4}
@@ -240,22 +213,17 @@ export const PasswordField: React.SFC<TextFieldProps> = ({
   info
 }) => (
   <FieldItem>
-    {
-      (touched && error) && 
-      <FieldError tips={tips}>
-        {touched && error}
-      </FieldError>
-    }
+    {touched && error && <FieldError>{touched && error}</FieldError>}
     <FieldInfo>
-      {!(touched && error) &&
+      {!(touched && error) && (
         <View style={styles.between}>
           {label && <Text style={styles.label}>{label}</Text>}
           {tips && <Tips tips={tips} />}
         </View>
-      }
+      )}
       {info && <View>{info}</View>}
     </FieldInfo>
-    <FieldInput style={(touched && error) && styles.errorBorder} rightContent={rightContent}>
+    <FieldInput style={touched && error && styles.errorBorder} rightContent={rightContent}>
       <TextInput
         style={styles.input}
         autoCorrect={false}
@@ -276,19 +244,9 @@ export const PasswordField: React.SFC<TextFieldProps> = ({
 export const SubmitButton: React.SFC<SubmitButtonProps> = ({ disabled, loading, onPress, text }) => (
   <FieldItem>
     <TouchableOpacity onPress={!disabled ? onPress : noop} disabled={disabled}>
-      <LinearGradientContainer
-        type="right"
-        colors={disabled ? Colors.disabled : null}
-        style={[styles.submitButton]}
-      >
+      <LinearGradientContainer type="right" colors={disabled ? Colors.disabled : null} style={[styles.submitButton]}>
         <Text style={styles.submitButtonText}>{text}</Text>
-        {loading && (
-          <ActivityIndicator
-            style={styles.indicator}
-            size="small"
-            color="white"
-          />
-        )}
+        {loading && <ActivityIndicator style={styles.indicator} size="small" color="white" />}
       </LinearGradientContainer>
     </TouchableOpacity>
   </FieldItem>

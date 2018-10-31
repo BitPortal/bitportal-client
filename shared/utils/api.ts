@@ -7,6 +7,7 @@ import {
 } from 'constants/env'
 import storage from 'utils/storage'
 import { isMobile } from 'utils/platform'
+import { Platform } from 'react-native'
 
 if (!isMobile) require('isomorphic-fetch')
 
@@ -52,18 +53,23 @@ export const fetchBase = async (
       fetchOptions.body = JSON.stringify(params)
     }
   }
-  // console.log('###---yy ', url)
+  console.log('###---xx ', url)
 
   return fetch(url, fetchOptions).then((res: any) => {
+    console.log(222)
     if (!res.ok) {
       return res.json().then((e: any) => Promise.reject({ message: e }))
     }
+    console.log(333)
 
     const contentType = res.headers.get('content-type')
 
     if (/json/.test(contentType)) {
+      console.log(444)
+
       return res.json()
     }
+    console.log(555)
 
     return null
   })
@@ -74,33 +80,42 @@ const cmsFetchBase = (
   endPoint: string = '/hello',
   params: object = {},
   options: object = {}
-) => fetchBase(method, endPoint, params, {
-  ...options,
-  baseUrl: BITPORTAL_API_CMS_URL
-})
+) =>
+  fetchBase(method, endPoint, params, {
+    ...options,
+    baseUrl: BITPORTAL_API_CMS_URL
+  })
 
 const marketFetchBase = (
   method: FetchMethod = 'GET',
   endPoint: string = '/hello',
   params: object = {},
   options: object = {}
-) => fetchBase(method, endPoint, params, {
-  ...options,
-  baseUrl: BITPORTAL_API_MARKET_URL
-})
+) =>
+  fetchBase(method, endPoint, params, {
+    ...options,
+    baseUrl: 'http://market.corp.bitportal.io/api/v2'
+  })
 
 const traceFetchBase = (
   method: FetchMethod = 'GET',
   endPoint: string = '/hello',
   params: object = {},
   options: object = {}
-) => fetchBase(method, endPoint, params, {
-  ...options,
-  baseUrl: BITPROTAL_API_TRACE_URL
-})
+) =>
+  fetchBase(method, endPoint, params, {
+    ...options,
+    baseUrl: BITPROTAL_API_TRACE_URL
+  })
 
-export const getTickers = (params?: TickerParams) => marketFetchBase('GET', '/tickers', params)
-export const getChart = (params?: ChartParams) => marketFetchBase('GET', '/chart', params)
+export const getTickers = (params?: TickerParams) => {
+  console.log('getTickers')
+  return marketFetchBase('GET', '/tickers', params)
+}
+export const getChart = (params: ChartParams) => {
+  const { chartType, ...excludeChartType } = params
+  return marketFetchBase('GET', `/charts/${chartType}`, excludeChartType)
+}
 export const getCurrencyRate = () => fetchBase('GET', '', {}, { baseUrl: CURRENCY_RATE_URL })
 export const getNewsList = (params: any) => cmsFetchBase('GET', '/article', params)
 export const getNewsBanner = () => cmsFetchBase('GET', '/banner')

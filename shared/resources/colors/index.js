@@ -64,4 +64,4 @@ const Colors = {
   textColor_181_181_181: 'rgb(181,181,181)'
 }
 
-export default Colors
+export default Colors;

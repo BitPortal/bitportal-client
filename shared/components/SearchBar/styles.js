@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   searchBox: {
     flexDirection: 'row',
     borderWidth: 1,
-    borderRadius: 3,
+    borderRadius: 10,
     paddingVertical: 2,
     marginRight: 5,
     marginVertical: Platform.OS === 'ios' ? 2 : 10,

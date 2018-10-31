@@ -1,28 +1,23 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import TableView, { HeaderTitle } from 'screens/Market/TableView'
 import * as tickerActions from 'actions/ticker'
 import * as tokenActions from 'actions/token'
 import { exchangeTickerSelector, sortFilterSelector } from 'selectors/ticker'
+import { eosAccountNameSelector } from 'selectors/eosAccount'
 import { bindActionCreators } from 'redux'
 import { View, InteractionManager } from 'react-native'
 import Modal from 'react-native-modal'
-import { Navigation } from 'react-native-navigation'
-import { EXCHANGES, EXCHANGE_NAMES, QUOTE_ASSETS } from 'constants/market'
+import { MARKET_CATEGORIES, MARKET_CATEGORY_NAMES } from 'constants/market'
 import NavigationBar, { ListButton } from 'components/NavigationBar'
 import SearchBar from 'components/SearchBar'
 import { IntlProvider } from 'react-intl'
 import Colors from 'resources/colors'
-import {
-  MAEKRT_LIST_SELECTED,
-  QUOTES_LIST_SELECTED,
-  MARKET_TOKEN_DETAIL
-} from 'constants/analytics'
+import { QUOTES_LIST_SELECTED } from 'constants/analytics'
 import { onEventWithLabel } from 'utils/analytics'
 import messages from 'resources/messages'
-import ExchangeList from './ExchangeList'
-import { Quotes } from './Quotes'
 import styles from './styles'
+import CategoryList from './CategoryList'
+import MarketContent from './MarketContent'
 
 @connect(
   state => ({
@@ -33,7 +28,9 @@ import styles from './styles'
     sortFilter: sortFilterSelector(state),
     quoteAssetFilter: state.ticker.get('quoteAssetFilter'),
     baseAsset: state.ticker.get('baseAsset'),
-    searchTerm: state.ticker.get('searchTerm')
+    searchTerm: state.ticker.get('searchTerm'),
+    marketCategory: state.ticker.get('marketCategory'),
+    eosAccountName: eosAccountNameSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators(
@@ -62,7 +59,7 @@ export default class Market extends Component {
     activeQuoteAsset: null
   }
 
-  searchCoin = (coinName) => {
+  searchCoin = coinName => {
     this.setState({ coinName })
   }
 
@@ -70,17 +67,16 @@ export default class Market extends Component {
     this.setState({ isVisible: true })
   }
 
-  changeExchange = (exchange) => {
+  changeCategory = category => {
     //Umeng analytics
-    onEventWithLabel(MAEKRT_LIST_SELECTED, exchange)
     InteractionManager.runAfterInteractions(() => {
-      this.setState({ isVisible: false, activeQuoteAsset: null }, () => {
-        this.props.actions.selectTickersByExchange(exchange)
+      this.setState({ isVisible: false }, () => {
+        this.props.actions.setMarketCategory(category)
       })
     })
   }
 
-  changeQuote = (quote) => {
+  changeQuote = quote => {
     //Umeng analytics
     onEventWithLabel(QUOTES_LIST_SELECTED, quote)
     this.setState({ activeQuoteAsset: quote }, () => {
@@ -89,29 +85,29 @@ export default class Market extends Component {
       })
     })
   }
-
-  pressListItem = (item) => {
-    //Umeng analytics
-    onEventWithLabel(MARKET_TOKEN_DETAIL, '行情 - token详情')
-    const baseAsset = item.get('base_asset')
-    InteractionManager.runAfterInteractions(() => {
-      this.props.actions.selectCurrentPair(item)
-      this.props.actions.selectBaseAsset(baseAsset)
-      this.props.actions.getTokenDetailRequested({ symbol: baseAsset })
-      Navigation.push(this.props.componentId, {
-        component: {
-          name: 'BitPortal.MarketDetails',
-          passProps: { item }
-        }
-      })
-    })
-  }
+  //
+  // pressListItem = (item) => {
+  //   //Umeng analytics
+  //   onEventWithLabel(MARKET_TOKEN_DETAIL, '行情 - token详情');
+  //   const baseAsset = item.get('base_asset');
+  //   InteractionManager.runAfterInteractions(() => {
+  //     this.props.actions.selectCurrentSymbol(item);
+  //     this.props.actions.selectBaseAsset(baseAsset);
+  //     this.props.actions.getTokenDetailRequested({ symbol: baseAsset });
+  //     Navigation.push(this.props.componentId, {
+  //       component: {
+  //         name: 'BitPortal.MarketDetails',
+  //         passProps: { item }
+  //       }
+  //     });
+  //   });
+  // };
 
   onRefresh = () => {
     this.props.actions.getTickersRequested({
-      exchange: this.props.exchangeFilter,
-      quote_asset: this.props.quoteAssetFilter,
-      sort: this.props.sortFilter,
+      // exchange: this.props.exchangeFilter,
+      // quote_asset: this.props.quoteAssetFilter,
+      // sort: this.props.sortFilter,
       limit: 200
     })
   }
@@ -122,15 +118,15 @@ export default class Market extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     return (
-      nextProps.loading !== this.props.loading
-      || nextProps.locale !== this.props.locale
-      || nextProps.exchangeFilter !== this.props.exchangeFilter
-      || nextProps.sortFilter !== this.props.sortFilter
-      || nextProps.quoteAssetFilter !== this.props.quoteAssetFilter
-      || nextState.isVisible !== this.state.isVisible
-      || nextState.coinName !== this.state.coinName
-      || nextState.activeQuoteAsset !== this.state.activeQuoteAsset
-      || nextState.searchTerm !== this.props.searchTerm
+      nextProps.loading !== this.props.loading ||
+      nextProps.locale !== this.props.locale ||
+      nextProps.exchangeFilter !== this.props.exchangeFilter ||
+      nextProps.sortFilter !== this.props.sortFilter ||
+      nextProps.quoteAssetFilter !== this.props.quoteAssetFilter ||
+      nextState.isVisible !== this.state.isVisible ||
+      nextState.coinName !== this.state.coinName ||
+      nextState.activeQuoteAsset !== this.state.activeQuoteAsset ||
+      nextState.searchTerm !== this.props.searchTerm
     )
   }
 
@@ -138,52 +134,31 @@ export default class Market extends Component {
     this.onRefresh()
   }
 
-  onChangeText = (text) => {
+  onChangeText = text => {
     this.props.actions.setSearchTerm(text)
   }
 
   render() {
-    const {
-      ticker,
-      locale,
-      loading,
-      exchangeFilter,
-      quoteAssetFilter,
-      searchTerm
-    } = this.props
+    const { locale, searchTerm, marketCategory, componentId } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            leftButton={
-              <ListButton
-                label={EXCHANGE_NAMES[exchangeFilter]}
-                onPress={this.selectExchange}
-              />
-            }
+            leftButton={<ListButton label={MARKET_CATEGORY_NAMES[marketCategory]} onPress={this.selectExchange} />}
             rightButton={
-              <SearchBar
-                searchTerm={searchTerm}
-                onChangeText={text => this.onChangeText(text)}
-                clearSearch={() => {
-                  this.props.actions.setSearchTerm('')
-                }}
-              />
+              marketCategory === 'SYSTEM' ? null : (
+                <SearchBar
+                  searchTerm={searchTerm}
+                  onChangeText={text => this.onChangeText(text)}
+                  clearSearch={() => {
+                    this.props.actions.setSearchTerm('')
+                  }}
+                />
+              )
             }
           />
-          <Quotes
-            onPress={this.changeQuote}
-            quote={this.state.activeQuoteAsset || quoteAssetFilter}
-            quoteList={QUOTE_ASSETS[exchangeFilter]}
-          />
-          <HeaderTitle messages={messages[locale]} />
-          <TableView
-            refreshing={loading}
-            onRefresh={this.onRefresh}
-            data={ticker}
-            onPress={this.pressListItem}
-          />
+          <MarketContent componentId={componentId} category={marketCategory} />
           <Modal
             animationIn="fadeIn"
             animationOut="fadeOut"
@@ -193,11 +168,14 @@ export default class Market extends Component {
             hideModalContentWhileAnimating
             backdropOpacity={0.3}
           >
-            <ExchangeList
-              exchangeList={EXCHANGES}
-              activeExchange={exchangeFilter}
-              changeExchange={this.changeExchange}
+            <CategoryList
+              loggedIn={this.props.eosAccountName}
+              categoryList={MARKET_CATEGORIES}
+              activeCategory={marketCategory}
+              changeCategory={this.changeCategory}
               dismissModal={this.closeExchangeList}
+              locale={this.props.locale}
+              messages={messages}
             />
           </Modal>
         </View>

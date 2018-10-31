@@ -7,17 +7,23 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: NAV_BAR_HEIGHT,
     backgroundColor: Colors.mainThemeColor,
+    // backgroundColor: 'red',
+
+    marginBottom: 5,
     justifyContent: 'center',
-    ...ifIphoneX({
-      paddingTop: 24
-    }, {
-      paddingTop: 0
-    })
+    ...ifIphoneX(
+      {
+        paddingTop: 24
+      },
+      {
+        paddingTop: 0
+      }
+    )
   },
   textTitle: {
-    fontSize: FontScale(20),
+    fontSize: FontScale(18),
     color: Colors.textColor_FFFFEE,
-    fontWeight: 'bold',
+    // fontWeight: "bold",
     width: SCREEN_WIDTH / 2,
     textAlign: 'center'
   },
@@ -29,7 +35,8 @@ const styles = StyleSheet.create({
     minWidth: 100,
     height: 40,
     paddingTop: Platform.OS === 'ios' ? 6 : 4,
-    paddingLeft: 20,
+    paddingLeft: 32,
+    // marginBottom: 20,
     alignItems: 'flex-start',
     justifyContent: 'center'
   },
