@@ -209,6 +209,7 @@
   "resource_ram_text_tips_3": "3. 内存容量的交易将要缴纳 (x+199)/200 的费用，x 为您的交易额。",
 
   "market_label_market_cap": "市值",
+  "market_label_volume_24h": "交易量",
   "market_label_price": "价格",
   "market_label_change": "浮动",
   "market_token_detail_label_listed_exchange": "上架交易所",
@@ -394,7 +395,6 @@
   "market_menu_button_overview": "总览",
   "market_menu_button_systemresource": "系统资源",
   "market_list_text_marketcap": "总市值",
-  "market_list_text_mcap": "总市值",
   "market_coincard_text_h": "时",
   "market_coincard_text_d": "日",
   "market_chart_text_h": "时",
