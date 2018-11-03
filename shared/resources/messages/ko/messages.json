@@ -247,6 +247,14 @@
   "voting_button_vote": "투표하기",
   "voting_error_popup_text_no_stake": "BP 투표 전에 EOS를 먼저 Stake 해주세요.",
   "voting_error_popup_text_vote_failed": "투표 실패",
+  "voting_popup_label_stake_net_insufficient": "NET insufficient",
+  "voting_popup_text_stake_net_insufficient": "Your NET is not insufficient, please go to \"Rescource Management\" to stake. NET is an EOS system rescource, and it is the factor of ur voting weight.",
+  "voting_popup_label_stake_cpu_insufficient": "CPU insufficient",
+  "voting_popup_text_stake_cpu_insufficient": "Your CPU is not insufficient, please go to \"Rescource Management\" to stake. CPU is an EOS system rescource, and it is the factor of ur voting weight.",
+  "voting_popup_label_stake_new_account": "Need to stake before voting!",
+  "voting_popup_text_stake_new_account": "You have not stake EOS for your vote, please go to \"Rescource Management\" to stake.",
+  "voting_popup_text_voting_successful": "Vote success",
+
 
   "bp_info_label_team_location": "팀 위치",
   "bp_info_label_bp_location": "BP 위치",

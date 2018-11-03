@@ -9,11 +9,9 @@ import * as tickerActions from 'actions/ticker'
 import * as tokenActions from 'actions/token'
 import FastImage from 'react-native-fast-image'
 
-import { FontScale } from 'utils/dimens'
 import abbreviate from 'number-abbreviate'
 import { filterBgColor } from 'utils'
-import { ASSET_FRACTION, DEFAULT_SORT_FILTER } from 'constants/market'
-import Images from 'resources/images'
+import { ASSET_FRACTION } from 'constants/market'
 import messages from 'resources/messages'
 import styles from './styles'
 

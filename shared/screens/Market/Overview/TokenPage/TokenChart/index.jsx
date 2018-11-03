@@ -6,7 +6,6 @@ import * as chartActions from 'actions/chart'
 import { formatChartDatasetSelector, yAxisSelector, xAxisSelector } from 'selectors/chart'
 import { LineChart } from 'react-native-charts-wrapper'
 import { RANGES, CHART_RANGES } from 'constants/chart'
-import { FLOATING_CARD_WIDTH } from 'utils/dimens'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 
 import messages from 'resources/messages'
@@ -107,7 +106,7 @@ export default class TokenChart extends Component {
                   ref="chartt"
                   keepPositionOnRotation={false}
                   // onSelect={this.handleSelect.bind(this)}
-                  onChange={event => {}}
+                  onChange={() => {}}
                   viewPortOffsets={{ left: 0, top: 10, right: 0, bottom: 5 }}
                 />
               )}

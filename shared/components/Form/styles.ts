@@ -1,6 +1,5 @@
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Colors from 'resources/colors'
-import { FontScale } from 'utils/dimens'
 import { Platform, StyleSheet } from 'react-native'
 import { FontScale, FLOATING_CARD_WIDTH, FLOATING_CARD_BORDER_RADIUS } from 'utils/dimens'
 
