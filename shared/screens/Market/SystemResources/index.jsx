@@ -14,7 +14,7 @@ import styles from './styles'
 export default class SystemResources extends React.Component {
   state = {
     /*eslint-disable*/
-    // index: 0,
+    index: 0,
     routes: [{ key: 'first', title: 'CPU' }, { key: 'second', title: 'RAM' }, { key: 'third', title: 'NET' }]
   }
 
@@ -67,7 +67,9 @@ export default class SystemResources extends React.Component {
           second: Ram,
           third: Net
         })}
-        onIndexChange={() => {}}
+        onIndexChange={index => {
+          this.setState({ index })
+        }}
         initialLayout={{ width: Dimensions.get('window').width }}
         renderTabBar={this._renderTabBar}
       />
