@@ -22,6 +22,7 @@ import styles from './styles'
 export default class TokenDetails extends Component {
   render() {
     const { locale, token, loading } = this.props
+    console.log('tokenn', token.toJS())
     return loading ? (
       <View>
         <DetailPanel>
@@ -78,7 +79,10 @@ export default class TokenDetails extends Component {
             )}
             {token.keySeq().map(
               item =>
-                item !== 'total_supply' && item !== 'circulating_supply' && MARKET_DETAIL_KEYS.includes(item) ? (
+                item !== 'total_supply' &&
+                item !== 'circulating_supply' &&
+                MARKET_DETAIL_KEYS.includes(item) &&
+                token.get(item).length !== 0 ? (
                   <View key={item}>
                     <View style={[styles.spaceBetween, { marginVertical: 10 }]}>
                       <Text style={styles.keyText}>
