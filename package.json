@@ -41,8 +41,8 @@
     "test": "cross-env NODE_ENV=test APP_ENV=development TARGET=node mocha-webpack --include ./test/helpers/setup.js --recursive",
     "cover": "cross-env NODE_ENV=test APP_ENV=development TARGET=node nyc --reporter=lcov --reporter=text mocha-webpack --include ./test/helpers/setup.js --recursive",
     "lint": "npm run lint:js && npm run lint:ts",
-    "lint:js": "eslint --ext .js --ext .jsx server shared test --fix",
-    "lint:ts": "tslint --project . --fix",
+    "lint:js": "eslint --ext .js --ext .jsx server shared test",
+    "lint:ts": "tslint --project . ",
     "tsc": "tsc",
     "postinstall": "sed -i '' 's/#import <RCTAnimation\\/RCTValueAnimatedNode.h>/#import \"RCTValueAnimatedNode.h\"/' ./node_modules/react-native/Libraries/NativeAnimation/RCTNativeAnimatedNodesManager.h",
     "sketch": "skpm-build --watch --run"
