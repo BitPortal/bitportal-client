@@ -210,6 +210,7 @@
   "resource_ram_text_tips_3": "3. Trading RAM requires a fee charge of (x+199)/200, x is your trading volume.",
 
   "market_label_market_cap": "Market Cap",
+  "market_label_volume_24h": "Volume 24h",
   "market_label_price": "Price",
   "market_label_change": "Change",
   "market_token_detail_label_listed_exchange": "Listed Exchange",
@@ -395,7 +396,6 @@
   "market_menu_button_overview": "Overview",
   "market_menu_button_systemresource": "System Resources",
   "market_list_text_marketcap": "Market Cap",
-  "market_list_text_mcap": "M Cap",
   "market_coincard_text_h": "H",
   "market_coincard_text_d": "D",
   "market_chart_text_h": "H",
