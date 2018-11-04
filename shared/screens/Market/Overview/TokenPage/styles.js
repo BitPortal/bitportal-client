@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT
+    height: SCREEN_HEIGHT
   },
   cardContainer: {
     width: SCREEN_WIDTH,
