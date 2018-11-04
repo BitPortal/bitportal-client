@@ -8,7 +8,8 @@ import {
   TAB_BAR_HEIGHT,
   FLOATING_CARD_WIDTH,
   FLOATING_CARD_BORDER_RADIUS,
-  WidthPercent
+  WidthPercent,
+  MARKET_BAR_HEIGHT
 } from 'utils/dimens'
 
 const styles = StyleSheet.create({
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     width: FLOATING_CARD_WIDTH,
-    height: 30,
+    height: MARKET_BAR_HEIGHT,
     backgroundColor: Colors.bgColor_30_31_37,
     flexDirection: 'row',
     alignItems: 'center',

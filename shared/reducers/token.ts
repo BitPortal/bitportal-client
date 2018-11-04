@@ -29,6 +29,9 @@ export default handleActions(
     },
     [actions.getTokenDetailFailed](state, action) {
       return state.set('error', action.payload).set('loading', false)
+    },
+    [actions.clearToken](state) {
+      return state.set('data', Immutable.fromJS({}))
     }
   },
   initialState
