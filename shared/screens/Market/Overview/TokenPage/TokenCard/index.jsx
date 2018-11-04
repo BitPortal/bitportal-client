@@ -121,7 +121,7 @@ export default class TokenCard extends Component {
               </View>
               <View style={styles.innerCardContainer}>
                 <Text style={styles.keyText}>
-                  <FormattedMessage id="market_label_volume_24h" />
+                  <FormattedMessage id="market_label_volume_24h" defaultMessage={messages.en.market_label_volume_24h} />
                 </Text>
                 <Text style={{ color: 'white' }}>{`$${abbreviate(ticker.get('volume_24h_usd'), 2)}`}</Text>
               </View>
