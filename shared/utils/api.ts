@@ -56,21 +56,9 @@ export const fetchBase = async (
   console.log('###---xx ', url)
 
   return fetch(url, fetchOptions).then((res: any) => {
-    console.log(222)
-    if (!res.ok) {
-      return res.json().then((e: any) => Promise.reject({ message: e }))
-    }
-    console.log(333)
-
+    if (!res.ok) return res.json().then((e: any) => Promise.reject({ message: e }))
     const contentType = res.headers.get('content-type')
-
-    if (/json/.test(contentType)) {
-      console.log(444)
-
-      return res.json()
-    }
-    console.log(555)
-
+    if (/json/.test(contentType)) return res.json()
     return null
   })
 }

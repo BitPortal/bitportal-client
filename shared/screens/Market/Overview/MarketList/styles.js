@@ -8,15 +8,17 @@ import {
   TAB_BAR_HEIGHT,
   FLOATING_CARD_WIDTH,
   FLOATING_CARD_BORDER_RADIUS,
-  WidthPercent
+  WidthPercent,
+  MARKET_BAR_HEIGHT
 } from 'utils/dimens'
 
 const styles = StyleSheet.create({
   scrollContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - TAB_BAR_HEIGHT,
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - TAB_BAR_HEIGHT - MARKET_BAR_HEIGHT,
     backgroundColor: Colors.mainThemeColor,
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingBottom: 15
   },
   listItem: {
     borderBottomWidth: 1,
