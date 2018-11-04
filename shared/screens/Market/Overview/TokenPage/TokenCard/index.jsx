@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Text, View } from 'react-native'
+import { bindActionCreators } from 'redux'
+import { Text, View, ActivityIndicator, InteractionManager } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import Colors from 'resources/colors'
 import { filterBgColor } from 'utils'
 import { ASSET_FRACTION } from 'constants/market'
 import { IntlProvider, FormattedNumber, FormattedMessage } from 'react-intl'
 import abbreviate from 'number-abbreviate'
+import * as tokenActions from 'actions/token'
 
 import messages from 'resources/messages'
 import styles from './styles'
@@ -32,13 +34,26 @@ const Tag = props => (
     loading: state.token.get('loading')
     // ticker: tokenTickerSelector(state),
   }),
-  null,
+  dispatch => ({
+    actions: bindActionCreators(
+      {
+        ...tokenActions
+      },
+      dispatch
+    )
+  }),
   null,
   { withRef: true }
 )
 export default class TokenCard extends Component {
+  componentWillUnmount() {
+    InteractionManager.runAfterInteractions(() => {
+      this.props.actions.clearToken()
+    })
+  }
+
   render() {
-    const { token, ticker, locale } = this.props
+    const { token, ticker, locale, loading } = this.props
     const tags = token.get('tags')
 
     return (
@@ -52,6 +67,7 @@ export default class TokenCard extends Component {
                   uri: `https://cdn.bitportal.io/tokenicon/128/color/${token.get('symbol')?.toLowerCase()}.png`
                 }}
               />
+
               <View
                 style={{
                   flex: 1,

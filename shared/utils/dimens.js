@@ -9,42 +9,43 @@ export const isIphoneX = () => {
   if (Platform.OS === 'ios') {
     return !Platform.isPad && !Platform.isTVOS && (dimen.height === 812 || dimen.width === 812)
   } else {
-    return _.findIndex(androidX, o => (DeviceInfo.getUserAgent().indexOf(o) !== -1)) !== -1
+    return _.findIndex(androidX, o => DeviceInfo.getUserAgent().indexOf(o) !== -1) !== -1
   }
 }
 
 export const ifIphoneX = (iphoneXStyle, regularStyle) => {
   if (isIphoneX()) {
-    return iphoneXStyle;
+    return iphoneXStyle
   }
-  return regularStyle;
-};
+  return regularStyle
+}
 
 const getScreenHeight = () => {
-  const tempHeight = Dimensions.get("window").height;
-  return Platform.OS === "ios" ? tempHeight : tempHeight - StatusBar.currentHeight;
-};
+  const tempHeight = Dimensions.get('window').height
+  return Platform.OS === 'ios' ? tempHeight : tempHeight - StatusBar.currentHeight
+}
 
 const getNavBarHeigt = () => {
-  let tempHeight = Platform.OS === "ios" ? 74 : 58;
-  tempHeight = isIphoneX() ? 88 : tempHeight;
-  return tempHeight;
-};
+  let tempHeight = Platform.OS === 'ios' ? 74 : 58
+  tempHeight = isIphoneX() ? 88 : tempHeight
+  return tempHeight
+}
 
 const getTabBarHeight = () => {
-  let tempHeight = Platform.OS === "ios" ? 49 : 56;
-  tempHeight = isIphoneX() ? 83 : tempHeight;
-  return tempHeight;
-};
+  let tempHeight = Platform.OS === 'ios' ? 49 : 56
+  tempHeight = isIphoneX() ? 83 : tempHeight
+  return tempHeight
+}
 
-export const SCREEN_WIDTH = Dimensions.get("window").width;
-export const FLOATING_CARD_WIDTH = SCREEN_WIDTH - 30;
-export const FLOATING_CARD_BORDER_RADIUS = 7;
-export const FLOATING_CARD_MARGIN_BOTTOM = 10;
-export const SCREEN_HEIGHT = getScreenHeight();
-export const NAV_BAR_HEIGHT = getNavBarHeigt();
-export const TAB_BAR_HEIGHT = getTabBarHeight();
-export const KEYBOARD_HEIGHT = Platform.OS === "ios" ? 240 : 300;
-export const FontScale = size => Math.round((size * SCREEN_WIDTH) / 375);
-export const WidthPercent = percent => (SCREEN_WIDTH * percent) / 100;
-export const HeightPercent = percent => (SCREEN_HEIGHT * percent) / 100;
+export const SCREEN_WIDTH = Dimensions.get('window').width
+export const FLOATING_CARD_WIDTH = SCREEN_WIDTH - 30
+export const FLOATING_CARD_BORDER_RADIUS = 7
+export const FLOATING_CARD_MARGIN_BOTTOM = 10
+export const SCREEN_HEIGHT = getScreenHeight()
+export const NAV_BAR_HEIGHT = getNavBarHeigt()
+export const TAB_BAR_HEIGHT = getTabBarHeight()
+export const KEYBOARD_HEIGHT = Platform.OS === 'ios' ? 240 : 300
+export const MARKET_BAR_HEIGHT = 30
+export const FontScale = size => Math.round((size * SCREEN_WIDTH) / 375)
+export const WidthPercent = percent => (SCREEN_WIDTH * percent) / 100
+export const HeightPercent = percent => (SCREEN_HEIGHT * percent) / 100

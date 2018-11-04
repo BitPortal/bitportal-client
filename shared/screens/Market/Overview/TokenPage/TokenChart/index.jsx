@@ -12,7 +12,7 @@ import messages from 'resources/messages'
 import styles from './styles'
 
 const CHART_DESCRIPTION = {
-  text: 'Bitportal',
+  text: 'BitPortal',
   textColor: processColor('rgba(255,255,255,0.3)')
 }
 
