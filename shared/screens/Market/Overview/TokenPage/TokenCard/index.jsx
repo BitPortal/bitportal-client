@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Text, View, ActivityIndicator, InteractionManager } from 'react-native'
+import { Text, View, InteractionManager } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import Colors from 'resources/colors'
 import { filterBgColor } from 'utils'
@@ -31,7 +31,6 @@ const Tag = props => (
   state => ({
     locale: state.intl.get('locale'),
     token: state.token.get('data'),
-    loading: state.token.get('loading')
     // ticker: tokenTickerSelector(state),
   }),
   dispatch => ({
@@ -53,7 +52,7 @@ export default class TokenCard extends Component {
   }
 
   render() {
-    const { token, ticker, locale, loading } = this.props
+    const { token, ticker, locale } = this.props
     const tags = token.get('tags')
 
     return (
