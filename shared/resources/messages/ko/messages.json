@@ -10,15 +10,13 @@
   "general_nav_discovery": "Discovery",
   "general_nav_profile": "My",
   "general_error_popup_text_no_account": "계정을 추가하지 않았습니다. \n계정 추가 후 다시 시도해주세요.",
-
+  "general_error_popup_text_network_unconnected": "No network connection. Please check your network",
   "search_text_search": "검색",
   "search_button_cancel": "취소",
   "search_label_no_search_result": "검색 결과가 존재하지 않습니다.",
-
   "copy_button_copy": "복사",
   "copy_text_copy_success": "복사 완료",
   "copy_text_copy_failed": "복사 실패, 다시 시도해주세요.",
-
   "assets_title_eos_wallet": "EOS 지갑",
   "assets_dropdown_button_create": "계정 생성",
   "assets_no_account_button_create": "계정 생성",
@@ -43,7 +41,6 @@
   "assets_tos_popup_label_tos": "서비스이용약관 및 개인정보처리방침",
   "assets_tos_popup_text_agree": "보인은 BitPortal의 서비스이용약관 및 개인정보처리방침에 동의합니다.",
   "assets_tos_popup_button_next": "다음",
-
   "add_eos_create_title_create": "EOS 계정 생성",
   "add_eos_create_label_account_name": "계정명",
   "add_eos_create_text_account_name": "12자리로, 숫자 1-5와 알파벳 a-z로 조합해주세요.",
@@ -68,13 +65,13 @@
   "add_eos_create_friend_assistance_title_friend_assistance": "친구에게 계정 생성해주기",
   "add_eos_create_friend_assistance_text_tip1": "1. EOS 계정 생성을 위해서는 EOS 토큰이 필요합니다. EOS 밸런스가 존재하는 지갑의 QR코드 스캐닝 기능을 통해 생성에 필요한 결제를 진행해주세요.",
   "add_eos_create_friend_assistance_text_tip2": "2. 계정 생성 후, 개인 자산 보호를 위해 Private Key을 안전한 곳에 백업해두시기 바랍니다.",
+  "add_eos_create_smart_contract_text_tip3": "주의: \n해당 계정 생성 방법은 DAppPub의 스마트 컨트랙으로 이루어지며, 진행과정은 매뉴얼화 되어 있지 않습니다. 실수로 틀린 정보를 입력하시게 되더라도, BitPortal에서는 어떠한 도움도 드릴 수 없다는 점 유의해주세요. \n오픈소스 주소:",
   "add_eos_create_friend_assistance_label_account": "계정 이름",
   "add_eos_create_friend_assistance_label_owner": "Owner Public Key",
   "add_eos_create_friend_assistance_label_active": "Active Public Key",
   "add_eos_create_smart_contract_title_smart_contract": "스마트 컨트랙을 통해 생성하기",
   "add_eos_create_smart_contract_text_tip1": "1. 현재 소수의 거래소에서만 계정 생성 기능을 보유하고 있습니다. 개인 자산 보호를 위해, 송금 시 'Memo' 기능을 지원하는 거래소에서 송금을 진행해주세요.",
   "add_eos_create_smart_contract_text_tip2": "2. 스마트 컨트랙을 통한 계정 생성 시, 반드시 2개의 EOS를 송금해주세요. 송금 완료 후, 이체된 EOS 중 일부는 자동으로 EOS의 CPU와 NET로 스테이킹이 되며, 남은 양으로 RAM을 자동 구매하게 됩니다.",
-  "add_eos_create_smart_contract_text_tip3": "주의: \n해당 계정 생성 방법은 DAppPub의 스마트 컨트랙으로 이루어지며, 진행과정은 매뉴얼화 되어 있지 않습니다. 실수로 틀린 정보를 입력하시게 되더라도, BitPortal에서는 어떠한 도움도 드릴 수 없다는 점 유의해주세요. \n오픈소스 주소:",
   "add_eos_create_smart_contract_label_contract_account_name": "컨트랙 계정명",
   "add_eos_create_smart_contract_label_contract_memo": "계정 메모",
   "add_eos_create_button_next": "다음",
@@ -83,15 +80,15 @@
   "add_eos_label_password_strength_strong": "강함",
   "add_eos_create_smart_contract_button_cancel": "취소",
   "add_eos_create_smart_contract_button_checkstatus": "현황 보기",
-
   "add_eos_label_set_password": "비밀번호 입력하기",
   "add_eos_text_password": "비밀번호 설정",
   "add_eos_text_confirm_password": "비밀번호 다시 입력하기",
   "add_eos_text_password_hint": "비밀번호 힌트 (선택)",
+  "add_eos_text_password_hint_blank": "Please enter password hint ",
   "add_eos_popup_text_password_tips": "오로지 BitPortal의 기능들을 정상 사용하기 위한 비밀번호입니다. 해당 비밀번호는 다른 어플리케이션에서는 사용할 수 없습니다. BitPortal은 사용자의 비밀번호를 어떠한 형태로든 저장하지 않으며, 사용자가 비밀번호를 잊어버렸을 경우, 프라이빗 키를 통해 비밀번호를 되찾으시면 됩니다.",
   "add_eos_error_text_password_blank": "비밀번호를 입력해주세요.",
   "add_eos_error_text_confirm_password": "비밀번호를 다시 입력해주세요.",
-  "add_eos_error_text_password_min_character": "비밀번호는 최소 6자리로 입력해주세요.", 
+  "add_eos_error_text_password_min_character": "비밀번호는 최소 6자리로 입력해주세요.",
   "add_eos_error_text_password_max_character": "비밀번호는 64자리를 넘길 수 없습니다.",
   "add_eos_error_text_password_unmatch": "비밀번호가 일치하지 않습니다.",
   "add_eos_error_text_password_hint_max_character": "비밀번호 힌트는 64자리를 넘길 수 없습니다.",
@@ -113,11 +110,9 @@
   "add_create_success_button_skip_backup": "건너뛰기",
   "add_import_success_title_select_account": "계정 선택",
   "add_eos_hint_popup_text_private_key": "소유자 Key : 계정 마스터 권한.이 계정의 최종 속성을 선언하십시오. 소유자 권한을 사용해야하는 거래는 거의 없습니다. 소유자 키는 오프라인 저장소에 저장하고 다른 사람과 공유하지 않는 것이 좋습니다. 소유자 키는 다른 모든 사용 권한을 복원하는 데 사용할 수 있습니다. \n활성 Key : 활동 권한. 이 권한은 일반적으로 전송, 투표 및 일상 거래와 같은 일부 일반 작업을 수행하는 데 사용됩니다.",
-
   "assets_label_total_assets": "Assets",
   "assets_label_assets": "Asset",
   "assets_label_private_key_no_backup": "백업 기록 없음",
-
   "scan_title_scan": "스캔하기",
   "scan_button_album": "앨범",
   "scan_text_processing": "처리중입니다.\n잠시만 기다려주세요.",
@@ -128,15 +123,12 @@
   "scan_popup_text_album_disabled": "시스템 설정 페이지에서 BitPortal 어플리케이션의 앨범 기능을 활성화 시켜주세요.",
   "scan_popup_button_cancel": "취소",
   "scan_popup_button_enable": "활성화 하기",
-
   "assets_list_title_token_list": "자산 목록",
   "assets_list_text_no_search_result": "BitPortal 지갑 속 아직 지원이 되고 있지 않은 EOS기반 토큰이 존재한다면,",
   "assets_list_link_contact_us": "연락해주세요.",
-
   "receive_title_receive": "받기",
   "receive_label_receive_amount": "수량",
   "receive_text_receive_amount": "받을 수량 입력하기",
-
   "send_title_send": "보내기",
   "send_label_account_name": "계정명",
   "send_error_text_account_name": "계정명을 입력해주세요.",
@@ -151,11 +143,11 @@
   "send_error_text_memo_max_character": "최대 입력 가능한 글자수를 초과했습니다.",
   "send_button_send": "보내기",
   "send_error_popup_text_send_failed": "거래 실패",
+  "send_confirm_title_confirm": "Confirm",
   "send_confirm_label_from": "보내기",
   "send_confirm_label_to": "To",
   "send_confirm_label_memo": "메모",
   "send_confirm_button_confirm": "확인",
-
   "transaction_list_button_send": "보내기",
   "transaction_list_button_receive": "받기",
   "transaction_list_text_no_data": "더 이상의 거래기록이 존재하지 않습니다.",
@@ -170,7 +162,6 @@
   "transaction_detail_button_confirm": "확인",
   "transaction_label_status_failed": "실패",
   "transaction_label_status_completed": "완료",
-
   "resource_label_available": "Available",
   "resource_label_total": "Total",
   "resource_label_used": "사용됨",
@@ -192,24 +183,26 @@
   "resource_error_popup_text_cpu_insufficient": "CPU 자원이 부족합니다.",
   "resource_error_popup_text_eos_system_error": "EOS 시스템 오류.\n잠시 후 다시 시도해주세요.",
   "resource_label_tips": "Tips:",
+  "resource_cpu_text_tips": "1. CPU is one of the resources in EOS network. You need to stake EOS in order to obtain CPU.\n\n2. You can unstake your staked EOS. Unstaked assets will be credited to your account in 72 hours.",
   "resource_cpu_text_tips_1": "1. CPU는 EOS 네트워크 자원 중 하나입니다. EOS를 Stake하여 CPU를 확보할 수 있습니다.",
   "resource_cpu_text_tips_2": "2. Stake된 EOS를 Unstake 할 수 있습니다. Ustake된 자산은 72시간 후 보유 중 자산으로 다시 기록됩니다.",
+  "resource_net_text_tips": "1. NET is one of the resources in EOS network. You need to stake EOS in order to obtain NET.\n\n2. You can unstake your staked EOS. Unstaked assets will be credited to your account in 72 hours.",
   "resource_net_text_tips_1": "1. NET는 EOS 네트워크 자원 중 하나입니다. EOS를 Stake하여 NET를 확보할 수 있습니다.",
   "resource_net_text_tips_2": "2. Stake된 EOS를 Unstake 할 수 있습니다. Ustake된 자산은 72시간 후 보유 중 자산으로 다시 기록됩니다.",
   "resource_ram_label_price": "가격",
   "resource_ram_button_buy": "구매",
   "resource_ram_button_sell": "판매",
+  "resource_ram_text_tips": "1. RAM is one of the resources in EOS network. You need to buy with EOS in order to obtain RAM.\n\n2. You can buy or sell RAM anytime.\n\n3. Trading RAM requires a fee charge of (x+199)/200, x is your trading volume.",
   "resource_ram_text_tips_1": "1. RAM은 EOS 네트워크 자원 중 하나입니다. EOS를 Stake하여 RAM을 확보할 수 있습니다.",
   "resource_ram_text_tips_2": "2. RAM을 상시 구매/판매 할 수 있습니다.",
   "resource_ram_text_tips_3": "3. RAM 거래시, (x+199)/200의 거래 비용이 소모됩니다. 'x'는 실제 거래 수량을 나타냅니다.",
-  
   "market_label_market_cap": "시가 총액",
+  "market_label_volume_24h": "Volume 24h",
   "market_label_price": "가격",
   "market_label_change": "변동",
   "market_token_detail_label_listed_exchange": "상장된 거래소",
   "market_token_detail_button_detail": "토큰 세부 정보",
   "market_token_detail_label_24h_volumn": "24시간 거래량",
-
   "discovery_title_discovery": "Discovery",
   "discovery_label_dapp_store": "DApp Store",
   "discovery_label_dapp_more": "More",
@@ -221,7 +214,6 @@
   "discovery_dapp_text_favourite_limit": "즐겨찾기 항목은 최대 8까지 등록 가능합니다.",
   "discovery_dapp_popup_button_cancel": "취소",
   "discovery_dapp_popup_button_understand": "인지했습니다.",
-
   "profile_title_profile": "프로필",
   "profile_button_voting": "BP 투표",
   "profile_button_resource": "자원 관리",
@@ -234,9 +226,7 @@
   "profile_text_version": "앱버전",
   "profile_text_copyright_1": "Copyright @2018 Patricia Ltd.",
   "profile_text_copyright_2": "All rights reserved",
-
   "transaction_all_title_transaction": "전체 거래 기록",
-
   "voting_button_resources": "자원",
   "voting_label_default": "Default",
   "voting_label_ranking": "랭킹",
@@ -254,13 +244,10 @@
   "voting_popup_label_stake_new_account": "Need to stake before voting!",
   "voting_popup_text_stake_new_account": "You have not stake EOS for your vote, please go to \"Rescource Management\" to stake.",
   "voting_popup_text_voting_successful": "Vote success",
-
-
   "bp_info_label_team_location": "팀 위치",
   "bp_info_label_bp_location": "BP 위치",
   "bp_info_label_team_intro": "팀 소개",
   "bp_info_label_social_media": "SNS",
-
   "contacts_add_title_add_contact": "연락처 추가",
   "contacts_add_label_account_name": "계정명",
   "contacts_add_error_text_account_name_invalid": "계정명이 올바르지 않습니다.\n다시 입력해주세요.",
@@ -269,11 +256,9 @@
   "contacts_add_label_contact_remark": "연락처 설명",
   "contacts_add_error_text_contact_remark_max_character": "연락처 설명은 64자리를 넘길 수 없습니다.",
   "contacts_add_button_add": "추가",
-
   "wallet_mgmt_button_export_private_key": "프라이빗 키 추출",
   "wallet_mgmt_button_change_password": "비밀번호 재설정",
   "wallet_mgmt_button_sign_out": "로그아웃",
-
   "export_title_export": "추출하기",
   "export_button_keystore": "키스토어 추출",
   "export_button_private_key": "프라이빗 키 추출",
@@ -289,13 +274,11 @@
   "export_keystore_text_note2": "암호화된 키스토어를 어떠한 온라인 플랫폼에도 전송하지 마세요. 만약 키스토어가 해킹당하면, 보유 중 모든 자산을 잃게 됩니다.",
   "export_keystore_label_note3": "오프라인 기록을 권장합니다.",
   "export_keystore_text_note3": "키스토어는 반드시 가장 안전한 디바이스에 저장해두시길 바라며, 사용 안 할 시에는 오프라인으로 전환해주세요.",
-
   "export_keystore_tab_qr_code": "QR 코드",
   "export_keystore_label_qr_code_note": "주의",
   "export_keystore_text_qr_code_note1": "누군가가 당신의 화면을 옆에서 보고있진 않은지 확인해주세요.",
   "export_keystore_text_qr_code_note2": "누군가가 당신의 화면을 옆에서 보고있진 않은지 확인해주세요.",
   "export_keystore_button_qr_code_show": "QR 코드를 보여주세요.",
-
   "change_password_title_change_password": "비밀번호 변경",
   "change_password_label_current_password": "현재 비밀번호",
   "change_password_error_text_current_password_blank": "현재 비밀번호를 입력해주세요.",
@@ -311,10 +294,8 @@
   "change_password_text_forget_password3": "비밀번호를 변경",
   "change_password_button_change": "변경",
   "change_password_error_popup_text_change_failed": "비밀번호 변경 실패",
-
   "logout_text_warning": "로그아웃 실행 시, 현존하는 모든 데이터들이 삭제됩니다.\n지갑 속 모든 정보들을 미리 백업해주세요.",
   "logout_text_logging_out": "로그아웃 중입니다. \n잠시만 기다려주세요.",
-
   "settings_button_language": "언어",
   "settings_button_currency": "시스템 언어",
   "settings_button_node": "노드 설정",
@@ -326,7 +307,6 @@
   "settings_node_popup_button_confirm": "확인",
   "settings_node_error_popup_text_node_invalid": "노드의 URL이 올바르지 않습니다.\n다시 한 번 입력해주세요.",
   "settings_node_error_popup_text_node_exist": "입력하신 노드가 이미 존재합니다.",
-
   "follow_us_label_facebook": "Facebook",
   "follow_us_label_kakao": "Kahao",
   "follow_us_label_telegram": "Telegram",
@@ -334,7 +314,6 @@
   "follow_us_label_weibo": "Weibo",
   "follow_us_label_wechatofficial": "WeChat Official Account",
   "follow_us_label_wechatservice": "WeChat Secretary",
-
   "about_us_text_bitportal": "BitPortal, a portal to the Internet of Value.\nBitPortal은 유저 친화적인 EOS 지갑입니다.",
   "about_us_button_tos": "서비스 조건",
   "about_us_button_update_log": "업데이트 기록",
@@ -344,27 +323,25 @@
   "about_us_update_check_popup_label_discover_new_version": "새로운 버전 발견",
   "about_us_update_check_popup_button_update": "지금 업데이트",
   "about_us_update_check_popup_button_cancel": "나중에 업데이트",
-
   "webview_title_tos": "서비스 조건",
   "webview_button_share": "공유",
   "webview_button_open_in_safari": "Safari에서 열기",
   "webview_button_cancel": "취소",
   "webview_button_open_in_browser": "다른 브라우저에서 열기",
   "webview_error_text_load_failed": "로딩 실패",
-
-
   "confirm": "완료",
   "cancel": "취소",
-
   "game": "게임",
   "explorer": "탐험",
   "tool": "도구",
+  "exchange": "Exchanges",
+  "marketplace": "Marketplace",
+  "social": "Social",
+  "high_risk": "High Risk",
   "system": "시스템",
   "news": "소식",
   "other": "기타",
   "no_login": "EOS 계정 생성 또는 불러오기를 진행해주세요.",
-
-
   "description": "설명",
   "circulating_supply": "현재 공급된 수량",
   "total_supply": "전체 공급 수량",
@@ -380,10 +357,19 @@
   "details": "세부 내용",
   "description_null": "설명 없음",
   "details_null": "상세 정보 없음",
-
-
   "actlist_title_name_account": "계정",
   "actlist_button_name_create": "새로 만들기",
-  "actlist_button_name_import": "계정 불러오기"
-
+  "actlist_button_name_import": "계정 불러오기",
+  "market_menu_button_overview": "Overview",
+  "market_menu_button_systemresource": "System Resources",
+  "market_list_text_marketcap": "Market Cap",
+  "market_coincard_text_h": "H",
+  "market_coincard_text_d": "D",
+  "market_chart_text_h": "H",
+  "market_chart_text_d": "D",
+  "market_chart_text_w": "W",
+  "market_chart_text_m": "M",
+  "market_chart_text_y": "Y",
+  "market_chart_text_all": "ALL",
+  "market_chart_text_notavailable": "Chart Not Available"
 }
