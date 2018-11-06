@@ -68,6 +68,7 @@ export default class SystemResources extends React.Component {
           third: Net
         })}
         onIndexChange={index => {
+          /*eslint-disable*/
           this.setState({ index })
         }}
         initialLayout={{ width: Dimensions.get('window').width }}
