@@ -116,7 +116,7 @@ android {
         versionCode 1
         versionName "0.4.1"
         manifestPlaceholders = [
-                JPUSH_APPKEY: "05e8b10824ab700bae78e9eb",
+                JPUSH_APPKEY: "5744130aa0487d3355a1a9ac",
                 APP_CHANNEL : "default"
         ]
 
