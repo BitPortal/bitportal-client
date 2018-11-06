@@ -12,7 +12,7 @@ namespace="core"
 objc_prefix="BP"
 
 # Java package name for generated src
-java_package="com.bitportal.core"
+java_package="com.dexlize.core"
 
 
 ### Script

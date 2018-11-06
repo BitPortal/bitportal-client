@@ -1,4 +1,4 @@
-package com.bitportal.wallet.nativeutils;
+package com.dexlize.bitportal.nativeutils;
 
 import android.content.Context;
 import android.app.Activity;

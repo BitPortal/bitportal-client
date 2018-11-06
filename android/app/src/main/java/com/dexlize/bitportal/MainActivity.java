@@ -1,4 +1,4 @@
-package com.bitportal.wallet;
+package com.dexlize.bitportal;
 import android.os.Bundle;
 import org.devio.rn.splashscreen.SplashScreen;
 
