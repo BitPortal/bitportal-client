@@ -28,12 +28,14 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		16E64946D5354C92BAF56AD2 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E378031D0A07409DB9E63E29 /* libRNSVG.a */; };
 		1808822A2135447300321418 /* NativeUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 180882292135447300321418 /* NativeUtils.m */; };
-		181BFEB1212994AD00810CE2 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 181BFEAF212994AD00810CE2 /* QBImagePicker.framework */; };
-		181BFEB2212994AD00810CE2 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 181BFEB0212994AD00810CE2 /* RSKImageCropper.framework */; };
 		18284831212564E300F2BE57 /* libRCTQRCodeLocalImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 182848302125643100F2BE57 /* libRCTQRCodeLocalImage.a */; };
 		1865A8C221758AD000CE1997 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1865A8C421758AD000CE1997 /* InfoPlist.strings */; };
 		18A2AA5220F70A4300CD3D3C /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A2AA0C20F70A4300CD3D3C /* libsqlite3.tbd */; };
 		18B18429213675180037A46D /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18B18428213675180037A46D /* UserNotifications.framework */; };
+		18D549802192DA4800A9C2FD /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18D5497E2192DA4800A9C2FD /* QBImagePicker.framework */; };
+		18D549812192DA4800A9C2FD /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18D5497F2192DA4800A9C2FD /* RSKImageCropper.framework */; };
+		18D549822192DACE00A9C2FD /* QBImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18D5497E2192DA4800A9C2FD /* QBImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		18D549832192DACE00A9C2FD /* RSKImageCropper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18D5497F2192DA4800A9C2FD /* RSKImageCropper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		18E3A366219070FB008F89FD /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E3A34A219070EA008F89FD /* Charts.framework */; };
 		18E3A3682190710E008F89FD /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18E3A34A219070EA008F89FD /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		18E3A6B221915C5C008F89FD /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 18E3A6A521915C3C008F89FD /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -749,6 +751,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				18D549822192DACE00A9C2FD /* QBImagePicker.framework in Embed Frameworks */,
+				18D549832192DACE00A9C2FD /* RSKImageCropper.framework in Embed Frameworks */,
 				18E3A6B221915C5C008F89FD /* SwiftyJSON.framework in Embed Frameworks */,
 				18E3A3682190710E008F89FD /* Charts.framework in Embed Frameworks */,
 			);
@@ -797,6 +801,8 @@
 		18A2AA0C20F70A4300CD3D3C /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		18B18427213672030037A46D /* bitportal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = bitportal.entitlements; path = bitportal/bitportal.entitlements; sourceTree = "<group>"; };
 		18B18428213675180037A46D /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		18D5497E2192DA4800A9C2FD /* QBImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = "<group>"; };
+		18D5497F2192DA4800A9C2FD /* RSKImageCropper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = "<group>"; };
 		18E3A344219070EA008F89FD /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = Charts/Charts.xcodeproj; sourceTree = "<group>"; };
 		18E3A69921915C3C008F89FD /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = SwiftyFiles/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
 		18F281812177351C00DEB13F /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
@@ -1076,7 +1082,6 @@
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
-				181BFEB1212994AD00810CE2 /* QBImagePicker.framework in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				18F2829B2177351D00DEB13F /* UMCommon.framework in Frameworks */,
@@ -1084,12 +1089,12 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				18F2829C2177351D00DEB13F /* UMAnalytics.framework in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
+				18D549812192DA4800A9C2FD /* RSKImageCropper.framework in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				16E64946D5354C92BAF56AD2 /* libRNSVG.a in Frameworks */,
 				E662FE3421664237A221E6FD /* libRNVectorIcons.a in Frameworks */,
 				09B8273B350D4C26AFEA787C /* libSplashScreen.a in Frameworks */,
 				D023FF8940464E9991C0DC59 /* libRNSensitiveInfo.a in Frameworks */,
-				181BFEB2212994AD00810CE2 /* RSKImageCropper.framework in Frameworks */,
 				9E31D36A8C5B48448C2BF665 /* libReactNativeConfig.a in Frameworks */,
 				9509302018DC41A2817622F3 /* libBVLinearGradient.a in Frameworks */,
 				65B9E23F4D9E4DB68F5A768C /* libReactNativePermissions.a in Frameworks */,
@@ -1116,6 +1121,7 @@
 				0A346C8DE1634C019DFAA3F6 /* libRNFS.a in Frameworks */,
 				DEA29666337C4B80B04421C3 /* libFastImage.a in Frameworks */,
 				6EB423FA09184B7CB887CA2C /* libReactNativeKeyboardManager.a in Frameworks */,
+				18D549802192DA4800A9C2FD /* QBImagePicker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1199,6 +1205,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				1865A8C421758AD000CE1997 /* InfoPlist.strings */,
 				13B07FB71A68108700A75B9A /* main.mm */,
+				18D5497D2192DA4800A9C2FD /* ImageCropper */,
 				18F2817F2177351C00DEB13F /* third-party-modules */,
 			);
 			name = bitportal;
@@ -1391,6 +1398,15 @@
 				18C75BF020BD466300E1C279 /* libRNVersionNumber-tvOS.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		18D5497D2192DA4800A9C2FD /* ImageCropper */ = {
+			isa = PBXGroup;
+			children = (
+				18D5497E2192DA4800A9C2FD /* QBImagePicker.framework */,
+				18D5497F2192DA4800A9C2FD /* RSKImageCropper.framework */,
+			);
+			path = ImageCropper;
 			sourceTree = "<group>";
 		};
 		18E3A345219070EA008F89FD /* Products */ = {
@@ -2952,8 +2968,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = bitportal/bitportal.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
@@ -2963,6 +2979,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Umeng",
 					"$(PROJECT_DIR)/third-party-modules/Umeng",
+					"$(PROJECT_DIR)/ImageCropper",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3006,7 +3023,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.bitportal.wallet;
 				PRODUCT_NAME = bitportal;
 				PROVISIONING_PROFILE = "8cd75e73-9ada-45e4-88af-19ea0bff69ab";
-				PROVISIONING_PROFILE_SPECIFIER = "wallet ad hoc profile";
+				PROVISIONING_PROFILE_SPECIFIER = "wall development profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "RNCharts/bitportal-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
@@ -3022,8 +3039,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = bitportal/bitportal.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WFW5A3K678;
@@ -3032,6 +3049,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Umeng",
 					"$(PROJECT_DIR)/third-party-modules/Umeng",
+					"$(PROJECT_DIR)/ImageCropper",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3076,7 +3094,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.bitportal.wallet;
 				PRODUCT_NAME = bitportal;
 				PROVISIONING_PROFILE = "8cd75e73-9ada-45e4-88af-19ea0bff69ab";
-				PROVISIONING_PROFILE_SPECIFIER = "wallet ad hoc profile";
+				PROVISIONING_PROFILE_SPECIFIER = "wall development profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "RNCharts/bitportal-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
