@@ -98,7 +98,7 @@ export default class Discovery extends Component {
     ) {
       Navigation.push(this.props.componentId, {
         component: {
-          name: 'BitPortal.BPWebView',
+          name: 'BitPortal.DappWebView',
           passProps: {
             uri: item.mobile_jump_url,
             title: item.title

@@ -1,4 +1,4 @@
-package com.bitportal.wallet.core;
+package com.dexlize.bitportal.core;
 
 import android.util.Log;
 

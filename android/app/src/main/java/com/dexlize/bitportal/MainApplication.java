@@ -1,4 +1,4 @@
-package com.bitportal.wallet;
+package com.dexlize.bitportal;
 
 import com.remobile.qrcodeLocalImage.RCTQRCodeLocalImagePackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
@@ -20,11 +20,11 @@ import com.facebook.soloader.SoLoader;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.reactnativenavigation.react.ReactGateway;
-import com.bitportal.wallet.core.BPCorePackage;
+import com.dexlize.bitportal.core.BPCorePackage;
 import com.umeng.commonsdk.UMConfigure;
-import com.bitportal.wallet.umeng.RNUMConfigure;
-import com.bitportal.wallet.umeng.DplusReactPackage;
-import com.bitportal.wallet.nativeutils.NativeUtilsPackage;
+import com.dexlize.bitportal.umeng.RNUMConfigure;
+import com.dexlize.bitportal.umeng.DplusReactPackage;
+import com.dexlize.bitportal.nativeutils.NativeUtilsPackage;
 import cn.jpush.reactnativejpush.JPushPackage;
 import cn.jpush.android.api.JPushInterface;
 import com.github.alinz.reactnativewebviewbridge.WebViewBridgePackage;

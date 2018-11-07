@@ -31,7 +31,7 @@ export default class ProducerDetails extends Component {
   pressLink = (uri) => {
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.BPWebView',
+        name: 'BitPortal.DappWebView',
         passProps: { uri }
       }
     })

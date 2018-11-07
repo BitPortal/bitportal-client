@@ -106,7 +106,7 @@ export const getChart = (params: ChartParams) => {
 }
 export const getCurrencyRate = () => fetchBase('GET', '', {}, { baseUrl: CURRENCY_RATE_URL })
 export const getNewsList = (params: any) => cmsFetchBase('GET', '/article', params)
-export const getNewsBanner = () => cmsFetchBase('GET', '/banner')
+export const getNewsBanner = (params: any) => cmsFetchBase('GET', '/banner', params)
 export const getVersionInfo = () => cmsFetchBase('GET', '/system')
 export const getProducersInfo = (params: any) => cmsFetchBase('GET', '/eosbp', params)
 export const getTokenDetail = (params: any) => cmsFetchBase('GET', '/token', params)

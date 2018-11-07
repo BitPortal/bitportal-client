@@ -108,7 +108,7 @@ export default class Profile extends Component {
     const locale = this.props.locale === 'zh' ? `${this.props.locale}/` : ''
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.BPWebView',
+        name: 'BitPortal.DappWebView',
         passProps: {
           uri: `${BITPORTAL_WEBSITE_URL}/${locale}help/?webview=true`,
           title: messages[this.props.locale].profile_button_help_center

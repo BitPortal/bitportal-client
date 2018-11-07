@@ -103,7 +103,7 @@ export default class AccountSmartContactOrder extends Component {
     const uri = 'https://github.com/dappub/signupeoseos'
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.BPWebView',
+        name: 'BitPortal.DappWebView',
         passProps: {
           title: uri,
           needLinking: true,

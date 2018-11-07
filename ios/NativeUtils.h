@@ -12,7 +12,7 @@
 #import "SSKeychain.h"
 
 #define KeyChainDeviceId @"KeychainDeviceId" // 手机keychain id
-#define KeyChainService @"org.dexlize.bitportal" // apple id (com.bitportal.wallet)
+#define KeyChainService @"org.dexlize.bitportal" // apple id (com.dexlize.bitportal)
 
 
 @interface NativeUtils : NSObject <RCTBridgeModule>
