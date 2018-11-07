@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 import * as newsActions from 'actions/news'
 import { connect } from 'react-redux'
 import Swiper from 'react-native-swiper'
+import { loadInjectSync } from 'utils/inject'
 import BannerCard from './BannerCard'
 import styles from './styles'
 
@@ -30,12 +31,14 @@ export default class NewBanner extends PureComponent {
   }
 
   onBannerPress = (item) => {
+    const inject = loadInjectSync()
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.BPWebView',
+        name: 'BitPortal.DappWebView',
         passProps: {
           uri: item.jump_url,
-          title: item.title
+          title: item.title,
+          inject
         }
       }
     })

@@ -20,7 +20,7 @@ function* getNewsList(action: Action<NewsParams>) {
 
 function* getNewsBanner() {
   try {
-    const data = yield call(api.getNewsBanner)
+    const data = yield call(api.getNewsBanner, { _sort: 'display_priority:desc' })
     yield put(actions.getNewsBannerSucceeded(data))
   } catch (e) {
     yield put(actions.getNewsBannerFailed(e.message))
