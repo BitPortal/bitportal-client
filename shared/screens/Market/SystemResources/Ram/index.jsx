@@ -55,7 +55,7 @@ export default class Memory extends Component {
     const uri = 'https://eosmonitor.io/'
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.BPWebView',
+        name: 'BitPortal.DappWebView',
         passProps: {
           title: uri,
           needLinking: true,

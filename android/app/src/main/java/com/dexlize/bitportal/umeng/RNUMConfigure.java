@@ -1,4 +1,4 @@
-package com.bitportal.wallet.umeng;
+package com.dexlize.bitportal.umeng;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
