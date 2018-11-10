@@ -89,7 +89,7 @@ const runApp = async () => {
   }
 
   // SplashScreen.hide()
-  Platform.OS === 'ios' && KeyboardManager.setEnableAutoToolbar(true);
+  Platform.OS === 'ios' && KeyboardManager.setEnableAutoToolbar(true)
 }
 
 const setStatusBarStyle = async () => {
@@ -98,9 +98,19 @@ const setStatusBarStyle = async () => {
   StatusBar.setBarStyle(statusBarMode, true)
 }
 
+let visibleComponentID
+
+export const currentComponentID = () => visibleComponentID
+
+Navigation.events().registerComponentDidAppearListener(({ componentId, componentName }) => {
+  console.log('componentdidAppearr', componentId, componentName)
+  visibleComponentID = componentId
+  currentComponentID()
+})
+
 Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setDefaultOptions({
-    modalPresentationStyle:'fullScreen',
+    modalPresentationStyle: 'fullScreen',
     topBar: {
       visible: false,
       animate: false,
