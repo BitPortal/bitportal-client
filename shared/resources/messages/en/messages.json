@@ -99,6 +99,7 @@
   "add_eos_error_text_password_hint_max_character": "Password hint cannot exceed 64 characters.",
   "add_eos_text_private_key": "Enter Private Key",
   "add_eos_error_popup_text_private_key_invalid": "Your private key is invalid. Please import a valid private key.",
+  "add_eos_error_popup_text_no_binding_account": "No related account is binding to this key. Please import a valid private key.",
   "add_eos_text_tos_agree": "I agree with BitPortal ",
   "add_eos_link_tos": "Terms of Service and Privacy Policy",
   "add_eos_import_title_import": "Import EOS Account",
