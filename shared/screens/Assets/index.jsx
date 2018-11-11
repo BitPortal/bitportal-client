@@ -42,11 +42,6 @@ export default class Wallet extends Component {
       topBar: {
         title: {
           text: '钱包'
-        },
-        largeTitle: {
-          visible: true,
-          fontSize: 30,
-          fontFamily: 'SFNSDisplay'
         }
       }
     }

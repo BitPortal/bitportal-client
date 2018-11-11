@@ -240,6 +240,11 @@ declare module 'utils/*' {
   export = file
 }
 
+declare module 'core/*' {
+  const file: any
+  export = file
+}
+
 declare module 'utils/location' {
   interface LocationActions {
     pop: any

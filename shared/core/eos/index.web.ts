@@ -251,27 +251,53 @@ const createEOSAccount = async ({
   const wifs = await getEOSWifsByInfo(password, accountInfo, [_permission])
   const keyProvider = wifs.map((item: any) => item.wif)
   const eos = await initEOS({ keyProvider })
-  const data = await eos.transaction((tr: any) => {
-    tr.newaccount({
-      creator,
-      name: eosAccountName,
-      owner: ownerPublicKey,
-      active: activePublicKey
-    })
-
-    tr.buyrambytes({
-      payer: creator,
-      receiver: eosAccountName,
-      bytes: 8192
-    })
-
-    tr.delegatebw({
-      from: creator,
-      receiver: eosAccountName,
-      stake_net_quantity: '0.1000 EOS',
-      stake_cpu_quantity: '0.1000 EOS',
-      transfer: 0
-    })
+  const data = await eos.transaction({
+    actions: [
+      {
+        account: 'eosio',
+        name: 'newaccount',
+        authorization: [{
+          actor: creator,
+          permission: _permission.toLowerCase()
+        }],
+        data: {
+          creator,
+          name: eosAccountName,
+          owner: ownerPublicKey,
+          active: activePublicKey
+        }
+      },
+      {
+        account: 'eosio',
+        name: 'buyrambytes',
+        authorization: [{
+          actor: creator,
+          permission: _permission.toLowerCase()
+        }],
+        data: {
+          payer: creator,
+          receiver: eosAccountName,
+          bytes: 8192
+        }
+      },
+      {
+        account: 'eosio',
+        name: 'delegatebw',
+        authorization: [{
+          actor: creator,
+          permission: _permission.toLowerCase()
+        }],
+        data: {
+          from: creator,
+          receiver: eosAccountName,
+          stake_net_quantity: '0.1000 EOS',
+          stake_cpu_quantity: '0.1000 EOS',
+          transfer: 0
+        }
+      }
+    ],
+    broadcast: false,
+    sign: true
   })
 
   return data

@@ -3,18 +3,30 @@ import Market from 'screens/Market'
 import Welcome from 'screens/Welcome'
 import Wallet from 'screens/Wallet'
 import WalletAssets from 'screens/Wallet/Assets'
+import WalletList from 'screens/Wallet/WalletList'
+import Voting from 'screens/Wallet/Voting'
 import Discovery from 'screens/Discovery'
 import Profile from 'screens/Profile'
+import LanguageSetting from 'screens/Profile/LanguageSetting'
+import CurrencySetting from 'screens/Profile/CurrencySetting'
+import NodeSetting from 'screens/Profile/NodeSetting'
 import Images from 'resources/images'
 import messages from 'resources/messages'
 
 export const registerScreens = (store, Provider) => {
   Navigation.registerComponentWithRedux('BitPortal.Welcome', () => Welcome, Provider, store)
+
   Navigation.registerComponentWithRedux('BitPortal.Wallet', () => Wallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.WalletAssets', () => WalletAssets, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.WalletList', () => WalletList, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Voting', () => Voting, Provider, store)
+
   Navigation.registerComponentWithRedux('BitPortal.Market', () => Market, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Discovery', () => Discovery, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Profile', () => Profile, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.LanguageSetting', () => LanguageSetting, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.CurrencySetting', () => CurrencySetting, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.NodeSetting', () => NodeSetting, Provider, store)
 }
 
 export const startApp = (callback) => {
@@ -24,6 +36,18 @@ export const startApp = (callback) => {
         background: {
           translucent: false,
           color: '#F7F7F7'
+        },
+        drawBehind: true,
+        title: {
+          fontFamily: 'System'
+        },
+        subtitle: {
+          fontFamily: 'System'
+        },
+        largeTitle: {
+          visible: true,
+          fontSize: 30,
+          fontFamily: 'System'
         }
       },
       layout: {
@@ -33,7 +57,8 @@ export const startApp = (callback) => {
       bottomTabs: {
         visible: true,
         translucent: true,
-        backgroundColor: '#F7F7F7'
+        backgroundColor: '#F7F7F7',
+        drawBehind: false
       }
     })
 
@@ -76,9 +101,9 @@ export const startTabBasedApp = () => {
                 bottomTab: {
                   text: '钱包',
                   textColor: '#9D9D9D',
+                  iconColor: '#9D9D9D',
                   selectedTextColor: '#007AFF',
-                  icon: Images.asset,
-                  selectedIcon: Images.asset_press,
+                  icon: require('resources/images/wallet_tab.png'),
                   selectedIconColor: '#007AFF',
                   testID: 'BITPORTAL_ASSETS'
                 }
@@ -99,9 +124,9 @@ export const startTabBasedApp = () => {
                 bottomTab: {
                   text: '行情',
                   textColor: '#9D9D9D',
+                  iconColor: '#9D9D9D',
                   selectedTextColor: '#007AFF',
-                  icon: Images.market,
-                  selectedIcon: Images.market_press,
+                  icon: require('resources/images/market_tab.png'),
                   selectedIconColor: '#007AFF',
                   testID: 'BITPORTAL_MARKET'
                 }
@@ -122,9 +147,9 @@ export const startTabBasedApp = () => {
                 bottomTab: {
                   text: '应用',
                   textColor: '#9D9D9D',
+                  iconColor: '#9D9D9D',
                   selectedTextColor: '#007AFF',
-                  icon: Images.discovery,
-                  selectedIcon: Images.discovery_press,
+                  icon: require('resources/images/dapp_tab.png'),
                   selectedIconColor: '#007AFF',
                   testID: 'BITPORTAL_DISCOVERY'
                 }
@@ -145,9 +170,9 @@ export const startTabBasedApp = () => {
                 bottomTab: {
                   text: '我的',
                   textColor: '#9D9D9D',
+                  iconColor: '#9D9D9D',
                   selectedTextColor: '#007AFF',
-                  icon: Images.profile,
-                  selectedIcon: Images.profile_press,
+                  icon: require('resources/images/profile_tab.png'),
                   selectedIconColor: '#007AFF',
                   testID: 'BITPORTAL_PROFILE'
                 }

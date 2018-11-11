@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { View } from 'react-native'
+import { View, Text, Switch } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
+import FastImage from 'react-native-fast-image'
 import * as eosAssetsActions from 'actions/eosAsset'
-import { eosAssetSelector, eosAssetSearchResultListSelector } from 'selectors/eosAsset'
+import { eosAssetListSelector, eosAssetSearchResultListSelector } from 'selectors/eosAsset'
 import styles from './styles'
-
-const { Section, Item } = TableView
 
 @connect(
   state => ({
-    eosAsset: eosAssetSelector(state),
+    eosAsset: eosAssetListSelector(state),
     eosAssetSearchResult: eosAssetSearchResultListSelector(state),
     loading: state.eosAsset.get('loading'),
     loaded: state.eosAsset.get('loaded')
@@ -28,21 +27,9 @@ export default class Wallet extends Component {
   static get options() {
     return {
       topBar: {
-        drawBehind: true,
         title: {
           text: '添加资产'
         },
-        largeTitle: {
-          visible: true,
-          fontSize: 30,
-          fontFamily: 'SFNSDisplay'
-        },
-        background: {
-          translucent: false
-        },
-        searchBar: true,
-        searchBarHiddenWhenScrolling: true,
-        searchBarPlaceholder: 'Search'
       },
       bottomTabs: {
         visible: false
@@ -53,9 +40,15 @@ export default class Wallet extends Component {
   subscription = Navigation.events().bindComponent(this)
 
   state = { searching: false }
+  tableViewRef = React.createRef()
+  pendingAssetQueue = []
 
   searchBarUpdated({ text, isFocused }) {
     this.setState({ searching: isFocused })
+    if (this.pendingAssetQueue.length) {
+      this.props.actions.toggleEOSAssetList(this.pendingAssetQueue)
+      this.pendingAssetQueue = []
+    }
     this.props.actions.searchEOSAssetRequested(text)
   }
 
@@ -63,8 +56,28 @@ export default class Wallet extends Component {
     this.props.actions.getEOSAssetRequested()
   }
 
+  onSwitchAccessoryChanged = (data) => {
+    const { account, symbol, current_supply, max_supply, icon_url, rank_url } = data
+    this.props.actions.toggleEOSAssetForStorage({ contract: account, symbol, current_supply, max_supply, icon_url, rank_url })
+    this.pendingAssetQueue.push({ contract: account, symbol, current_supply, max_supply, icon_url, rank_url })
+  }
+
   componentDidAppear() {
     this.props.actions.getEOSAssetRequested()
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        searchBar: true,
+        searchBarHiddenWhenScrolling: true,
+        searchBarPlaceholder: 'Search'
+      }
+    })
+  }
+
+  componentWillUnmount() {
+    if (this.pendingAssetQueue.length) {
+      this.props.actions.toggleEOSAssetList(this.pendingAssetQueue)
+      this.pendingAssetQueue = []
+    }
   }
 
   render() {
@@ -75,24 +88,33 @@ export default class Wallet extends Component {
       <View style={styles.container}>
         <TableView
           style={{ flex: 1 }}
-          tableViewCellStyle={TableView.Consts.CellStyle.Subtitle}
-          canRefresh={loaded}
+          tableViewCellStyle={TableView.Consts.CellStyle.Default}
+          canRefresh={loaded && !this.state.searching}
           refreshing={loaded && loading}
           onRefresh={this.onRefresh}
           detailTextColor="#666666"
-          allowsToggle
           showsVerticalScrollIndicator={false}
+          cellSeparatorInset={{ left: 66 }}
+          reactModuleForCell="AssetTableViewCell"
+          onSwitchAccessoryChanged={this.onSwitchAccessoryChanged}
         >
-          <Section>
+          <TableView.Section>
             {data.map(item => (
-              <Item
+               <TableView.Item
                  key={`${item.get('symbol')}_${item.get('account')}`}
-                 detail={item.get('account')}
-              >
-                {item.get('symbol')}
-              </Item>
-            ))}
-          </Section>
+                 height={60}
+                 selectionStyle={TableView.Consts.CellSelectionStyle.None}
+                 icon_url={item.get('icon_url')}
+                 symbol={item.get('symbol')}
+                 account={item.get('account')}
+                 current_supply={item.get('current_supply')}
+                 max_supply={item.get('max_supply')}
+                 rank_url={item.get('rank_url')}
+                 accessoryType={5}
+                 switchOn={item.get('selected')}
+               />
+             ))}
+          </TableView.Section>
         </TableView>
       </View>
     )

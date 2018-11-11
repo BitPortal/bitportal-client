@@ -9,7 +9,7 @@ import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 import styles from './styles'
 
-const { Section, Item } = TableView
+const { Section, Item, CollectionView, CollectionViewItem } = TableView
 
 @connect(
   state => ({
@@ -38,60 +38,246 @@ export default class Market extends Component {
     return {
       topBar: {
         title: {
-          text: 'Market'
+          text: '行情'
         },
-        drawBehind: true,
         searchBar: true,
         searchBarHiddenWhenScrolling: true,
-        searchBarPlaceholder: 'Search',
-        background: {
-          translucent: false
-        },
-        largeTitle: {
-          visible: true,
-          fontSize: 30,
-          fontFamily: 'SFNSDisplay'
-        }
+        searchBarPlaceholder: 'Search'
       }
     }
   }
 
   subscription = Navigation.events().bindComponent(this)
 
+  onSelect = () => {
+    console.log('onSelect')
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <TableView
-          style={{ flex: 1 }}
-          tableViewCellStyle={TableView.Consts.CellStyle.Subtitle}
-          canRefresh
-        >
-          <Section>
-            <Item>1</Item>
-            <Item>1</Item>
-            <Item>1</Item>
-            <Item>1</Item>
-            <Item>1</Item>
-            <Item>1</Item>
-            <Item>1</Item>
-            <Item>1</Item>
-            <Item>1</Item>
-            <Item>1</Item>
-            <Item>1</Item>
-            <Item>1</Item>
-            <Item>1</Item>
-            <Item>1</Item>
-            <Item>1</Item>
-            <Item>1</Item>
-            <Item>1</Item>
-            <Item>1</Item>
-            <Item>1</Item>
-            <Item>1</Item>
-            <Item>1</Item>
-            <Item>1</Item>
-          </Section>
-        </TableView>
-      </View>
+      <TableView
+        style={{ flex: 1, backgroundColor: 'white' }}
+        canRefresh
+      >
+        <Section>
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="0.1492"
+            componentId={this.props.componentId}
+          />
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="0.1492"
+            componentId={this.props.componentId}
+          />
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="-0.252"
+            componentId={this.props.componentId}
+          />
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="0.1492"
+            componentId={this.props.componentId}
+          />
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="0.1492"
+            componentId={this.props.componentId}
+          />
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="-0.252"
+            componentId={this.props.componentId}
+          />
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="0.1492"
+            componentId={this.props.componentId}
+          />
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="0.1492"
+            componentId={this.props.componentId}
+          />
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="-0.252"
+            componentId={this.props.componentId}
+          />
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="0.1492"
+            componentId={this.props.componentId}
+          />
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="0.1492"
+            componentId={this.props.componentId}
+          />
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="-0.252"
+            componentId={this.props.componentId}
+          />
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="0.1492"
+            componentId={this.props.componentId}
+          />
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="0.1492"
+            componentId={this.props.componentId}
+          />
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="-0.252"
+            componentId={this.props.componentId}
+          />
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="0.1492"
+            componentId={this.props.componentId}
+          />
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="0.1492"
+            componentId={this.props.componentId}
+          />
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="-0.252"
+            componentId={this.props.componentId}
+          />
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="0.1492"
+            componentId={this.props.componentId}
+          />
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="0.1492"
+            componentId={this.props.componentId}
+          />
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="-0.252"
+            componentId={this.props.componentId}
+          />
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="0.1492"
+            componentId={this.props.componentId}
+          />
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="0.1492"
+            componentId={this.props.componentId}
+          />
+          <Item
+            reactModuleForCell="MarketTableViewCell"
+            height={60}
+            price="567.00 USD"
+            symbol="BTC"
+            name="Bitcoin"
+            change="-0.252"
+            componentId={this.props.componentId}
+          />
+        </Section>
+      </TableView>
     )
   }
 }

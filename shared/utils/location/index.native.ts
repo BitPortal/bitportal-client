@@ -11,7 +11,7 @@ export const push = (location: string, componentId: string, passProps: object = 
 }
 
 export const pop = (componentId: string) => {
-  Navigation.pop(componentId, null)
+  Navigation.pop(componentId)
 }
 
 export const popToRoot = (componentId: string) => {

@@ -82,7 +82,7 @@ export const getIdFromSeed = async (seed: Buffer) => {
   const checksum = createHash('rmd160').update(Buffer.concat(check)).digest().slice(0, 4)
   const address = base58.encode(Buffer.concat([publicKey, checksum]))
   const version = '1'
-  const id = 'BP' + version + address
+  const id = 'bp' + version + address
   return id
 }
 

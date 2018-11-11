@@ -5,7 +5,8 @@ import 'intl/locale-data/jsonp/en.js'
 import 'intl/locale-data/jsonp/zh.js'
 import 'core-js/es6/symbol'
 import 'core-js/fn/symbol/iterator'
-import { StatusBar, Platform } from 'react-native'
+import React from 'react'
+import { StatusBar, Platform, AppRegistry } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { getInitialLang } from 'selectors/intl'
 import { getInitialContact } from 'selectors/contact'
@@ -27,6 +28,15 @@ import VersionNumber from 'react-native-version-number'
 import { calculate } from 'utils/update'
 import { ENV } from 'constants/env'
 import { noop } from 'utils'
+import AssetTableViewCell from 'components/TableViewCell/AssetTableViewCell'
+import AssetBalanceTableViewCell from 'components/TableViewCell/AssetBalanceTableViewCell'
+import WalletTableViewCell from 'components/TableViewCell/WalletTableViewCell'
+import ProducerTableViewCell from 'components/TableViewCell/ProducerTableViewCell'
+import MarketTableViewCell from 'components/TableViewCell/MarketTableViewCell'
+import WalletCardCollectionViewCell from 'components/CollectionViewCell/WalletCardCollectionViewCell'
+import FeaturedDappCollectionViewCell from 'components/CollectionViewCell/FeaturedDappCollectionViewCell'
+import SmallDappCollectionViewCell from 'components/CollectionViewCell/SmallDappCollectionViewCell'
+import LargeDappCollectionViewCell from 'components/CollectionViewCell/LargeDappCollectionViewCell'
 
 EStyleSheet.build({})
 
@@ -68,6 +78,16 @@ const runApp = async () => {
   })
 
   registerScreens(store, Provider)
+  AppRegistry.registerComponent('AssetTableViewCell', () => AssetTableViewCell)
+  AppRegistry.registerComponent('AssetBalanceTableViewCell', () => AssetBalanceTableViewCell)
+  AppRegistry.registerComponent('WalletTableViewCell', () => WalletTableViewCell)
+  AppRegistry.registerComponent('ProducerTableViewCell', () => ProducerTableViewCell)
+  AppRegistry.registerComponent('MarketTableViewCell', () => MarketTableViewCell)
+  AppRegistry.registerComponent('WalletCardCollectionViewCell', () => WalletCardCollectionViewCell)
+  AppRegistry.registerComponent('FeaturedDappCollectionViewCell', () => FeaturedDappCollectionViewCell)
+  AppRegistry.registerComponent('SmallDappCollectionViewCell', () => SmallDappCollectionViewCell)
+  AppRegistry.registerComponent('LargeDappCollectionViewCell', () => LargeDappCollectionViewCell)
+
   store.runSaga(sagas)
   if (remoteVersion && calculate(remoteVersion) <= calculate(localVersion)) {
     startTabBasedApp(lang)

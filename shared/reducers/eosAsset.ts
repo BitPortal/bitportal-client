@@ -33,6 +33,15 @@ export default handleActions(
         return index !== -1 ? v.update(index, (v: any) => v.update('selected', (v: any) => !v).merge(Immutable.fromJS(action.payload))) : v.push(Immutable.fromJS({ ...action.payload, selected: true })).sortBy((v: any) => v.get('symbol'))
       })
     },
+    [actions.toggleEOSAssetList] (state, action) {
+      const assetList = action.payload
+      return assetList.reduce((state: any, asset: any) => state.update('toggledAsset', (v: any) => {
+        const contract = asset.contract
+        const symbol = asset.symbol
+        const index = v.findIndex((v: any) => v.get('contract') === contract && v.get('symbol') === symbol)
+        return index !== -1 ? v.update(index, (v: any) => v.update('selected', (v: any) => !v).merge(Immutable.fromJS(asset))) : v.push(Immutable.fromJS({ ...asset, selected: true })).sortBy((v: any) => v.get('symbol'))
+      }), state)
+    },
     [actions.searchEOSAssetRequested] (state) {
       return state.set('searching', true)
     },

@@ -123,16 +123,15 @@ const baseConfig = {
           loader: 'babel-loader',
           query: {
             babelrc: false,
-            presets: removeEmpty([
-              ['env', { loose: true, modules: false }],
-              'react'
-            ]),
+            presets: [
+              ['@babel/env', { loose: true, modules: false }],
+              '@babel/react'
+            ],
             plugins: [
-              'syntax-dynamic-import',
-              'transform-class-properties',
-              'transform-decorators-legacy',
-              'react-hot-loader/babel',
-              'transform-runtime',
+              '@babel/plugin-syntax-dynamic-import',
+              '@babel/plugin-proposal-class-properties',
+              ["@babel/plugin-proposal-decorators", { legacy: true }],
+              "@babel/plugin-transform-runtime",
               'react-hot-loader/babel'
             ]
           }
