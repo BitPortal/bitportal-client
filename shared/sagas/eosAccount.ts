@@ -6,11 +6,19 @@ import * as actions from 'actions/eosAccount'
 import { getEOSBalanceSucceeded } from 'actions/balance'
 import { createClassicWalletSucceeded } from 'actions/wallet'
 import { traceImport } from 'actions/trace'
-import  { setSelected } from 'actions/producer'
+import { setSelected } from 'actions/producer'
 import { votedProducersSelector, eosCoreLiquidBalanceSelector, eosAccountNameSelector } from 'selectors/eosAccount'
 import secureStorage from 'utils/secureStorage'
 import { BITPORTAL_API_EOS_URL, EOS_API_URL } from 'constants/env'
-import { randomKey, privateToPublic, isValidPrivate, initEOS, getPermissionsByKey, getInitialAccountInfo, createEOSAccount } from 'core/eos'
+import {
+  randomKey,
+  privateToPublic,
+  isValidPrivate,
+  initEOS,
+  getPermissionsByKey,
+  getInitialAccountInfo,
+  createEOSAccount
+} from 'core/eos'
 import { encrypt, validateEOSPublicKeyByInfo } from 'core/key'
 import { getErrorMessage, getEOSErrorMessage } from 'utils'
 import { popToRoot, push } from 'utils/location'
@@ -68,7 +76,7 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
       irreversible: false,
       backup: false,
       node: BITPORTAL_API_EOS_URL,
-      timestamp: +Date.now(),
+      timestamp: +Date.now()
     }
 
     yield all([
@@ -105,7 +113,7 @@ function* createEOSAccountAssistanceRequested(action: Action<CreateEOSAccountAss
     const privateKeyDecodedString = wif.decode(privateKey).privateKey.toString('hex')
     const keystore = yield call(encrypt, privateKeyDecodedString, password, { origin: 'classic', coin: 'EOS' })
 
-    const eos = yield call(initEOS, { httpEndpoint: BITPORTAL_API_EOS_URL } )
+    const eos = yield call(initEOS, { httpEndpoint: BITPORTAL_API_EOS_URL })
     try {
       const info = yield call(eos.getAccount, eosAccountName)
       assert(!info && !info.account_name, 'Account name already exists')
@@ -144,9 +152,7 @@ function* cancelEOSAccountAssistanceRequestd(action: any) {
   try {
     yield call(secureStorage.removeItem, `EOS_ACCOUNT_CREATION_REQUEST_INFO`)
     if (action.payload.componentId) popToRoot(action.payload.componentId)
-  } catch (e) {
-
-  }
+  } catch (e) {}
 }
 
 function* showAssistanceAccountInfo(action: any) {
@@ -155,15 +161,14 @@ function* showAssistanceAccountInfo(action: any) {
     yield put(actions.createEOSAccountAssistanceSucceeded(eosAccountCreationRequestInfo))
     const path = eosAccountCreationRequestInfo.path
     if (action.payload.componentId) push(`BitPortal.${path}`, action.payload.componentId)
-  } catch (e) {
-
-  }
+  } catch (e) {}
 }
 
 function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
   if (!action.payload) return
 
   try {
+    console.log('importEOS', action.payload)
     const eosAccountName = action.payload.eosAccountName
     const publicKey = action.payload.publicKey
     const privateKey = action.payload.privateKey
@@ -208,7 +213,6 @@ function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
       note: ''
     }
     yield put(traceImport(params))
-
   } catch (e) {
     yield put(actions.importEOSAccountFailed(getErrorMessage(e)))
   }
@@ -238,7 +242,14 @@ function* getEOSKeyAccountsRequested(action: Action<GetEOSKeyAccountsParams>) {
     }
 
     yield put(actions.getEOSKeyAccountsSucceeded(result))
-    if (action.payload.componentId) push('BitPortal.AccountSelection', action.payload.componentId, { keyPermissions, publicKey, privateKey, password, hint })
+    if (action.payload.componentId)
+      push('BitPortal.AccountSelection', action.payload.componentId, {
+        keyPermissions,
+        publicKey,
+        privateKey,
+        password,
+        hint
+      })
   } catch (e) {
     yield put(actions.getEOSKeyAccountsFailed(getEOSErrorMessage(e)))
   }
@@ -251,7 +262,10 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
     const eosAccountName = action.payload.eosAccountName
     const eosAccountCreationInfo = yield select((state: RootState) => state.eosAccount.get('eosAccountCreationInfo'))
 
-    const useCreationServer = eosAccountCreationInfo.get('transactionId') && eosAccountCreationInfo.get('eosAccountName') === eosAccountName && !eosAccountCreationInfo.get('irreversible')
+    const useCreationServer =
+      eosAccountCreationInfo.get('transactionId') &&
+      eosAccountCreationInfo.get('eosAccountName') === eosAccountName &&
+      !eosAccountCreationInfo.get('irreversible')
     const eos = yield call(initEOS, useCreationServer ? { httpEndpoint: BITPORTAL_API_EOS_URL } : {})
     const info = yield call(eos.getAccount, eosAccountName)
     assert(info && info.account_name, 'Invalid account info')
@@ -278,7 +292,6 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
       platform: `mobile_${Platform.OS}`
     }
     yield put(subscribe(params))
-
   } catch (e) {
     yield put(actions.getEOSAccountFailed(e.message))
   }
@@ -341,7 +354,14 @@ function* createEOSAccountForOthersRequested(action: Action<CreateEOSAccountForO
     const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
     const creator = yield select((state: RootState) => eosAccountNameSelector(state))
 
-    const result = yield call(createEOSAccount, { creator, eosAccountName, ownerPublicKey, activePublicKey, password, permission })
+    const result = yield call(createEOSAccount, {
+      creator,
+      eosAccountName,
+      ownerPublicKey,
+      activePublicKey,
+      password,
+      permission
+    })
     yield put(actions.createEOSAccountForOthersSucceeded(result))
   } catch (e) {
     yield put(actions.createEOSAccountForOthersFailed(getEOSErrorMessage(e)))
@@ -353,7 +373,7 @@ function* checkEOSAccountCreationStatusRequested(action: Action<CheckEOSAccountS
 
   try {
     const eosAccountCreationRequestInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_CREATION_REQUEST_INFO`, true)
-    const  {
+    const {
       eosAccountName,
       ownerPublicKey,
       activePublicKey,
@@ -392,8 +412,18 @@ function* checkEOSAccountCreationStatusRequested(action: Action<CheckEOSAccountS
       call(secureStorage.setItem, `EOS_ACCOUNT_CREATION_INFO_${eosAccountName}`, eosAccountCreationInfo, true),
       put(actions.syncEOSAccountCreationInfo(eosAccountCreationInfo)),
       call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, accountInfo, true),
-      call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_OWNER_${ownerPublicKey}`, ownerKeystore, true),
-      call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_ACTIVE_${activePublicKey}`, activeKeystore, true),
+      call(
+        secureStorage.setItem,
+        `CLASSIC_KEYSTORE_EOS_${eosAccountName}_OWNER_${ownerPublicKey}`,
+        ownerKeystore,
+        true
+      ),
+      call(
+        secureStorage.setItem,
+        `CLASSIC_KEYSTORE_EOS_${eosAccountName}_ACTIVE_${activePublicKey}`,
+        activeKeystore,
+        true
+      ),
       call(secureStorage.setItem, `CLASSIC_WALLET_INFO_EOS_${eosAccountName}`, walletInfo, true),
       call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
     ])

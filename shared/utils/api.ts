@@ -7,7 +7,6 @@ import {
 } from 'constants/env'
 import storage from 'utils/storage'
 import { isMobile } from 'utils/platform'
-import { Platform } from 'react-native'
 
 if (!isMobile) require('isomorphic-fetch')
 
@@ -122,3 +121,6 @@ export const traceTransaction = (params: any) => traceFetchBase('POST', '/transa
 export const traceStake = (params: any) => traceFetchBase('POST', '/stake', params)
 export const traceVotes = (params: any) => traceFetchBase('POST', '/votes', params)
 export const traceImport = (params: any) => traceFetchBase('POST', '/registry/wallets/import', params)
+
+export const simpleWalletAuth = (params: any, baseUrl: string) => fetchBase('POST', '', params, { baseUrl })
+export const simpleWalletVerifyLogin = (baseUrl: string) => fetchBase('GET', '', undefined, { baseUrl })

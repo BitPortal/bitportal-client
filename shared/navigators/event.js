@@ -2,7 +2,7 @@ import EventEmitter from 'EventEmitter'
 import { Navigation } from 'react-native-navigation'
 export const events = new EventEmitter()
 
-export const handleOpenURL = (event, componentId, destination) => {
+export const handleOpenURL = (event, componentId) => {
   console.log('handleOpenUrlll', event)
   if (event.url) {
     Navigation.mergeOptions('bottomTabsId', {

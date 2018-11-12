@@ -371,5 +371,30 @@
   "market_chart_text_m": "M",
   "market_chart_text_y": "Y",
   "market_chart_text_all": "ALL",
-  "market_chart_text_notavailable": "Chart Not Available"
+  "market_chart_text_notavailable": "Chart Not Available",
+
+  "scan_simplewallet_signin_title_authorize": "Dapp Authorization",
+  "scan_simplewallet_signin_text_name": "",
+  "scan_simplewallet_signin_label_authority": "The Dapp will obtain the following authority",
+  "scan_simplewallet_signin_text_login": "Account info and Login",
+  "scan_simplewallet_signin_text_warning": "Caution: We will not provide your Private Key to the Dapp",
+  "scan_simplewallet_signin_label_account": "Account: ",
+  "scan_simplewallet_signin_button_confirm": "Confirm",
+  "scan_simplewallet_signin_button_cancel": "Cancel",
+  "scan_simplewallet_signin_popup_expiredcode": "QrCode expired",
+  "scan_simplewallet_signin_popup_authorizing": "Authorizing",
+  "scan_simplewallet_signin_auth_failed": "Authorization Failed",
+  "scan_simplewallet_signin_auth_success": "Authorization Successful",
+
+  "scan_simplewallet_trade_title_order": "Order Payment",
+  "scan_simplewallet_trade_text_name": "",
+  "scan_simplewallet_trade_label_amount": "Amount",
+  "scan_simplewallet_trade_label_drawee": "Drawee",
+  "scan_simplewallet_trade_label_payee": "Payee",
+  "scan_simplewallet_trade_label_contract": "Contract",
+  "scan_simplewallet_trade_label_memo": "Memo",
+  "scan_simplewallet_trade_button_confirmpayment": "Payment Confirmation",
+  "scan_simplewallet_trade_label_desc": "Description",
+  "scan_simplewallet_trade_continue": "Continue",
+  "scan_simplewallet_trade_success": "Transaction Successful"
 }

@@ -56,9 +56,10 @@ export default EStyleSheet.create({
     flex: 1,
     color: Colors.textColor_255_255_238,
     fontSize: FontScale(14),
-    marginTop: 10,
+    marginTop: 5,
     minHeight: 60,
-    borderRadius: 5
+    borderRadius: 5,
+    marginBottom: 5
   },
   fieldItem: {
     flexDirection: 'column',
@@ -143,5 +144,18 @@ export default EStyleSheet.create({
   text12: {
     fontSize: FontScale(12),
     color: Colors.textColor_255_255_238
+  },
+  dropdownMenu: {
+    width: '70%',
+    flex: 1
+  },
+  dropdownMenuItem: {
+    backgroundColor: Colors.bgColor_48_49_59,
+    color: Colors.textColor_255_255_238,
+    height: FontScale(40),
+    fontSize: FontScale(14)
+  },
+  dropdownBox: {
+    flex: 1
   }
 })

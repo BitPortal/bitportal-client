@@ -50,6 +50,9 @@ import ExportEntrance from 'screens/Profile/ExportEntrance'
 import ExportKeystore from 'screens/Profile/ExportKeystore'
 import ExportPrivateKey from 'screens/Profile/ExportPrivateKey'
 import TransactionHistory from 'screens/Profile/TransactionHistory'
+import SimpleWalletAuth from 'screens/SimpleWallet'
+import SimpleWalletTransaction from 'screens/SimpleWallet/Transaction'
+
 import Images from 'resources/images'
 import Colors from 'resources/colors'
 import messages from 'resources/messages'
@@ -108,6 +111,8 @@ export const registerScreens = store => {
   )
   Navigation.registerComponent('BitPortal.EOSAccountCreation', () => screenComponent(EOSAccountCreation, store))
   Navigation.registerComponent('BitPortal.TokenPage', () => screenComponent(TokenPage, store))
+  Navigation.registerComponent('BitPortal.SimpleWalletAuth', () => screenComponent(SimpleWalletAuth, store))
+  Navigation.registerComponent('BitPortal.SimpleWalletTransaction', ()=> screenComponent(SimpleWalletTransaction, store))
 }
 
 export const startSingleApp = () => {

@@ -103,7 +103,7 @@ let visibleComponentID
 export const currentComponentID = () => visibleComponentID
 
 Navigation.events().registerComponentDidAppearListener(({ componentId, componentName }) => {
-  console.log('componentdidAppearr', componentId, componentName)
+  // console.log('componentdidAppearr', componentId, componentName)
   visibleComponentID = componentId
   currentComponentID()
 })

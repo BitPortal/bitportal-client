@@ -403,5 +403,30 @@
   "market_chart_text_m": "月",
   "market_chart_text_y": "年",
   "market_chart_text_all": "全",
-  "market_chart_text_notavailable": "图表暂不可用"
+  "market_chart_text_notavailable": "图表暂不可用",
+
+  "scan_simplewallet_signin_title_authorize": "账户授权",
+  "scan_simplewallet_signin_text_name": "",
+  "scan_simplewallet_signin_label_authority": "该应用将会得到以下权限",
+  "scan_simplewallet_signin_text_login": "登录并获取您的 eos 账户信息",
+  "scan_simplewallet_signin_text_warning": "注:您的私钥将不会被提供给该应用",
+  "scan_simplewallet_signin_label_account": "授权账号:",
+  "scan_simplewallet_signin_button_confirm": "确认授权",
+  "scan_simplewallet_signin_button_cancel": "取消",
+  "scan_simplewallet_signin_popup_expiredcode": "二维码已过期",
+  "scan_simplewallet_signin_popup_authorizing": "授权中",
+  "scan_simplewallet_signin_auth_failed": "授权失败",
+  "scan_simplewallet_signin_auth_success": "授权成功",
+
+  "scan_simplewallet_trade_title_order": "订单",
+  "scan_simplewallet_trade_text_name": "",
+  "scan_simplewallet_trade_label_amount": "数量",
+  "scan_simplewallet_trade_label_drawee": "付款账户",
+  "scan_simplewallet_trade_label_payee": "收款账户",
+  "scan_simplewallet_trade_label_contract": "合约",
+  "scan_simplewallet_trade_label_memo": "备注",
+  "scan_simplewallet_trade_button_confirmpayment": "确认支付",
+  "scan_simplewallet_trade_label_desc": "描述",
+  "scan_simplewallet_trade_continue": "下一步",
+  "scan_simplewallet_trade_success": "交易成功"
 }
