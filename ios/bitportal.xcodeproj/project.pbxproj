@@ -1071,7 +1071,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18E3A5FE21914794008F89FD /* SwiftyJSON.framework in Frameworks */,
 				18E3A366219070FB008F89FD /* Charts.framework in Frameworks */,
 				34903D5D215E2FAB0032F08A /* libReact-Native-Webview-Bridge.a in Frameworks */,
 				18B18429213675180037A46D /* UserNotifications.framework in Frameworks */,

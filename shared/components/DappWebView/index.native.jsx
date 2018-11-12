@@ -89,6 +89,7 @@ export default class DappWebView extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    console.log('###--xx sendingMessage: ', this.props.sendingMessage)
     if (this.props.sendingMessage && prevProps.sendingMessage !== this.props.sendingMessage && this.webviewbridge) {
       this.webviewbridge.sendToBridge(this.props.sendingMessage)
     }
@@ -170,6 +171,7 @@ export default class DappWebView extends Component {
   }
 
   onBridgeMessage = (message) => {
+    console.log('###--xx receiveMessage: ', message)
     this.props.actions.receiveMessage(message)
   }
 

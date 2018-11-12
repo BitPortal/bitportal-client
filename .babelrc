@@ -1,5 +1,5 @@
 {
-  "presets": ["react-native"],
+  "presets": ["babel-preset-stage-2","react-native"],
   "plugins": [
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
     "@babel/plugin-proposal-object-rest-spread",
