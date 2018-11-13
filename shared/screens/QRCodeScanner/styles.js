@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     height: SCREEN_HEIGHT - NAV_BAR_HEIGHT
   },
   qrContainer: {
-    marginTop: -NAV_BAR_HEIGHT,
+    marginTop: 0,
   },
   centerText: {
     flex: 1,
