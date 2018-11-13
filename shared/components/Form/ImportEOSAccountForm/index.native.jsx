@@ -21,7 +21,7 @@ export const errorMessages = (error, messages) => {
     case 'Invalid private key!':
       return messages.add_eos_error_popup_text_private_key_invalid
     case 'No key accounts':
-      return 'No key accounts'
+      return messages.add_eos_error_popup_text_no_binding_account
     case 'EOS System Error':
       return messages.resource_error_popup_text_eos_system_error
     default:
