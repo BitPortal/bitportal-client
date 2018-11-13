@@ -5,7 +5,7 @@ import { eosAuthSign } from 'core/eos'
 import * as api from 'utils/api'
 import { getErrorMessage } from 'utils'
 
-function* loginSWAuthRequested(action: Action<loginSWAuthParams>) {
+function* loginSWAuthRequested(action: Action<LoginSWAuthParams>) {
   console.log('loginSWAUth', action.payload)
   if (!action.payload) return
   try {
@@ -27,13 +27,13 @@ function* loginSWAuthRequested(action: Action<loginSWAuthParams>) {
   }
 }
 
-function* transactionSWRequested(action: Action<transactionSWParams>) {
-  if (!action.payload) return
-  try {
-  } catch (error) {}
-}
+// function* transactionSWRequested(action: Action<transactionSWParams>) {
+//   if (!action.payload) return
+//   try {
+//   } catch (error) {}
+// }
 
 export default function* simpleWalletSaga() {
   yield takeEvery(String(actions.loginSWAuthRequested), loginSWAuthRequested)
-  yield takeEvery(String(actions.transactionSWRequested), transactionSWRequested)
+  // yield takeEvery(String(actions.transactionSWRequested), transactionSWRequested)
 }

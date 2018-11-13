@@ -72,7 +72,7 @@ export default class AccountSmartContactOrder extends Component {
     const { locale } = this.props
     const { action } = await Dialog.alert(
       messages[locale].assets_popup_label_delete_order,
-      messages[locale].assets_popup_text_pending_create_order,
+      messages[locale].assets_popup_content_delete_order,
       {
         negativeText: messages[locale].assets_popup_text_delete_order_cnacel,
         positiveText: messages[locale].assets_popup_text_delete_order_confirm
@@ -103,7 +103,7 @@ export default class AccountSmartContactOrder extends Component {
     const uri = 'https://github.com/dappub/signupeoseos'
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.BPWebView',
+        name: 'BitPortal.DappWebView',
         passProps: {
           title: uri,
           needLinking: true,

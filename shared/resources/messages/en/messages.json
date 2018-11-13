@@ -99,6 +99,7 @@
   "add_eos_error_text_password_hint_max_character": "Password hint cannot exceed 64 characters.",
   "add_eos_text_private_key": "Enter Private Key",
   "add_eos_error_popup_text_private_key_invalid": "Your private key is invalid. Please import a valid private key.",
+  "add_eos_error_popup_text_no_binding_account": "No related account is binding to this key. Please import a valid private key.",
   "add_eos_text_tos_agree": "I agree with BitPortal ",
   "add_eos_link_tos": "Terms of Service and Privacy Policy",
   "add_eos_import_title_import": "Import EOS Account",
@@ -114,7 +115,7 @@
   "add_create_success_button_start_backup": "Backup",
   "add_create_success_button_skip_backup": "Skip this step",
   "add_import_success_title_select_account": "Select Account",
-  "add_eos_hint_popup_text_private_key": "Owner Key: Account master authority, declare the final attribution of this account. Only few transactions require the use of Owner permission. It is recommended to store the Owner Key in off-line storage, do not share it with anyone. The Owner Key can be used to restore all other permissions. \nActive Key: Activity permissions. This permission is generally used to do some general operations such as transfering, voting, and routine transactions.",
+  "add_eos_hint_popup_text_private_key": "Owner Key: Account master authority, declare the final attribution of this account. Only few transactions require the use of Owner permission. It is recommended to store the Owner Key in off-line storage, do not share it with anyone. The Owner Key can be used to restore all other permissions. \n\nActive Key: Activity permissions. This permission is generally used to do some general operations such as transfering, voting, and routine transactions.",
 
   "assets_label_total_assets": "Assets",
   "assets_label_assets": "Asset",

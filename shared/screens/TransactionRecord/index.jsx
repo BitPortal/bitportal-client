@@ -59,7 +59,7 @@ export default class TransactionRecord extends Component {
     const number = type === 'tx' ? transactionId : blockHeight
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.BPWebView',
+        name: 'BitPortal.DappWebView',
         passProps: {
           uri: `${EOS_EXPLORER_URL}/${type}/${number}`,
           needLinking: true

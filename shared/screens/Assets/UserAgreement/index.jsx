@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
   },
   bgContainer: {
     width: SCREEN_WIDTH,
-    marginTop: NAV_BAR_HEIGHT + TAB_BAR_HEIGHT - SCREEN_HEIGHT,
+    height: SCREEN_HEIGHT,
+    marginTop: -SCREEN_HEIGHT,
     paddingHorizontal: 15
   },
   center: {

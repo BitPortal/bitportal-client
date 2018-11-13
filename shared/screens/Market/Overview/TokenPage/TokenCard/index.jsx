@@ -31,7 +31,6 @@ const Tag = props => (
   state => ({
     locale: state.intl.get('locale'),
     token: state.token.get('data'),
-    loading: state.token.get('loading')
     // ticker: tokenTickerSelector(state),
   }),
   dispatch => ({

@@ -1,15 +1,19 @@
 import { StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
-import {
-  SCREEN_WIDTH,
-  SCREEN_HEIGHT
-} from 'utils/dimens'
+import { SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
 
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
     backgroundColor: Colors.mainThemeColor
+  },
+  content: {
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT
+  },
+  qrContainer: {
+    marginTop: 0,
   },
   centerText: {
     flex: 1,

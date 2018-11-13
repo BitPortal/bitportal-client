@@ -207,13 +207,14 @@ export default class Scanner extends Component {
               />
             }
           />
-          <QRCodeScanner
-            ref={node => {
-              this.scanner = node
-            }}
-            onRead={this.onSuccess}
-            showMarker={true}
-          />
+          <View style={styles.content}>
+            <QRCodeScanner
+              ref={(node) => { this.scanner = node }}
+              containerStyle={styles.qrContainer}
+              onRead={this.onSuccess}
+              showMarker={true}
+            />
+          </View>
           <Loading text={messages[locale].scan_text_processing} isVisible={this.state.isVisible} />
         </View>
       </IntlProvider>

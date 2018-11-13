@@ -1,5 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.bitportal.wallet" android:versionCode="1" android:versionName="0.4.0">
-	<uses-sdk android:minSdkVersion="16" android:targetSdkVersion="22" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.dexlize.bitportal" android:versionCode="1" android:versionName="0.4.1">
+	<uses-sdk android:targetSdkVersion="22" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 	<uses-permission android:name="android.permission.VIBRATE" />
@@ -11,8 +11,8 @@
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 	<!-- 极光 -->
-	<permission android:name="com.bitportal.wallet.permission.JPUSH_MESSAGE" android:protectionLevel="signature" />
-	<uses-permission android:name="com.bitportal.wallet.permission.JPUSH_MESSAGE" />
+	<permission android:name="com.dexlize.bitportal.permission.JPUSH_MESSAGE" android:protectionLevel="signature" />
+	<uses-permission android:name="com.dexlize.bitportal.permission.JPUSH_MESSAGE" />
 	<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 	<uses-permission android:name="android.permission.WRITE_SETTINGS" />
 	<!-- 友盟配置的权限 -->
@@ -28,14 +28,8 @@
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
-			<intent-filter android:label="@string/app_name">
-				<action android:name="android.intent.action.VIEW" />
-				<category android:name="android.intent.category.DEFAULT" />
-				<category android:name="android.intent.category.BROWSABLE" />
-				<data android:scheme="bitportal" />
-			</intent-filter>
 		</activity>
-		<meta-data android:name="JPUSH_APPKEY" android:value="05e8b10824ab700bae78e9eb" />
+		<meta-data android:name="JPUSH_APPKEY" android:value="5744130aa0487d3355a1a9ac" />
 		<meta-data android:name="JPUSH_CHANNEL" android:value="Android" />
 		<activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
 	</application>

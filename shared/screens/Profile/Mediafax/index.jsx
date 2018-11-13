@@ -37,7 +37,7 @@ export default class MediafaxScreen extends Component {
     if (validateUrl(MediafaxUrls[item])) {
       Navigation.push(this.props.componentId, {
         component: {
-          name: 'BitPortal.BPWebView',
+          name: 'BitPortal.DappWebView',
           passProps: {
             title: messages[this.props.locale][`mdf_title_index_media${index}`],
             needLinking: true,

@@ -47,7 +47,7 @@ export default class About extends Component {
       case 'TermsOfService':
         Navigation.push(this.props.componentId, {
           component: {
-            name: 'BitPortal.BPWebView',
+            name: 'BitPortal.DappWebView',
             passProps: {
               title: messages[locale].about_us_button_tos,
               uri: BITPORTAL_API_TERMS_URL
@@ -58,7 +58,7 @@ export default class About extends Component {
       case 'UpdateLogs':
         Navigation.push(this.props.componentId, {
           component: {
-            name: 'BitPortal.BPWebView',
+            name: 'BitPortal.DappWebView',
             passProps: {
               title: messages[locale].about_us_button_update_log,
               uri: BITPORTAL_API_UPDATE_LOG_URL
@@ -95,7 +95,7 @@ export default class About extends Component {
     if (validateUrl(MediafaxUrls[title])) {
       Navigation.push(this.props.componentId, {
         component: {
-          name: 'BitPortal.BPWebView',
+          name: 'BitPortal.DappWebView',
           passProps: {
             title,
             uri: MediafaxUrls[title]
@@ -105,7 +105,7 @@ export default class About extends Component {
     } else {
       Navigation.push(this.props.componentId, {
         component: {
-          name: 'BitPortal.BPWebView',
+          name: 'BitPortal.DappWebView',
           passProps: {
             title,
             name: MediafaxUrls[title]

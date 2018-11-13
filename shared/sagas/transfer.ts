@@ -10,6 +10,7 @@ import { getEOSErrorMessage } from 'utils'
 import { reset } from 'redux-form/immutable'
 import { push } from 'utils/location'
 import { traceTransaction } from 'actions/trace'
+import * as api from 'utils/api'
 
 function* transfer(action: Action<TransferParams>) {
   if (!action.payload) return
@@ -23,16 +24,34 @@ function* transfer(action: Action<TransferParams>) {
     const memo = action.payload.memo
     const password = action.payload.password
     const contract = action.payload.contract
+    const callback = action.payload.callback
     // const permission = action.payload.permission
     const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
-    const transactionResult = yield call(transferEOSAsset, { fromAccount, toAccount, amount, symbol, precision, memo, password, contract, permission })
+    const transactionResult = yield call(transferEOSAsset, {
+      fromAccount,
+      toAccount,
+      amount,
+      symbol,
+      precision,
+      memo,
+      password,
+      contract,
+      permission
+    })
     yield put(actions.transferSucceeded(transactionResult))
     yield put(reset('transferAssetsForm'))
     yield put(actions.closeTransferModal())
     yield delay(500)
 
-    if (action.payload.componentId) {
-      push('BitPortal.TransactionRecord', action.payload.componentId, { transactionResult: Immutable.fromJS(transactionResult) })
+    if (action.payload.componentId && callback) {
+      push('BitPortal.TransactionRecord', action.payload.componentId, {
+        transactionResult: Immutable.fromJS(transactionResult)
+      })
+      yield call(api.simpleWalletCallback, callback)
+    } else if (action.payload.componentId) {
+      push('BitPortal.TransactionRecord', action.payload.componentId, {
+        transactionResult: Immutable.fromJS(transactionResult)
+      })
     }
     yield put(getEOSAccountRequested({ eosAccountName: fromAccount }))
 
@@ -52,7 +71,6 @@ function* transfer(action: Action<TransferParams>) {
       toAddr: toAccount
     }
     yield put(traceTransaction(traceParams))
-    
   } catch (e) {
     yield put(actions.transferFailed(getEOSErrorMessage(e)))
   }

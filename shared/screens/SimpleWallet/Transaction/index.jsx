@@ -88,7 +88,7 @@ export default class SimpleWalletTransaction extends Component {
   }
 
   submitSWTransfer = password => {
-    const { fromAccount, quantity, symbol, toAccount, memo, contract } = this.state
+    const { fromAccount, quantity, symbol, toAccount, memo, contract, callback } = this.state
 
     this.props.actions.transferRequested({
       fromAccount,
@@ -98,6 +98,7 @@ export default class SimpleWalletTransaction extends Component {
       toAccount,
       memo,
       contract,
+      callback,
       componentId: this.props.componentId
     })
   }
@@ -116,8 +117,8 @@ export default class SimpleWalletTransaction extends Component {
 
   showModal = () => {
     // const { activeAsset } = this.props
-    const { symbol, amount, to, desc, contract, from } = this.props.payload
-    this.setState({ quantity: amount, fromAccount: from, toAccount: to, memo: desc, symbol, contract }, () => {
+    const { symbol, amount, to, desc, contract, from, callback } = this.props.payload
+    this.setState({ quantity: amount, fromAccount: from, toAccount: to, memo: desc, symbol, contract, callback }, () => {
       this.props.actions.openTransferModal()
     })
     // this.props.actions.openTransferModal()
