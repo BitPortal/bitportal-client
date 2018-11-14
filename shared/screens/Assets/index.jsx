@@ -1,11 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import {
-  View,
-  ScrollView,
-  LayoutAnimation
-} from 'react-native'
+import { View, ScrollView, LayoutAnimation, Linking } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import storage from 'utils/storage'
 import Colors from 'resources/colors'
@@ -16,15 +12,13 @@ import * as versionActions from 'actions/version'
 import * as currencyActions from 'actions/currency'
 import * as eosAccountActions from 'actions/eosAccount'
 
-import {
-  selectedEOSTokenBalanceSelector,
-  eosTotalAssetBalanceSelector
-} from 'selectors/balance'
+import { selectedEOSTokenBalanceSelector, eosTotalAssetBalanceSelector } from 'selectors/balance'
 import { eosPriceSelector } from 'selectors/ticker'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import NavigationBar, { CommonTitle, CommonRightButton } from 'components/NavigationBar'
 import { checkCamera } from 'utils/permissions'
+import { handleOpenURL, events } from 'navigators/event'
 import { ASSETS_QR, ASSETS_TOKEN_DETAIL, ASSETS_EOS_RESOURCE, ASSETS_ADD_TOKEN } from 'constants/analytics'
 import { onEventWithLabel } from 'utils/analytics'
 import { startListenNetInfo } from 'utils/netInfo'
@@ -32,11 +26,12 @@ import secureStorage from 'utils/secureStorage'
 import Dialog from 'components/Dialog'
 import messages from 'resources/messages'
 import { GradiantCard, GradiantCardContainer } from 'components/GradiantCard'
-import styles from './styles'
+import { currentComponentID } from '../../../mobile'
 import EnableAssets from './EnableAssets'
 import BalanceList from './BalanceList'
 import TotalAssetsCard from './TotalAssetsCard'
 import UserAgreement from './UserAgreement'
+import styles from './styles'
 
 @connect(
   state => ({
@@ -64,7 +59,6 @@ import UserAgreement from './UserAgreement'
   null,
   { withRef: true }
 )
-
 export default class Assets extends Component {
   static get options() {
     return {
@@ -81,6 +75,38 @@ export default class Assets extends Component {
 
   UNSAFE_componentWillUpdate() {
     LayoutAnimation.easeInEaseOut()
+  }
+
+  componentDidMount() {
+    Linking.addEventListener('url', event => handleOpenURL(event, currentComponentID()))
+
+    // Linking.addEventListener('url', this.emitDeepLink)
+
+    // Linking.getInitialURL()
+    //   .then(url => {
+    //     console.log('Linkingggg', url)
+    //     if (url) {
+    //       console.log('Initial url is: ', url)
+    //     }
+    //   })
+    //   .catch(err => console.error('An error occurred', err))
+    // events.addEventListener('DeepLink', () => {})
+  }
+
+  componentWillUnmount() {
+    // Linking.removeEventListener('url', this._handleOpenURL)
+  }
+
+  handleDeepLink(event) {
+    // const parts = event.link.split('/') // Link parts
+    // const payload = event.payload // (optional) The payload
+    // if (parts[0] == 'chats') {
+    //   // handle the link somehow, usually run a this.props.navigator command
+    // }
+  }
+
+  emitDeepLink(event) {
+    events.emit('DeepLink', { link: event.url, payload: 'deepLink Payload' })
   }
 
   displayAccountList = () => {}
@@ -120,7 +146,7 @@ export default class Assets extends Component {
     })
   }
 
-  checkAsset = (item) => {
+  checkAsset = item => {
     // Umeng analytics
     onEventWithLabel(ASSETS_TOKEN_DETAIL, '资产 - token资产详情')
     this.props.actions.setActiveAsset(item)
@@ -155,18 +181,18 @@ export default class Assets extends Component {
     switch (type) {
       case 'import':
         entrance = 'AccountImport'
-        break;
+        break
       case 'create':
         entrance = 'EOSAccountCreation'
-        break;
+        break
       case 'assistance':
         entrance = 'AccountAssistance'
-        break;
+        break
       case 'contract':
         entrance = 'AccountSmartContact'
-        break;
+        break
       default:
-        break;
+        break
     }
     this.setState({ isVisible: false }, () => {
       Navigation.push(this.props.componentId, {
@@ -177,7 +203,7 @@ export default class Assets extends Component {
     })
   }
 
-  showUserAgreement = async (type) => {
+  showUserAgreement = async type => {
     const { locale } = this.props
     const eosAccountCreationRequestInfo = await secureStorage.getItem('EOS_ACCOUNT_CREATION_REQUEST_INFO', true)
     if (eosAccountCreationRequestInfo) {
@@ -210,7 +236,7 @@ export default class Assets extends Component {
     })
   }
 
-  switchWallet = (info) => {
+  switchWallet = info => {
     this.props.actions.switchWalletRequested(info)
   }
 
@@ -259,8 +285,10 @@ export default class Assets extends Component {
           {!walletCount && (
             <View style={styles.scrollContainer}>
               <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 10 }}>
-
-                <GradiantCardContainer containerTag={messages[locale].assets_label_create_account} extraStyle={{ marginTop: 10 }}>
+                <GradiantCardContainer
+                  containerTag={messages[locale].assets_label_create_account}
+                  extraStyle={{ marginTop: 10 }}
+                >
                   <GradiantCard
                     title={messages[locale].assets_label_create_account_registration_code}
                     extraStyle={{ marginBottom: 10 }}
@@ -280,7 +308,10 @@ export default class Assets extends Component {
                   />
                 </GradiantCardContainer>
 
-                <GradiantCardContainer containerTag={messages[locale].assets_label_import_account} extraStyle={{ marginTop: 10 }}>
+                <GradiantCardContainer
+                  containerTag={messages[locale].assets_label_import_account}
+                  extraStyle={{ marginTop: 10 }}
+                >
                   <GradiantCard
                     title={messages[locale].assets_label_import_account_import_private_key}
                     colors={Colors.gradientCardColors2}
@@ -288,7 +319,6 @@ export default class Assets extends Component {
                     content={messages[locale].assets_text_import_account_import_private_key}
                   />
                 </GradiantCardContainer>
-
               </ScrollView>
             </View>
           )}
@@ -307,22 +337,19 @@ export default class Assets extends Component {
                   onPress={this.displayReceiceQRCode}
                 />
                 {!!activeEOSAccount.get('account_name') && (
-                  <EnableAssets
-                    Title={<FormattedMessage id="assets_label_assets" />}
-                    onPress={this.checkAssetList}
-                  />
+                  <EnableAssets Title={<FormattedMessage id="assets_label_assets" />} onPress={this.checkAssetList} />
                 )}
                 {eosAssetBalance && (
-                  <BalanceList
-                    data={eosAssetBalance}
-                    eosPrice={eosPrice}
-                    onPress={this.checkAsset}
-                  />
+                  <BalanceList data={eosAssetBalance} eosPrice={eosPrice} onPress={this.checkAsset} />
                 )}
               </ScrollView>
             </View>
           )}
-          <UserAgreement acceptUserAgreement={this.acceptUserAgreement} isVisible={this.state.isVisible} dismissModal={this.dismissModal} />
+          <UserAgreement
+            acceptUserAgreement={this.acceptUserAgreement}
+            isVisible={this.state.isVisible}
+            dismissModal={this.dismissModal}
+          />
         </View>
       </IntlProvider>
     )

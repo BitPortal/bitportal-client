@@ -2,29 +2,30 @@ import { createSelector } from 'reselect'
 import Immutable from 'immutable'
 import _ from 'lodash'
 import { DAPP_SECTIONS } from 'constants/dApp'
-import console = require('console')
 
 const dataSelector = (state: RootState) => state.dApp.get('data')
 const searchTermSelector = (state: RootState) => state.dApp.get('searchTerm')
 const locale = (state: RootState) => state.intl.get('locale')
 export const favoriteDappsSelector = (state: RootState) => state.dApp.get('favoriteDapps')
 
-export const getInitialDapp = (storedFavoriteDapps?: any) => Immutable.fromJS({
-  data: [],
-  loading: false,
-  loaded: false,
-  error: null,
-  searchTerm: '',
-  favoriteDapps: storedFavoriteDapps || []
-})
+export const getInitialDapp = (storedFavoriteDapps?: any) =>
+  Immutable.fromJS({
+    data: [],
+    loading: false,
+    loaded: false,
+    error: null,
+    searchTerm: '',
+    favoriteDapps: storedFavoriteDapps || []
+  })
 
 export const mergeFavoritesDataSelector = createSelector(
   favoriteDappsSelector,
   dataSelector,
-  (favoriteDapps: any, data: any) => data.map((item: any) => {
-    const index = favoriteDapps.findIndex((e: any) => e.get('name') === item.get('name'))
-    return item.set('selected', index !== -1)
-  })
+  (favoriteDapps: any, data: any) =>
+    data.map((item: any) => {
+      const index = favoriteDapps.findIndex((e: any) => e.get('name') === item.get('name'))
+      return item.set('selected', index !== -1)
+    })
 )
 
 export const parsedDappListSelector = createSelector(
@@ -49,15 +50,17 @@ export const searchDappListSelector = createSelector(
   mergeFavoritesDataSelector,
   searchTermSelector,
   locale,
-  (data: any, searchTerm: any, locale: any) => data.filter(
-    (item: any) => (searchTerm.trim() === ''
-      ? item
-      : item
-        .get('display_name')
-        .get(locale)
-        .toUpperCase()
-        .includes(searchTerm.toUpperCase()))
-  )
+  (data: any, searchTerm: any, locale: any) =>
+    data.filter(
+      (item: any) =>
+        searchTerm.trim() === ''
+          ? item
+          : item
+              .get('display_name')
+              .get(locale)
+              .toUpperCase()
+              .includes(searchTerm.toUpperCase())
+    )
 )
 // [{title:category,data:[item1,item2]}]
 export const sectionedDappListSelector = createSelector(searchDappListSelector, (resultsList: any) => {

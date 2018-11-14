@@ -29,6 +29,7 @@ const Colors = {
   bgColor_FAFAFA: '#FAFAFA',
   bgColor_30_31_37: 'rgb(30,31,37)',
   bgColor_48_49_59: 'rgb(48,49,59)',
+  bgColor_48_49_56: 'rgb(48,49,56)',
   bgColor_59_59_59: 'rgb(59,59,59)',
   bgColor_41_41_44: 'rgb(41,41,44)',
   bgColor_0_122_255: 'rgb(0,122,255)',
@@ -64,4 +65,4 @@ const Colors = {
   textColor_181_181_181: 'rgb(181,181,181)'
 }
 
-export default Colors;
+export default Colors

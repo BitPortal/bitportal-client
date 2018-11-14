@@ -6,7 +6,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
-import { IntlProvider, FormattedMessage, FormattedNumber, FormattedDate, FormattedTime, FormattedRelative } from 'react-intl'
+import {
+  IntlProvider,
+  FormattedMessage,
+  FormattedNumber,
+  FormattedDate,
+  FormattedTime,
+  FormattedRelative
+} from 'react-intl'
 import * as transactionActions from 'actions/transaction'
 import QRCode from 'react-native-qrcode-svg'
 import LinearGradientContainer from 'components/LinearGradientContainer'
@@ -22,14 +29,16 @@ import styles from './styles'
     transactionDetail: state.transaction.get('detail')
   }),
   dispatch => ({
-    actions: bindActionCreators({
-      ...transactionActions
-    }, dispatch)
+    actions: bindActionCreators(
+      {
+        ...transactionActions
+      },
+      dispatch
+    )
   }),
   null,
   { withRef: true }
 )
-
 export default class TransactionRecord extends Component {
   static get options() {
     return {
@@ -43,7 +52,7 @@ export default class TransactionRecord extends Component {
     isCopied: false
   }
 
-  checkBlockInfo = (type) => {
+  checkBlockInfo = type => {
     const { transactionInfo, transactionResult } = this.props
     const { blockHeight, transactionId } = this.getInfo(transactionInfo, transactionResult)
     // transactions  --  blocks
@@ -63,16 +72,18 @@ export default class TransactionRecord extends Component {
     Navigation.pop(this.props.componentId)
   }
 
+  goHome = () => {
+    Navigation.popToRoot(this.props.componentId)
+  }
+
   copyTxID = () => {
     let txsId
     if (this.props.transactionInfo) txsId = this.props.transactionInfo.getIn(['action_trace', 'trx_id'])
     else txsId = this.props.transactionResult.get('transaction_id')
     Clipboard.setString(txsId)
-    Dialog.alert(
-      messages[this.props.locale].copy_text_copy_success,
-      txsId,
-      { positiveText: messages[this.props.locale].transaction_detail_button_confirm }
-    )
+    Dialog.alert(messages[this.props.locale].copy_text_copy_success, txsId, {
+      positiveText: messages[this.props.locale].transaction_detail_button_confirm
+    })
   }
 
   clipboard = () => {
@@ -81,7 +92,9 @@ export default class TransactionRecord extends Component {
     else txsId = this.props.transactionResult.get('transaction_id')
     const url = `${EOS_EXPLORER_URL}/tx/${txsId}`
     Clipboard.setString(url)
-    this.setState({ isCopied: true }, () => { Toast(messages[this.props.locale].copy_text_copy_success) })
+    this.setState({ isCopied: true }, () => {
+      Toast(messages[this.props.locale].copy_text_copy_success)
+    })
   }
 
   getInfo = (transactionInfo, transactionResult) => {
@@ -145,31 +158,31 @@ export default class TransactionRecord extends Component {
   render() {
     const { isCopied } = this.state
     const { locale, transactionInfo, transactionResult } = this.props
-    const {
-      time,
-      blockHeight,
-      fromAccount,
-      toAccount,
-      memo,
-      amount,
-      symbol,
-      transactionId
-    } = this.getInfo(transactionInfo, transactionResult)
+    const { time, blockHeight, fromAccount, toAccount, memo, amount, symbol, transactionId } = this.getInfo(
+      transactionInfo,
+      transactionResult
+    )
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale].transaction_detail_title_transaction_detail}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.goBack()} />}
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => this.goHome()} />}
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.content}>
-
-                <LinearGradientContainer type="right" colors={Colors.tradeSuccess} style={[styles.center, styles.header]}>
+                <LinearGradientContainer
+                  type="right"
+                  colors={Colors.tradeSuccess}
+                  style={[styles.center, styles.header]}
+                >
                   <Text style={styles.text12}>
                     {transactionResult && <FormattedRelative value={time} updateInterval={1000} />}
-                    {!transactionResult && <FormattedDate value={+new Date(`${time}Z`)} year="numeric" month="long" day="2-digit" />} {!transactionResult && <FormattedTime value={+new Date(`${time}Z`)} />}
+                    {!transactionResult && (
+                      <FormattedDate value={+new Date(`${time}Z`)} year="numeric" month="long" day="2-digit" />
+                    )}{' '}
+                    {!transactionResult && <FormattedTime value={+new Date(`${time}Z`)} />}
                   </Text>
                   {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Ionicons name={iconMark} size={26} color={Colors.bgColor_FAFAFA} />
@@ -181,19 +194,23 @@ export default class TransactionRecord extends Component {
 
                 <View style={[styles.header2, styles.between]}>
                   <View style={[styles.center, { marginHorizontal: 15 }]}>
-                    <Text style={styles.text10}><FormattedMessage id="transaction_detail_label_from" /></Text>
-                    <Text numberOfLines={1} style={styles.text12}>{fromAccount}</Text>
+                    <Text style={styles.text10}>
+                      <FormattedMessage id="transaction_detail_label_from" />
+                    </Text>
+                    <Text numberOfLines={1} style={styles.text12}>
+                      {fromAccount}
+                    </Text>
                   </View>
                   <View style={{ marginTop: 15 }}>
-                    <Ionicons
-                      size={20}
-                      color={Colors.bgColor_FAFAFA}
-                      name="ios-arrow-round-forward-outline"
-                    />
+                    <Ionicons size={20} color={Colors.bgColor_FAFAFA} name="ios-arrow-round-forward-outline" />
                   </View>
                   <View style={[styles.center, { marginHorizontal: 15 }]}>
-                    <Text style={styles.text10}><FormattedMessage id="transaction_detail_label_to" /></Text>
-                    <Text numberOfLines={1} style={styles.text12}>{toAccount}</Text>
+                    <Text style={styles.text10}>
+                      <FormattedMessage id="transaction_detail_label_to" />
+                    </Text>
+                    <Text numberOfLines={1} style={styles.text12}>
+                      {toAccount}
+                    </Text>
                   </View>
                 </View>
                 <View style={styles.amountContent}>
@@ -202,11 +219,7 @@ export default class TransactionRecord extends Component {
                   </Text>
                   <View style={[styles.between, { alignItems: 'center' }]}>
                     <Text style={styles.text24}>
-                      <FormattedNumber
-                        value={amount}
-                        maximumFractionDigits={4}
-                        minimumFractionDigits={4}
-                      />
+                      <FormattedNumber value={amount} maximumFractionDigits={4} minimumFractionDigits={4} />
                     </Text>
                     <Text style={styles.text14}> {symbol}</Text>
                   </View>
@@ -225,16 +238,27 @@ export default class TransactionRecord extends Component {
                       <Text style={[styles.text14, { marginTop: 10 }]}>
                         <FormattedMessage id="transaction_detail_label_transaction_id" />:
                       </Text>
-                      <Text onLongPress={this.copyTxID} onPress={() => this.checkBlockInfo('tx')} numberOfLines={1} style={styles.text14}>
-                        # <Text style={{ color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }}>
+                      <Text
+                        onLongPress={this.copyTxID}
+                        onPress={() => this.checkBlockInfo('tx')}
+                        numberOfLines={1}
+                        style={styles.text14}
+                      >
+                        #{' '}
+                        <Text style={{ color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }}>
                           {transactionId && `${transactionId.slice(0, 7)}....${transactionId.slice(-7)}`}
                         </Text>
                       </Text>
                       <Text style={[styles.text14, { marginTop: 15 }]}>
                         <FormattedMessage id="transaction_detail_label_block" />:
                       </Text>
-                      <Text onPress={() => this.checkBlockInfo('block')} numberOfLines={1} style={[styles.text14, { marginBottom: 15 }]}>
-                        # <Text style={{ color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }}>
+                      <Text
+                        onPress={() => this.checkBlockInfo('block')}
+                        numberOfLines={1}
+                        style={[styles.text14, { marginBottom: 15 }]}
+                      >
+                        #{' '}
+                        <Text style={{ color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }}>
                           {blockHeight}
                         </Text>
                       </Text>
@@ -243,19 +267,28 @@ export default class TransactionRecord extends Component {
                     </View>
                     <View style={{ marginRight: 20, marginTop: 10, alignItems: 'center' }}>
                       <View style={{ padding: 3, backgroundColor: Colors.bgColor_FFFFFF }}>
-                        <QRCode
-                          value={transactionId}
-                          size={80}
-                          color="black"
-                        />
+                        <QRCode value={transactionId} size={80} color="black" />
                       </View>
                       <TouchableOpacity
                         disabled={isCopied}
                         onPress={this.clipboard}
-                        style={[styles.btn, styles.center, { backgroundColor: isCopied ? Colors.textColor_181_181_181 : Colors.textColor_89_185_226 }]}
+                        style={[
+                          styles.btn,
+                          styles.center,
+                          { backgroundColor: isCopied ? Colors.textColor_181_181_181 : Colors.textColor_89_185_226 }
+                        ]}
                       >
-                        <Text style={[styles.text14, { color: isCopied ? Colors.textColor_107_107_107 : Colors.textColor_255_255_238 }]}>
-                          {isCopied ? <FormattedMessage id="copy_text_copy_success" /> : <FormattedMessage id="copy_button_copy" />}
+                        <Text
+                          style={[
+                            styles.text14,
+                            { color: isCopied ? Colors.textColor_107_107_107 : Colors.textColor_255_255_238 }
+                          ]}
+                        >
+                          {isCopied ? (
+                            <FormattedMessage id="copy_text_copy_success" />
+                          ) : (
+                            <FormattedMessage id="copy_button_copy" />
+                          )}
                         </Text>
                       </TouchableOpacity>
                     </View>

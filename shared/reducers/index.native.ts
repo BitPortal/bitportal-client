@@ -23,6 +23,7 @@ import contact from './contact'
 import eosNode from './eosNode'
 import dappBrowser from './dappBrowser'
 import appInfo from './appInfo'
+import simpleWallet from './simpleWallet'
 
 export default combineReducers({
   form,
@@ -48,5 +49,6 @@ export default combineReducers({
   contact,
   eosNode,
   dappBrowser,
-  appInfo
+  appInfo,
+  simpleWallet
 })
