@@ -33,7 +33,6 @@ export default class DappTransactionForm extends Component {
   isExpired = () => Math.floor(Date.now() / 1000) > this.props.payload.expired
 
   render() {
-    console.log('DappTransactionForm eosaccountselector', this.props.eosAccount, this.props.eosAccountName, this.props)
     const {
       locale,
       payload: { from, to, contract, desc, dappData }

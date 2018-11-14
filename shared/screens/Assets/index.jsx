@@ -78,7 +78,6 @@ export default class Assets extends Component {
   }
 
   componentDidMount() {
-    console.log('cdm', handleOpenURL, events)
     Linking.addEventListener('url', event => handleOpenURL(event, currentComponentID()))
 
     // Linking.addEventListener('url', this.emitDeepLink)
@@ -99,7 +98,6 @@ export default class Assets extends Component {
   }
 
   handleDeepLink(event) {
-    console.log('handleDeepLink', event)
     // const parts = event.link.split('/') // Link parts
     // const payload = event.payload // (optional) The payload
     // if (parts[0] == 'chats') {
@@ -108,7 +106,6 @@ export default class Assets extends Component {
   }
 
   emitDeepLink(event) {
-    console.log('emitting DeepLink', event)
     events.emit('DeepLink', { link: event.url, payload: 'deepLink Payload' })
   }
 

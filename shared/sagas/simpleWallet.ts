@@ -6,7 +6,6 @@ import * as api from 'utils/api'
 import { getErrorMessage } from 'utils'
 
 function* loginSWAuthRequested(action: Action<LoginSWAuthParams>) {
-  console.log('loginSWAUth', action.payload)
   if (!action.payload) return
   try {
     const { eosAccountName, timestamp, ref, uuID, loginUrl, password, wallet, protocol, version } = action.payload
@@ -15,7 +14,6 @@ function* loginSWAuthRequested(action: Action<LoginSWAuthParams>) {
     const sign = yield call(eosAuthSign, { account: eosAccountName, publicKey, password, signData, isHash: false })
     const params = { protocol, version, timestamp, sign, uuID, account: eosAccountName, ref }
     const result = yield call(api.simpleWalletAuth, params, loginUrl)
-    console.log('resultt', result)
     if (!result) yield put(actions.loginSWAuthFailed('error'))
     else if (result.code === 1) yield put(actions.loginSWAuthFailed('error'))
     else if (result.code === 0) {
@@ -23,7 +21,6 @@ function* loginSWAuthRequested(action: Action<LoginSWAuthParams>) {
     }
   } catch (error) {
     yield put(actions.loginSWAuthFailed(getErrorMessage(error)))
-    console.log('error', error)
   }
 }
 

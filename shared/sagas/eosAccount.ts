@@ -168,7 +168,6 @@ function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
   if (!action.payload) return
 
   try {
-    console.log('importEOS', action.payload)
     const eosAccountName = action.payload.eosAccountName
     const publicKey = action.payload.publicKey
     const privateKey = action.payload.privateKey

@@ -118,9 +118,12 @@ export default class SimpleWalletTransaction extends Component {
   showModal = () => {
     // const { activeAsset } = this.props
     const { symbol, amount, to, desc, contract, from, callback } = this.props.payload
-    this.setState({ quantity: amount, fromAccount: from, toAccount: to, memo: desc, symbol, contract, callback }, () => {
-      this.props.actions.openTransferModal()
-    })
+    this.setState(
+      { quantity: amount, fromAccount: from, toAccount: to, memo: desc, symbol, contract, callback },
+      () => {
+        this.props.actions.openTransferModal()
+      }
+    )
     // this.props.actions.openTransferModal()
   }
 
@@ -153,7 +156,6 @@ export default class SimpleWalletTransaction extends Component {
       showModal
     } = this.props
 
-    console.log('transaction props', this.props, loaded)
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>

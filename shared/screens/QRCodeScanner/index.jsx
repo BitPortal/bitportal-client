@@ -57,7 +57,6 @@ export default class Scanner extends Component {
   }
 
   onSuccess = e => {
-    console.log('onSuccesss', e)
     if (
       isJsonString(e.data) &&
       JSON.parse(e.data).protocol === 'SimpleWallet' &&
@@ -76,7 +75,6 @@ export default class Scanner extends Component {
       JSON.parse(e.data).action === 'transfer'
     ) {
       const transactionParams = JSON.parse(e.data)
-      console.log('parsedd', transactionParams)
       Navigation.push(this.props.componentId, {
         component: {
           name: 'BitPortal.SimpleWalletTransaction',
@@ -209,7 +207,9 @@ export default class Scanner extends Component {
           />
           <View style={styles.content}>
             <QRCodeScanner
-              ref={(node) => { this.scanner = node }}
+              ref={node => {
+                this.scanner = node
+              }}
               containerStyle={styles.qrContainer}
               onRead={this.onSuccess}
               showMarker={true}

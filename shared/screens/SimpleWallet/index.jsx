@@ -110,7 +110,6 @@ export default class SimpleWalletAuth extends Component {
       error,
       loaded
     } = this.props
-    console.log('simplewallet props', this.props, loaded)
     return (
       <View style={styles.container}>
         <NavigationBar

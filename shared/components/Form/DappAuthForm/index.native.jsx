@@ -34,7 +34,6 @@ export default class DappAuthForm extends Component {
   isExpired = () => Math.floor(Date.now() / 1000) > this.props.payload.expired
 
   render() {
-    console.log('dappauthform eosaccountselector', this.props.eosAccount, this.props.eosAccountName, this.props)
     const { locale, eosAccountName } = this.props
     return (
       <IntlProvider messages={messages[locale]}>

@@ -5,7 +5,6 @@ import { EOS_TESTNET_NODES, EOS_MAINNET_CHAIN_ID, EOS_TESTNET_CHAIN_ID } from 'c
 import storage from 'utils/storage'
 import secureStorage from 'utils/secureStorage'
 import { getEOSWifsByInfo } from 'core/key'
-import console = require('console')
 
 const ecc = Eos.modules.ecc
 let eos: any
@@ -35,12 +34,10 @@ const privateToPublic = async (privateKey: string) => {
 
 const isValidPrivate = (privateKey: string) => ecc.isValidPrivate(privateKey)
 
-const getProducers = (params: any) => {
-  alert(JSON.stringify(params))
-  return new Promise(resolve => {
+const getProducers = (params: any) =>
+  new Promise(resolve => {
     eos.getProducers(params).then((result: any) => resolve(result))
   })
-}
 
 const sortProducers = (a: any, b: any) =>
   parseInt(Eos.modules.format.encodeName(a, false), 10) - parseInt(Eos.modules.format.encodeName(b, false), 10)
@@ -243,10 +240,12 @@ const createEOSAccount = async ({
       {
         account: 'eosio',
         name: 'newaccount',
-        authorization: [{
-          actor: creator,
-          permission: _permission.toLowerCase()
-        }],
+        authorization: [
+          {
+            actor: creator,
+            permission: _permission.toLowerCase()
+          }
+        ],
         data: {
           creator,
           name: eosAccountName,
@@ -257,10 +256,12 @@ const createEOSAccount = async ({
       {
         account: 'eosio',
         name: 'buyrambytes',
-        authorization: [{
-          actor: creator,
-          permission: _permission.toLowerCase()
-        }],
+        authorization: [
+          {
+            actor: creator,
+            permission: _permission.toLowerCase()
+          }
+        ],
         data: {
           payer: creator,
           receiver: eosAccountName,
@@ -270,10 +271,12 @@ const createEOSAccount = async ({
       {
         account: 'eosio',
         name: 'delegatebw',
-        authorization: [{
-          actor: creator,
-          permission: _permission.toLowerCase()
-        }],
+        authorization: [
+          {
+            actor: creator,
+            permission: _permission.toLowerCase()
+          }
+        ],
         data: {
           from: creator,
           receiver: eosAccountName,
