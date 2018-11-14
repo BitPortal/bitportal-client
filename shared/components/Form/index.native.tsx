@@ -272,6 +272,14 @@ export const Button: React.SFC<ButtonProps> = ({ onPress, text }) => (
   </FieldItem>
 )
 
+export const CancelButton: React.SFC<ButtonProps> = ({ onPress, text }) => (
+  <FieldItem>
+    <TouchableOpacity onPress={onPress} style={styles.cancelButton}>
+      <Text style={styles.submitButtonText}>{text}</Text>
+    </TouchableOpacity>
+  </FieldItem>
+)
+
 export const Dropdown = ({ touched, error, label, tips, info, options }) => (
   <FieldItem>
     <FieldInfo>

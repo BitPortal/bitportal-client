@@ -3,7 +3,7 @@ import { Text, View } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form/immutable'
-import { FormContainer, TextField, SubmitButton, Button } from 'components/Form'
+import { FormContainer, TextField, SubmitButton, CancelButton } from 'components/Form'
 import { eosAccountSelector, eosAccountNameSelector } from 'selectors/eosAccount'
 import * as simpleWalletActions from 'actions/simpleWallet'
 import { IntlProvider, FormattedMessage } from 'react-intl'
@@ -39,13 +39,19 @@ export default class DappAuthForm extends Component {
     return (
       <IntlProvider messages={messages[locale]}>
         <FormContainer>
-          <Field
-            label={messages[locale].scan_simplewallet_signin_label_authority}
-            name="dappAuthority"
-            component={TextField}
-            props={{ value: messages[locale].scan_simplewallet_signin_text_login, editable: false }}
-          />
-          <View style={{ paddingTop: 0, paddingBottom: 10 }}>
+          <View
+            style={{
+              width: '100%',
+              paddingTop: 0,
+              paddingBottom: 20
+            }}
+          >
+            <Text style={[styles.text14, { color: 'white' }]}>
+              <FormattedMessage id="scan_simplewallet_signin_label_authority" />
+              {'\n\n●  '}
+              <FormattedMessage id="scan_simplewallet_signin_text_login" />
+              {'\n'}
+            </Text>
             <Text style={styles.text14}>
               <FormattedMessage id="scan_simplewallet_signin_text_warning" />
             </Text>
@@ -63,11 +69,6 @@ export default class DappAuthForm extends Component {
             component={Dropdown}
             props={{ options: ['Option1', 'Option2'] }}
           /> */}
-          <Button
-            style={{ backgroundColor: 'red' }}
-            text={<FormattedMessage id="scan_simplewallet_signin_button_cancel" />}
-            onPress={this.props.onCancel}
-          />
           <SubmitButton
             disabled={this.isExpired()}
             text={
@@ -80,6 +81,11 @@ export default class DappAuthForm extends Component {
               />
             }
             onPress={this.props.onSubmit}
+          />
+          <CancelButton
+            style={{ backgroundColor: 'red' }}
+            text={<FormattedMessage id="scan_simplewallet_signin_button_cancel" />}
+            onPress={this.props.onCancel}
           />
         </FormContainer>
       </IntlProvider>

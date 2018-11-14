@@ -3,7 +3,7 @@ import { View } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form/immutable'
-import { FormContainer, TextField, TextAreaField, SubmitButton, Button } from 'components/Form'
+import { FormContainer, TextField, TextAreaField, SubmitButton, CancelButton } from 'components/Form'
 import { eosAccountSelector, eosAccountNameSelector } from 'selectors/eosAccount'
 import * as simpleWalletActions from 'actions/simpleWallet'
 import { IntlProvider, FormattedMessage } from 'react-intl'
@@ -76,11 +76,6 @@ export default class DappTransactionForm extends Component {
 
           <View style={{ paddingTop: 0, paddingBottom: 10 }} />
 
-          <Button
-            style={{ backgroundColor: 'red' }}
-            text={<FormattedMessage id="scan_simplewallet_signin_button_cancel" />}
-            onPress={this.props.onCancel}
-          />
           <SubmitButton
             disabled={this.isExpired()}
             text={
@@ -91,6 +86,11 @@ export default class DappTransactionForm extends Component {
               />
             }
             onPress={this.props.onSubmit}
+          />
+          <CancelButton
+            style={{ backgroundColor: 'red' }}
+            text={<FormattedMessage id="scan_simplewallet_signin_button_cancel" />}
+            onPress={this.props.onCancel}
           />
         </FormContainer>
       </IntlProvider>

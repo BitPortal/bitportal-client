@@ -100,6 +100,15 @@ export default EStyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
+  cancelButton: {
+    marginTop: 3,
+    backgroundColor: Colors.bgColor_48_49_56,
+    borderRadius: 3,
+    paddingVertical: 12,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
   indicator: {
     marginLeft: 10
   },

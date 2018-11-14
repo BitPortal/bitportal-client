@@ -376,9 +376,9 @@
 
   "scan_simplewallet_signin_title_authorize": "Dapp Authorization",
   "scan_simplewallet_signin_text_name": "",
-  "scan_simplewallet_signin_label_authority": "The Dapp will obtain the following authority",
+  "scan_simplewallet_signin_label_authority": "The Dapp will obtain the following authority:",
   "scan_simplewallet_signin_text_login": "Account info and Login",
-  "scan_simplewallet_signin_text_warning": "Caution: We will not provide your Private Key to the Dapp",
+  "scan_simplewallet_signin_text_warning": "Please Note: We will not provide your Private Key to the Dapp",
   "scan_simplewallet_signin_label_account": "Account: ",
   "scan_simplewallet_signin_button_confirm": "Confirm",
   "scan_simplewallet_signin_button_cancel": "Cancel",
