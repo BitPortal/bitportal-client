@@ -44,7 +44,7 @@
     "lint:js": "eslint --ext .js --ext .jsx server shared test",
     "lint:ts": "tslint --project . ",
     "tsc": "tsc",
-    "postinstall": "sed -i '' 's/#import <RCTAnimation\\/RCTValueAnimatedNode.h>/#import \"RCTValueAnimatedNode.h\"/' ./node_modules/react-native/Libraries/NativeAnimation/RCTNativeAnimatedNodesManager.h",
+    "postinstall": "cd node_modules/react-native && scripts/ios-install-third-party.sh && cd third-party/glog-0.3.4/ && ../../scripts/ios-configure-glog.sh && cd ../../../.. && sed -i '' 's/#import <RCTAnimation\\/RCTValueAnimatedNode.h>/#import \"RCTValueAnimatedNode.h\"/' ./node_modules/react-native/Libraries/NativeAnimation/RCTNativeAnimatedNodesManager.h",
     "sketch": "skpm-build --watch --run"
   },
   "dependencies": {

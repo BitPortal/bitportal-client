@@ -28,11 +28,15 @@ BitPortal client for web, ios, android, windows, macOS and browser extension
 $ git clone https://github.com/BitPortal/bitportal-client.git
 ```
 
-## install
+## install mobile 
 ```sh
 $ npm install -g full-icu
-$ yarn install
+$ npm/yarn install
 ```
+## IOS 
+open Xcode and select 'Copy only when installing' in ReactNativeNavigation (see below)
+![readme](https://cdn.bitportal.io/github/readme_1.jpg)
+
 
 ## run website
 ```sh
