@@ -117,12 +117,12 @@ export const encrypt = async (input: string, password: string, opts: { origin?: 
   }
 
   if (kdf === 'pbkdf2') {
-    kdfparams.c = opts.c || 262144
+    kdfparams.c = opts.c || 8192
     kdfparams.prf = 'hmac-sha256'
     const derivedKeyHex = await pbkdf2(Buffer.from(password).toString('hex'), kdfparams.salt, kdfparams.c, kdfparams.dklen, 'sha256')
     derivedKey = Buffer.from(derivedKeyHex, 'hex')
   } else if (kdf === 'scrypt') {
-    kdfparams.n = opts.n || 262144
+    kdfparams.n = opts.n || 8192
     kdfparams.r = opts.r || 8
     kdfparams.p = opts.p || 1
     const derivedKeyHex = await scrypt(Buffer.from(password).toString('hex'), kdfparams.salt, kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen)
