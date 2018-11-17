@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { View, Text, Switch, ScrollView, Dimensions, LayoutAnimation } from 'react-native'
+import { View, Text, ScrollView, Dimensions, LayoutAnimation } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 import FastImage from 'react-native-fast-image'
-import * as eosAssetsActions from 'actions/eosAsset'
 import { producerListSelector } from 'selectors/producer'
 import * as producerActions from 'actions/producer'
 import * as votingActions from 'actions/voting'
@@ -66,8 +65,11 @@ export default class Voting extends Component {
   }
 
   subscription = Navigation.events().bindComponent(this)
-  state = { searching: false, selected: 0 }
+
+  state = { selected: 0 }
+
   tableViewRef = React.createRef()
+
   pendingAssetQueue = []
 
   navigationButtonPressed({ buttonId }) {
@@ -76,8 +78,8 @@ export default class Voting extends Component {
     }
   }
 
-  searchBarUpdated({ text, isFocused }) {
-    this.setState({ searching: isFocused })
+  searchBarUpdated() {
+    // this.setState({ searching: isFocused })
   }
 
   onRefresh = () => {
@@ -121,22 +123,21 @@ export default class Voting extends Component {
 
     return (
       <View style={styles.container}>
-        <View style={[styles.selected, { marginTop: Navigation.constants().topBarHeight, height: !!selectedProducerList.count() ? 80 : 0 }]}>
+        <View style={[styles.selected, { marginTop: Navigation.constants().topBarHeight, height: selectedProducerList.count() ? 80 : 0 }]}>
           <ScrollView
-            style={{ height: !!selectedProducerList.count() ? 80 : 0 }}
+            style={{ height: selectedProducerList.count() ? 80 : 0 }}
             horizontal
             showsHorizontalScrollIndicator={false}
-            ref={ref => this.scrollView = ref}
+            ref={(ref) => { this.scrollView = ref; return null }}
           >
-            {selectedProducerList.map(item =>
-              <View key={item} style={{ height: 66, width: Dimensions.get('window').width / 4, backgroundColor: 'white', marginTop: 7, flex: 1, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column' }}>
-                <FastImage
+            {selectedProducerList.map(item => <View key={item} style={{ height: 66, width: Dimensions.get('window').width / 4, backgroundColor: 'white', marginTop: 7, flex: 1, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column' }}>
+              <FastImage
                   source={require('resources/images/producer.png')}
                   style={{ width: 40, height: 40 }}
-                />
-                <Text style={{ color: 'black', fontSize: 11 }}>{item}</Text>
-              </View>
-             )}
+              />
+              <Text style={{ color: 'black', fontSize: 11 }}>{item}</Text>
+            </View>
+            )}
           </ScrollView>
         </View>
         <TableView
@@ -151,7 +152,7 @@ export default class Voting extends Component {
         >
           <TableView.Section label="当前出块节点">
             {producerList.map(item => (
-               <TableView.Item
+              <TableView.Item
                  key={item.get('owner')}
                  height={60}
                  selectionStyle={TableView.Consts.CellSelectionStyle.None}
@@ -163,8 +164,8 @@ export default class Voting extends Component {
                  rank_url={item.get('rank_url')}
                  onPress={this.onPress}
                  accessoryType={TableView.Consts.AccessoryType.DetailButton}
-               />
-             ))}
+              />
+            ))}
           </TableView.Section>
         </TableView>
       </View>

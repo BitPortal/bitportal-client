@@ -1,8 +1,8 @@
-import { expect } from 'chai'
-import { hashPassword } from 'core/keystore'
+// import { expect } from 'chai'
+// import { hashPassword } from 'core/keystore'
 
-describe('keystore', () => {
-  it('hashPassword', () => {
-    console.log(hashPassword('hello'))
-  })
-})
+// describe('keystore', () => {
+//   it('hashPassword', () => {
+//     console.log(hashPassword('hello'))
+//   })
+// })

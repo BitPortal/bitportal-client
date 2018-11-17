@@ -38,6 +38,12 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
 
     const publicKey = yield call(privateToPublic, privateKey)
 
+    const permission = 'OWNER'
+    const privateKeyDecodedString = wif.decode(privateKey).privateKey.toString('hex')
+    const keystore = yield call(encrypt, privateKeyDecodedString, password, { origin: 'classic', coin: 'EOS' })
+
+    yield call(secureStorage.setItem, `CLASSIC_TEMP_KEYSTORE_EOS_${eosAccountName}_${permission}_${publicKey}`, keystore, true)
+
     const result = yield call(api.createEOSAccount, {
       inviteCode,
       chainType: 'eos',
@@ -49,9 +55,6 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
     const txhash = result.txhash
     assert(txhash, 'No txhash!')
 
-    const permission = 'OWNER'
-    const privateKeyDecodedString = wif.decode(privateKey).privateKey.toString('hex')
-    const keystore = yield call(encrypt, privateKeyDecodedString, password, { origin: 'classic', coin: 'EOS' })
     const walletInfo = {
       eosAccountName,
       permission,

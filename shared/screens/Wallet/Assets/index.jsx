@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { View, Text, Switch } from 'react-native'
+import { View } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
-import FastImage from 'react-native-fast-image'
+// import FastImage from 'react-native-fast-image'
 import * as eosAssetsActions from 'actions/eosAsset'
 import { eosAssetListSelector, eosAssetSearchResultListSelector } from 'selectors/eosAsset'
 import styles from './styles'
@@ -40,7 +40,9 @@ export default class Wallet extends Component {
   subscription = Navigation.events().bindComponent(this)
 
   state = { searching: false }
+
   tableViewRef = React.createRef()
+
   pendingAssetQueue = []
 
   searchBarUpdated({ text, isFocused }) {
@@ -100,7 +102,7 @@ export default class Wallet extends Component {
         >
           <TableView.Section>
             {data.map(item => (
-               <TableView.Item
+              <TableView.Item
                  key={`${item.get('symbol')}_${item.get('account')}`}
                  height={60}
                  selectionStyle={TableView.Consts.CellSelectionStyle.None}
@@ -112,8 +114,8 @@ export default class Wallet extends Component {
                  rank_url={item.get('rank_url')}
                  accessoryType={5}
                  switchOn={item.get('selected')}
-               />
-             ))}
+              />
+            ))}
           </TableView.Section>
         </TableView>
       </View>

@@ -1,19 +1,51 @@
 import assert from 'assert'
-import { randomBytes, pbkdf2, scrypt, keccak256 } from 'core/crypto'
-import { createHash, createCipheriv, createDecipheriv } from 'crypto'
+import { randomBytes, pbkdf2, scrypt, keccak256, bip39, hash160, ripemd160 } from 'core/crypto'
+import { createHash, createCipheriv, createDecipheriv, createHmac } from 'crypto'
+import HDKey from 'hdkey'
+import secp256k1 from 'secp256k1'
+import bs58 from 'bs58'
+import bs58check from 'bs58check'
+import uuidv4 from 'uuid/v4'
+import {
+  bip44Path,
+  network,
+  walletType,
+  magicHex,
+  keystoreVersion,
+  derivedMode,
+  chain,
+  segWit
+} from 'core/constants'
+// import bech32 from 'bech32'
 
 const decipherBuffer = (decipher: any, data: any) => {
   return Buffer.concat([decipher.update(data), decipher.final()])
+}
+
+const toChecksumAddress = async (address: string) => {
+  const rawAddress = address.toLowerCase().replace('0x', '')
+  const hash = (await keccak256(rawAddress)).toString('hex')
+  let ret = '0x'
+
+  for (let i = 0; i < rawAddress.length; i++) {
+    if (parseInt(hash[i], 16) >= 8) {
+      ret += rawAddress[i].toUpperCase()
+    } else {
+      ret += rawAddress[i]
+    }
+  }
+
+  return ret
+}
+
+const generateMac = async (derivedKey: string, ciphertext: string) => {
+  return (await keccak256(Buffer.concat([Buffer.from(derivedKey, 'hex').slice(16, 32), Buffer.from(ciphertext, 'hex')]))).toString('hex')
 }
 
 export const hashPassword = (password: string) => {
   const hashed1 = createHash('sha256').update(Buffer.from(password).toString('hex')).digest()
   const hashed2 = createHash('sha256').update(hashed1).digest()
   return hashed2.toString('hex')
-}
-
-const generateMac = (derivedKey: string, ciphertext: string) => {
-   return keccak256(Buffer.concat([Buffer.from(derivedKey, 'hex').slice(16, 32), Buffer.from(ciphertext, 'hex')])).toString('hex')
 }
 
 export const createCrypto = async (password: string, origin: string, kdfType: string, isCached: boolean) => {
@@ -28,11 +60,11 @@ export const createCrypto = async (password: string, origin: string, kdfType: st
   let derivedKey
 
   if (kdf === 'pbkdf2') {
-    kdfparams.c = 10240
+    kdfparams.c = 65535 // 10240
     kdfparams.prf = 'hmac-sha256'
     derivedKey = await pbkdf2(Buffer.from(password).toString('hex'), kdfparams.salt, kdfparams.c, kdfparams.dklen, 'sha256')
   } else if (kdf === 'scrypt') {
-    kdfparams.n = 8192
+    kdfparams.n = 65535 // 8192
     kdfparams.r = 8
     kdfparams.p = 1
     derivedKey = await scrypt(Buffer.from(password).toString('hex'), kdfparams.salt, kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen)
@@ -40,16 +72,17 @@ export const createCrypto = async (password: string, origin: string, kdfType: st
     throw new Error('Unsupported kdf type')
   }
 
-  const ciphertext = encrypt(derivedKey, iv, origin)
-  const mac = generateMac(derivedKey, ciphertext)
+  const cipher = 'aes-128-ctr'
+  const ciphertext = await encrypt(derivedKey, iv, origin, cipher)
+  const mac = await generateMac(derivedKey, ciphertext)
 
   const crypto: any = {
     kdf,
     kdfparams,
     ciphertext,
     mac,
-    cipherparams: { iv },
-    cipher: 'aes-128-ctr'
+    cipher,
+    cipherparams: { iv }
   }
 
   if (isCached) {
@@ -73,7 +106,7 @@ export const getCachedDerivedKey = async (password: string, crypto: any) => {
     }
   }
 
-  const derivedKey = getValidDerivedKey(password, crypto)
+  const derivedKey = await getValidDerivedKey(password, crypto)
 
   return derivedKey
 }
@@ -98,7 +131,7 @@ export const getValidDerivedKey = async (password: string, crypto: any) => {
   }
 
   const ciphertext = crypto.ciphertext
-  const mac = generateMac(derivedKey, ciphertext)
+  const mac = await generateMac(derivedKey, ciphertext)
 
   if (mac !== crypto.mac) {
     throw new Error('Invalid password')
@@ -118,12 +151,12 @@ export const verifyPassword = async (password: string, crypto: any) => {
 
 export const clearCachedDerivedKey = (crypto: any) => {
   const cryptoWithoutCachedDerivedKey = { ...crypto }
-  cryptoWithoutCachedDerivedKey.cachedDerivedKey = null
+  delete cryptoWithoutCachedDerivedKey.cachedDerivedKey
   return cryptoWithoutCachedDerivedKey
 }
 
 export const cacheDerivedKey = async (password: string, crypto: any) => {
-  const derivedKey = getValidDerivedKey(password, crypto)
+  const derivedKey = await getValidDerivedKey(password, crypto)
   const cryptoWithCachedDerivedKey = { ...crypto }
   cryptoWithCachedDerivedKey.cachedDerivedKey = {
     derivedKey,
@@ -132,10 +165,10 @@ export const cacheDerivedKey = async (password: string, crypto: any) => {
   return cryptoWithCachedDerivedKey
 }
 
-export const encrypt = (derivedKey: string, iv: string, origin: string) => {
+export const encrypt = async (derivedKey: string, iv: string, origin: string, cipherType: string) => {
   const derivedKeyBuffer = Buffer.from(derivedKey, 'hex')
   const ivBuffer = Buffer.from(iv, 'hex')
-  const cipher = createCipheriv('aes-128-ctr', derivedKeyBuffer.slice(0, 16), ivBuffer)
+  const cipher = createCipheriv(cipherType, derivedKeyBuffer.slice(0, 16), ivBuffer)
 
   if (!cipher) {
     throw new Error('Unsupported cipher')
@@ -146,8 +179,9 @@ export const encrypt = (derivedKey: string, iv: string, origin: string) => {
   return ciphertext.toString('hex')
 }
 
-export const decrypt = (derivedKey: string, iv: string, ciphertext: string, cipher: string) => {
+export const decrypt = async (derivedKey: string, iv: string, ciphertext: string, cipher: string) => {
   const decipher = createDecipheriv(cipher, Buffer.from(derivedKey, 'hex').slice(0, 16), Buffer.from(iv, 'hex'))
+
   const origin = decipherBuffer(decipher, Buffer.from(ciphertext, 'hex'))
   return origin.toString('hex')
 }
@@ -155,7 +189,7 @@ export const decrypt = (derivedKey: string, iv: string, ciphertext: string, ciph
 export const deriveEncPair = async (password: string, origin: string, crypto: any) => {
   const derivedKey = await getCachedDerivedKey(password, crypto)
   const iv = (await randomBytes(16)).toString('hex')
-  const encrypted = encrypt(derivedKey, iv, origin)
+  const encrypted = await encrypt(derivedKey, iv, origin, crypto.cipher)
 
   return {
     encStr: encrypted,
@@ -166,7 +200,209 @@ export const deriveEncPair = async (password: string, origin: string, crypto: an
 export const decryptEncPair = async (password: string, encPair: any, crypto: any) => {
   const derivedKey = await getCachedDerivedKey(password, crypto)
   const iv = encPair.nonce
-  const decrypted = decrypt(derivedKey, iv, encPair.encStr, 'aes-128-ctr')
+  const decrypted = await decrypt(derivedKey, iv, encPair.encStr, crypto.cipher)
 
   return decrypted
+}
+
+export const createIdentityKeystore = async (metadata: any, mnemonicCodes: any, password: string) => {
+  const seed = bip39.mnemonicToSeedHex(mnemonicCodes.join(' '))
+  const hdkey = HDKey.fromMasterSeed(new Buffer(seed, 'hex'))
+  const masterPrivateKey = hdkey.privateKey
+  const masterPrivateExtendedKey = hdkey.privateExtendedKey
+
+  const backupKey = createHmac('sha256', masterPrivateKey).update(Buffer.from('Automatic Backup Key Mainnet')).digest()
+  const authenticationKey = createHmac('sha256', backupKey).update(Buffer.from('Authentication Key')).digest()
+
+  const authKey = secp256k1.publicKeyCreate(authenticationKey)
+  const pubHash = hash160(authKey)
+  const networkVersion = metadata.network === network.mainnet ? '00' : '6F'
+  const version = '00'
+  const fullIdentifier = magicHex + networkVersion + version + pubHash.toString('hex')
+  const identifier = bs58check.encode(Buffer.from(fullIdentifier, 'hex'))
+  const encKeyBuffer = createHmac('sha256', backupKey).update(Buffer.from('Encryption Key')).digest()
+  const encKey = encKeyBuffer.toString('hex')
+  const ecKeyPub = secp256k1.publicKeyCreate(encKeyBuffer, false)
+
+  const hashFunction = Buffer.from('12', 'hex')
+  const digest = createHash('sha256').update(ecKeyPub).digest()
+  const digestSize = Buffer.from(digest.byteLength.toString(16), 'hex')
+  const combined = Buffer.concat([hashFunction, digestSize, digest])
+  const multihash = bs58.encode(combined)
+  const ipfsId = multihash.toString()
+
+  let crypto = await createCrypto(password, Buffer.from(masterPrivateExtendedKey).toString('hex'), 'pbkdf2', true)
+  const encAuthKey = await deriveEncPair(password, authenticationKey.toString('hex'), crypto)
+  const encMnemonic = await deriveEncPair(password, seed, crypto)
+  crypto = clearCachedDerivedKey(crypto)
+
+  const random = await randomBytes(16)
+  const id = uuidv4({ random })
+  const walletIDs: string[] = []
+
+  const keystore = {
+    id,
+    identifier,
+    encKey,
+    ipfsId,
+    encAuthKey,
+    encMnemonic,
+    crypto,
+    walletIDs,
+    version: keystoreVersion.identity,
+    bitportalMeta: {
+      ...metadata,
+      timestamp: +Date.now()
+    }
+  }
+
+  return keystore
+}
+
+export const createHDBTCKeystore = async (metadata: any, mnemonicCodes: any, password: string, isSegWit: boolean, id?: string) => {
+  const mnemonics = mnemonicCodes.join(' ')
+  assert(bip39.validateMnemonic(mnemonics), 'Invalid mnemonics')
+
+  const seed = bip39.mnemonicToSeedHex(mnemonics)
+  const hdkey = HDKey.fromMasterSeed(new Buffer(seed, 'hex'))
+
+  let path
+
+  if (metadata.network === network.mainnet) {
+    path = isSegWit ? bip44Path.btcSegwitMainnet : bip44Path.btcMainnet
+  } else if (metadata.network === network.testnet) {
+    path = isSegWit ? bip44Path.btcSegwitTestnet : bip44Path.btcTestnet
+  } else {
+    throw new Error('Invalid network type')
+  }
+
+  const parentkey = hdkey.derive(path)
+  const xpub = parentkey.publicExtendedKey
+  const xprv = parentkey.privateExtendedKey
+
+  const mainAddressKey = hdkey.derive(path + '/0/0')
+  const mainPrivateKey = mainAddressKey.privateKey
+  const mainPublicKey = secp256k1.publicKeyCreate(mainPrivateKey)
+  const mainPublicKeyHash = hash160(mainPublicKey)
+
+  let address
+
+  if (isSegWit) {
+    /* const words = bech32.toWords(mainPublicKeyHash)
+     * words.unshift(0x00)
+     * const redeem = bech32.encode('bc', words)*/
+    const redeemHash = hash160(Buffer.from('0014' + mainPublicKeyHash.toString('hex'), 'hex'))
+    address = bs58check.encode(Buffer.from('05' + redeemHash.toString('hex'), 'hex'))
+  } else {
+    address = bs58check.encode(Buffer.from('00' + mainPublicKeyHash.toString('hex'), 'hex'))
+  }
+
+  let crypto = await createCrypto(password, Buffer.from(xprv).toString('hex'), 'pbkdf2', true)
+  const encMnemonic = await deriveEncPair(password, seed, crypto)
+  crypto = clearCachedDerivedKey(crypto)
+
+  const random = await randomBytes(16)
+
+  const keystore = {
+    encMnemonic,
+    crypto,
+    xpub,
+    address,
+    version: keystoreVersion.btc,
+    mnemonicPath: path,
+    id: id || uuidv4({ random }),
+    bitportalMeta: {
+      ...metadata,
+      timestamp: +Date.now(),
+      walletType: walletType.hd,
+      chain: chain.btc,
+      segWit: isSegWit ? segWit.p2wpkh : segWit.none,
+      name: 'BTC-Wallet'
+    }
+  }
+
+  return keystore
+}
+
+export const createHDETHKeystore = async (metadata: any, mnemonicCodes: any, password: string, id?: string) => {
+  const mnemonics = mnemonicCodes.join(' ')
+  assert(bip39.validateMnemonic(mnemonics), 'Invalid mnemonics')
+
+  const seed = bip39.mnemonicToSeedHex(mnemonics)
+  const hdkey = HDKey.fromMasterSeed(new Buffer(seed, 'hex'))
+  const path = bip44Path.eth
+
+  const keyChain = hdkey.derive(path)
+  const privateKey = keyChain.privateKey
+  const publicKey = secp256k1.publicKeyCreate(privateKey, false).slice(1)
+  const a = await keccak256(publicKey)
+  const lowerCaseAddress = '0x' + a.slice(-20).toString('hex')
+  const address = await toChecksumAddress(lowerCaseAddress)
+
+  let crypto = await createCrypto(password, Buffer.from(privateKey).toString('hex'), 'pbkdf2', true)
+  const encMnemonic = await deriveEncPair(password, seed, crypto)
+  crypto = clearCachedDerivedKey(crypto)
+  const random = await randomBytes(16)
+
+  const keystore = {
+    encMnemonic,
+    crypto,
+    address,
+    version: keystoreVersion.eth,
+    mnemonicPath: path,
+    id: id || uuidv4({ random }),
+    bitportalMeta: {
+      ...metadata,
+      timestamp: +Date.now(),
+      walletType: walletType.hd,
+      chain: chain.eth,
+      name: 'ETH-Wallet'
+    }
+  }
+
+  return keystore
+}
+
+export const createHDEOSKeystore = async (metadata: any, mnemonicCodes: any, password: string, id?: string) => {
+  const mnemonics = mnemonicCodes.join(' ')
+  assert(bip39.validateMnemonic(mnemonics), 'Invalid mnemonics')
+
+  const seed = bip39.mnemonicToSeedHex(mnemonics)
+  const hdkey = HDKey.fromMasterSeed(new Buffer(seed, 'hex'))
+  const path = bip44Path.eosLedger
+  const masterPrivateKey = await randomBytes(16)
+
+  let crypto = await createCrypto(password, Buffer.from(masterPrivateKey).toString('hex'), 'pbkdf2', true)
+  const encMnemonic = await deriveEncPair(password, seed, crypto)
+  const keyPathPrivates = await Promise.all(path.split(',').map(async (hdPath: string) => {
+    const keyChain = hdkey.derive(hdPath)
+    const privateKey = keyChain.privateKey
+    const publicKey = secp256k1.publicKeyCreate(privateKey)
+    const publicKeyHash = ripemd160(publicKey)
+    const address = 'EOS' + bs58.encode(Buffer.from(publicKey.toString('hex') + publicKeyHash.slice(0, 4).toString('hex'), 'hex'))
+    const encPrivate = await deriveEncPair(password, privateKey.toString('hex'), crypto)
+    return { encrypted: encPrivate, publicKey: address, derivedMode: derivedMode.pathDirectly, path: hdPath }
+  }))
+  crypto = clearCachedDerivedKey(crypto)
+
+  const random = await randomBytes(16)
+
+  const keystore = {
+    encMnemonic,
+    crypto,
+    keyPathPrivates,
+    address: '',
+    version: keystoreVersion.eos,
+    mnemonicPath: path,
+    id: id || uuidv4({ random }),
+    bitportalMeta: {
+      ...metadata,
+      timestamp: +Date.now(),
+      walletType: walletType.hd,
+      chain: chain.eos,
+      name: 'EOS-Wallet'
+    }
+  }
+
+  return keystore
 }

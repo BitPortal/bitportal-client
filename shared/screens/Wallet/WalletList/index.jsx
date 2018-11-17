@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { View, Text, Switch, ActionSheetIOS } from 'react-native'
+import { View, ActionSheetIOS } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
-import FastImage from 'react-native-fast-image'
+// import FastImage from 'react-native-fast-image'
 import * as eosAssetsActions from 'actions/eosAsset'
 import { eosAssetListSelector, eosAssetSearchResultListSelector } from 'selectors/eosAsset'
 import styles from './styles'
@@ -56,18 +56,15 @@ export default class WalletList extends Component {
 
   subscription = Navigation.events().bindComponent(this)
 
-  state = { searching: false, editting: false }
   tableViewRef = React.createRef()
+
   pendingAssetQueue = []
-
-
-  subscription = Navigation.events().bindComponent(this)
 
   navigationButtonPressed({ buttonId }) {
     if (buttonId === 'cancel') {
       Navigation.dismissAllModals()
     } else if (buttonId === 'edit') {
-      this.setState({ editting: true })
+      // this.setState({ editting: true })
       Navigation.mergeOptions(this.props.componentId, {
         topBar: {
           rightButtons: [
@@ -79,7 +76,7 @@ export default class WalletList extends Component {
         }
       })
     } else if (buttonId === 'done') {
-      this.setState({ editting: false })
+      // this.setState({ editting: false })
       Navigation.mergeOptions(this.props.componentId, {
         topBar: {
           rightButtons: [
@@ -93,8 +90,8 @@ export default class WalletList extends Component {
     }
   }
 
-  searchBarUpdated({ text, isFocused }) {
-    this.setState({ searching: isFocused })
+  searchBarUpdated({ text }) {
+    // this.setState({ searching: isFocused })
     if (this.pendingAssetQueue.length) {
       this.props.actions.toggleEOSAssetList(this.pendingAssetQueue)
       this.pendingAssetQueue = []
@@ -133,8 +130,8 @@ export default class WalletList extends Component {
   }
 
   render() {
-    const { eosAsset, eosAssetSearchResult, loaded, loading } = this.props
-    const data = this.state.searching ? eosAssetSearchResult : eosAsset
+    // const { eosAsset, eosAssetSearchResult } = this.props
+    // const data = this.state.searching ? eosAssetSearchResult : eosAsset
 
     return (
       <View style={styles.container}>
@@ -148,64 +145,22 @@ export default class WalletList extends Component {
           reactModuleForCell="WalletTableViewCell"
           moveWithinSectionOnly
         >
-          <Section label="身份钱包" canEdit canMove>
+          <Section label="当前身份下的钱包" canEdit canMove>
             <Item
               height={60}
               onPress={this.onPress}
               selectionStyle={TableView.Consts.CellSelectionStyle.None}
-              name="BTC-Wallet"
-              blockchain="BTC-SEGWIT"
-              address="12ESfU8aaUyxepfMbxee9vt688eeS2QEsF"
-              selected
-            />
-            <Item
-              height={60}
-              onPress={this.onPress}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
-              name="ETH-Wallet"
-              blockchain="ETH"
-              address="0xdc91b2Df92E06D3FA74D23F47d3A9C3899f43556"
-            />
-            <Item
-              height={60}
-              onPress={this.onPress}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
-              name="EOS-Wallet"
-              blockchain="EOS"
-              account="terencegehui"
+              type="add"
+              text="添加数字身份..."
             />
           </Section>
-          <Section label="导入钱包">
+          <Section label="导入的钱包">
             <Item
               height={60}
               onPress={this.onPress}
               selectionStyle={TableView.Consts.CellSelectionStyle.None}
               type="add"
               text="导入新钱包..."
-            />
-            <Item
-              height={60}
-              onPress={this.onPress}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
-              name="BTC-Wallet"
-              blockchain="BTC-SEGWIT"
-              address="12ESfU8aaUyxepfMbxee9vt688eeS2QEsF"
-            />
-            <Item
-              height={60}
-              onPress={this.onPress}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
-              name="ETH-Wallet"
-              blockchain="ETH"
-              address="0xdc91b2Df92E06D3FA74D23F47d3A9C3899f43556"
-            />
-            <Item
-              height={60}
-              onPress={this.onPress}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
-              name="EOS-Wallet"
-              blockchain="EOS"
-              account="terencegehui"
             />
             <Item
               height={60}

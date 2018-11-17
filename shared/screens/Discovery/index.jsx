@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { ScrollView } from 'react-native'
 import { bindActionCreators } from 'redux'
 import * as newsActions from 'actions/news'
 import * as dAppActions from 'actions/dApp'
 import TableView from 'react-native-tableview'
-import styles from './styles'
 const { Section, Item, CollectionView, CollectionViewItem } = TableView
 
 @connect(

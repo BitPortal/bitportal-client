@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { View, ScrollView, Text, Dimensions, TouchableOpacity, TouchableHighlight } from 'react-native'
+import { View } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
-import FastImage from 'react-native-fast-image'
+// import FastImage from 'react-native-fast-image'
 import SplashScreen from 'react-native-splash-screen'
 import * as walletActions from 'actions/wallet'
 import * as tickerActions from 'actions/ticker'
@@ -13,12 +13,10 @@ import * as versionActions from 'actions/version'
 import * as currencyActions from 'actions/currency'
 import * as eosAccountActions from 'actions/eosAccount'
 import { selectedEOSTokenBalanceSelector, eosTotalAssetBalanceSelector } from 'selectors/balance'
-import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview'
 import { eosPriceSelector } from 'selectors/ticker'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import styles from './styles'
-const { Section, Item, Cell, CollectionView, CollectionViewItem } = TableView
-const dataProvider = new DataProvider((r1, r2) => r1 !== r2)
+const { Section, Item, CollectionView, CollectionViewItem } = TableView
 
 @connect(
   state => ({
@@ -64,32 +62,6 @@ export default class Wallet extends Component {
     }
   }
 
-  state = {
-    dataProvider: dataProvider.cloneWithRows([
-      {
-        title: 1
-      },
-      {
-        title: 2
-      },
-      {
-        title: 3
-      },
-      {
-        title: 4
-      },
-      {
-        title: 5
-      },
-      {
-        title: 6
-      },
-      {
-        title: 7
-      }
-    ])
-  }
-
   subscription = Navigation.events().bindComponent(this)
 
   navigationButtonPressed({ buttonId }) {
@@ -106,28 +78,13 @@ export default class Wallet extends Component {
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.props.actions.syncWalletRequested()
     SplashScreen.hide()
   }
 
   componentDidAppear() {
 
-  }
-
-  _renderItem ({ item, index }) {
-    const imageList = [require('resources/images/BTCCard.png'), require('resources/images/ETHCard.png'), require('resources/images/BTCCard.png')]
-    return (
-      <View style={styles.slideContainer}>
-        <View style={styles.slide}>
-          <FastImage
-            source={imageList[index]}
-            style={styles.slideBackground}
-          />
-          <Text style={styles.slideText}>{item.title}</Text>
-        </View>
-      </View>
-    )
   }
 
   addAssets = () => {
@@ -155,57 +112,6 @@ export default class Wallet extends Component {
         }]
       }
     })
-  }
-
-  recyclerListViewRef = React.createRef()
-
-  layoutProvider = new LayoutProvider(
-    index => index % 1,
-    (type, dim) => {
-      dim.width = Dimensions.get('window').width - 24
-      dim.height = 190
-    }
-  )
-
-  rowRenderer = (type, item) => {
-    const imageList = [require('resources/images/BTCCard.png'), require('resources/images/ETHCard.png'), require('resources/images/BTCCard.png')]
-
-    return (
-      <View style={styles.slideContainer}>
-        <View style={styles.slide}>
-          <FastImage
-            source={imageList[0]}
-            style={styles.slideBackground}
-          />
-          <View style={{ position: 'absolute', top: 12, left: 12, right: 12, flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <FastImage
-                source={require('resources/images/BTCLogo.png')}
-                style={{ width: 40, height: 40, borderRadius: 4, marginRight: 10 }}
-              />
-              <View>
-                <Text style={{ color: 'white', fontSize: 17 }}>BTC-Wallet</Text>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Text style={{ color: 'white', fontSize: 15, opacity: 0.9, marginRight: 6 }}>terencegehui</Text>
-                  <FastImage
-                    source={require('resources/images/copy.png')}
-                    style={{ width: 13, height: 10.5, marginTop: 3 }}
-                  />
-                </View>
-              </View>
-            </View>
-            <FastImage
-              source={require('resources/images/circle_more.png')}
-              style={{ width: 28, height: 28, borderRadius: 4 }}
-            />
-          </View>
-          <View style={{ position: 'absolute', left: 12, right: 12, bottom: 12, flex: 1, alignItems: 'flex-end' }}>
-            <Text style={{ color: 'white', fontSize: 28 }}>$1,900.00</Text>
-            <Text style={{ color: 'white', fontSize: 17, marginTop: 8 }}>总资产</Text>
-          </View>
-        </View>
-      </View>
-    )
   }
 
   handlePress = () => {

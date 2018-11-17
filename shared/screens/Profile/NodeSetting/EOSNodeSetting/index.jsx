@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+// import { View } from 'react-native'
 import { connect } from 'react-redux'
 import TableView from 'react-native-tableview'
-import styles from './styles'
 
 const { Section, Item } = TableView
 

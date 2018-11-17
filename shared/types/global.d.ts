@@ -331,8 +331,6 @@ declare module 'core/key' {
     getMasterSeedFromEntropy: any
     decrypt: any
     encrypt: any
-    getIdFromSeed: any
-    getIdFromEntropy: any
     getEOSWifsByInfo: any
     validateEOSPublicKeyByInfo: any
   }
@@ -417,4 +415,14 @@ declare module 'bip39' {
 declare module 'react-native-fs' {
   const fs: any
   export default fs
+}
+
+declare module 'bs58check' {
+  const file: any
+  export = file
+}
+
+declare module 'bech32' {
+  const file: any
+  export = file
 }

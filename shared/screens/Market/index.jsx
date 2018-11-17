@@ -4,12 +4,11 @@ import * as tickerActions from 'actions/ticker'
 import * as tokenActions from 'actions/token'
 import { exchangeTickerSelector, sortFilterSelector } from 'selectors/ticker'
 import { bindActionCreators } from 'redux'
-import { View } from 'react-native'
+// import { View } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
-import styles from './styles'
 
-const { Section, Item, CollectionView, CollectionViewItem } = TableView
+const { Section, Item } = TableView
 
 @connect(
   state => ({
