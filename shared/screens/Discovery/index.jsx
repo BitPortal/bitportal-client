@@ -10,10 +10,12 @@ import { IntlProvider } from 'react-intl'
 import { loadInject } from 'utils/inject'
 import Colors from 'resources/colors'
 import messages from 'resources/messages'
+import SearchBar from 'components/SearchBar'
 import NewsList from './NewsList'
 import NewsBanner from './NewsBanner'
 import DappStore from './DappStore'
 import styles from './styles'
+import DappListInline from './DappList/inline'
 
 const PAGE_LENGTH = 10
 
@@ -25,7 +27,8 @@ const PAGE_LENGTH = 10
     loadingMore: state.news.get('loadingMore'),
     bannerData: state.news.get('bannerData'),
     nomore: state.news.get('nomore'),
-    dAppList: state.dApp.get('data')
+    dAppList: state.dApp.get('data'),
+    searchTerm: state.dApp.get('searchTerm')
   }),
   dispatch => ({
     actions: bindActionCreators(
@@ -90,12 +93,8 @@ export default class Discovery extends Component {
     })
   }
 
-  onRowPress = (item) => {
-    if (
-      item.mobile_type === 'link'
-      && item.mobile_jump_url
-      && item.mobile_jump_url.length > 0
-    ) {
+  onRowPress = item => {
+    if (item.mobile_type === 'link' && item.mobile_jump_url && item.mobile_jump_url.length > 0) {
       Navigation.push(this.props.componentId, {
         component: {
           name: 'BitPortal.DappWebView',
@@ -118,7 +117,7 @@ export default class Discovery extends Component {
     }
   }
 
-  onBannerPress = (item) => {
+  onBannerPress = item => {
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.DiscoveryArticle',
@@ -142,26 +141,32 @@ export default class Discovery extends Component {
     })
   }
 
+  onChangeText = text => {
+    this.props.actions.setSearchTerm(text)
+  }
+
   render() {
-    const {
-      locale,
-      loadingMore,
-      isRefreshing,
-      nomore,
-      componentId
-    } = this.props
+    const { locale, loadingMore, isRefreshing, nomore, componentId, searchTerm } = this.props
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            leftButton={
-              <CommonTitle title={messages[locale].discovery_title_discovery} />
+            leftButton={<CommonTitle title={messages[locale].discovery_title_discovery} />}
+            rightButton={
+              <SearchBar
+                searchTerm={searchTerm}
+                onChangeText={text => this.onChangeText(text)}
+                clearSearch={() => {
+                  this.props.actions.setSearchTerm('')
+                }}
+              />
             }
           />
           <ScrollView>
             <NewsBanner componentId={componentId} />
 
             <DappStore componentId={componentId} />
+            <DappListInline componentId={componentId} />
             <NewsList
               data={this.getNewsListData()}
               onRefresh={this.onRefresh}

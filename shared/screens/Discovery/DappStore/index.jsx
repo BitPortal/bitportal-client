@@ -53,19 +53,13 @@ export default class DappStore extends PureComponent {
         <View style={styles.container}>
           <TouchableWithoutFeedback onLongPress={this.showDappBrowser}>
             <View style={styles.listTitle}>
-              <Text
-                style={[styles.text14, { fontWeight: 'bold', color: Colors.textColor_255_255_238 }]}
-              >
+              <Text style={[styles.text14, { fontWeight: 'bold', color: Colors.textColor_255_255_238 }]}>
                 {messages[this.props.locale].discovery_label_dapp_store}
               </Text>
             </View>
           </TouchableWithoutFeedback>
           <View style={styles.hairLine} />
-          <ScrollView
-            horizontal={true}
-            scrollEnabled={false}
-            contentContainerStyle={styles.dAppScrollViewContainer}
-          >
+          <ScrollView horizontal={true} scrollEnabled={false} contentContainerStyle={styles.dAppScrollViewContainer}>
             {loading ? (
               <View
                 style={{
@@ -88,7 +82,6 @@ export default class DappStore extends PureComponent {
               ))
             )}
           </ScrollView>
-          <View style={[styles.hairLine, { height: 10 }]} />
         </View>
       </IntlProvider>
     )
