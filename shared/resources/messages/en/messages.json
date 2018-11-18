@@ -159,6 +159,8 @@
   "send_confirm_label_to": "Receiver",
   "send_confirm_label_memo": "Memo",
   "send_confirm_button_confirm": "Confirm",
+  "send_label_contract": "Contract",
+  "send_error_popup_asset_unavailable": "Asset Unavailable",
 
   "transaction_list_button_send": "Send",
   "transaction_list_button_receive": "Receive",

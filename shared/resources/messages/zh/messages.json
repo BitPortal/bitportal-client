@@ -158,6 +158,8 @@
   "send_confirm_label_to": "收款人",
   "send_confirm_label_memo": "附言",
   "send_confirm_button_confirm": "确认",
+  "send_label_contract": "合约",
+  "send_error_popup_asset_unavailable": "Token 无法交易",
 
   "transaction_list_button_send": "发送",
   "transaction_list_button_receive": "接收",

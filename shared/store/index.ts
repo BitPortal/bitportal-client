@@ -15,13 +15,28 @@ if (ENV !== 'production') {
   const installDevTools = require('immutable-devtools')
   installDevTools(Immutable)
 }
+let deepLinkAuth = false
+
+export const deepLinkReady = () => deepLinkAuth
+
+const createDeepLinkMiddleware = () => () => (next: any) => (action: any) => {
+  if (action.type === 'balance/GET_EOS_SUCCEEDED') {
+    deepLinkAuth = true
+  }
+  return next(action)
+}
 
 export default function configure(initialState: RootState = {}, history?: any): AppStore<RootState> {
   const sagaMiddleware = createSagaMiddleware()
   const routerMiddleware = createRouterMiddleware(history)
-  const middlewares = !isMobile ? [routerMiddleware, sagaMiddleware] : [sagaMiddleware]
+  const deepLinkMiddleware = createDeepLinkMiddleware()
+  const middlewares = !isMobile ? [routerMiddleware, sagaMiddleware] : [sagaMiddleware, deepLinkMiddleware]
   const composeEnhancers = (ENV !== 'production' && isBrowser && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
-  const store: AppStore<RootState> = createStore(rootReducer, initialState, composeEnhancers(applyMiddleware(...middlewares)))
+  const store: AppStore<RootState> = createStore(
+    rootReducer,
+    initialState,
+    composeEnhancers(applyMiddleware(...middlewares))
+  )
 
   store.runSaga = sagaMiddleware.run
   store.close = () => store.dispatch(END)

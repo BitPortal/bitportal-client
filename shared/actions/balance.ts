@@ -9,5 +9,5 @@ export const getEOSAssetBalanceFailed = createAction<ErrorMessage>('balance/GET_
 export const getEOSAssetBalanceListRequested = createAction<GetAssetBalanceListParams>('balance/GET_LIST_REQUESTED')
 export const getEOSAssetBalanceListSucceeded = createAction<GetAssetBalanceListResult>('balance/GET_LIST_SUCCEEDED')
 export const getEOSAssetBalanceListFailed = createAction<ErrorMessage>('balance/GET_LIST_FAILED')
-export const setActiveAsset = createAction<string>('balance/SET_ACTIVE_ASSET')
+export const setActiveAsset = createAction<any>('balance/SET_ACTIVE_ASSET')
 export const resetBalance = createAction('balance/RESET')
