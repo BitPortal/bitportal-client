@@ -46,7 +46,7 @@ export const errorMessages = (error, messages) => {
     // error: state.simpleWallet.get('error'),
     error: state.transfer.get('error'),
     // loaded: state.simpleWallet.get('loaded'),
-    loaded: state.transfer.get('loaded'),
+    // loaded: state.transfer.get('loaded'),
     showModal: state.transfer.get('showModal')
   }),
   dispatch => ({
@@ -152,7 +152,6 @@ export default class SimpleWalletTransaction extends Component {
       payload: { dappIcon, dappName, amount, symbol, precision },
       loading,
       error,
-      loaded,
       showModal
     } = this.props
 

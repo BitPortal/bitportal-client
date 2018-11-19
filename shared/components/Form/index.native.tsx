@@ -116,7 +116,7 @@ export const TextField: React.SFC<TextFieldProps> = ({
   editable
 }) => (
   <FieldItem>
-    {touched && error && <FieldError>{touched && error}</FieldError>}
+    {touched && error && <FieldError tips={tips}>{touched && error}</FieldError>}
     <FieldInfo>
       {!(touched && error) && (
         <View style={styles.between}>
@@ -185,7 +185,7 @@ export const TextAreaField: React.SFC<TextFieldProps> = ({
   editable
 }) => (
   <FieldItem>
-    {touched && error && <FieldError>{touched && error}</FieldError>}
+    {touched && error && <FieldError tips={tips}>{touched && error}</FieldError>}
     <FieldInfo>
       {!(touched && error) && (
         <View style={styles.between}>
@@ -225,7 +225,7 @@ export const PasswordField: React.SFC<TextFieldProps> = ({
   info
 }) => (
   <FieldItem>
-    {touched && error && <FieldError>{touched && error}</FieldError>}
+    {touched && error && <FieldError tips={tips}>{touched && error}</FieldError>}
     <FieldInfo>
       {!(touched && error) && (
         <View style={styles.between}>

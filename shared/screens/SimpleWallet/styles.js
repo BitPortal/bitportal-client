@@ -6,8 +6,7 @@ import {
   NAV_BAR_HEIGHT,
   FontScale,
   FLOATING_CARD_WIDTH,
-  FLOATING_CARD_BORDER_RADIUS,
-  FLOATING_CARD_MARGIN_BOTTOM
+  FLOATING_CARD_BORDER_RADIUS
 } from 'utils/dimens'
 
 const styles = StyleSheet.create({

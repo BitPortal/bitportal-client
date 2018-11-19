@@ -6,11 +6,14 @@ import { FontScale, FLOATING_CARD_WIDTH, FLOATING_CARD_BORDER_RADIUS } from 'uti
 export default EStyleSheet.create({
   formContainer: {
     flex: 1,
-    width: '100%',
+    width: '100%-30',
     paddingHorizontal: 20,
     paddingVertical: 20,
     alignItems: 'center',
     flexDirection: 'column',
+    marginTop: 15,
+    marginHorizontal: 15,
+    borderRadius: 15,
     backgroundColor: Colors.minorThemeColor
   },
   searchContainer: {

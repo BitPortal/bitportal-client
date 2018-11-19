@@ -56,7 +56,7 @@
   "add_eos_create_error_popup_text_registration_code_used": "입력하신 코드는 이미 사용 만료됐습니다.",
   "add_eos_create_error_popup_text_registration_code_invite": "본 이벤트는 사전에 초대된 유저분들에게만 해당됩니다.",
   "add_eos_create_error_popup_text_registration_code_eos": "본 이벤트는 EOS 토큰에만 해당됩니다.",
-  "add_eos_create_button_with_private_key": "프라이빗 키를 이미 보유하고 계십니까? (선택)",
+  "add_eos_create_button_with_private_key": "입력해주세요 (선택)",
   "add_eos_create_button_collapse_private_key": "중단하기",
   "add_eos_create_button_create": "생성하기",
   "add_eos_create_button_import": "계정 불러오기",
