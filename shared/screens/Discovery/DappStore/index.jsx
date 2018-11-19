@@ -56,7 +56,7 @@ export default class DappStore extends PureComponent {
               <Text
                 style={[styles.text14, { fontWeight: 'bold', color: Colors.textColor_255_255_238 }]}
               >
-                Dapp Store
+                {messages[this.props.locale].discovery_label_dapp_store}
               </Text>
             </View>
           </TouchableWithoutFeedback>
