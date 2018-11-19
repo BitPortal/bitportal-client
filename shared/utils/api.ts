@@ -81,7 +81,7 @@ const marketFetchBase = (
 ) =>
   fetchBase(method, endPoint, params, {
     ...options,
-    baseUrl: 'http://market.corp.bitportal.io/api/v2'
+    baseUrl: BITPORTAL_API_MARKET_URL
   })
 
 const traceFetchBase = (
