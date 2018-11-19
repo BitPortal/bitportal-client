@@ -94,7 +94,7 @@ export default class DappListInline extends Component {
       <View style={styles.moreSectionHeader}>
         <Text style={styles.title}>{messages[this.props.locale][title]}</Text>
         <TouchableOpacity style={styles.moreButton} onPress={this.handleMore}>
-            <Text style={styles.moreText}>{messages[this.props.locale].discovery_dapp_list_title_more}</Text>
+          <Text style={styles.moreText}>{messages[this.props.locale].discovery_dapp_list_title_more}</Text>
         </TouchableOpacity>
       </View>
     )

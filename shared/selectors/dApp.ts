@@ -38,8 +38,10 @@ export const parsedDappListSelector = createSelector(
       return found ? null : newArr.push(item.toJS())
     })
 
-    if (newArr.length > 11) {
-      const parsed = newArr.splice(0, 11).concat({ type: 'more' })
+    if (newArr.length > 8) {
+      // const parsed = newArr.splice(0, 11).concat({ type: 'more' })
+      const parsed = newArr.splice(0, 8)
+
       return Immutable.fromJS(parsed)
     }
     return Immutable.fromJS(data.splice(0, 11))

@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     paddingBottom: TAB_BAR_HEIGHT
   },
   listTitle: {
-    width: SCREEN_WIDTH,
+    // width: SCREEN_WIDTH,
     height: 40,
     paddingLeft: 20,
     alignItems: 'flex-start',
@@ -93,13 +93,34 @@ const styles = StyleSheet.create({
   },
   title: {
     color: Colors.textColor_FFFFEE,
-    fontSize: FontScale(12),
-    fontWeight: 'bold',
-    marginVertical: 10
+    fontSize: FontScale(15),
+    fontWeight: 'bold'
   },
   hairLine: {
     height: 2,
     backgroundColor: Colors.mainThemeColor
+  },
+  moreText: {
+    color: Colors.textColor_84_164_207,
+    fontSize: FontScale(14)
+    // fontWeight: 'bold'
+  },
+  moreButton: {
+    // backgroundColor: 'red',
+    paddingVertical: 5,
+    paddingHorizontal: 2
+  },
+  moreSectionHeader: {
+    width: SCREEN_WIDTH,
+    height: 40,
+    backgroundColor: Colors.bgColor_30_31_37,
+    flexDirection: 'row',
+
+    marginBottom: 1,
+    // marginTop: 10,
+    paddingHorizontal: 20,
+    justifyContent: 'space-between',
+    alignItems: 'center'
   }
 })
 

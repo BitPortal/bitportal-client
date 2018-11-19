@@ -163,11 +163,10 @@ export default class Discovery extends Component {
             }
           />
           <ScrollView>
-            <NewsBanner componentId={componentId} />
-
-            <DappStore componentId={componentId} />
+            {!searchTerm.trim() && <NewsBanner componentId={componentId} />}
+            {!searchTerm.trim() && <DappStore componentId={componentId} />}
             <DappListInline componentId={componentId} />
-            <NewsList
+            {/* <NewsList
               data={this.getNewsListData()}
               onRefresh={this.onRefresh}
               onEndReached={this.onEndReached}
@@ -176,7 +175,7 @@ export default class Discovery extends Component {
               nomore={nomore}
               loadingMore={loadingMore}
               componentId={componentId}
-            />
+            /> */}
           </ScrollView>
         </View>
       </IntlProvider>

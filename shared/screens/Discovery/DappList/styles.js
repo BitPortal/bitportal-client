@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   moreText: {
-    color: Colors.textColor_FFFFEE,
+    color: Colors.textColor_84_164_207,
     fontSize: FontScale(14)
     // fontWeight: 'bold'
   },
