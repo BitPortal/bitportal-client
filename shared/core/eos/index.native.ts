@@ -20,9 +20,7 @@ const initEOS = async (options: any) => {
   return eos
 }
 
-const getEOS = () => {
-  return eos
-}
+const getEOS = () => eos
 
 const randomKey = async () => {
   const privateKey = await ecc.randomKey()
@@ -36,16 +34,13 @@ const privateToPublic = async (privateKey: string) => {
 
 const isValidPrivate = (privateKey: string) => ecc.isValidPrivate(privateKey)
 
-const getProducers = (params: any) => {
-  alert(JSON.stringify(params))
-  return new Promise((resolve) => {
-    eos.getProducers(params).then((result: any) => {
-      return resolve(result)
-    })
+const getProducers = (params: any) =>
+  new Promise(resolve => {
+    eos.getProducers(params).then((result: any) => resolve(result))
   })
-}
 
-const sortProducers = (a: any, b: any) => parseInt(Eos.modules.format.encodeName(a, false), 10) - parseInt(Eos.modules.format.encodeName(b, false), 10)
+const sortProducers = (a: any, b: any) =>
+  parseInt(Eos.modules.format.encodeName(a, false), 10) - parseInt(Eos.modules.format.encodeName(b, false), 10)
 
 const getPermissionsByKey = (publickKey: string, accountInfo: any) => {
   assert(accountInfo.permissions && accountInfo.permissions.length, 'EOS account permissions dose not exist!')
@@ -53,56 +48,60 @@ const getPermissionsByKey = (publickKey: string, accountInfo: any) => {
   const permissions = accountInfo.permissions
   const eosAccountName = accountInfo.account_name
   const balance = accountInfo.core_liquid_balance ? accountInfo.core_liquid_balance.split(' ')[0] : 0
-  const roles = permissions.filter((permission: any) => permission.required_auth && permission.required_auth.keys.filter((key: any) => key && key.key === publickKey).length).map((permission: any) => ({ balance, accountInfo, accountName: eosAccountName, permission: permission.perm_name }))
+  const roles = permissions
+    .filter(
+      (permission: any) =>
+        permission.required_auth &&
+        permission.required_auth.keys.filter((key: any) => key && key.key === publickKey).length
+    )
+    .map((permission: any) => ({ balance, accountInfo, accountName: eosAccountName, permission: permission.perm_name }))
   // const ownerPermission = roles.filter((role: any) => role.permission === 'owner')
   // return ownerPermission.length ? ownerPermission : roles
   return roles
 }
 
-const getInitialAccountInfo = (eosAccountName: string, publicKey: string) => (
-  {
-    account_name: eosAccountName,
-    core_liquid_balance: '0.0000 EOS',
-    cpu_limit: { used: 0, available: 0, max: 0 },
-    cpu_weight: 0,
-    net_limit: { used: 0, available: 0, max: 0 },
-    net_weight: 0,
-    permissions: [
-      {
-        parent: 'owner',
-        perm_name: 'active',
-        required_auth: {
-          accounts: [],
-          keys: [{ key: publicKey, weight: 1 }],
-          threshold: 1,
-          waits: []
-        }
-      },
-      {
-        parent: '',
-        perm_name: 'owner',
-        required_auth: {
-          accounts: [],
-          keys: [{ key: publicKey, weight: 1 }],
-          threshold: 1,
-          waits: []
-        }
+const getInitialAccountInfo = (eosAccountName: string, publicKey: string) => ({
+  account_name: eosAccountName,
+  core_liquid_balance: '0.0000 EOS',
+  cpu_limit: { used: 0, available: 0, max: 0 },
+  cpu_weight: 0,
+  net_limit: { used: 0, available: 0, max: 0 },
+  net_weight: 0,
+  permissions: [
+    {
+      parent: 'owner',
+      perm_name: 'active',
+      required_auth: {
+        accounts: [],
+        keys: [{ key: publicKey, weight: 1 }],
+        threshold: 1,
+        waits: []
       }
-    ],
-    privileged: false,
-    ram_quota: 0,
-    ram_usage: 0,
-    refund_request: null,
-    self_delegated_bandwidth: null,
-    total_resources: {
-      owner: eosAccountName,
-      cpu_weight: '0.0000 EOS',
-      net_weight: '0.0000 EOS',
-      ram_bytes: 0
     },
-    voter_info: null
-  }
-)
+    {
+      parent: '',
+      perm_name: 'owner',
+      required_auth: {
+        accounts: [],
+        keys: [{ key: publicKey, weight: 1 }],
+        threshold: 1,
+        waits: []
+      }
+    }
+  ],
+  privileged: false,
+  ram_quota: 0,
+  ram_usage: 0,
+  refund_request: null,
+  self_delegated_bandwidth: null,
+  total_resources: {
+    owner: eosAccountName,
+    cpu_weight: '0.0000 EOS',
+    net_weight: '0.0000 EOS',
+    ram_bytes: 0
+  },
+  voter_info: null
+})
 
 const voteEOSProducers = async ({ eosAccountName, password, permission, producers, proxy }: VoteEOSProducersParams) => {
   assert(eosAccountName, 'No EOS account exist!')
@@ -115,19 +114,23 @@ const voteEOSProducers = async ({ eosAccountName, password, permission, producer
 
   const eos = await initEOS({ keyProvider })
   const data = await eos.transaction({
-    actions: [{
-      account: 'eosio',
-      name: 'voteproducer',
-      authorization: [{
-        actor: eosAccountName,
-        permission: _permission.toLowerCase()
-      }],
-      data: {
-        voter: eosAccountName,
-        producers: sortedProducers,
-        proxy: proxy || ''
+    actions: [
+      {
+        account: 'eosio',
+        name: 'voteproducer',
+        authorization: [
+          {
+            actor: eosAccountName,
+            permission: _permission.toLowerCase()
+          }
+        ],
+        data: {
+          voter: eosAccountName,
+          producers: sortedProducers,
+          proxy: proxy || ''
+        }
       }
-    }],
+    ],
     broadcast: false,
     sign: true
   })
@@ -155,20 +158,24 @@ const transferEOSAsset = async ({
   const keyProvider = wifs.map((item: any) => item.wif)
   const eos = await initEOS({ keyProvider })
   const data = await eos.transaction({
-    actions: [{
-      account: contract,
-      name: 'transfer',
-      authorization: [{
-        actor: fromAccount,
-        permission: _permission.toLowerCase()
-      }],
-      data: {
-        quantity,
-        memo: memo || '',
-        from: fromAccount,
-        to: toAccount
+    actions: [
+      {
+        account: contract,
+        name: 'transfer',
+        authorization: [
+          {
+            actor: fromAccount,
+            permission: _permission.toLowerCase()
+          }
+        ],
+        data: {
+          quantity,
+          memo: memo || '',
+          from: fromAccount,
+          to: toAccount
+        }
       }
-    }],
+    ],
     broadcast: false,
     sign: true
   })
@@ -176,12 +183,7 @@ const transferEOSAsset = async ({
   return data
 }
 
-const pushEOSAction = async ({
-  account,
-  actions,
-  password,
-  permission
-}: PushEOSActionParams) => {
+const pushEOSAction = async ({ account, actions, password, permission }: PushEOSActionParams) => {
   const _permission = permission || 'ACTIVE'
   const accountInfo = await secureStorage.getItem(`EOS_ACCOUNT_INFO_${account}`, true)
   const wifs = await getEOSWifsByInfo(password, accountInfo, [_permission])
@@ -195,13 +197,7 @@ const pushEOSAction = async ({
   return data
 }
 
-const eosAuthSign = async ({
-  account,
-  publicKey,
-  password,
-  signData,
-  isHash
-}: SignEOSDataParams) => {
+const eosAuthSign = async ({ account, publicKey, password, signData, isHash }: SignEOSDataParams) => {
   const accountInfo = await secureStorage.getItem(`EOS_ACCOUNT_INFO_${account}`, true)
   const wifs = await getEOSWifsByInfo(password, accountInfo, ['OWNER', 'ACTIVE'])
   const keyProvider = wifs.filter((item: any) => item.publicKey === publicKey).map((item: any) => item.wif)
@@ -209,12 +205,7 @@ const eosAuthSign = async ({
   return isHash ? ecc.Signature.signHash(signData, wif).toString() : ecc.sign(Buffer.from(signData, 'utf8'), wif)
 }
 
-const signature = async ({
-  account,
-  publicKey,
-  password,
-  buf
-}: SignatureParams) => {
+const signature = async ({ account, publicKey, password, buf }: SignatureParams) => {
   const accountInfo = await secureStorage.getItem(`EOS_ACCOUNT_INFO_${account}`, true)
   const wifs = await getEOSWifsByInfo(password, accountInfo, ['OWNER', 'ACTIVE'])
   const keyProvider = wifs.filter((item: any) => item.publicKey === publicKey).map((item: any) => item.wif)
@@ -222,14 +213,7 @@ const signature = async ({
   return [ecc.sign(Buffer.from(buf.data, 'utf8'), wif)]
 }
 
-const verify = async ({
-  account,
-  permission,
-  password,
-  signature,
-  data,
-  publicKey
-}: VerifyParams) => {
+const verify = async ({ account, permission, password, signature, data, publicKey }: VerifyParams) => {
   const _permission = permission || 'ACTIVE'
   const accountInfo = await secureStorage.getItem(`EOS_ACCOUNT_INFO_${account}`, true)
   const wifs = await getEOSWifsByInfo(password, accountInfo, [_permission])
@@ -256,10 +240,12 @@ const createEOSAccount = async ({
       {
         account: 'eosio',
         name: 'newaccount',
-        authorization: [{
-          actor: creator,
-          permission: _permission.toLowerCase()
-        }],
+        authorization: [
+          {
+            actor: creator,
+            permission: _permission.toLowerCase()
+          }
+        ],
         data: {
           creator,
           name: eosAccountName,
@@ -270,10 +256,12 @@ const createEOSAccount = async ({
       {
         account: 'eosio',
         name: 'buyrambytes',
-        authorization: [{
-          actor: creator,
-          permission: _permission.toLowerCase()
-        }],
+        authorization: [
+          {
+            actor: creator,
+            permission: _permission.toLowerCase()
+          }
+        ],
         data: {
           payer: creator,
           receiver: eosAccountName,
@@ -283,10 +271,12 @@ const createEOSAccount = async ({
       {
         account: 'eosio',
         name: 'delegatebw',
-        authorization: [{
-          actor: creator,
-          permission: _permission.toLowerCase()
-        }],
+        authorization: [
+          {
+            actor: creator,
+            permission: _permission.toLowerCase()
+          }
+        ],
         data: {
           from: creator,
           receiver: eosAccountName,

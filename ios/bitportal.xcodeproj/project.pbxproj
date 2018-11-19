@@ -3088,7 +3088,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.bitportal.wallet;
 				PRODUCT_NAME = bitportal;
 				PROVISIONING_PROFILE = "8cd75e73-9ada-45e4-88af-19ea0bff69ab";
-				PROVISIONING_PROFILE_SPECIFIER = "wallet ad hoc profile";
+				PROVISIONING_PROFILE_SPECIFIER = "wall development profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "RNCharts/bitportal-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";

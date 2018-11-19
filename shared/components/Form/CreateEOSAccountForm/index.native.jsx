@@ -5,7 +5,7 @@ import { LayoutAnimation } from 'react-native'
 import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
 import { IntlProvider } from 'react-intl'
 import { FormContainer, TextField, PasswordField, TextAreaField, SubmitButton } from 'components/Form'
-import { normalizeEOSAccountName, normalizeText } from 'utils/normalize'
+import { normalizeText } from 'utils/normalize'
 import PasswordStrength from 'components/PasswordStrength'
 import Alert from 'components/Alert'
 import { validateEOSAccountName } from 'utils/validate'
@@ -127,7 +127,6 @@ export default class CreateEOSAccountForm extends Component {
             component={TextField}
             placeholder={messages[locale].add_eos_create_text_account_name}
             tips={messages[locale].add_eos_create_popup_text_account_name_tips}
-            normalize={normalizeEOSAccountName}
           />
           <Field
             label={messages[locale].add_eos_label_set_password}

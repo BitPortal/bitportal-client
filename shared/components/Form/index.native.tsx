@@ -4,6 +4,8 @@ import LinearGradientContainer from 'components/LinearGradientContainer'
 import { noop } from 'utils'
 import Colors from 'resources/colors'
 import Tips from 'components/Tips'
+import ModalDropdown from 'react-native-modal-dropdown'
+
 import styles from './styles'
 
 type KeyboardAppearance = 'default' | 'light' | 'dark'
@@ -43,6 +45,8 @@ interface TextFieldProps {
   placeholder?: string
   returnKeyType?: ReturnKeyType
   onSubmitEditing?: any
+  value?: string
+  editable?: boolean
 }
 
 interface SubmitButtonProps {
@@ -107,10 +111,12 @@ export const TextField: React.SFC<TextFieldProps> = ({
   rightContent,
   tips,
   info,
-  placeholder
+  placeholder,
+  value,
+  editable
 }) => (
   <FieldItem>
-    {touched && error && <FieldError>{touched && error}</FieldError>}
+    {touched && error && <FieldError tips={tips}>{touched && error}</FieldError>}
     <FieldInfo>
       {!(touched && error) && (
         <View style={styles.between}>
@@ -133,6 +139,8 @@ export const TextField: React.SFC<TextFieldProps> = ({
         keyboardAppearance={Colors.keyboardTheme as KeyboardAppearance}
         onChangeText={onChange}
         {...restInput}
+        value={value}
+        editable={editable}
       />
     </FieldInput>
   </FieldItem>
@@ -172,10 +180,12 @@ export const TextAreaField: React.SFC<TextFieldProps> = ({
   meta: { touched, error },
   label,
   tips,
-  placeholder
+  placeholder,
+  value,
+  editable
 }) => (
   <FieldItem>
-    {touched && error && <FieldError>{touched && error}</FieldError>}
+    {touched && error && <FieldError tips={tips}>{touched && error}</FieldError>}
     <FieldInfo>
       {!(touched && error) && (
         <View style={styles.between}>
@@ -198,6 +208,8 @@ export const TextAreaField: React.SFC<TextFieldProps> = ({
         keyboardAppearance={Colors.keyboardTheme as KeyboardAppearance}
         onChangeText={onChange}
         {...restInput}
+        value={value}
+        editable={editable}
       />
     </FieldInput>
   </FieldItem>
@@ -213,7 +225,7 @@ export const PasswordField: React.SFC<TextFieldProps> = ({
   info
 }) => (
   <FieldItem>
-    {touched && error && <FieldError>{touched && error}</FieldError>}
+    {touched && error && <FieldError tips={tips}>{touched && error}</FieldError>}
     <FieldInfo>
       {!(touched && error) && (
         <View style={styles.between}>
@@ -257,5 +269,40 @@ export const Button: React.SFC<ButtonProps> = ({ onPress, text }) => (
     <TouchableOpacity onPress={onPress} style={styles.button}>
       <Text style={styles.buttonText}>{text}</Text>
     </TouchableOpacity>
+  </FieldItem>
+)
+
+export const CancelButton: React.SFC<ButtonProps> = ({ onPress, text }) => (
+  <FieldItem>
+    <TouchableOpacity onPress={onPress} style={styles.cancelButton}>
+      <Text style={styles.submitButtonText}>{text}</Text>
+    </TouchableOpacity>
+  </FieldItem>
+)
+
+export const Dropdown = ({ touched, error, label, tips, info, options }) => (
+  <FieldItem>
+    <FieldInfo>
+      {!(touched && error) && (
+        <View style={styles.between}>
+          {label && <Text style={styles.label}>{label}</Text>}
+          {tips && <Tips tips={tips} />}
+        </View>
+      )}
+      {info && <View>{info}</View>}
+    </FieldInfo>
+    {/* <View style={styles.input}> */}
+    <FieldInput>
+      <ModalDropdown
+        style={styles.dropdownBox}
+        textStyle={[styles.input]}
+        dropdownTextStyle={styles.dropdownMenuItem}
+        dropdownStyle={styles.dropdownMenu}
+        options={options}
+        renderButtonText={() => <Text>testing</Text>}
+      />
+    </FieldInput>
+
+    {/* </View> */}
   </FieldItem>
 )

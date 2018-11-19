@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: 50,
     paddingHorizontal: 20,
-    backgroundColor: Colors.mainThemeColor,
+    backgroundColor: Colors.mainThemeColor
   },
   between: {
     flexDirection: 'row',
@@ -30,11 +30,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   bottom: {
-    ...ifIphoneX({
-      paddingBottom: 34
-    }, {
-      paddingBottom: 0
-    })
+    ...ifIphoneX(
+      {
+        paddingBottom: 34
+      },
+      {
+        paddingBottom: 0
+      }
+    ),
+    alignItems: 'center'
+    // justifyContent: 'center'
   },
   close: {
     width: 50,
@@ -51,7 +56,7 @@ const styles = StyleSheet.create({
   },
   item: {
     width: SCREEN_WIDTH - 64,
-    height: 30,
+    height: 30
   },
   line: {
     width: SCREEN_WIDTH - 64,
@@ -78,12 +83,9 @@ const styles = StyleSheet.create({
   }
 })
 
-@connect(
-  state => ({
-    locale: state.intl.get('locale')
-  })
-)
-
+@connect(state => ({
+  locale: state.intl.get('locale')
+}))
 export default class TransferCard extends Component {
   render() {
     const { isVisible, dismiss, transfer, locale, quantity, symbol, toAccount, memo, loading } = this.props
@@ -103,26 +105,30 @@ export default class TransferCard extends Component {
               <TouchableOpacity onPress={dismiss} style={[styles.center, styles.close]}>
                 <Ionicons name="ios-close" size={28} color={Colors.bgColor_FFFFFF} />
               </TouchableOpacity>
-              <Text style={styles.text18}><FormattedMessage id="send_confirm_title_confirm" /></Text>
-              <Text style={styles.text18}>{' '}</Text>
+              <Text style={styles.text18}>
+                <FormattedMessage id="send_confirm_title_confirm" />
+              </Text>
+              <Text style={styles.text18} />
             </View>
-            <View style={[styles.header, styles.bottom, { backgroundColor: Colors.minorThemeColor, minHeight: 300 }]}>
+            <View style={[styles.header, styles.bottom, { backgroundColor: Colors.minorThemeColor, minHeight: 280 }]}>
               <View style={[styles.item, styles.between, { marginTop: 24 }]}>
                 <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                  <Text style={[styles.text14, { width: 60 }]}> <FormattedMessage id="send_confirm_label_from" /> </Text>
+                  <Text style={[styles.text14, { width: 60 }]}>
+                    {' '}
+                    <FormattedMessage id="send_confirm_label_from" />{' '}
+                  </Text>
                   <Text style={[styles.text14, { marginLeft: 35, color: Colors.textColor_89_185_226 }]}>
-                    <FormattedNumber
-                      value={quantity || 0}
-                      maximumFractionDigits={4}
-                      minimumFractionDigits={4}
-                    />
+                    <FormattedNumber value={quantity || 0} maximumFractionDigits={4} minimumFractionDigits={4} />
                   </Text>
                 </View>
                 <Text style={styles.text14}> {symbol}</Text>
               </View>
               <View style={[styles.item, styles.between, { marginTop: 10 }]}>
                 <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                  <Text style={[styles.text14, { width: 60 }]}> <FormattedMessage id="send_confirm_label_to" /> </Text>
+                  <Text style={[styles.text14, { width: 60 }]}>
+                    {' '}
+                    <FormattedMessage id="send_confirm_label_to" />{' '}
+                  </Text>
                   <Text style={[styles.text14, { marginLeft: 35, color: Colors.textColor_89_185_226 }]}>
                     {toAccount}
                   </Text>
@@ -131,8 +137,14 @@ export default class TransferCard extends Component {
               <View style={styles.line} />
               <View style={[styles.item, styles.between, { marginTop: -10 }]}>
                 <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                  <Text style={[styles.text14, { width: 60 }]}> <FormattedMessage id="send_confirm_label_memo" /> </Text>
-                  <Text numberOfLines={1} style={[styles.text14, { marginLeft: 35, color: Colors.textColor_89_185_226 }]}>
+                  <Text style={[styles.text14, { width: 60 }]}>
+                    {' '}
+                    <FormattedMessage id="send_confirm_label_memo" />{' '}
+                  </Text>
+                  <Text
+                    numberOfLines={1}
+                    style={[styles.text14, { marginLeft: 35, color: Colors.textColor_89_185_226 }]}
+                  >
                     {memo}
                   </Text>
                 </View>

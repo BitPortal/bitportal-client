@@ -24,6 +24,14 @@ import styles from './styles'
 )
 
 export default class ReceiveQRCode extends Component {
+  static get options() {
+    return {
+      bottomTabs: {
+        visible: false
+      }
+    }
+  }
+
   state = {
     value: '',
     isCopied: false

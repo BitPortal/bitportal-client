@@ -6,7 +6,8 @@ import { IntlProvider } from 'react-intl'
 import { Field, reduxForm, formValueSelector, change } from 'redux-form/immutable'
 import { Navigation } from 'react-native-navigation'
 import { FormContainer, TextField, TextAreaField, SubmitButton } from 'components/Form'
-import { normalizeEOSAccountName, normalizeUnitByFraction } from 'utils/normalize'
+import { normalizeUnitByFraction } from 'utils/normalize'
+import { validateEOSAccountName } from 'utils/validate'
 import * as transferActions from 'actions/transfer'
 import * as eosAccountActions from 'actions/eosAccount'
 import * as balanceActions from 'actions/balance'
@@ -22,7 +23,9 @@ import messages from 'resources/messages'
 import styles from './styles'
 
 export const errorMessages = (error, messages) => {
-  if (!error) { return null }
+  if (!error) {
+    return null
+  }
 
   const message = typeof error === 'object' ? error.message : error
 
@@ -36,8 +39,10 @@ export const errorMessages = (error, messages) => {
   }
 }
 
-export const errorMessageDetail = (error) => {
-  if (!error || typeof error !== 'object') { return null }
+export const errorMessageDetail = error => {
+  if (!error || typeof error !== 'object') {
+    return null
+  }
 
   return error.detail
 }
@@ -50,7 +55,7 @@ const validate = (values, props) => {
 
   if (!values.get('toAccount')) {
     errors.toAccount = messages[props.locale].send_error_text_account_name
-  } else if (values.get('toAccount').length > 12) {
+  } else if (values.get('toAccount') && validateEOSAccountName(values.get('toAccount'))) {
     errors.toAccount = messages[props.locale].send_error_text_account_name_invalid
   }
 
@@ -65,15 +70,16 @@ const validate = (values, props) => {
   return errors
 }
 
-const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject) => {
-  props.actions.validateEOSAccountRequested({
-    field: 'toAccount',
-    value: props.toAccount,
-    errorMessage: messages[props.locale].send_error_popup_text_account_not_exist,
-    resolve,
-    reject
+const asyncValidate = (values, dispatch, props) =>
+  new Promise((resolve, reject) => {
+    props.actions.validateEOSAccountRequested({
+      field: 'toAccount',
+      value: props.toAccount,
+      errorMessage: messages[props.locale].send_error_popup_text_account_not_exist,
+      resolve,
+      reject
+    })
   })
-})
 
 @connect(
   state => ({
@@ -87,17 +93,18 @@ const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject)
     eosAccountName: eosAccountNameSelector(state)
   }),
   dispatch => ({
-    actions: bindActionCreators({
-      ...transferActions,
-      ...eosAccountActions,
-      ...balanceActions,
-      change
-    }, dispatch)
+    actions: bindActionCreators(
+      {
+        ...transferActions,
+        ...eosAccountActions,
+        ...balanceActions,
+        change
+      },
+      dispatch
+    )
   })
 )
-
 @reduxForm({ form: 'transferAssetsForm', validate, asyncValidate, asyncBlurFields: ['toAccount'] })
-
 export default class TransferAssetsForm extends Component {
   state = {
     quantity: null,
@@ -107,12 +114,15 @@ export default class TransferAssetsForm extends Component {
     showPrompt: false
   }
 
-  showModal = (data) => {
+  showModal = data => {
     const { activeAsset } = this.props
     const symbol = activeAsset.get('symbol')
-    this.setState({ quantity: data.get('quantity'), toAccount: data.get('toAccount'), memo: data.get('memo'), symbol }, () => {
-      this.props.actions.openTransferModal()
-    })
+    this.setState(
+      { quantity: data.get('quantity'), toAccount: data.get('toAccount'), memo: data.get('memo'), symbol },
+      () => {
+        this.props.actions.openTransferModal()
+      }
+    )
   }
 
   closeModal = () => {
@@ -133,7 +143,7 @@ export default class TransferAssetsForm extends Component {
     this.setState({ showPrompt: false })
   }
 
-  fillToAccount = (eosAccountName) => {
+  fillToAccount = eosAccountName => {
     this.props.actions.change('transferAssetsForm', 'toAccount', eosAccountName)
   }
 
@@ -148,7 +158,7 @@ export default class TransferAssetsForm extends Component {
     })
   }
 
-  submit = (password) => {
+  submit = password => {
     const fromAccount = this.props.eosAccountName
 
     this.props.actions.transferRequested({
@@ -165,17 +175,35 @@ export default class TransferAssetsForm extends Component {
 
   componentDidMount() {
     const { activeAsset, eosAccountName } = this.props
-    this.props.actions.getEOSAssetBalanceRequested({ code: activeAsset.get('contract'), eosAccountName, symbol: activeAsset.get('symbol') })
+    this.props.actions.getEOSAssetBalanceRequested({
+      code: activeAsset.get('contract'),
+      eosAccountName,
+      symbol: activeAsset.get('symbol')
+    })
   }
 
   render() {
-    const { handleSubmit, invalid, pristine, activeAsset, activeAssetBalance, eosPrice, quantity, transfer, locale } = this.props
+    const {
+      handleSubmit,
+      invalid,
+      pristine,
+      activeAsset,
+      activeAssetBalance,
+      eosPrice,
+      quantity,
+      transfer,
+      locale,
+      accountName,
+      amount,
+      memo
+    } = this.props
     const disabled = invalid || pristine
     const symbol = activeAsset.get('symbol')
     const balance = activeAssetBalance
     const error = transfer.get('error')
     const showModal = transfer.get('showModal')
     const price = symbol === 'EOS' ? eosPrice : 0
+    const contract = activeAsset.get('contract')
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -185,7 +213,7 @@ export default class TransferAssetsForm extends Component {
             name="toAccount"
             component={TextField}
             rightContent={<ContactIcon onPress={this.getContactInfo} />}
-            normalize={normalizeEOSAccountName}
+            props={{ value: accountName }}
           />
           <Field
             label={messages[locale].send_label_amount}
@@ -194,15 +222,38 @@ export default class TransferAssetsForm extends Component {
             rightContent={<CurrencyUnit quantity={+quantity * +price} />}
             keyboardType="numeric"
             normalize={normalizeUnitByFraction(4)}
-            info={balance && <Text style={styles.balance}>{messages[locale].send_label_balance} {balance} {symbol}</Text>}
+            info={
+              balance && (
+                <Text style={styles.balance}>
+                  {messages[locale].send_label_balance} {balance} {symbol}
+                </Text>
+              )
+            }
+            props={{ value: amount }}
+          />
+          <Field
+            label={messages[locale].send_label_contract}
+            name="contract"
+            component={TextField}
+            props={{ value: contract, editable: false }}
           />
           <Field
             name="memo"
             placeholder={messages[locale].send_text_memo}
             component={TextAreaField}
+            props={{ value: memo }}
           />
-          <SubmitButton disabled={disabled} onPress={handleSubmit(this.showModal)} text={messages[locale].send_button_send} />
-          <Alert message={errorMessages(error, messages[locale])} subMessage={errorMessageDetail(error)} dismiss={this.props.actions.clearTransferError} delay={500} />
+          <SubmitButton
+            disabled={disabled}
+            onPress={handleSubmit(this.showModal)}
+            text={messages[locale].send_button_send}
+          />
+          <Alert
+            message={errorMessages(error, messages[locale])}
+            subMessage={errorMessageDetail(error)}
+            dismiss={this.props.actions.clearTransferError}
+            delay={500}
+          />
           <TransferCard
             isVisible={showModal}
             dismiss={this.closeModal}

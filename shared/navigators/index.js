@@ -50,11 +50,14 @@ import ExportEntrance from 'screens/Profile/ExportEntrance'
 import ExportKeystore from 'screens/Profile/ExportKeystore'
 import ExportPrivateKey from 'screens/Profile/ExportPrivateKey'
 import TransactionHistory from 'screens/Profile/TransactionHistory'
+import SimpleWalletAuth from 'screens/SimpleWallet'
+import SimpleWalletTransaction from 'screens/SimpleWallet/Transaction'
+
 import Images from 'resources/images'
 import Colors from 'resources/colors'
 import messages from 'resources/messages'
 
-export const registerScreens = (store) => {
+export const registerScreens = store => {
   Navigation.registerComponent('BitPortal.Welcome', () => screenComponent(Welcome, store))
   Navigation.registerComponent('BitPortal.DappWebView', () => screenComponent(DappWebView, store))
   Navigation.registerComponent('BitPortal.DappBrowser', () => screenComponent(DappBrowser, store))
@@ -100,18 +103,23 @@ export const registerScreens = (store) => {
   Navigation.registerComponent('BitPortal.AccountAssistance', () => screenComponent(AccountAssistance, store))
   Navigation.registerComponent('BitPortal.AccountSmartContact', () => screenComponent(AccountSmartContact, store))
   Navigation.registerComponent('BitPortal.AccountAssistanceOrder', () => screenComponent(AccountAssistanceOrder, store))
-  Navigation.registerComponent('BitPortal.AccountSmartContactOrder', () => screenComponent(AccountSmartContactOrder, store))
-  Navigation.registerComponent('BitPortal.AccountAssistancePayment', () => screenComponent(AccountAssistancePayment, store))
+  Navigation.registerComponent('BitPortal.AccountSmartContactOrder', () =>
+    screenComponent(AccountSmartContactOrder, store)
+  )
+  Navigation.registerComponent('BitPortal.AccountAssistancePayment', () =>
+    screenComponent(AccountAssistancePayment, store)
+  )
   Navigation.registerComponent('BitPortal.EOSAccountCreation', () => screenComponent(EOSAccountCreation, store))
-  Navigation.registerComponent("BitPortal.TokenPage", () => screenComponent(TokenPage, store));
-
+  Navigation.registerComponent('BitPortal.TokenPage', () => screenComponent(TokenPage, store))
+  Navigation.registerComponent('BitPortal.SimpleWalletAuth', () => screenComponent(SimpleWalletAuth, store))
+  Navigation.registerComponent('BitPortal.SimpleWalletTransaction', ()=> screenComponent(SimpleWalletTransaction, store))
 }
 
 export const startSingleApp = () => {
   Navigation.setRoot({
     root: {
       component: {
-        name: "BitPortal.Welcome",
+        name: 'BitPortal.Welcome',
         options: {
           topBar: {
             visible: false
@@ -119,21 +127,22 @@ export const startSingleApp = () => {
         }
       }
     }
-  });
-};
+  })
+}
 
 export const startTabBasedApp = locale => {
   Navigation.setRoot({
     root: {
       bottomTabs: {
+        id:'bottomTabsId',
         children: [
           {
             stack: {
               children: [
                 {
                   component: {
-                    id: "BitPortal.Assets",
-                    name: "BitPortal.Assets",
+                    id: 'BitPortal.Assets',
+                    name: 'BitPortal.Assets',
                     options: {
                       topBar: {
                         visible: false,
@@ -146,12 +155,12 @@ export const startTabBasedApp = locale => {
               options: {
                 bottomTab: {
                   text: messages[locale].general_nav_assets,
-                  textColor: "gray",
+                  textColor: 'gray',
                   selectedTextColor: Colors.textColor_89_185_226,
                   icon: Images.asset,
                   selectedIcon: Images.asset_press,
                   selectedIconColor: Colors.textColor_89_185_226,
-                  testID: "BITPORTAL_ASSETS"
+                  testID: 'BITPORTAL_ASSETS'
                 },
                 bottomTabs: {
                   visible: true
@@ -164,8 +173,8 @@ export const startTabBasedApp = locale => {
               children: [
                 {
                   component: {
-                    id: "BitPortal.Market",
-                    name: "BitPortal.Market",
+                    id: 'BitPortal.Market',
+                    name: 'BitPortal.Market',
                     options: {
                       topBar: {
                         visible: false,
@@ -178,12 +187,12 @@ export const startTabBasedApp = locale => {
               options: {
                 bottomTab: {
                   text: messages[locale].general_nav_market,
-                  textColor: "gray",
+                  textColor: 'gray',
                   selectedTextColor: Colors.textColor_89_185_226,
                   icon: Images.market,
                   selectedIcon: Images.market_press,
                   selectedIconColor: Colors.textColor_89_185_226,
-                  testID: "BITPORTAL_MARKET"
+                  testID: 'BITPORTAL_MARKET'
                 },
                 bottomTabs: {
                   visible: true
@@ -196,8 +205,8 @@ export const startTabBasedApp = locale => {
               children: [
                 {
                   component: {
-                    id: "BitPortal.Discovery",
-                    name: "BitPortal.Discovery",
+                    id: 'BitPortal.Discovery',
+                    name: 'BitPortal.Discovery',
                     options: {
                       topBar: {
                         visible: false,
@@ -210,12 +219,12 @@ export const startTabBasedApp = locale => {
               options: {
                 bottomTab: {
                   text: messages[locale].general_nav_discovery,
-                  textColor: "gray",
+                  textColor: 'gray',
                   selectedTextColor: Colors.textColor_89_185_226,
                   icon: Images.discovery,
                   selectedIcon: Images.discovery_press,
                   selectedIconColor: Colors.textColor_89_185_226,
-                  testID: "BITPORTAL_DISCOVERY"
+                  testID: 'BITPORTAL_DISCOVERY'
                 },
                 bottomTabs: {
                   visible: true
@@ -228,8 +237,8 @@ export const startTabBasedApp = locale => {
               children: [
                 {
                   component: {
-                    id: "BitPortal.Profile",
-                    name: "BitPortal.Profile",
+                    id: 'BitPortal.Profile',
+                    name: 'BitPortal.Profile',
                     options: {
                       topBar: {
                         visible: false,
@@ -242,12 +251,12 @@ export const startTabBasedApp = locale => {
               options: {
                 bottomTab: {
                   text: messages[locale].general_nav_profile,
-                  textColor: "gray",
+                  textColor: 'gray',
                   selectedTextColor: Colors.textColor_89_185_226,
                   icon: Images.profile,
                   selectedIcon: Images.profile_press,
                   selectedIconColor: Colors.textColor_89_185_226,
-                  testID: "BITPORTAL_PROFILE"
+                  testID: 'BITPORTAL_PROFILE'
                 },
                 bottomTabs: {
                   visible: true
@@ -258,59 +267,59 @@ export const startTabBasedApp = locale => {
         ]
       }
     }
-  });
-};
+  })
+}
 
 export const setBottomTabsLocale = locale => {
-  if (Platform.OS === "ios") {
-    Navigation.mergeOptions("BitPortal.Assets", {
+  if (Platform.OS === 'ios') {
+    Navigation.mergeOptions('BitPortal.Assets', {
       bottomTab: {
         text: messages[locale].general_nav_assets,
-        textColor: "gray",
+        textColor: 'gray',
         selectedTextColor: Colors.textColor_89_185_226,
         icon: Images.asset,
         selectedIcon: Images.asset_press,
         selectedIconColor: Colors.textColor_89_185_226,
-        testID: "BITPORTAL_ASSETS"
+        testID: 'BITPORTAL_ASSETS'
       }
-    });
+    })
 
-    Navigation.mergeOptions("BitPortal.Market", {
+    Navigation.mergeOptions('BitPortal.Market', {
       bottomTab: {
         text: messages[locale].general_nav_market,
-        textColor: "gray",
+        textColor: 'gray',
         selectedTextColor: Colors.textColor_89_185_226,
         icon: Images.market,
         selectedIcon: Images.market_press,
         selectedIconColor: Colors.textColor_89_185_226,
-        testID: "BITPORTAL_MARKET"
+        testID: 'BITPORTAL_MARKET'
       }
-    });
+    })
 
-    Navigation.mergeOptions("BitPortal.Discovery", {
+    Navigation.mergeOptions('BitPortal.Discovery', {
       bottomTab: {
         text: messages[locale].general_nav_discovery,
-        textColor: "gray",
+        textColor: 'gray',
         selectedTextColor: Colors.textColor_89_185_226,
         icon: Images.discovery,
         selectedIcon: Images.discovery_press,
         selectedIconColor: Colors.textColor_89_185_226,
-        testID: "BITPORTAL_DISCOVERY"
+        testID: 'BITPORTAL_DISCOVERY'
       }
-    });
+    })
 
-    Navigation.mergeOptions("BitPortal.Profile", {
+    Navigation.mergeOptions('BitPortal.Profile', {
       bottomTab: {
         text: messages[locale].general_nav_profile,
-        textColor: "gray",
+        textColor: 'gray',
         selectedTextColor: Colors.textColor_89_185_226,
         icon: Images.profile,
         selectedIcon: Images.profile_press,
         selectedIconColor: Colors.textColor_89_185_226,
-        testID: "BITPORTAL_PROFILE"
+        testID: 'BITPORTAL_PROFILE'
       }
-    });
+    })
   } else {
-    startTabBasedApp(locale);
+    startTabBasedApp(locale)
   }
-};
+}

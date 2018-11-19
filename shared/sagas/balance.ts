@@ -15,7 +15,10 @@ function* getEOSBalanceRequested(action: Action<GetAssetBalanceParams>) {
     const code = 'eosio.token'
 
     const eosAccountCreationInfo = yield select((state: RootState) => state.eosAccount.get('eosAccountCreationInfo'))
-    const useCreationServer = eosAccountCreationInfo.get('transactionId') && eosAccountCreationInfo.get('eosAccountName') === eosAccountName && !eosAccountCreationInfo.get('irreversible')
+    const useCreationServer =
+      eosAccountCreationInfo.get('transactionId') &&
+      eosAccountCreationInfo.get('eosAccountName') === eosAccountName &&
+      !eosAccountCreationInfo.get('irreversible')
     const eos = yield call(initEOS, useCreationServer ? { httpEndpoint: BITPORTAL_API_EOS_URL } : {})
 
     const data = yield call(eos.getCurrencyBalance, { code, account: eosAccountName })
@@ -27,7 +30,6 @@ function* getEOSBalanceRequested(action: Action<GetAssetBalanceParams>) {
     const contract = code
     const balanceInfo = { symbol, balance, contract, blockchain }
     yield put(actions.getEOSBalanceSucceeded({ eosAccountName, balanceInfo }))
-
   } catch (e) {
     yield put(actions.getEOSBalanceFailed(getErrorMessage(e)))
   }
@@ -42,7 +44,10 @@ function* getEOSAssetBalanceRequested(action: Action<GetAssetBalanceParams>) {
     const symbol = action.payload.symbol
 
     const eosAccountCreationInfo = yield select((state: RootState) => state.eosAccount.get('eosAccountCreationInfo'))
-    const useCreationServer = eosAccountCreationInfo.get('transactionId') && eosAccountCreationInfo.get('eosAccountName') === eosAccountName && !eosAccountCreationInfo.get('irreversible')
+    const useCreationServer =
+      eosAccountCreationInfo.get('transactionId') &&
+      eosAccountCreationInfo.get('eosAccountName') === eosAccountName &&
+      !eosAccountCreationInfo.get('irreversible')
     const eos = yield call(initEOS, useCreationServer ? { httpEndpoint: BITPORTAL_API_EOS_URL } : {})
 
     const data = yield call(eos.getCurrencyBalance, { code, account: eosAccountName })

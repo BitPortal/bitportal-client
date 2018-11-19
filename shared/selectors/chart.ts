@@ -2,7 +2,6 @@ import { createSelector } from 'reselect'
 import { CHART_RANGES, TIME_CONSTRAINT } from 'constants/chart'
 import { processColor } from 'react-native'
 import moment from 'moment'
-import console = require('console')
 
 const chartRangeSelector = (state: RootState) => state.chart.get('range')
 const chartTypeSelector = (state: RootState) => state.chart.get('chartType')

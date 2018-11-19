@@ -7,7 +7,6 @@ import {
 } from 'constants/env'
 import storage from 'utils/storage'
 import { isMobile } from 'utils/platform'
-import { Platform } from 'react-native'
 
 if (!isMobile) require('isomorphic-fetch')
 
@@ -82,7 +81,7 @@ const marketFetchBase = (
 ) =>
   fetchBase(method, endPoint, params, {
     ...options,
-    baseUrl: 'http://market.corp.bitportal.io/api/v2'
+    baseUrl: BITPORTAL_API_MARKET_URL
   })
 
 const traceFetchBase = (
@@ -96,10 +95,7 @@ const traceFetchBase = (
     baseUrl: BITPROTAL_API_TRACE_URL
   })
 
-export const getTickers = (params?: TickerParams) => {
-  console.log('getTickers')
-  return marketFetchBase('GET', '/tickers', params)
-}
+export const getTickers = (params?: TickerParams) => marketFetchBase('GET', '/tickers', params)
 export const getChart = (params: ChartParams) => {
   const { chartType, ...excludeChartType } = params
   return marketFetchBase('GET', `/charts/${chartType}`, excludeChartType)
@@ -122,3 +118,6 @@ export const traceTransaction = (params: any) => traceFetchBase('POST', '/transa
 export const traceStake = (params: any) => traceFetchBase('POST', '/stake', params)
 export const traceVotes = (params: any) => traceFetchBase('POST', '/votes', params)
 export const traceImport = (params: any) => traceFetchBase('POST', '/registry/wallets/import', params)
+
+export const simpleWalletAuth = (params: any, baseUrl: string) => fetchBase('POST', '', params, { baseUrl })
+export const simpleWalletCallback = (baseUrl: string) => fetchBase('GET', '', undefined, { baseUrl })

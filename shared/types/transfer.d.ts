@@ -9,6 +9,7 @@ declare interface TransferParams {
   precision?: number
   permission?: string
   componentId?: string
+  callback?: string
 }
 
 declare type TransferResult = any

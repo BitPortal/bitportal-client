@@ -5,7 +5,6 @@ import { LayoutAnimation } from 'react-native'
 import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
 import { IntlProvider } from 'react-intl'
 import { FormContainer, TextField, PasswordField, SubmitButton } from 'components/Form'
-import { normalizeEOSAccountName } from 'utils/normalize'
 import PasswordStrength from 'components/PasswordStrength'
 import { validateEOSAccountName } from 'utils/validate'
 import { getPasswordStrength } from 'utils'
@@ -17,7 +16,9 @@ import messages from 'resources/messages'
 import Alert from 'components/Alert'
 
 export const errorMessages = (error, messages) => {
-  if (!error) { return null }
+  if (!error) {
+    return null
+  }
 
   const message = typeof error === 'object' ? error.message : error
   switch (String(message)) {
@@ -63,7 +64,6 @@ const validate = (values, props) => {
     errors.confirmedPassword = messages[locale].add_eos_error_text_password_unmatch
   }
 
-
   return errors
 }
 
@@ -75,27 +75,32 @@ const validate = (values, props) => {
     password: formValueSelector('CreateEOSAccountSmartContactForm')(state, 'password')
   }),
   dispatch => ({
-    actions: bindActionCreators({
-      ...walletActions,
-      ...eosAccountActions
-    }, dispatch)
+    actions: bindActionCreators(
+      {
+        ...walletActions,
+        ...eosAccountActions
+      },
+      dispatch
+    )
   })
 )
-
 @reduxForm({ form: 'CreateEOSAccountSmartContactForm', validate })
-
 export default class CreateEOSAccountSmartContactForm extends Component {
   UNSAFE_componentWillUpdate() {
     LayoutAnimation.easeInEaseOut()
   }
 
-  submit = (data) => {
+  submit = data => {
     // Umeng analytics
     onEventWithMap(ACCOUNT_EOS_CREATE, { eosAccountName: data.get('eosAccountName') })
 
     const componentId = this.props.componentId
     this.props.actions.createEOSAccountAssistanceRequested(
-      data.set('componentId', componentId).set('path', 'AccountSmartContactOrder').delete('confirmedPassword').toJS()
+      data
+        .set('componentId', componentId)
+        .set('path', 'AccountSmartContactOrder')
+        .delete('confirmedPassword')
+        .toJS()
     )
   }
 
@@ -114,7 +119,6 @@ export default class CreateEOSAccountSmartContactForm extends Component {
             component={TextField}
             placeholder={messages[locale].add_eos_create_text_account_name}
             tips={messages[locale].add_eos_create_popup_text_account_name_tips}
-            normalize={normalizeEOSAccountName}
           />
           <Field
             label={messages[locale].add_eos_label_set_password}
@@ -137,8 +141,15 @@ export default class CreateEOSAccountSmartContactForm extends Component {
             component={TextField}
           />
 
-          <SubmitButton disabled={disabled} onPress={handleSubmit(this.submit)} text={messages[locale].add_eos_create_button_next} />
-          <Alert message={errorMessages(error, messages[locale], this.props)} dismiss={this.props.actions.clearEOSAccountError} />
+          <SubmitButton
+            disabled={disabled}
+            onPress={handleSubmit(this.submit)}
+            text={messages[locale].add_eos_create_button_next}
+          />
+          <Alert
+            message={errorMessages(error, messages[locale], this.props)}
+            dismiss={this.props.actions.clearEOSAccountError}
+          />
         </FormContainer>
       </IntlProvider>
     )
