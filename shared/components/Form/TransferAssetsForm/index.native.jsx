@@ -192,7 +192,10 @@ export default class TransferAssetsForm extends Component {
       eosPrice,
       quantity,
       transfer,
-      locale
+      locale,
+      accountName,
+      amount,
+      memo
     } = this.props
     const disabled = invalid || pristine
     const symbol = activeAsset.get('symbol')
@@ -200,6 +203,7 @@ export default class TransferAssetsForm extends Component {
     const error = transfer.get('error')
     const showModal = transfer.get('showModal')
     const price = symbol === 'EOS' ? eosPrice : 0
+    const contract = activeAsset.get('contract')
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -209,6 +213,7 @@ export default class TransferAssetsForm extends Component {
             name="toAccount"
             component={TextField}
             rightContent={<ContactIcon onPress={this.getContactInfo} />}
+            props={{ value: accountName }}
           />
           <Field
             label={messages[locale].send_label_amount}
@@ -224,11 +229,19 @@ export default class TransferAssetsForm extends Component {
                 </Text>
               )
             }
+            props={{ value: amount }}
           />
-          <Field 
-            label={messages[locale].send_text_memo}
-            name="memo" 
-            component={TextAreaField} 
+          <Field
+            label={messages[locale].send_label_contract}
+            name="contract"
+            component={TextField}
+            props={{ value: contract, editable: false }}
+          />
+          <Field
+            name="memo"
+            placeholder={messages[locale].send_text_memo}
+            component={TextAreaField}
+            props={{ value: memo }}
           />
           <SubmitButton
             disabled={disabled}

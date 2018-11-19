@@ -3,7 +3,7 @@ import { all, select, call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import { reset } from 'redux-form/immutable'
 import * as actions from 'actions/eosAccount'
-import { getEOSBalanceSucceeded } from 'actions/balance'
+import { getEOSBalanceSucceeded, setActiveAsset, getEOSAssetBalanceSucceeded } from 'actions/balance'
 import { createClassicWalletSucceeded } from 'actions/wallet'
 import { traceImport } from 'actions/trace'
 import { setSelected } from 'actions/producer'
@@ -306,7 +306,12 @@ function* getEOSAccountSucceeded(action: Action<GetEOSAccountResult>) {
   const eosAccountName = action.payload.account_name
   const coreLiquidBalance = action.payload.core_liquid_balance
 
+  const activeAsset = yield select((state: RootState) => state.balance.get('activeAsset'))
+  // default active asset set to EOS
+  if (!activeAsset) yield put(setActiveAsset(balanceInfo))
+
   if (eosAccountName && coreLiquidBalance && balanceInfo) {
+    yield put(getEOSAssetBalanceSucceeded({ eosAccountName, balanceInfo: balanceInfo.toJS() }))
     yield put(getEOSBalanceSucceeded({ eosAccountName, balanceInfo: balanceInfo.toJS() }))
   }
 }

@@ -78,10 +78,8 @@ export default class Assets extends Component {
   }
 
   componentDidMount() {
-    Linking.addEventListener('url', event => handleOpenURL(event, currentComponentID()))
-
+    // Linking.addEventListener('url', event => handleOpenURL(event, currentComponentID()))
     // Linking.addEventListener('url', this.emitDeepLink)
-
     // Linking.getInitialURL()
     //   .then(url => {
     //     console.log('Linkingggg', url)
