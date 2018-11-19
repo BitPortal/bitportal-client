@@ -6,7 +6,8 @@ import { IntlProvider } from 'react-intl'
 import { Field, reduxForm, formValueSelector, change } from 'redux-form/immutable'
 import { Navigation } from 'react-native-navigation'
 import { FormContainer, TextField, TextAreaField, SubmitButton } from 'components/Form'
-import { normalizeEOSAccountName, normalizeUnitByFraction } from 'utils/normalize'
+import { normalizeUnitByFraction } from 'utils/normalize'
+import { validateEOSAccountName } from 'utils/validate'
 import * as transferActions from 'actions/transfer'
 import * as eosAccountActions from 'actions/eosAccount'
 import * as balanceActions from 'actions/balance'
@@ -54,7 +55,7 @@ const validate = (values, props) => {
 
   if (!values.get('toAccount')) {
     errors.toAccount = messages[props.locale].send_error_text_account_name
-  } else if (values.get('toAccount').length > 12) {
+  } else if (values.get('toAccount') && validateEOSAccountName(values.get('toAccount'))) {
     errors.toAccount = messages[props.locale].send_error_text_account_name_invalid
   }
 
@@ -208,7 +209,6 @@ export default class TransferAssetsForm extends Component {
             name="toAccount"
             component={TextField}
             rightContent={<ContactIcon onPress={this.getContactInfo} />}
-            normalize={normalizeEOSAccountName}
           />
           <Field
             label={messages[locale].send_label_amount}
@@ -225,7 +225,11 @@ export default class TransferAssetsForm extends Component {
               )
             }
           />
-          <Field name="memo" placeholder={messages[locale].send_text_memo} component={TextAreaField} />
+          <Field 
+            label={messages[locale].send_text_memo}
+            name="memo" 
+            component={TextAreaField} 
+          />
           <SubmitButton
             disabled={disabled}
             onPress={handleSubmit(this.showModal)}

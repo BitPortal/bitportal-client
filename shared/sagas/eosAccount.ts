@@ -277,8 +277,7 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
     const deviceId = yield call(getDeviceID)
     const code = 'eosio.token'
     const data = yield call(eos.getCurrencyBalance, { code, account: eosAccountName })
-    assert(data && data[0] && typeof data[0] === 'string', 'No balance!')
-    const symbol = data[0].split(' ')[1]
+    const symbol = (data && data[0]) ? data[0].split(' ')[1] : 'eos'
 
     const params = {
       language,
@@ -290,6 +289,7 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
       topic: '',
       platform: `mobile_${Platform.OS}`
     }
+    console.log('###--', params)
     yield put(subscribe(params))
   } catch (e) {
     yield put(actions.getEOSAccountFailed(e.message))

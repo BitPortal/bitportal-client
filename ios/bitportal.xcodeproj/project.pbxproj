@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		0051641BD21F403D8E50DB42 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63C330A6E7DB472694F6CC51 /* Ionicons.ttf */; };
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
@@ -1070,7 +1071,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18E3A5FE21914794008F89FD /* SwiftyJSON.framework in Frameworks */,
 				18E3A366219070FB008F89FD /* Charts.framework in Frameworks */,
 				34903D5D215E2FAB0032F08A /* libReact-Native-Webview-Bridge.a in Frameworks */,
 				18B18429213675180037A46D /* UserNotifications.framework in Frameworks */,
@@ -3088,7 +3088,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.bitportal.wallet;
 				PRODUCT_NAME = bitportal;
 				PROVISIONING_PROFILE = "8cd75e73-9ada-45e4-88af-19ea0bff69ab";
-				PROVISIONING_PROFILE_SPECIFIER = "wallet ad hoc profile";
+				PROVISIONING_PROFILE_SPECIFIER = "wall development profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "RNCharts/bitportal-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
