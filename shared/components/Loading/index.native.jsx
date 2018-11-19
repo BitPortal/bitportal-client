@@ -4,16 +4,14 @@ import { SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT,
+    height: SCREEN_HEIGHT,
     width: SCREEN_WIDTH,
-    backgroundColor: 'rgba(0, 0, 0, 0)',
+    backgroundColor: 'rgba(0, 0, 0, 0)'
+  },
+  center: {
     justifyContent: 'center',
     alignItems: 'center'
   },
-
   border: {
     minWidth: 100,
     minHeight: 100,
@@ -25,8 +23,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  positionStyle: {},
-  backStyle: {}
+  positionStyle: {
+    position: 'absolute',
+    top: 0,
+    left: 0
+  },
+  backStyle: {
+    height: SCREEN_HEIGHT,
+    top: NAV_BAR_HEIGHT
+  }
 })
 
 export default class Loading extends Component {
@@ -36,7 +41,7 @@ export default class Loading extends Component {
     const bgStyle = availableBack ? {} : styles.backStyle
     if (!isVisible) return null
     return (
-      <View style={[styles.container, bgStyle, extraStyle]}>
+      <View style={[styles.container, styles.center, styles.positionStyle, bgStyle, extraStyle]}>
         <View style={styles.positionStyle}>
           <View style={borderStyle}>
             <ActivityIndicator size="small" color="white" />

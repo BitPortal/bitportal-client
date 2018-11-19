@@ -78,10 +78,8 @@ export default class Assets extends Component {
   }
 
   componentDidMount() {
-    Linking.addEventListener('url', event => handleOpenURL(event, currentComponentID()))
-
+    // Linking.addEventListener('url', event => handleOpenURL(event, currentComponentID()))
     // Linking.addEventListener('url', this.emitDeepLink)
-
     // Linking.getInitialURL()
     //   .then(url => {
     //     console.log('Linkingggg', url)
@@ -97,7 +95,7 @@ export default class Assets extends Component {
     // Linking.removeEventListener('url', this._handleOpenURL)
   }
 
-  handleDeepLink(event) {
+  handleDeepLink() {
     // const parts = event.link.split('/') // Link parts
     // const payload = event.payload // (optional) The payload
     // if (parts[0] == 'chats') {

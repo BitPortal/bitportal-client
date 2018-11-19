@@ -3,7 +3,7 @@ import { all, select, call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import { reset } from 'redux-form/immutable'
 import * as actions from 'actions/eosAccount'
-import { getEOSBalanceSucceeded } from 'actions/balance'
+import { getEOSBalanceSucceeded, setActiveAsset, getEOSAssetBalanceSucceeded } from 'actions/balance'
 import { createClassicWalletSucceeded } from 'actions/wallet'
 import { traceImport } from 'actions/trace'
 import { setSelected } from 'actions/producer'
@@ -277,8 +277,7 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
     const deviceId = yield call(getDeviceID)
     const code = 'eosio.token'
     const data = yield call(eos.getCurrencyBalance, { code, account: eosAccountName })
-    assert(data && data[0] && typeof data[0] === 'string', 'No balance!')
-    const symbol = data[0].split(' ')[1]
+    const symbol = (data && data[0]) ? data[0].split(' ')[1] : 'eos'
 
     const params = {
       language,
@@ -290,6 +289,7 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
       topic: '',
       platform: `mobile_${Platform.OS}`
     }
+    console.log('###--', params)
     yield put(subscribe(params))
   } catch (e) {
     yield put(actions.getEOSAccountFailed(e.message))
@@ -306,7 +306,12 @@ function* getEOSAccountSucceeded(action: Action<GetEOSAccountResult>) {
   const eosAccountName = action.payload.account_name
   const coreLiquidBalance = action.payload.core_liquid_balance
 
+  const activeAsset = yield select((state: RootState) => state.balance.get('activeAsset'))
+  // default active asset set to EOS
+  if (!activeAsset) yield put(setActiveAsset(balanceInfo))
+
   if (eosAccountName && coreLiquidBalance && balanceInfo) {
+    yield put(getEOSAssetBalanceSucceeded({ eosAccountName, balanceInfo: balanceInfo.toJS() }))
     yield put(getEOSBalanceSucceeded({ eosAccountName, balanceInfo: balanceInfo.toJS() }))
   }
 }

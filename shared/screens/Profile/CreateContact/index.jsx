@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { View, ScrollView } from 'react-native'
-import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import AddContactsForm from 'components/Form/AddContactsForm'
@@ -37,7 +36,7 @@ export default class CreateContact extends Component {
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
-            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingTop: 20, backgroundColor: Colors.bgColor_30_31_37 }}>
+            <ScrollView showsVerticalScrollIndicator={false}>
               <AddContactsForm componentId={this.props.componentId} />
               <View style={styles.keyboard} />
             </ScrollView>

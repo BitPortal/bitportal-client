@@ -6,7 +6,8 @@ import { IntlProvider } from 'react-intl'
 import { Field, reduxForm, formValueSelector, change } from 'redux-form/immutable'
 import { Navigation } from 'react-native-navigation'
 import { FormContainer, TextField, TextAreaField, SubmitButton } from 'components/Form'
-import { normalizeEOSAccountName, normalizeUnitByFraction } from 'utils/normalize'
+import { normalizeUnitByFraction } from 'utils/normalize'
+import { validateEOSAccountName } from 'utils/validate'
 import * as transferActions from 'actions/transfer'
 import * as eosAccountActions from 'actions/eosAccount'
 import * as balanceActions from 'actions/balance'
@@ -54,7 +55,7 @@ const validate = (values, props) => {
 
   if (!values.get('toAccount')) {
     errors.toAccount = messages[props.locale].send_error_text_account_name
-  } else if (values.get('toAccount').length > 12) {
+  } else if (values.get('toAccount') && validateEOSAccountName(values.get('toAccount'))) {
     errors.toAccount = messages[props.locale].send_error_text_account_name_invalid
   }
 
@@ -191,7 +192,10 @@ export default class TransferAssetsForm extends Component {
       eosPrice,
       quantity,
       transfer,
-      locale
+      locale,
+      accountName,
+      amount,
+      memo
     } = this.props
     const disabled = invalid || pristine
     const symbol = activeAsset.get('symbol')
@@ -199,6 +203,7 @@ export default class TransferAssetsForm extends Component {
     const error = transfer.get('error')
     const showModal = transfer.get('showModal')
     const price = symbol === 'EOS' ? eosPrice : 0
+    const contract = activeAsset.get('contract')
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -208,7 +213,7 @@ export default class TransferAssetsForm extends Component {
             name="toAccount"
             component={TextField}
             rightContent={<ContactIcon onPress={this.getContactInfo} />}
-            normalize={normalizeEOSAccountName}
+            props={{ value: accountName }}
           />
           <Field
             label={messages[locale].send_label_amount}
@@ -224,8 +229,20 @@ export default class TransferAssetsForm extends Component {
                 </Text>
               )
             }
+            props={{ value: amount }}
           />
-          <Field name="memo" placeholder={messages[locale].send_text_memo} component={TextAreaField} />
+          <Field
+            label={messages[locale].send_label_contract}
+            name="contract"
+            component={TextField}
+            props={{ value: contract, editable: false }}
+          />
+          <Field
+            name="memo"
+            placeholder={messages[locale].send_text_memo}
+            component={TextAreaField}
+            props={{ value: memo }}
+          />
           <SubmitButton
             disabled={disabled}
             onPress={handleSubmit(this.showModal)}
