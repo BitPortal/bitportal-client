@@ -130,6 +130,7 @@
   "receive_title_receive": "받기",
   "receive_label_receive_amount": "수량",
   "receive_text_receive_amount": "받을 수량 입력하기",
+
   "send_title_send": "보내기",
   "send_label_account_name": "계정명",
   "send_error_text_account_name": "계정명을 입력해주세요.",
@@ -149,6 +150,9 @@
   "send_confirm_label_to": "To",
   "send_confirm_label_memo": "메모",
   "send_confirm_button_confirm": "확인",
+  "send_label_contract": "Contract",
+  "send_error_popup_asset_unavailable": "Asset Unavailable",
+
   "transaction_list_button_send": "보내기",
   "transaction_list_button_receive": "받기",
   "transaction_list_text_no_data": "더 이상의 거래기록이 존재하지 않습니다.",

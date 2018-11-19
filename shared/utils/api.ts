@@ -95,10 +95,7 @@ const traceFetchBase = (
     baseUrl: BITPROTAL_API_TRACE_URL
   })
 
-export const getTickers = (params?: TickerParams) => {
-  console.log('getTickers')
-  return marketFetchBase('GET', '/tickers', params)
-}
+export const getTickers = (params?: TickerParams) => marketFetchBase('GET', '/tickers', params)
 export const getChart = (params: ChartParams) => {
   const { chartType, ...excludeChartType } = params
   return marketFetchBase('GET', `/charts/${chartType}`, excludeChartType)

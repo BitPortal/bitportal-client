@@ -5,7 +5,7 @@ import 'intl/locale-data/jsonp/en.js'
 import 'intl/locale-data/jsonp/zh.js'
 import 'core-js/es6/symbol'
 import 'core-js/fn/symbol/iterator'
-import { StatusBar, Platform } from 'react-native'
+import { StatusBar, Platform, Linking } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { getInitialLang } from 'selectors/intl'
 import { getInitialContact } from 'selectors/contact'
@@ -28,6 +28,7 @@ import { getLocaleLanguage } from 'utils/language'
 import { calculate } from 'utils/update'
 import { ENV } from 'constants/env'
 import { noop } from 'utils'
+import { handleOpenURL, events } from 'navigators/event'
 
 EStyleSheet.build({})
 
@@ -101,6 +102,8 @@ const setStatusBarStyle = async () => {
 let visibleComponentID
 
 export const currentComponentID = () => visibleComponentID
+
+Linking.addEventListener('url', event => handleOpenURL(event, currentComponentID()))
 
 Navigation.events().registerComponentDidAppearListener(({ componentId, componentName }) => {
   // console.log('componentdidAppearr', componentId, componentName)
