@@ -62,7 +62,8 @@ const Colors = {
   textColor_107_107_107: 'rgb(107,107,107)',
   textColor_89_185_226: 'rgb(89,185,226)',
   textColor_74_74_74: 'rgb(74,74,74)',
-  textColor_181_181_181: 'rgb(181,181,181)'
+  textColor_181_181_181: 'rgb(181,181,181)',
+  textColor_84_164_207: 'rgb(84, 164, 207)'
 }
 
 export default Colors

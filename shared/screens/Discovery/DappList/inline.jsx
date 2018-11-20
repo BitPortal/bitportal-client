@@ -1,24 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, Text, SectionList, Modal } from 'react-native'
+import { View, Text, SectionList, Modal, TouchableOpacity } from 'react-native'
 import { Navigation } from 'react-native-navigation'
-import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { bindActionCreators } from 'redux'
 import * as dAppActions from 'actions/dApp'
 import { searchDappListSelector, sectionedDappListSelector } from 'selectors/dApp'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
 import { IntlProvider } from 'react-intl'
-import SearchBar from 'components/SearchBar'
 import { SCREEN_WIDTH } from 'utils/dimens'
 import AddRemoveButtonAnimation from 'components/AddRemoveButton/animation'
 import messages from 'resources/messages'
-import sectionListGetItemLayout from 'react-native-section-list-get-item-layout'
 import DappListItem from './DappListItem'
 import styles from './styles'
-import ItemStyles from './DappListItem/styles'
 
-const ITEM_HEIGHT = ItemStyles.rowContainer.height
-const SEPERATOR_HEIGHT = 1
 @connect(
   state => ({
     locale: state.intl.get('locale'),
@@ -40,19 +34,7 @@ const SEPERATOR_HEIGHT = 1
   null,
   { withRef: true }
 )
-export default class DappList extends Component {
-  constructor(props) {
-    super(props)
-
-    this.getItemLayout = sectionListGetItemLayout({
-      getItemHeight: () => ITEM_HEIGHT,
-      getSeparatorHeight: () => SEPERATOR_HEIGHT,
-      getSectionHeaderHeight: () => 40,
-      getSectionFooterHeight: () => 10,
-      listHeaderHeight: -25
-    })
-  }
-
+export default class DappListInline extends Component {
   static get options() {
     return {
       bottomTabs: {
@@ -71,21 +53,19 @@ export default class DappList extends Component {
     this.setState({ visible: false })
   }
 
-  componentDidMount() {
-    if (this.props.jumpToIndex)
-      setTimeout(() => {
-        this.sectionListRef.scrollToLocation({
-          itemIndex: 0,
-          sectionIndex: this.props.jumpToIndex,
-          viewPostition: 0,
-          animated: true
-        })
-      }, 500)
+  handleMore = title => {
+    const jumpToIndex = this.props.dAppSections.findIndex(e => e.title === title)
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.DappList',
+        passProps: { jumpToIndex }
+      }
+    })
   }
 
-  renderItem = ({ item }) => {
+  renderItem = ({ item, index }) => {
     const { locale, eosAccountName } = this.props
-    return (
+    return index < 5 ? (
       <DappListItem
         item={item}
         selected={item.get('selected')}
@@ -99,16 +79,23 @@ export default class DappList extends Component {
         }}
         eosAccountName={eosAccountName}
       />
-    )
+    ) : null
   }
 
   renderSeparator = () => <View style={styles.itemSeperator} />
 
-  renderSectionHeader = ({ section: { title } }) => (
-    <View style={[styles.sectionHeader]}>
+  renderSectionHeader = ({ section: { title, data } }) => data.length < 5 ? (
+    <View style={styles.sectionHeader}>
       <Text style={styles.title}>{messages[this.props.locale][title]}</Text>
     </View>
-  )
+    ) : (
+      <View style={styles.moreSectionHeader}>
+        <Text style={styles.title}>{messages[this.props.locale][title]}</Text>
+        <TouchableOpacity style={styles.moreButton} onPress={() => this.handleMore(title)}>
+          <Text style={styles.moreText}>{messages[this.props.locale].discovery_dapp_list_title_more}</Text>
+        </TouchableOpacity>
+      </View>
+    )
 
   onChangeText = text => {
     this.props.actions.setSearchTerm(text)
@@ -121,23 +108,10 @@ export default class DappList extends Component {
   }
 
   render() {
-    const { locale, loading, searchTerm, dAppSections } = this.props
+    const { locale, loading, dAppSections } = this.props
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-          <NavigationBar
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={this.goBack} />}
-            title={messages[locale].discovery_dapp_title_dapp_list}
-            rightButton={
-              <SearchBar
-                searchTerm={searchTerm}
-                onChangeText={text => this.onChangeText(text)}
-                clearSearch={() => {
-                  this.props.actions.setSearchTerm('')
-                }}
-              />
-            }
-          />
           {/* <VirtualizedList
             style={styles.listContainer}
             data={dAppList}
@@ -157,10 +131,7 @@ export default class DappList extends Component {
           /> */}
           <View styles={{ backgroundColor: 'red' }}>
             <SectionList
-              ref={node => {
-                this.sectionListRef = node
-              }}
-              style={styles.listContainer}
+              style={styles.inlineListContainer}
               renderItem={this.renderItem}
               keyExtractor={this.keyExtractor}
               renderSectionHeader={this.renderSectionHeader}
@@ -169,7 +140,6 @@ export default class DappList extends Component {
               // onEndReachedThreshold={-0.1}
               stickySectionHeadersEnabled={false}
               refreshing={loading}
-              getItemLayout={this.getItemLayout}
             />
           </View>
 

@@ -12,6 +12,14 @@ const styles = StyleSheet.create({
     height: SCREEN_HEIGHT - NAV_BAR_HEIGHT,
     backgroundColor: Colors.mainThemeColor
   },
+  inlineListContainer: {
+    marginTop: 0,
+    width: SCREEN_WIDTH,
+    // height: SCREEN_HEIGHT - NAV_BAR_HEIGHT,
+    backgroundColor: Colors.mainThemeColor,
+    marginBottom: 10
+  },
+
   rowContainer: {
     flexDirection: 'row',
     paddingHorizontal: 20,
@@ -38,6 +46,17 @@ const styles = StyleSheet.create({
     fontSize: FontScale(15),
     fontWeight: 'bold'
   },
+  moreText: {
+    color: Colors.textColor_84_164_207,
+    fontSize: FontScale(14)
+    // fontWeight: 'bold'
+  },
+  moreButton: {
+    // backgroundColor: 'red',
+    paddingVertical: 5,
+    paddingHorizontal: 2
+  },
+
   itemSeperator: {
     height: 1,
     width: SCREEN_WIDTH
@@ -70,6 +89,18 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingHorizontal: 20,
     justifyContent: 'center'
+  },
+  moreSectionHeader: {
+    width: SCREEN_WIDTH,
+    height: 40,
+    backgroundColor: Colors.bgColor_30_31_37,
+    flexDirection: 'row',
+
+    marginBottom: 1,
+    marginTop: 10,
+    paddingHorizontal: 20,
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   text24: {
     fontSize: FontScale(24),

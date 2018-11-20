@@ -219,6 +219,8 @@
   "discovery_dapp_text_favourite_limit": "즐겨찾기 항목은 최대 8까지 등록 가능합니다.",
   "discovery_dapp_popup_button_cancel": "취소",
   "discovery_dapp_popup_button_understand": "인지했습니다.",
+  "discovery_dapp_list_title_more": "更多 >",
+
   "profile_title_profile": "프로필",
   "profile_button_voting": "BP 투표",
   "profile_button_resource": "자원 관리",
