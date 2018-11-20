@@ -157,8 +157,6 @@ export default class DappWebView extends Component {
     )
   }
 
-  renderLoading = () => (<WebViewLoading />)
-
   onNavigationStateChange = (navState) => {
     const url = new Url(navState.url)
     const hostname = url.hostname
@@ -202,6 +200,14 @@ export default class DappWebView extends Component {
       this.setState({ uri: searchText })
     }
   }
+
+  componentWillMount() {
+    if (condition) {
+      
+    }
+  }
+
+  renderLoading = () => (<WebViewLoading />)
 
   render() {
     const {
