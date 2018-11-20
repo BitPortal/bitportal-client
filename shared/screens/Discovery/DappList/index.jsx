@@ -5,19 +5,20 @@ import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { bindActionCreators } from 'redux'
 import * as dAppActions from 'actions/dApp'
-import {
-  searchDappListSelector,
-  sectionedDappListSelector
-} from 'selectors/dApp'
+import { searchDappListSelector, sectionedDappListSelector } from 'selectors/dApp'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
 import { IntlProvider } from 'react-intl'
 import SearchBar from 'components/SearchBar'
 import { SCREEN_WIDTH } from 'utils/dimens'
 import AddRemoveButtonAnimation from 'components/AddRemoveButton/animation'
 import messages from 'resources/messages'
+import sectionListGetItemLayout from 'react-native-section-list-get-item-layout'
 import DappListItem from './DappListItem'
 import styles from './styles'
+import ItemStyles from './DappListItem/styles'
 
+const ITEM_HEIGHT = ItemStyles.rowContainer.height
+const SEPERATOR_HEIGHT = 1
 @connect(
   state => ({
     locale: state.intl.get('locale'),
@@ -40,6 +41,18 @@ import styles from './styles'
   { withRef: true }
 )
 export default class DappList extends Component {
+  constructor(props) {
+    super(props)
+
+    this.getItemLayout = sectionListGetItemLayout({
+      getItemHeight: () => ITEM_HEIGHT,
+      getSeparatorHeight: () => SEPERATOR_HEIGHT,
+      getSectionHeaderHeight: () => 40,
+      getSectionFooterHeight: () => 10,
+      listHeaderHeight: -25
+    })
+  }
+
   static get options() {
     return {
       bottomTabs: {
@@ -56,6 +69,18 @@ export default class DappList extends Component {
 
   hideModal = () => {
     this.setState({ visible: false })
+  }
+
+  componentDidMount() {
+    if (this.props.jumpToIndex)
+      setTimeout(() => {
+        this.sectionListRef.scrollToLocation({
+          itemIndex: 0,
+          sectionIndex: this.props.jumpToIndex,
+          viewPostition: 0,
+          animated: true
+        })
+      }, 500)
   }
 
   renderItem = ({ item }) => {
@@ -85,7 +110,7 @@ export default class DappList extends Component {
     </View>
   )
 
-  onChangeText = (text) => {
+  onChangeText = text => {
     this.props.actions.setSearchTerm(text)
   }
 
@@ -97,14 +122,11 @@ export default class DappList extends Component {
 
   render() {
     const { locale, loading, searchTerm, dAppSections } = this.props
-
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            leftButton={
-              <CommonButton iconName="md-arrow-back" onPress={this.goBack} />
-            }
+            leftButton={<CommonButton iconName="md-arrow-back" onPress={this.goBack} />}
             title={messages[locale].discovery_dapp_title_dapp_list}
             rightButton={
               <SearchBar
@@ -135,6 +157,9 @@ export default class DappList extends Component {
           /> */}
           <View styles={{ backgroundColor: 'red' }}>
             <SectionList
+              ref={node => {
+                this.sectionListRef = node
+              }}
               style={styles.listContainer}
               renderItem={this.renderItem}
               keyExtractor={this.keyExtractor}
@@ -144,6 +169,7 @@ export default class DappList extends Component {
               // onEndReachedThreshold={-0.1}
               stickySectionHeadersEnabled={false}
               refreshing={loading}
+              getItemLayout={this.getItemLayout}
             />
           </View>
 

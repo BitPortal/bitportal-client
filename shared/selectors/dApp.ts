@@ -3,7 +3,8 @@ import Immutable from 'immutable'
 import _ from 'lodash'
 import { DAPP_SECTIONS } from 'constants/dApp'
 
-const dataSelector = (state: RootState) => state.dApp.get('data')
+const dataSelector = (state: RootState) =>
+  state.dApp.get('data').filter((item: any) => item.get('status') === 'published')
 const searchTermSelector = (state: RootState) => state.dApp.get('searchTerm')
 const locale = (state: RootState) => state.intl.get('locale')
 export const favoriteDappsSelector = (state: RootState) => state.dApp.get('favoriteDapps')

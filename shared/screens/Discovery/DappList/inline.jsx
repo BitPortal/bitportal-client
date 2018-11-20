@@ -2,13 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { View, Text, SectionList, Modal, TouchableOpacity } from 'react-native'
 import { Navigation } from 'react-native-navigation'
-import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { bindActionCreators } from 'redux'
 import * as dAppActions from 'actions/dApp'
 import { searchDappListSelector, sectionedDappListSelector } from 'selectors/dApp'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
 import { IntlProvider } from 'react-intl'
-import SearchBar from 'components/SearchBar'
 import { SCREEN_WIDTH } from 'utils/dimens'
 import AddRemoveButtonAnimation from 'components/AddRemoveButton/animation'
 import messages from 'resources/messages'
@@ -55,17 +53,18 @@ export default class DappListInline extends Component {
     this.setState({ visible: false })
   }
 
-  handleMore = () => {
+  handleMore = title => {
+    const jumpToIndex = this.props.dAppSections.findIndex(e => e.title === title)
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.DappList'
+        name: 'BitPortal.DappList',
+        passProps: { jumpToIndex }
       }
     })
   }
 
   renderItem = ({ item, index }) => {
     const { locale, eosAccountName } = this.props
-
     return index < 5 ? (
       <DappListItem
         item={item}
@@ -85,20 +84,18 @@ export default class DappListInline extends Component {
 
   renderSeparator = () => <View style={styles.itemSeperator} />
 
-  renderSectionHeader = ({ section: { title, data } }) => {
-    return data.length < 5 ? (
-      <View style={styles.sectionHeader}>
-        <Text style={styles.title}>{messages[this.props.locale][title]}</Text>
-      </View>
+  renderSectionHeader = ({ section: { title, data } }) => data.length < 5 ? (
+    <View style={styles.sectionHeader}>
+      <Text style={styles.title}>{messages[this.props.locale][title]}</Text>
+    </View>
     ) : (
       <View style={styles.moreSectionHeader}>
         <Text style={styles.title}>{messages[this.props.locale][title]}</Text>
-        <TouchableOpacity style={styles.moreButton} onPress={this.handleMore}>
+        <TouchableOpacity style={styles.moreButton} onPress={() => this.handleMore(title)}>
           <Text style={styles.moreText}>{messages[this.props.locale].discovery_dapp_list_title_more}</Text>
         </TouchableOpacity>
       </View>
     )
-  }
 
   onChangeText = text => {
     this.props.actions.setSearchTerm(text)
@@ -112,7 +109,6 @@ export default class DappListInline extends Component {
 
   render() {
     const { locale, loading, dAppSections } = this.props
-
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
