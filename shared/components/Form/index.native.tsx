@@ -67,6 +67,10 @@ interface SearchContainer {
 
 export const FormContainer: React.SFC = ({ children }) => <View style={styles.formContainer}>{children}</View>
 
+export const FormContainerAutoWidth: React.SFC = ({ children }) => (
+  <View style={styles.FormContainerAutoWidth}>{children}</View>
+)
+
 export const SearchContainer: React.SFC<SearchContainer> = ({ children, style }) => (
   <View style={[styles.searchContainer, style]}>{children}</View>
 )

@@ -166,7 +166,7 @@ export default class SimpleWalletTransaction extends Component {
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <View style={{ paddingVertical: 15, flexDirection: 'row', alignItems: 'center' }}>
+              <View style={styles.iconWrapper}>
                 <FastImage style={styles.icon} source={{ uri: dappIcon }} />
                 <Text style={[styles.text16, { fontWeight: 'bold' }]}>{dappName}</Text>
               </View>
@@ -212,10 +212,10 @@ export default class SimpleWalletTransaction extends Component {
                   callback={this.submitSWTransfer}
                   dismiss={this.dismissPasswordPrompt}
                 />
-                <Loading isVisible={loading} text={messages[locale].send_button_send} />
               </View>
             </ScrollView>
           </View>
+          <Loading isVisible={loading} text={messages[locale].send_button_send} />
         </View>
       </IntlProvider>
     )

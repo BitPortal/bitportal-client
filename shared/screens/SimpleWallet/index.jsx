@@ -147,9 +147,9 @@ export default class SimpleWalletAuth extends Component {
                 dismiss={this.dismissPasswordPrompt}
               />
             </View>
-            <Loading isVisible={loading} text={messages[locale].scan_simplewallet_signin_popup_authorizing} />
           </ScrollView>
         </View>
+        <Loading isVisible={loading} text={messages[locale].scan_simplewallet_signin_popup_authorizing} />
       </View>
     )
   }
