@@ -72,15 +72,19 @@ export default class DappList extends Component {
   }
 
   componentDidMount() {
-    if (this.props.jumpToIndex)
-      setTimeout(() => {
-        this.sectionListRef.scrollToLocation({
-          itemIndex: 0,
-          sectionIndex: this.props.jumpToIndex,
-          viewPostition: 0,
-          animated: true
-        })
-      }, 500)
+    console.log('prosss', this.props)
+    if (this.props.section) {
+      this.props.dAppSections.filter(e => e.title === this.props.section)
+    }
+
+    // setTimeout(() => {
+    //   this.sectionListRef.scrollToLocation({
+    //     itemIndex: 0,
+    //     sectionIndex: this.props.jumpToIndex,
+    //     viewPostition: 0,
+    //     animated: true
+    //   })
+    // }, 500)
   }
 
   renderItem = ({ item }) => {
@@ -122,6 +126,10 @@ export default class DappList extends Component {
 
   render() {
     const { locale, loading, searchTerm, dAppSections } = this.props
+    let filteredSections
+    if (this.props.section) {
+      filteredSections = this.props.dAppSections.filter(e => e.title === this.props.section)
+    }
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -164,12 +172,12 @@ export default class DappList extends Component {
               renderItem={this.renderItem}
               keyExtractor={this.keyExtractor}
               renderSectionHeader={this.renderSectionHeader}
-              sections={dAppSections}
+              sections={filteredSections || dAppSections}
               ItemSeparatorComponent={this.renderSeparator}
               // onEndReachedThreshold={-0.1}
               stickySectionHeadersEnabled={false}
               refreshing={loading}
-              getItemLayout={this.getItemLayout}
+              // getItemLayout={this.getItemLayout}
             />
           </View>
 

@@ -54,11 +54,12 @@ export default class DappListInline extends Component {
   }
 
   handleMore = title => {
-    const jumpToIndex = this.props.dAppSections.findIndex(e => e.title === title)
+    const jumpToIndex = this.props.dAppSections.filter(e => e.title === title)
+    const section = jumpToIndex[0].title
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.DappList',
-        passProps: { jumpToIndex }
+        passProps: { section }
       }
     })
   }
@@ -84,10 +85,11 @@ export default class DappListInline extends Component {
 
   renderSeparator = () => <View style={styles.itemSeperator} />
 
-  renderSectionHeader = ({ section: { title, data } }) => data.length < 5 ? (
-    <View style={styles.sectionHeader}>
-      <Text style={styles.title}>{messages[this.props.locale][title]}</Text>
-    </View>
+  renderSectionHeader = ({ section: { title, data } }) =>
+    data.length < 5 ? (
+      <View style={styles.sectionHeader}>
+        <Text style={styles.title}>{messages[this.props.locale][title]}</Text>
+      </View>
     ) : (
       <View style={styles.moreSectionHeader}>
         <Text style={styles.title}>{messages[this.props.locale][title]}</Text>
