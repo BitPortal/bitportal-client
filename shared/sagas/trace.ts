@@ -33,8 +33,19 @@ function* traceVotes(action: Action<TraceVotesParams>) {
   }
 }
 
+function* traceImport(action: Action<TraceVotesParams>) {
+  if (!action.payload) return
+
+  try {
+    yield call(api.traceImport, action.payload)
+  } catch (e) {
+    console.log('###', e)
+  }
+}
+
 export default function* tokenSaga() {
   yield takeEvery(String(actions.traceTransaction), traceTransaction)
   yield takeEvery(String(actions.traceStake), traceStake)
   yield takeEvery(String(actions.traceVotes), traceVotes)
+  yield takeEvery(String(actions.traceImport), traceImport)
 }
