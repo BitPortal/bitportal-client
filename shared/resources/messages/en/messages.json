@@ -61,6 +61,7 @@
   "add_eos_create_error_popup_text_registration_code_invite": "The campaign is only available to invited users.",
   "add_eos_create_error_popup_text_registration_code_eos": "The campaign only applies to EOS.",
   "add_eos_create_button_with_private_key": "Private key  (Optional)",
+  "add_eos_create_registration_code_popup_text_private_key_tips": "By entering an existing EOS private key, once the account is successfully created, it belongs to the public key that corresponds to the private key you entered. If you leave the private key field blank, the account will create a new private key.",  
   "add_eos_create_button_collapse_private_key": "Collapse",
   "add_eos_create_button_create": "Create",
   "add_eos_create_button_import": "Import Account",
@@ -231,6 +232,7 @@
   "discovery_dapp_text_favourite_limit": "You can only add 8 favorites",
   "discovery_dapp_popup_button_cancel": "Cancel",
   "discovery_dapp_popup_button_understand": "I've Acknowleged",
+  "discovery_dapp_list_title_more": "more >",
 
   "profile_title_profile": "Profile",
   "profile_button_voting": "Producer Voting",

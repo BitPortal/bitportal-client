@@ -12041,6 +12041,11 @@ react-native-root-toast@^3.0.1:
     prop-types "^15.6.0"
     react-timer-mixin "^0.13.3"
 
+react-native-section-list-get-item-layout@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/react-native-section-list-get-item-layout/-/react-native-section-list-get-item-layout-2.2.3.tgz#152a8efdcb3847dbcbeb04cd2d0de4312d3d2fcb"
+  integrity sha512-fzCW5SiYP6qCZyDHebaElHonIFr8NFrZK9JDkxFLnpxMJih4d+HQ4rHyOs0Z4Gb/FjyCVbRH7RtEnjeQ0XffMg==
+
 "react-native-sensitive-info@git://github.com/mCodex/react-native-sensitive-info#keystore":
   version "5.0.0"
   resolved "git://github.com/mCodex/react-native-sensitive-info#2badfc4e35ce79904f70cc8e315fdba582e41457"

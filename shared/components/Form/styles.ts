@@ -16,6 +16,19 @@ export default EStyleSheet.create({
     borderRadius: 15,
     backgroundColor: Colors.minorThemeColor
   },
+  formContainerAutoWidth: {
+    flex: 1,
+    width: '90%',
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    alignItems: 'center',
+    flexDirection: 'column',
+    marginTop: 15,
+    marginHorizontal: 15,
+    borderRadius: 15,
+    // backgroundColor: Colors.minorThemeColor
+    backgroundColor: 'red'
+  },
   searchContainer: {
     width: '100% - 70',
     minHeight: FontScale(28),

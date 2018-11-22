@@ -29,10 +29,10 @@ const styles = StyleSheet.create({
     // backgroundColor: 'red',
     // alignItems: 'center',
     width: FLOATING_CARD_WIDTH,
-    marginBottom: 15
+    marginBottom: 15,
     // minHeight: 200
     // margin: 15
-    // padding: 20,
+    padding: 20
     // flex: 1
   },
   dappWrapper: {
@@ -117,9 +117,13 @@ const styles = StyleSheet.create({
     margin: 10
   },
   amountWrapper: {
-    padding: 20,
     alignItems: 'flex-start',
     justifyContent: 'flex-start'
+  },
+  iconWrapper: {
+    paddingVertical: 15,
+    flexDirection: 'row',
+    alignItems: 'center'
   }
 })
 

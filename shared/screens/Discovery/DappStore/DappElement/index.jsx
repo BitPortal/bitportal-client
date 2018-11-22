@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as dAppActions from 'actions/dApp'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import Alert from 'components/Alert'
@@ -11,6 +14,19 @@ import { onEventWithMap } from 'utils/analytics'
 import { DAPP_STORE } from 'constants/analytics'
 import styles from './styles'
 
+@connect(
+  null,
+  dispatch => ({
+    actions: bindActionCreators(
+      {
+        ...dAppActions
+      },
+      dispatch
+    )
+  }),
+  null,
+  { withRef: true }
+)
 @injectIntl
 export default class DappElement extends Component {
   state = { message: undefined, subMessage: undefined, alertAction: undefined }
@@ -30,11 +46,11 @@ export default class DappElement extends Component {
     this.setState({ message: undefined, subMessage: undefined })
   }
 
-  setAlertAction = (alertAction) => {
+  setAlertAction = alertAction => {
     this.setState({ alertAction })
   }
 
-  getAlertAction = (item) => {
+  getAlertAction = item => {
     const { alertAction } = this.state
     if (alertAction === 'toPage') {
       this.toPage(item)
@@ -44,7 +60,7 @@ export default class DappElement extends Component {
     this.clearMessage()
   }
 
-  toPage = (item) => {
+  toPage = item => {
     Navigation.push(this.props.componentId, {
       component: {
         name: item.get('url'),
@@ -56,7 +72,7 @@ export default class DappElement extends Component {
     })
   }
 
-  toUrl = (item) => {
+  toUrl = item => {
     const inject = loadInjectSync()
 
     const { eosAccountName } = this.props

@@ -1,18 +1,13 @@
 import { StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
-import {
-  FontScale,
-  SCREEN_WIDTH,
-  SCREEN_HEIGHT,
-  TAB_BAR_HEIGHT,
-} from 'utils/dimens'
+import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, TAB_BAR_HEIGHT } from 'utils/dimens'
 
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
     backgroundColor: Colors.mainThemeColor,
-    paddingBottom: TAB_BAR_HEIGHT,
+    paddingBottom: TAB_BAR_HEIGHT
   },
   navButton: {
     minWidth: 100,
@@ -36,8 +31,8 @@ const styles = StyleSheet.create({
   markdownContainer: {
     paddingHorizontal: 16,
     marginTop: 24,
-    paddingBottom: TAB_BAR_HEIGHT,
-  },
+    paddingBottom: TAB_BAR_HEIGHT
+  }
 })
 
 export default styles

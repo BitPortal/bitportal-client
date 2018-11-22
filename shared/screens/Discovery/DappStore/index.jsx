@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { View, Text, ScrollView, ActivityIndicator, TouchableWithoutFeedback } from 'react-native'
+import { View, Text, ScrollView, ActivityIndicator, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { Navigation } from 'react-native-navigation'
 import * as dAppActions from 'actions/dApp'
@@ -8,7 +8,6 @@ import { parsedDappListSelector } from 'selectors/dApp'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
 import { IntlProvider } from 'react-intl'
 import { loadInjectSync } from 'utils/inject'
-import Colors from 'resources/colors'
 import messages from 'resources/messages'
 import DappElement from './DappElement'
 import styles from './styles'
@@ -46,26 +45,38 @@ export default class DappStore extends PureComponent {
     })
   }
 
+  handleMore = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.DappList'
+      }
+    })
+  }
+
   render() {
     const { locale, componentId, loading, eosAccountName } = this.props
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-          <TouchableWithoutFeedback onLongPress={this.showDappBrowser}>
+          {/* <TouchableWithoutFeedback onLongPress={this.showDappBrowser}>
             <View style={styles.listTitle}>
-              <Text
-                style={[styles.text14, { fontWeight: 'bold', color: Colors.textColor_255_255_238 }]}
-              >
+              <Text style={[styles.text14, { fontWeight: 'bold', color: Colors.textColor_255_255_238 }]}>
                 {messages[this.props.locale].discovery_label_dapp_store}
               </Text>
-            </View>
-          </TouchableWithoutFeedback>
+          </TouchableWithoutFeedback> 
+            </View>*/}
+          <View style={styles.moreSectionHeader}>
+            <TouchableWithoutFeedback onLongPress={this.showDappBrowser}>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.title}>{messages[this.props.locale].discovery_label_dapp_store}</Text>
+              </View>
+            </TouchableWithoutFeedback>
+            <TouchableOpacity style={styles.moreButton} onPress={this.handleMore}>
+              <Text style={styles.moreText}>{messages[this.props.locale].discovery_dapp_list_title_more}</Text>
+            </TouchableOpacity>
+          </View>
           <View style={styles.hairLine} />
-          <ScrollView
-            horizontal={true}
-            scrollEnabled={false}
-            contentContainerStyle={styles.dAppScrollViewContainer}
-          >
+          <ScrollView horizontal={true} scrollEnabled={false} contentContainerStyle={styles.dAppScrollViewContainer}>
             {loading ? (
               <View
                 style={{
@@ -88,7 +99,6 @@ export default class DappStore extends PureComponent {
               ))
             )}
           </ScrollView>
-          <View style={[styles.hairLine, { height: 10 }]} />
         </View>
       </IntlProvider>
     )

@@ -240,6 +240,7 @@ export default class SearchBar extends Component {
                 color={Colors.textColor_181_181_181}
                 onPress={() => {
                   this.toggleExpanded()
+                  this.clearSearch()
                   this.animate()
                 }}
                 style={{

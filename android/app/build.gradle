@@ -219,7 +219,6 @@ dependencies {
     compile project(':react-native-camera')
     compile project(':react-native-blur')
     compile project(':jpush-react-native')
-    compile project(':@remobile_react-native-qrcode-local-image')
     compile project(':react-native-image-crop-picker')
     implementation project(':react-native-charts-wrapper')
     implementation project(':react-native-fast-image')

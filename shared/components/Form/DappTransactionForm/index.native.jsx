@@ -3,7 +3,7 @@ import { View } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form/immutable'
-import { FormContainer, TextField, TextAreaField, SubmitButton, CancelButton } from 'components/Form'
+import { FormContainerAutoWidth, TextField, TextAreaField, SubmitButton, CancelButton } from 'components/Form'
 import { eosAccountSelector, eosAccountNameSelector } from 'selectors/eosAccount'
 import * as simpleWalletActions from 'actions/simpleWallet'
 import { IntlProvider, FormattedMessage } from 'react-intl'
@@ -39,7 +39,7 @@ export default class DappTransactionForm extends Component {
     } = this.props
     return (
       <IntlProvider messages={messages[locale]}>
-        <FormContainer>
+        <FormContainerAutoWidth>
           <Field
             label={messages[locale].scan_simplewallet_trade_label_drawee}
             name="dappTransactionDrawee"
@@ -91,7 +91,7 @@ export default class DappTransactionForm extends Component {
             text={<FormattedMessage id="scan_simplewallet_signin_button_cancel" />}
             onPress={this.props.onCancel}
           />
-        </FormContainer>
+        </FormContainerAutoWidth>
       </IntlProvider>
     )
   }

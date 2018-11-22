@@ -1,9 +1,9 @@
 export const EOS_MAINNET_NODES = [
+  'https://eos-mainnet.bitportal.io',
   'https://geo.eosasia.one',
   'https://api1.eosasia.one',
   'https://eos.greymass.com',
-  'https://api.hkeos.com',
-  'https://eos-mainnet.bitportal.io'
+  'https://api.hkeos.com'
 ]
 
 export const EOS_TESTNET_NODES = [

@@ -9,8 +9,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0)'
   },
   center: {
-    justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   border: {
     minWidth: 100,
@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     padding: 10,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    // backgroundColor: 'red',
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -42,11 +41,9 @@ export default class Loading extends Component {
     if (!isVisible) return null
     return (
       <View style={[styles.container, styles.center, styles.positionStyle, bgStyle, extraStyle]}>
-        <View style={styles.positionStyle}>
-          <View style={borderStyle}>
-            <ActivityIndicator size="small" color="white" />
-            {text && <Text style={{ color: 'white', marginTop: 10 }}>{text}</Text>}
-          </View>
+        <View style={borderStyle}>
+          <ActivityIndicator size="small" color="white" />
+          {text && <Text style={{ color: 'white', marginTop: 10 }}>{text}</Text>}
         </View>
       </View>
     )

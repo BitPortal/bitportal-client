@@ -30,6 +30,7 @@ import EnableAssets from './EnableAssets'
 import BalanceList from './BalanceList'
 import TotalAssetsCard from './TotalAssetsCard'
 import UserAgreement from './UserAgreement'
+import MenuPopUp from './MenuPopUp'
 import styles from './styles'
 
 @connect(
@@ -69,27 +70,12 @@ export default class Assets extends Component {
 
   state = {
     type: '',
-    isVisible: false
+    isVisible: false,
+    isVisible2: false
   }
 
   UNSAFE_componentWillUpdate() {
     LayoutAnimation.easeInEaseOut()
-  }
-
-  componentWillUnmount() {
-    // Linking.removeEventListener('url', this._handleOpenURL)
-  }
-
-  handleDeepLink() {
-    // const parts = event.link.split('/') // Link parts
-    // const payload = event.payload // (optional) The payload
-    // if (parts[0] == 'chats') {
-    //   // handle the link somehow, usually run a this.props.navigator command
-    // }
-  }
-
-  emitDeepLink(event) {
-    events.emit('DeepLink', { link: event.url, payload: 'deepLink Payload' })
   }
 
   displayAccountList = () => {}
@@ -115,6 +101,8 @@ export default class Assets extends Component {
       }
     }
   }
+
+  showMemu = () => this.setState({ isVisible2: true })
 
   checkAssetList = () => {
     // Umeng analytics
@@ -155,7 +143,7 @@ export default class Assets extends Component {
   }
 
   dismissModal = () => {
-    this.setState({ isVisible: false })
+    this.setState({ isVisible: false, isVisible2: false })
   }
 
   acceptUserAgreement = () => {
@@ -207,6 +195,58 @@ export default class Assets extends Component {
     } else {
       this.setState({ isVisible: true, type })
     }
+  }
+
+  selectFunc = async (type) => {
+    await this.setState({ isVisible2: false })
+    const eosAccountName = this.props.eosAccount.get('data').get('account_name')
+    setTimeout(() => {
+      switch (type) {
+        case 'scanQR':
+          this.scanQR()
+          break;
+        case 'transfer':
+          if (eosAccountName) {
+            Navigation.push(this.props.componentId, {
+              component: {
+                name: 'BitPortal.AssetsTransfer'
+              }
+            })
+          } else {
+            const { locale } = this.props
+            Dialog.alert(messages[locale].general_error_popup_text_no_account, null, {
+              negativeText: messages[locale].general_popup_button_close
+            })
+          }
+          break;
+        case 'receive':
+          if (eosAccountName) {
+            Navigation.push(this.props.componentId, {
+              component: {
+                name: 'BitPortal.ReceiveQRCode',
+                passProps: {
+                  symbol: 'EOS'
+                }
+              }
+            })
+          } else {
+            const { locale } = this.props
+            Dialog.alert(messages[locale].general_error_popup_text_no_account, null, {
+              negativeText: messages[locale].general_popup_button_close
+            })
+          }
+          break;
+        case 'vote':
+          Navigation.push(this.props.componentId, {
+            component: {
+              name: 'BitPortal.Voting'
+            }
+          })
+          break;
+        default:
+          break;
+      }
+    }, 500)
   }
 
   checkResourcesDetails = () => {
@@ -263,7 +303,7 @@ export default class Assets extends Component {
         <View style={styles.container}>
           <NavigationBar
             leftButton={<CommonTitle title={<FormattedMessage id="assets_title_eos_wallet" />} />}
-            rightButton={<CommonRightButton iconName="md-qr-scanner" onPress={() => this.scanQR()} />}
+            rightButton={<CommonRightButton iconName="md-add" onPress={() => this.showMemu()} />}
           />
           {!walletCount && (
             <View style={styles.scrollContainer}>
@@ -331,6 +371,11 @@ export default class Assets extends Component {
           <UserAgreement
             acceptUserAgreement={this.acceptUserAgreement}
             isVisible={this.state.isVisible}
+            dismissModal={this.dismissModal}
+          />
+          <MenuPopUp 
+            selectFunc={this.selectFunc}
+            isVisible={this.state.isVisible2}
             dismissModal={this.dismissModal}
           />
         </View>
