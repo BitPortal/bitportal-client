@@ -74,8 +74,8 @@ export const exchangeTickerSelector = createSelector(
 const exchangeTickerSortByHelper = (filter: any) => {
   const filters = {
     market_cap_usd: 'market_cap_usd',
-    price_change_percent_low: 'percent_change_1h',
-    price_change_percent_high: 'percent_change_1h',
+    price_change_percent_low: 'percent_change_24h',
+    price_change_percent_high: 'percent_change_24h',
     current_price_low: 'price_usd',
     current_price_high: 'price_usd'
   }

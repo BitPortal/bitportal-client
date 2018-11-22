@@ -67,7 +67,11 @@ export default class DappStore extends PureComponent {
           </TouchableWithoutFeedback> 
             </View>*/}
           <View style={styles.moreSectionHeader}>
-            <Text style={styles.title}>{messages[this.props.locale].discovery_label_dapp_store}</Text>
+            <TouchableWithoutFeedback onLongPress={this.showDappBrowser}>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.title}>{messages[this.props.locale].discovery_label_dapp_store}</Text>
+              </View>
+            </TouchableWithoutFeedback>
             <TouchableOpacity style={styles.moreButton} onPress={this.handleMore}>
               <Text style={styles.moreText}>{messages[this.props.locale].discovery_dapp_list_title_more}</Text>
             </TouchableOpacity>

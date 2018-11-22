@@ -19,11 +19,7 @@ export default class SystemResources extends React.Component {
   }
 
   /*eslint-enable*/
-  renderLabel = label => (
-    // <View style={{ backgroundColor: "red", width: 30, height: 30 }}>
-    <Text style={{ color: 'white' }}>{label.route.title}</Text>
-  )
-  // </View>
+  renderLabel = label => <Text style={{ color: 'white' }}>{label.route.title}</Text>
 
   renderIndicator = props => {
     const { position, navigationState } = props
@@ -40,7 +36,7 @@ export default class SystemResources extends React.Component {
       I18nManager.isRTL ? -1 : 1
     )
     return (
-      <Animated.View style={[styles.singleTab, { width, transform: [{ translateX }] }, this.props.indicatorStyle]}>
+      <Animated.View style={[styles.singleTab, { width, transform: [{ translateX }] }]}>
         <LinearGradientContainer style={styles.singleTab} />
       </Animated.View>
     )
