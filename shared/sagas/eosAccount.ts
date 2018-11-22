@@ -241,7 +241,7 @@ function* getEOSKeyAccountsRequested(action: Action<GetEOSKeyAccountsParams>) {
     }
 
     yield put(actions.getEOSKeyAccountsSucceeded(result))
-    if (action.payload.componentId)
+    if (action.payload.componentId) {
       push('BitPortal.AccountSelection', action.payload.componentId, {
         keyPermissions,
         publicKey,
@@ -249,6 +249,7 @@ function* getEOSKeyAccountsRequested(action: Action<GetEOSKeyAccountsParams>) {
         password,
         hint
       })
+    }
   } catch (e) {
     yield put(actions.getEOSKeyAccountsFailed(getEOSErrorMessage(e)))
   }
