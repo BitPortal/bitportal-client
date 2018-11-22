@@ -7,7 +7,7 @@ import { FLOATING_CARD_WIDTH, FontScale } from 'utils/dimens'
 const styles = StyleSheet.create({
   container: {
     width: FLOATING_CARD_WIDTH - 64,
-    height: 38,
+    height: 20,
     borderRadius: 3,
     flexDirection: 'row',
     alignItems: 'center'
