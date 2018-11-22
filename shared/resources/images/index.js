@@ -53,7 +53,10 @@ const Images = {
   unsign_agreement: require('./agreement_unsign.png'),
   list_hot: require('./list_hot.png'),
   list_new: require('./list_new.png'),
-  dapp_logo_default: require('./dapp_logo_default.png')
+  dapp_logo_default: require('./dapp_logo_default.png'),
+  assets_scan: require('./assets_scan.png'),
+  assets_send: require('./assets_send.png'),
+  assets_receive: require('./assets_receive.png')
 }
 
 export default Images

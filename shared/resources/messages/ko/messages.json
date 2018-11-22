@@ -57,6 +57,7 @@
   "add_eos_create_error_popup_text_registration_code_invite": "본 이벤트는 사전에 초대된 유저분들에게만 해당됩니다.",
   "add_eos_create_error_popup_text_registration_code_eos": "본 이벤트는 EOS 토큰에만 해당됩니다.",
   "add_eos_create_button_with_private_key": "입력해주세요 (선택)",
+  "add_eos_create_registration_code_popup_text_private_key_tips": "기존 EOS 개인 키를 입력하면 계정이 성공적으로 만들어지면 입력 한 개인 키에 해당하는 공개 키에 속합니다. 비공개 키 필드를 비워두면 계정에서 새 비공개 키를 만듭니다.",    
   "add_eos_create_button_collapse_private_key": "중단하기",
   "add_eos_create_button_create": "생성하기",
   "add_eos_create_button_import": "계정 불러오기",
