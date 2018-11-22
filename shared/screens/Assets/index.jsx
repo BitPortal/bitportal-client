@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { View, ScrollView, LayoutAnimation, Linking } from 'react-native'
+import { View, ScrollView, LayoutAnimation } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import storage from 'utils/storage'
 import Colors from 'resources/colors'
@@ -18,7 +18,7 @@ import { eosAccountSelector } from 'selectors/eosAccount'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import NavigationBar, { CommonTitle, CommonRightButton } from 'components/NavigationBar'
 import { checkCamera } from 'utils/permissions'
-import { handleOpenURL, events } from 'navigators/event'
+import { events } from 'navigators/event'
 import { ASSETS_QR, ASSETS_TOKEN_DETAIL, ASSETS_EOS_RESOURCE, ASSETS_ADD_TOKEN } from 'constants/analytics'
 import { onEventWithLabel } from 'utils/analytics'
 import { startListenNetInfo } from 'utils/netInfo'
@@ -77,36 +77,6 @@ export default class Assets extends Component {
 
   UNSAFE_componentWillUpdate() {
     LayoutAnimation.easeInEaseOut()
-  }
-
-  componentDidMount() {
-    // Linking.addEventListener('url', event => handleOpenURL(event, currentComponentID()))
-    // Linking.addEventListener('url', this.emitDeepLink)
-    // Linking.getInitialURL()
-    //   .then(url => {
-    //     console.log('Linkingggg', url)
-    //     if (url) {
-    //       console.log('Initial url is: ', url)
-    //     }
-    //   })
-    //   .catch(err => console.error('An error occurred', err))
-    // events.addEventListener('DeepLink', () => {})
-  }
-
-  componentWillUnmount() {
-    // Linking.removeEventListener('url', this._handleOpenURL)
-  }
-
-  handleDeepLink() {
-    // const parts = event.link.split('/') // Link parts
-    // const payload = event.payload // (optional) The payload
-    // if (parts[0] == 'chats') {
-    //   // handle the link somehow, usually run a this.props.navigator command
-    // }
-  }
-
-  emitDeepLink(event) {
-    events.emit('DeepLink', { link: event.url, payload: 'deepLink Payload' })
   }
 
   displayAccountList = () => {}

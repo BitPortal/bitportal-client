@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
 import Colors from 'resources/colors'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import Modal from 'react-native-modal'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
-import { Text, View, TouchableOpacity, StyleSheet, WebView, TouchableWithoutFeedback } from 'react-native'
+import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 import messages from 'resources/messages'
 import FastImage from 'react-native-fast-image'
 import Images from 'resources/images'
-import LinearGradientContainer from 'components/LinearGradientContainer'
-import { BITPORTAL_API_TERMS_URL } from 'constants/env'
 
 const styles = StyleSheet.create({
   container: {
@@ -83,13 +80,9 @@ const styles = StyleSheet.create({
 )
 
 export default class MenuPopUp extends Component {
-  state = {
-    signed: false
-  }
 
   render() {
     const { isVisible, dismissModal, selectFunc, locale } = this.props
-    const { signed } = this.state
     if (!isVisible) return null
     return (
       <IntlProvider messages={messages[locale]}>
