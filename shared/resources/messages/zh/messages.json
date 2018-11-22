@@ -61,6 +61,7 @@
   "add_eos_create_error_popup_text_registration_code_invite": "该活动仅向受邀用户开放",
   "add_eos_create_error_popup_text_registration_code_eos": "该活动仅适用于EOS",
   "add_eos_create_button_with_private_key": "私钥（选填）",
+  "add_eos_create_registration_code_popup_text_private_key_tips": "在此处填写已有的 EOS 私钥，当注册码创建账户成功后，新创建的账户将归属于所填写的私钥对应的公钥下。若未填写已有的 EOS 私钥，创建的账户将生成新的私钥。",
   "add_eos_create_button_collapse_private_key": "收起",
   "add_eos_create_button_create": "创建",
   "add_eos_create_button_import": "导入账户",
@@ -161,8 +162,8 @@
   "send_label_contract": "合约",
   "send_error_popup_asset_unavailable": "Token 无法交易",
 
-  "transaction_list_button_send": "发送",
-  "transaction_list_button_receive": "接收",
+  "transaction_list_button_send": "转账",
+  "transaction_list_button_receive": "收款",
   "transaction_list_text_no_data": "暂无更多交易记录",
   "transaction_detail_title_transaction_detail": "交易详情",
   "transaction_detail_label_from": "从",

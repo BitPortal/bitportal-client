@@ -71,7 +71,7 @@ export default class About extends Component {
   }
 
   getVersionInfo = () => {
-    if (isNewest) {
+    if (isNewest()) {
       const data = this.props.version.get('data')
       const locale = this.props.locale
       showIsLast(data, locale)

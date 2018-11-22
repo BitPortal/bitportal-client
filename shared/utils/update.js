@@ -6,7 +6,7 @@ import messages from 'resources/messages'
 const actionNegative = 'actionNegative'
 const actionPositive = 'actionPositive'
 let timer
-const isLast = false
+let isLast = false
 
 // const showNoUpdate = async () => {
 //   await show('当前版本无需更新', '', { negativeText: messages[locale]['general_popup_button_close'] })
@@ -106,9 +106,9 @@ export const update = (data, locale) => {
   // const minVersion = data.minVersion
   // return alert(`${calculate(lastVersion)}--${calculate(localVersion)}--${calculate(lastVersion) > calculate(localVersion)}`)
   // if (!isRequired(localVersion, minVersion)) return showNoUpdate(locale)
-  if (!needUpdate(localVersion, lastVersion)) { return true }
-  if (needUpdate(localVersion, lastVersion) && data.force) { return showForceUpdate(data, locale) }
-  if (needUpdate(localVersion, lastVersion) && !data.force) { return showGoToUpdate(data, locale) }
+  if (!needUpdate(localVersion, lastVersion)) { isLast = true; return true }
+  if (needUpdate(localVersion, lastVersion) && data.force) { isLast = false; return showForceUpdate(data, locale) }
+  if (needUpdate(localVersion, lastVersion) && !data.force) { isLast = false; return showGoToUpdate(data, locale) }
   return true
 }
 

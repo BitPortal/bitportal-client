@@ -124,6 +124,10 @@ export default class DappList extends Component {
     Navigation.pop(this.props.componentId)
   }
 
+  componentWillUnmount() {
+    this.props.actions.setSearchTerm('')
+  }
+
   render() {
     const { locale, loading, searchTerm, dAppSections } = this.props
     let filteredSections

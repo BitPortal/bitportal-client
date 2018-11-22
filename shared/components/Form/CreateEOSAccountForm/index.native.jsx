@@ -157,6 +157,7 @@ export default class CreateEOSAccountForm extends Component {
           />
           <Field
             label={messages[locale].add_eos_create_button_with_private_key}
+            tips={messages[locale].add_eos_create_registration_code_popup_text_private_key_tips}
             placeholder={messages[locale].add_eos_text_private_key}
             name="privateKey"
             normalize={normalizeText}
