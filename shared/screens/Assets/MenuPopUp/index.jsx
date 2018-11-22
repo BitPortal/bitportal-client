@@ -21,12 +21,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     backgroundColor: Colors.bgColor_30_31_37
   },
-  bgContainer: {
-    marginTop: -SCREEN_HEIGHT,
-    paddingHorizontal: 15,
-    justifyContent: 'flex-end',
-    flexDirection: 'row',
-  },
   center: {
     alignItems: 'center',
     justifyContent: 'center'
@@ -36,12 +30,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row'
   },
+  bgContainer: {
+    marginTop: -SCREEN_HEIGHT+NAV_BAR_HEIGHT,
+    width: 170,
+    minHeight: 100,
+    marginLeft: SCREEN_WIDTH-180,
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+  },
   contentContainer: {
     borderRadius: 5,
     minWidth: 100,
     minHeight: 100,
     padding: 15,
-    marginTop: NAV_BAR_HEIGHT,
     backgroundColor: Colors.minorThemeColor
   },
   btnContainer: {

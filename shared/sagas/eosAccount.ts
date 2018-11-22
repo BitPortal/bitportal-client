@@ -208,9 +208,9 @@ function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
       walletId: eosAccountName,
       chainType: 'eos',
       ownerKey: publicKey,
-      activeKey: publicKey,
-      note: ''
+      activeKey: publicKey
     }
+    // console.log('###--', params)
     yield put(traceImport(params))
   } catch (e) {
     yield put(actions.importEOSAccountFailed(getErrorMessage(e)))
@@ -256,7 +256,7 @@ function* getEOSKeyAccountsRequested(action: Action<GetEOSKeyAccountsParams>) {
 
 function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
   if (!action.payload) return
-
+  
   try {
     const eosAccountName = action.payload.eosAccountName
     const eosAccountCreationInfo = yield select((state: RootState) => state.eosAccount.get('eosAccountCreationInfo'))
@@ -278,7 +278,6 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
     const code = 'eosio.token'
     const data = yield call(eos.getCurrencyBalance, { code, account: eosAccountName })
     const symbol = (data && data[0]) ? data[0].split(' ')[1] : 'eos'
-
     const params = {
       language,
       deviceId,
