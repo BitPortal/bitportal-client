@@ -11,6 +11,7 @@ import abbreviate from 'number-abbreviate'
 import * as tokenActions from 'actions/token'
 
 import messages from 'resources/messages'
+import Images from 'resources/images'
 import styles from './styles'
 
 const Tag = props => (
@@ -30,7 +31,7 @@ const Tag = props => (
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    token: state.token.get('data'),
+    token: state.token.get('data')
     // ticker: tokenTickerSelector(state),
   }),
   dispatch => ({
@@ -45,6 +46,8 @@ const Tag = props => (
   { withRef: true }
 )
 export default class TokenCard extends Component {
+  state = { imageFallback: false }
+
   componentWillUnmount() {
     InteractionManager.runAfterInteractions(() => {
       this.props.actions.clearToken()
@@ -62,9 +65,14 @@ export default class TokenCard extends Component {
             <View style={styles.titleWrapper}>
               <FastImage
                 style={styles.icon}
-                source={{
-                  uri: `https://cdn.bitportal.io/tokenicon/128/color/${token.get('symbol')?.toLowerCase()}.png`
-                }}
+                source={
+                  this.state.imageFallback
+                    ? Images.default_icon
+                    : {
+                        uri: `https://cdn.bitportal.io/tokenicon/128/color/${token.get('symbol')?.toLowerCase()}.png`
+                      }
+                }
+                onError={() => this.setState({ imageFallback: true })}
               />
 
               <View
@@ -78,8 +86,8 @@ export default class TokenCard extends Component {
                     {token.size === 0
                       ? ticker.get('symbol')
                       : locale === 'zh'
-                        ? token.get('name_zh') && token.get('name_zh').trim()
-                        : token.get('name_en') && token.get('name_en')}
+                      ? token.get('name_zh') && token.get('name_zh').trim()
+                      : token.get('name_en') && token.get('name_en')}
                   </Text>
                 </View>
                 <View

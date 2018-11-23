@@ -13,6 +13,7 @@ import abbreviate from 'number-abbreviate'
 import { filterBgColor } from 'utils'
 import { ASSET_FRACTION } from 'constants/market'
 import messages from 'resources/messages'
+import Images from 'resources/images'
 import styles from './styles'
 
 @connect(
@@ -24,14 +25,17 @@ import styles from './styles'
   { withRef: true }
 )
 class ListItem extends Component {
-  shouldComponentUpdate(nextProps) {
+  state = { imageFallback: false }
+
+  shouldComponentUpdate(nextProps, nextState) {
     return (
       nextProps.item.get('price_usd') !== this.props.item.get('price_usd') ||
       nextProps.item.get('volume_24h_usd') !== this.props.item.get('volume_24h_usd') ||
       nextProps.item.get('market_cap_usd') !== this.props.item.get('market_cap_usd') ||
       nextProps.item.get('available_supply') !== this.props.item.get('available_supply') ||
       nextProps.item.get('percent_change_1h') !== this.props.item.get('percent_change_1h') ||
-      nextProps.item.get('percent_change_7d') !== this.props.item.get('percent_change_7d')
+      nextProps.item.get('percent_change_7d') !== this.props.item.get('percent_change_7d') ||
+      nextState.imageFallback !== this.state.imageFallback
     )
   }
 
@@ -49,10 +53,16 @@ class ListItem extends Component {
             /> */}
             <FastImage
               style={styles.icon}
-              source={{
-                uri: `https://cdn.bitportal.io/tokenicon/32/color/${item.get('symbol')?.toLowerCase()}.png`
-              }}
+              source={
+                this.state.imageFallback
+                  ? Images.default_icon
+                  : {
+                      uri: `https://cdn.bitportal.io/tokenicon/32/color/${item.get('symbol')?.toLowerCase()}.png`
+                    }
+              }
+              onError={() => this.setState({ imageFallback: true })}
             />
+            {/* <View style={{ height: 40, width: 40, backgroundColor: 'red' }} /> */}
           </View>
 
           <View
