@@ -273,7 +273,7 @@ export default class Assets extends Component {
 
   componentWillMount() {
     startListenNetInfo(this.props.locale)
-    this.props.actions.getVersionInfoRequested()
+    // this.props.actions.getVersionInfoRequested()
     this.getCurrencyRate()
     this.props.actions.syncWalletRequested()
   }

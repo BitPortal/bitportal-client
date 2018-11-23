@@ -151,10 +151,10 @@ export default class About extends Component {
                 leftItemTitle={<FormattedMessage id="about_us_button_update_log" />}
                 onPress={() => this.changePage('UpdateLogs')}
               />
-              <SettingItem
+              {/* <SettingItem
                 leftItemTitle={<FormattedMessage id="about_us_button_update_check" />}
                 onPress={this.getVersionInfo}
-              />
+              /> */}
               <SettingItem
                 leftItemTitle={<FormattedMessage id="about_us_button_product_intro" />}
                 onPress={this.goCheckGuide}
