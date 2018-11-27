@@ -1,4 +1,16 @@
 import { createAction } from 'redux-actions'
 
-export const getWhiteListStoreInfo = createAction('version/GET_STORE_INFO')
-
+export const noticeWhiteList = createAction('whiteList/NOTICE')
+export const switchWhiteListRequest = createAction<object>('whiteList/SWITCH_REQUEST')
+export const switchWhiteListSucceeded = createAction<object>('whiteList/SWITCH_SUCCEEDED')
+export const getWhiteListValue = createAction('whiteList/GET_VALUE')
+export const getWhiteListStoreInfo = createAction<object>('whiteList/GET_STORE_INFO')
+export const changeSettingEnabled = createAction<object>('whiteList/CHANGE_SETTING_ENABLED')
+export const changeSwitchSetting = createAction<object>('whiteList/CHANGE_SWITCH_SETTING')
+export const changeSwitchWhiteList = createAction<object>('whiteList/CHANGE_SWITCH_WHITE_LIST')
+export const recordDappInfo = createAction<object>('whiteList/RECORD_DAPP_INFO')
+export const recordDappList = createAction<object>('whiteList/RECORD_DAPP_LIST')
+export const recordPassword = createAction<object>('whiteList/RECORD_PASSWORD')
+export const updateWhiteListStoreInfo = createAction<object>('whiteList/UPDATE_STORE_INFO')
+export const initSelectedDapp = createAction<object>('whiteList/INIT_SELECTED_DAPP')
+export const resetSelectedDapp = createAction('whiteList/RESET_DAPP')

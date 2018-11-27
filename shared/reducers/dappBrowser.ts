@@ -26,7 +26,7 @@ export default handleActions({
     return state.set('resolving', false)
   },
   [actions.resolveMessageFailed] (state, action) {
-    return state.set('resolving', false).set('error', action.payload)
+    return state.set('resolving', false).set('loadingContract', false).set('error', action.payload)
   },
   [actions.loadContract] (state) {
     return state.set('loadingContract', true)

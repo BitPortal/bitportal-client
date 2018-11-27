@@ -62,6 +62,76 @@ const styles = EStyleSheet.create({
     paddingTop: 8,
     minHeight: 40
   },
+  whiteListContainer: {
+    width: '100%',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginTop: 15,
+    paddingTop: 5,
+    minHeight: 40
+  },
+  titleContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    minHeight: 20
+  },
+  textTipContainer: {
+    marginVertical: 10,
+    alignItems: 'center'
+  },
+  textTip: {
+    fontSize: FontScale(15),
+    color: Colors.textColor_255_76_118
+  },
+  titleSetting: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  contentContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 20,
+    minHeight: 20
+  },
+  btn: {
+    width: '20%',
+    minHeight: 30,
+    marginRight: 15,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingVertical: 10,
+  },
+  textContentDes: {
+    width: '70%',
+    minHeight: 20
+  },
+  textSettingDes: {
+    width: '70%',
+    minHeight: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 15
+  },
+  settingContainer: {
+    marginTop: 20,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    minHeight: 20
+  },
+  switchContainer: {
+    marginLeft: '10%',
+    minHeight: 20
+  },
+  switch: {
+    transform: [{ scaleX: .6 }, { scaleY: .6 }]
+  },
   label: {
     fontSize: FontScale(14),
     color: Colors.textColor_255_255_238,
@@ -69,6 +139,10 @@ const styles = EStyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: 100
+  },
+  whiteListView: {
+    width: '100%',
+    maxHeight: 200,
   },
   dataView: {
     width: '100% - 130',
@@ -129,6 +203,19 @@ const styles = EStyleSheet.create({
   },
   indicator: {
     marginLeft: 10
+  },
+  text15: {
+    fontSize: FontScale(15),
+    fontWeight: 'bold',
+    color: Colors.textColor_255_255_238
+  },
+  text14: {
+    fontSize: FontScale(14),
+    color: Colors.textColor_107_107_107
+  },
+  text12: {
+    fontSize: FontScale(12),
+    color: Colors.textColor_255_255_238
   }
 })
 

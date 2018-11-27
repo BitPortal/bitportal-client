@@ -1,6 +1,7 @@
 import { AlertIOS, Alert } from 'react-native'
 import { goSettingPermission } from 'utils/nativeUtil'
 import messages from 'resources/messages'
+import { Navigation } from 'react-native-navigation'
 
 const actionNegative = 'actionNegative'
 const actionPositive = 'actionPositive'
@@ -53,6 +54,30 @@ const permissionAlert = (title, content, locale) => {
   Alert.alert(title, content, buttons)
 }
 
+const whiteListAlert = (title, content, locale, componentId) => {
+  const buttons = []
+
+  buttons.push({
+    text: messages[locale].scan_popup_button_cancel,
+    onPress: () => console.log('Cancel Pressed'),
+    style: 'cancel'
+  })
+
+  buttons.push({
+    text: messages[locale].scan_popup_button_enable,
+    onPress: () => {
+      Navigation.push(componentId, {
+        component: {
+          name: 'BitPortal.Settings'
+        }
+      })
+    },
+    style: 'default'
+  })
+
+  Alert.alert(title, content, buttons)
+}
+
 const prompt = (title = '', content = null, options = {}) => new Promise((resolve) => {
   const buttons = []
   let inputType = null
@@ -89,6 +114,7 @@ export default {
   alert,
   prompt,
   permissionAlert,
+  whiteListAlert,
   actionPositive,
   actionNegative
 }
