@@ -228,6 +228,10 @@ export default class DappWebView extends Component {
               renderError={this.renderError}
               renderLoading={this.renderLoading}
               startInLoadingState={true}
+              useWebKit={true}
+              originWhitelist={['http://', 'https://']}
+              mixedContentMode={'always'}
+              thirdPartyCookiesEnabled={true}
               automaticallyAdjustContentInsets={false}
               onNavigationStateChange={this.onNavigationStateChange}
               javaScriptEnabled={true}

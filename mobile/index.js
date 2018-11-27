@@ -126,7 +126,7 @@ Navigation.events().registerAppLaunchedListener(() => {
     },
     bottomTabs: {
       visible: true,
-      drawBehind: true,
+      ...Platform.select({ android: { drawBehind: true } }),
       animate: Platform.OS !== 'ios',
       backgroundColor: Colors.minorThemeColor,
       tabColor: 'gray',
