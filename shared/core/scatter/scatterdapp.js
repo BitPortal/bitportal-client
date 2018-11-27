@@ -80,6 +80,7 @@ const throwIfNoIdentity = () => {
 const setupSigProviders = (context) => {
   PluginRepository.signatureProviders().map((sigProvider) => {
     context[sigProvider.name] = sigProvider.signatureProvider(_send, throwIfNoIdentity)
+    console.log('###--xx sigProvider:', context[sigProvider.name])
     return context[sigProvider.name]
   })
 }

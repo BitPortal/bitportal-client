@@ -7,13 +7,20 @@ import { connect } from 'react-redux'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { onEventWithLabel } from 'utils/analytics'
 import messages from 'resources/messages'
+import * as whiteListActions from 'actions/whiteList'
+import { bindActionCreators } from 'redux'
 import styles from './styles'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.get('locale'),
+    value: state.whiteList.get('value')
   }),
-  null,
+  dispatch => ({
+    actions: bindActionCreators({
+      ...whiteListActions
+    }, dispatch)
+  }),
   null,
   { withRef: true }
 )
@@ -27,14 +34,6 @@ export default class Setting extends Component {
     }
   }
 
-  state = {
-    enableTouchID: false
-  }
-
-  switchTouchID = () => {
-    this.setState(prevState => ({ enableTouchID: !prevState.enableTouchID }))
-  }
-
   changeSettings = (page) => {
     // Umeng analytics
     onEventWithLabel(`setting_${page.toLowerCase()}`, page)
@@ -45,9 +44,16 @@ export default class Setting extends Component {
     })
   }
 
-  render() {
-    const { locale } = this.props
+  onValueChange = (value) => {
+    this.props.actions.switchWhiteListRequest({ value })
+  }
 
+  componentWillMount() {
+    this.props.actions.getWhiteListValue()
+  }
+
+  render() {
+    const { locale, value } = this.props
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -60,11 +66,14 @@ export default class Setting extends Component {
               <SettingItem leftItemTitle={<FormattedMessage id="settings_button_language" />} onPress={() => this.changeSettings('Languages')} extraStyle={{ marginTop: 10 }} />
               <SettingItem leftItemTitle={<FormattedMessage id="settings_button_currency" />} onPress={() => this.changeSettings('Currencies')} />
               <SettingItem leftItemTitle={<FormattedMessage id="settings_button_node" />} onPress={() => this.changeSettings('NodeSettings')} />
+              <SettingItem 
+                disabled={true}
+                leftItemTitle={"白名单功能"} 
+                rightItemTitle={'switch'}
+                value={value}
+                onValueChange={this.onValueChange}
+              />
               {/* <SettingItem leftItemTitle={<FormattedMessage id="sts_sec_title_theme" />} onPress={() => {}} /> */}
-              {/* <View style={[styles.itemContainer, styles.between, { marginTop: 10 }]}>
-                <Text style={[styles.text16, { marginLeft: -2 }]}> Touch ID </Text>
-                <Switch value={enableTouchID} onValueChange={(e) => this.switchTouchID()} />
-              </View> */}
             </ScrollView>
           </View>
         </View>

@@ -27,6 +27,7 @@ import dappBrwoserSaga from './dappBrwoser'
 import traceSaga from './trace'
 import notificationSaga from './notification'
 import simpleWalletSaga from './simpleWallet'
+import whiteListSaga from './whiteList'
 
 const sagas = {
   formSaga: fork(formSaga),
@@ -55,7 +56,8 @@ const sagas = {
   dappBrwoserSaga: fork(dappBrwoserSaga),
   traceSaga: fork(traceSaga),
   notificationSaga: fork(notificationSaga),
-  simpleWalletSaga: fork(simpleWalletSaga)
+  simpleWalletSaga: fork(simpleWalletSaga),
+  whiteListSaga: fork(whiteListSaga)
 }
 
 if (ENV === 'production') {

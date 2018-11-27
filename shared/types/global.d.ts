@@ -47,6 +47,7 @@ declare interface RootState {
   eosAsset?: any
   dApp?: any
   dappBrowser?: any
+  whiteList?: any
   appInfo?: any
   chart?: any
 }

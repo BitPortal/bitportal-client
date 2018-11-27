@@ -3,9 +3,11 @@ import { delay } from 'redux-saga'
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/dappBrowser'
+import * as whiteListActions from 'actions/whiteList'
 import { parseMessageId, typeOf, validateEOSActions } from 'utils'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
 import { currenctWalletSelector } from 'selectors/wallet'
+import Immutable from 'immutable'
 import {
   initEOS,
   transferEOSAsset,
@@ -176,18 +178,32 @@ function* pendRequestSignature(messageActionType: string, payload: any, messageI
   const buf = payload.buf
   const transaction = payload.transaction
   const blockchain = 'EOS'
+  const info = { requiredFields, buf, transaction, blockchain }
 
-  yield put(actions.pendMessage({
-    messageId,
-    payload,
-    type: messageActionType,
-    info: {
-      requiredFields,
-      buf,
-      transaction,
-      blockchain
+  const whiteListEnabled = yield select((state: RootState) => state.whiteList.get('value'))
+  const selectedDapp = yield select((state: RootState) => state.whiteList.get('selectedDapp'))
+  const dappName = selectedDapp.get('dappName')
+  const dappList = yield select((state: RootState) => state.whiteList.get('dappList'))
+  // console.log('###--yy pendRequestSignature', dappList)
+  let authorized = false
+  dappList.forEach((v: any) => {
+    if (v.get('dappName') === dappName) {
+      authorized = v.get('authorized')
     }
-  }))
+  });
+  // console.log('###--yy authorized: --', authorized)
+  if (authorized && whiteListEnabled && selectedDapp.get && selectedDapp.get('settingEnabled')) {
+    const password = yield select((state: RootState) => state.whiteList.get('password'))
+    // console.log('###--yy', password, info, messageId)
+    yield resolveRequestSignature( password, Immutable.fromJS(info), messageId)
+  } else {
+    yield put(actions.pendMessage({
+      messageId,
+      payload,
+      type: messageActionType,
+      info
+    }))
+  }
 }
 
 function* resolveTransferEOSAsset(password: string, info: any, messageId: string) {
@@ -350,6 +366,11 @@ function* resolveRequestSignature(password: string, info: any, messageId: string
     const buf = info.get('buf').toJS()
     const publicKey = yield select((state: RootState) => state.wallet.get('data').get('publicKey'))
     const account = yield select((state: RootState) => eosAccountNameSelector(state))
+    
+    // 存储dapp信息并绑定account到本地
+    const selectedDapp = yield select((state: RootState) => state.whiteList.get('selectedDapp'))
+    const store = selectedDapp.set('authorized', true).set('accountName', account).set('info', info).delete('password')
+    yield put(whiteListActions.updateWhiteListStoreInfo({ store }))
 
     const signatures = yield call(signature, {
       account,

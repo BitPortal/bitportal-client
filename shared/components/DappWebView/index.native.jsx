@@ -21,6 +21,7 @@ import { FormattedMessage, IntlProvider } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
 import Url from 'url-parse'
 import * as dappBrwoserActions from 'actions/dappBrowser'
+import * as whiteListActions from 'actions/whiteList'
 import ActionModal from 'components/ActionModal'
 import Prompt from 'components/Prompt'
 import Loading from 'components/Loading'
@@ -64,7 +65,8 @@ export const errorMessages = (error, messages) => {
   }),
   dispatch => ({
     actions: bindActionCreators({
-      ...dappBrwoserActions
+      ...dappBrwoserActions,
+      ...whiteListActions
     }, dispatch)
   }),
   null,
@@ -89,6 +91,7 @@ export default class DappWebView extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    console.log('###--xx sendingMessage: ', this.props.sendingMessage)
     if (this.props.sendingMessage && prevProps.sendingMessage !== this.props.sendingMessage && this.webviewbridge) {
       this.webviewbridge.sendToBridge(this.props.sendingMessage)
     }
@@ -156,8 +159,6 @@ export default class DappWebView extends Component {
     )
   }
 
-  renderLoading = () => (<WebViewLoading />)
-
   onNavigationStateChange = (navState) => {
     const url = new Url(navState.url)
     const hostname = url.hostname
@@ -170,6 +171,7 @@ export default class DappWebView extends Component {
   }
 
   onBridgeMessage = (message) => {
+    console.log('###--xx receiveMessage: ', message)
     this.props.actions.receiveMessage(message)
   }
 
@@ -179,6 +181,7 @@ export default class DappWebView extends Component {
 
   resolveMessage = (password) => {
     InteractionManager.runAfterInteractions(() => {
+      this.props.actions.recordPassword({ password })
       this.props.actions.resolveMessage({ password })
     })
   }
@@ -200,6 +203,22 @@ export default class DappWebView extends Component {
       this.setState({ uri: searchText })
     }
   }
+
+  componentWillUnmount() {
+    this.props.actions.resetSelectedDapp()
+  }
+
+  onLoadEnd = () => {
+    const { componentId } = this.props
+    this.props.actions.noticeWhiteList({ 
+      componentId, 
+      dappName: this.props.title,
+      dappUrl: this.props.uri 
+    })
+    this.props.actions.getWhiteListStoreInfo({ dappName: this.props.title })
+  }
+
+  renderLoading = () => (<WebViewLoading />)
 
   render() {
     const {
@@ -232,6 +251,7 @@ export default class DappWebView extends Component {
           <View style={styles.content}>
             <WebViewBridge
               source={{ uri }}
+              onLoadEnd={this.onLoadEnd}
               ref={(e) => { this.webviewbridge = e }}
               renderError={this.renderError}
               renderLoading={this.renderLoading}

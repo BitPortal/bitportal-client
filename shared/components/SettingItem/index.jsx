@@ -3,7 +3,8 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableHighlight
+  TouchableHighlight,
+  Switch
 } from 'react-native'
 import BPImage from 'components/BPNativeComponents/BPImage'
 import { SCREEN_WIDTH, FontScale } from 'utils/dimens'
@@ -28,6 +29,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  switch: {
+    transform: [{ scaleX: .9 }, { scaleY: .9 }]
+  },
   imageStyle: {
     width: 16,
     height: 16,
@@ -50,7 +54,7 @@ export default class SettingItem extends Component {
     }
   }
 
-  renderRightItem(rightItemTitle) {
+  renderRightItem(rightItemTitle, value, onValueChange) {
     const { rightImageName, iconColor } = this.props
     const iconName = rightImageName || 'ios-arrow-forward'
     const imageColor = iconColor || Colors.textColor_181_181_181
@@ -58,6 +62,15 @@ export default class SettingItem extends Component {
     if (!rightItemTitle) {
       return (
         <Ionicons name={iconName} size={24} color={imageColor} />
+      )
+    }
+    if (!!rightItemTitle && rightItemTitle === 'switch') {
+      return (
+        <Switch
+          value={value}
+          style={styles.switch}
+          onValueChange={onValueChange}
+        />
       )
     }
 
@@ -83,7 +96,7 @@ export default class SettingItem extends Component {
   }
 
   render() {
-    const { disabled, leftItemTitle, rightItemTitle, extraStyle } = this.props
+    const { disabled, leftItemTitle, rightItemTitle, value, onValueChange, extraStyle } = this.props
     return (
       <TouchableHighlight
         underlayColor={Colors.hoverColor}
@@ -93,7 +106,7 @@ export default class SettingItem extends Component {
       >
         <View style={[styles.viewContainer]}>
           {this.renderLeftItem(leftItemTitle)}
-          {this.renderRightItem(rightItemTitle)}
+          {this.renderRightItem(rightItemTitle, value, onValueChange)}
         </View>
       </TouchableHighlight>
     )

@@ -24,6 +24,7 @@ import eosNode from './eosNode'
 import dappBrowser from './dappBrowser'
 import appInfo from './appInfo'
 import simpleWallet from './simpleWallet'
+import whiteList from './whiteList'
 
 export default combineReducers({
   form,
@@ -50,5 +51,6 @@ export default combineReducers({
   eosNode,
   dappBrowser,
   appInfo,
-  simpleWallet
+  simpleWallet,
+  whiteList
 })

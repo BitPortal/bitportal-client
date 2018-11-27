@@ -7,6 +7,7 @@ import { FormattedMessage, /* FormattedNumber, */IntlProvider } from 'react-intl
 import Modal from 'react-native-modal'
 import { messageTypeSelector, messageInfoSelector } from 'selectors/dappBrowser'
 import { noop } from 'utils'
+import WhiteListTips from './WhiteListTips'
 import styles from './styles'
 import messages from './messages'
 
@@ -140,7 +141,7 @@ const PushActionItems = ({ info, locale }) => (
   </Fragment>
 )
 
-const SignatureActionItems = ({ info, locale }) => (
+const SignatureActionItems = ({ info, locale, value }) => (
   <Fragment>
     <View style={styles.item}>
       <Text style={styles.label}>{messages[locale].general_action_modal_text_action}:</Text>
@@ -174,6 +175,7 @@ const SignatureActionItems = ({ info, locale }) => (
         ))}
       </ScrollView>
     </View>
+    <WhiteListTips value={value} />
   </Fragment>
 )
 
