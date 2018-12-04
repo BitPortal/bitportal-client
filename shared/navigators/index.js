@@ -17,6 +17,7 @@ import AssetSearch from 'screens/Assets/AssetSearch'
 import AssetsTransfer from 'screens/Assets/AssetsTransfer'
 import AvailableAssets from 'screens/Assets/AvailableAssets'
 import Backup from 'screens/Account/Backup'
+import AccountAdd from 'screens/Account/AccountAdd'
 import AccountImport from 'screens/Account/AccountImport'
 import AccountSelection from 'screens/Account/AccountSelection'
 import AccountAssistance from 'screens/Account/AccountAssistance'
@@ -98,6 +99,7 @@ export const registerScreens = store => {
   Navigation.registerComponent('BitPortal.ExportPrivateKey', () => screenComponent(ExportPrivateKey, store))
   Navigation.registerComponent('BitPortal.TransactionHistory', () => screenComponent(TransactionHistory, store))
   Navigation.registerComponent('BitPortal.Backup', () => screenComponent(Backup, store))
+  Navigation.registerComponent('BitPortal.AccountAdd', () => screenComponent(AccountAdd, store))
   Navigation.registerComponent('BitPortal.AccountImport', () => screenComponent(AccountImport, store))
   Navigation.registerComponent('BitPortal.AccountSelection', () => screenComponent(AccountSelection, store))
   Navigation.registerComponent('BitPortal.AccountAssistance', () => screenComponent(AccountAssistance, store))
