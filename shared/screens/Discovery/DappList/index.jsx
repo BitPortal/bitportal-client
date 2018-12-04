@@ -9,10 +9,14 @@ import { searchDappListSelector, sectionedDappListSelector } from 'selectors/dAp
 import { eosAccountNameSelector } from 'selectors/eosAccount'
 import { IntlProvider } from 'react-intl'
 import SearchBar from 'components/SearchBar'
-import { SCREEN_WIDTH } from 'utils/dimens'
+import FastImage from 'react-native-fast-image'
+import { SCREEN_WIDTH, FLOATING_CARD_BORDER_RADIUS } from 'utils/dimens'
+import { DAPP_SECTION_ICONS } from 'constants/dApp'
 import AddRemoveButtonAnimation from 'components/AddRemoveButton/animation'
 import messages from 'resources/messages'
 import sectionListGetItemLayout from 'react-native-section-list-get-item-layout'
+import Images from 'resources/images'
+
 import DappListItem from './DappListItem'
 import styles from './styles'
 import ItemStyles from './DappListItem/styles'
@@ -61,7 +65,7 @@ export default class DappList extends Component {
     }
   }
 
-  state = { visible: false }
+  state = { visible: false, filteredSections: [] }
 
   showModal = () => {
     this.setState({ visible: true })
@@ -71,12 +75,10 @@ export default class DappList extends Component {
     this.setState({ visible: false })
   }
 
-  componentDidMount() {
-    console.log('prosss', this.props)
-    if (this.props.section) {
-      this.props.dAppSections.filter(e => e.title === this.props.section)
-    }
-
+  UNSAFE_componentWillMount() {
+    // if (this.props.section === 'all') this.setState({ filteredSections: this.props.dAppSections })
+    // else if (this.props.section)
+    //   this.setState({ filteredSections: this.props.dAppSections.filter(e => e.title === this.props.section) })
     // setTimeout(() => {
     //   this.sectionListRef.scrollToLocation({
     //     itemIndex: 0,
@@ -87,7 +89,17 @@ export default class DappList extends Component {
     // }, 500)
   }
 
-  renderItem = ({ item }) => {
+  handleFloatingRadius = ({ index, section }) => {
+    if (index === 0)
+      return { borderTopLeftRadius: FLOATING_CARD_BORDER_RADIUS, borderTopRightRadius: FLOATING_CARD_BORDER_RADIUS }
+    if (index === section.data.length - 1)
+      return {
+        borderBottomLeftRadius: FLOATING_CARD_BORDER_RADIUS,
+        borderBottomRightRadius: FLOATING_CARD_BORDER_RADIUS
+      }
+  }
+
+  renderItem = ({ item, index, section }) => {
     const { locale, eosAccountName } = this.props
     return (
       <DappListItem
@@ -102,6 +114,7 @@ export default class DappList extends Component {
           this.hideModal()
         }}
         eosAccountName={eosAccountName}
+        extraStyleProps={this.handleFloatingRadius({ index, section })}
       />
     )
   }
@@ -110,7 +123,10 @@ export default class DappList extends Component {
 
   renderSectionHeader = ({ section: { title } }) => (
     <View style={[styles.sectionHeader]}>
-      <Text style={styles.title}>{messages[this.props.locale][title]}</Text>
+      <View style={styles.row}>
+        <FastImage style={styles.categoryIcon} source={DAPP_SECTION_ICONS[title].icon} />
+        <Text style={styles.title}>{messages[this.props.locale][DAPP_SECTION_ICONS[title].stringId]}</Text>
+      </View>
     </View>
   )
 
@@ -129,11 +145,11 @@ export default class DappList extends Component {
   }
 
   render() {
-    const { locale, loading, searchTerm, dAppSections } = this.props
     let filteredSections
-    if (this.props.section) {
-      filteredSections = this.props.dAppSections.filter(e => e.title === this.props.section)
-    }
+    if (this.props.section === 'all') filteredSections = this.props.dAppSections
+    else if (this.props.section) filteredSections = this.props.dAppSections.filter(e => e.title === this.props.section)
+    const { locale, loading, searchTerm, dAppSections } = this.props
+    console.log('filteredSectionss', filteredSections)
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -142,6 +158,7 @@ export default class DappList extends Component {
             title={messages[locale].discovery_dapp_title_dapp_list}
             rightButton={
               <SearchBar
+                expandedSearch={this.props.expandedSearch}
                 searchTerm={searchTerm}
                 onChangeText={text => this.onChangeText(text)}
                 clearSearch={() => {
@@ -150,29 +167,21 @@ export default class DappList extends Component {
               />
             }
           />
-          {/* <VirtualizedList
-            style={styles.listContainer}
-            data={dAppList}
-            keyExtractor={this.keyExtractor}
-            ItemSeparatorComponent={this.renderSeparator}
-            showsVerticalScrollIndicator={false}
-            getItemCount={dAppList => dAppList.size || 0}
-            renderItem={this.renderItem}
-            getItem={(items, index) => (items.get ? items.get(index) : items[index])
-            }
-            ListHeaderComponent={this.renderHeader}
-            ListFooterComponent={this.renderFoot}
-            onRefresh={this.props.onRefresh}
-            onEndReached={this.props.onEndReached}
-            onEndReachedThreshold={-0.1}
-            refreshing={loading}
-          /> */}
-          <View styles={{ backgroundColor: 'red' }}>
+          <View>
+            {filteredSections.length === 0 && (
+              <View style={styles.noResults}>
+                <FastImage style={styles.noResultIcon} source={Images.dapp_no_result} />
+                <Text style={[styles.text14, { textAlign: 'center' }]}>
+                  {messages[locale].dapp_list_text_search_no_result}
+                </Text>
+              </View>
+            )}
             <SectionList
               ref={node => {
                 this.sectionListRef = node
               }}
               style={styles.listContainer}
+              // contentContainerStyle={styles.listContainer}
               renderItem={this.renderItem}
               keyExtractor={this.keyExtractor}
               renderSectionHeader={this.renderSectionHeader}

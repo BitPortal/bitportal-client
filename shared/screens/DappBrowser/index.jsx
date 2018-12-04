@@ -1,21 +1,11 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
-import {
-  View,
-  Text,
-  Share,
-  Linking,
-  Platform,
-  ActivityIndicator,
-  InteractionManager
-} from 'react-native'
+import { View, Text, Share, Linking, Platform, ActivityIndicator, InteractionManager } from 'react-native'
 import WebViewBridge from 'react-native-webview-bridge'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
-import NavigationBar, {
-  WebViewLeftButton
-} from 'components/NavigationBar'
+import NavigationBar, { WebViewLeftButton } from 'components/NavigationBar'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
 import Url from 'url-parse'
@@ -41,7 +31,9 @@ const WebViewLoading = ({ text }) => (
 )
 
 export const errorMessages = (error, messages) => {
-  if (!error) { return null }
+  if (!error) {
+    return null
+  }
 
   const message = typeof error === 'object' ? error.message : error
 
@@ -63,14 +55,16 @@ export const errorMessages = (error, messages) => {
     error: state.dappBrowser.get('error')
   }),
   dispatch => ({
-    actions: bindActionCreators({
-      ...dappBrwoserActions
-    }, dispatch)
+    actions: bindActionCreators(
+      {
+        ...dappBrwoserActions
+      },
+      dispatch
+    )
   }),
   null,
   { withRef: true }
 )
-
 export default class DappWebView extends Component {
   static get options() {
     return {
@@ -112,7 +106,7 @@ export default class DappWebView extends Component {
     this.actionSheet.show()
   }
 
-  selectActionSheet = (index) => {
+  selectActionSheet = index => {
     switch (index) {
       case 0:
         this.share()
@@ -129,7 +123,7 @@ export default class DappWebView extends Component {
   linking = () => {
     const url = this.props.uri
     Linking.canOpenURL(url)
-      .then((supported) => {
+      .then(supported => {
         if (!supported) {
           // console.log(`Can't handle url: ${url}`);
         } else {
@@ -144,7 +138,7 @@ export default class DappWebView extends Component {
 
   goHome = () => Navigation.pop(this.props.componentId)
 
-  renderError = (e) => {
+  renderError = e => {
     if (e === 'WebKitErrorDomain') {
       return null
     }
@@ -157,9 +151,9 @@ export default class DappWebView extends Component {
     )
   }
 
-  renderLoading = () => (<WebViewLoading />)
+  renderLoading = () => <WebViewLoading />
 
-  onNavigationStateChange = (navState) => {
+  onNavigationStateChange = navState => {
     const url = new Url(navState.url)
     const hostname = url.hostname
     const host = hostname.indexOf('www.') === 0 ? hostname.replace('www.', '') : hostname
@@ -170,7 +164,7 @@ export default class DappWebView extends Component {
     })
   }
 
-  onBridgeMessage = (message) => {
+  onBridgeMessage = message => {
     this.props.actions.receiveMessage(message)
   }
 
@@ -178,7 +172,7 @@ export default class DappWebView extends Component {
     this.props.actions.rejectMessage()
   }
 
-  resolveMessage = (password) => {
+  resolveMessage = password => {
     InteractionManager.runAfterInteractions(() => {
       this.props.actions.resolveMessage({ password })
     })
@@ -192,7 +186,7 @@ export default class DappWebView extends Component {
     this.setState({ showPrompt: false })
   }
 
-  onSubmitEditing = (event) => {
+  onSubmitEditing = event => {
     const searchText = event.nativeEvent.text
 
     if (searchText === this.state.uri) {
@@ -203,15 +197,7 @@ export default class DappWebView extends Component {
   }
 
   render() {
-    const {
-      title,
-      locale,
-      hasPendingMessage,
-      resolvingMessage,
-      loadingContract,
-      error,
-      inject
-    } = this.props
+    const { title, locale, hasPendingMessage, resolvingMessage, loadingContract, error, inject } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -224,7 +210,9 @@ export default class DappWebView extends Component {
           <View style={styles.content}>
             <WebViewBridge
               source={{ uri: this.state.uri }}
-              ref={(e) => { this.webviewbridge = e }}
+              ref={e => {
+                this.webviewbridge = e
+              }}
               renderError={this.renderError}
               renderLoading={this.renderLoading}
               startInLoadingState={true}
@@ -236,14 +224,36 @@ export default class DappWebView extends Component {
               scalesPageToFit={true}
               nativeConfig={{ props: { backgroundColor: Colors.minorThemeColor, flex: 1 } }}
               onBridgeMessage={this.onBridgeMessage}
-              injectedJavaScript={inject}
+              // injectedJavaScript={inject}
+              injectedJavaScript="
+              function waitForBridge() {
+
+
+              if (window.postMessage.length !== 1){
+              setTimeout(waitForBridge, 200);
+              }
+              else {
+              setTimeout(window.postMessage(window.location.href),1000);
+              }
+              }
+
+              window.onload = waitForBridge;
+      
+    "
+              onMessage={event => {
+                console.log(`MESSAGE >>>>${event.nativeEvent.data}`)
+              }}
             />
             <ActionModal
               isVisible={hasPendingMessage && !resolvingMessage}
               dismiss={this.rejectMessage}
               confirm={this.showPrompt}
             />
-            <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearPasswordError} delay={500} />
+            <Alert
+              message={errorMessages(error, messages[locale])}
+              dismiss={this.props.actions.clearPasswordError}
+              delay={500}
+            />
             <Prompt
               isVisible={this.state.showPrompt}
               type="secure-text"
@@ -251,11 +261,15 @@ export default class DappWebView extends Component {
               dismiss={this.closePrompt}
             />
             <ActionSheet
-              ref={(o) => { this.actionSheet = o }}
+              ref={o => {
+                this.actionSheet = o
+              }}
               title=""
               options={[
                 messages[locale].webview_button_share,
-                Platform.OS === 'ios' ? messages[locale].webview_button_open_in_safari : messages[locale].webview_button_open_in_browser,
+                Platform.OS === 'ios'
+                  ? messages[locale].webview_button_open_in_safari
+                  : messages[locale].webview_button_open_in_browser,
                 messages[locale].webview_button_cancel
               ]}
               cancelButtonIndex={2}
@@ -265,7 +279,10 @@ export default class DappWebView extends Component {
           </View>
           <Loading
             isVisible={resolvingMessage || loadingContract}
-            text={(resolvingMessage && <FormattedMessage id="webview_signing" />) || (loadingContract && <FormattedMessage id="webview_fetching_contract" />)}
+            text={
+              (resolvingMessage && <FormattedMessage id="webview_signing" />) ||
+              (loadingContract && <FormattedMessage id="webview_fetching_contract" />)
+            }
           />
         </View>
       </IntlProvider>

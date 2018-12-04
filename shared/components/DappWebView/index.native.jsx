@@ -1,32 +1,27 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
-import {
-  View,
-  Text,
-  Share,
-  Linking,
-  Platform,
-  ActivityIndicator,
-  InteractionManager
-} from 'react-native'
+import { View, Text, Share, Linking, Platform, ActivityIndicator, InteractionManager, Clipboard } from 'react-native'
 import WebViewBridge from 'react-native-webview-bridge'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
-import NavigationBar, {
-  LinkingRightButton,
-  WebViewLeftButton
-} from 'components/NavigationBar'
+import NavigationBar, { LinkingRightButton, WebViewLeftButton } from 'components/NavigationBar'
 import { FormattedMessage, IntlProvider } from 'react-intl'
-import ActionSheet from 'react-native-actionsheet'
+import Modal from 'react-native-modal'
 import Url from 'url-parse'
+import { mergeFavoritesDataSelector } from 'selectors/dApp'
 import * as dappBrwoserActions from 'actions/dappBrowser'
 import * as whiteListActions from 'actions/whiteList'
+import * as dAppActions from 'actions/dApp'
 import ActionModal from 'components/ActionModal'
 import Prompt from 'components/Prompt'
 import Loading from 'components/Loading'
 import Alert from 'components/Alert'
+import AddRemoveButtonAnimation from 'components/AddRemoveButton/animation'
+import Toast from 'components/Toast'
 import globalMessages from 'resources/messages'
+import Images from 'resources/images'
+import BrowserMenu from './BrowserMenu'
 import localMessages from './messages'
 import styles from './styles'
 
@@ -42,7 +37,9 @@ const WebViewLoading = ({ text }) => (
 )
 
 export const errorMessages = (error, messages) => {
-  if (!error) { return null }
+  if (!error) {
+    return null
+  }
 
   const message = typeof error === 'object' ? error.message : error
 
@@ -61,18 +58,24 @@ export const errorMessages = (error, messages) => {
     resolvingMessage: state.dappBrowser.get('resolving'),
     sendingMessage: state.dappBrowser.get('sendingMessage'),
     loadingContract: state.dappBrowser.get('loadingContract'),
-    error: state.dappBrowser.get('error')
+    error: state.dappBrowser.get('error'),
+    selectedDapp: state.dApp.get('selected'),
+    favoriteDapps: state.dApp.get('favoriteDapps'),
+    mergedFavoritesDappList: mergeFavoritesDataSelector(state)
   }),
   dispatch => ({
-    actions: bindActionCreators({
-      ...dappBrwoserActions,
-      ...whiteListActions
-    }, dispatch)
+    actions: bindActionCreators(
+      {
+        ...dappBrwoserActions,
+        ...whiteListActions,
+        ...dAppActions
+      },
+      dispatch
+    )
   }),
   null,
   { withRef: true }
 )
-
 export default class DappWebView extends Component {
   static get options() {
     return {
@@ -90,16 +93,61 @@ export default class DappWebView extends Component {
     }
   }
 
+  state = {
+    canGoBack: false,
+    showPrompt: false,
+    browserHistory: [this.props.uri],
+    visibleMenu: false,
+    visibleAnimation: false
+  }
+
+  handleBrowserMenuList = () => {
+    const item = this.props.mergedFavoritesDappList.filter(element => element.get('name') === this.props.name).get(0)
+    // console.log('handleBrowserMenuList', this.props.mergedFavoritesDappList, item, this.props.name, this.props)
+    return [
+      {
+        name: globalMessages[this.props.locale].webview_button_refresh,
+        onPress: () => {
+          this.hideBrowserMenu()
+          this.webviewbridge.reload()
+        },
+        icon: Images.dapp_browser_refresh
+      },
+      {
+        name: globalMessages[this.props.locale].webview_button_copy_url,
+        onPress: () => {
+          this.hideBrowserMenu()
+          Clipboard.setString(this.props.uri)
+          Toast(globalMessages[this.props.locale].webview_copied_to_clipboard, 1000, 0)
+        },
+        icon: Images.dapp_browser_copy_url
+      },
+      {
+        name: globalMessages[this.props.locale].webview_button_open_in_browser,
+        onPress: () => {
+          this.hideBrowserMenu()
+          this.linking()
+        },
+        icon: Images.dapp_browser_open_in_browser
+      },
+      {
+        name: item.get('selected')
+          ? globalMessages[this.props.locale].webview_button_remove_from_favorites
+          : globalMessages[this.props.locale].webview_button_add_to_favorites,
+        onPress: () => {
+          this.toggleFavorite(item)
+          setTimeout(() => this.hideBrowserMenu(), 500)
+        },
+        icon: item.get('selected') ? Images.dapp_browser_favorite_unsave : Images.dapp_browser_favorite_save
+      }
+    ]
+  }
+
   componentDidUpdate(prevProps) {
     console.log('###--xx sendingMessage: ', this.props.sendingMessage)
     if (this.props.sendingMessage && prevProps.sendingMessage !== this.props.sendingMessage && this.webviewbridge) {
       this.webviewbridge.sendToBridge(this.props.sendingMessage)
     }
-  }
-
-  state = {
-    canGoBack: false,
-    showPrompt: false
   }
 
   share = () => {
@@ -110,28 +158,10 @@ export default class DappWebView extends Component {
     }
   }
 
-  showActionSheet = () => {
-    this.actionSheet.show()
-  }
-
-  selectActionSheet = (index) => {
-    switch (index) {
-      case 0:
-        this.share()
-        break
-      case 1:
-        this.linking()
-        break
-
-      default:
-        break
-    }
-  }
-
   linking = () => {
     const url = this.props.uri
     Linking.canOpenURL(url)
-      .then((supported) => {
+      .then(supported => {
         if (!supported) {
           // console.log(`Can't handle url: ${url}`);
         } else {
@@ -142,24 +172,32 @@ export default class DappWebView extends Component {
       .catch(err => console.error('An error occurred', err))
   }
 
-  goBack = () => (this.state.canGoBack ? this.webviewbridge.goBack() : Navigation.pop(this.props.componentId))
+
+  goBack = () => {
+    if (this.state.browserHistory.length === 1) {
+      Navigation.pop(this.props.componentId)
+    } else {
+      this.webviewbridge.goBack()
+      this.setState(prevState => ({
+        browserHistory: prevState.browserHistory.splice(0, prevState.browserHistory.length - 1)
+      }))
+    }
+  }
 
   goHome = () => Navigation.pop(this.props.componentId)
 
-  renderError = (e) => {
+  renderError = e => {
     if (e === 'WebKitErrorDomain') {
       return null
     }
     return (
       <View style={[styles.center, styles.content]}>
-        <Text style={styles.text18}>
-          {messages[this.props.locale].webview_error_text_load_failed}
-        </Text>
+        <Text style={styles.text18}>{messages[this.props.locale].webview_error_text_load_failed}</Text>
       </View>
     )
   }
 
-  onNavigationStateChange = (navState) => {
+  onNavigationStateChange = navState => {
     const url = new Url(navState.url)
     const hostname = url.hostname
     const host = hostname.indexOf('www.') === 0 ? hostname.replace('www.', '') : hostname
@@ -170,16 +208,25 @@ export default class DappWebView extends Component {
     })
   }
 
-  onBridgeMessage = (message) => {
-    console.log('###--xx receiveMessage: ', message)
+  onBridgeMessage = message => {
+    // console.log('###--xx receiveMessage: ', message)
+    if (message.includes('clickedURL')) this.handleHistory(message)
     this.props.actions.receiveMessage(message)
+  }
+
+  handleHistory = history => {
+    const url = history.match(/http.*/gi)[0]
+    if (this.state.browserHistory[this.state.browserHistory.length - 1] !== url) {
+      this.setState(prevState => ({ browserHistory: prevState.browserHistory.concat(url) }))
+    }
+    console.log('newBroserhistory', this.state.browserHistory)
   }
 
   rejectMessage = () => {
     this.props.actions.rejectMessage()
   }
 
-  resolveMessage = (password) => {
+  resolveMessage = password => {
     InteractionManager.runAfterInteractions(() => {
       this.props.actions.recordPassword({ password })
       this.props.actions.resolveMessage({ password })
@@ -194,7 +241,7 @@ export default class DappWebView extends Component {
     this.setState({ showPrompt: false })
   }
 
-  onSubmitEditing = (event) => {
+  onSubmitEditing = event => {
     const searchText = event.nativeEvent.text
 
     if (searchText === this.state.uri) {
@@ -210,15 +257,46 @@ export default class DappWebView extends Component {
 
   onLoadEnd = () => {
     const { componentId } = this.props
-    this.props.actions.noticeWhiteList({ 
-      componentId, 
+    this.props.actions.noticeWhiteList({
+      componentId,
       dappName: this.props.title,
-      dappUrl: this.props.uri 
+      dappUrl: this.props.uri
     })
     this.props.actions.getWhiteListStoreInfo({ dappName: this.props.title })
   }
 
-  renderLoading = () => (<WebViewLoading />)
+  renderLoading = () => <WebViewLoading />
+
+  showBrowserMenu = () => this.setState({ visibleMenu: true })
+
+  hideBrowserMenu = () => this.setState({ visibleMenu: false })
+
+  toggleFavAnimation = () => {
+    this.setState({ visibleAnimation: true }, () => {
+      setTimeout(() => this.setState({ visibleAnimation: false }), 500)
+    })
+  }
+
+  showAnimationModal = () => {
+    this.setState({ visibleAnimation: true })
+  }
+
+  hideAnimationModal = () => {
+    this.setState({ visibleAnimation: false })
+  }
+
+  toggleFavorite = item => {
+    const { favoriteDapps, locale } = this.props
+    if (favoriteDapps.toJS().length >= 8 && !item.get('selected')) {
+      return Toast(globalMessages[locale].discovery_dapp_text_favourite_limit, 2000, 0)
+    } else {
+      this.toggleFavAnimation()
+      this.props.actions.toggleFavoriteDapp({
+        item,
+        selected: item.get('selected')
+      })
+    }
+  }
 
   render() {
     const {
@@ -230,29 +308,25 @@ export default class DappWebView extends Component {
       error,
       needLinking,
       uri,
-      inject
+      inject,
+      item
     } = this.props
-
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
             title={title}
             leftButton={<WebViewLeftButton goBack={this.goBack} goHome={this.goHome} />}
-            rightButton={
-              needLinking && (
-                <LinkingRightButton
-                  iconName="ios-more"
-                  onPress={this.showActionSheet}
-                />
-              )
-            }
+            // rightButton={needLinking && <LinkingRightButton iconName="ios-more" onPress={this.showActionSheet} />}
+            rightButton={<LinkingRightButton iconName="ios-more" onPress={this.showBrowserMenu} />}
           />
           <View style={styles.content}>
             <WebViewBridge
               source={{ uri }}
               onLoadEnd={this.onLoadEnd}
-              ref={(e) => { this.webviewbridge = e }}
+              ref={e => {
+                this.webviewbridge = e
+              }}
               renderError={this.renderError}
               renderLoading={this.renderLoading}
               startInLoadingState={true}
@@ -271,30 +345,50 @@ export default class DappWebView extends Component {
               dismiss={this.rejectMessage}
               confirm={this.showPrompt}
             />
-            <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearPasswordError} delay={500} />
+            <Alert
+              message={errorMessages(error, messages[locale])}
+              dismiss={this.props.actions.clearPasswordError}
+              delay={500}
+            />
             <Prompt
               isVisible={this.state.showPrompt}
               type="secure-text"
               callback={this.resolveMessage}
               dismiss={this.closePrompt}
             />
-            <ActionSheet
-              ref={(o) => { this.actionSheet = o }}
-              title=""
-              options={[
-                messages[locale].webview_button_share,
-                Platform.OS === 'ios' ? messages[locale].webview_button_open_in_safari : messages[locale].webview_button_open_in_browser,
-                messages[locale].webview_button_cancel
-              ]}
-              cancelButtonIndex={2}
-              destructiveButtonIndex={1}
-              onPress={this.selectActionSheet}
-            />
           </View>
           <Loading
             isVisible={resolvingMessage || loadingContract}
-            text={(resolvingMessage && <FormattedMessage id="webview_signing" />) || (loadingContract && <FormattedMessage id="webview_fetching_contract" />)}
+            text={
+              (resolvingMessage && <FormattedMessage id="webview_signing" />) ||
+              (loadingContract && <FormattedMessage id="webview_fetching_contract" />)
+            }
           />
+          <Modal
+            style={{ margin: 0 }}
+            isVisible={this.state.visibleMenu}
+            useNativeDriver
+            hideModalContentWhileAnimating
+            backdropOpacity={0.3}
+          >
+            <BrowserMenu
+              dismissModal={this.hideBrowserMenu}
+              menuList={this.handleBrowserMenuList()}
+              linking={this.linking}
+            />
+            <Modal
+              transparent={true}
+              isVisible={this.state.visibleAnimation}
+              backdropOpacity={0}
+              disableAnimation
+              animationInTiming={10}
+              animationOutTiming={10}
+            >
+              <View style={styles.favAnimationModal}>
+                <AddRemoveButtonAnimation value={this.props.selectedDapp} />
+              </View>
+            </Modal>
+          </Modal>
         </View>
       </IntlProvider>
     )

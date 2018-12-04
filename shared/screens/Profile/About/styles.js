@@ -1,15 +1,24 @@
 import { StyleSheet } from 'react-native'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT } from 'utils/dimens'
+import {
+  FontScale,
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  NAV_BAR_HEIGHT,
+  TAB_BAR_HEIGHT,
+  FLOATING_CARD_WIDTH,
+  FLOATING_CARD_BORDER_RADIUS
+} from 'utils/dimens'
 import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
-    backgroundColor: Colors.mainThemeColor
+    backgroundColor: Colors.mainThemeColor,
+    alignItems: 'center'
   },
   scrollContainer: {
-    width: SCREEN_WIDTH,
+    width: FLOATING_CARD_WIDTH,
     height: SCREEN_HEIGHT - NAV_BAR_HEIGHT
   },
   between: {
@@ -22,12 +31,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   content: {
-    width: SCREEN_WIDTH,
+    // width: SCREEN_WIDTH,
     minHeight: 100,
     paddingVertical: 25,
     paddingHorizontal: 20,
     backgroundColor: Colors.minorThemeColor,
-    alignItems: 'center'
+    alignItems: 'center',
+    borderRadius: FLOATING_CARD_BORDER_RADIUS
   },
   image: {
     width: 75,

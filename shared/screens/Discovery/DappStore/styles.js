@@ -1,12 +1,15 @@
 import { StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
-import { FontScale, SCREEN_WIDTH, TAB_BAR_HEIGHT } from 'utils/dimens'
+import { FontScale, SCREEN_WIDTH, TAB_BAR_HEIGHT, FLOATING_CARD_WIDTH, FLOATING_CARD_BORDER_RADIUS } from 'utils/dimens'
 
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
     minHeight: 50,
-    backgroundColor: Colors.bgColor_30_31_37
+    // backgroundColor: Colors.bgColor_30_31_37
+    backgroundColor: Colors.mainThemeColor,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   dAppWrapper: {
     flexDirection: 'column',
@@ -19,11 +22,16 @@ const styles = StyleSheet.create({
     // paddingVertical: 10
   },
   dAppScrollViewContainer: {
-    width: SCREEN_WIDTH,
+    width: FLOATING_CARD_WIDTH,
+    borderRadius: FLOATING_CARD_BORDER_RADIUS,
     paddingVertical: 15,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    flexWrap: 'wrap'
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    backgroundColor: Colors.minorThemeColor,
+    height: 120
+    // flex: 1
   },
   navButton: {
     minWidth: 100,
@@ -101,27 +109,36 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.mainThemeColor
   },
   moreText: {
-    color: Colors.textColor_84_164_207,
-    fontSize: FontScale(14)
+    color: Colors.white,
+    fontSize: FontScale(14),
+    paddingHorizontal: 10
     // fontWeight: 'bold'
   },
   moreButton: {
     // backgroundColor: 'red',
     paddingVertical: 5,
-    paddingHorizontal: 2
+    paddingHorizontal: 2,
+    paddingRight: 14
   },
-  moreSectionHeader: {
+  sectionHeader: {
     width: SCREEN_WIDTH,
-    height: 40,
-    backgroundColor: Colors.bgColor_30_31_37,
+    height: 45,
+    backgroundColor: Colors.mainThemeColor,
+    // backgroundColor: 'red',
     flexDirection: 'row',
-
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 1,
-    // marginTop: 10,
-    paddingHorizontal: 20,
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  }
+    paddingHorizontal: 0,
+    paddingLeft: 15
+    // justifyContent: 'space-between'
+  },
+  categoryIcon: {
+    height: 17,
+    width: 17,
+    paddingRight: 10
+  },
+  row: { flex: 1, flexDirection: 'row', alignItems: 'center' }
 })
 
 export default styles

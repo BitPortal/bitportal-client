@@ -1,25 +1,28 @@
 import { StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
-import { SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, FontScale } from 'utils/dimens'
+import { SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, FontScale, FLOATING_CARD_WIDTH } from 'utils/dimens'
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.mainThemeColor
   },
-  listContainer: {
-    marginTop: 0,
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT,
-    backgroundColor: Colors.mainThemeColor
-  },
+  // listContainer: {
+  //   marginTop: 0,
+  //   width: SCREEN_WIDTH,
+  //   height: SCREEN_HEIGHT - NAV_BAR_HEIGHT,
+  //   backgroundColor: Colors.mainThemeColor,
+  //   justifyContent: 'center',
+  //   alignItems: 'center'
+  // },
   rowContainer: {
     flexDirection: 'row',
-    paddingHorizontal: 20,
+    // paddingHorizontal: 20,
     paddingBottom: 10,
     paddingTop: 14,
-    backgroundColor: Colors.bgColor_30_31_37,
+    backgroundColor: Colors.minorThemeColor,
+    // backgroundColor: 'red',
     alignItems: 'center',
-    width: SCREEN_WIDTH,
+    width: FLOATING_CARD_WIDTH,
     height: FontScale(80)
     // marginBottom: 2
   },
@@ -41,7 +44,7 @@ const styles = StyleSheet.create({
     color: Colors.textColor_FFFFEE,
     fontSize: FontScale(15),
     fontWeight: 'bold',
-    marginBottom: 5
+    marginBottom: 0
   },
   itemSeperator: {
     height: 1,
@@ -49,7 +52,7 @@ const styles = StyleSheet.create({
   },
   subTitle: {
     color: Colors.textColor_149_149_149,
-    fontSize: FontScale(13),
+    fontSize: FontScale(12),
     marginTop: 5
   },
   infoArea: {
@@ -80,8 +83,8 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: 40,
     backgroundColor: Colors.bgColor_30_31_37,
-    marginBottom: 1,
-    marginTop: 10,
+    marginBottom: 0,
+    // marginTop: 10,
     paddingHorizontal: 20,
     justifyContent: 'center'
   },
@@ -93,6 +96,16 @@ const styles = StyleSheet.create({
   text14: {
     fontSize: FontScale(14),
     color: Colors.textColor_181_181_181
+  },
+  titleTextWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center'
+    // backgroundColor: 'brown'
+  },
+  titleSideLabel: {
+    margin: 5,
+    height: 12,
+    width: 30
   }
 })
 

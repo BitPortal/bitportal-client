@@ -3,12 +3,12 @@ import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
   image: {
-    height: 22,
-    width: 22
+    height: 18,
+    width: 18
   },
   buttonWrapper: {
-    width: '30%',
-    height: '17%',
+    width: 100,
+    height: 120,
     backgroundColor: Colors.textColor_142_142_147,
     justifyContent: 'center',
     alignItems: 'center',

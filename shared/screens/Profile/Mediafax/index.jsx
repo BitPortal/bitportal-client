@@ -11,6 +11,7 @@ import Toast from 'components/Toast'
 import { SOCIAL_MEDIA } from 'constants/analytics'
 import { onEventWithLabel } from 'utils/analytics'
 import messages from 'resources/messages'
+import { FLOATING_CARD_BORDER_RADIUS } from 'utils/dimens'
 import styles from './styles'
 
 @connect(
@@ -21,7 +22,6 @@ import styles from './styles'
   null,
   { withRef: true }
 )
-
 export default class MediafaxScreen extends Component {
   static get options() {
     return {
@@ -53,25 +53,59 @@ export default class MediafaxScreen extends Component {
 
   render() {
     const { locale } = this.props
-
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale].profile_button_follow_us}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
+            leftButton={
+              <CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />
+            }
           />
           <View style={styles.scrollContainer}>
-            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center', paddingTop: 10 }}>
-              {Mediafax.map((item, index) => (
-                <SettingItem
-                  key={index}
-                  leftImage={MediafaxIcons[item]}
-                  leftItemTitle={messages[locale][`follow_us_label_${item.toLocaleLowerCase()}`]}
-                  rightItemTitle={(item.indexOf('Wechat') !== -1) && `${MediafaxUrls[item]}`}
-                  onPress={() => this.changePage(index, item)}
-                />
-              ))}
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ alignItems: 'center', paddingTop: 10 }}
+            >
+              {Mediafax.map((item, index) => {
+                if (index === 0)
+                  return (
+                    <SettingItem
+                      key={index}
+                      leftImage={MediafaxIcons[item]}
+                      leftItemTitle={messages[locale][`follow_us_label_${item.toLocaleLowerCase()}`]}
+                      rightItemTitle={item.indexOf('Wechat') !== -1 && `${MediafaxUrls[item]}`}
+                      onPress={() => this.changePage(index, item)}
+                      extraStyle={{
+                        borderTopLeftRadius: FLOATING_CARD_BORDER_RADIUS,
+                        borderTopRightRadius: FLOATING_CARD_BORDER_RADIUS
+                      }}
+                    />
+                  )
+                if (index === Mediafax.length - 1)
+                  return (
+                    <SettingItem
+                      key={index}
+                      leftImage={MediafaxIcons[item]}
+                      leftItemTitle={messages[locale][`follow_us_label_${item.toLocaleLowerCase()}`]}
+                      rightItemTitle={item.indexOf('Wechat') !== -1 && `${MediafaxUrls[item]}`}
+                      onPress={() => this.changePage(index, item)}
+                      extraStyle={{
+                        borderBottomLeftRadius: FLOATING_CARD_BORDER_RADIUS,
+                        borderBottomRightRadius: FLOATING_CARD_BORDER_RADIUS
+                      }}
+                    />
+                  )
+                return (
+                  <SettingItem
+                    key={index}
+                    leftImage={MediafaxIcons[item]}
+                    leftItemTitle={messages[locale][`follow_us_label_${item.toLocaleLowerCase()}`]}
+                    rightItemTitle={item.indexOf('Wechat') !== -1 && `${MediafaxUrls[item]}`}
+                    onPress={() => this.changePage(index, item)}
+                  />
+                )
+              })}
             </ScrollView>
           </View>
         </View>

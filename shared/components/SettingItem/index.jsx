@@ -1,13 +1,7 @@
 import React, { Component } from 'react'
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableHighlight,
-  Switch
-} from 'react-native'
+import { StyleSheet, Text, View, TouchableHighlight, Switch } from 'react-native'
 import BPImage from 'components/BPNativeComponents/BPImage'
-import { SCREEN_WIDTH, FontScale } from 'utils/dimens'
+import { SCREEN_WIDTH, FLOATING_CARD_WIDTH, FontScale } from 'utils/dimens'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
@@ -20,21 +14,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: SCREEN_WIDTH,
+    width: FLOATING_CARD_WIDTH,
     height: 50,
     backgroundColor: Colors.minorThemeColor,
-    paddingHorizontal: 20
+    paddingHorizontal: 16
   },
   center: {
     alignItems: 'center',
     justifyContent: 'center'
   },
   switch: {
-    transform: [{ scaleX: .9 }, { scaleY: .9 }]
+    transform: [{ scaleX: 0.9 }, { scaleY: 0.9 }]
   },
   imageStyle: {
     width: 16,
-    height: 16,
+    height: 16
   },
   text16: {
     fontSize: FontScale(16),
@@ -60,25 +54,15 @@ export default class SettingItem extends Component {
     const imageColor = iconColor || Colors.textColor_181_181_181
 
     if (!rightItemTitle) {
-      return (
-        <Ionicons name={iconName} size={24} color={imageColor} />
-      )
+      return <Ionicons name={iconName} size={24} color={imageColor} />
     }
     if (!!rightItemTitle && rightItemTitle === 'switch') {
-      return (
-        <Switch
-          value={value}
-          style={styles.switch}
-          onValueChange={onValueChange}
-        />
-      )
+      return <Switch value={value} style={styles.switch} onValueChange={onValueChange} />
     }
 
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={[styles.text16]}>
-          {rightItemTitle}
-        </Text>
+        <Text style={[styles.text16]}>{rightItemTitle}</Text>
       </View>
     )
   }
@@ -88,9 +72,7 @@ export default class SettingItem extends Component {
     return (
       <View style={[{ flexDirection: 'row' }, styles.center]}>
         {leftImage && <BPImage source={leftImage} style={styles.leftImageStyle} />}
-        <Text style={[styles.text16, leftTitleStyle]}>
-          {leftItemTitle}
-        </Text>
+        <Text style={[styles.text16, leftTitleStyle]}>{leftItemTitle}</Text>
       </View>
     )
   }
@@ -104,7 +86,7 @@ export default class SettingItem extends Component {
         disabled={disabled === undefined ? false : disabled}
         onPress={() => this.onPress()}
       >
-        <View style={[styles.viewContainer]}>
+        <View style={[styles.viewContainer, extraStyle]}>
           {this.renderLeftItem(leftItemTitle)}
           {this.renderRightItem(rightItemTitle, value, onValueChange)}
         </View>
