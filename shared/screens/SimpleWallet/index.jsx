@@ -35,7 +35,7 @@ export const errorMessages = (error, messages) => {
   state => ({
     locale: state.intl.get('locale'),
     loading: state.simpleWallet.get('loading'),
-    wallet: state.wallet.get('classicWalletList'),
+    activeWallet: state.wallet.get('data'),
     eosAccountName: eosAccountNameSelector(state),
     error: state.simpleWallet.get('error'),
     loaded: state.simpleWallet.get('loaded')
@@ -73,7 +73,7 @@ export default class SimpleWalletAuth extends Component {
 
   submitSWAuth = password => {
     const { uuID, loginUrl, protocol, version } = this.props.payload
-    const { eosAccountName, wallet } = this.props
+    const { eosAccountName, activeWallet } = this.props
     const timestamp = Math.floor(Date.now() / 1000)
     const ref = 'BitPortal'
     this.props.actions.loginSWAuthRequested({
@@ -83,7 +83,7 @@ export default class SimpleWalletAuth extends Component {
       ref,
       loginUrl,
       password,
-      wallet,
+      activeWallet,
       protocol,
       version
     })

@@ -309,7 +309,7 @@ export default class Assets extends Component {
     const hdWalletList = wallet.get('hdWalletList')
     const classicWalletList = wallet.get('classicWalletList')
     const walletCount = hdWalletList.size + classicWalletList.size
-    console.log('###--yy 312', activeEOSAccount.toJS())
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
