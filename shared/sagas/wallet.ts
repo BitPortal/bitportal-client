@@ -176,23 +176,23 @@ function* syncWalletRequested() {
     // console.log(items)
 
     const allItems = yield call(secureStorage.getAllItems)
-
+    console.log('###--yy', allItems)
     const hdWalletList = Object.keys(allItems).filter(item => !item.indexOf('HD_KEYSTORE')).map((item) => {
       const id = item.slice('HD_KEYSTORE'.length + 1)
       const infoKey = `HD_WALLET_INFO_${id}`
       const info = allItems[infoKey]
       return JSON.parse(info)
     }).sort((a, b) => a.timestamp - b.timestamp)
-
+    console.log('###--yy', hdWalletList)
     const classicWalletList = Object.keys(allItems).filter(item => !item.indexOf('CLASSIC_WALLET_INFO_EOS')).map((item) => {
       const info = allItems[item]
       return JSON.parse(info)
     }).sort((a, b) => a.timestamp - b.timestamp)
-
+    console.log('###--yy', classicWalletList)
     assert(hdWalletList.length + classicWalletList.length, 'No wallets!')
 
     let active = allItems.ACTIVE_WALLET && JSON.parse(allItems.ACTIVE_WALLET)
-
+    console.log('###--yy', allItems.ACTIVE_WALLET)
     if (!active) {
       active = hdWalletList.length ? hdWalletList[0] : classicWalletList[0]
       yield call(secureStorage.setItem, 'ACTIVE_WALLET', active, true)
@@ -202,7 +202,7 @@ function* syncWalletRequested() {
       const info = allItems[item]
       return JSON.parse(info)
     }).sort((a, b) => a.timestamp - b.timestamp)
-
+    console.log('###--yy', eosAccountList)
     yield put(syncEOSAccount(eosAccountList))
     yield put(actions.syncWalletSucceeded({ hdWalletList, classicWalletList, active }))
 

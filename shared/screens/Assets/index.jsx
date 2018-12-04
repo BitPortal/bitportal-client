@@ -16,7 +16,7 @@ import { selectedEOSTokenBalanceSelector, eosTotalAssetBalanceSelector } from 's
 import { eosPriceSelector } from 'selectors/ticker'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { IntlProvider, FormattedMessage } from 'react-intl'
-import NavigationBar, { CommonTitle, CommonRightButton } from 'components/NavigationBar'
+import NavigationBar, { CommonButton, CommonTitle, CommonRightButton } from 'components/NavigationBar'
 import { checkCamera } from 'utils/permissions'
 import { events } from 'navigators/event'
 import { ASSETS_QR, ASSETS_TOKEN_DETAIL, ASSETS_EOS_RESOURCE, ASSETS_ADD_TOKEN } from 'constants/analytics'
@@ -31,6 +31,7 @@ import BalanceList from './BalanceList'
 import TotalAssetsCard from './TotalAssetsCard'
 import UserAgreement from './UserAgreement'
 import MenuPopUp from './MenuPopUp'
+import AccountSwitchModal from '../Account/AccountSwitch'
 import styles from './styles'
 
 @connect(
@@ -71,7 +72,8 @@ export default class Assets extends Component {
   state = {
     type: '',
     isVisible: false,
-    isVisible2: false
+    isVisible2: false,
+    isVisible3: false
   }
 
   UNSAFE_componentWillUpdate() {
@@ -143,7 +145,7 @@ export default class Assets extends Component {
   }
 
   dismissModal = () => {
-    this.setState({ isVisible: false, isVisible2: false })
+    this.setState({ isVisible: false, isVisible2: false, isVisible3: false })
   }
 
   acceptUserAgreement = () => {
@@ -259,10 +261,6 @@ export default class Assets extends Component {
     })
   }
 
-  switchWallet = info => {
-    this.props.actions.switchWalletRequested(info)
-  }
-
   getCurrencyRate = async () => {
     const currency = await storage.getItem('bitportal_currency', true)
     if (currency && currency.symbol) {
@@ -291,18 +289,37 @@ export default class Assets extends Component {
     }
   }
 
+  addNewEOSAccount = () => {
+    this.setState({ isVisible3: true })
+  }
+
+  routeToNewAccount= () => {
+    this.setState({ isVisible3: false }, () => {
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: `BitPortal.AccountAdd`
+        }
+      })
+    })
+  }
+
   render() {
     const { wallet, eosAssetBalance, eosTotalAssetBalance, locale, eosAccount, eosPrice } = this.props
     const activeEOSAccount = eosAccount.get('data')
     const hdWalletList = wallet.get('hdWalletList')
     const classicWalletList = wallet.get('classicWalletList')
     const walletCount = hdWalletList.size + classicWalletList.size
-
+    console.log('###--yy 312', activeEOSAccount.toJS())
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            leftButton={<CommonTitle title={<FormattedMessage id="assets_title_eos_wallet" />} />}
+            leftButton={
+              activeEOSAccount.get && activeEOSAccount.get('account_name') ?
+              <CommonButton onPress={this.addNewEOSAccount} title={activeEOSAccount.get('account_name')+' >'} />
+              :
+              <CommonTitle title={messages[locale].assets_title_eos_wallet}/>
+            }
             rightButton={<CommonRightButton iconName="md-add" onPress={() => this.showMemu()} />}
           />
           {!walletCount && (
@@ -376,6 +393,11 @@ export default class Assets extends Component {
           <MenuPopUp 
             selectFunc={this.selectFunc}
             isVisible={this.state.isVisible2}
+            dismissModal={this.dismissModal}
+          />
+          <AccountSwitchModal 
+            routeToNewAccount={this.routeToNewAccount}
+            isVisible={this.state.isVisible3}
             dismissModal={this.dismissModal}
           />
         </View>
