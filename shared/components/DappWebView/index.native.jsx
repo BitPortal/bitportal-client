@@ -144,7 +144,7 @@ export default class DappWebView extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log('###--xx sendingMessage: ', this.props.sendingMessage)
+    // console.log('###--xx sendingMessage: ', this.props.sendingMessage)
     if (this.props.sendingMessage && prevProps.sendingMessage !== this.props.sendingMessage && this.webviewbridge) {
       this.webviewbridge.sendToBridge(this.props.sendingMessage)
     }
@@ -219,7 +219,6 @@ export default class DappWebView extends Component {
     if (this.state.browserHistory[this.state.browserHistory.length - 1] !== url) {
       this.setState(prevState => ({ browserHistory: prevState.browserHistory.concat(url) }))
     }
-    console.log('newBroserhistory', this.state.browserHistory)
   }
 
   rejectMessage = () => {
@@ -330,6 +329,10 @@ export default class DappWebView extends Component {
               renderError={this.renderError}
               renderLoading={this.renderLoading}
               startInLoadingState={true}
+              useWebKit={true}
+              originWhitelist={['http://', 'https://']}
+              mixedContentMode={'always'}
+              thirdPartyCookiesEnabled={true}
               automaticallyAdjustContentInsets={false}
               onNavigationStateChange={this.onNavigationStateChange}
               javaScriptEnabled={true}

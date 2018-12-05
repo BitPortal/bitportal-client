@@ -5,7 +5,7 @@ declare interface LoginSWAuthParams {
   uuID: any
   loginUrl: any
   password: any
-  wallet: any
+  activeWallet: any
   protocol: any
   version: any
 }

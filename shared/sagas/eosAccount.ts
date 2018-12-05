@@ -289,7 +289,7 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
       topic: '',
       platform: `mobile_${Platform.OS}`
     }
-    console.log('###--', params)
+    // console.log('###--', params)
     yield put(subscribe(params))
   } catch (e) {
     yield put(actions.getEOSAccountFailed(e.message))

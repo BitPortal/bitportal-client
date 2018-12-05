@@ -127,7 +127,7 @@ export default class DappWebView extends Component {
         if (!supported) {
           // console.log(`Can't handle url: ${url}`);
         } else {
-          console.log('open', url)
+          // console.log('open', url)
           Linking.openURL(url)
         }
       })
@@ -216,6 +216,10 @@ export default class DappWebView extends Component {
               renderError={this.renderError}
               renderLoading={this.renderLoading}
               startInLoadingState={true}
+              useWebKit={true}
+              originWhitelist={['http://', 'https://']}
+              mixedContentMode={'always'}
+              thirdPartyCookiesEnabled={true}
               automaticallyAdjustContentInsets={false}
               onNavigationStateChange={this.onNavigationStateChange}
               javaScriptEnabled={true}
@@ -240,9 +244,7 @@ export default class DappWebView extends Component {
               window.onload = waitForBridge;
       
     "
-              onMessage={event => {
-                console.log(`MESSAGE >>>>${event.nativeEvent.data}`)
-              }}
+
             />
             <ActionModal
               isVisible={hasPendingMessage && !resolvingMessage}

@@ -92,7 +92,6 @@ export default class DappListItem extends React.PureComponent {
 
   toUrl = item => {
     const inject = loadInjectSync()
-    console.log('tourl', 1111111111)
 
     Navigation.push(this.props.componentId, {
       component: {
@@ -123,8 +122,6 @@ export default class DappListItem extends React.PureComponent {
 
   render() {
     const { item, locale, extraStyleProps } = this.props
-    console.log('localeee', locale)
-
     return (
       <IntlProvider locale={locale}>
         <View>

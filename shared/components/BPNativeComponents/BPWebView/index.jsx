@@ -1,20 +1,10 @@
 import React, { Component } from 'react'
-import {
-  View,
-  Text,
-  Share,
-  Linking,
-  Platform,
-  ActivityIndicator
-} from 'react-native'
+import { View, Text, Share, Linking, Platform, ActivityIndicator } from 'react-native'
 import WebViewBridge from 'react-native-webview-bridge'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
-import NavigationBar, {
-  LinkingRightButton,
-  WebViewLeftButton
-} from 'components/NavigationBar'
+import NavigationBar, { LinkingRightButton, WebViewLeftButton } from 'components/NavigationBar'
 import { IntlProvider } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
 import messages from 'resources/messages'
@@ -37,7 +27,6 @@ const Loading = ({ text }) => (
   null,
   { withRef: true }
 )
-
 export default class BPWebView extends Component {
   static get options() {
     return {
@@ -64,7 +53,7 @@ export default class BPWebView extends Component {
     this.actionSheet.show()
   }
 
-  selectActionSheet = (index) => {
+  selectActionSheet = index => {
     switch (index) {
       case 0:
         this.share()
@@ -81,11 +70,11 @@ export default class BPWebView extends Component {
   linking = () => {
     const url = this.props.uri
     Linking.canOpenURL(url)
-      .then((supported) => {
+      .then(supported => {
         if (!supported) {
           // console.log(`Can't handle url: ${url}`);
         } else {
-          console.log('open', url)
+          // console.log('open', url)
           Linking.openURL(url)
         }
       })
@@ -98,22 +87,20 @@ export default class BPWebView extends Component {
 
   // goForward = () => this.webview.goForward()
 
-  renderError = (e) => {
+  renderError = e => {
     if (e === 'WebKitErrorDomain') {
       return null
     }
     return (
       <View style={[styles.center, styles.content]}>
-        <Text style={styles.text18}>
-          {messages[this.props.locale].webview_error_text_load_failed}
-        </Text>
+        <Text style={styles.text18}>{messages[this.props.locale].webview_error_text_load_failed}</Text>
       </View>
     )
   }
 
   renderLoading = () => <Loading />
 
-  onNavigationStateChange = (navState) => {
+  onNavigationStateChange = navState => {
     this.setState({
       canGoBack: navState.canGoBack
     })
@@ -127,30 +114,21 @@ export default class BPWebView extends Component {
         <View style={styles.container}>
           <NavigationBar
             title={title}
-            leftButton={
-              <WebViewLeftButton goBack={this.goBack} goHome={this.goHome} />
-            }
-            rightButton={
-              needLinking && (
-                <LinkingRightButton
-                  iconName="ios-more"
-                  onPress={this.showActionSheet}
-                />
-              )
-            }
+            leftButton={<WebViewLeftButton goBack={this.goBack} goHome={this.goHome} />}
+            rightButton={needLinking && <LinkingRightButton iconName="ios-more" onPress={this.showActionSheet} />}
           />
           <View style={styles.content}>
             {uri && (
               <WebViewBridge
                 source={{ uri }}
-                ref={(e) => {
+                ref={e => {
                   this.webview = e
                 }}
                 renderError={this.renderError}
                 renderLoading={this.renderLoading}
                 startInLoadingState={true}
                 automaticallyAdjustContentInsets={false}
-                onNavigationStateChange={(e) => {
+                onNavigationStateChange={e => {
                   this.onNavigationStateChange(e)
                 }}
                 javaScriptEnabled={true}
@@ -163,7 +141,7 @@ export default class BPWebView extends Component {
               />
             )}
             <ActionSheet
-              ref={(o) => {
+              ref={o => {
                 this.actionSheet = o
               }}
               title=""

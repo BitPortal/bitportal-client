@@ -76,7 +76,6 @@ export default class DappElement extends Component {
     const inject = loadInjectSync()
 
     const { eosAccountName, selected } = this.props
-    console.log('tourlll', selected, this.props)
     // Umeng analitics
     onEventWithMap(DAPP_STORE, {
       dappName: item.get('display_name').get(this.props.locale) || item.get('display_name').get('en'),
