@@ -8,7 +8,7 @@ import { parsedDappListSelector } from 'selectors/dApp'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
 import { IntlProvider } from 'react-intl'
 import { loadInjectSync } from 'utils/inject'
-import { SCREEN_WIDTH } from 'utils/dimens'
+import { SCREEN_WIDTH, SCREEN_HEIGHT } from 'utils/dimens'
 import { TabView, TabBar } from 'react-native-tab-view'
 import messages from 'resources/messages'
 import FastImage from 'react-native-fast-image'
@@ -59,7 +59,7 @@ export default class DappStore extends PureComponent {
             /*eslint-disable*/
             this.setState({ index })
           }}
-          initialLayout={{ width: SCREEN_WIDTH }}
+          initialLayout={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}
           renderTabBar={() => {}}
         />
       </View>

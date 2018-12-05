@@ -5,7 +5,7 @@ import * as dAppActions from 'actions/dApp'
 import { connect } from 'react-redux'
 import { parsedDappListSelector } from 'selectors/dApp'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
-import { SCREEN_WIDTH } from 'utils/dimens'
+import { SCREEN_WIDTH, SCREEN_HEIGHT } from 'utils/dimens'
 import { TabView, TabBar } from 'react-native-tab-view'
 import messages from 'resources/messages'
 import DappElement from '../DappElement'
@@ -52,11 +52,11 @@ export default class DappGrouping extends Component {
 
     switch (route.key) {
       case 'first':
-        return <DappGroupScene items={pageOneContent} componentId={componentId} />
+        return <DappGroupScene items={pageOneContent} componentId={componentId} pageStyle={'first'} />
       case 'second':
-        return <DappGroupScene items={pageTwoContent} componentId={componentId} />
+        return <DappGroupScene items={pageTwoContent} componentId={componentId} pageStyle={'middle'} />
       case 'third':
-        return <DappGroupScene items={pageThreeContent} componentId={componentId} />
+        return <DappGroupScene items={pageThreeContent} componentId={componentId} pageStyle={'end'} />
       default:
         return null
     }
@@ -72,7 +72,7 @@ export default class DappGrouping extends Component {
             /*eslint-disable*/
             this.setState({ index })
           }}
-          initialLayout={{ width: SCREEN_WIDTH }}
+          initialLayout={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}
           renderTabBar={() => {}}
         />
       </View>

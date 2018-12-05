@@ -53,6 +53,7 @@ export default class DappCategories extends Component {
               if (index === 0)
                 return (
                   <SettingItem
+                    key={index}
                     leftImage={DAPP_SECTION_ICONS[item].icon}
                     leftItemTitle={<FormattedMessage id={DAPP_SECTION_ICONS[item].stringId} />}
                     extraStyle={{
@@ -66,6 +67,7 @@ export default class DappCategories extends Component {
               if (index === allItems.length - 1)
                 return (
                   <SettingItem
+                    key={index}
                     leftImage={DAPP_SECTION_ICONS[item].icon}
                     leftItemTitle={<FormattedMessage id={DAPP_SECTION_ICONS[item].stringId} />}
                     extraStyle={{
@@ -79,6 +81,7 @@ export default class DappCategories extends Component {
               else
                 return (
                   <SettingItem
+                    key={index}
                     leftImage={DAPP_SECTION_ICONS[item].icon}
                     leftItemTitle={<FormattedMessage id={DAPP_SECTION_ICONS[item].stringId} />}
                     extraStyle={{ paddingHorizontal: 20 }}

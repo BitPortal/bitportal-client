@@ -15,18 +15,10 @@ import styles from './styles'
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    loading: state.dApp.get('loading'),
     dAppList: parsedDappListSelector(state),
     eosAccountName: eosAccountNameSelector(state)
   }),
-  dispatch => ({
-    actions: bindActionCreators(
-      {
-        ...dAppActions
-      },
-      dispatch
-    )
-  }),
+  null,
   null,
   { withRef: true }
 )
@@ -59,7 +51,7 @@ export default class MyDappScene extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.wrapper}>
           <ScrollView horizontal={false} scrollEnabled={false} contentContainerStyle={styles.dAppScrollViewContainer}>
-            {this.props.items.map((item, index) => (
+            {items.map((item, index) => (
               <DappElement
                 rowItem
                 item={item}

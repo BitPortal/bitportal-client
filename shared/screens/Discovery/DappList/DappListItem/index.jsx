@@ -163,7 +163,7 @@ export default class DappListItem extends React.PureComponent {
                   </Text>
                   {item.get('is_highrisk') && (
                     <BPImage
-                      style={styles.titleSideLabel}
+                      style={locale === 'zh' ? styles.titleSideLabelZh : styles.titleSideLabelEn}
                       source={locale === 'zh' ? Images.dapp_high_risk_zh : Images.dapp_high_risk_en}
                     />
                   )}

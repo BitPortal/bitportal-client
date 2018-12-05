@@ -102,7 +102,12 @@ const styles = StyleSheet.create({
     alignItems: 'center'
     // backgroundColor: 'brown'
   },
-  titleSideLabel: {
+  titleSideLabelEn: {
+    margin: 5,
+    height: 12,
+    width: 40
+  },
+  titleSideLabelZh: {
     margin: 5,
     height: 12,
     width: 30
