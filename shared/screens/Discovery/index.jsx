@@ -147,6 +147,8 @@ export default class Discovery extends Component {
     this.props.actions.setSearchTerm(text)
   }
 
+  goBack = () => Navigation.pop(this.props.componentId)
+
   render() {
     const { locale, loadingMore, isRefreshing, nomore, componentId, searchTerm } = this.props
     return (
@@ -170,7 +172,11 @@ export default class Discovery extends Component {
                   Navigation.push(this.props.componentId, {
                     component: {
                       name: 'BitPortal.DappList',
-                      passProps: { section: 'all', expandedSearch: true }
+                      passProps: {
+                        section: 'all',
+                        expandedSearch: true
+                        // extraCloseProps: this.goBack
+                      }
                     }
                   })
                 }}
