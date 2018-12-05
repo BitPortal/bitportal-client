@@ -164,6 +164,9 @@ export default class DappList extends Component {
                 clearSearch={() => {
                   this.props.actions.setSearchTerm('')
                 }}
+                extraCloseProps={() => {
+                  Navigation.pop(this.props.componentId)
+                }}
               />
             }
           />
@@ -188,9 +191,9 @@ export default class DappList extends Component {
               sections={filteredSections || dAppSections}
               ItemSeparatorComponent={this.renderSeparator}
               // onEndReachedThreshold={-0.1}
+              showsVerticalScrollIndicator={false}
               stickySectionHeadersEnabled={false}
               refreshing={loading}
-              // getItemLayout={this.getItemLayout}
             />
           </View>
 

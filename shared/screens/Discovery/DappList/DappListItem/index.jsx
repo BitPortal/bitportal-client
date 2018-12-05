@@ -92,7 +92,6 @@ export default class DappListItem extends React.PureComponent {
 
   toUrl = item => {
     const inject = loadInjectSync()
-    console.log('tourl', 1111111111)
 
     Navigation.push(this.props.componentId, {
       component: {
@@ -123,8 +122,6 @@ export default class DappListItem extends React.PureComponent {
 
   render() {
     const { item, locale, extraStyleProps } = this.props
-    console.log('localeee', locale)
-
     return (
       <IntlProvider locale={locale}>
         <View>
@@ -166,7 +163,7 @@ export default class DappListItem extends React.PureComponent {
                   </Text>
                   {item.get('is_highrisk') && (
                     <BPImage
-                      style={styles.titleSideLabel}
+                      style={locale === 'zh' ? styles.titleSideLabelZh : styles.titleSideLabelEn}
                       source={locale === 'zh' ? Images.dapp_high_risk_zh : Images.dapp_high_risk_en}
                     />
                   )}

@@ -12,15 +12,15 @@ import {
 const styles = StyleSheet.create({
   container: {
     marginTop: 40,
-
     backgroundColor: Colors.mainThemeColor,
     justifyContent: 'center',
     alignItems: 'center'
   },
   listContainer: {
     width: FLOATING_CARD_WIDTH,
-    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT,
-    backgroundColor: Colors.mainThemeColor
+    height: SCREEN_HEIGHT,
+    backgroundColor: Colors.mainThemeColor,
+    marginBottom: 80
     // backgroundColor: 'red'
     // alignItems: 'center'
   },

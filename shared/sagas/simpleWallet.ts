@@ -8,8 +8,8 @@ import { getErrorMessage } from 'utils'
 function* loginSWAuthRequested(action: Action<LoginSWAuthParams>) {
   if (!action.payload) return
   try {
-    const { eosAccountName, timestamp, ref, uuID, loginUrl, password, wallet, protocol, version } = action.payload
-    const publicKey = wallet.get(0).get('publicKey')
+    const { eosAccountName, timestamp, ref, uuID, loginUrl, password, activeWallet, protocol, version } = action.payload
+    const publicKey = activeWallet.get('publicKey')
     const signData = `${timestamp + eosAccountName + uuID}BitPortal`
     const sign = yield call(eosAuthSign, { account: eosAccountName, publicKey, password, signData, isHash: false })
     const params = { protocol, version, timestamp, sign, uuID, account: eosAccountName, ref }
