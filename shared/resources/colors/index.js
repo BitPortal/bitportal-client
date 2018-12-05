@@ -52,6 +52,7 @@ const Colors = {
   textColor_white_4: 'rgba(255,255,255,0.4)',
   textColor_142_142_147: 'rgb(142,142,147)',
   textColor_149_149_149: 'rgb(149,149,149)',
+  textColor_141_142_148: 'rgb(141,142,148)',
   textColor_93_207_242: 'rgb(93,207,242)',
   textColor_80_201_109: 'rgb(80,201,109)',
   textColor_255_255_238: 'rgb(255,255,238)',
@@ -63,7 +64,8 @@ const Colors = {
   textColor_89_185_226: 'rgb(89,185,226)',
   textColor_74_74_74: 'rgb(74,74,74)',
   textColor_181_181_181: 'rgb(181,181,181)',
-  textColor_84_164_207: 'rgb(84, 164, 207)'
+  textColor_84_164_207: 'rgb(84, 164, 207)',
+  white: 'white'
 }
 
 export default Colors

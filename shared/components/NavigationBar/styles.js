@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
   textTitle: {
     fontSize: FontScale(18),
-    color: Colors.textColor_FFFFEE,
+    color: Colors.white,
     // fontWeight: "bold",
     width: SCREEN_WIDTH / 2,
     textAlign: 'center'
@@ -42,12 +42,12 @@ const styles = StyleSheet.create({
   },
   text20: {
     fontSize: FontScale(20),
-    color: Colors.textColor_FFFFEE,
+    color: Colors.white,
     fontWeight: 'bold'
   },
   text13: {
     fontSize: FontScale(13),
-    color: Colors.textColor_FFFFEE
+    color: Colors.white
   }
 })
 

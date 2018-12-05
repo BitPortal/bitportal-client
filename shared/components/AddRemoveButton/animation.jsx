@@ -54,9 +54,7 @@ export default class AddRemoveButtonAnimation extends PureComponent {
       outputRange: [1, 0]
     })
     return (
-      <Animated.View
-        style={[styles.buttonWrapper, { transform: [{ scale }], opacity }]}
-      >
+      <Animated.View style={[styles.buttonWrapper, { transform: [{ scale }], opacity }]}>
         <AnimatedIcon
           style={{ fontSize: 70 }}
           name={value ? 'ios-close-circle-outline' : 'ios-add-circle-outline'}

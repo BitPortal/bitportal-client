@@ -15,10 +15,13 @@ import Loading from 'components/Loading'
 import Alert from 'components/Alert'
 import Prompt from 'components/Prompt'
 import messages from 'resources/messages'
+import { FLOATING_CARD_BORDER_RADIUS } from 'utils/dimens'
 import styles from './styles'
 
 export const errorMessages = (error, messages) => {
-  if (!error) { return null }
+  if (!error) {
+    return null
+  }
 
   const message = typeof error === 'object' ? error.message : error
 
@@ -39,16 +42,18 @@ export const errorMessages = (error, messages) => {
     logoutError: state.wallet.get('logoutError')
   }),
   dispatch => ({
-    actions: bindActionCreators({
-      ...keystoreActions,
-      logoutRequested,
-      clearLogoutError
-    }, dispatch)
+    actions: bindActionCreators(
+      {
+        ...keystoreActions,
+        logoutRequested,
+        clearLogoutError
+      },
+      dispatch
+    )
   }),
   null,
   { withRef: true }
 )
-
 export default class AccountManager extends Component {
   static get options() {
     return {
@@ -73,7 +78,7 @@ export default class AccountManager extends Component {
     })
   }
 
-  exportAccount = (password) => {
+  exportAccount = password => {
     // Umeng analutics
     onEventWithLabel(WALLET_MGT_EXPORT, '管理钱包 - 导出私钥')
     this.props.actions.exportEOSKeyRequested({
@@ -85,7 +90,7 @@ export default class AccountManager extends Component {
     })
   }
 
-  logout = (password) => {
+  logout = password => {
     // Umeng analutics
     onEventWithLabel(WALLET_MGT_LOGOUT, '管理钱包 - 登出')
     this.props.actions.logoutRequested({
@@ -122,7 +127,9 @@ export default class AccountManager extends Component {
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale].profile_button_wallet_mgmt}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
+            leftButton={
+              <CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />
+            }
           />
           <View style={styles.scrollContainer}>
             <ScrollView
@@ -132,21 +139,42 @@ export default class AccountManager extends Component {
               <SettingItem
                 leftItemTitle={<FormattedMessage id="wallet_mgmt_button_export_private_key" />}
                 onPress={this.showExportPrompt}
-                extraStyle={{ marginTop: 10 }}
+                extraStyle={{
+                  marginTop: 10,
+                  borderTopLeftRadius: FLOATING_CARD_BORDER_RADIUS,
+                  borderTopRightRadius: FLOATING_CARD_BORDER_RADIUS
+                }}
               />
               <SettingItem
                 leftItemTitle={<FormattedMessage id="wallet_mgmt_button_change_password" />}
                 onPress={this.resetPassword}
+                extraStyle={{
+                  borderBottomLeftRadius: FLOATING_CARD_BORDER_RADIUS,
+                  borderBottomRightRadius: FLOATING_CARD_BORDER_RADIUS
+                }}
               />
               <SettingItem
                 leftItemTitle={<FormattedMessage id="wallet_mgmt_button_sign_out" />}
                 rightItemTitle=" "
                 onPress={this.showLogoutPrompt}
-                extraStyle={{ marginTop: 10, alignItems: 'center', justifyContent: 'center' }}
+                extraStyle={{
+                  marginTop: 10,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: FLOATING_CARD_BORDER_RADIUS
+                }}
                 leftTitleStyle={{ color: Colors.textColor_255_76_118 }}
               />
-              <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearKeystoreError} delay={500} />
-              <Alert message={errorMessages(logoutError, messages[locale])} dismiss={this.props.actions.clearLogoutError} delay={500} />
+              <Alert
+                message={errorMessages(error, messages[locale])}
+                dismiss={this.props.actions.clearKeystoreError}
+                delay={500}
+              />
+              <Alert
+                message={errorMessages(logoutError, messages[locale])}
+                dismiss={this.props.actions.clearLogoutError}
+                delay={500}
+              />
               <Prompt
                 isVisible={this.state.showExportPrompt}
                 title={messages[locale].general_popup_label_password}

@@ -16,6 +16,8 @@ import { isNewest, showIsLast } from 'utils/update'
 import { MediafaxUrls } from 'constants/mediafax'
 import { validateUrl } from 'utils/validate'
 import messages from 'resources/messages'
+import { FLOATING_CARD_BORDER_RADIUS } from 'utils/dimens'
+
 import styles from './styles'
 
 @connect(
@@ -24,14 +26,16 @@ import styles from './styles'
     version: state.version
   }),
   dispatch => ({
-    actions: bindActionCreators({
-      ...versionActions
-    }, dispatch)
+    actions: bindActionCreators(
+      {
+        ...versionActions
+      },
+      dispatch
+    )
   }),
   null,
   { withRef: true }
 )
-
 export default class About extends Component {
   static get options() {
     return {
@@ -41,7 +45,7 @@ export default class About extends Component {
     }
   }
 
-  changePage = (page) => {
+  changePage = page => {
     const { locale } = this.props
     switch (page) {
       case 'TermsOfService':
@@ -91,7 +95,7 @@ export default class About extends Component {
     })
   }
 
-  browseMedia = (title) => {
+  browseMedia = title => {
     if (validateUrl(MediafaxUrls[title])) {
       Navigation.push(this.props.componentId, {
         component: {
@@ -123,27 +127,29 @@ export default class About extends Component {
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale].profile_button_about_us}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
+            leftButton={
+              <CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />
+            }
           />
           <View style={styles.scrollContainer}>
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={{ alignItems: 'center' }}
-            >
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center' }}>
               <View style={styles.content}>
                 <View style={[styles.image, { borderRadius: 15 }]}>
                   <BPImage style={styles.image} source={Images.about_logo} resizeMode="contain" />
                 </View>
                 <Text style={[styles.text12, { marginTop: 10 }]}>
-                  <FormattedMessage id="profile_text_version" />
-                    : {VersionNumber.appVersion}
+                  <FormattedMessage id="profile_text_version" />: {VersionNumber.appVersion}
                 </Text>
                 <Text multiline={true} style={[styles.text14, { marginTop: 20 }]}>
                   <FormattedMessage id="about_us_text_bitportal" />
                 </Text>
               </View>
               <SettingItem
-                extraStyle={{ marginTop: 10 }}
+                extraStyle={{
+                  marginTop: 10,
+                  borderTopLeftRadius: FLOATING_CARD_BORDER_RADIUS,
+                  borderTopRightRadius: FLOATING_CARD_BORDER_RADIUS
+                }}
                 onPress={() => this.changePage('TermsOfService')}
                 leftItemTitle={<FormattedMessage id="about_us_button_tos" />}
               />
@@ -158,6 +164,10 @@ export default class About extends Component {
               <SettingItem
                 leftItemTitle={<FormattedMessage id="about_us_button_product_intro" />}
                 onPress={this.goCheckGuide}
+                extraStyle={{
+                  borderBottomLeftRadius: FLOATING_CARD_BORDER_RADIUS,
+                  borderBottomRightRadius: FLOATING_CARD_BORDER_RADIUS
+                }}
               />
             </ScrollView>
           </View>

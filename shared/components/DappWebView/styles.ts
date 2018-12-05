@@ -36,10 +36,18 @@ const styles = StyleSheet.create({
   borderStyle: {
     width: 100,
     height: 100,
-    marginTop: -NAV_BAR_HEIGHT*2,
+    marginTop: -NAV_BAR_HEIGHT * 2,
     borderRadius: 4,
     padding: 10,
     backgroundColor: 'rgba(0, 0, 0, 0.5)'
+  },
+  favAnimationModal: {
+    // backgroundColor: 'yellow',
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+    // flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 

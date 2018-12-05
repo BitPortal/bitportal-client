@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: FontScale(22),
     color: Colors.textColor_FFFFEE,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   subTitle: {
     fontSize: FontScale(16),
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     height: 140,
     width: '100%',
     top: 0,
-    left: 0,
+    left: 0
   },
   paginationStyle: {
     marginBottom: -15

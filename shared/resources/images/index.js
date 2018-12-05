@@ -56,7 +56,29 @@ const Images = {
   dapp_logo_default: require('./dapp_logo_default.png'),
   assets_scan: require('./assets_scan.png'),
   assets_send: require('./assets_send.png'),
-  assets_receive: require('./assets_receive.png')
+  assets_receive: require('./assets_receive.png'),
+  dapp_all: require('./dapp_all.png'),
+  dapp_browser: require('./dapp_browser.png'),
+  dapp_category: require('./dapp_category.png'),
+  dapp_exchange: require('./dapp_exchange.png'),
+  dapp_favorite: require('./dapp_favorite.png'),
+  dapp_game: require('./dapp_game.png'),
+  dapp_hot: require('./dapp_hot.png'),
+  dapp_market: require('./dapp_market.png'),
+  dapp_mydapp: require('./dapp_mydapp.png'),
+  dapp_new: require('./dapp_new.png'),
+  dapp_news: require('./dapp_news.png'),
+  dapp_system: require('./dapp_system.png'),
+  dapp_tool: require('./dapp_tool.png'),
+  dapp_browser_copy_url: require('./dapp_browser_copy_url.png'),
+  dapp_browser_favorite_save: require('./dapp_browser_favorite_save.png'),
+  dapp_browser_favorite_unsave: require('./dapp_browser_favorite_unsave.png'),
+  dapp_browser_open_in_browser: require('./dapp_browser_open_in_browser.png'),
+  dapp_browser_refresh: require('./dapp_browser_refresh.png'),
+  dapp_high_risk_en: require('./dapp_high_risk_en.png'),
+  dapp_high_risk_zh: require('./dapp_high_risk_zh.png'),
+  dapp_no_result: require('./dapp_no_result.png'),
+  dapp_high_risk_icon: require('./dapp_high_risk.png')
 }
 
 export default Images
