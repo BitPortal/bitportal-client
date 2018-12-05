@@ -164,7 +164,7 @@ export default class Discovery extends Component {
           />
           <ScrollView>
             {!searchTerm.trim() && <NewsBanner componentId={componentId} />}
-            {!searchTerm.trim() && <DappStore componentId={componentId} />}
+            {/* {!searchTerm.trim() && <DappStore componentId={componentId} />} */}
             <DappListInline componentId={componentId} />
             {/* <NewsList
               data={this.getNewsListData()}
