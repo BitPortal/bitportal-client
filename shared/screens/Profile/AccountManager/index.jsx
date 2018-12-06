@@ -21,7 +21,6 @@ import styles from './styles'
   null,
   { withRef: true }
 )
-
 export default class AccountManager extends Component {
   static get options() {
     return {
@@ -64,7 +63,9 @@ export default class AccountManager extends Component {
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale].profile_button_wallet_mgmt}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
+            leftButton={
+              <CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />
+            }
           />
           <View style={styles.scrollContainer}>
             <ScrollView

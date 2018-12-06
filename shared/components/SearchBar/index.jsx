@@ -86,12 +86,12 @@ const validate = () => {
 //props:locale, onChangeText, clearSearch
 export default class SearchBar extends Component {
   state = {
-    expanded: false,
-    translateX: new Animated.Value(0),
-    searchBoxColor: new Animated.Value(0),
-    wrapperColor: new Animated.Value(0),
-    opacity: new Animated.Value(0),
-    containerWidth: new Animated.Value(0)
+    expanded: !!this.props.expandedSearch,
+    translateX: new Animated.Value(this.props.expandedSearch ? 1 : 0),
+    searchBoxColor: new Animated.Value(this.props.expandedSearch ? 1 : 0),
+    wrapperColor: new Animated.Value(this.props.expandedSearch ? 1 : 0),
+    opacity: new Animated.Value(this.props.expandedSearch ? 1 : 0),
+    containerWidth: new Animated.Value(this.props.expandedSearch ? 1 : 0)
   }
 
   toggleExpanded = () => {
@@ -189,11 +189,11 @@ export default class SearchBar extends Component {
   render() {
     const translateX = this.state.translateX.interpolate({
       inputRange: [0, 1],
-      outputRange: ['20%', '80%']
+      outputRange: ['0%', '80%']
     })
     const searchBoxColor = this.state.searchBoxColor.interpolate({
       inputRange: [0, 1],
-      outputRange: [Colors.mainThemeColor, 'rgb(0,0,0)']
+      outputRange: ['rgba(0,0,0,0)', 'rgb(0,0,0)']
     })
     const wrapperColor = this.state.wrapperColor.interpolate({
       inputRange: [0, 1],
@@ -201,8 +201,9 @@ export default class SearchBar extends Component {
     })
     const containerWidth = this.state.containerWidth.interpolate({
       inputRange: [0, 1],
-      outputRange: [SCREEN_WIDTH / 1.5, SCREEN_WIDTH]
+      outputRange: [SCREEN_WIDTH / 10, SCREEN_WIDTH]
     })
+
     const { styleProps, locale } = this.props
     const { opacity } = this.state
 
@@ -210,19 +211,6 @@ export default class SearchBar extends Component {
       <IntlProvider messages={messages[locale]}>
         <Animated.View style={[styles.container, { width: containerWidth }]}>
           <Animated.View style={[styles.searchWrapper, { backgroundColor: wrapperColor }]}>
-            <Animated.View style={{ opacity }}>
-              <TouchableOpacity
-                style={{ paddingHorizontal: 20 }}
-                onPress={() => {
-                  this.toggleExpanded()
-                  this.clearSearch()
-                  this.animate()
-                }}
-              >
-                <Ionicons name="md-arrow-back" size={24} color={Colors.textColor_181_181_181} />
-              </TouchableOpacity>
-            </Animated.View>
-
             <Animated.View
               style={[
                 styles.searchBox,
@@ -244,12 +232,15 @@ export default class SearchBar extends Component {
                   this.animate()
                 }}
                 style={{
+                  // position: 'absolute',
+                  // top: 6,
+                  // right: -40,
                   paddingHorizontal: 10,
-                  paddingRight: 10,
-                  justifyContent: 'flex-start'
+                  paddingRight: this.state.expanded ? 10 : 30,
+                  justifyContent: 'flex-end'
                 }}
               />
-              <Text>{'  '}</Text>
+              {/* <Text>{'  '}</Text> */}
               <Animated.View style={{ flex: 1, opacity }}>
                 {/* <TextInput
                   ref={(input) => {
@@ -280,6 +271,23 @@ export default class SearchBar extends Component {
                   />
                 </SearchContainer>
               </Animated.View>
+            </Animated.View>
+            <Animated.View style={{ opacity }}>
+              <TouchableOpacity
+                style={{ paddingHorizontal: 5 }}
+                onPress={() => {
+                  this.toggleExpanded()
+                  this.clearSearch()
+                  this.animate()
+                  if (this.props.extraCloseProps && this.state.expanded)
+                    InteractionManager.runAfterInteractions(() => this.props.extraCloseProps())
+                }}
+              >
+                <View>
+                  <Text style={{ color: 'white' }}>{messages[locale].dapp_list_button_search_cancel}</Text>
+                </View>
+                {/* <Ionicons name="md-arrow-back" size={24} color={Colors.textColor_181_181_181} /> */}
+              </TouchableOpacity>
             </Animated.View>
           </Animated.View>
         </Animated.View>

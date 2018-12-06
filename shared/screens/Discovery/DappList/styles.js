@@ -1,16 +1,28 @@
 import { StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
-import { SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, FontScale } from 'utils/dimens'
+import {
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  NAV_BAR_HEIGHT,
+  FontScale,
+  FLOATING_CARD_WIDTH,
+  FLOATING_CARD_BORDER_RADIUS
+} from 'utils/dimens'
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.mainThemeColor
+    marginTop: 40,
+    backgroundColor: Colors.mainThemeColor,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   listContainer: {
-    marginTop: 0,
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT,
-    backgroundColor: Colors.mainThemeColor
+    width: FLOATING_CARD_WIDTH,
+    height: SCREEN_HEIGHT,
+    backgroundColor: Colors.mainThemeColor,
+    marginBottom: 80
+    // backgroundColor: 'red'
+    // alignItems: 'center'
   },
   inlineListContainer: {
     marginTop: 0,
@@ -26,6 +38,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingTop: 14,
     backgroundColor: Colors.bgColor_30_31_37,
+    backgroundColor: 'red',
     alignItems: 'center',
     width: SCREEN_WIDTH,
     height: FontScale(80)
@@ -82,12 +95,8 @@ const styles = StyleSheet.create({
   sectionHeader: {
     width: SCREEN_WIDTH,
     height: 40,
-    backgroundColor: Colors.bgColor_30_31_37,
-    // backgroundColor: 'red',
-
     marginBottom: 1,
     marginTop: 10,
-    paddingHorizontal: 20,
     justifyContent: 'center'
   },
   moreSectionHeader: {
@@ -95,7 +104,6 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: Colors.bgColor_30_31_37,
     flexDirection: 'row',
-
     marginBottom: 1,
     marginTop: 10,
     paddingHorizontal: 20,
@@ -110,6 +118,28 @@ const styles = StyleSheet.create({
   text14: {
     fontSize: FontScale(14),
     color: Colors.textColor_181_181_181
+  },
+  row: { flex: 1, flexDirection: 'row', alignItems: 'center' },
+  categoryIcon: {
+    height: 17,
+    width: 17,
+    paddingRight: 10,
+    marginRight: 5
+    // backgroundColor: 'red'
+  },
+  noResults: {
+    width: FLOATING_CARD_WIDTH,
+    backgroundColor: Colors.minorThemeColor,
+    minHeight: 150,
+    padding: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: FLOATING_CARD_BORDER_RADIUS
+  },
+  noResultIcon: {
+    height: 100,
+    width: 100,
+    marginBottom: 20
   }
 })
 
