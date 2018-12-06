@@ -164,7 +164,7 @@ export default class DappList extends Component {
                 clearSearch={() => {
                   this.props.actions.setSearchTerm('')
                 }}
-                // extraCloseProps={() => this.props.extraCloseProps()}
+                extraCloseProps={this.props.extraCloseProps ? () => Navigation.pop(this.props.componentId) : null}
               />
             }
           />
@@ -205,9 +205,8 @@ export default class DappList extends Component {
                   justifyContent: 'center',
                   alignItems: 'center'
                 }}
-              >
-                <AddRemoveButtonAnimation value={this.props.selected} />
-              </View>
+              />
+              <AddRemoveButtonAnimation value={this.props.selected} />
             </Modal>
           </View>
         </View>

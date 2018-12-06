@@ -8,7 +8,6 @@ import * as newsActions from 'actions/news'
 import * as dAppActions from 'actions/dApp'
 import { IntlProvider } from 'react-intl'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
 import { loadInject } from 'utils/inject'
 import Colors from 'resources/colors'
 import messages from 'resources/messages'
@@ -147,8 +146,6 @@ export default class Discovery extends Component {
     this.props.actions.setSearchTerm(text)
   }
 
-  goBack = () => Navigation.pop(this.props.componentId)
-
   render() {
     const { locale, loadingMore, isRefreshing, nomore, componentId, searchTerm } = this.props
     return (
@@ -174,8 +171,8 @@ export default class Discovery extends Component {
                       name: 'BitPortal.DappList',
                       passProps: {
                         section: 'all',
-                        expandedSearch: true
-                        // extraCloseProps: this.goBack
+                        expandedSearch: true,
+                        extraCloseProps: true
                       }
                     }
                   })

@@ -2,6 +2,7 @@ import { createSelector } from 'reselect'
 import Immutable from 'immutable'
 import _ from 'lodash'
 import { DAPP_SECTIONS } from 'constants/dApp'
+import console = require('console')
 
 const dataSelector = (state: RootState) =>
   state.dApp.get('data').filter((item: any) => item.get('status') === 'published')
@@ -82,7 +83,7 @@ export const sectionedDappListSelector = createSelector(searchDappListSelector, 
 export const hotDappsSelector = createSelector(mergeFavoritesDataSelector, (data: any) => {
   const newArr = data.filter((item: any) => item.get('is_hot'))
   if (newArr.size > 9) {
-    const correctLength = newArr.splice(0, 10)
+    const correctLength = newArr.splice(9)
     return correctLength
   }
   return newArr
@@ -91,7 +92,7 @@ export const hotDappsSelector = createSelector(mergeFavoritesDataSelector, (data
 export const newDappsSelector = createSelector(mergeFavoritesDataSelector, (data: any) => {
   const newArr = data.filter((item: any) => item.get('is_new'))
   if (newArr.size > 9) {
-    const correctLength = newArr.splice(0, 10)
+    const correctLength = newArr.splice(9)
     return correctLength
   }
   return newArr
