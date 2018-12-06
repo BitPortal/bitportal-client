@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
-import { FontScale, SCREEN_WIDTH, TAB_BAR_HEIGHT } from 'utils/dimens'
+import { FontScale, SCREEN_WIDTH, TAB_BAR_HEIGHT, FLOATING_CARD_WIDTH } from 'utils/dimens'
 
 const styles = StyleSheet.create({
   container: {
@@ -10,14 +10,23 @@ const styles = StyleSheet.create({
   },
   dAppWrapper: {
     flexDirection: 'column',
-    width: SCREEN_WIDTH / 4,
-    height: 90,
+    width: FLOATING_CARD_WIDTH / 5,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 5
+    marginVertical: 5,
+    paddingHorizontal: 3
     // backgroundColor: 'red'
-
     // paddingVertical: 10
+  },
+  dAppWrapperRowItem: {
+    height: 70,
+    flexDirection: 'row',
+    width: FLOATING_CARD_WIDTH,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginVertical: 5,
+    paddingHorizontal: 15
+    // backgroundColor: 'red'
   },
   dAppScrollViewContainer: {
     width: SCREEN_WIDTH,
@@ -42,6 +51,13 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   favoriteWrapper: {
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    borderRadius: 10
+  },
+  rowFavoriteWrapper: {
     flexDirection: 'row',
     position: 'absolute',
     bottom: 0,
@@ -77,6 +93,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  iconWrapper: {
+    padding: 0
+    // backgroundColor: 'red'
+  },
   center: {
     alignItems: 'center',
     justifyContent: 'center'
@@ -104,13 +124,52 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.bgColor_30_31_37
   },
   title: {
-    color: Colors.textColor_FFFFEE,
-    fontSize: FontScale(12),
-    marginVertical: 10
+    color: Colors.white,
+    // fontWeight: 'bold',
+    fontSize: FontScale(14),
+    marginTop: 6,
+    marginBottom: 3
+  },
+  categoryText: {
+    color: Colors.textColor_141_142_148,
+    fontSize: FontScale(10)
+    // marginTop: 2
   },
   hairLine: {
-    height: 2,
+    height: StyleSheet.hairlineWidth,
+    width: FLOATING_CARD_WIDTH,
     backgroundColor: Colors.mainThemeColor
+    // backgroundColor: 'red'
+  },
+  titleTextWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 3
+    // backgroundColor: 'brown'
+  },
+  titleSideLabel: {
+    margin: 5,
+    height: 12,
+    width: 30
+  },
+  rowTextWrapper: {
+    flexDirection: 'column',
+    paddingHorizontal: 10,
+    justifyContent: 'space-between',
+    // backgroundColor: 'red',
+    marginRight: 30
+  },
+  rowTitle: {
+    color: Colors.white,
+    textAlignVertical: 'center',
+    // fontWeight: 'bold',
+    fontSize: FontScale(14)
+    // marginTop: 6
+  },
+  rowDescription: {
+    color: Colors.textColor_141_142_148,
+    fontSize: FontScale(12),
+    marginTop: 2
   }
 })
 

@@ -35,7 +35,7 @@ import styles from './styles'
 export default class DappListItem extends React.PureComponent {
   state = { message: undefined, subMessage: undefined, alertAction: undefined }
 
-  toggleFavorite = (item) => {
+  toggleFavorite = item => {
     const { favoriteDapps, locale } = this.props
     if (favoriteDapps.toJS().length >= 8 && !item.get('selected')) {
       return Toast(messages[locale].discovery_dapp_text_favourite_limit, 2000, 0)
@@ -64,11 +64,11 @@ export default class DappListItem extends React.PureComponent {
     this.setState({ message: undefined, subMessage: undefined })
   }
 
-  setAlertAction = (alertAction) => {
+  setAlertAction = alertAction => {
     this.setState({ alertAction })
   }
 
-  getAlertAction = (item) => {
+  getAlertAction = item => {
     const { alertAction } = this.state
     if (alertAction === 'toPage') {
       this.toPage(item)
@@ -78,7 +78,7 @@ export default class DappListItem extends React.PureComponent {
     this.clearMessage()
   }
 
-  toPage = (item) => {
+  toPage = item => {
     Navigation.push(this.props.componentId, {
       component: {
         name: item.get('url'),
@@ -90,7 +90,7 @@ export default class DappListItem extends React.PureComponent {
     })
   }
 
-  toUrl = (item) => {
+  toUrl = item => {
     const inject = loadInjectSync()
 
     Navigation.push(this.props.componentId, {
@@ -100,7 +100,8 @@ export default class DappListItem extends React.PureComponent {
           uri: item.get('url'),
           iconUrl: item.get('icon_url'),
           title: item.get('display_name').get(this.props.locale) || item.get('display_name').get('en'),
-          inject
+          inject,
+          item
         }
       }
     })
@@ -121,65 +122,76 @@ export default class DappListItem extends React.PureComponent {
   }
 
   render() {
-    const { item, locale } = this.props
+    const { item, locale, extraStyleProps } = this.props
     return (
       <IntlProvider locale={locale}>
-        <TouchableHighlight
-          underlayColor={Colors.hoverColor}
-          onPress={() => {
-            this.onPress(item, locale)
-          }}
-        >
-          <View style={styles.rowContainer}>
-            <View style={styles.iconWrapper}>
-              <BPImage
-                style={styles.image}
-                source={item.get('icon_url') ? { uri: `${item.get('icon_url')}` } : Images.dapp_logo_default}
+        <View>
+          <TouchableHighlight
+            underlayColor={Colors.hoverColor}
+            onPress={() => {
+              this.onPress(item, locale)
+            }}
+          >
+            <View style={[styles.rowContainer, { ...extraStyleProps }]}>
+              <AddRemoveButton
+                value={this.props.selected}
+                onValueChange={() => {
+                  this.toggleFavorite(item)
+                }}
               />
-              {item.get('is_hot') ? (
-                <View style={styles.hotNewWrapper}>
-                  {/* <BPImage style={styles.favoriteStar} source={Images.list_favorite} /> */}
-                  <BPImage style={styles.hotNewTag} source={Images.list_hot} />
-                </View>
-              ) : null}
-              {item.get('is_new') ? (
-                <View style={styles.hotNewWrapper}>
-                  {/* <BPImage style={styles.favoriteStar} source={Images.list_favorite} /> */}
-                  <BPImage style={styles.hotNewTag} source={Images.list_new} />
-                </View>
-              ) : null}
-            </View>
-            <View style={styles.right}>
-              <Text style={styles.title}>
-                {item.get('display_name').get(locale) || item.get('display_name').get('en')}
-              </Text>
-              <View style={styles.infoArea}>
-                <Text numberOfLines={2} style={styles.subTitle}>
-                  {item.get('description').get(locale) || item.get('description').get('en')}
-                </Text>
+              <View style={styles.iconWrapper}>
+                <BPImage
+                  style={styles.image}
+                  source={item.get('icon_url') ? { uri: `${item.get('icon_url')}` } : Images.dapp_logo_default}
+                />
+                {item.get('is_hot') ? (
+                  <View style={styles.hotNewWrapper}>
+                    {/* <BPImage style={styles.favoriteStar} source={Images.list_favorite} /> */}
+                    <BPImage style={styles.hotNewTag} source={Images.list_hot} />
+                  </View>
+                ) : null}
+                {item.get('is_new') ? (
+                  <View style={styles.hotNewWrapper}>
+                    {/* <BPImage style={styles.favoriteStar} source={Images.list_favorite} /> */}
+                    <BPImage style={styles.hotNewTag} source={Images.list_new} />
+                  </View>
+                ) : null}
               </View>
+              <View style={styles.right}>
+                <View style={styles.titleTextWrapper}>
+                  <Text style={styles.title}>
+                    {item.get('display_name').get(locale) || item.get('display_name').get('en')}
+                  </Text>
+                  {item.get('is_highrisk') && (
+                    <BPImage
+                      style={locale === 'zh' ? styles.titleSideLabelZh : styles.titleSideLabelEn}
+                      source={locale === 'zh' ? Images.dapp_high_risk_zh : Images.dapp_high_risk_en}
+                    />
+                  )}
+                </View>
+                <View style={styles.infoArea}>
+                  <Text numberOfLines={2} style={styles.subTitle}>
+                    {item.get('description').get(locale) || item.get('description').get('en')}
+                  </Text>
+                </View>
+              </View>
+
+              <Alert
+                message={this.state.message}
+                subMessage={this.state.subMessage}
+                negativeText={messages[locale].discovery_dapp_popup_button_cancel}
+                positiveText={messages[locale].discovery_dapp_popup_button_understand}
+                dismiss={() => {
+                  this.getAlertAction(this.props.item)
+                }}
+                twoButton={item.get('type') === 'link'}
+                onCancel={() => {
+                  this.clearMessage()
+                }}
+              />
             </View>
-            <AddRemoveButton
-              value={this.props.selected}
-              onValueChange={() => {
-                this.toggleFavorite(item)
-              }}
-            />
-            <Alert
-              message={this.state.message}
-              subMessage={this.state.subMessage}
-              negativeText={messages[locale].discovery_dapp_popup_button_cancel}
-              positiveText={messages[locale].discovery_dapp_popup_button_understand}
-              dismiss={() => {
-                this.getAlertAction(this.props.item)
-              }}
-              twoButton={item.get('type') === 'link'}
-              onCancel={() => {
-                this.clearMessage()
-              }}
-            />
-          </View>
-        </TouchableHighlight>
+          </TouchableHighlight>
+        </View>
       </IntlProvider>
     )
   }

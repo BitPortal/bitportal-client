@@ -1,5 +1,13 @@
 import { StyleSheet } from 'react-native'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, ifIphoneX } from 'utils/dimens'
+import {
+  FontScale,
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  NAV_BAR_HEIGHT,
+  TAB_BAR_HEIGHT,
+  ifIphoneX,
+  FLOATING_CARD_WIDTH
+} from 'utils/dimens'
 import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
@@ -47,14 +55,17 @@ const styles = StyleSheet.create({
     height: TAB_BAR_HEIGHT,
     paddingHorizontal: 20,
     backgroundColor: Colors.mainThemeColor,
-    ...ifIphoneX({
-      paddingBottom: 34
-    }, {
-      paddingBottom: 0
-    })
+    ...ifIphoneX(
+      {
+        paddingBottom: 34
+      },
+      {
+        paddingBottom: 0
+      }
+    )
   },
   btn: {
-    width: SCREEN_WIDTH-64,
+    width: SCREEN_WIDTH - 64,
     height: 30,
     borderRadius: 2
   }

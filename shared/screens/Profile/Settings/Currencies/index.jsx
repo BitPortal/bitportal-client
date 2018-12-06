@@ -9,6 +9,7 @@ import { IntlProvider } from 'react-intl'
 import { bindActionCreators } from 'redux'
 import * as currencyActions from 'actions/currency'
 import messages from 'resources/messages'
+import { FLOATING_CARD_BORDER_RADIUS } from 'utils/dimens'
 import styles from './styles'
 
 @connect(
@@ -17,14 +18,16 @@ import styles from './styles'
     currency: state.currency
   }),
   dispatch => ({
-    actions: bindActionCreators({
-      ...currencyActions
-    }, dispatch)
+    actions: bindActionCreators(
+      {
+        ...currencyActions
+      },
+      dispatch
+    )
   }),
   null,
   { withRef: true }
 )
-
 export default class Currencies extends Component {
   static get options() {
     return {
@@ -34,7 +37,7 @@ export default class Currencies extends Component {
     }
   }
 
-  switchCurrency = (symbol) => {
+  switchCurrency = symbol => {
     this.props.actions.setCurrency(symbol)
   }
 
@@ -47,14 +50,20 @@ export default class Currencies extends Component {
         <View style={styles.container}>
           <NavigationBar
             title={messages[locale].settings_button_currency}
-            leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
+            leftButton={
+              <CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />
+            }
           />
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <SettingItem
                 leftItemTitle="CNY"
                 onPress={() => this.switchCurrency('CNY')}
-                extraStyle={{ marginTop: 10 }}
+                extraStyle={{
+                  marginTop: 10,
+                  borderTopLeftRadius: FLOATING_CARD_BORDER_RADIUS,
+                  borderTopRightRadius: FLOATING_CARD_BORDER_RADIUS
+                }}
                 iconColor={Colors.bgColor_0_122_255}
                 rightItemTitle={currentSymbol === 'CNY' ? null : ' '}
                 rightImageName={currentSymbol === 'CNY' && 'md-checkmark'}
@@ -65,6 +74,10 @@ export default class Currencies extends Component {
                 rightItemTitle={currentSymbol === 'USD' ? null : ' '}
                 rightImageName={currentSymbol === 'USD' && 'md-checkmark'}
                 onPress={() => this.switchCurrency('USD')}
+                extraStyle={{
+                  borderBottomLeftRadius: FLOATING_CARD_BORDER_RADIUS,
+                  borderBottomRightRadius: FLOATING_CARD_BORDER_RADIUS
+                }}
               />
             </ScrollView>
           </View>

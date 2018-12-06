@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux'
 import * as newsActions from 'actions/news'
 import * as dAppActions from 'actions/dApp'
 import { IntlProvider } from 'react-intl'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import { loadInject } from 'utils/inject'
 import Colors from 'resources/colors'
 import messages from 'resources/messages'
@@ -153,11 +154,37 @@ export default class Discovery extends Component {
           <NavigationBar
             leftButton={<CommonTitle title={messages[locale].discovery_title_discovery} />}
             rightButton={
-              <SearchBar
-                searchTerm={searchTerm}
-                onChangeText={text => this.onChangeText(text)}
-                clearSearch={() => {
-                  this.props.actions.setSearchTerm('')
+              // <SearchBar
+              //   searchTerm={searchTerm}
+              //   onChangeText={text => this.onChangeText(text)}
+              //   clearSearch={() => {
+              //     this.props.actions.setSearchTerm('')
+              //   }}
+              // />
+              <Ionicons
+                name="ios-search"
+                size={24}
+                color={Colors.textColor_181_181_181}
+                onPress={() => {
+                  Navigation.push(this.props.componentId, {
+                    component: {
+                      name: 'BitPortal.DappList',
+                      passProps: {
+                        section: 'all',
+                        expandedSearch: true,
+                        extraCloseProps: true
+                      }
+                    }
+                  })
+                }}
+                style={{
+                  // position: 'absolute',
+                  // top: 6,
+                  // right: -40,
+                  // paddingHorizontal: 10,
+                  paddingTop: 10,
+                  paddingRight: 30,
+                  justifyContent: 'flex-end'
                 }}
               />
             }
@@ -165,7 +192,7 @@ export default class Discovery extends Component {
           <ScrollView>
             {!searchTerm.trim() && <NewsBanner componentId={componentId} />}
             {!searchTerm.trim() && <DappStore componentId={componentId} />}
-            <DappListInline componentId={componentId} />
+            {/* <DappListInline componentId={componentId} /> */}
             {/* <NewsList
               data={this.getNewsListData()}
               onRefresh={this.onRefresh}
