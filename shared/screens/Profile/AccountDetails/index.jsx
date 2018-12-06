@@ -142,22 +142,40 @@ export default class AccountDetails extends Component {
               <SettingItem
                 leftItemTitle={<FormattedMessage id="wallet_mgmt_button_export_private_key" />}
                 onPress={this.showExportPrompt}
-                extraStyle={{ marginTop: 10 }}
+                extraStyle={{
+                  marginTop: 10,
+                  borderTopLeftRadius: FLOATING_CARD_BORDER_RADIUS,
+                  borderTopRightRadius: FLOATING_CARD_BORDER_RADIUS
+                }}
               />
               <SettingItem
                 leftItemTitle={<FormattedMessage id="wallet_mgmt_button_change_password" />}
                 onPress={this.resetPassword}
+                extraStyle={{
+                  borderTopLeftRadius: FLOATING_CARD_BORDER_RADIUS,
+                  borderTopRightRadius: FLOATING_CARD_BORDER_RADIUS
+                }}
               />
               <SettingItem
                 disabled={true}
                 leftItemTitle='白名单详情'
                 onPress={this.routeToWhiteListDetails}
+                extraStyle={{
+                  borderTopLeftRadius: FLOATING_CARD_BORDER_RADIUS,
+                  borderTopRightRadius: FLOATING_CARD_BORDER_RADIUS
+                }}
               />
               <SettingItem
                 leftItemTitle={<FormattedMessage id="wallet_mgmt_button_sign_out" />}
                 rightItemTitle=" "
                 onPress={this.showLogoutPrompt}
-                extraStyle={{ marginTop: 10, alignItems: 'center', justifyContent: 'center' }}
+                extraStyle={{ 
+                  marginTop: 10, 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  borderTopLeftRadius: FLOATING_CARD_BORDER_RADIUS,
+                  borderTopRightRadius: FLOATING_CARD_BORDER_RADIUS
+                }}
                 leftTitleStyle={{ color: Colors.textColor_255_76_118 }}
               />
               <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearKeystoreError} delay={500} />
