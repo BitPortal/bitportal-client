@@ -149,7 +149,7 @@ export default class DappList extends Component {
     if (this.props.section === 'all') filteredSections = this.props.dAppSections
     else if (this.props.section) filteredSections = this.props.dAppSections.filter(e => e.title === this.props.section)
     const { locale, loading, searchTerm, dAppSections } = this.props
-    console.log('filteredSectionss', filteredSections)
+    console.log('filteredSectionss', filteredSections, this.props.extraCloseProps)
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -164,9 +164,7 @@ export default class DappList extends Component {
                 clearSearch={() => {
                   this.props.actions.setSearchTerm('')
                 }}
-                extraCloseProps={() => {
-                  Navigation.pop(this.props.componentId)
-                }}
+                extraCloseProps={this.props.extraCloseProps ? () => Navigation.pop(this.props.componentId) : null}
               />
             }
           />
@@ -207,9 +205,8 @@ export default class DappList extends Component {
                   justifyContent: 'center',
                   alignItems: 'center'
                 }}
-              >
-                <AddRemoveButtonAnimation value={this.props.selected} />
-              </View>
+              />
+              <AddRemoveButtonAnimation value={this.props.selected} />
             </Modal>
           </View>
         </View>

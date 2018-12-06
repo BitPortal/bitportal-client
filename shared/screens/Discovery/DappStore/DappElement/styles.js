@@ -127,7 +127,8 @@ const styles = StyleSheet.create({
     color: Colors.white,
     // fontWeight: 'bold',
     fontSize: FontScale(14),
-    marginTop: 6
+    marginTop: 6,
+    marginBottom: 3
   },
   categoryText: {
     color: Colors.textColor_141_142_148,
@@ -135,12 +136,15 @@ const styles = StyleSheet.create({
     // marginTop: 2
   },
   hairLine: {
-    height: 2,
+    height: StyleSheet.hairlineWidth,
+    width: FLOATING_CARD_WIDTH,
     backgroundColor: Colors.mainThemeColor
+    // backgroundColor: 'red'
   },
   titleTextWrapper: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 3
     // backgroundColor: 'brown'
   },
   titleSideLabel: {

@@ -279,7 +279,7 @@ export default class SearchBar extends Component {
                   this.toggleExpanded()
                   this.clearSearch()
                   this.animate()
-                  if (this.props.extraCloseProps)
+                  if (this.props.extraCloseProps && this.state.expanded)
                     InteractionManager.runAfterInteractions(() => this.props.extraCloseProps())
                 }}
               >

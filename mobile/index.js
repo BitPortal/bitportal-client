@@ -106,7 +106,7 @@ export const currentComponentID = () => visibleComponentID
 Linking.addEventListener('url', event => handleOpenURL(event, currentComponentID()))
 
 Navigation.events().registerComponentDidAppearListener(({ componentId, componentName }) => {
-  // console.log('componentdidAppearr', componentId, componentName)
+  console.log('componentdidAppearr', componentId, componentName)
   visibleComponentID = componentId
   currentComponentID()
 })

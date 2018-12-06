@@ -1,9 +1,10 @@
 import Images from 'resources/images'
 
 export const DAPP_SECTIONS = [
+  'FAVORITE',
   'SYSTEM',
   'GAME',
-  'HIGHRISK',
+  'HIGH_RISK',
   'SOCIAL',
   'EXCHANGE',
   'MARKETPLACE',

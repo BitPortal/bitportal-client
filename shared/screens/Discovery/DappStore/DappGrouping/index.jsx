@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { View, Animated } from 'react-native'
 import { bindActionCreators } from 'redux'
 import * as dAppActions from 'actions/dApp'
 import { connect } from 'react-redux'
@@ -7,8 +7,7 @@ import { parsedDappListSelector } from 'selectors/dApp'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from 'utils/dimens'
 import { TabView, TabBar } from 'react-native-tab-view'
-import messages from 'resources/messages'
-import DappElement from '../DappElement'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import DappGroupScene from './DappGroupScene'
 import styles from './styles'
 
@@ -34,7 +33,11 @@ export default class DappGrouping extends Component {
   state = {
     /*eslint-disable*/
     index: 0,
-    routes: [{ key: 'first', title: '' }, { key: 'second', title: '' }, { key: 'third', title: '' }]
+    routes: [
+      { key: 'first', title: '', color: 'red' },
+      { key: 'second', title: '', color: 'blue' },
+      { key: 'third', title: '', color: 'green' }
+    ]
   }
 
   componentDidMount() {
@@ -62,6 +65,76 @@ export default class DappGrouping extends Component {
     }
   }
 
+  _renderIndicator = props => {
+    console.log('width', props)
+    // const { width, position } = props
+    const { position } = props
+    const inputRange = [0, 0.48, 0.49, 0.51, 0.52, 1, 1.48, 1.49, 1.51, 1.52, 2]
+    // const inputRange = [0, 1, 2]
+
+    const scale = position.interpolate({
+      inputRange,
+      outputRange: inputRange.map(x => (Math.trunc(x) === x ? 2 : 0.1))
+    })
+    const opacity = position.interpolate({
+      inputRange,
+      outputRange: inputRange.map(x => {
+        const d = x - Math.trunc(x)
+        return d === 0.49 || d === 0.51 ? 0 : 1
+      })
+    })
+    const translateX = position.interpolate({
+      inputRange: inputRange,
+      outputRange: inputRange.map(x => Math.round(x - 1) * 20)
+    })
+    // const backgroundColor = position.interpolate({
+    //   inputRange,
+    //   outputRange: inputRange.map(x => props.navigationState.routes[Math.round(x)].color)
+    // })
+
+    return (
+      <Animated.View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+        {/* <Animated.View style={[styles.container, { transform: [{ translateX }] }]}>
+          <Animated.View style={[styles.indicator, { opacity, transform: [{ scale }] }]} />
+        </Animated.View> */}
+        {props.navigationState.routes.map((e, i) => {
+          if (i === props.navigationState.index) {
+            return <View style={styles.activeIndicator} />
+          } else {
+            return <View style={styles.indicator} />
+          }
+        })}
+      </Animated.View>
+    )
+  }
+
+  _renderIcon = ({ route }) => <Ionicons name={route.icon} size={24} style={styles.icon} />
+
+  _renderBadge = ({ route }) => {
+    if (route.key === '2') {
+      return (
+        <View style={styles.badge}>
+          <Text style={styles.count}>42</Text>
+        </View>
+      )
+    }
+    return null
+  }
+
+  _renderTabBar = props => {
+    console.log('tabbarr', props)
+    return (
+      <TabBar
+        {...props}
+        renderIcon={this._renderIcon}
+        renderBadge={this._renderBadge}
+        renderIndicator={this._renderIndicator}
+        style={styles.tabbar}
+        // indicatorStyle={{ backgroundColor: 'red', height: 50 }}
+      />
+    )
+  }
+
   render() {
     return (
       <View style={styles.sceneContainer}>
@@ -73,7 +146,9 @@ export default class DappGrouping extends Component {
             this.setState({ index })
           }}
           initialLayout={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}
-          renderTabBar={() => {}}
+          tabBarPosition="bottom"
+          // renderTabBar={() => {}}
+          renderTabBar={this.props.items.size <= 3 ? () => {} : this._renderTabBar}
         />
       </View>
     )
