@@ -63,24 +63,33 @@ export default class AccountSwitchModal extends Component {
                 </Text>
                 <TouchableOpacity onPress={routeToNewAccount} style={styles.close}>
                   <Text style={[styles.text14, { color: Colors.textColor_89_185_226 }]}>
-                    添加新账户
+                    添加新钱包
                   </Text>
                 </TouchableOpacity>
                 
               </View>
               <ScrollView style={styles.body} contentContainerStyle={styles.contentContainerStyle}>
                 {walletList.map((item) => (
-                  <TouchableOpacity key={item.get('publicKey')} onPress={() => this.switchAccount(item)}>
+                  <TouchableOpacity key={item.get('publicKey')+item.get('permission')} onPress={() => this.switchAccount(item)}>
                     <View style={styles.accountItemContainer}>
                       <View>
-                        <Text style={styles.text14}>
-                          {item.get('eosAccountName')} {item.get('permission')}
-                        </Text>
-                        <Text style={styles.text12}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                          <View style={styles.textRadius}>
+                            <Text style={[styles.text12, { color: Colors.textColor_89_185_226 }]}>
+                              {item.get('permission').toLowerCase()}
+                            </Text>
+                          </View>
+                          <Text style={[styles.text15, { marginLeft: 5 }]}>
+                            {item.get('eosAccountName')} 
+                          </Text>
+                        </View>
+                        <Text style={[styles.text12, { marginTop: 8 }]}>
                           {item.get('publicKey') && `${item.get('publicKey').slice(0, 7)}....${item.get('publicKey').slice(-7)}`}
                         </Text>
                       </View>
-                      { item.get('eosAccountName') === activeWallet.get('eosAccountName')
+                      { 
+                        item.get('eosAccountName') === activeWallet.get('eosAccountName') 
+                        && item.get('permission').toLowerCase() === activeWallet.get('permission').toLowerCase()
                         && <Ionicons name="md-checkmark" size={20} color={Colors.textColor_89_185_226} />
                       }
                     </View>

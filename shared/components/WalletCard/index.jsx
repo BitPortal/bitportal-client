@@ -6,10 +6,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import styles from './styles'
 
-export default ({ accountType, accountName, balanceTitle, eosValue, eosAmount, colors, onPress }) => (
-  <TouchableWithoutFeedback onPress={onPress}>
+export default ({ accountType, accountName, balanceTitle, eosValue, eosAmount, active, colors, imported, onPress }) => (
+  <TouchableWithoutFeedback disabled={imported} onPress={onPress}>
     <View style={styles.cardContainer}>
-      <LinearGradientContainer type="right" colors={colors} style={[styles.contentContainer, styles.topRadius]}>
+      <LinearGradientContainer type="right" colors={imported ? Colors.disabled : colors} style={[styles.contentContainer, styles.topRadius]}>
         <View style={[styles.contentContainer, styles.paddingStyle, styles.between]}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={styles.textRadius}>
@@ -17,7 +17,23 @@ export default ({ accountType, accountName, balanceTitle, eosValue, eosAmount, c
                 {accountType}
               </Text>
             </View>
-            <Text style={[styles.text16, { marginLeft: 15 }]}>{accountName}</Text>
+            <Text style={[styles.text16, { marginLeft: 10 }]}>{accountName}</Text>
+            { 
+              imported && 
+              <View style={[styles.textRadius, { paddingHorizontal: 6, paddingVertical: 3, marginLeft: 10  }]}>
+                <Text style={[styles.text12, { color: Colors.textColor_255_76_118 }]}>
+                  已导入
+                </Text>
+              </View>
+            }
+            { 
+              active && 
+              <View style={[styles.textRadius, { paddingHorizontal: 6, paddingVertical: 3, marginLeft: 10  }]}>
+                <Text style={[styles.text12, { color: Colors.textColor_255_76_118 }]}>
+                  当前钱包
+                </Text>
+              </View>
+            }
           </View>
           <Ionicons name="ios-arrow-forward" size={26} color={Colors.bgColor_FAFAFA} />
         </View>

@@ -44,7 +44,8 @@ const styles = EStyleSheet.create({
   },
   body: {
     width: '100%',
-    height: '40%'
+    height: '40%',
+    backgroundColor: Colors.mainThemeColor
   },
   accountItemContainer: {
     width: '100%-40',
@@ -53,7 +54,7 @@ const styles = EStyleSheet.create({
     marginVertical: 10,
     paddingHorizontal: 20,
     paddingVertical: 15,
-    borderRadius: 12,
+    borderRadius: 4,
     backgroundColor: Colors.minorThemeColor,
     flexDirection: 'row',
     alignItems: 'center',
@@ -67,6 +68,11 @@ const styles = EStyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  textRadius: {
+    borderRadius: 4,
+    paddingHorizontal: 6,
+    backgroundColor: Colors.bgColor_FFFFFF
+  },
   text15: {
     fontSize: FontScale(15),
     fontWeight: 'bold',
@@ -78,7 +84,7 @@ const styles = EStyleSheet.create({
   },
   text12: {
     fontSize: FontScale(12),
-    color: Colors.textColor_107_107_107
+    color: Colors.textColor_181_181_181
   }
 })
 

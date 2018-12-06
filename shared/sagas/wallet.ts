@@ -16,7 +16,7 @@ import secureStorage from 'utils/secureStorage'
 import storage from 'utils/storage'
 import { privateToPublic, initEOS, randomKey } from 'core/eos'
 import { getMasterSeed, encrypt, decrypt, getEOSKeys, getEOSWifsByInfo } from 'core/key'
-import { push, pop, popToRoot } from 'utils/location'
+import { push, pop } from 'utils/location'
 import { unsubscribe } from 'actions/notification'
 import { getDeviceID } from 'utils/nativeUtil'
 import wif from 'wif'
@@ -243,6 +243,8 @@ function* logoutRequested(action: Action<LogoutParams>) {
     const origin = action.payload.origin
     const bpid = action.payload.bpid
     const coin = action.payload.coin
+    const permission = action.payload.permission
+    const publicKey = action.payload.publicKey
 
     assert(origin, 'No origin!')
 
@@ -255,10 +257,15 @@ function* logoutRequested(action: Action<LogoutParams>) {
       yield call(getEOSWifsByInfo, password, accountInfo, [permission])
     }
 
-    const items = yield call(secureStorage.getAllItems)
-    for (const item of Object.keys(items)) {
-      yield call(secureStorage.removeItem, item)
+    const allItems = yield call(secureStorage.getAllItems)
+    let active = allItems.ACTIVE_WALLET && JSON.parse(allItems.ACTIVE_WALLET)
+    if (active.eosAccountName === eosAccountName && active.publicKey === publicKey) {
+      yield call(secureStorage.removeItem, 'ACTIVE_WALLET')
     }
+    yield call(secureStorage.removeItem, `EOS_ACCOUNT_INFO_${eosAccountName}`)
+    yield call(secureStorage.removeItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_${permission}_${publicKey}`)
+    yield call(secureStorage.removeItem, `CLASSIC_WALLET_INFO_EOS_${eosAccountName}`)
+    
     yield call(storage.removeItem, 'bitportal_toggledEOSAsset')
     yield call(storage.removeItem, 'bitportal_favoriteDapps')
     yield put(actions.resetWallet())
@@ -268,9 +275,10 @@ function* logoutRequested(action: Action<LogoutParams>) {
     yield put(resetTransaction())
     yield put(resetKey())
     yield put(clearProducer())
+    yield put(actions.syncWalletRequested())
     yield put(actions.logoutSucceeded())
 
-    if (action.payload.componentId) popToRoot(action.payload.componentId)
+    if (action.payload.componentId) pop(action.payload.componentId)
 
     // unsubscribe
     const deviceId = yield call(getDeviceID)

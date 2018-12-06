@@ -184,17 +184,12 @@ function* pendRequestSignature(messageActionType: string, payload: any, messageI
   const selectedDapp = yield select((state: RootState) => state.whiteList.get('selectedDapp'))
   const dappName = selectedDapp.get('dappName')
   const dappList = yield select((state: RootState) => state.whiteList.get('dappList'))
-  // console.log('###--yy pendRequestSignature', dappList)
-  let authorized = false
-  dappList.forEach((v: any) => {
-    if (v.get('dappName') === dappName) {
-      authorized = v.get('authorized')
-    }
-  });
-  // console.log('###--yy authorized: --', authorized)
+
+  let authorized = false // 临时属性：表示用户之前开启过白名单 当第一次输入密码后设为true 后面无需再输密码
+  dappList.forEach((v: any) => { if (v.get('dappName') === dappName) { authorized = v.get('authorized') }})
+
   if (authorized && whiteListEnabled && selectedDapp.get && selectedDapp.get('settingEnabled')) {
     const password = yield select((state: RootState) => state.whiteList.get('password'))
-    // console.log('###--yy', password, info, messageId)
     yield resolveRequestSignature( password, Immutable.fromJS(info), messageId)
   } else {
     yield put(actions.pendMessage({
@@ -379,6 +374,7 @@ function* resolveRequestSignature(password: string, info: any, messageId: string
       buf
     })
     yield put(actions.clearMessage())
+    // delay(350)
     yield put(actions.sendMessage({
       messageId,
       type: 'actionSucceeded',

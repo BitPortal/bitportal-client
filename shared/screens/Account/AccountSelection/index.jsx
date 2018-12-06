@@ -12,7 +12,8 @@ import Loading from 'components/Loading'
 import messages from 'resources/messages'
 import Images from 'resources/images'
 import Dialog from 'components/Dialog'
-import AccountCard from './AccountCard'
+import WalletCard from 'components/WalletCard'
+import { hasEOSAccountImported } from 'utils/index'
 import styles from './styles'
 
 export const errorMessages = (error, messages) => {
@@ -32,6 +33,7 @@ export const errorMessages = (error, messages) => {
   state => ({
     locale: state.intl.get('locale'),
     eosAccount: state.eosAccount,
+    walletList: state.wallet.get('classicWalletList'),
     eosPrice: eosPriceSelector(state)
   }),
   dispatch => ({
@@ -71,10 +73,10 @@ export default class AccountSelection extends Component {
   }
 
   render() {
-    const { locale, keyPermissions, eosPrice, eosAccount } = this.props
+    const { locale, keyPermissions, eosPrice, eosAccount, walletList } = this.props
     const loading = eosAccount.get('loading')
     const error = eosAccount.get('importError')
-
+  
     return (
       <View style={styles.container}>
         <NavigationBar
@@ -84,17 +86,28 @@ export default class AccountSelection extends Component {
         />
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            {keyPermissions.map(keyPermission => <AccountCard
-                key={`${keyPermission.permission}_${keyPermission.accountName}`}
-                accountType={keyPermission.permission}
-                accountName={keyPermission.accountName}
-                eosValue={+eosPrice * +keyPermission.balance}
-                eosAmount={keyPermission.balance}
-                balanceTitle="Balance"
-                onPress={this.selectAccount.bind(this, keyPermission)}
-                colors={keyPermission.permission !== 'owner' && Colors.ramColor}
-            />
-            )}
+            {
+              keyPermissions.map(keyPermission => (
+                <WalletCard
+                  key={`${keyPermission.permission}_${keyPermission.accountName}`}
+                  accountType={keyPermission.permission}
+                  accountName={keyPermission.accountName}
+                  eosValue={+eosPrice * +keyPermission.balance}
+                  eosAmount={keyPermission.balance}
+                  balanceTitle="Balance"
+                  imported={hasEOSAccountImported(
+                    { 
+                      eosAccountName: keyPermission.accountName, 
+                      publicKey: this.props.publicKey,
+                      permission: keyPermission.permission
+                    },
+                    walletList
+                  )}
+                  onPress={this.selectAccount.bind(this, keyPermission)}
+                  colors={keyPermission.permission !== 'owner' && Colors.ramColor}
+                />
+              ))
+            }
           </ScrollView>
           <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearEOSAccountError} />
         </View>

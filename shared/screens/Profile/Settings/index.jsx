@@ -89,7 +89,7 @@ export default class Setting extends Component {
               <SettingItem
                 disabled={true}
                 leftItemTitle="白名单功能"
-                rightItemTitle="switch"
+                rightItemTitle='switch'
                 value={value}
                 onValueChange={this.onValueChange}
                 extraStyle={{

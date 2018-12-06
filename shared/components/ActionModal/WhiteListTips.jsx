@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as whiteListActions from 'actions/whiteList'
 import { whiteListAuthorizedSelector } from 'selectors/whiteList'
+import BPImage from 'components/BPNativeComponents/BPImage'
+import Images from 'resources/images'
 import styles from './styles'
 
 @connect(
@@ -61,7 +63,7 @@ export default class WhiteListTips extends PureComponent {
 
           <View style={styles.titleContainer}>
             <Text style={styles.text15}> 
-            { (authorized && accept) ? ' ' : '开启白名单' } 
+              {(authorized && accept) ? ' ' : '开启白名单'} 
             </Text>
             <View style={styles.titleSetting}>
               <Text onPress={this.switchSetting} style={[styles.text14, { marginTop: -4 }, signedColor]}> 
@@ -75,7 +77,7 @@ export default class WhiteListTips extends PureComponent {
             settingDisplay && accept &&
             <View style={styles.settingContainer}>
               <View style={styles.textSettingDes}>
-                <Text style={[styles.text12, { marginRight: 10 }]}> 注意：</Text>
+                <BPImage source={Images.whiteList_warning} style={[styles.image, { marginRight: 10 }]} />
                 <Text style={styles.text12}> 打开高级设置，下次进行该操作时，无需进行弹框确认直接执行，开启后可前往钱包管理中关闭 </Text>
               </View>
               <View style={styles.switchContainer}>
@@ -92,11 +94,14 @@ export default class WhiteListTips extends PureComponent {
             !(authorized && accept) &&
             <View style={styles.contentContainer}>
               <TouchableOpacity onPress={this.switchWhiteList} style={styles.btn}>
-                <Text style={styles.text12}> 同意 </Text>
+                { accept 
+                  ? <BPImage source={Images.whiteList_accepted} style={styles.image} />
+                  : <BPImage source={Images.whiteList_accept} style={styles.image} />
+                }
               </TouchableOpacity>
               <View style={styles.textContentDes}>
                 <Text style={styles.text12}> 
-                  您可以将此操作列入白名单，下次就不必在此授权。勾选属性旁边的单选按钮意味着您允许此操作的该属性可以更改，仅当其他属性发生变化才不会被列入白名单。 
+                  您可以将此操作列入白名单，下次就不必在此授权。
                 </Text>
               </View>
             </View>

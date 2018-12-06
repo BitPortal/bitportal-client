@@ -31,7 +31,9 @@ declare interface LogoutParams {
   origin: string
   bpid?: string
   coin: string
-  componentId?: string
+  componentId?: string,
+  permission?: string,
+  publicKey?: string
 }
 
 declare interface ChangePasswordParams {

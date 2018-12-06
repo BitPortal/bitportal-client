@@ -16,8 +16,7 @@ import styles from './styles'
 @connect(
   state => ({
     locale: state.intl.get('locale'),
-    eosAccount: eosAccountSelector(state),
-    contact: state.contact
+    eosAccount: eosAccountSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -28,7 +27,7 @@ import styles from './styles'
   { withRef: true }
 )
 
-export default class Contacts extends Component {
+export default class WhiteListDetails extends Component {
   static get options() {
     return {
       bottomTabs: {
@@ -86,7 +85,7 @@ export default class Contacts extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale].profile_button_contacts}
+            title='白名单详情'
             leftButton={<CommonButton iconName="md-arrow-back" onPress={this.goBack} />}
             rightButton={<CommonRightButton iconName="md-add" onPress={this.addContact} />}
           />

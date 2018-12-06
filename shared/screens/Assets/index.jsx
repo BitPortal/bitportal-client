@@ -51,8 +51,7 @@ import styles from './styles'
         ...balanceActions,
         ...versionActions,
         ...currencyActions,
-        ...eosAccountActions,
-        ...walletActions
+        ...eosAccountActions
       },
       dispatch
     )
