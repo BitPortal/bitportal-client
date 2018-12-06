@@ -11,6 +11,7 @@ import * as keystoreActions from 'actions/keystore'
 import { logoutRequested, clearLogoutError } from 'actions/wallet'
 import { WALLET_MGT_EXPORT, WALLET_MGT_RESET_PW, WALLET_MGT_LOGOUT } from 'constants/analytics'
 import { onEventWithLabel } from 'utils/analytics'
+import { FLOATING_CARD_BORDER_RADIUS } from 'utils/dimens'
 import Loading from 'components/Loading'
 import Alert from 'components/Alert'
 import Prompt from 'components/Prompt'
@@ -161,8 +162,8 @@ export default class AccountDetails extends Component {
                 leftItemTitle='白名单详情'
                 onPress={this.routeToWhiteListDetails}
                 extraStyle={{
-                  borderTopLeftRadius: FLOATING_CARD_BORDER_RADIUS,
-                  borderTopRightRadius: FLOATING_CARD_BORDER_RADIUS
+                  borderBottomLeftRadius: FLOATING_CARD_BORDER_RADIUS,
+                  borderBottomRightRadius: FLOATING_CARD_BORDER_RADIUS
                 }}
               />
               <SettingItem
@@ -173,8 +174,7 @@ export default class AccountDetails extends Component {
                   marginTop: 10, 
                   alignItems: 'center', 
                   justifyContent: 'center',
-                  borderTopLeftRadius: FLOATING_CARD_BORDER_RADIUS,
-                  borderTopRightRadius: FLOATING_CARD_BORDER_RADIUS
+                  borderRadius: FLOATING_CARD_BORDER_RADIUS
                 }}
                 leftTitleStyle={{ color: Colors.textColor_255_76_118 }}
               />
