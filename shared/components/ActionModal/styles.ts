@@ -99,7 +99,7 @@ const styles = EStyleSheet.create({
     minHeight: 20
   },
   btn: {
-    width: '20%',
+    width: '15%',
     minHeight: 30,
     marginRight: 15,
     alignItems: 'center',
@@ -107,7 +107,7 @@ const styles = EStyleSheet.create({
     paddingVertical: 10,
   },
   textContentDes: {
-    width: '70%',
+    width: '80%',
     minHeight: 20
   },
   textSettingDes: {
@@ -203,6 +203,10 @@ const styles = EStyleSheet.create({
   },
   indicator: {
     marginLeft: 10
+  },
+  image: {
+    width: 16,
+    height: 16
   },
   text15: {
     fontSize: FontScale(15),

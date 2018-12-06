@@ -56,7 +56,10 @@ const Images = {
   dapp_logo_default: require('./dapp_logo_default.png'),
   assets_scan: require('./assets_scan.png'),
   assets_send: require('./assets_send.png'),
-  assets_receive: require('./assets_receive.png')
+  assets_receive: require('./assets_receive.png'),
+  whiteList_accept: require('./whiteList_accept.png'),
+  whiteList_accepted: require('./whiteList_accepted.png'),
+  whiteList_warning: require('./whiteList_warning.png'),
 }
 
 export default Images

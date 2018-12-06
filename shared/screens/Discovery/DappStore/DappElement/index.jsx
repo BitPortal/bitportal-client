@@ -87,6 +87,7 @@ export default class DappElement extends Component {
         name: 'BitPortal.DappWebView',
         passProps: {
           uri: item.get('url'),
+          iconUrl: item.get('icon_url'),
           title: item.get('display_name').get(this.props.locale) || item.get('display_name').get('en'),
           inject
         }

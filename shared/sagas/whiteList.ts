@@ -14,7 +14,9 @@ function* noticeWhiteList(action: any) {
 
     const dappName = action.payload.dappName
     const dappUrl = action.payload.dappUrl
-    yield put(actions.recordDappInfo({ dappName, dappUrl }))
+    const iconUrl = action.payload.iconUrl
+
+    yield put(actions.recordDappInfo({ dappName, dappUrl, iconUrl }))
     if (!info || (!!info && !info.dappLuanched)) {
       const storeInfo = { dappLuanched: true }
       yield call(storage.mergeItem, 'bitportal_white_list', storeInfo, true)
@@ -93,11 +95,9 @@ function* updateWhiteListStoreInfo(action: any) {
       yield put(actions.recordDappList({ dappList: reducerDappList }))
     }
     
-    let storeDappList = []
+    const storeDappList: any = []
     if (dappList.length > 1) {
-      dappList.forEach((v: any) => {
-        storeDappList.push(v.delete('authorized').toJS())  
-      });
+      dappList.forEach((v: any) => { storeDappList.push(v.delete('authorized').toJS()) })
     } else {
       storeDappList.push(dappInfo.delete('authorized').toJS())
     }

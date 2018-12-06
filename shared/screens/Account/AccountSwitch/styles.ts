@@ -68,6 +68,11 @@ const styles = EStyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  textRadius: {
+    borderRadius: 4,
+    paddingHorizontal: 6,
+    backgroundColor: Colors.bgColor_FFFFFF
+  },
   text15: {
     fontSize: FontScale(15),
     fontWeight: 'bold',
@@ -79,7 +84,7 @@ const styles = EStyleSheet.create({
   },
   text12: {
     fontSize: FontScale(12),
-    color: Colors.textColor_107_107_107
+    color: Colors.textColor_181_181_181
   }
 })
 

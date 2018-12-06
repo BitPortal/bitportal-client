@@ -116,6 +116,14 @@ export default class AccountDetails extends Component {
     this.setState({ showLogoutPrompt: false })
   }
 
+  routeToWhiteListDetails = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.WhiteListDetails'
+      }
+    })
+  }
+
   render() {
     const { locale, exporting, error, loggingOut, logoutError } = this.props
 
@@ -139,6 +147,11 @@ export default class AccountDetails extends Component {
               <SettingItem
                 leftItemTitle={<FormattedMessage id="wallet_mgmt_button_change_password" />}
                 onPress={this.resetPassword}
+              />
+              <SettingItem
+                disabled={true}
+                leftItemTitle='白名单详情'
+                onPress={this.routeToWhiteListDetails}
               />
               <SettingItem
                 leftItemTitle={<FormattedMessage id="wallet_mgmt_button_sign_out" />}
