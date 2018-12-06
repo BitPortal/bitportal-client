@@ -38,13 +38,13 @@ export const walletListSelector = createSelector(
           const permissions = getPermissionsByKey(walletItem.get('publicKey'), eosAccountList.get(index).toJS())
           if (permissions.length > 0) {
             const index = permissions.findIndex((v: any) => v.permission === walletItem.get('permission').toLowerCase())
-            index !== -1 && list.push(walletItem.set('balance', permissions[index].balance).set('active', true))
+            if (index !== -1) list.push(walletItem.set('balance', permissions[index].balance).set('active', true))
           }
         } else {
           const permissions = getPermissionsByKey(walletItem.get('publicKey'), eosAccountList.get(index).toJS())
           if (permissions.length > 0) {
             const index = permissions.findIndex((v: any) => v.permission === walletItem.get('permission').toLowerCase())
-            index !== -1 && list.push(walletItem.set('balance', permissions[index].balance).set('active', false))
+            if ( index !== -1) list.push(walletItem.set('balance', permissions[index].balance).set('active', false))
           }
         }
       }

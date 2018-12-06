@@ -258,7 +258,7 @@ function* logoutRequested(action: Action<LogoutParams>) {
     }
 
     const allItems = yield call(secureStorage.getAllItems)
-    let active = allItems.ACTIVE_WALLET && JSON.parse(allItems.ACTIVE_WALLET)
+    const active = allItems.ACTIVE_WALLET && JSON.parse(allItems.ACTIVE_WALLET)
     if (active.eosAccountName === eosAccountName && active.publicKey === publicKey) {
       yield call(secureStorage.removeItem, 'ACTIVE_WALLET')
     }
