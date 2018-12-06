@@ -237,6 +237,7 @@ function* getEOSKeyAccountsRequested(action: Action<GetEOSKeyAccountsParams>) {
     for (const accountName of keyAccounts) {
       const accountInfo = yield call(eos.getAccount, accountName)
       const permissions = getPermissionsByKey(publicKey, accountInfo)
+      // console.log('###--yy', permissions, accountInfo)
       keyPermissions = [...keyPermissions, ...permissions]
     }
 

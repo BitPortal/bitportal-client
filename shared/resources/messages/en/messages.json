@@ -283,7 +283,7 @@
 
   "wallet_mgmt_button_export_private_key": "Export Private Key",
   "wallet_mgmt_button_change_password": "Reset Password",
-  "wallet_mgmt_button_sign_out": "Sign Out",
+  "wallet_mgmt_button_sign_out": "Delete Wallet",
 
   "export_title_export": "Export",
   "export_button_keystore": "Export Keystore",

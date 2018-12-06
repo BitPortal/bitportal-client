@@ -44,7 +44,8 @@ const styles = EStyleSheet.create({
   },
   body: {
     width: '100%',
-    height: '40%'
+    height: '40%',
+    backgroundColor: Colors.mainThemeColor
   },
   accountItemContainer: {
     width: '100%-40',
@@ -53,7 +54,7 @@ const styles = EStyleSheet.create({
     marginVertical: 10,
     paddingHorizontal: 20,
     paddingVertical: 15,
-    borderRadius: 12,
+    borderRadius: 4,
     backgroundColor: Colors.minorThemeColor,
     flexDirection: 'row',
     alignItems: 'center',

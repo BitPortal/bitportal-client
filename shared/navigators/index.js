@@ -47,6 +47,7 @@ import NodeSettings from 'screens/Profile/Settings/NodeSettings'
 import CreateContact from 'screens/Profile/CreateContact'
 import ResetPassword from 'screens/Profile/ResetPassword'
 import AccountManager from 'screens/Profile/AccountManager'
+import AccountDetails from 'screens/Profile/AccountDetails'
 import ExportEntrance from 'screens/Profile/ExportEntrance'
 import ExportKeystore from 'screens/Profile/ExportKeystore'
 import ExportPrivateKey from 'screens/Profile/ExportPrivateKey'
@@ -94,6 +95,7 @@ export const registerScreens = store => {
   Navigation.registerComponent('BitPortal.CreateContact', () => screenComponent(CreateContact, store))
   Navigation.registerComponent('BitPortal.ResetPassword', () => screenComponent(ResetPassword, store))
   Navigation.registerComponent('BitPortal.AccountManager', () => screenComponent(AccountManager, store))
+  Navigation.registerComponent('BitPortal.AccountDetails', () => screenComponent(AccountDetails, store))
   Navigation.registerComponent('BitPortal.ExportEntrance', () => screenComponent(ExportEntrance, store))
   Navigation.registerComponent('BitPortal.ExportKeystore', () => screenComponent(ExportKeystore, store))
   Navigation.registerComponent('BitPortal.ExportPrivateKey', () => screenComponent(ExportPrivateKey, store))

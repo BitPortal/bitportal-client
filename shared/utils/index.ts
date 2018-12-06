@@ -274,3 +274,12 @@ export const isJsonString = (str: string) => {
 
   return true
 }
+
+export const hasEOSAccountImported = (item: any, walletList: any) => {
+  const index = walletList.findIndex((v: any) => (
+     v.get('eosAccountName') === item.eosAccountName 
+    && v.get('publicKey') === item.publicKey
+    && v.get('permission').toLowerCase() === item.permission
+  ))
+  return index !== -1
+}

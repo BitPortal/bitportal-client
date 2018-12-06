@@ -61,7 +61,7 @@ export default class WhiteListTips extends PureComponent {
 
           <View style={styles.titleContainer}>
             <Text style={styles.text15}> 
-            { (authorized && accept) ? ' ' : '开启白名单' } 
+            {(authorized && accept) ? ' ' : '开启白名单'} 
             </Text>
             <View style={styles.titleSetting}>
               <Text onPress={this.switchSetting} style={[styles.text14, { marginTop: -4 }, signedColor]}> 

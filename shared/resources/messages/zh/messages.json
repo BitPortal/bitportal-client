@@ -282,7 +282,7 @@
 
   "wallet_mgmt_button_export_private_key": "导出私钥",
   "wallet_mgmt_button_change_password": "重置密码",
-  "wallet_mgmt_button_sign_out": "登出",
+  "wallet_mgmt_button_sign_out": "删除钱包",
 
   "export_title_export": "导出",
   "export_button_keystore": "导出 Keystore",

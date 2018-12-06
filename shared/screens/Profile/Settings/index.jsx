@@ -68,8 +68,8 @@ export default class Setting extends Component {
               <SettingItem leftItemTitle={<FormattedMessage id="settings_button_node" />} onPress={() => this.changeSettings('NodeSettings')} />
               <SettingItem 
                 disabled={true}
-                leftItemTitle={"白名单功能"} 
-                rightItemTitle={'switch'}
+                leftItemTitle="白名单功能"
+                rightItemTitle='switch'
                 value={value}
                 onValueChange={this.onValueChange}
               />
