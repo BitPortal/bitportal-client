@@ -3,13 +3,14 @@ import { connect } from 'react-redux'
 import { View, ScrollView, LayoutAnimation } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import Colors from 'resources/colors'
-import { IntlProvider, FormattedMessage } from 'react-intl'
+import { IntlProvider } from 'react-intl'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import secureStorage from 'utils/secureStorage'
 import Dialog from 'components/Dialog'
 import messages from 'resources/messages'
 import { GradiantCard, GradiantCardContainer } from 'components/GradiantCard'
 import styles from './styles'
+import UserAgreement from '../../Assets/UserAgreement'
 
 @connect(
   state => ({
@@ -70,6 +71,7 @@ export default class AccountAdd extends Component {
   }
 
   showUserAgreement = async type => {
+    // console.log('###--yy', type)
     const { locale } = this.props
     const eosAccountCreationRequestInfo = await secureStorage.getItem('EOS_ACCOUNT_CREATION_REQUEST_INFO', true)
     if (eosAccountCreationRequestInfo) {
@@ -98,7 +100,7 @@ export default class AccountAdd extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar 
-            title={'添加新账户'} 
+            title='添加新账户'
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
@@ -139,6 +141,11 @@ export default class AccountAdd extends Component {
               </GradiantCardContainer>
             </ScrollView>
           </View>
+          <UserAgreement
+            acceptUserAgreement={this.acceptUserAgreement}
+            isVisible={this.state.isVisible}
+            dismissModal={this.dismissModal}
+          />
         </View>
       </IntlProvider>
     )

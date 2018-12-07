@@ -54,6 +54,7 @@ export const errorMessages = (error, messages) => {
 @connect(
   state => ({
     locale: state.intl.get('locale'),
+    whiteList: state.whiteList,
     hasPendingMessage: state.dappBrowser.get('hasPendingMessage'),
     resolvingMessage: state.dappBrowser.get('resolving'),
     sendingMessage: state.dappBrowser.get('sendingMessage'),
@@ -233,7 +234,17 @@ export default class DappWebView extends Component {
   }
 
   showPrompt = () => {
-    this.setState({ showPrompt: true })
+    const { whiteList } = this.props
+    const dappName = whiteList.getIn(['selectedDapp', 'dappName'])
+    const dappList = whiteList.get('dappList')
+    let authorized = false
+    dappList.forEach((v) => { if (v.get('dappName') === dappName) { authorized = v.get('authorized') }})
+    if (authorized) {
+      const password = whiteList.get('password')
+      this.props.actions.resolveMessage({ password })
+    } else {
+      this.setState({ showPrompt: true })
+    }
   }
 
   closePrompt = () => {
@@ -259,7 +270,8 @@ export default class DappWebView extends Component {
     this.props.actions.noticeWhiteList({
       componentId,
       dappName: this.props.title,
-      dappUrl: this.props.uri
+      dappUrl: this.props.uri,
+      iconUrl: this.props.iconUrl
     })
     this.props.actions.getWhiteListStoreInfo({ dappName: this.props.title })
   }
@@ -332,7 +344,7 @@ export default class DappWebView extends Component {
               startInLoadingState={true}
               useWebKit={true}
               originWhitelist={['http://', 'https://']}
-              mixedContentMode={'always'}
+              mixedContentMode='always'
               thirdPartyCookiesEnabled={true}
               automaticallyAdjustContentInsets={false}
               onNavigationStateChange={this.onNavigationStateChange}

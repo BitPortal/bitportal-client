@@ -3,15 +3,16 @@ import { handleActions } from 'redux-actions'
 import * as actions from 'actions/whiteList'
 
 const initialState = Immutable.fromJS({
-  value: false,
-  password: '',
-  dappList: [],
-  selectedDapp: {
-    dappName: '',
-    dappUrl: '',
-    accept: false,
-    settingDisplay: false,
-    settingEnabled: false
+  value: false, // 设置页面的白名单功能开关
+  password: '', // 临时属性 不本地存储
+  dappList: [], // 和账户绑定 记录授权过的白名单列表
+  selectedDapp: { // 当前进行中的dapp
+    dappName: '', // 当前进行中的dapp名字
+    dappUrl: '', // 当前进行中的dappurl
+    iconUrl: '', // 当前进行中的dapp icon url
+    accept: false, // 当前进行中的dapp是否开启了白名单  如开启则只需输一次密码即可
+    settingDisplay: false, // 当前进行中的dapp是否展示高级设置
+    settingEnabled: false // 当前进行中的dapp是否开启了高级设置
   },
   loading: false,
   loaded: false,
@@ -30,6 +31,7 @@ export default handleActions(
       return state
       .setIn(['selectedDapp', 'dappName'], action.payload.dappName)
       .setIn(['selectedDapp', 'dappUrl'], action.payload.dappUrl)
+      .setIn(['selectedDapp', 'iconUrl'], action.payload.iconUrl)
     },
     [actions.changeSettingEnabled](state, action) {
       return state.setIn(['selectedDapp', 'settingEnabled'], action.payload.settingEnabled)
@@ -50,6 +52,7 @@ export default handleActions(
       return state
       .setIn(['selectedDapp', 'dappName'], action.payload.dappName)
       .setIn(['selectedDapp', 'dappUrl'], action.payload.dappUrl)
+      .setIn(['selectedDapp', 'iconUrl'], action.payload.iconUrl)
       .setIn(['selectedDapp', 'accept'], action.payload.accept)
       .setIn(['selectedDapp', 'settingDisplay'], action.payload.settingDisplay)
       .setIn(['selectedDapp', 'settingEnabled'], action.payload.settingEnabled)

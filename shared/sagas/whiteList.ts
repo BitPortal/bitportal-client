@@ -14,13 +14,15 @@ function* noticeWhiteList(action: any) {
 
     const dappName = action.payload.dappName
     const dappUrl = action.payload.dappUrl
-    yield put(actions.recordDappInfo({ dappName, dappUrl }))
+    const iconUrl = action.payload.iconUrl
+
+    yield put(actions.recordDappInfo({ dappName, dappUrl, iconUrl }))
     if (!info || (!!info && !info.dappLuanched)) {
       const storeInfo = { dappLuanched: true }
       yield call(storage.mergeItem, 'bitportal_white_list', storeInfo, true)
       Dialog.whiteListAlert(
-        "提示",
-        "DApp白名单开关已经移置设置，新增了体验更流畅的高级模式，是否前往开启白名单功能？",
+        '提示',
+        'DApp白名单开关已经移置设置，新增了体验更流畅的高级模式，是否前往开启白名单功能？',
         locale,
         action.payload.componentId
       )
@@ -93,11 +95,9 @@ function* updateWhiteListStoreInfo(action: any) {
       yield put(actions.recordDappList({ dappList: reducerDappList }))
     }
     
-    let storeDappList = []
+    const storeDappList: any = []
     if (dappList.length > 1) {
-      dappList.forEach((v: any) => {
-        storeDappList.push(v.delete('authorized').toJS())  
-      });
+      dappList.forEach((v: any) => { storeDappList.push(v.delete('authorized').toJS()) })
     } else {
       storeDappList.push(dappInfo.delete('authorized').toJS())
     }
