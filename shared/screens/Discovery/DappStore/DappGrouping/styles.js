@@ -9,35 +9,23 @@ import {
 const styles = {
   sceneContainer: {
     width: SCREEN_WIDTH,
-    height: 260
+    height: 255
   },
   wrapper: {
     width: SCREEN_WIDTH,
     alignItems: 'center',
-    height: 260
-  },
-  tabBar: {
-    width: FLOATING_CARD_WIDTH,
-    backgroundColor: Colors.minorThemeColor,
-    borderRadius: FLOATING_CARD_BORDER_RADIUS,
-    height: 30,
-    marginBottom: FLOATING_CARD_MARGIN_BOTTOM
+    height: 255
   },
   dAppScrollViewContainer: {
     width: FLOATING_CARD_WIDTH,
     borderRadius: FLOATING_CARD_BORDER_RADIUS,
-    // paddingVertical: 15,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     flexWrap: 'wrap',
     backgroundColor: Colors.minorThemeColor
-    // backgroundColor: 'red'
-    // flex: 1
   },
   tabbar: {
-    // width: FLOATING_CARD_WIDTH,
-    // marginTop: 10,
     height: 10,
     backgroundColor: Colors.mainThemeColor,
     overflow: 'hidden',

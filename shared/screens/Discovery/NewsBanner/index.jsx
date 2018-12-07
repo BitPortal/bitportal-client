@@ -30,7 +30,7 @@ export default class NewBanner extends PureComponent {
     this.props.actions.getNewsBannerRequested()
   }
 
-  onBannerPress = (item) => {
+  onBannerPress = item => {
     const inject = loadInjectSync()
     Navigation.push(this.props.componentId, {
       component: {
@@ -48,18 +48,16 @@ export default class NewBanner extends PureComponent {
     const { bannerData } = this.props
     const banners = bannerData.toJS()
     return banners.map(item => (
-      <BannerCard
-        imageUrl={item.img_url}
-        key={item.id}
-        onPress={() => this.onBannerPress(item)}
-      />
+      <BannerCard imageUrl={item.img_url} key={item.id} onPress={() => this.onBannerPress(item)} />
     ))
   }
 
   render() {
     const { bannerData } = this.props
     const banners = bannerData.toJS()
-    if (!banners || banners.length < 1) { return null }
+    if (!banners || banners.length < 1) {
+      return null
+    }
     return (
       <View style={styles.container}>
         <Swiper

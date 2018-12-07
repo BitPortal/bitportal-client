@@ -16,6 +16,7 @@ import AddRemoveButtonAnimation from 'components/AddRemoveButton/animation'
 import messages from 'resources/messages'
 import sectionListGetItemLayout from 'react-native-section-list-get-item-layout'
 import Images from 'resources/images'
+import _ from 'lodash'
 
 import DappListItem from './DappListItem'
 import styles from './styles'
@@ -65,7 +66,11 @@ export default class DappList extends Component {
     }
   }
 
-  state = { visible: false, filteredSections: [] }
+  componentDidUpdate
+
+  state = { visible: false, filteredSections: undefined }
+
+  filteredSections = _.memoize((list, section) => (section === 'all' ? list : list.filter(e => e.title === section)))
 
   showModal = () => {
     this.setState({ visible: true })
@@ -75,7 +80,19 @@ export default class DappList extends Component {
     this.setState({ visible: false })
   }
 
+  handleSectionFilter = () => {
+    if (this.props.section === 'all') {
+      this.setState({ filteredSections: this.props.dAppSections })
+      // return this.props.dAppSections
+    } else if (this.props.section) {
+      const filteredSections = this.props.dAppSections.filter(e => e.title === this.props.section)
+      this.setState({ filteredSections })
+      // return filteredSections
+    }
+  }
+
   UNSAFE_componentWillMount() {
+    this.handleSectionFilter()
     // if (this.props.section === 'all') this.setState({ filteredSections: this.props.dAppSections })
     // else if (this.props.section)
     //   this.setState({ filteredSections: this.props.dAppSections.filter(e => e.title === this.props.section) })
@@ -87,6 +104,34 @@ export default class DappList extends Component {
     //     animated: true
     //   })
     // }, 500)
+  }
+
+  componentDidUpdate(prevProps) {
+    // this.handleSectionFilter()
+    if (prevProps.dAppSections !== this.props.dAppSections) {
+      this.handleListPosition()
+      console.log('didupdatenotthesame', this.sectionListRef)
+    }
+  }
+
+  handleListPosition = () => {
+    this.sectionListRef._wrapperListRef._listRef.scrollToOffset({
+      offset: this.handleOffset(),
+      animated: false
+    })
+  }
+
+  handleOffset = () => {
+    console.log('dapppps', this.props.dAppSections)
+    const { dAppSections } = this.props
+    if (this.props.dAppSections[0].title !== 'favorite') {
+      console.log('yoyoyoyo')
+      return this.state.yOffset
+    // } else if (this.props.dAppSections[0].title === 'favorite' && dAppSections.data.length === 1) {
+    //   return this.state.yOffset
+    } else {
+      return this.props.selected ? this.state.yOffset - 81 : this.state.yOffset + 81
+    }
   }
 
   handleFloatingRadius = ({ index, section }) => {
@@ -134,7 +179,10 @@ export default class DappList extends Component {
     this.props.actions.setSearchTerm(text)
   }
 
-  keyExtractor = item => item.get('id')
+  keyExtractor = item =>
+    // if (item.get('id') === '5b686329393c735b018f4be6') console.log('itemm', item.toJS())
+    // return () => item.get('id')
+    item.get('id')
 
   goBack = () => {
     Navigation.pop(this.props.componentId)
@@ -144,12 +192,16 @@ export default class DappList extends Component {
     this.props.actions.setSearchTerm('')
   }
 
+  handleScroll = event => this.setState({ yOffset: event.nativeEvent.contentOffset.y })
+
   render() {
-    let filteredSections
-    if (this.props.section === 'all') filteredSections = this.props.dAppSections
-    else if (this.props.section) filteredSections = this.props.dAppSections.filter(e => e.title === this.props.section)
+    // let filteredSections
+    // if (this.props.section === 'all') filteredSections = this.props.dAppSections
+    // else if (this.props.section) filteredSections = this.props.dAppSections.filter(e => e.title === this.props.section)
     const { locale, loading, searchTerm, dAppSections } = this.props
-    console.log('filteredSectionss', filteredSections, this.props.extraCloseProps)
+    const filteredSections = this.filteredSections(this.props.dAppSections, this.props.section)
+    // const { filteredSections } = this.state
+    // console.log('filteredSectionss', filteredSections, this.props.extraCloseProps, this.getItemLayout())
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -192,6 +244,11 @@ export default class DappList extends Component {
               showsVerticalScrollIndicator={false}
               stickySectionHeadersEnabled={false}
               refreshing={loading}
+              onScroll={this.handleScroll}
+              // maintainPositionAtOrBeyondIndex={1}
+              // onViewableItemsChanged={({ viewableItems, changed }) => {
+              //   console.log('onviewableitemschanged', viewableItems, changed)
+              // }}
             />
           </View>
 

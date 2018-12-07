@@ -90,7 +90,6 @@ export default class DappElement extends Component {
           title: item.get('display_name').get(this.props.locale) || item.get('display_name').get('en'),
           inject,
           item,
-          selected,
           name: item.get('name')
         }
       }

@@ -310,6 +310,7 @@ export default class DappWebView extends Component {
       inject,
       item
     } = this.props
+    console.log('webviewww',this.props.name)
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>

@@ -33,11 +33,7 @@ export default class DappGrouping extends Component {
   state = {
     /*eslint-disable*/
     index: 0,
-    routes: [
-      { key: 'first', title: '', color: 'red' },
-      { key: 'second', title: '', color: 'blue' },
-      { key: 'third', title: '', color: 'green' }
-    ]
+    routes: [{ key: 'first', title: '' }, { key: 'second', title: '' }, { key: 'third', title: '' }]
   }
 
   componentDidMount() {
@@ -66,11 +62,8 @@ export default class DappGrouping extends Component {
   }
 
   _renderIndicator = props => {
-    console.log('width', props)
-    // const { width, position } = props
     const { position } = props
     const inputRange = [0, 0.48, 0.49, 0.51, 0.52, 1, 1.48, 1.49, 1.51, 1.52, 2]
-    // const inputRange = [0, 1, 2]
 
     const scale = position.interpolate({
       inputRange,
@@ -122,15 +115,13 @@ export default class DappGrouping extends Component {
   }
 
   _renderTabBar = props => {
-    console.log('tabbarr', props)
     return (
       <TabBar
         {...props}
-        renderIcon={this._renderIcon}
-        renderBadge={this._renderBadge}
+        // renderIcon={this._renderIcon}
+        // renderBadge={this._renderBadge}
         renderIndicator={this._renderIndicator}
         style={styles.tabbar}
-        // indicatorStyle={{ backgroundColor: 'red', height: 50 }}
       />
     )
   }
