@@ -103,9 +103,9 @@ export default class DappWebView extends Component {
   }
 
   handleBrowserMenuList = () => {
-    const item = this.props.mergedFavoritesDappList.filter(element => element.get('name') === this.props.name).get(0)
-    // console.log('handleBrowserMenuList', this.props.mergedFavoritesDappList, item, this.props.name, this.props)
-    return [
+    let item = ''
+    if (this.props.name) item = this.props.mergedFavoritesDappList.filter(element => element.get('name') === this.props.name).get(0)
+    const menuList = [
       {
         name: globalMessages[this.props.locale].webview_button_refresh,
         onPress: () => {
@@ -130,18 +130,20 @@ export default class DappWebView extends Component {
           this.linking()
         },
         icon: Images.dapp_browser_open_in_browser
-      },
-      {
-        name: item.get('selected')
-          ? globalMessages[this.props.locale].webview_button_remove_from_favorites
-          : globalMessages[this.props.locale].webview_button_add_to_favorites,
-        onPress: () => {
-          this.toggleFavorite(item)
-          setTimeout(() => this.hideBrowserMenu(), 500)
-        },
-        icon: item.get('selected') ? Images.dapp_browser_favorite_unsave : Images.dapp_browser_favorite_save
       }
+       
     ]
+    if (this.props.name) menuList.push({
+      name: item.get('selected')
+        ? globalMessages[this.props.locale].webview_button_remove_from_favorites
+        : globalMessages[this.props.locale].webview_button_add_to_favorites,
+      onPress: () => {
+        this.toggleFavorite(item)
+        setTimeout(() => this.hideBrowserMenu(), 500)
+      },
+      icon: item.get('selected') ? Images.dapp_browser_favorite_unsave : Images.dapp_browser_favorite_save
+    })
+    return menuList
   }
 
   componentDidUpdate(prevProps) {
@@ -172,7 +174,6 @@ export default class DappWebView extends Component {
       })
       .catch(err => console.error('An error occurred', err))
   }
-
 
   goBack = () => {
     if (this.state.browserHistory.length === 1) {
@@ -238,7 +239,11 @@ export default class DappWebView extends Component {
     const dappName = whiteList.getIn(['selectedDapp', 'dappName'])
     const dappList = whiteList.get('dappList')
     let authorized = false
-    dappList.forEach((v) => { if (v.get('dappName') === dappName) { authorized = v.get('authorized') }})
+    dappList.forEach(v => {
+      if (v.get('dappName') === dappName) {
+        authorized = v.get('authorized')
+      }
+    })
     if (authorized) {
       const password = whiteList.get('password')
       this.props.actions.resolveMessage({ password })
@@ -322,7 +327,7 @@ export default class DappWebView extends Component {
       inject,
       item
     } = this.props
-    console.log('webviewww',this.props.name)
+    console.log('propss',this.props)
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -344,7 +349,7 @@ export default class DappWebView extends Component {
               startInLoadingState={true}
               useWebKit={true}
               originWhitelist={['http://', 'https://']}
-              mixedContentMode='always'
+              mixedContentMode="always"
               thirdPartyCookiesEnabled={true}
               automaticallyAdjustContentInsets={false}
               onNavigationStateChange={this.onNavigationStateChange}
@@ -392,19 +397,8 @@ export default class DappWebView extends Component {
               menuList={this.handleBrowserMenuList()}
               linking={this.linking}
             />
-            <Modal
-              transparent={true}
-              isVisible={this.state.visibleAnimation}
-              backdropOpacity={0}
-              disableAnimation
-              animationInTiming={10}
-              animationOutTiming={10}
-            >
-              <View style={styles.favAnimationModal}>
-                <AddRemoveButtonAnimation value={this.props.selectedDapp} />
-              </View>
-            </Modal>
           </Modal>
+          <AddRemoveButtonAnimation visible={this.state.visibleAnimation} value={this.props.selectedDapp} />
         </View>
       </IntlProvider>
     )

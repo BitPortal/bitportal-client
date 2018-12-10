@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     paddingVertical: 15,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    justifyContent: 'center'
   },
   menuItemWrapper: {
     flexDirection: 'column',
