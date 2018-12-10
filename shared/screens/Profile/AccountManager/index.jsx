@@ -4,7 +4,7 @@ import Colors from 'resources/colors'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
-import { FormattedMessage, IntlProvider } from 'react-intl'
+import { IntlProvider } from 'react-intl'
 import messages from 'resources/messages'
 import WalletCard from 'components/WalletCard'
 import { walletListSelector } from 'selectors/wallet'
@@ -57,7 +57,6 @@ export default class AccountManager extends Component {
 
   render() {
     const { locale, walletList, eosPrice } = this.props
-    // console.log('###--yy', walletList.toJS())
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -90,7 +89,7 @@ export default class AccountManager extends Component {
             </ScrollView>
           </View>
           <View style={styles.btnContainer}>
-            <TouchableOpacity style={[{ flex: 1 }, styles.center]} onPress={this.routeToNewAccount} >
+            <TouchableOpacity style={[{flex: 1}, styles.center]} onPress={this.routeToNewAccount} >
               <Text style={styles.text14}>
                 添加新钱包
               </Text>

@@ -173,10 +173,10 @@ function* createWalletRequested(action: Action<CreateWalletParams>) {
 function* syncWalletRequested() {
   try {
     // const items = yield call(secureStorage.getAllItems)
-    // console.log(items)
 
     const allItems = yield call(secureStorage.getAllItems)
-    
+    // console.log('###--yy', allItems)
+
     const hdWalletList = Object.keys(allItems).filter(item => !item.indexOf('HD_KEYSTORE')).map((item) => {
       const id = item.slice('HD_KEYSTORE'.length + 1)
       const infoKey = `HD_WALLET_INFO_${id}`
@@ -243,18 +243,20 @@ function* logoutRequested(action: Action<LogoutParams>) {
     const origin = action.payload.origin
     const bpid = action.payload.bpid
     const coin = action.payload.coin
-    const permission = action.payload.permission
+    const permission = action.payload.permission && action.payload.permission.toUpperCase()
     const publicKey = action.payload.publicKey
-
     assert(origin, 'No origin!')
 
     if (origin === 'hd') {
       const keystore = yield call(secureStorage.getItem, `HD_KEYSTORE_${bpid}`, true)
       yield call(decrypt, keystore, password)
     } else if (coin === 'EOS') {
-      const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
-      const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
-      yield call(getEOSWifsByInfo, password, accountInfo, [permission])
+      let accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
+      if (!accountInfo) {
+        accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}_${permission}`, true)
+      }
+      const permissions = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
+      yield call(getEOSWifsByInfo, password, accountInfo, [permissions])
     }
 
     const allItems = yield call(secureStorage.getAllItems)
@@ -262,9 +264,13 @@ function* logoutRequested(action: Action<LogoutParams>) {
     if (active.eosAccountName === eosAccountName && active.publicKey === publicKey) {
       yield call(secureStorage.removeItem, 'ACTIVE_WALLET')
     }
-    yield call(secureStorage.removeItem, `EOS_ACCOUNT_INFO_${eosAccountName}`)
-    yield call(secureStorage.removeItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_${permission}_${publicKey}`)
+    // 删除旧版本本地存储信息
+    yield call(secureStorage.removeItem, `EOS_ACCOUNT_INFO_${eosAccountName}`) 
     yield call(secureStorage.removeItem, `CLASSIC_WALLET_INFO_EOS_${eosAccountName}`)
+     // 删除新版本本地存储信息
+    yield call(secureStorage.removeItem, `EOS_ACCOUNT_INFO_${eosAccountName}_${permission}`)
+    yield call(secureStorage.removeItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_${permission}_${publicKey}`)
+    yield call(secureStorage.removeItem, `CLASSIC_WALLET_INFO_EOS_${eosAccountName}_${permission}`)
     
     yield call(storage.removeItem, 'bitportal_toggledEOSAsset')
     yield call(storage.removeItem, 'bitportal_favoriteDapps')
@@ -291,6 +297,7 @@ function* logoutRequested(action: Action<LogoutParams>) {
     yield put(unsubscribe(params))
 
   } catch (e) {
+
     yield put(actions.logoutFailed(getErrorMessage(e)))
   }
 }

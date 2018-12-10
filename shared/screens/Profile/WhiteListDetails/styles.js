@@ -10,25 +10,48 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT,
+    alignItems: 'center'
   },
   listItem: {
     width: SCREEN_WIDTH,
-    height: 50
+    height: 64
   },
   extraListItem: {
-    justifyContent: 'center',
-    paddingLeft: 32,
-    borderBottomColor: Colors.minorThemeColor,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    paddingLeft: 20,
+    borderBottomColor: Colors.mainThemeColor,
     borderBottomWidth: StyleSheet.hairlineWidth,
     backgroundColor: Colors.bgColor_30_31_37
   },
-  text14: {
-    fontSize: FontScale(14),
+  image: {
+    width: 50,
+    height: 50,
+    marginRight: 10
+  },
+  switch: {
+    transform: [{ scaleX: .8 }, { scaleY: .8 }],
+    marginRight: 20
+  },
+  header: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: SCREEN_WIDTH,
+    height: 30,
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+    backgroundColor: Colors.mainThemeColor,
+    borderBottomColor: Colors.minorThemeColor,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  text16: {
+    fontSize: FontScale(16),
     color: Colors.textColor_255_255_238
   },
-  text12: {
-    fontSize: FontScale(12),
+  text14: {
+    fontSize: FontScale(14),
     color: Colors.textColor_181_181_181
   }
 })

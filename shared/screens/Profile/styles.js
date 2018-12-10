@@ -5,8 +5,7 @@ import {
   SCREEN_HEIGHT,
   NAV_BAR_HEIGHT,
   TAB_BAR_HEIGHT,
-  FLOATING_CARD_WIDTH,
-  FLOATING_CARD_BORDER_RADIUS
+  FLOATING_CARD_WIDTH
 } from 'utils/dimens'
 import Colors from 'resources/colors'
 
