@@ -107,10 +107,8 @@ export default class DappList extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    // this.handleSectionFilter()
     if (prevProps.dAppSections !== this.props.dAppSections) {
       this.handleListPosition()
-      console.log('didupdatenotthesame', this.sectionListRef)
     }
   }
 
@@ -122,15 +120,21 @@ export default class DappList extends Component {
   }
 
   handleOffset = () => {
-    console.log('dapppps', this.props.dAppSections)
-    const { dAppSections } = this.props
-    if (this.props.dAppSections[0].title !== 'favorite') {
-      console.log('yoyoyoyo')
-      return this.state.yOffset
-    // } else if (this.props.dAppSections[0].title === 'favorite' && dAppSections.data.length === 1) {
-    //   return this.state.yOffset
+    const { dAppSections, selected, section } = this.props
+    if (section === 'all' && dAppSections && dAppSections[0] && dAppSections[0].title !== 'favorite') {
+      return this.state.yOffset - 131
+    } else if (
+      section === 'all' &&
+      dAppSections &&
+      dAppSections[0] &&
+      dAppSections[0].title === 'favorite' &&
+      dAppSections[0].data.length === 1
+    ) {
+      return selected ? this.state.yOffset - 131 : this.state.yOffset + 131
+    } else if (section === 'all') {
+      return selected ? this.state.yOffset - 81 : this.state.yOffset + 81
     } else {
-      return this.props.selected ? this.state.yOffset - 81 : this.state.yOffset + 81
+      return this.state.yOffset
     }
   }
 
@@ -179,10 +183,7 @@ export default class DappList extends Component {
     this.props.actions.setSearchTerm(text)
   }
 
-  keyExtractor = item =>
-    // if (item.get('id') === '5b686329393c735b018f4be6') console.log('itemm', item.toJS())
-    // return () => item.get('id')
-    item.get('id')
+  keyExtractor = item => item.get('id')
 
   goBack = () => {
     Navigation.pop(this.props.componentId)
@@ -192,16 +193,14 @@ export default class DappList extends Component {
     this.props.actions.setSearchTerm('')
   }
 
-  handleScroll = event => this.setState({ yOffset: event.nativeEvent.contentOffset.y })
+  handleScroll = event => {
+    this.setState({ yOffset: event.nativeEvent.contentOffset.y })
+  }
 
   render() {
-    // let filteredSections
-    // if (this.props.section === 'all') filteredSections = this.props.dAppSections
-    // else if (this.props.section) filteredSections = this.props.dAppSections.filter(e => e.title === this.props.section)
     const { locale, loading, searchTerm, dAppSections } = this.props
     const filteredSections = this.filteredSections(this.props.dAppSections, this.props.section)
-    // const { filteredSections } = this.state
-    // console.log('filteredSectionss', filteredSections, this.props.extraCloseProps, this.getItemLayout())
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -245,27 +244,12 @@ export default class DappList extends Component {
               stickySectionHeadersEnabled={false}
               refreshing={loading}
               onScroll={this.handleScroll}
-              // maintainPositionAtOrBeyondIndex={1}
               // onViewableItemsChanged={({ viewableItems, changed }) => {
               //   console.log('onviewableitemschanged', viewableItems, changed)
               // }}
             />
           </View>
-
-          <View>
-            <Modal transparent={true} visible={this.state.visible}>
-              <View
-                style={{
-                  // backgroundColor: 'yellow',
-                  width: SCREEN_WIDTH,
-                  flex: 1,
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}
-              />
-              <AddRemoveButtonAnimation value={this.props.selected} />
-            </Modal>
-          </View>
+          <AddRemoveButtonAnimation visible={this.state.visible} value={this.props.selected} />
         </View>
       </IntlProvider>
     )
