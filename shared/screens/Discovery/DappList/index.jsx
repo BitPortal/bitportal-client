@@ -68,7 +68,7 @@ export default class DappList extends Component {
 
   componentDidUpdate
 
-  state = { visible: false, filteredSections: undefined }
+  state = { visible: false, yOffset: 0 }
 
   filteredSections = _.memoize((list, section) => (section === 'all' ? list : list.filter(e => e.title === section)))
 
@@ -113,8 +113,9 @@ export default class DappList extends Component {
   }
 
   handleListPosition = () => {
+    const offset = this.handleOffset()
     this.sectionListRef._wrapperListRef._listRef.scrollToOffset({
-      offset: this.handleOffset(),
+      offset: offset < 0 ? 0 : offset,
       animated: false
     })
   }

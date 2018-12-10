@@ -45,7 +45,7 @@ export default class DappListItem extends React.PureComponent {
         item,
         selected: item.get('selected')
       })
-      setTimeout(() => this.props.hideModal(), 500)
+      setTimeout(() => this.props.hideModal(), 1000)
     }
   }
 
