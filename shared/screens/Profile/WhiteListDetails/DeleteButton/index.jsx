@@ -7,7 +7,7 @@ import { SCREEN_WIDTH } from 'utils/dimens'
 const styles = StyleSheet.create({
   btn: {
     width: 100,
-    height: 50,
+    height: 64,
     marginLeft: SCREEN_WIDTH - 100,
     backgroundColor: Colors.bgColor_255_71_64
   },

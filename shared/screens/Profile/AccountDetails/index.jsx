@@ -120,7 +120,10 @@ export default class AccountDetails extends Component {
   routeToWhiteListDetails = () => {
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.WhiteListDetails'
+        name: 'BitPortal.WhiteListDetails',
+        passProps: {
+          eosAccountName: this.props.eosAccountName
+        }
       }
     })
   }
@@ -152,13 +155,8 @@ export default class AccountDetails extends Component {
               <SettingItem
                 leftItemTitle={<FormattedMessage id="wallet_mgmt_button_change_password" />}
                 onPress={this.resetPassword}
-                extraStyle={{
-                  borderTopLeftRadius: FLOATING_CARD_BORDER_RADIUS,
-                  borderTopRightRadius: FLOATING_CARD_BORDER_RADIUS
-                }}
               />
               <SettingItem
-                disabled={true}
                 leftItemTitle='白名单详情'
                 onPress={this.routeToWhiteListDetails}
                 extraStyle={{

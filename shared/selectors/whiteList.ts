@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect'
+import { eosAccountNameSelector } from 'selectors/eosAccount'
 
 const dappListSelector = (state: RootState) => state.whiteList.get('dappList')
 const dappNameSelector = (state: RootState) => state.whiteList.getIn(['selectedDapp', 'dappName'])

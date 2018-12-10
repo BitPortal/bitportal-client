@@ -14,3 +14,7 @@ export const recordPassword = createAction<object>('whiteList/RECORD_PASSWORD')
 export const updateWhiteListStoreInfo = createAction<object>('whiteList/UPDATE_STORE_INFO')
 export const initSelectedDapp = createAction<object>('whiteList/INIT_SELECTED_DAPP')
 export const resetSelectedDapp = createAction('whiteList/RESET_DAPP')
+export const getDappListStoreInfo = createAction('whiteList/DAPP_LIST_INFO')
+
+export const resetSettingEnabled = createAction<object>('whiteList/RESET_SETTING_ENABLED')
+export const deleteContract = createAction<object>('whiteList/DELETE_CONTRACT')

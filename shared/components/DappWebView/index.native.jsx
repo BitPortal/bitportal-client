@@ -103,9 +103,11 @@ export default class DappWebView extends Component {
   }
 
   handleBrowserMenuList = () => {
+
     let item = ''
     if (this.props.name) item = this.props.mergedFavoritesDappList.filter(element => element.get('name') === this.props.name).get(0)
     const menuList = [
+
       {
         name: globalMessages[this.props.locale].webview_button_refresh,
         onPress: () => {
@@ -327,7 +329,6 @@ export default class DappWebView extends Component {
       inject,
       item
     } = this.props
-    console.log('propss',this.props)
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>

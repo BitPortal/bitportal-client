@@ -69,8 +69,8 @@ export default class AccountSwitchModal extends Component {
                 
               </View>
               <ScrollView style={styles.body} contentContainerStyle={styles.contentContainerStyle}>
-                {walletList.map((item) => (
-                  <TouchableOpacity key={item.get('publicKey')+item.get('permission')} onPress={() => this.switchAccount(item)}>
+                {walletList.map((item, index) => (
+                  <TouchableOpacity key={index} onPress={() => this.switchAccount(item)}>
                     <View style={styles.accountItemContainer}>
                       <View>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
