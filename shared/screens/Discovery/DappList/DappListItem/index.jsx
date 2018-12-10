@@ -101,7 +101,8 @@ export default class DappListItem extends React.PureComponent {
           iconUrl: item.get('icon_url'),
           title: item.get('display_name').get(this.props.locale) || item.get('display_name').get('en'),
           inject,
-          item
+          item,
+          name: item.get('name')
         }
       }
     })

@@ -16,6 +16,7 @@ import AddRemoveButtonAnimation from 'components/AddRemoveButton/animation'
 import messages from 'resources/messages'
 import sectionListGetItemLayout from 'react-native-section-list-get-item-layout'
 import Images from 'resources/images'
+import _ from 'lodash'
 
 import DappListItem from './DappListItem'
 import styles from './styles'
@@ -65,7 +66,11 @@ export default class DappList extends Component {
     }
   }
 
-  state = { visible: false, filteredSections: [] }
+  componentDidUpdate
+
+  state = { visible: false, filteredSections: undefined }
+
+  filteredSections = _.memoize((list, section) => (section === 'all' ? list : list.filter(e => e.title === section)))
 
   showModal = () => {
     this.setState({ visible: true })
@@ -75,7 +80,19 @@ export default class DappList extends Component {
     this.setState({ visible: false })
   }
 
+  handleSectionFilter = () => {
+    if (this.props.section === 'all') {
+      this.setState({ filteredSections: this.props.dAppSections })
+      // return this.props.dAppSections
+    } else if (this.props.section) {
+      const filteredSections = this.props.dAppSections.filter(e => e.title === this.props.section)
+      this.setState({ filteredSections })
+      // return filteredSections
+    }
+  }
+
   UNSAFE_componentWillMount() {
+    this.handleSectionFilter()
     // if (this.props.section === 'all') this.setState({ filteredSections: this.props.dAppSections })
     // else if (this.props.section)
     //   this.setState({ filteredSections: this.props.dAppSections.filter(e => e.title === this.props.section) })
@@ -87,6 +104,38 @@ export default class DappList extends Component {
     //     animated: true
     //   })
     // }, 500)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.dAppSections !== this.props.dAppSections) {
+      this.handleListPosition()
+    }
+  }
+
+  handleListPosition = () => {
+    this.sectionListRef._wrapperListRef._listRef.scrollToOffset({
+      offset: this.handleOffset(),
+      animated: false
+    })
+  }
+
+  handleOffset = () => {
+    const { dAppSections, selected, section } = this.props
+    if (section === 'all' && dAppSections && dAppSections[0] && dAppSections[0].title !== 'favorite') {
+      return this.state.yOffset - 131
+    } else if (
+      section === 'all' &&
+      dAppSections &&
+      dAppSections[0] &&
+      dAppSections[0].title === 'favorite' &&
+      dAppSections[0].data.length === 1
+    ) {
+      return selected ? this.state.yOffset - 131 : this.state.yOffset + 131
+    } else if (section === 'all') {
+      return selected ? this.state.yOffset - 81 : this.state.yOffset + 81
+    } else {
+      return this.state.yOffset
+    }
   }
 
   handleFloatingRadius = ({ index, section }) => {
@@ -144,12 +193,14 @@ export default class DappList extends Component {
     this.props.actions.setSearchTerm('')
   }
 
+  handleScroll = event => {
+    this.setState({ yOffset: event.nativeEvent.contentOffset.y })
+  }
+
   render() {
-    let filteredSections
-    if (this.props.section === 'all') filteredSections = this.props.dAppSections
-    else if (this.props.section) filteredSections = this.props.dAppSections.filter(e => e.title === this.props.section)
     const { locale, loading, searchTerm, dAppSections } = this.props
-    console.log('filteredSectionss', filteredSections, this.props.extraCloseProps)
+    const filteredSections = this.filteredSections(this.props.dAppSections, this.props.section)
+
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -192,23 +243,13 @@ export default class DappList extends Component {
               showsVerticalScrollIndicator={false}
               stickySectionHeadersEnabled={false}
               refreshing={loading}
+              onScroll={this.handleScroll}
+              // onViewableItemsChanged={({ viewableItems, changed }) => {
+              //   console.log('onviewableitemschanged', viewableItems, changed)
+              // }}
             />
           </View>
-
-          <View>
-            <Modal transparent={true} visible={this.state.visible}>
-              <View
-                style={{
-                  // backgroundColor: 'yellow',
-                  width: SCREEN_WIDTH,
-                  flex: 1,
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}
-              />
-              <AddRemoveButtonAnimation value={this.props.selected} />
-            </Modal>
-          </View>
+          <AddRemoveButtonAnimation visible={this.state.visible} value={this.props.selected} />
         </View>
       </IntlProvider>
     )

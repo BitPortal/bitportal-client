@@ -104,7 +104,6 @@ export default class DappWebView extends Component {
 
   handleBrowserMenuList = () => {
     const item = this.props.mergedFavoritesDappList.filter(element => element.get('name') === this.props.name).get(0)
-    // console.log('handleBrowserMenuList', this.props.mergedFavoritesDappList, item, this.props.name, this.props)
     return [
       {
         name: globalMessages[this.props.locale].webview_button_refresh,
@@ -173,7 +172,6 @@ export default class DappWebView extends Component {
       .catch(err => console.error('An error occurred', err))
   }
 
-
   goBack = () => {
     if (this.state.browserHistory.length === 1) {
       Navigation.pop(this.props.componentId)
@@ -238,7 +236,11 @@ export default class DappWebView extends Component {
     const dappName = whiteList.getIn(['selectedDapp', 'dappName'])
     const dappList = whiteList.get('dappList')
     let authorized = false
-    dappList.forEach((v) => { if (v.get('dappName') === dappName) { authorized = v.get('authorized') }})
+    dappList.forEach(v => {
+      if (v.get('dappName') === dappName) {
+        authorized = v.get('authorized')
+      }
+    })
     if (authorized) {
       const password = whiteList.get('password')
       this.props.actions.resolveMessage({ password })
@@ -343,7 +345,7 @@ export default class DappWebView extends Component {
               startInLoadingState={true}
               useWebKit={true}
               originWhitelist={['http://', 'https://']}
-              mixedContentMode='always'
+              mixedContentMode="always"
               thirdPartyCookiesEnabled={true}
               automaticallyAdjustContentInsets={false}
               onNavigationStateChange={this.onNavigationStateChange}
@@ -391,19 +393,8 @@ export default class DappWebView extends Component {
               menuList={this.handleBrowserMenuList()}
               linking={this.linking}
             />
-            <Modal
-              transparent={true}
-              isVisible={this.state.visibleAnimation}
-              backdropOpacity={0}
-              disableAnimation
-              animationInTiming={10}
-              animationOutTiming={10}
-            >
-              <View style={styles.favAnimationModal}>
-                <AddRemoveButtonAnimation value={this.props.selectedDapp} />
-              </View>
-            </Modal>
           </Modal>
+          <AddRemoveButtonAnimation visible={this.state.visibleAnimation} value={this.props.selectedDapp} />
         </View>
       </IntlProvider>
     )

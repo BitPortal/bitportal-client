@@ -8,25 +8,21 @@ const AnimatedIcon = Animated.createAnimatedComponent(Ionicons)
 export default class AddRemoveButtonAnimation extends Component {
   state = {
     scale: new Animated.Value(0),
-    opacity: new Animated.Value(0),
-    visible: true
+    opacity: new Animated.Value(0)
   }
 
   componentDidMount() {
-    setTimeout(() => this.animate(), 100)
+    // setTimeout(() => this.animate(), 100)
   }
 
-  // shouldComponentUpdate(prevProps) {
-  //   if (this.props.value !== prevProps.value) this.animate()
-  // }
-
   componentDidUpdate(prevProps) {
-    console.log('didupdate', this.props.value, prevProps.value)
-    // if (this.props.value !== prevProps.value) setTimeout(() => this.animate(), 100)
+    if (this.props.visible && prevProps.visible !== this.props.visible) this.animate()
   }
 
   animate = () => {
     const handle = InteractionManager.createInteractionHandle()
+    this.state.scale.setValue(0)
+    this.state.opacity.setValue(0)
     // Animated.sequence([
     //   Animated.spring(this.state.scale, {
     //     toValue: -0.1,
@@ -41,22 +37,20 @@ export default class AddRemoveButtonAnimation extends Component {
         toValue: 1,
         friction: 7,
         tension: 5,
-        duration: 250
+        duration: 500
         // easing: Easing.ease
       }),
       Animated.timing(this.state.opacity, {
         toValue: 1,
-        duration: 250
+        duration: 500
         // easing: Easing.ease
       })
-      // ])
     ]).start(() => {
       InteractionManager.clearInteractionHandle(handle)
     })
   }
 
   render() {
-    console.log('visible', this.visible)
     const { value } = this.props
     const scale = this.state.scale.interpolate({
       inputRange: [0, 1],
@@ -66,8 +60,7 @@ export default class AddRemoveButtonAnimation extends Component {
       inputRange: [0, 1],
       outputRange: [1, 0]
     })
-    return this.state.visible === false ? null : (
-      // <Animated.View style={[styles.buttonWrapper, { transform: [{ scale }], opacity }]}>
+    return !this.props.visible ? null : (
       <Animated.View style={[styles.container, styles.center, styles.positionStyle, styles.backStyle]}>
         <Animated.View style={[styles.buttonWrapper, { transform: [{ scale }], opacity }]}>
           <AnimatedIcon

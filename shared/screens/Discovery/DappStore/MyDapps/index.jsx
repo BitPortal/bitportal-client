@@ -1,18 +1,7 @@
 import React, { PureComponent } from 'react'
-import { View, Text, ScrollView, ActivityIndicator, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
-import { bindActionCreators } from 'redux'
-import { Navigation } from 'react-native-navigation'
-import * as dAppActions from 'actions/dApp'
-import { connect } from 'react-redux'
-import { parsedDappListSelector } from 'selectors/dApp'
-import { eosAccountNameSelector } from 'selectors/eosAccount'
-import { IntlProvider } from 'react-intl'
-import { loadInjectSync } from 'utils/inject'
+import { View, Animated } from 'react-native'
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from 'utils/dimens'
 import { TabView, TabBar } from 'react-native-tab-view'
-import messages from 'resources/messages'
-import FastImage from 'react-native-fast-image'
-import DappElement from '../DappElement'
 import MyDappScene from './MyDappScene'
 import styles from './styles'
 
@@ -37,17 +26,59 @@ export default class DappStore extends PureComponent {
     }
   }
 
-  _renderTabBar = props => (
-    <View style={styles.container}>
+  _renderIndicator = props => {
+    // const { width, position } = props
+    const { position } = props
+    const inputRange = [0, 0.48, 0.49, 0.51, 0.52, 1, 1.48, 1.49, 1.51, 1.52, 2]
+    // const inputRange = [0, 1, 2]
+
+    const scale = position.interpolate({
+      inputRange,
+      outputRange: inputRange.map(x => (Math.trunc(x) === x ? 2 : 0.1))
+    })
+    const opacity = position.interpolate({
+      inputRange,
+      outputRange: inputRange.map(x => {
+        const d = x - Math.trunc(x)
+        return d === 0.49 || d === 0.51 ? 0 : 1
+      })
+    })
+    const translateX = position.interpolate({
+      inputRange: inputRange,
+      outputRange: inputRange.map(x => Math.round(x - 1) * 20)
+    })
+    // const backgroundColor = position.interpolate({
+    //   inputRange,
+    //   outputRange: inputRange.map(x => props.navigationState.routes[Math.round(x)].color)
+    // })
+
+    return (
+      <Animated.View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+        {/* <Animated.View style={[styles.container, { transform: [{ translateX }] }]}>
+          <Animated.View style={[styles.indicator, { opacity, transform: [{ scale }] }]} />
+        </Animated.View> */}
+        {props.navigationState.routes.map((e, i) => {
+          if (i === props.navigationState.index) {
+            return <View style={styles.activeIndicator} key={i} />
+          } else {
+            return <View style={styles.indicator} key={i} />
+          }
+        })}
+      </Animated.View>
+    )
+  }
+
+  _renderTabBar = props => {
+    return (
       <TabBar
         {...props}
-        style={styles.tabBar}
-        // renderIndicator={this.renderIndicator}
-        // renderLabel={this.renderLabel}
-        // indicatorStyle={styles.selectedTab}
+        // renderIcon={this._renderIcon}
+        // renderBadge={this._renderBadge}
+        renderIndicator={this._renderIndicator}
+        style={styles.tabbar}
       />
-    </View>
-  )
+    )
+  }
 
   render() {
     return (
@@ -60,7 +91,9 @@ export default class DappStore extends PureComponent {
             this.setState({ index })
           }}
           initialLayout={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}
-          renderTabBar={() => {}}
+          // renderTabBar={() => {}}
+          tabBarPosition="bottom"
+          renderTabBar={this._renderTabBar}
         />
       </View>
     )
