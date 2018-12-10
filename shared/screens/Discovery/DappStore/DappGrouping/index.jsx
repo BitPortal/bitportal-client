@@ -92,9 +92,9 @@ export default class DappGrouping extends Component {
         </Animated.View> */}
         {props.navigationState.routes.map((e, i) => {
           if (i === props.navigationState.index) {
-            return <View style={styles.activeIndicator} />
+            return <View style={styles.activeIndicator} key={i} />
           } else {
-            return <View style={styles.indicator} />
+            return <View style={styles.indicator} key={i} />
           }
         })}
       </Animated.View>
