@@ -81,9 +81,12 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
 
     yield all([
       call(secureStorage.setItem, `EOS_ACCOUNT_CREATION_INFO_${eosAccountName}`, eosAccountCreationInfo, true),
+      call(secureStorage.setItem, `EOS_ACCOUNT_CREATION_INFO_${eosAccountName}_${permission}`, eosAccountCreationInfo, true),
       call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, accountInfo, true),
+      call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}_${permission}`, accountInfo, true),
       call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_${permission}_${publicKey}`, keystore, true),
       call(secureStorage.setItem, `CLASSIC_WALLET_INFO_EOS_${eosAccountName}`, walletInfo, true),
+      call(secureStorage.setItem, `CLASSIC_WALLET_INFO_EOS_${eosAccountName}_${permission}`, walletInfo, true),
       call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
     ])
 
@@ -187,9 +190,9 @@ function* importEOSAccountRequested(action: Action<ImportEOSAccountParams>) {
     }
 
     yield all([
-      call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, accountInfo, true),
+      call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}_${permission}`, accountInfo, true),
       call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_${permission}_${publicKey}`, keystore, true),
-      call(secureStorage.setItem, `CLASSIC_WALLET_INFO_EOS_${eosAccountName}`, walletInfo, true),
+      call(secureStorage.setItem, `CLASSIC_WALLET_INFO_EOS_${eosAccountName}_${permission}`, walletInfo, true),
       call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
     ])
 
@@ -262,16 +265,18 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
   try {
     const eosAccountName = action.payload.eosAccountName
     const eosAccountCreationInfo = yield select((state: RootState) => state.eosAccount.get('eosAccountCreationInfo'))
-
     const useCreationServer =
       eosAccountCreationInfo.get('transactionId') &&
       eosAccountCreationInfo.get('eosAccountName') === eosAccountName &&
       !eosAccountCreationInfo.get('irreversible')
     const eos = yield call(initEOS, useCreationServer ? { httpEndpoint: BITPORTAL_API_EOS_URL } : {})
     const info = yield call(eos.getAccount, eosAccountName)
+    
     assert(info && info.account_name, 'Invalid account info')
     yield put(actions.getEOSAccountSucceeded(info))
+    const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
     yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, info, true)
+    yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}_${permission}`, info, true)
 
     // notification subscribe
     const language = yield select((state: RootState) => state.intl.get('locale'))
@@ -417,6 +422,7 @@ function* checkEOSAccountCreationStatusRequested(action: Action<CheckEOSAccountS
       call(secureStorage.setItem, `EOS_ACCOUNT_CREATION_INFO_${eosAccountName}`, eosAccountCreationInfo, true),
       put(actions.syncEOSAccountCreationInfo(eosAccountCreationInfo)),
       call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, accountInfo, true),
+      call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}_OWNER`, accountInfo, true),
       call(
         secureStorage.setItem,
         `CLASSIC_KEYSTORE_EOS_${eosAccountName}_OWNER_${ownerPublicKey}`,
@@ -430,6 +436,7 @@ function* checkEOSAccountCreationStatusRequested(action: Action<CheckEOSAccountS
         true
       ),
       call(secureStorage.setItem, `CLASSIC_WALLET_INFO_EOS_${eosAccountName}`, walletInfo, true),
+      call(secureStorage.setItem, `CLASSIC_WALLET_INFO_EOS_${eosAccountName}_OWNER`, walletInfo, true),
       call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
     ])
 
