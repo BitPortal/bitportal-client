@@ -9,14 +9,15 @@ import {
 const styles = {
   sceneContainer: {
     width: SCREEN_WIDTH,
-    alignItems: 'center',
     height: 125,
     marginBottom: 0
+    // backgroundColor: 'red'
   },
   wrapper: {
     width: SCREEN_WIDTH,
     alignItems: 'center',
-    height: 110
+    height: 110,
+    borderRadius: FLOATING_CARD_BORDER_RADIUS
   },
   tabBar: {
     width: FLOATING_CARD_WIDTH,
@@ -38,14 +39,14 @@ const styles = {
     backgroundColor: 'blue'
   },
   dAppScrollViewContainer: {
-    width: FLOATING_CARD_WIDTH,
+    // width: FLOATING_CARD_WIDTH,
     borderRadius: FLOATING_CARD_BORDER_RADIUS,
-    // paddingVertical: 15,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     flexWrap: 'wrap',
     backgroundColor: Colors.minorThemeColor
+    // backgroundColor: 'red'
     // flex: 1
   },
   tabbar: {
