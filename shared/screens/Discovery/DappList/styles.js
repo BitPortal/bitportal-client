@@ -11,7 +11,7 @@ import {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
+    paddingTop: 40,
     backgroundColor: Colors.mainThemeColor,
     justifyContent: 'center',
     alignItems: 'center'

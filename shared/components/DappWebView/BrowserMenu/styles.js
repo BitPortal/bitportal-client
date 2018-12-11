@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     // marginTop: NAV_BAR_HEIGHT - SCREEN_HEIGHT
     marginTop: -120,
     backgroundColor: Colors.minorThemeColor
+    // backgroundColor: 'red'
   },
   scrollViewContainer: {
     width: SCREEN_WIDTH,
@@ -39,14 +40,10 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     // backgroundColor: 'red',
     paddingHorizontal: 5
-
-    // paddingVertical: 10
   },
   menuButton: {
-    // backgroundColor: Colors.bgColor_27_27_26,
-    // backgroundColor: 'red',
-    height: 50,
-    width: 50,
+    // height: 50,
+    // width: 50,
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center'
