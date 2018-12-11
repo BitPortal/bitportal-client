@@ -103,8 +103,11 @@ export default class DappWebView extends Component {
   }
 
   handleBrowserMenuList = () => {
-    const item = this.props.mergedFavoritesDappList.filter(element => element.get('name') === this.props.name).get(0)
-    return [
+
+    let item = ''
+    if (this.props.name) item = this.props.mergedFavoritesDappList.filter(element => element.get('name') === this.props.name).get(0)
+    const menuList = [
+
       {
         name: globalMessages[this.props.locale].webview_button_refresh,
         onPress: () => {
@@ -129,18 +132,20 @@ export default class DappWebView extends Component {
           this.linking()
         },
         icon: Images.dapp_browser_open_in_browser
-      },
-      {
-        name: item.get('selected')
-          ? globalMessages[this.props.locale].webview_button_remove_from_favorites
-          : globalMessages[this.props.locale].webview_button_add_to_favorites,
-        onPress: () => {
-          this.toggleFavorite(item)
-          setTimeout(() => this.hideBrowserMenu(), 500)
-        },
-        icon: item.get('selected') ? Images.dapp_browser_favorite_unsave : Images.dapp_browser_favorite_save
       }
+       
     ]
+    if (this.props.name) menuList.push({
+      name: item.get('selected')
+        ? globalMessages[this.props.locale].webview_button_remove_from_favorites
+        : globalMessages[this.props.locale].webview_button_add_to_favorites,
+      onPress: () => {
+        this.toggleFavorite(item)
+        setTimeout(() => this.hideBrowserMenu(), 500)
+      },
+      icon: item.get('selected') ? Images.dapp_browser_favorite_unsave : Images.dapp_browser_favorite_save
+    })
+    return menuList
   }
 
   componentDidUpdate(prevProps) {
