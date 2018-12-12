@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
-import { View, Text, Share, Linking, Platform, ActivityIndicator, InteractionManager } from 'react-native'
+import { View, Text, Share, Linking, Platform, ActivityIndicator, InteractionManager, Clipboard } from 'react-native'
 import WebViewBridge from 'react-native-webview-bridge'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
+import Modal from 'react-native-modal'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { WebViewLeftButton } from 'components/NavigationBar'
 import { FormattedMessage, IntlProvider } from 'react-intl'
@@ -12,10 +13,15 @@ import Url from 'url-parse'
 import * as dappBrwoserActions from 'actions/dappBrowser'
 import ActionModal from 'components/ActionModal'
 import Prompt from 'components/Prompt'
+import Toast from 'components/Toast'
+
 import Loading from 'components/Loading'
 import Alert from 'components/Alert'
+import BrowserMenu from 'components/DappWebView/BrowserMenu'
 import SearchWebsiteForm from 'components/Form/SearchWebsiteForm'
 import globalMessages from 'resources/messages'
+import { loadInjectSync } from 'utils/inject'
+import Images from 'resources/images'
 import localMessages from './messages'
 import styles from './styles'
 
@@ -82,6 +88,8 @@ export default class DappWebView extends Component {
     }
   }
 
+  inject = loadInjectSync()
+
   componentDidUpdate(prevProps) {
     if (this.props.sendingMessage && prevProps.sendingMessage !== this.props.sendingMessage && this.webviewbridge) {
       this.webviewbridge.sendToBridge(this.props.sendingMessage)
@@ -91,7 +99,8 @@ export default class DappWebView extends Component {
   state = {
     canGoBack: false,
     showPrompt: false,
-    uri: 'https://build-prguimiryr.now.sh/'
+    uri: 'https://build-prguimiryr.now.sh/',
+    visibleMenu: false
   }
 
   share = () => {
@@ -121,7 +130,7 @@ export default class DappWebView extends Component {
   }
 
   linking = () => {
-    const url = this.props.uri
+    const url = this.state.uri
     Linking.canOpenURL(url)
       .then(supported => {
         if (!supported) {
@@ -154,7 +163,15 @@ export default class DappWebView extends Component {
   renderLoading = () => <WebViewLoading />
 
   onNavigationStateChange = navState => {
-    const url = new Url(navState.url)
+    // const url = new Url(navState.url)
+    // let url
+    // if (this.state.uri.includes('http://') === false) {
+    //   url = new Url(`http://${this.state.uri}`)
+    // } else {
+    //   url = new Url(this.state.uri)
+    // }
+    const url = new Url(this.state.uri)
+
     const hostname = url.hostname
     const host = hostname.indexOf('www.') === 0 ? hostname.replace('www.', '') : hostname
     this.props.actions.setHost(host)
@@ -187,13 +204,64 @@ export default class DappWebView extends Component {
   }
 
   onSubmitEditing = event => {
-    const searchText = event.nativeEvent.text
-
+    let searchText = event.nativeEvent.text
+    if (!searchText.match(/^[a-zA-Z]+:\/\//)) {
+      searchText = `http://${searchText}`
+    }
     if (searchText === this.state.uri) {
       this.webviewbridge.reload()
     } else {
       this.setState({ uri: searchText })
     }
+  }
+
+  showBrowserMenu = () => this.setState({ visibleMenu: true })
+
+  hideBrowserMenu = () => this.setState({ visibleMenu: false })
+
+  handleBrowserMenuList = () => {
+    let item = ''
+    if (this.props.name)
+      item = this.props.mergedFavoritesDappList.filter(element => element.get('name') === this.props.name).get(0)
+    const menuList = [
+      {
+        name: globalMessages[this.props.locale].webview_button_refresh,
+        onPress: () => {
+          this.hideBrowserMenu()
+          this.webviewbridge.reload()
+        },
+        icon: Images.dapp_browser_refresh
+      },
+      {
+        name: globalMessages[this.props.locale].webview_button_copy_url,
+        onPress: () => {
+          this.hideBrowserMenu()
+          Clipboard.setString(this.props.uri)
+          Toast(globalMessages[this.props.locale].webview_copied_to_clipboard, 1000, 0)
+        },
+        icon: Images.dapp_browser_copy_url
+      },
+      {
+        name: globalMessages[this.props.locale].webview_button_open_in_browser,
+        onPress: () => {
+          this.hideBrowserMenu()
+          this.linking()
+        },
+        icon: Images.dapp_browser_open_in_browser
+      }
+    ]
+    if (this.props.name)
+      menuList.push({
+        name: item.get('selected')
+          ? globalMessages[this.props.locale].webview_button_remove_from_favorites
+          : globalMessages[this.props.locale].webview_button_add_to_favorites,
+        onPress: () => {
+          this.toggleFavorite(item)
+          setTimeout(() => this.hideBrowserMenu(), 500)
+        },
+        icon: item.get('selected') ? Images.dapp_browser_favorite_unsave : Images.dapp_browser_favorite_save
+      })
+    return menuList
   }
 
   render() {
@@ -205,7 +273,9 @@ export default class DappWebView extends Component {
           <NavigationBar
             title={title}
             leftButton={<WebViewLeftButton goBack={this.goBack} goHome={this.goHome} />}
-            rightButton={<SearchWebsiteForm onSubmitEditing={this.onSubmitEditing} />}
+            rightButton={
+              <SearchWebsiteForm onSubmitEditing={this.onSubmitEditing} showBrowserMenu={this.showBrowserMenu} />
+            }
           />
           <View style={styles.content}>
             <WebViewBridge
@@ -218,7 +288,7 @@ export default class DappWebView extends Component {
               startInLoadingState={true}
               useWebKit={true}
               originWhitelist={['http://', 'https://']}
-              mixedContentMode={'always'}
+              mixedContentMode="always"
               thirdPartyCookiesEnabled={true}
               automaticallyAdjustContentInsets={false}
               onNavigationStateChange={this.onNavigationStateChange}
@@ -228,23 +298,7 @@ export default class DappWebView extends Component {
               scalesPageToFit={true}
               nativeConfig={{ props: { backgroundColor: Colors.minorThemeColor, flex: 1 } }}
               onBridgeMessage={this.onBridgeMessage}
-              // injectedJavaScript={inject}
-              injectedJavaScript="
-              function waitForBridge() {
-
-
-              if (window.postMessage.length !== 1){
-              setTimeout(waitForBridge, 200);
-              }
-              else {
-              setTimeout(window.postMessage(window.location.href),1000);
-              }
-              }
-
-              window.onload = waitForBridge;
-      
-    "
-
+              injectedJavaScript={this.inject}
             />
             <ActionModal
               isVisible={hasPendingMessage && !resolvingMessage}
@@ -286,6 +340,19 @@ export default class DappWebView extends Component {
               (loadingContract && <FormattedMessage id="webview_fetching_contract" />)
             }
           />
+          <Modal
+            style={{ margin: 0 }}
+            isVisible={this.state.visibleMenu}
+            useNativeDriver
+            hideModalContentWhileAnimating
+            backdropOpacity={0.3}
+          >
+            <BrowserMenu
+              dismissModal={this.hideBrowserMenu}
+              menuList={this.handleBrowserMenuList()}
+              linking={this.linking}
+            />
+          </Modal>
         </View>
       </IntlProvider>
     )
