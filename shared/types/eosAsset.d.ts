@@ -6,7 +6,6 @@ declare interface eosAsset {
   issuer: string
   current_supply: string
   max_supply: string
-  rank_url: string
   createdAt: string
   updatedAt: string
   icon_url?: string
