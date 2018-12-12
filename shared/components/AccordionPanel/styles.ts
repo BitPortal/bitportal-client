@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
-    backgroundColor: Colors.mainThemeColor
+    backgroundColor: Colors.minorThemeColor
   },
   scrollContainer: {
     width: SCREEN_WIDTH,

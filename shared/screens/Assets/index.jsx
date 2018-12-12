@@ -315,7 +315,7 @@ export default class Assets extends Component {
           <NavigationBar
             leftButton={
               activeEOSAccount.get && activeEOSAccount.get('account_name') ?
-              <CommonButton onPress={this.addNewEOSAccount} title={activeEOSAccount.get('account_name')+' >'} />
+              <CommonButton extraStyle={{paddingLeft: 0}} onPress={this.addNewEOSAccount} title={activeEOSAccount.get('account_name')+' >'} />
               :
               <CommonTitle title={messages[locale].assets_title_eos_wallet}/>
             }
@@ -362,8 +362,8 @@ export default class Assets extends Component {
             </View>
           )}
           {!!walletCount && (
-            <View style={styles.scrollContainer}>
-              <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={[styles.scrollContainer, {alignItems: 'center'}]}>
+              <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ alignItems: 'center' }}>
                 <TotalAssetsCard
                   totalAssets={eosTotalAssetBalance}
                   accountName={activeEOSAccount.get('account_name')}
@@ -389,12 +389,12 @@ export default class Assets extends Component {
             isVisible={this.state.isVisible}
             dismissModal={this.dismissModal}
           />
-          <MenuPopUp 
+          <MenuPopUp
             selectFunc={this.selectFunc}
             isVisible={this.state.isVisible2}
             dismissModal={this.dismissModal}
           />
-          <AccountSwitchModal 
+          <AccountSwitchModal
             routeToNewAccount={this.routeToNewAccount}
             isVisible={this.state.isVisible3}
             dismissModal={this.dismissModal}

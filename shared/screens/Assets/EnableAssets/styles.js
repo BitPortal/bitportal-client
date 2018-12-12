@@ -1,19 +1,8 @@
 import { StyleSheet, Platform } from 'react-native'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT } from 'utils/dimens'
+import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, FLOATING_CARD_WIDTH, FLOATING_CARD_BORDER_RADIUS } from 'utils/dimens'
 import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
-  container: {
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT,
-    backgroundColor: Colors.minorThemeColor
-  },
-  headerContainer: {
-    width: SCREEN_WIDTH,
-    height: NAV_BAR_HEIGHT,
-    backgroundColor: Colors.minorThemeColor,
-    paddingTop: Platform.OS === 'ios' ? 20 : 0
-  },
   navButton: {
     minWidth: 100,
     height: 40,
@@ -33,7 +22,7 @@ const styles = StyleSheet.create({
   },
   text14: {
     fontSize: FontScale(14),
-    color: Colors.textColor_89_185_226
+    color: Colors.white
   },
   text20: {
     fontSize: FontScale(20),
@@ -46,8 +35,12 @@ const styles = StyleSheet.create({
     color: Colors.textColor_255_255_238
   },
   addAssetsContainer: {
-    width: SCREEN_WIDTH,
-    height: 50
+    width: FLOATING_CARD_WIDTH,
+    height: 50,
+    paddingHorizontal: 20,
+    backgroundColor: Colors.minorThemeColor,
+    borderTopLeftRadius: FLOATING_CARD_BORDER_RADIUS,
+    borderTopRightRadius: FLOATING_CARD_BORDER_RADIUS,
   },
   scrollContainer: {
     width: SCREEN_WIDTH,
@@ -55,9 +48,17 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.mainThemeColor
   },
   listContainer: {
-    width: SCREEN_WIDTH,
-    height: 70,
-    marginTop: 1
+    width: FLOATING_CARD_WIDTH,
+    height: 60,
+    marginTop: 1,
+    borderBottomColor: Colors.minorThemeColor,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    backgroundColor: Colors.bgColor_30_31_37,
+    borderRadius: FLOATING_CARD_BORDER_RADIUS,
+    marginVertical: 5,
+    marginLeft: 10
   },
   createAccountContainer: {
     width: SCREEN_WIDTH - 64,

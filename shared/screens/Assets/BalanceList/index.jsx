@@ -50,7 +50,7 @@ export default class BalanceList extends Component {
     const { data, onPress, eosPrice, isAssetHidden, eosCoreLiquidBalance } = this.props
 
     return (
-      <View>
+      <View style={styles.balanceListContainer}>
         <ListItem
           item={eosCoreLiquidBalance}
           isAssetHidden={isAssetHidden}
