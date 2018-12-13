@@ -67,7 +67,7 @@ export default class SystemResources extends React.Component {
           /*eslint-disable*/
           this.setState({ index })
         }}
-        initialLayout={{ width: Dimensions.get('window').width }}
+        initialLayout={{ width: Dimensions.get('window').width, height: Dimensions.get('window').height}}
         renderTabBar={this._renderTabBar}
       />
     )

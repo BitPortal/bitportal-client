@@ -83,8 +83,7 @@ export default class AssetsSearch extends Component {
     const current_supply = item.get('current_supply')
     const max_supply = item.get('max_supply')
     const icon_url = item.get('icon_url')
-    const rank_url = item.get('rank_url')
-    this.props.actions.toggleEOSAsset({ contract, symbol, current_supply, max_supply, icon_url, rank_url })
+    this.props.actions.toggleEOSAsset({ contract, symbol, current_supply, max_supply, icon_url})
   }
 
   renderItem = (type, item) => (

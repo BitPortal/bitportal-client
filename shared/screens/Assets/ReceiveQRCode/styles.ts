@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
-import { SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, FontScale, KEYBOARD_HEIGHT } from 'utils/dimens'
+import { SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, FontScale, KEYBOARD_HEIGHT, FLOATING_CARD_WIDTH, FLOATING_CARD_BORDER_RADIUS } from 'utils/dimens'
 
 const styles = StyleSheet.create({
   container: {
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     minHeight: 100,
     paddingVertical: 20,
-    backgroundColor: Colors.minorThemeColor
+    backgroundColor: Colors.mainThemeColor
   },
   qrContainer: {
     padding: 15,
@@ -33,11 +33,12 @@ const styles = StyleSheet.create({
     borderRadius: 8
   },
   inputContainer: {
-    width: SCREEN_WIDTH,
+    width: FLOATING_CARD_WIDTH,
     paddingHorizontal: 20,
     height: 60,
     marginVertical: 10,
-    backgroundColor: Colors.bgColor_30_31_37
+    backgroundColor: Colors.bgColor_30_31_37,
+    borderRadius: FLOATING_CARD_BORDER_RADIUS,
   },
   input: {
     minWidth: 140,

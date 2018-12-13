@@ -16,8 +16,7 @@ export default class EnableAssets extends Component {
       <View
         style={[
           styles.addAssetsContainer,
-          styles.between,
-          { paddingHorizontal: 20, backgroundColor: Colors.minorThemeColor }
+          styles.between
         ]}
       >
         <View
@@ -26,7 +25,7 @@ export default class EnableAssets extends Component {
             alignItems: 'center'
           }}
         >
-          <Text style={styles.text14}> {Title} </Text>
+          <Text style={styles.text20}> {Title} </Text>
         </View>
         <TouchableOpacity onPress={onPress}>
           <Ionicons

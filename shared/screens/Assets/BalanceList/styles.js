@@ -1,17 +1,17 @@
 import { StyleSheet, Platform } from 'react-native'
-import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT } from 'utils/dimens'
+import { FontScale, SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, FLOATING_CARD_WIDTH, FLOATING_CARD_BORDER_RADIUS } from 'utils/dimens'
 import Colors from 'resources/colors'
 
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
-    backgroundColor: Colors.minorThemeColor
+    backgroundColor: Colors.mainThemeColor
   },
   headerContainer: {
     width: SCREEN_WIDTH,
     height: NAV_BAR_HEIGHT,
-    backgroundColor: Colors.minorThemeColor,
+    backgroundColor: Colors.mainThemeColor,
     paddingTop: Platform.OS === 'ios' ? 20 : 0
   },
   navButton: {
@@ -45,27 +45,31 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.textColor_255_255_238
   },
-  addAssetsContainer: {
-    width: SCREEN_WIDTH,
-    height: 50
-  },
   scrollContainer: {
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - TAB_BAR_HEIGHT,
     backgroundColor: Colors.mainThemeColor
   },
-  listContainer: {
-    width: SCREEN_WIDTH,
-    height: 70,
-    marginTop: 1
+  balanceListContainer: {
+    width: FLOATING_CARD_WIDTH,
+    backgroundColor: Colors.minorThemeColor,
+    alignItems: 'center',
+    paddingBottom: 20,
+    borderBottomLeftRadius: FLOATING_CARD_BORDER_RADIUS,
+    borderBottomRightRadius: FLOATING_CARD_BORDER_RADIUS
   },
-  createAccountContainer: {
-    width: SCREEN_WIDTH - 64,
-    height: (SCREEN_WIDTH / 2) - 32,
-    borderRadius: 12,
-    marginHorizontal: 32,
-    marginVertical: 20,
-    backgroundColor: Colors.mainThemeColor
+  listContainer: {
+    width: FLOATING_CARD_WIDTH,
+    height: 60,
+    marginTop: 1,
+    // borderBottomWidth: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    borderTopWidth: 1,
+    borderTopColor: Colors.mainThemeColor
+    // borderRadius: FLOATING_CARD_BORDER_RADIUS,
+    // marginVertical: 5,
   },
   image: {
     width: 36,

@@ -142,11 +142,11 @@ export default class AssetChart extends Component {
 
     if (loaded && hasMore) {
       return (
-        <ActivityIndicator style={{ marginVertical: 10 }} size="small" color="white" />
+        <ActivityIndicator style={{ marginVertical: 5 }} size="small" color="white" />
       )
     } else if (loaded) {
       return (
-        <Text style={{ marginVertical: 10, alignSelf: 'center', color: 'white' }}>
+        <Text style={{ marginVertical: 5, alignSelf: 'center', color: 'white' }}>
           {messages[locale].transaction_list_text_no_data}
         </Text>
       )
