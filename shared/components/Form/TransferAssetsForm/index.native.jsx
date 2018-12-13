@@ -194,6 +194,7 @@ export default class TransferAssetsForm extends Component {
       transfer,
       locale,
       accountName,
+      toAccount,
       amount,
       memo
     } = this.props
@@ -213,7 +214,7 @@ export default class TransferAssetsForm extends Component {
             name="toAccount"
             component={TextField}
             rightContent={<ContactIcon onPress={this.getContactInfo} />}
-            props={{ value: accountName }}
+            props={{ value: toAccount }}
           />
           <Field
             label={messages[locale].send_label_amount}
