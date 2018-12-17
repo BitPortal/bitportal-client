@@ -3,6 +3,7 @@ import screenComponent from 'components/ScreenComponent'
 import { Platform } from 'react-native'
 import Market from 'screens/Market'
 import TokenPage from 'screens/Market/Overview/TokenPage'
+import SystemResources from 'screens/SystemResources'
 import Welcome from 'screens/Welcome'
 import LightBox from 'screens/LightBox'
 import QRCodeScanner from 'screens/QRCodeScanner'
@@ -75,6 +76,7 @@ export const registerScreens = store => {
   Navigation.registerComponent('BitPortal.AssetsTransfer', () => screenComponent(AssetsTransfer, store))
   Navigation.registerComponent('BitPortal.AvailableAssets', () => screenComponent(AvailableAssets, store))
   Navigation.registerComponent('BitPortal.Market', () => screenComponent(Market, store))
+  Navigation.registerComponent('BitPortal.SystemResources', () => screenComponent(SystemResources, store))
   Navigation.registerComponent('BitPortal.Discovery', () => screenComponent(Discovery, store))
   Navigation.registerComponent('BitPortal.DiscoveryArticle', () => screenComponent(ArticleWebView, store))
   Navigation.registerComponent('BitPortal.Markdown', () => screenComponent(Markdown, store))

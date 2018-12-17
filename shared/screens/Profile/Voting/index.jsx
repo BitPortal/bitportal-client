@@ -154,7 +154,7 @@ export default class Voting extends Component {
     } else {
       Navigation.push(this.props.componentId, {
         component: {
-          name: 'BitPortal.Resources'
+          name: 'BitPortal.SystemResources'
         }
       })
     }

@@ -3,6 +3,7 @@ import * as actions from 'actions/whiteList'
 import storage from 'utils/storage'
 import Dialog from 'components/Dialog'
 import Immutable from 'immutable'
+import messages from 'resources/messages'
 
 function* noticeWhiteList(action: any) {
   try {
@@ -21,8 +22,8 @@ function* noticeWhiteList(action: any) {
       const storeInfo = { dappLuanched: true }
       yield call(storage.mergeItem, 'bitportal_white_list', storeInfo, true)
       Dialog.whiteListAlert(
-        '提示',
-        'DApp白名单开关已经移置设置，新增了体验更流畅的高级模式，是否前往开启白名单功能？',
+        messages[locale].whitelist_title_tips,
+        messages[locale].whitelist_title_content,
         locale,
         action.payload.componentId
       )

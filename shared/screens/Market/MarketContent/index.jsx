@@ -8,7 +8,7 @@ class MarketContent extends Component {
     const { category } = this.props
     if (category === 'OVERVIEW') return <Overview componentId={this.props.componentId} />
     else if (category === 'DEXLIZE') return <Dexlize />
-    else if (category === 'SYSTEM') return <SystemResources />
+    else if (category === 'SYSTEM') return <SystemResources componentId={this.props.componentId} />
     else return null
   }
 }

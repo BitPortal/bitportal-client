@@ -140,7 +140,7 @@ function* pendSignEOSData(messageActionType: string, payload: any, messageId: st
 
   const account = payload.account
   const publicKey = payload.publicKey
-  const signData = payload.signData
+  const signData = payload.signData || payload.data
   const isHash = payload.isHash || false
   const blockchain = 'EOS'
 
@@ -324,7 +324,7 @@ function* resolveSignEOSData(password: string, info: any, messageId: string) {
   try {
     const account = info.get('account')
     const publicKey = info.get('publicKey')
-    const signData = info.get('signData')
+    const signData = info.get('signData') 
     const isHash = info.get('isHash')
 
     const signedData = yield call(eosAuthSign, {
@@ -356,16 +356,47 @@ function* resolveSignEOSData(password: string, info: any, messageId: string) {
   }
 }
 
+function* resolveRequestArbitrarySignature(password: string, info: any, messageId: string) {
+  try {
+    const account = info.get('account')
+    const publicKey = info.get('publicKey')
+    const signData = info.get('signData')
+    const isHash = info.get('isHash')
+    console.log('###--yy account: %s, publicKey: %s, signData: %s isHash: %s', account, publicKey, signData, isHash)
+    const signatures = yield call(eosAuthSign, {
+      account,
+      password,
+      publicKey,
+      signData,
+      isHash
+    })
+    yield put(actions.clearMessage())
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionSucceeded',
+      payload: {
+        data: { signatures, returnedFields: [] }
+      }
+    }))
+  } catch (error) {
+    yield put(actions.clearMessage())
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionFailed',
+      payload: {
+        error: {
+          message: error.message || error
+        }
+      }
+    }))
+  }
+}
+
 function* resolveRequestSignature(password: string, info: any, messageId: string) {
   try {
     const buf = info.get('buf').toJS()
     const publicKey = yield select((state: RootState) => state.wallet.get('data').get('publicKey'))
     const account = yield select((state: RootState) => eosAccountNameSelector(state))
-    
-    // 存储dapp信息并绑定account到本地
-    const selectedDapp = yield select((state: RootState) => state.whiteList.get('selectedDapp'))
-    const store = selectedDapp.set('authorized', true).set('accountName', account).set('info', info).delete('password')
-    yield put(whiteListActions.updateWhiteListStoreInfo({ store }))
 
     const signatures = yield call(signature, {
       account,
@@ -374,7 +405,13 @@ function* resolveRequestSignature(password: string, info: any, messageId: string
       buf
     })
     yield put(actions.clearMessage())
-    // delay(350)
+    yield delay(500)
+
+    // 存储dapp信息并绑定account到本地
+    const selectedDapp = yield select((state: RootState) => state.whiteList.get('selectedDapp'))
+    const store = selectedDapp.set('authorized', true).set('accountName', account).set('info', info).delete('password')
+    yield put(whiteListActions.updateWhiteListStoreInfo({ store }))
+
     yield put(actions.sendMessage({
       messageId,
       type: 'actionSucceeded',
@@ -630,6 +667,17 @@ function* receiveMessage(action: Action<string>) {
         }, messageId)
       }
       break
+    case 'requestArbitrarySignature': 
+      {
+        // console.log('###--yy', messageActionType)
+        const currentWallet = yield select((state: RootState) => currenctWalletSelector(state))
+        assert(currentWallet, 'No wallet in BitPortal!')
+        payload.account = currentWallet.get('account')
+        const publicKey = payload.publicKey
+        assert(publicKey === currentWallet.get('publicKey'), 'Public key is not in BitPortal.')
+        yield pendSignEOSData(messageActionType, payload, messageId)
+      }
+      break
     case 'forgetIdentity':
     case 'requestAddNetwork':
       {
@@ -728,6 +776,9 @@ function* resolveMessage(action: Action<any>) {
         break
       case 'requestSignature':
         yield resolveRequestSignature(password, info, messageId)
+        break
+      case 'requestArbitrarySignature':
+        yield resolveRequestArbitrarySignature(password, info, messageId)
         break
       default:
         break

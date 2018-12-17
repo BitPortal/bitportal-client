@@ -3,10 +3,11 @@ import CurrencyText from 'components/CurrencyText'
 import LinearGradientContainer from 'components/LinearGradientContainer'
 import { View, Text, TouchableWithoutFeedback } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import messages from 'resources/messages'
 import Colors from 'resources/colors'
 import styles from './styles'
 
-export default ({ accountType, accountName, balanceTitle, eosValue, eosAmount, active, colors, imported, onPress }) => (
+export default ({ locale, accountType, accountName, balanceTitle, eosValue, eosAmount, active, colors, imported, onPress }) => (
   <TouchableWithoutFeedback disabled={imported} onPress={onPress}>
     <View style={styles.cardContainer}>
       <LinearGradientContainer type="right" colors={imported ? Colors.disabled : colors} style={[styles.contentContainer, styles.topRadius]}>
@@ -22,7 +23,7 @@ export default ({ accountType, accountName, balanceTitle, eosValue, eosAmount, a
               imported && 
               <View style={[styles.textRadius, { paddingHorizontal: 6, paddingVertical: 3, marginLeft: 10  }]}>
                 <Text style={[styles.text12, { color: Colors.textColor_255_76_118 }]}>
-                  已导入
+                  {messages[locale].add_import_success_label_imported}
                 </Text>
               </View>
             }
@@ -30,11 +31,12 @@ export default ({ accountType, accountName, balanceTitle, eosValue, eosAmount, a
               active && 
               <View style={[styles.textRadius, { paddingHorizontal: 6, paddingVertical: 3, marginLeft: 10  }]}>
                 <Text style={[styles.text12, { color: Colors.textColor_255_76_118 }]}>
-                  当前钱包
+                  {messages[locale].add_import_success_label_current}
                 </Text>
               </View>
             }
           </View>
+          {/* <Ionicons name="md-checkmark-circle" size={26} color={Colors.bgColor_FAFAFA} /> */}
           <Ionicons name="ios-arrow-forward" size={26} color={Colors.bgColor_FAFAFA} />
         </View>
       </LinearGradientContainer>

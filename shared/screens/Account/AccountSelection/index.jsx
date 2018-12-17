@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { View, ScrollView } from 'react-native'
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
 import Colors from 'resources/colors'
@@ -95,6 +95,7 @@ export default class AccountSelection extends Component {
                   eosValue={+eosPrice * +keyPermission.balance}
                   eosAmount={keyPermission.balance}
                   balanceTitle="Balance"
+                  locale={locale}
                   imported={hasEOSAccountImported(
                     { 
                       eosAccountName: keyPermission.accountName, 
@@ -109,8 +110,16 @@ export default class AccountSelection extends Component {
               ))
             }
           </ScrollView>
-          <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearEOSAccountError} />
         </View>
+        {/* <View style={styles.btnContainer}>
+          <TouchableOpacity style={[{flex: 1}, styles.center]} onPress={this.routeToNewAccount} >
+            <Text style={styles.text14}>
+              导入账户
+            </Text>
+          </TouchableOpacity>
+        </View> */}
+
+        <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearEOSAccountError} />
         <Loading isVisible={loading} text={messages[locale].export_private_key_text_exporting} />
       </View>
     )

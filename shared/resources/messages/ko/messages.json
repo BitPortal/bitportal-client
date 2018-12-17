@@ -168,6 +168,26 @@
   "transaction_detail_button_confirm": "확인",
   "transaction_label_status_failed": "실패",
   "transaction_label_status_completed": "완료",
+
+  "transaction_detail_label_enable_whitelist": "Enable whitelist",
+  "transaction_detail_button_advanced_settings": "Advanced",
+  "transaction_detail_text_agree_whitelist": "You can whitelist this action and don't have to authorize it next time.",
+  "transaction_detail_text_enable_advanced_settings": "You don't need to confirm transaction popup by enabling advanced. You can turn it off in wallet management.",
+
+  "wallet_mgmt_button_whitelist_detail": "Whitelist Details",
+  "wallet_mgmt_whitelist_title_whitelist": "Whitelist List",
+  "wallet_mgmt_whitelist_label_enabled_dapps": "Enabled DApps",
+  "wallet_mgmt_whitelist_label_advance_settings": "Advanced",
+  "wallet_mgmt_whitelist_text_no_enabled_dapps": "You have not authorized any whitelist DApps.",
+
+  "account_change_title_change": "Change Account",
+  "account_change_button_add_account": "Add",
+  "add_import_success_label_imported": "Imported",
+  "add_import_success_label_current": "Current",
+
+  "whitelist_title_tips": "Tips",
+  "whitelist_title_content": "DApp’s whitelist has moved to App Setting, meanwhile, we added an advanced mode to improve the experience. Do you wanna turn it on?",
+
   "resource_label_available": "Available",
   "resource_label_total": "Total",
   "resource_label_used": "사용됨",
@@ -329,6 +349,7 @@
   "settings_button_language": "언어",
   "settings_button_currency": "시스템 언어",
   "settings_button_node": "노드 설정",
+  "settings_label_whitelist": "Whitelist",
   "settings_node_label_default_node": "시스템 노드",
   "settings_node_label_customized_node": "커스텀 노드",
   "settings_node_button_add_node": "노드 추가",

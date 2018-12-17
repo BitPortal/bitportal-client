@@ -92,6 +92,7 @@ export default class DappWebView extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.sendingMessage && prevProps.sendingMessage !== this.props.sendingMessage && this.webviewbridge) {
+      console.log('###--yy sendingMessage: --', this.props.sendingMessage)
       this.webviewbridge.sendToBridge(this.props.sendingMessage)
     }
   }

@@ -18,8 +18,11 @@ import { RecyclerListView, LayoutProvider } from 'recyclerlistview'
 import ImmutableDataProvider from 'utils/immutableDataProvider'
 import { SCREEN_WIDTH } from 'utils/dimens'
 import messages from 'resources/messages'
+import Images from 'resources/images'
+import { BPImage, BPGradientButton } from 'components/BPNativeComponents'
 import RecordItem from './RecordItem'
 import styles from './styles'
+import Colors from 'resources/colors'
 
 const dataProvider = new ImmutableDataProvider((r1, r2) => r1.get('account_action_seq') !== r2.get('account_action_seq'))
 
@@ -203,13 +206,27 @@ export default class AssetChart extends Component {
               />
             </View>
             <View style={[styles.btnContainer, styles.between]}>
-              <TouchableOpacity style={[styles.center, styles.btn]} onPress={this.send}>
-                <Text style={styles.text14}><FormattedMessage id="transaction_list_button_send" /></Text>
-              </TouchableOpacity>
+              <View style={{ flex: 1, paddingVertical: 10, paddingHorizontal: 15, borderRadius: 8 }}>
+                <BPGradientButton onPress={this.send} extraStyle={{ marginHorizontal: 10 }}>
+                  <View style={{ flexDirection: 'row' }}>
+                    <BPImage source={Images.assets_send} style={styles.image} />
+                    <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>
+                      <FormattedMessage id="transaction_list_button_send" />
+                    </Text>
+                  </View>
+                </BPGradientButton>
+              </View>
               <View style={styles.line} />
-              <TouchableOpacity style={[styles.center, styles.btn]} onPress={this.receive}>
-                <Text style={styles.text14}><FormattedMessage id="transaction_list_button_receive" /></Text>
-              </TouchableOpacity>
+              <View style={{ flex: 1, paddingVertical: 10, paddingHorizontal: 15, borderRadius: 8 }}>
+                <BPGradientButton onPress={this.receive} colors={Colors.ramColor} extraStyle={{ marginHorizontal: 10 }}>
+                  <View style={{ flexDirection: 'row' }}>
+                    <BPImage source={Images.assets_receive} style={styles.image} />
+                    <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>
+                      <FormattedMessage id="transaction_list_button_receive" />
+                    </Text>
+                  </View>
+                </BPGradientButton>
+              </View>
             </View>
           </View>
         </View>

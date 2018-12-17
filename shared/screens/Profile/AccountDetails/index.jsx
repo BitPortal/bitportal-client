@@ -6,7 +6,7 @@ import SettingItem from 'components/SettingItem'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
-import { FormattedMessage, IntlProvider } from 'react-intl'
+import { IntlProvider } from 'react-intl'
 import * as keystoreActions from 'actions/keystore'
 import { logoutRequested, clearLogoutError } from 'actions/wallet'
 import { WALLET_MGT_EXPORT, WALLET_MGT_RESET_PW, WALLET_MGT_LOGOUT } from 'constants/analytics'
@@ -144,7 +144,7 @@ export default class AccountDetails extends Component {
               contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }}
             >
               <SettingItem
-                leftItemTitle={<FormattedMessage id="wallet_mgmt_button_export_private_key" />}
+                leftItemTitle={messages[locale].wallet_mgmt_button_export_private_key}
                 onPress={this.showExportPrompt}
                 extraStyle={{
                   marginTop: 10,
@@ -153,11 +153,11 @@ export default class AccountDetails extends Component {
                 }}
               />
               <SettingItem
-                leftItemTitle={<FormattedMessage id="wallet_mgmt_button_change_password" />}
+                leftItemTitle={messages[locale].wallet_mgmt_button_change_password}
                 onPress={this.resetPassword}
               />
               <SettingItem
-                leftItemTitle='白名单详情'
+                leftItemTitle={messages[locale].wallet_mgmt_button_whitelist_detail}
                 onPress={this.routeToWhiteListDetails}
                 extraStyle={{
                   borderBottomLeftRadius: FLOATING_CARD_BORDER_RADIUS,
@@ -165,7 +165,7 @@ export default class AccountDetails extends Component {
                 }}
               />
               <SettingItem
-                leftItemTitle={<FormattedMessage id="wallet_mgmt_button_sign_out" />}
+                leftItemTitle={messages[locale].wallet_mgmt_button_sign_out}
                 rightItemTitle=" "
                 onPress={this.showLogoutPrompt}
                 extraStyle={{ 

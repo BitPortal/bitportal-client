@@ -200,6 +200,9 @@ export default class ActionModal extends Component {
       return (<PushActionItems info={info} locale={this.props.locale} />)
     } else if (messageType === 'requestSignature') {
       return (<SignatureActionItems info={info} locale={this.props.locale} />)
+    } else if (messageType === 'requestArbitrarySignature') {
+      console.log('###-yy eosAuthSign action modal: ', info)
+      return (<SignActionItems info={info} locale={this.props.locale} />)
     }
 
     return null
