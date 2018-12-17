@@ -59,11 +59,11 @@ export default class AccountSwitchModal extends Component {
                   <Ionicons name="ios-close" size={28} color={Colors.bgColor_FFFFFF} />
                 </TouchableOpacity>
                 <Text style={styles.title}>
-                  账户切换
+                  {messages[locale].account_change_title_change}
                 </Text>
                 <TouchableOpacity onPress={routeToNewAccount} style={styles.close}>
                   <Text style={[styles.text14, { color: Colors.textColor_89_185_226 }]}>
-                    添加新钱包
+                    {messages[locale].account_change_button_add_account}
                   </Text>
                 </TouchableOpacity>
                 

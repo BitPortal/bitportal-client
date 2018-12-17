@@ -177,6 +177,25 @@
   "transaction_label_status_failed": "已失败",
   "transaction_label_status_completed": "已确认",
 
+  "transaction_detail_label_enable_whitelist": "开启白名单",
+  "transaction_detail_button_advanced_settings": "高级设置",
+  "transaction_detail_text_agree_whitelist": "您可以将此操作列入白名单，下次就不必再次授权。",
+  "transaction_detail_text_enable_advanced_settings": "打开高级设置，下次进行该操作时，无需进行弹窗确认直接执行，开启后可前往钱包管理中关闭",
+
+  "wallet_mgmt_button_whitelist_detail": "白名单详情",
+  "wallet_mgmt_whitelist_title_whitelist": "白名单列表",
+  "wallet_mgmt_whitelist_label_enabled_dapps": "已开启应用",
+  "wallet_mgmt_whitelist_label_advance_settings": "高级设置",
+  "wallet_mgmt_whitelist_text_no_enabled_dapps": "暂无任何授权白名单的应用",
+
+  "account_change_title_change": "切换账户",
+  "account_change_button_add_account": "添加账户",
+  "add_import_success_label_imported": "已导入",
+  "add_import_success_label_current": "当前钱包",
+
+  "whitelist_title_tips": "提示",
+  "whitelist_title_content": "DApp白名单开关已经移置设置，新增了体验更流畅的高级模式，是否前往开启白名单功能？",
+
   "resource_label_available": "可用",
   "resource_label_total": "总量",
   "resource_label_used": "已用",
@@ -350,6 +369,7 @@
   "settings_button_language": "语言",
   "settings_button_currency": "默认货币",
   "settings_button_node": "节点设置",
+  "settings_label_whitelist": "白名单功能",
   "settings_node_label_default_node": "默认节点",
   "settings_node_label_customized_node": "自定义节点",
   "settings_node_button_add_node": "添加节点",

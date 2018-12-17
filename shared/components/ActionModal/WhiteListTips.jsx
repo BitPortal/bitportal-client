@@ -8,6 +8,7 @@ import * as whiteListActions from 'actions/whiteList'
 import { whiteListAuthorizedSelector } from 'selectors/whiteList'
 import BPImage from 'components/BPNativeComponents/BPImage'
 import Images from 'resources/images'
+import messges from 'resources/messages'
 import styles from './styles'
 
 @connect(
@@ -49,7 +50,7 @@ export default class WhiteListTips extends PureComponent {
   }
 
   render() {
-    const { value, selectedDapp, authorized } = this.props
+    const { value, selectedDapp, authorized, locale } = this.props
     const accept = selectedDapp.get('accept')
     const settingDisplay = selectedDapp.get('settingDisplay')
     const settingEnabled = selectedDapp.get('settingEnabled')
@@ -63,11 +64,11 @@ export default class WhiteListTips extends PureComponent {
 
           <View style={styles.titleContainer}>
             <Text style={styles.text15}> 
-              {(authorized && accept) ? ' ' : '开启白名单'} 
+              {(authorized && accept) ? ' ' : messges[locale].transaction_detail_label_enable_whitelist} 
             </Text>
             <View style={styles.titleSetting}>
               <Text onPress={this.switchSetting} style={[styles.text14, { marginTop: -4 }, signedColor]}> 
-                高级设置 
+                {messges[locale].transaction_detail_button_advanced_settings} 
               </Text>
               <Ionicons name={settingDisplay ? 'md-arrow-dropdown' : "md-arrow-dropright"} size={18} color={arrowColor} />
             </View>
@@ -78,7 +79,9 @@ export default class WhiteListTips extends PureComponent {
             <View style={styles.settingContainer}>
               <View style={styles.textSettingDes}>
                 <BPImage source={Images.whiteList_warning} style={[styles.image, { marginRight: 10 }]} />
-                <Text style={styles.text12}> 打开高级设置，下次进行该操作时，无需进行弹框确认直接执行，开启后可前往钱包管理中关闭 </Text>
+                <Text style={styles.text12}> 
+                  {messges[locale].transaction_detail_text_agree_whitelist}
+                </Text>
               </View>
               <View style={styles.switchContainer}>
                 <Switch
@@ -101,7 +104,7 @@ export default class WhiteListTips extends PureComponent {
               </TouchableOpacity>
               <View style={styles.textContentDes}>
                 <Text style={styles.text12}> 
-                  您可以将此操作列入白名单，下次就不必在此授权。
+                  {messges[locale].transaction_detail_text_agree_whitelist} 
                 </Text>
               </View>
             </View>

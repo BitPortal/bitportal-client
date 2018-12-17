@@ -90,10 +90,10 @@ export default class WhiteListDetails extends Component {
   renderHeader = () => (
     <View style={styles.header}>
       <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>
-        白名单列表
+        {messages[this.props.locale].wallet_mgmt_whitelist_label_enabled_dapps}
       </Text>
       <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>
-        高级设置
+        {messages[this.props.locale].wallet_mgmt_whitelist_label_advance_settings}
       </Text>
     </View>
   )
@@ -106,7 +106,7 @@ export default class WhiteListDetails extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title='白名单详情'
+            title={messages[locale].wallet_mgmt_whitelist_title_whitelist}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={this.goBack} />}
           />
           <View style={styles.scrollContainer}>
@@ -125,7 +125,7 @@ export default class WhiteListDetails extends Component {
               :
               <ScrollView contentContainerStyle={{ paddingTop: 20 }}>
                 <Text style={styles.text14}>
-                  暂无白名单授权列表
+                  {messages[locale].wallet_mgmt_whitelist_text_no_enabled_dapps}
                 </Text>
               </ScrollView>
           }

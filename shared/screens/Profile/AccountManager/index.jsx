@@ -81,6 +81,7 @@ export default class AccountManager extends Component {
                     eosValue={+eosPrice * +item.get('balance')}
                     eosAmount={item.get('balance')}
                     balanceTitle="Balance"
+                    locale={locale}
                     active={item.get('active')}
                     onPress={this.checkAccountDetails.bind(this, item)}
                     colors={item.get('permission').toLowerCase() !== 'owner' && Colors.ramColor}
@@ -93,7 +94,7 @@ export default class AccountManager extends Component {
             <View style={{ flex: 1, paddingVertical: 10, paddingHorizontal: 15, borderRadius: 8 }}>
               <BPGradientButton onPress={this.routeToNewAccount} extraStyle={{ marginHorizontal: 10 }}>
                 <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>
-                  添加新钱包
+                  {messages[locale].account_change_button_add_account}
                 </Text>
               </BPGradientButton>
             </View>

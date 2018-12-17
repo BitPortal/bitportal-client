@@ -88,7 +88,7 @@ export default class Setting extends Component {
               />
               <SettingItem
                 disabled={true}
-                leftItemTitle="白名单功能"
+                leftItemTitle={<FormattedMessage id="settings_label_whitelist" />}
                 rightItemTitle='switch'
                 value={value}
                 onValueChange={this.onValueChange}

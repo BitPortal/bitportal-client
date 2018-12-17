@@ -95,6 +95,7 @@ export default class AccountSelection extends Component {
                   eosValue={+eosPrice * +keyPermission.balance}
                   eosAmount={keyPermission.balance}
                   balanceTitle="Balance"
+                  locale={locale}
                   imported={hasEOSAccountImported(
                     { 
                       eosAccountName: keyPermission.accountName, 
