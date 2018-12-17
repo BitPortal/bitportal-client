@@ -35,6 +35,7 @@ export default ({ accountType, accountName, balanceTitle, eosValue, eosAmount, a
               </View>
             }
           </View>
+          {/* <Ionicons name="md-checkmark-circle" size={26} color={Colors.bgColor_FAFAFA} /> */}
           <Ionicons name="ios-arrow-forward" size={26} color={Colors.bgColor_FAFAFA} />
         </View>
       </LinearGradientContainer>

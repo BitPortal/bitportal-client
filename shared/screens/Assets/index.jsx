@@ -255,7 +255,7 @@ export default class Assets extends Component {
     onEventWithLabel(ASSETS_EOS_RESOURCE, '资产 - EOS资源管理')
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.Resources'
+        name: 'BitPortal.SystemResources'
       }
     })
   }
@@ -363,7 +363,10 @@ export default class Assets extends Component {
           )}
           {!!walletCount && (
             <View style={styles.scrollContainer}>
-              <ScrollView showsVerticalScrollIndicator={false}>
+              <ScrollView 
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ alignItems: 'center' }}
+              >
                 <TotalAssetsCard
                   totalAssets={eosTotalAssetBalance}
                   accountName={activeEOSAccount.get('account_name')}

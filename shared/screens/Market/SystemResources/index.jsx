@@ -55,12 +55,13 @@ export default class SystemResources extends React.Component {
   )
 
   render() {
+    const { componentId } = this.props
     return (
       <TabView
         navigationState={this.state}
         renderScene={SceneMap({
           first: Cpu,
-          second: Ram,
+          second: () => <Ram componentId={componentId} />,
           third: Net
         })}
         onIndexChange={index => {

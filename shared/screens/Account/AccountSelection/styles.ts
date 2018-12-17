@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 import Colors from 'resources/colors'
-import { SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, FontScale } from 'utils/dimens'
+import { SCREEN_WIDTH, SCREEN_HEIGHT, NAV_BAR_HEIGHT, TAB_BAR_HEIGHT, ifIphoneX, FontScale } from 'utils/dimens'
 
 const styles = StyleSheet.create({
   container: {
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT,
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - TAB_BAR_HEIGHT,
     alignItems: 'center'
   },
   cardContainer: {
@@ -35,6 +35,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row'
   },
+  center: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   paddingStyle: {
     paddingHorizontal: 20
   },
@@ -42,6 +46,16 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 10,
     backgroundColor: Colors.bgColor_FFFFFF
+  },
+  btnContainer: {
+    width: SCREEN_WIDTH,
+    height: TAB_BAR_HEIGHT,
+    backgroundColor: Colors.minorThemeColor,
+    ...ifIphoneX({
+      paddingBottom: 34
+    }, {
+      paddingBottom: 0
+    })
   },
   text12: {
     fontSize: FontScale(12),

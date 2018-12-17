@@ -240,8 +240,14 @@ function* getEOSKeyAccountsRequested(action: Action<GetEOSKeyAccountsParams>) {
     for (const accountName of keyAccounts) {
       const accountInfo = yield call(eos.getAccount, accountName)
       const permissions = getPermissionsByKey(publicKey, accountInfo)
-      // console.log('###--yy', permissions, accountInfo)
-      keyPermissions = [...keyPermissions, ...permissions]
+      if (permissions.length > 1) {
+        const newPermissions = permissions.filter((v: any) => ( v.permission == 'active'))
+        // console.log('###--yy', newPermissions)
+        keyPermissions = [...keyPermissions, ...newPermissions]
+      } else {
+        // console.log('###--yy', permissions, accountInfo)
+        keyPermissions = [...keyPermissions, ...permissions]
+      }
     }
 
     yield put(actions.getEOSKeyAccountsSucceeded(result))

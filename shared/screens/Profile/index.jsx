@@ -77,7 +77,7 @@ export default class Profile extends Component {
         break
       case 'Resources':
         if (this.props.hasEOSAccount) {
-          pageName = 'Resources'
+          pageName = 'SystemResources'
         } else {
           return this.dialog()
         }

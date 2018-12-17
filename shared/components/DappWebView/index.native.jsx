@@ -149,7 +149,7 @@ export default class DappWebView extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    // console.log('###--xx sendingMessage: ', this.props.sendingMessage)
+    console.log('###--yy sendingMessage: ', this.props.sendingMessage)
     if (this.props.sendingMessage && prevProps.sendingMessage !== this.props.sendingMessage && this.webviewbridge) {
       this.webviewbridge.sendToBridge(this.props.sendingMessage)
     }
@@ -213,7 +213,7 @@ export default class DappWebView extends Component {
   }
 
   onBridgeMessage = message => {
-    // console.log('###--xx receiveMessage: ', message)
+    console.log('###--yy receiveMessage: ', message)
     if (message.includes('clickedURL')) this.handleHistory(message)
     this.props.actions.receiveMessage(message)
   }
@@ -239,14 +239,13 @@ export default class DappWebView extends Component {
   showPrompt = () => {
     const { whiteList } = this.props
     const dappName = whiteList.getIn(['selectedDapp', 'dappName'])
+    const accepted = whiteList.getIn(['selectedDapp', 'accept'])
     const dappList = whiteList.get('dappList')
+    
     let authorized = false
-    dappList.forEach(v => {
-      if (v.get('dappName') === dappName) {
-        authorized = v.get('authorized')
-      }
-    })
-    if (authorized) {
+    dappList.forEach(v => { if (v.get('dappName') === dappName) { authorized = v.get('authorized') } })
+
+    if (accepted && authorized) {
       const password = whiteList.get('password')
       this.props.actions.resolveMessage({ password })
     } else {

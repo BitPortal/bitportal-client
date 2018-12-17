@@ -6,12 +6,12 @@ import styles from './styles'
 
 export default class BPGradientButton extends Component{
   render() {
-    const { onPress, disabled, children, extraStyle } = this.props
+    const { onPress, disabled, colors, children, extraStyle } = this.props
     return (
       <TouchableOpacity style={styles.container} onPress={onPress} disabled={disabled}>
         <LinearGradientContainer
           type="right"
-          colors={disabled ? Colors.disabled : null}
+          colors={disabled ? Colors.disabled : colors}
           style={[styles.center, { width: '100%', height: '100%', borderRadius: 3 }, extraStyle]}
         >
           {children}

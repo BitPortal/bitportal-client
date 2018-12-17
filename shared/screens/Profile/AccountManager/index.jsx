@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 import messages from 'resources/messages'
 import WalletCard from 'components/WalletCard'
+import { BPGradientButton } from 'components/BPNativeComponents'
 import { walletListSelector } from 'selectors/wallet'
 import { eosPriceSelector } from 'selectors/ticker'
 import styles from './styles'
@@ -89,11 +90,13 @@ export default class AccountManager extends Component {
             </ScrollView>
           </View>
           <View style={styles.btnContainer}>
-            <TouchableOpacity style={[{flex: 1}, styles.center]} onPress={this.routeToNewAccount} >
-              <Text style={styles.text14}>
-                添加新钱包
-              </Text>
-            </TouchableOpacity>
+            <View style={{ flex: 1, paddingVertical: 10, paddingHorizontal: 15, borderRadius: 8 }}>
+              <BPGradientButton onPress={this.routeToNewAccount} extraStyle={{ marginHorizontal: 10 }}>
+                <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>
+                  添加新钱包
+                </Text>
+              </BPGradientButton>
+            </View>
           </View>
         </View>
       </IntlProvider>

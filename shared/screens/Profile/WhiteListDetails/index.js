@@ -92,7 +92,7 @@ export default class WhiteListDetails extends Component {
       <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>
         白名单列表
       </Text>
-      <Text style={[styles.text14, { color: Colors.textColor_89_185_226 }]}>
+      <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>
         高级设置
       </Text>
     </View>
