@@ -16,7 +16,7 @@ import messages from 'resources/messages'
 
 const styles = StyleSheet.create({
   linearContainer: {
-    width: SCREEN_WIDTH - 64,
+    width: SCREEN_WIDTH - 32,
     height: 150,
     borderRadius: 12
   },
@@ -25,16 +25,9 @@ const styles = StyleSheet.create({
     minHeight: 20,
     borderBottomLeftRadius: 12,
     borderBottomRightRadius: 12,
-    backgroundColor: Colors.mainThemeColor,
+    backgroundColor: Colors.minorThemeColor,
     alignItems: 'center',
     paddingHorizontal: 20
-  },
-  guideArrow: {
-    width: 30,
-    height: 8,
-    borderBottomLeftRadius: 3,
-    borderBottomRightRadius: 3,
-    backgroundColor: Colors.mainThemeColor
   },
   divider: {
     width: 2,
@@ -147,10 +140,10 @@ export default class TotalAssetsCard extends Component {
 
     return (
       <IntlProvider messages={messages[locale]}>
-        <View style={{ alignItems: 'center', backgroundColor: Colors.minorThemeColor, paddingVertical: 15 }}>
+        <View style={{ alignItems: 'center', backgroundColor: Colors.mainThemeColor, paddingVertical: 15 }}>
           <LinearGradientContainer
             type="right"
-            style={[styles.linearContainer, { marginHorizontal: 32, marginTop: 10 }]}
+            style={[styles.linearContainer, {marginTop: 10 }]}
           >
             <TouchableWithoutFeedback
               disabled={disabled}
@@ -195,8 +188,7 @@ export default class TotalAssetsCard extends Component {
               </View>
             </TouchableWithoutFeedback>
           </LinearGradientContainer>
-          <TouchableOpacity disabled={true} onPress={this.foldResources}>
-            <View style={{ alignItems: 'center' }}>
+          <TouchableOpacity disabled={true} onPress={this.foldResources} style={{alignItems: 'center'}}>
               <View style={[styles.resourcesContainer, styles.between, { paddingVertical: 15 }]}>
                 <View style={styles.center}>
                   <Text onPress={this.checkResources} style={[styles.text12, { paddingHorizontal: 20 }]}>
@@ -242,7 +234,6 @@ export default class TotalAssetsCard extends Component {
                   </Text>
                 </View>
               </View>
-            </View>
           </TouchableOpacity>
         </View>
       </IntlProvider>

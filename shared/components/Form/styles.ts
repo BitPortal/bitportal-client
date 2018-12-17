@@ -48,7 +48,7 @@ export default EStyleSheet.create({
   },
   searchFieldInput: {
     minHeight: FontScale(24),
-    paddingVertical: 10,
+    paddingVertical: Platform.OS === 'ios' ? 10 : 0,
     backgroundColor: 'black',
     borderRadius: 3,
     flexDirection: 'row',

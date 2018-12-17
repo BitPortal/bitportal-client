@@ -4,16 +4,24 @@ import BPImage from 'components/BPNativeComponents/BPImage'
 import Colors from 'resources/colors'
 import Images from 'resources/images'
 import { FormattedNumber, FormattedRelative } from 'react-intl'
-import { FontScale, SCREEN_WIDTH } from 'utils/dimens'
+import { FontScale, SCREEN_WIDTH, FLOATING_CARD_WIDTH, FLOATING_CARD_BORDER_RADIUS } from 'utils/dimens'
 import LinearGradientContainer from 'components/LinearGradientContainer'
 
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH,
     height: 70,
-    backgroundColor: Colors.bgColor_30_31_37,
-    borderBottomColor: Colors.mainThemeColor,
-    borderBottomWidth: StyleSheet.hairlineWidth
+    backgroundColor: Colors.mainThemeColor,
+    borderBottomColor: Colors.minorThemeColor,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    alignItems: 'center'
+  },
+  recordContainer: {
+    backgroundColor: Colors.minorThemeColor,
+    width: FLOATING_CARD_WIDTH,
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderRadius: FLOATING_CARD_BORDER_RADIUS
   },
   between: {
     alignItems: 'center',
@@ -75,7 +83,7 @@ export default ({ item, onPress, eosAccountName }) => {
       underlayColor={Colors.hoverColor}
       onPress={() => onPress(item)}
     >
-      <View style={[styles.container, styles.between, { paddingHorizontal: 20 }]}>
+      <View style={[styles.recordContainer, styles.between, { paddingHorizontal: 20 }]}>
         <View style={{ alignItems: 'center', flexDirection: 'row' }}>
           <GradientIcon isReceiver={isReceiver} />
           <View style={{ marginLeft: 10 }}>
