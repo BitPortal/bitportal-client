@@ -90,8 +90,8 @@ export default class AccountManager extends Component {
               }
             </ScrollView>
           </View>
-          <View style={styles.btnContainer}>
-            <View style={{ flex: 1, paddingVertical: 10, paddingHorizontal: 15, borderRadius: 8 }}>
+          <View style={[styles.btnContainer, styles.between]}>
+            <View style={{ flex: 1, height: 40, paddingHorizontal: 15, borderRadius: 8 }}>
               <BPGradientButton onPress={this.routeToNewAccount} extraStyle={{ marginHorizontal: 10 }}>
                 <Text style={[styles.text14, { color: Colors.textColor_255_255_238 }]}>
                   {messages[locale].account_change_button_add_account}

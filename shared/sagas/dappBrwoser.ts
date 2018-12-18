@@ -158,6 +158,42 @@ function* pendSignEOSData(messageActionType: string, payload: any, messageId: st
   }))
 }
 
+function* pendArbitrarySignature(messageActionType: string, payload: any, messageId: string) {
+  const hasPendingMessage = yield select((state: RootState) => state.dappBrowser.get('hasPendingMessage'))
+  if (hasPendingMessage) {
+    const pendingMessageActionType = yield select((state: RootState) => state.dappBrowser.getIn(['pendingMessage', 'type']))
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionFailed',
+      payload: {
+        error: {
+          message: `There's a pending request: ${pendingMessageActionType}`
+        }
+      }
+    }))
+    return
+  }
+
+  const account = payload.account
+  const publicKey = payload.publicKey
+  const signData = payload.data 
+  const isHash = payload.isHash || false
+  const blockchain = 'EOS'
+
+  yield put(actions.pendMessage({
+    messageId,
+    payload,
+    type: messageActionType,
+    info: {
+      account,
+      publicKey,
+      signData,
+      isHash,
+      blockchain
+    }
+  }))
+}
+
 function* pendRequestSignature(messageActionType: string, payload: any, messageId: string) {
   const hasPendingMessage = yield select((state: RootState) => state.dappBrowser.get('hasPendingMessage'))
   if (hasPendingMessage) {
@@ -362,7 +398,7 @@ function* resolveRequestArbitrarySignature(password: string, info: any, messageI
     const publicKey = info.get('publicKey')
     const signData = info.get('signData')
     const isHash = info.get('isHash')
-    console.log('###--yy account: %s, publicKey: %s, signData: %s isHash: %s', account, publicKey, signData, isHash)
+    // console.log('###--yy account: %s, publicKey: %s, signData: %s isHash: %s', account, publicKey, signData, isHash)
     const signatures = yield call(eosAuthSign, {
       account,
       password,
@@ -375,7 +411,7 @@ function* resolveRequestArbitrarySignature(password: string, info: any, messageI
       messageId,
       type: 'actionSucceeded',
       payload: {
-        data: { signatures, returnedFields: [] }
+        data: signatures
       }
     }))
   } catch (error) {
@@ -669,13 +705,13 @@ function* receiveMessage(action: Action<string>) {
       break
     case 'requestArbitrarySignature': 
       {
-        // console.log('###--yy', messageActionType)
+        console.log('###--yy', messageActionType)
         const currentWallet = yield select((state: RootState) => currenctWalletSelector(state))
         assert(currentWallet, 'No wallet in BitPortal!')
         payload.account = currentWallet.get('account')
         const publicKey = payload.publicKey
         assert(publicKey === currentWallet.get('publicKey'), 'Public key is not in BitPortal.')
-        yield pendSignEOSData(messageActionType, payload, messageId)
+        yield pendArbitrarySignature(messageActionType, payload, messageId)
       }
       break
     case 'forgetIdentity':

@@ -10,11 +10,11 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - TAB_BAR_HEIGHT
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - TAB_BAR_HEIGHT -20
   },
   btnContainer: {
     width: SCREEN_WIDTH,
-    height: TAB_BAR_HEIGHT,
+    height: TAB_BAR_HEIGHT+20,
     backgroundColor: Colors.minorThemeColor,
     ...ifIphoneX({
       paddingBottom: 34

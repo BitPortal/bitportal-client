@@ -80,7 +80,7 @@ export default class WhiteListTips extends PureComponent {
               <View style={styles.textSettingDes}>
                 <BPImage source={Images.whiteList_warning} style={[styles.image, { marginRight: 10 }]} />
                 <Text style={styles.text12}> 
-                  {messges[locale].transaction_detail_text_agree_whitelist}
+                  {messges[locale].transaction_detail_text_enable_advanced_settings}
                 </Text>
               </View>
               <View style={styles.switchContainer}>

@@ -250,7 +250,7 @@
   "discovery_dapp_popup_text_redirect": "You will be redirected to third party DApp \"{app}\". Your actions and usage on third party DApp should apply to third party DApp's Terms of Service and Privacy Policy. \"{app}\" will directly and independently be responsible for your actions and usage.",
   "discovery_dapp_text_favourite_limit": "You can only add 8 favorites",
   "discovery_dapp_popup_button_cancel": "Cancel",
-  "discovery_dapp_popup_button_understand": "I've Acknowleged",
+  "discovery_dapp_popup_button_understand": "Understood",
   "discovery_dapp_list_title_more": "more",
 
   "dapp_title_dapp": "DApps",
