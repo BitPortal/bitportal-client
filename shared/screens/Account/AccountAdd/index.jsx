@@ -100,7 +100,7 @@ export default class AccountAdd extends Component {
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar 
-            title='添加新账户'
+            title={messages[locale].account_change_button_add_account}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
