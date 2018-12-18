@@ -200,38 +200,38 @@ export const startTabBasedApp = locale => {
               }
             }
           },
-          {
-            stack: {
-              children: [
-                {
-                  component: {
-                    id: 'BitPortal.Discovery',
-                    name: 'BitPortal.Discovery',
-                    options: {
-                      topBar: {
-                        visible: false,
-                        animate: false
-                      }
-                    }
-                  }
-                }
-              ],
-              options: {
-                bottomTab: {
-                  text: messages[locale].general_nav_discovery,
-                  textColor: 'gray',
-                  selectedTextColor: Colors.textColor_89_185_226,
-                  icon: Images.discovery,
-                  selectedIcon: Images.discovery_press,
-                  selectedIconColor: Colors.textColor_89_185_226,
-                  testID: 'BITPORTAL_DISCOVERY'
-                },
-                bottomTabs: {
-                  visible: true
-                }
-              }
-            }
-          },
+          // {
+          //   stack: {
+          //     children: [
+          //       {
+          //         component: {
+          //           id: 'BitPortal.Discovery',
+          //           name: 'BitPortal.Discovery',
+          //           options: {
+          //             topBar: {
+          //               visible: false,
+          //               animate: false
+          //             }
+          //           }
+          //         }
+          //       }
+          //     ],
+          //     options: {
+          //       bottomTab: {
+          //         text: messages[locale].general_nav_discovery,
+          //         textColor: 'gray',
+          //         selectedTextColor: Colors.textColor_89_185_226,
+          //         icon: Images.discovery,
+          //         selectedIcon: Images.discovery_press,
+          //         selectedIconColor: Colors.textColor_89_185_226,
+          //         testID: 'BITPORTAL_DISCOVERY'
+          //       },
+          //       bottomTabs: {
+          //         visible: true
+          //       }
+          //     }
+          //   }
+          // },
           {
             stack: {
               children: [
