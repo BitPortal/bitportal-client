@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   content: {
-    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - TAB_BAR_HEIGHT,
+    height: SCREEN_HEIGHT - NAV_BAR_HEIGHT - TAB_BAR_HEIGHT - 20,
     backgroundColor: Colors.mainThemeColor
   },
   topContent: {
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     width: SCREEN_WIDTH,
-    height: TAB_BAR_HEIGHT,
+    height: TAB_BAR_HEIGHT+20,
     backgroundColor: Colors.mainThemeColor,
     ...ifIphoneX({
       paddingBottom: 34

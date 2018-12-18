@@ -46,7 +46,7 @@ function* switchWhiteList(action: any) {
 function* getWhiteListStoreInfo(action: any) {
   try {
     const store = yield call(storage.getItem, 'bitportal_white_list', true)
-    console.log('###--yy  getWhiteListStoreInfo', store)
+    // console.log('###--yy  getWhiteListStoreInfo', store)
     if (!!store && !!store.dappList) {
       const index = store.dappList.findIndex((v: any) => {
         // 给每个dapp添加一个授权属性来判断是否有已经授权
@@ -56,9 +56,9 @@ function* getWhiteListStoreInfo(action: any) {
         return v.dappName === action.payload.dappName
       })
       if (index !== -1) yield put(actions.initSelectedDapp(store.dappList[index]))
-      console.log('###--yy  dappList', store.dappList)
+      // console.log('###--yy  dappList', store.dappList)
       const dappList = yield select((state: RootState) => state.whiteList.get('dappList'))
-      console.log('###--yy  dappList', dappList)
+      // console.log('###--yy  dappList', dappList)
       if (!dappList.size) {
         yield put(actions.recordDappList({ dappList: Immutable.fromJS(store.dappList) }))
       }
@@ -102,7 +102,7 @@ function* resetSettingEnabled(action: any) {
 
       const storeDappList: any = []
       reducerDappList.forEach((v: any) => storeDappList.push(v.delete('authorized').toJS()))
-      console.log('###--yy updateWhiteListStoreInfo 107', storeDappList)
+      // console.log('###--yy updateWhiteListStoreInfo 107', storeDappList)
       yield call(storage.mergeItem, 'bitportal_white_list', { dappList: storeDappList }, true)
     } 
   } catch (e) {
@@ -134,7 +134,7 @@ function* updateWhiteListStoreInfo(action: any) {
     const dappInfo = action.payload.store
     const dappList = yield select((state: RootState) => state.whiteList.get('dappList'))
 
-    console.log('###--yy updateWhiteListStoreInfo 82', dappList.toJS(), dappInfo.toJS())    
+    // console.log('###--yy updateWhiteListStoreInfo 82', dappList.toJS(), dappInfo.toJS())    
     const index = dappList.findIndex((v: any) => v.get('dappName') === dappInfo.get('dappName'))
     const storeDappList: any = []
     if (index === -1) {

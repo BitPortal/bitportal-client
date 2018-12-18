@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     width: FLOATING_CARD_WIDTH,
     backgroundColor: Colors.minorThemeColor,
     alignItems: 'center',
-    paddingBottom: 20,
+    paddingBottom: 8,
     borderBottomLeftRadius: FLOATING_CARD_BORDER_RADIUS,
     borderBottomRightRadius: FLOATING_CARD_BORDER_RADIUS
   },

@@ -206,7 +206,7 @@ export default class AssetChart extends Component {
               />
             </View>
             <View style={[styles.btnContainer, styles.between]}>
-              <View style={{ flex: 1, paddingVertical: 10, paddingHorizontal: 15, borderRadius: 8 }}>
+              <View style={{ flex: 1, height: 40, paddingHorizontal: 15, borderRadius: 8 }}>
                 <BPGradientButton onPress={this.send} extraStyle={{ marginHorizontal: 10 }}>
                   <View style={{ flexDirection: 'row' }}>
                     <BPImage source={Images.assets_send} style={styles.image} />
@@ -217,7 +217,7 @@ export default class AssetChart extends Component {
                 </BPGradientButton>
               </View>
               <View style={styles.line} />
-              <View style={{ flex: 1, paddingVertical: 10, paddingHorizontal: 15, borderRadius: 8 }}>
+              <View style={{ flex: 1,height: 40, paddingHorizontal: 15, borderRadius: 8 }}>
                 <BPGradientButton onPress={this.receive} colors={Colors.ramColor} extraStyle={{ marginHorizontal: 10 }}>
                   <View style={{ flexDirection: 'row' }}>
                     <BPImage source={Images.assets_receive} style={styles.image} />
