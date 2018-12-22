@@ -100,7 +100,7 @@ export default class DappWebView extends Component {
   state = {
     canGoBack: false,
     showPrompt: false,
-    uri: 'https://build-prguimiryr.now.sh/',
+    uri: 'https://www.myeoskit.com/tools/',
     visibleMenu: false
   }
 
