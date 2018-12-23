@@ -106,7 +106,7 @@
     // NSSet<UIUserNotificationCategory *> *categories for iOS8 and iOS9
   }
   [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
-  [JPUSHService setupWithOption:launchOptions appKey:@"05e8b10824ab700bae78e9eb"
+  [JPUSHService setupWithOption:launchOptions appKey:@"5744130aa0487d3355a1a9ac"
                         channel:@"app store" apsForProduction:true];
 
   NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];

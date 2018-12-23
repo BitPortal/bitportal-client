@@ -174,6 +174,13 @@
   "transaction_detail_text_agree_whitelist": "You can whitelist this action and don't have to authorize it next time.",
   "transaction_detail_text_enable_advanced_settings": "You don't need to confirm transaction popup by enabling advanced. You can turn it off in wallet management.",
 
+  "wallet_details_label_permission": "Permission",
+  "wallet_details_label_private_key": "공개 키",
+  "wallet_mgmt_button_export_private_key": "프라이빗 키 추출",
+  "wallet_mgmt_button_change_private_key": "Change Private Key",
+  "wallet_mgmt_button_change_password": "비밀번호 재설정",
+  "wallet_mgmt_button_sign_out": "로그아웃",
+
   "wallet_mgmt_button_whitelist_detail": "Whitelist Details",
   "wallet_mgmt_whitelist_title_whitelist": "Whitelist List",
   "wallet_mgmt_whitelist_label_enabled_dapps": "Enabled DApps",
@@ -222,6 +229,11 @@
   "resource_ram_text_tips_1": "1. RAM은 EOS 네트워크 자원 중 하나입니다. EOS를 Stake하여 RAM을 확보할 수 있습니다.",
   "resource_ram_text_tips_2": "2. RAM을 상시 구매/판매 할 수 있습니다.",
   "resource_ram_text_tips_3": "3. RAM 거래시, (x+199)/200의 거래 비용이 소모됩니다. 'x'는 실제 거래 수량을 나타냅니다.",
+  "resource_cpu_rent_label_tips_1": "Unable to stake? ",
+  "resource_cpu_rent_label_tips_2": "Rent CPU",
+  "resource_cpu_rent_label_tips_3": "for free.",
+
+
   "market_label_market_cap": "시가 총액",
   "market_label_volume_24h": "Volume 24h",
   "market_label_price": "가격",
@@ -306,9 +318,7 @@
   "contacts_add_label_contact_remark": "연락처 설명",
   "contacts_add_error_text_contact_remark_max_character": "연락처 설명은 64자리를 넘길 수 없습니다.",
   "contacts_add_button_add": "추가",
-  "wallet_mgmt_button_export_private_key": "프라이빗 키 추출",
-  "wallet_mgmt_button_change_password": "비밀번호 재설정",
-  "wallet_mgmt_button_sign_out": "로그아웃",
+
   "export_title_export": "추출하기",
   "export_button_keystore": "키스토어 추출",
   "export_button_private_key": "프라이빗 키 추출",

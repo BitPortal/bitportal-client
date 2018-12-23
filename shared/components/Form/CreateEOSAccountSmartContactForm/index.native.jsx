@@ -11,7 +11,7 @@ import { getPasswordStrength } from 'utils'
 import * as walletActions from 'actions/wallet'
 import * as eosAccountActions from 'actions/eosAccount'
 import { onEventWithMap } from 'utils/analytics'
-import { ACCOUNT_EOS_CREATE } from 'constants/analytics'
+import { ACCOUNT_EOS_CREATE_SMART_CONTACT } from 'constants/analytics'
 import messages from 'resources/messages'
 import Alert from 'components/Alert'
 
@@ -92,7 +92,7 @@ export default class CreateEOSAccountSmartContactForm extends Component {
 
   submit = data => {
     // Umeng analytics
-    onEventWithMap(ACCOUNT_EOS_CREATE, { eosAccountName: data.get('eosAccountName') })
+    onEventWithMap(ACCOUNT_EOS_CREATE_SMART_CONTACT, { eosAccountName: data.get('eosAccountName') })
 
     const componentId = this.props.componentId
     this.props.actions.createEOSAccountAssistanceRequested(
@@ -119,6 +119,7 @@ export default class CreateEOSAccountSmartContactForm extends Component {
             component={TextField}
             placeholder={messages[locale].add_eos_create_text_account_name}
             tips={messages[locale].add_eos_create_popup_text_account_name_tips}
+            extraTips={messages[locale].add_eos_create_error_text_account_name_invalid}
           />
           <Field
             label={messages[locale].add_eos_label_set_password}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
-import { View, ScrollView } from 'react-native'
+import { View, ScrollView, Clipboard } from 'react-native'
 import Colors from 'resources/colors'
 import SettingItem from 'components/SettingItem'
 import { Navigation } from 'react-native-navigation'
@@ -12,9 +12,12 @@ import { logoutRequested, clearLogoutError } from 'actions/wallet'
 import { WALLET_MGT_EXPORT, WALLET_MGT_RESET_PW, WALLET_MGT_LOGOUT } from 'constants/analytics'
 import { onEventWithLabel } from 'utils/analytics'
 import { FLOATING_CARD_BORDER_RADIUS } from 'utils/dimens'
+import { EOSToolsDappSelector } from 'selectors/dApp'
+import { loadInjectSync } from 'utils/inject'
 import Loading from 'components/Loading'
 import Alert from 'components/Alert'
 import Prompt from 'components/Prompt'
+import Toast from 'components/Toast'
 import messages from 'resources/messages'
 import styles from './styles'
 
@@ -37,7 +40,8 @@ export const errorMessages = (error, messages) => {
     exporting: state.keystore.get('exporting'),
     error: state.keystore.get('error'),
     loggingOut: state.wallet.get('loggingOut'),
-    logoutError: state.wallet.get('logoutError')
+    logoutError: state.wallet.get('logoutError'),
+    eosToolsDapp: EOSToolsDappSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -62,6 +66,30 @@ export default class AccountDetails extends Component {
   state = {
     showExportPrompt: false,
     showLogoutPrompt: false
+  }
+
+  copy = (content) => {
+    Clipboard.setString(content)
+    Toast(messages[this.props.locale].webview_copied_to_clipboard+ ': '+ content, 1000, 0)
+  }
+
+  changePrivateKey = () => {
+    const { eosToolsDapp } = this.props
+    const item = eosToolsDapp
+    const inject = loadInjectSync()
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.DappWebView',
+        passProps: {
+          uri: item.get('url'),
+          iconUrl: item.get('icon_url'),
+          title: item.get('display_name').get(this.props.locale) || item.get('display_name').get('en'),
+          inject,
+          item,
+          name: item.get('name')
+        }
+      }
+    })
   }
 
   resetPassword = () => {
@@ -129,13 +157,13 @@ export default class AccountDetails extends Component {
   }
 
   render() {
-    const { locale, exporting, error, loggingOut, logoutError } = this.props
+    const { locale, exporting, error, loggingOut, logoutError, accountInfo } = this.props
 
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
           <NavigationBar
-            title={messages[locale].profile_button_wallet_mgmt}
+            title={accountInfo.get('eosAccountName')}
             leftButton={<CommonButton iconName="md-arrow-back" onPress={() => Navigation.pop(this.props.componentId)} />}
           />
           <View style={styles.scrollContainer}>
@@ -144,6 +172,40 @@ export default class AccountDetails extends Component {
               contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }}
             >
               <SettingItem
+                leftItemTitle={messages[locale].add_eos_create_friend_assistance_label_account+': '}
+                rightImageName={'md-copy'}
+                iconSize={20}
+                rightItemTitle={accountInfo.get('eosAccountName')}
+                onPress={() => this.copy(accountInfo.get('eosAccountName'))}
+                extraStyle={{
+                  marginTop: 10,
+                  borderTopLeftRadius: FLOATING_CARD_BORDER_RADIUS,
+                  borderTopRightRadius: FLOATING_CARD_BORDER_RADIUS
+                }}
+              />
+              <SettingItem
+                leftItemTitle={messages[locale].wallet_details_label_private_key+': '}
+                rightImageName={'md-copy'}
+                iconSize={20}
+                rightItemTitle={`${accountInfo.get('publicKey').slice(0, 6)}....${accountInfo.get('publicKey').slice(-6)}`}
+                onPress={() => this.copy(accountInfo.get('publicKey'))}
+              />
+              <SettingItem
+                leftItemTitle={messages[locale].general_nav_assets+':'}
+                rightItemTitle={accountInfo.get('balance') + ' EOS'}
+                disabled={true}
+              />
+              <SettingItem
+                leftItemTitle={messages[locale].wallet_details_label_permission+':'}
+                rightItemTitle={accountInfo.get('permission').toLowerCase()}
+                disabled={true}
+                extraStyle={{
+                  borderBottomLeftRadius: FLOATING_CARD_BORDER_RADIUS,
+                  borderBottomRightRadius: FLOATING_CARD_BORDER_RADIUS
+                }}
+              />
+
+              <SettingItem
                 leftItemTitle={messages[locale].wallet_mgmt_button_export_private_key}
                 onPress={this.showExportPrompt}
                 extraStyle={{
@@ -151,6 +213,10 @@ export default class AccountDetails extends Component {
                   borderTopLeftRadius: FLOATING_CARD_BORDER_RADIUS,
                   borderTopRightRadius: FLOATING_CARD_BORDER_RADIUS
                 }}
+              />
+              <SettingItem
+                leftItemTitle={messages[locale].wallet_mgmt_button_change_private_key}
+                onPress={this.changePrivateKey}
               />
               <SettingItem
                 leftItemTitle={messages[locale].wallet_mgmt_button_change_password}

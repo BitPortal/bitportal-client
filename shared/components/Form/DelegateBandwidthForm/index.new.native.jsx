@@ -7,16 +7,19 @@ import { FormContainer, TextField, SubmitButton } from 'components/Form'
 import { normalizeUnitByCurrency } from 'utils/normalize'
 import { validateUnitByCurrency } from 'utils/validate'
 import * as bandwidthActions from 'actions/bandwidth'
+import { Navigation } from 'react-native-navigation'
 import Switch from 'components/Switch'
 import Balance from 'components/Balance'
 import { IntlProvider } from 'react-intl'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { eosBalanceSelector } from 'selectors/balance'
+import { CPUEmergencyDappSelector } from 'selectors/dApp'
+import { loadInjectSync } from 'utils/inject'
 import Prompt from 'components/Prompt'
 import Alert from 'components/Alert'
 import messages from 'resources/messages'
-import { FLOATING_CARD_WIDTH, FLOATING_CARD_BORDER_RADIUS, FLOATING_CARD_MARGIN_BOTTOM } from 'utils/dimens'
+import { FontScale, FLOATING_CARD_WIDTH, FLOATING_CARD_BORDER_RADIUS, FLOATING_CARD_MARGIN_BOTTOM } from 'utils/dimens'
 import Colors from 'resources/colors'
 
 const styles = EStyleSheet.create({
@@ -29,6 +32,10 @@ const styles = EStyleSheet.create({
     // flex: 1,
     flexDirection: 'column',
     marginBottom: FLOATING_CARD_MARGIN_BOTTOM
+  },
+  text14: {
+    fontSize: FontScale(14),
+    color: Colors.textColor_216_216_216
   }
 })
 
@@ -118,7 +125,8 @@ const validate = (values, props) => {
     locale: state.intl.get('locale'),
     eosAccount: eosAccountSelector(state),
     eosBalance: eosBalanceSelector(state),
-    bandwidth: state.bandwidth
+    bandwidth: state.bandwidth,
+    cpuEmergencyDapp: CPUEmergencyDappSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators(
@@ -180,6 +188,25 @@ export default class DelegateBandwidthForm extends Component {
     this.setState({ isVisible: false })
   }
 
+  freeRent = () => {
+    const { cpuEmergencyDapp } = this.props
+    const item = cpuEmergencyDapp
+    const inject = loadInjectSync()
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.DappWebView',
+        passProps: {
+          uri: item.get('url'),
+          iconUrl: item.get('icon_url'),
+          title: item.get('display_name').get(this.props.locale) || item.get('display_name').get('en'),
+          inject,
+          item,
+          name: item.get('name')
+        }
+      }
+    })
+  }
+
   render() {
     const { handleSubmit, invalid, pristine, bandwidth, locale, eosAccount, eosBalance } = this.props
     const delegating = bandwidth.get('delegating')
@@ -223,6 +250,13 @@ export default class DelegateBandwidthForm extends Component {
                   : messages[locale].resource_button_unstake
               }
             />
+            <Text style={styles.text14}>
+              {messages[locale].resource_cpu_rent_label_tips_1}
+              <Text onPress={this.freeRent} style={[styles.text14, { color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }]}>
+                {messages[locale].resource_cpu_rent_label_tips_2}
+              </Text>
+              {' '}{messages[locale].resource_cpu_rent_label_tips_3}
+            </Text>
             <Alert
               message={errorMessages(error, messages[locale])}
               subMessage={errorMessageDetail(error, messages[locale])}

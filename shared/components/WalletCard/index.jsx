@@ -7,7 +7,7 @@ import messages from 'resources/messages'
 import Colors from 'resources/colors'
 import styles from './styles'
 
-export default ({ locale, accountType, accountName, balanceTitle, eosValue, eosAmount, active, colors, imported, onPress }) => (
+export default ({ locale, accountType, accountName, balanceTitle, eosValue, eosAmount, active, colors, imported, selected, onPress }) => (
   <TouchableWithoutFeedback disabled={imported} onPress={onPress}>
     <View style={styles.cardContainer}>
       <LinearGradientContainer type="right" colors={imported ? Colors.disabled : colors} style={[styles.contentContainer, styles.topRadius]}>
@@ -36,8 +36,16 @@ export default ({ locale, accountType, accountName, balanceTitle, eosValue, eosA
               </View>
             }
           </View>
-          {/* <Ionicons name="md-checkmark-circle" size={26} color={Colors.bgColor_FAFAFA} /> */}
-          <Ionicons name="ios-arrow-forward" size={26} color={Colors.bgColor_FAFAFA} />
+          {
+            selected === undefined 
+            ? <Ionicons name="ios-arrow-forward" size={26} color={Colors.bgColor_FAFAFA} />
+            : (
+              imported || selected 
+              ? <Ionicons name="md-radio-button-on" size={26} color={Colors.bgColor_FAFAFA} />
+              : <Ionicons name="md-radio-button-off" size={26} color={Colors.bgColor_FAFAFA} />
+            ) 
+          }
+          
         </View>
       </LinearGradientContainer>
       <View style={[styles.contentContainer, styles.paddingStyle, styles.between, styles.bottomRadius, { backgroundColor: Colors.minorThemeColor }]}>

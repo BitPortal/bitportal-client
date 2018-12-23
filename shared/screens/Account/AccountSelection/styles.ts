@@ -51,11 +51,18 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: TAB_BAR_HEIGHT,
     backgroundColor: Colors.minorThemeColor,
+    paddingHorizontal: 20,
     ...ifIphoneX({
       paddingBottom: 34
     }, {
       paddingBottom: 0
     })
+  },
+  voteBtn: {
+    width: 80,
+    height: 30,
+    borderRadius: 4,
+    backgroundColor: Colors.textColor_89_185_226
   },
   text12: {
     fontSize: FontScale(12),

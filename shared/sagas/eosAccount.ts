@@ -236,24 +236,25 @@ function* getEOSKeyAccountsRequested(action: Action<GetEOSKeyAccountsParams>) {
     assert(result.account_names && result.account_names.length, 'No key accounts')
     const keyAccounts = result.account_names
     let keyPermissions: string[] = []
-
     for (const accountName of keyAccounts) {
       const accountInfo = yield call(eos.getAccount, accountName)
       const permissions = getPermissionsByKey(publicKey, accountInfo)
       if (permissions.length > 1) {
-        const newPermissions = permissions.filter((v: any) => ( v.permission == 'active'))
-        // console.log('###--yy', newPermissions)
+        const newPermissions = permissions.filter((v: any) => (v.permission === 'active'))
         keyPermissions = [...keyPermissions, ...newPermissions]
       } else {
-        // console.log('###--yy', permissions, accountInfo)
         keyPermissions = [...keyPermissions, ...permissions]
       }
     }
-
-    yield put(actions.getEOSKeyAccountsSucceeded(result))
+    const keyPermissionsArr = []
+    for (let index = 0; index < keyPermissions.length; index++) {
+      const element = keyPermissions[index]
+      element.selected = false
+      keyPermissionsArr.push(element)
+    }
+    yield put(actions.getEOSKeyAccountsSucceeded(keyPermissionsArr))
     if (action.payload.componentId) {
       push('BitPortal.AccountSelection', action.payload.componentId, {
-        keyPermissions,
         publicKey,
         privateKey,
         password,

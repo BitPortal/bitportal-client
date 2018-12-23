@@ -102,7 +102,7 @@ export default class AccountAssistancePayment extends Component {
           <View style={styles.scrollContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.contentContainer}>
-                <InputItem label="账户名称" value={account} />
+                <InputItem label={messages[locale].add_eos_create_friend_assistance_label_account} value={account} />
                 <InputItem label="Owner Key" value={owner} />
                 <InputItem label="Active Key" value={active} />
                 <View style={styles.btnContainer}>

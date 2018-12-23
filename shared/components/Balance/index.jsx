@@ -10,7 +10,8 @@ const styles = EStyleSheet.create({
     height: 70,
     paddingTop: 20,
     paddingHorizontal: 32,
-    backgroundColor: Colors.minorThemeColor
+    backgroundColor: Colors.minorThemeColor,
+    marginBottom: -20
   },
   between: {
     justifyContent: 'space-between',

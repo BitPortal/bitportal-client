@@ -19,7 +19,7 @@ export const validateEOSAccountFailed = createAction<ValidateEOSAccountRejection
 export const hiddenAssetDisplay = createAction<string>('eosAccount/HIDDEN_ASSET_DISPLAY')
 export const completeBackup = createAction('eosAccount/COMPLETE_BACKUP')
 export const getEOSKeyAccountsRequested = createAction<GetEOSKeyAccountsParams>('eosAccount/GET_KEY_ACCOUNTS_REQUESTED')
-export const getEOSKeyAccountsSucceeded = createAction<GetEOSKeyAccountsResult>('eosAccount/GET_KEY_ACCOUNTS_SUCCEEDED')
+export const getEOSKeyAccountsSucceeded = createAction<object>('eosAccount/GET_KEY_ACCOUNTS_SUCCEEDED')
 export const getEOSKeyAccountsFailed = createAction<ErrorMessage>('eosAccount/GET_KEY_ACCOUNTS_FAILED')
 
 export const createEOSAccountAssistanceRequested = createAction<CreateEOSAccountAssistanceParams>('eosAccount/CREATE_ASSISTANCE_REQUESTED')
@@ -35,3 +35,5 @@ export const createEOSAccountForOthersFailed = createAction<ErrorMessage>('eosAc
 export const checkEOSAccountCreationStatusRequested = createAction<CheckEOSAccountStatusParams>('eosAccount/CHECK_CREATION_STATUS_REQUESTED')
 export const checkEOSAccountCreationStatusSucceeded = createAction<CheckEOSAccountStatusResult>('eosAccount/CHECK_CREATION_STATUS_SUCCEEDED')
 export const checkEOSAccountCreationStatusFailed = createAction<ErrorMessage>('eosAccount/CHECK_CREATION_STATUS_FAILED')
+
+export const selectAccount = createAction<object>('eosAccount/SELECT_ACCOUNT')
