@@ -39,10 +39,33 @@ export const EOSToolsDappSelector = createSelector(
       url: "https://www.myeoskit.com/tools/"
     }
     if (dappList.size > 0) {
-      dappList.map((v: any) => {
-        if (v.get && v.get('name') === 'EOSX工具箱') return v
-        else return Immutable.fromJS(item)
-      })
+      for (let index = 0; index < dappList.length; index++) {
+        const element = dappList[index];
+        if (element.get && element.get('name') === 'EOSX工具箱') return Immutable.fromJS(element)
+      }
+      return Immutable.fromJS(item)
+    } else {
+      return Immutable.fromJS(item)
+    }
+  }
+)
+
+
+export const CPUEmergencyDappSelector = createSelector(
+  favoriteDappsSelector,
+  (dappList: any) => {
+    const item = {
+      name: "CPU Emergency",
+      display_name: {en: "CPU Emergency", zh: "CPU救援服务"},
+      icon_url: "https://cdn.bitportal.io/media/2018/05/0b8578be-discovery_logo.png",
+      url: "https://cpuemergency.com/"
+    }
+    if (dappList.size > 0) {
+      for (let index = 0; index < dappList.length; index++) {
+        const element = dappList[index];
+        if (element.get && element.get('name') === 'CPU Emergency') return Immutable.fromJS(element)
+      }
+      return Immutable.fromJS(item)
     } else {
       return Immutable.fromJS(item)
     }

@@ -81,6 +81,7 @@ export default class DappElement extends Component {
       dappName: item.get('display_name').get(this.props.locale) || item.get('display_name').get('en'),
       walletId: eosAccountName
     })
+    // console.log('###--yy', item.toJS())
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.DappWebView',

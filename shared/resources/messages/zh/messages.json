@@ -237,6 +237,9 @@
   "resource_ram_text_tips_1": "1. 内存容量是 EOS 网络中的资源，获取时需要使用 EOS 进行购买。",
   "resource_ram_text_tips_2": "2. 你可以随时购买或者卖出您所拥有的内存容量。",
   "resource_ram_text_tips_3": "3. 内存容量的交易将要缴纳 (x+199)/200 的费用，x 为您的交易额。",
+  "resource_cpu_rent_label_tips_1": "资源不足无法抵押？",
+  "resource_cpu_rent_label_tips_2": "免费租赁",
+  "resource_cpu_rent_label_tips_3": "CPU 资源",
 
   "market_label_market_cap": "市值",
   "market_label_volume_24h": "交易量",

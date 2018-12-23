@@ -229,6 +229,11 @@
   "resource_ram_text_tips_1": "1. RAM은 EOS 네트워크 자원 중 하나입니다. EOS를 Stake하여 RAM을 확보할 수 있습니다.",
   "resource_ram_text_tips_2": "2. RAM을 상시 구매/판매 할 수 있습니다.",
   "resource_ram_text_tips_3": "3. RAM 거래시, (x+199)/200의 거래 비용이 소모됩니다. 'x'는 실제 거래 수량을 나타냅니다.",
+  "resource_cpu_rent_label_tips_1": "Unable to stake? ",
+  "resource_cpu_rent_label_tips_2": "Rent CPU",
+  "resource_cpu_rent_label_tips_3": "for free.",
+
+
   "market_label_market_cap": "시가 총액",
   "market_label_volume_24h": "Volume 24h",
   "market_label_price": "가격",
