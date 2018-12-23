@@ -114,6 +114,7 @@ export const TextField: React.SFC<TextFieldProps> = ({
   keyboardType,
   rightContent,
   tips,
+  extraTips,
   info,
   placeholder,
   value,
@@ -147,6 +148,7 @@ export const TextField: React.SFC<TextFieldProps> = ({
         editable={editable}
       />
     </FieldInput>
+    {extraTips && <Text style={[styles.text12, { alignSelf: 'flex-end', marginTop: 4 }]}>{extraTips}</Text>}
   </FieldItem>
 )
 

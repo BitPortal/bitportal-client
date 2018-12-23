@@ -113,6 +113,7 @@ export default class CreateEOSAccountAssistanceForm extends Component {
             component={TextField}
             placeholder={messages[locale].add_eos_create_text_account_name}
             tips={messages[locale].add_eos_create_popup_text_account_name_tips}
+            extraTips={messages[locale].add_eos_create_error_text_account_name_invalid}
           />
           <Field
             label={messages[locale].add_eos_label_set_password}
