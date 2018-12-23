@@ -52,7 +52,7 @@ export default class Memory extends Component {
   }
 
   checkRamPrice = () => {
-    const uri = 'https://eosmonitor.io/'
+    const uri = 'https://eos.feexplorer.io/'
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.DappWebView',
@@ -66,7 +66,7 @@ export default class Memory extends Component {
   }
 
   render() {
-    const { locale, ram, ramQuota, ramAvailable, ramAvailablePercent, ramPrice } = this.props
+    const { componentId, locale, ram, ramQuota, ramAvailable, ramAvailablePercent, ramPrice } = this.props
     const buying = ram.get('buying')
     const selling = ram.get('selling')
     const loading = buying || selling
@@ -105,7 +105,7 @@ export default class Memory extends Component {
                   </Text>
                 </View>
               </View>
-              <TradeRAMForm />
+              <TradeRAMForm componentId={componentId} />
               <DescriptionPanel
                 title={messages[locale].resource_label_tips}
                 description={`${messages[locale].resource_ram_text_tips}`}

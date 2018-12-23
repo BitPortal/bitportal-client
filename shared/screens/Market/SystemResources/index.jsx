@@ -15,7 +15,7 @@ export default class SystemResources extends React.Component {
   state = {
     /*eslint-disable*/
     index: 0,
-    routes: [{ key: 'first', title: 'CPU' }, { key: 'second', title: 'RAM' }, { key: 'third', title: 'NET' }]
+    routes: [{ key: 'ram', title: 'RAM' }, { key: 'cpu', title: 'CPU' }, { key: 'net', title: 'NET' }]
   }
 
   /*eslint-enable*/
@@ -60,9 +60,9 @@ export default class SystemResources extends React.Component {
       <TabView
         navigationState={this.state}
         renderScene={SceneMap({
-          first: Cpu,
-          second: () => <Ram componentId={componentId} />,
-          third: Net
+          ram: () => <Ram componentId={componentId} />,
+          cpu: () => <Cpu componentId={componentId} />,
+          net: () => <Net componentId={componentId} />
         })}
         onIndexChange={index => {
           /*eslint-disable*/

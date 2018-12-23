@@ -33,7 +33,7 @@ export default class Cpu extends Component {
   // }
 
   render() {
-    const { locale, eosAccount, bandwidth } = this.props
+    const { componentId, locale, eosAccount, bandwidth } = this.props
     const activeEOSAccount = eosAccount.get('data')
     const percent = activeEOSAccount.getIn(['cpu_limit', 'available']) / activeEOSAccount.getIn(['cpu_limit', 'max'])
     const refund = activeEOSAccount.get('refund_request')
@@ -68,7 +68,7 @@ export default class Cpu extends Component {
                   <Text style={styles.text14}>{refund}</Text>
                 </View>
               </View>
-              <DelegateBandwidthForm resource="cpu" />
+              <DelegateBandwidthForm componentId={componentId} resource="cpu" />
               <DescriptionPanel
                 title={messages[locale].resource_label_tips}
                 description={`${messages[locale].resource_cpu_text_tips}`}
