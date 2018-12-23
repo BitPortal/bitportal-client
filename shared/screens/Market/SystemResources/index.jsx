@@ -61,8 +61,8 @@ export default class SystemResources extends React.Component {
         navigationState={this.state}
         renderScene={SceneMap({
           ram: () => <Ram componentId={componentId} />,
-          cpu: Cpu,
-          net: Net
+          cpu: () => <Cpu componentId={componentId} />,
+          net: () => <Net componentId={componentId} />
         })}
         onIndexChange={index => {
           /*eslint-disable*/
