@@ -52,7 +52,7 @@ export default class Memory extends Component {
   }
 
   checkRamPrice = () => {
-    const uri = 'https://eosmonitor.io/'
+    const uri = 'https://eos.feexplorer.io/'
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.DappWebView',
