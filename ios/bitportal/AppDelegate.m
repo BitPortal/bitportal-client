@@ -106,7 +106,7 @@
     // NSSet<UIUserNotificationCategory *> *categories for iOS8 and iOS9
   }
   [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
-  [JPUSHService setupWithOption:launchOptions appKey:@"05e8b10824ab700bae78e9eb"
+  [JPUSHService setupWithOption:launchOptions appKey:@"5744130aa0487d3355a1a9ac"
                         channel:@"app store" apsForProduction:true];
 
   NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
@@ -114,7 +114,7 @@
   
   // Umeng sdk:
   [UMConfigure setLogEnabled:NO];
-  [RNUMConfigure initWithAppkey:@"5744130aa0487d3355a1a9ac" channel:@"App Store"];
+  [RNUMConfigure initWithAppkey:@"5b46cc71f43e481b4f0000e7" channel:@"App Store"];
   [MobClick setScenarioType:E_UM_NORMAL];
   
   // splash:
