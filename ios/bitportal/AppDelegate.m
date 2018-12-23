@@ -49,7 +49,7 @@
 {
   // 注册 DeviceToken
   [JPUSHService registerDeviceToken:deviceToken];
-  
+
   // 获取 registrationID
   [JPUSHService registrationIDCompletionHandler:^(int resCode, NSString *registrationID) {
     NSLog(@"resCode : %d,registrationID: %@",resCode,registrationID);
@@ -111,12 +111,12 @@
 
   NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
   [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
-  
+
   // Umeng sdk:
   [UMConfigure setLogEnabled:NO];
-  [RNUMConfigure initWithAppkey:@"5744130aa0487d3355a1a9ac" channel:@"App Store"];
+  [RNUMConfigure initWithAppkey:@"5b46cc71f43e481b4f0000e7" channel:@"App Store"];
   [MobClick setScenarioType:E_UM_NORMAL];
-  
+
   // splash:
   [SplashScreen show];
   return YES;
