@@ -2,7 +2,6 @@ import { createSelector } from 'reselect'
 import Immutable from 'immutable'
 import _ from 'lodash'
 import { DAPP_SECTIONS } from 'constants/dApp'
-import console = require('console')
 
 const dataSelector = (state: RootState) =>
   state.dApp.get('data').filter((item: any) => item.get('status') === 'published')
@@ -28,6 +27,26 @@ export const mergeFavoritesDataSelector = createSelector(
       const index = favoriteDapps.findIndex((e: any) => e.get('name') === item.get('name'))
       return item.set('selected', index !== -1)
     })
+)
+
+export const EOSToolsDappSelector = createSelector(
+  favoriteDappsSelector,
+  (dappList: any) => {
+    const item = {
+      name: "EOSX工具箱",
+      display_name: {zh: "EOSX工具箱", en: "MyEOSKit"},
+      icon_url: "https://cdn.bitportal.io/dapps/icons/myeoskit.png",
+      url: "https://www.myeoskit.com/tools/"
+    }
+    if (dappList.size > 0) {
+      dappList.map((v: any) => {
+        if (v.get && v.get('name') === 'EOSX工具箱') return v
+        else return Immutable.fromJS(item)
+      })
+    } else {
+      return Immutable.fromJS(item)
+    }
+  }
 )
 
 export const parsedDappListSelector = createSelector(

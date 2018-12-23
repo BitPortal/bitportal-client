@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
+import { Text, View, ScrollView, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
 import Colors from 'resources/colors'
 import { eosPriceSelector } from 'selectors/ticker'
 import * as eosAccountActions from 'actions/eosAccount'
+import LinearGradientContainer from 'components/LinearGradientContainer'
 import Alert from 'components/Alert'
 import Loading from 'components/Loading'
 import messages from 'resources/messages'
@@ -34,7 +35,8 @@ export const errorMessages = (error, messages) => {
     locale: state.intl.get('locale'),
     eosAccount: state.eosAccount,
     walletList: state.wallet.get('classicWalletList'),
-    eosPrice: eosPriceSelector(state)
+    eosPrice: eosPriceSelector(state),
+    keyPermissions: state.eosAccount.get('keyPermissions').toJS()
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -55,12 +57,25 @@ export default class AccountSelection extends Component {
   }
 
   selectAccount = (keyPermission) => {
-    const { publicKey, privateKey, password, hint } = this.props
-    const accountInfo = keyPermission.accountInfo
-    const eosAccountName = keyPermission.accountName
-    const permission = keyPermission.permission
+    const size = this.countForSelected()
+    if (size < 5) {
+      this.props.actions.selectAccount(keyPermission)
+    }
+  }
+
+  importAccount = () => {
+    const { keyPermissions, publicKey, privateKey, password, hint } = this.props
+    
     const componentId = this.props.componentId
-    this.props.actions.importEOSAccountRequested({ eosAccountName, permission, accountInfo, publicKey, privateKey, password, hint, componentId })
+    for (let index = 0; index < keyPermissions.length; index++) {
+      const keyPermission = keyPermissions[index];
+      if (keyPermission.selected) {
+        const accountInfo = keyPermission.accountInfo
+        const eosAccountName = keyPermission.accountName
+        const permission = keyPermission.permission
+        this.props.actions.importEOSAccountRequested({ eosAccountName, permission, accountInfo, publicKey, privateKey, password, hint, componentId })
+      }
+    }
   }
 
   showHint = () => {
@@ -72,11 +87,23 @@ export default class AccountSelection extends Component {
     )
   }
 
+  countForSelected = () => {
+    const { keyPermissions } = this.props
+    let amount = 0
+    for (let index = 0; index < keyPermissions.length; index++) {
+      const element = keyPermissions[index]
+      if (element.selected) {
+        amount ++
+      }
+    }
+    return amount
+  }
+
   render() {
     const { locale, keyPermissions, eosPrice, eosAccount, walletList } = this.props
+    const size = this.countForSelected()
     const loading = eosAccount.get('loading')
     const error = eosAccount.get('importError')
-  
     return (
       <View style={styles.container}>
         <NavigationBar
@@ -95,6 +122,7 @@ export default class AccountSelection extends Component {
                   eosValue={+eosPrice * +keyPermission.balance}
                   eosAmount={keyPermission.balance}
                   balanceTitle="Balance"
+                  selected={keyPermission.selected}
                   locale={locale}
                   imported={hasEOSAccountImported(
                     { 
@@ -111,14 +139,21 @@ export default class AccountSelection extends Component {
             }
           </ScrollView>
         </View>
-        {/* <View style={styles.btnContainer}>
-          <TouchableOpacity style={[{flex: 1}, styles.center]} onPress={this.routeToNewAccount} >
-            <Text style={styles.text14}>
-              导入账户
-            </Text>
-          </TouchableOpacity>
-        </View> */}
-
+        <View style={[styles.btnContainer, styles.between]}>
+          <Text style={styles.text14}>{messages[locale].voting_label_selected}</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={[styles.text14, { marginRight: 15 }]}>{size}/5</Text>
+            <LinearGradientContainer type="right" colors={!size ? Colors.disabled : Colors.voteColor} style={styles.voteBtn}>
+              <TouchableWithoutFeedback onPress={this.importAccount} style={styles.center} disabled={!size}>
+                <View>
+                  <Text style={[styles.text14, { marginHorizontal: 10, marginVertical: 2 }]}>
+                    {messages[locale].add_eos_import_button_import}
+                  </Text>
+                </View>
+              </TouchableWithoutFeedback>
+            </LinearGradientContainer>
+          </View>
+        </View>
         <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearEOSAccountError} />
         <Loading isVisible={loading} text={messages[locale].export_private_key_text_exporting} />
       </View>

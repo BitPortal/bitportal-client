@@ -12,6 +12,8 @@ export const ASSETS_EOS_RESOURCE_RAM = 'assets_EOS_resource_RAM' // 资产 - EOS
 export const ASSETS_ADD_TOKEN = 'assets_add_token' // 资产 - 添加token资产
 
 export const ACCOUNT_EOS_CREATE = 'account_eos_create' // 账户 - 创建
+export const ACCOUNT_EOS_CREATE_ASSISTANCE = 'account_eos_create_assistance' // 账户 - 好友协助注册 *
+export const ACCOUNT_EOS_CREATE_SMART_CONTACT = 'account_eos_create_smart_contact' // 账户 - 好友协助注册 *
 
 export const MAEKRT_LIST_SELECTED = 'mkt_list_selected' // 行情 - 市场列表 - 市场选择
 export const QUOTES_LIST_SELECTED = 'quotes_list_selected' // 行情 - 市场列表 - 交易对选择

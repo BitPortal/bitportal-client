@@ -183,6 +183,13 @@
   "transaction_detail_text_agree_whitelist": "You can whitelist this action and don't have to authorize it next time.",
   "transaction_detail_text_enable_advanced_settings": "You don't need to confirm transaction popup by enabling advanced. You can turn it off in wallet management.",
 
+  "wallet_details_label_permission": "Permission",
+  "wallet_details_label_private_key": "Public Key",
+  "wallet_mgmt_button_export_private_key": "Export Private Key",
+  "wallet_mgmt_button_change_private_key": "Change Private Key",
+  "wallet_mgmt_button_change_password": "Reset Password",
+  "wallet_mgmt_button_sign_out": "Delete Wallet",
+
   "wallet_mgmt_button_whitelist_detail": "Whitelist Details",
   "wallet_mgmt_whitelist_title_whitelist": "Whitelist List",
   "wallet_mgmt_whitelist_label_enabled_dapps": "Enabled DApps",
@@ -321,10 +328,6 @@
   "contacts_add_label_contact_remark": "Contact Remark",
   "contacts_add_error_text_contact_remark_max_character": "Contact remark cannot exceed 64 characters.",
   "contacts_add_button_add": "Add",
-
-  "wallet_mgmt_button_export_private_key": "Export Private Key",
-  "wallet_mgmt_button_change_password": "Reset Password",
-  "wallet_mgmt_button_sign_out": "Delete Wallet",
 
   "export_title_export": "Export",
   "export_button_keystore": "Export Keystore",

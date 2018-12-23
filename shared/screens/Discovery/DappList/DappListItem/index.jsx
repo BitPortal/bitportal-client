@@ -10,7 +10,6 @@ import { loadInjectSync } from 'utils/inject'
 import AddRemoveButton from 'components/AddRemoveButton'
 import Alert from 'components/Alert'
 import Toast from 'components/Toast'
-
 import Colors from 'resources/colors'
 import Images from 'resources/images'
 import messages from 'resources/messages'

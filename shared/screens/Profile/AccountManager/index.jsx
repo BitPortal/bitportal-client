@@ -46,7 +46,8 @@ export default class AccountManager extends Component {
       eosAccountName: item.get('eosAccountName'),
       coin: item.get('coin'),
       permission: item.get('permission').toLowerCase(),
-      publicKey: item.get('publicKey')
+      publicKey: item.get('publicKey'),
+      accountInfo: item
     }
     Navigation.push(this.props.componentId, {
       component: {
@@ -73,7 +74,7 @@ export default class AccountManager extends Component {
               contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }}
             >
               {
-                walletList.map((item) => (
+                walletList.map((item) => ( 
                   <WalletCard 
                     key={`${item.get('permission')}_${item.get('eosAccountName')}`}
                     accountType={item.get('permission').toLowerCase()}

@@ -8,6 +8,7 @@ const initialState = Immutable.fromJS({
   eosAccountList: [],
   eosAccountCreationRequestInfo: {},
   eosAccountCreationInfo: {},
+  keyPermissions: [],
   loading: false,
   loaded: false,
   error: null,
@@ -47,8 +48,14 @@ export default handleActions({
   [actions.getEOSKeyAccountsRequested] (state) {
     return state.set('loading', true)
   },
-  [actions.getEOSKeyAccountsSucceeded] (state) {
-    return state.set('loaded', true).set('loading', false)
+  [actions.getEOSKeyAccountsSucceeded] (state, action) {
+    return state.set('loaded', true).set('loading', false).set('keyPermissions', Immutable.fromJS(action.payload))
+  },
+  [actions.selectAccount](state, action) {
+    return state.update('keyPermissions', (v: any) => {
+      const index = v.findIndex((item: any) => item.get('accountName') === action.payload.accountName)
+      return index !== -1 ? v.setIn([index, 'selected'], !action.payload.selected) : v
+    })
   },
   [actions.getEOSKeyAccountsFailed] (state, action) {
     return state.set('getKeyAccountsError', action.payload).set('loading', false)

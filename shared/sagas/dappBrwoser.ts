@@ -705,7 +705,7 @@ function* receiveMessage(action: Action<string>) {
       break
     case 'requestArbitrarySignature': 
       {
-        console.log('###--yy', messageActionType)
+        // console.log('###--yy', messageActionType)
         const currentWallet = yield select((state: RootState) => currenctWalletSelector(state))
         assert(currentWallet, 'No wallet in BitPortal!')
         payload.account = currentWallet.get('account')

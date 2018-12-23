@@ -11,7 +11,7 @@ import { getPasswordStrength } from 'utils'
 import * as walletActions from 'actions/wallet'
 import * as eosAccountActions from 'actions/eosAccount'
 import { onEventWithMap } from 'utils/analytics'
-import { ACCOUNT_EOS_CREATE } from 'constants/analytics'
+import { ACCOUNT_EOS_CREATE_ASSISTANCE } from 'constants/analytics'
 import Alert from 'components/Alert'
 import messages from 'resources/messages'
 
@@ -90,7 +90,7 @@ export default class CreateEOSAccountAssistanceForm extends Component {
 
   submit = (data) => {
     // Umeng analytics
-    onEventWithMap(ACCOUNT_EOS_CREATE, { eosAccountName: data.get('eosAccountName') })
+    onEventWithMap(ACCOUNT_EOS_CREATE_ASSISTANCE, { eosAccountName: data.get('eosAccountName') })
 
     const componentId = this.props.componentId
     this.props.actions.createEOSAccountAssistanceRequested(

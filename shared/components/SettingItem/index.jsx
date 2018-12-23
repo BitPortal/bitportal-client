@@ -30,6 +30,10 @@ const styles = StyleSheet.create({
     width: 16,
     height: 16
   },
+  text14: {
+    fontSize: FontScale(14),
+    color: Colors.textColor_181_181_181
+  },
   text16: {
     fontSize: FontScale(16),
     color: Colors.textColor_255_255_238
@@ -43,15 +47,25 @@ const styles = StyleSheet.create({
 
 export default class SettingItem extends Component {
   onPress() {
-    if (!this.props.disabled) {
-      this.props.onPress()
+    const { disabled, onPress } = this.props
+    if (!disabled) {
+      onPress && onPress()
     }
   }
 
   renderRightItem(rightItemTitle, value, onValueChange) {
-    const { rightImageName, iconColor } = this.props
+    const { rightImageName, iconColor, iconSize } = this.props
     const iconName = rightImageName || 'ios-arrow-forward'
     const imageColor = iconColor || Colors.textColor_181_181_181
+
+    if (!!rightItemTitle && !!rightImageName) {
+      return (
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={[styles.text14, { marginRight: 10 }]}>{rightItemTitle}</Text>
+          <Ionicons name={iconName} size={iconSize || 24} color={imageColor} />
+        </View>
+      )
+    }
 
     if (!rightItemTitle) {
       return <Ionicons name={iconName} size={24} color={imageColor} />
@@ -62,7 +76,7 @@ export default class SettingItem extends Component {
 
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={[styles.text16]}>{rightItemTitle}</Text>
+        <Text style={[styles.text14]}>{rightItemTitle}</Text>
       </View>
     )
   }
@@ -78,7 +92,7 @@ export default class SettingItem extends Component {
   }
 
   render() {
-    const { disabled, leftItemTitle, rightItemTitle, value, onValueChange, extraStyle } = this.props
+    const { disabled, leftItemTitle, rightItemTitle, iconSize, value, onValueChange, extraStyle } = this.props
     return (
       <TouchableHighlight
         underlayColor={Colors.hoverColor}
