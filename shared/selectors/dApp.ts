@@ -33,10 +33,10 @@ export const EOSToolsDappSelector = createSelector(
   favoriteDappsSelector,
   (dappList: any) => {
     const item = {
-      name: "EOSX工具箱",
-      display_name: {zh: "EOSX工具箱", en: "MyEOSKit"},
-      icon_url: "https://cdn.bitportal.io/dapps/icons/myeoskit.png",
-      url: "https://www.myeoskit.com/tools/"
+      name: 'EOSX工具箱',
+      display_name: {zh: 'EOSX工具箱', en: 'MyEOSKit'},
+      icon_url: 'https://cdn.bitportal.io/dapps/icons/myeoskit.png',
+      url: 'https://www.myeoskit.com/tools/'
     }
     if (dappList.size > 0) {
       for (let index = 0; index < dappList.length; index++) {
@@ -55,14 +55,14 @@ export const CPUEmergencyDappSelector = createSelector(
   favoriteDappsSelector,
   (dappList: any) => {
     const item = {
-      name: "CPU Emergency",
-      display_name: {en: "CPU Emergency", zh: "CPU救援服务"},
-      icon_url: "https://cdn.bitportal.io/media/2018/05/0b8578be-discovery_logo.png",
-      url: "https://cpuemergency.com/"
+      name: 'CPU Emergency',
+      display_name: {en: 'CPU Emergency', zh: 'CPU救援服务'},
+      icon_url: 'https://cdn.bitportal.io/media/2018/05/0b8578be-discovery_logo.png',
+      url: 'https://cpuemergency.com/'
     }
     if (dappList.size > 0) {
       for (let index = 0; index < dappList.length; index++) {
-        const element = dappList[index];
+        const element = dappList[index]
         if (element.get && element.get('name') === 'CPU Emergency') return Immutable.fromJS(element)
       }
       return Immutable.fromJS(item)
