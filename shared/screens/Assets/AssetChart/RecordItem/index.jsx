@@ -12,8 +12,6 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: 70,
     backgroundColor: Colors.mainThemeColor,
-    borderBottomColor: Colors.minorThemeColor,
-    borderBottomWidth: StyleSheet.hairlineWidth,
     alignItems: 'center'
   },
   recordContainer: {

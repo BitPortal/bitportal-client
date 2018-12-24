@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { View, ScrollView, LayoutAnimation } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import Colors from 'resources/colors'
@@ -8,15 +9,23 @@ import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import secureStorage from 'utils/secureStorage'
 import Dialog from 'components/Dialog'
 import messages from 'resources/messages'
+import * as eosAccountActions from 'actions/eosAccount'
 import { GradiantCard, GradiantCardContainer } from 'components/GradiantCard'
 import styles from './styles'
 import UserAgreement from '../../Assets/UserAgreement'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.get('locale'),
   }),
-  null,
+  dispatch => ({
+    actions: bindActionCreators(
+      {
+        ...eosAccountActions
+      },
+      dispatch
+    )
+  }),
   null,
   { withRef: true }
 )
