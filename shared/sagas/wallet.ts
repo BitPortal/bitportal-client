@@ -184,11 +184,16 @@ function* syncWalletRequested() {
       return JSON.parse(info)
     }).sort((a, b) => a.timestamp - b.timestamp)
     
-    const classicWalletList = Object.keys(allItems).filter(item => !item.indexOf('CLASSIC_WALLET_INFO_EOS')).map((item) => {
+    let classicWalletList = Object.keys(allItems).filter(item => !item.indexOf('CLASSIC_WALLET_INFO_EOS')).map((item) => {
       const info = allItems[item]
       return JSON.parse(info)
     }).sort((a, b) => a.timestamp - b.timestamp)
-    
+    let walletObj = {} // 去重
+    classicWalletList = classicWalletList.reduce((arr, next) => {
+      walletObj[next.eosAccountName] ? "" : walletObj[next.eosAccountName] = true && arr.push(next);
+      return arr;
+    },[])
+
     assert(hdWalletList.length + classicWalletList.length, 'No wallets!')
 
     let active = allItems.ACTIVE_WALLET && JSON.parse(allItems.ACTIVE_WALLET)
@@ -198,11 +203,16 @@ function* syncWalletRequested() {
       yield call(secureStorage.setItem, 'ACTIVE_WALLET', active, true)
     }
 
-    const eosAccountList = Object.keys(allItems).filter(item => !item.indexOf('EOS_ACCOUNT_INFO')).map((item) => {
+    let eosAccountList = Object.keys(allItems).filter(item => !item.indexOf('EOS_ACCOUNT_INFO')).map((item) => {
       const info = allItems[item]
       return JSON.parse(info)
     }).sort((a, b) => a.timestamp - b.timestamp)
-    
+    let eosAccountObj = {} // 去重
+    eosAccountList = eosAccountList.reduce((arr, next) => {
+      eosAccountObj[next.account_name] ? "" : eosAccountObj[next.account_name] = true && arr.push(next);
+      return arr;
+    },[])
+
     yield put(syncEOSAccount(eosAccountList))
     yield put(actions.syncWalletSucceeded({ hdWalletList, classicWalletList, active }))
 
@@ -228,6 +238,7 @@ function* switchWalletRequested(action: Action<HDWallet>) {
   try {
     yield call(secureStorage.setItem, 'ACTIVE_WALLET', action.payload, true)
     yield put(actions.switchWalletSucceeded(action.payload))
+    yield put(actions.syncWalletRequested())
   } catch (e) {
     yield put(actions.switchWalletFailed(getErrorMessage(e)))
   }

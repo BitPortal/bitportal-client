@@ -441,7 +441,7 @@ function* resolveRequestSignature(password: string, info: any, messageId: string
       buf
     })
     yield put(actions.clearMessage())
-    yield delay(500)
+    yield delay(1000)
 
     // 存储dapp信息并绑定account到本地
     const selectedDapp = yield select((state: RootState) => state.whiteList.get('selectedDapp'))

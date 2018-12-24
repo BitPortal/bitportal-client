@@ -250,13 +250,17 @@ export default class DelegateBandwidthForm extends Component {
                   : messages[locale].resource_button_unstake
               }
             />
-            <Text style={styles.text14}>
-              {messages[locale].resource_cpu_rent_label_tips_1}
-              <Text onPress={this.freeRent} style={[styles.text14, { color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }]}>
-                {messages[locale].resource_cpu_rent_label_tips_2}
+            {
+              this.state.activeForm === 'Delegate' && this.props.resource === 'cpu' &&
+              <Text style={styles.text14}>
+                {messages[locale].resource_cpu_rent_label_tips_1}
+                <Text onPress={this.freeRent} style={[styles.text14, { color: Colors.textColor_89_185_226, textDecorationLine: 'underline' }]}>
+                  {messages[locale].resource_cpu_rent_label_tips_2}
+                </Text>
+                {' '}{messages[locale].resource_cpu_rent_label_tips_3}
               </Text>
-              {' '}{messages[locale].resource_cpu_rent_label_tips_3}
-            </Text>
+            }
+            
             <Alert
               message={errorMessages(error, messages[locale])}
               subMessage={errorMessageDetail(error, messages[locale])}

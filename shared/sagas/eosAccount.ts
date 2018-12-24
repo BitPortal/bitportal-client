@@ -81,7 +81,6 @@ function* createEOSAccountRequested(action: Action<CreateEOSAccountParams>) {
 
     yield all([
       call(secureStorage.setItem, `EOS_ACCOUNT_CREATION_INFO_${eosAccountName}`, eosAccountCreationInfo, true),
-      call(secureStorage.setItem, `EOS_ACCOUNT_CREATION_INFO_${eosAccountName}_${permission}`, eosAccountCreationInfo, true),
       call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, accountInfo, true),
       call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}_${permission}`, accountInfo, true),
       call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_${permission}_${publicKey}`, keystore, true),
