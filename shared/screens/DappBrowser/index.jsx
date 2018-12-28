@@ -288,7 +288,7 @@ export default class DappWebView extends Component {
               renderLoading={this.renderLoading}
               startInLoadingState={true}
               useWebKit={true}
-              originWhitelist={['http://', 'https://']}
+              originWhitelist={["http://.*", "https://.*"]}
               mixedContentMode="always"
               thirdPartyCookiesEnabled={true}
               automaticallyAdjustContentInsets={false}

@@ -64,6 +64,9 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: Colors.textColor_89_185_226
   },
+  selectAllBtn: {
+    padding: 10
+  },
   text12: {
     fontSize: FontScale(12),
     color: Colors.textColor_255_255_238

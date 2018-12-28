@@ -307,6 +307,7 @@
   "voting_label_promotion": "Promotion",
   "voting_label_cooperation": "Cooperation",
   "voting_label_selected": "Selected",
+  "voting_label_select_all": "Select All",
   "voting_button_vote": "Vote",
   "voting_error_popup_text_no_stake": "You need to stake EOS before voting producers.",
   "voting_error_popup_text_vote_failed": "Voting failed",

@@ -107,7 +107,6 @@ export default class DappWebView extends Component {
     let item = ''
     if (this.props.name) item = this.props.mergedFavoritesDappList.filter(element => element.get('name') === this.props.name).get(0)
     const menuList = [
-
       {
         name: globalMessages[this.props.locale].webview_button_refresh,
         onPress: () => {
@@ -149,7 +148,7 @@ export default class DappWebView extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    // console.log('###--yy sendingMessage: ', this.props.sendingMessage)
+    console.log('###--yy sendingMessage: ', this.props.sendingMessage, prevProps.sendingMessage)
     if (this.props.sendingMessage && prevProps.sendingMessage !== this.props.sendingMessage && this.webviewbridge) {
       this.webviewbridge.sendToBridge(this.props.sendingMessage)
     }
@@ -213,7 +212,7 @@ export default class DappWebView extends Component {
   }
 
   onBridgeMessage = message => {
-    // console.log('###--yy receiveMessage: ', message)
+    console.log('###--yy receiveMessage: ', message)
     if (message.includes('clickedURL')) this.handleHistory(message)
     this.props.actions.receiveMessage(message)
   }
@@ -328,6 +327,7 @@ export default class DappWebView extends Component {
       inject,
       item
     } = this.props
+    // console.log('###--yy', inject)
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
@@ -348,7 +348,7 @@ export default class DappWebView extends Component {
               renderLoading={this.renderLoading}
               startInLoadingState={true}
               useWebKit={true}
-              originWhitelist={['http://', 'https://']}
+              originWhitelist={["http://.*", "https://.*"]}
               mixedContentMode="always"
               thirdPartyCookiesEnabled={true}
               automaticallyAdjustContentInsets={false}

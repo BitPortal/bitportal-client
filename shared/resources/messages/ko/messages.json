@@ -296,6 +296,7 @@
   "voting_label_promotion": "프로모션",
   "voting_label_cooperation": "제휴",
   "voting_label_selected": "선택됨",
+  "voting_label_select_all": "Select All",
   "voting_button_vote": "투표하기",
   "voting_error_popup_text_no_stake": "BP 투표 전에 EOS를 먼저 Stake 해주세요.",
   "voting_error_popup_text_vote_failed": "투표 실패",
