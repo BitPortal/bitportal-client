@@ -15,7 +15,10 @@ export default class SystemResources extends React.Component {
   state = {
     /*eslint-disable*/
     index: 0,
-    routes: [{ key: 'first', title: 'CPU' }, { key: 'second', title: 'RAM' }, { key: 'third', title: 'NET' }]
+    routes: [
+      { key: 'first', title: 'CPU' }, 
+      // { key: 'second', title: 'RAM' }, 
+      { key: 'second', title: 'NET' }]
   }
 
   /*eslint-enable*/
@@ -23,7 +26,7 @@ export default class SystemResources extends React.Component {
 
   renderIndicator = props => {
     const { position, navigationState } = props
-    const width = FLOATING_CARD_WIDTH / 3
+    const width = FLOATING_CARD_WIDTH / 2
     const translateX = Animated.multiply(
       Animated.multiply(
         position.interpolate({
@@ -60,8 +63,8 @@ export default class SystemResources extends React.Component {
         navigationState={this.state}
         renderScene={SceneMap({
           first: Cpu,
-          second: Ram,
-          third: Net
+          // second: Ram,
+          second: Net
         })}
         onIndexChange={index => {
           /*eslint-disable*/
