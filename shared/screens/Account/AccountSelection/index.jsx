@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Text, View, ScrollView, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import Colors from 'resources/colors'
 import { eosPriceSelector } from 'selectors/ticker'
 import * as eosAccountActions from 'actions/eosAccount'
@@ -56,13 +57,6 @@ export default class AccountSelection extends Component {
     }
   }
 
-  selectAccount = (keyPermission) => {
-    const size = this.countForSelected()
-    if (size < 5) {
-      this.props.actions.selectAccount(keyPermission)
-    }
-  }
-
   importAccount = () => {
     const { keyPermissions, publicKey, privateKey, password, hint } = this.props
     
@@ -99,9 +93,57 @@ export default class AccountSelection extends Component {
     return amount
   }
 
+  countForAll = () => {
+    const { keyPermissions, walletList, publicKey } = this.props
+    let amount = 0
+    for (let index = 0; index < keyPermissions.length; index++) {
+      const keyPermission = keyPermissions[index]
+      const obj = { 
+        publicKey,
+        permission: keyPermission.permission,
+        eosAccountName: keyPermission.accountName
+      }
+      const imported = hasEOSAccountImported(obj, walletList)
+      if (!imported) { amount++ }
+    }
+    return amount
+  }
+
+  checkSelectedStatus = (selectedSize, avaliableTotalSize) => {
+    if (selectedSize === 0) 
+      return <Ionicons name="ios-radio-button-off" size={22} color={Colors.bgColor_FAFAFA} />
+    else if (selectedSize < avaliableTotalSize) 
+      return <Ionicons name="ios-remove-circle-outline" size={22} color={Colors.textColor_255_76_118} />
+    else if (selectedSize === avaliableTotalSize) 
+      return <Ionicons name="ios-checkmark-circle-outline" size={22} color={Colors.textColor_89_185_226} />
+  }
+
+  selectAccount = (keyPermission) => {
+    this.props.actions.selectAccount(keyPermission)
+  }
+
+  selectAllAccount = (selectedSize, avaliableTotalSize) => {
+    const { keyPermissions, walletList, publicKey } = this.props
+    const newKeyPermissions = []
+    for (let index = 0; index < keyPermissions.length; index++) {
+      const keyPermission = keyPermissions[index]
+      const obj = { 
+        publicKey,
+        permission: keyPermission.permission,
+        eosAccountName: keyPermission.accountName
+      }
+      const imported = hasEOSAccountImported(obj, walletList)
+      if (!imported) { newKeyPermissions.push(keyPermission) }
+    }
+    if (selectedSize === 0) this.props.actions.selectAllAccount(newKeyPermissions)
+    else this.props.actions.cancelSelectAllAccount(newKeyPermissions)
+  }
+
   render() {
     const { locale, keyPermissions, eosPrice, eosAccount, walletList } = this.props
-    const size = this.countForSelected()
+    const selectedSize = this.countForSelected()
+    const avaliableTotalSize = this.countForAll()
+    const selectedIcon = this.checkSelectedStatus(selectedSize, avaliableTotalSize)
     const loading = eosAccount.get('loading')
     const error = eosAccount.get('importError')
     return (
@@ -114,37 +156,47 @@ export default class AccountSelection extends Component {
         <View style={styles.scrollContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
             {
-              keyPermissions.map(keyPermission => (
-                <WalletCard
-                  key={`${keyPermission.permission}_${keyPermission.accountName}`}
-                  accountType={keyPermission.permission}
-                  accountName={keyPermission.accountName}
-                  eosValue={+eosPrice * +keyPermission.balance}
-                  eosAmount={keyPermission.balance}
-                  balanceTitle="Balance"
-                  selected={keyPermission.selected}
-                  locale={locale}
-                  imported={hasEOSAccountImported(
-                    { 
-                      eosAccountName: keyPermission.accountName, 
-                      publicKey: this.props.publicKey,
-                      permission: keyPermission.permission
-                    },
-                    walletList
-                  )}
-                  onPress={this.selectAccount.bind(this, keyPermission)}
-                  colors={keyPermission.permission !== 'owner' && Colors.ramColor}
-                />
-              ))
+              keyPermissions.map(keyPermission => {
+                // console.log('###--yy', keyPermission)
+                return (
+                  <WalletCard
+                    key={`${keyPermission.permission}_${keyPermission.accountName}`}
+                    accountType={keyPermission.permission}
+                    accountName={keyPermission.accountName}
+                    eosValue={+eosPrice * +keyPermission.balance}
+                    eosAmount={keyPermission.balance}
+                    balanceTitle="Balance"
+                    selected={keyPermission.selected}
+                    locale={locale}
+                    imported={hasEOSAccountImported(
+                      { 
+                        eosAccountName: keyPermission.accountName, 
+                        publicKey: this.props.publicKey,
+                        permission: keyPermission.permission
+                      },
+                      walletList
+                    )}
+                    onPress={this.selectAccount.bind(this, keyPermission)}
+                    colors={keyPermission.permission !== 'owner' && Colors.ramColor}
+                  />
+                )
+              })
             }
           </ScrollView>
         </View>
         <View style={[styles.btnContainer, styles.between]}>
-          <Text style={styles.text14}>{messages[locale].voting_label_selected}</Text>
+          <View style={{ alignItems: 'center', flexDirection: 'row' }}>
+            <TouchableOpacity style={styles.selectAllBtn} onPress={() => this.selectAllAccount(selectedSize, avaliableTotalSize)}>
+              {selectedIcon}
+            </TouchableOpacity>
+            <Text style={styles.text14}>{messages[locale].voting_label_select_all}</Text>
+          </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={[styles.text14, { marginRight: 15 }]}>{size}/5</Text>
-            <LinearGradientContainer type="right" colors={!size ? Colors.disabled : Colors.voteColor} style={styles.voteBtn}>
-              <TouchableWithoutFeedback onPress={this.importAccount} style={styles.center} disabled={!size}>
+            <Text style={[styles.text14, { marginRight: 15 }]}>
+              {messages[locale].voting_label_selected}{': '}{selectedSize}/{avaliableTotalSize}
+            </Text>
+            <LinearGradientContainer type="right" colors={!selectedSize ? Colors.disabled : Colors.voteColor} style={styles.voteBtn}>
+              <TouchableWithoutFeedback onPress={this.importAccount} style={styles.center} disabled={!selectedSize}>
                 <View>
                   <Text style={[styles.text14, { marginHorizontal: 10, marginVertical: 2 }]}>
                     {messages[locale].add_eos_import_button_import}

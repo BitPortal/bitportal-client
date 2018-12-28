@@ -57,6 +57,34 @@ export default handleActions({
       return index !== -1 ? v.setIn([index, 'selected'], !action.payload.selected) : v
     })
   },
+  [actions.selectAllAccount](state, action) {
+    return state.update('keyPermissions', (v: any) => {
+      const newKeyPermissions = action.payload
+      let newAccounts = v
+      for (let index = 0; index < newKeyPermissions.length; index++) {
+        const permission = newKeyPermissions[index]
+        const newIndex = v.findIndex((item: any) => item.get('accountName') === permission.accountName)
+        if (newIndex !== -1) {
+          newAccounts = newAccounts.setIn([newIndex, 'selected'], true)
+        }
+      }
+      return newAccounts
+    })
+  },
+  [actions.cancelSelectAllAccount](state, action) {
+    return state.update('keyPermissions', (v: any) => {
+      const newKeyPermissions = action.payload
+      let newAccounts = v
+      for (let index = 0; index < newKeyPermissions.length; index++) {
+        const permission = newKeyPermissions[index]
+        const newIndex = v.findIndex((item: any) => item.get('accountName') === permission.accountName)
+        if (newIndex !== -1) {
+          newAccounts = newAccounts.setIn([newIndex, 'selected'], false)
+        }
+      }
+      return newAccounts
+    })
+  },
   [actions.getEOSKeyAccountsFailed] (state, action) {
     return state.set('getKeyAccountsError', action.payload).set('loading', false)
   },

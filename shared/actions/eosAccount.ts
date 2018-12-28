@@ -37,3 +37,5 @@ export const checkEOSAccountCreationStatusSucceeded = createAction<CheckEOSAccou
 export const checkEOSAccountCreationStatusFailed = createAction<ErrorMessage>('eosAccount/CHECK_CREATION_STATUS_FAILED')
 
 export const selectAccount = createAction<object>('eosAccount/SELECT_ACCOUNT')
+export const selectAllAccount = createAction<object>('eosAccount/SELECT_ALL_ACCOUNT')
+export const cancelSelectAllAccount = createAction<object>('eosAccount/CANCEL_SELECT_ALL_ACCOUNT')
