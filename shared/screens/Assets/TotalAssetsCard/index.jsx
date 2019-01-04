@@ -195,7 +195,7 @@ export default class TotalAssetsCard extends Component {
               </View>
             </TouchableWithoutFeedback>
           </LinearGradientContainer>
-          <TouchableOpacity disabled={true} onPress={this.foldResources}>
+          {/* <TouchableOpacity disabled={true} onPress={this.foldResources}>
             <View style={{ alignItems: 'center' }}>
               <View style={[styles.resourcesContainer, styles.between, { paddingVertical: 15 }]}>
                 <View style={styles.center}>
@@ -243,7 +243,7 @@ export default class TotalAssetsCard extends Component {
                 </View>
               </View>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </IntlProvider>
     )
