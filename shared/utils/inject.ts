@@ -3,16 +3,6 @@ import RNFS from 'react-native-fs'
 
 let inject = ''
 
-const browserHist: string = `
-  (function () {
-    if (WebViewBridge) {
-      window.onclick = function () {
-        setTimeout(() => WebViewBridge.send('clickedURL ' + window.location.href), 500)
-      }
-    }
-  })()
-`
-
 export const rootPath = Platform.OS === 'ios' ? RNFS.MainBundlePath : 'raw'
 const readFile = Platform.OS === 'ios' ? RNFS.readFile : RNFS.readFileAssets
 
@@ -20,8 +10,7 @@ const loadLocalFile = (path: string) =>
   new Promise((resolve, reject) => {
     readFile(path, 'utf8')
       .then((contents: string) => {
-        inject = browserHist
-        inject += contents
+        inject = contents
         resolve(inject)
       })
       .catch((error: any) => {
