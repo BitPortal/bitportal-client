@@ -114,7 +114,7 @@ android {
         renderscriptSupportModeEnabled true
         vectorDrawables.useSupportLibrary true
         versionCode 1
-        versionName "0.5.1"
+        versionName "0.5.2"
         manifestPlaceholders = [
                 JPUSH_APPKEY: "5744130aa0487d3355a1a9ac",
                 APP_CHANNEL : "default"
