@@ -15,6 +15,16 @@ function* getNewsList(action: Action<NewsParams>) {
       language: lang,
       status: 'published'
     })
+    // fall back to en
+    if (data.length === 0) {
+      data = yield call(api.getNewsList, {
+        _sort: 'createdAt:desc',
+        _start: action.payload.startAt || 0,
+        _limit: action.payload.limit || 10,
+        language: 'en',
+        status: 'published'
+      })
+    }
     yield put(actions.getNewsListSucceeded({ data, loadingMore: action.payload.loadingMore }))
   } catch (e) {
     yield put(actions.getNewsListFailed(e.message))
@@ -25,6 +35,11 @@ function* getNewsBanner() {
   try {
     const lang = yield select((state: RootState) => state.intl.get('locale'))
     const data = yield call(api.getNewsBanner, { _sort: 'display_priority:desc', status: 'published', language: lang })
+    console.log('banner data', data)
+    // fall back to en
+    if (data.length === 0) {
+      data = yield call(api.getNewsBanner, { _sort: 'display_priority:desc', status: 'published', language: 'en' })
+    }
     yield put(actions.getNewsBannerSucceeded(data))
   } catch (e) {
     yield put(actions.getNewsBannerFailed(e.message))
