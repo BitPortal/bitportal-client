@@ -24,5 +24,6 @@ export const DAPP_SECTION_ICONS = {
   tool: { icon: Images.dapp_tool, stringId: 'dapp_button_category_tool' },
   explorer: { icon: Images.dapp_browser, stringId: 'dapp_button_category_browser' },
   news: { icon: Images.dapp_news, stringId: 'dapp_button_category_news' },
-  favorite: { icon: Images.dapp_favorite, stringId: 'dapp_list_label_favourite' }
+  favorite: { icon: Images.dapp_favorite, stringId: 'dapp_list_label_favourite' },
+  other: { icon: Images.dapp_other, stringId: 'dapp_list_label_other' }
 }

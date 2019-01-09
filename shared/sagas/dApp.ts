@@ -8,6 +8,7 @@ import storage from 'utils/storage'
 function* getDappList(action: Action<TokenParams>) {
   try {
     const data = yield call(api.getDappList, { ...action.payload, _sort: 'display_priority:desc' })
+    yield call(storage.mergeItem, 'bitportal_discovery_dapp_list', { dappList: data }, true)
     yield put(actions.getDappListSucceeded(data))
   } catch (e) {
     yield put(actions.getDappListFailed(e.message))
@@ -15,14 +16,8 @@ function* getDappList(action: Action<TokenParams>) {
 }
 
 function* toggleFavoriteDapp() {
-  const favoriteDappsArray = yield select((state: RootState) => favoriteDappsSelector(state)
-  )
-  yield call(
-    storage.setItem,
-    'bitportal_favoriteDapps',
-    favoriteDappsArray.toJS(),
-    true
-  )
+  const favoriteDappsArray = yield select((state: RootState) => favoriteDappsSelector(state))
+  yield call(storage.setItem, 'bitportal_favoriteDapps', favoriteDappsArray.toJS(), true)
 }
 
 export default function* dAppSaga() {

@@ -65,6 +65,7 @@ const Images = {
   dapp_category: require('./dapp_category.png'),
   dapp_exchange: require('./dapp_exchange.png'),
   dapp_favorite: require('./dapp_favorite.png'),
+  dapp_other: require('./dapp_other.png'),
   dapp_game: require('./dapp_game.png'),
   dapp_hot: require('./dapp_hot.png'),
   dapp_market: require('./dapp_market.png'),

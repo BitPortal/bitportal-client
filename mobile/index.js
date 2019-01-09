@@ -52,7 +52,8 @@ const runApp = async () => {
     eosNode,
     selectedEOSAsset,
     storedFavoriteDapps,
-    remoteVersion
+    remoteVersion,
+    storedDappList
   ] = await Promise.all([
     storage.getItem('bitportal_lang'),
     storage.getItem('bitportal_currency', true),
@@ -60,9 +61,9 @@ const runApp = async () => {
     storage.getItem('bitportal_eosNode', true),
     storage.getItem('bitportal_toggledEOSAsset', true),
     storage.getItem('bitportal_favoriteDapps', true),
-    storage.getItem('bitportal_version')
+    storage.getItem('bitportal_version'),
+    storage.getItem('bitportal_discovery_dapp_list', true)
   ])
-
   const lang = localLang || getLocaleLanguage()
   const symbol = currency && currency.symbol
   const rate = currency && currency.rate
@@ -70,6 +71,7 @@ const runApp = async () => {
   const customNodes = eosNode && eosNode.customNodes
   const localVersion = VersionNumber.appVersion
   const platform = Platform.OS
+  const dappList = storedDappList && storedDappList.dappList
 
   const store = configure({
     intl: getInitialLang(lang),
@@ -77,7 +79,7 @@ const runApp = async () => {
     currency: getInitialCurrency(symbol, rate),
     eosNode: getInitialEOSNode(activeNode, customNodes),
     eosAsset: getInitialEOSAsset(selectedEOSAsset),
-    dApp: getInitialDapp(storedFavoriteDapps),
+    dApp: getInitialDapp(storedFavoriteDapps, dappList),
     appInfo: getInitialAppInfo(platform, localVersion)
   })
 

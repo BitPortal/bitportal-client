@@ -148,7 +148,7 @@ export default class DappWebView extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log('###--yy sendingMessage: ', this.props.sendingMessage, prevProps.sendingMessage)
+    // console.log('###--yy sendingMessage: ', this.props.sendingMessage, prevProps.sendingMessage)
     if (this.props.sendingMessage && prevProps.sendingMessage !== this.props.sendingMessage && this.webviewbridge) {
       this.webviewbridge.sendToBridge(this.props.sendingMessage)
     }
@@ -212,7 +212,7 @@ export default class DappWebView extends Component {
   }
 
   onBridgeMessage = message => {
-    console.log('###--yy receiveMessage: ', message)
+    // console.log('###--yy receiveMessage: ', message)
     if (message.includes('clickedURL')) this.handleHistory(message)
     this.props.actions.receiveMessage(message)
   }
@@ -327,7 +327,6 @@ export default class DappWebView extends Component {
       inject,
       item
     } = this.props
-    // console.log('###--yy', inject)
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>

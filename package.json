@@ -115,7 +115,6 @@
     "react-native-scrollable-tab-view": "git@github.com:skv-headless/react-native-scrollable-tab-view#master",
     "react-native-section-list-get-item-layout": "^2.2.3",
     "react-native-sensitive-info": "git://github.com/mCodex/react-native-sensitive-info#keystore",
-    "react-native-simple-markdown": "^1.1.0",
     "react-native-splash-screen": "3.0.1",
     "react-native-svg": "^5.5.1",
     "react-native-swipe-list-view": "^1.1.1",

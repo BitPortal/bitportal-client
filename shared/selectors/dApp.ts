@@ -9,9 +9,9 @@ const searchTermSelector = (state: RootState) => state.dApp.get('searchTerm')
 const locale = (state: RootState) => state.intl.get('locale')
 export const favoriteDappsSelector = (state: RootState) => state.dApp.get('favoriteDapps')
 
-export const getInitialDapp = (storedFavoriteDapps?: any) =>
+export const getInitialDapp = (storedFavoriteDapps?: any, storedDappList?: any) =>
   Immutable.fromJS({
-    data: [],
+    data: storedDappList || [],
     loading: false,
     loaded: false,
     error: null,

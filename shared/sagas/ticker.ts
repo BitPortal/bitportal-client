@@ -3,13 +3,27 @@ import { call, put, takeEvery, select } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as api from 'utils/api'
 import * as actions from 'actions/ticker'
+import storage from 'utils/storage'
 
 function* getTickers(action: Action<TickerParams>) {
   if (!action.payload) return
 
   try {
     const data = yield call(api.getTickers, action.payload)
+    yield call(storage.mergeItem, 'bitportal_market_ticker', { ticker: data }, true)
+    
     yield put(actions.getTickersSucceeded(data))
+  } catch (e) {
+    yield put(actions.getTickersFailed(e.message))
+  }
+}
+
+function * getLocalTickers () {
+  try {
+    const store = yield call(storage.getItem, 'bitportal_market_ticker', true)
+    if (store && store.ticker) {
+      yield put(actions.getTickersSucceeded(store.ticker))
+    }
   } catch (e) {
     yield put(actions.getTickersFailed(e.message))
   }
@@ -52,16 +66,8 @@ function* getPairListedExchange(action: Action<TickerParams>) {
 
 export default function* tickerSaga() {
   yield takeEvery(String(actions.getTickersRequested), getTickers)
-  yield takeEvery(
-    String(actions.selectTickersByExchange),
-    selectTickersByExchange
-  )
-  yield takeEvery(
-    String(actions.selectTickersByQuoteAsset),
-    selectTickersByQuoteAsset
-  )
-  yield takeEvery(
-    String(actions.getPairListedExchangeRequested),
-    getPairListedExchange
-  )
+  yield takeEvery(String(actions.getLocalTickers), getLocalTickers)
+  yield takeEvery(String(actions.selectTickersByExchange), selectTickersByExchange)
+  yield takeEvery(String(actions.selectTickersByQuoteAsset), selectTickersByQuoteAsset)
+  yield takeEvery(String(actions.getPairListedExchangeRequested), getPairListedExchange)
 }

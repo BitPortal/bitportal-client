@@ -9,15 +9,15 @@ const styles = StyleSheet.create({
     marginBottom: 5
   },
   dot: {
-    width: 0,
-    height: 0,
+    width: 8,
+    height: 2,
     borderRadius: 2,
     marginHorizontal: 2,
     backgroundColor: Colors.textColor_white_4
   },
   activeDot: {
-    width: 0,
-    height: 0,
+    width: 8,
+    height: 8,
     borderRadius: 4,
     marginHorizontal: 2,
     backgroundColor: Colors.bgColor_FAFAFA

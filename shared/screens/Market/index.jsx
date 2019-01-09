@@ -67,6 +67,10 @@ export default class Market extends Component {
     this.setState({ isVisible: true })
   }
 
+  componentWillMount() {
+    this.props.actions.getLocalTickers()
+  }
+
   changeCategory = category => {
     //Umeng analytics
     InteractionManager.runAfterInteractions(() => {
@@ -85,23 +89,6 @@ export default class Market extends Component {
       })
     })
   }
-  //
-  // pressListItem = (item) => {
-  //   //Umeng analytics
-  //   onEventWithLabel(MARKET_TOKEN_DETAIL, '行情 - token详情');
-  //   const baseAsset = item.get('base_asset');
-  //   InteractionManager.runAfterInteractions(() => {
-  //     this.props.actions.selectCurrentSymbol(item);
-  //     this.props.actions.selectBaseAsset(baseAsset);
-  //     this.props.actions.getTokenDetailRequested({ symbol: baseAsset });
-  //     Navigation.push(this.props.componentId, {
-  //       component: {
-  //         name: 'BitPortal.MarketDetails',
-  //         passProps: { item }
-  //       }
-  //     });
-  //   });
-  // };
 
   onRefresh = () => {
     this.props.actions.getTickersRequested({

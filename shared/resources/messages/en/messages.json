@@ -280,6 +280,7 @@
   "dapp_button_category_news": "News",
   "dapp_list_title_dapp_list": "DApp List",
   "dapp_list_label_favourite": "My Favourites",
+  "dapp_list_label_other": "Others",
   "dapp_list_text_no_favouriste": "You have not added any favourite DApps.",
   "dapp_list_text_search": "Search",
   "dapp_list_button_search_cancel": "Cancel",
