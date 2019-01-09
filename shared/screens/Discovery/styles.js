@@ -32,6 +32,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     marginTop: 24,
     paddingBottom: TAB_BAR_HEIGHT
+  },
+  icons: {
+    paddingTop: 10,
+    paddingRight: 30,
+    justifyContent: 'flex-end'
   }
 })
 

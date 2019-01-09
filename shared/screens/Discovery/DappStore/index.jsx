@@ -11,13 +11,11 @@ import { loadInjectSync } from 'utils/inject'
 import messages from 'resources/messages'
 import FastImage from 'react-native-fast-image'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
 import Images from 'resources/images'
 import DappElement from './DappElement'
 import MyDapps from './MyDapps'
 import DappGrouping from './DappGrouping'
 import DappCategories from './DappCategories'
-
 import styles from './styles'
 
 @connect(
@@ -81,8 +79,7 @@ export default class DappStore extends PureComponent {
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.container}>
-          {loading || !loaded ? (
-            // {true ? (
+          {/* {loading || !loaded ? 
             <View style={styles.center}>
               <View style={styles.sectionHeader} />
               <View style={styles.dAppScrollViewContainer}>
@@ -97,7 +94,7 @@ export default class DappStore extends PureComponent {
                 <ActivityIndicator size="large" />
               </View>
             </View>
-          ) : (
+           :  */}
             <View>
               <View style={styles.sectionHeader}>
                 <View style={styles.row}>
@@ -135,7 +132,7 @@ export default class DappStore extends PureComponent {
               </View>
               <DappCategories items={dAppSections} componentId={componentId} />
             </View>
-          )}
+          {/* } */}
         </View>
       </IntlProvider>
     )

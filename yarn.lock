@@ -12050,14 +12050,6 @@ react-native-section-list-get-item-layout@^2.2.3:
   version "5.0.0"
   resolved "git://github.com/mCodex/react-native-sensitive-info#2badfc4e35ce79904f70cc8e315fdba582e41457"
 
-react-native-simple-markdown@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-simple-markdown/-/react-native-simple-markdown-1.1.0.tgz#4d462f8ced26393c5230467420c61a50cc6a8095"
-  integrity sha1-TUYvjO0mOTxSMEZ0IMYaUMxqgJU=
-  dependencies:
-    lodash "^4.15.0"
-    simple-markdown "git://github.com/CharlesMangwa/simple-markdown.git"
-
 react-native-splash-screen@3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.0.1.tgz#178b29b7d848e6ee5a41fbb9c1299eb2b5aaa600"

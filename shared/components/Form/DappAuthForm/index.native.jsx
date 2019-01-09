@@ -8,7 +8,7 @@ import { eosAccountSelector, eosAccountNameSelector } from 'selectors/eosAccount
 import * as simpleWalletActions from 'actions/simpleWallet'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import messages from 'resources/messages'
-import styles from 'screens/Discovery/NewsList/NewsRow/styles'
+import styles from './styles'
 
 const validate = () => {}
 

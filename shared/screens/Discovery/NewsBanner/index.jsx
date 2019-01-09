@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { View } from 'react-native'
+import { View, LayoutAnimation } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { bindActionCreators } from 'redux'
 import * as newsActions from 'actions/news'
@@ -26,8 +26,13 @@ import styles from './styles'
   { withRef: true }
 )
 export default class NewBanner extends PureComponent {
-  componentDidMount() {
+  componentWillMount() {
+    this.props.actions.getLocalBanners()
     this.props.actions.getNewsBannerRequested()
+  }
+
+  UNSAFE_componentWillReceiveProps() {
+    LayoutAnimation.easeInEaseOut()
   }
 
   onBannerPress = item => {

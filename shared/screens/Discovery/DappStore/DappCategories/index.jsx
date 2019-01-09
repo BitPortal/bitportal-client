@@ -42,6 +42,24 @@ export default class DappCategories extends Component {
     })
   }
 
+  filterIndex = (index, allItems) => {
+    if (index === 0) {
+      return {
+        borderTopLeftRadius: FLOATING_CARD_BORDER_RADIUS,
+        borderTopRightRadius: FLOATING_CARD_BORDER_RADIUS,
+        paddingHorizontal: 20
+      }
+    } else if (index === allItems.length - 1) {
+      return {
+        borderBottomLeftRadius: FLOATING_CARD_BORDER_RADIUS,
+        borderBottomRightRadius: FLOATING_CARD_BORDER_RADIUS,
+        paddingHorizontal: 20
+      }
+    } else {
+      return { paddingHorizontal: 20 }
+    }
+  }
+
   render() {
     const { items, loading, onPress, locale } = this.props
     const { allItems } = this.state
@@ -50,44 +68,15 @@ export default class DappCategories extends Component {
         <View style={styles.scrollContainer}>
           <ScrollView horizontal={false} scrollEnabled={false} contentContainerStyle={styles.dAppScrollViewContainer}>
             {allItems.map((item, index) => {
-              if (index === 0)
-                return (
-                  <SettingItem
-                    key={index}
-                    leftImage={DAPP_SECTION_ICONS[item].icon}
-                    leftItemTitle={<FormattedMessage id={DAPP_SECTION_ICONS[item].stringId} />}
-                    extraStyle={{
-                      borderTopLeftRadius: FLOATING_CARD_BORDER_RADIUS,
-                      borderTopRightRadius: FLOATING_CARD_BORDER_RADIUS,
-                      paddingHorizontal: 20
-                    }}
-                    onPress={() => this.handleCategory(item)}
-                  />
-                )
-              if (index === allItems.length - 1)
-                return (
-                  <SettingItem
-                    key={index}
-                    leftImage={DAPP_SECTION_ICONS[item].icon}
-                    leftItemTitle={<FormattedMessage id={DAPP_SECTION_ICONS[item].stringId} />}
-                    extraStyle={{
-                      borderBottomLeftRadius: FLOATING_CARD_BORDER_RADIUS,
-                      borderBottomRightRadius: FLOATING_CARD_BORDER_RADIUS,
-                      paddingHorizontal: 20
-                    }}
-                    onPress={() => this.handleCategory(item)}
-                  />
-                )
-              else
-                return (
-                  <SettingItem
-                    key={index}
-                    leftImage={DAPP_SECTION_ICONS[item].icon}
-                    leftItemTitle={<FormattedMessage id={DAPP_SECTION_ICONS[item].stringId} />}
-                    extraStyle={{ paddingHorizontal: 20 }}
-                    onPress={() => this.handleCategory(item)}
-                  />
-                )
+              return (
+                <SettingItem
+                  key={index}
+                  leftImage={DAPP_SECTION_ICONS[item] ? DAPP_SECTION_ICONS[item].icon : DAPP_SECTION_ICONS['other'].icon}
+                  leftItemTitle={<FormattedMessage id={DAPP_SECTION_ICONS[item].stringId} />}
+                  extraStyle={this.filterIndex(index, allItems)}
+                  onPress={() => this.handleCategory(item)}
+                />
+              )
             })}
           </ScrollView>
         </View>

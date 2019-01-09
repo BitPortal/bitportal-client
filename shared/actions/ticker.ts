@@ -38,3 +38,5 @@ export const setSearchTerm = createAction<string>('ticker/SET_SEARCH_TERM')
 export const setMarketCategory = createAction<string>(
   'ticker/SET_MARKET_CATEGORY'
 )
+
+export const getLocalTickers = createAction('ticker/GET_LOCAL_TICKERS')
