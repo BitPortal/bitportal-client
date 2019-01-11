@@ -139,7 +139,7 @@ export default class Resources extends Component {
                 delegateText={<FormattedMessage id="resource_label_staked" />}
                 delegate={totalResourcesNETWeight}
               />
-              {/* <ResourcesCard
+              <ResourcesCard
                 colors={Colors.ramColor}
                 onPress={() => this.check('ram')}
                 title={<FormattedMessage id="resource_label_ram" />}
@@ -149,7 +149,7 @@ export default class Resources extends Component {
                 total={formatMemorySize(ramQuota)}
                 usageText={<FormattedMessage id="resource_label_used" />}
                 usage={formatMemorySize(ramUsage)}
-              /> */}
+              />
             </ScrollView>
           </View>
         </View>

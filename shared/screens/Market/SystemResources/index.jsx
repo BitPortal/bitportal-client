@@ -6,7 +6,6 @@ import { FLOATING_CARD_WIDTH } from 'utils/dimens'
 import Cpu from './Cpu'
 import Ram from './Ram'
 import Net from './Net'
-// import Net from './Net'
 import styles from './styles'
 
 // const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradientContainer);
@@ -17,8 +16,8 @@ export default class SystemResources extends React.Component {
     index: 0,
     routes: [
       { key: 'first', title: 'CPU' }, 
-      // { key: 'second', title: 'RAM' }, 
-      { key: 'second', title: 'NET' }]
+      { key: 'second', title: 'RAM' }, 
+      { key: 'third', title: 'NET' }]
   }
 
   /*eslint-enable*/
@@ -26,7 +25,7 @@ export default class SystemResources extends React.Component {
 
   renderIndicator = props => {
     const { position, navigationState } = props
-    const width = FLOATING_CARD_WIDTH / 2
+    const width = FLOATING_CARD_WIDTH / 3
     const translateX = Animated.multiply(
       Animated.multiply(
         position.interpolate({
@@ -63,8 +62,8 @@ export default class SystemResources extends React.Component {
         navigationState={this.state}
         renderScene={SceneMap({
           first: Cpu,
-          // second: Ram,
-          second: Net
+          second: Ram,
+          third: Net
         })}
         onIndexChange={index => {
           /*eslint-disable*/

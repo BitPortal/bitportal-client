@@ -20,13 +20,13 @@ const styles = {
   },
   singleTab: {
     height: 30,
-    width: FLOATING_CARD_WIDTH / 2,
+    width: FLOATING_CARD_WIDTH / 3,
     margin: 0,
     borderRadius: FLOATING_CARD_BORDER_RADIUS
   },
   selectedTab: {
     height: 30,
-    width: FLOATING_CARD_WIDTH / 2,
+    width: FLOATING_CARD_WIDTH / 3,
     borderRadius: FLOATING_CARD_BORDER_RADIUS,
     backgroundColor: 'blue'
   }

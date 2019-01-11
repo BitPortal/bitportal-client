@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     minHeight: 50,
     backgroundColor: Colors.borderColor_48_48_46,
     borderRadius: FLOATING_CARD_BORDER_RADIUS,
-    width: FLOATING_CARD_WIDTH / 2 - 25,
+    width: FLOATING_CARD_WIDTH / 3 - 25,
     marginVertical: 15,
     marginHorizontal: 5,
     alignItems: 'center',
