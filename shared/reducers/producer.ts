@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import { handleActions } from 'redux-actions'
 import * as actions from 'actions/producer'
-import { sortProducers } from 'core/eos'
+import { sortProducers } from 'core/legacy/eos'
 
 const initialState = Immutable.fromJS({
   data: {

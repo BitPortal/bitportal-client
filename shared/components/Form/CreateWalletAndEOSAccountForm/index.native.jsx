@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
+import { Field, reduxForm, formValueSelector } from 'redux-form'
 import { FormContainer, TextField, PasswordField, SubmitButton, Button } from 'components/Form'
 import PasswordStrength from 'components/PasswordStrength'
 import { normalizeEOSAccountName } from 'utils/normalize'
@@ -60,7 +60,7 @@ const validate = (values) => {
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     password: formValueSelector('createWalletAndEOSAccountForm')(state, 'password'),
     wallet: state.wallet
   }),

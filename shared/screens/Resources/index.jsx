@@ -27,7 +27,7 @@ import styles from './styles'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     wallet: state.wallet,
     cpuLimitAvailable: cpuLimitAvailableSelector(state),
     cpuLimitMax: cpuLimitMaxSelector(state),

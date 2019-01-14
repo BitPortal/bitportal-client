@@ -30,7 +30,7 @@ export const errorMessages = (error, messages) => {
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     exporting: state.keystore.get('exporting'),
     error: state.keystore.get('error'),
     wallet: state.wallet

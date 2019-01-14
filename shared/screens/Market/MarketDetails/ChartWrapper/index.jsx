@@ -6,7 +6,7 @@ import { CandleStickChart } from 'react-native-charts-wrapper'
 import styles from './styles'
 
 @connect(state => ({
-  locale: state.intl.get('locale'),
+  locale: state.intl.locale,
   chartData: state.chart.get('data')
 }))
 export default class ChartWrapper extends Component {

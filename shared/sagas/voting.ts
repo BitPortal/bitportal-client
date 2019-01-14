@@ -4,7 +4,7 @@ import * as actions from 'actions/voting'
 import { getEOSAccountRequested } from 'actions/eosAccount'
 import { traceVotes } from 'actions/trace'
 import { getEOSErrorMessage } from 'utils'
-import { voteEOSProducers } from 'core/eos'
+import { voteEOSProducers } from 'core/legacy/eos'
 import { voterInfoSelector } from 'selectors/eosAccount'
 
 function* votingRequested(action: Action<VotingParams>) {

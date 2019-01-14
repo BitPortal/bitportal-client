@@ -6,12 +6,12 @@
 
 namespace djinni_generated {
 
-NativeCore::NativeCore() : ::djinni::JniInterface<::core::Core, NativeCore>("com/bitportal/wallet/core/Core$CppProxy") {}
+NativeCore::NativeCore() : ::djinni::JniInterface<::core::Core, NativeCore>("com/bitportal/core/Core$CppProxy") {}
 
 NativeCore::~NativeCore() = default;
 
 
-CJNIEXPORT void JNICALL Java_com_bitportal_wallet_core_Core_00024CppProxy_nativeDestroy(JNIEnv* jniEnv, jobject /*this*/, jlong nativeRef)
+CJNIEXPORT void JNICALL Java_com_bitportal_core_Core_00024CppProxy_nativeDestroy(JNIEnv* jniEnv, jobject /*this*/, jlong nativeRef)
 {
     try {
         DJINNI_FUNCTION_PROLOGUE1(jniEnv, nativeRef);
@@ -19,7 +19,7 @@ CJNIEXPORT void JNICALL Java_com_bitportal_wallet_core_Core_00024CppProxy_native
     } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, )
 }
 
-CJNIEXPORT jobject JNICALL Java_com_bitportal_wallet_core_Core_create(JNIEnv* jniEnv, jobject /*this*/)
+CJNIEXPORT jobject JNICALL Java_com_bitportal_core_Core_00024CppProxy_create(JNIEnv* jniEnv, jobject /*this*/)
 {
     try {
         DJINNI_FUNCTION_PROLOGUE0(jniEnv);
@@ -28,7 +28,7 @@ CJNIEXPORT jobject JNICALL Java_com_bitportal_wallet_core_Core_create(JNIEnv* jn
     } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
 }
 
-CJNIEXPORT jstring JNICALL Java_com_bitportal_wallet_core_Core_00024CppProxy_native_1pbkdf2(JNIEnv* jniEnv, jobject /*this*/, jlong nativeRef, jstring j_password, jstring j_salt, jint j_iterations, jbyte j_keylen, jstring j_digest)
+CJNIEXPORT jstring JNICALL Java_com_bitportal_core_Core_00024CppProxy_native_1pbkdf2(JNIEnv* jniEnv, jobject /*this*/, jlong nativeRef, jstring j_password, jstring j_salt, jint j_iterations, jbyte j_keylen, jstring j_digest)
 {
     try {
         DJINNI_FUNCTION_PROLOGUE1(jniEnv, nativeRef);
@@ -42,7 +42,7 @@ CJNIEXPORT jstring JNICALL Java_com_bitportal_wallet_core_Core_00024CppProxy_nat
     } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
 }
 
-CJNIEXPORT jstring JNICALL Java_com_bitportal_wallet_core_Core_00024CppProxy_native_1scrypt(JNIEnv* jniEnv, jobject /*this*/, jlong nativeRef, jstring j_password, jstring j_salt, jint j_N, jbyte j_r, jbyte j_p, jbyte j_dkLen)
+CJNIEXPORT jstring JNICALL Java_com_bitportal_core_Core_00024CppProxy_native_1scrypt(JNIEnv* jniEnv, jobject /*this*/, jlong nativeRef, jstring j_password, jstring j_salt, jint j_N, jbyte j_r, jbyte j_p, jbyte j_dkLen)
 {
     try {
         DJINNI_FUNCTION_PROLOGUE1(jniEnv, nativeRef);
@@ -54,6 +54,19 @@ CJNIEXPORT jstring JNICALL Java_com_bitportal_wallet_core_Core_00024CppProxy_nat
                              ::djinni::I8::toCpp(jniEnv, j_p),
                              ::djinni::I8::toCpp(jniEnv, j_dkLen));
         return ::djinni::release(::djinni::String::fromCpp(jniEnv, r));
+    } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
+}
+
+CJNIEXPORT jobject JNICALL Java_com_bitportal_core_Core_00024CppProxy_native_1scanHDBTCAddresses(JNIEnv* jniEnv, jobject /*this*/, jlong nativeRef, jstring j_xpub, jint j_startIndex, jint j_endIndex, jboolean j_isSegWit)
+{
+    try {
+        DJINNI_FUNCTION_PROLOGUE1(jniEnv, nativeRef);
+        const auto& ref = ::djinni::objectFromHandleAddress<::core::Core>(nativeRef);
+        auto r = ref->scanHDBTCAddresses(::djinni::String::toCpp(jniEnv, j_xpub),
+                                         ::djinni::I32::toCpp(jniEnv, j_startIndex),
+                                         ::djinni::I32::toCpp(jniEnv, j_endIndex),
+                                         ::djinni::Bool::toCpp(jniEnv, j_isSegWit));
+        return ::djinni::release(::djinni::List<::djinni::Map<::djinni::String, ::djinni::String>>::fromCpp(jniEnv, r));
     } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
 }
 

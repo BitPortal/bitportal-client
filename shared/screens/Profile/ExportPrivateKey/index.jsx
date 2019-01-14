@@ -13,7 +13,7 @@ import styles from './styles'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.locale
   }),
   dispatch => ({
     actions: bindActionCreators({

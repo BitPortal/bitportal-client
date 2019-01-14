@@ -31,7 +31,7 @@ const ButtonElement = ({ Title, onPress }) => (
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     ticker: exchangeTickerSelector(state),
     baseAsset: state.ticker.get('baseAsset'),
     quoteAssetFilter: state.ticker.get('quoteAssetFilter'),

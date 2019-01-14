@@ -3,7 +3,7 @@ import { all, call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/producer'
 import * as api from 'utils/api'
-import { initEOS } from 'core/eos'
+import { initEOS } from 'core/legacy/eos'
 
 function* getProducersWithInfoRequested(action: Action<GetProducersWithInfoParams>) {
   if (!action.payload) return

@@ -1,75 +1,39 @@
 import { createSelector } from 'reselect'
-import Immutable from 'immutable'
 
-const dataSelector = (state: RootState) => state.dApp.get('data')
-const searchTermSelector = (state: RootState) => state.dApp.get('searchTerm')
-const locale = (state: RootState) => state.intl.get('locale')
-export const favoriteDappsSelector = (state: RootState) => state.dApp.get('favoriteDapps')
+const dappByIdSelector = (state: RootState) => state.dapp.byId
+const dappAllIdsSelector = (state: RootState) => state.dapp.allIds
 
-export const getInitialDapp = (storedFavoriteDapps?: any) => Immutable.fromJS({
-  data: [],
-  loading: false,
-  loaded: false,
-  error: null,
-  searchTerm: '',
-  favoriteDapps: storedFavoriteDapps || []
-})
+const dappRecommendByIdSelector = (state: RootState) => state.dapp.recommend.byId
+const dappRecommendAllIdsSelector = (state: RootState) => state.dapp.recommend.allIds
 
-export const mergeFavoritesDataSelector = createSelector(
-  favoriteDappsSelector,
-  dataSelector,
-  (favoriteDapps: any, data: any) => data.map((item: any) => {
-    const index = favoriteDapps.findIndex(
-      (e: any) => e.get('name') === item.get('name')
-    )
-    return item.set('selected', index !== -1)
-  })
+export const dappSelector = createSelector(
+  dappByIdSelector,
+  dappAllIdsSelector,
+  (byId: any, allIds: any) => allIds.map(id => byId[id])
 )
 
-export const parsedDappListSelector = createSelector(
-  favoriteDappsSelector,
-  dataSelector,
-  (favoriteDapps: any, data: any) => {
-    const newArr = [...favoriteDapps.toJS()]
-    data.forEach((item: any) => {
-      const found = newArr.find((i: any) => i.name === item.get('name'))
-      return found ? null : newArr.push(item.toJS())
-    })
-
-    if (newArr.length > 11) {
-      const parsed = newArr.splice(0, 11).concat({ type: 'more' })
-      return Immutable.fromJS(parsed)
-    }
-    return Immutable.fromJS(data.splice(0, 11))
-  }
+export const dappRecommendSelector = createSelector(
+  dappRecommendByIdSelector,
+  dappRecommendAllIdsSelector,
+  (byId: any, allIds: any) => allIds.map(id => byId[id])
 )
 
-export const searchDappListSelector = createSelector(
-  mergeFavoritesDataSelector,
-  searchTermSelector,
-  locale,
-  (data: any, searchTerm: any, locale: any) => data.filter(
-    (item: any) => (searchTerm.trim() === ''
-      ? item
-      : item
-        .get('display_name')
-        .get(locale)
-        .toUpperCase()
-        .includes(searchTerm.toUpperCase()))
-  )
+export const newDappSelector = createSelector(
+  dappSelector,
+  (dapps: any) => dapps.filter((dapp: any) => !!dapp.is_new)
 )
-// [{title:category,data:[item1,item2]}]
-export const sectionedDappListSelector = createSelector(
-  searchDappListSelector,
-  (resultsList: any) => {
-    const sections: any[] = []
-    resultsList.forEach((item: any) => {
-      const sectionIndex = sections.findIndex(
-        e => e.title === item.get('category')
-      )
-      if (sectionIndex !== -1) sections[sectionIndex].data.push(item)
-      else sections.push({ title: item.get('category'), data: [item] })
-    })
-    return sections
-  }
+
+export const hotDappSelector = createSelector(
+  dappSelector,
+  (dapps: any) => dapps.filter((dapp: any) => !!dapp.is_hot)
+)
+
+export const gameDappSelector = createSelector(
+  dappSelector,
+  (dapps: any) => dapps.filter((dapp: any) => dapp.category === 'game')
+)
+
+export const toolDappSelector = createSelector(
+  dappSelector,
+  (dapps: any) => dapps.filter((dapp: any) => dapp.category === 'tool')
 )

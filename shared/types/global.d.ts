@@ -149,18 +149,6 @@ declare module 'transit-immutable-js' {
   export = transit
 }
 
-declare module 'redux-form/immutable' {
-  interface Form {
-    reducer: any
-    change: any
-    reset: any
-    stopSubmit: any
-  }
-
-  const form: Form
-  export = form
-}
-
 declare module 'react-cookie' {
   interface Cookie {
     CookiesProvider: any
@@ -297,7 +285,7 @@ declare module 'serialize-javascript' {
   export = file
 }
 
-declare module 'core/eos' {
+declare module 'core/legacy/eos' {
   interface EOS {
     generateMasterKeys: any
     privateToPublic: any
@@ -323,7 +311,7 @@ declare module 'core/eos' {
   export = eos
 }
 
-declare module 'core/key' {
+declare module 'core/legacy/key' {
   interface KeyManagement {
     validateEntropy: any
     getEOSKeys: any

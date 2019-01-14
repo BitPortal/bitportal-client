@@ -68,7 +68,7 @@ export const errorMessageDetail = (error, messages) => {
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     producerList: producerListSelector(state),
     selected: state.producer.get('selected'),
     loading: state.producer.get('loading'),

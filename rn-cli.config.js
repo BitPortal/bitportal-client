@@ -1,5 +1,4 @@
 const nodeLibs = require('node-libs-react-native')
-const path = require('path')
 
 module.exports = {
   resolver: {
@@ -12,6 +11,5 @@ module.exports = {
   transformer: {
     enableBabelRCLookup: true,
     enableBabelRuntime: true
-  //   babelTransformerPath: require.resolve('react-native-typescript-transformer')
   }
 }

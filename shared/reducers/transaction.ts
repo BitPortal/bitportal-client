@@ -1,64 +1,74 @@
-import Immutable from 'immutable'
-import { handleActions } from 'redux-actions'
+import { handleActions } from 'utils/redux'
 import * as actions from 'actions/transaction'
 
-const initialState = Immutable.fromJS({
-  data: [],
-  detail: {},
-  loading: false,
-  loaded: false,
-  error: null,
-  position: -1,
-  offset: -50,
-  hasMore: true,
-  detailLoading: false,
-  detailLoaded: false,
-  detailError: null,
-  lastIrreversibleBlock: 0,
-  loadAll: false,
-  refresh: true,
-  activeAssetIncrements: 0
-})
+const initialState = {
+  activeTransactionId: null,
+  byId: {},
+  allIds: []
+}
 
 export default handleActions({
-  [actions.getTransactionsRequested] (state, action) {
-    return state.set('loading', true)
-      .set('loadAll', !!action.payload.loadAll)
-      .set('refresh', action.payload.position === -1)
-  },
-  [actions.getTransactionsSucceeded] (state, action) {
-    const refresh = state.get('refresh')
-    const eosActions = action.payload.actions
-    const activeAssetIncrements = action.payload.activeAssetIncrements
-    const hasMore = action.payload.hasMore
-    const position = action.payload.position
-    const lastIrreversibleBlock = action.payload.lastIrreversibleBlock
+  [actions.updateTransactions] (state, action) {
+    const { id, items, pagination } = action.payload
 
-    return state.set('loaded', true)
-      .set('loading', false)
-      .set('hasMore', hasMore)
-      .set('position', position)
-      .set('activeAssetIncrements', activeAssetIncrements)
-      .set('lastIrreversibleBlock', lastIrreversibleBlock)
-      .update('data', (v: any) => refresh ? Immutable.fromJS(eosActions) : v.concat(Immutable.fromJS(eosActions)))
+    if (!state.byId[id]) {
+      state.byId[id] = { id, pagination }
+
+      state.byId[id].items = {
+        byId: {},
+        allIds: []
+      }
+    }
+
+    items.forEach((item: any) => {
+      state.byId[id].items.byId[item.id] = item
+      const index = state.byId[id].items.allIds.findIndex((v: any) => v && v.id === item.id)
+      if (index === -1) state.byId[id].items.allIds.unshift({ id: item.id, timestamp: item.timestamp })
+    })
+    state.byId[id].items.allIds.sort((a: any, b: any) => b.timestamp - a.timestamp)
+
+    const index = state.allIds.findIndex((v: any) => v === id)
+    if (index === -1)  state.allIds.push(id)
   },
-  [actions.getTransactionsFailed] (state, action) {
-    return state.set('error', action.payload).set('loading', false)
+  [actions.addTransaction] (state, action) {
+    const { id, item } = action.payload
+
+    if (!state.byId[id]) {
+      state.byId[id] = { id }
+
+      state.byId[id].items = {
+        byId: {},
+        allIds: []
+      }
+    }
+
+    state.byId[id].items.byId[item.id] = item
+    const itemIndex = state.byId[id].items.allIds.findIndex((v: any) => v && v.id === item.id)
+    if (itemIndex === -1) {
+      let insertIndex = 0
+      for (let i = 0; i < state.byId[id].items.allIds.length; i++) {
+        if (item.timestamp > state.byId[id].items.allIds[i].timestamp) {
+          insertIndex = i
+          break
+        }
+      }
+      state.byId[id].items.allIds.splice(insertIndex, 0, { id: item.id, timestamp: item.timestamp })
+    }
+
+    const index = state.allIds.findIndex((v: any) => v === id)
+    if (index === -1)  state.allIds.push(id)
   },
-  [actions.getTransactionDetailRequested] (state) {
-    return state.set('detailLoading', true)
+  [actions.updateTransaction] (state, action) {
+    const { id, item } = action.payload
+    if (!state.byId[id]) return state
+    state.byId[id].items.byId[item.id] = item
   },
-  [actions.getTransactionDetailSucceeded] (state, action) {
-    return state.set('detailLoaded', true).set('detailLoading', false)
-      .set('detail', Immutable.fromJS(action.payload))
+  [actions.removeTransactions] (state, action) {
+    const { id } = action.payload
+    state.allIds.splice(state.allIds.findIndex((item: any) => item === id), 1)
+    delete state.byId[id]
   },
-  [actions.getTransactionDetailFailed] (state, action) {
-    return state.set('detailError', action.payload).set('detailLoading', false)
-  },
-  [actions.resetTransactionDetail] (state) {
-    return state.set('detail', Immutable.fromJS({}))
-  },
-  [actions.resetTransaction] () {
-    return initialState
+  [actions.setActiveTransactionId] (state, action) {
+    state.activeTransactionId = action.payload
   }
 }, initialState)

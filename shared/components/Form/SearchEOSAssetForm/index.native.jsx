@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form/immutable'
+import { Field, reduxForm } from 'redux-form'
 import { SearchContainer, SearchField } from 'components/Form'
 import Colors from 'resources/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -12,7 +12,7 @@ import messages from './messages'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.locale
   })
 )
 

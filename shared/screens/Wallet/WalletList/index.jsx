@@ -1,26 +1,30 @@
 import React, { Component } from 'react'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
+import { injectIntl } from 'react-intl'
 import { View, ActionSheetIOS } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
+import { identityWalletSelector, importedWalletSelector } from 'selectors/wallet'
 // import FastImage from 'react-native-fast-image'
-import * as eosAssetsActions from 'actions/eosAsset'
-import { eosAssetListSelector, eosAssetSearchResultListSelector } from 'selectors/eosAsset'
+import * as walletActions from 'actions/wallet'
 import styles from './styles'
 
 const { Section, Item } = TableView
 
+@injectIntl
+
 @connect(
   state => ({
-    eosAsset: eosAssetListSelector(state),
-    eosAssetSearchResult: eosAssetSearchResultListSelector(state),
-    loading: state.eosAsset.get('loading'),
-    loaded: state.eosAsset.get('loaded')
+    identity: state.identity,
+    identityWallets: identityWalletSelector(state),
+    importedWallets: importedWalletSelector(state),
+    portfolio: state.portfolio.byId,
+    activeWalletId: state.wallet.activeWalletId
   }),
   dispatch => ({
     actions: bindActionCreators({
-      ...eosAssetsActions
+      ...walletActions
     }, dispatch)
   })
 )
@@ -38,18 +42,15 @@ export default class WalletList extends Component {
             text: '取消'
           }
         ],
-        rightButtons: [
-          {
-            id: 'edit',
-            text: '编辑'
-          }
-        ],
+        /* rightButtons: [
+         *   {
+         *     id: 'edit',
+         *     text: '编辑'
+         *   }
+         * ],*/
         largeTitle: {
           visible: false
         }
-      },
-      bottomTabs: {
-        visible: false
       }
     }
   }
@@ -62,7 +63,7 @@ export default class WalletList extends Component {
 
   navigationButtonPressed({ buttonId }) {
     if (buttonId === 'cancel') {
-      Navigation.dismissAllModals()
+      Navigation.dismissModal(this.props.componentId)
     } else if (buttonId === 'edit') {
       // this.setState({ editting: true })
       Navigation.mergeOptions(this.props.componentId, {
@@ -99,39 +100,77 @@ export default class WalletList extends Component {
     this.props.actions.searchEOSAssetRequested(text)
   }
 
-  onRefresh = () => {
-    this.props.actions.getEOSAssetRequested()
-  }
-
-  onPress = () => {
-    ActionSheetIOS.showActionSheetWithOptions({
-      options: ['取消', '创建新身份', '恢复已有身份'],
-      cancelButtonIndex: 0,
-    }, (buttonIndex) => {
-      if (buttonIndex === 1) { /* destructive action */ }
+  toAddIdentity = () => {
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.AddIdentity'
+          }
+        }]
+      }
     })
   }
 
-  onSwitchAccessoryChanged = (data) => {
-    const { account, symbol, current_supply, max_supply, icon_url, rank_url } = data
-    this.props.actions.toggleEOSAssetForStorage({ contract: account, symbol, current_supply, max_supply, icon_url, rank_url })
-    this.pendingAssetQueue.push({ contract: account, symbol, current_supply, max_supply, icon_url, rank_url })
+  toSelectChainType = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.SelectChainType'
+      }
+    })
   }
 
-  componentDidAppear() {
-    this.props.actions.getEOSAssetRequested()
+  toManageWallet = (walletInfo) => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.ManageWallet',
+        passProps: { ...walletInfo },
+        options: {
+          topBar: {
+            backButton: {
+              title: '返回'
+            }
+          }
+        }
+      }
+    })
   }
 
-  componentWillUnmount() {
-    if (this.pendingAssetQueue.length) {
-      this.props.actions.toggleEOSAssetList(this.pendingAssetQueue)
-      this.pendingAssetQueue = []
+  onItemNotification = (data) => {
+    const { action } = data
+
+    if (action === 'toManageWallet') {
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.ManageWallet',
+          options: {
+            topBar: {
+              backButton: {
+                title: '返回'
+              }
+            }
+          }
+        }
+      })
+    } else if (action === 'switchWallet') {
+
     }
   }
 
+  switchWallet = (walletId) => {
+    this.props.actions.setActiveWallet(walletId)
+    Navigation.dismissAllModals()
+  }
+
+  selectEOSAccount = (walletId) => {
+
+  }
+
   render() {
-    // const { eosAsset, eosAssetSearchResult } = this.props
-    // const data = this.state.searching ? eosAssetSearchResult : eosAsset
+    const { identityWallets, importedWallets, activeWalletId, portfolio, intl } = this.props
+
+    const identityWalletsCount = identityWallets.length
+    const importedWalletsCount = importedWallets.length
 
     return (
       <View style={styles.container}>
@@ -141,34 +180,86 @@ export default class WalletList extends Component {
           tableViewCellStyle={TableView.Consts.CellStyle.Default}
           detailTextColor="#666666"
           showsVerticalScrollIndicator={false}
-          cellSeparatorInset={{ left: 66 }}
+          cellSeparatorInset={{ left: 16 }}
           reactModuleForCell="WalletTableViewCell"
+          onItemNotification={this.onItemNotification}
           moveWithinSectionOnly
         >
-          <Section label="当前身份下的钱包" canEdit canMove>
+          <Section />
+          {!identityWalletsCount && <Section>
             <Item
-              height={60}
-              onPress={this.onPress}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
+              height={44}
+              onPress={this.toAddIdentity}
               type="add"
               text="添加数字身份..."
             />
-          </Section>
-          <Section label="导入的钱包">
+          </Section>}
+          {identityWalletsCount && <Section label="身份钱包">
+            {identityWallets.map(wallet =>
+              <Item
+                height={60}
+                key={wallet.id}
+                uid={wallet.id}
+                name={wallet.name}
+                symbol={wallet.symbol}
+                chain={wallet.chain}
+                isSegwit={wallet.symbol === 'BTC' && wallet.segWit === 'P2WPKH'}
+                address={wallet.address}
+                segWit={wallet.segWit}
+                source={wallet.source}
+                totalAsset={(portfolio && portfolio[`${wallet.chain}/${wallet.address}`]) ? intl.formatNumber(portfolio[`${wallet.chain}/${wallet.address}`].totalAsset, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
+                componentId={this.props.componentId}
+                isSelected={wallet.id === activeWalletId}
+                accessoryType={(wallet.chain !== 'EOS' || !!wallet.address) ? TableView.Consts.AccessoryType.DetailButton : TableView.Consts.AccessoryType.DisclosureIndicator}
+                onPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.switchWallet.bind(this, wallet.id) : this.selectEOSAccount.bind(this, wallet.id)}
+                onAccessoryPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.toManageWallet.bind(this, {
+                    id: wallet.id,
+                    type: 'identity',
+                    name: wallet.name,
+                    address: wallet.address,
+                    chain: wallet.chain,
+                    symbol: wallet.symbol,
+                    segWit: wallet.segWit,
+                    source: wallet.source,
+                  }) : () => {}}
+              />
+             )}
+          </Section>}
+          <Section label={!!importedWalletsCount ? '导入的钱包' : ''}>
+            {importedWallets.map(wallet =>
+              <Item
+                height={60}
+                key={wallet.id}
+                uid={wallet.id}
+                name={wallet.name}
+                symbol={wallet.symbol}
+                chain={wallet.chain}
+                isSegwit={wallet.symbol === 'BTC' && wallet.segWit === 'P2WPKH'}
+                address={wallet.address}
+                segWit={wallet.segWit}
+                source={wallet.source}
+                totalAsset={(portfolio && portfolio[`${wallet.chain}/${wallet.address}`]) ? intl.formatNumber(portfolio[`${wallet.chain}/${wallet.address}`].totalAsset, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
+                componentId={this.props.componentId}
+                isSelected={wallet.id === activeWalletId}
+                accessoryType={(wallet.chain !== 'EOS' || !!wallet.address) ? TableView.Consts.AccessoryType.DetailButton : TableView.Consts.AccessoryType.DisclosureIndicator}
+                onPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.switchWallet.bind(this, wallet.id) : this.selectEOSAccount.bind(this, wallet.id)}
+                onAccessoryPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.toManageWallet.bind(this, {
+                    id: wallet.id,
+                    type: 'imported',
+                    name: wallet.name,
+                    address: wallet.address,
+                    chain: wallet.chain,
+                    symbol: wallet.symbol,
+                    segWit: wallet.segWit,
+                    source: wallet.source,
+                  }) : () => {}}
+              />
+             )}
             <Item
-              height={60}
-              onPress={this.onPress}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
+              height={44}
+              onPress={this.toSelectChainType}
               type="add"
               text="导入新钱包..."
-            />
-            <Item
-              height={60}
-              onPress={this.onPress}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
-              name="BTC-Wallet"
-              blockchain="BTC-SEGWIT"
-              address="12ESfU8aaUyxepfMbxee9vt688eeS2QEsF"
             />
           </Section>
         </TableView>

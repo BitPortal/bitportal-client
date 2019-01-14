@@ -28,7 +28,7 @@ export const errorMessages = (error, messages) => {
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     eosAccount: state.eosAccount,
     eosPrice: eosPriceSelector(state)
   }),

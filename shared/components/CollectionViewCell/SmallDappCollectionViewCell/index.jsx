@@ -11,23 +11,25 @@ const SmallDappCollectionViewCell = props => (
   }}
   >
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-      <View>
+      <View style={{ width: 62, height: 62, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.15)', marginRight: 10, borderRadius: 14, backgroundColor: '#E5E5EA' }}>
         <FastImage
-            source={require('resources/images/BTCLogo.png')}
-            style={{ width: 50, height: 50, marginRight: 10, borderRadius: 12 }}
+          source={{ uri: props.data.icon }}
+          style={{ width: '100%', height: '100%', borderRadius: 14 }}
         />
       </View>
       <View>
-        <Text style={{ fontSize: 17, marginBottom: 4 }}>未来之战</Text>
-        <Text style={{ color: '#8E8E93', fontSize: 11 }}>角色扮演</Text>
+        <Text style={{ fontSize: 17, marginBottom: 4 }}>{props.data.name}</Text>
+        <Text ellipsizeMode="tail" numberOfLines={2} style={{ color: '#8E8E93', fontSize: 11, width: 200, lineHeight: 13 }}>
+          {props.data.description}
+        </Text>
       </View>
     </View>
     <View>
       <TouchableOpacity style={{ backgroundColor: '#EFEFF4', borderRadius: 28, height: 28, width: 70, padding: 0, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ color: '#007AFF', margin: 0, padding: 0, fontSize: 13, fontWeight: 'bold' }}>玩一玩</Text>
+        <Text style={{ color: '#007AFF', margin: 0, padding: 0, fontSize: 13, fontWeight: '500' }}>打开</Text>
       </TouchableOpacity>
     </View>
-    {props.data.showSeparator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 60, backgroundColor: '#C8C7CC' }} />}
+    {props.data.showSeparator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 72, backgroundColor: '#C8C7CC' }} />}
   </View>
 )
 

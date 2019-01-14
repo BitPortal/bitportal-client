@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { LayoutAnimation } from 'react-native'
-import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
+import { Field, reduxForm, formValueSelector } from 'redux-form'
 import { IntlProvider } from 'react-intl'
 import { FormContainer, TextField, PasswordField, SubmitButton } from 'components/Form'
 import { normalizeEOSAccountName } from 'utils/normalize'
@@ -57,7 +57,7 @@ const validate = (values, props) => {
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     wallet: state.wallet,
     eosAccount: state.eosAccount,
     password: formValueSelector('createEOSAccountAssistanceForm')(state, 'password')

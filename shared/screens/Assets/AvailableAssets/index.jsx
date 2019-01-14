@@ -36,7 +36,7 @@ const dataProvider = new ImmutableDataProvider((r1, r2) => r1.get('account') !==
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     eosAssetList: eosAssetListSelector(state),
     loading: state.eosAsset.get('loading'),
     loaded: state.eosAsset.get('loaded')

@@ -1,13 +1,7 @@
 import { createAction } from 'redux-actions'
+import { createAsyncAction } from 'utils/redux'
 
-export const getDappListRequested = createAction<TokenParams>(
-  'dApp/GET_LIST_REQUESTED'
-)
-export const getDappListSucceeded = createAction<TokenResult>(
-  'dApp/GET_LIST_SUCCEEDED'
-)
-export const getDappListFailed = createAction<ErrorMessage>(
-  'dApp/GET_LIST_FAILED'
-)
-export const setSearchTerm = createAction<string>('dApp/SET_SEARCH_TERM')
-export const toggleFavoriteDapp = createAction<string>('dApp/TOGGLE')
+export const updateDapp = createAction<AddDappParams>('dapp/UPDATE')
+export const updateDappRecommend = createAction<AddDappRecommendParams>('dapp/UPDATE_RECOMMEND')
+export const getDapp = createAsyncAction('dapp/GET')
+export const getDappRecommend = createAsyncAction('dapp/GET_RECOMMEND')

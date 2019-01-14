@@ -1,10 +1,14 @@
 import { createAction } from 'redux-actions'
+import { createAsyncAction } from 'utils/redux'
 
-export const getTransactionsRequested = createAction<TransactionsParams>('transaction/GET_REQUESTED')
-export const getTransactionsSucceeded = createAction<TransactionsResult>('transaction/GET_SUCCEEDED')
-export const getTransactionsFailed = createAction<ErrorMessage>('transaction/GET_FAILED')
-export const getTransactionDetailRequested = createAction<TransactionDetailParams>('transaction/GET_DETAIL_REQUESTED')
-export const getTransactionDetailSucceeded = createAction<TransactionDetailResult>('transaction/GET_DETAIL_SUCCEEDED')
-export const getTransactionDetailFailed = createAction<ErrorMessage>('transaction/GET_DETAIL_FAILED')
-export const resetTransactionDetail = createAction('transaction/reset_detail')
-export const resetTransaction = createAction('transaction/reset')
+export const updateTransactions = createAction<UpdateTransactionsParams>('transaction/UPDATE_LIST')
+export const removeTransactions = createAction<RemoveTransactionParams>('transaction/REMOVE')
+export const updateTransaction = createAction<UpdateTransactionParams>('transaction/UPDATE')
+export const addTransaction = createAction<AddTransactionParams>('transaction/ADD')
+export const sortTransaction = createAction<AddTransactionParams>('transaction/SORT')
+export const setActiveTransactionId = createAction<SetActiveTransactionIdParams>('transaction/SET_ACTIVE')
+
+export const getTransactions = createAsyncAction('transaction/GET_LIST')
+export const getTransaction = createAsyncAction('transaction/GET')
+
+export const transfer = createAsyncAction('transaction/transfer')

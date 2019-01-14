@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect'
-import Immutable from 'immutable'
 
-export const getInitialEOSAsset = (presetSelectedAsset?: any) => Immutable.fromJS({
+export const getInitialEOSAsset = (presetSelectedAsset?: any) => ({
   data: [],
   loading: false,
   loaded: false,

@@ -39,7 +39,7 @@ const ListItem = ({ item, onPress, assetPrice, isAssetHidden }) => (
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     isAssetHidden: state.eosAccount.get('isAssetHidden'),
     eosCoreLiquidBalance: eosCoreLiquidBalanceSelector(state)
   })

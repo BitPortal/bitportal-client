@@ -6,6 +6,8 @@
 #include <cstdint>
 #include <memory>
 #include <string>
+#include <unordered_map>
+#include <vector>
 
 namespace core {
 
@@ -18,6 +20,8 @@ public:
     virtual std::string pbkdf2(const std::string & password, const std::string & salt, int32_t iterations, int8_t keylen, const std::string & digest) = 0;
 
     virtual std::string scrypt(const std::string & password, const std::string & salt, int32_t N, int8_t r, int8_t p, int8_t dkLen) = 0;
+
+    virtual std::vector<std::unordered_map<std::string, std::string>> scanHDBTCAddresses(const std::string & xpub, int32_t startIndex, int32_t endIndex, bool isSegWit) = 0;
 };
 
 }  // namespace core

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form/immutable'
+import { Field, reduxForm } from 'redux-form'
 import { SearchContainer, SearchField } from 'components/Form'
 import Colors from 'resources/colors'
 import { SCREEN_WIDTH } from 'utils/dimens'
@@ -13,7 +13,7 @@ import { SCREEN_WIDTH } from 'utils/dimens'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.locale
   })
 )
 

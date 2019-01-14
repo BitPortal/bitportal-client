@@ -62,4 +62,16 @@ const Images = {
   unsign_agreement: require('./agreement_unsign.png')
 }
 
+export const assetIcons = {
+  bitcoin: require('./btc_icon.png'),
+  ethereum: require('./eth_icon.png'),
+  eos: require('./eos_icon.png')
+}
+
+export const walletIcons = {
+  bitcoin: require('./BTCWallet.png'),
+  ethereum: require('./ETHWallet.png'),
+  eos: require('./EOSWallet.png')
+}
+
 export default Images

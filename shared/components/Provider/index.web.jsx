@@ -11,8 +11,8 @@ addLocaleData(zh)
 addLocaleData(ko)
 
 const mapStateToProps = state => ({
-  locale: state.intl.get('locale'),
-  messages: messages[state.intl.get('locale')]
+  locale: state.intl.locale,
+  messages: messages[state.intl.locale]
 })
 
 const ConnectedIntlProvider = connect(mapStateToProps)(IntlProvider)

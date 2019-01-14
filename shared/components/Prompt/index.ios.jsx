@@ -5,7 +5,7 @@ import messages from 'resources/messages'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.locale
   })
 )
 

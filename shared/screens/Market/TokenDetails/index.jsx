@@ -13,7 +13,7 @@ import styles from './styles'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     listedExchange: state.ticker.get('listedExchange'),
     loading: state.ticker.get('loading'),
     baseAsset: state.ticker.get('baseAsset')

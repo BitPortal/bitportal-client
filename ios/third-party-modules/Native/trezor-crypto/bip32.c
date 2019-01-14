@@ -24,6 +24,7 @@
 
 #include <string.h>
 #include <stdbool.h>
+#include<stdio.h>
 
 #include "aes/aes.h"
 #include "address.h"

@@ -1,52 +1,31 @@
 import { combineReducers } from 'redux'
-import { reducer as form } from 'redux-form/immutable'
+import { asyncActions } from 'actions'
+import { createAsyncActionsReducers } from 'utils/redux'
+import { reducer as form } from 'redux-form'
 import intl from './intl'
-import ticker from './ticker'
-import chart from './chart'
+import identity from './identity'
 import wallet from './wallet'
-import eosAccount from './eosAccount'
-import keystore from './keystore'
-import news from './news'
 import balance from './balance'
-import producer from './producer'
-import version from './version'
-import currency from './currency'
-import voting from './voting'
-import transfer from './transfer'
+import ticker from './ticker'
+import portfolio from './portfolio'
+import account from './account'
+import dapp from './dapp'
+import address from './address'
+import utxo from './utxo'
 import transaction from './transaction'
-import bandwidth from './bandwidth'
-import ram from './ram'
-import token from './token'
-import eosAsset from './eosAsset'
-import dApp from './dApp'
-import contact from './contact'
-import eosNode from './eosNode'
-import dappBrowser from './dappBrowser'
-import appInfo from './appInfo'
 
 export default combineReducers({
   form,
-  intl,
+  identity,
   wallet,
-  eosAccount,
-  keystore,
-  ticker,
-  chart,
-  news,
   balance,
-  producer,
-  version,
-  currency,
-  voting,
-  bandwidth,
-  ram,
-  transfer,
+  ticker,
+  portfolio,
+  account,
+  intl,
+  dapp,
+  address,
+  utxo,
   transaction,
-  token,
-  eosAsset,
-  dApp,
-  contact,
-  eosNode,
-  dappBrowser,
-  appInfo
+  ...createAsyncActionsReducers(asyncActions)
 })

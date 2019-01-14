@@ -22,7 +22,7 @@ import Progress from '../Progress'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     wallet: state.wallet,
     ram: state.ram,
     ramQuota: ramQuotaSelector(state),

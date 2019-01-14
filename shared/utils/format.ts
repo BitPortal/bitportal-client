@@ -27,7 +27,8 @@ const calculateFormatValue = (timeValue: any) => {
 }
 
 export const formatCycleTime = (value: any) => {
-  if (!value || value === '') return '0.00 μs'
+  if (!value) return '0.00 μs'
+
   const quoteArr = ['μs','ms','s','min','hrs','day']
   let index = 0
   const timeValue = parseFloat(value)
@@ -41,7 +42,8 @@ export const formatCycleTime = (value: any) => {
 }
 
 export const formatMemorySize = (value: any) => {
-  if (!value || value === '') return '0.00 byte'
+  if (!value) return '0.00 byte'
+
   const quoteArr = ['byte','KB','MB','GB','TB','PB','EB','ZB','YB']
   let index = 0
   const srcSize = parseFloat(value)

@@ -23,7 +23,7 @@ import styles from './styles'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     eosNodes: eosNodesSelector(state),
     activeNode: activeNodeSelector(state),
     defaultNodes: defaultNodesSelector(state),

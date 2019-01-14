@@ -60,7 +60,7 @@ const MarketElement = ({ data }) => (
   state => ({
     listedExchange: state.ticker.get('listedExchange'),
     loading: state.ticker.get('loading'),
-    locale: state.intl.get('locale')
+    locale: state.intl.locale
   }),
   dispatch => ({
     actions: bindActionCreators(

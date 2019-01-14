@@ -2,58 +2,32 @@ import { all, fork } from 'redux-saga/effects'
 import { ENV } from 'constants/env'
 import formSaga from './form'
 import intlSaga from './intl'
-import tickerSaga from './ticker'
-import chartSaga from './chart'
-import walletSaga from './wallet'
-import eosAccountSaga from './eosAccount'
-import keystoreSaga from './keystore'
-import balanceSaga from './balance'
 import loggerSaga from './logger'
-import newsSage from './news'
 import producerSage from './producer'
-import versionSaga from './version'
-import currencySaga from './currency'
-import votingSaga from './voting'
-import transferSaga from './transfer'
+import identitySaga from './identity'
+import walletSaga from './wallet'
+import balanceSaga from './balance'
+import tickerSaga from './ticker'
+import accountSaga from './account'
+import dappSaga from './dapp'
 import transactionSaga from './transaction'
-import ramSaga from './ram'
-import bandwidthSaga from './bandwidth'
-import tokenSaga from './token'
-import eosAssetSaga from './eosAsset'
-import dAppSaga from './dApp'
-import contactSaga from './contact'
-import eosNodeSaga from './eosNode'
-import dappBrwoserSaga from './dappBrwoser'
-import traceSaga from './trace'
-import notificationSaga from './notification' 
+import addressSaga from './address'
+import utxoSaga from './utxo'
 
 const sagas = {
   formSaga: fork(formSaga),
   intlSaga: fork(intlSaga),
-  tickerSaga: fork(tickerSaga),
-  chartSaga: fork(chartSaga),
-  walletSaga: fork(walletSaga),
-  eosAccountSaga: fork(eosAccountSaga),
-  keystoreSaga: fork(keystoreSaga),
-  newsSage: fork(newsSage),
-  balanceSaga: fork(balanceSaga),
   loggerSaga: fork(loggerSaga),
   producerSage: fork(producerSage),
-  versionSaga: fork(versionSaga),
-  currencySaga: fork(currencySaga),
-  votingSaga: fork(votingSaga),
-  transferSaga: fork(transferSaga),
+  identitySaga: fork(identitySaga),
+  walletSaga: fork(walletSaga),
+  balanceSaga: fork(balanceSaga),
+  tickerSaga: fork(tickerSaga),
+  accountSaga: fork(accountSaga),
+  dappSaga: fork(dappSaga),
   transactionSaga: fork(transactionSaga),
-  ramSaga: fork(ramSaga),
-  bandwidthSaga: fork(bandwidthSaga),
-  tokenSaga: fork(tokenSaga),
-  eosAssetSaga: fork(eosAssetSaga),
-  dAppSaga: fork(dAppSaga),
-  contactSaga: fork(contactSaga),
-  eosNodeSaga: fork(eosNodeSaga),
-  dappBrwoserSaga: fork(dappBrwoserSaga),
-  traceSaga: fork(traceSaga),
-  notificationSaga: fork(notificationSaga)
+  addressSaga: fork(addressSaga),
+  utxoSaga: fork(utxoSaga)
 }
 
 if (ENV === 'production') {

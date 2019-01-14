@@ -15,7 +15,7 @@ import styles from './styles'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     loading: state.dApp.get('loading'),
     dAppList: parsedDappListSelector(state),
     eosAccountName: eosAccountNameSelector(state)

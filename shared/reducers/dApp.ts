@@ -1,50 +1,36 @@
-import Immutable from 'immutable'
-import { handleActions } from 'redux-actions'
-import * as actions from 'actions/dApp'
+import { handleActions } from 'utils/redux'
+import * as actions from 'actions/dapp'
 
-const initialState = Immutable.fromJS({
-  data: [],
-  loading: false,
-  loaded: false,
-  error: null,
-  searchTerm: '',
-  favoriteDapps: [],
-  selected: undefined
-})
+const initialState = {
+  byId: {},
+  allIds: [],
+  recommend: {
+    byId: {},
+    allIds: []
+  }
+}
 
-export default handleActions(
-  {
-    [actions.getDappListRequested](state) {
-      return state.set('loading', true)
-    },
-    [actions.getDappListSucceeded](state, action) {
-      return state
-        .set('loaded', true)
-        .set('loading', false)
-        .set(
-          'data',
-          action.payload.length === 0
-            ? Immutable.fromJS({})
-            : Immutable.fromJS(action.payload)
-        )
-    },
-    [actions.getDappListFailed](state, action) {
-      return state.set('error', action.payload).set('loading', false)
-    },
-    [actions.setSearchTerm](state, action) {
-      return state.set('searchTerm', Immutable.fromJS(action.payload))
-    },
-    [actions.toggleFavoriteDapp](state, action) {
-      return state
-        .set('selected', action.payload.selected)
-        .update('favoriteDapps', (item: any) => {
-          const name = action.payload.item.get('name')
-          const index = item.findIndex((elem: any) => elem.get('name') === name)
-          if (index === -1) {
-            return item.push(action.payload.item.set('selected', true))
-          } else return item.delete(index)
-        })
-    }
+export default handleActions({
+  [actions.updateDapp] (state, action) {
+    action.payload.forEach(dapp => {
+      state.byId[dapp.id] = dapp
+
+      const index = state.allIds.findIndex((v: any) => v === dapp.id)
+
+      if (index === -1) {
+        state.allIds.push(dapp.id)
+      }
+    })
   },
-  initialState
-)
+  [actions.updateDappRecommend] (state, action) {
+    action.payload.forEach(recommend => {
+      state.recommend.byId[recommend.id] = recommend
+
+      const index = state.recommend.allIds.findIndex((v: any) => v === recommend.id)
+
+      if (index === -1) {
+        state.recommend.allIds.push(recommend.id)
+      }
+    })
+  }
+}, initialState)

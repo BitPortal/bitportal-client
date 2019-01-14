@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.locale
   })
 )
 

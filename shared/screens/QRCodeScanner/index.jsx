@@ -7,7 +7,7 @@ import QRDecode from '@remobile/react-native-qrcode-local-image'
 import NavigationBar, { CommonButton } from 'components/NavigationBar'
 import { View } from 'react-native'
 import QRCodeScanner from 'react-native-qrcode-scanner'
-import { change } from 'redux-form/immutable'
+import { change } from 'redux-form'
 import { IntlProvider } from 'react-intl'
 import * as balanceActions from 'actions/balance'
 import { parseEOSQrString, isJsonString } from 'utils'
@@ -24,7 +24,7 @@ import styles from './styles'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     eosAssetBalance: eosAssetBalanceSelector(state)
   }),
   dispatch => ({

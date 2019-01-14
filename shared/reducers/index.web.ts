@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { routerReducer as router } from 'react-router-redux'
-import { reducer as form } from 'redux-form/immutable'
+import { reducer as form } from 'redux-form'
 import intl from './intl'
 import ticker from './ticker'
 import chart from './chart'

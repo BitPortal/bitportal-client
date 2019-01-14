@@ -2,4 +2,5 @@ core = interface +c {
   static create(): core;
   pbkdf2(password: string, salt: string, iterations: i32, keylen: i8, digest: string): string;
   scrypt(password: string, salt: string, N: i32, r: i8, p: i8, dkLen: i8): string;
+  scanHDBTCAddresses(xpub: string, startIndex: i32, endIndex: i32, isSegWit: bool): list<map<string, string>>;
 }

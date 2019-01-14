@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { View, Text, ScrollView, Dimensions, LayoutAnimation } from 'react-native'
 import { Navigation } from 'react-native-navigation'
@@ -146,7 +146,7 @@ export default class Voting extends Component {
           detailTextColor="#666666"
           canRefresh
           showsVerticalScrollIndicator={false}
-          cellSeparatorInset={{ left: 66 }}
+          cellSeparatorInset={{ left: 46 }}
           reactModuleForCell="ProducerTableViewCell"
           headerBackgroundColor="#F7F7F7"
         >

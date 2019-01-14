@@ -1,29 +1,22 @@
 import React, { Component } from 'react'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { View } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 // import FastImage from 'react-native-fast-image'
-import * as eosAssetsActions from 'actions/eosAsset'
-import { eosAssetListSelector, eosAssetSearchResultListSelector } from 'selectors/eosAsset'
 import styles from './styles'
 
 @connect(
   state => ({
-    eosAsset: eosAssetListSelector(state),
-    eosAssetSearchResult: eosAssetSearchResultListSelector(state),
-    loading: state.eosAsset.get('loading'),
-    loaded: state.eosAsset.get('loaded')
   }),
   dispatch => ({
     actions: bindActionCreators({
-      ...eosAssetsActions
     }, dispatch)
   })
 )
 
-export default class Wallet extends Component {
+export default class Assets extends Component {
   static get options() {
     return {
       topBar: {
@@ -32,7 +25,9 @@ export default class Wallet extends Component {
         },
       },
       bottomTabs: {
-        visible: false
+        visible: false,
+        drawBehind: true,
+        animate: true
       }
     }
   }
@@ -65,26 +60,29 @@ export default class Wallet extends Component {
   }
 
   componentDidAppear() {
-    this.props.actions.getEOSAssetRequested()
-    Navigation.mergeOptions(this.props.componentId, {
-      topBar: {
-        searchBar: true,
-        searchBarHiddenWhenScrolling: true,
-        searchBarPlaceholder: 'Search'
-      }
-    })
+    // this.props.actions.getEOSAssetRequested()
+    /* Navigation.mergeOptions(this.props.componentId, {
+     *   topBar: {
+     *     searchBar: true,
+     *     searchBarHiddenWhenScrolling: true,
+     *     searchBarPlaceholder: 'Search'
+     *   }
+     * })*/
   }
 
   componentWillUnmount() {
-    if (this.pendingAssetQueue.length) {
-      this.props.actions.toggleEOSAssetList(this.pendingAssetQueue)
-      this.pendingAssetQueue = []
-    }
+    /* if (this.pendingAssetQueue.length) {
+     *   this.props.actions.toggleEOSAssetList(this.pendingAssetQueue)
+     *   this.pendingAssetQueue = []
+     * }*/
   }
 
   render() {
+    return null
+
     const { eosAsset, eosAssetSearchResult, loaded, loading } = this.props
     const data = this.state.searching ? eosAssetSearchResult : eosAsset
+
 
     return (
       <View style={styles.container}>

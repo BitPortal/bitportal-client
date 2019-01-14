@@ -179,7 +179,7 @@ const SignatureActionItems = ({ info, locale }) => (
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     dappBrowser: state.dappBrowser,
     messageType: messageTypeSelector(state),
     messageInfo: messageInfoSelector(state)

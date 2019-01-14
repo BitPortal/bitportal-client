@@ -14,7 +14,7 @@ import {
   eosAuthSign,
   signature,
   // verify
-} from 'core/eos'
+} from 'core/legacy/eos'
 
 function* pendTransferEOSAsset(messageActionType: string, payload: any, messageId: string) {
   const hasPendingMessage = yield select((state: RootState) => state.dappBrowser.get('hasPendingMessage'))
@@ -561,9 +561,9 @@ function* receiveMessage(action: Action<string>) {
           type: 'actionSucceeded',
           payload: {
             data: {
-              hash: '4872c19edc4f2caab405fb8b071d1bb6694adf8586d3c651a96eb06dbd0ad983',
+              hash: 'test',
               kyc: false,
-              name: 'RandomRaccoon433334',
+              name: 'test',
               publicKey: currentWallet.get('publicKey'),
               accounts: [{
                 authority: currentWallet.get('permission'),

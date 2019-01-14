@@ -15,7 +15,7 @@ import styles from './styles'
   baseAsset: state.ticker.get('baseAsset'),
   quoteAssetFilter: state.ticker.get('quoteAssetFilter'),
   token: state.token.get('data'),
-  locale: state.intl.get('locale')
+  locale: state.intl.locale
 }))
 export default class CoinInfoCard extends Component {
   render() {

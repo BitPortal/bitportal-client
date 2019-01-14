@@ -25,7 +25,7 @@ const dataProvider = new ImmutableDataProvider((r1, r2) => r1.get('account_actio
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     eosPrice: eosPriceSelector(state),
     activeAsset: activeAssetSelector(state),
     activeAssetBalance: activeAssetBalanceSelector(state),

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
+import { Field, reduxForm, formValueSelector } from 'redux-form'
 import { FormContainer, TextField, SubmitButton } from 'components/Form'
 import { IntlProvider, FormattedMessage } from 'react-intl'
 import { eosAccountSelector } from 'selectors/eosAccount'
@@ -43,7 +43,7 @@ const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject)
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     eosAccount: eosAccountSelector(state),
     eosAccountName: formValueSelector('addContactsForm')(
       state,

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
-import { Field, reduxForm, formValueSelector } from 'redux-form/immutable'
+import { Field, reduxForm, formValueSelector } from 'redux-form'
 import { FormContainer, TextField, PasswordField, SubmitButton } from 'components/Form'
 import { Text } from 'react-native'
 import { Navigation } from 'react-native-navigation'
@@ -61,7 +61,7 @@ const validate = (values, props) => {
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     keystore: state.keystore,
     eosAccount: eosAccountSelector(state),
     newPassword: formValueSelector('resetPasswordForm')(state, 'newPassword')

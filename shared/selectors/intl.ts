@@ -1,5 +1,3 @@
-import Immutable from 'immutable'
-
-export const getInitialLang = (presetLang?: string) => Immutable.fromJS({
+export const getInitialLang = (presetLang?: string) => ({
   locale: presetLang || 'en'
 })

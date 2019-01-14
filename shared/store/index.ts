@@ -1,6 +1,7 @@
-import Immutable from 'immutable'
 import { createStore, applyMiddleware, compose, Store } from 'redux'
 import createSagaMiddleware, { END } from 'redux-saga'
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 import { routerMiddleware as createRouterMiddleware } from 'react-router-redux'
 import rootReducer from 'reducers'
 import { isBrowser, isMobile } from 'utils/platform'
@@ -11,9 +12,11 @@ interface AppStore<S> extends Store<S> {
   close?: any
 }
 
-if (ENV !== 'production') {
-  const installDevTools = require('immutable-devtools')
-  installDevTools(Immutable)
+const persistConfig = {
+  key: 'root',
+  storage,
+  timeout: null,
+  blacklist: ['form']
 }
 
 export default function configure(initialState: RootState = {}, history?: any): AppStore<RootState> {
@@ -21,7 +24,10 @@ export default function configure(initialState: RootState = {}, history?: any): 
   const routerMiddleware = createRouterMiddleware(history)
   const middlewares = !isMobile ? [routerMiddleware, sagaMiddleware] : [sagaMiddleware]
   const composeEnhancers = (ENV !== 'production' && isBrowser && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose
-  const store: AppStore<RootState> = createStore(rootReducer, initialState, composeEnhancers(applyMiddleware(...middlewares)))
+
+  const persistedReducer = persistReducer(persistConfig, rootReducer)
+
+  const store: AppStore<RootState> = createStore(persistedReducer, initialState, composeEnhancers(applyMiddleware(...middlewares)))
 
   store.runSaga = sagaMiddleware.run
   store.close = () => store.dispatch(END)
@@ -33,5 +39,6 @@ export default function configure(initialState: RootState = {}, history?: any): 
     })
   }
 
+  store.persistor = persistStore(store)
   return store
 }

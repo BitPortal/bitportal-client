@@ -5,9 +5,9 @@ import { Action } from 'redux-actions'
 import * as actions from 'actions/transfer'
 import { getEOSAccountRequested } from 'actions/eosAccount'
 import { getEOSBalanceRequested, getEOSAssetBalanceRequested } from 'actions/balance'
-import { transferEOSAsset } from 'core/eos'
+import { transferEOSAsset } from 'core/legacy/eos'
 import { getEOSErrorMessage } from 'utils'
-import { reset } from 'redux-form/immutable'
+import { reset } from 'redux-form'
 import { push } from 'utils/location'
 import { traceTransaction } from 'actions/trace'
 
@@ -51,7 +51,7 @@ function* transfer(action: Action<TransferParams>) {
       toAddr: toAccount
     }
     yield put(traceTransaction(traceParams))
-    
+
   } catch (e) {
     yield put(actions.transferFailed(getEOSErrorMessage(e)))
   }

@@ -13,7 +13,7 @@ import {
   Keyboard,
   TextInput
 } from 'react-native'
-import { Field, reduxForm } from 'redux-form/immutable'
+import { Field, reduxForm } from 'redux-form'
 import { FieldItem } from 'components/Form'
 import Colors from 'resources/colors'
 import { SCREEN_WIDTH } from 'utils/dimens'
@@ -78,7 +78,7 @@ const validate = () => {
 })
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.locale
   }),
   null,
   null,

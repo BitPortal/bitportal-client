@@ -25,8 +25,7 @@ RCT_REMAP_METHOD(pbkdf2,
                  resolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
-    NSString *key = [_cppApi pbkdf2:password salt:salt iterations:(int32_t)iterations keylen:(int8_t)keylen digest:digest];
-    resolve(key);
+    resolve([_cppApi pbkdf2:password salt:salt iterations:(int32_t)iterations keylen:(int8_t)keylen digest:digest]);
 };
 
  RCT_REMAP_METHOD(scrypt,
@@ -39,7 +38,17 @@ RCT_REMAP_METHOD(pbkdf2,
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
  {
-   NSString *key = [_cppApi scrypt:password salt:salt N:(int32_t)N r:(int8_t)r p:(int8_t)p dkLen:(int8_t)dklen];
-   resolve(key);
+   resolve([_cppApi scrypt:password salt:salt N:(int32_t)N r:(int8_t)r p:(int8_t)p dkLen:(int8_t)dklen]);
  };
+
+RCT_REMAP_METHOD(scanHDBTCAddresses,
+                 xpub: (NSString *) xpub
+                 startIndex: (NSInteger) startIndex
+                 endIndex: (NSInteger) endIndex
+                 isSegWit: (BOOL) isSegWit
+                 resolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+  resolve([_cppApi scanHDBTCAddresses:xpub startIndex:startIndex endIndex:endIndex isSegWit:isSegWit]);
+};
 @end

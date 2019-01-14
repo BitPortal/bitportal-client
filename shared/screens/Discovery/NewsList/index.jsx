@@ -7,7 +7,7 @@ import NewsRow from './NewsRow'
 import styles from './styles'
 
 @connect(state => ({
-  locale: state.intl.get('locale')
+  locale: state.intl.locale
 }))
 export default class NewsList extends PureComponent {
   keyExtractor = item => String(item.id)

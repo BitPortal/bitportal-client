@@ -7,7 +7,7 @@ const { Section, Item } = TableView
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     wallet: state.wallet
   })
 )

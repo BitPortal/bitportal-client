@@ -22,4 +22,9 @@
                            p:(int8_t)p
                        dkLen:(int8_t)dkLen;
 
+- (nonnull NSArray<NSDictionary<NSString *, NSString *> *> *)scanHDBTCAddresses:(nonnull NSString *)xpub
+                                                                     startIndex:(int32_t)startIndex
+                                                                       endIndex:(int32_t)endIndex
+                                                                       isSegWit:(BOOL)isSegWit;
+
 @end

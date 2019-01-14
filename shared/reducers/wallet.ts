@@ -1,67 +1,72 @@
-import Immutable from 'immutable'
-import { handleActions } from 'redux-actions'
+import { handleActions } from 'utils/redux'
 import * as actions from 'actions/wallet'
 
-const initialState = Immutable.fromJS({
-  data: {},
-  hdWalletList: [],
-  classicWalletList: [],
-  loggingOut: false,
-  logoutError: null,
-  loading: false,
-  loaded: false,
-  error: null
-})
+const initialState = {
+  identityWallets: {
+    byId: {},
+    allIds: []
+  },
+  importedWallets: {
+    byId: {},
+    allIds: []
+  },
+  activeWalletId: null
+}
 
 export default handleActions({
-  [actions.createWalletRequested] (state) {
-    return state.set('loading', true)
+  [actions.setActiveWallet] (state, action) {
+    state.activeWalletId = action.payload
   },
-  [actions.createWalletAndEOSAccountRequested] (state) {
-    return state.set('loading', true)
+  [actions.addIdentityWallets] (state, action) {
+    action.payload.forEach(wallet => {
+      state.identityWallets.byId[wallet.id] = wallet
+      state.identityWallets.allIds.push(wallet.id)
+    })
   },
-  [actions.createHDWalletSucceeded] (state, action) {
-    return state.set('loaded', true).set('loading', false)
-      .set('data', Immutable.fromJS(action.payload))
-      .update('hdWalletList', (v: any) => v.push(Immutable.fromJS(action.payload)))
+  [actions.mergeIdentityWallets] (state, action) {
+    action.payload.forEach(wallet => {
+      state.identityWallets.byId[wallet.id] = wallet
+
+      const index = state.identityWallets.allIds.findIndex((v: any) => v === wallet.id)
+
+      if (index === -1) {
+        state.identityWallets.allIds.push(wallet.id)
+      }
+    })
   },
-  [actions.createClassicWalletSucceeded] (state, action) {
-    return state.set('loaded', true).set('loading', false)
-      .set('data', Immutable.fromJS(action.payload))
-      .update('classicWalletList', (v: any) => v.push(Immutable.fromJS(action.payload)))
+  [actions.addImportedWallet] (state, action) {
+    const wallet = action.payload
+    state.importedWallets.byId[wallet.id] = wallet
+    state.importedWallets.allIds.push(wallet.id)
   },
-  [actions.createWalletFailed] (state, action) {
-    return state.set('error', action.payload).set('loading', false)
+  [actions.addImportedWallets] (state, action) {
+    action.payload.forEach(wallet => {
+      state.importedWallets.byId[wallet.id] = wallet
+      state.importedWallets.allIds.push(wallet.id)
+    })
   },
-  [actions.syncWalletRequested] (state) {
-    return state.set('loading', true)
+  [actions.mergeImportedWallets] (state, action) {
+    // state.importedWallets.allIds = []
+
+    action.payload.forEach(wallet => {
+      state.importedWallets.byId[wallet.id] = wallet
+
+      const index = state.importedWallets.allIds.findIndex((v: any) => v === wallet.id)
+
+      if (index === -1) {
+        state.importedWallets.allIds.push(wallet.id)
+      }
+    })
   },
-  [actions.syncWalletSucceeded] (state, action) {
-    return state.set('loaded', true).set('loading', false)
-      .set('hdWalletList', Immutable.fromJS(action.payload.hdWalletList))
-      .set('classicWalletList', Immutable.fromJS(action.payload.classicWalletList))
-      .set('data', Immutable.fromJS(action.payload.active))
+  [actions.removeImportedWallet] (state, action) {
+    const id = action.payload
+    state.importedWallets.allIds.splice(state.importedWallets.allIds.findIndex((v: any) => v === id), 1)
+    delete state.importedWallets.byId[id]
   },
-  [actions.syncWalletFailed] (state, action) {
-    return state.set('error', action.payload).set('loading', false)
-  },
-  [actions.switchWalletSucceeded] (state, action) {
-    return state.set('data', Immutable.fromJS(action.payload))
-  },
-  [actions.logoutRequested] (state) {
-    return state.set('loggingOut', true)
-  },
-  [actions.logoutSucceeded] (state) {
-    return state.set('loggingOut', false)
-  },
-  [actions.logoutFailed] (state, action) {
-    return state.set('loggingOut', false).set('logoutError', action.payload)
-  },
-  [actions.clearLogoutError] (state) {
-    return state.set('logoutError', null)
-  },
-  [actions.clearWalletError] (state) {
-    return state.set('error', null)
+  [actions.removeIdentityWallet] (state, action) {
+    const id = action.payload
+    state.identityWallets.allIds.splice(state.identityWallets.allIds.findIndex((v: any) => v === id), 1)
+    delete state.identityWallets.byId[id]
   },
   [actions.resetWallet] () {
     return initialState

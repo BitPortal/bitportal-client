@@ -49,7 +49,7 @@ const renderRoutes = (routes: RouteComponent[], extraProps = {}, switchProps = {
 @connect(
   (state: any) => ({
     router: state.router,
-    locale: state.intl.get('locale')
+    locale: state.intl.locale
   }),
   dispatch => ({
     actions: bindActionCreators(routerActions as any, dispatch)

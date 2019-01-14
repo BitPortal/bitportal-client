@@ -1,21 +1,55 @@
 import { createSelector } from 'reselect'
 
-export const hasEOSAccountSelector = (state: RootState) => !!state.wallet.getIn(['data', 'eosAccountName'])
-const walletSelector = (state: RootState) => state.wallet.get('data')
+export const activeWalletIdSelector = (state: RootState) => state.wallet.activeWalletId
 
-export const currenctWalletSelector = createSelector(
-  walletSelector,
-  (wallet: any) => {
-    if (wallet.get('eosAccountName')) {
-      return wallet
-        .delete('timestamp')
-        .delete('coin')
-        .delete('origin')
-        .set('account', wallet.get('eosAccountName'))
-        .update('permission', (v: any) => v.toLowerCase())
-        .delete('eosAccountName')
-    }
+const identityWalletByIdSelector = (state: RootState) => state.wallet.identityWallets.byId
+const identityWalletAllIdsSelector = (state: RootState) => state.wallet.identityWallets.allIds
 
-    return null
-  }
+const importedWalletByIdSelector = (state: RootState) => state.wallet.importedWallets.byId
+const importedWalletAllIdsSelector = (state: RootState) => state.wallet.importedWallets.allIds
+
+export const walletAllIdsSelector = createSelector(
+  identityWalletAllIdsSelector,
+  importedWalletAllIdsSelector,
+  (identityWallet: string, importedWallet: any) => [...identityWallet, ...importedWallet]
+)
+
+export const walletByIdSelector = createSelector(
+  identityWalletByIdSelector,
+  importedWalletByIdSelector,
+  (identityWallet: string, importedWallet: any) => ({
+    ...identityWallet,
+    ...importedWallet
+  })
+)
+
+export const activeWalletSelector = createSelector(
+  activeWalletIdSelector,
+  identityWalletByIdSelector,
+  importedWalletByIdSelector,
+  (activeWalletId: string, identityWallets: any, importedWallets: any) => identityWallets[activeWalletId] || importedWallets[activeWalletId]
+)
+
+export const identityWalletSelector = createSelector(
+  identityWalletByIdSelector,
+  identityWalletAllIdsSelector,
+  (byId: any, allIds: any) => allIds.map(id => byId[id])
+)
+
+export const importedWalletSelector = createSelector(
+  importedWalletByIdSelector,
+  importedWalletAllIdsSelector,
+  (byId: any, allIds: any) => allIds.map(id => byId[id])
+)
+
+export const walletAddressesSelector = createSelector(
+  identityWalletSelector,
+  importedWalletSelector,
+  (identityWallets: any, importedWallets: any) => identityWallets.concat(importedWallets).map((wallet: any) => wallet.address).filter((address: string) => !!address)
+)
+
+export const eosAccountSelector = createSelector(
+  identityWalletSelector,
+  importedWalletSelector,
+  (identityWallets: any, importedWallets: any) => identityWallets.concat(importedWallets).filter((wallet) => wallet.chain === 'EOS').map((wallet: any) => wallet.address).filter((address: string) => !!address)
 )

@@ -1,31 +1,32 @@
-import { call, put, takeEvery, select } from 'redux-saga/effects'
-import { Action } from 'redux-actions'
+import assert from 'assert'
+import { takeEvery, put, call, select } from 'redux-saga/effects'
+import { getErrorMessage } from 'utils'
+import * as actions from 'actions/dapp'
 import * as api from 'utils/api'
-import * as actions from 'actions/dApp'
-import { favoriteDappsSelector } from 'selectors/dApp'
-import storage from 'utils/storage'
 
-function* getDappList(action: Action<TokenParams>) {
+function* getDapp(action: Action) {
   try {
-    const data = yield call(api.getDappList, { ...action.payload, _sort: 'display_priority:desc' })
-    yield put(actions.getDappListSucceeded(data))
+    const result = yield call(api.getDapp)
+    yield put(actions.updateDapp(result))
+    yield put(actions.getDapp.succeeded())
   } catch (e) {
-    yield put(actions.getDappListFailed(e.message))
+    yield put(actions.getDapp.failed(getErrorMessage(e)))
   }
 }
 
-function* toggleFavoriteDapp() {
-  const favoriteDappsArray = yield select((state: RootState) => favoriteDappsSelector(state)
-  )
-  yield call(
-    storage.setItem,
-    'bitportal_favoriteDapps',
-    favoriteDappsArray.toJS(),
-    true
-  )
+function* getDappRecommend(action: Action) {
+  try {
+    const result = yield call(api.getDappBanner)
+    yield put(actions.updateDappRecommend(result.sort((a: any, b: any) => +b.display_priority - +a.display_priority)))
+    yield put(actions.getDappRecommend.succeeded())
+  } catch (e) {
+    yield put(actions.getDappRecommend.failed(getErrorMessage(e)))
+  }
 }
 
-export default function* dAppSaga() {
-  yield takeEvery(String(actions.getDappListRequested), getDappList)
-  yield takeEvery(String(actions.toggleFavoriteDapp), toggleFavoriteDapp)
+export default function* dappSaga() {
+  yield takeEvery(String(actions.getDapp.requested), getDapp)
+  yield takeEvery(String(actions.getDapp.refresh), getDapp)
+  yield takeEvery(String(actions.getDappRecommend.requested), getDappRecommend)
+  yield takeEvery(String(actions.getDappRecommend.refresh), getDappRecommend)
 }

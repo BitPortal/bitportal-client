@@ -1,7 +1,7 @@
 import assert from 'assert'
 import { all, select, call, put, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
-import { reset } from 'redux-form/immutable'
+import { reset } from 'redux-form'
 import * as actions from 'actions/eosAccount'
 import { getEOSBalanceSucceeded } from 'actions/balance'
 import { createClassicWalletSucceeded } from 'actions/wallet'
@@ -10,7 +10,7 @@ import  { setSelected } from 'actions/producer'
 import { votedProducersSelector, eosCoreLiquidBalanceSelector, eosAccountNameSelector } from 'selectors/eosAccount'
 import secureStorage from 'utils/secureStorage'
 import { BITPORTAL_API_EOS_URL, EOS_API_URL } from 'constants/env'
-import { randomKey, privateToPublic, isValidPrivate, initEOS, getPermissionsByKey, getInitialAccountInfo, createEOSAccount } from 'core/eos'
+import { randomKey, privateToPublic, isValidPrivate, initEOS, getPermissionsByKey, getInitialAccountInfo, createEOSAccount } from 'core/legacy/eos'
 import { encrypt } from 'core/key'
 import { getErrorMessage, getEOSErrorMessage } from 'utils'
 import { popToRoot, push } from 'utils/location'
@@ -245,7 +245,7 @@ function* getEOSAccountRequested(action: Action<GetEOSAccountParams>) {
     yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, info, true)
 
     // notification subscribe
-    const language = yield select((state: RootState) => state.intl.get('locale'))
+    const language = yield select((state: RootState) => state.intl.locale)
     const registerationID = yield call(getRegisterationID)
     const deviceId = yield call(getDeviceID)
     const code = 'eosio.token'

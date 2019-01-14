@@ -1,15 +1,53 @@
 import { createSelector } from 'reselect'
-import { activeAssetSelector } from 'selectors/balance'
+import { activeWalletSelector } from 'selectors/wallet'
 
-export const transferTransactionsSelector = (state: RootState) => state.transaction.get('data').filter((transaction: any) => transaction.getIn(['action_trace', 'act', 'name']) === 'transfer')
+export const transactionSelector = (state: RootState) => state.transaction
+export const activeTransactionIdSelector = (state: RootState) => state.transaction.activeTransactionId
 
-export const activeAssetTransactionsSelector = createSelector(
-  activeAssetSelector,
-  transferTransactionsSelector,
-  (activeAsset: any, transactions: any) => {
-    const contract = activeAsset.get('contract')
-    const symbol = activeAsset.get('symbol')
+export const activeWalletTransactionsByIdSelector = createSelector(
+  activeWalletSelector,
+  transactionSelector,
+  (activeWallet: string, transaction: any) => {
+    if (activeWallet) {
+      const { chain, address } = activeWallet
+      const id = `${chain}/${address}`
+      const activeWalletTransaction = transaction.byId[id]
 
-    return transactions.filter((v: any) => v.getIn(['action_trace', 'act', 'account']) === contract && v.getIn(['action_trace', 'act', 'data', 'quantity']) && v.getIn(['action_trace', 'act', 'data', 'quantity']).indexOf(symbol) !== -1)
+      if (activeWalletTransaction) {
+        return activeWalletTransaction.items.byId
+      }
+    }
+
+    return null
+  }
+)
+
+export const activeWalletTransactionsSelector = createSelector(
+  activeWalletSelector,
+  transactionSelector,
+  (activeWallet: string, transaction: any) => {
+    if (activeWallet) {
+      const { chain, address } = activeWallet
+      const id = `${chain}/${address}`
+      const activeWalletTransaction = transaction.byId[id]
+
+      if (activeWalletTransaction) {
+        return activeWalletTransaction.items.allIds.map((item: any) => activeWalletTransaction.items.byId[typeof item === 'string' ? item : item.id])
+      }
+    }
+
+    return null
+  }
+)
+
+export const activeWalletTransactionSelector = createSelector(
+  activeWalletTransactionsByIdSelector,
+  activeTransactionIdSelector,
+  (transactions: string, id: any) => {
+    if (transactions && id) {
+      return transactions[id]
+    }
+
+    return null
   }
 )

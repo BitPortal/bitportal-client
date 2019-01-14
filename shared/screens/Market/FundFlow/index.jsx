@@ -10,7 +10,7 @@ import styles from './styles'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.locale
   }),
   null,
   null,

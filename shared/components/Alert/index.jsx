@@ -7,7 +7,7 @@ import messages from 'resources/messages'
 //PROPS: twoButton (设置两个取消，确定按钮的)，onCancel(取消自己的dismiss函数)
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.locale
   }),
   null,
   null,

@@ -1,293 +1,516 @@
-import { delay } from 'redux-saga'
-import { call, put, takeEvery, select } from 'redux-saga/effects'
-import { Action } from 'redux-actions'
-import { reset } from 'redux-form/immutable'
 import assert from 'assert'
+import { delay } from 'redux-saga'
+import { takeLatest, put, call, select } from 'redux-saga/effects'
+import { reset } from 'redux-form'
+import { getErrorMessage, getEOSErrorMessage } from 'utils'
 import * as actions from 'actions/wallet'
-import { resetBalance, getEOSBalanceRequested, getEOSAssetBalanceListRequested } from 'actions/balance'
-import { resetKey } from 'actions/keystore'
-import { resetTransaction } from 'actions/transaction'
-import { resetEOSAsset } from 'actions/eosAsset'
-import { clearProducer } from 'actions/producer'
-import { resetEOSAccount, syncEOSAccount, createEOSAccountSucceeded, getEOSAccountRequested, syncEOSAccountCreationInfo } from 'actions/eosAccount'
-import { getErrorMessage } from 'utils'
-import secureStorage from 'utils/secureStorage'
-import storage from 'utils/storage'
-import { privateToPublic, initEOS, randomKey } from 'core/eos'
-import { getMasterSeed, encrypt, decrypt, getEOSKeys, getEOSWifsByInfo } from 'core/key'
-import { push, pop, popToRoot } from 'utils/location'
-import { unsubscribe } from 'actions/notification'
-import { getDeviceID } from 'utils/nativeUtil'
-import wif from 'wif'
+import * as transactionActions from 'actions/transaction'
+import { getBalance } from 'actions/balance'
+import {
+  walletAddressesSelector,
+  identityWalletSelector,
+  importedWalletSelector,
+  activeWalletSelector,
+  walletAllIdsSelector
+} from 'selectors/wallet'
+import * as walletCore from 'core/wallet'
+import {
+  getEOSKeyAccountsByPrivateKey,
+  getEOSPermissionKeyPairs
+} from 'core/chain/eos'
+import memoryStorage from 'core/storage/memoryStorage'
+import secureStorage from 'core/storage/secureStorage'
+import { push, dismissAllModals, popToRoot, showModal } from 'utils/location'
 
-function* createWalletAndEOSAccountRequested(action: Action<CreateWalletAndEOSAccountParams>) {
+function* setActiveWallet(action: Action<SetActiveWalletParams>) {
   if (!action.payload) return
 
+  const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+  yield put(getBalance.requested(activeWallet))
+}
+
+function* deleteWallet(action: Action<DeleteWalletParams>) {
+  if (!action.payload) return
+  if (action.payload.delay) yield delay(action.payload.delay)
+
   try {
-    const name = action.payload.name
-    const eosAccountName = action.payload.eosAccountName
+    const id = action.payload.id
+    const chain = action.payload.chain
+    const address = action.payload.address
     const password = action.payload.password
-    const origin = action.payload.origin || 'classic'
+    const keystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    assert(keystore && keystore.crypto, 'No keystore')
+    const isValidPassword = yield call(walletCore.verifyPassword, password, keystore.crypto)
+    assert(isValidPassword, 'Invalid password')
+    yield call(secureStorage.removeItem, `IMPORTED_WALLET_KEYSTORE_${id}`)
+    const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
 
-    if (origin === 'classic') {
-      const existedAccount = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
-      assert(!existedAccount, 'EOS account already exists!')
-
-      const ownerWif = yield call(randomKey)
-      const activeWif = ownerWif
-      const ownerPrivateKey = wif.decode(ownerWif).privateKey.toString('hex')
-      const activePrivateKey = ownerPrivateKey
-
-      const creator = 'eosio'
-      const keyProvider = [
-        'EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV',
-        '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
-      ]
-      const owner = yield call(privateToPublic, ownerWif)
-      const active = yield call(privateToPublic, activeWif)
-
-      const signProvider = ({ sign, buf }: { sign: any, buf: any }) => sign(buf, '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3')
-      const eos = yield call(initEOS, { keyProvider, signProvider })
-      const transactionActions = (transaction: any) => {
-        transaction.newaccount({ creator, owner, active, name: eosAccountName })
-        transaction.buyrambytes({ payer: creator, receiver: eosAccountName, bytes: 8192 })
-        transaction.delegatebw({
-          from: creator,
-          receiver: eosAccountName,
-          stake_net_quantity: '1.0000 SYS',
-          stake_cpu_quantity: '1.0000 SYS',
-          transfer: 0
-        })
-      }
-      yield call(eos.transaction, transactionActions)
-      const accountInfo = yield call(eos.getAccount, eosAccountName)
-      const info = { ...accountInfo, timestamp: +Date.now() }
-
-      const ownerKeystore = yield call(encrypt, ownerPrivateKey, password, { origin: 'classic', coin: 'EOS' })
-      const activeKeystore = yield call(encrypt, activePrivateKey, password, { origin: 'classic', coin: 'EOS' })
-      const walletInfo = {
-        origin,
-        name,
-        eosAccountName,
-        coin: 'EOS',
-        timestamp: +Date.now()
-      }
-
-      yield call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_OWNER_${owner}`, ownerKeystore, true)
-      yield call(secureStorage.setItem, `CLASSIC_KEYSTORE_EOS_${eosAccountName}_ACTIVE_${active}`, activeKeystore, true)
-      yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, info, true)
-      yield call(secureStorage.setItem, `CLASSIC_WALLET_INFO_EOS_${eosAccountName}`, walletInfo, true)
-      yield call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
-
-      yield put(createEOSAccountSucceeded(info))
-      yield put(actions.createHDWalletSucceeded(walletInfo))
-      yield put(getEOSBalanceRequested({ eosAccountName: walletInfo.eosAccountName }))
-    } else {
-      const { id, entropy } = yield call(getMasterSeed)
-      const existedWallet = yield call(secureStorage.getItem, `HD_KEYSTORE_${id}`, true)
-      assert(!existedWallet, 'Wallet already exists!')
-      const keystore = yield call(encrypt, entropy, password, { bpid: id })
-
-      const walletInfo = {
-        origin,
-        name,
-        eosAccountName,
-        bpid: id,
-        timestamp: +Date.now()
-      }
-
-      const eosKeys = yield call(getEOSKeys, entropy)
-      assert(eosKeys, 'Generate EOS keys failed!')
-      const creator = 'eosio'
-      const keyProvider = [
-        'EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV',
-        '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3'
-      ]
-      const owner = eosKeys.keys.owner.publicKey
-      const active = eosKeys.keys.active.publicKey
-
-      const signProvider = ({ sign, buf }: { sign: any, buf: any }) => sign(buf, '5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3')
-      const eos = yield call(initEOS, { keyProvider, signProvider })
-      const transactionActions = (transaction: any) => {
-        transaction.newaccount({ creator, owner, active, name: eosAccountName })
-        transaction.buyrambytes({ payer: creator, receiver: eosAccountName, bytes: 8192 })
-        transaction.delegatebw({
-          from: creator,
-          receiver: eosAccountName,
-          stake_net_quantity: '1.0000 SYS',
-          stake_cpu_quantity: '1.0000 SYS',
-          transfer: 0
-        })
-      }
-      yield call(eos.transaction, transactionActions)
-      const accountInfo = yield call(eos.getAccount, eosAccountName)
-      const info = { ...accountInfo, bpid: id, timestamp: +Date.now() }
-
-      yield call(secureStorage.setItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, info, true)
-      yield call(secureStorage.setItem, `HD_KEYSTORE_${id}`, keystore, true)
-      yield call(secureStorage.setItem, `HD_WALLET_INFO_${id}`, walletInfo, true)
-      yield call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
-
-      yield put(createEOSAccountSucceeded(info))
-      yield put(actions.createHDWalletSucceeded(walletInfo))
-      yield put(getEOSBalanceRequested({ eosAccountName: walletInfo.eosAccountName }))
+    if (activeWallet.id === id) {
+      const walletAllIds = yield select((state: RootState) => walletAllIdsSelector(state))
+      const walletAllIdsAfterAction = walletAllIds.filter((walletId: string) => walletId !== id)
+      if (walletAllIdsAfterAction.length > 0) yield put(actions.setActiveWallet(walletAllIdsAfterAction[0]))
     }
 
-    yield put(reset('createWalletAndEOSAccountForm'))
-    if (action.payload.componentId) pop(action.payload.componentId)
-  } catch (e) {
-    yield put(actions.createWalletFailed(getErrorMessage(e)))
-  }
-}
+    const fromCard = action.payload.fromCard
 
-function* createWalletRequested(action: Action<CreateWalletParams>) {
-  if (!action.payload) return
-
-  try {
-    const name = action.payload.name
-    const password = action.payload.password
-    const { id, entropy } = yield call(getMasterSeed)
-    const existedWallet = yield call(secureStorage.getItem, `HD_KEYSTORE_${id}`, true)
-    assert(!existedWallet, 'Wallet already exists!')
-    const keystore = yield call(encrypt, entropy, password, { bpid: id })
-    const walletInfo = {
-      name,
-      bpid: id,
-      timestamp: +Date.now(),
-      origin: 'hd'
+    if (!fromCard) {
+      yield put(actions.removeImportedWallet(id))
     }
 
-    yield call(secureStorage.setItem, `HD_KEYSTORE_${id}`, keystore, true)
-    yield call(secureStorage.setItem, `HD_WALLET_INFO_${id}`, walletInfo, true)
-    yield call(secureStorage.setItem, 'ACTIVE_WALLET', walletInfo, true)
-    yield put(actions.createHDWalletSucceeded(walletInfo))
-
-    yield put(reset('createWalletForm'))
-    push('BitPortal.EOSAccountCreation')
-  } catch (e) {
-    yield put(actions.createWalletFailed(getErrorMessage(e)))
-  }
-}
-
-function* syncWalletRequested() {
-  try {
-    // const items = yield call(secureStorage.getAllItems)
-    // console.log(items)
-
-    const allItems = yield call(secureStorage.getAllItems)
-
-    const hdWalletList = Object.keys(allItems).filter(item => !item.indexOf('HD_KEYSTORE')).map((item) => {
-      const id = item.slice('HD_KEYSTORE'.length + 1)
-      const infoKey = `HD_WALLET_INFO_${id}`
-      const info = allItems[infoKey]
-      return JSON.parse(info)
-    }).sort((a, b) => a.timestamp - b.timestamp)
-
-    const classicWalletList = Object.keys(allItems).filter(item => !item.indexOf('CLASSIC_WALLET_INFO_EOS')).map((item) => {
-      const info = allItems[item]
-      return JSON.parse(info)
-    }).sort((a, b) => a.timestamp - b.timestamp)
-
-    assert(hdWalletList.length + classicWalletList.length, 'No wallets!')
-
-    let active = allItems.ACTIVE_WALLET && JSON.parse(allItems.ACTIVE_WALLET)
-
-    if (!active) {
-      active = hdWalletList.length ? hdWalletList[0] : classicWalletList[0]
-      yield call(secureStorage.setItem, 'ACTIVE_WALLET', active, true)
-    }
-
-    const eosAccountList = Object.keys(allItems).filter(item => !item.indexOf('EOS_ACCOUNT_INFO')).map((item) => {
-      const info = allItems[item]
-      return JSON.parse(info)
-    }).sort((a, b) => a.timestamp - b.timestamp)
-
-    yield put(syncEOSAccount(eosAccountList))
-    yield put(actions.syncWalletSucceeded({ hdWalletList, classicWalletList, active }))
-
-    if (active.eosAccountName) {
-      const eosAccountCreationInfoString = allItems[`EOS_ACCOUNT_CREATION_INFO_${active.eosAccountName}`]
-      const eosAccountCreationInfo = eosAccountCreationInfoString && JSON.parse(eosAccountCreationInfoString)
-      if (eosAccountCreationInfo) yield put(syncEOSAccountCreationInfo(eosAccountCreationInfo))
-
-      yield put(getEOSAccountRequested({ eosAccountName: active.eosAccountName }))
-      // yield put(getEOSBalanceRequested({ eosAccountName: active.eosAccountName }))
-      yield put(getEOSAssetBalanceListRequested({ eosAccountName: active.eosAccountName }))
-    }
-  } catch (e) {
-    yield put(actions.syncWalletFailed(getErrorMessage(e)))
-  }
-}
-
-function* switchWalletRequested(action: Action<HDWallet>) {
-  if (!action.payload) return
-
-  try {
-    yield call(secureStorage.setItem, 'ACTIVE_WALLET', action.payload, true)
-    yield put(actions.switchWalletSucceeded(action.payload))
-  } catch (e) {
-    yield put(actions.switchWalletFailed(getErrorMessage(e)))
-  }
-}
-
-function* logoutRequested(action: Action<LogoutParams>) {
-  if (!action.payload) return
-
-  try {
-    yield delay(500)
-    const eosAccountName = action.payload.eosAccountName
-    const password = action.payload.password
-    const origin = action.payload.origin
-    const bpid = action.payload.bpid
-    const coin = action.payload.coin
-
-    assert(origin, 'No origin!')
-
-    if (origin === 'hd') {
-      const keystore = yield call(secureStorage.getItem, `HD_KEYSTORE_${bpid}`, true)
-      yield call(decrypt, keystore, password)
-    } else if (coin === 'EOS') {
-      const accountInfo = yield call(secureStorage.getItem, `EOS_ACCOUNT_INFO_${eosAccountName}`, true)
-      const permission = yield select((state: RootState) => state.wallet.get('data').get('permission') || 'ACTIVE')
-      yield call(getEOSWifsByInfo, password, accountInfo, [permission])
-    }
-
-    const items = yield call(secureStorage.getAllItems)
-    for (const item of Object.keys(items)) {
-      yield call(secureStorage.removeItem, item)
-    }
-    yield call(storage.removeItem, 'bitportal_toggledEOSAsset')
-    yield call(storage.removeItem, 'bitportal_favoriteDapps')
-    yield put(actions.resetWallet())
-    yield put(resetEOSAccount())
-    yield put(resetEOSAsset())
-    yield put(resetBalance())
-    yield put(resetTransaction())
-    yield put(resetKey())
-    yield put(clearProducer())
-    yield put(actions.logoutSucceeded())
-
+    yield put(actions.deleteWallet.succeeded())
     if (action.payload.componentId) popToRoot(action.payload.componentId)
 
-    // unsubscribe
-    const deviceId = yield call(getDeviceID)
-    const params = {
-      deviceId,
-      chainType: coin,
-      walletId: eosAccountName
+    if (fromCard) {
+      yield delay(500)
+      yield put(actions.removeImportedWallet(id))
     }
-    // console.log('###---yy ', JSON.stringify(params))
-    yield put(unsubscribe(params))
+
+    yield put(transactionActions.removeTransactions({ id: `${chain}/${address}` }))
+  } catch (e) {
+    yield put(actions.deleteWallet.failed(getErrorMessage(e)))
+  }
+}
+
+function* exportMnemonics(action: Action<ExportMnemonicsParams>) {
+  if (!action.payload) return
+  if (action.payload.delay) yield delay(action.payload.delay)
+
+  try {
+    const id = action.payload.id
+    const password = action.payload.password
+    const source = action.payload.source
+
+    let keystore
+    if (source === 'NEW_IDENTITY' || source === 'RECOVERED_IDENTITY') {
+      keystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    } else {
+      keystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    }
+
+    assert(keystore && keystore.crypto, 'No keystore')
+    const mnemonics = yield call(walletCore.exportMnemonic, password, keystore)
+    yield put(actions.exportMnemonics.succeeded())
+
+    yield delay(500)
+    if (action.payload.componentId) {
+      showModal({
+        stack: {
+          children: [{
+            component: {
+              name: 'BitPortal.BackupIdentity',
+              passProps: { mnemonics, backup: true },
+              options: {
+                topBar: {
+                  leftButtons: [
+                    {
+                      id: 'cancel',
+                      text: '取消'
+                    }
+                  ]
+                }
+              }
+            }
+          }]
+        }
+      })
+    }
+  } catch (e) {
+    yield put(actions.exportMnemonics.failed(getErrorMessage(e)))
+  }
+}
+
+function* importBTCMnemonics(action: Action<ImportBTCMnemonicsParams>) {
+  if (!action.payload) return
+  if (action.payload.delay) yield delay(action.payload.delay)
+
+  try {
+    const mnemonic = action.payload.mnemonic
+    const password = action.payload.password
+    const isSegWit = action.payload.isSegWit
+    const passwordHint = action.payload.passwordHint || ''
+    const name = 'BTC-Wallet'
+    const network = 'MAINNET'
+
+    const keystore = yield call(walletCore.importBTCWalletByMnemonics, mnemonic, password, name, passwordHint, network, isSegWit)
+
+    const walletAddresses = yield select((state: RootState) => walletAddressesSelector(state))
+    assert(!walletAddresses.find((address: string) => address === keystore.address), 'Wallet already exist')
+
+    yield call(secureStorage.setItem, `IMPORTED_WALLET_KEYSTORE_${keystore.id}`, keystore, true)
+
+    const wallet = walletCore.getWalletMetaData(keystore)
+    yield put(actions.addImportedWallet(wallet))
+    yield put(actions.setActiveWallet(wallet.id))
+
+    yield put(actions.importBTCMnemonics.succeeded())
+    if (action.payload.componentId) dismissAllModals()
+  } catch (e) {
+    yield put(actions.importBTCMnemonics.failed(getErrorMessage(e)))
+  }
+}
+
+function* importBTCPrivateKey(action: Action<ImportBTCPrivateKeyParams>) {
+  if (!action.payload) return
+  if (action.payload.delay) yield delay(action.payload.delay)
+
+  try {
+    const privateKey = action.payload.privateKey
+    const password = action.payload.password
+    const isSegWit = action.payload.isSegWit
+    const passwordHint = action.payload.passwordHint || ''
+    const name = 'BTC-Wallet'
+    const network = 'MAINNET'
+
+    const keystore = yield call(walletCore.importBTCWalletByPrivateKey, privateKey, password, name, passwordHint, network, isSegWit)
+
+    const walletAddresses = yield select((state: RootState) => walletAddressesSelector(state))
+    assert(!walletAddresses.find((address: string) => address === keystore.address), 'Wallet already exist')
+
+    yield call(secureStorage.setItem, `IMPORTED_WALLET_KEYSTORE_${keystore.id}`, keystore, true)
+
+    const wallet = yield call(walletCore.getWalletMetaData, keystore)
+    yield put(actions.addImportedWallet(wallet))
+    yield put(actions.setActiveWallet(wallet.id))
+
+    yield put(actions.importBTCPrivateKey.succeeded())
+    if (action.payload.componentId) dismissAllModals()
+  } catch (e) {
+    yield put(actions.importBTCPrivateKey.failed(getErrorMessage(e)))
+  }
+}
+
+function* exportBTCPrivateKey(action: Action<ExportBTCPrivateKeyParams>) {
+  if (!action.payload) return
+  if (action.payload.delay) yield delay(action.payload.delay)
+
+  try {
+    const id = action.payload.id
+    const password = action.payload.password
+    const source = action.payload.source
+
+    let keystore
+    if (source === 'NEW_IDENTITY' || source === 'RECOVERED_IDENTITY') {
+      keystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    } else {
+      keystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    }
+
+    assert(keystore && keystore.crypto, 'No keystore')
+    const privateKey = yield call(walletCore.exportPrivateKey, password, keystore, source)
+    yield put(actions.exportBTCPrivateKey.succeeded())
+    yield delay(500)
+
+    if (action.payload.componentId) {
+      push('BitPortal.ExportBTCPrivateKey', action.payload.componentId, {
+        privateKey
+      })
+    }
+  } catch (e) {
+    yield put(actions.exportBTCPrivateKey.failed(getErrorMessage(e)))
+  }
+}
+
+function* generateNewBTCAddress(action: Action<GenerateNewBTCAddressParams>) {
+  if (!action.payload) return
+
+  try {
 
   } catch (e) {
-    yield put(actions.logoutFailed(getErrorMessage(e)))
+    yield put(actions.generateNewBTCAddress.failed(getErrorMessage(e)))
+  }
+}
+
+function* switchBTCAddressType(action: Action<SwitchBTCAddressTypeParams>) {
+  if (!action.payload) return
+
+  try {
+
+  } catch (e) {
+    yield put(actions.switchBTCAddressType.failed(getErrorMessage(e)))
+  }
+}
+
+function* importETHKeystore(action: Action<ImportETHKeystoreParams>) {
+  if (!action.payload) return
+  if (action.payload.delay) yield delay(action.payload.delay)
+
+  try {
+    const keystoreText = action.payload.keystore
+    const keystorePassword = action.payload.keystorePassword
+    const passwordHint = ''
+    const name = 'ETH-Wallet'
+
+    let keystoreObject
+    try {
+      keystoreObject = JSON.parse(keystoreText)
+    } catch (e) {
+      throw new Error('Invalid keystore')
+    }
+
+    assert(keystoreObject.id, 'No keystore id')
+    const id = keystoreObject.id
+
+    const importedWallets = yield select((state: RootState) => importedWalletSelector(state))
+    assert(importedWallets.findIndex((wallet: any) => wallet.id === id) === -1, 'Keystore already exist in imported wallets')
+    const identityWallets = yield select((state: RootState) => identityWalletSelector(state))
+    assert(identityWallets.findIndex((wallet: any) => wallet.id === id) === -1, 'Keystore already exist in identity wallets')
+
+
+    if (keystoreObject.address) {
+      const walletAddresses = yield select((state: RootState) => walletAddressesSelector(state))
+      assert(!walletAddresses.find((address: string) => address === keystoreObject.address), 'Wallet already exist')
+    }
+
+    const keystore = yield call(walletCore.importETHWalletByKeystore, keystoreObject, keystorePassword, name, passwordHint)
+    yield call(secureStorage.setItem, `IMPORTED_WALLET_KEYSTORE_${keystore.id}`, keystore, true)
+
+    const wallet = walletCore.getWalletMetaData(keystore)
+    yield put(actions.addImportedWallet(wallet))
+    yield put(actions.setActiveWallet(wallet.id))
+
+    yield put(actions.importETHKeystore.succeeded())
+    if (action.payload.componentId) dismissAllModals()
+  } catch (e) {
+    yield put(actions.importETHKeystore.failed(getErrorMessage(e)))
+  }
+}
+
+function* importETHMnemonics(action: Action<ImportETHMnemonicsParams>) {
+  if (!action.payload) return
+  if (action.payload.delay) yield delay(action.payload.delay)
+
+  try {
+    const mnemonic = action.payload.mnemonic
+    const password = action.payload.password
+    const path = action.payload.path || `m/44'/60'/0'/0/0`
+    const passwordHint = action.payload.passwordHint || ''
+    const name = 'ETH-Wallet'
+
+    const keystore = yield call(walletCore.importETHWalletByMnemonics, mnemonic, password, name, passwordHint, path)
+
+    const walletAddresses = yield select((state: RootState) => walletAddressesSelector(state))
+    assert(!walletAddresses.find((address: string) => address === keystore.address), 'Wallet already exist')
+
+    yield call(secureStorage.setItem, `IMPORTED_WALLET_KEYSTORE_${keystore.id}`, keystore, true)
+
+    const wallet = walletCore.getWalletMetaData(keystore)
+    yield put(actions.addImportedWallet(wallet))
+    yield put(actions.setActiveWallet(wallet.id))
+
+    yield put(actions.importETHMnemonics.succeeded())
+    if (action.payload.componentId) dismissAllModals()
+  } catch (e) {
+    yield put(actions.importETHMnemonics.failed(getErrorMessage(e)))
+  }
+}
+
+function* importETHPrivateKey(action: Action<ImportETHPrivateKeyParams>) {
+  if (!action.payload) return
+  if (action.payload.delay) yield delay(action.payload.delay)
+
+  try {
+    const privateKey = action.payload.privateKey
+    const password = action.payload.password
+    const passwordHint = action.payload.passwordHint || ''
+    const name = 'ETH-Wallet'
+
+    const keystore = yield call(walletCore.importETHWalletByPrivateKey, privateKey, password, name, passwordHint)
+
+    const walletAddresses = yield select((state: RootState) => walletAddressesSelector(state))
+    assert(!walletAddresses.find((address: string) => address === keystore.address), 'Wallet already exist')
+
+    yield call(secureStorage.setItem, `IMPORTED_WALLET_KEYSTORE_${keystore.id}`, keystore, true)
+
+    const wallet = walletCore.getWalletMetaData(keystore)
+    yield put(actions.addImportedWallet(wallet))
+    yield put(actions.setActiveWallet(wallet.id))
+
+    yield put(actions.importETHPrivateKey.succeeded())
+    if (action.payload.componentId) dismissAllModals()
+  } catch (e) {
+    yield put(actions.importETHPrivateKey.failed(getErrorMessage(e)))
+  }
+}
+
+function* exportETHPrivateKey(action: Action<ExportETHPrivateKeyParams>) {
+  if (!action.payload) return
+  if (action.payload.delay) yield delay(action.payload.delay)
+
+  try {
+    const id = action.payload.id
+    const password = action.payload.password
+    const source = action.payload.source
+
+    let keystore
+    if (source === 'NEW_IDENTITY' || source === 'RECOVERED_IDENTITY') {
+      keystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    } else {
+      keystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    }
+
+    assert(keystore && keystore.crypto, 'No keystore')
+    const privateKey = yield call(walletCore.exportPrivateKey, password, keystore)
+    yield put(actions.exportETHPrivateKey.succeeded())
+    yield delay(500)
+
+    if (action.payload.componentId) {
+      push('BitPortal.ExportETHPrivateKey', action.payload.componentId, {
+        privateKey
+      })
+    }
+  } catch (e) {
+    yield put(actions.exportETHPrivateKey.failed(getErrorMessage(e)))
+  }
+}
+
+function* exportETHKeystore(action: Action<ExportETHKeystoreParams>) {
+  if (!action.payload) return
+  if (action.payload.delay) yield delay(action.payload.delay)
+
+  try {
+    const id = action.payload.id
+    const password = action.payload.password
+    const source = action.payload.source
+
+    let keystore
+    if (source === 'NEW_IDENTITY' || source === 'RECOVERED_IDENTITY') {
+      keystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    } else {
+      keystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    }
+
+    assert(keystore && keystore.crypto, 'No keystore')
+    const isValidPassword = yield call(walletCore.verifyPassword, password, keystore.crypto)
+    assert(isValidPassword, 'Invalid password')
+    const exportableKeystore = {
+      id: keystore.id,
+      version: 3,
+      address: keystore.address.slice(2).toLowerCase(),
+      crypto: keystore.crypto
+    }
+    yield put(actions.exportETHKeystore.succeeded())
+    yield delay(500)
+
+    if (action.payload.componentId) {
+      push('BitPortal.ExportETHKeystore', action.payload.componentId, {
+        keystore: exportableKeystore
+      })
+    }
+  } catch (e) {
+    yield put(actions.exportETHKeystore.failed(getErrorMessage(e)))
+  }
+}
+
+function* getEOSKeyAccounts(action: Action<GetEOSKeyAccountsParams>) {
+  if (!action.payload) return
+  if (action.payload.delay) yield delay(action.payload.delay)
+
+  try {
+    const privateKey = action.payload.privateKey
+    const password = action.payload.password
+    const passwordHint = action.payload.passwordHint || ''
+    const keyAccounts = yield call(getEOSKeyAccountsByPrivateKey, privateKey.trim())
+    const importEOSAccountInfo = {
+      privateKey,
+      password,
+      passwordHint,
+      keyAccounts
+    }
+    yield call(memoryStorage.setItem, 'importEOSAccountInfo', importEOSAccountInfo, true)
+    yield put(reset('importEOSWalletForm'))
+    yield put(actions.getEOSKeyAccounts.succeeded())
+
+    if (action.payload.componentId) {
+      yield delay(500)
+      push('BitPortal.SelectEOSAccount', action.payload.componentId, { keyAccounts })
+    }
+  } catch (e) {
+    yield put(actions.getEOSKeyAccounts.failed(getEOSErrorMessage(e)))
+  }
+}
+
+function* importEOSPrivateKey(action: Action<ImportEOSPrivateKeyParams>) {
+  if (!action.payload) return
+  if (action.payload.delay) yield delay(action.payload.delay)
+
+  try {
+    const selected = action.payload.selected
+    const importEOSAccountInfo = yield call(memoryStorage.getItem, 'importEOSAccountInfo', true)
+    const {
+      privateKey,
+      password,
+      passwordHint,
+      keyAccounts
+    } = importEOSAccountInfo
+    const selectedKeyAccounts = keyAccounts.filter((account: any) => selected.indexOf(account.accountName) !== -1).map((account: any) => account.accountName)
+    const keystores = yield call(walletCore.importEOSWalletsByPrivateKeys, [privateKey], password, 'EOS-Wallet', passwordHint, selectedKeyAccounts)
+
+    for (const keystore of keystores) {
+      yield call(secureStorage.setItem, `IMPORTED_WALLET_KEYSTORE_${keystore.id}`, keystore, true)
+    }
+
+    const walletsInfo = keystores.map(walletCore.getWalletMetaData)
+
+    yield put(actions.addImportedWallets(walletsInfo))
+    yield put(actions.setActiveWallet(walletsInfo[0].id))
+    yield put(actions.importEOSPrivateKey.succeeded())
+    if (action.payload.componentId) dismissAllModals()
+    yield call(memoryStorage.removeItem, 'importEOSAccountInfo')
+  } catch (e) {
+    yield put(actions.importEOSPrivateKey.failed(getErrorMessage(e)))
+  }
+}
+
+function* exportEOSPrivateKey(action: Action<ExportEOSPrivateKeyParams>) {
+  if (!action.payload) return
+  if (action.payload.delay) yield delay(action.payload.delay)
+
+  try {
+    const id = action.payload.id
+    const address = action.payload.address
+    const password = action.payload.password
+    const source = action.payload.source
+    const permissions = action.payload.permissions
+
+    let keystore
+    if (source === 'NEW_IDENTITY' || source === 'RECOVERED_IDENTITY') {
+      keystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    } else {
+      keystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    }
+
+    assert(keystore && keystore.crypto, 'No keystore')
+    const keyPairs = yield call(walletCore.exportPrivateKeys, password, keystore)
+
+    const permissionKeyPairs = yield call(getEOSPermissionKeyPairs, keyPairs, address, permissions)
+    yield put(actions.exportEOSPrivateKey.succeeded())
+    yield delay(500)
+
+    if (action.payload.componentId) {
+      push('BitPortal.ExportEOSPrivateKey', action.payload.componentId, {
+        permissionKeyPairs
+      })
+    }
+  } catch (e) {
+    yield put(actions.exportEOSPrivateKey.failed(getErrorMessage(e)))
   }
 }
 
 export default function* walletSaga() {
-  yield takeEvery(String(actions.createWalletRequested), createWalletRequested)
-  yield takeEvery(String(actions.createWalletAndEOSAccountRequested), createWalletAndEOSAccountRequested)
-  yield takeEvery(String(actions.syncWalletRequested), syncWalletRequested)
-  yield takeEvery(String(actions.switchWalletRequested), switchWalletRequested)
-  yield takeEvery(String(actions.logoutRequested), logoutRequested)
+  yield takeLatest(String(actions.setActiveWallet), setActiveWallet)
+  yield takeLatest(String(actions.deleteWallet.requested), deleteWallet)
+  yield takeLatest(String(actions.exportMnemonics.requested), exportMnemonics)
+  yield takeLatest(String(actions.importBTCMnemonics.requested), importBTCMnemonics)
+  yield takeLatest(String(actions.importBTCPrivateKey.requested), importBTCPrivateKey)
+  yield takeLatest(String(actions.exportBTCPrivateKey.requested), exportBTCPrivateKey)
+  yield takeLatest(String(actions.generateNewBTCAddress.requested), generateNewBTCAddress)
+  yield takeLatest(String(actions.switchBTCAddressType.requested), switchBTCAddressType)
+  yield takeLatest(String(actions.importETHKeystore.requested), importETHKeystore)
+  yield takeLatest(String(actions.importETHMnemonics.requested), importETHMnemonics)
+  yield takeLatest(String(actions.importETHPrivateKey.requested), importETHPrivateKey)
+  yield takeLatest(String(actions.exportETHPrivateKey.requested), exportETHPrivateKey)
+  yield takeLatest(String(actions.exportETHKeystore.requested), exportETHKeystore)
+  yield takeLatest(String(actions.importEOSPrivateKey.requested), importEOSPrivateKey)
+  yield takeLatest(String(actions.getEOSKeyAccounts.requested), getEOSKeyAccounts)
+  yield takeLatest(String(actions.exportEOSPrivateKey.requested), exportEOSPrivateKey)
 }

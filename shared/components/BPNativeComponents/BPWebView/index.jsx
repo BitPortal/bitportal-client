@@ -31,7 +31,7 @@ const Loading = ({ text }) => (
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.locale
   }),
   null,
   null,

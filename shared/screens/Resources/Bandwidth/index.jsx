@@ -14,7 +14,7 @@ import Progress from '../Progress'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     wallet: state.wallet,
     bandwidth: state.bandwidth,
     eosAccount: eosAccountSelector(state)

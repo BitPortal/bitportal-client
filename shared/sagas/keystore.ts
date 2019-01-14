@@ -7,7 +7,7 @@ import { completeBackup } from 'actions/eosAccount'
 import { getErrorMessage, encodeKey } from 'utils'
 import secureStorage from 'utils/secureStorage'
 import { encrypt, getEOSWifsByInfo } from 'core/key'
-import { isValidPrivate, privateToPublic } from 'core/eos'
+import { isValidPrivate, privateToPublic } from 'core/legacy/eos'
 import { push, pop } from 'utils/location'
 import wif from 'wif'
 

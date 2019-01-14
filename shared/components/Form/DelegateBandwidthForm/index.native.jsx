@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { View, Text, InteractionManager } from 'react-native'
-import { Field, reduxForm, reset } from 'redux-form/immutable'
+import { Field, reduxForm, reset } from 'redux-form'
 import { FormContainer, TextField, SubmitButton } from 'components/Form'
 import { normalizeUnitByCurrency } from 'utils/normalize'
 import { validateUnitByCurrency } from 'utils/validate'
@@ -101,7 +101,7 @@ const validate = (values, props) => {
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     eosAccount: eosAccountSelector(state),
     eosBalance: eosBalanceSelector(state),
     bandwidth: state.bandwidth

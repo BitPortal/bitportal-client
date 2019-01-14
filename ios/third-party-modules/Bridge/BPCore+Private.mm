@@ -69,6 +69,19 @@ static_assert(__has_feature(objc_arc), "Djinni requires ARC to be enabled for th
     } DJINNI_TRANSLATE_EXCEPTIONS()
 }
 
+- (nonnull NSArray<NSDictionary<NSString *, NSString *> *> *)scanHDBTCAddresses:(nonnull NSString *)xpub
+                                                                     startIndex:(int32_t)startIndex
+                                                                       endIndex:(int32_t)endIndex
+                                                                       isSegWit:(BOOL)isSegWit {
+    try {
+        auto objcpp_result_ = _cppRefHandle.get()->scanHDBTCAddresses(::djinni::String::toCpp(xpub),
+                                                                      ::djinni::I32::toCpp(startIndex),
+                                                                      ::djinni::I32::toCpp(endIndex),
+                                                                      ::djinni::Bool::toCpp(isSegWit));
+        return ::djinni::List<::djinni::Map<::djinni::String, ::djinni::String>>::fromCpp(objcpp_result_);
+    } DJINNI_TRANSLATE_EXCEPTIONS()
+}
+
 namespace djinni_generated {
 
 auto Core::toCpp(ObjcType objc) -> CppType

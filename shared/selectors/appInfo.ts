@@ -1,7 +1,4 @@
-// import { createSelector } from 'reselect'
-import Immutable from 'immutable'
-
-export const getInitialAppInfo = (presetPlatform?: any, presetVersion?: any) => Immutable.fromJS({
+export const getInitialAppInfo = (presetPlatform?: any, presetVersion?: any) => ({
   name: 'BitPortal',
   platform: presetPlatform || '',
   version: presetVersion || ''

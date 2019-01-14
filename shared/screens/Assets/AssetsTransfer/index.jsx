@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { View, ScrollView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
-import { change } from 'redux-form/immutable'
+import { change } from 'redux-form'
 import NavigationBar, { CommonButton, CommonRightButton } from 'components/NavigationBar'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
@@ -14,7 +14,7 @@ import styles from './styles'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     transfer: state.transfer
   }),
   dispatch => ({

@@ -1,0 +1,15 @@
+# Uncomment the next line to define a global platform for your project
+platform :ios, '9.0'
+use_frameworks!
+workspace 'bitportal.xcworkspace'
+
+target 'bitportal' do
+  pod 'IGListKit', '~> 3.0'
+  pod 'Interactable', :path => '../node_modules/react-native-interactable'
+
+end
+
+target 'RNTableView' do
+  project '../node_modules/react-native-tableview/RNTableView.xcodeproj'
+  pod 'IGListKit', '~> 3.0'
+end

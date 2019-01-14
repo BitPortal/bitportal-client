@@ -20,7 +20,7 @@ import styles from './styles'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     dAppList: searchDappListSelector(state),
     loading: state.dApp.get('loading'),
     searchTerm: state.dApp.get('searchTerm'),

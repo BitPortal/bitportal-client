@@ -1,43 +1,138 @@
+import { AppRegistry, StatusBar } from 'react-native'
 import { Navigation } from 'react-native-navigation'
+import Provider, { PersistProvider } from 'components/Provider'
+import AssetTableViewCell from 'components/TableViewCell/AssetTableViewCell'
+import HeaderTableViewCell from 'components/TableViewCell/HeaderTableViewCell'
+import AssetBalanceTableViewCell from 'components/TableViewCell/AssetBalanceTableViewCell'
+import WalletTableViewCell from 'components/TableViewCell/WalletTableViewCell'
+import WalletManagementTableViewCell from 'components/TableViewCell/WalletManagementTableViewCell'
+import ProducerTableViewCell from 'components/TableViewCell/ProducerTableViewCell'
+import MarketTableViewCell from 'components/TableViewCell/MarketTableViewCell'
+import TransactionTableViewCell from 'components/TableViewCell/TransactionTableViewCell'
+import AssetActionsTableViewCell from 'components/TableViewCell/AssetActionsTableViewCell'
+import AssetOverviewTableViewCell from 'components/TableViewCell/AssetOverviewTableViewCell'
+import IdentityTableViewCell from 'components/TableViewCell/IdentityTableViewCell'
+import SelectEOSAccountTableViewCell from 'components/TableViewCell/SelectEOSAccountTableViewCell'
+import IdentityDetailTableViewCell from 'components/TableViewCell/IdentityDetailTableViewCell'
+import TransactionDetailTableViewCell from 'components/TableViewCell/TransactionDetailTableViewCell'
+import DappHeaderTableViewCell from 'components/TableViewCell/DappHeaderTableViewCell'
+import DappFooterTableViewCell from 'components/TableViewCell/DappFooterTableViewCell'
+
+import WalletCardCollectionViewCell from 'components/CollectionViewCell/WalletCardCollectionViewCell'
+import FeaturedDappCollectionViewCell from 'components/CollectionViewCell/FeaturedDappCollectionViewCell'
+import SmallDappCollectionViewCell from 'components/CollectionViewCell/SmallDappCollectionViewCell'
+import LargeDappCollectionViewCell from 'components/CollectionViewCell/LargeDappCollectionViewCell'
+import IdentityHeader from 'components/Header/IdentityHeader'
+
 import Market from 'screens/Market'
 import Welcome from 'screens/Welcome'
 import Wallet from 'screens/Wallet'
 import WalletAssets from 'screens/Wallet/Assets'
+import Asset from 'screens/Wallet/Asset'
+import TransferAsset from 'screens/Wallet/TransferAsset'
+import ReceiveAsset from 'screens/Wallet/ReceiveAsset'
 import WalletList from 'screens/Wallet/WalletList'
+import ManageWallet from 'screens/Wallet/ManageWallet'
 import Voting from 'screens/Wallet/Voting'
+import AddIdentity from 'screens/Wallet/AddIdentity'
+import MyIdentity from 'screens/Wallet/MyIdentity'
+import CreateIdentity from 'screens/Wallet/CreateIdentity'
+import RecoverIdentity from 'screens/Wallet/RecoverIdentity'
+import BackupIdentity from 'screens/Wallet/BackupIdentity'
+import SelectChainType from 'screens/Wallet/SelectChainType'
+import ImportBTCWallet from 'screens/Wallet/ImportBTCWallet'
+import ImportETHWallet from 'screens/Wallet/ImportETHWallet'
+import ImportEOSWallet from 'screens/Wallet/ImportEOSWallet'
+import ExportETHKeystore from 'screens/Wallet/ExportETHKeystore'
+import ExportETHPrivateKey from 'screens/Wallet/ExportETHPrivateKey'
+import ExportEOSPrivateKey from 'screens/Wallet/ExportEOSPrivateKey'
+import ExportBTCPrivateKey from 'screens/Wallet/ExportBTCPrivateKey'
+import SelectEOSAccount from 'screens/Wallet/SelectEOSAccount'
+import TransactionDetail from 'screens/Wallet/TransactionDetail'
 import Discovery from 'screens/Discovery'
 import Profile from 'screens/Profile'
+import Contacts from 'screens/Profile/Contacts'
+import News from 'screens/News'
 import LanguageSetting from 'screens/Profile/LanguageSetting'
 import CurrencySetting from 'screens/Profile/CurrencySetting'
 import NodeSetting from 'screens/Profile/NodeSetting'
 import Images from 'resources/images'
 import messages from 'resources/messages'
 
-export const registerScreens = (store, Provider) => {
+export const registerScreens = (store, persistor) => {
+  AppRegistry.registerComponent('AssetTableViewCell', () => AssetTableViewCell)
+  AppRegistry.registerComponent('HeaderTableViewCell', () => HeaderTableViewCell)
+  AppRegistry.registerComponent('AssetBalanceTableViewCell', () => AssetBalanceTableViewCell)
+  AppRegistry.registerComponent('WalletTableViewCell', () => WalletTableViewCell)
+  AppRegistry.registerComponent('WalletManagementTableViewCell', () => WalletManagementTableViewCell)
+  AppRegistry.registerComponent('ProducerTableViewCell', () => ProducerTableViewCell)
+  AppRegistry.registerComponent('MarketTableViewCell', () => MarketTableViewCell)
+  AppRegistry.registerComponent('TransactionTableViewCell', () => TransactionTableViewCell)
+  AppRegistry.registerComponent('AssetActionsTableViewCell', () => AssetActionsTableViewCell)
+  AppRegistry.registerComponent('AssetOverviewTableViewCell', () => AssetOverviewTableViewCell)
+  AppRegistry.registerComponent('WalletCardCollectionViewCell', () => WalletCardCollectionViewCell)
+  AppRegistry.registerComponent('FeaturedDappCollectionViewCell', () => FeaturedDappCollectionViewCell)
+  AppRegistry.registerComponent('SmallDappCollectionViewCell', () => SmallDappCollectionViewCell)
+  AppRegistry.registerComponent('LargeDappCollectionViewCell', () => LargeDappCollectionViewCell)
+  AppRegistry.registerComponent('IdentityTableViewCell', () => IdentityTableViewCell)
+  AppRegistry.registerComponent('SelectEOSAccountTableViewCell', () => SelectEOSAccountTableViewCell)
+  AppRegistry.registerComponent('IdentityDetailTableViewCell', () => IdentityDetailTableViewCell)
+  AppRegistry.registerComponent('TransactionDetailTableViewCell', () => TransactionDetailTableViewCell)
+  AppRegistry.registerComponent('DappHeaderTableViewCell', () => DappHeaderTableViewCell)
+  AppRegistry.registerComponent('DappFooterTableViewCell', () => DappFooterTableViewCell)
+
   Navigation.registerComponentWithRedux('BitPortal.Welcome', () => Welcome, Provider, store)
 
-  Navigation.registerComponentWithRedux('BitPortal.Wallet', () => Wallet, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Wallet', () => Wallet, PersistProvider, store)
   Navigation.registerComponentWithRedux('BitPortal.WalletAssets', () => WalletAssets, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Asset', () => Asset, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.TransferAsset', () => TransferAsset, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ReceiveAsset', () => ReceiveAsset, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.WalletList', () => WalletList, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ManageWallet', () => ManageWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Voting', () => Voting, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.AddIdentity', () => AddIdentity, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.MyIdentity', () => MyIdentity, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.IdentityHeader', () => IdentityHeader, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.CreateIdentity', () => CreateIdentity, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.RecoverIdentity', () => RecoverIdentity, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.BackupIdentity', () => BackupIdentity, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.SelectChainType', () => SelectChainType, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ImportBTCWallet', () => ImportBTCWallet, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ImportETHWallet', () => ImportETHWallet, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ImportEOSWallet', () => ImportEOSWallet, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.SelectEOSAccount', () => SelectEOSAccount, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ExportETHKeystore', () => ExportETHKeystore, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ExportETHPrivateKey', () => ExportETHPrivateKey, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ExportEOSPrivateKey', () => ExportEOSPrivateKey, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ExportBTCPrivateKey', () => ExportBTCPrivateKey, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.TransactionDetail', () => TransactionDetail, Provider, store)
 
   Navigation.registerComponentWithRedux('BitPortal.Market', () => Market, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Discovery', () => Discovery, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Profile', () => Profile, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Contacts', () => Contacts, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.News', () => News, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.LanguageSetting', () => LanguageSetting, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.CurrencySetting', () => CurrencySetting, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.NodeSetting', () => NodeSetting, Provider, store)
 }
 
 export const startApp = (callback) => {
+  StatusBar.setHidden(false, 'fade')
+  StatusBar.setBarStyle('default', true)
   Navigation.events().registerAppLaunchedListener(() => {
     Navigation.setDefaultOptions({
+      statusBar: {
+        visible: true
+      },
       topBar: {
         background: {
           translucent: false,
           color: '#F7F7F7'
         },
         drawBehind: true,
+        noBorder: false,
         title: {
           fontFamily: 'System'
         },
@@ -149,9 +244,32 @@ export const startTabBasedApp = () => {
                   textColor: '#9D9D9D',
                   iconColor: '#9D9D9D',
                   selectedTextColor: '#007AFF',
-                  icon: require('resources/images/dapp_tab.png'),
+                  icon: require('resources/images/app_tab.png'),
                   selectedIconColor: '#007AFF',
                   testID: 'BITPORTAL_DISCOVERY'
+                }
+              }
+            }
+          },
+          {
+            stack: {
+              children: [
+                {
+                  component: {
+                    id: 'BitPortal.News',
+                    name: 'BitPortal.News'
+                  }
+                }
+              ],
+              options: {
+                bottomTab: {
+                  text: '资讯',
+                  textColor: '#9D9D9D',
+                  iconColor: '#9D9D9D',
+                  selectedTextColor: '#007AFF',
+                  icon: require('resources/images/news_tab.png'),
+                  selectedIconColor: '#007AFF',
+                  testID: 'BITPORTAL_NEWS'
                 }
               }
             }

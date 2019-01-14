@@ -37,7 +37,7 @@ export const errorMessageDetail = (error) => {
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     loading: state.eosAccount.get('loading'),
     showSuccess: state.eosAccount.get('showSuccess'),
     error: state.eosAccount.get('error')

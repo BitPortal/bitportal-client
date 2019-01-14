@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Text } from 'react-native'
 import { IntlProvider } from 'react-intl'
-import { Field, reduxForm, formValueSelector, change } from 'redux-form/immutable'
+import { Field, reduxForm, formValueSelector, change } from 'redux-form'
 import { Navigation } from 'react-native-navigation'
 import { FormContainer, TextField, TextAreaField, SubmitButton } from 'components/Form'
 import { normalizeEOSAccountName, normalizeUnitByFraction } from 'utils/normalize'
@@ -77,7 +77,7 @@ const asyncValidate = (values, dispatch, props) => new Promise((resolve, reject)
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     transfer: state.transfer,
     activeAsset: activeAssetSelector(state),
     activeAssetBalance: activeAssetBalanceSelector(state),

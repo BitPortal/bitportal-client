@@ -4,7 +4,7 @@ import Update from './Update'
 
 @connect(
   state => ({
-    locale: state.intl.get('locale')
+    locale: state.intl.locale
   }),
   null,
   null,

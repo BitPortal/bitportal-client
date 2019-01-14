@@ -55,7 +55,7 @@ export const errorMessages = (error, messages) => {
 
 @connect(
   state => ({
-    locale: state.intl.get('locale'),
+    locale: state.intl.locale,
     hasPendingMessage: state.dappBrowser.get('hasPendingMessage'),
     resolvingMessage: state.dappBrowser.get('resolving'),
     sendingMessage: state.dappBrowser.get('sendingMessage'),
