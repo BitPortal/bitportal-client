@@ -2041,7 +2041,7 @@
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = WFW5A3K678;
+						DevelopmentTeam = 7AL695AUTL;
 						LastSwiftMigration = 1000;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
@@ -2964,12 +2964,12 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = bitportal/bitportal.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = WFW5A3K678;
+				DEVELOPMENT_TEAM = 7AL695AUTL;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3015,10 +3015,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.bitportal.wallet;
+				PRODUCT_BUNDLE_IDENTIFIER = org.dexlize.bitportal;
 				PRODUCT_NAME = bitportal;
 				PROVISIONING_PROFILE = "8cd75e73-9ada-45e4-88af-19ea0bff69ab";
-				PROVISIONING_PROFILE_SPECIFIER = "wallet ad hoc profile";
+				PROVISIONING_PROFILE_SPECIFIER = "BitPortal App Store";
 				SWIFT_OBJC_BRIDGING_HEADER = "RNCharts/bitportal-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
@@ -3038,7 +3038,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = WFW5A3K678;
+				DEVELOPMENT_TEAM = 7AL695AUTL;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3085,10 +3085,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.bitportal.wallet;
+				PRODUCT_BUNDLE_IDENTIFIER = org.dexlize.bitportal;
 				PRODUCT_NAME = bitportal;
 				PROVISIONING_PROFILE = "8cd75e73-9ada-45e4-88af-19ea0bff69ab";
-				PROVISIONING_PROFILE_SPECIFIER = "wallet ad hoc profile";
+				PROVISIONING_PROFILE_SPECIFIER = "BitPortal App Store";
 				SWIFT_OBJC_BRIDGING_HEADER = "RNCharts/bitportal-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
