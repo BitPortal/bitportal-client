@@ -27,11 +27,6 @@ import styles from './styles'
   { withRef: true }
 )
 export default class DappCategories extends Component {
-  state = { allItems: ['all'] }
-
-  UNSAFE_componentWillMount() {
-    this.setState({ allItems: ['all', ...this.props.items] })
-  }
 
   handleCategory = title => {
     Navigation.push(this.props.componentId, {
@@ -62,18 +57,18 @@ export default class DappCategories extends Component {
 
   render() {
     const { items, loading, onPress, locale } = this.props
-    const { allItems } = this.state
+    const categories = ['all', ...this.props.items]
     return (
       <IntlProvider messages={messages[locale]}>
         <View style={styles.scrollContainer}>
           <ScrollView horizontal={false} scrollEnabled={false} contentContainerStyle={styles.dAppScrollViewContainer}>
-            {allItems.map((item, index) => {
+            {categories.map((item, index) => {
               return (
                 <SettingItem
                   key={index}
                   leftImage={DAPP_SECTION_ICONS[item] ? DAPP_SECTION_ICONS[item].icon : DAPP_SECTION_ICONS['other'].icon}
                   leftItemTitle={<FormattedMessage id={DAPP_SECTION_ICONS[item].stringId} />}
-                  extraStyle={this.filterIndex(index, allItems)}
+                  extraStyle={this.filterIndex(index, categories)}
                   onPress={() => this.handleCategory(item)}
                 />
               )

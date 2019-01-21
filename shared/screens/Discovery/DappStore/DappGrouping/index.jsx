@@ -36,11 +36,13 @@ export default class DappGrouping extends Component {
     routes: [{ key: 'first', title: '' }, { key: 'second', title: '' }, { key: 'third', title: '' }]
   }
 
-  componentDidMount() {
+  componentWillReceiveProps() {
     const length = this.props.items.size
     if (length <= 3) this.setState({ routes: [{ key: 'first', title: '' }] })
     if (length > 3 && length <= 6)
       this.setState({ routes: [{ key: 'first', title: '' }, { key: 'second', title: '' }] })
+    if (length > 6)
+      this.setState({ routes: [{ key: 'first', title: '' }, { key: 'second', title: '' }, { key: 'third', title: '' }] })
   }
 
   renderScene = ({ route }) => {
