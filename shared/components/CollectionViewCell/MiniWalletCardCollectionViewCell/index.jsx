@@ -24,7 +24,7 @@ const MiniWalletCardCollectionViewCell = (props) => {
       <View style={{
         width: 60,
         height: 42,
-        borderRadius: 4,
+        borderRadius: 3,
         marginRight: 10
       }}
       >
@@ -34,7 +34,7 @@ const MiniWalletCardCollectionViewCell = (props) => {
             flex: 1,
             width: null,
             height: null,
-            borderRadius: 4
+            borderRadius: 3
           }}
         />
         <View style={{ position: 'absolute', top: 20 * ratio, left: 20 * ratio, right: 10 * ratio, flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>

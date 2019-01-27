@@ -7,7 +7,8 @@ const initialState = {
   recommend: {
     byId: {},
     allIds: []
-  }
+  },
+  categoryFilter: null
 }
 
 export default handleActions({
@@ -32,5 +33,11 @@ export default handleActions({
         state.recommend.allIds.push(recommend.id)
       }
     })
+  },
+  [actions.setDappFilter] (state, action) {
+    state.categoryFilter = action.payload
+  },
+  [actions.clearDappFilter] (state) {
+    state.categoryFilter = null
   }
 }, initialState)

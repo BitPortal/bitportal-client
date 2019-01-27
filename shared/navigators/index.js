@@ -17,6 +17,8 @@ import IdentityDetailTableViewCell from 'components/TableViewCell/IdentityDetail
 import TransactionDetailTableViewCell from 'components/TableViewCell/TransactionDetailTableViewCell'
 import DappHeaderTableViewCell from 'components/TableViewCell/DappHeaderTableViewCell'
 import DappFooterTableViewCell from 'components/TableViewCell/DappFooterTableViewCell'
+import DappCategoryTableViewCell from 'components/TableViewCell/DappCategoryTableViewCell'
+import SmallDappTableViewCell from 'components/TableViewCell/SmallDappTableViewCell'
 
 import WalletCardCollectionViewCell from 'components/CollectionViewCell/WalletCardCollectionViewCell'
 import FeaturedDappCollectionViewCell from 'components/CollectionViewCell/FeaturedDappCollectionViewCell'
@@ -50,6 +52,7 @@ import ExportBTCPrivateKey from 'screens/Wallet/ExportBTCPrivateKey'
 import SelectEOSAccount from 'screens/Wallet/SelectEOSAccount'
 import TransactionDetail from 'screens/Wallet/TransactionDetail'
 import Discovery from 'screens/Discovery'
+import DappList from 'screens/Discovery/DappList'
 import Profile from 'screens/Profile'
 import Contacts from 'screens/Profile/Contacts'
 import News from 'screens/News'
@@ -80,6 +83,8 @@ export const registerScreens = (store, persistor) => {
   AppRegistry.registerComponent('TransactionDetailTableViewCell', () => TransactionDetailTableViewCell)
   AppRegistry.registerComponent('DappHeaderTableViewCell', () => DappHeaderTableViewCell)
   AppRegistry.registerComponent('DappFooterTableViewCell', () => DappFooterTableViewCell)
+  AppRegistry.registerComponent('DappCategoryTableViewCell', () => DappCategoryTableViewCell)
+  AppRegistry.registerComponent('SmallDappTableViewCell', () => SmallDappTableViewCell)
 
   Navigation.registerComponentWithRedux('BitPortal.Welcome', () => Welcome, Provider, store)
 
@@ -110,6 +115,7 @@ export const registerScreens = (store, persistor) => {
 
   Navigation.registerComponentWithRedux('BitPortal.Market', () => Market, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Discovery', () => Discovery, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.DappList', () => DappList, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Profile', () => Profile, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Contacts', () => Contacts, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.News', () => News, Provider, store)

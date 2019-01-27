@@ -46,6 +46,32 @@ export default class Discovery extends Component {
 
   subscription = Navigation.events().bindComponent(this)
 
+  onItemNotification = (data) => {
+    const { action } = data
+
+    if (action === 'toDappList') {
+      const { categoryTitle, category } = data
+
+      this.toDappList(categoryTitle, category)
+    }
+  }
+
+  toDappList = (title, category) => {
+    this.props.actions.setDappFilter(category)
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.DappList',
+        options: {
+          topBar: {
+            title: {
+              text: title
+            }
+          }
+        }
+      }
+    })
+  }
+
   componentDidMount() {
     this.props.actions.getDapp.requested()
     this.props.actions.getDappRecommend.requested()
@@ -65,6 +91,7 @@ export default class Discovery extends Component {
         headerBackgroundColor="white"
         headerTextColor="black"
         separatorStyle={TableView.Consts.SeparatorStyle.None}
+        onItemNotification={this.onItemNotification}
       >
         <Section>
           <Item
@@ -94,6 +121,7 @@ export default class Discovery extends Component {
             height={44}
             title="最新上架"
             buttonText="更多"
+            category="new"
             componentId={this.props.componentId}
             selectionStyle={TableView.Consts.CellSelectionStyle.None}
             showSeparator
@@ -136,6 +164,7 @@ export default class Discovery extends Component {
             height={44}
             title="热门应用"
             buttonText="更多"
+            category="hot"
             componentId={this.props.componentId}
             selectionStyle={TableView.Consts.CellSelectionStyle.None}
             showSeparator
@@ -178,6 +207,7 @@ export default class Discovery extends Component {
             height={44}
             title="游戏"
             buttonText="更多"
+            category="game"
             componentId={this.props.componentId}
             selectionStyle={TableView.Consts.CellSelectionStyle.None}
             showSeparator
@@ -220,6 +250,7 @@ export default class Discovery extends Component {
             height={44}
             title="工具"
             buttonText="更多"
+            category="tool"
             componentId={this.props.componentId}
             selectionStyle={TableView.Consts.CellSelectionStyle.None}
             showSeparator
@@ -268,13 +299,13 @@ export default class Discovery extends Component {
           />
         </Section>
         <Section>
-          <Item image={require('resources/images/contact.png')}>系统</Item>
-          <Item image={require('resources/images/contact.png')}>游戏</Item>
-          <Item image={require('resources/images/contact.png')}>去中心交易平台</Item>
-          <Item image={require('resources/images/contact.png')}>市场</Item>
-          <Item image={require('resources/images/contact.png')}>工具</Item>
-          <Item image={require('resources/images/contact.png')}>区块链浏览器</Item>
-          <Item image={require('resources/images/contact.png')}>资讯</Item>
+          <Item reactModuleForCell="DappCategoryTableViewCell" height={44} category="system" name="系统" onPress={this.toDappList.bind(this, '系统', 'system')} showSeparator />
+          <Item reactModuleForCell="DappCategoryTableViewCell" height={44} category="game" name="游戏" onPress={this.toDappList.bind(this, '游戏', 'game')} showSeparator />
+          <Item reactModuleForCell="DappCategoryTableViewCell" height={44} category="exchange" name="去中心交易平台" onPress={this.toDappList.bind(this, '去中心交易平台', 'exchange')} showSeparator />
+          <Item reactModuleForCell="DappCategoryTableViewCell" height={44} category="marketplace" name="市场" onPress={this.toDappList.bind(this, '市场', 'marketplace')} showSeparator />
+          <Item reactModuleForCell="DappCategoryTableViewCell" height={44} category="tool" name="工具" onPress={this.toDappList.bind(this, '工具', 'tool')} showSeparator />
+          <Item reactModuleForCell="DappCategoryTableViewCell" height={44} category="explorer" name="区块链浏览器" onPress={this.toDappList.bind(this, '区块链浏览器', 'explorer')} showSeparator />
+          <Item reactModuleForCell="DappCategoryTableViewCell" height={44} category="news" name="资讯" onPress={this.toDappList.bind(this, '资讯', 'news')} />
         </Section>
         <Section>
           <Item
