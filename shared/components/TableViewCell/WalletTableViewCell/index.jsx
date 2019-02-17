@@ -1,13 +1,7 @@
 import React from 'react'
 import { View, Text, TouchableHighlight, NativeModules, Image } from 'react-native'
 import FastImage from 'react-native-fast-image'
-import MiniWalletCardCollectionViewCell from 'components/CollectionViewCell/MiniWalletCardCollectionViewCell'
-
-const colors = {
-  BTC: '#FF9500',
-  ETH: '#007AFF',
-  EOS: '#000000'
-}
+import { walletIcons } from 'resources/images'
 
 const WalletTableViewCell = (props) => {
   formatAddress = (address) => {
@@ -40,16 +34,16 @@ const WalletTableViewCell = (props) => {
     return (
       <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16 }}>
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-          <MiniWalletCardCollectionViewCell
-            data={{
-              name: props.data.name,
-              chain: props.data.chain,
-              address: '',
-              currency: "$",
-              totalAsset: "0.00",
-              cpu: "0.00",
-              net: "0.00",
-              ram: "0.00"
+          <FastImage
+            source={walletIcons[props.data.chain.toLowerCase()]}
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 10,
+              borderWidth: 0.5,
+              borderColor: 'rgba(0,0,0,0.2)',
+              backgroundColor: 'white',
+              marginRight: 10
             }}
           />
           <View style={{ flex: 1, height: 44, borderWidth: 0, borderColor: 'red', justifyContent: 'space-between' }}>
@@ -68,16 +62,16 @@ const WalletTableViewCell = (props) => {
   return (
     <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16 }}>
       <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-        <MiniWalletCardCollectionViewCell
-          data={{
-            name: props.data.name,
-            chain: props.data.chain,
-            address: props.data.address,
-            currency: "$",
-            totalAsset: props.data.totalAsset,
-            cpu: "0.00",
-            net: "0.00",
-            ram: "0.00"
+        <FastImage
+          source={walletIcons[props.data.chain.toLowerCase()]}
+          style={{
+            width: 40,
+            height: 40,
+            borderRadius: 10,
+            borderWidth: 0.5,
+            borderColor: 'rgba(0,0,0,0.2)',
+            backgroundColor: 'white',
+            marginRight: 10
           }}
         />
         <View style={{ flex: 1, height: 44, borderWidth: 0, borderColor: 'red', justifyContent: 'space-between' }}>
