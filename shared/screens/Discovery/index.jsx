@@ -12,6 +12,7 @@ import {
   toolDappSelector,
   dappRecommendSelector
 } from 'selectors/dapp'
+import { loadInject, loadInjectSync } from 'utils/inject'
 const { Section, Item, CollectionView, CollectionViewItem } = TableView
 
 @connect(
@@ -53,6 +54,43 @@ export default class Discovery extends Component {
       const { categoryTitle, category } = data
 
       this.toDappList(categoryTitle, category)
+    } else if (action === 'toDapp') {
+      const { url, title } = data
+      const inject = loadInjectSync()
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.WebView',
+          passProps: { url, inject },
+          options: {
+            topBar: {
+              title: {
+                text: title
+              }
+            }
+          }
+        }
+      })
+    }
+  }
+
+  onCollectionViewDidSelectItem = (data) => {
+    const { url, title } = data
+
+    if (title) {
+      const inject = loadInjectSync()
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.WebView',
+          passProps: { url, inject },
+          options: {
+            topBar: {
+              title: {
+                text: title
+              }
+            }
+          }
+        }
+      })
     }
   }
 
@@ -72,9 +110,10 @@ export default class Discovery extends Component {
     })
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.props.actions.getDapp.requested()
     this.props.actions.getDappRecommend.requested()
+    await loadInject()
   }
 
   componentDidAppear() {
@@ -92,6 +131,7 @@ export default class Discovery extends Component {
         headerTextColor="black"
         separatorStyle={TableView.Consts.SeparatorStyle.None}
         onItemNotification={this.onItemNotification}
+        onCollectionViewDidSelectItem={this.onCollectionViewDidSelectItem}
       >
         <Section>
           <Item
@@ -108,6 +148,7 @@ export default class Discovery extends Component {
                   title={item.title}
                   description={item.title}
                   img={item.img_url}
+                  url={item.jump_url}
                   key={item.id}
                   uid={item.id}
                 />
@@ -145,6 +186,7 @@ export default class Discovery extends Component {
                   description={item.description.zh}
                   name={item.display_name.zh}
                   icon={item.icon_url}
+                  url={item.url}
                   showSeparator={index % 3 !== 2}
                 />
                )}
@@ -188,6 +230,7 @@ export default class Discovery extends Component {
                   description={item.description.zh}
                   name={item.display_name.zh}
                   icon={item.icon_url}
+                  url={item.url}
                   showSeparator={index % 2 !== 1}
                 />
                )}
@@ -231,6 +274,7 @@ export default class Discovery extends Component {
                   description={item.description.zh}
                   name={item.display_name.zh}
                   icon={item.icon_url}
+                  url={item.url}
                   showSeparator={index % 3 !== 2}
                 />
                )}
@@ -274,6 +318,7 @@ export default class Discovery extends Component {
                   description={item.description.zh}
                   name={item.display_name.zh}
                   icon={item.icon_url}
+                  url={item.url}
                   showSeparator={index % 3 !== 2}
                 />
                )}
@@ -299,13 +344,61 @@ export default class Discovery extends Component {
           />
         </Section>
         <Section>
-          <Item reactModuleForCell="DappCategoryTableViewCell" height={44} category="system" name="系统" onPress={this.toDappList.bind(this, '系统', 'system')} showSeparator />
-          <Item reactModuleForCell="DappCategoryTableViewCell" height={44} category="game" name="游戏" onPress={this.toDappList.bind(this, '游戏', 'game')} showSeparator />
-          <Item reactModuleForCell="DappCategoryTableViewCell" height={44} category="exchange" name="去中心交易平台" onPress={this.toDappList.bind(this, '去中心交易平台', 'exchange')} showSeparator />
-          <Item reactModuleForCell="DappCategoryTableViewCell" height={44} category="marketplace" name="市场" onPress={this.toDappList.bind(this, '市场', 'marketplace')} showSeparator />
-          <Item reactModuleForCell="DappCategoryTableViewCell" height={44} category="tool" name="工具" onPress={this.toDappList.bind(this, '工具', 'tool')} showSeparator />
-          <Item reactModuleForCell="DappCategoryTableViewCell" height={44} category="explorer" name="区块链浏览器" onPress={this.toDappList.bind(this, '区块链浏览器', 'explorer')} showSeparator />
-          <Item reactModuleForCell="DappCategoryTableViewCell" height={44} category="news" name="资讯" onPress={this.toDappList.bind(this, '资讯', 'news')} />
+          <Item
+            reactModuleForCell="DappCategoryTableViewCell"
+            height={44}
+            category="system"
+            name="系统"
+            onPress={this.toDappList.bind(this, '系统', 'system')}
+            showSeparator
+          />
+          <Item
+            reactModuleForCell="DappCategoryTableViewCell"
+            height={44}
+            category="game"
+            name="游戏"
+            onPress={this.toDappList.bind(this, '游戏', 'game')}
+            showSeparator
+          />
+          <Item
+            reactModuleForCell="DappCategoryTableViewCell"
+            height={44}
+            category="exchange"
+            name="去中心交易平台"
+            onPress={this.toDappList.bind(this, '去中心交易平台', 'exchange')}
+            showSeparator
+          />
+          <Item
+            reactModuleForCell="DappCategoryTableViewCell"
+            height={44}
+            category="marketplace"
+            name="市场"
+            onPress={this.toDappList.bind(this, '市场', 'marketplace')}
+            showSeparator
+          />
+          <Item
+            reactModuleForCell="DappCategoryTableViewCell"
+            height={44}
+            category="tool"
+            name="工具"
+            onPress={this.toDappList.bind(this, '工具', 'tool')}
+            showSeparator
+          />
+          <Item
+            reactModuleForCell="DappCategoryTableViewCell"
+            height={44}
+            category="explorer"
+            name="区块链浏览器"
+            onPress={this.toDappList.bind(this, '区块链浏览器', 'explorer')}
+            showSeparator
+          />
+          <Item
+            reactModuleForCell="DappCategoryTableViewCell"
+            height={44}
+            category="news"
+            name="资讯"
+            onPress={this.toDappList.bind(this, '资讯', 'news')}
+          />
         </Section>
         <Section>
           <Item

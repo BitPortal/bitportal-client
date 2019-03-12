@@ -19,7 +19,6 @@ import DappHeaderTableViewCell from 'components/TableViewCell/DappHeaderTableVie
 import DappFooterTableViewCell from 'components/TableViewCell/DappFooterTableViewCell'
 import DappCategoryTableViewCell from 'components/TableViewCell/DappCategoryTableViewCell'
 import SmallDappTableViewCell from 'components/TableViewCell/SmallDappTableViewCell'
-
 import WalletCardCollectionViewCell from 'components/CollectionViewCell/WalletCardCollectionViewCell'
 import FeaturedDappCollectionViewCell from 'components/CollectionViewCell/FeaturedDappCollectionViewCell'
 import SmallDappCollectionViewCell from 'components/CollectionViewCell/SmallDappCollectionViewCell'
@@ -59,6 +58,8 @@ import News from 'screens/News'
 import LanguageSetting from 'screens/Profile/LanguageSetting'
 import CurrencySetting from 'screens/Profile/CurrencySetting'
 import NodeSetting from 'screens/Profile/NodeSetting'
+import WebView from 'screens/WebView'
+
 import Images from 'resources/images'
 import messages from 'resources/messages'
 
@@ -122,6 +123,8 @@ export const registerScreens = (store, persistor) => {
   Navigation.registerComponentWithRedux('BitPortal.LanguageSetting', () => LanguageSetting, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.CurrencySetting', () => CurrencySetting, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.NodeSetting', () => NodeSetting, Provider, store)
+
+  Navigation.registerComponentWithRedux('BitPortal.WebView', () => WebView, Provider, store)
 }
 
 export const startApp = (callback) => {

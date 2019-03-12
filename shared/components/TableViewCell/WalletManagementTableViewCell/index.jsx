@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Text, TouchableHighlight, Image } from 'react-native'
 import { Navigation } from 'react-native-navigation'
+import { walletIcons } from 'resources/images'
 
 const images = {
   keystore: require('resources/images/exportKeystore.png'),
@@ -51,8 +52,16 @@ const WalletManagementTableViewCell = (props) => {
     <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16 }}>
       <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
         <Image
-          source={require('resources/images/BTCCard.png')}
-          style={{ width: 40, height: 28, borderRadius: 4, marginRight: 10 }}
+          source={walletIcons[props.data.chain.toLowerCase()]}
+          style={{
+            width: 40,
+            height: 40,
+            borderRadius: 10,
+            borderWidth: 0.5,
+            borderColor: 'rgba(0,0,0,0.2)',
+            backgroundColor: 'white',
+            marginRight: 10
+          }}
         />
         <View style={{ flex: 1, height: 44, borderWidth: 0, borderColor: 'red', justifyContent: 'space-between' }}>
           <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>

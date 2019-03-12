@@ -37,6 +37,28 @@ export default class DappList extends Component {
     this.props.actions.clearDappFilter()
   }
 
+  onItemNotification = (data) => {
+    const { action } = data
+
+    if (action === 'toDapp') {
+      const { url, title } = data
+
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.WebView',
+          passProps: { url },
+          options: {
+            topBar: {
+              title: {
+                text: title
+              }
+            }
+          }
+        }
+      })
+    }
+  }
+
   render() {
     const { categoryDapp } = this.props
 
@@ -46,6 +68,7 @@ export default class DappList extends Component {
         headerBackgroundColor="white"
         headerTextColor="black"
         separatorStyle={TableView.Consts.SeparatorStyle.None}
+        onItemNotification={this.onItemNotification}
       >
         {categoryDapp && categoryDapp.length && <Section>
           {categoryDapp.map((item, index) =>
@@ -57,6 +80,7 @@ export default class DappList extends Component {
               description={item.description.zh}
               name={item.display_name.zh}
               icon={item.icon_url}
+              url={item.url}
               showSeparator={categoryDapp.length - 1 !== index}
             />
            )}

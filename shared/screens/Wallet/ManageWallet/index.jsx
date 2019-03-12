@@ -293,6 +293,7 @@ export default class ManageWallet extends Component {
               selectionStyle={TableView.Consts.CellSelectionStyle.None}
               name={name}
               address={address}
+              chain={chain}
               reactModuleForCell="WalletManagementTableViewCell"
               componentId={this.props.componentId}
             />

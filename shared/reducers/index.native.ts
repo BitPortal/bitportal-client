@@ -13,6 +13,7 @@ import dapp from './dapp'
 import address from './address'
 import utxo from './utxo'
 import transaction from './transaction'
+import bridge from './bridge'
 
 export default combineReducers({
   form,
@@ -27,5 +28,6 @@ export default combineReducers({
   address,
   utxo,
   transaction,
+  bridge,
   ...createAsyncActionsReducers(asyncActions)
 })

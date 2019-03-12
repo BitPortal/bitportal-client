@@ -89,6 +89,46 @@ export const getEOSPermissionKeyPairs = async (keyPairs: any, accountName: strin
   return permissionKeys
 }
 
+
+export const getActivePermissionPublicKeyPair = async (permissionKeys: any) => {
+  const permissions = permissionKeys.map((permissionKey: any) => permissionKey.name)
+  let activePermissionPublicKeyPair
+
+  if (permissions.indexOf('active') !== -1) {
+    activePermissionPublicKeyPair = permissionKeys.find((permissionKey: any) => permissionKey.name === 'active')
+  } else if (permissions.indexOf('owner') !== -1) {
+    activePermissionPublicKeyPair = permissionKeys.find((permissionKey: any) => permissionKey.name === 'owner')
+  } else {
+    activePermissionPublicKeyPair = permissionKeys[0]
+  }
+
+  return {
+    permission: activePermissionPublicKeyPair.name,
+    publicKey: activePermissionPublicKeyPair.keys[0].publicKey
+  }
+}
+
+export const getEOSPermissionPublicKeyPairs = async (publicKeys: any, accountName: string, permissions?: any) => {
+  const accountPermissions = permissions || (await getAccount(accountName)).permissions
+  const permissionKeys = accountPermissions
+    .map((permission: any) => ({
+      name: permission.perm_name,
+      keys: permission.required_auth.keys.filter((keyObject: any) => publicKeys.indexOf(keyObject.key) !== -1)
+    }))
+    .filter((permission: any) => permission.keys.length > 0)
+    .map((permission: any) => ({
+      ...permission,
+      keys: permission.keys.map((keyObject: any) => {
+        const keyPair = publicKeys.find((publicKey: string) => publicKey === keyObject.key)
+        return {
+          publicKey: keyObject.key,
+          weight: keyObject.weight
+        }
+      })
+    }))
+  return permissionKeys
+}
+
 export const getBalance = async (accountName: string, contract?: string, symbol?: string) => {
   const code = contract || 'eosio.token'
   const result = await eos.getCurrencyBalance({ code, account: accountName })
@@ -106,16 +146,21 @@ export const getAccount = async (accountName: string) => {
   return result
 }
 
+export const getContract = async (contractName: string) => {
+  const result = await eos.contract(contractName)
+  return result
+}
+
 export const selectKeysForPermission = async (keyPairs: any, account: string, permissions: any, permission?: string) => {
   let permissionKey
   const permissionKeys = await getEOSPermissionKeyPairs(keyPairs, account, permissions)
   assert(permissionKeys && permissionKeys.length, 'No private key for permissions')
 
   if (permission) {
-    permissionKey = permissionKeys.findIndex((item: any) => item.name === permission)
+    permissionKey = permissionKeys.find((item: any) => item.name === permission)
     assert(permissionKey, 'No private key for permission')
   } else {
-    const activePermissionKey = permissionKeys.findIndex((item: any) => item.name === 'active')
+    const activePermissionKey = permissionKeys.find((item: any) => item.name === 'active')
 
     permissionKey = activePermissionKey ? activePermissionKey : permissionKeys[0]
   }
@@ -176,4 +221,19 @@ export const transfer = async (
   })
 
   return data.transaction_id
+}
+
+export const sign = async (
+  password: string,
+  keystore: any,
+  buf: any,
+  account: string,
+  permissions: any,
+  permission?: string
+) => {
+  const keyPairs = await walletCore.exportPrivateKeys(password, keystore)
+  const permissionKey = await selectKeysForPermission(keyPairs, account, permissions, permission)
+  const keyProvider = permissionKey.keys
+  const wif = keyProvider[0]
+  return [ecc.sign(Buffer.from(buf.data, 'utf8'), wif)]
 }

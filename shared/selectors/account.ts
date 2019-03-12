@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect'
+import { activeWalletSelector } from './wallet'
 
 export const accountByIdSelector = (state: RootState) => state.account.byId
 const accountAllIdsSelector = (state: RootState) => state.account.allIds
@@ -19,5 +20,15 @@ export const accountResourcesByIdSelector = createSelector(
     }
 
     return resources
+  }
+)
+
+export const activeAccountSelector = createSelector(
+  activeWalletSelector,
+  accountByIdSelector,
+  (wallet: any, byId: any) => {
+    if (!byId && !wallet && wallet.chain !== 'EOS' && !wallet.address) return null
+    const id = `${wallet.chain}/${wallet.address}`
+    return byId[id]
   }
 )

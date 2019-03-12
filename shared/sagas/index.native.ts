@@ -13,6 +13,7 @@ import dappSaga from './dapp'
 import transactionSaga from './transaction'
 import addressSaga from './address'
 import utxoSaga from './utxo'
+import bridgeSaga from './bridge'
 
 const sagas = {
   formSaga: fork(formSaga),
@@ -27,7 +28,8 @@ const sagas = {
   dappSaga: fork(dappSaga),
   transactionSaga: fork(transactionSaga),
   addressSaga: fork(addressSaga),
-  utxoSaga: fork(utxoSaga)
+  utxoSaga: fork(utxoSaga),
+  bridgeSaga: fork(bridgeSaga)
 }
 
 if (ENV === 'production') {

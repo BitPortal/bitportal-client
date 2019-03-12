@@ -324,6 +324,7 @@ export default class Wallet extends Component {
           separatorStyle={TableView.Consts.SeparatorStyle.None}
           onItemNotification={this.onItemNotification}
           onScrollViewDidEndDecelerating={this.onScrollViewDidEndDecelerating}
+          onCollectionViewDidSelectItem={() => {}}
           ref={(ref) => { this.tableView = ref }}
         >
           <Section uid="WalletCardCollectionViewCell">
