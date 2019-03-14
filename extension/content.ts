@@ -41,7 +41,7 @@ store.ready().then(() => {
   supportedActions.forEach((action) => {
     document.addEventListener(`${action}_request`, () => {
       // chrome.runtime.sendMessage(e.detail.message, response => console.log(response))
-      store.dispatch(walletActions.syncWalletRequested())
+      // store.dispatch(walletActions.syncWalletRequested())
     })
   })
 })

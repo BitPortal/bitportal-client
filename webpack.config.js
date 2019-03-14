@@ -355,7 +355,7 @@ const extensionConfig = {
 const injectConfig = {
   ...baseConfig,
   context: resolve('shared'),
-  entry: 'core/scatter/inject.js',
+  entry: 'core/bridge/scatter/inject.js',
   output: {
     ...baseConfig.output,
     filename: 'inject.js',

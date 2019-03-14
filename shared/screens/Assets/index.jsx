@@ -51,7 +51,6 @@ export default class Wallet extends Component {
 
   componentDidMount() {
     SplashScreen.hide()
-    this.props.actions.syncWalletRequested()
   }
 
   componentDidAppear() {

@@ -108,7 +108,13 @@ export default class WebView extends Component {
       topBar: {
         largeTitle: {
           visible: false
-        }
+        },
+        rightButtons: [
+          {
+            id: 'refresh',
+            icon: require('resources/images/refresh.png')
+          }
+        ]
       },
       bottomTabs: {
         visible: false
@@ -127,7 +133,6 @@ export default class WebView extends Component {
   }
 
   state = {
-    canGoBack: false,
     showPrompt: false,
     hasPendingMessage: false,
     loadingContract: false,
@@ -147,7 +152,24 @@ export default class WebView extends Component {
     contractDataHeight: new Animated.Value(80),
     whiteListOpen: false,
     showSideCard: false,
+    progress: new Animated.Value(0),
+    progressOpacity: new Animated.Value(0),
+    navigationHeight: 0,
     uri: 'https://build-prguimiryr.now.sh/'
+  }
+
+  subscription = Navigation.events().bindComponent(this)
+
+  async componentDidMount() {
+    this.props.actions.clearMessage()
+    setTimeout(() => {
+      this.setState({ showPrompt: true })
+    }, 100)
+
+    const constants = await Navigation.constants()
+    this.setState({ navigationHeight: constants.statusBarHeight + 44 })
+
+    this.onLoadStart()
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -166,17 +188,16 @@ export default class WebView extends Component {
     }
   }
 
-  componentDidMount() {
-    this.props.actions.clearMessage()
-
-    setTimeout(() => {
-      this.setState({ showPrompt: true })
-    }, 100)
-  }
-
   /* componentWillUnmount() {
    *   this.props.actions.clearMessage()
    * }*/
+
+  navigationButtonPressed({ buttonId }) {
+    if (buttonId === 'refresh') {
+      this.webviewbridge.reload()
+      this.onLoadStart()
+    }
+  }
 
   textInput = React.createRef()
 
@@ -220,10 +241,6 @@ export default class WebView extends Component {
       .catch(err => console.error('An error occurred', err))
   }
 
-  goBack = () => (this.state.canGoBack ? this.webviewbridge.goBack() : Navigation.pop(this.props.componentId))
-
-  goHome = () => Navigation.pop(this.props.componentId)
-
   renderError = (e) => {
     if (e === 'WebKitErrorDomain') {
       return null
@@ -242,10 +259,6 @@ export default class WebView extends Component {
     const hostname = url.hostname
     const host = hostname.indexOf('www.') === 0 ? hostname.replace('www.', '') : hostname
     this.props.actions.setHost(host)
-
-    this.setState({
-      canGoBack: navState.canGoBack
-    })
   }
 
   onBridgeMessage = (message) => {
@@ -276,24 +289,63 @@ export default class WebView extends Component {
     }, 500)
   }
 
-  onSubmitEditing = (event) => {
-    const searchText = event.nativeEvent.text
-
-    if (searchText === this.state.uri) {
-      this.webviewbridge.reload()
-    } else {
-      this.setState({ uri: searchText })
+  onProgress = (data) => {
+    if (data > 0 && data < 1) {
+      Animated.timing(this.state.progress, {
+        toValue: 0.1 * Dimensions.get('window').width + Dimensions.get('window').width * 0.9 * data,
+        duration: 300,
+        easing: Easing.inOut(Easing.quad)
+      }).start()
+    } else if (data === 1) {
+      this.onLoadEnd()
     }
   }
 
-  onProgress = (data) => {
-    console.log(data)
+  onLoadStart = () => {
+    Animated.sequence([
+      Animated.timing(this.state.progressOpacity, {
+        toValue: 1,
+        duration: 10,
+        easing: Easing.inOut(Easing.quad)
+      }),
+      Animated.timing(this.state.progress, {
+        toValue: 0.1 * Dimensions.get('window').width,
+        duration: 300,
+        easing: Easing.inOut(Easing.quad)
+      })
+    ]).start()
+  }
+
+  onLoadEnd = () => {
+    Animated.sequence([
+      Animated.timing(this.state.progress, {
+        toValue: Dimensions.get('window').width,
+        duration: 300,
+        easing: Easing.inOut(Easing.quad)
+      }),
+      Animated.timing(this.state.progressOpacity, {
+        toValue: 0,
+        duration: 300,
+        easing: Easing.inOut(Easing.quad)
+      }),
+      Animated.timing(this.state.progress, {
+        toValue: 0,
+        duration: 10,
+        easing: Easing.inOut(Easing.quad)
+      })
+    ]).start()
+  }
+
+  onError = () => {
+    this.onLoadEnd()
   }
 
   shareDapp = () => {
-    ActionSheetIOS.showShareActionSheetWithOptions({
-      message: this.props.url
-    }, () => {}, () => {})
+    try {
+      Share.share({ url: this.props.url, title: this.props.title })
+    } catch (e) {
+      console.warn('share error --', e)
+    }
   }
 
   onPasswordChange = (e) => {
@@ -304,6 +356,14 @@ export default class WebView extends Component {
     if (!this.state.passwordValue) {
       this.enlargeAmount()
     }
+  }
+
+  goBack = () => {
+    this.webviewbridge.goBack()
+  }
+
+  goForward = () => {
+    this.webviewbridge.goForward()
   }
 
   enlargeAmount = () => {
@@ -552,15 +612,15 @@ export default class WebView extends Component {
           {(!!this.state.largeAmount || !!this.props.resolving) && <View style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0 }} />}
           <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
         </Animated.View>
-        <Animated.View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, opacity: this.state.whiteListOpacity, paddingHorizontal: 18 }}>
-          <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>白名单</Text>
-          <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', height: '100%', alignItems: 'center', justifyContent: 'space-between' }}>
+        {/* <Animated.View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, opacity: this.state.whiteListOpacity, paddingHorizontal: 18 }}>
+            <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>白名单</Text>
+            <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', height: '100%', alignItems: 'center', justifyContent: 'space-between' }}>
             <Text style={{ fontSize: 13 }}>开启后无需输入交易密码</Text>
             <Switch value={this.state.whiteListOpen} onValueChange={this.onWhiteListChange} />
-          </View>
-          {(!!this.state.largeAmount || !!this.props.resolving) && <View style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0 }} />}
-          <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
-        </Animated.View>
+            </View>
+            {(!!this.state.largeAmount || !!this.props.resolving) && <View style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0 }} />}
+            <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+            </Animated.View> */}
       </Fragment>
     )
   }
@@ -643,7 +703,7 @@ export default class WebView extends Component {
 
     return (
       <IntlProvider messages={messages[locale]}>
-        <View style={styles.container}>
+        <View>
           <View style={{ ...styles.content, height: Dimensions.get('window').height - tabHeight + 1 }}>
             <WebViewBridge
               source={{ uri: url }}
@@ -661,11 +721,15 @@ export default class WebView extends Component {
               onBridgeMessage={this.onBridgeMessage}
               injectedJavaScript={inject}
               onProgress={this.onProgress}
+              onError={this.onError}
             />
           </View>
-          <View style={{ width: '100%', height: tabHeight - 0.5, backgroundColor: '#F7F7F7', borderTopWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', alignItems: 'center', justifyContent: 'center', flex: 1, flexDirection: 'row' }}>
+          <Animated.View style={{ width: '100%', height: 2, position: 'absolute', top: this.state.navigationHeight, left: 0, opacity: this.state.progressOpacity }}>
+            <Animated.View style={{ height: '100%', width: this.state.progress, backgroundColor: '#007AFF' }} />
+          </Animated.View>
+          <View style={{ width: '100%', height: tabHeight, backgroundColor: '#F7F7F7', alignItems: 'center', justifyContent: 'center', flex: 1, flexDirection: 'row' }}>
             <View style={{ position: 'absolute', top: 0, left: 0, width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-              <TouchableOpacity onPress={() => {}}>
+              <TouchableOpacity onPress={this.goBack}>
                 <FastImage
                   source={require('resources/images/arrow_left_tab.png')}
                   style={{ width: 30, height: 30 }}
@@ -673,7 +737,7 @@ export default class WebView extends Component {
               </TouchableOpacity>
             </View>
             <View style={{ position: 'absolute', top: 0, left: '25%', width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-              <TouchableOpacity onPress={() => {}}>
+              <TouchableOpacity onPress={this.goForward}>
                 <FastImage
                   source={require('resources/images/arrow_right_tab.png')}
                   style={{ width: 30, height: 30 }}
@@ -696,6 +760,7 @@ export default class WebView extends Component {
                 />
               </TouchableOpacity>
             </View>
+            <View style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: 0.5, backgroundColor: 'rgba(0,0,0,0.2)' }} />
           </View>
           {this.props.loadingContract && <View style={{ position: 'absolute', right: 0, left: 0, top: 0, bottom: 0 }}>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
