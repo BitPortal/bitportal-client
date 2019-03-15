@@ -6,6 +6,7 @@ import { Navigation } from 'react-native-navigation'
 import { categoryDappSelector } from 'selectors/dapp'
 import * as dappActions from 'actions/dapp'
 import TableView from 'react-native-tableview'
+import { loadInjectSync } from 'utils/inject'
 const { Section, Item } = TableView
 
 @connect(
@@ -42,11 +43,12 @@ export default class DappList extends Component {
 
     if (action === 'toDapp') {
       const { url, title } = data
+      const inject = loadInjectSync()
 
       Navigation.push(this.props.componentId, {
         component: {
           name: 'BitPortal.WebView',
-          passProps: { url },
+          passProps: { url, inject },
           options: {
             topBar: {
               title: {

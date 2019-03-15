@@ -21,7 +21,8 @@ import {
   getEOSPermissionPublicKeyPairs,
   getActivePermissionPublicKeyPair,
   getContract,
-  sign
+  sign,
+  signData
 } from 'core/chain/eos'
 
 function* pendTransferEOSAsset(messageActionType: string, payload: any, messageId: string) {
@@ -194,6 +195,40 @@ function* pendRequestSignature(messageActionType: string, payload: any, messageI
       buf,
       transaction,
       blockchain
+    }
+  }))
+}
+
+function* pendArbitrarySignature(messageActionType: string, payload: any, messageId: string) {
+  const hasPendingMessage = yield select((state: RootState) => state.bridge.hasPendingMessage)
+  if (hasPendingMessage) {
+    const pendingMessageActionType = yield select((state: RootState) => state.bridge.pendingMessage.type)
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionFailed',
+      payload: {
+        error: {
+          message: `There's a pending request: ${pendingMessageActionType}`
+        }
+      }
+    }))
+    return
+  }
+
+  const data = payload.data
+  const isHash = payload.isHash
+  const permission = payload.permission
+  const blockchain = 'EOS'
+
+  yield put(actions.pendMessage({
+    messageId,
+    payload,
+    type: messageActionType,
+    info: {
+      data,
+      blockchain,
+      isHash,
+      permission
     }
   }))
 }
@@ -386,17 +421,47 @@ function* resolveRequestSignature(password: string, info: any, messageId: string
       }
     }))
   } catch (error) {
-    // yield put(actions.clearMessage())
     yield put(actions.resolveMessageFailed(error.message))
-    // yield put(actions.sendMessage({
-    //   messageId,
-    //   type: 'actionFailed',
-    //   payload: {
-    //     error: {
-    //       message: error.message || error
-    //     }
-    //   }
-    // }))
+  }
+}
+
+function* resolveRequestArbitrarySignature(password: string, info: any, messageId: string) {
+  try {
+    const data = info.data
+    const isHash = info.isHash
+    const permission = info.permission
+    const wallet = yield select((state: RootState) => activeWalletSelector(state))
+    const account = yield select((state: RootState) => activeAccountSelector(state))
+    const accountName = wallet.address
+    const id = wallet.id
+    const permissions = account && account.permissions
+
+    const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    const identityKeystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    const keystore = importedKeystore || identityKeystore
+    assert(keystore && keystore.crypto, 'No keystore')
+
+    const signedData = yield call(
+      signData,
+      password,
+      keystore,
+      data,
+      account,
+      isHash,
+      permissions,
+      permission
+    )
+
+    yield put(actions.clearMessage())
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionSucceeded',
+      payload: {
+        data: signedData
+      }
+    }))
+  } catch (error) {
+    yield put(actions.resolveMessageFailed(error.message))
   }
 }
 
@@ -429,6 +494,7 @@ function* receiveMessage(action: Action<string>) {
     const messageId = messageAction.messageId
     const payload = messageAction.payload
     const messageActionType = messageAction.type
+    console.log(action)
 
     switch (messageActionType) {
     // case 'getCurrentWallet':
@@ -643,6 +709,44 @@ function* receiveMessage(action: Action<string>) {
         }, messageId)
       }
       break
+    case 'requestArbitrarySignature':
+      {
+        const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+        assert(activeWallet && activeWallet.chain === 'EOS' && !!activeWallet.address, 'No active EOS wallet in BitPortal!')
+
+        const activeAccount = yield select((state: RootState) => activeAccountSelector(state))
+        const permissions = activeAccount && activeAccount.permissions
+        const permissionPublicKeyPairs = yield call(getEOSPermissionPublicKeyPairs, activeWallet.publicKeys, activeWallet.address, permissions)
+        const activePermissionPublicKeyPair = yield call(getActivePermissionPublicKeyPair, permissionPublicKeyPairs)
+
+        yield pendArbitrarySignature(messageActionType, {
+          ...payload,
+          account: activeWallet.address,
+          publicKey: activePermissionPublicKeyPair.publicKey,
+          permission: activePermissionPublicKeyPair.permission
+        }, messageId)
+      }
+      break
+    case 'authenticate':
+      {
+        const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+        assert(activeWallet && activeWallet.chain === 'EOS' && !!activeWallet.address, 'No active EOS wallet in BitPortal!')
+
+        const activeAccount = yield select((state: RootState) => activeAccountSelector(state))
+        const permissions = activeAccount && activeAccount.permissions
+        const permissionPublicKeyPairs = yield call(getEOSPermissionPublicKeyPairs, activeWallet.publicKeys, activeWallet.address, permissions)
+        const activePermissionPublicKeyPair = yield call(getActivePermissionPublicKeyPair, permissionPublicKeyPairs)
+        const host = yield select((state: RootState) => state.bridge.host)
+
+        yield pendArbitrarySignature(messageActionType, {
+          ...payload,
+          data: host,
+          account: activeWallet.address,
+          publicKey: activePermissionPublicKeyPair.publicKey,
+          permission: activePermissionPublicKeyPair.name
+        }, messageId)
+      }
+      break
     case 'forgetIdentity':
     case 'requestAddNetwork':
       {
@@ -655,17 +759,6 @@ function* receiveMessage(action: Action<string>) {
         }))
       }
       break
-    // case 'authenticate':
-    //   {
-    //     const currentWallet = yield select((state: RootState) => currenctWalletSelector(state))
-    //     assert(currentWallet, 'No wallet in BitPortal!')
-    //     const account = currentWallet.get('account')
-    //     // const permission = currentWallet.get('permission')
-    //     const publicKey = payload.publicKey
-    //     const data = yield select((state: RootState) => state.dappBrowser.get('host'))
-    //     yield pendSignEOSData('eosAuthSign', { account, publicKey, signData: data }, messageId)
-    //   }
-    //   break
     default:
       if (messageId) {
         yield put(actions.sendMessage({
@@ -740,6 +833,9 @@ function* resolveMessage(action: Action<any>) {
         break
       case 'requestSignature':
         yield resolveRequestSignature(password, info, messageId)
+        break
+      case 'requestArbitrarySignature':
+        yield resolveRequestArbitrarySignature(password, info, messageId)
         break
       default:
         break

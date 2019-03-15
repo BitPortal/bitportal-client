@@ -518,8 +518,70 @@ export default class WebView extends Component {
     }
   }
 
+  renderContractAction = (action) => {
+    return (
+      <Fragment>
+        <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
+          <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>当前钱包</Text>
+          <View style={{ width: Dimensions.get('window').width - 36 - 95, justifyContent: 'space-between', flexDirection: 'row' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Image
+                source={walletIcons.eos}
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: 10,
+                  borderWidth: 0.5,
+                  borderColor: 'rgba(0,0,0,0.2)',
+                  backgroundColor: 'white',
+                  marginRight: 10
+                }}
+              />
+              <View>
+                <Text style={{ fontSize: 13, marginBottom: 2 }}>{this.formatAddress(this.props.activeWallet.address)}</Text>
+                <Text style={{ fontSize: 13 }}>{`${this.props.balance.balance} ${this.props.balance.symbol}`}</Text>
+              </View>
+            </View>
+          </View>
+          <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+        </View>
+        <TouchableHighlight underlayColor="white" style={{ width: '100%' }} onPress={this.toNext}>
+          <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
+            <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>合约详情</Text>
+            <View style={{ width: Dimensions.get('window').width - 36 - 95, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
+              <View>
+                <Text style={{ fontSize: 13 }}>{action.account} (合约名)</Text>
+                <Text style={{ fontSize: 13 }}>{action.authorization.map((auth => `${auth.actor}@${auth.permission}`)).join(' ')} (权限)</Text>
+              </View>
+              <Image source={require('resources/images/arrow_right_bold.png')} />
+            </View>
+            <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+          </View>
+        </TouchableHighlight>
+        <Animated.View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, opacity: this.state.passwordTextInputOpacity, paddingHorizontal: 18 }}>
+          <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>输入密码</Text>
+          <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row' }}>
+            <TextInput
+              style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, width: '100%' }}
+              autoCorrect={false}
+              autoCapitalize="none"
+              onChangeText={this.onPasswordChange}
+              value={this.state.passwordValue}
+              ref={this.textInput}
+              onBlur={this.onPasswordBlur}
+              onSubmitEditing={this.submit}
+              disabled
+              secureTextEntry
+              focuses
+            />
+          </View>
+          {(!!this.state.largeAmount || !!this.props.resolving) && <View style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0 }} />}
+          <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+        </Animated.View>
+      </Fragment>
+    )
+  }
   renderTransferAction = (action) => {
-
     return (
       <Fragment>
         <Animated.View style={{ paddingVertical: this.state.amountContainerPaddingVertical, height: this.state.amountContainerHeight, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 18 }}>
@@ -626,63 +688,113 @@ export default class WebView extends Component {
   }
 
   renderTransactionDetail = (message) => {
-    const actions = message.payload.transaction.actions
+    if (message.type === 'requestSignature') {
+      const actions = message.payload.transaction.actions
 
-    if (this.state.showSideCard) {
-      return (
-        <ScrollView style={{ height: 340, width: '100%' }}>
-          {actions.map((action, index) =>
-            <Fragment key={action.name}>
-              <View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, paddingHorizontal: 18 }}>
-                <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>合约操作</Text>
-                <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', height: '100%', alignItems: 'center' }}>
-                  <Text style={{ fontSize: 13 }}>{action.name}</Text>
+      if (this.state.showSideCard) {
+        return (
+          <ScrollView style={{ height: 340, width: '100%' }}>
+            {actions.map((action, index) =>
+              <Fragment key={action.name}>
+                <View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, paddingHorizontal: 18 }}>
+                  <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>合约操作</Text>
+                  <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', height: '100%', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 13 }}>{action.name}</Text>
+                  </View>
+                  <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
                 </View>
-                <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
-              </View>
-              <View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, paddingHorizontal: 18 }}>
-                <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>合约名称</Text>
-                <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', height: '100%', alignItems: 'center' }}>
-                  <Text style={{ fontSize: 13 }}>{action.account}</Text>
+                <View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, paddingHorizontal: 18 }}>
+                  <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>合约名称</Text>
+                  <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', height: '100%', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 13 }}>{action.account}</Text>
+                  </View>
+                  <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
                 </View>
-                <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
-              </View>
-              <View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, paddingHorizontal: 18 }}>
-                <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>使用权限</Text>
-                <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', height: '100%', alignItems: 'center' }}>
-                  <Text style={{ fontSize: 13 }}>{action.authorization.map((auth => `${auth.actor}@${auth.permission}`)).join(' ')}</Text>
+                <View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, paddingHorizontal: 18 }}>
+                  <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>使用权限</Text>
+                  <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', height: '100%', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 13 }}>{action.authorization.map((auth => `${auth.actor}@${auth.permission}`)).join(' ')}</Text>
+                  </View>
+                  <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
                 </View>
-                <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
-              </View>
-              <View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
-                <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>合约参数</Text>
-                <View style={{ width: Dimensions.get('window').width - 36 - 95, paddingTop: 15, paddingBottom: 15 }}>
-                  {Object.keys(action.data).map(key =>
-                    <View key={key} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
-                      <Text style={{ fontSize: 13, color: '#A2A2A6', height: 20 }}>{key}</Text>
-                      <Text style={{ fontSize: 13 }}>{action.data[key]}</Text>
-                    </View>
-                   )}
+                <View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
+                  <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>合约参数</Text>
+                  <View style={{ width: Dimensions.get('window').width - 36 - 95, paddingTop: 15, paddingBottom: 15 }}>
+                    {Object.keys(action.data).map(key =>
+                      <View key={key} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
+                        <Text style={{ fontSize: 13, color: '#A2A2A6', height: 20 }}>{key}</Text>
+                        <Text style={{ fontSize: 13 }}>{action.data[key]}</Text>
+                      </View>
+                     )}
+                  </View>
+                  {(index !== actions.length - 1) && <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />}
                 </View>
-                {(index !== actions.length - 1) && <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />}
-              </View>
-            </Fragment>
-           )}
-        </ScrollView>
-      )
-    } else if (actions.length === 1) {
-      const action = actions[0]
-      const name = action.name
-      const account = action.account
-      const authorization = action.authorization
-      const data = action.data
+              </Fragment>
+             )}
+          </ScrollView>
+        )
+      } else if (actions.length === 1) {
+        const action = actions[0]
+        const name = action.name
+        const account = action.account
+        const authorization = action.authorization
+        const data = action.data
 
+        return (
+          <View style={{ height: 340 }}>
+            {name === 'transfer' && this.renderTransferAction(action)}
+            {name !== 'transfer' && this.renderContractAction(action)}
+            <View style={{ paddingTop: 10, paddingBottom: 10, position: 'absolute', bottom: 0, left: 0, width: '100%', paddingHorizontal: 18 }}>
+              <TouchableOpacity style={{ backgroundColor: '#007AFF', borderRadius: 10, width: '100%', height: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.7} onPress={!!this.state.largeAmount ? this.changeAmountSize : this.submit} disabled={!!this.props.resolving}>
+                {(!!this.state.largeAmount || !this.state.passwordValue) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>确认交易</Text>}
+                {(!this.state.largeAmount && !!this.state.passwordValue && !this.props.resolving) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>验证密码</Text>}
+                {(!this.state.largeAmount && !!this.state.passwordValue && !!this.props.resolving) && <ActivityIndicator size="small" color="#ffffff" style={{ marginRight: 5 }} />}
+                {(!this.state.largeAmount && !!this.state.passwordValue && !!this.props.resolving) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>验证密码中...</Text>}
+              </TouchableOpacity>
+            </View>
+          </View>
+        )
+      }
+    } else if (message.type === 'requestArbitrarySignature' || message.type === 'authenticate') {
       return (
-        <View style={{ height: 340 }}>
-          {name === 'transfer' && this.renderTransferAction(action)}
+        <View style={{ height: 240 }}>
+          <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
+            <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>签名内容</Text>
+            <View style={{ width: Dimensions.get('window').width - 36 - 95, justifyContent: 'space-between', flexDirection: 'row' }}>
+              <Text style={{ fontSize: 13 }}>{message.payload.data}</Text>
+            </View>
+            <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+          </View>
+          <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
+            <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>签名公钥</Text>
+            <View style={{ width: Dimensions.get('window').width - 36 - 95, justifyContent: 'space-between', flexDirection: 'row' }}>
+              <Text style={{ fontSize: 13 }}>{message.payload.publicKey}</Text>
+            </View>
+            <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+          </View>
+          <Animated.View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, opacity: this.state.passwordTextInputOpacity, paddingHorizontal: 18 }}>
+            <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>输入密码</Text>
+            <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row' }}>
+              <TextInput
+                style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, width: '100%' }}
+                autoCorrect={false}
+                autoCapitalize="none"
+                onChangeText={this.onPasswordChange}
+                value={this.state.passwordValue}
+                ref={this.textInput}
+                onBlur={this.onPasswordBlur}
+                onSubmitEditing={this.submit}
+                disabled
+                secureTextEntry
+                focuses
+              />
+            </View>
+            {(!!this.state.largeAmount || !!this.props.resolving) && <View style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0 }} />}
+            <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+          </Animated.View>
           <View style={{ paddingTop: 10, paddingBottom: 10, position: 'absolute', bottom: 0, left: 0, width: '100%', paddingHorizontal: 18 }}>
             <TouchableOpacity style={{ backgroundColor: '#007AFF', borderRadius: 10, width: '100%', height: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.7} onPress={!!this.state.largeAmount ? this.changeAmountSize : this.submit} disabled={!!this.props.resolving}>
-              {(!!this.state.largeAmount || !this.state.passwordValue) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>确认交易</Text>}
+              {(!!this.state.largeAmount || !this.state.passwordValue) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>确认签名</Text>}
               {(!this.state.largeAmount && !!this.state.passwordValue && !this.props.resolving) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>验证密码</Text>}
               {(!this.state.largeAmount && !!this.state.passwordValue && !!this.props.resolving) && <ActivityIndicator size="small" color="#ffffff" style={{ marginRight: 5 }} />}
               {(!this.state.largeAmount && !!this.state.passwordValue && !!this.props.resolving) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>验证密码中...</Text>}

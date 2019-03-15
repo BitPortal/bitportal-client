@@ -41,7 +41,12 @@ export default handleActions({
   [actions.setHost] (state, action) {
     state.host = action.payload
   },
-  [actions.clearMessage] () {
-    return initialState
+  [actions.clearMessage] (state) {
+    state.pendingMessage = null
+    state.hasPendingMessage = false
+    state.loadingContract = false
+    state.resolving = false
+    state.messageToSend = null
+    state.error = null
   }
 }, initialState)

@@ -237,3 +237,19 @@ export const sign = async (
   const wif = keyProvider[0]
   return [ecc.sign(Buffer.from(buf.data, 'utf8'), wif)]
 }
+
+export const signData = async (
+  password: string,
+  keystore: any,
+  data: string,
+  account: string,
+  isHash: boolean,
+  permissions: any,
+  permission?: string
+) => {
+  const keyPairs = await walletCore.exportPrivateKeys(password, keystore)
+  const permissionKey = await selectKeysForPermission(keyPairs, account, permissions, permission)
+  const keyProvider = permissionKey.keys
+  const wif = keyProvider[0]
+  return isHash ? ecc.Signature.signHash(data, wif).toString() : ecc.sign(Buffer.from(data, 'utf8'), wif)
+}

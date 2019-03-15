@@ -57,6 +57,7 @@ export default class Discovery extends Component {
     } else if (action === 'toDapp') {
       const { url, title } = data
       const inject = loadInjectSync()
+
       Navigation.push(this.props.componentId, {
         component: {
           name: 'BitPortal.WebView',
@@ -78,6 +79,7 @@ export default class Discovery extends Component {
 
     if (title) {
       const inject = loadInjectSync()
+      console.log(inject)
       Navigation.push(this.props.componentId, {
         component: {
           name: 'BitPortal.WebView',
