@@ -226,7 +226,7 @@ export const startTabBasedApp = () => {
               ],
               options: {
                 bottomTab: {
-                  text: '行情',
+                  text: '市场',
                   textColor: '#9D9D9D',
                   iconColor: '#9D9D9D',
                   selectedTextColor: '#007AFF',
