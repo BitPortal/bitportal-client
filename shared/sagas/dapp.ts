@@ -1,4 +1,3 @@
-import assert from 'assert'
 import { takeEvery, put, call, select } from 'redux-saga/effects'
 import { getErrorMessage } from 'utils'
 import * as actions from 'actions/dapp'
@@ -6,7 +5,7 @@ import * as api from 'utils/api'
 
 function* getDapp(action: Action) {
   try {
-    const result = yield call(api.getDapp)
+    const result = yield call(api.getDapp, { ...action.payload, _sort: 'display_priority:desc', status: 'published' })
     yield put(actions.updateDapp(result))
     yield put(actions.getDapp.succeeded())
   } catch (e) {
@@ -16,8 +15,14 @@ function* getDapp(action: Action) {
 
 function* getDappRecommend(action: Action) {
   try {
-    const result = yield call(api.getDappBanner)
-    yield put(actions.updateDappRecommend(result.sort((a: any, b: any) => +b.display_priority - +a.display_priority)))
+    // Todo:: get locale
+    let lang = 'zh'
+    let result = yield call(api.getDappBanner, { _sort: 'display_priority:desc', status: 'published', language: lang })
+    // fallback to en
+    if (result.length === 0) {
+      result = yield call(api.getDappBanner, { _sort: 'display_priority:desc', status: 'published', language: 'en' })
+    }
+    yield put(actions.updateDappRecommend(result))
     yield put(actions.getDappRecommend.succeeded())
   } catch (e) {
     yield put(actions.getDappRecommend.failed(getErrorMessage(e)))
