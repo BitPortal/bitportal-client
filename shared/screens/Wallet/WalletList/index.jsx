@@ -5,9 +5,10 @@ import { injectIntl } from 'react-intl'
 import { View, ActionSheetIOS } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
-import { identityWalletSelector, importedWalletSelector } from 'selectors/wallet'
+import { identityWalletSelector, importedWalletSelector, hasIdentityEOSWalletSelector } from 'selectors/wallet'
 // import FastImage from 'react-native-fast-image'
 import * as walletActions from 'actions/wallet'
+import * as accountActions from 'actions/account'
 import styles from './styles'
 
 const { Section, Item } = TableView
@@ -17,14 +18,16 @@ const { Section, Item } = TableView
 @connect(
   state => ({
     identity: state.identity,
+    syncingEOSAccount: state.syncEOSAccount.loading,
     identityWallets: identityWalletSelector(state),
     importedWallets: importedWalletSelector(state),
-    portfolio: state.portfolio.byId,
+    hasIdentityEOSWallet: hasIdentityEOSWalletSelector(state),
     activeWalletId: state.wallet.activeWalletId
   }),
   dispatch => ({
     actions: bindActionCreators({
-      ...walletActions
+      ...walletActions,
+      ...accountActions
     }, dispatch)
   })
 )
@@ -162,13 +165,32 @@ export default class WalletList extends Component {
     Navigation.dismissAllModals()
   }
 
-  selectEOSAccount = (walletId) => {
+  createEOSAccount = (walletId) => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.CreateEOSAccount',
+        options: {
+          topBar: {
+            backButton: {
+              title: '返回'
+            }
+          }
+        }
+      }
+    })
+  }
 
+  componentDidMount() {
+    if (!this.props.hasIdentityEOSWallet) {
+      const { identityWallets } = this.props
+      const index = identityWallets.findIndex((wallet: any) => wallet.chain === 'EOS')
+      const wallet = identityWallets[index]
+      this.props.actions.syncEOSAccount.requested(wallet)
+    }
   }
 
   render() {
-    const { identityWallets, importedWallets, activeWalletId, portfolio, intl } = this.props
-
+    const { identityWallets, importedWallets, activeWalletId, intl, syncingEOSAccount } = this.props
     const identityWalletsCount = identityWallets.length
     const importedWalletsCount = importedWallets.length
 
@@ -207,11 +229,11 @@ export default class WalletList extends Component {
                 address={wallet.address}
                 segWit={wallet.segWit}
                 source={wallet.source}
-                totalAsset={(portfolio && portfolio[`${wallet.chain}/${wallet.address}`]) ? intl.formatNumber(portfolio[`${wallet.chain}/${wallet.address}`].totalAsset, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
                 componentId={this.props.componentId}
                 isSelected={wallet.id === activeWalletId}
-                accessoryType={(wallet.chain !== 'EOS' || !!wallet.address) ? TableView.Consts.AccessoryType.DetailButton : TableView.Consts.AccessoryType.DisclosureIndicator}
-                onPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.switchWallet.bind(this, wallet.id) : this.selectEOSAccount.bind(this, wallet.id)}
+                syncingEOSAccount={syncingEOSAccount}
+                accessoryType={(wallet.chain !== 'EOS' || !!wallet.address) ? TableView.Consts.AccessoryType.DetailButton : (syncingEOSAccount ? TableView.Consts.AccessoryType.None : TableView.Consts.AccessoryType.DisclosureIndicator)}
+                onPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.switchWallet.bind(this, wallet.id) : (syncingEOSAccount ? () => {} : this.createEOSAccount.bind(this, wallet.id))}
                 onAccessoryPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.toManageWallet.bind(this, {
                     id: wallet.id,
                     type: 'identity',
@@ -238,11 +260,10 @@ export default class WalletList extends Component {
                 address={wallet.address}
                 segWit={wallet.segWit}
                 source={wallet.source}
-                totalAsset={(portfolio && portfolio[`${wallet.chain}/${wallet.address}`]) ? intl.formatNumber(portfolio[`${wallet.chain}/${wallet.address}`].totalAsset, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
                 componentId={this.props.componentId}
                 isSelected={wallet.id === activeWalletId}
                 accessoryType={(wallet.chain !== 'EOS' || !!wallet.address) ? TableView.Consts.AccessoryType.DetailButton : TableView.Consts.AccessoryType.DisclosureIndicator}
-                onPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.switchWallet.bind(this, wallet.id) : this.selectEOSAccount.bind(this, wallet.id)}
+                onPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.switchWallet.bind(this, wallet.id) : this.createEOSAccount.bind(this, wallet.id)}
                 onAccessoryPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.toManageWallet.bind(this, {
                     id: wallet.id,
                     type: 'imported',

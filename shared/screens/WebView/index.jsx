@@ -29,6 +29,7 @@ import { FormattedMessage, IntlProvider } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
 import Url from 'url-parse'
 import * as bridgeActions from 'actions/bridge'
+import * as dappActions from 'actions/dapp'
 import ActionModal from 'components/ActionModal'
 import SearchWebsiteForm from 'components/Form/SearchWebsiteForm'
 import FastImage from 'react-native-fast-image'
@@ -37,6 +38,7 @@ import { activeWalletSelector } from 'selectors/wallet'
 import { activeWalletBalanceSelector } from 'selectors/balance'
 import globalMessages from 'resources/messages'
 import { walletIcons } from 'resources/images'
+import { dappBookmarkAllIdsSelector } from 'selectors/dapp'
 import localMessages from './messages'
 import styles from './styles'
 
@@ -93,11 +95,13 @@ export const errorMessages = (error, messages) => {
     resolving: state.bridge.resolving,
     error: state.bridge.error,
     activeWallet: activeWalletSelector(state),
-    balance: activeWalletBalanceSelector(state)
+    balance: activeWalletBalanceSelector(state),
+    bookmarkedIds: dappBookmarkAllIdsSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
-      ...bridgeActions
+      ...bridgeActions,
+      ...dappActions
     }, dispatch)
   })
 )
@@ -155,6 +159,10 @@ export default class WebView extends Component {
     progress: new Animated.Value(0),
     progressOpacity: new Animated.Value(0),
     navigationHeight: 0,
+    showBookmark: false,
+    showBookmarkContent: false,
+    showCancelBookmark: false,
+    showCancelBookmarkContent: false,
     uri: 'https://build-prguimiryr.now.sh/'
   }
 
@@ -518,6 +526,33 @@ export default class WebView extends Component {
     }
   }
 
+  bookmark = () => {
+    const { id, bookmarkedIds } = this.props
+    const isBookmarked = bookmarkedIds.indexOf(id) !== -1
+
+    if (isBookmarked) {
+      this.props.actions.unBookmarkDapp({ id: this.props.id })
+
+      this.setState({ showCancelBookmark: true, showCancelBookmarkContent: true }, () => {
+        setTimeout(() => {
+          this.setState({ showCancelBookmark: false }, () => {
+            this.setState({ showCancelBookmarkContent: false })
+          })
+        }, 1000)
+      })
+    } else {
+      this.props.actions.bookmarkDapp({ id: this.props.id })
+
+      this.setState({ showBookmark: true, showBookmarkContent: true }, () => {
+        setTimeout(() => {
+          this.setState({ showBookmark: false }, () => {
+            this.setState({ showBookmarkContent: false })
+          })
+        }, 1000)
+      })
+    }
+  }
+
   renderContractAction = (action) => {
     return (
       <Fragment>
@@ -733,7 +768,7 @@ export default class WebView extends Component {
              )}
           </ScrollView>
         )
-      } else if (actions.length === 1) {
+      } else if (actions.length >= 1) {
         const action = actions[0]
         const name = action.name
         const account = action.account
@@ -810,8 +845,11 @@ export default class WebView extends Component {
       title,
       locale,
       inject,
-      url
+      url,
+      bookmarkedIds,
+      id
     } = this.props
+    const isBookmarked = bookmarkedIds.indexOf(id) !== -1
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -865,11 +903,9 @@ export default class WebView extends Component {
               </TouchableOpacity>
             </View>
             <View style={{ position: 'absolute', top: 0, left: '75%', width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-              <TouchableOpacity onPress={() => {}}>
-                <FastImage
-                  source={require('resources/images/bookmark.png')}
-                  style={{ width: 30, height: 30 }}
-                />
+              <TouchableOpacity onPress={this.bookmark}>
+                {isBookmarked && <FastImage source={require('resources/images/bookmarked_tab.png')} style={{ width: 30, height: 30 }} />}
+                {!isBookmarked && <FastImage source={require('resources/images/bookmark_tab.png')} style={{ width: 30, height: 30 }} />}
               </TouchableOpacity>
             </View>
             <View style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: 0.5, backgroundColor: 'rgba(0,0,0,0.2)' }} />
@@ -906,6 +942,40 @@ export default class WebView extends Component {
               </View>
               {!!this.props.pendingMessage && this.renderTransactionDetail(this.props.pendingMessage)}
             </View>
+          </Modal>
+          <Modal
+            isVisible={this.state.showBookmark}
+            backdropOpacity={0}
+            useNativeDriver
+            animationIn="fadeIn"
+            animationInTiming={200}
+            backdropTransitionInTiming={200}
+            animationOut="fadeOut"
+            animationOutTiming={200}
+            backdropTransitionOutTiming={200}
+          >
+            {this.state.showBookmarkContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
+                <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已收藏</Text>
+              </View>
+            </View>}
+          </Modal>
+          <Modal
+            isVisible={this.state.showCancelBookmark}
+            backdropOpacity={0}
+            useNativeDriver
+            animationIn="fadeIn"
+            animationInTiming={200}
+            backdropTransitionInTiming={200}
+            animationOut="fadeOut"
+            animationOutTiming={200}
+            backdropTransitionOutTiming={200}
+          >
+            {this.state.showCancelBookmarkContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
+                <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已取消收藏</Text>
+              </View>
+            </View>}
           </Modal>
         </View>
       </IntlProvider>

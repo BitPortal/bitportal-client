@@ -10,7 +10,8 @@ import {
   hotDappSelector,
   gameDappSelector,
   toolDappSelector,
-  dappRecommendSelector
+  dappRecommendSelector,
+  dappBookmarkSelector
 } from 'selectors/dapp'
 import { loadInject, loadInjectSync } from 'utils/inject'
 const { Section, Item, CollectionView, CollectionViewItem } = TableView
@@ -22,7 +23,8 @@ const { Section, Item, CollectionView, CollectionViewItem } = TableView
     hotDapp: hotDappSelector(state),
     gameDapp: gameDappSelector(state),
     toolDapp: toolDappSelector(state),
-    featured: dappRecommendSelector(state)
+    featured: dappRecommendSelector(state),
+    bookmarked: dappBookmarkSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -55,13 +57,13 @@ export default class Discovery extends Component {
 
       this.toDappList(categoryTitle, category)
     } else if (action === 'toDapp') {
-      const { url, title } = data
+      const { url, title, id } = data
       const inject = loadInjectSync()
 
       Navigation.push(this.props.componentId, {
         component: {
           name: 'BitPortal.WebView',
-          passProps: { url, inject },
+          passProps: { url, inject, id },
           options: {
             topBar: {
               title: {
@@ -75,15 +77,14 @@ export default class Discovery extends Component {
   }
 
   onCollectionViewDidSelectItem = (data) => {
-    const { url, title } = data
+    const { url, title, uid } = data
 
     if (title) {
       const inject = loadInjectSync()
-      console.log(inject)
       Navigation.push(this.props.componentId, {
         component: {
           name: 'BitPortal.WebView',
-          passProps: { url, inject },
+          passProps: { url, inject, id: uid },
           options: {
             topBar: {
               title: {
@@ -124,7 +125,7 @@ export default class Discovery extends Component {
   }
 
   render() {
-    const { dapp, newDapp, hotDapp, gameDapp, toolDapp, featured } = this.props
+    const { dapp, newDapp, hotDapp, gameDapp, toolDapp, featured, bookmarked } = this.props
 
     return (
       <TableView
@@ -158,6 +159,50 @@ export default class Discovery extends Component {
             </CollectionView>
           </Item>
         </Section>
+        {bookmarked && !!bookmarked.length && <Section>
+          <Item
+            reactModuleForCell="DappHeaderTableViewCell"
+            height={44}
+            title="我的收藏"
+            buttonText="更多"
+            category="bookmarked"
+            componentId={this.props.componentId}
+            selectionStyle={TableView.Consts.CellSelectionStyle.None}
+            showSeparator
+          />
+        </Section>}
+        {bookmarked && !!bookmarked.length && <Section>
+          <Item
+            height={bookmarked.length >= 3 ? 234 : bookmarked.length * 78}
+            containCollectionView
+            collectionViewInsideTableViewCell="SmallDappCollectionViewCell"
+            collectionViewInsideTableViewCellKey="SmallDappCollectionViewCellNew"
+          >
+            <CollectionView>
+              {bookmarked.map((item, index) =>
+                <CollectionViewItem
+                  key={item.id}
+                  uid={item.id}
+                  reactModuleForCollectionViewCell="SmallDappCollectionViewCell"
+                  reactModuleForCollectionViewCellKey="SmallDappCollectionViewCellNew"
+                  height="78"
+                  description={item.description.zh}
+                  name={item.display_name.zh}
+                  icon={item.icon_url}
+                  url={item.url}
+                  showSeparator={index % (bookmarked.length >= 3 ? 3 : bookmarked.length) !== ((bookmarked.length >= 3 ? 3 : bookmarked.length) - 1)}
+                />
+               )}
+            </CollectionView>
+          </Item>
+        </Section>}
+        {bookmarked && !!bookmarked.length && <Section>
+          <Item
+            reactModuleForCell="DappFooterTableViewCell"
+            height={16}
+            selectionStyle={TableView.Consts.CellSelectionStyle.None}
+          />
+        </Section>}
         <Section>
           <Item
             reactModuleForCell="DappHeaderTableViewCell"

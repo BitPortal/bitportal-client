@@ -1,10 +1,10 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, NativeModules } from 'react-native'
+import { View, Text, TouchableHighlight, NativeModules } from 'react-native'
 import FastImage from 'react-native-fast-image'
 
 const SmallDappCollectionViewCell = props => {
   toDapp = () => {
-    NativeModules.RNTableViewManager.sendNotification(props.tableViewReactTag, { action: 'toDapp', url: props.data.url, title: props.data.name })
+    NativeModules.RNTableViewManager.sendNotification(props.tableViewReactTag, { action: 'toDapp', url: props.data.url, title: props.data.name, id: props.data.uid })
   }
 
   return (
@@ -30,9 +30,14 @@ const SmallDappCollectionViewCell = props => {
         </View>
       </View>
       <View>
-        <TouchableOpacity style={{ backgroundColor: '#EFEFF4', borderRadius: 28, height: 28, width: 70, padding: 0, alignItems: 'center', justifyContent: 'center' }} onPress={this.toDapp}>
+        <TouchableHighlight
+          underlayColor="#EFEFF4"
+          activeOpacity={0.7}
+          style={{ backgroundColor: '#EFEFF4', borderRadius: 28, height: 28, width: 70, padding: 0, alignItems: 'center', justifyContent: 'center' }}
+          onPress={this.toDapp}
+        >
           <Text style={{ color: '#007AFF', margin: 0, padding: 0, fontSize: 13, fontWeight: '500' }}>打开</Text>
-        </TouchableOpacity>
+        </TouchableHighlight>
       </View>
       {props.data.showSeparator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 72, backgroundColor: '#C8C7CC' }} />}
     </View>

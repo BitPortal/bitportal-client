@@ -8,6 +8,9 @@ const initialState = {
     byId: {},
     allIds: []
   },
+  bookmarked: {
+    allIds: []
+  },
   categoryFilter: null
 }
 
@@ -33,6 +36,24 @@ export default handleActions({
         state.recommend.allIds.push(recommend.id)
       }
     })
+  },
+  [actions.bookmarkDapp] (state, action) {
+    if (!state.bookmarked) state.bookmarked = {
+      allIds: []
+    }
+
+    const index = state.bookmarked.allIds.findIndex((v: any) => v === action.payload.id)
+
+    if (index === -1) {
+      state.bookmarked.allIds.push(action.payload.id)
+    }
+  },
+  [actions.unBookmarkDapp] (state, action) {
+    const index = state.bookmarked.allIds.findIndex((v: any) => v === action.payload.id)
+
+    if (index !== -1) {
+      state.bookmarked.allIds.splice(index, 1)
+    }
   },
   [actions.setDappFilter] (state, action) {
     state.categoryFilter = action.payload

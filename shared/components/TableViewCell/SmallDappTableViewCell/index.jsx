@@ -4,7 +4,7 @@ import FastImage from 'react-native-fast-image'
 
 const SmallDappTableViewCell = props => {
   toDapp = () => {
-    NativeModules.RNTableViewManager.sendNotification(props.tableViewReactTag, { action: 'toDapp', url: props.data.url, title: props.data.name })
+    NativeModules.RNTableViewManager.sendNotification(props.tableViewReactTag, { action: 'toDapp', url: props.data.url, title: props.data.name, id: props.data.uid })
   }
 
   return (

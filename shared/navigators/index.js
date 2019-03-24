@@ -19,6 +19,7 @@ import DappHeaderTableViewCell from 'components/TableViewCell/DappHeaderTableVie
 import DappFooterTableViewCell from 'components/TableViewCell/DappFooterTableViewCell'
 import DappCategoryTableViewCell from 'components/TableViewCell/DappCategoryTableViewCell'
 import SmallDappTableViewCell from 'components/TableViewCell/SmallDappTableViewCell'
+import ChainTypeTableViewCell from 'components/TableViewCell/ChainTypeTableViewCell'
 import WalletCardCollectionViewCell from 'components/CollectionViewCell/WalletCardCollectionViewCell'
 import FeaturedDappCollectionViewCell from 'components/CollectionViewCell/FeaturedDappCollectionViewCell'
 import SmallDappCollectionViewCell from 'components/CollectionViewCell/SmallDappCollectionViewCell'
@@ -42,6 +43,7 @@ import RecoverIdentity from 'screens/Wallet/RecoverIdentity'
 import BackupIdentity from 'screens/Wallet/BackupIdentity'
 import SelectChainType from 'screens/Wallet/SelectChainType'
 import ImportBTCWallet from 'screens/Wallet/ImportBTCWallet'
+import CreateEOSAccount from 'screens/Wallet/CreateEOSAccount'
 import ImportETHWallet from 'screens/Wallet/ImportETHWallet'
 import ImportEOSWallet from 'screens/Wallet/ImportEOSWallet'
 import ExportETHKeystore from 'screens/Wallet/ExportETHKeystore'
@@ -74,6 +76,8 @@ export const registerScreens = (store, persistor) => {
   AppRegistry.registerComponent('TransactionTableViewCell', () => TransactionTableViewCell)
   AppRegistry.registerComponent('AssetActionsTableViewCell', () => AssetActionsTableViewCell)
   AppRegistry.registerComponent('AssetOverviewTableViewCell', () => AssetOverviewTableViewCell)
+  AppRegistry.registerComponent('ChainTypeTableViewCell', () => ChainTypeTableViewCell)
+
   AppRegistry.registerComponent('WalletCardCollectionViewCell', () => WalletCardCollectionViewCell)
   AppRegistry.registerComponent('FeaturedDappCollectionViewCell', () => FeaturedDappCollectionViewCell)
   AppRegistry.registerComponent('SmallDappCollectionViewCell', () => SmallDappCollectionViewCell)
@@ -105,6 +109,7 @@ export const registerScreens = (store, persistor) => {
   Navigation.registerComponentWithRedux('BitPortal.BackupIdentity', () => BackupIdentity, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.SelectChainType', () => SelectChainType, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ImportBTCWallet', () => ImportBTCWallet, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.CreateEOSAccount', () => CreateEOSAccount, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ImportETHWallet', () => ImportETHWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ImportEOSWallet', () => ImportEOSWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.SelectEOSAccount', () => SelectEOSAccount, Provider, store)

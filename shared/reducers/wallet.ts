@@ -68,6 +68,11 @@ export default handleActions({
     state.identityWallets.allIds.splice(state.identityWallets.allIds.findIndex((v: any) => v === id), 1)
     delete state.identityWallets.byId[id]
   },
+  [actions.updateEOSWalletAddress] (state, action) {
+    const id = action.payload.id
+    const address = action.payload.address
+    state.identityWallets.byId[id].address = address
+  },
   [actions.resetWallet] () {
     return initialState
   }

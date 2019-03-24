@@ -146,6 +146,25 @@ export default class ManageWallet extends Component {
     )
   }
 
+  creatswitchAccount = () => {
+
+  }
+
+  createNewAccount = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.CreateEOSAccount',
+        options: {
+          topBar: {
+            backButton: {
+              title: '返回'
+            }
+          }
+        }
+      }
+    })
+  }
+
   clearError = () => {
     this.props.actions.deleteWallet.clearError()
     this.props.actions.exportMnemonics.clearError()
@@ -189,6 +208,7 @@ export default class ManageWallet extends Component {
     const loading = deleteWalletLoading || exportMnemonicsLoading || exportBTCPrivateKeyLoading || exportETHKeystoreLoading || exportETHPrivateKeyLoading || exportEOSPrivateKeyLoading
 
     const editActions = []
+    const accountActions = []
     const exportActions = []
 
     if (chain === 'EOS') {
@@ -211,6 +231,31 @@ export default class ManageWallet extends Component {
           arrow
         />
       )
+
+
+      if (source === 'RECOVERED_IDENTITY' || source === 'NEW_IDENTITY') {
+        accountActions.push(
+          <Item
+            reactModuleForCell="WalletManagementTableViewCell"
+            key="switchAccount"
+            actionType="switchAccount"
+            text="切换账号"
+            onPress={this.switchAccount}
+            arrow
+          />
+        )
+
+        accountActions.push(
+          <Item
+            reactModuleForCell="WalletManagementTableViewCell"
+            key="createAccount"
+            actionType="createAccount"
+            onPress={this.createNewAccount}
+            text="创建新账号"
+            arrow
+          />
+        )
+      }
     }
 
     if (chain === 'BITCOIN') {
@@ -249,7 +294,7 @@ export default class ManageWallet extends Component {
       )
     }
 
-    if (source === 'PRIVATE' || source === 'WIF' || source === 'KEYSTORE' || chain === 'ETHEREUM') {
+    if (source === 'PRIVATE' || source === 'WIF' || source === 'KEYSTORE' || chain === 'ETHEREUM' || chain === 'EOS') {
       exportActions.push(
         <Item
           reactModuleForCell="WalletManagementTableViewCell"
@@ -300,6 +345,9 @@ export default class ManageWallet extends Component {
           </Section>
           {editActions.length > 0 && <Section>
             {editActions}
+          </Section>}
+          {accountActions.length > 0 && <Section>
+            {accountActions}
           </Section>}
           {exportActions.length > 0 && <Section>
             {exportActions}

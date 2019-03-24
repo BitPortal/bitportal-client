@@ -38,11 +38,11 @@ export const getEOSKeyAccountsByPublicKey = async (publicKey: string) => {
   const keyAccounts = await eos.getKeyAccounts({ public_key: publicKey })
   assert(typeof keyAccounts === 'object' && keyAccounts.account_names && typeof keyAccounts.account_names === 'object' && keyAccounts.account_names.length > 0, 'No key accounts')
 
-  const keyPermissions = []
-  for (const accountName of keyAccounts) {
+  let keyPermissions = []
+  for (const accountName of keyAccounts.account_names) {
     const accountInfo = await eos.getAccount(accountName)
     const permissions = getPermissionsByKey(publicKey, accountInfo)
-    keyPermissions = [...keyPermissions, ...permissions]
+    keyPermissions = [...keyPermissions, permissions]
   }
 
   return keyPermissions

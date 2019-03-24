@@ -42,13 +42,13 @@ export default class DappList extends Component {
     const { action } = data
 
     if (action === 'toDapp') {
-      const { url, title } = data
+      const { url, title, id } = data
       const inject = loadInjectSync()
 
       Navigation.push(this.props.componentId, {
         component: {
           name: 'BitPortal.WebView',
-          passProps: { url, inject },
+          passProps: { url, inject, id },
           options: {
             topBar: {
               title: {
@@ -78,6 +78,7 @@ export default class DappList extends Component {
               reactModuleForCell="SmallDappTableViewCell"
               selectionStyle={TableView.Consts.CellSelectionStyle.None}
               key={item.id}
+              uid={item.id}
               height="78"
               description={item.description.zh}
               name={item.display_name.zh}

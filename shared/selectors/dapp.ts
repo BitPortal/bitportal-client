@@ -7,21 +7,32 @@ const categoryFilterSelector = (state: RootState) => state.dapp.categoryFilter
 const dappRecommendByIdSelector = (state: RootState) => state.dapp.recommend.byId
 const dappRecommendAllIdsSelector = (state: RootState) => state.dapp.recommend.allIds
 
+export const dappBookmarkAllIdsSelector = (state: RootState) => state.dapp.bookmarked && state.dapp.bookmarked.allIds
+
 export const dappSelector = createSelector(
   dappByIdSelector,
   dappAllIdsSelector,
   (byId: any, allIds: any) => allIds.map(id => byId[id])
 )
 
+export const dappBookmarkSelector = createSelector(
+  dappByIdSelector,
+  dappBookmarkAllIdsSelector,
+  (byId: any, allIds: any) => allIds && allIds.map(id => byId[id]).filter((dapp: any) => !!dapp)
+)
+
 export const categoryDappSelector = createSelector(
   dappSelector,
   categoryFilterSelector,
-  (dapps: any, categoryFilter: any) => {
+  dappBookmarkSelector,
+  (dapps: any, categoryFilter: any, bookmarked: any) => {
     if (categoryFilter) {
       if (categoryFilter === 'new') {
         return dapps.filter((dapp: any) => !!dapp.is_new)
       } else if (categoryFilter === 'hot') {
         return dapps.filter((dapp: any) => !!dapp.is_hot)
+      } else if (categoryFilter === 'bookmarked') {
+        return bookmarked
       }
 
       return dapps.filter((dapp: any) => dapp.category === categoryFilter)

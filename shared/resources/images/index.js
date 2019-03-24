@@ -74,4 +74,10 @@ export const walletIcons = {
   eos: require('./EOSWallet.png')
 }
 
+export const chainIcons = {
+  bitcoin: require('./bitcoin_logo.png'),
+  ethereum: require('./ethereum_logo.png'),
+  eos: require('./eos_logo.png')
+}
+
 export default Images

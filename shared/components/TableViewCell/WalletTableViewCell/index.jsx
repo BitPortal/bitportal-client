@@ -51,7 +51,8 @@ const WalletTableViewCell = (props) => {
               <Text style={{ fontSize: 17, color: 'black' }}>{props.data.name}</Text>
             </View>
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={{ fontSize: 14, color: '#666666' }}>选择或创建EOS帐户</Text>
+              {!props.data.syncingEOSAccount && <Text style={{ fontSize: 14, color: '#666666' }}>创建EOS帐户</Text>}
+              {!!props.data.syncingEOSAccount && <Text style={{ fontSize: 14, color: '#666666' }}>检测EOS帐户中...</Text>}
             </View>
           </View>
         </View>

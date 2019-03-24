@@ -1,6 +1,6 @@
 import assert from 'assert'
 import { delay } from 'redux-saga'
-import { takeLatest, put, call, select } from 'redux-saga/effects'
+import { takeLatest, takeEvery, put, call, select } from 'redux-saga/effects'
 import { reset } from 'redux-form'
 import { getErrorMessage, getEOSErrorMessage } from 'utils'
 import * as actions from 'actions/wallet'

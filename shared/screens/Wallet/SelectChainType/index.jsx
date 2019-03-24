@@ -62,18 +62,28 @@ export default class SelectChainType extends Component {
       <TableView
         style={{ flex: 1 }}
         tableViewStyle={TableView.Consts.Style.Grouped}
+        cellSeparatorInset={{ left: 50 }}
       >
         <Section />
-        <Section arrow>
-          <Item onPress={this.toImportBTCWallet}>
-            BTC 钱包
-          </Item>
-          <Item onPress={this.toImportETHWallet}>
-            ETH 钱包
-          </Item>
-          <Item onPress={this.toImportEOSWallet}>
-            EOS 钱包
-          </Item>
+        <Section>
+          <Item
+            height={66}
+            chain="bitcoin"
+            reactModuleForCell="ChainTypeTableViewCell"
+            onPress={this.toImportBTCWallet}
+          />
+          <Item
+            height={66}
+            chain="ethereum"
+            reactModuleForCell="ChainTypeTableViewCell"
+            onPress={this.toImportETHWallet}
+          />
+          <Item
+            height={66}
+            chain="eos"
+            reactModuleForCell="ChainTypeTableViewCell"
+            onPress={this.toImportEOSWallet}
+          />
         </Section>
       </TableView>
     )

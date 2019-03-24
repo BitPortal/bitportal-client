@@ -7,11 +7,13 @@ const images = {
   keystore: require('resources/images/exportKeystore.png'),
   delete: require('resources/images/Delete.png'),
   privateKey: require('resources/images/exportPrivate.png'),
-  mnemonic: require('resources/images/export.png'),
+  mnemonic: require('resources/images/backup.png'),
   addressType: require('resources/images/switchAddressType.png'),
   address: require('resources/images/exportKeystore.png'),
   resources: require('resources/images/resources.png'),
-  vote: require('resources/images/vote.png')
+  vote: require('resources/images/vote.png'),
+  createAccount: require('resources/images/create_account.png'),
+  switchAccount: require('resources/images/switchAddressType.png')
 }
 
 const WalletManagementTableViewCell = (props) => {
