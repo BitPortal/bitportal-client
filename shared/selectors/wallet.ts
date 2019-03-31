@@ -39,8 +39,12 @@ export const identityWalletSelector = createSelector(
 export const hasIdentityEOSWalletSelector = createSelector(
   identityWalletSelector,
   (identityWallets: any) => {
-    const index = identityWallets.findIndex((wallet: any) => wallet.chain === 'EOS')
-    return !!identityWallets[index].address
+    if (identityWallets && identityWallets.length !== 0) {
+      const index = identityWallets.findIndex((wallet: any) => wallet.chain === 'EOS')
+      return !!identityWallets[index].address
+    } else {
+      return false
+    }
   }
 )
 
