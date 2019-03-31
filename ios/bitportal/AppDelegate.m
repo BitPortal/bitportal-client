@@ -32,7 +32,7 @@
 {
   // 注册 DeviceToken
   [JPUSHService registerDeviceToken:deviceToken];
-  
+
   // 获取 registrationID
   [JPUSHService registrationIDCompletionHandler:^(int resCode, NSString *registrationID) {
     NSLog(@"resCode : %d,registrationID: %@",resCode,registrationID);
@@ -81,6 +81,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  // JPush
   JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
   entity.types = JPAuthorizationOptionAlert|JPAuthorizationOptionBadge|JPAuthorizationOptionSound;
   if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
@@ -94,12 +95,12 @@
 
   NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
   [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
-  
+
   // Umeng sdk:
   [UMConfigure setLogEnabled:NO];
   [RNUMConfigure initWithAppkey:@"5b46cc71f43e481b4f0000e7" channel:@"App Store"];
   [MobClick setScenarioType:E_UM_NORMAL];
-  
+
   // splash:
   [SplashScreen show];
   return YES;
