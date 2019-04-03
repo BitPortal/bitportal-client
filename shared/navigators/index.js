@@ -20,6 +20,7 @@ import DappFooterTableViewCell from 'components/TableViewCell/DappFooterTableVie
 import DappCategoryTableViewCell from 'components/TableViewCell/DappCategoryTableViewCell'
 import SmallDappTableViewCell from 'components/TableViewCell/SmallDappTableViewCell'
 import ChainTypeTableViewCell from 'components/TableViewCell/ChainTypeTableViewCell'
+import NewsTableViewCell from 'components/TableViewCell/NewsTableViewCell'
 import WalletCardCollectionViewCell from 'components/CollectionViewCell/WalletCardCollectionViewCell'
 import FeaturedDappCollectionViewCell from 'components/CollectionViewCell/FeaturedDappCollectionViewCell'
 import SmallDappCollectionViewCell from 'components/CollectionViewCell/SmallDappCollectionViewCell'
@@ -90,6 +91,7 @@ export const registerScreens = (store, persistor) => {
   AppRegistry.registerComponent('DappFooterTableViewCell', () => DappFooterTableViewCell)
   AppRegistry.registerComponent('DappCategoryTableViewCell', () => DappCategoryTableViewCell)
   AppRegistry.registerComponent('SmallDappTableViewCell', () => SmallDappTableViewCell)
+  AppRegistry.registerComponent('NewsTableViewCell', () => NewsTableViewCell)
 
   Navigation.registerComponentWithRedux('BitPortal.Welcome', () => Welcome, Provider, store)
 
