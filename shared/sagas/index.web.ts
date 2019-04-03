@@ -19,7 +19,7 @@ import ramSaga from './ram'
 import bandwidthSaga from './bandwidth'
 import tokenSaga from './token'
 import eosAssetSaga from './eosAsset'
-import dAppSaga from './dApp'
+import dAppSaga from './dapp'
 import contactSaga from './contact'
 import eosNodeSaga from './eosNode'
 
