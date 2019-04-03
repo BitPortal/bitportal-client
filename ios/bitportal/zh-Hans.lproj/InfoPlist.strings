@@ -1,4 +1,4 @@
-/* 
+/*
   InfoPlist.strings
   bitportal
 
@@ -7,7 +7,7 @@
 */
 "NSPhotoLibraryUsageDescription" = "开启相册权限";
 "NSBluetoothPeripheralUsageDescription" = "开启蓝牙权限";
-"NSCameraUsageDescription" = "开启摄像权限";
+"NSCameraUsageDescription" = "\"BitPortal\"请求开启摄像头权限以扫描二维码";
 "NSAppleMusicUsageDescription" = "访问媒体资料库";
 "NSMotionUsageDescription" = "开启运动健身权限";
 "NSSpeechRecognitionUsageDescription" = "开启语音识别权限";
