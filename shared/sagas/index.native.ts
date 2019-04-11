@@ -11,6 +11,7 @@ import tickerSaga from './ticker'
 import accountSaga from './account'
 import keyAccountSaga from './keyAccount'
 import dappSaga from './dapp'
+import newsSaga from './news'
 import transactionSaga from './transaction'
 import addressSaga from './address'
 import utxoSaga from './utxo'
@@ -27,6 +28,7 @@ const sagas = {
   tickerSaga: fork(tickerSaga),
   accountSaga: fork(accountSaga),
   dappSaga: fork(dappSaga),
+  newsSaga: fork(newsSaga),
   transactionSaga: fork(transactionSaga),
   addressSaga: fork(addressSaga),
   utxoSaga: fork(utxoSaga),

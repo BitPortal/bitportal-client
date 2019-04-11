@@ -1,24 +1,7 @@
 {
   "zh": {
-    "home_partner_title": "合作伙伴",
-    "home_last_price": "最近成交价",
-    "carousel_one_title": "资金安全",
-    "carousel_one_content": "独有多重安全防护体系，最大限度地保障用户的数字货币资金安全",
-    "carousel_two_title": "快捷方便",
-    "carousel_two_content": "依托全球知名的区块链企业集团，交易所联盟化系统确保用户交易快速便捷",
-    "carousel_three_title": "服务专业",
-    "carousel_three_content": "专业客服团队打造7X24管家服务，全程优化服务体验，综合提升交易效率",
-    "home_partner_content": "交易所联盟已上线国际交易平台hitbtc、okex等，之后会陆续上线更多的知名交易平台。同时，与众多币圈知名媒体如Coinspeaker、Cointelegraph、巴比特、btc123等建立长期优质的稳定合作。"
   },
   "en": {
-    "home_partner_title": "Partners",
-    "home_last_price": "LAST PRICE",
-    "carousel_one_title": "Asset Security",
-    "carousel_one_content": "A sui generis MLS system to maximize the security of users’ digital currency asset",
-    "carousel_two_title": "Quick and Easy",
-    "carousel_two_content": "Backed by a world-renowned blockchain conglomerate, the unionized exchange systems ensure quick and easy transactions",
-    "carousel_three_title": "Professional Service",
-    "carousel_three_content": "A dedicated customer service team provides 24/7 butler service to optimize service experience the whole time and comprehensively ehnace trading efficiency",
-    "home_partner_content": "The Exchange Union has launched global trading platforms including HitBTC, OKEX, etc. and there are more to go live. Also, the union has partnered with famous media of the digital asset market such as CoinSpeaker, Cointelegraph, 8BTC, BTC123 for long-term, high-quality and stable cooperation."
+
   }
 }

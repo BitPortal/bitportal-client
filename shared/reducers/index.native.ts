@@ -11,6 +11,7 @@ import portfolio from './portfolio'
 import account from './account'
 import keyAccount from './keyAccount'
 import dapp from './dapp'
+import news from './news'
 import address from './address'
 import utxo from './utxo'
 import transaction from './transaction'
@@ -27,6 +28,7 @@ export default combineReducers({
   account,
   intl,
   dapp,
+  news,
   address,
   utxo,
   transaction,

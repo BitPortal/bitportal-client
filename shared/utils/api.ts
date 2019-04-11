@@ -70,6 +70,16 @@ export const fetchBase = async (
   })
 }
 
+const contentFetchBase = (
+  method: FetchMethod = 'GET',
+  endPoint: string = '/hello',
+  params: object = {},
+  options: object = {}
+) => fetchBase(method, endPoint, params, {
+  ...options,
+  baseUrl: 'https://content.bitportal.io/'
+})
+
 const cmsFetchBase = (
   method: FetchMethod = 'GET',
   endPoint: string = '/hello',
@@ -103,7 +113,7 @@ const traceFetchBase = (
 export const getTicker = (params?: TickerParams) => marketFetchBase('GET', '/tickers', params)
 export const getChart = (params?: ChartParams) => marketFetchBase('GET', '/chart', params)
 export const getCurrencyRate = () => fetchBase('GET', '', {}, { baseUrl: CURRENCY_RATE_URL })
-export const getNewsList = (params: any) => cmsFetchBase('GET', '/article', params)
+export const getNewsList = (params: any) => contentFetchBase('GET', '_/items/news', params)
 export const getDappBanner = (params: any) => cmsFetchBase('GET', '/banner', params)
 export const getVersionInfo = () => cmsFetchBase('GET', '/system')
 export const getProducersInfo = (params: any) => cmsFetchBase('GET', '/eosbp', params)
@@ -121,3 +131,6 @@ export const traceTransaction = (params: any) => traceFetchBase('POST', '/transa
 export const traceStake = (params: any) => traceFetchBase('POST', '/stake', params)
 export const traceVotes = (params: any) => traceFetchBase('POST', '/votes', params)
 export const traceImport = (params: any) => traceFetchBase('POST', '/registry/wallets/import', params)
+
+export const simpleWalletAuth = (params: any, baseUrl: string) => fetchBase('POST', '', params, { baseUrl })
+export const simpleWalletCallback = (baseUrl: string) => fetchBase('GET', '', undefined, { baseUrl })
