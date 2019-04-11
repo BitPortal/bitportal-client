@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect'
-import { activeWalletSelector } from './wallet'
+import { activeWalletSelector, managingWalletSelector } from './wallet'
 
 export const accountByIdSelector = (state: RootState) => state.account.byId
-const accountAllIdsSelector = (state: RootState) => state.account.allIds
+export const accountAllIdsSelector = (state: RootState) => state.account.allIds
 
 export const accountResourcesByIdSelector = createSelector(
   accountByIdSelector,
@@ -27,8 +27,55 @@ export const activeAccountSelector = createSelector(
   activeWalletSelector,
   accountByIdSelector,
   (wallet: any, byId: any) => {
-    if (!byId && !wallet && wallet.chain !== 'EOS' && !wallet.address) return null
+    if (!byId || !wallet || wallet.chain !== 'EOS' || !wallet.address) return null
     const id = `${wallet.chain}/${wallet.address}`
     return byId[id]
+  }
+)
+
+export const managingAccountSelector = createSelector(
+  managingWalletSelector,
+  accountByIdSelector,
+  (wallet: any, byId: any) => {
+    if (!byId || !wallet || wallet.chain !== 'EOS' || !wallet.address) return null
+    const id = `${wallet.chain}/${wallet.address}`
+    return byId[id]
+  }
+)
+
+export const managingAccountTotalResourcesSelector = createSelector(
+  managingAccountSelector,
+  (account: any) => account && account.total_resources
+)
+
+export const managingAccountSelfDelegatedBandwidthSelector = createSelector(
+  managingAccountSelector,
+  (account: any) => account && account.self_delegated_bandwidth
+)
+
+export const managingAccountVotedProducersSelector = createSelector(
+  managingAccountSelector,
+  (account: any) => account && account.voter_info && account.voter_info.producers
+)
+
+export const managingAccountOthersDelegatedBandwidthSelector = createSelector(
+  managingAccountTotalResourcesSelector,
+  managingAccountSelfDelegatedBandwidthSelector,
+  (account: any, selfDelegatedBandwidth: any) => {
+    if (account) {
+      if (selfDelegatedBandwidth) {
+        return ({
+          cpu_weight: `${+account.cpu_weight.split(' ')[0] - +selfDelegatedBandwidth.cpu_weight.split(' ')[0]} EOS`,
+          net_weight: `${+account.net_weight.split(' ')[0] - +selfDelegatedBandwidth.net_weight.split(' ')[0]} EOS`,
+        })
+      }
+
+      return ({
+        cpu_weight: account.cpu_weight,
+        net_weight: account.net_weight
+      })
+    }
+
+    return null
   }
 )

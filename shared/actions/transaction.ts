@@ -11,4 +11,9 @@ export const setActiveTransactionId = createAction<SetActiveTransactionIdParams>
 export const getTransactions = createAsyncAction('transaction/GET_LIST')
 export const getTransaction = createAsyncAction('transaction/GET')
 
-export const transfer = createAsyncAction('transaction/transfer')
+export const transfer = createAsyncAction('transaction/TRANSFER')
+export const vote = createAsyncAction('transaction/VOTE')
+export const buyRAM = createAsyncAction('transaction/buy_RAM')
+export const sellRAM = createAsyncAction('transaction/sell_RAM')
+export const delegateBW = createAsyncAction('transaction/delegate_BW')
+export const undelegateBW = createAsyncAction('transaction/undelegate_BW')

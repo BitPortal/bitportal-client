@@ -4,6 +4,8 @@ import { activeWalletSelector } from 'selectors/wallet'
 export const tickerByIdSelector = (state: RootState) => state.ticker.byId
 export const tickerAllIdsSelector = (state: RootState) => state.ticker.allIds
 
+export const eosRAMPriceSelector = (state: RootState) => state.ticker.resources && state.ticker.resources.byId['EOS/RAM'] && state.ticker.resources.byId['EOS/RAM'].price
+
 export const tickerSelector = createSelector(
   tickerByIdSelector,
   tickerAllIdsSelector,

@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect'
 
 export const activeWalletIdSelector = (state: RootState) => state.wallet.activeWalletId
+export const managingWalletIdSelector = (state: RootState) => state.wallet.managingWalletId
 
 const identityWalletByIdSelector = (state: RootState) => state.wallet.identityWallets.byId
 const identityWalletAllIdsSelector = (state: RootState) => state.wallet.identityWallets.allIds
@@ -27,7 +28,14 @@ export const activeWalletSelector = createSelector(
   activeWalletIdSelector,
   identityWalletByIdSelector,
   importedWalletByIdSelector,
-  (activeWalletId: string, identityWallets: any, importedWallets: any) => identityWallets[activeWalletId] || importedWallets[activeWalletId]
+  (activeWalletId: string, identityWallets: any, importedWallets: any) => activeWalletId && (identityWallets[activeWalletId] || importedWallets[activeWalletId])
+)
+
+export const managingWalletSelector = createSelector(
+  managingWalletIdSelector,
+  identityWalletByIdSelector,
+  importedWalletByIdSelector,
+  (managingWalletId: string, identityWallets: any, importedWallets: any) => managingWalletId && (identityWallets[managingWalletId] || importedWallets[managingWalletId])
 )
 
 export const identityWalletSelector = createSelector(
@@ -39,8 +47,12 @@ export const identityWalletSelector = createSelector(
 export const hasIdentityEOSWalletSelector = createSelector(
   identityWalletSelector,
   (identityWallets: any) => {
-    const index = identityWallets.findIndex((wallet: any) => wallet.chain === 'EOS')
-    return !!identityWallets[index].address
+    if (identityWallets && identityWallets.length) {
+      const index = identityWallets.findIndex((wallet: any) => wallet.chain === 'EOS')
+      return !!identityWallets[index].address
+    }
+
+    return false
   }
 )
 
@@ -50,6 +62,13 @@ export const identityEOSWalletSelector = createSelector(
     const index = identityWallet.findIndex(wallet => wallet.chain === 'EOS')
 
     return index !== -1 ? identityWallet[index] : null
+  }
+)
+
+export const identityEOSAccountsSelector = createSelector(
+  identityEOSWalletSelector,
+  (identityWallet: any) => {
+    return identityWallet && identityWallet.accounts
   }
 )
 

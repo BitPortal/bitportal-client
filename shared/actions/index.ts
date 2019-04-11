@@ -6,10 +6,12 @@ import * as balanceActions from './balance'
 import * as tickerActions from './ticker'
 import * as portfolioActions from './portfolio'
 import * as accountActions from './account'
+import * as keyAccountActions from './keyAccount'
 import * as dappActions from './dapp'
 import * as transactionActions from './transaction'
 import * as addressActions from './address'
 import * as utxoActions from './utxo'
+import * as producerActions from './producer'
 
 export const asyncActions = getAsyncActions({
   ...identityActions,
@@ -22,5 +24,7 @@ export const asyncActions = getAsyncActions({
   ...dappActions,
   ...transactionActions,
   ...addressActions,
-  ...utxoActions
+  ...utxoActions,
+  ...keyAccountActions,
+  ...producerActions
 })

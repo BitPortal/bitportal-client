@@ -4,6 +4,7 @@ import Provider, { PersistProvider } from 'components/Provider'
 import AssetTableViewCell from 'components/TableViewCell/AssetTableViewCell'
 import HeaderTableViewCell from 'components/TableViewCell/HeaderTableViewCell'
 import AssetBalanceTableViewCell from 'components/TableViewCell/AssetBalanceTableViewCell'
+import WalletOverviewTableViewCell from 'components/TableViewCell/WalletOverviewTableViewCell'
 import WalletTableViewCell from 'components/TableViewCell/WalletTableViewCell'
 import WalletManagementTableViewCell from 'components/TableViewCell/WalletManagementTableViewCell'
 import ProducerTableViewCell from 'components/TableViewCell/ProducerTableViewCell'
@@ -13,6 +14,7 @@ import AssetActionsTableViewCell from 'components/TableViewCell/AssetActionsTabl
 import AssetOverviewTableViewCell from 'components/TableViewCell/AssetOverviewTableViewCell'
 import IdentityTableViewCell from 'components/TableViewCell/IdentityTableViewCell'
 import SelectEOSAccountTableViewCell from 'components/TableViewCell/SelectEOSAccountTableViewCell'
+import SwitchEOSAccountTableViewCell from 'components/TableViewCell/SwitchEOSAccountTableViewCell'
 import IdentityDetailTableViewCell from 'components/TableViewCell/IdentityDetailTableViewCell'
 import TransactionDetailTableViewCell from 'components/TableViewCell/TransactionDetailTableViewCell'
 import DappHeaderTableViewCell from 'components/TableViewCell/DappHeaderTableViewCell'
@@ -44,6 +46,7 @@ import BackupIdentity from 'screens/Wallet/BackupIdentity'
 import SelectChainType from 'screens/Wallet/SelectChainType'
 import ImportBTCWallet from 'screens/Wallet/ImportBTCWallet'
 import CreateEOSAccount from 'screens/Wallet/CreateEOSAccount'
+import ManageEOSResource from 'screens/Wallet/ManageEOSResource'
 import ImportETHWallet from 'screens/Wallet/ImportETHWallet'
 import ImportEOSWallet from 'screens/Wallet/ImportEOSWallet'
 import ExportETHKeystore from 'screens/Wallet/ExportETHKeystore'
@@ -51,6 +54,7 @@ import ExportETHPrivateKey from 'screens/Wallet/ExportETHPrivateKey'
 import ExportEOSPrivateKey from 'screens/Wallet/ExportEOSPrivateKey'
 import ExportBTCPrivateKey from 'screens/Wallet/ExportBTCPrivateKey'
 import SelectEOSAccount from 'screens/Wallet/SelectEOSAccount'
+import SwitchEOSAccount from 'screens/Wallet/SwitchEOSAccount'
 import TransactionDetail from 'screens/Wallet/TransactionDetail'
 import Discovery from 'screens/Discovery'
 import DappList from 'screens/Discovery/DappList'
@@ -69,6 +73,7 @@ export const registerScreens = (store, persistor) => {
   AppRegistry.registerComponent('AssetTableViewCell', () => AssetTableViewCell)
   AppRegistry.registerComponent('HeaderTableViewCell', () => HeaderTableViewCell)
   AppRegistry.registerComponent('AssetBalanceTableViewCell', () => AssetBalanceTableViewCell)
+  AppRegistry.registerComponent('WalletOverviewTableViewCell', () => WalletOverviewTableViewCell)
   AppRegistry.registerComponent('WalletTableViewCell', () => WalletTableViewCell)
   AppRegistry.registerComponent('WalletManagementTableViewCell', () => WalletManagementTableViewCell)
   AppRegistry.registerComponent('ProducerTableViewCell', () => ProducerTableViewCell)
@@ -84,6 +89,7 @@ export const registerScreens = (store, persistor) => {
   AppRegistry.registerComponent('LargeDappCollectionViewCell', () => LargeDappCollectionViewCell)
   AppRegistry.registerComponent('IdentityTableViewCell', () => IdentityTableViewCell)
   AppRegistry.registerComponent('SelectEOSAccountTableViewCell', () => SelectEOSAccountTableViewCell)
+  AppRegistry.registerComponent('SwitchEOSAccountTableViewCell', () => SwitchEOSAccountTableViewCell)
   AppRegistry.registerComponent('IdentityDetailTableViewCell', () => IdentityDetailTableViewCell)
   AppRegistry.registerComponent('TransactionDetailTableViewCell', () => TransactionDetailTableViewCell)
   AppRegistry.registerComponent('DappHeaderTableViewCell', () => DappHeaderTableViewCell)
@@ -110,9 +116,11 @@ export const registerScreens = (store, persistor) => {
   Navigation.registerComponentWithRedux('BitPortal.SelectChainType', () => SelectChainType, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ImportBTCWallet', () => ImportBTCWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.CreateEOSAccount', () => CreateEOSAccount, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ManageEOSResource', () => ManageEOSResource, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ImportETHWallet', () => ImportETHWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ImportEOSWallet', () => ImportEOSWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.SelectEOSAccount', () => SelectEOSAccount, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.SwitchEOSAccount', () => SwitchEOSAccount, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ExportETHKeystore', () => ExportETHKeystore, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ExportETHPrivateKey', () => ExportETHPrivateKey, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ExportEOSPrivateKey', () => ExportEOSPrivateKey, Provider, store)

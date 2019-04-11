@@ -225,11 +225,12 @@ export default class Wallet extends Component {
 
     if (action === 'toManageWallet') {
       const { walletInfo } = data
+      this.props.actions.setManagingWallet(walletInfo.id)
 
       Navigation.push(this.props.componentId, {
         component: {
           name: 'BitPortal.ManageWallet',
-          passProps: { ...walletInfo, fromCard: true }
+          passProps: { ...walletInfo, fromCard: true  }
         }
       })
     } else if (action === 'copy') {
@@ -388,26 +389,18 @@ export default class Wallet extends Component {
               </CollectionView>
             </Item>
           </Section>
-          {/* <Section>
-              <Item
-              reactModuleForCell="AssetActionsTableViewCell"
+          <Section uid="HeaderTableViewCell">
+            <Item
+              reactModuleForCell="HeaderTableViewCell"
+              title="资产"
+              height={48}
+              componentId={this.props.componentId}
               selectionStyle={TableView.Consts.CellSelectionStyle.None}
-              height={72}
-              disblePress
-              />
-              </Section> */}
-        <Section uid="HeaderTableViewCell">
-          <Item
-            reactModuleForCell="HeaderTableViewCell"
-            title="资产"
-            height={48}
-            componentId={this.props.componentId}
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            switching={this.state.switching}
-            hasRightButton
-          />
-        </Section>
-        {!!balance && (
+              switching={this.state.switching}
+              hasRightButton
+            />
+          </Section>
+          {!!balance && (
            <Section headerHeight={0} uid="AssetBalanceTableViewCell">
              <Item
                onPress={!this.state.switching ? this.toAsset.bind(this, balance.symbol) : () => {}}

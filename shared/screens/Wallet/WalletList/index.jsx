@@ -9,6 +9,7 @@ import { identityWalletSelector, importedWalletSelector, hasIdentityEOSWalletSel
 // import FastImage from 'react-native-fast-image'
 import * as walletActions from 'actions/wallet'
 import * as accountActions from 'actions/account'
+import * as keyAccountActions from 'actions/keyAccount'
 import styles from './styles'
 
 const { Section, Item } = TableView
@@ -18,7 +19,7 @@ const { Section, Item } = TableView
 @connect(
   state => ({
     identity: state.identity,
-    syncingEOSAccount: state.syncEOSAccount.loading,
+    syncingEOSAccount: state.getKeyAccount.loading,
     identityWallets: identityWalletSelector(state),
     importedWallets: importedWalletSelector(state),
     hasIdentityEOSWallet: hasIdentityEOSWalletSelector(state),
@@ -27,7 +28,8 @@ const { Section, Item } = TableView
   dispatch => ({
     actions: bindActionCreators({
       ...walletActions,
-      ...accountActions
+      ...accountActions,
+      ...keyAccountActions
     }, dispatch)
   })
 )
@@ -124,6 +126,8 @@ export default class WalletList extends Component {
   }
 
   toManageWallet = (walletInfo) => {
+    this.props.actions.setManagingWallet(walletInfo.id)
+
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.ManageWallet',
@@ -185,7 +189,7 @@ export default class WalletList extends Component {
       const { identityWallets } = this.props
       const index = identityWallets.findIndex((wallet: any) => wallet.chain === 'EOS')
       const wallet = identityWallets[index]
-      this.props.actions.syncEOSAccount.requested(wallet)
+      this.props.actions.getKeyAccount.requested(wallet)
     }
   }
 

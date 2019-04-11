@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text, TouchableHighlight, NativeModules, Image } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient'
 import { walletIcons } from 'resources/images'
 
 const backgroundColors = {

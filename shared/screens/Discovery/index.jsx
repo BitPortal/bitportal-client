@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'utils/redux'
 import TableView from 'react-native-tableview'
 import { Navigation } from 'react-native-navigation'
+import { Alert } from 'react-native'
 import * as dappActions from 'actions/dapp'
 import {
   dappSelector,
@@ -14,6 +15,7 @@ import {
   dappBookmarkSelector
 } from 'selectors/dapp'
 import { loadInject, loadInjectSync } from 'utils/inject'
+import { activeWalletSelector } from 'selectors/wallet'
 const { Section, Item, CollectionView, CollectionViewItem } = TableView
 
 @connect(
@@ -24,7 +26,8 @@ const { Section, Item, CollectionView, CollectionViewItem } = TableView
     gameDapp: gameDappSelector(state),
     toolDapp: toolDappSelector(state),
     featured: dappRecommendSelector(state),
-    bookmarked: dappBookmarkSelector(state)
+    bookmarked: dappBookmarkSelector(state),
+    wallet: activeWalletSelector(state),
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -58,21 +61,40 @@ export default class Discovery extends Component {
       this.toDappList(categoryTitle, category)
     } else if (action === 'toDapp') {
       const { url, title, id } = data
-      const inject = loadInjectSync()
+      const { wallet } = this.props
+      if (!wallet) {
+        Alert.alert(
+          '暂无EOS钱包',
+          '',
+          [
+            { text: '确定', onPress: () => {} }
+          ]
+        )
+      } else if (wallet.chain !== 'EOS') {
+        Alert.alert(
+          '请切换到EOS钱包',
+          '',
+          [
+            { text: '确定', onPress: () => {} }
+          ]
+        )
+      } else {
+        const inject = loadInjectSync()
 
-      Navigation.push(this.props.componentId, {
-        component: {
-          name: 'BitPortal.WebView',
-          passProps: { url, inject, id },
-          options: {
-            topBar: {
-              title: {
-                text: title
+        Navigation.push(this.props.componentId, {
+          component: {
+            name: 'BitPortal.WebView',
+            passProps: { url, inject, id },
+            options: {
+              topBar: {
+                title: {
+                  text: title
+                }
               }
             }
           }
-        }
-      })
+        })
+      }
     }
   }
 

@@ -9,6 +9,7 @@ import walletSaga from './wallet'
 import balanceSaga from './balance'
 import tickerSaga from './ticker'
 import accountSaga from './account'
+import keyAccountSaga from './keyAccount'
 import dappSaga from './dapp'
 import transactionSaga from './transaction'
 import addressSaga from './address'
@@ -29,7 +30,8 @@ const sagas = {
   transactionSaga: fork(transactionSaga),
   addressSaga: fork(addressSaga),
   utxoSaga: fork(utxoSaga),
-  bridgeSaga: fork(bridgeSaga)
+  bridgeSaga: fork(bridgeSaga),
+  keyAccountSaga: fork(keyAccountSaga)
 }
 
 if (ENV === 'production') {

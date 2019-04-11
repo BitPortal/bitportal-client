@@ -496,6 +496,24 @@ function* exportEOSPrivateKey(action: Action<ExportEOSPrivateKeyParams>) {
   }
 }
 
+function* setEOSWalletAddress(action: Action<SetEOSWalletAddressParams>) {
+  if (!action.payload) return
+  const oldAddress = action.payload.oldAddress
+  const id = action.payload.id
+  const address = action.payload.address
+
+  try {
+    yield put(actions.updateEOSWalletAddress({ address, id }))
+    const keystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    keystore.address = address
+    yield call(secureStorage.setItem, `IDENTITY_WALLET_KEYSTORE_${id}`, keystore, true)
+    yield put(actions.setEOSWalletAddress.succeeded())
+  } catch (e) {
+    yield put(actions.updateEOSWalletAddress({ address: oldAddress, id }))
+    yield put(actions.setEOSWalletAddress.failed(getErrorMessage(e)))
+  }
+}
+
 export default function* walletSaga() {
   yield takeLatest(String(actions.setActiveWallet), setActiveWallet)
   yield takeLatest(String(actions.deleteWallet.requested), deleteWallet)
@@ -513,4 +531,5 @@ export default function* walletSaga() {
   yield takeLatest(String(actions.importEOSPrivateKey.requested), importEOSPrivateKey)
   yield takeLatest(String(actions.getEOSKeyAccounts.requested), getEOSKeyAccounts)
   yield takeLatest(String(actions.exportEOSPrivateKey.requested), exportEOSPrivateKey)
+  yield takeLatest(String(actions.setEOSWalletAddress.requested), setEOSWalletAddress)
 }

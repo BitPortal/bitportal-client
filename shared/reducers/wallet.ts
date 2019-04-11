@@ -10,12 +10,17 @@ const initialState = {
     byId: {},
     allIds: []
   },
-  activeWalletId: null
+  activeWalletId: null,
+  managingWalletId: null
 }
 
 export default handleActions({
   [actions.setActiveWallet] (state, action) {
     state.activeWalletId = action.payload
+    state.managingWalletId = action.payload
+  },
+  [actions.setManagingWallet] (state, action) {
+    state.managingWalletId = action.payload
   },
   [actions.addIdentityWallets] (state, action) {
     action.payload.forEach(wallet => {
@@ -72,6 +77,11 @@ export default handleActions({
     const id = action.payload.id
     const address = action.payload.address
     state.identityWallets.byId[id].address = address
+  },
+  [actions.updateEOSWalletAccounts] (state, action) {
+    const id = action.payload.id
+    const accounts = action.payload.accounts
+    state.identityWallets.byId[id].accounts = accounts
   },
   [actions.resetWallet] () {
     return initialState

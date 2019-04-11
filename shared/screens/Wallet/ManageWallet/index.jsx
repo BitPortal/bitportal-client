@@ -5,7 +5,9 @@ import { View, ActionSheetIOS, AlertIOS, Alert, Text, ActivityIndicator } from '
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 import * as walletActions from 'actions/wallet'
-import { accountByIdSelector } from 'selectors/account'
+import * as producerActions from 'actions/producer'
+import { accountByIdSelector, managingAccountVotedProducersSelector } from 'selectors/account'
+import { managingWalletSelector } from 'selectors/wallet'
 import Modal from 'react-native-modal'
 import styles from './styles'
 
@@ -32,11 +34,14 @@ export const errorMessages = (error, messages) => {
     exportETHKeystore: state.exportETHKeystore,
     exportETHPrivateKey: state.exportETHPrivateKey,
     exportEOSPrivateKey: state.exportEOSPrivateKey,
-    account: accountByIdSelector(state)
+    account: accountByIdSelector(state),
+    wallet: managingWalletSelector(state),
+    votedProducers: managingAccountVotedProducersSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
-      ...walletActions
+      ...walletActions,
+      ...producerActions
     }, dispatch)
   })
 )
@@ -62,7 +67,7 @@ export default class ManageWallet extends Component {
 
   componentDidAppear() {
     if (this.props.fromCard) {
-      this.props.actions.setActiveWallet(this.props.id)
+      this.props.actions.setActiveWallet(this.props.wallet.id)
     }
   }
 
@@ -124,7 +129,7 @@ export default class ManageWallet extends Component {
   }
 
   exportPrivateKey = (walletId, symbol) => {
-    const { chain, address } = this.props
+    const { chain, address } = this.props.wallet
     const account = this.props.account[`${chain}/${address}`]
     const permissions = account && account.permissions
 
@@ -146,14 +151,80 @@ export default class ManageWallet extends Component {
     )
   }
 
-  creatswitchAccount = () => {
-
+  switchEOSAccount = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.SwitchEOSAccount',
+        options: {
+          topBar: {
+            backButton: {
+              title: '返回'
+            }
+          }
+        }
+      }
+    })
   }
 
   createNewAccount = () => {
+    /* Navigation.showModal({
+     *   stack: {
+     *     children: [{
+     *       component: {
+     *         name: 'BitPortal.CreateEOSAccount'
+     *       },
+     *       options: {
+     *         topBar: {
+     *           backButton: {
+     *             title: '返回'
+     *           }
+     *         }
+     *       }
+     *     }]
+     *   }
+     * })*/
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.CreateEOSAccount',
+        options: {
+          topBar: {
+            backButton: {
+              title: '返回'
+            }
+          }
+        }
+      }
+    })
+  }
+
+  vote = () => {
+    this.props.actions.setSelected(this.props.votedProducers)
+
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.Voting'
+          },
+          options: {
+            topBar: {
+              searchBar: true,
+              searchBarHiddenWhenScrolling: false,
+              searchBarPlaceholder: 'Search'
+            }
+          }
+        }]
+      }
+    })
+  }
+
+  manageResource = () => {
+    const { chain, id } = this.props.wallet
+
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.ManageEOSResource',
+        passProps: { chain, walletId: id },
         options: {
           topBar: {
             backButton: {
@@ -197,7 +268,13 @@ export default class ManageWallet extends Component {
   }
 
   render() {
-    const { name, address, chain, source, type, segWit, id, symbol, deleteWallet, exportMnemonics, exportBTCPrivateKey, exportETHKeystore, exportETHPrivateKey, exportEOSPrivateKey } = this.props
+    const { type, segWit, deleteWallet, exportMnemonics, exportBTCPrivateKey, exportETHKeystore, exportETHPrivateKey, exportEOSPrivateKey, wallet } = this.props
+    const name = (wallet && wallet.name) || this.props.name
+    const address = (wallet && wallet.address) || this.props.address
+    const chain = (wallet && wallet.chain) || this.props.chain
+    const source = (wallet && wallet.source) || this.props.source
+    const id = (wallet && wallet.id) || this.props.id
+    const symbol = (wallet && wallet.symbol) || this.props.symbol
 
     const deleteWalletLoading = deleteWallet.loading
     const exportMnemonicsLoading = exportMnemonics.loading
@@ -218,6 +295,7 @@ export default class ManageWallet extends Component {
           key="vote"
           actionType="vote"
           text="节点投票"
+          onPress={this.vote}
           arrow
         />
       )
@@ -228,6 +306,7 @@ export default class ManageWallet extends Component {
           key="resources"
           actionType="resources"
           text="资源管理"
+          onPress={this.manageResource}
           arrow
         />
       )
@@ -240,7 +319,7 @@ export default class ManageWallet extends Component {
             key="switchAccount"
             actionType="switchAccount"
             text="切换账号"
-            onPress={this.switchAccount}
+            onPress={this.switchEOSAccount}
             arrow
           />
         )

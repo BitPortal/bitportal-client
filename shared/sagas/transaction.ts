@@ -1,13 +1,16 @@
 import assert from 'assert'
 import { delay } from 'redux-saga'
 import { takeLatest, put, call, select } from 'redux-saga/effects'
-import { getErrorMessage } from 'utils'
+import { getErrorMessage, getEOSErrorMessage } from 'utils'
 import { reset } from 'redux-form'
 import secureStorage from 'core/storage/secureStorage'
 import * as actions from 'actions/transaction'
+import { getAccount } from 'actions/account'
+import { getBalance } from 'actions/balance'
 import * as btcChain from 'core/chain/bitcoin'
 import * as ethChain from 'core/chain/etheruem'
 import * as eosChain from 'core/chain/eos'
+import { managingWalletSelector } from 'selectors/wallet'
 import { push } from 'utils/location'
 
 function* transfer(action: Action) {
@@ -120,6 +123,159 @@ function* transfer(action: Action) {
       })
   } catch (e) {
     yield put(actions.transfer.failed(getErrorMessage(e)))
+  }
+}
+
+function* vote(action: Action) {
+  if (!action.payload) return
+
+  try {
+    const { chain, id, accountName, password, producers, proxy } = action.payload
+
+    yield delay(500)
+    const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    const identityKeystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    const keystore = importedKeystore || identityKeystore
+    assert(keystore && keystore.crypto, 'No keystore')
+
+    assert(chain === 'EOS', 'Invalid chain type')
+
+    const allAccounts = yield select((state: RootState) => state.account)
+    const account = allAccounts.byId[`${chain}/${accountName}`]
+    assert(account, 'No eos account')
+    const sortedProducers = producers.slice().sort(eosChain.sortProducers)
+    yield call(eosChain.vote, password, keystore, accountName, sortedProducers, proxy, account.permissions)
+
+    yield put(actions.vote.succeeded())
+    yield put(getAccount.requested({ chain, address: accountName }))
+  } catch (e) {
+    yield put(actions.vote.failed(getErrorMessage(e)))
+  }
+}
+
+function* buyRAM(action: Action) {
+  if (!action.payload) return
+
+  try {
+    const { chain, id, accountName, password, receiver, ramAmount } = action.payload
+
+    yield delay(500)
+    const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    const identityKeystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    const keystore = importedKeystore || identityKeystore
+    assert(keystore && keystore.crypto, 'No keystore')
+
+    assert(chain === 'EOS', 'Invalid chain type')
+
+    const allAccounts = yield select((state: RootState) => state.account)
+    const account = allAccounts.byId[`${chain}/${accountName}`]
+    assert(account, 'No eos account')
+
+    const amount = `${(+ramAmount).toFixed(4)} EOS`
+    yield call(eosChain.buyRAM, password, keystore, accountName, receiver || accountName, amount, account.permissions)
+
+    yield put(actions.buyRAM.succeeded())
+    yield put(reset('manageEOSResourcesForm'))
+    yield put(getAccount.requested({ chain, address: accountName }))
+
+    const managingWallet = yield select((state: RootState) => managingWalletSelector(state))
+    yield put(getBalance.requested(managingWallet))
+  } catch (e) {
+    yield put(actions.buyRAM.failed(getEOSErrorMessage(e)))
+  }
+}
+
+function* sellRAM(action: Action) {
+  if (!action.payload) return
+
+  try {
+    const { chain, id, accountName, password, receiver, ramAmount } = action.payload
+
+    yield delay(500)
+    const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    const identityKeystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    const keystore = importedKeystore || identityKeystore
+    assert(keystore && keystore.crypto, 'No keystore')
+
+    assert(chain === 'EOS', 'Invalid chain type')
+
+    const allAccounts = yield select((state: RootState) => state.account)
+    const account = allAccounts.byId[`${chain}/${accountName}`]
+    assert(account, 'No eos account')
+
+    const amount = +ramAmount
+    yield call(eosChain.sellRAM, password, keystore, accountName, receiver || accountName, amount, account.permissions)
+
+    yield put(actions.sellRAM.succeeded())
+    yield put(reset('manageEOSResourcesForm'))
+    yield put(getAccount.requested({ chain, address: accountName }))
+
+    const managingWallet = yield select((state: RootState) => managingWalletSelector(state))
+    yield put(getBalance.requested(managingWallet))
+  } catch (e) {
+    yield put(actions.sellRAM.failed(getErrorMessage(e)))
+  }
+}
+
+function* delegateBW(action: Action) {
+  if (!action.payload) return
+
+  try {
+    const { chain, id, accountName, password, receiver, cpuAmount, netAmount } = action.payload
+
+    yield delay(500)
+    const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    const identityKeystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    const keystore = importedKeystore || identityKeystore
+    assert(keystore && keystore.crypto, 'No keystore')
+
+    assert(chain === 'EOS', 'Invalid chain type')
+
+    const allAccounts = yield select((state: RootState) => state.account)
+    const account = allAccounts.byId[`${chain}/${accountName}`]
+    assert(account, 'No eos account')
+
+    yield call(eosChain.delagateBW, password, keystore, accountName, receiver || accountName, `${(+cpuAmount).toFixed(4)} EOS`, `${(+netAmount).toFixed(4)} EOS`, account.permissions)
+
+    yield put(actions.delegateBW.succeeded())
+    yield put(reset('manageEOSResourcesForm'))
+    yield put(getAccount.requested({ chain, address: accountName }))
+
+    const managingWallet = yield select((state: RootState) => managingWalletSelector(state))
+    yield put(getBalance.requested(managingWallet))
+  } catch (e) {
+    yield put(actions.delegateBW.failed(getErrorMessage(e)))
+  }
+}
+
+function* undelegateBW(action: Action) {
+  if (!action.payload) return
+
+  try {
+    const { chain, id, accountName, password, receiver, cpuAmount, netAmount } = action.payload
+
+    yield delay(500)
+    const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    const identityKeystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    const keystore = importedKeystore || identityKeystore
+    assert(keystore && keystore.crypto, 'No keystore')
+
+    assert(chain === 'EOS', 'Invalid chain type')
+
+    const allAccounts = yield select((state: RootState) => state.account)
+    const account = allAccounts.byId[`${chain}/${accountName}`]
+    assert(account, 'No eos account')
+
+    yield call(eosChain.undelagateBW, password, keystore, accountName, receiver || accountName, `${(+cpuAmount).toFixed(4)} EOS`, `${(+netAmount).toFixed(4)} EOS`, account.permissions)
+
+    yield put(actions.undelegateBW.succeeded())
+    yield put(reset('manageEOSResourcesForm'))
+    yield put(getAccount.requested({ chain, address: accountName }))
+
+    const managingWallet = yield select((state: RootState) => managingWalletSelector(state))
+    yield put(getBalance.requested(managingWallet))
+  } catch (e) {
+    yield put(actions.undelegateBW.failed(getErrorMessage(e)))
   }
 }
 
@@ -374,7 +530,12 @@ function* getTransaction(action: Action) {
 }
 
 export default function* transactionSaga() {
+  yield takeLatest(String(actions.buyRAM.requested), buyRAM)
+  yield takeLatest(String(actions.sellRAM.requested), sellRAM)
+  yield takeLatest(String(actions.delegateBW.requested), delegateBW)
+  yield takeLatest(String(actions.undelegateBW.requested), undelegateBW)
   yield takeLatest(String(actions.transfer.requested), transfer)
+  yield takeLatest(String(actions.vote.requested), vote)
   yield takeLatest(String(actions.getTransactions.requested), getTransactions)
   yield takeLatest(String(actions.getTransactions.refresh), getTransactions)
   yield takeLatest(String(actions.getTransaction.requested), getTransaction)

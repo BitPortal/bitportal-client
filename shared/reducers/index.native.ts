@@ -9,11 +9,13 @@ import balance from './balance'
 import ticker from './ticker'
 import portfolio from './portfolio'
 import account from './account'
+import keyAccount from './keyAccount'
 import dapp from './dapp'
 import address from './address'
 import utxo from './utxo'
 import transaction from './transaction'
 import bridge from './bridge'
+import producer from './producer'
 
 export default combineReducers({
   form,
@@ -29,5 +31,7 @@ export default combineReducers({
   utxo,
   transaction,
   bridge,
+  keyAccount,
+  producer,
   ...createAsyncActionsReducers(asyncActions)
 })

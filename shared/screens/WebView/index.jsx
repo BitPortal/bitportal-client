@@ -758,7 +758,7 @@ export default class WebView extends Component {
                     {Object.keys(action.data).map(key =>
                       <View key={key} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
                         <Text style={{ fontSize: 13, color: '#A2A2A6', height: 20 }}>{key}</Text>
-                        <Text style={{ fontSize: 13 }}>{action.data[key]}</Text>
+                        <Text style={{ fontSize: 13 }}>{typeof action.data[key] === 'object' ? JSON.stringify(action.data[key]) : action.data[key]}</Text>
                       </View>
                      )}
                   </View>

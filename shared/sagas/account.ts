@@ -2,9 +2,10 @@ import assert from 'assert'
 import { takeLatest, put, call, select } from 'redux-saga/effects'
 import { getErrorMessage } from 'utils'
 import * as actions from 'actions/account'
-import { updateEOSWalletAddress } from 'actions/wallet'
+import { updateEOSWalletAddress, updateEOSWalletAccounts } from 'actions/wallet'
 import { getAccount as getEOSAccount, getEOSKeyAccountsByPublicKey } from 'core/chain/eos'
 import secureStorage from 'core/storage/secureStorage'
+import { pop } from 'utils/location'
 import * as api from 'utils/api'
 
 function* getAccount(action: Action) {
@@ -36,10 +37,12 @@ function* createEOSAccount(action: Action) {
     const inviteCode = action.payload.inviteCode
     const ownerKey = action.payload.ownerKey
     const activeKey = action.payload.activeKey
+    const componentId = action.payload.componentId
     const chainType = 'eos'
 
     yield call(api.createEOSAccount, { walletId, inviteCode, ownerKey, activeKey, chainType })
     yield put(actions.createEOSAccount.succeeded())
+    if (componentId) pop(componentId)
   } catch (e) {
     yield put(actions.createEOSAccount.failed(getErrorMessage(e)))
   }
@@ -65,6 +68,8 @@ function* syncEOSAccount(action: Action) {
         const id = `${chain}/${address}`
         yield put(actions.updateAccount({ id, ...accountInfo }))
       }
+
+      yield put(updateEOSWalletAccounts({ id: wallet.id, accounts: keyAccounts }))
     }
 
     if (!wallet.address && !!accountNames.length) {

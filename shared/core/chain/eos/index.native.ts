@@ -151,6 +151,18 @@ export const getContract = async (contractName: string) => {
   return result
 }
 
+export const getEOSRAMMarket = async () => {
+  const result = await eos.getTableRows({
+    json: true,
+    code: 'eosio',
+    scope: 'eosio',
+    table: 'rammarket',
+    table_key: 'rammarket'
+  })
+
+  return result
+}
+
 export const selectKeysForPermission = async (keyPairs: any, account: string, permissions: any, permission?: string) => {
   let permissionKey
   const permissionKeys = await getEOSPermissionKeyPairs(keyPairs, account, permissions)
@@ -214,6 +226,181 @@ export const transfer = async (
         memo: memo || '',
         from: fromAccount,
         to: toAccount
+      }
+    }],
+    broadcast: false,
+    sign: true
+  })
+
+  return data.transaction_id
+}
+
+export const vote = async (
+  password: string,
+  keystore: any,
+  accountName: string,
+  producers: any,
+  proxy: any,
+  permissions: any,
+  permission?: string
+) => {
+  const keyPairs = await walletCore.exportPrivateKeys(password, keystore)
+  const permissionKey = await selectKeysForPermission(keyPairs, accountName, permissions, permission)
+  const keyProvider = permissionKey.keys
+  const eos = await initEOS({ keyProvider })
+  const data = await eos.transaction({
+    actions: [{
+      account: 'eosio',
+      name: 'voteproducer',
+      authorization: [{
+        actor: accountName,
+        permission: permissionKey.name
+      }],
+      data: {
+        voter: accountName,
+        proxy: proxy || '',
+        producers
+      }
+    }],
+    broadcast: false,
+    sign: true
+  })
+
+  return data.transaction_id
+}
+
+export const buyRAM = async (
+  password: string,
+  keystore: any,
+  accountName: string,
+  receiver: any,
+  amount: any,
+  permissions: any,
+  permission?: string
+) => {
+  const keyPairs = await walletCore.exportPrivateKeys(password, keystore)
+  const permissionKey = await selectKeysForPermission(keyPairs, accountName, permissions, permission)
+  const keyProvider = permissionKey.keys
+  const eos = await initEOS({ keyProvider })
+  const data = await eos.transaction({
+    actions: [{
+      account: 'eosio',
+      name: 'buyram',
+      authorization: [{
+        actor: accountName,
+        permission: permissionKey.name
+      }],
+      data: {
+        payer: accountName,
+        receiver: receiver,
+        quant: amount
+      }
+    }],
+    broadcast: false,
+    sign: true
+  })
+
+  return data.transaction_id
+}
+
+export const sellRAM = async (
+  password: string,
+  keystore: any,
+  accountName: string,
+  receiver: any,
+  amount: any,
+  permissions: any,
+  permission?: string
+) => {
+  const keyPairs = await walletCore.exportPrivateKeys(password, keystore)
+  const permissionKey = await selectKeysForPermission(keyPairs, accountName, permissions, permission)
+  const keyProvider = permissionKey.keys
+  const eos = await initEOS({ keyProvider })
+  const data = await eos.transaction({
+    actions: [{
+      account: 'eosio',
+      name: 'sellram',
+      authorization: [{
+        actor: accountName,
+        permission: permissionKey.name
+      }],
+      data: {
+        account: accountName,
+        bytes: amount
+      }
+    }],
+    broadcast: false,
+    sign: true
+  })
+
+  return data.transaction_id
+}
+
+export const delagateBW = async (
+  password: string,
+  keystore: any,
+  accountName: string,
+  receiver: any,
+  cpuAmount: any,
+  netAmount: any,
+  permissions: any,
+  permission?: string
+) => {
+  const keyPairs = await walletCore.exportPrivateKeys(password, keystore)
+  const permissionKey = await selectKeysForPermission(keyPairs, accountName, permissions, permission)
+  const keyProvider = permissionKey.keys
+  const eos = await initEOS({ keyProvider })
+  const data = await eos.transaction({
+    actions: [{
+      account: 'eosio',
+      name: 'delegatebw',
+      authorization: [{
+        actor: accountName,
+        permission: permissionKey.name
+      }],
+      data: {
+        from: accountName,
+        receiver: receiver,
+        stake_net_quantity: cpuAmount,
+        stake_cpu_quantity: netAmount,
+        transfer: 0
+      }
+    }],
+    broadcast: false,
+    sign: true
+  })
+
+  return data.transaction_id
+}
+
+export const undelagateBW = async (
+  password: string,
+  keystore: any,
+  accountName: string,
+  receiver: any,
+  cpuAmount: any,
+  netAmount: any,
+  permissions: any,
+  permission?: string
+) => {
+  const keyPairs = await walletCore.exportPrivateKeys(password, keystore)
+  const permissionKey = await selectKeysForPermission(keyPairs, accountName, permissions, permission)
+  const keyProvider = permissionKey.keys
+  const eos = await initEOS({ keyProvider })
+  const data = await eos.transaction({
+    actions: [{
+      account: 'eosio',
+      name: 'undelegatebw',
+      authorization: [{
+        actor: accountName,
+        permission: permissionKey.name
+      }],
+      data: {
+        from: accountName,
+        receiver: receiver,
+        unstake_net_quantity: cpuAmount,
+        unstake_cpu_quantity: netAmount,
+        transfer: 0
       }
     }],
     broadcast: false,

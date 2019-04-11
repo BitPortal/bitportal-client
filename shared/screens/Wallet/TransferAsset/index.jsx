@@ -84,9 +84,19 @@ export const errorMessages = (error, messages) => {
       return '余额不足'
     case 'Returned error: insufficient funds for gas * price + value':
       return '余额不足以支付手续费'
+    case 'EOS System Error':
+      return 'EOS系统错误'
     default:
       return '转账失败'
   }
+}
+
+export const errorDetail = (error) => {
+  if (!error) { return null }
+
+  const detail = typeof error === 'object' ? error.detail : ''
+
+  return detail
 }
 
 formatAddress = (address) => {
@@ -416,7 +426,7 @@ export default class TransferAsset extends Component {
       setTimeout(() => {
         Alert.alert(
           errorMessages(error),
-          '',
+          errorDetail(error),
           [
             { text: '确定', onPress: () => this.clearError() }
           ]
