@@ -252,6 +252,18 @@ export default class Voting extends Component {
   render() {
     const { producer, selectedIds, selected, vote } = this.props
     const loading = vote.loading
+    const loaded = vote.loaded
+
+    if ((!loaded && loading) || !producer.length) {
+      return (
+        <View style={styles.container}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+            <ActivityIndicator size="small" color="#000000" />
+            <Text style={{ fontSize: 17, marginLeft: 5 }}>获取节点中...</Text>
+          </View>
+        </View>
+      )
+    }
 
     return (
       <View style={styles.container}>

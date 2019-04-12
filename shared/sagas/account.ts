@@ -3,7 +3,9 @@ import { takeLatest, put, call, select } from 'redux-saga/effects'
 import { getErrorMessage } from 'utils'
 import * as actions from 'actions/account'
 import { updateEOSWalletAddress, updateEOSWalletAccounts } from 'actions/wallet'
+import { getKeyAccount } from 'actions/keyAccount'
 import { getAccount as getEOSAccount, getEOSKeyAccountsByPublicKey } from 'core/chain/eos'
+import { identityEOSWalletSelector } from 'selectors/wallet'
 import secureStorage from 'core/storage/secureStorage'
 import { pop } from 'utils/location'
 import * as api from 'utils/api'
@@ -33,15 +35,25 @@ function* createEOSAccount(action: Action) {
   if (!action.payload) return
 
   try {
-    const walletId = action.payload.accountName
-    const inviteCode = action.payload.inviteCode
+    const accountName = action.payload.accountName
+    const inviteCode = action.payload.inviteCode.trim()
     const ownerKey = action.payload.ownerKey
     const activeKey = action.payload.activeKey
     const componentId = action.payload.componentId
     const chainType = 'eos'
 
-    yield call(api.createEOSAccount, { walletId, inviteCode, ownerKey, activeKey, chainType })
+    yield call(api.createEOSAccount, { walletId: accountName, inviteCode, ownerKey, activeKey, chainType })
     yield put(actions.createEOSAccount.succeeded())
+
+    const wallet = yield select((state: RootState) => identityEOSWalletSelector(state))
+    yield put(getKeyAccount.requested(wallet))
+
+    const id = wallet.id
+    const keystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    keystore.address = accountName
+    yield call(secureStorage.setItem, `IDENTITY_WALLET_KEYSTORE_${id}`, keystore, true)
+    yield put(updateEOSWalletAddress({ address: accountName, id }))
+
     if (componentId) pop(componentId)
   } catch (e) {
     yield put(actions.createEOSAccount.failed(getErrorMessage(e)))

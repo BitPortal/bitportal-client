@@ -47,13 +47,13 @@ export default handleActions({
   [actions.setSelected] (state, action) {
     const oldSelected = state.selectedIds
     oldSelected.forEach(id => {
-      state.byId[id].selected = false
+      if (state.byId[id]) state.byId[id].selected = false
     })
 
     state.selectedIds = action.payload || []
 
     state.selectedIds.forEach(id => {
-      state.byId[id].selected = true
+      if (state.byId[id]) state.byId[id].selected = true
     })
   },
   [actions.clearProducer] () {

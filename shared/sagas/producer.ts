@@ -1,9 +1,10 @@
 import assert from 'assert'
-import { all, call, put, takeEvery } from 'redux-saga/effects'
+import { all, call, put, takeEvery, select } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/producer'
 import * as api from 'utils/api'
 import { getProducers } from 'core/chain/eos'
+import { managingAccountVotedProducersSelector } from 'selectors/account'
 
 function* getProducer(action: Action<GetProducerParams>) {
   try {
@@ -35,7 +36,11 @@ function* getProducer(action: Action<GetProducerParams>) {
       more: producers.more,
       total_producer_vote_weight: producers.total_producer_vote_weight
     }))
+
     yield put(actions.getProducer.succeeded())
+
+    const votedProducers = yield select((state: any) => managingAccountVotedProducersSelector(state))
+    yield put(actions.setSelected(votedProducers))
   } catch (e) {
     yield put(actions.getProducer.failed(e.message))
   }

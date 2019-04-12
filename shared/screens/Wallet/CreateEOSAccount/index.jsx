@@ -192,7 +192,7 @@ const warn = (values) => {
     warnings.accountName = '账户名由a-z与1-5字符组成'
   } else if (!values.inviteCode) {
     warnings.inviteCode = '邀请码不能为空'
-  } else if (values.inviteCode.length !== 5) {
+  } else if (values.inviteCode.trim().length !== 5) {
     warnings.inviteCode = '邀请码长度为5位'
   }
 
@@ -492,7 +492,7 @@ export default class CreateEOSAccount extends Component {
                 />
               </View>
               <View style={{ marginLeft: 16, width: Dimensions.get('window').width - 120 - 32 - 16, height: 120 }}>
-                <Text style={{ fontSize: 17, marginBottom: 16 }}>如何协助注册？</Text>
+                <Text style={{ fontSize: 17, marginBottom: 12 }}>如何协助注册？</Text>
                 <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.42)', marginBottom: 6, lineHeight: 17 }}>1. 填写EOS账户名，分享二维码给好友</Text>
                 <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.42)', lineHeight: 17 }}>2. 好友扫码支付EOS，完成EOS账户注册</Text>
               </View>
