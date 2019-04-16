@@ -256,6 +256,7 @@ const shouldError = () => true
 
 @connect(
   state => ({
+    getAccount: state.getAccount,
     buyRAM: state.buyRAM,
     sellRAM: state.sellRAM,
     delegateBW: state.delegateBW,
@@ -302,7 +303,7 @@ export default class ManageEOSResource extends Component {
         title: {
           text: 'EOS资源管理'
         },
-        noBorder: true,
+        noBorder: false,
         drawBehind: false
       },
       bottomTabs: {
@@ -323,6 +324,8 @@ export default class ManageEOSResource extends Component {
       || nextProps.delegateBW.error !== prevState.delegateBWError
       || nextProps.undelegateBW.loading !== prevState.undelegateBWLoading
       || nextProps.undelegateBW.error !== prevState.undelegateBWError
+      || nextProps.getAccount.loading !== prevState.getAccountLoading
+      || nextProps.getAccount.loaded !== prevState.getAccountLoaded
     ) {
       return {
         invalid: nextProps.invalid,
@@ -334,7 +337,9 @@ export default class ManageEOSResource extends Component {
         delegateBWLoading: nextProps.delegateBW.loading,
         delegateBWError: nextProps.delegateBW.error,
         undelegateBWLoading: nextProps.undelegateBW.loading,
-        undelegateBWError: nextProps.undelegateBW.error
+        undelegateBWError: nextProps.undelegateBW.error,
+        getAccountLoading: nextProps.getAccount.loading,
+        getAccountLoaded: nextProps.getAccount.loaded
       }
     } else {
       return null
@@ -350,6 +355,8 @@ export default class ManageEOSResource extends Component {
     delegateBWError: null,
     undelegateBWLoading: false,
     undelegateBWError: null,
+    getAccountLoading: false,
+    getAccountLoaded: false,
 
     selectedIndex: 0,
     buy: true,
@@ -474,6 +481,8 @@ export default class ManageEOSResource extends Component {
       || prevState.sellRAMLoading !== this.state.sellRAMLoading
       || prevState.delegateBWLoading !== this.state.delegateBWLoading
       || prevState.undelegateBWLoading !== this.state.undelegateBWLoading
+      || prevState.getAccountLoading !== this.state.getAccountLoading
+      || prevState.getAccountLoaded !== this.state.getAccountLoaded
     ) {
       Navigation.mergeOptions(this.props.componentId, {
         topBar: {
@@ -484,7 +493,8 @@ export default class ManageEOSResource extends Component {
               fontWeight: '400',
               enabled: !this.state.invalid && !this.state.pristine && !this.state.buyRAMLoading && !this.state.sellRAMLoading && !this.state.delegateBWLoading && !this.state.undelegateBWLoading
             }
-          ]
+          ],
+          noBorder: !(!this.state.getAccountLoaded && this.state.getAccountLoading)
         }
       })
     }
@@ -492,6 +502,10 @@ export default class ManageEOSResource extends Component {
 
   componentDidMount() {
     this.props.actions.getEOSRAMTicker.requested()
+
+    if (!this.props.account && this.props.address && this.props.chain) {
+      this.props.actions.getAccount.requested({ chain: this.props.chain, address: this.props.address })
+    }
   }
 
   copy = (text) => {
@@ -560,7 +574,7 @@ export default class ManageEOSResource extends Component {
   }
 
   render() {
-    const { formValues, change, account, ramPrice, totalResources, selfDelegatedBandwidth, othersDelegatedBandwidth, balance } = this.props
+    const { formValues, change, account, ramPrice, totalResources, selfDelegatedBandwidth, othersDelegatedBandwidth, balance, getAccount } = this.props
     const receiver = formValues && formValues.receiver
     const buyRAMAmount = formValues && formValues.buyRAMAmount
     const sellRAMAmount = formValues && formValues.sellRAMAmount
@@ -568,6 +582,17 @@ export default class ManageEOSResource extends Component {
     const undelegateCPUAmount = formValues && formValues.undelegateCPUAmount
     const delegateNETAmount = formValues && formValues.delegateNETAmount
     const undelegateNETAmount = formValues && formValues.undelegateNETAmount
+
+    if ((!getAccount.loaded && getAccount.loading) || !account) {
+      return (
+        <View style={styles.container}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+            <ActivityIndicator size="small" color="#000000" />
+            <Text style={{ fontSize: 17, marginLeft: 5 }}>获取账户信息中...</Text>
+          </View>
+        </View>
+      )
+    }
 
     return (
       <View style={styles.container}>

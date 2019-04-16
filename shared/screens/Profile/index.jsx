@@ -109,7 +109,7 @@ export default class Profile extends Component {
             reactModuleForCell="IdentityTableViewCell"
             arrow
             onPress={this.toContacts}
-            text="地址簿"
+            text="联系人"
             isSetting
           />
           <Item

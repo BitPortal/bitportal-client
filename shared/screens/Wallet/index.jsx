@@ -270,6 +270,56 @@ export default class Wallet extends Component {
     this.props.actions.getBalance.refresh(this.props.activeWallet)
   }
 
+  onLeadingSwipe = (data) => {
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.TransferAsset',
+            options: {
+              topBar: {
+                title: {
+                  text: `发送${data.symbol}到`
+                },
+                leftButtons: [
+                  {
+                    id: 'cancel',
+                    text: '取消'
+                  }
+                ]
+              }
+            }
+          }
+        }]
+      }
+    })
+  }
+
+  onTrailingSwipe = (data) => {
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.ReceiveAsset',
+            options: {
+              topBar: {
+                title: {
+                  text: `接收 ${data.symbol}`
+                },
+                leftButtons: [
+                  {
+                    id: 'cancel',
+                    text: '取消'
+                  }
+                ]
+              }
+            }
+          }
+        }]
+      }
+    })
+  }
+
   render() {
     const { identity, identityWallets, importedWallets, scanIdentity, balance, getBalance, ticker, activeWallet, portfolio, resources, intl } = this.props
     const loading = scanIdentity.loading
@@ -327,6 +377,8 @@ export default class Wallet extends Component {
           onScrollViewDidEndDecelerating={this.onScrollViewDidEndDecelerating}
           onCollectionViewDidSelectItem={() => {}}
           ref={(ref) => { this.tableView = ref }}
+          onLeadingSwipe={this.onLeadingSwipe}
+          onTrailingSwipe={this.onTrailingSwipe}
         >
           <Section uid="WalletCardCollectionViewCell">
             <Item
@@ -401,7 +453,7 @@ export default class Wallet extends Component {
             />
           </Section>
           {!!balance && (
-           <Section headerHeight={0} uid="AssetBalanceTableViewCell">
+             <Section headerHeight={0} uid="AssetBalanceTableViewCell" canEdit={!this.state.switching}>
              <Item
                onPress={!this.state.switching ? this.toAsset.bind(this, balance.symbol) : () => {}}
                reactModuleForCell="AssetBalanceTableViewCell"
@@ -416,6 +468,9 @@ export default class Wallet extends Component {
                selectionStyle={this.state.switching ? TableView.Consts.CellSelectionStyle.None : TableView.Consts.CellSelectionStyle.Default}
                chain={chain}
                showSeparator={false}
+               swipeable={true}
+               trailingTitle="收款"
+               leadingTitle="转账"
              />
            </Section>
          )

@@ -23,12 +23,12 @@ export default class Contacts extends Component {
     return {
       topBar: {
         title: {
-          text: '地址簿'
+          text: '联系人'
         },
         rightButtons: [
           {
-            id: 'edit',
-            text: '编辑'
+            id: 'add',
+            icon: require('resources/images/Add.png')
           }
         ],
         largeTitle: {
@@ -46,32 +46,8 @@ export default class Contacts extends Component {
   state = { editting: false }
 
   navigationButtonPressed({ buttonId }) {
-    if (buttonId === 'edit') {
-      this.setState({ editting: true }, () => {
-        Navigation.mergeOptions(this.props.componentId, {
-          topBar: {
-            rightButtons: [
-              {
-                id: 'done',
-                text: '完成'
-              }
-            ]
-          }
-        })
-      })
-    } else if (buttonId === 'done') {
-      this.setState({ editting: false }, () => {
-        Navigation.mergeOptions(this.props.componentId, {
-          topBar: {
-            rightButtons: [
-              {
-                id: 'edit',
-                text: '编辑'
-              }
-            ]
-          }
-        })
-      })
+    if (buttonId === 'add') {
+
     }
   }
 
@@ -87,65 +63,75 @@ export default class Contacts extends Component {
     }
   }
 
+  onChange = (data) => {
+    console.log(data)
+  }
+
+  onPress = async () => {
+    const constants = await Navigation.constants()
+
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.Contact',
+        passProps: {
+          statusBarHeight: constants.statusBarHeight
+        }
+      }
+    })
+  }
+
   render() {
     return (
       <TableView
-        style={{ flex: 1 }}
-        tableViewStyle={TableView.Consts.Style.Grouped}
-        tableViewCellStyle={TableView.Consts.CellStyle.Subtitle}
+        style={{ flex: 1, backgroundColor: 'white' }}
+        tableViewCellStyle={TableView.Consts.CellStyle.Default}
         detailTextColor="#666666"
         showsVerticalScrollIndicator={false}
         cellSeparatorInset={{ left: 16 }}
         onItemNotification={this.onItemNotification}
-        editing={this.state.editting}
+        onChange={this.onChange}
         moveWithinSectionOnly
       >
-        <Section />
-        <Section canMove canEdit>
+        <Section label="T">
           <Item
-            height={44}
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
+            height={60}
             accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
-            detail="main"
-          >
-            terencegehui
-          </Item>
+            reactModuleForCell="ContactTableViewCell"
+            name="Terence Ge"
+            description="自己"
+            onPress={this.onPress}
+          />
           <Item
-            height={44}
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
+            height={60}
             accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
-            detail="test"
-          >
-            terencegehui
-          </Item>
+            reactModuleForCell="ContactTableViewCell"
+            name="Jamie Chen"
+            description="同事"
+            onPress={this.onPress}
+          />
           <Item
-            height={44}
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
+            height={60}
             accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
-          >
-            terencegehui
-          </Item>
+            reactModuleForCell="ContactTableViewCell"
+            name="Errance Liu"
+            description="同事"
+            onPress={this.onPress}
+          />
           <Item
-            height={44}
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
+            height={60}
             accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
-          >
-            terencegehui
-          </Item>
+            reactModuleForCell="ContactTableViewCell"
+            name="Binance"
+            description="交易所"
+            onPress={this.onPress}
+          />
           <Item
-            height={44}
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
+            height={60}
             accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
-          >
-            terencegehui
-          </Item>
-          <Item
-            height={44}
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            reactModuleForCell="WalletTableViewCell"
-            type="add"
-            text="添加新地址..."
-            canEdit={false}
+            reactModuleForCell="ContactTableViewCell"
+            name="OKEX"
+            description="交易所"
+            onPress={this.onPress}
           />
         </Section>
       </TableView>

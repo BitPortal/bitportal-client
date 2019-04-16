@@ -13,6 +13,8 @@ import TransactionTableViewCell from 'components/TableViewCell/TransactionTableV
 import AssetActionsTableViewCell from 'components/TableViewCell/AssetActionsTableViewCell'
 import AssetOverviewTableViewCell from 'components/TableViewCell/AssetOverviewTableViewCell'
 import IdentityTableViewCell from 'components/TableViewCell/IdentityTableViewCell'
+import ContactTableViewCell from 'components/TableViewCell/ContactTableViewCell'
+import AddressTableViewCell from 'components/TableViewCell/AddressTableViewCell'
 import SelectEOSAccountTableViewCell from 'components/TableViewCell/SelectEOSAccountTableViewCell'
 import SwitchEOSAccountTableViewCell from 'components/TableViewCell/SwitchEOSAccountTableViewCell'
 import IdentityDetailTableViewCell from 'components/TableViewCell/IdentityDetailTableViewCell'
@@ -61,6 +63,8 @@ import Discovery from 'screens/Discovery'
 import DappList from 'screens/Discovery/DappList'
 import Profile from 'screens/Profile'
 import Contacts from 'screens/Profile/Contacts'
+import Contact from 'screens/Profile/Contact'
+import EditContact from 'screens/Profile/EditContact'
 import News from 'screens/News'
 import LanguageSetting from 'screens/Profile/LanguageSetting'
 import CurrencySetting from 'screens/Profile/CurrencySetting'
@@ -89,6 +93,9 @@ export const registerScreens = (store, persistor) => {
   AppRegistry.registerComponent('SmallDappCollectionViewCell', () => SmallDappCollectionViewCell)
   AppRegistry.registerComponent('LargeDappCollectionViewCell', () => LargeDappCollectionViewCell)
   AppRegistry.registerComponent('IdentityTableViewCell', () => IdentityTableViewCell)
+  AppRegistry.registerComponent('ContactTableViewCell', () => ContactTableViewCell)
+  AppRegistry.registerComponent('AddressTableViewCell', () => AddressTableViewCell)
+
   AppRegistry.registerComponent('SelectEOSAccountTableViewCell', () => SelectEOSAccountTableViewCell)
   AppRegistry.registerComponent('SwitchEOSAccountTableViewCell', () => SwitchEOSAccountTableViewCell)
   AppRegistry.registerComponent('IdentityDetailTableViewCell', () => IdentityDetailTableViewCell)
@@ -134,6 +141,8 @@ export const registerScreens = (store, persistor) => {
   Navigation.registerComponentWithRedux('BitPortal.DappList', () => DappList, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Profile', () => Profile, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Contacts', () => Contacts, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Contact', () => Contact, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.EditContact', () => EditContact, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.News', () => News, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.LanguageSetting', () => LanguageSetting, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.CurrencySetting', () => CurrencySetting, Provider, store)

@@ -236,6 +236,7 @@ export default class WalletList extends Component {
                 componentId={this.props.componentId}
                 isSelected={wallet.id === activeWalletId}
                 syncingEOSAccount={syncingEOSAccount}
+                selectionStyle={(wallet.chain !== 'EOS' || !!wallet.address) ? TableView.Consts.CellSelectionStyle.Default : (syncingEOSAccount ? TableView.Consts.CellSelectionStyle.None : TableView.Consts.CellSelectionStyle.Default)}
                 accessoryType={(wallet.chain !== 'EOS' || !!wallet.address) ? TableView.Consts.AccessoryType.DetailButton : (syncingEOSAccount ? TableView.Consts.AccessoryType.None : TableView.Consts.AccessoryType.DisclosureIndicator)}
                 onPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.switchWallet.bind(this, wallet.id) : (syncingEOSAccount ? () => {} : this.createEOSAccount.bind(this, wallet.id))}
                 onAccessoryPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.toManageWallet.bind(this, {

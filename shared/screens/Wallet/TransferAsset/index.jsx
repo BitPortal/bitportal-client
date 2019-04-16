@@ -347,6 +347,12 @@ export default class TransferAsset extends Component {
   subscription = Navigation.events().bindComponent(this)
   state = { showContact: false }
 
+  navigationButtonPressed({ buttonId }) {
+    if (buttonId === 'cancel') {
+      Navigation.dismissAllModals()
+    }
+  }
+
   componentDidUpdate(prevProps, prevState) {
 
   }

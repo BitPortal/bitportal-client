@@ -111,6 +111,8 @@ export default class ReceiveAsset extends Component {
       ActionSheetIOS.showShareActionSheetWithOptions({
         message: this.getAddressUri(address, this.state.amount, chain)
       }, () => {}, () => {})
+    } else if (buttonId === 'cancel') {
+      Navigation.dismissAllModals()
     }
   }
 

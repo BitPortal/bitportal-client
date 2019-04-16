@@ -43,6 +43,7 @@ export const errorDetail = (error) => {
 @connect(
   state => ({
     vote: state.vote,
+    getProducer: state.getProducer,
     wallet: managingWalletSelector(state),
     producer: producerSelector(state),
     selectedIds: producerSelectedIdsSelector(state),
@@ -250,11 +251,10 @@ export default class Voting extends Component {
   }
 
   render() {
-    const { producer, selectedIds, selected, vote } = this.props
+    const { producer, selectedIds, selected, vote, getProducer } = this.props
     const loading = vote.loading
-    const loaded = vote.loaded
 
-    if ((!loaded && loading) || !producer.length) {
+    if ((!getProducer.loaded && getProducer.loading) || !producer.length) {
       return (
         <View style={styles.container}>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', flex: 1 }}>

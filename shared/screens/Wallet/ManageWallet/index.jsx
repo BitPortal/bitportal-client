@@ -220,12 +220,12 @@ export default class ManageWallet extends Component {
   }
 
   manageResource = () => {
-    const { chain, id } = this.props.wallet
+    const { chain, id, address } = this.props.wallet
 
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.ManageEOSResource',
-        passProps: { chain, walletId: id },
+        passProps: { chain: chain || this.props.chain, walletId: id || this.props.id, address: address || this.props.address },
         options: {
           topBar: {
             backButton: {

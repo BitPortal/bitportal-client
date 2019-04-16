@@ -14,7 +14,8 @@ const MarketTableViewCell = props => (
         <Text style={{ fontSize: 17, width: 200, marginBottom: 2 }} numberOfLines={1}>{props.data.name}</Text>
         <View style={{ flex: 1, flexDirection: 'row' }}>
           <Text style={{ fontSize: 15, color: '#888888', marginRight: 10 }}>{props.data.symbol}</Text>
-          {+props.data.change >= 0 ? <Text style={{ fontSize: 15, color: '#4CD964' }}>{`+${props.data.change}%`}</Text> : <Text style={{ fontSize: 15, color: '#FF3B30' }}>{`${props.data.change}%`}</Text>}
+          {+props.data.change === 0 && <Text style={{ fontSize: 15, color: 'black' }}>0.00%</Text>}
+          {+props.data.change !== 0 && (+props.data.change >= 0 ? <Text style={{ fontSize: 15, color: '#4CD964' }}>{`+${props.data.change}%`}</Text> : <Text style={{ fontSize: 15, color: '#FF3B30' }}>{`${props.data.change}%`}</Text>)}
         </View>
       </View>
     </View>
