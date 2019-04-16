@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
-import { View, Text, Clipboard, ActivityIndicator, TouchableHighlight } from 'react-native'
+import { View, Text, Alert, Clipboard, ActivityIndicator, TouchableHighlight } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 // import FastImage from 'react-native-fast-image'
@@ -25,6 +25,7 @@ import { accountResourcesByIdSelector } from 'selectors/account'
 import { formatCycleTime, formatMemorySize } from 'utils/format'
 import Sound from 'react-native-sound'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
+import OpeninstallModule from 'openinstall-react-native'
 import styles from './styles'
 const { Section, Item, CollectionView, CollectionViewItem } = TableView
 
@@ -125,6 +126,19 @@ export default class Wallet extends Component {
     SplashScreen.hide()
     KeyboardManager.setToolbarDoneBarButtonItemText('完成')
     KeyboardManager.setToolbarPreviousNextButtonEnable(true)
+    //该方法用于监听app通过univeral link或scheme拉起后获取唤醒参数
+    this.receiveWakeupListener = (map) => {
+      if (map) {
+        //do your work here
+        console.log(map)
+      }
+      Alert.alert('拉起回调', JSON.stringify(map))
+    }
+    OpeninstallModule.addWakeUpListener(this.receiveWakeupListener)
+  }
+
+  componentWillUnMount() {
+    OpeninstallModule.removeWakeUpListener(this.receiveWakeupListener)//移除监听
   }
 
   componentDidAppear() {
@@ -230,7 +244,7 @@ export default class Wallet extends Component {
       Navigation.push(this.props.componentId, {
         component: {
           name: 'BitPortal.ManageWallet',
-          passProps: { ...walletInfo, fromCard: true  }
+          passProps: { ...walletInfo, fromCard: true }
         }
       })
     } else if (action === 'copy') {
@@ -340,8 +354,7 @@ export default class Wallet extends Component {
               disablePress
             >
               <CollectionView>
-                {identityWallets.filter(wallet => !!wallet.address).map(wallet =>
-                  <CollectionViewItem
+                {identityWallets.filter(wallet => !!wallet.address).map(wallet => <CollectionViewItem
                     key={wallet.id}
                     uid={wallet.id}
                     type="identity"
@@ -361,10 +374,9 @@ export default class Wallet extends Component {
                     totalAsset={(portfolio && portfolio[`${wallet.chain}/${wallet.address}`]) ? intl.formatNumber(portfolio[`${wallet.chain}/${wallet.address}`].totalAsset, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
                     componentId={this.props.componentId}
                     separatorStyle={TableView.Consts.SeparatorStyle.None}
-                  />
-                 )}
-                 {importedWallets.map(wallet =>
-                   <CollectionViewItem
+                />
+                )}
+                {importedWallets.map(wallet => <CollectionViewItem
                      key={wallet.id}
                      uid={wallet.id}
                      type="imported"
@@ -384,8 +396,8 @@ export default class Wallet extends Component {
                      totalAsset={(portfolio && portfolio[`${wallet.chain}/${wallet.address}`]) ? intl.formatNumber(portfolio[`${wallet.chain}/${wallet.address}`].totalAsset, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
                      componentId={this.props.componentId}
                      separatorStyle={TableView.Consts.SeparatorStyle.None}
-                   />
-                 )}
+                />
+                )}
               </CollectionView>
             </Item>
           </Section>
@@ -401,8 +413,8 @@ export default class Wallet extends Component {
             />
           </Section>
           {!!balance && (
-           <Section headerHeight={0} uid="AssetBalanceTableViewCell">
-             <Item
+          <Section headerHeight={0} uid="AssetBalanceTableViewCell">
+            <Item
                onPress={!this.state.switching ? this.toAsset.bind(this, balance.symbol) : () => {}}
                reactModuleForCell="AssetBalanceTableViewCell"
                height={60}
@@ -416,9 +428,9 @@ export default class Wallet extends Component {
                selectionStyle={this.state.switching ? TableView.Consts.CellSelectionStyle.None : TableView.Consts.CellSelectionStyle.Default}
                chain={chain}
                showSeparator={false}
-             />
-           </Section>
-         )
+            />
+          </Section>
+          )
         }
         </TableView>
         <Modal

@@ -8557,6 +8557,11 @@ opener@~1.4.0:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/opener/-/opener-1.4.3.tgz#5c6da2c5d7e5831e8ffa3964950f8d6674ac90b8"
 
+openinstall-react-native@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.npmjs.org/openinstall-react-native/-/openinstall-react-native-1.0.6.tgz#8a677745162afcd5d9a4e9162cf40a1117df2a6a"
+  integrity sha512-eDPT81LmcPkLSoCBgJ6So3FeN0j4sqvEPDVssC3ntgoeG5nrqpQivL9Bz8KUfDcxI8L2vATlblNNBUZMGlXzxA==
+
 opn@^3.0.2:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/opn/-/opn-3.0.3.tgz#b6d99e7399f78d65c3baaffef1fb288e9b85243a"

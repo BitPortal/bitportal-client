@@ -7,13 +7,13 @@
     "node": ">=8.0.0",
     "npm": "^3.0.0"
   },
-  "pre-commit": [
-  ],
+  "pre-commit": [],
   "skpm": {
     "main": "sketch/BitPortal.sketchplugin",
     "manifest": "sketch/manifest.json"
   },
   "scripts": {
+    "openinstall": "node node_modules/openinstall-react-native/openinstallConfig.js",
     "web": "cross-env NODE_ENV=development APP_ENV=development TARGET=web webpack-dev-server -d --history-api-fallback --inline --progress --port 3009 --host dev.bitportal.io",
     "mobile": "watchman watch-del-all && rm -fr $TMPDIR/react-* && cross-env NODE_ENV=production node node_modules/react-native/local-cli/cli.js start -- --reset-cache",
     "ios": "react-native run-ios --scheme bitportal-development --port 8080 --simulator='iPhone 6s' ",
@@ -74,6 +74,7 @@
     "keccak": "^1.4.0",
     "merkle-lib": "^2.0.10",
     "normalize.css": "^7.0.0",
+    "openinstall-react-native": "^1.0.6",
     "pushdata-bitcoin": "^1.0.1",
     "qrcode.react": "^0.7.1",
     "query-string": "^5.0.1",

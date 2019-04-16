@@ -192,6 +192,10 @@ android {
 }
 
 dependencies {
+
+	implementation project(":react-native-openinstall")
+    compile project(':react-native-haptic-feedback')
+    compile project(':openinstall-react-native')
     compile project(':react-native-interactable')
     compile project(':react-native-sound')
     compile project(':@remobile_react-native-qrcode-local-image')

@@ -49,6 +49,13 @@
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
+			<!-- openinstall scheme -->
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+				<category android:name="android.intent.category.BROWSABLE"/>
+				<data android:scheme="salymh"/>
+			</intent-filter>
       </activity>
     <meta-data
         android:name="JPUSH_APPKEY"
@@ -65,6 +72,9 @@
         android:value="Android" />
 
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+		<meta-data 
+			android:name="com.openinstall.APP_KEY"
+			android:value="salymh"/>
     </application>
 
 </manifest>

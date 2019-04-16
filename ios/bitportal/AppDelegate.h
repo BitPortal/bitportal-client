@@ -8,6 +8,7 @@
  */
 
 #import <UIKit/UIKit.h>
+#import <RCTOpenInstall/RCTOpenInstall.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

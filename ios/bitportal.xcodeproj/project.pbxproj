@@ -125,6 +125,7 @@
 		65B9E23F4D9E4DB68F5A768C /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A4E69A5531D42558266115F /* libReactNativePermissions.a */; };
 		6E8227E55B0E48BD85F113D0 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FB603679EBFB4FB8B2328B5E /* FontAwesome.ttf */; };
 		6EB423FA09184B7CB887CA2C /* libReactNativeKeyboardManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 119A225CA6FE4E6B947FDB82 /* libReactNativeKeyboardManager.a */; };
+		6F336C8DA30C42E983F67F0B /* libRCTOpenInstall.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D87CB5B295A4712AF25E8B4 /* libRCTOpenInstall.a */; };
 		6F904384365D405DBC3513B4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E898A8F89E428EB8826709 /* Foundation.framework */; };
 		72652B92899FFD553E8770B5 /* Pods_bitportal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6F1ADD189273ABF3554BD86 /* Pods_bitportal.framework */; };
 		75196F384CA649EDB16DBE43 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CC58BACB3324565AE29AD83 /* libRNDeviceInfo.a */; };
@@ -635,6 +636,13 @@
 			remoteGlobalIDString = 3D3CD9181DE5FBD800167DC4;
 			remoteInfo = "jschelpers-tvOS";
 		};
+		5E2F3D3822664BD4006873AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 343E17A941C74BB0B7DDB00C /* RCTOpenInstall.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1E2FD8B421ABE34400BFF004;
+			remoteInfo = RCTOpenInstall;
+		};
 		5E9157321DD0AC6500FF2AA8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */;
@@ -873,9 +881,11 @@
 		18F282182177351C00DEB13F /* DJIError.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DJIError.mm; sourceTree = "<group>"; };
 		18F282192177351C00DEB13F /* DJIMarshal+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DJIMarshal+Private.h"; sourceTree = "<group>"; };
 		19F3AC824ACC4F94AE750BD7 /* RCTRestart.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTRestart.xcodeproj; path = "../node_modules/react-native-restart/ios/RCTRestart.xcodeproj"; sourceTree = "<group>"; };
+		1D87CB5B295A4712AF25E8B4 /* libRCTOpenInstall.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTOpenInstall.a; sourceTree = "<group>"; };
 		1F6FFFE3A1A14B14B05FDE01 /* libz.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		2AE2F539AB864A40ACF81B7E /* libresolv.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		2DCE5CE8E4DC4D17BDEAF27C /* libRNRandomBytes.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNRandomBytes.a; sourceTree = "<group>"; };
+		343E17A941C74BB0B7DDB00C /* RCTOpenInstall.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTOpenInstall.xcodeproj; path = "../node_modules/openinstall-react-native/ios/RCTOpenInstall/RCTOpenInstall.xcodeproj"; sourceTree = "<group>"; };
 		3446CAA920E8EB1E00ACA3C8 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/lib/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		345118EA21BBAEC6004E9426 /* Interactable.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Interactable.xcodeproj; path = "../node_modules/react-native-interactable/lib/ios/Interactable.xcodeproj"; sourceTree = "<group>"; };
 		346C2C9A21E738770030003C /* ReactNativeHaptic.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeHaptic.xcodeproj; path = "../node_modules/react-native-haptic/ios/ReactNativeHaptic.xcodeproj"; sourceTree = "<group>"; };
@@ -1008,6 +1018,7 @@
 				6EB423FA09184B7CB887CA2C /* libReactNativeKeyboardManager.a in Frameworks */,
 				8A6C70F270AA4DC4A9C3D4A6 /* libRNSound.a in Frameworks */,
 				72652B92899FFD553E8770B5 /* Pods_bitportal.framework in Frameworks */,
+				6F336C8DA30C42E983F67F0B /* libRCTOpenInstall.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1276,6 +1287,7 @@
 				119A225CA6FE4E6B947FDB82 /* libReactNativeKeyboardManager.a */,
 				5EDC738F416D4EE690D11190 /* libRNTableView.a */,
 				C7A85155C62D499CA8CD38A9 /* libRNSound.a */,
+				1D87CB5B295A4712AF25E8B4 /* libRCTOpenInstall.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -1646,6 +1658,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		5E2F3D3522664BD4006873AB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5E2F3D3922664BD4006873AB /* libRCTOpenInstall.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1706,6 +1726,7 @@
 				754647FCC10D42E79662A42B /* FastImage.xcodeproj */,
 				721257168F454099810D6D12 /* ReactNativeKeyboardManager.xcodeproj */,
 				E0CB8D19B7D042D594BFFAA2 /* RNSound.xcodeproj */,
+				343E17A941C74BB0B7DDB00C /* RCTOpenInstall.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1832,6 +1853,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 				"zh-Hans",
@@ -1892,6 +1914,10 @@
 				{
 					ProductGroup = 00C302D41ABCB9D200DB3ED1 /* Products */;
 					ProjectRef = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
+				},
+				{
+					ProductGroup = 5E2F3D3522664BD4006873AB /* Products */;
+					ProjectRef = 343E17A941C74BB0B7DDB00C /* RCTOpenInstall.xcodeproj */;
 				},
 				{
 					ProductGroup = 1828482C2125643100F2BE57 /* Products */;
@@ -2493,6 +2519,13 @@
 			remoteRef = 3DAD3EAE1DF850E9000B6D8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		5E2F3D3922664BD4006873AB /* libRCTOpenInstall.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTOpenInstall.a;
+			remoteRef = 5E2F3D3822664BD4006873AB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -2586,13 +2619,25 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-bitportal/Pods-bitportal-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/DoubleConversion/DoubleConversion.framework",
+				"${BUILT_PRODUCTS_DIR}/Folly/folly.framework",
 				"${BUILT_PRODUCTS_DIR}/IGListKit/IGListKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Interactable/Interactable.framework",
+				"${BUILT_PRODUCTS_DIR}/React/React.framework",
+				"${BUILT_PRODUCTS_DIR}/glog/glog.framework",
+				"${BUILT_PRODUCTS_DIR}/yoga/yoga.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DoubleConversion.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/folly.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGListKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Interactable.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/React.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/glog.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/yoga.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2754,6 +2799,7 @@
 					"$(SRCROOT)/../node_modules/react-native-tableview/RNTableView/**",
 					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
 					"$(SRCROOT)/../node_modules/react-native-interactable/ios",
+					"$(SRCROOT)/../node_modules/openinstall-react-native/ios/RCTOpenInstall/RCTOpenInstall",
 				);
 				INFOPLIST_FILE = bitportal/Info.plist;
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
@@ -2766,6 +2812,7 @@
 					"\"$(SRCROOT)/bitportal\"",
 					"\"$(SRCROOT)/bitportal\"",
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
+					"\"$(SRCROOT)/bitportal\"",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2828,6 +2875,7 @@
 					"$(SRCROOT)/../node_modules/react-native-tableview/RNTableView/**",
 					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
 					"$(SRCROOT)/../node_modules/react-native-interactable/ios",
+					"$(SRCROOT)/../node_modules/openinstall-react-native/ios/RCTOpenInstall/RCTOpenInstall",
 				);
 				INFOPLIST_FILE = bitportal/Info.plist;
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
@@ -2840,6 +2888,7 @@
 					"\"$(SRCROOT)/bitportal\"",
 					"\"$(SRCROOT)/bitportal\"",
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
+					"\"$(SRCROOT)/bitportal\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
