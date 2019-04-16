@@ -22,6 +22,12 @@ const AddressTableViewCell = (props) => {
           />
         </Text>
       </View>
+      <View>
+        <Image
+          source={require('resources/images/send.png')}
+          style={{ width: 24, height: 24 }}
+        />
+      </View>
     </View>
   )
 }

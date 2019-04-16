@@ -87,6 +87,12 @@ export default class Contact extends Component {
      * )*/
   }
 
+  navigationButtonPressed({ buttonId }) {
+    if (buttonId === 'edit') {
+
+    }
+  }
+
   backupIdentity = (id) => {
     AlertIOS.prompt(
       '请输入钱包密码',
@@ -169,6 +175,12 @@ export default class Contact extends Component {
               height={44}
               selectionStyle={TableView.Consts.CellSelectionStyle.None}
             />
+            <Item
+              reactModuleForCell="AddressTableViewCell"
+              address="3LtEVW6VPKU1Qe9RsHU6kfKKWDY9cCHHPB"
+              height={44}
+              selectionStyle={TableView.Consts.CellSelectionStyle.None}
+            />
           </Section>
           <Section label="ETH 地址">
             <Item
@@ -177,20 +189,8 @@ export default class Contact extends Component {
               height={44}
               selectionStyle={TableView.Consts.CellSelectionStyle.None}
             />
-            <Item
-              reactModuleForCell="AddressTableViewCell"
-              address="0xD375Da74415A1098fEDcA560F782bc1D11B4B782"
-              height={44}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            />
           </Section>
           <Section label="EOS 账户">
-            <Item
-              reactModuleForCell="AddressTableViewCell"
-              address="terencegehui"
-              height={44}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            />
             <Item
               reactModuleForCell="AddressTableViewCell"
               address="terencegehui"
