@@ -8,8 +8,8 @@ import * as identityActions from 'actions/identity'
 import Modal from 'react-native-modal'
 import FastImage from 'react-native-fast-image'
 import { injectIntl } from 'react-intl'
-import { activeWalletSelector} from 'selectors/wallet'
-import { activeWalletTransactionSelector } from 'selectors/transaction'
+import { activeWalletSelector, transferWalletSelector } from 'selectors/wallet'
+import { transferWalletTransactionSelector } from 'selectors/transaction'
 import Sound from 'react-native-sound'
 import * as transactionActions from 'actions/transaction'
 import styles from './styles'
@@ -31,8 +31,8 @@ const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
 @connect(
   state => ({
     getTransaction: state.getTransaction,
-    activeWallet: activeWalletSelector(state),
-    transaction: activeWalletTransactionSelector(state)
+    activeWallet: transferWalletSelector(state),
+    transaction: transferWalletTransactionSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({

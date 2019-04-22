@@ -11,6 +11,7 @@ import { activeWalletTickerSelector } from 'selectors/ticker'
 import { activeWalletTransactionsSelector } from 'selectors/transaction'
 import FastImage from 'react-native-fast-image'
 import * as transactionActions from 'actions/transaction'
+import * as walletActions from 'actions/wallet'
 import { assetIcons } from 'resources/images'
 import styles from './styles'
 const { Section, Item } = TableView
@@ -27,7 +28,8 @@ const { Section, Item } = TableView
   }),
   dispatch => ({
     actions: bindActionCreators({
-      ...transactionActions
+      ...transactionActions,
+      ...walletActions
     }, dispatch)
   })
 )
@@ -89,6 +91,7 @@ export default class Asset extends Component {
   }
 
   componentDidMount() {
+    this.props.actions.setActiveWallet(this.props.activeWallet.id)
     /* Navigation.mergeOptions(this.props.componentId, {
      *   topBar: {
      *     background: {

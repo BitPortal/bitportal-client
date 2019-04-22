@@ -58,6 +58,46 @@ const TextField = ({
   </View>
 )
 
+const MiniTextField = ({
+  input: { onChange, ...restInput },
+  meta: { touched, error, active },
+  label,
+  placeholder,
+  separator,
+  secureTextEntry,
+  fieldName,
+  change,
+  showClearButton,
+  switchable,
+  onSwitch,
+  clearButtonRight,
+  autoFocus,
+  autoCapitalize,
+  rightBorder
+}) => (
+  <View style={{ flex: 1, alignItems: 'center', height: 40, paddingRight: 16, flexDirection: 'row', borderRightWidth: rightBorder ? 0.5 : 0, borderColor: '#C8C7CC' }}>
+    <TextInput
+      style={{ width: '100%', height: '100%', fontSize: 17, paddingLeft: 16, paddingRight: clearButtonRight || 78 }}
+      autoCorrect={false}
+      autoCapitalize={autoCapitalize}
+      placeholder={placeholder}
+      onChangeText={onChange}
+      secureTextEntry={secureTextEntry}
+      autoFocus={autoFocus}
+      {...restInput}
+    />
+    {showClearButton && active && <View style={{ height: '100%', position: 'absolute', right: clearButtonRight || 38, top: 0, width: 20, alignItems: 'center', justifyContent: 'center' }}>
+      <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
+        <FastImage
+          source={require('resources/images/clear.png')}
+          style={{ width: 14, height: 14 }}
+        />
+      </TouchableHighlight>
+    </View>}
+    {separator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 0, backgroundColor: 'rgba(0,0,0,0.36)' }} />}
+  </View>
+)
+
 export const errorMessages = (error, messages) => {
   if (!error) { return null }
 
@@ -273,7 +313,7 @@ export default class MyIdentity extends Component {
 
     this.state.eosIds.forEach((value) => {
       if (data[`eos_accountName_${value}`]) {
-        eos.push({ accountName: data[`eos_accountName_${value}`] })
+        eos.push({ accountName: data[`eos_accountName_${value}`], memo: data[`eos_memo_${value}`] && data[`eos_memo_${value}`].trim() })
       }
     })
 
@@ -380,6 +420,10 @@ export default class MyIdentity extends Component {
 
         for (let i = 0; i < this.props.contact.eos.length; i++) {
           this.props.change(`eos_accountName_${i}`, this.props.contact.eos[i].accountName)
+          if (this.props.contact.eos[i].memo) {
+            this.props.change(`eos_memo_${i}`, this.props.contact.eos[i].memo)
+          }
+
           eosIds.push(i)
         }
 
@@ -519,19 +563,42 @@ export default class MyIdentity extends Component {
                   style={{ width: 28 * 0.8, height: 30 * 0.8 }}
                 />
               </TouchableHighlight>
-              <Field
-                label="EOS"
-                placeholder="账户名"
-                name={`eos_accountName_${id}`}
-                fieldName={`eos_accountName_${id}`}
-                change={change}
-                component={TextField}
-                switchable
-                onSwitch={() => {}}
-                showClearButton={!!formValues && formValues[`eos_accountName_${id}`] && formValues[`eos_accountName_${id}`].length > 0}
-                autoFocus={!editMode || id > contact.eos.length - 1}
-                autoCapitalize="none"
-              />
+              <View style={{ width: '100%', alignItems: 'center', height: 40, paddingRight: 16, flexDirection: 'row' }}>
+                 <View style={{ borderRightWidth: 0.5, borderColor: '#C8C7CC', height: '100%', width: 42, justifyContent: 'center', alignItems: 'center', paddingRight: 10 }}>
+                   <Text style={{ width: 30, height: '100%', justifyContent: 'center', alignItems: 'center', fontSize: 15, lineHeight: 40 }} numberOfLines={1}>EOS</Text>
+                 </View>
+                 <View style={{ flex: 1, height: 40, flexDirection: 'row' }}>
+                   <Field
+                     label="EOS"
+                     placeholder="账户名"
+                     name={`eos_accountName_${id}`}
+                     fieldName={`eos_accountName_${id}`}
+                     change={change}
+                     component={MiniTextField}
+                     switchable
+                     onSwitch={() => {}}
+                     showClearButton={!!formValues && formValues[`eos_accountName_${id}`] && formValues[`eos_accountName_${id}`].length > 0}
+                     autoFocus={!editMode || id > contact.eos.length - 1}
+                     autoCapitalize="none"
+                     rightBorder
+                     clearButtonRight={6}
+                   />
+                   <Field
+                     label="EOS"
+                     placeholder="默认备注"
+                     name={`eos_memo_${id}`}
+                     fieldName={`eos_memo_${id}`}
+                     change={change}
+                     component={MiniTextField}
+                     switchable
+                     onSwitch={() => {}}
+                     showClearButton={!!formValues && formValues[`eos_memo_${id}`] && formValues[`eos_memo_${id}`].length > 0}
+                     autoFocus={false}
+                     autoCapitalize="none"
+                     clearButtonRight={16}
+                   />
+                 </View>
+              </View>
               {(index !== this.state.eosIds.length - 1) && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />}
             </View>
            )}

@@ -11,16 +11,21 @@ const initialState = {
     allIds: []
   },
   activeWalletId: null,
-  managingWalletId: null
+  managingWalletId: null,
+  transferWalletId: null
 }
 
 export default handleActions({
   [actions.setActiveWallet] (state, action) {
     state.activeWalletId = action.payload
     state.managingWalletId = action.payload
+    state.transferWalletId = action.payload
   },
   [actions.setManagingWallet] (state, action) {
     state.managingWalletId = action.payload
+  },
+  [actions.setTransferWallet] (state, action) {
+    state.transferWalletId = action.payload
   },
   [actions.addIdentityWallets] (state, action) {
     action.payload.forEach(wallet => {

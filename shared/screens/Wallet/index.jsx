@@ -271,6 +271,8 @@ export default class Wallet extends Component {
   }
 
   onLeadingSwipe = (data) => {
+    this.props.actions.setTransferWallet(this.props.activeWallet.id)
+
     Navigation.showModal({
       stack: {
         children: [{

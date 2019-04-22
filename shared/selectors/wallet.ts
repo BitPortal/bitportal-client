@@ -2,6 +2,7 @@ import { createSelector } from 'reselect'
 
 export const activeWalletIdSelector = (state: RootState) => state.wallet.activeWalletId
 export const managingWalletIdSelector = (state: RootState) => state.wallet.managingWalletId
+export const transferWalletIdSelector = (state: RootState) => state.wallet.transferWalletId
 
 const identityWalletByIdSelector = (state: RootState) => state.wallet.identityWallets.byId
 const identityWalletAllIdsSelector = (state: RootState) => state.wallet.identityWallets.allIds
@@ -36,6 +37,13 @@ export const managingWalletSelector = createSelector(
   identityWalletByIdSelector,
   importedWalletByIdSelector,
   (managingWalletId: string, identityWallets: any, importedWallets: any) => managingWalletId && (identityWallets[managingWalletId] || importedWallets[managingWalletId])
+)
+
+export const transferWalletSelector = createSelector(
+  transferWalletIdSelector,
+  identityWalletByIdSelector,
+  importedWalletByIdSelector,
+  (transferWalletId: string, identityWallets: any, importedWallets: any) => transferWalletId && (identityWallets[transferWalletId] || importedWallets[transferWalletId])
 )
 
 export const identityWalletSelector = createSelector(

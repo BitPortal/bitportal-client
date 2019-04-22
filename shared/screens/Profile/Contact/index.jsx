@@ -9,7 +9,10 @@ import Modal from 'react-native-modal'
 import Sound from 'react-native-sound'
 import FastImage from 'react-native-fast-image'
 import { activeContactSelector } from 'selectors/contact'
+import { identityWalletSelector, importedWalletSelector } from 'selectors/wallet'
+import { balanceByIdSelector } from 'selectors/balance'
 import * as contactActions from 'actions/contact'
+import * as walletActions from 'actions/wallet'
 import styles from './styles'
 
 Sound.setCategory('Playback')
@@ -39,11 +42,15 @@ export const errorMessages = (error, messages) => {
 
 @connect(
   state => ({
-    contact: activeContactSelector(state)
+    contact: activeContactSelector(state),
+    identityWallet: identityWalletSelector(state),
+    importedWallet: importedWalletSelector(state),
+    balanceById: balanceByIdSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
-      ...contactActions
+      ...contactActions,
+      ...walletActions
     }, dispatch)
   })
 )
@@ -136,7 +143,72 @@ export default class Contact extends Component {
           })
         }, 1000)
       })
+    } else if (action === 'transfer') {
+      const { symbol, chain, name, address, note } = data
+      const wallet = this.selectWallet(chain)
+
+      if (!wallet) {
+        AlertIOS.alert(
+          `未检测到${symbol}钱包`,
+          null,
+          [
+            {
+              text: '确认',
+              onPress: () => {}
+            }
+          ]
+        )
+      } else {
+        this.props.actions.setTransferWallet(wallet.id)
+
+        Navigation.showModal({
+          stack: {
+            children: [{
+              component: {
+                name: 'BitPortal.TransferAsset',
+                passProps: { contact: { chain, name, address, memo: note }, presetContact: true },
+                options: {
+                  topBar: {
+                    title: {
+                      text: `发送${symbol}到`
+                    },
+                    leftButtons: [
+                      {
+                        id: 'cancel',
+                        text: '取消'
+                      }
+                    ]
+                  }
+                }
+              }
+            }]
+          }
+        })
+      }
     }
+  }
+
+  selectWallet = (chain, minimalBalance = 0) => {
+    const selectedIdentityWallet = this.props.identityWallet.filter(wallet => wallet.address && wallet.chain === chain)
+    const selectedImportedWallet = this.props.importedWallet.filter(wallet => wallet.address && wallet.chain === chain)
+
+    if (selectedIdentityWallet.length) {
+      const index = selectedIdentityWallet.findIndex(wallet => this.props.balanceById[`${wallet.chain}/${wallet.address}`] && +this.props.balanceById[`${wallet.chain}/${wallet.address}`].balance >= minimalBalance)
+      if (index !== -1) {
+        return selectedIdentityWallet[index]
+      } else {
+        return selectedIdentityWallet[0]
+      }
+    } else if (selectedImportedWallet.length) {
+      const index = selectedImportedWallet.findIndex(wallet => this.props.balanceById[`${wallet.chain}/${wallet.address}`] && +this.props.balanceById[`${wallet.chain}/${wallet.address}`].balance >= minimalBalance)
+      if (index !== -1) {
+        return selectedImportedWallet[index]
+      } else {
+        return selectedImportedWallet[0]
+      }
+    }
+
+    return null
   }
 
   render() {
@@ -174,6 +246,9 @@ export default class Contact extends Component {
                 height={60}
                 selectionStyle={TableView.Consts.CellSelectionStyle.None}
                 showSeparator
+                chain="BITCOIN"
+                symbol="BTC"
+                name={contact.name}
               />
              )}
           </Section>}
@@ -196,6 +271,9 @@ export default class Contact extends Component {
                 height={60}
                 selectionStyle={TableView.Consts.CellSelectionStyle.None}
                 showSeparator
+                chain="ETHEREUM"
+                symbol="ETH"
+                name={contact.name}
               />
              )}
           </Section>}
@@ -214,8 +292,12 @@ export default class Contact extends Component {
                 key={index}
                 reactModuleForCell="AddressTableViewCell"
                 address={item.accountName}
+                note={item.memo}
                 label="EOS 账户名"
                 height={60}
+                chain="EOS"
+                symbol="EOS"
+                name={contact.name}
                 selectionStyle={TableView.Consts.CellSelectionStyle.None}
                 showSeparator
               />

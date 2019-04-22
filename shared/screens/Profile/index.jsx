@@ -105,6 +105,7 @@ export default class Profile extends Component {
         <Section>
           <Item
             height={44}
+            key="addressBook"
             type="addressBook"
             reactModuleForCell="IdentityTableViewCell"
             arrow
@@ -113,6 +114,7 @@ export default class Profile extends Component {
             isSetting
           />
           <Item
+            key="language"
             type="language"
             detail="中文"
             reactModuleForCell="IdentityTableViewCell"
@@ -122,6 +124,7 @@ export default class Profile extends Component {
             text="语言设置"
           />
           <Item
+            key="currency"
             type="currency"
             detail="CNY"
             reactModuleForCell="IdentityTableViewCell"
@@ -131,6 +134,7 @@ export default class Profile extends Component {
             text="货币单位"
           />
           <Item
+            key="node"
             type="node"
             reactModuleForCell="IdentityTableViewCell"
             arrow
@@ -141,6 +145,7 @@ export default class Profile extends Component {
         </Section>
         <Section>
           <Item
+            key="privacyMode"
             type="privacyMode"
             reactModuleForCell="IdentityTableViewCell"
             selectionStyle={TableView.Consts.CellSelectionStyle.None}
@@ -150,6 +155,7 @@ export default class Profile extends Component {
             text="隐私模式"
           />
           <Item
+            key="darkMode"
             type="darkMode"
             reactModuleForCell="IdentityTableViewCell"
             selectionStyle={TableView.Consts.CellSelectionStyle.None}
@@ -161,6 +167,7 @@ export default class Profile extends Component {
         </Section>
         <Section arrow>
           <Item
+            key="inviteFrends"
             type="inviteFrends"
             reactModuleForCell="IdentityTableViewCell"
             arrow
@@ -168,6 +175,7 @@ export default class Profile extends Component {
             text="邀请好友"
           />
           <Item
+            key="helpCenter"
             type="helpCenter"
             reactModuleForCell="IdentityTableViewCell"
             arrow
@@ -175,6 +183,7 @@ export default class Profile extends Component {
             text="帮助中心"
           />
           <Item
+            key="aboutUs"
             type="aboutUs"
             reactModuleForCell="IdentityTableViewCell"
             arrow

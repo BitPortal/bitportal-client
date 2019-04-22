@@ -2,7 +2,8 @@ import { createAction } from 'redux-actions'
 import { createAsyncAction } from 'utils/redux'
 
 export const setActiveWallet = createAction<SetActiveWalletParams>('wallet/SET_ACTIVE_WALLET')
-export const setManagingWallet = createAction<SetEditingWalletParams>('wallet/SET_MANAGING_WALLET')
+export const setManagingWallet = createAction<SetManagingWalletParams>('wallet/SET_MANAGING_WALLET')
+export const setTransferWallet = createAction<SetTransferWalletParams>('wallet/SET_TRANSFER_WALLET')
 
 export const addIdentityWallet = createAction<AddIdentityWalletParams>('wallet/ADD_IDENTITY_WALLET')
 export const addIdentityWallets = createAction<AddIdentityWalletsParams>('wallet/ADD_IDENTITY_WALLETS')

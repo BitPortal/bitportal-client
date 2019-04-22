@@ -18,12 +18,13 @@ import {
   ActionSheetIOS
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
-import { activeWalletSelector } from 'selectors/wallet'
-import { activeWalletBalanceSelector } from 'selectors/balance'
+import { transferWalletSelector } from 'selectors/wallet'
+import { transferWalletBalanceSelector } from 'selectors/balance'
 import { Navigation } from 'react-native-navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Field, reduxForm, getFormSyncWarnings, getFormValues } from 'redux-form'
 import * as transactionActions from 'actions/transaction'
+import * as balanceActions from 'actions/balance'
 import Modal from 'react-native-modal'
 import { assetIcons } from 'resources/images'
 
@@ -119,7 +120,8 @@ const TextField = ({
   showClearButton,
   showContact,
   selectContact,
-  clearContact
+  clearContact,
+  contact
 }) => (
   <View style={{ width: '100%', alignItems: 'center', height: showContact ? 64 : 42, paddingLeft: 16, paddingRight: 16, flexDirection: 'row', backgroundColor: '#F7F7F7' }}>
     {!showContact && <TextInput
@@ -152,8 +154,8 @@ const TextField = ({
            </View>
          </View>
          <View>
-           <Text style={{ fontSize: 17 }}>Terence Ge</Text>
-           <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginTop: 2 }}>terencegehui</Text>
+           <Text style={{ fontSize: 17 }} lineOfNumebrs={1}>{contact.name}</Text>
+           <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginTop: 2 }} lineOfNumebrs={1}>{formatAddress(contact.address)}</Text>
          </View>
        </View>
      )
@@ -311,12 +313,13 @@ const shouldError = () => true
     transfer: state.transfer,
     formSyncWarnings: getFormSyncWarnings('transferAssetForm')(state),
     formValues: getFormValues('transferAssetForm')(state),
-    activeWallet: activeWalletSelector(state),
-    balance: activeWalletBalanceSelector(state),
+    activeWallet: transferWalletSelector(state),
+    balance: transferWalletBalanceSelector(state),
   }),
   dispatch => ({
     actions: bindActionCreators({
-      ...transactionActions
+      ...transactionActions,
+      ...balanceActions
     }, dispatch)
   })
 )
@@ -345,7 +348,7 @@ export default class TransferAsset extends Component {
   }
 
   subscription = Navigation.events().bindComponent(this)
-  state = { showContact: false }
+  state = { showContact: true, presetContact: false, defaultMemo: null }
 
   navigationButtonPressed({ buttonId }) {
     if (buttonId === 'cancel') {
@@ -353,12 +356,12 @@ export default class TransferAsset extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-
-  }
-
-  componentDidMount() {
-
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.presetContact !== prevState.presetContact) {
+      return { presetContact: nextProps.presetContact, defaultMemo: nextProps.contact && nextProps.contact.memo }
+    } else {
+      return null
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -409,7 +412,8 @@ export default class TransferAsset extends Component {
             symbol: balance.symbol,
             precision: balance.precision,
             contract: balance.contract,
-            componentId: this.props.componentId
+            componentId: this.props.componentId,
+            memo: data.memo || this.state.defaultMemo
           })
         }
       ],
@@ -418,7 +422,11 @@ export default class TransferAsset extends Component {
   }
 
   componentDidAppear() {
-    this.props.actions.transfer.succeeded()
+    if (this.props.presetContact && this.props.contact && this.props.contact.address) {
+      this.props.change('toAddress', this.props.contact.address)
+    }
+
+    this.props.actions.getBalance.requested(this.props.activeWallet)
   }
 
   clearError = () => {
@@ -447,6 +455,7 @@ export default class TransferAsset extends Component {
 
   clearContact = () => {
     this.setState({ showContact: false })
+    this.props.change('toAddress', null)
   }
 
   switchFeesType = () => {
@@ -478,7 +487,7 @@ export default class TransferAsset extends Component {
   }
 
   render() {
-    const { transfer, formValues, change, activeWallet, balance, intl } = this.props
+    const { transfer, formValues, change, activeWallet, balance, intl, contact, presetContact } = this.props
     const loading = transfer.loading
     const toAddress = formValues && formValues.toAddress
     const memo = formValues && formValues.memo
@@ -504,13 +513,14 @@ export default class TransferAsset extends Component {
             showClearButton={!!toAddress && toAddress.length > 0}
             change={change}
             separator
-            showContact={this.state.showContact}
+            showContact={this.state.showContact && this.state.presetContact}
             selectContact={this.selectContact}
             clearContact={this.clearContact}
+            contact={contact}
           />
           <Field
             label="备注"
-            placeholder="添加备注 (选填)"
+            placeholder={(this.state.showContact && this.state.presetContact && !!this.state.defaultMemo) ? `选填，默认为: ${this.state.defaultMemo}` : '添加备注 (选填)'}
             name="memo"
             fieldName="memo"
             component={MessageField}
