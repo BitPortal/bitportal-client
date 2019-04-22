@@ -1,19 +1,23 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { View, ActionSheetIOS } from 'react-native'
+import { View, ActionSheetIOS, Text } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
+import { contactSelector } from 'selectors/contact'
 // import FastImage from 'react-native-fast-image'
+import * as contactActions from 'actions/contact'
 import styles from './styles'
 
 const { Section, Item } = TableView
 
 @connect(
   state => ({
+    contact: contactSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
+      ...contactActions
     }, dispatch)
   })
 )
@@ -47,7 +51,15 @@ export default class Contacts extends Component {
 
   navigationButtonPressed({ buttonId }) {
     if (buttonId === 'add') {
-
+      Navigation.showModal({
+        stack: {
+          children: [{
+            component: {
+              name: 'BitPortal.EditContact'
+            }
+          }]
+        }
+      })
     }
   }
 
@@ -67,8 +79,9 @@ export default class Contacts extends Component {
     console.log(data)
   }
 
-  onPress = async () => {
+  onPress = async (id) => {
     const constants = await Navigation.constants()
+    this.props.actions.setActiveContact(id)
 
     Navigation.push(this.props.componentId, {
       component: {
@@ -81,6 +94,16 @@ export default class Contacts extends Component {
   }
 
   render() {
+    const { contact } = this.props
+
+    if (!contact || !contact.length) {
+      return (
+        <View style={{ flex: 1, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={{ color: '#666666', fontSize: 17 }}>暂无联系人</Text>
+        </View>
+      )
+    }
+
     return (
       <TableView
         style={{ flex: 1, backgroundColor: 'white' }}
@@ -91,49 +114,26 @@ export default class Contacts extends Component {
         onItemNotification={this.onItemNotification}
         onChange={this.onChange}
         moveWithinSectionOnly
+        sectionIndexTitlesEnabled
       >
-        <Section label="T">
-          <Item
-            height={60}
-            accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
-            reactModuleForCell="ContactTableViewCell"
-            name="Terence Ge"
-            description="自己"
-            onPress={this.onPress}
-          />
-          <Item
-            height={60}
-            accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
-            reactModuleForCell="ContactTableViewCell"
-            name="Jamie Chen"
-            description="同事"
-            onPress={this.onPress}
-          />
-          <Item
-            height={60}
-            accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
-            reactModuleForCell="ContactTableViewCell"
-            name="Errance Liu"
-            description="同事"
-            onPress={this.onPress}
-          />
-          <Item
-            height={60}
-            accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
-            reactModuleForCell="ContactTableViewCell"
-            name="Binance"
-            description="交易所"
-            onPress={this.onPress}
-          />
-          <Item
-            height={60}
-            accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
-            reactModuleForCell="ContactTableViewCell"
-            name="OKEX"
-            description="交易所"
-            onPress={this.onPress}
-          />
-        </Section>
+        {contact.map(section =>
+          <Section label={section.key} key={section.key}>
+            {section.items.map(item =>
+              <Item
+                key={item.id}
+                height={60}
+                accessoryType={TableView.Consts.AccessoryType.DisclosureIndicator}
+                reactModuleForCell="ContactTableViewCell"
+                name={item.name}
+                description={item.description}
+                hasBTC={!!item.btc && !!item.btc.length}
+                hasETH={!!item.eth && !!item.eth.length}
+                hasEOS={!!item.eos && !!item.eos.length}
+                onPress={this.onPress.bind(this, item.id)}
+              />
+             )}
+          </Section>
+         )}
       </TableView>
     )
   }

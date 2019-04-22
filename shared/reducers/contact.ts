@@ -1,17 +1,27 @@
-import Immutable from 'immutable'
-import { handleActions } from 'redux-actions'
-import { getInitialContact } from 'selectors/contact'
+import { handleActions } from 'utils/redux'
 import * as actions from 'actions/contact'
+
+const initialState = {
+  byId: {},
+  allIds: [],
+  activeId: null
+}
 
 export default handleActions({
   [actions.addContact] (state, action) {
-    return state.update('data', (v: any) => v.unshift(Immutable.fromJS({
-      id: v.reduce((maxId: number, contact: any) => Math.max(contact.get('id'), maxId), -1) + 1,
-      eosAccountName: action.payload.eosAccountName,
-      note: action.payload.note
-    })))
+    const contact = action.payload
+
+    state.byId[contact.id] = contact
+    const index = state.allIds.findIndex((v: any) => v === contact.id)
+    if (index === -1) state.allIds.push(contact.id)
   },
   [actions.deleteContact] (state, action) {
-    return state.update('data', (v: any) => v.filter((v: any) => v.get('id') !== action.payload))
+    const id = action.payload
+    const index = state.allIds.findIndex((v: any) => v === id)
+    state.allIds.splice(index, 1)
+    delete state.byId[id]
+  },
+  [actions.setActiveContact] (state, action) {
+    state.activeId = action.payload
   }
-}, getInitialContact())
+}, initialState)

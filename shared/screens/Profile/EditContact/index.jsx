@@ -1,15 +1,62 @@
 import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, ScrollView, ActionSheetIOS, AlertIOS, Alert, Text, ActivityIndicator, Animated } from 'react-native'
+import { View, ScrollView, ActionSheetIOS, AlertIOS, Alert, Text, ActivityIndicator, Animated, TextInput, TouchableHighlight, Image, Keyboard, LayoutAnimation } from 'react-native'
+import { Field, reduxForm, getFormValues, getFormSyncWarnings } from 'redux-form'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
-import * as identityActions from 'actions/identity'
+import * as contactActions from 'actions/contact'
 import Modal from 'react-native-modal'
 import FastImage from 'react-native-fast-image'
+import uuidv4 from 'uuid/v4'
+import { validateBTCAddress, validateETHAddress, validateEOSAccountName } from 'utils/validate'
 import styles from './styles'
 
 const { Section, Item } = TableView
+
+const TextField = ({
+  input: { onChange, ...restInput },
+  meta: { touched, error, active },
+  label,
+  placeholder,
+  separator,
+  secureTextEntry,
+  fieldName,
+  change,
+  showClearButton,
+  switchable,
+  onSwitch,
+  clearButtonRight,
+  autoFocus,
+  autoCapitalize
+}) => (
+  <View style={{ width: '100%', alignItems: 'center', height: 40, paddingRight: 16, flexDirection: 'row' }}>
+    {!!label && !!switchable &&
+     <View style={{ borderRightWidth: 0.5, borderColor: '#C8C7CC', height: '100%', width: 42, justifyContent: 'center', alignItems: 'center', paddingRight: 10 }}>
+       <Text style={{ width: 30, height: '100%', justifyContent: 'center', alignItems: 'center', fontSize: 15, lineHeight: 40 }} numberOfLines={1}>{label}</Text>
+     </View>
+    }
+    <TextInput
+      style={{ width: '100%', height: '100%', fontSize: 17, paddingLeft: 16, paddingRight: clearButtonRight || 78 }}
+      autoCorrect={false}
+      autoCapitalize={autoCapitalize}
+      placeholder={placeholder}
+      onChangeText={onChange}
+      secureTextEntry={secureTextEntry}
+      autoFocus={autoFocus}
+      {...restInput}
+    />
+    {showClearButton && active && <View style={{ height: '100%', position: 'absolute', right: clearButtonRight || 38, top: 0, width: 20, alignItems: 'center', justifyContent: 'center' }}>
+      <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
+        <FastImage
+          source={require('resources/images/clear.png')}
+          style={{ width: 14, height: 14 }}
+        />
+      </TouchableHighlight>
+    </View>}
+    {separator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 0, backgroundColor: 'rgba(0,0,0,0.36)' }} />}
+  </View>
+)
 
 export const errorMessages = (error, messages) => {
   if (!error) { return null }
@@ -24,15 +71,43 @@ export const errorMessages = (error, messages) => {
   }
 }
 
+const validate = (values) => {
+  const errors = {}
+
+  /* if (!values.name) {
+   *   errors.name = '请输入姓名'
+   * }*/
+
+  return errors
+}
+
+const warn = (values) => {
+
+  const warnings = {}
+
+  if (!values.name) {
+    warnings.name = '请输入姓名'
+  } else if (!values.name.trim().length) {
+    warnings.name = '请输入姓名'
+  } else if (values.name.trim().length > 50) {
+    warnings.name = '姓名不超过50个字符'
+  }
+
+  return warnings
+}
+
+const shouldError = () => true
+
+@reduxForm({ form: 'editContactForm', validate, shouldError, warn })
+
 @connect(
   state => ({
-    identity: state.identity,
-    deleteIdentity: state.deleteIdentity,
-    backupIdentity: state.backupIdentity
+    formSyncWarnings: getFormSyncWarnings('editContactForm')(state),
+    formValues: getFormValues('editContactForm')(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
-      ...identityActions
+      ...contactActions
     }, dispatch)
   })
 )
@@ -45,7 +120,25 @@ export default class MyIdentity extends Component {
           visible: false
         },
         title: {
-          text: '我的身份'
+          text: ''
+        },
+        leftButtons: [
+          {
+            id: 'cancel',
+            text: '取消'
+          }
+        ],
+        rightButtons: [
+          {
+            id: 'done',
+            fontWeight: '400',
+            text: '完成'
+          }
+        ],
+        noBorder: true,
+        background: {
+          color: 'white',
+          translucent: true
         }
       },
       bottomTabs: {
@@ -56,148 +149,405 @@ export default class MyIdentity extends Component {
 
   subscription = Navigation.events().bindComponent(this)
 
-  deleteIdentity = (id) => {
-    AlertIOS.prompt(
-      '请输入钱包密码',
-      null,
-      [
-        {
-          text: '取消',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel'
-        },
-        {
-          text: '确认',
-          onPress: password => this.props.actions.deleteIdentity.requested({
-            password,
-            id,
-            delay: 500,
-            componentId: this.props.componentId
-          })
-        }
-      ],
-      'secure-text'
-    )
+  state = {
+    btcIds: [],
+    ethIds: [],
+    eosIds: [],
+    lastBTCId: 0,
+    lastETHId: 0,
+    lastEOSId: 0
   }
 
-  backupIdentity = (id) => {
-    AlertIOS.prompt(
-      '请输入钱包密码',
-      null,
-      [
-        {
-          text: '取消',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel'
-        },
-        {
-          text: '确认',
-          onPress: password => this.props.actions.backupIdentity.requested({ id, password, delay: 500, componentId: this.props.componentId })
+  navigationButtonPressed({ buttonId }) {
+    if (buttonId === 'cancel') {
+      Navigation.dismissAllModals()
+    } else if (buttonId === 'done') {
+      const { formSyncWarnings, formValues } = this.props
+
+      if (typeof formSyncWarnings === 'object') {
+        const warning = formSyncWarnings.name
+        if (warning) {
+          Alert.alert(
+            warning,
+            '',
+            [
+              { text: '确定', onPress: () => console.log('OK Pressed') }
+            ]
+          )
+          return
         }
-      ],
-      'secure-text'
-    )
+      }
+
+      const btc = []
+      const eth = []
+      const eos = []
+
+      this.state.btcIds.forEach((value) => {
+        if (formValues[`btc_address_${value}`]) {
+          btc.push({ address: formValues[`btc_address_${value}`] })
+        }
+      })
+
+      this.state.ethIds.forEach((value) => {
+        if (formValues[`eth_address_${value}`]) {
+          eth.push({ address: formValues[`eth_address_${value}`] })
+        }
+      })
+
+      this.state.eosIds.forEach((value) => {
+        if (formValues[`eos_accountName_${value}`]) {
+          eos.push({ accountName: formValues[`eos_accountName_${value}`] })
+        }
+      })
+
+      if (!btc.length && !eth.length && !eos.length) {
+        Alert.alert(
+          '请添加地址或账户名',
+          '',
+          [
+            { text: '确定', onPress: () => console.log('OK Pressed') }
+          ]
+        )
+        return
+      }
+
+      for (let i = 0; i < btc.length; i++) {
+        if (!validateBTCAddress(btc[i].address)) {
+          Alert.alert(
+            '无效的BTC地址',
+            btc[i].address,
+            [
+              { text: '确定', onPress: () => console.log('OK Pressed') }
+            ]
+          )
+          return
+        }
+      }
+
+      for (let i = 0; i < eth.length; i++) {
+        if (!validateETHAddress(eth[i].address)) {
+          Alert.alert(
+            '无效的ETH地址',
+            eth[i].address,
+            [
+              { text: '确定', onPress: () => console.log('OK Pressed') }
+            ]
+          )
+          return
+        }
+      }
+
+      for (let i = 0; i < eos.length; i++) {
+        if (!validateEOSAccountName(eos[i].accountName)) {
+          Alert.alert(
+            '无效的EOS账户名',
+            eos[i].accountName,
+            [
+              { text: '确定', onPress: () => console.log('OK Pressed') }
+            ]
+          )
+          return
+        }
+      }
+
+      this.props.handleSubmit(this.submit)()
+    }
+  }
+
+  submit = (data) => {
+    const btc = []
+    const eth = []
+    const eos = []
+
+    this.state.btcIds.forEach((value) => {
+      if (data[`btc_address_${value}`]) {
+        btc.push({ address: data[`btc_address_${value}`] })
+      }
+    })
+
+    this.state.ethIds.forEach((value) => {
+      if (data[`eth_address_${value}`]) {
+        eth.push({ address: data[`eth_address_${value}`] })
+      }
+    })
+
+    this.state.eosIds.forEach((value) => {
+      if (data[`eos_accountName_${value}`]) {
+        eos.push({ accountName: data[`eos_accountName_${value}`] })
+      }
+    })
+
+    if (this.props.editMode && this.props.contact) {
+      this.props.actions.addContact({
+        id: this.props.contact.id,
+        name: data.name.trim(),
+        description: data.description && data.description.trim(),
+        btc,
+        eth,
+        eos
+      })
+    } else {
+      this.props.actions.addContact({
+        id: this.props.id || uuidv4(),
+        name: data.name.trim(),
+        description: data.description && data.description.trim(),
+        btc,
+        eth,
+        eos
+      })
+    }
+
+    Navigation.dismissAllModals()
   }
 
   clearError = () => {
-    this.props.actions.deleteIdentity.clearError()
-    this.props.actions.backupIdentity.clearError()
+
   }
 
   onModalHide = () => {
-    const deleteIdentityError = this.props.deleteIdentity.error
-    const backupIdentityError = this.props.backupIdentity.error
-    const error = deleteIdentityError || backupIdentityError
 
-    if (error) {
-      setTimeout(() => {
-        Alert.alert(
-          errorMessages(error),
-          '',
-          [
-            { text: '确定', onPress: () => this.clearError() }
-          ]
-        )
-      }, 20)
+  }
+
+  addEOSAccountName = () => {
+    this.setState({ eosIds: [...this.state.eosIds, this.state.lastEOSId + 1], lastEOSId: this.state.lastEOSId + 1 })
+  }
+
+  addBTCAddress = () => {
+    this.setState({ btcIds: [...this.state.btcIds, this.state.lastBTCId + 1], lastBTCId: this.state.lastBTCId + 1 })
+  }
+
+  addETHAddress = () => {
+    this.setState({ ethIds: [...this.state.ethIds, this.state.lastETHId + 1], lastETHId: this.state.lastETHId + 1 })
+  }
+
+  removeEOSAccountName = (id) => {
+    this.setState({ eosIds: this.state.eosIds.filter(item => item !== id) })
+    this.props.change(`eos_accountName_${id}`, null)
+  }
+
+  removeBTCAddress = (id) => {
+    this.setState({ btcIds: this.state.btcIds.filter(item => item !== id) })
+    this.props.change(`btc_address_${id}`, null)
+  }
+
+  removeETHAddress = (id) => {
+    this.setState({ ethIds: this.state.ethIds.filter(item => item !== id) })
+    this.props.change(`eth_address_${id}`, null)
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevState.btcIds.length !== this.state.btcIds.length
+      || prevState.ethIds.length !== this.state.ethIds.length
+      || prevState.eosIds.length !== this.state.eosIds.length
+    ) {
+      LayoutAnimation.easeInEaseOut()
+    }
+  }
+
+  componentDidMount() {
+    if (this.props.editMode && this.props.contact) {
+      this.props.change('name', this.props.contact.name)
+
+      if (this.props.contact.description) {
+        this.props.change('description', this.props.contact.description)
+      }
+
+      if (this.props.contact.btc.length) {
+        const btcIds = []
+
+        for (let i = 0; i < this.props.contact.btc.length; i++) {
+          this.props.change(`btc_address_${i}`, this.props.contact.btc[i].address)
+          btcIds.push(i)
+        }
+
+        this.setState({ btcIds })
+      }
+
+      if (this.props.contact.eth.length) {
+        const ethIds = []
+
+        for (let i = 0; i < this.props.contact.eth.length; i++) {
+          this.props.change(`eth_address_${i}`, this.props.contact.eth[i].address)
+          ethIds.push(i)
+        }
+
+        this.setState({ ethIds })
+      }
+
+      if (this.props.contact.eos.length) {
+        const eosIds = []
+
+        for (let i = 0; i < this.props.contact.eos.length; i++) {
+          this.props.change(`eos_accountName_${i}`, this.props.contact.eos[i].accountName)
+          eosIds.push(i)
+        }
+
+        this.setState({ eosIds })
+      }
     }
   }
 
   render() {
-    const { identity, backupIdentity, deleteIdentity } = this.props
-    const id = identity.id
-    const backupIdentityLoading = backupIdentity.loading
-    const deleteIdentityLoading = deleteIdentity.loading
-    const loading = backupIdentityLoading || deleteIdentityLoading
+    const { formValues, change, contact, editMode } = this.props
+    const name = formValues && formValues.name
+    const description = formValues && formValues.description
 
     return (
-      <View style={{ flex: 1 }}>
-        <TableView
-          style={{ flex: 1 }}
-          tableViewStyle={TableView.Consts.Style.Grouped}
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <ScrollView
+          style={{ flex: 1, backgroundColor: 'white' }}
+          showsVerticalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
         >
-          <Section />
-          <Section>
-            <Item
-              reactModuleForCell="IdentityDetailTableViewCell"
-              text="头像"
-              type="avatar"
-              height={60}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            />
-            <Item
-              reactModuleForCell="IdentityDetailTableViewCell"
-              text="身份名"
-              type="name"
-              detail={identity.name}
-              height={60}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            />
-            <Item
-              reactModuleForCell="IdentityDetailTableViewCell"
-              text="身份ID"
-              type="identifier"
-              detail={identity.identifier}
-              height={60}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            />
-          </Section>
-          <Section>
-            <Item
-              reactModuleForCell="IdentityDetailTableViewCell"
-              key="mnemonic"
-              actionType="mnemonic"
-              text="备份身份"
-              onPress={this.backupIdentity.bind(this, id)}
-            />
-            <Item
-              reactModuleForCell="IdentityDetailTableViewCell"
-              key="delete"
-              actionType="delete"
-              text="删除身份"
-              onPress={this.deleteIdentity.bind(this, id)}
-            />
-          </Section>
-        </TableView>
-        <Modal
-          isVisible={loading}
-          backdropOpacity={0.4}
-          useNativeDriver
-          animationIn="fadeIn"
-          animationInTiming={200}
-          backdropTransitionInTiming={200}
-          animationOut="fadeOut"
-          animationOutTiming={200}
-          backdropTransitionOutTiming={200}
-          onModalHide={this.onModalHide}
-        >
-          {loading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
-              <ActivityIndicator size="small" color="#000000" />
-              {deleteIdentityLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>验证密码...</Text>}
-              {!deleteIdentityLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>导出中...</Text>}
+          <View style={{ width: '100%', paddingLeft: 16, flexDirection: 'row', paddingBottom: 30 }}>
+            <View style={{ width: 41, height: 41, marginRight: 16 }}>
+              <FastImage
+                source={require('resources/images/Userpic2.png')}
+                style={{ width: 40, height: 40, borderRadius: 10, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
+              />
             </View>
-          </View>}
-        </Modal>
+            <View>
+              <Field
+                label="姓名"
+                placeholder="姓名"
+                name="name"
+                fieldName="name"
+                change={change}
+                component={TextField}
+                separator={true}
+                showClearButton={!!name && name.length > 0}
+                clearButtonRight={64}
+                autoFocus={!editMode}
+                autoCapitalize="sentences"
+              />
+              <Field
+                label="描述"
+                placeholder="描述"
+                name="description"
+                fieldName="description"
+                change={change}
+                component={TextField}
+                separator={true}
+                clearButtonRight={64}
+                showClearButton={!!description && description.length > 0}
+                autoCapitalize="sentences"
+              />
+            </View>
+          </View>
+          <View style={{ width: '100%', marginTop: 40 }}>
+            {this.state.btcIds.map((id, index) =>
+              <View key={id} style={{ width: '100%', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 16 }}>
+                <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }} onPress={this.removeBTCAddress.bind(this, id)}>
+                  <FastImage
+                    source={require('resources/images/remove_red.png')}
+                    style={{ width: 28 * 0.8, height: 30 * 0.8 }}
+                  />
+                </TouchableHighlight>
+                <Field
+                  label="BTC"
+                  placeholder="地址"
+                  name={`btc_address_${id}`}
+                  fieldName={`btc_address_${id}`}
+                  change={change}
+                  component={TextField}
+                  switchable
+                  onSwitch={() => {}}
+                  showClearButton={!!formValues && formValues[`btc_address_${id}`] && formValues[`btc_address_${id}`].length > 0}
+                  autoFocus={!editMode || id > contact.btc.length - 1}
+                  autoCapitalize="none"
+                />
+                {(index !== this.state.btcIds.length - 1) && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />}
+              </View>
+             )}
+        <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%', height: 40 }} onPress={this.addBTCAddress}>
+            <View style={{ width: '100%', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 16 }}>
+              <FastImage
+                source={require('resources/images/add_green.png')}
+                style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }}
+              />
+              <Text style={{ fontSize: 15 }}>添加BTC地址</Text>
+              <View style={{ position: 'absolute', height: 0.5, top: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
+              <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
+            </View>
+        </TouchableHighlight>
+          </View>
+          <View style={{ width: '100%', marginTop: 40 }}>
+            {this.state.ethIds.map((id, index) =>
+              <View key={id} style={{ width: '100%', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 16 }}>
+                <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }} onPress={this.removeETHAddress.bind(this, id)}>
+                  <FastImage
+                    source={require('resources/images/remove_red.png')}
+                    style={{ width: 28 * 0.8, height: 30 * 0.8 }}
+                  />
+                </TouchableHighlight>
+                <Field
+                  label="ETH"
+                  placeholder="地址"
+                  name={`eth_address_${id}`}
+                  fieldName={`eth_address_${id}`}
+                  change={change}
+                  component={TextField}
+                  switchable
+                  onSwitch={() => {}}
+                  showClearButton={!!formValues && formValues[`eth_address_${id}`] && formValues[`eth_address_${id}`].length > 0}
+                  autoFocus={!editMode || id > contact.eth.length - 1}
+                  autoCapitalize="none"
+                />
+                {(index !== this.state.ethIds.length - 1) && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />}
+              </View>
+             )}
+        <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%', height: 40 }} onPress={this.addETHAddress}>
+            <View style={{ width: '100%', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 16 }}>
+              <FastImage
+                source={require('resources/images/add_green.png')}
+                style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }}
+              />
+              <Text style={{ fontSize: 15 }}>添加ETH地址</Text>
+              <View style={{ position: 'absolute', height: 0.5, top: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
+              <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
+            </View>
+        </TouchableHighlight>
+          </View>
+          <View style={{ width: '100%', marginTop: 40 }}>
+          {this.state.eosIds.map((id, index) =>
+            <View key={id} style={{ width: '100%', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 16 }}>
+              <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }} onPress={this.removeEOSAccountName.bind(this, id)}>
+                <FastImage
+                  source={require('resources/images/remove_red.png')}
+                  style={{ width: 28 * 0.8, height: 30 * 0.8 }}
+                />
+              </TouchableHighlight>
+              <Field
+                label="EOS"
+                placeholder="账户名"
+                name={`eos_accountName_${id}`}
+                fieldName={`eos_accountName_${id}`}
+                change={change}
+                component={TextField}
+                switchable
+                onSwitch={() => {}}
+                showClearButton={!!formValues && formValues[`eos_accountName_${id}`] && formValues[`eos_accountName_${id}`].length > 0}
+                autoFocus={!editMode || id > contact.eos.length - 1}
+                autoCapitalize="none"
+              />
+              {(index !== this.state.eosIds.length - 1) && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />}
+            </View>
+           )}
+        <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%', height: 40 }} onPress={this.addEOSAccountName}>
+          <View style={{ width: '100%', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 16 }}>
+            <FastImage
+              source={require('resources/images/add_green.png')}
+              style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }}
+            />
+            <Text style={{ fontSize: 15 }}>添加EOS账户</Text>
+            <View style={{ position: 'absolute', height: 0.5, top: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
+            <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
+          </View>
+        </TouchableHighlight>
+          </View>
+      </ScrollView>
       </View>
     )
   }

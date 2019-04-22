@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TouchableHighlight, Image } from 'react-native'
+import { View, Text, TouchableOpacity, Image, NativeModules, TouchableHighlight } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 
 const AddressTableViewCell = (props) => {
@@ -11,23 +11,41 @@ const AddressTableViewCell = (props) => {
     }
   }
 
+  copy = (text) => {
+    NativeModules.RNTableViewManager.sendNotification(props.tableViewReactTag, { action: 'copy', text })
+  }
+
+  transfer = () => {
+    NativeModules.RNTableViewManager.sendNotification(props.tableViewReactTag, { action: 'transfer', address: props.data.address, note: props.data.note })
+  }
+
   return (
     <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16 }}>
-      <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Text style={{ fontSize: 17 }}>
-          {`${this.formatAddress(props.data.address)} `}
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'flex-start' }}>
+        <Text style={{ fontSize: 15, marginBottom: 4 }}>{props.data.label}</Text>
+        <TouchableOpacity underlayColor="rgba(0,0,0,0)" onPress={this.copy.bind(this, props.data.address)} activeOpacity={0.7}>
+          <Text style={{ fontSize: 15, color: '#007AFF' }} numberOfLines={1}>
+            {`${this.formatAddress(props.data.address)} `}
+          </Text>
+        </TouchableOpacity>
+      </View>
+      {props.data.note && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'flex-start', flexWrap: 'nowrap' }}>
+        <Text style={{ fontSize: 15, marginBottom: 4 }}>默认备注</Text>
+        <TouchableOpacity underlayColor="rgba(0,0,0,0)" onPress={this.copy.bind(this, props.data.note)} activeOpacity={0.7}>
+          <Text style={{ fontSize: 15, color: '#007AFF', paddingRight: 6 }} numberOfLines={1}>
+            {`${this.formatAddress(props.data.note)} `}
+          </Text>
+        </TouchableOpacity>
+      </View>}
+      <View style={{ marginLeft: 16 }}>
+        <TouchableHighlight underlayColor="rgba(0,0,0,0)" onPress={this.transfer} activeOpacity={0.7}>
           <Image
-            source={require('resources/images/copy_black.png')}
-            style={{ width: 18, height: 18 }}
+            source={require('resources/images/send.png')}
+            style={{ width: 24, height: 24 }}
           />
-        </Text>
+        </TouchableHighlight>
       </View>
-      <View>
-        <Image
-          source={require('resources/images/send.png')}
-          style={{ width: 24, height: 24 }}
-        />
-      </View>
+      {props.data.showSeparator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: '#C8C7CC' }} />}
     </View>
   )
 }

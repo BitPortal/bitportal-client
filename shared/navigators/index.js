@@ -3,6 +3,7 @@ import { Navigation } from 'react-native-navigation'
 import Provider, { PersistProvider } from 'components/Provider'
 import AssetTableViewCell from 'components/TableViewCell/AssetTableViewCell'
 import HeaderTableViewCell from 'components/TableViewCell/HeaderTableViewCell'
+import ContactHeaderTableViewCell from 'components/TableViewCell/ContactHeaderTableViewCell'
 import AssetBalanceTableViewCell from 'components/TableViewCell/AssetBalanceTableViewCell'
 import WalletOverviewTableViewCell from 'components/TableViewCell/WalletOverviewTableViewCell'
 import WalletTableViewCell from 'components/TableViewCell/WalletTableViewCell'
@@ -14,6 +15,7 @@ import AssetActionsTableViewCell from 'components/TableViewCell/AssetActionsTabl
 import AssetOverviewTableViewCell from 'components/TableViewCell/AssetOverviewTableViewCell'
 import IdentityTableViewCell from 'components/TableViewCell/IdentityTableViewCell'
 import ContactTableViewCell from 'components/TableViewCell/ContactTableViewCell'
+import ContactDeleteTableViewCell from 'components/TableViewCell/ContactDeleteTableViewCell'
 import AddressTableViewCell from 'components/TableViewCell/AddressTableViewCell'
 import SelectEOSAccountTableViewCell from 'components/TableViewCell/SelectEOSAccountTableViewCell'
 import SwitchEOSAccountTableViewCell from 'components/TableViewCell/SwitchEOSAccountTableViewCell'
@@ -77,6 +79,7 @@ import messages from 'resources/messages'
 export const registerScreens = (store, persistor) => {
   AppRegistry.registerComponent('AssetTableViewCell', () => AssetTableViewCell)
   AppRegistry.registerComponent('HeaderTableViewCell', () => HeaderTableViewCell)
+  AppRegistry.registerComponent('ContactHeaderTableViewCell', () => ContactHeaderTableViewCell)
   AppRegistry.registerComponent('AssetBalanceTableViewCell', () => AssetBalanceTableViewCell)
   AppRegistry.registerComponent('WalletOverviewTableViewCell', () => WalletOverviewTableViewCell)
   AppRegistry.registerComponent('WalletTableViewCell', () => WalletTableViewCell)
@@ -94,6 +97,7 @@ export const registerScreens = (store, persistor) => {
   AppRegistry.registerComponent('LargeDappCollectionViewCell', () => LargeDappCollectionViewCell)
   AppRegistry.registerComponent('IdentityTableViewCell', () => IdentityTableViewCell)
   AppRegistry.registerComponent('ContactTableViewCell', () => ContactTableViewCell)
+  AppRegistry.registerComponent('ContactDeleteTableViewCell', () => ContactDeleteTableViewCell)
   AppRegistry.registerComponent('AddressTableViewCell', () => AddressTableViewCell)
 
   AppRegistry.registerComponent('SelectEOSAccountTableViewCell', () => SelectEOSAccountTableViewCell)

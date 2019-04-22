@@ -1,4 +1,6 @@
 import { ASSET_FRACTION } from 'constants/market'
+import bitcoin from 'core/library/bitcoin'
+import { web3 } from 'core/api'
 
 export const validateText = (value: any) => !!value && !!value.trim()
 
@@ -10,6 +12,18 @@ export const validateUnitByCurrency = (currency: string) => (value: any) => vali
 
 export const validateUnitByFraction = (fraction: number) => (value: any) => validateUnit(value, fraction)
 
-export const validateEOSAccountName = (value: any) => !!value && /([1-5]|[a-z])+$/.test(value) && value.length === 12
-
 export const validateUrl = (value: any) => !!value && /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/.test(value)
+
+export const validateBTCAddress = (value: string) => {
+  try {
+    bitcoin.address.toOutputScript(value)
+    return true
+  } catch (e) {
+    console.log(e.message)
+    return false
+  }
+}
+
+export const validateETHAddress = (value: string) => web3.utils.isAddress(value)
+
+export const validateEOSAccountName = (value: any) => !!value && /([1-5]|[a-z])+$/.test(value) && value.length === 12

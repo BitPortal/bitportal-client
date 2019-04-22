@@ -17,6 +17,7 @@ import utxo from './utxo'
 import transaction from './transaction'
 import bridge from './bridge'
 import producer from './producer'
+import contact from './contact'
 
 export default combineReducers({
   form,
@@ -35,5 +36,6 @@ export default combineReducers({
   bridge,
   keyAccount,
   producer,
+  contact,
   ...createAsyncActionsReducers(asyncActions)
 })

@@ -13,6 +13,7 @@ import * as transactionActions from './transaction'
 import * as addressActions from './address'
 import * as utxoActions from './utxo'
 import * as producerActions from './producer'
+import * as contactActions from './contact'
 
 export const asyncActions = getAsyncActions({
   ...identityActions,
@@ -28,5 +29,6 @@ export const asyncActions = getAsyncActions({
   ...addressActions,
   ...utxoActions,
   ...keyAccountActions,
-  ...producerActions
+  ...producerActions,
+  ...contactActions
 })
