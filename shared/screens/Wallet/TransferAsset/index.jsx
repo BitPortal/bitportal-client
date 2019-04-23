@@ -723,8 +723,8 @@ export default class TransferAsset extends Component {
           style={{ margin: 0, justifyContent: 'flex-end' }}
         >
           {this.state.showSelectContact && <View>
-            <View style={{ width: '100%', height: 64 * 5 }}>
-              <View style={{ height: 64, width: '100%', backgroundColor: '#F8F8F8', borderTopLeftRadius: 12, borderTopRightRadius: 12, borderBottomWidth: 0.5, borderColor: '#C8C7CC', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
+            <View style={{ width: '100%', height: 64 * (contacts.length >= 4 ? 5 : contacts.length + 1), borderWidth: 0.5, borderColor: '#C8C7CC', borderTopLeftRadius: 12, borderTopRightRadius: 12 }}>
+              <View style={{ height: 64, width: '100%', backgroundColor: '#F7F7F7', borderTopLeftRadius: 12, borderTopRightRadius: 12, borderBottomWidth: 0.5, borderColor: '#C8C7CC', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
                 <View style={{ height: '100%', alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
                   <FastImage
                     source={walletIcons[chain.toLowerCase()]}
@@ -735,11 +735,11 @@ export default class TransferAsset extends Component {
                     <Text style={{ fontSize: 14, color: '#666666', marginTop: 2 }}>{`${symbol} ${chain === 'EOS' ? '账户名' : '地址'}`}</Text>
                   </View>
                 </View>
-                <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ padding: 4 }} activeOpacity={0.8} onPress={this.cancelSelectContact}>
-                  <Text style={{ fontSize: 16, color: '#007AFF' }}>取消</Text>
-                </TouchableHighlight>
+                {/* <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ padding: 4 }} activeOpacity={0.8} onPress={this.cancelSelectContact}>
+                    <Text style={{ fontSize: 17, color: '#007AFF' }}>取消</Text>
+                    </TouchableHighlight> */}
               </View>
-              <View style={{ height: 64 * 4, width: '100%', backgroundColor: 'white' }}>
+              <View style={{ height: 64 * (contacts.length >= 4 ? 4 : contacts.length), width: '100%', backgroundColor: 'white' }}>
                 <TableView
                   style={{ flex: 1, backgroundColor: 'white' }}
                   tableViewCellStyle={TableView.Consts.CellStyle.Default}

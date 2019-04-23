@@ -463,7 +463,7 @@ export default class ImportETHWallet extends Component {
             style={{ width: '100%' }}
           />
         </View>
-        <ScrollView showsVerticalScrollIndicator={false} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+        <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
           <View style={{ flex: 1, alignItems: 'center' }}>
             <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
               {this.state.selectedIndex === 0 && <Text style={{ fontSize: 13, color: '#666666' }}>Keystore 文件内容</Text>}

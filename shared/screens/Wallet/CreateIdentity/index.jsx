@@ -227,7 +227,9 @@ export default class CreateIdentity extends Component {
     const passwordHint = formValues && formValues.passwordHint
 
     return (
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+      <View style={styles.container}>
+        <View style={{ width: '100%', height: 0.5, backgroundColor: 'rgba(0,0,0,0)' }} />
+      <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
         <View style={{ flex: 1, alignItems: 'center' }} onPress={() => console.log('press')}>
           <View style={{ marginBottom: 14 }}>
             <Text style={{ fontSize: 26, fontWeight: 'bold' }}>创建身份</Text>
@@ -279,6 +281,7 @@ export default class CreateIdentity extends Component {
           </View>}
         </View>
       </ScrollView>
+      </View>
     )
   }
 }

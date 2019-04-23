@@ -294,8 +294,9 @@ export default class RecoverIdentity extends Component {
     const passwordHint = formValues && formValues.passwordHint
 
     return (
+      <View style={styles.container}>
+        <View style={{ width: '100%', height: 0.5, backgroundColor: 'rgba(0,0,0,0)' }} />
       <ScrollView
-        style={styles.container}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
@@ -360,6 +361,7 @@ export default class RecoverIdentity extends Component {
           </View>
         </View>
       </ScrollView>
+      </View>
     )
   }
 }

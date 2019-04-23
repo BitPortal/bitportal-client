@@ -53,41 +53,41 @@ export default class Asset extends Component {
   }
 
   toTransferAsset = () => {
-    /* Navigation.showModal({
-     *   stack: {
-     *     children: [{
-     *       component: {
-     *         name: 'BitPortal.TransferAsset',
-     *         options: {
-     *           topBar: {
-     *             title: {
-     *               text: `发送${this.props.activeWallet.symbol}到`
-     *             },
-     *             leftButtons: [
-     *               {
-     *                 id: 'cancel',
-     *                 text: '取消'
-     *               }
-     *             ]
-     *           }
-     *         }
-     *       }
-     *     }]
-     *   }
-     * })*/
-
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.TransferAsset',
-        options: {
-          topBar: {
-            title: {
-              text: `发送${this.props.activeWallet.symbol}到`
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.TransferAsset',
+            options: {
+              topBar: {
+                title: {
+                  text: `发送${this.props.activeWallet.symbol}到`
+                },
+                leftButtons: [
+                  {
+                    id: 'cancel',
+                    text: '取消'
+                  }
+                ]
+              }
             }
           }
-        }
+        }]
       }
     })
+
+    /* Navigation.push(this.props.componentId, {
+     *   component: {
+     *     name: 'BitPortal.TransferAsset',
+     *     options: {
+     *       topBar: {
+     *         title: {
+     *           text: `发送${this.props.activeWallet.symbol}到`
+     *         }
+     *       }
+     *     }
+     *   }
+     * })*/
   }
 
   toReceiveAsset = () => {
