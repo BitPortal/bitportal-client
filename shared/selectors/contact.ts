@@ -1,8 +1,10 @@
 import { createSelector } from 'reselect'
+import { transferWalletSelector } from 'selectors/wallet'
 
 export const contactByIdSelector = (state: RootState) => state.contact.byId
 export const contactAllIdsSelector = (state: RootState) => state.contact.allIds
 export const activeContactIdSelector = (state: RootState) => state.contact.activeId
+export const selectedContactInfoSelector = (state: RootState) => state.contact.selected
 
 export const contactSelector = createSelector(
   contactByIdSelector,
@@ -35,8 +37,79 @@ export const contactSelector = createSelector(
   }
 )
 
+export const transferWalletsContactsSelector = createSelector(
+  transferWalletSelector,
+  contactByIdSelector,
+  contactAllIdsSelector,
+  (wallet: any, byId: any, allIds: any) => {
+    if (!wallet || !wallet.chain) return []
+
+    let chainSymbol
+
+    if (wallet.chain === 'BITCOIN') {
+      chainSymbol = 'btc'
+    } else if (wallet.chain === 'ETHEREUM') {
+      chainSymbol = 'eth'
+    } else if (wallet.chain === 'EOS') {
+      chainSymbol = 'eos'
+    } else {
+      return []
+    }
+
+    const contacts = allIds.map(id => byId[id])
+      .filter(item => item[chainSymbol] && item[chainSymbol].length)
+      .map(item => ({ id: item.id, name: item.name, description: item.description, address: item[chainSymbol] }))
+      .sort((a, b) => {
+        if(a.name.toUpperCase() < b.name.toUpperCase()) {
+          return -1
+        } else if(a.name.toUpperCase() > b.name.toUpperCase()) {
+          return 1
+        }
+
+        return 0
+      }).reduce((a, b) => {
+        const addresses = b.address.map(item => ({ id: b.id, name: b.name, description: b.description, ...item }))
+        return [...a, ...addresses]
+      }, [])
+
+    return contacts
+  }
+)
+
 export const activeContactSelector = createSelector(
   activeContactIdSelector,
   contactByIdSelector,
   (activeId: string, byId: any) => activeId && byId[activeId]
+)
+
+export const selectedContactSelector = createSelector(
+  selectedContactInfoSelector,
+  contactByIdSelector,
+  (info: string, byId: any) => {
+    if (info && byId) {
+      const id = info.id
+      let chainSymbol
+
+      if (info.chain === 'BITCOIN') {
+        chainSymbol = 'btc'
+      } else if (info.chain === 'ETHEREUM') {
+        chainSymbol = 'eth'
+      } else if (info.chain === 'EOS') {
+        chainSymbol = 'eos'
+      } else {
+        return null
+      }
+
+      const contact = byId[id]
+      const addresses = contact[chainSymbol]
+      const index = addresses.findIndex(item => item.address === info.address || item.accountName === info.address)
+      if (index !== -1) {
+        const address = addresses[index]
+
+        return ({ ...info, ...address })
+      }
+    }
+
+    return null
+  }
 )

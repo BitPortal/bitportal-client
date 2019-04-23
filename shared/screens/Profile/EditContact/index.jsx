@@ -200,7 +200,7 @@ export default class MyIdentity extends Component {
 
   navigationButtonPressed({ buttonId }) {
     if (buttonId === 'cancel') {
-      Navigation.dismissAllModals()
+      Navigation.dismissModal(this.props.componentId)
     } else if (buttonId === 'done') {
       const { formSyncWarnings, formValues } = this.props
 
@@ -337,7 +337,7 @@ export default class MyIdentity extends Component {
       })
     }
 
-    Navigation.dismissAllModals()
+    Navigation.dismissModal(this.props.componentId)
   }
 
   clearError = () => {

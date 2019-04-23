@@ -160,13 +160,13 @@ export default class Contact extends Component {
         )
       } else {
         this.props.actions.setTransferWallet(wallet.id)
+        this.props.actions.setSelectedContact({ id: this.props.contact.id, address, name, chain })
 
         Navigation.showModal({
           stack: {
             children: [{
               component: {
                 name: 'BitPortal.TransferAsset',
-                passProps: { contact: { chain, name, address, memo: note }, presetContact: true },
                 options: {
                   topBar: {
                     title: {

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
@@ -17,16 +17,22 @@ import {
   LayoutAnimation,
   ActionSheetIOS
 } from 'react-native'
+import ActionSheetCustom from 'react-native-actionsheet'
 import FastImage from 'react-native-fast-image'
+import TableView from 'react-native-tableview'
 import { transferWalletSelector } from 'selectors/wallet'
 import { transferWalletBalanceSelector } from 'selectors/balance'
+import { transferWalletsContactsSelector, selectedContactSelector } from 'selectors/contact'
 import { Navigation } from 'react-native-navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Field, reduxForm, getFormSyncWarnings, getFormValues } from 'redux-form'
 import * as transactionActions from 'actions/transaction'
 import * as balanceActions from 'actions/balance'
+import * as contactActions from 'actions/contact'
 import Modal from 'react-native-modal'
-import { assetIcons } from 'resources/images'
+import { assetIcons, walletIcons } from 'resources/images'
+
+const { Section, Item } = TableView
 
 const styles = EStyleSheet.create({
   container: {
@@ -121,12 +127,14 @@ const TextField = ({
   showContact,
   selectContact,
   clearContact,
-  contact
+  contact,
+  autoFocus
 }) => (
   <View style={{ width: '100%', alignItems: 'center', height: showContact ? 64 : 42, paddingLeft: 16, paddingRight: 16, flexDirection: 'row', backgroundColor: '#F7F7F7' }}>
     {!showContact && <TextInput
       style={styles.textFiled}
       autoCorrect={false}
+      autoFocus={autoFocus}
       autoCapitalize="none"
       placeholder={placeholder}
       onChangeText={onChange}
@@ -315,11 +323,14 @@ const shouldError = () => true
     formValues: getFormValues('transferAssetForm')(state),
     activeWallet: transferWalletSelector(state),
     balance: transferWalletBalanceSelector(state),
+    contacts: transferWalletsContactsSelector(state),
+    selectedContact: selectedContactSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
       ...transactionActions,
-      ...balanceActions
+      ...balanceActions,
+      ...contactActions
     }, dispatch)
   })
 )
@@ -348,7 +359,15 @@ export default class TransferAsset extends Component {
   }
 
   subscription = Navigation.events().bindComponent(this)
-  state = { showContact: true, presetContact: false, defaultMemo: null }
+
+  state = {
+    selectContact: false,
+    showSelectContact: false,
+    selectedContactName: null,
+    selectedContactAddress: null,
+    selectedContactMemo: null,
+    autoFocusToAddress: false
+  }
 
   navigationButtonPressed({ buttonId }) {
     if (buttonId === 'cancel') {
@@ -357,17 +376,25 @@ export default class TransferAsset extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.presetContact !== prevState.presetContact) {
-      return { presetContact: nextProps.presetContact, defaultMemo: nextProps.contact && nextProps.contact.memo }
+    if (
+      (nextProps.selectedContact && nextProps.selectedContact.name) !== prevState.selectedContactName ||
+      (nextProps.selectedContact && nextProps.selectedContact.address) !== prevState.selectedContactAddress ||
+      (nextProps.selectedContact && nextProps.selectedContact.memo) !== prevState.selectedContactMemo
+    ) {
+      LayoutAnimation.easeInEaseOut()
+
+      return {
+        selectedContactName: (nextProps.selectedContact && nextProps.selectedContact.name),
+        selectedContactAddress: (nextProps.selectedContact && nextProps.selectedContact.address),
+        selectedContactMemo: (nextProps.selectedContact && nextProps.selectedContact.memo)
+      }
     } else {
       return null
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.showContact !== this.state.showContact) {
-      LayoutAnimation.easeInEaseOut()
-    }
+
   }
 
   componentWillUnmount() {
@@ -413,7 +440,7 @@ export default class TransferAsset extends Component {
             precision: balance.precision,
             contract: balance.contract,
             componentId: this.props.componentId,
-            memo: data.memo || this.state.defaultMemo
+            memo: data.memo || (this.props.selectedContact && this.props.selectedContact.memo)
           })
         }
       ],
@@ -422,11 +449,23 @@ export default class TransferAsset extends Component {
   }
 
   componentDidAppear() {
-    if (this.props.presetContact && this.props.contact && this.props.contact.address) {
-      this.props.change('toAddress', this.props.contact.address)
+    if (this.props.selectedContact && this.props.selectedContact.address) {
+      this.props.change('toAddress', this.props.selectedContact.address)
     }
 
     this.props.actions.getBalance.requested(this.props.activeWallet)
+  }
+
+  componentWillUnmount() {
+    this.props.actions.setSelectedContact(null)
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+
+  }
+
+  componentDidMount() {
+    this.setState({ autoFocusToAddress: true })
   }
 
   clearError = () => {
@@ -450,12 +489,81 @@ export default class TransferAsset extends Component {
   }
 
   selectContact = () => {
-    this.setState({ showContact: true })
+    Keyboard.dismiss()
+
+    if (this.props.contacts && this.props.contacts.length) {
+      this.setState({ selectContact: true, showSelectContact: true })
+    } else {
+      const chain = this.props.activeWallet && this.props.activeWallet.chain
+      let chainSymbol
+
+      if (chain === 'BITCOIN') {
+        chainSymbol = 'BTC'
+      } else if (chain === 'ETHEREUM') {
+        chainSymbol = 'ETH'
+      } else if (chain === 'EOS') {
+        chainSymbol = 'EOS'
+      } else {
+        return null
+      }
+
+      Alert.alert(
+        `暂无${chainSymbol}联系人地址`,
+        null,
+        [
+          { text: '确认', onPress: () => console.log('cancel Pressed') },
+          { text: '添加', onPress: () => {
+            Navigation.showModal({
+              stack: {
+                children: [{
+                  component: {
+                    name: 'BitPortal.EditContact'
+                  }
+                }]
+              }
+            })
+          } }
+        ]
+      )
+    }
+  }
+
+  selectContactAddress = (chain, id, name, address) => {
+    this.props.actions.setSelectedContact({ id, address, name, chain })
+    this.props.change('toAddress', address)
+    this.cancelSelectContact()
+  }
+
+  onToAddressBlur = () => {
+    const { contacts, selectedContact, formValues, activeWallet } = this.props
+
+    if (contacts && contacts.length && !selectedContact) {
+      const toAddress = formValues && formValues.toAddress
+      if (toAddress) {
+        const index = contacts.findIndex(item => item.address === toAddress || item.accountName === toAddress)
+        if (index !== -1) {
+          this.props.actions.setSelectedContact({
+            id: contacts[index].id,
+            address: contacts[index].address || contacts[index].accountName,
+            name: contacts[index].name,
+            chain: activeWallet.chain
+          })
+        }
+      }
+    }
+  }
+
+  cancelSelectContact = () => {
+    this.setState({ selectContact: false }, () => {
+      setTimeout(() => {
+        this.setState({ showSelectContact: false })
+      }, 200)
+    })
   }
 
   clearContact = () => {
-    this.setState({ showContact: false })
     this.props.change('toAddress', null)
+    this.props.actions.setSelectedContact(null)
   }
 
   switchFeesType = () => {
@@ -487,7 +595,7 @@ export default class TransferAsset extends Component {
   }
 
   render() {
-    const { transfer, formValues, change, activeWallet, balance, intl, contact, presetContact } = this.props
+    const { transfer, formValues, change, activeWallet, balance, intl, presetContact, contacts, selectedContact } = this.props
     const loading = transfer.loading
     const toAddress = formValues && formValues.toAddress
     const memo = formValues && formValues.memo
@@ -506,21 +614,23 @@ export default class TransferAsset extends Component {
         <View style={{ flex: 1, width: '100%', alignItems: 'center', borderTopWidth: 0, borderBottomWidth: 0, borderColor: '#C8C7CC' }}>
           <Field
             label="地址"
-            placeholder={`请输入${symbol}地址`}
+            placeholder={`请输入${symbol}${chain === 'EOS' ? '账户名' : '地址'}`}
             name="toAddress"
             fieldName="toAddress"
             component={TextField}
             showClearButton={!!toAddress && toAddress.length > 0}
             change={change}
             separator
-            showContact={this.state.showContact && this.state.presetContact}
+            showContact={selectedContact}
             selectContact={this.selectContact}
             clearContact={this.clearContact}
-            contact={contact}
+            contact={this.props.selectedContact}
+            autoFocus={this.state.autoFocusToAddress}
+            onBlur={this.onToAddressBlur}
           />
           <Field
             label="备注"
-            placeholder={(this.state.showContact && this.state.presetContact && !!this.state.defaultMemo) ? `选填，默认为: ${this.state.defaultMemo}` : '添加备注 (选填)'}
+            placeholder={(selectedContact && !!selectedContact.memo) ? `选填，默认为: ${selectedContact.memo}` : '添加备注 (选填)'}
             name="memo"
             fieldName="memo"
             component={MessageField}
@@ -529,7 +639,7 @@ export default class TransferAsset extends Component {
             separator
           />
           <Field
-            label="当前帐号"
+            label="支付帐号"
             placeholder=""
             name="card"
             fieldName="card"
@@ -592,6 +702,68 @@ export default class TransferAsset extends Component {
             </TouchableHighlight>
           </View>
         </View>
+        <ActionSheetCustom
+          ref={o => this.ActionSheet = o}
+          title="选择联系人"
+          options={[
+            'Cancel',
+            'Apple',
+            'Watermelon'
+          ]}
+          cancelButtonIndex={0}
+          onPress={(index) => { /* do something */ }}
+        />
+        <Modal
+          isVisible={this.state.selectContact}
+          onBackdropPress={this.cancelSelectContact}
+          backdropOpacity={0.4}
+          useNativeDriver
+          animationIn="slideInUp"
+          animationOut="slideOutDown"
+          style={{ margin: 0, justifyContent: 'flex-end' }}
+        >
+          {this.state.showSelectContact && <View>
+            <View style={{ width: '100%', height: 64 * 5 }}>
+              <View style={{ height: 64, width: '100%', backgroundColor: '#F8F8F8', borderTopLeftRadius: 12, borderTopRightRadius: 12, borderBottomWidth: 0.5, borderColor: '#C8C7CC', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
+                <View style={{ height: '100%', alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
+                  <FastImage
+                    source={walletIcons[chain.toLowerCase()]}
+                    style={{ width: 40, height: 40, marginRight: 16, borderRadius: 10, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }}
+                  />
+                  <View style={{ height: '100%', justifyContent: 'center' }}>
+                    <Text style={{ fontSize: 17 }}>{`选择联系人`}</Text>
+                    <Text style={{ fontSize: 14, color: '#666666', marginTop: 2 }}>{`${symbol} ${chain === 'EOS' ? '账户名' : '地址'}`}</Text>
+                  </View>
+                </View>
+                <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ padding: 4 }} activeOpacity={0.8} onPress={this.cancelSelectContact}>
+                  <Text style={{ fontSize: 16, color: '#007AFF' }}>取消</Text>
+                </TouchableHighlight>
+              </View>
+              <View style={{ height: 64 * 4, width: '100%', backgroundColor: 'white' }}>
+                <TableView
+                  style={{ flex: 1, backgroundColor: 'white' }}
+                  tableViewCellStyle={TableView.Consts.CellStyle.Default}
+                  showsVerticalScrollIndicator={false}
+                  cellSeparatorInset={{ left: 16 }}
+                >
+                  <Section>
+                    {contacts.map(contact =>
+                      <Item
+                        key={contact.id}
+                        height={64}
+                        reactModuleForCell="SelectContactTableViewCell"
+                        name={contact.name}
+                        address={contact.address || contact.accountName}
+                        onPress={this.selectContactAddress.bind(this, chain, contact.id, contact.name, contact.address || contact.accountName)}
+                        accessoryType={(selectedContact && chain === selectedContact.chain && contact.name === selectedContact.name && (contact.address === selectedContact.address || contact.accountName === selectedContact.address)) ? TableView.Consts.AccessoryType.Checkmark : TableView.Consts.AccessoryType.None}
+                      />
+                     )}
+                  </Section>
+                </TableView>
+              </View>
+            </View>
+          </View>}
+        </Modal>
         <Modal
           isVisible={loading}
           backdropOpacity={0.4}

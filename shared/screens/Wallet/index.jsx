@@ -14,6 +14,7 @@ import * as identityActions from 'actions/identity'
 import * as balanceActions from 'actions/balance'
 import * as accountActions from 'actions/account'
 import * as tickerActions from 'actions/ticker'
+import * as contactActions from 'actions/contact'
 import {
   identityWalletSelector,
   importedWalletSelector,
@@ -60,7 +61,8 @@ const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
       ...walletActions,
       ...balanceActions,
       ...accountActions,
-      ...tickerActions
+      ...tickerActions,
+      ...contactActions
     }, dispatch)
   })
 )
@@ -125,6 +127,7 @@ export default class Wallet extends Component {
     SplashScreen.hide()
     KeyboardManager.setToolbarDoneBarButtonItemText('完成')
     KeyboardManager.setToolbarPreviousNextButtonEnable(true)
+    this.props.actions.setSelectedContact(null)
   }
 
   componentDidAppear() {

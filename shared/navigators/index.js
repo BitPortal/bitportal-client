@@ -15,6 +15,7 @@ import AssetActionsTableViewCell from 'components/TableViewCell/AssetActionsTabl
 import AssetOverviewTableViewCell from 'components/TableViewCell/AssetOverviewTableViewCell'
 import IdentityTableViewCell from 'components/TableViewCell/IdentityTableViewCell'
 import ContactTableViewCell from 'components/TableViewCell/ContactTableViewCell'
+import SelectContactTableViewCell from 'components/TableViewCell/SelectContactTableViewCell'
 import ContactDeleteTableViewCell from 'components/TableViewCell/ContactDeleteTableViewCell'
 import AddressTableViewCell from 'components/TableViewCell/AddressTableViewCell'
 import SelectEOSAccountTableViewCell from 'components/TableViewCell/SelectEOSAccountTableViewCell'
@@ -97,6 +98,7 @@ export const registerScreens = (store, persistor) => {
   AppRegistry.registerComponent('LargeDappCollectionViewCell', () => LargeDappCollectionViewCell)
   AppRegistry.registerComponent('IdentityTableViewCell', () => IdentityTableViewCell)
   AppRegistry.registerComponent('ContactTableViewCell', () => ContactTableViewCell)
+  AppRegistry.registerComponent('SelectContactTableViewCell', () => SelectContactTableViewCell)
   AppRegistry.registerComponent('ContactDeleteTableViewCell', () => ContactDeleteTableViewCell)
   AppRegistry.registerComponent('AddressTableViewCell', () => AddressTableViewCell)
 
