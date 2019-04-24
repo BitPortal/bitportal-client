@@ -41,6 +41,7 @@ export default class LanguageSetting extends Component {
 
   render() {
     const { locale } = this.props
+    console.log(locale)
 
     return (
       <TableView
@@ -50,13 +51,13 @@ export default class LanguageSetting extends Component {
         <Section />
         <Section>
           <Item
-            selected={locale === 'en'}
+            accessoryType={locale === 'en' ? TableView.Consts.AccessoryType.Checkmark : TableView.Consts.AccessoryType.None}
             onPress={this.setLocale.bind(this, 'en')}
           >
             English
           </Item>
           <Item
-            selected={locale === 'zh'}
+            accessoryType={locale === 'zh' ? TableView.Consts.AccessoryType.Checkmark : TableView.Consts.AccessoryType.None}
             onPress={this.setLocale.bind(this, 'zh')}
           >
             中文

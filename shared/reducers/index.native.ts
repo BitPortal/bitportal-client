@@ -3,6 +3,7 @@ import { asyncActions } from 'actions'
 import { createAsyncActionsReducers } from 'utils/redux'
 import { reducer as form } from 'redux-form'
 import intl from './intl'
+import currency from './currency'
 import identity from './identity'
 import wallet from './wallet'
 import balance from './balance'
@@ -28,6 +29,7 @@ export default combineReducers({
   portfolio,
   account,
   intl,
+  currency,
   dapp,
   news,
   address,

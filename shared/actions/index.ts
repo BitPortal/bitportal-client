@@ -1,5 +1,6 @@
 import { getAsyncActions } from 'utils/redux'
 import * as intlActions from './intl'
+import * as currencyActions from './currency'
 import * as identityActions from './identity'
 import * as walletActions from './wallet'
 import * as balanceActions from './balance'
@@ -23,6 +24,7 @@ export const asyncActions = getAsyncActions({
   ...portfolioActions,
   ...tickerActions,
   ...intlActions,
+  ...currencyActions,
   ...dappActions,
   ...newsActions,
   ...transactionActions,

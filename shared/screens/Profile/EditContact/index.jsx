@@ -204,18 +204,15 @@ export default class MyIdentity extends Component {
     } else if (buttonId === 'done') {
       const { formSyncWarnings, formValues } = this.props
 
-      if (typeof formSyncWarnings === 'object') {
-        const warning = formSyncWarnings.name
-        if (warning) {
-          Alert.alert(
-            warning,
-            '',
-            [
-              { text: '确定', onPress: () => console.log('OK Pressed') }
-            ]
-          )
-          return
-        }
+      if (!formValues.name || !formValues.name.trim().length) {
+        Alert.alert(
+          '请输入姓名',
+          '',
+          [
+            { text: '确定', onPress: () => console.log('OK Pressed') }
+          ]
+        )
+        return
       }
 
       const btc = []
@@ -439,6 +436,7 @@ export default class MyIdentity extends Component {
 
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <View style={{ width: '100%', height: 0.5, backgroundColor: 'rgba(0,0,0,0)' }} />
         <ScrollView
           style={{ flex: 1, backgroundColor: 'white' }}
           showsVerticalScrollIndicator={false}

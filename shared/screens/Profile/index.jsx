@@ -10,6 +10,7 @@ const { Section, Item } = TableView
 @connect(
   state => ({
     locale: state.intl.locale,
+    currencySymbol: state.currency.symbol,
     identity: state.identity
   })
 )
@@ -80,7 +81,7 @@ export default class Profile extends Component {
   }
 
   render() {
-    const { identity } = this.props
+    const { identity, locale, currencySymbol } = this.props
     const hasIdentity = !!identity.id
 
     return (
@@ -116,7 +117,7 @@ export default class Profile extends Component {
           <Item
             key="language"
             type="language"
-            detail="中文"
+            detail={locale === 'zh' ? '中文' : 'English'}
             reactModuleForCell="IdentityTableViewCell"
             arrow
             onPress={this.toLanguageSetting}
@@ -126,7 +127,7 @@ export default class Profile extends Component {
           <Item
             key="currency"
             type="currency"
-            detail="CNY"
+            detail={currencySymbol}
             reactModuleForCell="IdentityTableViewCell"
             arrow
             onPress={this.toCurrencySetting}
