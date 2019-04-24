@@ -854,7 +854,8 @@ export default class WebView extends Component {
     return (
       <IntlProvider messages={messages[locale]}>
         <View>
-          <View style={{ ...styles.content, height: Dimensions.get('window').height - tabHeight + 1 }}>
+          <View style={{ width: '100%', height: this.state.navigationHeight, backgroundColor: 'rgba(0,0,0,0)' }} />
+          <View style={{ width: '100%', height: Dimensions.get('window').height - tabHeight + 1 - this.state.navigationHeight }}>
             <WebViewBridge
               source={{ uri: url }}
               ref={(e) => { this.webviewbridge = e }}
