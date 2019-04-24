@@ -17,6 +17,7 @@ export const removeImportedWallet = createAction<RemoveImportedWalletParams>('wa
 export const removeIdentityWallet = createAction<RemoveImportedWalletParams>('wallet/REMOVE_IDENTITY_WALLET')
 
 export const updateEOSWalletAddress = createAction<SetEOSWalletAddressParams>('wallet/UPDATE_EOS_ADDRESS')
+export const updateWalletName = createAction<UpdateWalletNameParams>('wallet/UPDATE_NAME')
 
 export const deleteWallet = createAsyncAction('wallet/DELETE_WALLET')
 export const exportMnemonics = createAsyncAction('wallet/EXPORT_MNEMONICS')
@@ -34,3 +35,4 @@ export const getEOSKeyAccounts = createAsyncAction('wallet/GET_EOS_KEY_ACCOUNTS'
 export const importEOSPrivateKey = createAsyncAction('wallet/IMPORT_EOS_PRIVATEKEY')
 export const exportEOSPrivateKey = createAsyncAction('wallet/EXPORT_EOS_PRIVATEKEY')
 export const setEOSWalletAddress = createAsyncAction('wallet/SET_EOS_ADDRESS')
+export const setWalletName = createAsyncAction('wallet/SET_NAME')

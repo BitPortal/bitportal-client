@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TouchableHighlight, Image } from 'react-native'
+import { View, Text, TouchableHighlight, Image, NativeModules } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { walletIcons } from 'resources/images'
 
@@ -18,11 +18,7 @@ const images = {
 
 const WalletManagementTableViewCell = (props) => {
   toEditWallet = () => {
-    /* Navigation.push(props.data.componentId, {
-     *   component: {
-     *     name: 'BitPortal.ManageWallet'
-     *   }
-     * })*/
+    NativeModules.RNTableViewManager.sendNotification(props.tableViewReactTag, { action: 'toEditWallet', name: props.data.name })
   }
 
   formatAddress = (address) => {

@@ -80,7 +80,7 @@ const WalletCardCollectionViewCell = (props) => {
               }}
             />
             <View>
-              <Text style={{ color: 'white', fontSize: 17 }}>{props.data.name}</Text>
+              <Text style={{ color: 'white', fontSize: 17, maxWidth: 200 }} numberOfLines={1}>{props.data.name}</Text>
               {!!props.data.address && <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Text style={{ color: 'white', fontSize: props.data.chain === 'EOS' ? 15 : 13, opacity: 0.9, marginRight: 6 }}>{this.formatAddress(props.data.address)}</Text>

@@ -268,6 +268,47 @@ export default class ManageWallet extends Component {
     }
   }
 
+  onItemNotification = (data) => {
+    const { action } = data
+
+    if (action === 'toEditWallet') {
+      const { name } = data
+      const oldName = name
+
+      AlertIOS.prompt(
+        '设置钱包名称',
+        null,
+        [
+          {
+            text: '取消',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel'
+          },
+          {
+            text: '确认',
+            onPress: name => {
+              if (name) {
+                if (name.length > 30) {
+                  Alert.alert(
+                    '钱包名称不能超过30个字符',
+                    '',
+                    [
+                      { text: '确定', onPress: () => console.log('ok') }
+                    ]
+                  )
+                }
+
+                this.props.actions.setWalletName.requested({ oldName, name, id: this.props.wallet.id })
+              }
+            }
+          }
+        ],
+        'plain-text',
+        name
+      )
+    }
+  }
+
   render() {
     const { type, segWit, deleteWallet, exportMnemonics, exportBTCPrivateKey, exportETHKeystore, exportETHPrivateKey, exportEOSPrivateKey, wallet } = this.props
     const name = (wallet && wallet.name) || this.props.name
@@ -410,6 +451,7 @@ export default class ManageWallet extends Component {
           showsVerticalScrollIndicator={false}
           moveWithinSectionOnly
           cellSeparatorInset={{ left: 61 }}
+          onItemNotification={this.onItemNotification}
         >
           <Section />
           <Section>

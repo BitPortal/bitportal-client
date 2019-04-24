@@ -83,6 +83,16 @@ export default handleActions({
     const address = action.payload.address
     state.identityWallets.byId[id].address = address
   },
+  [actions.updateWalletName] (state, action) {
+    const id = action.payload.id
+    const name = action.payload.name
+
+    if (state.identityWallets.byId[id]) {
+      state.identityWallets.byId[id].name = name
+    } else if (state.importedWallets.byId[id]) {
+      state.importedWallets.byId[id].name = name
+    }
+  },
   [actions.updateEOSWalletAccounts] (state, action) {
     const id = action.payload.id
     const accounts = action.payload.accounts
