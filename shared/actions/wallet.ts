@@ -18,6 +18,7 @@ export const removeIdentityWallet = createAction<RemoveImportedWalletParams>('wa
 
 export const updateEOSWalletAddress = createAction<SetEOSWalletAddressParams>('wallet/UPDATE_EOS_ADDRESS')
 export const updateWalletName = createAction<UpdateWalletNameParams>('wallet/UPDATE_NAME')
+export const updateBTCWalletAddressType = createAction<UpdateBTCWalletAddressType>('wallet/UPDATE_BTC_WALLET_ADDRESS_TYPE')
 
 export const deleteWallet = createAsyncAction('wallet/DELETE_WALLET')
 export const exportMnemonics = createAsyncAction('wallet/EXPORT_MNEMONICS')

@@ -72,7 +72,6 @@ export default class SwitchEOSAccount extends Component {
         <TableView
           style={{ flex: 1 }}
           tableViewStyle={TableView.Consts.Style.Grouped}
-          reactModuleForCell="SwitchEOSAccountTableViewCell"
         >
           <Section />
           {keyAccounts && <Section>
@@ -80,6 +79,7 @@ export default class SwitchEOSAccount extends Component {
               <Item
                 height={60}
                 key={account.accountName}
+                reactModuleForCell="SwitchEOSAccountTableViewCell"
                 onPress={this.selectEOSAccount.bind(this, account.accountName)}
                 selectionStyle={account.accountName === address ? TableView.Consts.CellSelectionStyle.None : TableView.Consts.CellSelectionStyle.Default}
                 accessoryType={account.accountName === address ? TableView.Consts.AccessoryType.Checkmark : TableView.Consts.AccessoryType.None}

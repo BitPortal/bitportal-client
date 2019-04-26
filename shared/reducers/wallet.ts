@@ -83,6 +83,21 @@ export default handleActions({
     const address = action.payload.address
     state.identityWallets.byId[id].address = address
   },
+  [actions.updateBTCWalletAddressType] (state, action) {
+    const id = action.payload.id
+    const address = action.payload.address
+    const segWit = action.payload.segWit
+
+    if (state.identityWallets.byId[id]) {
+      state.identityWallets.byId[id].address = address
+      state.identityWallets.byId[id].segWit = segWit
+    }
+
+    if (state.importedWallets.byId[id]) {
+      state.importedWallets.byId[id].address = address
+      state.importedWallets.byId[id].segWit = segWit
+    }
+  },
   [actions.updateWalletName] (state, action) {
     const id = action.payload.id
     const name = action.payload.name

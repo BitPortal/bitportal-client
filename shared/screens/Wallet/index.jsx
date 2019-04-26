@@ -23,6 +23,7 @@ import {
 import { activeWalletBalanceSelector } from 'selectors/balance'
 import { activeWalletTickerSelector } from 'selectors/ticker'
 import { accountResourcesByIdSelector } from 'selectors/account'
+import { managingWalletChildAddressSelector } from 'selectors/address'
 import { formatCycleTime, formatMemorySize } from 'utils/format'
 import Sound from 'react-native-sound'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
@@ -53,7 +54,8 @@ const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
     balance: activeWalletBalanceSelector(state),
     ticker: activeWalletTickerSelector(state),
     portfolio: state.portfolio.byId,
-    resources: accountResourcesByIdSelector(state)
+    resources: accountResourcesByIdSelector(state),
+    childAddress: managingWalletChildAddressSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -300,12 +302,17 @@ export default class Wallet extends Component {
     })
   }
 
-  onTrailingSwipe = (data) => {
+  onTrailingSwipe = async (data) => {
+    const constants = await Navigation.constants()
+
     Navigation.showModal({
       stack: {
         children: [{
           component: {
             name: 'BitPortal.ReceiveAsset',
+            passProps: {
+              statusBarHeight: constants.statusBarHeight
+            },
             options: {
               topBar: {
                 title: {
@@ -316,7 +323,8 @@ export default class Wallet extends Component {
                     id: 'cancel',
                     text: '取消'
                   }
-                ]
+                ],
+                noBorder: data.chain === 'BITCOIN' && this.props.activeWallet.address !== this.props.childAddress
               }
             }
           }

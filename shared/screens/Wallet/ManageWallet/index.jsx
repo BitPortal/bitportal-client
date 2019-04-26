@@ -35,6 +35,7 @@ export const errorMessages = (error, messages) => {
     exportETHKeystore: state.exportETHKeystore,
     exportETHPrivateKey: state.exportETHPrivateKey,
     exportEOSPrivateKey: state.exportEOSPrivateKey,
+    switchBTCAddressType: state.switchBTCAddressType,
     account: accountByIdSelector(state),
     wallet: managingWalletSelector(state),
     votedProducers: managingAccountVotedProducersSelector(state)
@@ -167,6 +168,26 @@ export default class ManageWallet extends Component {
     })
   }
 
+  switchBTCAddress = async () => {
+    const constants = await Navigation.constants()
+
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.SwitchBTCAddress',
+        passProps: {
+          statusBarHeight: constants.statusBarHeight
+        },
+        options: {
+          topBar: {
+            backButton: {
+              title: '返回'
+            }
+          }
+        }
+      }
+    })
+  }
+
   createNewAccount = () => {
     /* Navigation.showModal({
      *   stack: {
@@ -244,6 +265,7 @@ export default class ManageWallet extends Component {
     this.props.actions.exportETHKeystore.clearError()
     this.props.actions.exportETHPrivateKey.clearError()
     this.props.actions.exportEOSPrivateKey.clearError()
+    this.props.actions.switchBTCAddressType.clearError()
   }
 
   onModalHide = () => {
@@ -253,7 +275,8 @@ export default class ManageWallet extends Component {
     const exportETHKeystoreError = this.props.exportETHKeystore.error
     const exportETHPrivateKeyError = this.props.exportETHPrivateKey.error
     const exportEOSPrivateKeyError = this.props.exportEOSPrivateKey.error
-    const error = deleteWalletError || exportMnemonicsError || exportBTCPrivateKeyError || exportETHKeystoreError || exportETHPrivateKeyError || exportEOSPrivateKeyError
+    const switchBTCAddressTypeError = this.props.switchBTCAddressType.error
+    const error = deleteWalletError || exportMnemonicsError || exportBTCPrivateKeyError || exportETHKeystoreError || exportETHPrivateKeyError || exportEOSPrivateKeyError || switchBTCAddressTypeError
 
     if (error) {
       setTimeout(() => {
@@ -266,6 +289,58 @@ export default class ManageWallet extends Component {
         )
       }, 20)
     }
+  }
+
+  switchBTCAddressType = (walletId) => {
+    const { wallet } = this.props
+    const segWit = (wallet && wallet.segWit) || this.props.segWit
+    const source = (wallet && wallet.source) || this.props.source
+
+    ActionSheetIOS.showActionSheetWithOptions({
+      title: '切换地址类型',
+      options: ['取消', `隔离见证`, `普通`],
+      cancelButtonIndex: 0,
+    }, (buttonIndex) => {
+      if (buttonIndex === 1) {
+        if (segWit !== 'P2WPKH') {
+          AlertIOS.prompt(
+            '请输入钱包密码',
+            null,
+            [
+              {
+                text: '取消',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel'
+              },
+              {
+                text: '确认',
+                onPress: password => this.props.actions.switchBTCAddressType.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, segWit, source })
+              }
+            ],
+            'secure-text'
+          )
+        }
+      } else if (buttonIndex === 2) {
+        if (segWit === 'P2WPKH') {
+          AlertIOS.prompt(
+            '请输入钱包密码',
+            null,
+            [
+              {
+                text: '取消',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel'
+              },
+              {
+                text: '确认',
+                onPress: password => this.props.actions.switchBTCAddressType.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, segWit, source })
+              }
+            ],
+            'secure-text'
+          )
+        }
+      }
+    })
   }
 
   onItemNotification = (data) => {
@@ -296,9 +371,9 @@ export default class ManageWallet extends Component {
                       { text: '确定', onPress: () => console.log('ok') }
                     ]
                   )
+                } else {
+                  this.props.actions.setWalletName.requested({ oldName, name, id: this.props.wallet.id })
                 }
-
-                this.props.actions.setWalletName.requested({ oldName, name, id: this.props.wallet.id })
               }
             }
           }
@@ -310,13 +385,14 @@ export default class ManageWallet extends Component {
   }
 
   render() {
-    const { type, segWit, deleteWallet, exportMnemonics, exportBTCPrivateKey, exportETHKeystore, exportETHPrivateKey, exportEOSPrivateKey, wallet } = this.props
+    const { type, deleteWallet, exportMnemonics, exportBTCPrivateKey, exportETHKeystore, exportETHPrivateKey, exportEOSPrivateKey, switchBTCAddressType, wallet } = this.props
     const name = (wallet && wallet.name) || this.props.name
     const address = (wallet && wallet.address) || this.props.address
     const chain = (wallet && wallet.chain) || this.props.chain
     const source = (wallet && wallet.source) || this.props.source
     const id = (wallet && wallet.id) || this.props.id
     const symbol = (wallet && wallet.symbol) || this.props.symbol
+    const segWit = (wallet && wallet.segWit) || this.props.segWit
 
     const deleteWalletLoading = deleteWallet.loading
     const exportMnemonicsLoading = exportMnemonics.loading
@@ -324,7 +400,8 @@ export default class ManageWallet extends Component {
     const exportETHKeystoreLoading = exportETHKeystore.loading
     const exportETHPrivateKeyLoading = exportETHPrivateKey.loading
     const exportEOSPrivateKeyLoading = exportEOSPrivateKey.loading
-    const loading = deleteWalletLoading || exportMnemonicsLoading || exportBTCPrivateKeyLoading || exportETHKeystoreLoading || exportETHPrivateKeyLoading || exportEOSPrivateKeyLoading
+    const switchBTCAddressTypeLoading = switchBTCAddressType.loading
+    const loading = deleteWalletLoading || exportMnemonicsLoading || exportBTCPrivateKeyLoading || exportETHKeystoreLoading || exportETHPrivateKeyLoading || exportEOSPrivateKeyLoading || switchBTCAddressTypeLoading
 
     const editActions = []
     const accountActions = []
@@ -386,6 +463,7 @@ export default class ManageWallet extends Component {
           key="address"
           actionType="address"
           text="钱包地址"
+          onPress={this.switchBTCAddress}
           arrow
         />
       )
@@ -397,6 +475,7 @@ export default class ManageWallet extends Component {
           actionType="addressType"
           text="切换地址类型"
           detail={segWit === 'P2WPKH' ? '隔离见证' : '普通'}
+          onPress={this.switchBTCAddressType.bind(this, id)}
           arrow
         />
       )
@@ -501,7 +580,8 @@ export default class ManageWallet extends Component {
             <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
               <ActivityIndicator size="small" color="#000000" />
               {deleteWalletLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>验证密码...</Text>}
-              {!deleteWalletLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>导出中...</Text>}
+              {switchBTCAddressTypeLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>切换中...</Text>}
+              {(!deleteWalletLoading && !switchBTCAddressTypeLoading) && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>导出中...</Text>}
             </View>
           </View>}
         </Modal>

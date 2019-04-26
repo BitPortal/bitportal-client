@@ -14,6 +14,7 @@ import {
   walletAllIdsSelector
 } from 'selectors/wallet'
 import * as walletCore from 'core/wallet'
+import { createHDBTCKeystore } from 'core/keystore'
 import {
   getEOSKeyAccountsByPrivateKey,
   getEOSPermissionKeyPairs
@@ -224,7 +225,40 @@ function* switchBTCAddressType(action: Action<SwitchBTCAddressTypeParams>) {
   if (!action.payload) return
 
   try {
+    const id = action.payload.id
+    const password = action.payload.password
+    const source = action.payload.source
+    const segWit = action.payload.segWit
 
+    let keystore
+    const fromIdentity = source === 'NEW_IDENTITY' || source === 'RECOVERED_IDENTITY'
+    if (fromIdentity) {
+      keystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    } else {
+      keystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    }
+
+    assert(keystore && keystore.crypto, 'No keystore')
+
+    const mnemonics = yield call(walletCore.exportMnemonic, password, keystore)
+    const metadata = {
+      name: keystore.bitportalMeta.name,
+      passwordHint: keystore.bitportalMeta.passwordHint,
+      network: keystore.bitportalMeta.network,
+      source: keystore.bitportalMeta.source
+    }
+    const mnemonicCodes = mnemonics.trim().split(' ')
+    const isSegWit = segWit === 'P2WPKH'
+    const newKeystore = yield call(createHDBTCKeystore, metadata, mnemonicCodes, password, !isSegWit, id)
+
+    if (fromIdentity) {
+      yield call(secureStorage.setItem, `IDENTITY_WALLET_KEYSTORE_${id}`, newKeystore, true)
+    } else {
+      yield call(secureStorage.setItem, `IMPORTED_WALLET_KEYSTORE_${id}`, newKeystore, true)
+    }
+
+    yield put(actions.updateBTCWalletAddressType({ id, address: newKeystore.address, segWit: newKeystore.bitportalMeta.segWit }))
+    yield put(actions.switchBTCAddressType.succeeded())
   } catch (e) {
     yield put(actions.switchBTCAddressType.failed(getErrorMessage(e)))
   }

@@ -9,6 +9,7 @@ import { activeWalletSelector} from 'selectors/wallet'
 import { activeWalletBalanceSelector } from 'selectors/balance'
 import { activeWalletTickerSelector } from 'selectors/ticker'
 import { activeWalletTransactionsSelector } from 'selectors/transaction'
+import { managingWalletChildAddressSelector } from 'selectors/address'
 import FastImage from 'react-native-fast-image'
 import * as transactionActions from 'actions/transaction'
 import * as walletActions from 'actions/wallet'
@@ -24,7 +25,8 @@ const { Section, Item } = TableView
     activeWallet: activeWalletSelector(state),
     balance: activeWalletBalanceSelector(state),
     ticker: activeWalletTickerSelector(state),
-    transactions: activeWalletTransactionsSelector(state)
+    transactions: activeWalletTransactionsSelector(state),
+    childAddress: managingWalletChildAddressSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -90,15 +92,21 @@ export default class Asset extends Component {
      * })*/
   }
 
-  toReceiveAsset = () => {
+  toReceiveAsset = async () => {
+    const constants = await Navigation.constants()
+
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.ReceiveAsset',
+        passProps: {
+          statusBarHeight: constants.statusBarHeight
+        },
         options: {
           topBar: {
             title: {
               text: `接收 ${this.props.activeWallet.symbol}`
-            }
+            },
+            noBorder: this.props.activeWallet.chain === 'BITCOIN' && this.props.activeWallet.address !== this.props.childAddress
           }
         }
       }

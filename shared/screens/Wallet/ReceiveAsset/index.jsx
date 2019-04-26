@@ -16,11 +16,13 @@ import {
   Keyboard,
   Dimensions,
   Clipboard,
-  ActionSheetIOS
+  ActionSheetIOS,
+  SegmentedControlIOS
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { activeWalletSelector } from 'selectors/wallet'
 import { activeWalletBalanceSelector } from 'selectors/balance'
+import { managingWalletChildAddressSelector } from 'selectors/address'
 import { Navigation } from 'react-native-navigation'
 import QRCode from 'react-native-qrcode-svg'
 import EStyleSheet from 'react-native-extended-stylesheet'
@@ -64,6 +66,7 @@ const styles = EStyleSheet.create({
   state => ({
     activeWallet: activeWalletSelector(state),
     balance: activeWalletBalanceSelector(state),
+    childAddress: managingWalletChildAddressSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -99,7 +102,8 @@ export default class ReceiveAsset extends Component {
   state = {
     showModal: false,
     showModalContent: false,
-    amount: 0
+    amount: 0,
+    selectedIndex: 0
   }
 
   navigationButtonPressed({ buttonId }) {
@@ -116,19 +120,11 @@ export default class ReceiveAsset extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-
-  }
-
   componentDidMount() {
 
   }
 
   componentWillUnmount() {
-
-  }
-
-  componentDidDisappear() {
 
   }
 
@@ -191,27 +187,40 @@ export default class ReceiveAsset extends Component {
     return address
   }
 
+  changeSelectedIndex = (e) => {
+    this.setState({ selectedIndex: e.nativeEvent.selectedSegmentIndex })
+  }
+
   render() {
-    const { activeWallet, balance, intl } = this.props
+    const { activeWallet, balance, intl, childAddress, statusBarHeight } = this.props
     const symbol = activeWallet.symbol
     const chain = activeWallet.chain
     const available = balance && intl.formatNumber(balance.balance, { minimumFractionDigits: balance.precision, maximumFractionDigits: balance.precision })
     const address = activeWallet.address
+    const hasChildAddress = childAddress && childAddress !== address
 
     return (
+      <View style={[styles.container, { backgroundColor: 'white' }]}>
+        {hasChildAddress && <View style={{ height: 52, width: '100%', justifyContent: 'center', paddingTop: 5, paddingBottom: 13, paddingLeft: 16, paddingRight: 16, backgroundColor: '#F7F7F7', borderColor: '#C8C7CC', borderBottomWidth: 0.5, marginTop: statusBarHeight + 44 }}>
+          <SegmentedControlIOS
+            values={['主地址', '子地址']}
+            selectedIndex={this.state.selectedIndex}
+            onChange={this.changeSelectedIndex}
+            style={{ width: '100%' }}
+          />
+        </View>}
       <ScrollView
-        style={[styles.container, { backgroundColor: 'white' }]}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
         <View style={{ flex: 1, width: '100%', alignItems: 'center', padding: 16 }}>
           <Text style={{ fontSize: 17, marginBottom: 16 }}>当前钱包地址用于接收{+this.state.amount > 0 ? this.state.amount : ''} {symbol}</Text>
           <QRCode
-            value={this.getAddressUri(address, this.state.amount, chain)}
+            value={this.getAddressUri(!this.state.selectedIndex ? address : childAddress, this.state.amount, chain)}
             size={200}
           />
-          <Text style={{ fontSize: this.getAddressFontSize(address), marginTop: 16, marginBottom: 16, textAlign: 'center' }}>
-            {address}
+          <Text style={{ fontSize: this.getAddressFontSize(!this.state.selectedIndex ? address : childAddress), marginTop: 16, marginBottom: 16, textAlign: 'center' }}>
+            {!this.state.selectedIndex ? address : childAddress}
           </Text>
           <TouchableOpacity
             underlayColor="#007AFF"
@@ -224,7 +233,7 @@ export default class ReceiveAsset extends Component {
               justifyContent: 'center',
               borderRadius: 10
             }}
-            onPress={this.copy.bind(this, this.getAddressUri(address, this.state.amount, chain))}
+            onPress={this.copy.bind(this, this.getAddressUri(!this.state.selectedIndex ? address : childAddress, this.state.amount, chain))}
           >
             <Text style={{ textAlign: 'center', color: 'white', fontSize: 17 }}>复制钱包地址</Text>
           </TouchableOpacity>
@@ -239,24 +248,25 @@ export default class ReceiveAsset extends Component {
             <Text style={{ textAlign: 'center', color: '#007AFF', fontSize: 17 }}>设置金额</Text>
           </TouchableOpacity>
         </View>
-        <Modal
-          isVisible={this.state.showModal}
-          backdropOpacity={0}
-          useNativeDriver
-          animationIn="fadeIn"
-          animationInTiming={200}
-          backdropTransitionInTiming={200}
-          animationOut="fadeOut"
-          animationOutTiming={200}
-          backdropTransitionOutTiming={200}
-        >
-          {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
-              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已复制</Text>
-            </View>
-          </View>}
-        </Modal>
       </ScrollView>
+      <Modal
+        isVisible={this.state.showModal}
+        backdropOpacity={0}
+        useNativeDriver
+        animationIn="fadeIn"
+        animationInTiming={200}
+        backdropTransitionInTiming={200}
+        animationOut="fadeOut"
+        animationOutTiming={200}
+        backdropTransitionOutTiming={200}
+      >
+        {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
+            <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已复制</Text>
+          </View>
+        </View>}
+      </Modal>
+      </View>
     )
   }
 }

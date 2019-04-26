@@ -368,7 +368,6 @@ export default class ImportBTCWallet extends Component {
         </View>
         <ScrollView
           showsVerticalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
           <View style={{ flex: 1, alignItems: 'center' }}>

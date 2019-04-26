@@ -20,6 +20,7 @@ import ContactDeleteTableViewCell from 'components/TableViewCell/ContactDeleteTa
 import AddressTableViewCell from 'components/TableViewCell/AddressTableViewCell'
 import SelectEOSAccountTableViewCell from 'components/TableViewCell/SelectEOSAccountTableViewCell'
 import SwitchEOSAccountTableViewCell from 'components/TableViewCell/SwitchEOSAccountTableViewCell'
+import SwitchBTCAddressTableViewCell from 'components/TableViewCell/SwitchBTCAddressTableViewCell'
 import IdentityDetailTableViewCell from 'components/TableViewCell/IdentityDetailTableViewCell'
 import TransactionDetailTableViewCell from 'components/TableViewCell/TransactionDetailTableViewCell'
 import DappHeaderTableViewCell from 'components/TableViewCell/DappHeaderTableViewCell'
@@ -61,6 +62,7 @@ import ExportEOSPrivateKey from 'screens/Wallet/ExportEOSPrivateKey'
 import ExportBTCPrivateKey from 'screens/Wallet/ExportBTCPrivateKey'
 import SelectEOSAccount from 'screens/Wallet/SelectEOSAccount'
 import SwitchEOSAccount from 'screens/Wallet/SwitchEOSAccount'
+import SwitchBTCAddress from 'screens/Wallet/SwitchBTCAddress'
 import TransactionDetail from 'screens/Wallet/TransactionDetail'
 import Discovery from 'screens/Discovery'
 import DappList from 'screens/Discovery/DappList'
@@ -104,6 +106,7 @@ export const registerScreens = (store, persistor) => {
 
   AppRegistry.registerComponent('SelectEOSAccountTableViewCell', () => SelectEOSAccountTableViewCell)
   AppRegistry.registerComponent('SwitchEOSAccountTableViewCell', () => SwitchEOSAccountTableViewCell)
+  AppRegistry.registerComponent('SwitchBTCAddressTableViewCell', () => SwitchBTCAddressTableViewCell)
   AppRegistry.registerComponent('IdentityDetailTableViewCell', () => IdentityDetailTableViewCell)
   AppRegistry.registerComponent('TransactionDetailTableViewCell', () => TransactionDetailTableViewCell)
   AppRegistry.registerComponent('DappHeaderTableViewCell', () => DappHeaderTableViewCell)
@@ -136,6 +139,7 @@ export const registerScreens = (store, persistor) => {
   Navigation.registerComponentWithRedux('BitPortal.ImportEOSWallet', () => ImportEOSWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.SelectEOSAccount', () => SelectEOSAccount, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.SwitchEOSAccount', () => SwitchEOSAccount, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.SwitchBTCAddress', () => SwitchBTCAddress, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ExportETHKeystore', () => ExportETHKeystore, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ExportETHPrivateKey', () => ExportETHPrivateKey, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ExportEOSPrivateKey', () => ExportEOSPrivateKey, Provider, store)

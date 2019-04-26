@@ -3,7 +3,11 @@ import * as actions from 'actions/address'
 
 const initialState = {
   byId: {},
-  allIds: []
+  allIds: [],
+  child: {
+    byId: {},
+    allIds: []
+  }
 }
 
 export default handleActions({
@@ -13,5 +17,13 @@ export default handleActions({
 
     const index = state.allIds.findIndex((v: any) => v === id)
     if (index === -1) state.allIds.push(id)
+  },
+  [actions.updateChildAddress] (state, action) {
+    const { id, address } = action.payload
+    if (!state.child) state.child = { byId: {}, allIds: [] }
+    state.child.byId[id] = address
+
+    const index = state.child.allIds.findIndex((v: any) => v === id)
+    if (index === -1) state.child.allIds.push(id)
   }
 }, initialState)
