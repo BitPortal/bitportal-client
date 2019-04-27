@@ -294,29 +294,29 @@ export const startTabBasedApp = () => {
               }
             }
           },
-          {
-            stack: {
-              children: [
-                {
-                  component: {
-                    id: 'BitPortal.News',
-                    name: 'BitPortal.News'
-                  }
-                }
-              ],
-              options: {
-                bottomTab: {
-                  text: '资讯',
-                  textColor: '#9D9D9D',
-                  iconColor: '#9D9D9D',
-                  selectedTextColor: '#007AFF',
-                  icon: require('resources/images/news_tab.png'),
-                  selectedIconColor: '#007AFF',
-                  testID: 'BITPORTAL_NEWS'
-                }
-              }
-            }
-          },
+          // {
+          //   stack: {
+          //     children: [
+          //       {
+          //         component: {
+          //           id: 'BitPortal.News',
+          //           name: 'BitPortal.News'
+          //         }
+          //       }
+          //     ],
+          //     options: {
+          //       bottomTab: {
+          //         text: '资讯',
+          //         textColor: '#9D9D9D',
+          //         iconColor: '#9D9D9D',
+          //         selectedTextColor: '#007AFF',
+          //         icon: require('resources/images/news_tab.png'),
+          //         selectedIconColor: '#007AFF',
+          //         testID: 'BITPORTAL_NEWS'
+          //       }
+          //     }
+          //   }
+          // },
           {
             stack: {
               children: [

@@ -617,6 +617,7 @@ export default class WebView extends Component {
     )
   }
   renderTransferAction = (action) => {
+    console.log(action)
     return (
       <Fragment>
         <Animated.View style={{ paddingVertical: this.state.amountContainerPaddingVertical, height: this.state.amountContainerHeight, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 18 }}>
@@ -681,8 +682,8 @@ export default class WebView extends Component {
             <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>合约详情</Text>
             <View style={{ width: Dimensions.get('window').width - 36 - 95, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
               <View>
-                <Text style={{ fontSize: 13 }}>{action.account} (合约名)</Text>
-                <Text style={{ fontSize: 13 }}>{action.authorization.map((auth => `${auth.actor}@${auth.permission}`)).join(' ')} (权限)</Text>
+                <Text style={{ fontSize: 13 }}>{`${action.account}->${action.name}`}</Text>
+                <Text style={{ fontSize: 13 }}>{action.authorization.map((auth => `${auth.actor}@${auth.permission}`)).join(' ')}</Text>
               </View>
               <Image source={require('resources/images/arrow_right_bold.png')} />
             </View>

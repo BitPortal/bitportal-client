@@ -285,10 +285,9 @@ function* importETHKeystore(action: Action<ImportETHKeystoreParams>) {
     const id = keystoreObject.id
 
     const importedWallets = yield select((state: RootState) => importedWalletSelector(state))
-    assert(importedWallets.findIndex((wallet: any) => wallet.id === id) === -1, 'Keystore already exist in imported wallets')
+    // assert(importedWallets.findIndex((wallet: any) => wallet.id === id) === -1, 'Keystore already exist in imported wallets')
     const identityWallets = yield select((state: RootState) => identityWalletSelector(state))
-    assert(identityWallets.findIndex((wallet: any) => wallet.id === id) === -1, 'Keystore already exist in identity wallets')
-
+    // assert(identityWallets.findIndex((wallet: any) => wallet.id === id) === -1, 'Keystore already exist in identity wallets')
 
     if (keystoreObject.address) {
       const walletAddresses = yield select((state: RootState) => walletAddressesSelector(state))

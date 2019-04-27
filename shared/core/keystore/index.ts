@@ -454,6 +454,7 @@ export const createETHKeystore = async (metadata: any, privateKey: any, password
 }
 
 export const importETHKeystore = async (metadata: any, keystore: any, password: string, id?: string) => {
+  assert(keystore.version === 1 || keystore.version === 3, 'Invalid keystore version')
   assert(keystore.crypto, 'No keystore crypto')
   const crypto = keystore.crypto
   assert(crypto.cipherparams, 'No keystore crypto cipherparams')
