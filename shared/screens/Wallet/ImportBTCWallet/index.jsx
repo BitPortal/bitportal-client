@@ -408,6 +408,26 @@ export default class ImportBTCWallet extends Component {
               </View>
             </Fragment>}
         <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
+          <Text style={{ fontSize: 13, color: '#666666' }}>选择地址类型</Text>
+        </View>
+        <View style={{ width: '100%', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
+          <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%', height: 44 }} onPress={this.changeAddressType.bind(this, true)}>
+            <View style={{ height: 44, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
+              <Text style={{ fontSize: 17 }}>隔离见证</Text>
+              {this.state.isSegWit && <FastImage source={require('resources/images/radio_checked.png')} style={{ width: 24, height: 24 }} />}
+              {!this.state.isSegWit && <FastImage source={require('resources/images/radio_unchecked.png')} style={{ width: 24, height: 24 }} />}
+              <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: '#C8C7CC' }} />
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%', height: 44 }} onPress={this.changeAddressType.bind(this, false)}>
+            <View style={{ height: 44, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
+              <Text style={{ fontSize: 17 }}>普通</Text>
+              {this.state.isSegWit && <FastImage source={require('resources/images/radio_unchecked.png')} style={{ width: 24, height: 24 }} />}
+              {!this.state.isSegWit && <FastImage source={require('resources/images/radio_checked.png')} style={{ width: 24, height: 24 }} />}
+            </View>
+          </TouchableHighlight>
+        </View>
+        <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
           <Text style={{ fontSize: 13, color: '#666666' }}>设置密码</Text>
         </View>
         <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
@@ -433,28 +453,8 @@ export default class ImportBTCWallet extends Component {
             separator={false}
           />
         </View>
-            {/* <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
-                <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>如果要在导入的同时修改密码，请在输入框内重复输入新密码，旧密码将在导入后失效。</Text>
-                </View> */}
-            <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-              <Text style={{ fontSize: 13, color: '#666666' }}>选择地址类型</Text>
-            </View>
-            <View style={{ width: '100%', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
-              <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%', height: 44 }} onPress={this.changeAddressType.bind(this, true)}>
-                <View style={{ height: 44, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
-                  <Text style={{ fontSize: 17 }}>隔离见证</Text>
-                  {this.state.isSegWit && <FastImage source={require('resources/images/radio_checked.png')} style={{ width: 24, height: 24 }} />}
-                  {!this.state.isSegWit && <FastImage source={require('resources/images/radio_unchecked.png')} style={{ width: 24, height: 24 }} />}
-                  <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: '#C8C7CC' }} />
-                </View>
-              </TouchableHighlight>
-              <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%', height: 44 }} onPress={this.changeAddressType.bind(this, false)}>
-                <View style={{ height: 44, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
-                  <Text style={{ fontSize: 17 }}>普通</Text>
-                  {this.state.isSegWit && <FastImage source={require('resources/images/radio_unchecked.png')} style={{ width: 24, height: 24 }} />}
-                  {!this.state.isSegWit && <FastImage source={require('resources/images/radio_checked.png')} style={{ width: 24, height: 24 }} />}
-                </View>
-              </TouchableHighlight>
+            <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
+              <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。</Text>
             </View>
           </View>
         </ScrollView>

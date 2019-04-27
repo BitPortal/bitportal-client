@@ -387,6 +387,9 @@ export default class ImportEOSWallet extends Component {
                 separator={false}
               />
             </View>
+            <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
+              <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。</Text>
+            </View>
           </View>
         </ScrollView>
         <Modal

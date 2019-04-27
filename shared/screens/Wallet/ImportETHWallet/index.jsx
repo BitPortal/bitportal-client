@@ -499,6 +499,9 @@ export default class ImportETHWallet extends Component {
                   secureTextEntry
                 />
               </View>
+              {/* <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
+                  <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>以太坊官方Keystore文件内容和密码</Text>
+                  </View> */}
             </Fragment>}
             {this.state.selectedIndex === 1 && <Fragment>
               <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
@@ -577,6 +580,9 @@ export default class ImportETHWallet extends Component {
                   showClearButton={!!passwordHint && passwordHint.length > 0}
                   separator={false}
                 />
+              </View>
+              <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
+                <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。</Text>
               </View>
             </Fragment>}
           </View>
