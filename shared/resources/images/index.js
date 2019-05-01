@@ -80,4 +80,15 @@ export const chainIcons = {
   eos: require('./eos_logo.png')
 }
 
+export const dappCategoryIcons = {
+  system: require('./system_dapp.png'),
+  game: require('./game_dapp.png'),
+  exchange: require('./exchange_dapp.png'),
+  marketplace: require('./marketplace_dapp.png'),
+  tool: require('./tool_dapp.png'),
+  explorer: require('./explorer_dapp.png'),
+  news: require('./news_dapp.png')
+}
+
+
 export default Images

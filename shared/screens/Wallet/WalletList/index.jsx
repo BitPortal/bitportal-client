@@ -252,7 +252,7 @@ export default class WalletList extends Component {
               />
              )}
           </Section>}
-          <Section label={!!importedWalletsCount ? '导入的钱包' : ''}>
+          <Section label={!!importedWalletsCount ? '普通钱包' : ''}>
             {importedWallets.map(wallet =>
               <Item
                 height={60}

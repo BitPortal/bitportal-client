@@ -245,7 +245,8 @@ function* switchBTCAddressType(action: Action<SwitchBTCAddressTypeParams>) {
       name: keystore.bitportalMeta.name,
       passwordHint: keystore.bitportalMeta.passwordHint,
       network: keystore.bitportalMeta.network,
-      source: keystore.bitportalMeta.source
+      source: keystore.bitportalMeta.source,
+      timestamp: keystore.bitportalMeta.timestamp
     }
     const mnemonicCodes = mnemonics.trim().split(' ')
     const isSegWit = segWit === 'P2WPKH'

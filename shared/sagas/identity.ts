@@ -10,6 +10,7 @@ import memoryStorage from 'core/storage/memoryStorage'
 import secureStorage from 'core/storage/secureStorage'
 import { importedWalletSelector, activeWalletIdSelector } from 'selectors/wallet'
 import { push, dismissAllModals, showModal, popToRoot } from 'utils/location'
+import { CHAIN_ORDER } from 'constants/chain'
 
 const actions = { ...identityActions, ...walletActions }
 
@@ -32,7 +33,13 @@ function* scanIdentity(action: Action<ScanIdentityParams>) {
       const identityWallets = Object.keys(allItems).filter(item => !item.indexOf('IDENTITY_WALLET_KEYSTORE')).map((item) => {
         const info = allItems[item]
         return JSON.parse(info)
-      }).filter(wallet => walletIDs.indexOf(wallet.id) !== -1).sort((a, b) => a.bitportalMeta.timestamp - b.bitportalMeta.timestamp)
+      }).filter(wallet => walletIDs.indexOf(wallet.id) !== -1).sort((a, b) => {
+        if (a.bitportalMeta.chain && b.bitportalMeta.chain) {
+          return CHAIN_ORDER[a.bitportalMeta.chain] - CHAIN_ORDER[b.bitportalMeta.chain]
+        }
+
+        return a.bitportalMeta.timestamp - b.bitportalMeta.timestamp
+      })
 
       const identityWalletsInfo = identityWallets.map(walletCore.getWalletMetaData)
 

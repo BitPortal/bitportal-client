@@ -106,6 +106,7 @@
 		1CFF3B8F2A394826A002951C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8FAC78A2D9E457AA6A5C151 /* SystemConfiguration.framework */; };
 		279ACDBA87444D5D9230BA0D /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3693ECD00D2451D9DFE9083 /* Zocial.ttf */; };
 		3446CAB220E8F39F00ACA3C8 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3446CAAF20E8EB1E00ACA3C8 /* libReactNativeNavigation.a */; };
+		3449499A2274C1BB00D8AB38 /* libRNCSlider.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 344949872274C19E00D8AB38 /* libRNCSlider.a */; };
 		3451193721BBAEE9004E9426 /* libInteractable.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 345118F321BBAEC6004E9426 /* libInteractable.a */; };
 		346C2CE821E738A00030003C /* libReactNativeHaptic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 346C2CCF21E738780030003C /* libReactNativeHaptic.a */; };
 		346C2D1521E74B170030003C /* libRNReactNativeHapticFeedback.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 346C2D1421E74AFF0030003C /* libRNReactNativeHapticFeedback.a */; };
@@ -459,6 +460,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 7B49FEBB1E95090800DEB3EA;
 			remoteInfo = ReactNativeNavigationTests;
+		};
+		344949862274C19E00D8AB38 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3449494A2274C19E00D8AB38 /* RNCSlider.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 28C79A09220DC4CC0061DE82;
+			remoteInfo = RNCSlider;
 		};
 		345118F221BBAEC6004E9426 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -877,6 +885,7 @@
 		2AE2F539AB864A40ACF81B7E /* libresolv.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		2DCE5CE8E4DC4D17BDEAF27C /* libRNRandomBytes.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNRandomBytes.a; sourceTree = "<group>"; };
 		3446CAA920E8EB1E00ACA3C8 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/lib/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
+		3449494A2274C19E00D8AB38 /* RNCSlider.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCSlider.xcodeproj; path = "../node_modules/@react-native-community/slider/ios/RNCSlider.xcodeproj"; sourceTree = "<group>"; };
 		345118EA21BBAEC6004E9426 /* Interactable.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Interactable.xcodeproj; path = "../node_modules/react-native-interactable/lib/ios/Interactable.xcodeproj"; sourceTree = "<group>"; };
 		346C2C9A21E738770030003C /* ReactNativeHaptic.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeHaptic.xcodeproj; path = "../node_modules/react-native-haptic/ios/ReactNativeHaptic.xcodeproj"; sourceTree = "<group>"; };
 		346C2D0F21E74AFE0030003C /* RNReactNativeHapticFeedback.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNReactNativeHapticFeedback.xcodeproj; path = "../node_modules/react-native-haptic-feedback/ios/RNReactNativeHapticFeedback.xcodeproj"; sourceTree = "<group>"; };
@@ -948,6 +957,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3449499A2274C1BB00D8AB38 /* libRNCSlider.a in Frameworks */,
 				346C2D1521E74B170030003C /* libRNReactNativeHapticFeedback.a in Frameworks */,
 				346C2CE821E738A00030003C /* libReactNativeHaptic.a in Frameworks */,
 				3451193721BBAEE9004E9426 /* libInteractable.a in Frameworks */,
@@ -1580,6 +1590,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		3449494B2274C19E00D8AB38 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				344949872274C19E00D8AB38 /* libRNCSlider.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		345118EB21BBAEC6004E9426 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1667,6 +1685,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				3449494A2274C19E00D8AB38 /* RNCSlider.xcodeproj */,
 				346C2D0F21E74AFE0030003C /* RNReactNativeHapticFeedback.xcodeproj */,
 				346C2C9A21E738770030003C /* ReactNativeHaptic.xcodeproj */,
 				345118EA21BBAEC6004E9426 /* Interactable.xcodeproj */,
@@ -1952,6 +1971,10 @@
 				{
 					ProductGroup = 18E8845E20A0033D00B9D792 /* Products */;
 					ProjectRef = C594A110612840FD81FF27B5 /* RNCamera.xcodeproj */;
+				},
+				{
+					ProductGroup = 3449494B2274C19E00D8AB38 /* Products */;
+					ProjectRef = 3449494A2274C19E00D8AB38 /* RNCSlider.xcodeproj */;
 				},
 				{
 					ProductGroup = 34904DD120ECEB4A001A240A /* Products */;
@@ -2316,6 +2339,13 @@
 			fileType = wrapper.cfbundle;
 			path = ReactNativeNavigationTests.xctest;
 			remoteRef = 3446CAB020E8EB1E00ACA3C8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		344949872274C19E00D8AB38 /* libRNCSlider.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNCSlider.a;
+			remoteRef = 344949862274C19E00D8AB38 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		345118F321BBAEC6004E9426 /* libInteractable.a */ = {

@@ -17,7 +17,7 @@ function* transfer(action: Action) {
   if (!action.payload) return
 
   try {
-    const { chain, id, password, amount, symbol, precision, memo, contract, toAddress, fromAddress, feeRate } = action.payload
+    const { chain, id, password, amount, symbol, precision, memo, contract, toAddress, fromAddress, feeRate, gasLimit, gasPrice } = action.payload
 
     const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
     const identityKeystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
@@ -25,7 +25,7 @@ function* transfer(action: Action) {
     assert(keystore && keystore.crypto, 'No keystore')
 
     if (chain === 'ETHEREUM') {
-      const hash = yield call(ethChain.transfer, password, keystore, fromAddress, toAddress, amount)
+      const hash = yield call(ethChain.transfer, password, keystore, fromAddress, toAddress, amount, gasPrice * Math.pow(10, 9), gasLimit)
       const transaction = {
         id: hash,
         timestamp: +Date.now(),

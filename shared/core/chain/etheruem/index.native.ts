@@ -24,6 +24,16 @@ export const getTransaction = async (hash: string) => {
   return result
 }
 
+export const getETHGasPrice = async () => {
+  const networkGasPrice = await web3.eth.getGasPrice()
+  return networkGasPrice * Math.pow(10, -9)
+}
+
+// export const getETHGasLimit = async (hash: string) => {
+//   const estimateGas = await web3.eth.estimateGas(rawTx)
+//   return estimateGas
+// }
+
 const sendTransaction = async (rawTransaction: string) => {
   return new Promise((resolve, reject) => {
     web3.eth.sendSignedTransaction(rawTransaction).on('transactionHash', (hash) => {
@@ -50,11 +60,15 @@ export const transfer = async (password: string, keystore: any, fromAddress: str
   if (!gasPrice) {
     const networkGasPrice = await web3.eth.getGasPrice()
     rawTx.gasPrice = web3.utils.toHex(networkGasPrice)
+  } else {
+    rawTx.gasPrice = web3.utils.toHex(gasPrice)
   }
 
   if (!gasLimit) {
     const estimateGas = await web3.eth.estimateGas(rawTx)
     rawTx.gasLimit = estimateGas
+  } else {
+    rawTx.gasLimit = gasLimit
   }
 
   const rawTransaction = await signETHTransaction(rawTx, password, keystore)

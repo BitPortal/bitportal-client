@@ -106,7 +106,7 @@ export default class Asset extends Component {
             title: {
               text: `接收 ${this.props.activeWallet.symbol}`
             },
-            noBorder: this.props.activeWallet.chain === 'BITCOIN' && this.props.activeWallet.address !== this.props.childAddress
+            noBorder: this.props.activeWallet.chain === 'BITCOIN' && this.props.childAddress && this.props.activeWallet.address !== this.props.childAddress
           }
         }
       }

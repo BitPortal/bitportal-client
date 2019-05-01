@@ -324,7 +324,7 @@ export default class Wallet extends Component {
                     text: '取消'
                   }
                 ],
-                noBorder: data.chain === 'BITCOIN' && this.props.activeWallet.address !== this.props.childAddress
+                noBorder: data.chain === 'BITCOIN' && this.props.childAddress && this.props.activeWallet.address !== this.props.childAddress
               }
             }
           }

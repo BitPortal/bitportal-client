@@ -41,7 +41,6 @@ export default class LanguageSetting extends Component {
 
   render() {
     const { locale } = this.props
-    console.log(locale)
 
     return (
       <TableView

@@ -110,6 +110,16 @@ const traceFetchBase = (
   baseUrl: BITPROTAL_API_TRACE_URL
 })
 
+const bitcoinFeesBase = (
+  method: FetchMethod = 'GET',
+  endPoint: string = '/hello',
+  params: object = {},
+  options: object = {}
+) => fetchBase(method, endPoint, params, {
+  ...options,
+  baseUrl: 'https://bitcoinfees.earn.com/api/v1'
+})
+
 export const getTicker = (params?: TickerParams) => marketFetchBase('GET', '/tickers', params)
 export const getChart = (params?: ChartParams) => marketFetchBase('GET', '/chart', params)
 export const getCurrencyRate = () => fetchBase('GET', '', {}, { baseUrl: CURRENCY_RATE_URL })
@@ -134,3 +144,5 @@ export const traceImport = (params: any) => traceFetchBase('POST', '/registry/wa
 
 export const simpleWalletAuth = (params: any, baseUrl: string) => fetchBase('POST', '', params, { baseUrl })
 export const simpleWalletCallback = (baseUrl: string) => fetchBase('GET', '', undefined, { baseUrl })
+
+export const getBTCFees = (params: any) => bitcoinFeesBase('GET', '/fees/recommended')

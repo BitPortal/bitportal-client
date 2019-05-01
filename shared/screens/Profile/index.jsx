@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { View, LayoutAnimation } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 import TableView from 'react-native-tableview'
@@ -27,6 +27,8 @@ export default class Profile extends Component {
   }
 
   subscription = Navigation.events().bindComponent(this)
+
+  state = { showView: false }
 
   toLanguageSetting = () => {
     Navigation.push(this.props.componentId, {
@@ -80,9 +82,23 @@ export default class Profile extends Component {
     })
   }
 
+  componentDidMount() {
+
+  }
+
+  componentDidAppear() {
+    this.setState({ showView: true })
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    LayoutAnimation.easeInEaseOut()
+  }
+
   render() {
     const { identity, locale, currencySymbol } = this.props
     const hasIdentity = !!identity.id
+
+    if (!this.state.showView) return null
 
     return (
       <TableView
@@ -134,15 +150,15 @@ export default class Profile extends Component {
             isSetting
             text="货币单位"
           />
-          <Item
-            key="node"
-            type="node"
-            reactModuleForCell="IdentityTableViewCell"
-            arrow
-            onPress={this.toNodeSetting}
-            isSetting
-            text="节点设置"
-          />
+          {/* <Item
+              key="node"
+              type="node"
+              reactModuleForCell="IdentityTableViewCell"
+              arrow
+              onPress={this.toNodeSetting}
+              isSetting
+              text="节点设置"
+              /> */}
         </Section>
         <Section>
           <Item

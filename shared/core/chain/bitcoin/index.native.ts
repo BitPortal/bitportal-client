@@ -145,9 +145,14 @@ export const transfer = async (password: string, keystore: any, inputs: any, out
   for (let i = 0; i < inputs.length; i++) {
     const child = node.derive(+inputs[i].change).derive(+inputs[i].index)
     const keyPair = bitcoin.ECPair.fromPrivateKey(child.privateKey)
-    const p2wpkh = bitcoin.payments.p2wpkh({ pubkey: keyPair.publicKey })
-    const p2sh = bitcoin.payments.p2sh({ redeem: p2wpkh })
-    txb.sign(i, keyPair, p2sh.redeem.output, null, inputs[i].value)
+
+    if (isSegWit) {
+      const p2wpkh = bitcoin.payments.p2wpkh({ pubkey: keyPair.publicKey })
+      const p2sh = bitcoin.payments.p2sh({ redeem: p2wpkh })
+      txb.sign(i, keyPair, p2sh.redeem.output, null, inputs[i].value)
+    } else {
+      txb.sign(i, keyPair)
+    }
   }
 
   const tx = txb.build()

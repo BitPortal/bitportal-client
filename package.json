@@ -7,8 +7,7 @@
     "node": ">=8.0.0",
     "npm": "^3.0.0"
   },
-  "pre-commit": [
-  ],
+  "pre-commit": [],
   "skpm": {
     "main": "sketch/BitPortal.sketchplugin",
     "manifest": "sketch/manifest.json"
@@ -46,6 +45,7 @@
     "sketch": "skpm-build --watch --run"
   },
   "dependencies": {
+    "@react-native-community/slider": "^1.1.0",
     "@remobile/react-native-qrcode-local-image": "^1.0.4",
     "bech32": "^1.1.3",
     "bip32": "^1.0.2",
