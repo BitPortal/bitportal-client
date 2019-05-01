@@ -167,6 +167,10 @@ export default class Asset extends Component {
     }
   }
 
+  onLoadMore = (e) => {
+    console.log('onLoadMore', e)
+  }
+
   render() {
     const { ticker, balance, activeWallet, intl, transactions, getTransactions, statusBarHeight } = this.props
     const transactionCount = transactions && transactions.length
@@ -232,6 +236,8 @@ export default class Asset extends Component {
           onRefresh={this.onRefresh}
           refreshing={refreshing}
           canRefresh={hasTransactions}
+          onLoadMore={this.onLoadMore}
+          canLoadMore={true}
         >
           <Section uid="HeaderTableViewCell">
             <Item

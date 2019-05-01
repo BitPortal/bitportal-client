@@ -617,7 +617,6 @@ export default class WebView extends Component {
     )
   }
   renderTransferAction = (action) => {
-    console.log(action)
     return (
       <Fragment>
         <Animated.View style={{ paddingVertical: this.state.amountContainerPaddingVertical, height: this.state.amountContainerHeight, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 18 }}>
@@ -778,8 +777,8 @@ export default class WebView extends Component {
 
         return (
           <View style={{ height: 340 }}>
-            {name === 'transfer' && this.renderTransferAction(action)}
-            {name !== 'transfer' && this.renderContractAction(action)}
+            {(name === 'transfer' && account === 'eosio.token') && this.renderTransferAction(action)}
+            {(name !== 'transfer' || account !== 'eosio.token') && this.renderContractAction(action)}
             <View style={{ paddingTop: 10, paddingBottom: 10, position: 'absolute', bottom: 0, left: 0, width: '100%', paddingHorizontal: 18 }}>
               <TouchableOpacity style={{ backgroundColor: '#007AFF', borderRadius: 10, width: '100%', height: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.7} onPress={!!this.state.largeAmount ? this.changeAmountSize : this.submit} disabled={!!this.props.resolving}>
                 {(!!this.state.largeAmount || !this.state.passwordValue) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>确认交易</Text>}

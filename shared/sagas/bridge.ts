@@ -794,6 +794,7 @@ function* rejectMessage() {
 
   if (messageId && !resolving) {
     yield put(actions.clearMessage())
+    yield delay(500)
     yield put(actions.sendMessage({
       messageId,
       type: 'actionFailed',

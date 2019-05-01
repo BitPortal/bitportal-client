@@ -9,10 +9,10 @@ const initialState = {
 
 export default handleActions({
   [actions.updateTransactions] (state, action) {
-    const { id, items, pagination } = action.payload
+    const { id, items, pagination, canLoadMore } = action.payload
 
     if (!state.byId[id]) {
-      state.byId[id] = { id, pagination }
+      state.byId[id] = { id, pagination, canLoadMore }
 
       state.byId[id].items = {
         byId: {},

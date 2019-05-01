@@ -20,6 +20,7 @@ import bridge from './bridge'
 import producer from './producer'
 import contact from './contact'
 import fee from './fee'
+import asset from './asset'
 
 export default combineReducers({
   form,
@@ -41,5 +42,6 @@ export default combineReducers({
   producer,
   contact,
   fee,
+  asset,
   ...createAsyncActionsReducers(asyncActions)
 })

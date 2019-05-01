@@ -295,9 +295,10 @@ function* getTransactions(action: Action) {
       assert(walletAddresses, 'No hd wallet addresses')
 
       const fromIndex = 0
-      const toIndex = 50
+      const toIndex = 10
       const addresses = walletAddresses.external.allIds.concat(walletAddresses.change.allIds)
       const transactions = yield call(btcChain.getTransactions, addresses, fromIndex, toIndex)
+      const canLoadMore = transactions.items.length === 10
       const items = transactions.items
         .map((item: any) => ({ ...item, id: item.txid, timestamp: +item.time * 1000 }))
         .map((item: any) => {
@@ -354,7 +355,8 @@ function* getTransactions(action: Action) {
         to: transactions.to
       }
 
-      yield put(actions.updateTransactions({ id, items, pagination }))
+      console.log({ id, items, pagination, canLoadMore })
+      yield put(actions.updateTransactions({ id, items, pagination, canLoadMore }))
     } else if (chain === 'ETHEREUM') {
       const startblock = 0
       const endblock = 99999999

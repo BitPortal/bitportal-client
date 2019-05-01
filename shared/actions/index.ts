@@ -16,6 +16,7 @@ import * as utxoActions from './utxo'
 import * as producerActions from './producer'
 import * as contactActions from './contact'
 import * as feeActions from './fee'
+import * as assetActions from './asset'
 
 export const asyncActions = getAsyncActions({
   ...identityActions,
@@ -34,5 +35,6 @@ export const asyncActions = getAsyncActions({
   ...keyAccountActions,
   ...producerActions,
   ...contactActions,
-  ...feeActions
+  ...feeActions,
+  ...assetActions
 })

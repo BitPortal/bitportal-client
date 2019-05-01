@@ -171,7 +171,7 @@ export default class Wallet extends Component {
   addAssets = () => {
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.WalletAssets'
+        name: 'BitPortal.EOSAssets'
       }
     })
   }
@@ -462,7 +462,8 @@ export default class Wallet extends Component {
               componentId={this.props.componentId}
               selectionStyle={TableView.Consts.CellSelectionStyle.None}
               switching={this.state.switching}
-              hasRightButton
+              chain={chain}
+              hasRightButton={chain !== 'BITCOIN'}
             />
           </Section>
           {!!balance && (
