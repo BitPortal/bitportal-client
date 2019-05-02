@@ -78,12 +78,11 @@ export default class EOSAssets extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.getEOSAsset.requested()
+    this.props.actions.getEOSAsset.requested({ display_priority: 1 })
   }
 
   render() {
     const { eosAsset } = this.props
-    console.log(eosAsset)
 
     return (
       <View style={styles.container}>

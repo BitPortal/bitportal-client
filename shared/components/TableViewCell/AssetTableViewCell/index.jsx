@@ -17,12 +17,12 @@ const AssetTableViewCell = props => {
         <View style={{ width: 40, height: 40, marginRight: 10, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.3)', backgroundColor: 'white', borderRadius: 20 }}>
           <FastImage
             source={{ uri: props.data.icon_url }}
-            style={{ width: 39, height: 39 }}
+            style={{ width: 39, height: 39, borderRadius: 20 }}
           />
         </View>
         <View style={{ flex: 1 }}>
           <Text style={{ fontSize: 17 }}>{props.data.symbol}</Text>
-          <Text style={{ fontSize: 15, color: '#666666' }}>{formatAddress(props.data.account)}</Text>
+          <Text style={{ fontSize: 15, color: '#666666' }}>{`合约: ${formatAddress(props.data.account)}`}</Text>
         </View>
       </View>
     </View>

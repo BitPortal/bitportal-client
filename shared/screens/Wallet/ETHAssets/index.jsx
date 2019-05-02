@@ -83,7 +83,6 @@ export default class ETHAssets extends Component {
 
   render() {
     const { ethAsset } = this.props
-    console.log(ethAsset)
 
     return (
       <View style={styles.container}>

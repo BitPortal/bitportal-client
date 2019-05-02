@@ -7,7 +7,7 @@ import * as api from 'utils/api'
 
 function* getETHAsset(action: Action) {
   try {
-    const result = yield call(api.getETHAsset)
+    const result = yield call(api.getETHAsset, action.payload)
     yield put(actions.updateETHAsset(result))
     yield put(actions.getETHAsset.succeeded())
   } catch (e) {
@@ -17,7 +17,7 @@ function* getETHAsset(action: Action) {
 
 function* getEOSAsset(action: Action) {
   try {
-    const result = yield call(api.getEOSAsset)
+    const result = yield call(api.getEOSAsset, action.payload)
     yield put(actions.updateEOSAsset(result))
     yield put(actions.getEOSAsset.succeeded())
   } catch (e) {
