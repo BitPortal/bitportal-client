@@ -184,7 +184,7 @@ export default class ReceiveAsset extends Component {
       return `${chain.toLowerCase()}:${address}?amount=${amount}`
     }
 
-    return address
+    return `${chain.toLowerCase()}:${address}`
   }
 
   changeSelectedIndex = (e) => {
