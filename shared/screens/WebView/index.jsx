@@ -25,7 +25,7 @@ import WebViewBridge from 'react-native-webview-bridge'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
-import { FormattedMessage, IntlProvider } from 'react-intl'
+import { FormattedMessage, IntlProvider, injectIntl } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
 import Url from 'url-parse'
 import * as bridgeActions from 'actions/bridge'
@@ -39,6 +39,7 @@ import { activeWalletBalanceSelector } from 'selectors/balance'
 import globalMessages from 'resources/messages'
 import { walletIcons } from 'resources/images'
 import { dappBookmarkAllIdsSelector } from 'selectors/dapp'
+import { hex_to_ascii } from 'utils'
 import localMessages from './messages'
 import styles from './styles'
 
@@ -84,6 +85,8 @@ export const errorMessages = (error, messages) => {
       return messages.webview_signing_failed
   }
 }
+
+@injectIntl
 
 @connect(
   state => ({
@@ -142,6 +145,7 @@ export default class WebView extends Component {
     loadingContract: false,
     requirePassword: false,
     amountFontSize: new Animated.Value(30),
+    actionFontSize: new Animated.Value(24),
     symbolFontSize: new Animated.Value(18),
     symbolMarginTop: new Animated.Value(5),
     amountLabelOpacity: new Animated.Value(0),
@@ -381,6 +385,11 @@ export default class WebView extends Component {
         duration: 300,
         easing: Easing.inOut(Easing.quad)
       }),
+      Animated.timing(this.state.actionFontSize, {
+        toValue: 24,
+        duration: 300,
+        easing: Easing.inOut(Easing.quad)
+      }),
       Animated.timing(this.state.symbolFontSize, {
         toValue: 18,
         duration: 300,
@@ -447,6 +456,11 @@ export default class WebView extends Component {
         duration: 300,
         easing: Easing.inOut(Easing.quad)
       }),
+      Animated.timing(this.state.actionFontSize, {
+        toValue: 13,
+        duration: 300,
+        easing: Easing.inOut(Easing.quad)
+      }),
       Animated.timing(this.state.symbolFontSize, {
         toValue: 13,
         duration: 300,
@@ -498,8 +512,8 @@ export default class WebView extends Component {
   }
 
   formatAddress = (address) => {
-    if (address && address.length > 20) {
-      return `${address.slice(0, 10)}....${address.slice(-10)}`
+    if (address && address.length > 16) {
+      return `${address.slice(0, 8)}....${address.slice(-8)}`
     } else {
       return address
     }
@@ -556,30 +570,7 @@ export default class WebView extends Component {
   renderContractAction = (action) => {
     return (
       <Fragment>
-        <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
-          <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>当前钱包</Text>
-          <View style={{ width: Dimensions.get('window').width - 36 - 95, justifyContent: 'space-between', flexDirection: 'row' }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Image
-                source={walletIcons.eos}
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: 10,
-                  borderWidth: 0.5,
-                  borderColor: 'rgba(0,0,0,0.2)',
-                  backgroundColor: 'white',
-                  marginRight: 10
-                }}
-              />
-              <View>
-                <Text style={{ fontSize: 13, marginBottom: 2 }}>{this.formatAddress(this.props.activeWallet.address)}</Text>
-                <Text style={{ fontSize: 13 }}>{`${this.props.balance.balance} ${this.props.balance.symbol}`}</Text>
-              </View>
-            </View>
-          </View>
-          <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
-        </View>
+        {this.renderActiveWallet()}
         <TouchableHighlight underlayColor="white" style={{ width: '100%' }} onPress={this.toNext}>
           <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
             <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>合约详情</Text>
@@ -616,6 +607,38 @@ export default class WebView extends Component {
       </Fragment>
     )
   }
+
+  renderActiveWallet = () => {
+    if (!this.props.activeWallet) return null
+
+    return (
+      <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
+        <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>当前钱包</Text>
+        <View style={{ width: Dimensions.get('window').width - 36 - 95, justifyContent: 'space-between', flexDirection: 'row' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Image
+              source={walletIcons[this.props.activeWallet.chain.toLowerCase()]}
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: 10,
+                borderWidth: 0.5,
+                borderColor: 'rgba(0,0,0,0.2)',
+                backgroundColor: 'white',
+                marginRight: 10
+              }}
+            />
+            <View>
+              <Text style={{ fontSize: 13, marginBottom: 2 }}>{this.formatAddress(this.props.activeWallet.address)}</Text>
+              <Text style={{ fontSize: 13 }}>{`${this.props.intl.formatNumber(this.props.balance.balance, { minimumFractionDigits: this.props.balance.precision, maximumFractionDigits: this.props.balance.precision })} ${this.props.balance.symbol}`}</Text>
+            </View>
+          </View>
+        </View>
+        <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+      </View>
+    )
+  }
+
   renderTransferAction = (action) => {
     return (
       <Fragment>
@@ -652,30 +675,7 @@ export default class WebView extends Component {
           </Animated.View>
           <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
         </Animated.View>
-        <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
-          <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>当前钱包</Text>
-          <View style={{ width: Dimensions.get('window').width - 36 - 95, justifyContent: 'space-between', flexDirection: 'row' }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Image
-                source={walletIcons.eos}
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: 10,
-                  borderWidth: 0.5,
-                  borderColor: 'rgba(0,0,0,0.2)',
-                  backgroundColor: 'white',
-                  marginRight: 10
-                }}
-              />
-              <View>
-                <Text style={{ fontSize: 13, marginBottom: 2 }}>{this.formatAddress(this.props.activeWallet.address)}</Text>
-                <Text style={{ fontSize: 13 }}>{`${this.props.balance.balance} ${this.props.balance.symbol}`}</Text>
-              </View>
-            </View>
-          </View>
-          <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
-        </View>
+        {this.renderActiveWallet()}
         <TouchableHighlight underlayColor="white" style={{ width: '100%' }} onPress={this.toNext}>
           <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
             <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>合约详情</Text>
@@ -837,6 +837,78 @@ export default class WebView extends Component {
           </View>
         </View>
       )
+    } else if (message.type === 'eth_rpc_request') {
+      if (message.payload.method === 'personal_sign') {
+        return (
+          <View style={{ height: 290 }}>
+            <Animated.View style={{ paddingVertical: this.state.amountContainerPaddingVertical, height: this.state.amountContainerHeight, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 18 }}>
+              <View
+                style={{ flexDirection: 'row', position: 'absolute', left: '-100%', top: 25, opacity: 1 }}
+                onLayout={(event) => {
+                    const layout = event.nativeEvent.layout
+                    this.setState({
+                      largeAmountWidth: layout.width,
+                      amountMarginLeft: new Animated.Value((Dimensions.get('window').width - layout.width) / 2 - 18)
+                    })
+                  }}
+              >
+                <Text style={{ fontSize: 24 }}>
+                  个人签名
+                </Text>
+              </View>
+              <Animated.Text style={{ fontSize: 13, color: '#A2A2A6', width: 95, position: 'absolute', left: 18, top: 15, opacity: this.state.amountLabelOpacity }}>
+                当前操作
+              </Animated.Text>
+              <Animated.View
+                style={{ flexDirection: 'row', marginLeft: this.state.amountMarginLeft }}
+              >
+                <Animated.Text style={{ fontSize: this.state.actionFontSize }}>
+                  个人签名
+                </Animated.Text>
+              </Animated.View>
+              <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+            </Animated.View>
+            {this.renderActiveWallet()}
+            <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
+              <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>签名内容</Text>
+              <ScrollView contentContainerStyle={{ width: Dimensions.get('window').width - 36 - 95, justifyContent: 'space-between', flexDirection: 'row' }} style={{ maxHeight: 32 }}>
+                <Text style={{ fontSize: 13 }}>{hex_to_ascii(message.payload.params[0])}</Text>
+              </ScrollView>
+              <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+            </View>
+            <Animated.View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, opacity: this.state.passwordTextInputOpacity, paddingHorizontal: 18 }}>
+              <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>输入密码</Text>
+              <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row' }}>
+                <TextInput
+                  style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, width: '100%' }}
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  onChangeText={this.onPasswordChange}
+                  value={this.state.passwordValue}
+                  ref={this.textInput}
+                  onBlur={this.onPasswordBlur}
+                  onSubmitEditing={this.submit}
+                  disabled
+                  secureTextEntry
+                  focuses
+                />
+              </View>
+              {(!!this.state.largeAmount || !!this.props.resolving) && <View style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0 }} />}
+              <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+            </Animated.View>
+            <View style={{ paddingTop: 10, paddingBottom: 10, position: 'absolute', bottom: 0, left: 0, width: '100%', paddingHorizontal: 18 }}>
+              <TouchableOpacity style={{ backgroundColor: '#007AFF', borderRadius: 10, width: '100%', height: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.7} onPress={!!this.state.largeAmount ? this.changeAmountSize : this.submit} disabled={!!this.props.resolving}>
+                {(!!this.state.largeAmount || !this.state.passwordValue) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>确认签名</Text>}
+                {(!this.state.largeAmount && !!this.state.passwordValue && !this.props.resolving) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>验证密码</Text>}
+                {(!this.state.largeAmount && !!this.state.passwordValue && !!this.props.resolving) && <ActivityIndicator size="small" color="#ffffff" style={{ marginRight: 5 }} />}
+                {(!this.state.largeAmount && !!this.state.passwordValue && !!this.props.resolving) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>验证密码中...</Text>}
+              </TouchableOpacity>
+            </View>
+          </View>
+        )
+      } else {
+        return null
+      }
     }
   }
 
@@ -857,7 +929,7 @@ export default class WebView extends Component {
           <View style={{ width: '100%', height: this.state.navigationHeight, backgroundColor: 'rgba(0,0,0,0)' }} />
           <View style={{ width: '100%', height: Dimensions.get('window').height - tabHeight + 1 - this.state.navigationHeight }}>
             <WebViewBridge
-              source={{ uri: url }}
+              source={{ uri: 'https://www.cryptokitties.co' }}
               ref={(e) => { this.webviewbridge = e }}
               renderError={this.renderError}
               renderLoading={() => {}}
@@ -870,7 +942,7 @@ export default class WebView extends Component {
               scalesPageToFit={true}
               nativeConfig={{ props: { backgroundColor: Colors.minorThemeColor, flex: 1 } }}
               onBridgeMessage={this.onBridgeMessage}
-              injectedJavaScript={inject}
+              injectedJavaScriptBeforeLoad={inject}
               onProgress={this.onProgress}
               onError={this.onError}
             />

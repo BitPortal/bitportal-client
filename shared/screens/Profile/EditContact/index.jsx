@@ -204,7 +204,7 @@ export default class MyIdentity extends Component {
     } else if (buttonId === 'done') {
       const { formSyncWarnings, formValues } = this.props
 
-      if (!formValues.name || !formValues.name.trim().length) {
+      if (!formValues || !formValues.name || !formValues.name.trim().length) {
         Alert.alert(
           '请输入姓名',
           '',

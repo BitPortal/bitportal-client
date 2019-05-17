@@ -6,7 +6,7 @@ import { Navigation } from 'react-native-navigation'
 import { bindActionCreators } from 'redux'
 import * as dAppActions from 'actions/dapp'
 import { IntlProvider, injectIntl } from 'react-intl'
-import { loadInjectSync } from 'utils/inject'
+import { loadScatterSync } from 'utils/inject'
 import AddRemoveButton from 'components/AddRemoveButton'
 import Alert from 'components/Alert'
 import Toast from 'components/Toast'
@@ -97,7 +97,7 @@ export default class DappListItem extends React.PureComponent {
   }
 
   toUrl = (item) => {
-    const inject = loadInjectSync()
+    const inject = loadScatterSync()
 
     Navigation.push(this.props.componentId, {
       component: {

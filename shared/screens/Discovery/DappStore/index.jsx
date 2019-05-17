@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { parsedDappListSelector } from 'selectors/dapp'
 import { eosAccountNameSelector } from 'selectors/eosAccount'
 import { IntlProvider } from 'react-intl'
-import { loadInjectSync } from 'utils/inject'
+import { loadScatterSync } from 'utils/inject'
 import Colors from 'resources/colors'
 import messages from 'resources/messages'
 import DappElement from './DappElement'
@@ -33,7 +33,7 @@ import styles from './styles'
 )
 export default class DappStore extends PureComponent {
   showDappBrowser = () => {
-    const inject = loadInjectSync()
+    const inject = loadScatterSync()
 
     Navigation.push(this.props.componentId, {
       component: {

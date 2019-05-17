@@ -20,7 +20,6 @@ import {
   Animated,
   Easing
 } from 'react-native'
-import ActionSheetCustom from 'react-native-actionsheet'
 import FastImage from 'react-native-fast-image'
 import TableView from 'react-native-tableview'
 import { transferWalletSelector } from 'selectors/wallet'
@@ -986,17 +985,6 @@ export default class TransferAsset extends Component {
             </TouchableHighlight>
           </View>
         </View>
-        <ActionSheetCustom
-          ref={o => this.ActionSheet = o}
-          title="选择联系人"
-          options={[
-            'Cancel',
-            'Apple',
-            'Watermelon'
-          ]}
-          cancelButtonIndex={0}
-          onPress={(index) => { /* do something */ }}
-        />
         <Modal
           isVisible={this.state.selectContact}
           onBackdropPress={this.cancelSelectContact}

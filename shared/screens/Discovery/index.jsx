@@ -14,7 +14,7 @@ import {
   dappRecommendSelector,
   dappBookmarkSelector
 } from 'selectors/dapp'
-import { loadInject, loadInjectSync } from 'utils/inject'
+import { loadScatter, loadScatterSync, loadMetaMask, loadMetaMaskSync } from 'utils/inject'
 import { activeWalletSelector } from 'selectors/wallet'
 const { Section, Item, CollectionView, CollectionViewItem } = TableView
 
@@ -70,16 +70,19 @@ export default class Discovery extends Component {
             { text: '确定', onPress: () => {} }
           ]
         )
-      } else if (wallet.chain !== 'EOS') {
-        Alert.alert(
-          '请切换到EOS钱包',
-          '',
-          [
-            { text: '确定', onPress: () => {} }
-          ]
-        )
-      } else {
-        const inject = loadInjectSync()
+      }
+      /* else if (wallet.chain !== 'EOS') {
+       *   Alert.alert(
+       *     '请切换到EOS钱包',
+       *     '',
+       *     [
+       *       { text: '确定', onPress: () => {} }
+       *     ]
+       *   )
+       * }*/
+      else {
+        // const inject = loadScatterSync()
+        const inject = loadMetaMaskSync()
 
         Navigation.push(this.props.componentId, {
           component: {
@@ -102,7 +105,7 @@ export default class Discovery extends Component {
     const { url, title, uid } = data
 
     if (title) {
-      const inject = loadInjectSync()
+      const inject = loadScatterSync()
       Navigation.push(this.props.componentId, {
         component: {
           name: 'BitPortal.WebView',
@@ -138,7 +141,8 @@ export default class Discovery extends Component {
   async componentDidMount() {
     this.props.actions.getDapp.requested()
     this.props.actions.getDappRecommend.requested()
-    await loadInject()
+    await loadScatter()
+    await loadMetaMask()
   }
 
   componentDidAppear() {
@@ -160,7 +164,7 @@ export default class Discovery extends Component {
       >
         <Section>
           <Item
-            height={318}
+            height={306}
             containCollectionView
             collectionViewInsideTableViewCell="FeaturedDappCollectionViewCell"
             collectionViewInsideTableViewCellKey="FeaturedDappCollectionViewCell"
@@ -169,7 +173,7 @@ export default class Discovery extends Component {
               {featured.map(item =>
                 <CollectionViewItem
                   reactModuleForCollectionViewCell="FeaturedDappCollectionViewCell"
-                  height="315"
+                  height="303"
                   title={item.title}
                   description={item.title}
                   img={item.img_url}
@@ -180,6 +184,15 @@ export default class Discovery extends Component {
                )}
             </CollectionView>
           </Item>
+        </Section>
+        <Section>
+          <Item
+            reactModuleForCell="DappMarketTableViewCell"
+            height={44}
+            componentId={this.props.componentId}
+            selectionStyle={TableView.Consts.CellSelectionStyle.None}
+            showSeparator
+          />
         </Section>
         {bookmarked && !!bookmarked.length && <Section>
           <Item

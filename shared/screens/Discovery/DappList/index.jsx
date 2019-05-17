@@ -6,7 +6,7 @@ import { Navigation } from 'react-native-navigation'
 import { categoryDappSelector } from 'selectors/dapp'
 import * as dappActions from 'actions/dapp'
 import TableView from 'react-native-tableview'
-import { loadInjectSync } from 'utils/inject'
+import { loadScatterSync } from 'utils/inject'
 const { Section, Item } = TableView
 
 @connect(
@@ -43,7 +43,7 @@ export default class DappList extends Component {
 
     if (action === 'toDapp') {
       const { url, title, id } = data
-      const inject = loadInjectSync()
+      const inject = loadScatterSync()
 
       Navigation.push(this.props.componentId, {
         component: {

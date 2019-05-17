@@ -274,3 +274,13 @@ export const isJsonString = (str: string) => {
 
   return true
 }
+
+export const hex_to_ascii = (str1: number) => {
+  const hex = str1.toString()
+  let str = ''
+
+  for (let n = 0; n < hex.length; n += 2) {
+	str += String.fromCharCode(parseInt(hex.substr(n, 2), 16))
+  }
+  return str
+}

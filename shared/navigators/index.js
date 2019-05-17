@@ -24,6 +24,7 @@ import SwitchBTCAddressTableViewCell from 'components/TableViewCell/SwitchBTCAdd
 import IdentityDetailTableViewCell from 'components/TableViewCell/IdentityDetailTableViewCell'
 import TransactionDetailTableViewCell from 'components/TableViewCell/TransactionDetailTableViewCell'
 import DappHeaderTableViewCell from 'components/TableViewCell/DappHeaderTableViewCell'
+import DappMarketTableViewCell from 'components/TableViewCell/DappMarketTableViewCell'
 import DappFooterTableViewCell from 'components/TableViewCell/DappFooterTableViewCell'
 import DappCategoryTableViewCell from 'components/TableViewCell/DappCategoryTableViewCell'
 import SmallDappTableViewCell from 'components/TableViewCell/SmallDappTableViewCell'
@@ -111,6 +112,8 @@ export const registerScreens = (store, persistor) => {
   AppRegistry.registerComponent('IdentityDetailTableViewCell', () => IdentityDetailTableViewCell)
   AppRegistry.registerComponent('TransactionDetailTableViewCell', () => TransactionDetailTableViewCell)
   AppRegistry.registerComponent('DappHeaderTableViewCell', () => DappHeaderTableViewCell)
+  AppRegistry.registerComponent('DappMarketTableViewCell', () => DappMarketTableViewCell)
+
   AppRegistry.registerComponent('DappFooterTableViewCell', () => DappFooterTableViewCell)
   AppRegistry.registerComponent('DappCategoryTableViewCell', () => DappCategoryTableViewCell)
   AppRegistry.registerComponent('SmallDappTableViewCell', () => SmallDappTableViewCell)

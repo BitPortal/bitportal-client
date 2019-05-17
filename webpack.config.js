@@ -48,7 +48,8 @@ const baseConfig = {
           resolve(__dirname, 'shared/resources/scripts'),
           resolve(__dirname, 'shared/resources/charting_library'),
           resolve(__dirname, 'shared/screens'),
-          resolve(__dirname, 'shared/navigators')
+          resolve(__dirname, 'shared/navigators'),
+          resolve(__dirname, 'shared/core/bridge')
         ]
       },
       {
@@ -352,13 +353,38 @@ const extensionConfig = {
   }
 }
 
-const injectConfig = {
+const injectScatterConfig = {
   ...baseConfig,
   context: resolve('shared'),
   entry: 'core/bridge/scatter/inject.js',
   output: {
     ...baseConfig.output,
-    filename: 'inject.js',
+    filename: 'injectScatter.js',
+    path: resolve('ios/bitportal')
+  },
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        uglifyOptions: {
+          mangle: true,
+          output: {
+            comments: false
+          }
+        }
+      })
+    ]
+  }
+}
+
+const injectMetaMaskConfig = {
+  ...baseConfig,
+  context: resolve('shared'),
+  entry: 'core/bridge/metamask/inpage.js',
+  output: {
+    ...baseConfig.output,
+    filename: 'injectMetaMask.js',
     path: resolve('ios/bitportal')
   },
   optimization: {
@@ -382,7 +408,8 @@ const configs = {
   node: serverConfig,
   "electron-renderer": desktopConfig,
   extension: extensionConfig,
-  inject: injectConfig
+  injectScatter: injectScatterConfig,
+  injectMetaMask: injectMetaMaskConfig
 }
 
 module.exports = configs[process.env.TARGET]

@@ -4,7 +4,7 @@ import { Navigation } from 'react-native-navigation'
 import Alert from 'components/Alert'
 import { injectIntl, IntlProvider } from 'react-intl'
 import BPImage from 'components/BPNativeComponents/BPImage'
-import { loadInjectSync } from 'utils/inject'
+import { loadScatterSync } from 'utils/inject'
 import Images from 'resources/images'
 import messages from 'resources/messages'
 import { onEventWithMap } from 'utils/analytics'
@@ -63,7 +63,7 @@ export default class DappElement extends Component {
   }
 
   toUrl = (item) => {
-    const inject = loadInjectSync()
+    const inject = loadScatterSync()
 
     const { eosAccountName } = this.props
     // Umeng analitics

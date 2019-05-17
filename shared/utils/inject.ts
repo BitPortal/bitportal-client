@@ -1,16 +1,17 @@
 import { Platform } from 'react-native'
 import RNFS from 'react-native-fs'
 
-let inject: string = ''
+let scatter: string = ''
+let metamask: string = ''
 
 export const rootPath = Platform.OS === 'ios' ? RNFS.MainBundlePath : 'raw'
 const readFile = Platform.OS === 'ios' ? RNFS.readFile : RNFS.readFileAssets
 
-const loadLocalFile = (path: string) => {
+const loadScatterFile = (path: string) => {
   return new Promise((reslove, reject) => {
     readFile(path, 'utf8')
       .then((contents: string) => {
-        inject = contents
+        scatter = contents
         reslove(contents)
       }).catch((error: any) => {
         reject(error)
@@ -18,12 +19,34 @@ const loadLocalFile = (path: string) => {
   })
 }
 
-export const loadInject = async () => {
-  if (inject) return inject
+export const loadScatter = async () => {
+  if (scatter) return scatter
 
-  return await loadLocalFile(`${rootPath}/inject.js`)
+  return await loadScatterFile(`${rootPath}/injectScatter.js`)
 }
 
-export const loadInjectSync = () => {
-  return inject
+export const loadScatterSync = () => {
+  return scatter
+}
+
+const loadMetaMaskFile = (path: string) => {
+  return new Promise((reslove, reject) => {
+    readFile(path, 'utf8')
+      .then((contents: string) => {
+        metamask = contents
+        reslove(contents)
+      }).catch((error: any) => {
+        reject(error)
+      })
+  })
+}
+
+export const loadMetaMask = async () => {
+  if (metamask) return metamask
+
+  return await loadMetaMaskFile(`${rootPath}/injectMetaMask.js`)
+}
+
+export const loadMetaMaskSync = () => {
+  return metamask
 }
