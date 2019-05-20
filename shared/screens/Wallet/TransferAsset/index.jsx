@@ -602,7 +602,11 @@ export default class TransferAsset extends Component {
         `暂无${chainSymbol}联系人地址`,
         null,
         [
-          { text: '取消', onPress: () => console.log('cancel Pressed') },
+          {
+            text: '取消',
+            onPress: () => console.log('cancel Pressed'),
+            style: 'cancel'
+          },
           { text: '添加', onPress: () => {
             Navigation.showModal({
               stack: {

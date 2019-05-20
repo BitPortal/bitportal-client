@@ -2,7 +2,7 @@ import { createSelector } from 'reselect'
 import { managingWalletSelector } from 'selectors/wallet'
 
 export const addressByIdSelector = (state: RootState) => state.address.byId
-export const childAddressByIdSelector = (state: RootState) => state.address.child.byId
+export const childAddressByIdSelector = (state: RootState) => state.address.child && state.address.child.byId
 
 export const managingWalletAddressSelector = createSelector(
   managingWalletSelector,
