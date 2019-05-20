@@ -150,7 +150,6 @@ const AddressField = ({
       placeholder={placeholder}
       onChangeText={onChange}
       keyboardType="default"
-      autoCapitalize='none'
       secureTextEntry={secureTextEntry}
       {...restInput}
     />}
@@ -220,7 +219,6 @@ const MessageField = ({
       placeholder={placeholder}
       onChangeText={onChange}
       keyboardType="default"
-      autoCapitalize='none'
       multiline={true}
       secureTextEntry={secureTextEntry}
       {...restInput}
@@ -268,7 +266,6 @@ const AmountField = ({
         placeholder={placeholder}
         onChangeText={onChange}
         keyboardType="numeric"
-        autoCapitalize='none'
         secureTextEntry={secureTextEntry}
         {...restInput}
       />
@@ -306,7 +303,6 @@ const TextField = ({
         placeholder={placeholder}
         onChangeText={onChange}
         keyboardType="numeric"
-        autoCapitalize='none'
         secureTextEntry={secureTextEntry}
         {...restInput}
       />
@@ -526,7 +522,7 @@ export default class TransferAsset extends Component {
             componentId: this.props.componentId,
             memo: data.memo || (this.props.selectedContact && this.props.selectedContact.memo),
             gasLimit: this.state.ethGasLimit,
-            gasPrice: +this.state.useGasPrice || +this.state.initialGwei || this.state.ethGasPrice  || 4.00
+            gasPrice: +this.state.useGasPrice || +this.state.initialGwei || this.state.ethGasPrice || 4.00
           })
         }
       ],
@@ -825,7 +821,7 @@ export default class TransferAsset extends Component {
             separator
           />
           {showMinnerFee && chain === 'BITCOIN' && <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16 }}>
-            <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+            <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
               <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
                 <Text style={{ fontSize: 15 }}>矿工费</Text>
                 <TouchableHighlight
