@@ -17,7 +17,7 @@ function* transfer(action: Action) {
   if (!action.payload) return
 
   try {
-    const { chain, id, password, amount, symbol, precision, memo, contract, toAddress, fromAddress, feeRate, gasLimit, gasPrice } = action.payload
+    const { chain, id, password, amount, symbol, precision, memo, contract, toAddress, fromAddress, feeRate, gasLimit, gasPrice, opreturn } = action.payload
 
     const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
     const identityKeystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
@@ -52,10 +52,14 @@ function* transfer(action: Action) {
       const walletAddress = address.byId[`${chain}/${fromAddress}`]
       assert(walletAddress, 'No address')
 
+      if ( !opreturn ) {
+        opreturn = ''
+      }
+
       const changeAddress = btcChain.getChangeAddress(walletUTXO, walletAddress.change)
       const { inputs, outputs, fee } = yield call(btcChain.selectUTXO, walletUTXO, amount, toAddress, changeAddress, feeRate)
       const inputsWithIdx = btcChain.getInputsWithIdx(inputs, walletAddress)
-      const hash = yield call(btcChain.transfer, password, keystore, inputsWithIdx, outputs)
+      const hash = yield call(btcChain.transfer, password, keystore, inputsWithIdx, outputs, opreturn)
 
       const transaction = {
         id: hash,
@@ -68,6 +72,7 @@ function* transfer(action: Action) {
         fees: '--',
         vin: [{ addr: fromAddress }],
         vout: [{ scriptPubKey: { addresses: [toAddress] } }],
+        opReturnHex: opreturn,
         pending: true
       }
 

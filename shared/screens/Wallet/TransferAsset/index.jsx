@@ -918,7 +918,7 @@ export default class TransferAsset extends Component {
               />
             </View>}
           </View>}
-          {chain === 'BITCOIN' && false && <View style={{ width: '100%', marginBottom: this.state.showOPReturn ? 16 : 0 }}>
+          {chain === 'BITCOIN' && <View style={{ width: '100%', marginBottom: this.state.showOPReturn ? 16 : 0 }}>
             <View style={{ position: 'absolute', height: 0.5, top: 0, right: 16, left: 16, backgroundColor: '#C8C7CC' }} />
             <View style={{ width: '100%', height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: 16, paddingRight: 16 }}>
               <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>

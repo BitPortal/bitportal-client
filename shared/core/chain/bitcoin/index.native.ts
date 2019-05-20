@@ -123,7 +123,7 @@ export const scanHDAddressesByXpub = async (xpub: string, start: number, end: nu
   return addresses
 }
 
-export const transfer = async (password: string, keystore: any, inputs: any, outputs: any) => {
+export const transfer = async (password: string, keystore: any, inputs: any, outputs: any, opReturnHex: string) => {
   const isSegWit = keystore.bitportalMeta.segWit && keystore.bitportalMeta.segWit !== segWit.none
   const mnemonic = await decryptMnemonic(password, keystore)
   const seed = bip39.mnemonicToSeed(mnemonic)
@@ -140,6 +140,13 @@ export const transfer = async (password: string, keystore: any, inputs: any, out
 
   for (const output of outputs) {
     txb.addOutput(output.address, output.value)
+  }
+
+  if (opReturnHex && opReturnHex.length > 0) {
+    // add opt return data
+    const data = Buffer.from(opReturnHex, 'hex')
+    const embed = bitcoin.payments.embed({ data: [data] })
+    txb.addOutput(embed.output, 0)
   }
 
   for (let i = 0; i < inputs.length; i++) {
