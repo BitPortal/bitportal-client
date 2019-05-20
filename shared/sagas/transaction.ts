@@ -72,7 +72,6 @@ function* transfer(action: Action) {
         fees: '--',
         vin: [{ addr: fromAddress }],
         vout: [{ scriptPubKey: { addresses: [toAddress] } }],
-        opReturnHex: opreturn,
         pending: true
       }
 
