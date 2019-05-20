@@ -18,6 +18,13 @@ export default handleActions({
     const index = state.allIds.findIndex((v: any) => v === id)
     if (index === -1) state.allIds.push(id)
   },
+  [actions.removeAddress] (state, action) {
+    const { id, chain, address } = action.payload
+    delete state.byId[`${chain}/${address}`]
+
+    const index = state.allIds.findIndex((v: any) => v === id)
+    if (index === -1) state.allIds.splice(id, 1)
+  },
   [actions.updateChildAddress] (state, action) {
     const { id, address } = action.payload
     if (!state.child) state.child = { byId: {}, allIds: [] }

@@ -52,10 +52,6 @@ function* transfer(action: Action) {
       const walletAddress = address.byId[`${chain}/${fromAddress}`]
       assert(walletAddress, 'No address')
 
-      if ( !opreturn ) {
-        opreturn = ''
-      }
-
       const changeAddress = btcChain.getChangeAddress(walletUTXO, walletAddress.change)
       const { inputs, outputs, fee } = yield call(btcChain.selectUTXO, walletUTXO, amount, toAddress, changeAddress, feeRate)
       const inputsWithIdx = btcChain.getInputsWithIdx(inputs, walletAddress)
@@ -71,8 +67,7 @@ function* transfer(action: Action) {
         confirmations: '--',
         fees: '--',
         vin: [{ addr: fromAddress }],
-        vout: [{ scriptPubKey: { addresses: [toAddress] } }],
-        opReturnHex: opreturn,
+        vout: [{ scriptPubKey: { addresses: [toAddress] } }, ...(!!opreturn ? [{ scriptPubKey: { hex: opreturn } }] : [])],
         pending: true
       }
 

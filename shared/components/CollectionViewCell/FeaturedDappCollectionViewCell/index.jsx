@@ -7,7 +7,7 @@ const FeaturedDappCollectionViewCell = (props) => (
     flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'center',
-    paddingBottom: 12
+    paddingBottom: 24
   }}
   >
     <Text style={{ color: '#007AFF', fontSize: 11, height: 13, marginTop: 12 }}>特别推荐</Text>

@@ -45,7 +45,8 @@ export default class Discovery extends Component {
         },
         searchBar: true,
         searchBarHiddenWhenScrolling: true,
-        searchBarPlaceholder: 'Search'
+        searchBarPlaceholder: 'Search',
+        rightImage: require('resources/images/ETHWallet.png')
       }
     }
   }
@@ -164,7 +165,7 @@ export default class Discovery extends Component {
       >
         <Section>
           <Item
-            height={306}
+            height={318}
             containCollectionView
             collectionViewInsideTableViewCell="FeaturedDappCollectionViewCell"
             collectionViewInsideTableViewCellKey="FeaturedDappCollectionViewCell"
@@ -173,7 +174,7 @@ export default class Discovery extends Component {
               {featured.map(item =>
                 <CollectionViewItem
                   reactModuleForCollectionViewCell="FeaturedDappCollectionViewCell"
-                  height="303"
+                  height="315"
                   title={item.title}
                   description={item.title}
                   img={item.img_url}
@@ -184,15 +185,6 @@ export default class Discovery extends Component {
                )}
             </CollectionView>
           </Item>
-        </Section>
-        <Section>
-          <Item
-            reactModuleForCell="DappMarketTableViewCell"
-            height={44}
-            componentId={this.props.componentId}
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            showSeparator
-          />
         </Section>
         {bookmarked && !!bookmarked.length && <Section>
           <Item
