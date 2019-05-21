@@ -84,7 +84,7 @@ export default class Wallet extends Component {
         ],
         rightButtons: [
           {
-            id: 'scanQrCode',
+            id: 'scan',
             icon: require('resources/images/scan2_right.png')
           }
         ]
@@ -116,6 +116,16 @@ export default class Wallet extends Component {
           children: [{
             component: {
               name: 'BitPortal.WalletList'
+            }
+          }]
+        }
+      })
+    } else if (buttonId === 'scan') {
+      Navigation.showModal({
+        stack: {
+          children: [{
+            component: {
+              name: 'BitPortal.Camera'
             }
           }]
         }

@@ -77,6 +77,7 @@ import LanguageSetting from 'screens/Profile/LanguageSetting'
 import CurrencySetting from 'screens/Profile/CurrencySetting'
 import NodeSetting from 'screens/Profile/NodeSetting'
 import WebView from 'screens/WebView'
+import Camera from 'screens/Camera'
 
 import Images from 'resources/images'
 import messages from 'resources/messages'
@@ -164,6 +165,7 @@ export const registerScreens = (store, persistor) => {
   Navigation.registerComponentWithRedux('BitPortal.NodeSetting', () => NodeSetting, Provider, store)
 
   Navigation.registerComponentWithRedux('BitPortal.WebView', () => WebView, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Camera', () => Camera, Provider, store)
 }
 
 export const startApp = (callback) => {
