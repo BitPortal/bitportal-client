@@ -1,4 +1,5 @@
-import React, { Component, View, Text } from 'react'
+import React, { Component } from 'react'
+import { View, Text, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
 import { bindActionCreators } from 'utils/redux'
@@ -35,7 +36,6 @@ export default class News extends Component {
   }
 
   async componentDidMount() {
-    this.props.actions.getNews.requested({ startAt: 0, limit: 10 })
   }
 
   componentDidAppear() {
@@ -43,40 +43,50 @@ export default class News extends Component {
   }
 
   fetchMore = () => {
-    this.props.actions.getNews.requested({ startAt: 0, limit: 10 })
+    this.props.actions.getNews.requested({ startAt: 0, limit: 20 })
   }
 
   render() {
     const { news, intl } = this.props
 
     return (
-      <TableView
-        style={{ flex: 1, backgroundColor: 'white' }}
-        reactModuleForCell="NewsTableViewCell"
-        tableViewCellStyle={TableView.Consts.CellStyle.Default}
-        headerBackgroundColor="white"
-        headerTextColor="black"
-        cellSeparatorInset={{ right: 16 }}
-        refreshing={news.refreshing}
-        onRefresh={this.fetchMore}
-      >
-        <Section>
-          { news.listData ? news.listData.map(
-            item => <Item
-              key={item.id}
-              height={94}
-              title={item.title}
-              tags={item.tags[0] || 'News'}
-              author={item.author}
-              img_url=""
-              jump_url=""
-              content={item.content}
-              componentId={this.props.componentId}
-            />
-          ) : []
-          }
-        </Section>
-      </TableView>
+      <View style={{ flex: 1 }}>
+        <Text>
+          {news.loading ? 'Fetching' : 'Fetched'} News
+        </Text>
+
+        {news.loading && <ActivityIndicator />}
+
+        <TableView
+          style={{ flex: 1, backgroundColor: 'white' }}
+          reactModuleForCell="NewsTableViewCell"
+          tableViewCellStyle={TableView.Consts.CellStyle.Default}
+          headerBackgroundColor="white"
+          headerTextColor="black"
+          cellSeparatorInset={{ right: 16 }}
+          canRefresh
+          refreshing={news.loading}
+          onRefresh={this.fetchMore}
+        >
+          <Section>
+            { news.listData ? news.listData.map(
+              item => <Item
+                key={item.id}
+                height={94}
+                title={item.title}
+                tags={(item.tags && item.tags[0]) || 'News'}
+                author={item.publisher}
+                img_url=""
+                jump_url=""
+                lang={intl}
+                content={item.content}
+                componentId={this.props.componentId}
+              />
+            ) : []
+            }
+          </Section>
+        </TableView>
+      </View>
     )
   }
 }
