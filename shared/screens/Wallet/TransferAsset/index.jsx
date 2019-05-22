@@ -594,6 +594,8 @@ export default class TransferAsset extends Component {
         chainSymbol = 'ETH'
       } else if (chain === 'EOS') {
         chainSymbol = 'EOS'
+      } else if (chain === 'CHAINX') {
+        chainSymbol = 'PCX'
       } else {
         return null
       }
@@ -963,13 +965,6 @@ export default class TransferAsset extends Component {
               change={change}
               separator
             />}
-            {this.state.showOPReturn && false && <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 16 }}>
-              <View style={{ width: '100%', borderColor: '#F3F3F3', borderWidth: 1, borderRadius: 17, padding: 15, backgroundColor: '#FAFAFA' }}>
-                <Text>
-                  文本 ASCII: 3LtEVW6VPKU1Qe9RsHU6kfKKWDY9cCHHPB@BitPortal
-                </Text>
-              </View>
-            </View>}
           </View>
           }
           <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, marginTop: showMinnerFee ? 4 : 16, marginBottom: 20 }}>

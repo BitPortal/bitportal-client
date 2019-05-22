@@ -12,6 +12,7 @@ import { getUTXO } from 'actions/utxo'
 import * as btcChain from 'core/chain/bitcoin'
 import * as ethChain from 'core/chain/etheruem'
 import * as eosChain from 'core/chain/eos'
+import * as chainxChain from 'core/chain/chainx'
 
 function* getBalance(action: Action) {
   if (!action.payload) return
@@ -43,6 +44,10 @@ function* getBalance(action: Action) {
       balance = result.balance
       const { symbol, precision, contract } = result
       yield put(actions.updateBalance({ id, chain, balance, symbol, precision, contract }))
+      yield put(actions.getBalance.succeeded({ walletId, balance }))
+    } else if (chain === 'CHAINX') {
+      balance = yield call(chainxChain.getBalance, address)
+      yield put(actions.updateBalance({ id, chain, balance, symbol, precision: 8 }))
       yield put(actions.getBalance.succeeded({ walletId, balance }))
     }
   } catch (e) {

@@ -5,19 +5,22 @@ export const bip44Path = {
   btcTestnet: `m/44'/1'/0'`,
   btcSegwitMainnet: `m/49'/0'/0'`,
   btcSegwitTestnet: `m/49'/1'/0'`,
-  eosLedger: `m/44'/194'/0'/0/0`
+  eosLedger: `m/44'/194'/0'/0/0`,
+  chainx: `m/44'/239'/0'/0/0`
 }
 
 export const chain = {
   eth: 'ETHEREUM',
   btc: 'BITCOIN',
-  eos: 'EOS'
+  eos: 'EOS',
+  chainx: 'CHAINX'
 }
 
 export const symbol = {
   eth: 'ETH',
   btc: 'BTC',
-  eos: 'EOS'
+  eos: 'EOS',
+  pcx: 'PCX'
 }
 
 export const walletType = {
@@ -64,7 +67,8 @@ export const keystoreVersion = {
   identity: 0,
   btc: 0,
   eth: 3,
-  eos: 0
+  eos: 0,
+  chainx: 0,
 }
 
 export const magicHex = '0d387e'

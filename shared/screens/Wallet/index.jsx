@@ -191,6 +191,8 @@ export default class Wallet extends Component {
       return 'Bitcoin'
     } else if (symbol === 'ETH') {
       return 'Etheruem'
+    } else if (symbol === 'PCX') {
+      return 'ChainX'
     } else {
       return symbol
     }

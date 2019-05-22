@@ -18,6 +18,9 @@ import {
   symbol
 } from 'core/constants'
 import EthereumTx from 'ethereumjs-tx'
+
+import Chainx from 'chainx.js'
+
 // import bech32 from 'bech32'
 
 const decipherBuffer = (decipher: any, data: any) => {
@@ -636,4 +639,74 @@ export const signETHTransaction = async (data: any, password: string, keystore: 
 
 export const signBTCTransaction = async (data: any, password: string, keystore: any) => {
 
+}
+
+export const createHDChainxKeystore = async (metadata: any, mnemonicCodes: any, password: string, id?: string) => {
+  const mnemonics = mnemonicCodes.join(' ')
+  assert(bip39.validateMnemonic(mnemonics), 'Invalid mnemonics')
+
+  const chainx = new Chainx('wss://w2.chainx.org/ws')
+  chainx.account.setNet('mainnet')
+  await chainx.isRpcReady()
+  const keychain = chainx.account.from(mnemonics)
+
+  const seed = keychain.privateKey()
+  const path = bip44Path.chainx
+  const privateKey = keychain.derive().privateKey()
+  const address = keychain.derive().address()
+
+  let crypto = await createCrypto(password, Buffer.from(privateKey).toString('hex'), 'pbkdf2', true)
+  crypto = clearCachedDerivedKey(crypto)
+  const encMnemonic = await deriveEncPair(password, Buffer.from(mnemonicCodes.join(' '), 'utf8').toString('hex'), crypto)
+  const random = await randomBytes(16)
+
+  const keystore = {
+    crypto,
+    address,
+    encMnemonic,
+    version: keystoreVersion.chainx,
+    mnemonicPath: path,
+    id: id || uuidv4({ random }),
+    bitportalMeta: {
+      ...metadata,
+      timestamp: +Date.now(),
+      walletType: walletType.hd,
+      chain: chain.chainx,
+      name: 'Chainx-Wallet',
+      symbol: symbol.pcx
+    }
+  }
+
+  return keystore
+}
+
+export const createChainxKeystore = async (metadata: any, wif: any, password: string, id?: string) => {
+  const chainx = new Chainx('wss://w2.chainx.org/ws')
+  chainx.account.setNet('mainnet')
+  await chainx.isRpcReady()
+  const keychain = chainx.account.from(wif)
+
+  const publicKey = keychain.publicKey()
+  const privateKey = keychain.privateKey()
+  const address = keychain.address()
+
+  const crypto = await createCrypto(password, Buffer.from(wif).toString('hex'), 'pbkdf2', false)
+  const random = await randomBytes(16)
+
+  const keystore = {
+    crypto,
+    address,
+    version: keystoreVersion.chainx,
+    id: id || uuidv4({ random }),
+    bitportalMeta: {
+      ...metadata,
+      timestamp: +Date.now(),
+      walletType: walletType.imported,
+      chain: chain.chainx,
+      name: 'Chainx-Wallet',
+      symbol: symbol.pcx
+    }
+  }
+
+  return keystore
 }

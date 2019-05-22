@@ -57,6 +57,15 @@ export default class SelectChainType extends Component {
     })
   }
 
+  toImportChainxWallet = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.ImportChainxWallet'
+      }
+    })
+  }
+
+
   render() {
     return (
       <TableView
@@ -83,6 +92,12 @@ export default class SelectChainType extends Component {
             chain="eos"
             reactModuleForCell="ChainTypeTableViewCell"
             onPress={this.toImportEOSWallet}
+          />
+          <Item
+            height={66}
+            chain="chainx"
+            reactModuleForCell="ChainTypeTableViewCell"
+            onPress={this.toImportChainxWallet}
           />
         </Section>
       </TableView>

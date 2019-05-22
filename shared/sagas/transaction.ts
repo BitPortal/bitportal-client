@@ -10,6 +10,7 @@ import { getBalance } from 'actions/balance'
 import * as btcChain from 'core/chain/bitcoin'
 import * as ethChain from 'core/chain/etheruem'
 import * as eosChain from 'core/chain/eos'
+import * as chainxChain from 'core/chain/chainx'
 import { managingWalletSelector } from 'selectors/wallet'
 import { push } from 'utils/location'
 
@@ -95,6 +96,28 @@ function* transfer(action: Action) {
         block_num: '--',
         targetAddress: toAddress,
         transactionType: 'send',
+        pending: true
+      }
+
+      yield put(actions.addTransaction({ id: `${chain}/${fromAddress}`, item: transaction }))
+      yield put(actions.setActiveTransactionId(hash))
+    } else if (chain === 'CHAINX') {
+      const hash = memo ?
+        yield call(chainxChain.transfer, password, keystore, fromAddress, toAddress, symbol, amount, memo):
+        yield call(chainxChain.transfer, password, keystore, fromAddress, toAddress, symbol, amount)
+
+      const transaction = {
+        id: hash,
+        timestamp: +Date.now(),
+        change: -+amount,
+        blockNumber: '--',
+        targetAddress: toAddress,
+        from: fromAddress,
+        to: toAddress,
+        transactionType: 'send',
+        confirmations: '--',
+        gasUsed: '--',
+        gasPrice: '--',
         pending: true
       }
 
@@ -411,6 +434,35 @@ function* getTransactions(action: Action) {
         last_irreversible_block: transactions.last_irreversible_block,
         position,
         offset
+      }
+
+      yield put(actions.updateTransactions({ id, items, pagination }))
+    } else if (chain === 'CHAINX') {
+      const page = 0
+      const pageSize = 200
+      const transactions = yield call(chainxChain.getTransactions, address, page, pageSize)
+      const items = transactions.map((item: any) => {
+        // TODO: this need to be fixed
+        const isTransfer = item.module === 'XAssets' && item.call === 'transfer'
+        const isDest = isTransfer && item.args[0].data === address
+        const transactionType = item.module + '.' + item.call
+        const change = (isDest ? +item.args[1].data : -+item.args[1].data) * Math.pow(10, -8)
+        const targetAddress = isDest ? item.args[0].data : item.args[0].data
+
+        return {
+          ...item,
+          id: item.hash,
+          timestamp: +item.time,
+          change,
+          targetAddress,
+          transactionType
+        }
+      })
+
+      const pagination = {
+        totalItems: items.length,
+        page,
+        pageSize
       }
 
       yield put(actions.updateTransactions({ id, items, pagination }))

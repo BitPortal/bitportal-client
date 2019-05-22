@@ -6,9 +6,11 @@ import {
   createBTCKeystore,
   createHDETHKeystore,
   createHDEOSKeystore,
+  createHDChainxKeystore,
   importETHKeystore,
   createETHKeystore,
   createEOSKeystore,
+  createChainxKeystore,
   decryptMnemonic,
   decryptPrivateKey,
   decryptPrivateKeys,
@@ -35,11 +37,13 @@ export const createIdentity = async (password: string, name: string, passwordHin
   const btcWalletKeystore = await createHDBTCKeystore(metadata, mnemonicCodes, password, isSegWit)
   const ethWalletKeystore = await createHDETHKeystore(metadata, mnemonicCodes, password)
   const eosWalletKeystore = await createHDEOSKeystore(metadata, mnemonicCodes, password)
+  const chainxWalletKeyStore = await createHDChainxKeystore(metadata, mnemonicCodes, password)
 
-  const wallets = [btcWalletKeystore, ethWalletKeystore, eosWalletKeystore]
+  const wallets = [btcWalletKeystore, ethWalletKeystore, eosWalletKeystore, chainxWalletKeyStore]
   keystore.walletIDs.push(btcWalletKeystore.id)
   keystore.walletIDs.push(ethWalletKeystore.id)
   keystore.walletIDs.push(eosWalletKeystore.id)
+  keystore.walletIDs.push(chainxWalletKeyStore.id)
 
   return { keystore, wallets }
 }
@@ -61,11 +65,13 @@ export const recoverIdentity = async (mnemonic: string, password: string, name: 
   const btcWalletKeystore = await createHDBTCKeystore(metadata, mnemonicCodes, password, isSegWit)
   const ethWalletKeystore = await createHDETHKeystore(metadata, mnemonicCodes, password)
   const eosWalletKeystore = await createHDEOSKeystore(metadata, mnemonicCodes, password)
+  const chainxWalletKeyStore = await createHDChainxKeystore(metadata, mnemonicCodes, password)
 
-  const wallets = [btcWalletKeystore, ethWalletKeystore, eosWalletKeystore]
+  const wallets = [btcWalletKeystore, ethWalletKeystore, eosWalletKeystore, chainxWalletKeyStore]
   keystore.walletIDs.push(btcWalletKeystore.id)
   keystore.walletIDs.push(ethWalletKeystore.id)
   keystore.walletIDs.push(eosWalletKeystore.id)
+  keystore.walletIDs.push(chainxWalletKeyStore.id)
 
   return { keystore, wallets }
 }
@@ -210,4 +216,37 @@ export const getWalletMetaData = (keystore: any) => {
   }
 
   return info
+}
+
+
+export const importChainxWalletByMnemonics = async (mnemonic: string, password: string, name: string, passwordHint: string, network: string) => {
+  assert(network === networkType.mainnet || network === networkType.testnet, 'Invalid network')
+
+  const mnemonicText = mnemonic
+  const mnemonicCodes = mnemonicText.trim().split(' ')
+  const metadata = {
+    name,
+    passwordHint,
+    network,
+    source: source.mnemonic
+  }
+
+  const chainxWalletKeystore = await createHDChainxKeystore(metadata, mnemonicCodes, password)
+
+  return chainxWalletKeystore
+}
+
+export const importChainxWalletByPrivateKey = async (wif: string, password: string, name: string, passwordHint: string, network: string) => {
+  assert(network === networkType.mainnet || network === networkType.testnet, 'Invalid network')
+
+  const metadata = {
+    name,
+    passwordHint,
+    network,
+    source: source.wif
+  }
+
+  const chainxWalletKeystore = await createChainxKeystore(metadata, wif, password)
+
+  return chainxWalletKeystore
 }

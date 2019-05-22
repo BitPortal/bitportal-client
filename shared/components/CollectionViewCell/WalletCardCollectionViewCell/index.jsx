@@ -6,7 +6,8 @@ import { walletIcons } from 'resources/images'
 const backgroundColors = {
   BITCOIN: 'rgba(255, 204, 0, 1)',
   ETHEREUM: 'rgba(88, 86, 214, 1)',
-  EOS: 'black'
+  EOS: 'black',
+  CHAINX: 'white',
 }
 
 const WalletCardCollectionViewCell = (props) => {

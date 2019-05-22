@@ -144,3 +144,44 @@ export const initEOS = async (options: any) => {
   const httpEndpoint = options.httpEndpoint || eosNodes[0]
   return Eos({ ...options, chainId, httpEndpoint })
 }
+
+export const chainxScanApi = async (
+  method: FetchMethod = 'GET',
+  endPoint: string = '/hello',
+  params: object = {},
+  options: FetchOptions = {}
+) => {
+  const baseUrl = 'http://api.chainx.org'
+  const headers = options.headers || {}
+  const paramsWithApiKey = { ...params, apikey: etherscanApiKey }
+
+  let url = baseUrl + endPoint
+
+  if (!headers.Accept) headers.Accept = 'application/json'
+  if (!headers['Content-Type']) headers['Content-Type'] = 'application/json'
+
+  const fetchOptions: any = { method, headers }
+
+  if (method === 'GET') {
+    const queryString: string = `${Object.keys(paramsWithApiKey)
+      .map(k => [k, paramsWithApiKey[k]].map(encodeURIComponent).join('='))
+      .join('&')}`
+    if (queryString) url += `?${queryString}`
+  } else if (method === 'POST' || method === 'PUT') {
+    fetchOptions.body = JSON.stringify(paramsWithApiKey)
+  }
+
+  return fetch(url, fetchOptions).then((res: any) => {
+    if (!res.ok) {
+      return res.json().then((e: any) => Promise.reject({ message: e.data.tx_hex }))
+    }
+
+    const contentType = res.headers.get('content-type')
+
+    if (/json/.test(contentType)) {
+      return res.json()
+    }
+
+    return null
+  })
+}

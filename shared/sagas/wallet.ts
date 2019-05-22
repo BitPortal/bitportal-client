@@ -582,6 +582,64 @@ function* setWalletName(action: Action<SetWalletNameParams>) {
   }
 }
 
+function* importChainxMnemonics(action: Action<ImportChainxMnemonicsParams>) {
+  if (!action.payload) return
+  if (action.payload.delay) yield delay(action.payload.delay)
+
+  try {
+    const mnemonic = action.payload.mnemonic
+    const password = action.payload.password
+    const passwordHint = action.payload.passwordHint || ''
+    const name = 'Chainx-Wallet'
+    const network = 'MAINNET'
+
+    const keystore = yield call(walletCore.importChainxWalletByMnemonics, mnemonic, password, name, passwordHint, network)
+
+    const walletAddresses = yield select((state: RootState) => walletAddressesSelector(state))
+    assert(!walletAddresses.find((address: string) => address === keystore.address), 'Wallet already exist')
+
+    yield call(secureStorage.setItem, `IMPORTED_WALLET_KEYSTORE_${keystore.id}`, keystore, true)
+
+    const wallet = walletCore.getWalletMetaData(keystore)
+    yield put(actions.addImportedWallet(wallet))
+    yield put(actions.setActiveWallet(wallet.id))
+
+    yield put(actions.importChainxMnemonics.succeeded())
+    if (action.payload.componentId) dismissAllModals()
+  } catch (e) {
+    yield put(actions.importChainxMnemonics.failed(getErrorMessage(e)))
+  }
+}
+
+function* importChainxPrivateKey(action: Action<ImportChainxPrivateKeyParams>) {
+  if (!action.payload) return
+  if (action.payload.delay) yield delay(action.payload.delay)
+
+  try {
+    const privateKey = action.payload.privateKey
+    const password = action.payload.password
+    const passwordHint = action.payload.passwordHint || ''
+    const name = 'Chainx-Wallet'
+    const network = 'MAINNET'
+
+    const keystore = yield call(walletCore.importChainxWalletByPrivateKey, privateKey, password, name, passwordHint, network)
+
+    const walletAddresses = yield select((state: RootState) => walletAddressesSelector(state))
+    assert(!walletAddresses.find((address: string) => address === keystore.address), 'Wallet already exist')
+
+    yield call(secureStorage.setItem, `IMPORTED_WALLET_KEYSTORE_${keystore.id}`, keystore, true)
+
+    const wallet = yield call(walletCore.getWalletMetaData, keystore)
+    yield put(actions.addImportedWallet(wallet))
+    yield put(actions.setActiveWallet(wallet.id))
+
+    yield put(actions.importChainxPrivateKey.succeeded())
+    if (action.payload.componentId) dismissAllModals()
+  } catch (e) {
+    yield put(actions.importChainxPrivateKey.failed(getErrorMessage(e)))
+  }
+}
+
 export default function* walletSaga() {
   yield takeLatest(String(actions.setActiveWallet), setActiveWallet)
   yield takeLatest(String(actions.deleteWallet.requested), deleteWallet)
@@ -601,4 +659,6 @@ export default function* walletSaga() {
   yield takeLatest(String(actions.exportEOSPrivateKey.requested), exportEOSPrivateKey)
   yield takeLatest(String(actions.setEOSWalletAddress.requested), setEOSWalletAddress)
   yield takeLatest(String(actions.setWalletName.requested), setWalletName)
+  yield takeLatest(String(actions.importChainxMnemonics.requested), importChainxMnemonics)
+  yield takeLatest(String(actions.importChainxPrivateKey.requested), importChainxPrivateKey)
 }

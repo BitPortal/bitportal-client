@@ -5,7 +5,7 @@ import { View, Text, TouchableHighlight } from 'react-native'
 import { injectIntl } from 'react-intl'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
-import { activeWalletSelector} from 'selectors/wallet'
+import { activeWalletSelector } from 'selectors/wallet'
 import { activeWalletBalanceSelector } from 'selectors/balance'
 import { activeWalletTickerSelector } from 'selectors/ticker'
 import { activeWalletTransactionsSelector } from 'selectors/transaction'
@@ -251,8 +251,7 @@ export default class Asset extends Component {
             />
           </Section>
           {transactionCount && <Section>
-          {transactions.map((transaction: any, index: number) =>
-            <Item
+            {transactions.map((transaction: any, index: number) => <Item
               reactModuleForCell="TransactionTableViewCell"
               height={60}
               key={transaction.id}
@@ -267,7 +266,7 @@ export default class Asset extends Component {
               showSeparator={transactionCount - 1 !== index}
               onPress={this.toTransactionDetail.bind(this, transaction.id, transaction.pending)}
             />
-           )}
+            )}
           </Section>}
         </TableView>
       </View>
