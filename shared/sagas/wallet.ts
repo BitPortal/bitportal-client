@@ -590,7 +590,7 @@ function* importChainxMnemonics(action: Action<ImportChainxMnemonicsParams>) {
     const mnemonic = action.payload.mnemonic
     const password = action.payload.password
     const passwordHint = action.payload.passwordHint || ''
-    const name = 'Chainx-Wallet'
+    const name = 'ChainX-Wallet'
     const network = 'MAINNET'
 
     const keystore = yield call(walletCore.importChainxWalletByMnemonics, mnemonic, password, name, passwordHint, network)
@@ -619,7 +619,7 @@ function* importChainxPrivateKey(action: Action<ImportChainxPrivateKeyParams>) {
     const privateKey = action.payload.privateKey
     const password = action.payload.password
     const passwordHint = action.payload.passwordHint || ''
-    const name = 'Chainx-Wallet'
+    const name = 'ChainX-Wallet'
     const network = 'MAINNET'
 
     const keystore = yield call(walletCore.importChainxWalletByPrivateKey, privateKey, password, name, passwordHint, network)

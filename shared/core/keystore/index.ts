@@ -672,7 +672,7 @@ export const createHDChainxKeystore = async (metadata: any, mnemonicCodes: any, 
       timestamp: +Date.now(),
       walletType: walletType.hd,
       chain: chain.chainx,
-      name: 'Chainx-Wallet',
+      name: 'ChainX-Wallet',
       symbol: symbol.pcx
     }
   }
@@ -703,7 +703,7 @@ export const createChainxKeystore = async (metadata: any, wif: any, password: st
       timestamp: +Date.now(),
       walletType: walletType.imported,
       chain: chain.chainx,
-      name: 'Chainx-Wallet',
+      name: 'ChainX-Wallet',
       symbol: symbol.pcx
     }
   }
