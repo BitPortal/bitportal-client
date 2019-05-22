@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, ActionSheetIOS, AlertIOS, Alert, Text, ActivityIndicator, Linking, TouchableOpacity, Dimensions, TouchableHighlight } from 'react-native'
+import { View, ActionSheetIOS, AlertIOS, Alert, Text, ActivityIndicator, Linking, TouchableOpacity, Dimensions, TouchableHighlight, Platform } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import * as walletActions from 'actions/wallet'
 import * as producerActions from 'actions/producer'
@@ -10,6 +10,34 @@ import { accountByIdSelector, managingAccountVotedProducersSelector } from 'sele
 import { managingWalletSelector } from 'selectors/wallet'
 import Modal from 'react-native-modal'
 import FastImage from 'react-native-fast-image'
+
+const toolBarMargin = (() => {
+  const isIphoneX = () => {
+    let dimensions
+    if (Platform.OS !== 'ios') {
+      return false
+    }
+    if (Platform.isPad || Platform.isTVOS) {
+      return false
+    }
+    dimensions = Dimensions.get('window')
+    if (dimensions.height === 812 || dimensions.width === 812) { // Checks for iPhone X in portrait or landscape
+      return true
+    }
+    if (dimensions.height === 896 || dimensions.width === 896) {
+      return true
+    }
+    return false
+  }
+
+  if (isIphoneX()) {
+    return 60 // iPhone X
+  } else if (Platform.OS == 'ios') {
+    return 32 // Other iPhones
+  } else {
+    return 32 // Android
+  }
+})()
 
 @connect(
   state => ({
@@ -48,12 +76,21 @@ export default class Camera extends Component {
 
   subscription = Navigation.events().bindComponent(this)
 
+  state = {
+    showScanner: false
+  }
+
   componentDidAppear() {
+    this.setState({ showScanner: true })
+  }
+
+  componentDidMount() {
 
   }
 
   onSuccess = (e) => {
     Linking.openURL(e.data).catch(err => console.error('An error occured', err))
+    this.forceUpdate()
   }
 
   dismiss = () => {
@@ -70,6 +107,8 @@ export default class Camera extends Component {
           showMarker={true}
           onRead={this.onSuccess}
           customMarker={<View style={{ width: 240, height: 240, backgroundColor: 'rgba(0,0,0,0)', borderRadius: 10, borderWidth: 0, borderColor: 'green' }} />}
+          reactivateTimeout = {5000}
+          reactivate={true}
         />
         <View style={{ position: 'absolute', top: 0, left: 0, width: Dimensions.get('window').width, height: Dimensions.get('window').height, alignItems: 'center', justifyContent: 'center' }}>
           <View style={{ position: 'absolute', top: 0, left: 0, width: Dimensions.get('window').width, height: (Dimensions.get('window').height - 240) / 2, backgroundColor: 'rgba(0,0,0,0.6)' }} />
@@ -81,7 +120,7 @@ export default class Camera extends Component {
             style={{ width: 240, height: 240, position: 'absolute', top: (Dimensions.get('window').height - 240) / 2, left: (Dimensions.get('window').width - 240) / 2 }}
           />
         </View>
-        <TouchableHighlight underlayColor="white" activeOpacity={0.42} style={{ position: 'absolute', left: 20, top: 32, width: 28, height: 28, borderRadius: 14 }} onPress={this.dismiss}>
+        <TouchableHighlight underlayColor="white" activeOpacity={0.42} style={{ position: 'absolute', left: 20, top: toolBarMargin, width: 28, height: 28, borderRadius: 14 }} onPress={this.dismiss}>
           <View style={{ width: 28, height: 28, backgroundColor: 'white', borderRadius: 14 }}>
             <FastImage
               source={require('resources/images/nav_cancel.png')}
@@ -93,7 +132,7 @@ export default class Camera extends Component {
           <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'white' }}>扫描二维码</Text>
           <Text style={{ fontSize: 17, color: 'white', marginTop: 16 }}>扫描钱包地址开始转账</Text>
         </View>
-        <View style={{ position: 'absolute', bottom: 16, left: 16, right: 16, backgroundColor: 'rgba(255,255,255,0.5)', borderRadius: 14, height: 60, padding: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <View style={{ position: 'absolute', bottom: toolBarMargin, left: 16, right: 16, backgroundColor: 'rgba(255,255,255,0.5)', borderRadius: 14, height: 60, padding: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
           <View style={{ height: 44, width: '50%', paddingRight: 4 }}>
             <View
               style={{
