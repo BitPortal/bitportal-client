@@ -11,8 +11,9 @@ import * as btcChain from 'core/chain/bitcoin'
 import * as ethChain from 'core/chain/etheruem'
 import * as eosChain from 'core/chain/eos'
 import * as chainxChain from 'core/chain/chainx'
+import * as api from 'utils/api'
 import { managingWalletSelector } from 'selectors/wallet'
-import { push } from 'utils/location'
+import { push, dismissAllModals } from 'utils/location'
 
 function* transfer(action: Action) {
   if (!action.payload) return
@@ -583,6 +584,55 @@ function* getTransaction(action: Action) {
   }
 }
 
+function* authorizeEOSAccount(action: Action) {
+  if (!action.payload) return
+
+  try {
+    const { password, authorizeWallet, simpleWallet } = action.payload
+    yield delay(500)
+    const id = authorizeWallet.id
+    const chain = authorizeWallet.chain
+    const accountName = authorizeWallet.address
+    const uuID = simpleWallet.uuID
+    const ref = 'BitPortal'
+
+    const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    const identityKeystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    const keystore = importedKeystore || identityKeystore
+    assert(keystore && keystore.crypto, 'No keystore')
+
+    assert(chain === 'EOS', 'Invalid chain type')
+
+    const allAccounts = yield select((state: RootState) => state.account)
+    const account = allAccounts.byId[`${chain}/${accountName}`]
+    assert(account, 'No eos account')
+
+    const timestamp = +Date.now()
+    const data = String(timestamp) + accountName + uuID + ref
+    const signedData = yield call(eosChain.simpleWalletSign, password, keystore, data, accountName, account.permissions)
+
+    const result = yield call(api.simpleWalletAuthorize, {
+      protocol: simpleWallet.protocol,
+      version: simpleWallet.version,
+      sign: signedData,
+      uuID: simpleWallet.uuID,
+      account: accountName,
+      ref: 'BitPortal',
+      loginUrl: simpleWallet.loginUrl,
+      timestamp
+    })
+
+    if (!result.code) {
+      yield put(actions.authorizeEOSAccount.succeeded())
+      dismissAllModals()
+    } else {
+      assert(false, result.error)
+    }
+  } catch (e) {
+    yield put(actions.authorizeEOSAccount.failed(getErrorMessage(e)))
+  }
+}
+
 export default function* transactionSaga() {
   yield takeLatest(String(actions.buyRAM.requested), buyRAM)
   yield takeLatest(String(actions.sellRAM.requested), sellRAM)
@@ -594,4 +644,5 @@ export default function* transactionSaga() {
   yield takeLatest(String(actions.getTransactions.refresh), getTransactions)
   yield takeLatest(String(actions.getTransaction.requested), getTransaction)
   yield takeLatest(String(actions.getTransaction.refresh), getTransaction)
+  yield takeLatest(String(actions.authorizeEOSAccount.requested), authorizeEOSAccount)
 }

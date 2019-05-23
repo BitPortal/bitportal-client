@@ -49,6 +49,7 @@ import WalletList from 'screens/Wallet/WalletList'
 import ManageWallet from 'screens/Wallet/ManageWallet'
 import Voting from 'screens/Wallet/Voting'
 import AddIdentity from 'screens/Wallet/AddIdentity'
+import AuthorizeEOSAccount from 'screens/Wallet/AuthorizeEOSAccount'
 import MyIdentity from 'screens/Wallet/MyIdentity'
 import CreateIdentity from 'screens/Wallet/CreateIdentity'
 import RecoverIdentity from 'screens/Wallet/RecoverIdentity'
@@ -136,6 +137,7 @@ export const registerScreens = (store, persistor) => {
   Navigation.registerComponentWithRedux('BitPortal.ManageWallet', () => ManageWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Voting', () => Voting, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.AddIdentity', () => AddIdentity, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.AuthorizeEOSAccount', () => AuthorizeEOSAccount, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.MyIdentity', () => MyIdentity, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.IdentityHeader', () => IdentityHeader, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.CreateIdentity', () => CreateIdentity, Provider, store)

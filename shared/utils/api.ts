@@ -53,8 +53,6 @@ export const fetchBase = async (
     }
   }
 
-  // console.log('###---yy ', url)
-
   return fetch(url, fetchOptions).then((res: any) => {
     if (!res.ok) {
       return res.json().then((e: any) => Promise.reject({ message: e }))
@@ -146,3 +144,5 @@ export const simpleWalletAuth = (params: any, baseUrl: string) => fetchBase('POS
 export const simpleWalletCallback = (baseUrl: string) => fetchBase('GET', '', undefined, { baseUrl })
 
 export const getBTCFees = (params: any) => bitcoinFeesBase('GET', '/fees/recommended')
+
+export const simpleWalletAuthorize = ({ loginUrl, ...params }) => fetchBase('POST', '', params, { baseUrl: loginUrl })

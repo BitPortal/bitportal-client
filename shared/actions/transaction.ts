@@ -17,3 +17,5 @@ export const buyRAM = createAsyncAction('transaction/buy_RAM')
 export const sellRAM = createAsyncAction('transaction/sell_RAM')
 export const delegateBW = createAsyncAction('transaction/delegate_BW')
 export const undelegateBW = createAsyncAction('transaction/undelegate_BW')
+
+export const authorizeEOSAccount = createAsyncAction('transaction/AUTHORIZE_EOS_ACCOUNT')

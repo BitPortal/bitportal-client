@@ -195,13 +195,27 @@ export default class Camera extends Component {
     } else {
       const isJson = isJsonString(code)
       if (isJson) {
-        Alert.alert(
-          code,
-          '',
-          [
-            { text: '确定', onPress: () => {} }
-          ]
-        )
+        const json = JSON.parse(code)
+
+        if (json.protocol && json.protocol === 'SimpleWallet') {
+          const wallet = (this.props.activeWallet && this.props.activeWallet.chain === 'EOS') ? this.props.activeWallet : this.selectWallet('EOS')
+          this.props.actions.setTransferWallet(wallet.id)
+
+          Navigation.setStackRoot(this.props.componentId, {
+            component: {
+              name: 'BitPortal.AuthorizeEOSAccount',
+              passProps: { simpleWallet: json }
+            }
+          })
+        } else {
+          Alert.alert(
+            code,
+            '',
+            [
+              { text: '确定', onPress: () => {} }
+            ]
+          )
+        }
       } else {
         const parsed = urlParse(code, true)
         const { protocol, pathname, query } = parsed
@@ -278,7 +292,6 @@ export default class Camera extends Component {
               }
             })
           }
-
         }
       }
     }
