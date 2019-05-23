@@ -10,6 +10,7 @@ import Modal from 'react-native-modal'
 import FastImage from 'react-native-fast-image'
 import uuidv4 from 'uuid/v4'
 import { validateBTCAddress, validateETHAddress, validateEOSAccountName } from 'utils/validate'
+import { findDuplicate } from 'utils'
 import styles from './styles'
 
 const { Section, Item } = TableView
@@ -200,10 +201,8 @@ export default class MyIdentity extends Component {
 
   navigationButtonPressed({ buttonId }) {
     if (buttonId === 'cancel') {
-      Keyboard.dismiss()
-      setTimeout(() => {
-        Navigation.dismissModal(this.props.componentId)
-      })
+      // Keyboard.dismiss()
+      Navigation.dismissModal(this.props.componentId)
     } else if (buttonId === 'done') {
       const { formSyncWarnings, formValues } = this.props
 
@@ -288,6 +287,45 @@ export default class MyIdentity extends Component {
           )
           return
         }
+      }
+
+      const btcAddresses = btc.map(item => item.address)
+      const btcDuplicate = findDuplicate(btcAddresses)
+      if (btcDuplicate) {
+        Alert.alert(
+          '重复添加的BTC地址',
+          btcDuplicate,
+          [
+            { text: '确定', onPress: () => console.log('OK Pressed') }
+          ]
+        )
+        return
+      }
+
+      const ethAddresses = eth.map(item => item.address)
+      const ethDuplicate = findDuplicate(ethAddresses)
+      if (ethDuplicate) {
+        Alert.alert(
+          '重复添加的ETHC地址',
+          ethDuplicate,
+          [
+            { text: '确定', onPress: () => console.log('OK Pressed') }
+          ]
+        )
+        return
+      }
+
+      const eosAddresses = eos.map(item => item.accountName)
+      const eosDuplicate = findDuplicate(eosAddresses)
+      if (eosDuplicate) {
+        Alert.alert(
+          '重复添加的EOS账户名',
+          eosDuplicate,
+          [
+            { text: '确定', onPress: () => console.log('OK Pressed') }
+          ]
+        )
+        return
       }
 
       this.props.handleSubmit(this.submit)()

@@ -22,6 +22,7 @@ import SelectEOSAccountTableViewCell from 'components/TableViewCell/SelectEOSAcc
 import SwitchEOSAccountTableViewCell from 'components/TableViewCell/SwitchEOSAccountTableViewCell'
 import SwitchBTCAddressTableViewCell from 'components/TableViewCell/SwitchBTCAddressTableViewCell'
 import IdentityDetailTableViewCell from 'components/TableViewCell/IdentityDetailTableViewCell'
+import ProducerDetailTableViewCell from 'components/TableViewCell/ProducerDetailTableViewCell'
 import TransactionDetailTableViewCell from 'components/TableViewCell/TransactionDetailTableViewCell'
 import DappHeaderTableViewCell from 'components/TableViewCell/DappHeaderTableViewCell'
 import DappMarketTableViewCell from 'components/TableViewCell/DappMarketTableViewCell'
@@ -67,6 +68,7 @@ import SelectEOSAccount from 'screens/Wallet/SelectEOSAccount'
 import SwitchEOSAccount from 'screens/Wallet/SwitchEOSAccount'
 import SwitchBTCAddress from 'screens/Wallet/SwitchBTCAddress'
 import TransactionDetail from 'screens/Wallet/TransactionDetail'
+import ProducerDetail from 'screens/Wallet/ProducerDetail'
 import Discovery from 'screens/Discovery'
 import DappList from 'screens/Discovery/DappList'
 import Profile from 'screens/Profile'
@@ -112,6 +114,7 @@ export const registerScreens = (store, persistor) => {
   AppRegistry.registerComponent('SwitchEOSAccountTableViewCell', () => SwitchEOSAccountTableViewCell)
   AppRegistry.registerComponent('SwitchBTCAddressTableViewCell', () => SwitchBTCAddressTableViewCell)
   AppRegistry.registerComponent('IdentityDetailTableViewCell', () => IdentityDetailTableViewCell)
+  AppRegistry.registerComponent('ProducerDetailTableViewCell', () => ProducerDetailTableViewCell)
   AppRegistry.registerComponent('TransactionDetailTableViewCell', () => TransactionDetailTableViewCell)
   AppRegistry.registerComponent('DappHeaderTableViewCell', () => DappHeaderTableViewCell)
   AppRegistry.registerComponent('DappMarketTableViewCell', () => DappMarketTableViewCell)
@@ -153,6 +156,7 @@ export const registerScreens = (store, persistor) => {
   Navigation.registerComponentWithRedux('BitPortal.ExportEOSPrivateKey', () => ExportEOSPrivateKey, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ExportBTCPrivateKey', () => ExportBTCPrivateKey, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.TransactionDetail', () => TransactionDetail, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ProducerDetail', () => ProducerDetail, Provider, store)
 
   Navigation.registerComponentWithRedux('BitPortal.Market', () => Market, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Discovery', () => Discovery, Provider, store)

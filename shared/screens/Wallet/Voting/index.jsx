@@ -250,6 +250,15 @@ export default class Voting extends Component {
     }
   }
 
+  onAccessoryPress = (item) => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.ProducerDetail',
+        passProps: item
+      }
+    })
+  }
+
   render() {
     const { producer, selectedIds, selected, vote, getProducer } = this.props
     const loading = vote.loading
@@ -325,6 +334,7 @@ export default class Voting extends Component {
                  rank_url={item.rank_url}
                  onPress={this.onPress.bind(this, item.owner)}
                  accessoryType={TableView.Consts.AccessoryType.DetailButton}
+                 onAccessoryPress={this.onAccessoryPress.bind(this, item)}
                />
              ))}
           </TableView.Section>
@@ -345,6 +355,7 @@ export default class Voting extends Component {
                  rank_url={item.rank_url}
                  onPress={this.onPress.bind(this, item.owner)}
                  accessoryType={TableView.Consts.AccessoryType.DetailButton}
+                 onAccessoryPress={this.onAccessoryPress.bind(this, item)}
                />
              ))}
           </TableView.Section>

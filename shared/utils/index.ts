@@ -284,3 +284,18 @@ export const hex_to_ascii = (str1: number) => {
   }
   return str
 }
+
+export const findDuplicate = (list: string[]) => {
+  const uniq = list.map((name) => ({ count: 1, name: name }))
+  .reduce((a, b) => {
+    a[b.name] = (a[b.name] || 0) + b.count
+    return a
+  }, {})
+  const duplicates = Object.keys(uniq).filter((a) => uniq[a] > 1)
+
+  if (duplicates.length) {
+    return duplicates[0]
+  } else {
+    return null
+  }
+}

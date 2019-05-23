@@ -440,6 +440,7 @@ export default class TransferAsset extends Component {
 
   navigationButtonPressed({ buttonId }) {
     if (buttonId === 'cancel') {
+      // Keyboard.dismiss()
       Navigation.dismissAllModals()
     }
   }

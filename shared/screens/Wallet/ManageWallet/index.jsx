@@ -28,7 +28,7 @@ export const errorMessages = (error, messages) => {
 
 @connect(
   state => ({
-    vote: state.vote,
+    getProducer: state.getProducer,
     deleteWallet: state.deleteWallet,
     exportMnemonics: state.exportMnemonics,
     exportBTCPrivateKey: state.exportBTCPrivateKey,
@@ -220,7 +220,7 @@ export default class ManageWallet extends Component {
   }
 
   vote = () => {
-    if (this.props.vote.loaded) this.props.actions.setSelected(this.props.votedProducers)
+    if (this.props.getProducer.loaded) this.props.actions.setSelected(this.props.votedProducers)
 
     Navigation.showModal({
       stack: {

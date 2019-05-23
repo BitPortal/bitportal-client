@@ -181,7 +181,7 @@ export default class ReceiveAsset extends Component {
 
   getAddressUri = (address, amount, chain) => {
     if (!!amount && +amount > 0 && !!chain) {
-      return `${chain.toLowerCase()}:${address}?amount=${amount}`
+      return `${chain.toLowerCase()}:${address}?value=${amount}`
     }
 
     return `${chain.toLowerCase()}:${address}`
