@@ -561,6 +561,14 @@ export default class TransferAsset extends Component {
     } else if (this.props.activeWallet.chain === 'ETHEREUM') {
       this.props.actions.getETHGasPrice.requested()
     }
+
+    if (this.props.presetAddress) {
+      this.props.change('toAddress', this.props.presetAddress)
+    }
+
+    if (this.props.presetAmount) {
+      this.props.change('amount', this.props.presetAmount)
+    }
   }
 
   clearError = () => {

@@ -7,7 +7,8 @@ import * as walletActions from 'actions/wallet'
 import * as producerActions from 'actions/producer'
 import QRCodeScanner, { CAMERA_FLASH_MODE } from 'react-native-qrcode-scanner'
 import { accountByIdSelector, managingAccountVotedProducersSelector } from 'selectors/account'
-import { managingWalletSelector } from 'selectors/wallet'
+import { identityWalletSelector, importedWalletSelector, activeWalletSelector } from 'selectors/wallet'
+import { balanceByIdSelector } from 'selectors/balance'
 import Modal from 'react-native-modal'
 import FastImage from 'react-native-fast-image'
 import QRDecode from '@remobile/react-native-qrcode-local-image'
@@ -48,10 +49,15 @@ const toolBarMargin = (() => {
 
 @connect(
   state => ({
+    identityWallet: identityWalletSelector(state),
+    importedWallet: importedWalletSelector(state),
+    activeWallet: activeWalletSelector(state),
+    balanceById: balanceByIdSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
-      change
+      change,
+      ...walletActions
     }, dispatch)
   })
 )
@@ -63,16 +69,6 @@ export default class Camera extends Component {
         backgroundColor: 'black',
       },
       topBar: {
-        title: {
-          text: '扫描',
-          color: 'white'
-        },
-        largeTitle: {
-          visible: false
-        },
-        background: {
-          color: 'rgba(0,0,0,0)'
-        },
         visible: false
       },
       bottomTabs: {
@@ -151,7 +147,6 @@ export default class Camera extends Component {
   }
 
   parseQrCode = (code) => {
-    console.log(code)
     const { from, form, field, chain, symbol } = this.props
 
     if (from === 'import') {
@@ -191,15 +186,125 @@ export default class Camera extends Component {
             ]
           )
         } else {
-          this.props.actions.change(form, field, pathname)
+          this.props.actions.change(form, field, address)
           const amount = query.amount || query.value
           if (amount) this.props.actions.change(form, 'amount', amount)
           this.dismiss()
         }
       }
     } else {
+      const isJson = isJsonString(code)
+      if (isJson) {
+        Alert.alert(
+          code,
+          '',
+          [
+            { text: '确定', onPress: () => {} }
+          ]
+        )
+      } else {
+        const parsed = urlParse(code, true)
+        const { protocol, pathname, query } = parsed
 
+        const hasProtocal = protocol === `${code.split(':')[0]}:`
+        const address = hasProtocal ? pathname : code
+        let chain = null
+
+        if (validateBTCAddress(address)) {
+          chain = 'BITCOIN'
+        } else if (validateETHAddress(address)) {
+          chain = 'ETHEREUM'
+        } else if (validateEOSAccountName(address)) {
+          chain = 'EOS'
+        }
+
+        if (!chain) {
+          Alert.alert(
+            code,
+            '',
+            [
+              { text: '确定', onPress: () => {} }
+            ]
+          )
+        } else {
+          const amount = query.amount || query.value
+          let symbol = null
+          if (chain === 'BITCOIN') {
+            symbol = 'BTC'
+          } else if (chain === 'ETHEREUM') {
+            symbol = 'ETH'
+          } else if (chain === 'EOS') {
+            symbol = 'EOS'
+          }
+
+          const wallet = (this.props.activeWallet && this.props.activeWallet.chain === chain) ? this.props.activeWallet : this.selectWallet(chain)
+
+          if (!wallet) {
+            AlertIOS.alert(
+              `未检测到${symbol}钱包`,
+              null,
+              [
+                {
+                  text: '确认',
+                  onPress: () => {}
+                }
+              ]
+            )
+          } else {
+            this.props.actions.setTransferWallet(wallet.id)
+
+            Navigation.setStackRoot(this.props.componentId, {
+              component: {
+                name: 'BitPortal.TransferAsset',
+                passProps: { presetAddress: address, presetAmount: amount },
+                options: {
+                  topBar: {
+                    title: {
+                      text: `发送${symbol}到`
+                    },
+                    leftButtons: [
+                      {
+                        id: 'cancel',
+                        text: '取消'
+                      }
+                    ]
+                  },
+                  animations: {
+                    setStackRoot: {
+                      enabled: true
+                    }
+                  }
+                }
+              }
+            })
+          }
+
+        }
+      }
     }
+  }
+
+  selectWallet = (chain, minimalBalance = 0) => {
+    const selectedIdentityWallet = this.props.identityWallet.filter(wallet => wallet.address && wallet.chain === chain)
+    const selectedImportedWallet = this.props.importedWallet.filter(wallet => wallet.address && wallet.chain === chain)
+
+    if (selectedIdentityWallet.length) {
+      const index = selectedIdentityWallet.findIndex(wallet => this.props.balanceById[`${wallet.chain}/${wallet.address}`] && +this.props.balanceById[`${wallet.chain}/${wallet.address}`].balance >= minimalBalance)
+      if (index !== -1) {
+        return selectedIdentityWallet[index]
+      } else {
+        return selectedIdentityWallet[0]
+      }
+    } else if (selectedImportedWallet.length) {
+      const index = selectedImportedWallet.findIndex(wallet => this.props.balanceById[`${wallet.chain}/${wallet.address}`] && +this.props.balanceById[`${wallet.chain}/${wallet.address}`].balance >= minimalBalance)
+      if (index !== -1) {
+        return selectedImportedWallet[index]
+      } else {
+        return selectedImportedWallet[0]
+      }
+    }
+
+    return null
   }
 
   dismiss = () => {
