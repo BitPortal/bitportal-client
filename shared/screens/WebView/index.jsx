@@ -929,7 +929,7 @@ export default class WebView extends Component {
           <View style={{ width: '100%', height: this.state.navigationHeight, backgroundColor: 'rgba(0,0,0,0)' }} />
           <View style={{ width: '100%', height: Dimensions.get('window').height - tabHeight + 1 - this.state.navigationHeight }}>
             <WebViewBridge
-              source={{ uri: 'https://www.cryptokitties.co' }}
+              source={{ uri: url }}
               ref={(e) => { this.webviewbridge = e }}
               renderError={this.renderError}
               renderLoading={() => {}}
