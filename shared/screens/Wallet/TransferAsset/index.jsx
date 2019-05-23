@@ -33,6 +33,7 @@ import * as transactionActions from 'actions/transaction'
 import * as balanceActions from 'actions/balance'
 import * as contactActions from 'actions/contact'
 import * as feeActions from 'actions/fee'
+import * as walletActions from 'actions/wallet'
 import Modal from 'react-native-modal'
 import Slider from '@react-native-community/slider'
 import { assetIcons, walletIcons } from 'resources/images'
@@ -385,6 +386,7 @@ const shouldError = () => true
   dispatch => ({
     actions: bindActionCreators({
       ...transactionActions,
+      ...walletActions,
       ...balanceActions,
       ...contactActions,
       ...feeActions
@@ -556,6 +558,10 @@ export default class TransferAsset extends Component {
   componentDidMount() {
     this.setState({ autoFocusToAddress: true })
 
+    if (this.props.presetWalletId) {
+      this.props.actions.setTransferWallet(this.props.presetWalletId)
+    }
+
     if (this.props.activeWallet.chain === 'BITCOIN') {
       this.props.actions.getBTCFees.requested()
     } else if (this.props.activeWallet.chain === 'ETHEREUM') {
@@ -569,6 +575,17 @@ export default class TransferAsset extends Component {
     if (this.props.presetAmount) {
       this.props.change('amount', this.props.presetAmount)
     }
+
+    if (this.props.presetMemo) {
+      this.props.change('memo', this.props.presetMemo)
+    }
+
+    if (this.props.presetOpReturn) {
+      if (this.props.activeWallet.chain === 'BITCOIN') {
+        this.props.change('opreturn', this.props.presetOpReturn)
+        this.addOPReturn()
+      }
+    }
   }
 
   clearError = () => {
@@ -576,11 +593,11 @@ export default class TransferAsset extends Component {
   }
 
   addOPReturn = () => {
-    this.setState({ showOPReturn: true })
+    if (this.state.showOPReturn === false) this.setState({ showOPReturn: true })
   }
 
   removeOPReturn = () => {
-    this.setState({ showOPReturn: false })
+    if (this.state.showOPReturn === true) this.setState({ showOPReturn: false })
   }
 
   onModalHide = () => {
@@ -776,6 +793,7 @@ export default class TransferAsset extends Component {
     const available = balance && intl.formatNumber(balance.balance, { minimumFractionDigits: balance.precision, maximumFractionDigits: balance.precision })
     const chain = activeWallet.chain
 
+    // fees and display related
     const showMinnerFee = chain === 'BITCOIN' || chain === 'ETHEREUM'
     const showMemo = chain === 'EOS'
     const spin = this.state.spinValue.interpolate({
