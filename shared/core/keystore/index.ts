@@ -20,6 +20,7 @@ import {
 import EthereumTx from 'ethereumjs-tx'
 
 import Chainx from 'chainx.js'
+import { initChainx } from 'core/chain/chainx'
 
 // import bech32 from 'bech32'
 
@@ -645,9 +646,7 @@ export const createHDChainxKeystore = async (metadata: any, mnemonicCodes: any, 
   const mnemonics = mnemonicCodes.join(' ')
   assert(bip39.validateMnemonic(mnemonics), 'Invalid mnemonics')
 
-  const chainx = new Chainx('wss://w2.chainx.org/ws')
-  chainx.account.setNet('mainnet')
-  await chainx.isRpcReady()
+  const chainx = await initChainx()
   const keychain = chainx.account.from(mnemonics)
 
   const seed = keychain.privateKey()
@@ -681,9 +680,7 @@ export const createHDChainxKeystore = async (metadata: any, mnemonicCodes: any, 
 }
 
 export const createChainxKeystore = async (metadata: any, wif: any, password: string, id?: string) => {
-  const chainx = new Chainx('wss://w2.chainx.org/ws')
-  chainx.account.setNet('mainnet')
-  await chainx.isRpcReady()
+  const chainx = await initChainx()
   const keychain = chainx.account.from(wif)
 
   const publicKey = keychain.publicKey()

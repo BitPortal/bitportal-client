@@ -4,10 +4,16 @@ import Chainx from 'chainx.js'
 
 export const initChainx = async (network: string) => {
   // Todo:: fix init
-  const chainx = new Chainx('wss://w1.chainx.org/ws')
-  chainx.account.setNet('mainnet')
-  // (network.toLowerCase() === 'mainnet') ? chainx.account.setNet('mainnet') : chainx.account.setNet('testnet')
-  await chainx.isRpcReady()
+  try {
+    const chainx = new Chainx('wss://w1.chainx.org/ws')
+    chainx.account.setNet('mainnet')
+    await chainx.isRpcReady()
+  } catch (e) {
+    // retry
+    const chainx = new Chainx('wss://w2.chainx.org/ws')
+    chainx.account.setNet('mainnet')
+    await chainx.isRpcReady()
+  }
   return chainx
 }
 
@@ -24,8 +30,8 @@ export const getAsset = async (address: string) => {
   return asset
 }
 
-export const getTransactions = async (address: string, page: number = 0, pageSize: number = 10) => {
-  const result = await chainxScanApi('GET', '/account/' + address + '/txs', {
+export const getTransactions = async (publicKey: string, page: number = 0, pageSize: number = 10) => {
+  const result = await chainxScanApi('GET', '/account/' + publicKey + '/txs', {
     page,
     page_size: pageSize
   })

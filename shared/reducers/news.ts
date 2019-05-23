@@ -8,7 +8,10 @@ const initialState = {
   listError: null,
   nomore: false,
   isRefreshing: false,
-  loadingMore: false
+  loadingMore: false,
+  loading: false,
+  loaded: false,
+  refreshing: false
 }
 
 export default handleActions({
