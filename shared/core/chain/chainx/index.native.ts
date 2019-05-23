@@ -2,26 +2,30 @@ import { chainxScanApi } from 'core/api'
 import { decryptPrivateKey, decryptMnemonic } from 'core/keystore'
 import Chainx from 'chainx.js'
 
-export const initChainx = async (network: string) => {
+export const initChainx = async (network: string = 'mainnet') => {
   // Todo:: fix init
-  try {
-    const chainx = new Chainx('wss://w1.chainx.org/ws')
-    chainx.account.setNet('mainnet')
-    await chainx.isRpcReady()
-  } catch (e) {
-    // retry
-    const chainx = new Chainx('wss://w2.chainx.org/ws')
-    chainx.account.setNet('mainnet')
-    await chainx.isRpcReady()
-  }
-  return chainx
+
+    let chainx = new Chainx('wss://w2.chainx.org/ws')
+    if (chainx) {
+      chainx.account.setNet('mainnet')
+      await chainx.isRpcReady()
+      return chainx
+    }
+    else {
+      chainx = new Chainx('wss://w2.chainx.org/ws')
+      if (chainx && chainx.provider) {
+        chainx.account.setNet('mainnet')
+        await chainx.isRpcReady()
+        return chainx
+      } else {
+        return false
+      }
+    }
 }
 
 export const getBalance = async (address: string) => {
   const chainx = await initChainx('mainnet')
-  console.log('running get balance', chainx)
   const balance = await chainx.asset.getAssetsByAccount(address, 0, 1)
-  console.log('get chainx balance', balance)
   return (+balance.data[0].details.Free) * Math.pow(10, -8)
 }
 
@@ -43,7 +47,8 @@ export const getTransaction = async (hash: string) => {
 }
 
 export const getBlockNumber = async () => {
-
+  const chainx = await initChainx()
+  return await chainx.chain.getBlockNumber()
 }
 
 export const getBlock = async (id: string | number, returnTransactionObjects: boolean) => {
