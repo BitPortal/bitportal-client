@@ -106,7 +106,7 @@ export default class Voting extends Component {
 
   navigationButtonPressed({ buttonId }) {
     if (buttonId === 'cancel') {
-      Navigation.dismissModal(this.props.componentId);
+      Navigation.dismissModal(this.props.componentId)
     } else if (buttonId === 'vote') {
       AlertIOS.prompt(
         '请输入钱包密码',

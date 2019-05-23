@@ -349,6 +349,19 @@ export default class ImportBTCWallet extends Component {
     this.setState({ isSegWit })
   }
 
+  scan = (field) => {
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.Camera',
+            passProps: { from: 'import', form: 'importBTCWalletForm', field }
+          }
+        }]
+      }
+    })
+  }
+
   render() {
     const { formValues, change } = this.props
     const mnemonic = formValues && formValues.mnemonic
@@ -384,11 +397,14 @@ export default class ImportBTCWallet extends Component {
                   component={TextAreaField}
                   change={change}
                   showClearButton={!!mnemonic && mnemonic.length > 0}
+                  scan={this.scan}
                 />
-                <FastImage
-                  source={require('resources/images/scan.png')}
-                  style={{ width: 30, height: 30, position: 'absolute', right: 16, top: 4 }}
-                />
+                <TouchableHighlight underlayColor="rgba(0,0,0,0)" onPress={this.scan.bind(this, 'mnemonic')} style={{ width: 30, height: 30, position: 'absolute', right: 16, top: 4 }} activeOpacity={0.42}>
+                  <FastImage
+                    source={require('resources/images/scan2_right.png')}
+                    style={{ width: 30, height: 30 }}
+                  />
+                </TouchableHighlight>
               </View>
             </Fragment>}
             {this.state.selectedIndex === 1 && <Fragment>
@@ -401,10 +417,12 @@ export default class ImportBTCWallet extends Component {
                   change={change}
                   showClearButton={!!privateKey && privateKey.length > 0}
                 />
-                <FastImage
-                  source={require('resources/images/scan.png')}
-                  style={{ width: 30, height: 30, position: 'absolute', right: 16, top: 4 }}
-                />
+                <TouchableHighlight underlayColor="rgba(0,0,0,0)" onPress={this.scan.bind(this, 'privateKey')} style={{ width: 30, height: 30, position: 'absolute', right: 16, top: 4 }} activeOpacity={0.42}>
+                  <FastImage
+                    source={require('resources/images/scan2_right.png')}
+                    style={{ width: 30, height: 30 }}
+                  />
+                </TouchableHighlight>
               </View>
             </Fragment>}
         <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>

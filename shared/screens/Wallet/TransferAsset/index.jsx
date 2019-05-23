@@ -404,7 +404,7 @@ export default class TransferAsset extends Component {
         },
         rightButtons: [
           {
-            id: 'scanQrCode',
+            id: 'scan',
             icon: require('resources/images/scan2_right.png')
           }
         ]
@@ -442,6 +442,17 @@ export default class TransferAsset extends Component {
     if (buttonId === 'cancel') {
       // Keyboard.dismiss()
       Navigation.dismissAllModals()
+    } else if (buttonId === 'scan') {
+      Navigation.showModal({
+        stack: {
+          children: [{
+            component: {
+              name: 'BitPortal.Camera',
+              passProps: { from: 'transfer', form: 'transferAssetForm', field: 'toAddress', chain: this.props.activeWallet.chain, symbol: this.props.activeWallet.symbol }
+            }
+          }]
+        }
+      })
     }
   }
 

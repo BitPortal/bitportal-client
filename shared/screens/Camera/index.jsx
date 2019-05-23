@@ -12,7 +12,11 @@ import Modal from 'react-native-modal'
 import FastImage from 'react-native-fast-image'
 import QRDecode from '@remobile/react-native-qrcode-local-image'
 import ImagePicker from 'react-native-image-crop-picker'
+import { change } from 'redux-form'
 import { checkPhoto } from 'utils/permissions'
+import { isJsonString } from 'utils'
+import urlParse from 'url-parse'
+import { validateBTCAddress, validateETHAddress, validateEOSAccountName } from 'utils/validate'
 
 const toolBarMargin = (() => {
   const isIphoneX = () => {
@@ -47,7 +51,7 @@ const toolBarMargin = (() => {
   }),
   dispatch => ({
     actions: bindActionCreators({
-
+      change
     }, dispatch)
   })
 )
@@ -147,11 +151,59 @@ export default class Camera extends Component {
   }
 
   parseQrCode = (code) => {
+    console.log(code)
+    const { from, form, field, chain, symbol } = this.props
 
+    if (from === 'import') {
+      this.props.actions.change(form, field, code)
+      this.dismiss()
+    } else if (from === 'transfer') {
+      const isJson = isJsonString(code)
+      if (isJson) {
+        Alert.alert(
+          `无效的${symbol}地址`,
+          '',
+          [
+            { text: '确定', onPress: () => {} }
+          ]
+        )
+      } else {
+        const parsed = urlParse(code, true)
+        const { protocol, pathname, query } = parsed
+
+        const address = protocol === `${chain.toLowerCase()}:` ? pathname : code
+        let isValid = false
+
+        if (chain === 'BITCOIN') {
+          isValid = validateBTCAddress(address)
+        } else if (chain === 'ETHEREUM') {
+          isValid = validateETHAddress(address)
+        } else if (chain === 'EOS') {
+          isValid = validateEOSAccountName(address)
+        }
+
+        if (!isValid) {
+          Alert.alert(
+            `无效的${symbol}地址`,
+            '',
+            [
+              { text: '确定', onPress: () => {} }
+            ]
+          )
+        } else {
+          this.props.actions.change(form, field, pathname)
+          const amount = query.amount || query.value
+          if (amount) this.props.actions.change(form, 'amount', amount)
+          this.dismiss()
+        }
+      }
+    } else {
+
+    }
   }
 
   dismiss = () => {
-    Navigation.dismissAllModals()
+    Navigation.dismissModal(this.props.componentId)
   }
 
   render() {
@@ -165,7 +217,7 @@ export default class Camera extends Component {
           onRead={this.onSuccess}
           customMarker={<View style={{ width: 240, height: 240, backgroundColor: 'rgba(0,0,0,0)', borderRadius: 10, borderWidth: 0, borderColor: 'green' }} />}
           reactivateTimeout = {5000}
-          reactivate={true}
+          reactivate={false}
           flashMode={this.state.torchOn ? CAMERA_FLASH_MODE.torch : CAMERA_FLASH_MODE.off}
         />
         <View style={{ position: 'absolute', top: 0, left: 0, width: Dimensions.get('window').width, height: Dimensions.get('window').height, alignItems: 'center', justifyContent: 'center' }}>

@@ -125,7 +125,8 @@ export default class Wallet extends Component {
         stack: {
           children: [{
             component: {
-              name: 'BitPortal.Camera'
+              name: 'BitPortal.Camera',
+              passProps: { from: 'wallet' }
             }
           }]
         }
