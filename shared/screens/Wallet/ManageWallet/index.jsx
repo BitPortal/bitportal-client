@@ -221,14 +221,17 @@ export default class ManageWallet extends Component {
     })
   }
 
-  vote = () => {
+  vote = async () => {
     if (this.props.getProducer.loaded) this.props.actions.setSelected(this.props.votedProducers)
+    this.props.actions.handleProducerSearchTextChange('')
+    const constants = await Navigation.constants()
 
     Navigation.showModal({
       stack: {
         children: [{
           component: {
-            name: 'BitPortal.Voting'
+            name: 'BitPortal.Voting',
+            passProps: { statusBarHeight: constants.statusBarHeight }
           },
           options: {
             topBar: {

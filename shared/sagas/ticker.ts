@@ -1,5 +1,6 @@
 import assert from 'assert'
-import { takeEvery, put, call, select } from 'redux-saga/effects'
+import { delay } from 'redux-saga'
+import { takeEvery, put, call, select, takeLatest } from 'redux-saga/effects'
 import { getErrorMessage } from 'utils'
 import { getEOSRAMMarket } from 'core/chain/eos'
 import * as actions from 'actions/ticker'
@@ -36,9 +37,16 @@ function* getEOSRAMTicker(action: Action) {
   }
 }
 
+function* handleTickerSearchTextChange(action: Action) {
+  yield delay(500)
+  const text = action.payload || ''
+  yield put(actions.setTickerSearchText(text))
+}
+
 export default function* tickerSaga() {
   yield takeEvery(String(actions.getTicker.requested), getTicker)
   yield takeEvery(String(actions.getTicker.refresh), getTicker)
   yield takeEvery(String(actions.getEOSRAMTicker.requested), getEOSRAMTicker)
   yield takeEvery(String(actions.getEOSRAMTicker.refresh), getEOSRAMTicker)
+  yield takeLatest(String(actions.handleTickerSearchTextChange), handleTickerSearchTextChange)
 }

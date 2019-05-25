@@ -1,5 +1,6 @@
 import assert from 'assert'
-import { all, call, put, takeEvery, select } from 'redux-saga/effects'
+import { all, call, put, takeEvery, takeLatest, select } from 'redux-saga/effects'
+import { delay } from 'redux-saga'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/producer'
 import * as api from 'utils/api'
@@ -46,7 +47,14 @@ function* getProducer(action: Action<GetProducerParams>) {
   }
 }
 
+function* handleProducerSearchTextChange(action: Action) {
+  yield delay(500)
+  const text = action.payload || ''
+  yield put(actions.setProducerSearchText(text))
+}
+
 export default function* producerSaga() {
   yield takeEvery(String(actions.getProducer.requested), getProducer)
   yield takeEvery(String(actions.getProducer.refresh), getProducer)
+  yield takeLatest(String(actions.handleProducerSearchTextChange), handleProducerSearchTextChange)
 }

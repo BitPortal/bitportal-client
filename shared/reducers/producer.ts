@@ -7,7 +7,8 @@ const initialState = {
   selectedIds: [],
   sortType: 'default',
   total_producer_vote_weight: 0,
-  more: null
+  more: null,
+  searchText: ''
 }
 
 export default handleActions({
@@ -58,5 +59,8 @@ export default handleActions({
   },
   [actions.clearProducer] () {
     return initialState
+  },
+  [actions.setProducerSearchText] (state, action) {
+    state.searchText = action.payload
   }
 }, initialState)

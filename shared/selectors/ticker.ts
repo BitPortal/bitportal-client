@@ -3,13 +3,21 @@ import { activeWalletSelector } from 'selectors/wallet'
 
 export const tickerByIdSelector = (state: RootState) => state.ticker.byId
 export const tickerAllIdsSelector = (state: RootState) => state.ticker.allIds
+export const tickerSearchTextSelector = (state: RootState) => state.ticker.searchText
 
 export const eosRAMPriceSelector = (state: RootState) => state.ticker.resources && state.ticker.resources.byId['EOS/RAM'] && state.ticker.resources.byId['EOS/RAM'].price
 
 export const tickerSelector = createSelector(
   tickerByIdSelector,
   tickerAllIdsSelector,
-  (byId: any, allIds: any) => allIds.map(id => byId[id])
+  tickerSearchTextSelector,
+  (byId: any, allIds: any, searchText: string) => {
+    if (searchText) {
+      return allIds.map(id => byId[id]).filter(item => item.symbol.toLowerCase().indexOf(searchText.toLowerCase()) !== -1 || item.name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1)
+    } else {
+      return allIds.map(id => byId[id])
+    }
+  }
 )
 
 export const activeWalletTickerSelector = createSelector(

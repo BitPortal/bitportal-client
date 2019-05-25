@@ -7,4 +7,7 @@ export const setSelected = createAction<any>('producer/SET_SELECT')
 export const clearProducer = createAction('producer/CLEAR')
 export const updateProducer = createAction('producer/UPDATE')
 
+export const handleProducerSearchTextChange = createAction('producer/HANDLE_SEARCH_TEXT')
+export const setProducerSearchText = createAction('producer/SET_SEARCH_TEXT')
+
 export const getProducer = createAsyncAction('producer/GET')

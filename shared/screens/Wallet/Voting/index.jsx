@@ -11,8 +11,9 @@ import { managingWalletSelector } from 'selectors/wallet'
 import {
   producerSelector,
   producerSelectedIdsSelector,
+  selectedProducerSelector,
   producerAllIdsSelector,
-  selectedProducerSelector
+  producerIdsSelector
 } from 'selectors/producer'
 import Modal from 'react-native-modal'
 import styles from './styles'
@@ -48,7 +49,7 @@ export const errorDetail = (error) => {
     producer: producerSelector(state),
     selectedIds: producerSelectedIdsSelector(state),
     selected: selectedProducerSelector(state),
-    allIds: producerAllIdsSelector(state)
+    allIds: producerIdsSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -68,7 +69,7 @@ export default class Voting extends Component {
         subtitle: {
           text: '0 / 30 已选'
         },
-        drawBehind: false,
+        drawBehind: true,
         searchBar: true,
         searchBarHiddenWhenScrolling: true,
         searchBarPlaceholder: 'Search',
@@ -98,7 +99,7 @@ export default class Voting extends Component {
 
   subscription = Navigation.events().bindComponent(this)
 
-  state = { selected: 0 }
+  state = { selected: 0, searching: false }
 
   tableViewRef = React.createRef()
 
@@ -133,8 +134,14 @@ export default class Voting extends Component {
     }
   }
 
-  searchBarUpdated() {
-    // this.setState({ searching: isFocused })
+  searchBarUpdated({ text, isFocused }) {
+    this.setState({ searching: isFocused })
+
+    if (isFocused) {
+      this.props.actions.handleProducerSearchTextChange(text)
+    } else {
+      this.props.actions.handleProducerSearchTextChange('')
+    }
   }
 
   onRefresh = () => {
@@ -194,7 +201,6 @@ export default class Voting extends Component {
         this.scrollView.scrollTo({ x: (Dimensions.get('window').width / 4) * this.props.selectedIds.length - Dimensions.get('window').width, animated: true })
       }
     }
-
     LayoutAnimation.easeInEaseOut()
   }
 
@@ -222,6 +228,7 @@ export default class Voting extends Component {
 
   componentWillUnmount() {
     this.props.actions.setSelected([])
+    this.props.actions.handleProducerSearchTextChange('')
   }
 
   onModalHide = () => {
@@ -260,10 +267,10 @@ export default class Voting extends Component {
   }
 
   render() {
-    const { producer, selectedIds, selected, vote, getProducer } = this.props
+    const { producer, selectedIds, selected, vote, getProducer, statusBarHeight } = this.props
     const loading = vote.loading
 
-    if ((!getProducer.loaded && getProducer.loading) || !producer.length) {
+    if (!getProducer.loaded && getProducer.loading) {
       return (
         <View style={styles.container}>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
@@ -275,8 +282,8 @@ export default class Voting extends Component {
     }
 
     return (
-      <View style={styles.container}>
-        <View style={[styles.selected, { marginTop: Navigation.constants().topBarHeight, height: selectedIds.length ? 80 : 0 }]}>
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <View style={{ width: '100%', height: selectedIds.length ? 80 : 0, marginTop: !this.state.searching ? (statusBarHeight + 44 + 56) : (statusBarHeight + 56) }}>
           <ScrollView
             style={{ height: selectedIds.length ? 80 : 0 }}
             horizontal
@@ -307,7 +314,7 @@ export default class Voting extends Component {
           </ScrollView>
         </View>
         <TableView
-          style={styles.tableView}
+          style={{ flex: 1 }}
           tableViewCellStyle={TableView.Consts.CellStyle.Default}
           detailTextColor="#666666"
           canRefresh

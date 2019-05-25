@@ -31,14 +31,22 @@ export default class Market extends Component {
         title: {
           text: '行情'
         },
-        /* searchBar: true,
-         * searchBarHiddenWhenScrolling: true,
-         * searchBarPlaceholder: 'Search'*/
+        searchBar: true,
+        searchBarHiddenWhenScrolling: true,
+        searchBarPlaceholder: 'Search'
       }
     }
   }
 
   subscription = Navigation.events().bindComponent(this)
+
+  searchBarUpdated({ text, isFocused }) {
+    if (isFocused) {
+      this.props.actions.handleTickerSearchTextChange(text)
+    } else {
+      this.props.actions.handleTickerSearchTextChange('')
+    }
+  }
 
   onSelect = () => {
     console.log('onSelect')

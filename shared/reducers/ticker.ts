@@ -7,7 +7,8 @@ const initialState = {
   resources: {
     byId: {},
     allIds: []
-  }
+  },
+  searchText: ''
 }
 
 export default handleActions({
@@ -34,5 +35,8 @@ export default handleActions({
     if (index === -1) {
       state.resources.allIds.push(id)
     }
+  },
+  [actions.setTickerSearchText] (state, action) {
+    state.searchText = action.payload
   }
 }, initialState)
