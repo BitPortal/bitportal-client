@@ -19,6 +19,8 @@ export const errorMessages = (error, messages) => {
   const message = typeof error === 'object' ? error.message : error
 
   switch (String(message)) {
+    case 'SegWit requires compressed private key':
+      return '隔离见证需要压缩的公钥格式'
     case 'Invalid password':
       return '密码错误'
     default:
@@ -457,16 +459,18 @@ export default class ManageWallet extends Component {
     }
 
     if (chain === 'BITCOIN') {
-      editActions.push(
-        <Item
-          reactModuleForCell="WalletManagementTableViewCell"
-          key="address"
-          actionType="address"
-          text="钱包地址"
-          onPress={this.switchBTCAddress}
-          arrow
-        />
-      )
+      if (source !== 'WIF') {
+        editActions.push(
+          <Item
+            reactModuleForCell="WalletManagementTableViewCell"
+            key="address"
+            actionType="address"
+            text="钱包地址"
+            onPress={this.switchBTCAddress}
+            arrow
+          />
+        )
+      }
 
       editActions.push(
         <Item

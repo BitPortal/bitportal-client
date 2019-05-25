@@ -3,7 +3,7 @@ import HDKey from 'hdkey'
 import { hash160, bip39 } from 'core/crypto'
 import bitcoin from 'core/library/bitcoin'
 import coinSelect from 'core/library/coinselect'
-import { decryptMnemonic, decryptPrivateKey } from 'core/keystore'
+import { decryptMnemonic, decryptPrivateKey, exportPrivateKey } from 'core/keystore'
 import secp256k1 from 'secp256k1'
 import bs58check from 'bs58check'
 import { segWit } from 'core/constants'
@@ -172,7 +172,7 @@ export const transfer = async (password: string, keystore: any, inputs: any, out
 
 export const transferByWif = async (password: string, keystore: any, inputs: any, outputs: any, opReturnHex: string = '') => {
   const isSegWit = keystore.bitportalMeta.segWit && keystore.bitportalMeta.segWit !== segWit.none
-  const privateKey = await decryptPrivateKey(password, keystore)
+  const privateKey = await exportPrivateKey(password, keystore, 'WIF')
 
   const txb = new bitcoin.TransactionBuilder()
   txb.setVersion(1)

@@ -14,7 +14,7 @@ import {
   walletAllIdsSelector
 } from 'selectors/wallet'
 import * as walletCore from 'core/wallet'
-import { createHDBTCKeystore } from 'core/keystore'
+import { createHDBTCKeystore, createBTCKeystore } from 'core/keystore'
 import {
   getEOSKeyAccountsByPrivateKey,
   getEOSPermissionKeyPairs
@@ -240,25 +240,49 @@ function* switchBTCAddressType(action: Action<SwitchBTCAddressTypeParams>) {
 
     assert(keystore && keystore.crypto, 'No keystore')
 
-    const mnemonics = yield call(walletCore.exportMnemonic, password, keystore)
-    const metadata = {
-      name: keystore.bitportalMeta.name,
-      passwordHint: keystore.bitportalMeta.passwordHint,
-      network: keystore.bitportalMeta.network,
-      source: keystore.bitportalMeta.source,
-      timestamp: keystore.bitportalMeta.timestamp
-    }
-    const mnemonicCodes = mnemonics.trim().split(' ')
-    const isSegWit = segWit === 'P2WPKH'
-    const newKeystore = yield call(createHDBTCKeystore, metadata, mnemonicCodes, password, !isSegWit, id)
+    if (source === 'WIF') {
+      const wif = yield call(walletCore.exportPrivateKey, password, keystore, source)
 
-    if (fromIdentity) {
-      yield call(secureStorage.setItem, `IDENTITY_WALLET_KEYSTORE_${id}`, newKeystore, true)
+      const metadata = {
+        name: keystore.bitportalMeta.name,
+        passwordHint: keystore.bitportalMeta.passwordHint,
+        network: keystore.bitportalMeta.network,
+        source: keystore.bitportalMeta.source,
+        timestamp: keystore.bitportalMeta.timestamp
+      }
+
+      const isSegWit = segWit === 'P2WPKH'
+      const newKeystore = yield call(createBTCKeystore, metadata, wif, password, !isSegWit, id)
+
+      if (fromIdentity) {
+        yield call(secureStorage.setItem, `IDENTITY_WALLET_KEYSTORE_${id}`, newKeystore, true)
+      } else {
+        yield call(secureStorage.setItem, `IMPORTED_WALLET_KEYSTORE_${id}`, newKeystore, true)
+      }
+
+      yield put(actions.updateBTCWalletAddressType({ id, address: newKeystore.address, segWit: newKeystore.bitportalMeta.segWit }))
     } else {
-      yield call(secureStorage.setItem, `IMPORTED_WALLET_KEYSTORE_${id}`, newKeystore, true)
+      const mnemonics = yield call(walletCore.exportMnemonic, password, keystore)
+      const metadata = {
+        name: keystore.bitportalMeta.name,
+        passwordHint: keystore.bitportalMeta.passwordHint,
+        network: keystore.bitportalMeta.network,
+        source: keystore.bitportalMeta.source,
+        timestamp: keystore.bitportalMeta.timestamp
+      }
+      const mnemonicCodes = mnemonics.trim().split(' ')
+      const isSegWit = segWit === 'P2WPKH'
+      const newKeystore = yield call(createHDBTCKeystore, metadata, mnemonicCodes, password, !isSegWit, id)
+
+      if (fromIdentity) {
+        yield call(secureStorage.setItem, `IDENTITY_WALLET_KEYSTORE_${id}`, newKeystore, true)
+      } else {
+        yield call(secureStorage.setItem, `IMPORTED_WALLET_KEYSTORE_${id}`, newKeystore, true)
+      }
+
+      yield put(actions.updateBTCWalletAddressType({ id, address: newKeystore.address, segWit: newKeystore.bitportalMeta.segWit }))
     }
 
-    yield put(actions.updateBTCWalletAddressType({ id, address: newKeystore.address, segWit: newKeystore.bitportalMeta.segWit }))
     yield put(actions.switchBTCAddressType.succeeded())
   } catch (e) {
     yield put(actions.switchBTCAddressType.failed(getErrorMessage(e)))
