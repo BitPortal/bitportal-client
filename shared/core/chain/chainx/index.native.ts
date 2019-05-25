@@ -2,9 +2,9 @@ import { chainxScanApi } from 'core/api'
 import { decryptPrivateKey, decryptMnemonic } from 'core/keystore'
 import Chainx from 'chainx.js'
 
+
 export const initChainx = async (network: string = 'mainnet') => {
   // Todo:: fix init
-
     let chainx = new Chainx('wss://w2.chainx.org/ws')
     if (chainx) {
       chainx.account.setNet('mainnet')
@@ -12,15 +12,23 @@ export const initChainx = async (network: string = 'mainnet') => {
       return chainx
     }
     else {
-      chainx = new Chainx('wss://w2.chainx.org/ws')
+      chainx = new Chainx('wss://w1.chainx.org/ws')
       if (chainx && chainx.provider) {
         chainx.account.setNet('mainnet')
         await chainx.isRpcReady()
         return chainx
       } else {
+        console.error('failed to init chainx')
         return false
       }
     }
+}
+
+export const getInfo = async () => {
+  const chainx = await initChainx('mainnet')
+  const info = await chainx.chain.getInfo()
+  const trustee = await chainx.trustee.getTrusteeSessionInfo('Bitcoin')
+  return {info, trustee}
 }
 
 export const getBalance = async (address: string) => {
@@ -62,11 +70,9 @@ export const getBlockTransactionNumber = async (id: string | number) => {
 export const transfer = async (password: string, keystore: any, fromAddress: string, toAddress: string, symbol: string, amount: string, memo: string = '') => {
   const chainx = await initChainx('mainnet')
 
-  console.log('CHAINX Transfer', password, keystore, fromAddress, toAddress, amount, memo)
   const txToSign = await chainx.asset.transfer(toAddress, symbol, amount * Math.pow(10, 8), memo)
 
   const privateKey = await decryptPrivateKey(password, keystore)
-  console.log('private key', privateKey, Buffer.from(privateKey, 'hex').toString())
 
   // chainx.account.from(mnemonic).derive().privateKey()
 
@@ -85,4 +91,18 @@ export const transfer = async (password: string, keystore: any, fromAddress: str
       return false
     }
   })
+}
+//
+export const getAddressByAccount = async (address: string) => {
+  const chainx = await initChainx('mainnet')
+  return await chainx.asset.getAddressByAccount(address, 'Bitcoin')
+}
+
+export const getIntentions = async () => {
+  const chainx = await initChainx('mainnet')
+  return await chainx.stake.getIntentions()
+}
+
+export const getDepositOpReturn = (address, nodeName = 'BitPortal') => {
+  return new Buffer.from(address + '@' + nodeName, 'utf-8').toString('hex')
 }

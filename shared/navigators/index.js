@@ -70,6 +70,8 @@ import SwitchEOSAccount from 'screens/Wallet/SwitchEOSAccount'
 import SwitchBTCAddress from 'screens/Wallet/SwitchBTCAddress'
 import TransactionDetail from 'screens/Wallet/TransactionDetail'
 import ProducerDetail from 'screens/Wallet/ProducerDetail'
+import ChainXDeposit from 'screens/Wallet/ChainX/Deposit'
+import ChainXVoting from 'screens/Wallet/ChainX/Voting'
 import Discovery from 'screens/Discovery'
 import DappList from 'screens/Discovery/DappList'
 import Profile from 'screens/Profile'
@@ -159,6 +161,8 @@ export const registerScreens = (store, persistor) => {
   Navigation.registerComponentWithRedux('BitPortal.ExportBTCPrivateKey', () => ExportBTCPrivateKey, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.TransactionDetail', () => TransactionDetail, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ProducerDetail', () => ProducerDetail, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ChainXDeposit', () => ChainXDeposit, PersistProvider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ChainXVoting', () => ChainXVoting, PersistProvider, store)
 
   Navigation.registerComponentWithRedux('BitPortal.Market', () => Market, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Discovery', () => Discovery, Provider, store)
@@ -286,29 +290,29 @@ export const startTabBasedApp = () => {
               }
             }
           },
-          {
-            stack: {
-              children: [
-                {
-                  component: {
-                    id: 'BitPortal.Discovery',
-                    name: 'BitPortal.Discovery'
-                  }
-                }
-              ],
-              options: {
-                bottomTab: {
-                  text: '应用',
-                  textColor: '#9D9D9D',
-                  iconColor: '#9D9D9D',
-                  selectedTextColor: '#007AFF',
-                  icon: require('resources/images/app_tab.png'),
-                  selectedIconColor: '#007AFF',
-                  testID: 'BITPORTAL_DISCOVERY'
-                }
-              }
-            }
-          },
+          // {
+          //   stack: {
+          //     children: [
+          //       {
+          //         component: {
+          //           id: 'BitPortal.Discovery',
+          //           name: 'BitPortal.Discovery'
+          //         }
+          //       }
+          //     ],
+          //     options: {
+          //       bottomTab: {
+          //         text: '应用',
+          //         textColor: '#9D9D9D',
+          //         iconColor: '#9D9D9D',
+          //         selectedTextColor: '#007AFF',
+          //         icon: require('resources/images/app_tab.png'),
+          //         selectedIconColor: '#007AFF',
+          //         testID: 'BITPORTAL_DISCOVERY'
+          //       }
+          //     }
+          //   }
+          // },
           // {
           //   stack: {
           //     children: [

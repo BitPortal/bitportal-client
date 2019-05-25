@@ -13,7 +13,9 @@ const images = {
   resources: require('resources/images/resources.png'),
   vote: require('resources/images/vote.png'),
   createAccount: require('resources/images/create_account.png'),
-  switchAccount: require('resources/images/switchAddressType.png')
+  switchAccount: require('resources/images/switchAddressType.png'),
+  chainxDeposit: require('resources/images/switchAddressType.png'),
+  chainxVoting: require('resources/images/vote.png'),
 }
 
 const WalletManagementTableViewCell = (props) => {

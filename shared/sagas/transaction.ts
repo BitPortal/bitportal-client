@@ -14,6 +14,8 @@ import * as chainxChain from 'core/chain/chainx'
 import * as api from 'utils/api'
 import { managingWalletSelector } from 'selectors/wallet'
 import { push, dismissAllModals } from 'utils/location'
+import { decodeAddress } from '@chainx/account'
+
 
 function* transfer(action: Action) {
   if (!action.payload) return
@@ -454,7 +456,7 @@ function* getTransactions(action: Action) {
     } else if (chain === 'CHAINX') {
       const page = 0
       const pageSize = 200
-      const transactions = yield call(chainxChain.getTransactions, address, page, pageSize)
+      const transactions = yield call(chainxChain.getTransactions, decodeAddress(address), page, pageSize)
       const items = transactions.map((item: any) => {
         // TODO: this need to be fixed
         const isTransfer = item.module === 'XAssets' && item.call === 'transfer'

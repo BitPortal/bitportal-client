@@ -783,7 +783,7 @@ export default class TransferAsset extends Component {
   }
 
   render() {
-    const { transfer, formValues, change, activeWallet, balance, intl, presetContact, contacts, selectedContact } = this.props
+    const { transfer, formValues, change, activeWallet, balance, intl, contacts, selectedContact } = this.props
     const loading = transfer.loading
     const toAddress = formValues && formValues.toAddress
     const memo = formValues && formValues.memo

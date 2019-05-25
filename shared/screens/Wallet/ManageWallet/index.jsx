@@ -389,6 +389,46 @@ export default class ManageWallet extends Component {
     }
   }
 
+  chainxDeposit = async (walletId) => {
+    const constants = await Navigation.constants()
+
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.ChainXDeposit',
+        passProps: {
+          statusBarHeight: constants.statusBarHeight
+        },
+        options: {
+          topBar: {
+            backButton: {
+              title: '返回'
+            }
+          }
+        }
+      }
+    })
+  }
+
+  chainxVoting = async (walletId) => {
+    const constants = await Navigation.constants()
+
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.ChainXVoting',
+        passProps: {
+          statusBarHeight: constants.statusBarHeight
+        },
+        options: {
+          topBar: {
+            backButton: {
+              title: '返回'
+            }
+          }
+        }
+      }
+    })
+  }
+
   render() {
     const { type, deleteWallet, exportMnemonics, exportBTCPrivateKey, exportETHKeystore, exportETHPrivateKey, exportEOSPrivateKey, switchBTCAddressType, wallet } = this.props
     const name = (wallet && wallet.name) || this.props.name
@@ -522,6 +562,29 @@ export default class ManageWallet extends Component {
           actionType="keystore"
           text="导出Keystore"
           onPress={this.exportETHKeystore.bind(this, id)}
+          arrow
+        />
+      )
+    }
+
+    if (chain === 'CHAINX') {
+      editActions.push(
+        <Item
+          reactModuleForCell="WalletManagementTableViewCell"
+          key="chainxDeposit"
+          actionType="chainxDeposit"
+          text="充值挖矿"
+          onPress={this.chainxDeposit.bind(this, id)}
+          arrow
+        />
+      )
+      editActions.push(
+        <Item
+          reactModuleForCell="WalletManagementTableViewCell"
+          key="chainxVoting"
+          actionType="chainxVoting"
+          text="投票选举"
+          onPress={this.chainxVoting.bind(this, id)}
           arrow
         />
       )
