@@ -21,19 +21,24 @@ function* getBalance(action: Action) {
     const chain = action.payload.chain
     const address = action.payload.address
     const symbol = action.payload.symbol
+    const source = action.payload.source
     const walletId = action.payload.id
 
     let balance = '0'
     let id = `${chain}/${address}`
 
     if (chain === 'BITCOIN') {
-      const allAddresses = yield select((state: RootState) => state.address)
-      const walletAddresses = allAddresses.byId[id]
-      if (walletAddresses) {
-        const addresses = walletAddresses.external.allIds.concat(walletAddresses.change.allIds)
-        yield put(getUTXO.requested({ addresses, walletId, id, chain, symbol, precision: 8 }))
+      if (source === 'WIF') {
+        yield put(getUTXO.requested({ addresses: [address], walletId, id, chain, symbol, precision: 8 }))
       } else {
-        yield put(scanHDAddresses.requested({ ...action.payload, precision: 8 }))
+        const allAddresses = yield select((state: RootState) => state.address)
+        const walletAddresses = allAddresses.byId[id]
+        if (walletAddresses) {
+          const addresses = walletAddresses.external.allIds.concat(walletAddresses.change.allIds)
+          yield put(getUTXO.requested({ addresses, walletId, id, chain, symbol, precision: 8 }))
+        } else {
+          yield put(scanHDAddresses.requested({ ...action.payload, precision: 8 }))
+        }
       }
     } else if (chain === 'ETHEREUM') {
       balance = yield call(ethChain.getBalance, address)

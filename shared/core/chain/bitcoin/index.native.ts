@@ -3,7 +3,7 @@ import HDKey from 'hdkey'
 import { hash160, bip39 } from 'core/crypto'
 import bitcoin from 'core/library/bitcoin'
 import coinSelect from 'core/library/coinselect'
-import { decryptMnemonic } from 'core/keystore'
+import { decryptMnemonic, decryptPrivateKey } from 'core/keystore'
 import secp256k1 from 'secp256k1'
 import bs58check from 'bs58check'
 import { segWit } from 'core/constants'
@@ -153,6 +153,47 @@ export const transfer = async (password: string, keystore: any, inputs: any, out
     const child = node.derive(+inputs[i].change).derive(+inputs[i].index)
     const keyPair = bitcoin.ECPair.fromPrivateKey(child.privateKey)
 
+    if (isSegWit) {
+      const p2wpkh = bitcoin.payments.p2wpkh({ pubkey: keyPair.publicKey })
+      const p2sh = bitcoin.payments.p2sh({ redeem: p2wpkh })
+      txb.sign(i, keyPair, p2sh.redeem.output, null, inputs[i].value)
+    } else {
+      txb.sign(i, keyPair)
+    }
+  }
+
+  const tx = txb.build()
+  const tx_hex = tx.toHex()
+
+  const result = await chainSoApi('POST', '/send_tx/BTC', { tx_hex })
+  return result.data.txid
+}
+
+
+export const transferByWif = async (password: string, keystore: any, inputs: any, outputs: any, opReturnHex: string = '') => {
+  const isSegWit = keystore.bitportalMeta.segWit && keystore.bitportalMeta.segWit !== segWit.none
+  const privateKey = await decryptPrivateKey(password, keystore)
+
+  const txb = new bitcoin.TransactionBuilder()
+  txb.setVersion(1)
+
+  for (const input of inputs) {
+    txb.addInput(input.txid, input.vout)
+  }
+
+  for (const output of outputs) {
+    txb.addOutput(output.address, output.value)
+  }
+
+  if (opReturnHex) {
+    // add opt return data
+    const data = Buffer.from(opReturnHex, 'hex')
+    const embed = bitcoin.payments.embed({ data: [data] })
+    txb.addOutput(embed.output, 0)
+  }
+
+  const keyPair = bitcoin.ECPair.fromWIF(privateKey)
+  for (let i = 0; i < inputs.length; i++) {
     if (isSegWit) {
       const p2wpkh = bitcoin.payments.p2wpkh({ pubkey: keyPair.publicKey })
       const p2sh = bitcoin.payments.p2sh({ redeem: p2wpkh })

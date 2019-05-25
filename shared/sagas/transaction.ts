@@ -19,7 +19,7 @@ function* transfer(action: Action) {
   if (!action.payload) return
 
   try {
-    const { chain, id, password, amount, symbol, precision, memo, contract, toAddress, fromAddress, feeRate, gasLimit, gasPrice, opreturn } = action.payload
+    const { chain, source, id, password, amount, symbol, precision, memo, contract, toAddress, fromAddress, feeRate, gasLimit, gasPrice, opreturn } = action.payload
 
     const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
     const identityKeystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
@@ -50,14 +50,21 @@ function* transfer(action: Action) {
       const walletUTXO = utxo.byId[`${chain}/${fromAddress}`]
       assert(walletUTXO, 'No utxo')
 
-      const address = yield select((state: RootState) => state.address)
-      const walletAddress = address.byId[`${chain}/${fromAddress}`]
-      assert(walletAddress, 'No address')
+      let hash
+      if (source === 'WIF') {
+        const changeAddress = fromAddress
+        const { inputs, outputs, fee } = yield call(btcChain.selectUTXO, walletUTXO, amount, toAddress, changeAddress, feeRate)
+        hash = yield call(btcChain.transferByWif, password, keystore, inputs, outputs, opreturn)
+      } else {
+        const address = yield select((state: RootState) => state.address)
+        const walletAddress = address.byId[`${chain}/${fromAddress}`]
+        assert(walletAddress, 'No address')
 
-      const changeAddress = btcChain.getChangeAddress(walletUTXO, walletAddress.change)
-      const { inputs, outputs, fee } = yield call(btcChain.selectUTXO, walletUTXO, amount, toAddress, changeAddress, feeRate)
-      const inputsWithIdx = btcChain.getInputsWithIdx(inputs, walletAddress)
-      const hash = yield call(btcChain.transfer, password, keystore, inputsWithIdx, outputs, opreturn)
+        const changeAddress = btcChain.getChangeAddress(walletUTXO, walletAddress.change)
+        const { inputs, outputs, fee } = yield call(btcChain.selectUTXO, walletUTXO, amount, toAddress, changeAddress, feeRate)
+        const inputsWithIdx = btcChain.getInputsWithIdx(inputs, walletAddress)
+        hash = yield call(btcChain.transfer, password, keystore, inputsWithIdx, outputs, opreturn)
+      }
 
       const transaction = {
         id: hash,
@@ -309,18 +316,25 @@ function* getTransactions(action: Action) {
   try {
     const chain = action.payload.chain
     const address = action.payload.address
+    const source = action.payload.source
     const walletId = action.payload.id
 
     let id = `${chain}/${address}`
 
     if (chain === 'BITCOIN') {
-      const allAddresses = yield select((state: RootState) => state.address)
-      const walletAddresses = allAddresses.byId[id]
-      assert(walletAddresses, 'No hd wallet addresses')
+      let addresses
+
+      if (source === 'WIF') {
+        addresses = [address]
+      } else {
+        const allAddresses = yield select((state: RootState) => state.address)
+        const walletAddresses = allAddresses.byId[id]
+        assert(walletAddresses, 'No hd wallet addresses')
+        addresses = walletAddresses.external.allIds.concat(walletAddresses.change.allIds)
+      }
 
       const fromIndex = 0
       const toIndex = 10
-      const addresses = walletAddresses.external.allIds.concat(walletAddresses.change.allIds)
       const transactions = yield call(btcChain.getTransactions, addresses, fromIndex, toIndex)
       const canLoadMore = transactions.items.length === 10
       const items = transactions.items
@@ -379,7 +393,6 @@ function* getTransactions(action: Action) {
         to: transactions.to
       }
 
-      console.log({ id, items, pagination, canLoadMore })
       yield put(actions.updateTransactions({ id, items, pagination, canLoadMore }))
     } else if (chain === 'ETHEREUM') {
       const startblock = 0
