@@ -31,9 +31,9 @@ export default class Market extends Component {
         title: {
           text: '行情'
         },
-        searchBar: true,
-        searchBarHiddenWhenScrolling: true,
-        searchBarPlaceholder: 'Search'
+        /* searchBar: true,
+         * searchBarHiddenWhenScrolling: true,
+         * searchBarPlaceholder: 'Search'*/
       }
     }
   }
@@ -87,6 +87,7 @@ export default class Market extends Component {
               currency="$"
               change={intl.formatNumber(item.percent_change_24h, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               componentId={this.props.componentId}
+              selectionStyle={TableView.Consts.CellSelectionStyle.None}
             />
            )}
         </Section>

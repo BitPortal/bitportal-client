@@ -17,7 +17,7 @@ const AssetTableViewCell = props => {
         <View style={{ width: 40, height: 40, marginRight: 10, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.3)', backgroundColor: 'white', borderRadius: 20 }}>
           <FastImage
             source={{ uri: props.data.icon_url }}
-            style={{ width: 39, height: 39, borderRadius: 20 }}
+            style={{ width: 39, height: 39, borderRadius: 20, backgroundColor: 'white' }}
           />
         </View>
         <View style={{ flex: 1 }}>
