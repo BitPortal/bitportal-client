@@ -1,6 +1,5 @@
 export const EOS_MAINNET_NODES = [
   'https://geo.eosasia.one',
-  'https://api1.eosasia.one',
   'https://eos.greymass.com',
   'https://api.hkeos.com',
   'https://eos-mainnet.bitportal.io'
@@ -20,5 +19,6 @@ export const EOS_TESTNET_CHAIN_ID = '5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b
 export const CHAIN_ORDER = {
   BITCOIN: 0,
   ETHEREUM: 1,
-  EOS: 2
+  EOS: 2,
+  CHAINX: 3
 }
