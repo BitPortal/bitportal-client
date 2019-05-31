@@ -1,53 +1,53 @@
 import { chainxScanApi } from 'core/api'
 import { decryptPrivateKey, decryptMnemonic } from 'core/keystore'
-import Chainx from 'chainx.js'
+import { ApiBase, HttpProvider } from 'chainx.js'
+import chainxAccount from '@chainx/account'
+import { walletType } from 'core/constants'
 
-
-export const initChainx = async (network: string = 'mainnet') => {
-  // Todo:: fix init
-    let chainx = new Chainx('wss://w2.chainx.org/ws')
-    if (chainx) {
-      chainx.account.setNet('mainnet')
-      await chainx.isRpcReady()
-      return chainx
-    }
-    else {
-      chainx = new Chainx('wss://w1.chainx.org/ws')
-      if (chainx && chainx.provider) {
-        chainx.account.setNet('mainnet')
-        await chainx.isRpcReady()
-        return chainx
-      } else {
-        console.error('failed to init chainx')
-        return false
-      }
-    }
+export const initRpc = () => {
+  return new HttpProvider('https://w1.chainx.org/rpc')
 }
 
-export const getInfo = async () => {
-  const chainx = await initChainx('mainnet')
-  const info = await chainx.chain.getInfo()
-  const trustee = await chainx.trustee.getTrusteeSessionInfo('Bitcoin')
-  return {info, trustee}
+export const initApibase = async () => {
+  const chainx = new ApiBase(new HttpProvider('https://w1.chainx.org/rpc'), ['https://w2.chainx.org/rpc'])
+  await chainx._isReady
+  return chainx
+}
+
+const getPrivateKeyFromKeyStore = async (password: string, keystore: any) => {
+  let privateKey
+  if (keystore && keystore.bitportalMeta) {
+    if (keystore.bitportalMeta.walletType === walletType.hd) {
+      const mnemonics = await decryptMnemonic(password, keystore)
+      privateKey = chainxAccount.from(mnemonics).privateKey()
+    } else if (keystore.bitportalMeta.walletType === walletType.imported){
+      privateKey = await decryptPrivateKey(password, keystore)
+    } else {
+      console.error('invalid wallet type in keystore')
+    }
+  }
+  return Buffer.from(privateKey, 'hex').toString()
 }
 
 export const getBalance = async (address: string) => {
-  const chainx = await initChainx('mainnet')
-  const balance = await chainx.asset.getAssetsByAccount(address, 0, 1)
+  const provider = initRpc()
+  const balance = await provider.send('chainx_getAssetsByAccount', [chainxAccount.decodeAddress(address), 0, 1]);
+
   return (+balance.data[0].details.Free) * Math.pow(10, -8)
 }
 
 export const getAsset = async (address: string) => {
-  const asset = await chainx.asset.getAssetsByAccount(address, 0, 1)
+  const provider = initRpc()
+  const asset = await provider.send('chainx_getAssetsByAccount', [chainxAccount.decodeAddress(address), 0, 1])
   return asset
 }
 
-export const getTransactions = async (publicKey: string, page: number = 0, pageSize: number = 10) => {
-  const result = await chainxScanApi('GET', '/account/' + publicKey + '/txs', {
+export const getTransactions = async (address: string, page: number = 0, pageSize: number = 10) => {
+  const result = await chainxScanApi('GET', '/account/' + chainxAccount.decodeAddress(address) + '/txs', {
     page,
     page_size: pageSize
   })
-  return result.items
+  return result
 }
 
 export const getTransaction = async (hash: string) => {
@@ -55,8 +55,7 @@ export const getTransaction = async (hash: string) => {
 }
 
 export const getBlockNumber = async () => {
-  const chainx = await initChainx()
-  return await chainx.chain.getBlockNumber()
+
 }
 
 export const getBlock = async (id: string | number, returnTransactionObjects: boolean) => {
@@ -67,42 +66,99 @@ export const getBlockTransactionNumber = async (id: string | number) => {
 
 }
 
-export const transfer = async (password: string, keystore: any, fromAddress: string, toAddress: string, symbol: string, amount: string, memo: string = '') => {
-  const chainx = await initChainx('mainnet')
-
-  const txToSign = await chainx.asset.transfer(toAddress, symbol, amount * Math.pow(10, 8), memo)
-
-  const privateKey = await decryptPrivateKey(password, keystore)
-
-  // chainx.account.from(mnemonic).derive().privateKey()
-
-  // Todo:: check address
-
-  txToSign.signAndSend(Buffer.from(privateKey, 'hex').toString(), (error, response) => {
-    if (error) console.error(error)
-    else if (response.status === 'Finalized') {
-      if (response.result === 'ExtrinsicSuccess') {
-        return response.txHash
-      } else {
-        console.log(response)
-        return false
-      }
-    } else {
-      return false
-    }
-  })
-}
-//
 export const getAddressByAccount = async (address: string) => {
-  const chainx = await initChainx('mainnet')
-  return await chainx.asset.getAddressByAccount(address, 'Bitcoin')
+  const provider = initRpc()
+  const addresses = await provider.send('chainx_getAddressByAccount', [chainxAccount.decodeAddress(address), 'Bitcoin'])
+  return addresses
+}
+
+export const getTrusteeSessionInfo = async () => {
+  const provider = initRpc()
+  return await provider.send('chainx_getTrusteeSessionInfo', ['Bitcoin'])
 }
 
 export const getIntentions = async () => {
-  const chainx = await initChainx('mainnet')
-  return await chainx.stake.getIntentions()
+  const provider = initRpc()
+  const intentions = await provider.send('chainx_getIntentions', [])
+  return intentions
+}
+
+export const getNominationRecords = async (address) => {
+  const provider = initRpc()
+  const pubkey = chainxAccount.decodeAddress(address)
+  const records = await provider.send('chainx_getNominationRecords', [pubkey])
+  return records
 }
 
 export const getDepositOpReturn = (address, nodeName = 'BitPortal') => {
   return new Buffer.from(address + '@' + nodeName, 'utf-8').toString('hex')
+}
+
+
+export const transfer = async (password: string, keystore: any, fromAddress: string, toAddress: string, symbol: string, amount: string, memo: string = '') => {
+  const realAmount = (+amount) * Math.pow(10, 8)
+
+  const chainx = await initApibase()
+
+  // 生成转账交易
+  const extrinsic = chainx.tx.xAssets.transfer(toAddress, symbol, realAmount, memo)
+
+  // 获取该账户交易次数
+  const nonce = await chainx.query.system.accountNonce(fromAddress)
+
+  const pk = await getPrivateKeyFromKeyStore(password, keystore)
+
+  // const signed = extrinsic.sign(privateKeyHex, {nonce, acceleration = 1, blockHash: chainx.genesisHash })
+  const txId = await extrinsic.signAndSend(pk, { nonce, acceleration: 5 })
+  return txId
+}
+
+export const vote = async (password: string, keystore: any, fromAddress: string, targetAddress: string, amount: string, memo: string) => {
+  const realAmount = (+amount) * Math.pow(10, 8)
+
+  const chainx = await initApibase()
+
+  const extrinsic = chainx.tx.xStaking.nominate(targetAddress, realAmount, memo)
+
+  // Get Nonce
+  const nonce = await chainx.query.system.accountNonce(fromAddress)
+
+  const pk = await getPrivateKeyFromKeyStore(password, keystore)
+  // const signed = extrinsic.sign(privateKeyHex, {nonce, acceleration = 1, blockHash: chainx.genesisHash })
+  const txId = await extrinsic.signAndSend(pk, { nonce, acceleration: 5 })
+  return txId
+}
+
+export const voteClaim = async (password: string, keystore: any, fromAddress: string, targetAddress: string) => {
+  console.log('voteClaim', password, keystore, fromAddress, targetAddress)
+  const chainx = await initApibase()
+
+  // Generate Transaction
+  const extrinsic = chainx.tx.xStaking.claim(targetAddress)
+
+  // Get Nonce
+  const nonce = await chainx.query.system.accountNonce(fromAddress)
+
+  const pk = await getPrivateKeyFromKeyStore(password, keystore)
+
+  const txId = await extrinsic.signAndSend(pk, { nonce, acceleration: 5 })
+  return txId
+}
+
+export const depositClaim = async (password: string, keystore: any, fromAddress: string, asset = 'Bitcoin') => {
+  if (['Bitcoin', 'SDOT'].indexOf(asset) === -1) {
+    throw new Error('Invalid asset' + asset.toString())
+  }
+  const chainx = await initApibase()
+
+  // Generate Transaction
+  const extrinsic = chainx.tx.xTokens.claim(asset)
+
+  // Get Nonce
+  const nonce = await chainx.query.system.accountNonce(fromAddress)
+
+  const pk = await getPrivateKeyFromKeyStore(password, keystore)
+
+  const txId = await extrinsic.signAndSend(pk, { nonce, acceleration: 5 })
+  return txId
 }

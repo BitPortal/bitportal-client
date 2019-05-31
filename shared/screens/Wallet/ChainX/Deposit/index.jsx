@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, Text, Button, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import { injectIntl } from 'react-intl'
 import { Navigation } from 'react-native-navigation'
 import { activeWalletSelector, identityBTCWalletSelector, importedBTCWalletSelector } from 'selectors/wallet'
 import FastImage from 'react-native-fast-image'
 import * as walletActions from 'actions/wallet'
 import EStyleSheet from 'react-native-extended-stylesheet'
-import { getDepositOpReturn, getAddressByAccount, getInfo } from 'core/chain/chainx'
+import { getDepositOpReturn, getAddressByAccount, getTrusteeSessionInfo } from 'core/chain/chainx'
 import Dialog from 'components/Dialog'
 
 const styles = EStyleSheet.create({
@@ -64,16 +64,20 @@ export default class ChainXDeposit extends Component {
   static get options() {
     return {
       topBar: {
-        noBorder: true,
         rightButtons: [
+          {
+            id: 'chainxDepositHistory',
+            text: '充值记录'
+          }
         ],
         largeTitle: {
           visible: false
         },
         background: {
-          color: 'white',
+          color: 'rgba(0,0,0,0)',
           translucent: true
-        }
+        },
+        noBorder: true
       },
       bottomTabs: {
         visible: false
@@ -96,14 +100,21 @@ export default class ChainXDeposit extends Component {
   }
 
 
+  navigationButtonPressed({buttonId}) {
+    if (buttonId === 'chainxDepositHistory') {
+      Dialog.alert('提示', '功能正在开发中...')
+    }
+  }
+
   async componentDidMount() {
     const { activeWallet } = this.props
     const bindedBTCAddress = await getAddressByAccount(activeWallet.address)
-    const { trustee } = await getInfo()
+    const trustee = await getTrusteeSessionInfo()
     const depositBTCAddress = trustee.hotEntity.addr
     this.setState({ bindedBTCAddress })
     this.setState({ depositBTCAddress })
-    this.setState({ loaded: true})
+    this.setState({ loaded: true })
+    Dialog.alert('提示', 'ChainX主网最近暂停了BTC的充值，仅开放提现功能，具体请关注官方公告。使用本功能前，请务必确保主链已开放该功能。')
   }
 
   onRefresh = () => {
@@ -118,7 +129,7 @@ export default class ChainXDeposit extends Component {
   }
 
   toDepositBTC = () => {
-    const {identityBTCWallet, importedBTCWallet} = this.props
+    const { identityBTCWallet, importedBTCWallet } = this.props
     if (!this.state.loaded || !this.state.depositBTCAddress) {
       Dialog.alert('提示', '正在加载充值数据，请稍后')
       return false
@@ -166,8 +177,10 @@ export default class ChainXDeposit extends Component {
   }
 
   toMappingSDOT = () => {
-    Dialog.alert('提示', '当前并非ChainX地址，请切换到ChainX钱包！')
+    Dialog.alert('提示', '正在开发中')
     return false
+
+    const presetWallet = identityETHWallet || importedETHWallet
 
     Navigation.showModal({
       stack: {
@@ -204,7 +217,6 @@ export default class ChainXDeposit extends Component {
         name: 'BitPortal.WebView',
         passProps: {
           url: 'http://s.bitportal.io/7yk58',
-          inject: '',
           id: 0
         },
         largeTitle: {
@@ -247,27 +259,42 @@ export default class ChainXDeposit extends Component {
             resizeMode="cover"
           />
         </View>
-        <View style={{width: '100%', height: 420, paddingHorizontal: 16, paddingVertical: 30}}>
+        <ScrollView
+          style={{ height: '100%' }}
+          showsHorizontalScrollIndicator={false}
+          ref={(ref) => { this.scrollView = ref; return null }}
+        >
+        <View style={{width: '100%', height: 420, paddingHorizontal: 16, paddingVertical: 20 }}>
           <Text style={{fontSize: 30, marginBottom: 10}}>参与</Text>
           <Text style={{fontSize: 30, marginBottom: 20}}>
             ChainX <Text style={{color: '#007AFF'}}>充值挖矿</Text>
           </Text>
-          <Text style={{fontSize: 17, marginBottom: 3}}>
+          <Text style={{fontSize: 17, marginBottom: 20}}>
             充值BTC或映射SDOT（仅限Polkadot私募第一期），获得ChainX的PCX奖励
           </Text>
-          <Text style={{fontSize: 17, marginBottom: 3}}>
-            当前ChainX地址： {this.props.activeWallet.address}
+          <Text style={{fontSize: 17, marginBottom: 5}}>
+            当前ChainX地址：
+          </Text>
+          <Text style={{fontSize: 17, paddingLeft: 20, marginBottom: 5}}>
+            {this.props.activeWallet.address}
           </Text>
 
-          <Text style={{fontSize: 17, marginBottom: 3}}>
-            当前已绑定BTC地址：
-          </Text>
-          <Text style={{fontSize: 17, marginBottom: 40}}>
-            {this.state.loaded ? this.state.bindedBTCAddress: '正在加载'}
-          </Text>
+            <Text style={{fontSize: 17, marginBottom: 3}}>
+              当前已绑定BTC地址：
+            </Text>
+          <View>
+          <ScrollView
+            style={{ height: 100 }}
+            showsHorizontalScrollIndicator={false}
+            ref={(ref) => { this.scrollView = ref; return null }}
+          >
+            <Text style={{fontSize: 17, paddingLeft: 20, marginBottom: 40}}>
+              {this.state.loaded ? this.state.bindedBTCAddress: '正在加载'}
+            </Text>
+          </ScrollView>
+          </View>
 
-
-          {/*<Text style={{fontSize: 17, marginBottom: 60, color: '#007AFF'}} onPress={this.toDepositRule}>阅读奖励规则...</Text>*/}
+          <Text style={{fontSize: 17, marginBottom: 30, color: '#007AFF'}} onPress={this.toDepositRule}>阅读奖励规则...</Text>
           <TouchableOpacity style={styles.button} onPress={this.toDepositBTC}>
             <Text style={styles.buttonText}>绑定并充值BTC</Text>
           </TouchableOpacity>
@@ -275,6 +302,7 @@ export default class ChainXDeposit extends Component {
             <Text style={[styles.buttonText, {color: '#007AFF'}]}>映射SDOT</Text>
           </TouchableOpacity>
         </View>
+        </ScrollView>
       </View>
       //
       // <View style={styles.container}>

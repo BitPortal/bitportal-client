@@ -9,6 +9,7 @@ import * as producerActions from 'actions/producer'
 import { accountByIdSelector, managingAccountVotedProducersSelector } from 'selectors/account'
 import { managingWalletSelector } from 'selectors/wallet'
 import Modal from 'react-native-modal'
+import Dialog from 'components/Dialog'
 import styles from './styles'
 
 const { Section, Item } = TableView
@@ -412,19 +413,95 @@ export default class ManageWallet extends Component {
   chainxVoting = async (walletId) => {
     const constants = await Navigation.constants()
 
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.ChainXVoting',
-        passProps: {
-          statusBarHeight: constants.statusBarHeight
-        },
-        options: {
-          topBar: {
-            backButton: {
-              title: '返回'
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.ChainXVoting'
+          },
+          options: {
+            topBar: {
+              searchBar: true,
+              searchBarHiddenWhenScrolling: false,
+              searchBarPlaceholder: 'Search'
             }
           }
+        }]
+      }
+    })
+  }
+
+  chainxTrustee = async () => {
+    Dialog.alert('提示', 'Coming Soon')
+    return
+    const constants = await Navigation.constants()
+
+    Navigation.push({
+      component: {
+        name: 'BitPortal.ChainXTrustee'
+      },
+      options: {
+        topBar: {
+          searchBar: true,
+          searchBarHiddenWhenScrolling: false,
+          searchBarPlaceholder: 'Search'
         }
+      }
+    })
+  }
+
+  chainxToStats = async () => {
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.WebView',
+            passProps: {
+              url: 'https://stats.chainx.org/#/ChainX?utm=bitportal'
+            },
+            options: {
+              topBar: {
+                title: {
+                  text: 'ChainX 节点状态'
+                },
+                leftButtons: [
+                  {
+                    id: 'cancel',
+                    text: '取消'
+                  }
+                ]
+              }
+            }
+          }
+        }]
+      }
+    })
+  }
+
+  chainxToScan = async () => {
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.WebView',
+            passProps: {
+              url: 'https://scan.chainx.org?utm=bitportal'
+            },
+            options: {
+              topBar: {
+                title: {
+                  text: 'ChainX 区块链浏览器'
+                },
+                leftButtons: [
+                  {
+                    id: 'cancel',
+                    text: '取消'
+                  }
+                ]
+              }
+            }
+          }
+        }]
       }
     })
   }
@@ -585,6 +662,36 @@ export default class ManageWallet extends Component {
           actionType="chainxVoting"
           text="投票选举"
           onPress={this.chainxVoting.bind(this, id)}
+          arrow
+        />
+      )
+      editActions.push(
+        <Item
+          reactModuleForCell="WalletManagementTableViewCell"
+          key="chainxTrustee"
+          actionType="chainxTrustee"
+          text="资产信托"
+          onPress={this.chainxTrustee.bind(this, id)}
+          arrow
+        />
+      )
+      accountActions.push(
+        <Item
+          reactModuleForCell="WalletManagementTableViewCell"
+          key="chainxScan"
+          actionType="chainxScan"
+          text="区块浏览器"
+          onPress={this.chainxToScan.bind(this, id)}
+          arrow
+        />
+      )
+      accountActions.push(
+        <Item
+          reactModuleForCell="WalletManagementTableViewCell"
+          key="chainxStats"
+          actionType="chainxStats"
+          text="节点状态"
+          onPress={this.chainxToStats.bind(this, id)}
           arrow
         />
       )

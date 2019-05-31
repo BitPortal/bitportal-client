@@ -9,6 +9,8 @@ import WalletOverviewTableViewCell from 'components/TableViewCell/WalletOverview
 import WalletTableViewCell from 'components/TableViewCell/WalletTableViewCell'
 import WalletManagementTableViewCell from 'components/TableViewCell/WalletManagementTableViewCell'
 import ProducerTableViewCell from 'components/TableViewCell/ProducerTableViewCell'
+import ChainXValidatorTableViewCell from 'components/TableViewCell/ChainXValidatorTableViewCell'
+import ChainXValidatorDetailTableViewCell from 'components/TableViewCell/ChainXValidatorDetailTableViewCell'
 import MarketTableViewCell from 'components/TableViewCell/MarketTableViewCell'
 import TransactionTableViewCell from 'components/TableViewCell/TransactionTableViewCell'
 import AssetActionsTableViewCell from 'components/TableViewCell/AssetActionsTableViewCell'
@@ -72,6 +74,7 @@ import TransactionDetail from 'screens/Wallet/TransactionDetail'
 import ProducerDetail from 'screens/Wallet/ProducerDetail'
 import ChainXDeposit from 'screens/Wallet/ChainX/Deposit'
 import ChainXVoting from 'screens/Wallet/ChainX/Voting'
+import ChainXValidatorDetail from 'screens/Wallet/ChainX/Voting/ValidatorDetail'
 import Discovery from 'screens/Discovery'
 import DappList from 'screens/Discovery/DappList'
 import Profile from 'screens/Profile'
@@ -102,6 +105,9 @@ export const registerScreens = (store, persistor) => {
   AppRegistry.registerComponent('AssetActionsTableViewCell', () => AssetActionsTableViewCell)
   AppRegistry.registerComponent('AssetOverviewTableViewCell', () => AssetOverviewTableViewCell)
   AppRegistry.registerComponent('ChainTypeTableViewCell', () => ChainTypeTableViewCell)
+  AppRegistry.registerComponent('ChainXValidatorTableViewCell', () => ChainXValidatorTableViewCell)
+  AppRegistry.registerComponent('ChainXValidatorDetailTableViewCell', () => ChainXValidatorDetailTableViewCell)
+
 
   AppRegistry.registerComponent('WalletCardCollectionViewCell', () => WalletCardCollectionViewCell)
   AppRegistry.registerComponent('FeaturedDappCollectionViewCell', () => FeaturedDappCollectionViewCell)
@@ -163,6 +169,7 @@ export const registerScreens = (store, persistor) => {
   Navigation.registerComponentWithRedux('BitPortal.ProducerDetail', () => ProducerDetail, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ChainXDeposit', () => ChainXDeposit, PersistProvider, store)
   Navigation.registerComponentWithRedux('BitPortal.ChainXVoting', () => ChainXVoting, PersistProvider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ChainXValidatorDetail', () => ChainXValidatorDetail, PersistProvider, store)
 
   Navigation.registerComponentWithRedux('BitPortal.Market', () => Market, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Discovery', () => Discovery, Provider, store)

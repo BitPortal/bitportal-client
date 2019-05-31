@@ -14,6 +14,7 @@ import FastImage from 'react-native-fast-image'
 import * as transactionActions from 'actions/transaction'
 import * as walletActions from 'actions/wallet'
 import { assetIcons } from 'resources/images'
+import chainxAccount from '@chainx/account'
 import styles from './styles'
 const { Section, Item } = TableView
 
@@ -167,6 +168,27 @@ export default class Asset extends Component {
     }
   }
 
+  toChainXHistory = () => {
+    const address = this.props.activeWallet.address
+    const publicKey = chainxAccount.decodeAddress(address)
+    const url = `https://scan.chainx.org/accounts/${publicKey}`
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.WebView',
+        passProps: {
+          url: url
+        },
+        options: {
+          topBar: {
+            title: {
+              text: 'ChainX历史记录'
+            }
+          }
+        }
+      }
+    })
+  }
+
   onLoadMore = (e) => {
     console.log('onLoadMore', e)
   }
@@ -224,51 +246,68 @@ export default class Asset extends Component {
           </View>
           <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 0, backgroundColor: '#C8C7CC' }} />
         </View>
-        <TableView
-          style={{ flex: 1, backgroundColor: 'white' }}
-          tableViewCellStyle={TableView.Consts.CellStyle.Default}
-          detailTextColor="#666666"
-          headerBackgroundColor="white"
-          headerTextColor="black"
-          headerFontSize={17}
-          onItemNotification={this.onItemNotification}
-          separatorStyle={TableView.Consts.SeparatorStyle.None}
-          onRefresh={this.onRefresh}
-          refreshing={refreshing}
-          canRefresh={hasTransactions}
-          onLoadMore={this.onLoadMore}
-          canLoadMore={true}
-        >
-          <Section uid="HeaderTableViewCell">
-            <Item
-              reactModuleForCell="HeaderTableViewCell"
-              title={emptyTransactions ? '暂无交易记录' : '交易记录'}
-              loading={(!refreshing && loading) && (!hasTransactions || emptyTransactions)}
-              loadingTitle="获取交易记录..."
-              height={48}
-              componentId={this.props.componentId}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            />
-          </Section>
-          {transactionCount && <Section>
-            {transactions.map((transaction: any, index: number) => <Item
-              reactModuleForCell="TransactionTableViewCell"
-              height={60}
-              key={transaction.id}
-              id={transaction.id}
-              change={intl.formatNumber(+transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}
-              date={transaction.timestamp && intl.formatDate(+transaction.timestamp, { year: 'numeric', month: 'numeric', day: 'numeric' })}
-              time={transaction.timestamp && intl.formatTime(+transaction.timestamp, { hour12: false, hour: 'numeric', minute: 'numeric', second: 'numeric' })}
-              transactionType={transaction.transactionType}
-              targetAddress={transaction.targetAddress}
-              symbol={symbol}
-              componentId={this.props.componentId}
-              showSeparator={transactionCount - 1 !== index}
-              onPress={this.toTransactionDetail.bind(this, transaction.id, transaction.pending)}
-            />
-            )}
-          </Section>}
-        </TableView>
+        {chain === 'CHAINX' && (<View style={{ marginTop: 50, alignItems: 'center' }}>
+          <Text style={{fontSize: 18, color: '#007AFF' }} onPress={this.toChainXHistory}>ChainX的更多记录请点击这里...</Text>
+        </View>)}
+        {chain !== 'CHAINX' && (
+          <TableView
+            style={{ flex: 1, backgroundColor: 'white' }}
+            tableViewCellStyle={TableView.Consts.CellStyle.Default}
+            detailTextColor="#666666"
+            headerBackgroundColor="white"
+            headerTextColor="black"
+            headerFontSize={17}
+            onItemNotification={this.onItemNotification}
+            separatorStyle={TableView.Consts.SeparatorStyle.None}
+            onRefresh={this.onRefresh}
+            refreshing={refreshing}
+            canRefresh={hasTransactions}
+            onLoadMore={this.onLoadMore}
+            canLoadMore={true}
+          >
+            <Section uid="HeaderTableViewCell">
+              <Item
+                reactModuleForCell="HeaderTableViewCell"
+                title={emptyTransactions ? '暂无交易记录' : '交易记录'}
+                loading={(!refreshing && loading) && (!hasTransactions || emptyTransactions)}
+                loadingTitle="获取交易记录..."
+                height={48}
+                componentId={this.props.componentId}
+                selectionStyle={TableView.Consts.CellSelectionStyle.None}
+              />
+            </Section>
+            {transactionCount && <Section>
+              {transactions.map((transaction: any, index: number) => <Item
+                  reactModuleForCell="TransactionTableViewCell"
+                  height={60}
+                  key={transaction.id}
+                  id={transaction.id}
+                  change={intl.formatNumber(+transaction.change, {
+                    minimumFractionDigits: precision,
+                    maximumFractionDigits: precision
+                  })}
+                  date={transaction.timestamp && intl.formatDate(+transaction.timestamp, {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric'
+                  })}
+                  time={transaction.timestamp && intl.formatTime(+transaction.timestamp, {
+                    hour12: false,
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric'
+                  })}
+                  transactionType={transaction.transactionType}
+                  targetAddress={transaction.targetAddress}
+                  symbol={symbol}
+                  componentId={this.props.componentId}
+                  showSeparator={transactionCount - 1 !== index}
+                  onPress={this.toTransactionDetail.bind(this, transaction.id, transaction.pending)}
+              />
+              )}
+            </Section>}
+          </TableView>
+        )}
       </View>
     )
   }

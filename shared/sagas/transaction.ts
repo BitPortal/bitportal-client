@@ -14,8 +14,6 @@ import * as chainxChain from 'core/chain/chainx'
 import * as api from 'utils/api'
 import { managingWalletSelector } from 'selectors/wallet'
 import { push, dismissAllModals } from 'utils/location'
-import { decodeAddress } from '@chainx/account'
-
 
 function* transfer(action: Action) {
   if (!action.payload) return
@@ -124,6 +122,7 @@ function* transfer(action: Action) {
         targetAddress: toAddress,
         from: fromAddress,
         to: toAddress,
+        memo,
         transactionType: 'send',
         confirmations: '--',
         gasUsed: '--',
@@ -456,8 +455,8 @@ function* getTransactions(action: Action) {
     } else if (chain === 'CHAINX') {
       const page = 0
       const pageSize = 200
-      const transactions = yield call(chainxChain.getTransactions, decodeAddress(address), page, pageSize)
-      const items = transactions.map((item: any) => {
+      const transactions = yield call(chainxChain.getTransactions, address, page, pageSize)
+      const items = transactions.items.map((item: any) => {
         // TODO: this need to be fixed
         const isTransfer = item.module === 'XAssets' && item.call === 'transfer'
         const isDest = isTransfer && item.args[0].data === address
@@ -476,7 +475,7 @@ function* getTransactions(action: Action) {
       })
 
       const pagination = {
-        totalItems: items.length,
+        transactions: items.total,
         page,
         pageSize
       }
@@ -591,6 +590,8 @@ function* getTransaction(action: Action) {
       //   }
       //   yield put(actions.updateTransaction({ id, item: tx }))
       // }
+    } else if (chain === 'CHAINX') {
+      const transaction = yield call(chainxChain.getTransaction, transactionId)
     }
 
     yield put(actions.getTransaction.succeeded())
