@@ -82,7 +82,6 @@ export default class MyIdentity extends Component {
     if (location) {
       items.push(
         <Item
-          key={location}
           reactModuleForCell="ProducerDetailTableViewCell"
           text="节点位置"
           key="location"

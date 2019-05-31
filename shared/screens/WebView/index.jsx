@@ -208,6 +208,8 @@ export default class WebView extends Component {
     if (buttonId === 'refresh') {
       this.webviewbridge.reload()
       this.onLoadStart()
+    } else if (buttonId === 'cancel') {
+      Navigation.dismissModal(this.props.componentId)
     }
   }
 
@@ -639,60 +641,59 @@ export default class WebView extends Component {
     )
   }
 
-  renderTransferAction = (action) => {
-    return (
-      <Fragment>
-        <Animated.View style={{ paddingVertical: this.state.amountContainerPaddingVertical, height: this.state.amountContainerHeight, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 18 }}>
-          <View
+  renderTransferAction = action => (
+    <Fragment>
+      <Animated.View style={{ paddingVertical: this.state.amountContainerPaddingVertical, height: this.state.amountContainerHeight, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 18 }}>
+        <View
             style={{ flexDirection: 'row', position: 'absolute', left: '-100%', top: 25, opacity: 1 }}
             onLayout={(event) => {
-                const layout = event.nativeEvent.layout
-                this.setState({
-                  largeAmountWidth: layout.width,
-                  amountMarginLeft: new Animated.Value((Dimensions.get('window').width - layout.width) / 2 - 18)
-                })
-              }}
-          >
-            <Text style={{ fontSize: 30 }}>
-              {action.data.quantity.split(' ')[0]}
-            </Text>
-            <Text style={{ fontSize: 18, marginTop: 5, marginLeft: 4 }}>
-              {action.data.quantity.split(' ')[1]}
-            </Text>
-          </View>
-          <Animated.Text style={{ fontSize: 13, color: '#A2A2A6', width: 95, position: 'absolute', left: 18, top: 15, opacity: this.state.amountLabelOpacity }}>
+              const layout = event.nativeEvent.layout
+              this.setState({
+                largeAmountWidth: layout.width,
+                amountMarginLeft: new Animated.Value((Dimensions.get('window').width - layout.width) / 2 - 18)
+              })
+            }}
+        >
+          <Text style={{ fontSize: 30 }}>
+            {action.data.quantity.split(' ')[0]}
+          </Text>
+          <Text style={{ fontSize: 18, marginTop: 5, marginLeft: 4 }}>
+            {action.data.quantity.split(' ')[1]}
+          </Text>
+        </View>
+        <Animated.Text style={{ fontSize: 13, color: '#A2A2A6', width: 95, position: 'absolute', left: 18, top: 15, opacity: this.state.amountLabelOpacity }}>
             支付金额
-          </Animated.Text>
-          <Animated.View
+        </Animated.Text>
+        <Animated.View
             style={{ flexDirection: 'row', marginLeft: this.state.amountMarginLeft }}
-          >
-            <Animated.Text style={{ fontSize: this.state.amountFontSize }}>
-              {action.data.quantity.split(' ')[0]}
-            </Animated.Text>
-            <Animated.Text style={{ fontSize: this.state.symbolFontSize, marginTop: this.state.symbolMarginTop, marginLeft: 4 }}>
-              {action.data.quantity.split(' ')[1]}
-            </Animated.Text>
-          </Animated.View>
-          <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+        >
+          <Animated.Text style={{ fontSize: this.state.amountFontSize }}>
+            {action.data.quantity.split(' ')[0]}
+          </Animated.Text>
+          <Animated.Text style={{ fontSize: this.state.symbolFontSize, marginTop: this.state.symbolMarginTop, marginLeft: 4 }}>
+            {action.data.quantity.split(' ')[1]}
+          </Animated.Text>
         </Animated.View>
-        {this.renderActiveWallet()}
-        <TouchableHighlight underlayColor="white" style={{ width: '100%' }} onPress={this.toNext}>
-          <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
-            <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>合约详情</Text>
-            <View style={{ width: Dimensions.get('window').width - 36 - 95, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
-              <View>
-                <Text style={{ fontSize: 13 }}>{`${action.account}->${action.name}`}</Text>
-                <Text style={{ fontSize: 13 }}>{action.authorization.map((auth => `${auth.actor}@${auth.permission}`)).join(' ')}</Text>
-              </View>
-              <Image source={require('resources/images/arrow_right_bold.png')} />
+        <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+      </Animated.View>
+      {this.renderActiveWallet()}
+      <TouchableHighlight underlayColor="white" style={{ width: '100%' }} onPress={this.toNext}>
+        <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
+          <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>合约详情</Text>
+          <View style={{ width: Dimensions.get('window').width - 36 - 95, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
+            <View>
+              <Text style={{ fontSize: 13 }}>{`${action.account}->${action.name}`}</Text>
+              <Text style={{ fontSize: 13 }}>{action.authorization.map((auth => `${auth.actor}@${auth.permission}`)).join(' ')}</Text>
             </View>
-            <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+            <Image source={require('resources/images/arrow_right_bold.png')} />
           </View>
-        </TouchableHighlight>
-        <Animated.View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, opacity: this.state.passwordTextInputOpacity, paddingHorizontal: 18 }}>
-          <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>输入密码</Text>
-          <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row' }}>
-            <TextInput
+          <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+        </View>
+      </TouchableHighlight>
+      <Animated.View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, opacity: this.state.passwordTextInputOpacity, paddingHorizontal: 18 }}>
+        <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>输入密码</Text>
+        <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row' }}>
+          <TextInput
               style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, width: '100%' }}
               autoCorrect={false}
               autoCapitalize="none"
@@ -704,12 +705,12 @@ export default class WebView extends Component {
               disabled
               secureTextEntry
               focuses
-            />
-          </View>
-          {(!!this.state.largeAmount || !!this.props.resolving) && <View style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0 }} />}
-          <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
-        </Animated.View>
-        {/* <Animated.View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, opacity: this.state.whiteListOpacity, paddingHorizontal: 18 }}>
+          />
+        </View>
+        {(!!this.state.largeAmount || !!this.props.resolving) && <View style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0 }} />}
+        <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+      </Animated.View>
+      {/* <Animated.View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, opacity: this.state.whiteListOpacity, paddingHorizontal: 18 }}>
             <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>白名单</Text>
             <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', height: '100%', alignItems: 'center', justifyContent: 'space-between' }}>
             <Text style={{ fontSize: 13 }}>开启后无需输入交易密码</Text>
@@ -718,9 +719,8 @@ export default class WebView extends Component {
             {(!!this.state.largeAmount || !!this.props.resolving) && <View style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0 }} />}
             <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
             </Animated.View> */}
-      </Fragment>
-    )
-  }
+    </Fragment>
+  )
 
   renderTransactionDetail = (message) => {
     if (message.type === 'requestSignature') {
@@ -729,43 +729,41 @@ export default class WebView extends Component {
       if (this.state.showSideCard) {
         return (
           <ScrollView style={{ height: 340, width: '100%' }}>
-            {actions.map((action, index) =>
-              <Fragment key={action.name}>
-                <View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, paddingHorizontal: 18 }}>
-                  <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>合约操作</Text>
-                  <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', height: '100%', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 13 }}>{action.name}</Text>
-                  </View>
-                  <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+            {actions.map((action, index) => <Fragment key={action.name}>
+              <View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, paddingHorizontal: 18 }}>
+                <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>合约操作</Text>
+                <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', height: '100%', alignItems: 'center' }}>
+                  <Text style={{ fontSize: 13 }}>{action.name}</Text>
                 </View>
-                <View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, paddingHorizontal: 18 }}>
-                  <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>合约名称</Text>
-                  <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', height: '100%', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 13 }}>{action.account}</Text>
-                  </View>
-                  <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+                <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+              </View>
+              <View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, paddingHorizontal: 18 }}>
+                <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>合约名称</Text>
+                <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', height: '100%', alignItems: 'center' }}>
+                  <Text style={{ fontSize: 13 }}>{action.account}</Text>
                 </View>
-                <View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, paddingHorizontal: 18 }}>
-                  <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>使用权限</Text>
-                  <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', height: '100%', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 13 }}>{action.authorization.map((auth => `${auth.actor}@${auth.permission}`)).join(' ')}</Text>
-                  </View>
-                  <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+                <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+              </View>
+              <View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, paddingHorizontal: 18 }}>
+                <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>使用权限</Text>
+                <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', height: '100%', alignItems: 'center' }}>
+                  <Text style={{ fontSize: 13 }}>{action.authorization.map((auth => `${auth.actor}@${auth.permission}`)).join(' ')}</Text>
                 </View>
-                <View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
-                  <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>合约参数</Text>
-                  <View style={{ width: Dimensions.get('window').width - 36 - 95, paddingTop: 15, paddingBottom: 15 }}>
-                    {Object.keys(action.data).map(key =>
-                      <View key={key} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
-                        <Text style={{ fontSize: 13, color: '#A2A2A6', height: 20 }}>{key}</Text>
-                        <Text style={{ fontSize: 13 }}>{typeof action.data[key] === 'object' ? JSON.stringify(action.data[key]) : action.data[key]}</Text>
-                      </View>
-                     )}
+                <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+              </View>
+              <View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
+                <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>合约参数</Text>
+                <View style={{ width: Dimensions.get('window').width - 36 - 95, paddingTop: 15, paddingBottom: 15 }}>
+                  {Object.keys(action.data).map(key => <View key={key} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
+                    <Text style={{ fontSize: 13, color: '#A2A2A6', height: 20 }}>{key}</Text>
+                    <Text style={{ fontSize: 13 }}>{typeof action.data[key] === 'object' ? JSON.stringify(action.data[key]) : action.data[key]}</Text>
                   </View>
-                  {(index !== actions.length - 1) && <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />}
+                  )}
                 </View>
-              </Fragment>
-             )}
+                {(index !== actions.length - 1) && <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />}
+              </View>
+            </Fragment>
+            )}
           </ScrollView>
         )
       } else if (actions.length >= 1) {
@@ -780,7 +778,7 @@ export default class WebView extends Component {
             {(name === 'transfer' && account === 'eosio.token') && this.renderTransferAction(action)}
             {(name !== 'transfer' || account !== 'eosio.token') && this.renderContractAction(action)}
             <View style={{ paddingTop: 10, paddingBottom: 10, position: 'absolute', bottom: 0, left: 0, width: '100%', paddingHorizontal: 18 }}>
-              <TouchableOpacity style={{ backgroundColor: '#007AFF', borderRadius: 10, width: '100%', height: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.7} onPress={!!this.state.largeAmount ? this.changeAmountSize : this.submit} disabled={!!this.props.resolving}>
+              <TouchableOpacity style={{ backgroundColor: '#007AFF', borderRadius: 10, width: '100%', height: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.7} onPress={this.state.largeAmount ? this.changeAmountSize : this.submit} disabled={!!this.props.resolving}>
                 {(!!this.state.largeAmount || !this.state.passwordValue) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>确认交易</Text>}
                 {(!this.state.largeAmount && !!this.state.passwordValue && !this.props.resolving) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>验证密码</Text>}
                 {(!this.state.largeAmount && !!this.state.passwordValue && !!this.props.resolving) && <ActivityIndicator size="small" color="#ffffff" style={{ marginRight: 5 }} />}
@@ -828,7 +826,7 @@ export default class WebView extends Component {
             <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
           </Animated.View>
           <View style={{ paddingTop: 10, paddingBottom: 10, position: 'absolute', bottom: 0, left: 0, width: '100%', paddingHorizontal: 18 }}>
-            <TouchableOpacity style={{ backgroundColor: '#007AFF', borderRadius: 10, width: '100%', height: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.7} onPress={!!this.state.largeAmount ? this.changeAmountSize : this.submit} disabled={!!this.props.resolving}>
+            <TouchableOpacity style={{ backgroundColor: '#007AFF', borderRadius: 10, width: '100%', height: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.7} onPress={this.state.largeAmount ? this.changeAmountSize : this.submit} disabled={!!this.props.resolving}>
               {(!!this.state.largeAmount || !this.state.passwordValue) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>确认签名</Text>}
               {(!this.state.largeAmount && !!this.state.passwordValue && !this.props.resolving) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>验证密码</Text>}
               {(!this.state.largeAmount && !!this.state.passwordValue && !!this.props.resolving) && <ActivityIndicator size="small" color="#ffffff" style={{ marginRight: 5 }} />}
@@ -845,12 +843,12 @@ export default class WebView extends Component {
               <View
                 style={{ flexDirection: 'row', position: 'absolute', left: '-100%', top: 25, opacity: 1 }}
                 onLayout={(event) => {
-                    const layout = event.nativeEvent.layout
-                    this.setState({
-                      largeAmountWidth: layout.width,
-                      amountMarginLeft: new Animated.Value((Dimensions.get('window').width - layout.width) / 2 - 18)
-                    })
-                  }}
+                  const layout = event.nativeEvent.layout
+                  this.setState({
+                    largeAmountWidth: layout.width,
+                    amountMarginLeft: new Animated.Value((Dimensions.get('window').width - layout.width) / 2 - 18)
+                  })
+                }}
               >
                 <Text style={{ fontSize: 24 }}>
                   个人签名
@@ -897,7 +895,7 @@ export default class WebView extends Component {
               <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
             </Animated.View>
             <View style={{ paddingTop: 10, paddingBottom: 10, position: 'absolute', bottom: 0, left: 0, width: '100%', paddingHorizontal: 18 }}>
-              <TouchableOpacity style={{ backgroundColor: '#007AFF', borderRadius: 10, width: '100%', height: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.7} onPress={!!this.state.largeAmount ? this.changeAmountSize : this.submit} disabled={!!this.props.resolving}>
+              <TouchableOpacity style={{ backgroundColor: '#007AFF', borderRadius: 10, width: '100%', height: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.7} onPress={this.state.largeAmount ? this.changeAmountSize : this.submit} disabled={!!this.props.resolving}>
                 {(!!this.state.largeAmount || !this.state.passwordValue) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>确认签名</Text>}
                 {(!this.state.largeAmount && !!this.state.passwordValue && !this.props.resolving) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>验证密码</Text>}
                 {(!this.state.largeAmount && !!this.state.passwordValue && !!this.props.resolving) && <ActivityIndicator size="small" color="#ffffff" style={{ marginRight: 5 }} />}
@@ -921,7 +919,7 @@ export default class WebView extends Component {
       bookmarkedIds,
       id
     } = this.props
-    const isBookmarked = bookmarkedIds.indexOf(id) !== -1
+    const isBookmarked = id ? (bookmarkedIds.indexOf(id) !== -1) : false
 
     return (
       <IntlProvider messages={messages[locale]}>
@@ -942,7 +940,7 @@ export default class WebView extends Component {
               scalesPageToFit={true}
               nativeConfig={{ props: { backgroundColor: Colors.minorThemeColor, flex: 1 } }}
               onBridgeMessage={this.onBridgeMessage}
-              injectedJavaScriptBeforeLoad={inject}
+              injectedJavaScriptBeforeLoad={inject || ''}
               onProgress={this.onProgress}
               onError={this.onError}
             />

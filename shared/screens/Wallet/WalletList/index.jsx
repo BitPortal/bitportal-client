@@ -221,8 +221,7 @@ export default class WalletList extends Component {
             />
           </Section>}
           {identityWalletsCount && <Section label="身份钱包">
-            {identityWallets.map(wallet =>
-              <Item
+            {identityWallets.map(wallet => <Item
                 height={60}
                 key={wallet.id}
                 uid={wallet.id}
@@ -240,21 +239,20 @@ export default class WalletList extends Component {
                 accessoryType={(wallet.chain !== 'EOS' || !!wallet.address) ? TableView.Consts.AccessoryType.DetailButton : (syncingEOSAccount ? TableView.Consts.AccessoryType.None : TableView.Consts.AccessoryType.DisclosureIndicator)}
                 onPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.switchWallet.bind(this, wallet.id) : (syncingEOSAccount ? () => {} : this.createEOSAccount.bind(this, wallet.id))}
                 onAccessoryPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.toManageWallet.bind(this, {
-                    id: wallet.id,
-                    type: 'identity',
-                    name: wallet.name,
-                    address: wallet.address,
-                    chain: wallet.chain,
-                    symbol: wallet.symbol,
-                    segWit: wallet.segWit,
-                    source: wallet.source,
-                  }) : () => {}}
-              />
-             )}
+                  id: wallet.id,
+                  type: 'identity',
+                  name: wallet.name,
+                  address: wallet.address,
+                  chain: wallet.chain,
+                  symbol: wallet.symbol,
+                  segWit: wallet.segWit,
+                  source: wallet.source,
+                }) : () => {}}
+            />
+            )}
           </Section>}
-          <Section label={!!importedWalletsCount ? '普通钱包' : ''}>
-            {importedWallets.map(wallet =>
-              <Item
+          <Section label={importedWalletsCount ? '普通钱包' : ''}>
+            {importedWallets.map(wallet => <Item
                 height={60}
                 key={wallet.id}
                 uid={wallet.id}
@@ -270,17 +268,17 @@ export default class WalletList extends Component {
                 accessoryType={(wallet.chain !== 'EOS' || !!wallet.address) ? TableView.Consts.AccessoryType.DetailButton : TableView.Consts.AccessoryType.DisclosureIndicator}
                 onPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.switchWallet.bind(this, wallet.id) : this.createEOSAccount.bind(this, wallet.id)}
                 onAccessoryPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.toManageWallet.bind(this, {
-                    id: wallet.id,
-                    type: 'imported',
-                    name: wallet.name,
-                    address: wallet.address,
-                    chain: wallet.chain,
-                    symbol: wallet.symbol,
-                    segWit: wallet.segWit,
-                    source: wallet.source,
-                  }) : () => {}}
-              />
-             )}
+                  id: wallet.id,
+                  type: 'imported',
+                  name: wallet.name,
+                  address: wallet.address,
+                  chain: wallet.chain,
+                  symbol: wallet.symbol,
+                  segWit: wallet.segWit,
+                  source: wallet.source,
+                }) : () => {}}
+            />
+            )}
             <Item
               height={44}
               onPress={this.toSelectChainType}

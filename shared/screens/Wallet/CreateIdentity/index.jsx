@@ -6,7 +6,6 @@ import {
   ScrollView,
   Text,
   TouchableHighlight,
-  Image,
   TextInput,
   Alert,
   ActivityIndicator,
@@ -64,11 +63,10 @@ const TextField = ({
       placeholder={placeholder}
       onChangeText={onChange}
       keyboardType="default"
-      autoCapitalize='none'
       secureTextEntry={secureTextEntry}
       {...restInput}
     />
-    {showClearButton && active && <View style={{ height: '100%', position: 'absolute', right: 16, top: 0, width: 20, height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+    {showClearButton && active && <View style={{ height: '100%', position: 'absolute', right: 16, top: 0, width: 20, alignItems: 'center', justifyContent: 'center' }}>
       <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
         <FastImage
           source={require('resources/images/clear.png')}
@@ -164,6 +162,7 @@ export default class CreateIdentity extends Component {
   }
 
   state = { invalid: true, pristine: true, loading: false, showForm: true }
+
   subscription = Navigation.events().bindComponent(this)
 
   componentDidUpdate(prevProps, prevState) {
@@ -229,25 +228,25 @@ export default class CreateIdentity extends Component {
     return (
       <View style={styles.container}>
         <View style={{ width: '100%', height: 0.5, backgroundColor: 'rgba(0,0,0,0)' }} />
-      <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
-        <View style={{ flex: 1, alignItems: 'center' }} onPress={() => console.log('press')}>
-          <View style={{ marginBottom: 14 }}>
-            <Text style={{ fontSize: 26, fontWeight: 'bold' }}>创建身份</Text>
-            {loading
+        <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+          <View style={{ flex: 1, alignItems: 'center' }} onPress={() => console.log('press')}>
+            <View style={{ marginBottom: 14 }}>
+              <Text style={{ fontSize: 26, fontWeight: 'bold' }}>创建身份</Text>
+              {loading
              && (
                <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 0, right: -25 }}>
                  <ActivityIndicator size="small" color="#000000" />
                </View>
              )
             }
-          </View>
-          <View style={{ marginBottom: 16, height: 22 }}>
-            {!loading && <Text style={{ fontSize: 17, paddingLeft: 32, paddingRight: 32, lineHeight: 22, textAlign: 'center' }}>
+            </View>
+            <View style={{ marginBottom: 16, height: 22 }}>
+              {!loading && <Text style={{ fontSize: 17, paddingLeft: 32, paddingRight: 32, lineHeight: 22, textAlign: 'center' }}>
               输入您的身份信息
-            </Text>}
-          </View>
-          {this.state.showForm && <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
-            <Field
+              </Text>}
+            </View>
+            {this.state.showForm && <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
+              <Field
               label="身份名"
               placeholder="输入不超过12位的身份名"
               name="name"
@@ -256,8 +255,8 @@ export default class CreateIdentity extends Component {
               showClearButton={!!name && name.length > 0}
               change={change}
               separator
-            />
-            <Field
+              />
+              <Field
               label="密码"
               placeholder="不少于8位字符，建议混合大小写字母，数字，符号"
               name="password"
@@ -267,8 +266,8 @@ export default class CreateIdentity extends Component {
               change={change}
               secureTextEntry
               separator
-            />
-            <Field
+              />
+              <Field
               label="密码提示"
               placeholder="选填"
               name="passwordHint"
@@ -277,10 +276,10 @@ export default class CreateIdentity extends Component {
               showClearButton={!!passwordHint && passwordHint.length > 0}
               change={change}
               separator={false}
-            />
-          </View>}
-        </View>
-      </ScrollView>
+              />
+            </View>}
+          </View>
+        </ScrollView>
       </View>
     )
   }
