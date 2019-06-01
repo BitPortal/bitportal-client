@@ -16,7 +16,7 @@ const images = {
   switchAccount: require('resources/images/switchAddressType.png'),
   chainxDeposit: require('resources/images/switchAddressType.png'),
   chainxVoting: require('resources/images/vote.png'),
-  chainxTrustee: require('resources/images/backup.png'),
+  chainxWithdrawal: require('resources/images/backup.png'),
   chainxScan: require('resources/images/resources.png'),
   chainxStats: require('resources/images/market_tab.png')
 }

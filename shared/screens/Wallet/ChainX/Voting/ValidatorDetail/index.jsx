@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, TouchableHighlight, AlertIOS, TextInput } from 'react-native'
+import { View, Text, TouchableOpacity, TouchableHighlight, AlertIOS, TextInput, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { Field, reduxForm, getFormSyncWarnings, getFormValues } from 'redux-form'
 import { Navigation } from 'react-native-navigation'
@@ -79,7 +79,7 @@ export default class ChainXValidatorDetail extends Component {
         rightButtons: [
           {
             id: 'help',
-            text: '帮助'
+            text: '详情'
           }
         ],
         largeTitle: {
@@ -99,6 +99,32 @@ export default class ChainXValidatorDetail extends Component {
   }
 
   subscription = Navigation.events().bindComponent(this)
+
+  navigationButtonPressed({ buttonId }) {
+    const account = this.props.account
+    const url = `https://scan.chainx.org/validators/all/${account.toString()}`
+    if (buttonId === 'help') {
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.WebView',
+          passProps: {
+            url,
+            id: 99998
+          },
+          largeTitle: {
+            visible: false
+          },
+          options: {
+            topBar: {
+              title: {
+                text: '节点详情 - 更多'
+              }
+            }
+          }
+        }
+      })
+    }
+  }
 
   formatBalance = (balance, num = 8) => (parseInt(balance) * Math.pow(10, -8)).toFixed(num).toString()
 
@@ -171,8 +197,30 @@ export default class ChainXValidatorDetail extends Component {
     try {
       const tx = await vote(password, keystore, activeWallet.address, targetAddress, amount)
       if (tx) {
-        console.log('投票成功, txId: ', tx.toString())
-        Dialog.alert('成功', `投票成功!交易id:${tx.toString()}`)
+        console.log('投票交易已发送, txId: ', tx.toString())
+        Alert.alert(
+          '发送交易成功',
+          `投票交易发送成功，请检查区块链信息!交易id:${tx.toString()}`,
+          {
+            text: 'OK',
+            onPress: () => {
+              console.log('Ok Pressed')
+              Navigation.pop(this.props.componentId, {
+                component: {
+                  name: 'BitPortal.ChainXVoting'
+                },
+                options: {
+                  topBar: {
+                    searchBar: false,
+                    searchBarHiddenWhenScrolling: false,
+                    searchBarPlaceholder: 'Search'
+                  }
+                }
+              })
+            },
+            style: 'default'
+          }
+        )
       } else {
         console.error('投票失败', tx.toString())
         Dialog.alert('错误', '投票失败')
@@ -200,7 +248,7 @@ export default class ChainXValidatorDetail extends Component {
     try {
       const tx = await voteClaim(password, keystore, activeWallet.address, targetAddress)
       if (tx) {
-        Dialog.alert('成功', `提息成功!交易id:${tx.toString()}`)
+        Dialog.alert('发送交易成功', `提息交易发送成功，请检查区块链信息!交易id:${tx.toString()}`)
       } else {
         console.error('提息失败', tx.toString())
         Dialog.alert('错误', '提息失败')

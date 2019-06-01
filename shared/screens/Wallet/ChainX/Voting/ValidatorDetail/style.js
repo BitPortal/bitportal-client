@@ -67,6 +67,11 @@ const styles = EStyleSheet.create({
   actionButtonText: {
     color: '#007AFF',
     fontSize: 17
+  },
+  textFiled: {
+    height: '100%',
+    fontSize: 17,
+    width: '100% - 138'
   }
 })
 

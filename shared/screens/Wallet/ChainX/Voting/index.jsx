@@ -1,24 +1,13 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, Text, ScrollView, Dimensions, LayoutAnimation, TouchableHighlight, AlertIOS, ActivityIndicator, Alert } from 'react-native'
+import { View, Text, AlertIOS, ActivityIndicator, Alert } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
-import FastImage from 'react-native-fast-image'
-import * as transactionActions from 'actions/transaction'
-import * as producerActions from 'actions/producer'
 import { managingWalletSelector, activeWalletSelector } from 'selectors/wallet'
-import {
-  producerSelector,
-  producerSelectedIdsSelector,
-  selectedProducerSelector,
-  producerAllIdsSelector,
-  producerIdsSelector
-} from 'selectors/producer'
 import { getIntentions, getAsset, getNominationRecords } from 'core/chain/chainx'
 import Modal from 'react-native-modal'
 import Dialog from 'components/Dialog'
-import chainxAccount from '@chainx/account'
 import styles from './styles'
 
 
@@ -47,18 +36,8 @@ export const errorDetail = (error) => {
 
 @connect(
   state => ({
-    vote: state.vote,
-    getProducer: state.getProducer,
     wallet: managingWalletSelector(state),
     activeWallet: activeWalletSelector(state),
-    producer: producerSelector(state),
-    allIds: producerIdsSelector(state)
-  }),
-  dispatch => ({
-    actions: bindActionCreators({
-      ...transactionActions,
-      ...producerActions
-    }, dispatch)
   })
 )
 
@@ -70,7 +49,7 @@ export default class ChainXVoting extends Component {
           text: 'ChainX 节点投票'
         },
         drawBehind: true,
-        searchBar: true,
+        searchBar: false,
         searchBarHiddenWhenScrolling: true,
         searchBarPlaceholder: 'Search',
         largeTitle: {
@@ -106,7 +85,8 @@ export default class ChainXVoting extends Component {
 
   navigationButtonPressed({ buttonId }) {
     if (buttonId === 'cancel') {
-      Navigation.dismissModal(this.props.componentId)
+      // Navigation.dismissAllModals()
+      Navigation.pop(this.props.componentId)
     } else if (buttonId === 'vote') {
       AlertIOS.prompt(
         '请输入钱包密码',
@@ -135,20 +115,10 @@ export default class ChainXVoting extends Component {
 
   searchBarUpdated({ text, isFocused }) {
     this.setState({ searching: isFocused })
-
-    if (isFocused) {
-      this.props.actions.handleProducerSearchTextChange(text)
-    } else {
-      this.props.actions.handleProducerSearchTextChange('')
-    }
   }
 
   onRefresh = () => {
-    // this.props.actions.getProducer.refresh({ json: true, limit: 500 })
-    this.getValidators()
-  }
-
-  onPress = () => {
+    this.getNominationRecords()
   }
 
   onSelectedPress = (owner) => {
@@ -167,16 +137,15 @@ export default class ChainXVoting extends Component {
   }
 
   componentDidAppear() {
+    // only update user voting info
+    if (this.state.loaded) {
+      this.getNominationRecords()
+    }
   }
 
   async componentDidMount() {
-    // this.props.actions.getChainXProducer.requested({ json: true, limit: 500 })
     await this.getValidators()
-    if (this.props.activeWallet && this.props.activeWallet.address) {
-      this.getNominationRecords(this.props.activeWallet.address)
-    } else {
-      console.log('no active chainx address')
-    }
+    this.getNominationRecords()
   }
 
   getValidators = async () => {
@@ -187,11 +156,15 @@ export default class ChainXVoting extends Component {
     this.setState({ loaded: true })
   }
 
-  getNominationRecords = async (address) => {
-    const records = await getNominationRecords(address)
-    this.setState({ userNominationRecords: records })
-    // console.log('ui getNominationRecords', this.state.userNominationRecords)
-    this.updateValidatorsByNomination()
+  getNominationRecords = async () => {
+    if (this.props.activeWallet && this.props.activeWallet.address) {
+      const records = await getNominationRecords(this.props.activeWallet.address)
+      this.setState({ userNominationRecords: records })
+      // console.log('ui getNominationRecords', this.state.userNominationRecords)
+      this.updateValidatorsByNomination()
+    } else {
+      console.log('no active chainx address')
+    }
   }
 
   updateValidatorsByNomination = () => {
@@ -209,8 +182,6 @@ export default class ChainXVoting extends Component {
   }
 
   componentWillUnmount() {
-    this.props.actions.setSelected([])
-    this.props.actions.handleProducerSearchTextChange('')
   }
 
   onModalHide = () => {

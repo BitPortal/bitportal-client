@@ -413,32 +413,45 @@ export default class ManageWallet extends Component {
   chainxVoting = async (walletId) => {
     const constants = await Navigation.constants()
 
-    Navigation.showModal({
-      stack: {
-        children: [{
-          component: {
-            name: 'BitPortal.ChainXVoting'
-          },
-          options: {
-            topBar: {
-              searchBar: true,
-              searchBarHiddenWhenScrolling: false,
-              searchBarPlaceholder: 'Search'
-            }
-          }
-        }]
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.ChainXVoting'
+      },
+      options: {
+        topBar: {
+          searchBar: false,
+          searchBarHiddenWhenScrolling: false,
+          searchBarPlaceholder: 'Search'
+        }
       }
     })
+    //
+    // Navigation.showModal({
+    //   stack: {
+    //     children: [{
+    //       component: {
+    //         name: 'BitPortal.ChainXVoting'
+    //       },
+    //       options: {
+    //         topBar: {
+    //           searchBar: true,
+    //           searchBarHiddenWhenScrolling: false,
+    //           searchBarPlaceholder: 'Search'
+    //         }
+    //       }
+    //     }]
+    //   }
+    // })
   }
 
-  chainxTrustee = async () => {
+  chainxWithdrawal = async () => {
     Dialog.alert('提示', 'Coming Soon')
     return
     const constants = await Navigation.constants()
 
     Navigation.push({
       component: {
-        name: 'BitPortal.ChainXTrustee'
+        name: 'BitPortal.ChainxWithdrawal'
       },
       options: {
         topBar: {
@@ -668,10 +681,10 @@ export default class ManageWallet extends Component {
       editActions.push(
         <Item
           reactModuleForCell="WalletManagementTableViewCell"
-          key="chainxTrustee"
-          actionType="chainxTrustee"
-          text="资产信托"
-          onPress={this.chainxTrustee.bind(this, id)}
+          key="chainxWithdrawal"
+          actionType="chainxWithdrawal"
+          text="资产提现"
+          onPress={this.chainxWithdrawal.bind(this, id)}
           arrow
         />
       )
