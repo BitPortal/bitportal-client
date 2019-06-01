@@ -73,10 +73,14 @@ export const keystoreVersion = {
 
 export const magicHex = '0d387e'
 
+export const chainxRpcNodes = [
+  'https://w1.chainx.org/rpc',
+  'https://w2.chainx.org/rpc'
+]
+
 export const eosNodes = [
   'https://eos-mainnet.bitportal.io',
   'https://geo.eosasia.one',
-  'https://api1.eosasia.one',
   'https://eos.greymass.com',
   'https://api.hkeos.com'
 ]
