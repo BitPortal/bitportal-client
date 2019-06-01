@@ -19,14 +19,15 @@ const getPrivateKeyFromKeyStore = async (password: string, keystore: any) => {
   if (keystore && keystore.bitportalMeta) {
     if (keystore.bitportalMeta.walletType === walletType.hd) {
       const mnemonics = await decryptMnemonic(password, keystore)
-      privateKey = chainxAccount.from(mnemonics).privateKey()
+      privateKey = chainxAccount.from(mnemonics).derive().privateKey()
     } else if (keystore.bitportalMeta.walletType === walletType.imported){
       privateKey = await decryptPrivateKey(password, keystore)
+      privateKey = chainxAccount.from(privateKey).privateKey()
     } else {
       console.error('invalid wallet type in keystore')
     }
   }
-  return Buffer.from(privateKey, 'hex').toString()
+  return privateKey
 }
 
 export const getBalance = async (address: string) => {
@@ -94,6 +95,9 @@ export const getDepositOpReturn = (address, nodeName = 'BitPortal') => {
   return new Buffer.from(address + '@' + nodeName, 'utf-8').toString('hex')
 }
 
+export const getSdotMappingData = (address, nodeName = 'BitPotal') => {
+  return getDepositOpReturn(address, nodeName)
+}
 
 export const transfer = async (password: string, keystore: any, fromAddress: string, toAddress: string, symbol: string, amount: string, memo: string = '') => {
   const realAmount = (+amount) * Math.pow(10, 8)
@@ -101,6 +105,7 @@ export const transfer = async (password: string, keystore: any, fromAddress: str
   const chainx = await initApibase()
 
   // 生成转账交易
+  console.log('transfer params', fromAddress, toAddress, symbol, realAmount, memo)
   const extrinsic = chainx.tx.xAssets.transfer(toAddress, symbol, realAmount, memo)
 
   // 获取该账户交易次数
@@ -124,13 +129,12 @@ export const vote = async (password: string, keystore: any, fromAddress: string,
   const nonce = await chainx.query.system.accountNonce(fromAddress)
 
   const pk = await getPrivateKeyFromKeyStore(password, keystore)
-  // const signed = extrinsic.sign(privateKeyHex, {nonce, acceleration = 1, blockHash: chainx.genesisHash })
+
   const txId = await extrinsic.signAndSend(pk, { nonce, acceleration: 5 })
   return txId
 }
 
 export const voteClaim = async (password: string, keystore: any, fromAddress: string, targetAddress: string) => {
-  console.log('voteClaim', password, keystore, fromAddress, targetAddress)
   const chainx = await initApibase()
 
   // Generate Transaction
@@ -159,6 +163,6 @@ export const depositClaim = async (password: string, keystore: any, fromAddress:
 
   const pk = await getPrivateKeyFromKeyStore(password, keystore)
 
-  const txId = await extrinsic.signAndSend(pk, { nonce, acceleration: 5 })
+  const txId = await extrinsic.signAndSend(pk, { nonce, acceleration: 2 })
   return txId
 }
