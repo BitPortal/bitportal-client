@@ -109,7 +109,7 @@ export const importedBTCWalletSelector = createSelector(
   (importedWallet) => {
     const index = importedWallet.findIndex(wallet => wallet.chain === 'BITCOIN')
 
-    return index !== -1 ? identityWallet[index] : null
+    return index !== -1 ? importedWallet[index] : null
   }
 )
 
@@ -118,7 +118,7 @@ export const importedETHWalletSelector = createSelector(
   (importedWallet) => {
     const index = importedWallet.findIndex(wallet => wallet.chain === 'ETHEREUM')
 
-    return index !== -1 ? identityWallet[index] : null
+    return index !== -1 ? importedWallet[index] : null
   }
 )
 
