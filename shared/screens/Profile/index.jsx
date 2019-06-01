@@ -82,6 +82,56 @@ export default class Profile extends Component {
     })
   }
 
+  toAboutUs = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.WebView',
+        passProps: {
+          url: 'https://www.bitportal.io/',
+          id: 99999
+        }
+      },
+      options: {
+        topBar: {
+          title: {
+            text: 'BitPortal 官网'
+          },
+          leftButtons: [
+            {
+              id: 'cancel',
+              text: '返回'
+            }
+          ]
+        }
+      }
+    })
+  }
+
+  toHelpCenter = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.WebView',
+        passProps: {
+          url: 'https://www.bitportal.io/help/',
+          id: 99999
+        }
+      },
+      options: {
+        topBar: {
+          title: {
+            text: 'BitPortal 帮助中心'
+          },
+          leftButtons: [
+            {
+              id: 'cancel',
+              text: '返回'
+            }
+          ]
+        }
+      }
+    })
+  }
+
   componentDidMount() {
 
   }
@@ -160,42 +210,43 @@ export default class Profile extends Component {
               text="节点设置"
               /> */}
         </Section>
-        <Section>
-          <Item
-            key="privacyMode"
-            type="privacyMode"
-            reactModuleForCell="IdentityTableViewCell"
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            accessoryType={5}
-            switchOn={false}
-            isSetting
-            text="隐私模式"
-          />
-          <Item
-            key="darkMode"
-            type="darkMode"
-            reactModuleForCell="IdentityTableViewCell"
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            accessoryType={5}
-            switchOn={false}
-            isSetting
-            text="夜间模式"
-          />
-        </Section>
+        {/*<Section>*/}
+          {/*<Item*/}
+            {/*key="privacyMode"*/}
+            {/*type="privacyMode"*/}
+            {/*reactModuleForCell="IdentityTableViewCell"*/}
+            {/*selectionStyle={TableView.Consts.CellSelectionStyle.None}*/}
+            {/*accessoryType={5}*/}
+            {/*switchOn={false}*/}
+            {/*isSetting*/}
+            {/*text="隐私模式"*/}
+          {/*/>*/}
+          {/*<Item*/}
+            {/*key="darkMode"*/}
+            {/*type="darkMode"*/}
+            {/*reactModuleForCell="IdentityTableViewCell"*/}
+            {/*selectionStyle={TableView.Consts.CellSelectionStyle.None}*/}
+            {/*accessoryType={5}*/}
+            {/*switchOn={false}*/}
+            {/*isSetting*/}
+            {/*text="夜间模式"*/}
+          {/*/>*/}
+        {/*</Section>*/}
         <Section arrow>
-          <Item
-            key="inviteFrends"
-            type="inviteFrends"
-            reactModuleForCell="IdentityTableViewCell"
-            arrow
-            isSetting
-            text="邀请好友"
-          />
+          {/*<Item*/}
+            {/*key="inviteFrends"*/}
+            {/*type="inviteFrends"*/}
+            {/*reactModuleForCell="IdentityTableViewCell"*/}
+            {/*arrow*/}
+            {/*isSetting*/}
+            {/*text="邀请好友"*/}
+          {/*/>*/}
           <Item
             key="helpCenter"
             type="helpCenter"
             reactModuleForCell="IdentityTableViewCell"
             arrow
+            onPress={this.toHelpCenter}
             isSetting
             text="帮助中心"
           />
@@ -204,6 +255,7 @@ export default class Profile extends Component {
             type="aboutUs"
             reactModuleForCell="IdentityTableViewCell"
             arrow
+            onPress={this.toAboutUs}
             isSetting
             text="关于我们"
           />
