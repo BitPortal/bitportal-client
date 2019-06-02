@@ -171,7 +171,14 @@ export default class BackupIdentity extends Component {
         this.setState({ userEntry: word })
       }
 
-      this.setState({ shuffledMnemonics: this.state.shuffledMnemonics.split(' ').filter(item => item !== word).join(' ') })
+      const shuffledMnemonicsList = this.state.shuffledMnemonics.split(' ')
+      const wordIndex = shuffledMnemonicsList.findIndex(item => item === word)
+
+      if (wordIndex !== -1) {
+        shuffledMnemonicsList.splice(wordIndex, 1)
+        const newShuffledMnemonics = shuffledMnemonicsList.join(' ')
+        this.setState({ shuffledMnemonics: newShuffledMnemonics })
+      }
     } else {
       if (!!this.state.shuffledMnemonics) {
         this.setState({ shuffledMnemonics: [...this.state.shuffledMnemonics.split(' '), word].join(' ') })
@@ -179,7 +186,14 @@ export default class BackupIdentity extends Component {
         this.setState({ shuffledMnemonics: word })
       }
 
-      this.setState({ userEntry: this.state.userEntry.split(' ').filter(item => item !== word).join(' ') })
+      const userEntryList = this.state.userEntry.split(' ')
+      const wordIndex = userEntryList.findIndex(item => item === word)
+
+      if (wordIndex !== -1) {
+        userEntryList.splice(wordIndex, 1)
+        const newUserEntry = userEntryList.join(' ')
+        this.setState({ userEntry: newUserEntry })
+      }
     }
   }
 
