@@ -172,10 +172,10 @@ export default class BackupIdentity extends Component {
       }
 
       const shuffledMnemonicsList = this.state.shuffledMnemonics.split(' ')
-      const wordIndex = shuffledMnemonicsList.findIndex(item => item === word)
+      // const wordIndex = shuffledMnemonicsList.findIndex(item => item === word)
 
-      if (wordIndex !== -1) {
-        shuffledMnemonicsList.splice(wordIndex, 1)
+      if (index !== -1) {
+        shuffledMnemonicsList.splice(index, 1)
         const newShuffledMnemonics = shuffledMnemonicsList.join(' ')
         this.setState({ shuffledMnemonics: newShuffledMnemonics })
       }
@@ -187,10 +187,10 @@ export default class BackupIdentity extends Component {
       }
 
       const userEntryList = this.state.userEntry.split(' ')
-      const wordIndex = userEntryList.findIndex(item => item === word)
+      // const wordIndex = userEntryList.findIndex(item => item === word)
 
-      if (wordIndex !== -1) {
-        userEntryList.splice(wordIndex, 1)
+      if (index !== -1) {
+        userEntryList.splice(index, 1)
         const newUserEntry = userEntryList.join(' ')
         this.setState({ userEntry: newUserEntry })
       }
