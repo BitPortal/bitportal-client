@@ -177,7 +177,6 @@ export default class BackupIdentity extends Component {
       if (wordIndex !== -1) {
         shuffledMnemonicsList.splice(wordIndex, 1)
         const newShuffledMnemonics = shuffledMnemonicsList.join(' ')
-        console.log('newShuffledMnemonics', newShuffledMnemonics)
         this.setState({ shuffledMnemonics: newShuffledMnemonics })
       }
     } else {
@@ -193,7 +192,6 @@ export default class BackupIdentity extends Component {
       if (wordIndex !== -1) {
         userEntryList.splice(wordIndex, 1)
         const newUserEntry = userEntryList.join(' ')
-        console.log('newUserEntry', newUserEntry)
         this.setState({ userEntry: newUserEntry })
       }
     }
