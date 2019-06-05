@@ -22,7 +22,7 @@ const getPrivateKeyFromKeyStore = async (password: string, keystore: any) => {
       privateKey = chainxAccount.from(mnemonics).derive().privateKey()
     } else if (keystore.bitportalMeta.walletType === walletType.imported){
       privateKey = await decryptPrivateKey(password, keystore)
-      privateKey = chainxAccount.from(privateKey).privateKey()
+      privateKey = Buffer.from(privateKey, 'hex').toString()
     } else {
       console.error('invalid wallet type in keystore')
     }
@@ -114,7 +114,7 @@ export const transfer = async (password: string, keystore: any, fromAddress: str
   const pk = await getPrivateKeyFromKeyStore(password, keystore)
 
   // const signed = extrinsic.sign(privateKeyHex, {nonce, acceleration = 1, blockHash: chainx.genesisHash })
-  const txId = await extrinsic.signAndSend(pk, { nonce, acceleration: 5 })
+  const txId = await extrinsic.signAndSend(pk, { nonce, acceleration: 1 })
   return txId
 }
 
@@ -130,7 +130,7 @@ export const vote = async (password: string, keystore: any, fromAddress: string,
 
   const pk = await getPrivateKeyFromKeyStore(password, keystore)
 
-  const txId = await extrinsic.signAndSend(pk, { nonce, acceleration: 5 })
+  const txId = await extrinsic.signAndSend(pk, { nonce, acceleration: 1 })
   return txId
 }
 
@@ -145,7 +145,7 @@ export const voteClaim = async (password: string, keystore: any, fromAddress: st
 
   const pk = await getPrivateKeyFromKeyStore(password, keystore)
 
-  const txId = await extrinsic.signAndSend(pk, { nonce, acceleration: 5 })
+  const txId = await extrinsic.signAndSend(pk, { nonce, acceleration: 1 })
   return txId
 }
 
@@ -163,6 +163,6 @@ export const depositClaim = async (password: string, keystore: any, fromAddress:
 
   const pk = await getPrivateKeyFromKeyStore(password, keystore)
 
-  const txId = await extrinsic.signAndSend(pk, { nonce, acceleration: 2 })
+  const txId = await extrinsic.signAndSend(pk, { nonce, acceleration: 1 })
   return txId
 }
