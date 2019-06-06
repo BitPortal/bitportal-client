@@ -6,14 +6,16 @@ import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 import * as assetActions from 'actions/asset'
 // import FastImage from 'react-native-fast-image'
-import { selectedAssetIdsSelector } from 'selectors/asset'
-import { activeWalletSelector } from 'selectors/wallet'
+import { selectedAssetIdsSelector, assetsSelector } from 'selectors/asset'
+import { activeWalletSelector, activeChainSelector } from 'selectors/wallet'
 import styles from './styles'
 
 @connect(
   state => ({
     getETHAsset: state.getETHAsset,
-    ethAsset: null,
+    getEOSAsset: state.getEOSAsset,
+    chain: activeChainSelector(state),
+    assets: assetsSelector(state),
     activeWallet: activeWalletSelector(state),
     selectedAssetId: selectedAssetIdsSelector(state)
   }),
@@ -27,11 +29,11 @@ import styles from './styles'
 export default class AddAssets extends Component {
   static get options() {
     return {
-      topBar: {
-        title: {
-          text: '添加ETH资产'
-        },
-      },
+      /* topBar: {
+       *   title: {
+       *     text: '添加资产'
+       *   },
+       * },*/
       bottomTabs: {
         visible: false,
         drawBehind: true,
@@ -42,7 +44,7 @@ export default class AddAssets extends Component {
 
   subscription = Navigation.events().bindComponent(this)
 
-  state = { searching: false }
+  state = { searching: false, switching: false }
 
   tableViewRef = React.createRef()
 
@@ -82,17 +84,35 @@ export default class AddAssets extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.getETHAsset.requested()
+    const { chain } = this.props
+
+    if (chain === 'ETHEREUM') {
+      this.props.actions.getETHAsset.requested()
+    } else if (chain === 'EOS') {
+      this.props.actions.getEOSAsset.requested()
+    }
   }
 
   onSwitchAccessoryChanged = (item) => {
-    console.log(item)
+    const { activeWallet, chain } = this.props
+    const walletId = activeWallet.id
+    const contract = item.contract
+    const symbol = item.symbol
+    const assetId = `${chain}/${contract}/${symbol}`
+
+    setTimeout(() => {
+      if (item.switchOn) {
+        this.props.actions.selectAsset({ walletId, assetId })
+      } else {
+        this.props.actions.unselectAsset({ walletId, assetId })
+      }
+    }, 500)
   }
 
   render() {
-    const { ethAsset, selectedAssetId, getETHAsset } = this.props
+    const { assets, selectedAssetId, getETHAsset, getEOSAsset, chain } = this.props
 
-    if (getETHAsset.loading && !ethAsset.length) {
+    if ((getEOSAsset.loading || getETHAsset.loading) && !assets.length) {
       return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <View style={{ marginTop: 80 }}>
@@ -116,7 +136,7 @@ export default class AddAssets extends Component {
           onSwitchAccessoryChanged={this.onSwitchAccessoryChanged}
         >
           <TableView.Section>
-            {ethAsset.map(item => (
+            {assets.map(item => (
                <TableView.Item
                  key={item.id}
                  height={60}
@@ -129,7 +149,7 @@ export default class AddAssets extends Component {
                  max_supply={item.max_supply}
                  rank_url={item.rank_url}
                  accessoryType={5}
-                 switchOn={item.selected}
+                 switchOn={selectedAssetId && selectedAssetId.indexOf(`${chain}/${item.contract}/${item.symbol}`) !== -1}
                />
              ))}
           </TableView.Section>

@@ -22,7 +22,7 @@ import {
   activeWalletSelector
 } from 'selectors/wallet'
 import { activeWalletBalanceSelector } from 'selectors/balance'
-import { selectedAssetSelector } from 'selectors/asset'
+import { activeWalletSelectedAssetsSelector } from 'selectors/asset'
 import { activeWalletTickerSelector } from 'selectors/ticker'
 import { accountResourcesByIdSelector } from 'selectors/account'
 import { managingWalletChildAddressSelector } from 'selectors/address'
@@ -60,7 +60,7 @@ const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
     portfolio: state.portfolio.byId,
     resources: accountResourcesByIdSelector(state),
     childAddress: managingWalletChildAddressSelector(state),
-    selectedAsset: selectedAssetSelector(state)
+    selectedAsset: activeWalletSelectedAssetsSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -568,7 +568,7 @@ export default class Wallet extends Component {
               selectionStyle={TableView.Consts.CellSelectionStyle.None}
               switching={this.state.switching}
               chain={chain}
-              hasRightButton={chain !== 'BITCOIN'}
+              hasRightButton={chain === 'ETHEREUM' || chain === 'EOS'}
             />
           </Section>
           {!!balance && (<Section headerHeight={0} uid="AssetBalanceTableViewCell" canEdit={!this.state.switching}>{assetItems}</Section>)}
