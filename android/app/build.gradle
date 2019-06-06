@@ -192,6 +192,7 @@ android {
 }
 
 dependencies {
+    implementation project(':@react-native-community_async-storage')
     compile project(':@react-native-community_slider')
     compile project(':react-native-interactable')
     compile project(':react-native-sound')

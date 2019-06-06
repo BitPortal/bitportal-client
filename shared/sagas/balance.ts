@@ -51,9 +51,9 @@ function* getBalance(action: Action) {
       yield put(actions.updateBalance({ id, chain, balance, symbol, precision, contract }))
       yield put(actions.getBalance.succeeded({ walletId, balance }))
     } else if (chain === 'CHAINX') {
-      balance = yield call(chainxChain.getBalance, address)
-      yield put(actions.updateBalance({ id, chain, balance, symbol, precision: 8 }))
-      yield put(actions.getBalance.succeeded({ walletId, balance }))
+      // balance = yield call(chainxChain.getBalance, address)
+      // yield put(actions.updateBalance({ id, chain, balance, symbol, precision: 8 }))
+      // yield put(actions.getBalance.succeeded({ walletId, balance }))
     }
   } catch (e) {
     yield put(actions.getBalance.failed(getErrorMessage(e)))

@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect'
 import { activeWalletSelector, transferWalletSelector } from 'selectors/wallet'
+import { activeAssetSelector, transferAssetSelector } from 'selectors/asset'
 
 export const transactionSelector = (state: RootState) => state.transaction
 export const activeTransactionIdSelector = (state: RootState) => state.transaction.activeTransactionId
@@ -16,6 +17,36 @@ export const activeWalletTransactionsByIdSelector = createSelector(
 
       if (activeWalletTransaction) {
         return activeWalletTransaction.items.byId
+      }
+    }
+
+    return null
+  }
+)
+
+export const activeWalletAssetTransactionsByIdSelector = createSelector(
+  activeWalletSelector,
+  activeAssetSelector,
+  transactionSelector,
+  (activeWallet: string, activeAsset: string, transaction: any) => {
+    if (activeWallet) {
+      if (activeAsset) {
+        const { chain, address } = activeWallet
+        const activeAssetAddress = activeAsset.address || activeAsset.account
+        const id = `${chain}/${address}/${activeAssetAddress}/${activeAsset.symbol}`
+        const activeWalletTransaction = transaction.byId[id]
+
+        if (activeWalletTransaction) {
+          return activeWalletTransaction.items.byId
+        }
+      } else {
+        const { chain, address } = activeWallet
+        const id = `${chain}/${address}`
+        const activeWalletTransaction = transaction.byId[id]
+
+        if (activeWalletTransaction) {
+          return activeWalletTransaction.items.byId
+        }
       }
     }
 

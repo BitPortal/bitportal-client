@@ -27,6 +27,7 @@ function* setActiveWallet(action: Action<SetActiveWalletParams>) {
   if (!action.payload) return
 
   const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+  yield put(actions.setActiveChain(activeWallet.chain))
   yield put(getBalance.requested(activeWallet))
 }
 
@@ -99,7 +100,7 @@ function* exportMnemonics(action: Action<ExportMnemonicsParams>) {
           children: [{
             component: {
               name: 'BitPortal.BackupIdentity',
-              passProps: { mnemonics, backup: true },
+              passProps: { mnemonics: mnemonics + ' salt', backup: true },
               options: {
                 topBar: {
                   leftButtons: [

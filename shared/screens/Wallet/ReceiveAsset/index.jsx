@@ -198,6 +198,7 @@ export default class ReceiveAsset extends Component {
     const available = balance && intl.formatNumber(balance.balance, { minimumFractionDigits: balance.precision, maximumFractionDigits: balance.precision })
     const address = activeWallet.address
     const hasChildAddress = childAddress && childAddress !== address
+    const addressUri = this.getAddressUri(!this.state.selectedIndex ? address : childAddress, this.state.amount, chain)
 
     return (
       <View style={[styles.container, { backgroundColor: 'white' }]}>
@@ -216,7 +217,7 @@ export default class ReceiveAsset extends Component {
         <View style={{ flex: 1, width: '100%', alignItems: 'center', padding: 16 }}>
           <Text style={{ fontSize: 17, marginBottom: 16 }}>当前钱包地址用于接收{+this.state.amount > 0 ? this.state.amount : ''} {symbol}</Text>
           <QRCode
-            value={this.getAddressUri(!this.state.selectedIndex ? address : childAddress, this.state.amount, chain)}
+            value={addressUri}
             size={200}
           />
           <Text style={{ fontSize: this.getAddressFontSize(!this.state.selectedIndex ? address : childAddress), marginTop: 16, marginBottom: 16, textAlign: 'center' }}>
@@ -233,7 +234,7 @@ export default class ReceiveAsset extends Component {
               justifyContent: 'center',
               borderRadius: 10
             }}
-            onPress={this.copy.bind(this, this.getAddressUri(!this.state.selectedIndex ? address : childAddress, this.state.amount, chain))}
+            onPress={this.copy.bind(this, addressUri)}
           >
             <Text style={{ textAlign: 'center', color: 'white', fontSize: 17 }}>复制钱包地址</Text>
           </TouchableOpacity>

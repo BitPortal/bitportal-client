@@ -1,3 +1,4 @@
+import axios from 'axios'
 import {
   BITPORTAL_API_REST_URL,
   BITPORTAL_API_MARKET_URL,
@@ -66,6 +67,45 @@ export const fetchBase = async (
 
     return null
   })
+}
+
+export const axiosBase = async (
+  method: FetchMethod = 'GET',
+  endPoint: string = '/hello',
+  params: object = {},
+  options: FetchOptions = {}
+) => {
+  const baseUrl = options.baseUrl || BITPORTAL_API_REST_URL
+  const headers = options.headers || {}
+  const auth = options.auth
+
+  let url = baseUrl + endPoint
+
+  if (!headers.Accept) headers.Accept = 'application/json'
+  if (!headers['Content-Type']) headers['Content-Type'] = 'application/json'
+
+  if (auth) {
+    const token = await storage.getItem('bitportal_t')
+    const authorization = token && `Bearer ${token}`
+    headers.Authorization = authorization || null
+  }
+
+  const fetchOptions: any = { method, headers }
+
+  if (method === 'GET') {
+    const queryString: string = `${Object.keys(params)
+      .map(k => [k, params[k]].map(encodeURIComponent).join('='))
+      .join('&')}`
+    if (queryString) url += `?${queryString}`
+  }
+
+  return await axios({
+    method: method.toLowerCase(),
+    headers,
+    timeout: 20000,
+    url,
+    params
+  }).then(res => res.data)
 }
 
 const contentFetchBase = (

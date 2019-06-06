@@ -110,6 +110,8 @@
 		3446CAB220E8F39F00ACA3C8 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3446CAAF20E8EB1E00ACA3C8 /* libReactNativeNavigation.a */; };
 		3449499A2274C1BB00D8AB38 /* libRNCSlider.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 344949872274C19E00D8AB38 /* libRNCSlider.a */; };
 		3451193721BBAEE9004E9426 /* libInteractable.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 345118F321BBAEC6004E9426 /* libInteractable.a */; };
+		345D6F6D229D9DAA009E56AC /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 345D6F17229D9DAA009E56AC /* JavaScriptCore.framework */; };
+		345D6FF6229DBA1F009E56AC /* libRNCAsyncStorage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 345D6FE2229DBA08009E56AC /* libRNCAsyncStorage.a */; };
 		346C2CE821E738A00030003C /* libReactNativeHaptic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 346C2CCF21E738780030003C /* libReactNativeHaptic.a */; };
 		346C2D1521E74B170030003C /* libRNReactNativeHapticFeedback.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 346C2D1421E74AFF0030003C /* libRNReactNativeHapticFeedback.a */; };
 		34763E1A229438B7002AEA19 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34763DCC22943899002AEA19 /* libART.a */; };
@@ -238,20 +240,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 3D383D621EBD27B9005632C8;
 			remoteInfo = "double-conversion-tvOS";
-		};
-		18009975206392B3009374CD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9936F3131F5F2E4B0010BF04;
-			remoteInfo = privatedata;
-		};
-		18009977206392B3009374CD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9936F32F1F5F2E5B0010BF04;
-			remoteInfo = "privatedata-tvOS";
 		};
 		1800997F206392B3009374CD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -477,6 +465,41 @@
 			remoteGlobalIDString = CC0127971E3ACC3900B23C9F;
 			remoteInfo = Interactable;
 		};
+		345D6F49229D9DAA009E56AC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EDEBC6D6214B3E7000DD5AC8;
+			remoteInfo = jsi;
+		};
+		345D6F4B229D9DAA009E56AC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EDEBC73B214B45A300DD5AC8;
+			remoteInfo = jsiexecutor;
+		};
+		345D6F4D229D9DAA009E56AC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = ED296FB6214C9A0900B7C4FE;
+			remoteInfo = "jsi-tvOS";
+		};
+		345D6F4F229D9DAA009E56AC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = ED296FEE214C9CF800B7C4FE;
+			remoteInfo = "jsiexecutor-tvOS";
+		};
+		345D6FE1229DBA08009E56AC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 345D6FA1229DBA08009E56AC /* RNCAsyncStorage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNCAsyncStorage;
+		};
 		346C2CCE21E738780030003C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 346C2C9A21E738770030003C /* ReactNativeHaptic.xcodeproj */;
@@ -644,20 +667,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 3D3CD9321DE5FBEE00167DC4;
 			remoteInfo = "cxxreact-tvOS";
-		};
-		3DAD3EAC1DF850E9000B6D8A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3D3CD90B1DE5FBD600167DC4;
-			remoteInfo = jschelpers;
-		};
-		3DAD3EAE1DF850E9000B6D8A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3D3CD9181DE5FBD800167DC4;
-			remoteInfo = "jschelpers-tvOS";
 		};
 		5E9157321DD0AC6500FF2AA8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -905,6 +914,8 @@
 		3446CAA920E8EB1E00ACA3C8 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/lib/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		3449494A2274C19E00D8AB38 /* RNCSlider.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCSlider.xcodeproj; path = "../node_modules/@react-native-community/slider/ios/RNCSlider.xcodeproj"; sourceTree = "<group>"; };
 		345118EA21BBAEC6004E9426 /* Interactable.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Interactable.xcodeproj; path = "../node_modules/react-native-interactable/lib/ios/Interactable.xcodeproj"; sourceTree = "<group>"; };
+		345D6F17229D9DAA009E56AC /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		345D6FA1229DBA08009E56AC /* RNCAsyncStorage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCAsyncStorage.xcodeproj; path = "../node_modules/@react-native-community/async-storage/ios/RNCAsyncStorage.xcodeproj"; sourceTree = "<group>"; };
 		346C2C9A21E738770030003C /* ReactNativeHaptic.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeHaptic.xcodeproj; path = "../node_modules/react-native-haptic/ios/ReactNativeHaptic.xcodeproj"; sourceTree = "<group>"; };
 		346C2D0F21E74AFE0030003C /* RNReactNativeHapticFeedback.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNReactNativeHapticFeedback.xcodeproj; path = "../node_modules/react-native-haptic-feedback/ios/RNReactNativeHapticFeedback.xcodeproj"; sourceTree = "<group>"; };
 		34763DC622943899002AEA19 /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
@@ -975,6 +986,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				345D6FF6229DBA1F009E56AC /* libRNCAsyncStorage.a in Frameworks */,
+				345D6F6D229D9DAA009E56AC /* JavaScriptCore.framework in Frameworks */,
 				34763E1A229438B7002AEA19 /* libART.a in Frameworks */,
 				3449499A2274C1BB00D8AB38 /* libRNCSlider.a in Frameworks */,
 				346C2D1521E74B170030003C /* libRNReactNativeHapticFeedback.a in Frameworks */,
@@ -1135,16 +1148,16 @@
 				3DAD3EA71DF850E9000B6D8A /* libyoga.a */,
 				3DAD3EA91DF850E9000B6D8A /* libcxxreact.a */,
 				3DAD3EAB1DF850E9000B6D8A /* libcxxreact.a */,
-				3DAD3EAD1DF850E9000B6D8A /* libjschelpers.a */,
-				3DAD3EAF1DF850E9000B6D8A /* libjschelpers.a */,
 				3472432820B0B65C008D018F /* libjsinspector.a */,
 				3472432A20B0B65C008D018F /* libjsinspector-tvOS.a */,
 				1800996E206392B3009374CD /* libthird-party.a */,
 				18009970206392B3009374CD /* libthird-party.a */,
 				18009972206392B3009374CD /* libdouble-conversion.a */,
 				18009974206392B3009374CD /* libdouble-conversion.a */,
-				18009976206392B3009374CD /* libprivatedata.a */,
-				18009978206392B3009374CD /* libprivatedata-tvOS.a */,
+				345D6F4A229D9DAA009E56AC /* libjsi.a */,
+				345D6F4C229D9DAA009E56AC /* libjsiexecutor.a */,
+				345D6F4E229D9DAA009E56AC /* libjsi-tvOS.a */,
+				345D6F50229D9DAA009E56AC /* libjsiexecutor-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1244,6 +1257,7 @@
 		1836E658209063D300C81AED /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				345D6F17229D9DAA009E56AC /* JavaScriptCore.framework */,
 				18B18428213675180037A46D /* UserNotifications.framework */,
 				18524C732125544300004FBC /* QBImagePicker.framework */,
 				18524C752125544300004FBC /* RSKImageCropper.framework */,
@@ -1626,6 +1640,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		345D6FA2229DBA08009E56AC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				345D6FE2229DBA08009E56AC /* libRNCAsyncStorage.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		346C2C9B21E738770030003C /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1714,6 +1736,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				345D6FA1229DBA08009E56AC /* RNCAsyncStorage.xcodeproj */,
 				34763DC622943899002AEA19 /* ART.xcodeproj */,
 				3449494A2274C19E00D8AB38 /* RNCSlider.xcodeproj */,
 				346C2D0F21E74AFE0030003C /* RNReactNativeHapticFeedback.xcodeproj */,
@@ -2007,6 +2030,10 @@
 					ProjectRef = C594A110612840FD81FF27B5 /* RNCamera.xcodeproj */;
 				},
 				{
+					ProductGroup = 345D6FA2229DBA08009E56AC /* Products */;
+					ProjectRef = 345D6FA1229DBA08009E56AC /* RNCAsyncStorage.xcodeproj */;
+				},
+				{
 					ProductGroup = 3449494B2274C19E00D8AB38 /* Products */;
 					ProjectRef = 3449494A2274C19E00D8AB38 /* RNCSlider.xcodeproj */;
 				},
@@ -2149,20 +2176,6 @@
 			fileType = archive.ar;
 			path = "libdouble-conversion.a";
 			remoteRef = 18009973206392B3009374CD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		18009976206392B3009374CD /* libprivatedata.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libprivatedata.a;
-			remoteRef = 18009975206392B3009374CD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		18009978206392B3009374CD /* libprivatedata-tvOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libprivatedata-tvOS.a";
-			remoteRef = 18009977206392B3009374CD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		18009980206392B3009374CD /* libRNVectorIcons.a */ = {
@@ -2389,6 +2402,41 @@
 			remoteRef = 345118F221BBAEC6004E9426 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		345D6F4A229D9DAA009E56AC /* libjsi.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjsi.a;
+			remoteRef = 345D6F49229D9DAA009E56AC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		345D6F4C229D9DAA009E56AC /* libjsiexecutor.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjsiexecutor.a;
+			remoteRef = 345D6F4B229D9DAA009E56AC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		345D6F4E229D9DAA009E56AC /* libjsi-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libjsi-tvOS.a";
+			remoteRef = 345D6F4D229D9DAA009E56AC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		345D6F50229D9DAA009E56AC /* libjsiexecutor-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libjsiexecutor-tvOS.a";
+			remoteRef = 345D6F4F229D9DAA009E56AC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		345D6FE2229DBA08009E56AC /* libRNCAsyncStorage.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNCAsyncStorage.a;
+			remoteRef = 345D6FE1229DBA08009E56AC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		346C2CCF21E738780030003C /* libReactNativeHaptic.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -2555,20 +2603,6 @@
 			fileType = archive.ar;
 			path = libcxxreact.a;
 			remoteRef = 3DAD3EAA1DF850E9000B6D8A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3DAD3EAD1DF850E9000B6D8A /* libjschelpers.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libjschelpers.a;
-			remoteRef = 3DAD3EAC1DF850E9000B6D8A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3DAD3EAF1DF850E9000B6D8A /* libjschelpers.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libjschelpers.a;
-			remoteRef = 3DAD3EAE1DF850E9000B6D8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */ = {

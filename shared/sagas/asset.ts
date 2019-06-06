@@ -8,7 +8,7 @@ import * as api from 'utils/api'
 function* getETHAsset(action: Action) {
   try {
     const result = yield call(api.getETHAsset, action.payload)
-    yield put(actions.updateETHAsset(result))
+    yield put(actions.updateAsset({ assets: result, chain: 'ETHEREUM' }))
     yield put(actions.getETHAsset.succeeded())
   } catch (e) {
     yield put(actions.getETHAsset.failed(getErrorMessage(e)))
@@ -18,7 +18,7 @@ function* getETHAsset(action: Action) {
 function* getEOSAsset(action: Action) {
   try {
     const result = yield call(api.getEOSAsset, action.payload)
-    yield put(actions.updateEOSAsset(result))
+    yield put(actions.updateAsset({ assets: result, chain: 'EOS' }))
     yield put(actions.getEOSAsset.succeeded())
   } catch (e) {
     yield put(actions.getEOSAsset.failed(getErrorMessage(e)))

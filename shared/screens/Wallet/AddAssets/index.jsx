@@ -1,17 +1,21 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View } from 'react-native'
+import { View, Text, ActivityIndicator } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 import * as assetActions from 'actions/asset'
 // import FastImage from 'react-native-fast-image'
-import { assetSelector } from 'selectors/asset'
+import { selectedAssetIdsSelector } from 'selectors/asset'
+import { activeWalletSelector } from 'selectors/wallet'
 import styles from './styles'
 
 @connect(
   state => ({
-    eosAsset: assetSelector(state)
+    getETHAsset: state.getETHAsset,
+    ethAsset: null,
+    activeWallet: activeWalletSelector(state),
+    selectedAssetId: selectedAssetIdsSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -20,12 +24,12 @@ import styles from './styles'
   })
 )
 
-export default class EOSAssets extends Component {
+export default class AddAssets extends Component {
   static get options() {
     return {
       topBar: {
         title: {
-          text: '添加EOS资产'
+          text: '添加ETH资产'
         },
       },
       bottomTabs: {
@@ -78,13 +82,26 @@ export default class EOSAssets extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.getEOSAsset.requested({ display_priority: 1 })
+    this.props.actions.getETHAsset.requested()
+  }
+
+  onSwitchAccessoryChanged = (item) => {
+    console.log(item)
   }
 
   render() {
-    const { eosAsset } = this.props
+    const { ethAsset, selectedAssetId, getETHAsset } = this.props
 
-    if (!eosAsset) return null
+    if (getETHAsset.loading && !ethAsset.length) {
+      return (
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <View style={{ marginTop: 80 }}>
+            <ActivityIndicator size="small" color="#666666" />
+            <Text style={{ marginTop: 10, color: '#666666' }}>加载资产</Text>
+          </View>
+        </View>
+      )
+    }
 
     return (
       <View style={styles.container}>
@@ -99,7 +116,7 @@ export default class EOSAssets extends Component {
           onSwitchAccessoryChanged={this.onSwitchAccessoryChanged}
         >
           <TableView.Section>
-            {eosAsset.map(item => (
+            {ethAsset.map(item => (
                <TableView.Item
                  key={item.id}
                  height={60}
@@ -107,7 +124,7 @@ export default class EOSAssets extends Component {
                  selectionStyle={TableView.Consts.CellSelectionStyle.None}
                  icon_url={item.icon_url}
                  symbol={item.symbol}
-                 account={item.account}
+                 contract={item.contract}
                  current_supply={item.current_supply}
                  max_supply={item.max_supply}
                  rank_url={item.rank_url}

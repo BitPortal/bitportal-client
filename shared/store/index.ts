@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose, Store } from 'redux'
 import createSagaMiddleware, { END } from 'redux-saga'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
+import AsyncStorage from '@react-native-community/async-storage'
 import { routerMiddleware as createRouterMiddleware } from 'react-router-redux'
 import rootReducer from 'reducers'
 import { isBrowser, isMobile } from 'utils/platform'
@@ -14,9 +15,9 @@ interface AppStore<S> extends Store<S> {
 
 const persistConfig = {
   key: 'root',
-  storage,
+  storage: AsyncStorage,
   timeout: null,
-  blacklist: ['form']
+  whitelist: ['____']
 }
 
 export default function configure(initialState: RootState = {}, history?: any): AppStore<RootState> {

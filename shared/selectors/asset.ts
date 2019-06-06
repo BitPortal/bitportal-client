@@ -1,19 +1,31 @@
 import { createSelector } from 'reselect'
 
-const eosAssetByIdSelector = (state: RootState) => state.asset.EOS.byId
-const eosAssetAllIdsSelector = (state: RootState) => state.asset.EOS.allIds
+const activeAssetIdSelector = (state: RootState) => state.asset.activeAssetId
+const assetByIdSelector = (state: RootState) => state.asset.byId
+const assetAllIdsSelector = (state: RootState) => state.asset.allIds
 
-const ethAssetByIdSelector = (state: RootState) => state.asset.ETHEREUM.byId
-const ethAssetAllIdsSelector = (state: RootState) => state.asset.ETHEREUM.allIds
+export const selectedAssetSelector = (state: RootState) => state.asset.selected
 
-export const eosAssetSelector = createSelector(
-  eosAssetByIdSelector,
-  eosAssetAllIdsSelector,
-  (byId: any, allIds: any) => (allIds && byId) && allIds.map(id => byId[id]).filter(item => item.display_priority > 0)
+export const activeAssetSelector = createSelector(
+  activeAssetIdSelector,
+  assetByIdSelector,
+  (activeAssetId: any, byId: any) => {
+    if (byId) {
+      return byId[activeAssetId]
+    }
+
+    return null
+  }
 )
 
-export const ethAssetSelector = createSelector(
-  ethAssetByIdSelector,
-  ethAssetAllIdsSelector,
-  (byId: any, allIds: any) => (allIds && byId) && allIds.map(id => byId[id]).filter(item => item.display_priority > 0)
+export const transferAssetSelector = createSelector(
+  activeAssetIdSelector,
+  assetByIdSelector,
+  (activeAssetId: any, byId: any) => {
+    if (byId) {
+      return byId[activeAssetId]
+    }
+
+    return null
+  }
 )

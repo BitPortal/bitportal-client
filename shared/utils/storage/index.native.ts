@@ -1,13 +1,4 @@
-import { AsyncStorage } from 'react-native'
-
-
-/**
- *  本地存储key-value结构值：
- *    bitportal_lang: string                 eg: zh/en                  // 语言
- *    bitportal_welcome: object              eg: { localVersion: string }    // 是否第一次开启app
- *    bitportal_status_bar: string           eg: default/light-content  // 状态栏模式(根据夜间模式调换)
- *    bitportal_t: string                                               // 用户Token
- */
+import AsyncStorage from '@react-native-community/async-storage'
 
 const getItem = async (key: string, json?: boolean) => {
   try {

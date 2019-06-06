@@ -12,10 +12,14 @@ const initialState = {
   },
   activeWalletId: null,
   managingWalletId: null,
-  transferWalletId: null
+  transferWalletId: null,
+  activeChain: null
 }
 
 export default handleActions({
+  [actions.setActiveChain] (state, action) {
+    state.activeChain = action.payload
+  },
   [actions.setActiveWallet] (state, action) {
     state.activeWalletId = action.payload
     state.managingWalletId = action.payload
