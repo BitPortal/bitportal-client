@@ -233,6 +233,34 @@ export default class ChainXDeposit extends Component {
     })
   }
 
+  toClaimDeposit = () => {
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.ChainXDepositClaim',
+            passProps: {
+
+            },
+            options: {
+              topBar: {
+                title: {
+                  text: '充值提息'
+                },
+                leftButtons: [
+                  {
+                    id: 'cancel',
+                    text: '取消'
+                  }
+                ]
+              }
+            }
+          }
+        }]
+      }
+    })
+  }
+
   render() {
     const { intl, activeWallet } = this.props
 
@@ -300,6 +328,9 @@ export default class ChainXDeposit extends Component {
           </TouchableOpacity>
           <TouchableOpacity style={[styles.button, {backgroundColor: '#EFEFF4'}]} onPress={this.toMappingSDOT.bind(this)}>
             <Text style={[styles.buttonText, {color: '#007AFF'}]}>映射SDOT</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.button, {backgroundColor: '#EFEFF4'}]} onPress={this.toClaimDeposit.bind(this)}>
+            <Text style={[styles.buttonText, {color: '#007AFF'}]}>充值提息</Text>
           </TouchableOpacity>
         </View>
         </ScrollView>

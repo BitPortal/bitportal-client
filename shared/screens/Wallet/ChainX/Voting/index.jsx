@@ -7,6 +7,7 @@ import TableView from 'react-native-tableview'
 import { managingWalletSelector, activeWalletSelector } from 'selectors/wallet'
 import { getIntentions, getAsset, getNominationRecords } from 'core/chain/chainx'
 import Modal from 'react-native-modal'
+import Chainx from 'chainx.js'
 import Dialog from 'components/Dialog'
 import styles from './styles'
 
@@ -77,6 +78,8 @@ export default class ChainXVoting extends Component {
     loading: true,
     loaded: false,
     voteLoding: false,
+    blockHeight: 0,
+    chainx_subscription: null
   }
 
   tableViewRef = React.createRef()
@@ -146,6 +149,17 @@ export default class ChainXVoting extends Component {
   async componentDidMount() {
     await this.getValidators()
     this.getNominationRecords()
+    // 目前只支持 websocket 链接
+    if (!this.state.chainx_subscription) {
+      const chainx = new Chainx('wss://w1.chainx.org/ws')
+      // 等待异步的初始化
+      await chainx.isRpcReady()
+      const subscription = chainx.chain.subscribeNewHead().subscribe(result => {
+        console.log('当前块高：', result.number)
+        this.setState({blockHeight: result.number})
+      })
+      this.setState({ chainx_subscription: subscription })
+    }
   }
 
   getValidators = async () => {
@@ -182,6 +196,9 @@ export default class ChainXVoting extends Component {
   }
 
   componentWillUnmount() {
+    if (this.state.chainx_subscription) {
+      this.state.chainx_subscription.unsubscribe()
+    }
   }
 
   onModalHide = () => {
@@ -223,6 +240,16 @@ export default class ChainXVoting extends Component {
     const { statusBarHeight } = this.props
     const loading = this.state.voteLoding
 
+    // const validator = this.state.validator
+    // const userNominationRecords = this.state.userNominationRecords
+    // console.log('validator', validator)
+    // console.log('userNominationRecords', userNominationRecords)
+    //
+    // // 最新总票龄 = 总票龄 + 总投票金额 *（当前高度 - 总票龄更新高度）
+    // const latestVoitingWeight
+    //
+    // // 用户最新总票龄
+
     if (!this.state.loaded && this.state.loading) {
       return (
         <View style={styles.container}>
@@ -261,7 +288,15 @@ export default class ChainXVoting extends Component {
                 isValidator={item.isValidator}
                 about={item.about}
                 jackpot={item.jackpot}
+                jackpotAccount={item.jackpotAccount}
+                sessionKey={item.sessionKey}
+                url={item.url}
+                blockHeight={this.state.blockHeight}
+                lastTotalVoteWeight={item.lastTotalVoteWeight}
+                lastTotalVoteWeightUpdate={item.lastTotalVoteWeightUpdate}
                 totalNomination={item.totalNomination}
+                userLastVoteWeight={item.userLastVoteWeight}
+                userLastVoteWeightUpdate={item.userLastVoteWeightUpdate}
                 userNomination={(item && item.userNomination) || '-'}
                 onPress={this.onAccessoryPress.bind(this, item)}
                 accessoryType={TableView.Consts.AccessoryType.DetailButton}
@@ -283,7 +318,15 @@ export default class ChainXVoting extends Component {
                 isValidator={item.isValidator}
                 about={item.about}
                 jackpot={item.jackpot}
+                jackpotAccount={item.jackpotAccount}
+                sessionKey={item.sessionKey}
+                url={item.url}
+                blockHeight={this.state.blockHeight}
+                lastTotalVoteWeight={item.lastTotalVoteWeight}
+                lastTotalVoteWeightUpdate={item.lastTotalVoteWeightUpdate}
                 totalNomination={item.totalNomination}
+                userLastVoteWeight={item.userLastVoteWeight}
+                userLastVoteWeightUpdate={item.userLastVoteWeightUpdate}
                 userNomination={(item && item.userNomination) || '-'}
                 onPress={this.onAccessoryPress.bind(this, item)}
                 accessoryType={TableView.Consts.AccessoryType.DetailButton}
@@ -307,9 +350,14 @@ export default class ChainXVoting extends Component {
                 jackpot={item.jackpot}
                 jackpotAccount={item.jackpotAccount}
                 sessionKey={item.sessionKey}
-                totalNomination={item.totalNomination}
-                userNomination={(item && item.userNomination) || '-'}
                 url={item.url}
+                blockHeight={this.state.blockHeight}
+                lastTotalVoteWeight={item.lastTotalVoteWeight}
+                lastTotalVoteWeightUpdate={item.lastTotalVoteWeightUpdate}
+                totalNomination={item.totalNomination}
+                userLastVoteWeight={item.userLastVoteWeight}
+                userLastVoteWeightUpdate={item.userLastVoteWeightUpdate}
+                userNomination={(item && item.userNomination) || '-'}
                 onPress={this.onAccessoryPress.bind(this, item)}
                 accessoryType={TableView.Consts.AccessoryType.DetailButton}
                 onAccessoryPress={this.onAccessoryPress.bind(this, item)}

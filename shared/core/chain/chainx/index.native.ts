@@ -9,7 +9,7 @@ export const initRpc = () => {
 }
 
 export const initApibase = async () => {
-  const chainx = new ApiBase(new HttpProvider('https://w1.chainx.org/rpc'), ['https://w2.chainx.org/rpc'])
+  const chainx = new ApiBase(new HttpProvider('https://w1.chainx.org.cn/rpc'), ['https://w2.chainx.org/rpc'])
   await chainx._isReady
   return chainx
 }
@@ -39,7 +39,7 @@ export const getBalance = async (address: string) => {
 
 export const getAsset = async (address: string) => {
   const provider = initRpc()
-  const asset = await provider.send('chainx_getAssetsByAccount', [chainxAccount.decodeAddress(address), 0, 1])
+  const asset = await provider.send('chainx_getAssetsByAccount', [chainxAccount.decodeAddress(address), 0, 10])
   return asset
 }
 
@@ -105,7 +105,7 @@ export const transfer = async (password: string, keystore: any, fromAddress: str
   const chainx = await initApibase()
 
   // 生成转账交易
-  console.log('transfer params', fromAddress, toAddress, symbol, realAmount, memo)
+  // console.log('transfer params', fromAddress, toAddress, symbol, realAmount, memo)
   const extrinsic = chainx.tx.xAssets.transfer(toAddress, symbol, realAmount, memo)
 
   // 获取该账户交易次数

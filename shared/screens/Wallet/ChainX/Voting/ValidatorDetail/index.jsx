@@ -7,6 +7,7 @@ import TableView from 'react-native-tableview'
 import assert from 'assert'
 import FastImage from 'react-native-fast-image'
 import { activeWalletSelector } from 'selectors/wallet'
+import { activeWalletBalanceSelector } from 'selectors/balance'
 import { voteClaim, vote } from 'core/chain/chainx'
 import secureStorage from 'core/storage/secureStorage'
 import Dialog from 'components/Dialog'
@@ -68,7 +69,8 @@ const validate = (values) => {
 @connect(
   state => ({
     activeWallet: activeWalletSelector(state),
-    formValues: getFormValues('chainxVotingAmountForm')(state)
+    formValues: getFormValues('chainxVotingAmountForm')(state),
+    balance: activeWalletBalanceSelector(state)
   })
 )
 
@@ -259,7 +261,7 @@ export default class ChainXValidatorDetail extends Component {
   }
 
   render() {
-    const { formValues, change, name, account, about, isActive, isValidator, isTruestee, jackpot, jackpotAccount, sessionKey, info } = this.props
+    const { formValues, change, balance, name, account, about, isActive, isValidator, isTruestee, jackpot, jackpotAccount, sessionKey, pendingInterest, info } = this.props
     const votingAmount = formValues && formValues.passwordHint
     const formatedJackpot = jackpot && this.formatBalance(jackpot)
 
@@ -339,6 +341,10 @@ export default class ChainXValidatorDetail extends Component {
           </Section>
         </TableView>
         <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
+          <View style={{ width: '100%', alignItems: 'center', height: 56, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
+            <Text style={{ fontSize: 17, fontWeight: 'bold', marginRight: 16, width: 70 }}>可用余额</Text>
+            <Text style={{ fontSize: 17 }}>{balance.balance.toFixed(balance.precision)} {balance.symbol}</Text>
+          </View>
           <Field
             label="投票数量"
             placeholder="输入PCX数量"
