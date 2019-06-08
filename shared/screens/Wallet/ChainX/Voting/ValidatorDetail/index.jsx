@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, TouchableHighlight, TextInput, Alert } from 'react-native'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'utils/redux'
 import { Field, reduxForm, getFormSyncWarnings, getFormValues } from 'redux-form'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 import assert from 'assert'
+import * as balanceActions from 'actions/balance'
 import FastImage from 'react-native-fast-image'
 import { activeWalletSelector } from 'selectors/wallet'
 import { activeWalletBalanceSelector } from 'selectors/balance'
@@ -70,7 +72,13 @@ const validate = (values) => {
   state => ({
     activeWallet: activeWalletSelector(state),
     formValues: getFormValues('chainxVotingAmountForm')(state),
-    balance: activeWalletBalanceSelector(state)
+    balance: activeWalletBalanceSelector(state),
+    getBalance: state.getBalance
+  }),
+  dispatch => ({
+    actions: bindActionCreators({
+      ...balanceActions
+    }, dispatch)
   })
 )
 
@@ -78,6 +86,12 @@ export default class ChainXValidatorDetail extends Component {
   static get options() {
     return {
       topBar: {
+        leftButtons: [
+          {
+            id: 'cancel',
+            text: '返回'
+          }
+        ],
         rightButtons: [
           {
             id: 'help',
@@ -103,9 +117,11 @@ export default class ChainXValidatorDetail extends Component {
   subscription = Navigation.events().bindComponent(this)
 
   navigationButtonPressed({ buttonId }) {
-    const account = this.props.account
-    const url = `https://scan.chainx.org/validators/all/${account.toString()}`
-    if (buttonId === 'help') {
+    if (buttonId === 'cancel') {
+      Navigation.dismissAllModals()
+    } else if (buttonId === 'help') {
+      const account = this.props.account
+      const url = `https://scan.chainx.org/validators/all/${account.toString()}`
       Navigation.push(this.props.componentId, {
         component: {
           name: 'BitPortal.WebView',
@@ -227,6 +243,7 @@ export default class ChainXValidatorDetail extends Component {
         console.error('投票失败', tx.toString())
         Dialog.alert('错误', '投票失败')
       }
+      this.props.actions.getBalance.refresh(this.props.activeWallet)
     } catch (e) {
       Dialog.alert('投票失败', `错误：${e.toString()}`)
     }
@@ -255,13 +272,15 @@ export default class ChainXValidatorDetail extends Component {
         console.error('提息失败', tx.toString())
         Dialog.alert('错误', '提息失败')
       }
+      this.props.actions.getBalance.refresh(this.props.activeWallet)
     } catch (e) {
       Dialog.alert('提息失败', `错误：${e.toString()}`)
     }
   }
 
+
   render() {
-    const { formValues, change, balance, name, account, about, isActive, isValidator, isTruestee, jackpot, jackpotAccount, sessionKey, pendingInterest, info } = this.props
+    const { formValues, change, balance, name, account, about, isActive, isValidator, isTruestee, jackpot, jackpotAccount, sessionKey, pendingInterestStr } = this.props
     const votingAmount = formValues && formValues.passwordHint
     const formatedJackpot = jackpot && this.formatBalance(jackpot)
 
@@ -329,6 +348,18 @@ export default class ChainXValidatorDetail extends Component {
       />
     )
 
+    items.push(
+      <Item
+        reactModuleForCell="ChainXValidatorDetailTableViewCell"
+        text="待领利息"
+        key="pendingInterest"
+        type="pendingInterest"
+        detail={pendingInterestStr}
+        height={60}
+        selectionStyle={TableView.Consts.CellSelectionStyle.None}
+      />
+    )
+
     return (
       <View style={{ flex: 1 }}>
         <TableView
@@ -343,7 +374,8 @@ export default class ChainXValidatorDetail extends Component {
         <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
           <View style={{ width: '100%', alignItems: 'center', height: 56, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
             <Text style={{ fontSize: 17, fontWeight: 'bold', marginRight: 16, width: 70 }}>可用余额</Text>
-            <Text style={{ fontSize: 17 }}>{balance.balance.toFixed(balance.precision)} {balance.symbol}</Text>
+            <Text style={{ fontSize: 17 }}>{balance && balance.balance && balance.balance.toFixed(balance.precision)} {balance.symbol}</Text>
+            <Text style={{ fontSize: 17 }}>{!balance && '暂时无法显示'}</Text>
           </View>
           <Field
             label="投票数量"

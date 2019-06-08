@@ -37,6 +37,17 @@ export const getBalance = async (address: string) => {
   return (+balance.data[0].details.Free) * Math.pow(10, -8)
 }
 
+export const getPseduIntentions = async () => {
+  const provider = initRpc()
+  const asset = await provider.send('chainx_getPseduIntentions', [])
+  return asset
+}
+
+export const getPseduNominationRecords = async (address: string) => {
+  const provider = initRpc()
+  return await provider.send('chainx_getPseduNominationRecords', [chainxAccount.decodeAddress(address)])
+}
+
 export const getAsset = async (address: string) => {
   const provider = initRpc()
   const asset = await provider.send('chainx_getAssetsByAccount', [chainxAccount.decodeAddress(address), 0, 10])
@@ -55,8 +66,14 @@ export const getTransaction = async (hash: string) => {
   return ''
 }
 
-export const getBlockNumber = async () => {
-
+export const getBlockHeight = async () => {
+  const result = await chainxScanApi('GET', '/chain/height', {})
+  console.log(result)
+  if (result && result.height) {
+    return result.height
+  } else {
+    return 0
+  }
 }
 
 export const getBlock = async (id: string | number, returnTransactionObjects: boolean) => {

@@ -5,7 +5,7 @@ import { View, Text, ActivityIndicator, Alert } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 import { managingWalletSelector, activeWalletSelector } from 'selectors/wallet'
-import { getIntentions, getAsset, getNominationRecords } from 'core/chain/chainx'
+import { getIntentions, getAsset, getNominationRecords, getBlockHeight } from 'core/chain/chainx'
 import Modal from 'react-native-modal'
 import Chainx from 'chainx.js'
 import Dialog from 'components/Dialog'
@@ -78,8 +78,7 @@ export default class ChainXVoting extends Component {
     loading: true,
     loaded: false,
     voteLoding: false,
-    blockHeight: 0,
-    chainx_subscription: null
+    blockHeight: 0
   }
 
   tableViewRef = React.createRef()
@@ -144,21 +143,21 @@ export default class ChainXVoting extends Component {
     if (this.state.loaded) {
       this.getNominationRecords()
     }
+    this.updateBlockHeight()
   }
 
   async componentDidMount() {
     await this.getValidators()
     this.getNominationRecords()
-    // 目前只支持 websocket 链接
-    if (!this.state.chainx_subscription) {
-      const chainx = new Chainx('wss://w1.chainx.org/ws')
-      // 等待异步的初始化
-      await chainx.isRpcReady()
-      const subscription = chainx.chain.subscribeNewHead().subscribe(result => {
-        console.log('当前块高：', result.number)
-        this.setState({blockHeight: result.number})
-      })
-      this.setState({ chainx_subscription: subscription })
+    this.timer = setInterval(() => {
+      this.updateBlockHeight();
+    }, 5000);
+  }
+
+  updateBlockHeight = async () => {
+    const blockHeight = await getBlockHeight()
+    if (blockHeight) {
+      this.setState({ blockHeight: blockHeight })
     }
   }
 
@@ -196,9 +195,7 @@ export default class ChainXVoting extends Component {
   }
 
   componentWillUnmount() {
-    if (this.state.chainx_subscription) {
-      this.state.chainx_subscription.unsubscribe()
-    }
+    this.timer && clearInterval(this.timer);
   }
 
   onModalHide = () => {
@@ -227,28 +224,27 @@ export default class ChainXVoting extends Component {
     }
   }
 
-  onAccessoryPress = (item) => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.ChainXValidatorDetail',
-        passProps: item
+  onAccessoryPress = (item, pendingInterestStr = '-') => {
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.ChainXValidatorDetail',
+            passProps: {
+              ...item,
+              pendingInterestStr
+            }
+          }
+        }]
       }
     })
   }
 
+  formatBalance = (balance, num = 8) => (parseInt(balance) * Math.pow(10, -8)).toFixed(num)
+
   render() {
     const { statusBarHeight } = this.props
     const loading = this.state.voteLoding
-
-    // const validator = this.state.validator
-    // const userNominationRecords = this.state.userNominationRecords
-    // console.log('validator', validator)
-    // console.log('userNominationRecords', userNominationRecords)
-    //
-    // // 最新总票龄 = 总票龄 + 总投票金额 *（当前高度 - 总票龄更新高度）
-    // const latestVoitingWeight
-    //
-    // // 用户最新总票龄
 
     if (!this.state.loaded && this.state.loading) {
       return (
@@ -275,94 +271,167 @@ export default class ChainXVoting extends Component {
           ref={(ref) => { this.tableViewRef = ref; return null }}
         >
           <TableView.Section label="特别推荐 / 总票数">
-            {this.state.validator.filter(vali => vali.name === 'BitPortal').map(item => (
-              <TableView.Item
-                key={item.name}
-                height={60}
-                cellHeight={60}
-                selectionStyle={TableView.Consts.CellSelectionStyle.None}
-                name={item.name}
-                account={item.account}
-                isActive={item.isActive}
-                isTrustee={item.isTrustee}
-                isValidator={item.isValidator}
-                about={item.about}
-                jackpot={item.jackpot}
-                jackpotAccount={item.jackpotAccount}
-                sessionKey={item.sessionKey}
-                url={item.url}
-                blockHeight={this.state.blockHeight}
-                lastTotalVoteWeight={item.lastTotalVoteWeight}
-                lastTotalVoteWeightUpdate={item.lastTotalVoteWeightUpdate}
-                totalNomination={item.totalNomination}
-                userLastVoteWeight={item.userLastVoteWeight}
-                userLastVoteWeightUpdate={item.userLastVoteWeightUpdate}
-                userNomination={(item && item.userNomination) || '-'}
-                onPress={this.onAccessoryPress.bind(this, item)}
-                accessoryType={TableView.Consts.AccessoryType.DetailButton}
-                onAccessoryPress={this.onAccessoryPress.bind(this, item)}
-              />
-            ))}
+            {this.state.validator.filter(vali => vali.name === 'BitPortal').map(item => {
+              let pendingInterest = 0
+              if (item && item.userNomination) {
+                // 最新总票龄 = 总票龄 + 总投票金额 *（当前高度 - 总票龄更新高度）
+                const latestTotalVoteWeight = item.lastTotalVoteWeight + item.totalNomination * (this.state.blockHeight - item.lastTotalVoteWeightUpdate)
+
+                // 最新用户票龄 = 用户票龄 + 投票金额 *（当前高度 - 用户票龄更新高度）
+                const latestUserVoteWeight = item.userLastVoteWeight + item.userNomination * (this.state.blockHeight - item.userLastVoteWeightUpdate)
+
+                if (latestUserVoteWeight > 0 && latestTotalVoteWeight > 0 && item.jackpot > 0) {
+                  // 用户待领利息 = 最新用户票龄 / 最新总票龄 * 奖池金额
+                  pendingInterest = latestUserVoteWeight / latestTotalVoteWeight * item.jackpot
+                }
+              }
+              const pendingInterestStr = this.formatBalance(pendingInterest, 8)
+
+              // pendingInterestStr
+              const userNominationStr = (item && item.userNomination && this.formatBalance(item.userNomination, 4)) || '-'
+              const totalNominationStr = this.formatBalance(item.totalNomination)
+              return (
+                <TableView.Item
+                  key={item.name}
+                  height={60}
+                  cellHeight={60}
+                  selectionStyle={TableView.Consts.CellSelectionStyle.None}
+                  name={item.name}
+                  account={item.account}
+                  isActive={item.isActive}
+                  isTrustee={item.isTrustee}
+                  isValidator={item.isValidator}
+                  about={item.about}
+                  jackpot={item.jackpot}
+                  jackpotAccount={item.jackpotAccount}
+                  sessionKey={item.sessionKey}
+                  url={item.url}
+                  blockHeight={this.state.blockHeight}
+                  lastTotalVoteWeight={item.lastTotalVoteWeight}
+                  lastTotalVoteWeightUpdate={item.lastTotalVoteWeightUpdate}
+                  totalNomination={item.totalNomination}
+                  userLastVoteWeight={item.userLastVoteWeight}
+                  userLastVoteWeightUpdate={item.userLastVoteWeightUpdate}
+                  userNomination={(item && item.userNomination) || '-'}
+                  userNominationStr={userNominationStr}
+                  pendingInterestStr={pendingInterestStr}
+                  totalNominationStr={totalNominationStr}
+                  onPress={this.onAccessoryPress.bind(this, item, pendingInterestStr)}
+                  accessoryType={TableView.Consts.AccessoryType.DetailButton}
+                  onAccessoryPress={this.onAccessoryPress.bind(this, item, pendingInterestStr)}
+                />
+              )
+            })}
           </TableView.Section>
           <TableView.Section label="验证节点 / 总票数">
-            {this.state.validator.filter(vali => vali.isActive && vali.isValidator).sort((a, b) => b.totalNomination - a.totalNomination).map(item => (
-              <TableView.Item
-                key={item.name}
-                height={60}
-                cellHeight={60}
-                selectionStyle={TableView.Consts.CellSelectionStyle.None}
-                name={item.name}
-                account={item.account}
-                isActive={item.isActive}
-                isTrustee={item.isTrustee}
-                isValidator={item.isValidator}
-                about={item.about}
-                jackpot={item.jackpot}
-                jackpotAccount={item.jackpotAccount}
-                sessionKey={item.sessionKey}
-                url={item.url}
-                blockHeight={this.state.blockHeight}
-                lastTotalVoteWeight={item.lastTotalVoteWeight}
-                lastTotalVoteWeightUpdate={item.lastTotalVoteWeightUpdate}
-                totalNomination={item.totalNomination}
-                userLastVoteWeight={item.userLastVoteWeight}
-                userLastVoteWeightUpdate={item.userLastVoteWeightUpdate}
-                userNomination={(item && item.userNomination) || '-'}
-                onPress={this.onAccessoryPress.bind(this, item)}
-                accessoryType={TableView.Consts.AccessoryType.DetailButton}
-                onAccessoryPress={this.onAccessoryPress.bind(this, item)}
-              />
-            ))}
+            {this.state.validator.filter(vali => vali.isActive && vali.isValidator).sort((a, b) => b.totalNomination - a.totalNomination).map(item => {
+
+              let pendingInterest = 0
+              if (item && item.userNomination) {
+                // 最新总票龄 = 总票龄 + 总投票金额 *（当前高度 - 总票龄更新高度）
+                const latestTotalVoteWeight = item.lastTotalVoteWeight + item.totalNomination * (this.state.blockHeight - item.lastTotalVoteWeightUpdate)
+
+                // 最新用户票龄 = 用户票龄 + 投票金额 *（当前高度 - 用户票龄更新高度）
+                const latestUserVoteWeight = item.userLastVoteWeight + item.userNomination * (this.state.blockHeight - item.userLastVoteWeightUpdate)
+
+                if (latestUserVoteWeight > 0 && latestTotalVoteWeight > 0 && item.jackpot > 0) {
+                  // 用户待领利息 = 最新用户票龄 / 最新总票龄 * 奖池金额
+                  pendingInterest = latestUserVoteWeight / latestTotalVoteWeight * item.jackpot
+                }
+              }
+              const pendingInterestStr = this.formatBalance(pendingInterest, 8)
+
+              // pendingInterestStr
+              const userNominationStr = (item && item.userNomination && this.formatBalance(item.userNomination, 4)) || '-'
+              const totalNominationStr = this.formatBalance(item.totalNomination)
+
+              return (
+                <TableView.Item
+                  key={item.name}
+                  height={60}
+                  cellHeight={60}
+                  selectionStyle={TableView.Consts.CellSelectionStyle.None}
+                  name={item.name}
+                  account={item.account}
+                  isActive={item.isActive}
+                  isTrustee={item.isTrustee}
+                  isValidator={item.isValidator}
+                  about={item.about}
+                  jackpot={item.jackpot}
+                  jackpotAccount={item.jackpotAccount}
+                  sessionKey={item.sessionKey}
+                  url={item.url}
+                  blockHeight={this.state.blockHeight}
+                  lastTotalVoteWeight={item.lastTotalVoteWeight}
+                  lastTotalVoteWeightUpdate={item.lastTotalVoteWeightUpdate}
+                  totalNomination={item.totalNomination}
+                  userLastVoteWeight={item.userLastVoteWeight}
+                  userLastVoteWeightUpdate={item.userLastVoteWeightUpdate}
+                  userNomination={(item && item.userNomination) || '-'}
+                  userNominationStr={userNominationStr}
+                  pendingInterestStr={pendingInterestStr}
+                  totalNominationStr={totalNominationStr}
+                  onPress={this.onAccessoryPress.bind(this, item)}
+                  accessoryType={TableView.Consts.AccessoryType.DetailButton}
+                  onAccessoryPress={this.onAccessoryPress.bind(this, item)}
+                />
+              )
+            })}
           </TableView.Section>
           <TableView.Section label="备选节点 / 总票数">
-            {this.state.validator.filter(vali => !vali.isValidator).sort((a, b) => b.totalNomination - a.totalNomination).map(item => (
-              <TableView.Item
-                key={item.name}
-                height={60}
-                cellHeight={60}
-                selectionStyle={TableView.Consts.CellSelectionStyle.None}
-                name={item.name}
-                account={item.account}
-                isActive={item.isActive}
-                isTrustee={item.isTrustee}
-                isValidator={item.isValidator}
-                about={item.about}
-                jackpot={item.jackpot}
-                jackpotAccount={item.jackpotAccount}
-                sessionKey={item.sessionKey}
-                url={item.url}
-                blockHeight={this.state.blockHeight}
-                lastTotalVoteWeight={item.lastTotalVoteWeight}
-                lastTotalVoteWeightUpdate={item.lastTotalVoteWeightUpdate}
-                totalNomination={item.totalNomination}
-                userLastVoteWeight={item.userLastVoteWeight}
-                userLastVoteWeightUpdate={item.userLastVoteWeightUpdate}
-                userNomination={(item && item.userNomination) || '-'}
-                onPress={this.onAccessoryPress.bind(this, item)}
-                accessoryType={TableView.Consts.AccessoryType.DetailButton}
-                onAccessoryPress={this.onAccessoryPress.bind(this, item)}
-              />
-            ))}
+            {this.state.validator.filter(vali => !vali.isValidator).sort((a, b) => b.totalNomination - a.totalNomination).map(item => {
+
+              let pendingInterest = 0
+              if (item && item.userNomination) {
+                // 最新总票龄 = 总票龄 + 总投票金额 *（当前高度 - 总票龄更新高度）
+                const latestTotalVoteWeight = item.lastTotalVoteWeight + item.totalNomination * (this.state.blockHeight - item.lastTotalVoteWeightUpdate)
+
+                // 最新用户票龄 = 用户票龄 + 投票金额 *（当前高度 - 用户票龄更新高度）
+                const latestUserVoteWeight = item.userLastVoteWeight + item.userNomination * (this.state.blockHeight - item.userLastVoteWeightUpdate)
+
+                if (latestUserVoteWeight > 0 && latestTotalVoteWeight > 0 && item.jackpot > 0) {
+                  // 用户待领利息 = 最新用户票龄 / 最新总票龄 * 奖池金额
+                  pendingInterest = latestUserVoteWeight / latestTotalVoteWeight * item.jackpot
+                }
+              }
+              const pendingInterestStr = this.formatBalance(pendingInterest, 8)
+
+              // pendingInterestStr
+              const userNominationStr = (item && item.userNomination && this.formatBalance(item.userNomination, 4)) || '-'
+              const totalNominationStr = this.formatBalance(item.totalNomination)
+
+              return (
+                  <TableView.Item
+                    key={item.name}
+                    height={60}
+                    cellHeight={60}
+                    selectionStyle={TableView.Consts.CellSelectionStyle.None}
+                    name={item.name}
+                    account={item.account}
+                    isActive={item.isActive}
+                    isTrustee={item.isTrustee}
+                    isValidator={item.isValidator}
+                    about={item.about}
+                    jackpot={item.jackpot}
+                    jackpotAccount={item.jackpotAccount}
+                    sessionKey={item.sessionKey}
+                    url={item.url}
+                    blockHeight={this.state.blockHeight}
+                    lastTotalVoteWeight={item.lastTotalVoteWeight}
+                    lastTotalVoteWeightUpdate={item.lastTotalVoteWeightUpdate}
+                    totalNomination={item.totalNomination}
+                    userLastVoteWeight={item.userLastVoteWeight}
+                    userLastVoteWeightUpdate={item.userLastVoteWeightUpdate}
+                    userNomination={(item && item.userNomination) || '-'}
+                    userNominationStr={userNominationStr}
+                    pendingInterestStr={pendingInterestStr}
+                    totalNominationStr={totalNominationStr}
+                    onPress={this.onAccessoryPress.bind(this, item)}
+                    accessoryType={TableView.Consts.AccessoryType.DetailButton}
+                    onAccessoryPress={this.onAccessoryPress.bind(this, item)}
+                  />
+                )
+            })}
           </TableView.Section>
         </TableView>
         <Modal

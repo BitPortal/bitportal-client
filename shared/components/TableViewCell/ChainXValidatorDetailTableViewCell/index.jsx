@@ -32,7 +32,6 @@ const ChainXValidatorDetailTableViewCell = (props) => {
         <Text
           style={{ fontSize: props.data.type === 'sessionKey' ? 15 : 17, textAlign: 'right', maxWidth: 240 }}
         >{props.data.detail}</Text>
-
       </View>
     </View>
   )
