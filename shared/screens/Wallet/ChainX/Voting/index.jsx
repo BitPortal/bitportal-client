@@ -240,7 +240,7 @@ export default class ChainXVoting extends Component {
     })
   }
 
-  formatBalance = (balance, num = 8) => (parseInt(balance) * Math.pow(10, -8)).toFixed(num)
+  formatBalance = (balance, num = 8) => (parseInt(balance) * Math.pow(10, -num)).toFixed(num)
 
   render() {
     const { statusBarHeight } = this.props
@@ -371,9 +371,9 @@ export default class ChainXVoting extends Component {
                   userNominationStr={userNominationStr}
                   pendingInterestStr={pendingInterestStr}
                   totalNominationStr={totalNominationStr}
-                  onPress={this.onAccessoryPress.bind(this, item)}
+                  onPress={this.onAccessoryPress.bind(this, item, pendingInterestStr)}
                   accessoryType={TableView.Consts.AccessoryType.DetailButton}
-                  onAccessoryPress={this.onAccessoryPress.bind(this, item)}
+                  onAccessoryPress={this.onAccessoryPress.bind(this, item, pendingInterestStr)}
                 />
               )
             })}
@@ -426,9 +426,9 @@ export default class ChainXVoting extends Component {
                     userNominationStr={userNominationStr}
                     pendingInterestStr={pendingInterestStr}
                     totalNominationStr={totalNominationStr}
-                    onPress={this.onAccessoryPress.bind(this, item)}
+                    onPress={this.onAccessoryPress.bind(this, item, pendingInterestStr)}
                     accessoryType={TableView.Consts.AccessoryType.DetailButton}
-                    onAccessoryPress={this.onAccessoryPress.bind(this, item)}
+                    onAccessoryPress={this.onAccessoryPress.bind(this, item, pendingInterestStr)}
                   />
                 )
             })}

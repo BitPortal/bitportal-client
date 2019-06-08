@@ -64,7 +64,7 @@ export default class ChainXDepositClaim extends Component {
     loaded: false
   }
 
-  formatBalance = (balance, num = 8) => (parseInt(balance) * Math.pow(10, -8)).toFixed(num).toString()
+  formatBalance = (balance, num = 8) => (parseInt(balance) * Math.pow(10, -num)).toFixed(num).toString()
 
 
   updatePseduIntentions = async() => {
@@ -127,7 +127,7 @@ export default class ChainXDepositClaim extends Component {
   }
 
   toDepositClaim = (asset) => {
-    if (['Bitcoin', 'SDOT'].indexOf(asset) === -1) {
+    if (['BTC', 'SDOT'].indexOf(asset) === -1) {
       Dialog.alert('提示', '请指定资产')
       return
     }
@@ -188,6 +188,11 @@ export default class ChainXDepositClaim extends Component {
         console.error('提息失败', tx.toString())
         Dialog.alert('错误', '提息失败')
       }
+      setTimeout(async () => {
+        await this.updatePseduIntentions()
+        await this.updateUserIntentions(activeWallet.address)
+        await this.updateBlockHeight()
+      }, 2000)
     } catch (e) {
       Dialog.alert('提息失败', `错误：${e.toString()}`)
     }
@@ -343,7 +348,7 @@ export default class ChainXDepositClaim extends Component {
           </Section>
         </TableView>
         <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
-          <TouchableOpacity style={styles.button} onPress={this.toDepositClaim.bind(this, 'Bitcoin')}>
+          <TouchableOpacity style={styles.button} onPress={this.toDepositClaim.bind(this, 'BTC')}>
             <Text style={styles.buttonText}>BTC充值提息</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.button, { backgroundColor: '#EFEFF4' }]} onPress={this.toDepositClaim.bind(this, 'SDOT')}>

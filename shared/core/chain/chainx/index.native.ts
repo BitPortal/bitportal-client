@@ -166,8 +166,8 @@ export const voteClaim = async (password: string, keystore: any, fromAddress: st
   return txId
 }
 
-export const depositClaim = async (password: string, keystore: any, fromAddress: string, asset = 'Bitcoin') => {
-  if (['Bitcoin', 'SDOT'].indexOf(asset) === -1) {
+export const depositClaim = async (password: string, keystore: any, fromAddress: string, asset = 'BTC') => {
+  if (['BTC', 'SDOT'].indexOf(asset) === -1) {
     throw new Error('Invalid asset' + asset.toString())
   }
   const chainx = await initApibase()

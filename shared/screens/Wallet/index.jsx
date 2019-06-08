@@ -304,7 +304,7 @@ export default class Wallet extends Component {
       Navigation.push(this.props.componentId, {
         component: {
           name: 'BitPortal.ManageWallet',
-          passProps: { ...walletInfo, fromCard: true  }
+          passProps: { ...walletInfo, fromCard: true }
         }
       })
     } else if (action === 'copy') {

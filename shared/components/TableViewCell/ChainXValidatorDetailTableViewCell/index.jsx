@@ -11,7 +11,7 @@ const ChainXValidatorDetailTableViewCell = (props) => {
     }
   }
 
-  formatBalance = (balance, num = 8) => (parseInt(balance) * Math.pow(10, -8)).toFixed(num).toString()
+  formatBalance = (balance, num = 8) => (parseInt(balance) * Math.pow(10, -num)).toFixed(num).toString()
 
   if (props.data.actionType) {
     return (
