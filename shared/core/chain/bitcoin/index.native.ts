@@ -62,6 +62,11 @@ export const getTransactions = async (address: string | string[], from: number =
   return transactions
 }
 
+export const getTransaction = async (txid: string) => {
+  const transaction = await insightApi('GET', `/tx/${txid}`)
+  return transaction
+}
+
 export const getEstimateFee = async () => {
   const fee = await insightApi('GET', '/utils/estimatefee')
   return fee['2']

@@ -8,44 +8,19 @@ export const transferTransactionIdSelector = (state: RootState) => state.transac
 
 export const activeWalletTransactionsByIdSelector = createSelector(
   activeWalletSelector,
+  activeAssetSelector,
   transactionSelector,
-  (activeWallet: string, transaction: any) => {
+  (activeWallet: any, activeAsset: any, transaction: any) => {
     if (activeWallet) {
       const { chain, address } = activeWallet
       const id = `${chain}/${address}`
       const activeWalletTransaction = transaction.byId[id]
 
       if (activeWalletTransaction) {
-        return activeWalletTransaction.items.byId
-      }
-    }
-
-    return null
-  }
-)
-
-export const activeWalletAssetTransactionsByIdSelector = createSelector(
-  activeWalletSelector,
-  activeAssetSelector,
-  transactionSelector,
-  (activeWallet: string, activeAsset: string, transaction: any) => {
-    if (activeWallet) {
-      if (activeAsset) {
-        const { chain, address } = activeWallet
-        const activeAssetAddress = activeAsset.address || activeAsset.account
-        const id = `${chain}/${address}/${activeAssetAddress}/${activeAsset.symbol}`
-        const activeWalletTransaction = transaction.byId[id]
-
-        if (activeWalletTransaction) {
-          return activeWalletTransaction.items.byId
-        }
-      } else {
-        const { chain, address } = activeWallet
-        const id = `${chain}/${address}`
-        const activeWalletTransaction = transaction.byId[id]
-
-        if (activeWalletTransaction) {
-          return activeWalletTransaction.items.byId
+        if (activeAsset.contract && activeWallet.symbol === activeAsset.symbol && activeWallet.chain === activeAsset.chain) {
+          return activeWalletTransaction[`${activeAsset.contract}/${activeAsset.symbol}`].items.byId
+        } else {
+          return activeWalletTransaction.basecoin.items.byId
         }
       }
     }
@@ -56,15 +31,20 @@ export const activeWalletAssetTransactionsByIdSelector = createSelector(
 
 export const activeWalletTransactionsSelector = createSelector(
   activeWalletSelector,
+  activeAssetSelector,
   transactionSelector,
-  (activeWallet: string, transaction: any) => {
+  (activeWallet: any, activeAsset: any, transaction: any) => {
     if (activeWallet) {
       const { chain, address } = activeWallet
       const id = `${chain}/${address}`
       const activeWalletTransaction = transaction.byId[id]
 
       if (activeWalletTransaction) {
-        return activeWalletTransaction.items.allIds.map((item: any) => activeWalletTransaction.items.byId[typeof item === 'string' ? item : item.id])
+        if (activeAsset.contract && activeWallet.symbol === activeAsset.symbol && activeWallet.chain === activeAsset.chain) {
+          return activeWalletTransaction[`${activeAsset.contract}/${activeAsset.symbol}`].items.allIds.map((item: any) => activeWalletTransaction[`${activeAsset.contract}/${activeAsset.symbol}`].items.byId[typeof item === 'string' ? item : item.id])
+        } else {
+          return activeWalletTransaction.basecoin.items.allIds.map((item: any) => activeWalletTransaction.basecoin.items.byId[typeof item === 'string' ? item : item.id])
+        }
       }
     }
 
@@ -86,15 +66,20 @@ export const activeWalletTransactionSelector = createSelector(
 
 export const transferWalletTransactionsByIdSelector = createSelector(
   transferWalletSelector,
+  transferAssetSelector,
   transactionSelector,
-  (transferWallet: string, transaction: any) => {
+  (transferWallet: any, transferAsset: any, transaction: any) => {
     if (transferWallet) {
       const { chain, address } = transferWallet
       const id = `${chain}/${address}`
       const transferWalletTransaction = transaction.byId[id]
 
       if (transferWalletTransaction) {
-        return transferWalletTransaction.items.byId
+        if (transferAsset.contract && transferWallet.symbol === transferAsset.symbol && transferWallet.chain === transferAsset.chain) {
+          return transferWalletTransaction[`${transferAsset.contract}/${transferAsset.symbol}`].items.byId
+        } else {
+          return transferWalletTransaction.basecoin.items.byId
+        }
       }
     }
 
@@ -104,15 +89,20 @@ export const transferWalletTransactionsByIdSelector = createSelector(
 
 export const transferWalletTransactionsSelector = createSelector(
   transferWalletSelector,
+  transferAssetSelector,
   transactionSelector,
-  (transferWallet: string, transaction: any) => {
+  (transferWallet: any, transferAsset: any, transaction: any) => {
     if (transferWallet) {
       const { chain, address } = transferWallet
       const id = `${chain}/${address}`
       const transferWalletTransaction = transaction.byId[id]
 
       if (transferWalletTransaction) {
-        return transferWalletTransaction.items.allIds.map((item: any) => transferWalletTransaction.items.byId[typeof item === 'string' ? item : item.id])
+        if (transferAsset.contract && transferWallet.symbol === transferAsset.symbol && transferWallet.chain === transferAsset.chain) {
+          return transferWalletTransaction[`${transferAsset.contract}/${transferAsset.symbol}`].items.allIds.map((item: any) => transferWalletTransaction[`${transferAsset.contract}/${transferAsset.symbol}`].items.byId[typeof item === 'string' ? item : item.id])
+        } else {
+          return transferWalletTransaction.basecoin.items.allIds.map((item: any) => transferWalletTransaction.basecoin.items.byId[typeof item === 'string' ? item : item.id])
+        }
       }
     }
 
@@ -122,8 +112,8 @@ export const transferWalletTransactionsSelector = createSelector(
 
 export const transferWalletTransactionSelector = createSelector(
   transferWalletTransactionsByIdSelector,
-  activeTransactionIdSelector,
-  (transactions: string, id: any) => {
+  transferTransactionIdSelector,
+  (transactions: any, id: any) => {
     if (transactions && id) {
       return transactions[id]
     }

@@ -120,7 +120,10 @@ export default class Asset extends Component {
   }
 
   componentDidAppear() {
-    this.props.actions.getTransactions.requested(this.props.activeWallet)
+    const { activeWallet, activeAsset } = this.props
+    const contract = activeAsset.contract
+    const assetSymbol = activeAsset.symbol
+    this.props.actions.getTransactions.requested({ ...this.props.activeWallet, contract, assetSymbol })
   }
 
   componentDidDisappear() {
