@@ -21,7 +21,7 @@ import {
   importedWalletSelector,
   activeWalletSelector
 } from 'selectors/wallet'
-import { activeWalletBalanceSelector } from 'selectors/balance'
+import { activeWalletBalanceSelector, activeWalletAssetsBalanceSelector } from 'selectors/balance'
 import { activeWalletSelectedAssetsSelector } from 'selectors/asset'
 import { activeWalletTickerSelector } from 'selectors/ticker'
 import { accountResourcesByIdSelector } from 'selectors/account'
@@ -56,6 +56,7 @@ const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
     activeWalletId: state.wallet.activeWalletId,
     activeWallet: activeWalletSelector(state),
     balance: activeWalletBalanceSelector(state),
+    assetsBalance: activeWalletAssetsBalanceSelector(state),
     ticker: activeWalletTickerSelector(state),
     portfolio: state.portfolio.byId,
     resources: accountResourcesByIdSelector(state),
@@ -151,7 +152,8 @@ export default class Wallet extends Component {
     /* for (let i = 0; i < 200; i++) {
      *   // Replace me with a link to a large file
      *   // http://ipv4.download.thinkbroadband.com/5MB.zip
-     *   const res = await fetch('https://market.bitportal.io/api/v2/tickers', { mode: 'no-cors' })
+     *   const res = await fetch('https://market.bitportal.io/api/v2/t
+       ickers', { mode: 'no-cors' })
      *   const result = await api.getTicker()
      *   console.log('fetched', result.length)
      * }*/
@@ -249,7 +251,7 @@ export default class Wallet extends Component {
           options: {
             topBar: {
               title: {
-                text: `${asset.name} (${asset.symbol})`
+                text: `${asset.name || asset.symbol} (${asset.symbol})`
               }
             }
           }
@@ -330,6 +332,14 @@ export default class Wallet extends Component {
   onLeadingSwipe = (data) => {
     this.props.actions.setTransferWallet(this.props.activeWallet.id)
 
+    if (data.isToken) {
+      const assetId = `${data.chain}/${data.contract}/${data.symbol}`
+      this.props.actions.setTransferAsset(assetId)
+    } else {
+      const assetId = `${data.chain}/${data.symbol}`
+      this.props.actions.setTransferAsset(assetId)
+    }
+
     Navigation.showModal({
       stack: {
         children: [{
@@ -356,6 +366,14 @@ export default class Wallet extends Component {
 
   onTrailingSwipe = async (data) => {
     const constants = await Navigation.constants()
+
+    if (data.isToken) {
+      const assetId = `${data.chain}/${data.contract}/${data.symbol}`
+      this.props.actions.setTransferAsset(assetId)
+    } else {
+      const assetId = `${data.chain}/${data.symbol}`
+      this.props.actions.setTransferAsset(assetId)
+    }
 
     Navigation.showModal({
       stack: {
@@ -393,7 +411,6 @@ export default class Wallet extends Component {
     const identityWalletsCount = identityWallets.length
     const importedWalletsCount = importedWallets.length
     const chain = activeWallet ? activeWallet.chain : ''
-
 
     if (loading && !identityWalletsCount && !importedWalletsCount) {
       return (
@@ -443,26 +460,31 @@ export default class Wallet extends Component {
           switching={this.state.switching}
           selectionStyle={this.state.switching ? TableView.Consts.CellSelectionStyle.None : TableView.Consts.CellSelectionStyle.Default}
           chain={chain}
-          showSeparator={false}
+          showSeparator={selectedAsset && selectedAsset.length}
           swipeable={true}
           trailingTitle="收款"
           leadingTitle="转账"
         />
       )
+      const assetsBalance = this.props.assetsBalance
 
       if (selectedAsset && selectedAsset.length) {
         for (let i = 0; i < selectedAsset.length; i++) {
+          const assetBalance = assetsBalance[`${selectedAsset[i].contract}/${selectedAsset[i].symbol}`]
+
           assetItems.push(
             <Item
               key={selectedAsset[i].contract}
+              isToken={true}
+              contract={selectedAsset[i].contract}
               onPress={!this.state.switching ? this.toAsset.bind(this, balance.symbol, selectedAsset[i]) : () => {}}
               reactModuleForCell="AssetBalanceTableViewCell"
               height={60}
-              balance={intl.formatNumber(0, { minimumFractionDigits: balance.precision, maximumFractionDigits: balance.precision })}
+              balance={intl.formatNumber(assetBalance ? assetBalance.balance : 0, { minimumFractionDigits: assetBalance ? assetBalance.precision : balance.precision, maximumFractionDigits: assetBalance ? assetBalance.precision : balance.precision })}
               amount={(ticker && ticker[`${activeWallet.chain}/${selectedAsset[i].symbol}`]) ? intl.formatNumber(0 * +ticker[`${activeWallet.chain}/${selectedAsset[i].symbol}`], { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
               currency="$"
               symbol={selectedAsset[i].symbol}
-              name={selectedAsset[i].name}
+              name={selectedAsset[i].name || selectedAsset[i].symbol}
               componentId={this.props.componentId}
               switching={this.state.switching}
               selectionStyle={this.state.switching ? TableView.Consts.CellSelectionStyle.None : TableView.Consts.CellSelectionStyle.Default}

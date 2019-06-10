@@ -2,6 +2,7 @@ import { createSelector } from 'reselect'
 import { activeWalletIdSelector, activeChainSelector } from 'selectors/wallet'
 
 const activeAssetIdSelector = (state: RootState) => state.asset.activeAssetId
+const transferAssetIdSelector = (state: RootState) => state.asset.transferAssetId
 const assetByIdSelector = (state: RootState) => state.asset.byId
 const assetAllIdsSelector = (state: RootState) => state.asset.allIds
 
@@ -18,7 +19,13 @@ export const activeAssetSelector = createSelector(
   activeAssetIdSelector,
   assetByIdSelector,
   (activeAssetId: any, byId: any) => {
-    if (byId) {
+    if (activeAssetId === 'BITCOIN/BTC') {
+      return { chain: 'BITCOIN', symbol: 'BTC', precision: 8 }
+    } else if  (activeAssetId === 'ETHEREUM/ETH') {
+      return { chain: 'ETHEREUM', symbol: 'ETH', precision: 8 }
+    } else if  (activeAssetId === 'EOS/EOS') {
+      return { chain: 'EOS', symbol: 'EOS', precision: 8 }
+    } else if (byId) {
       return byId[activeAssetId]
     }
 
@@ -27,11 +34,17 @@ export const activeAssetSelector = createSelector(
 )
 
 export const transferAssetSelector = createSelector(
-  activeAssetIdSelector,
+  transferAssetIdSelector,
   assetByIdSelector,
-  (activeAssetId: any, byId: any) => {
-    if (byId) {
-      return byId[activeAssetId]
+  (transferAssetId: any, byId: any) => {
+    if (transferAssetId === 'BITCOIN/BTC') {
+      return { chain: 'BITCOIN', symbol: 'BTC', precision: 8 }
+    } else if  (transferAssetId === 'ETHEREUM/ETH') {
+      return { chain: 'ETHEREUM', symbol: 'ETH', precision: 8 }
+    } else if  (transferAssetId === 'EOS/EOS') {
+      return { chain: 'EOS', symbol: 'EOS', precision: 8 }
+    } else if (byId) {
+      return byId[transferAssetId]
     }
 
     return null

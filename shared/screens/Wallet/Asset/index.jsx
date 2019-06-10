@@ -5,14 +5,16 @@ import { View, Text, TouchableHighlight } from 'react-native'
 import { injectIntl } from 'react-intl'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
-import { activeWalletSelector } from 'selectors/wallet'
-import { activeWalletBalanceSelector } from 'selectors/balance'
+import { activeWalletSelector, activeChainSelector } from 'selectors/wallet'
+import { activeWalletBalanceSelector, activeAssetBalanceSelector } from 'selectors/balance'
 import { activeWalletTickerSelector } from 'selectors/ticker'
 import { activeWalletTransactionsSelector } from 'selectors/transaction'
 import { managingWalletChildAddressSelector } from 'selectors/address'
+import { activeAssetSelector } from 'selectors/asset'
 import FastImage from 'react-native-fast-image'
 import * as transactionActions from 'actions/transaction'
 import * as walletActions from 'actions/wallet'
+import * as balanceActions from 'actions/balance'
 import { assetIcons } from 'resources/images'
 import styles from './styles'
 const { Section, Item } = TableView
@@ -22,8 +24,11 @@ const { Section, Item } = TableView
 @connect(
   state => ({
     getTransactions: state.getTransactions,
+    chain: activeChainSelector(state),
     activeWallet: activeWalletSelector(state),
-    balance: activeWalletBalanceSelector(state),
+    activeAsset: activeAssetSelector(state),
+    walletBalance: activeWalletBalanceSelector(state),
+    assetBalance: activeAssetBalanceSelector(state),
     ticker: activeWalletTickerSelector(state),
     transactions: activeWalletTransactionsSelector(state),
     childAddress: managingWalletChildAddressSelector(state)
@@ -31,7 +36,8 @@ const { Section, Item } = TableView
   dispatch => ({
     actions: bindActionCreators({
       ...transactionActions,
-      ...walletActions
+      ...walletActions,
+      ...balanceActions
     }, dispatch)
   })
 )
@@ -63,7 +69,7 @@ export default class Asset extends Component {
             options: {
               topBar: {
                 title: {
-                  text: `发送${this.props.activeWallet.symbol}到`
+                  text: `发送${this.props.activeAsset.symbol}到`
                 },
                 leftButtons: [
                   {
@@ -123,14 +129,13 @@ export default class Asset extends Component {
 
   componentDidMount() {
     this.props.actions.setActiveWallet(this.props.activeWallet.id)
-    /* Navigation.mergeOptions(this.props.componentId, {
-     *   topBar: {
-     *     background: {
-     *       color: 'white'
-     *     },
-     *     noBorder: true
-     *   }
-     * })*/
+    const { activeAsset, activeWallet, chain } = this.props
+
+    if (activeAsset.contract) {
+      this.props.actions.getEOSTokenBalance.requested({ ...activeAsset, ...activeWallet })
+    } else {
+      this.props.actions.getBalance.requested(activeWallet)
+    }
   }
 
   toTransactionDetail = (id, pending) => {
@@ -148,8 +153,8 @@ export default class Asset extends Component {
         },
         passProps: {
           chain: this.props.activeWallet.chain,
-          precision: this.props.balance.precision,
-          symbol: this.props.balance.symbol
+          precision: this.props.assetBalance.precision,
+          symbol: this.props.assetBalance.symbol
         }
       }
     })
@@ -167,12 +172,13 @@ export default class Asset extends Component {
     }
   }
 
-  onLoadMore = (e) => {
-    console.log('onLoadMore', e)
-  }
+  /* onLoadMore = (e) => {
+   *   console.log('onLoadMore', e)
+   * }*/
 
   render() {
-    const { ticker, balance, activeWallet, intl, transactions, getTransactions, statusBarHeight } = this.props
+    const { ticker, walletBalance, activeWallet, activeAsset, intl, transactions, getTransactions, statusBarHeight, assetBalance } = this.props
+    const balance = activeAsset.contract ? assetBalance : walletBalance
     const transactionCount = transactions && transactions.length
     const precision = balance.precision
     const symbol = balance.symbol
@@ -188,12 +194,11 @@ export default class Asset extends Component {
           <View style={{ width: '100%', justifyContent: 'space-between', alignItems: 'flex-start', flexDirection: 'row', paddingRight: 16, paddingLeft: 16 }}>
             <View style={{ justifyContent: 'center', alignItems: 'flex-start', width: '60%' }}>
               <Text style={{ fontSize: 26, fontWeight: '500' }}>{balance && intl.formatNumber(balance.balance, { minimumFractionDigits: balance.precision, maximumFractionDigits: balance.precision })}</Text>
-              <Text style={{ fontSize: 20, color: '#007AFF', marginTop: 4 }}>≈ ${(ticker && ticker[`${activeWallet.chain}/${activeWallet.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${activeWallet.symbol}`], { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</Text>
+              {!assetBalance && <Text style={{ fontSize: 20, color: '#007AFF', marginTop: 4 }}>≈ ${(ticker && ticker[`${activeWallet.chain}/${activeWallet.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${activeWallet.symbol}`], { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</Text>}
+              {!!assetBalance && <Text style={{ fontSize: 20, color: '#007AFF', marginTop: 4 }}>≈ ${(ticker && ticker[`${activeWallet.chain}/${assetBalance.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${assetBalance.symbol}`], { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</Text>}
             </View>
-            {!!chain && <FastImage
-              source={assetIcons[chain.toLowerCase()]}
-              style={{ width: 60, height: 60, borderRadius: 30, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }}
-            />}
+            {(!activeAsset || !activeAsset.icon_url) && !!chain && <FastImage source={assetIcons[chain.toLowerCase()]} style={{ width: 60, height: 60, borderRadius: 30, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }} />}
+            {(!!activeAsset && !!activeAsset.icon_url) && <FastImage source={{ uri: activeAsset.icon_url }} style={{ width: 60, height: 60, borderRadius: 30, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }} />}
           </View>
           {/* <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16 }}>
               <Text style={{ fontSize: 17, color: 'rgba(0,0,0,0.48)' }}>{this.formatAddress(activeWallet.address)}</Text>
@@ -236,7 +241,6 @@ export default class Asset extends Component {
           onRefresh={this.onRefresh}
           refreshing={refreshing}
           canRefresh={hasTransactions}
-          onLoadMore={this.onLoadMore}
           canLoadMore={true}
         >
           <Section uid="HeaderTableViewCell">

@@ -100,7 +100,7 @@ function* exportMnemonics(action: Action<ExportMnemonicsParams>) {
           children: [{
             component: {
               name: 'BitPortal.BackupIdentity',
-              passProps: { mnemonics: mnemonics + ' salt', backup: true },
+              passProps: { mnemonics, backup: true },
               options: {
                 topBar: {
                   leftButtons: [

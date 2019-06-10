@@ -48,7 +48,7 @@ function* getBalance(action: Action) {
       const result = yield call(eosChain.getBalance, address)
       balance = result.balance
       const { symbol, precision, contract } = result
-      yield put(actions.updateBalance({ id, chain, balance, symbol, precision, contract }))
+      yield put(actions.updateBalance({ id, chain, balance, symbol, precision }))
       yield put(actions.getBalance.succeeded({ walletId, balance }))
     } else if (chain === 'CHAINX') {
       // balance = yield call(chainxChain.getBalance, address)
@@ -57,6 +57,51 @@ function* getBalance(action: Action) {
     }
   } catch (e) {
     yield put(actions.getBalance.failed(getErrorMessage(e)))
+  }
+}
+
+function* getETHTokenBalance(action: Action) {
+  if (!action.payload) return
+
+  try {
+    const chain = action.payload.chain
+    const address = action.payload.address
+    const symbol = action.payload.symbol
+    const contract = action.payload.contract
+    const source = action.payload.source
+    const walletId = action.payload.id
+
+    let balance = '0'
+    let id = `${chain}/${address}/${contract}/${symbol}`
+
+    balance = yield call(ethChain.getTokenBalance, address)
+    yield put(actions.updateBalance({ id, chain, balance, symbol, precision: 8 }))
+    yield put(actions.getETHTokenBalance.succeeded({ walletId, balance }))
+  } catch (e) {
+    yield put(actions.getETHTokenBalance.failed(getErrorMessage(e)))
+  }
+}
+
+function* getEOSTokenBalance(action: Action) {
+  if (!action.payload) return
+
+  try {
+    console.log(action.payload)
+    const chain = action.payload.chain
+    const address = action.payload.address
+    const symbol = action.payload.symbol
+    const contract = action.payload.contract
+    const walletId = action.payload.id
+
+    let balance = '0'
+    let id = `${chain}/${address}`
+
+    const result = yield call(eosChain.getBalance, address, contract, symbol)
+    balance = result.balance
+    yield put(actions.updateBalance({ id, chain, balance: balance, symbol: result.symbol, precision: result.precision, contract }))
+    yield put(actions.getEOSTokenBalance.succeeded({ walletId, balance }))
+  } catch (e) {
+    yield put(actions.getEOSTokenBalance.failed(getErrorMessage(e)))
   }
 }
 
@@ -84,4 +129,6 @@ export default function* balanceSaga() {
   yield takeLatest(String(actions.getBalance.requested), getBalance)
   yield takeLatest(String(actions.getBalance.refresh), getBalance)
   yield takeLatest(String(actions.getBalance.succeeded), getBalanceSucceeded)
+  yield takeLatest(String(actions.getETHTokenBalance.requested), getETHTokenBalance)
+  yield takeLatest(String(actions.getEOSTokenBalance.requested), getEOSTokenBalance)
 }
