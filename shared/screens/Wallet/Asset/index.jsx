@@ -16,6 +16,7 @@ import * as transactionActions from 'actions/transaction'
 import * as walletActions from 'actions/wallet'
 import * as balanceActions from 'actions/balance'
 import { assetIcons } from 'resources/images'
+import chainxAccount from '@chainx/account'
 import styles from './styles'
 const { Section, Item } = TableView
 
@@ -175,9 +176,26 @@ export default class Asset extends Component {
     }
   }
 
-  /* onLoadMore = (e) => {
-   *   console.log('onLoadMore', e)
-   * }*/
+  toChainXHistory = () => {
+    const address = this.props.activeWallet.address
+    const publicKey = chainxAccount.decodeAddress(address)
+    const url = `https://scan.chainx.org/accounts/${publicKey}`
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.WebView',
+        passProps: {
+          url: url
+        },
+        options: {
+          topBar: {
+            title: {
+              text: 'ChainX历史记录'
+            }
+          }
+        }
+      }
+    })
+  }
 
   render() {
     const { ticker, walletBalance, activeWallet, activeAsset, intl, transactions, getTransactions, statusBarHeight, assetBalance } = this.props
@@ -232,6 +250,10 @@ export default class Asset extends Component {
           </View>
           <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 0, backgroundColor: '#C8C7CC' }} />
         </View>
+        {chain === 'CHAINX' && (<View style={{ marginTop: 50, alignItems: 'center' }}>
+          <Text style={{fontSize: 18, color: '#007AFF' }} onPress={this.toChainXHistory}>ChainX的更多记录请点击这里...</Text>
+        </View>)}
+        {chain !== 'CHAINX' && (
         <TableView
           style={{ flex: 1, backgroundColor: 'white' }}
           tableViewCellStyle={TableView.Consts.CellStyle.Default}
@@ -276,6 +298,7 @@ export default class Asset extends Component {
             )}
           </Section>}
         </TableView>
+        )}
       </View>
     )
   }

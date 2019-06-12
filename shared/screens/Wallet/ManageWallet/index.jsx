@@ -9,6 +9,7 @@ import * as producerActions from 'actions/producer'
 import { accountByIdSelector, managingAccountVotedProducersSelector } from 'selectors/account'
 import { managingWalletSelector } from 'selectors/wallet'
 import Modal from 'react-native-modal'
+import Dialog from 'components/Dialog'
 import styles from './styles'
 
 const { Section, Item } = TableView
@@ -389,6 +390,135 @@ export default class ManageWallet extends Component {
     }
   }
 
+  chainxDeposit = async (walletId) => {
+    const constants = await Navigation.constants()
+
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.ChainXDeposit',
+        passProps: {
+          statusBarHeight: constants.statusBarHeight
+        },
+        options: {
+          topBar: {
+            backButton: {
+              title: '返回'
+            }
+          }
+        }
+      }
+    })
+  }
+
+  chainxVoting = async (walletId) => {
+    const constants = await Navigation.constants()
+
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.ChainXVoting'
+      },
+      options: {
+        topBar: {
+          searchBar: false,
+          searchBarHiddenWhenScrolling: false,
+          searchBarPlaceholder: 'Search'
+        }
+      }
+    })
+    //
+    // Navigation.showModal({
+    //   stack: {
+    //     children: [{
+    //       component: {
+    //         name: 'BitPortal.ChainXVoting'
+    //       },
+    //       options: {
+    //         topBar: {
+    //           searchBar: true,
+    //           searchBarHiddenWhenScrolling: false,
+    //           searchBarPlaceholder: 'Search'
+    //         }
+    //       }
+    //     }]
+    //   }
+    // })
+  }
+
+  chainxWithdrawal = async () => {
+    Dialog.alert('提示', 'Coming Soon')
+    return
+    const constants = await Navigation.constants()
+
+    Navigation.push({
+      component: {
+        name: 'BitPortal.ChainxWithdrawal'
+      },
+      options: {
+        topBar: {
+          searchBar: true,
+          searchBarHiddenWhenScrolling: false,
+          searchBarPlaceholder: 'Search'
+        }
+      }
+    })
+  }
+
+  chainxToStats = async () => {
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.WebView',
+            passProps: {
+              url: 'https://stats.chainx.org/#/ChainX?utm=bitportal'
+            },
+            options: {
+              topBar: {
+                title: {
+                  text: 'ChainX 节点状态'
+                },
+                leftButtons: [
+                  {
+                    id: 'cancel',
+                    text: '取消'
+                  }
+                ]
+              }
+            }
+          }
+        }]
+      }
+    })
+  }
+
+  chainxToScan = async () => {
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.WebView',
+            passProps: {
+              url: 'https://scan.chainx.org?utm=bitportal'
+            },
+            options: {
+              topBar: {
+                title: {
+                  text: 'ChainX 区块链浏览器'
+                },
+                leftButtons: [
+                  {
+                    id: 'cancel',
+                    text: '取消'
+                  }
+                ]
+              }
+            }
+          }
+        }]
+      }
+    })
+  }
+
   render() {
     const { type, deleteWallet, exportMnemonics, exportBTCPrivateKey, exportETHKeystore, exportETHPrivateKey, exportEOSPrivateKey, switchBTCAddressType, wallet } = this.props
     const name = (wallet && wallet.name) || this.props.name
@@ -522,6 +652,59 @@ export default class ManageWallet extends Component {
           actionType="keystore"
           text="导出Keystore"
           onPress={this.exportETHKeystore.bind(this, id)}
+          arrow
+        />
+      )
+    }
+
+    if (chain === 'CHAINX') {
+      editActions.push(
+        <Item
+          reactModuleForCell="WalletManagementTableViewCell"
+          key="chainxDeposit"
+          actionType="chainxDeposit"
+          text="充值挖矿"
+          onPress={this.chainxDeposit.bind(this, id)}
+          arrow
+        />
+      )
+      editActions.push(
+        <Item
+          reactModuleForCell="WalletManagementTableViewCell"
+          key="chainxVoting"
+          actionType="chainxVoting"
+          text="投票选举"
+          onPress={this.chainxVoting.bind(this, id)}
+          arrow
+        />
+      )
+      editActions.push(
+        <Item
+          reactModuleForCell="WalletManagementTableViewCell"
+          key="chainxWithdrawal"
+          actionType="chainxWithdrawal"
+          text="资产提现"
+          onPress={this.chainxWithdrawal.bind(this, id)}
+          arrow
+        />
+      )
+      accountActions.push(
+        <Item
+          reactModuleForCell="WalletManagementTableViewCell"
+          key="chainxScan"
+          actionType="chainxScan"
+          text="区块浏览器"
+          onPress={this.chainxToScan.bind(this, id)}
+          arrow
+        />
+      )
+      accountActions.push(
+        <Item
+          reactModuleForCell="WalletManagementTableViewCell"
+          key="chainxStats"
+          actionType="chainxStats"
+          text="节点状态"
+          onPress={this.chainxToStats.bind(this, id)}
           arrow
         />
       )

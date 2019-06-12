@@ -671,6 +671,38 @@ function* importChainxPrivateKey(action: Action<ImportChainxPrivateKeyParams>) {
   }
 }
 
+function* exportPCXPrivateKey(action: Action<ExportPCXPrivateKeyParams>) {
+  if (!action.payload) return
+  if (action.payload.delay) yield delay(action.payload.delay)
+
+  try {
+    const id = action.payload.id
+    const password = action.payload.password
+    const source = action.payload.source
+
+    let keystore
+    if (source === 'NEW_IDENTITY' || source === 'RECOVERED_IDENTITY') {
+      keystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    } else {
+      keystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    }
+
+    assert(keystore && keystore.crypto, 'No keystore')
+    const privateKey = yield call(walletCore.exportPrivateKey, password, keystore, source)
+    yield put(actions.exportPCXPrivateKey.succeeded())
+    yield delay(500)
+
+    if (action.payload.componentId) {
+      push('BitPortal.ExportPCXPrivateKey', action.payload.componentId, {
+        privateKey
+      })
+    }
+  } catch (e) {
+    yield put(actions.exportPCXPrivateKey.failed(getErrorMessage(e)))
+  }
+}
+
+
 export default function* walletSaga() {
   yield takeLatest(String(actions.setActiveWallet), setActiveWallet)
   yield takeLatest(String(actions.deleteWallet.requested), deleteWallet)
@@ -692,4 +724,5 @@ export default function* walletSaga() {
   yield takeLatest(String(actions.setWalletName.requested), setWalletName)
   yield takeLatest(String(actions.importChainxMnemonics.requested), importChainxMnemonics)
   yield takeLatest(String(actions.importChainxPrivateKey.requested), importChainxPrivateKey)
+  yield takeLatest(String(actions.exportPCXPrivateKey.requested), exportPCXPrivateKey)
 }

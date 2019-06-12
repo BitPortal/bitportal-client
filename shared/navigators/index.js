@@ -9,6 +9,8 @@ import WalletOverviewTableViewCell from 'components/TableViewCell/WalletOverview
 import WalletTableViewCell from 'components/TableViewCell/WalletTableViewCell'
 import WalletManagementTableViewCell from 'components/TableViewCell/WalletManagementTableViewCell'
 import ProducerTableViewCell from 'components/TableViewCell/ProducerTableViewCell'
+import ChainXValidatorTableViewCell from 'components/TableViewCell/ChainXValidatorTableViewCell'
+import ChainXValidatorDetailTableViewCell from 'components/TableViewCell/ChainXValidatorDetailTableViewCell'
 import MarketTableViewCell from 'components/TableViewCell/MarketTableViewCell'
 import TransactionTableViewCell from 'components/TableViewCell/TransactionTableViewCell'
 import AssetActionsTableViewCell from 'components/TableViewCell/AssetActionsTableViewCell'
@@ -66,11 +68,15 @@ import ExportETHKeystore from 'screens/Wallet/ExportETHKeystore'
 import ExportETHPrivateKey from 'screens/Wallet/ExportETHPrivateKey'
 import ExportEOSPrivateKey from 'screens/Wallet/ExportEOSPrivateKey'
 import ExportBTCPrivateKey from 'screens/Wallet/ExportBTCPrivateKey'
+import ExportPCXPrivateKey from 'screens/Wallet/ExportPCXPrivateKey'
 import SelectEOSAccount from 'screens/Wallet/SelectEOSAccount'
 import SwitchEOSAccount from 'screens/Wallet/SwitchEOSAccount'
 import SwitchBTCAddress from 'screens/Wallet/SwitchBTCAddress'
 import TransactionDetail from 'screens/Wallet/TransactionDetail'
 import ProducerDetail from 'screens/Wallet/ProducerDetail'
+import ChainXDeposit from 'screens/Wallet/ChainX/Deposit'
+import ChainXVoting from 'screens/Wallet/ChainX/Voting'
+import ChainXValidatorDetail from 'screens/Wallet/ChainX/Voting/ValidatorDetail'
 import Discovery from 'screens/Discovery'
 import DappList from 'screens/Discovery/DappList'
 import Profile from 'screens/Profile'
@@ -101,6 +107,9 @@ export const registerScreens = (store) => {
   AppRegistry.registerComponent('AssetActionsTableViewCell', () => AssetActionsTableViewCell)
   AppRegistry.registerComponent('AssetOverviewTableViewCell', () => AssetOverviewTableViewCell)
   AppRegistry.registerComponent('ChainTypeTableViewCell', () => ChainTypeTableViewCell)
+  AppRegistry.registerComponent('ChainXValidatorTableViewCell', () => ChainXValidatorTableViewCell)
+  AppRegistry.registerComponent('ChainXValidatorDetailTableViewCell', () => ChainXValidatorDetailTableViewCell)
+
 
   AppRegistry.registerComponent('WalletCardCollectionViewCell', () => WalletCardCollectionViewCell)
   AppRegistry.registerComponent('FeaturedDappCollectionViewCell', () => FeaturedDappCollectionViewCell)
@@ -160,8 +169,12 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.ExportETHPrivateKey', () => ExportETHPrivateKey, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ExportEOSPrivateKey', () => ExportEOSPrivateKey, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ExportBTCPrivateKey', () => ExportBTCPrivateKey, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ExportPCXPrivateKey', () => ExportPCXPrivateKey, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.TransactionDetail', () => TransactionDetail, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ProducerDetail', () => ProducerDetail, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ChainXDeposit', () => ChainXDeposit, PersistProvider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ChainXVoting', () => ChainXVoting, PersistProvider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ChainXValidatorDetail', () => ChainXValidatorDetail, PersistProvider, store)
 
   Navigation.registerComponentWithRedux('BitPortal.Market', () => Market, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Discovery', () => Discovery, Provider, store)
@@ -289,29 +302,29 @@ export const startTabBasedApp = () => {
               }
             }
           },
-          {
-            stack: {
-              children: [
-                {
-                  component: {
-                    id: 'BitPortal.Discovery',
-                    name: 'BitPortal.Discovery'
-                  }
-                }
-              ],
-              options: {
-                bottomTab: {
-                  text: '应用',
-                  textColor: '#9D9D9D',
-                  iconColor: '#9D9D9D',
-                  selectedTextColor: '#007AFF',
-                  icon: require('resources/images/app_tab.png'),
-                  selectedIconColor: '#007AFF',
-                  testID: 'BITPORTAL_DISCOVERY'
-                }
-              }
-            }
-          },
+          // {
+          //   stack: {
+          //     children: [
+          //       {
+          //         component: {
+          //           id: 'BitPortal.Discovery',
+          //           name: 'BitPortal.Discovery'
+          //         }
+          //       }
+          //     ],
+          //     options: {
+          //       bottomTab: {
+          //         text: '应用',
+          //         textColor: '#9D9D9D',
+          //         iconColor: '#9D9D9D',
+          //         selectedTextColor: '#007AFF',
+          //         icon: require('resources/images/app_tab.png'),
+          //         selectedIconColor: '#007AFF',
+          //         testID: 'BITPORTAL_DISCOVERY'
+          //       }
+          //     }
+          //   }
+          // },
           // {
           //   stack: {
           //     children: [

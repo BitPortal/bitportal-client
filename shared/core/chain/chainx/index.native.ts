@@ -1,45 +1,54 @@
 import { chainxScanApi } from 'core/api'
 import { decryptPrivateKey, decryptMnemonic } from 'core/keystore'
-import Chainx from 'chainx.js'
+import { ApiBase, HttpProvider } from 'chainx.js'
+import chainxAccount from '@chainx/account'
+import { walletType } from 'core/constants'
 
-export const initChainx = async (network: string = 'mainnet') => {
-  // Todo:: fix init
+export const initRpc = () => {
+  return new HttpProvider('https://w1.chainx.org/rpc')
+}
 
-    let chainx = new Chainx('wss://w2.chainx.org/ws')
-    if (chainx) {
-      chainx.account.setNet('mainnet')
-      await chainx.isRpcReady()
-      return chainx
+export const initApibase = async () => {
+  const chainx = new ApiBase(new HttpProvider('https://w1.chainx.org/rpc'), ['https://w2.chainx.org/rpc'])
+  await chainx._isReady
+  return chainx
+}
+
+const getPrivateKeyFromKeyStore = async (password: string, keystore: any) => {
+  let privateKey
+  if (keystore && keystore.bitportalMeta) {
+    if (keystore.bitportalMeta.walletType === walletType.hd) {
+      const mnemonics = await decryptMnemonic(password, keystore)
+      privateKey = chainxAccount.from(mnemonics).derive().privateKey()
+    } else if (keystore.bitportalMeta.walletType === walletType.imported){
+      privateKey = await decryptPrivateKey(password, keystore)
+      privateKey = Buffer.from(privateKey, 'hex').toString()
+    } else {
+      console.error('invalid wallet type in keystore')
     }
-    else {
-      chainx = new Chainx('wss://w2.chainx.org/ws')
-      if (chainx && chainx.provider) {
-        chainx.account.setNet('mainnet')
-        await chainx.isRpcReady()
-        return chainx
-      } else {
-        return false
-      }
-    }
+  }
+  return privateKey
 }
 
 export const getBalance = async (address: string) => {
-  const chainx = await initChainx('mainnet')
-  const balance = await chainx.asset.getAssetsByAccount(address, 0, 1)
+  const provider = initRpc()
+  const balance = await provider.send('chainx_getAssetsByAccount', [chainxAccount.decodeAddress(address), 0, 1]);
+
   return (+balance.data[0].details.Free) * Math.pow(10, -8)
 }
 
 export const getAsset = async (address: string) => {
-  const asset = await chainx.asset.getAssetsByAccount(address, 0, 1)
+  const provider = initRpc()
+  const asset = await provider.send('chainx_getAssetsByAccount', [chainxAccount.decodeAddress(address), 0, 1])
   return asset
 }
 
-export const getTransactions = async (publicKey: string, page: number = 0, pageSize: number = 10) => {
-  const result = await chainxScanApi('GET', '/account/' + publicKey + '/txs', {
+export const getTransactions = async (address: string, page: number = 0, pageSize: number = 10) => {
+  const result = await chainxScanApi('GET', '/account/' + chainxAccount.decodeAddress(address) + '/txs', {
     page,
     page_size: pageSize
   })
-  return result.items
+  return result
 }
 
 export const getTransaction = async (hash: string) => {
@@ -47,8 +56,7 @@ export const getTransaction = async (hash: string) => {
 }
 
 export const getBlockNumber = async () => {
-  const chainx = await initChainx()
-  return await chainx.chain.getBlockNumber()
+
 }
 
 export const getBlock = async (id: string | number, returnTransactionObjects: boolean) => {
@@ -59,30 +67,102 @@ export const getBlockTransactionNumber = async (id: string | number) => {
 
 }
 
+export const getAddressByAccount = async (address: string) => {
+  const provider = initRpc()
+  const addresses = await provider.send('chainx_getAddressByAccount', [chainxAccount.decodeAddress(address), 'Bitcoin'])
+  return addresses
+}
+
+export const getTrusteeSessionInfo = async () => {
+  const provider = initRpc()
+  return await provider.send('chainx_getTrusteeSessionInfo', ['Bitcoin'])
+}
+
+export const getIntentions = async () => {
+  const provider = initRpc()
+  const intentions = await provider.send('chainx_getIntentions', [])
+  return intentions
+}
+
+export const getNominationRecords = async (address) => {
+  const provider = initRpc()
+  const pubkey = chainxAccount.decodeAddress(address)
+  const records = await provider.send('chainx_getNominationRecords', [pubkey])
+  return records
+}
+
+export const getDepositOpReturn = (address, nodeName = 'BitPortal') => {
+  return new Buffer.from(address + '@' + nodeName, 'utf-8').toString('hex')
+}
+
+export const getSdotMappingData = (address, nodeName = 'BitPotal') => {
+  return getDepositOpReturn(address, nodeName)
+}
+
 export const transfer = async (password: string, keystore: any, fromAddress: string, toAddress: string, symbol: string, amount: string, memo: string = '') => {
-  const chainx = await initChainx('mainnet')
+  const realAmount = (+amount) * Math.pow(10, 8)
 
-  console.log('CHAINX Transfer', password, keystore, fromAddress, toAddress, amount, memo)
-  const txToSign = await chainx.asset.transfer(toAddress, symbol, amount * Math.pow(10, 8), memo)
+  const chainx = await initApibase()
 
-  const privateKey = await decryptPrivateKey(password, keystore)
-  console.log('private key', privateKey, Buffer.from(privateKey, 'hex').toString())
+  // 生成转账交易
+  console.log('transfer params', fromAddress, toAddress, symbol, realAmount, memo)
+  const extrinsic = chainx.tx.xAssets.transfer(toAddress, symbol, realAmount, memo)
 
-  // chainx.account.from(mnemonic).derive().privateKey()
+  // 获取该账户交易次数
+  const nonce = await chainx.query.system.accountNonce(fromAddress)
 
-  // Todo:: check address
+  const pk = await getPrivateKeyFromKeyStore(password, keystore)
 
-  txToSign.signAndSend(Buffer.from(privateKey, 'hex').toString(), (error, response) => {
-    if (error) console.error(error)
-    else if (response.status === 'Finalized') {
-      if (response.result === 'ExtrinsicSuccess') {
-        return response.txHash
-      } else {
-        console.log(response)
-        return false
-      }
-    } else {
-      return false
-    }
-  })
+  // const signed = extrinsic.sign(privateKeyHex, {nonce, acceleration = 1, blockHash: chainx.genesisHash })
+  const txId = await extrinsic.signAndSend(pk, { nonce, acceleration: 1 })
+  return txId
+}
+
+export const vote = async (password: string, keystore: any, fromAddress: string, targetAddress: string, amount: string, memo: string) => {
+  const realAmount = (+amount) * Math.pow(10, 8)
+
+  const chainx = await initApibase()
+
+  const extrinsic = chainx.tx.xStaking.nominate(targetAddress, realAmount, memo)
+
+  // Get Nonce
+  const nonce = await chainx.query.system.accountNonce(fromAddress)
+
+  const pk = await getPrivateKeyFromKeyStore(password, keystore)
+
+  const txId = await extrinsic.signAndSend(pk, { nonce, acceleration: 1 })
+  return txId
+}
+
+export const voteClaim = async (password: string, keystore: any, fromAddress: string, targetAddress: string) => {
+  const chainx = await initApibase()
+
+  // Generate Transaction
+  const extrinsic = chainx.tx.xStaking.claim(targetAddress)
+
+  // Get Nonce
+  const nonce = await chainx.query.system.accountNonce(fromAddress)
+
+  const pk = await getPrivateKeyFromKeyStore(password, keystore)
+
+  const txId = await extrinsic.signAndSend(pk, { nonce, acceleration: 1 })
+  return txId
+}
+
+export const depositClaim = async (password: string, keystore: any, fromAddress: string, asset = 'Bitcoin') => {
+  if (['Bitcoin', 'SDOT'].indexOf(asset) === -1) {
+    throw new Error('Invalid asset' + asset.toString())
+  }
+  const chainx = await initApibase()
+
+  // Generate Transaction
+  const extrinsic = chainx.tx.xTokens.claim(asset)
+
+  // Get Nonce
+  const nonce = await chainx.query.system.accountNonce(fromAddress)
+
+  const pk = await getPrivateKeyFromKeyStore(password, keystore)
+
+  const txId = await extrinsic.signAndSend(pk, { nonce, acceleration: 1 })
+  return txId
 }

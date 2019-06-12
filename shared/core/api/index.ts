@@ -151,7 +151,7 @@ export const chainxScanApi = async (
   params: object = {},
   options: FetchOptions = {}
 ) => {
-  const baseUrl = 'http://api.chainx.org'
+  const baseUrl = 'https://api.chainx.org.cn/'
   const headers = options.headers || {}
   const paramsWithApiKey = { ...params, apikey: etherscanApiKey }
 

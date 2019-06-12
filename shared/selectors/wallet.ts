@@ -53,6 +53,24 @@ export const identityWalletSelector = createSelector(
   (byId: any, allIds: any) => allIds.map(id => byId[id])
 )
 
+export const identityBTCWalletSelector = createSelector(
+  identityWalletSelector,
+  (identityWallet: any) => {
+    const index = identityWallet.findIndex(wallet => wallet.chain === 'BITCOIN')
+
+    return index !== -1 ? identityWallet[index] : null
+  }
+)
+
+export const identityETHWalletSelector = createSelector(
+  identityWalletSelector,
+  (identityWallet: any) => {
+    const index = identityWallet.findIndex(wallet => wallet.chain === 'ETHEREUM')
+
+    return index !== -1 ? identityWallet[index] : null
+  }
+)
+
 export const hasIdentityEOSWalletSelector = createSelector(
   identityWalletSelector,
   (identityWallets: any) => {
@@ -85,6 +103,24 @@ export const importedWalletSelector = createSelector(
   importedWalletByIdSelector,
   importedWalletAllIdsSelector,
   (byId: any, allIds: any) => allIds.map(id => byId[id])
+)
+
+export const importedBTCWalletSelector = createSelector(
+  importedWalletSelector,
+  (importedWallet) => {
+    const index = importedWallet.findIndex(wallet => wallet.chain === 'BITCOIN')
+
+    return index !== -1 ? importedWallet[index] : null
+  }
+)
+
+export const importedETHWalletSelector = createSelector(
+  importedWalletSelector,
+  (importedWallet) => {
+    const index = importedWallet.findIndex(wallet => wallet.chain === 'ETHEREUM')
+
+    return index !== -1 ? importedWallet[index] : null
+  }
 )
 
 export const walletAddressesSelector = createSelector(

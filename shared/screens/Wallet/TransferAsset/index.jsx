@@ -106,7 +106,7 @@ export const errorMessages = (error, messages) => {
     case 'EOS System Error':
       return 'EOS系统错误'
     default:
-      return '转账失败'
+      return `转账失败 ${message.toString()}`
   }
 }
 
@@ -156,29 +156,29 @@ const AddressField = ({
       {...restInput}
     />}
     {!!showContact && (
-       <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-         <View style={{ width: 40, height: 40, marginRight: 16 }}>
-           <FastImage
+    <View style={{ alignItems: 'center', flexDirection: 'row' }}>
+      <View style={{ width: 40, height: 40, marginRight: 16 }}>
+        <FastImage
              source={require('resources/images/Userpic2.png')}
              style={{ width: 40, height: 40, borderRadius: 10, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
-           />
-           <View style={{ height: 34, width: 34, borderRadius: 17, position: 'absolute', right: -15, top: -15, alignItems: 'center', justifyContent: 'center' }}>
-             <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'flex-start', justifyContent: 'flex-end', padding: 5 }} activeOpacity={0.8} onPress={clearContact}>
-               <View style={{ width: 18, height: 18, borderRadius: 9, backgroundColor: 'white' }}>
-                 <FastImage
+        />
+        <View style={{ height: 34, width: 34, borderRadius: 17, position: 'absolute', right: -15, top: -15, alignItems: 'center', justifyContent: 'center' }}>
+          <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'flex-start', justifyContent: 'flex-end', padding: 5 }} activeOpacity={0.8} onPress={clearContact}>
+            <View style={{ width: 18, height: 18, borderRadius: 9, backgroundColor: 'white' }}>
+              <FastImage
                    source={require('resources/images/remove_red.png')}
                    style={{ width: 18, height: 18 }}
-                 />
-               </View>
-             </TouchableHighlight>
-           </View>
-         </View>
-         <View>
-           <Text style={{ fontSize: 17 }} lineOfNumebrs={1}>{contact.name}</Text>
-           <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginTop: 2 }} lineOfNumebrs={1}>{formatAddress(contact.address)}</Text>
-         </View>
-       </View>
-     )
+              />
+            </View>
+          </TouchableHighlight>
+        </View>
+      </View>
+      <View>
+        <Text style={{ fontSize: 17 }} lineOfNumebrs={1}>{contact.name}</Text>
+        <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginTop: 2 }} lineOfNumebrs={1}>{formatAddress(contact.address)}</Text>
+      </View>
+    </View>
+    )
     }
     <View style={{ height: '100%', position: 'absolute', right: 16, top: 0, width: 30, alignItems: 'center', justifyContent: 'center' }}>
       <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={selectContact}>
@@ -279,7 +279,7 @@ const AmountField = ({
           />
         </TouchableHighlight>
       </View>}
-    {separator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 16, left: 16, backgroundColor: '#C8C7CC' }} />}
+      {separator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 16, left: 16, backgroundColor: '#C8C7CC' }} />}
     </View>
   </View>
 )
@@ -315,7 +315,7 @@ const TextField = ({
           />
         </TouchableHighlight>
       </View>}
-    {separator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 16, left: 16, backgroundColor: '#C8C7CC' }} />}
+      {separator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 16, left: 16, backgroundColor: '#C8C7CC' }} />}
     </View>
   </View>
 )
@@ -466,13 +466,13 @@ export default class TransferAsset extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
-      (nextProps.selectedContact && nextProps.selectedContact.name) !== prevState.selectedContactName ||
-      (nextProps.selectedContact && nextProps.selectedContact.address) !== prevState.selectedContactAddress ||
-      (nextProps.selectedContact && nextProps.selectedContact.memo) !== prevState.selectedContactMemo ||
-      (nextProps.fee && nextProps.fee.fastestFee) !== prevState.fastestBTCFee ||
-      (nextProps.fee && nextProps.fee.halfHourFee) !== prevState.halfHourBTCFee ||
-      (nextProps.fee && nextProps.fee.hourFee) !== prevState.hourBTCFee ||
-      (nextProps.fee && nextProps.fee.gasPrice) !== prevState.ethGasPrice
+      (nextProps.selectedContact && nextProps.selectedContact.name) !== prevState.selectedContactName
+      || (nextProps.selectedContact && nextProps.selectedContact.address) !== prevState.selectedContactAddress
+      || (nextProps.selectedContact && nextProps.selectedContact.memo) !== prevState.selectedContactMemo
+      || (nextProps.fee && nextProps.fee.fastestFee) !== prevState.fastestBTCFee
+      || (nextProps.fee && nextProps.fee.halfHourFee) !== prevState.halfHourBTCFee
+      || (nextProps.fee && nextProps.fee.hourFee) !== prevState.hourBTCFee
+      || (nextProps.fee && nextProps.fee.gasPrice) !== prevState.ethGasPrice
     ) {
       LayoutAnimation.easeInEaseOut()
 
@@ -565,6 +565,7 @@ export default class TransferAsset extends Component {
 
   componentDidMount() {
     this.setState({ autoFocusToAddress: true })
+    console.log('preset opreturn', this.props.presetOpReturn)
 
     if (this.props.presetWalletId) {
       this.props.actions.setTransferWallet(this.props.presetWalletId)
@@ -654,17 +655,18 @@ export default class TransferAsset extends Component {
             onPress: () => console.log('cancel Pressed'),
             style: 'cancel'
           },
-          { text: '添加', onPress: () => {
-            Navigation.showModal({
-              stack: {
-                children: [{
-                  component: {
-                    name: 'BitPortal.EditContact'
-                  }
-                }]
-              }
-            })
-          } }
+          { text: '添加',
+            onPress: () => {
+              Navigation.showModal({
+                stack: {
+                  children: [{
+                    component: {
+                      name: 'BitPortal.EditContact'
+                    }
+                  }]
+                }
+              })
+            } }
         ]
       )
     }
@@ -812,7 +814,7 @@ export default class TransferAsset extends Component {
     })
 
     const feeRate = this.state.feeRate || this.state.initialFeeRate || this.state.fastestBTCFee || 45
-    const useGasPrice = this.state.useGasPrice || this.state.initialGwei || this.state.ethGasPrice  || 4.00
+    const useGasPrice = this.state.useGasPrice || this.state.initialGwei || this.state.ethGasPrice || 4.00
 
     return (
       <ScrollView
@@ -922,7 +924,7 @@ export default class TransferAsset extends Component {
                 maximumTrackTintColor="#E5E5EA"
               />
             </View>}
-      </View>}
+          </View>}
           {showMinnerFee && chain === 'ETHEREUM' && <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16 }}>
             <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
               <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
@@ -963,7 +965,7 @@ export default class TransferAsset extends Component {
             </View>
             {this.state.customFee && <View style={{ width: '100%', height: 50 }}>
               <Slider
-                value={this.state.initialGwei || this.state.ethGasPrice  || 4.00}
+                value={this.state.initialGwei || this.state.ethGasPrice || 4.00}
                 minimumValue={1}
                 maximumValue={50}
                 onValueChange={this.onSliderValueChange}
@@ -1045,7 +1047,7 @@ export default class TransferAsset extends Component {
                     style={{ width: 40, height: 40, marginRight: 16, borderRadius: 10, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }}
                   />
                   <View style={{ height: '100%', justifyContent: 'center' }}>
-                    <Text style={{ fontSize: 17 }}>{`选择联系人`}</Text>
+                    <Text style={{ fontSize: 17 }}>选择联系人</Text>
                     <Text style={{ fontSize: 14, color: '#666666', marginTop: 2 }}>{`${symbol} ${chain === 'EOS' ? '账户名' : '地址'}`}</Text>
                   </View>
                 </View>
@@ -1061,8 +1063,7 @@ export default class TransferAsset extends Component {
                   cellSeparatorInset={{ left: 16 }}
                 >
                   <Section>
-                    {contacts.map(contact =>
-                      <Item
+                    {contacts.map(contact => <Item
                         key={contact.id}
                         height={64}
                         reactModuleForCell="SelectContactTableViewCell"
@@ -1070,8 +1071,8 @@ export default class TransferAsset extends Component {
                         address={contact.address || contact.accountName}
                         onPress={this.selectContactAddress.bind(this, chain, contact.id, contact.name, contact.address || contact.accountName)}
                         accessoryType={(selectedContact && chain === selectedContact.chain && contact.name === selectedContact.name && (contact.address === selectedContact.address || contact.accountName === selectedContact.address)) ? TableView.Consts.AccessoryType.Checkmark : TableView.Consts.AccessoryType.None}
-                      />
-                     )}
+                    />
+                    )}
                   </Section>
                 </TableView>
               </View>

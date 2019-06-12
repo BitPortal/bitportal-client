@@ -606,7 +606,6 @@ export default class ManageEOSResource extends Component {
         </View>
         <ScrollView
           showsVerticalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
           <View style={{ flex: 1, alignItems: 'center' }}>
