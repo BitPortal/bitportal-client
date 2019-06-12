@@ -321,7 +321,7 @@ function* getTransactions(action: Action) {
     const assetSymbol = action.payload.assetSymbol
     const walletId = action.payload.id
 
-    const assetId = contract ? `${contract}/${assetSymbol}` : 'basecoin'
+    const assetId = contract ? `${contract}/${assetSymbol}` : 'syscoin'
 
     let id = `${chain}/${address}`
 
@@ -426,11 +426,13 @@ function* getTransactions(action: Action) {
 
       yield put(actions.updateTransactions({ id, items, pagination, assetId }))
     } else if (chain === 'EOS') {
-      const position = 0
-      const offset = 2000
+      const tokenAccount = contract || 'eosio.token'
+      const position = -1
+      const offset = -100
       const transactions = yield call(eosChain.getTransactions, address, position, offset)
+      console.log('eos transactions', transactions)
       const items = transactions.actions
-        .filter((item: any) => item.action_trace.act.name === 'transfer' && item.action_trace.act.account === 'eosio.token')
+        .filter((item: any) => item.action_trace.act.name === 'transfer' && item.action_trace.act.account === tokenAccount)
         .map((item: any) => {
           const isSender = item.action_trace.act.data.from === address
           const transactionType = isSender ? 'send' : 'receive'

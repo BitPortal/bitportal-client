@@ -3,7 +3,7 @@ import { activeWalletIdSelector, activeChainSelector } from 'selectors/wallet'
 
 const activeAssetIdSelector = (state: RootState) => state.asset.activeAssetId
 const transferAssetIdSelector = (state: RootState) => state.asset.transferAssetId
-const assetByIdSelector = (state: RootState) => state.asset.byId
+export const assetByIdSelector = (state: RootState) => state.asset.byId
 const assetAllIdsSelector = (state: RootState) => state.asset.allIds
 
 export const selectedAssetSelector = (state: RootState) => state.asset.selected
@@ -54,7 +54,12 @@ export const transferAssetSelector = createSelector(
 export const selectedAssetIdsSelector = createSelector(
   activeWalletIdSelector,
   selectedAssetSelector,
-  (activeWalletId: string, selectedAsset: any, ) => selectedAsset[activeWalletId]
+  (activeWalletId: string, selectedAsset: any) => selectedAsset[activeWalletId]
+)
+
+export const eosAssetAllIdsSelector = createSelector(
+  assetAllIdsSelector,
+  (assetAllIds: string) => assetAllIds.filter(item => item.indexOf('EOS/') === 0)
 )
 
 export const activeWalletSelectedAssetsSelector = createSelector(

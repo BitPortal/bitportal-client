@@ -1,6 +1,6 @@
 import assert from 'assert'
 import { delay } from 'redux-saga'
-import { takeLatest, put, call, select } from 'redux-saga/effects'
+import { takeLatest, put, call, select, all } from 'redux-saga/effects'
 import { getErrorMessage } from 'utils'
 import { updatePortfolio } from 'actions/portfolio'
 import * as actions from 'actions/balance'
@@ -86,7 +86,6 @@ function* getEOSTokenBalance(action: Action) {
   if (!action.payload) return
 
   try {
-    console.log(action.payload)
     const chain = action.payload.chain
     const address = action.payload.address
     const symbol = action.payload.symbol
@@ -102,6 +101,23 @@ function* getEOSTokenBalance(action: Action) {
     yield put(actions.getEOSTokenBalance.succeeded({ walletId, balance }))
   } catch (e) {
     yield put(actions.getEOSTokenBalance.failed(getErrorMessage(e)))
+  }
+}
+
+function* getEOSTokenBalanceList(action: Action) {
+  if (!action.payload) return
+
+  try {
+    const address = action.payload.activeWallet.address
+    const chain = action.payload.activeWallet.chain
+    const selectedAsset = action.payload.selectedAsset
+    const id = `${chain}/${address}`
+
+    const balanceList = yield all(selectedAsset.map(item => call(eosChain.getBalance, address, item.contract, item.symbol)))
+    yield put(actions.updateBalanceList({ id, chain, balanceList }))
+    yield put(actions.getEOSTokenBalanceList.succeeded())
+  } catch (e) {
+    yield put(actions.getEOSTokenBalanceList.failed(getErrorMessage(e)))
   }
 }
 
@@ -131,4 +147,5 @@ export default function* balanceSaga() {
   yield takeLatest(String(actions.getBalance.succeeded), getBalanceSucceeded)
   yield takeLatest(String(actions.getETHTokenBalance.requested), getETHTokenBalance)
   yield takeLatest(String(actions.getEOSTokenBalance.requested), getEOSTokenBalance)
+  yield takeLatest(String(actions.getEOSTokenBalanceList.requested), getEOSTokenBalanceList)
 }

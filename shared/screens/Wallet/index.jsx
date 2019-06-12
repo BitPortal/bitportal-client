@@ -162,11 +162,18 @@ export default class Wallet extends Component {
   async componentDidAppear() {
     this.setState({ switching: false })
 
+    const { activeWallet, selectedAsset } = this.props
+
     if (this.props.activeWalletId) {
       this.scrollToItem(this.state.activeWalletId)
-    }
 
-    this.props.actions.getBalance.requested(this.props.activeWallet)
+
+      this.props.actions.getBalance.requested(activeWallet)
+
+      if ((activeWallet.chain === 'EOS') && activeWallet.address) {
+        this.props.actions.scanEOSAsset.requested(activeWallet)
+      }
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -314,14 +321,16 @@ export default class Wallet extends Component {
   }
 
   onScrollViewDidEndDecelerating = (data) => {
-    const { identityWallets, importedWallets } = this.props
-    const page = data.page
-    const wallet = identityWallets.filter(wallet => !!wallet.address).concat(importedWallets)[page]
-    if (wallet) this.props.actions.setActiveWallet(wallet.id)
     const action = data.action
     this.setState({ switching: action === 'start' })
+
     if (action === 'end') {
       ReactNativeHapticFeedback.trigger('selection', true)
+
+      const { identityWallets, importedWallets } = this.props
+      const page = data.page
+      const wallet = identityWallets.filter(wallet => !!wallet.address).concat(importedWallets)[page]
+      if (wallet) this.props.actions.setActiveWallet(wallet.id)
     }
   }
 

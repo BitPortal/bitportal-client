@@ -23,7 +23,7 @@ export default handleActions({
 
     const chain = action.payload.chain
     action.payload.assets.forEach(asset => {
-      const contract = asset.account || asset.address
+      const contract = asset.contract || asset.account || asset.address
       const id = `${chain}/${contract}/${asset.symbol}`
       state.byId[id] = asset
       state.byId[id].contract = contract
@@ -40,8 +40,23 @@ export default handleActions({
     if (!state.selected[walletId]) {
       state.selected[walletId] = [assetId]
     } else if (state.selected[walletId].indexOf(assetId) === -1) {
-      state.selected[walletId].push(assetId)
+      state.selected[walletId].unshift(assetId)
     }
+  },
+  [actions.selectAssetList] (state, action) {
+    state.selected = state.selected || {}
+    const assets = action.payload
+
+    assets.forEach(asset => {
+      const walletId = asset.walletId
+      const assetId = asset.assetId
+
+      if (!state.selected[walletId]) {
+        state.selected[walletId] = [assetId]
+      } else if (state.selected[walletId].indexOf(assetId) === -1) {
+        state.selected[walletId].push(assetId)
+      }
+    })
   },
   [actions.unselectAsset] (state, action) {
     const walletId = action.payload.walletId

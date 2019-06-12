@@ -158,6 +158,26 @@ const bitcoinFeesBase = (
   baseUrl: 'https://bitcoinfees.earn.com/api/v1'
 })
 
+const eosxFetchBase = (
+  method: FetchMethod = 'GET',
+  endPoint: string = '/hello',
+  params: object = {},
+  options: object = {}
+) => fetchBase(method, endPoint, params, {
+  ...options,
+  baseUrl: 'https://eosx-apigw.eosx.io/api'
+})
+
+const eosxLightFetchBase = (
+  method: FetchMethod = 'GET',
+  endPoint: string = '/hello',
+  params: object = {},
+  options: object = {}
+) => fetchBase(method, endPoint, params, {
+  ...options,
+  baseUrl: 'https://api.light.xeos.me/api/account/eos'
+})
+
 export const getTicker = (params?: TickerParams) => marketFetchBase('GET', '/tickers', params)
 export const getChart = (params?: ChartParams) => marketFetchBase('GET', '/chart', params)
 export const getCurrencyRate = () => fetchBase('GET', '', {}, { baseUrl: CURRENCY_RATE_URL })
@@ -167,10 +187,11 @@ export const getVersionInfo = () => cmsFetchBase('GET', '/system')
 export const getProducersInfo = (params: any) => cmsFetchBase('GET', '/eosbp', params)
 export const getTokenDetail = (params: any) => cmsFetchBase('GET', '/token', params)
 export const getDapp = (params: any) => cmsFetchBase('GET', '/eosdapp', params)
-export const getEOSAsset = (params: any) => cmsFetchBase('GET', '/eostoken', params)
+export const getEOSAsset = (params: any) => eosxFetchBase('GET', '/tokens', params)
 export const getETHAsset = (params: any) => cmsFetchBase('GET', '/ethtoken', params)
 export const createEOSAccount = (params: any) => fetchBase('POST', '/registry/wallets/campaign/eoscreation', params)
 export const importEOSAccount = (params: any) => fetchBase('POST', '/registry/wallets/import', params)
+export const scanEOSAsset = (params: any) => eosxLightFetchBase('GET', `/${params.address}`)
 
 export const subscribe = (params: any) => traceFetchBase('POST', '/notification/subscribe', params)
 export const unsubscribe = (params: any) => traceFetchBase('POST', '/notification/unsubscribe', params)

@@ -17,10 +17,10 @@ export const activeWalletTransactionsByIdSelector = createSelector(
       const activeWalletTransaction = transaction.byId[id]
 
       if (activeWalletTransaction) {
-        if (activeAsset.contract && activeWallet.symbol === activeAsset.symbol && activeWallet.chain === activeAsset.chain) {
+        if (activeAsset.contract && activeWallet.chain === activeAsset.chain && activeWalletTransaction[`${activeAsset.contract}/${activeAsset.symbol}`]) {
           return activeWalletTransaction[`${activeAsset.contract}/${activeAsset.symbol}`].items.byId
-        } else {
-          return activeWalletTransaction.basecoin.items.byId
+        } else if (activeWallet.symbol === activeAsset.symbol && activeWallet.chain === activeAsset.chain && activeWalletTransaction.syscoin) {
+          return activeWalletTransaction.syscoin.items.byId
         }
       }
     }
@@ -40,10 +40,10 @@ export const activeWalletTransactionsSelector = createSelector(
       const activeWalletTransaction = transaction.byId[id]
 
       if (activeWalletTransaction) {
-        if (activeAsset.contract && activeWallet.symbol === activeAsset.symbol && activeWallet.chain === activeAsset.chain) {
+        if (activeAsset.contract && activeWallet.chain === activeAsset.chain && activeWalletTransaction[`${activeAsset.contract}/${activeAsset.symbol}`]) {
           return activeWalletTransaction[`${activeAsset.contract}/${activeAsset.symbol}`].items.allIds.map((item: any) => activeWalletTransaction[`${activeAsset.contract}/${activeAsset.symbol}`].items.byId[typeof item === 'string' ? item : item.id])
-        } else {
-          return activeWalletTransaction.basecoin.items.allIds.map((item: any) => activeWalletTransaction.basecoin.items.byId[typeof item === 'string' ? item : item.id])
+        } else if (activeWallet.symbol === activeAsset.symbol && activeWallet.chain === activeAsset.chain && activeWalletTransaction.syscoin) {
+          return activeWalletTransaction.syscoin.items.allIds.map((item: any) => activeWalletTransaction.syscoin.items.byId[typeof item === 'string' ? item : item.id])
         }
       }
     }
@@ -75,10 +75,10 @@ export const transferWalletTransactionsByIdSelector = createSelector(
       const transferWalletTransaction = transaction.byId[id]
 
       if (transferWalletTransaction) {
-        if (transferAsset.contract && transferWallet.symbol === transferAsset.symbol && transferWallet.chain === transferAsset.chain) {
+        if (transferAsset.contract && transferWallet.chain === transferAsset.chain && transferWalletTransaction[`${transferAsset.contract}/${transferAsset.symbol}`]) {
           return transferWalletTransaction[`${transferAsset.contract}/${transferAsset.symbol}`].items.byId
-        } else {
-          return transferWalletTransaction.basecoin.items.byId
+        } else if (transferWallet.symbol === transferAsset.symbol && transferWallet.chain === transferAsset.chain && transferWalletTransaction.syscoin) {
+          return transferWalletTransaction.syscoin.items.byId
         }
       }
     }
@@ -98,10 +98,10 @@ export const transferWalletTransactionsSelector = createSelector(
       const transferWalletTransaction = transaction.byId[id]
 
       if (transferWalletTransaction) {
-        if (transferAsset.contract && transferWallet.symbol === transferAsset.symbol && transferWallet.chain === transferAsset.chain) {
+        if (transferAsset.contract && transferWallet.chain === transferAsset.chain && transferWalletTransaction[`${transferAsset.contract}/${transferAsset.symbol}`]) {
           return transferWalletTransaction[`${transferAsset.contract}/${transferAsset.symbol}`].items.allIds.map((item: any) => transferWalletTransaction[`${transferAsset.contract}/${transferAsset.symbol}`].items.byId[typeof item === 'string' ? item : item.id])
-        } else {
-          return transferWalletTransaction.basecoin.items.allIds.map((item: any) => transferWalletTransaction.basecoin.items.byId[typeof item === 'string' ? item : item.id])
+        } else if (transferWallet.symbol === transferAsset.symbol && transferWallet.chain === transferAsset.chain && transferWalletTransaction.syscoin) {
+          return transferWalletTransaction.syscoin.items.allIds.map((item: any) => transferWalletTransaction.syscoin.items.byId[typeof item === 'string' ? item : item.id])
         }
       }
     }

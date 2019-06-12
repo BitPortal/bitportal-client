@@ -9,8 +9,8 @@ export const activeWalletBalanceSelector = createSelector(
   balanceByIdSelector,
   (activeWallet: string, balanceById: any) => {
     if (activeWallet) {
-      if (balanceById[`${activeWallet.chain}/${activeWallet.address}`]) {
-        return balanceById[`${activeWallet.chain}/${activeWallet.address}`].basecoin
+      if (balanceById[`${activeWallet.chain}/${activeWallet.address}`] && balanceById[`${activeWallet.chain}/${activeWallet.address}`].syscoin) {
+        return balanceById[`${activeWallet.chain}/${activeWallet.address}`].syscoin
       } else {
         return ({ balance: '0', symbol: activeWallet.symbol, precision: activeWallet.chain === 'EOS' ? 4 : 8, contract: activeWallet.chain === 'EOS' ? 'eosio.token' : null })
       }
@@ -26,7 +26,7 @@ export const transferWalletBalanceSelector = createSelector(
   (transferWallet: string, balanceById: any) => {
     if (transferWallet) {
       if (balanceById[`${transferWallet.chain}/${transferWallet.address}`]) {
-        return balanceById[`${transferWallet.chain}/${transferWallet.address}`].basecoin
+        return balanceById[`${transferWallet.chain}/${transferWallet.address}`].syscoin
       } else {
         return ({ balance: '0', symbol: transferWallet.symbol, precision: transferWallet.chain === 'EOS' ? 4 : 8, contract: transferWallet.chain === 'EOS' ? 'eosio.token' : null })
       }
