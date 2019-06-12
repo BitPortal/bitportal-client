@@ -288,7 +288,7 @@ export default class ChainXVoting extends Component {
               const pendingInterestStr = this.formatBalance(pendingInterest, 8)
 
               // pendingInterestStr
-              const userNominationStr = (item && item.userNomination && this.formatBalance(item.userNomination, 4)) || '-'
+              const userNominationStr = (item && item.userNomination && this.formatBalance(item.userNomination, 8)) || '-'
               const totalNominationStr = this.formatBalance(item.totalNomination)
               return (
                 <TableView.Item
@@ -342,7 +342,7 @@ export default class ChainXVoting extends Component {
               const pendingInterestStr = this.formatBalance(pendingInterest, 8)
 
               // pendingInterestStr
-              const userNominationStr = (item && item.userNomination && this.formatBalance(item.userNomination, 4)) || '-'
+              const userNominationStr = (item && item.userNomination && this.formatBalance(item.userNomination, 8)) || '-'
               const totalNominationStr = this.formatBalance(item.totalNomination)
 
               return (
@@ -397,7 +397,7 @@ export default class ChainXVoting extends Component {
               const pendingInterestStr = this.formatBalance(pendingInterest, 8)
 
               // pendingInterestStr
-              const userNominationStr = (item && item.userNomination && this.formatBalance(item.userNomination, 4)) || '-'
+              const userNominationStr = (item && item.userNomination && this.formatBalance(item.userNomination, 8)) || '-'
               const totalNominationStr = this.formatBalance(item.totalNomination)
 
               return (
