@@ -6,6 +6,7 @@ import { getErrorMessage, getEOSErrorMessage } from 'utils'
 import * as actions from 'actions/wallet'
 import * as transactionActions from 'actions/transaction'
 import { getBalance } from 'actions/balance'
+import { scanEOSAsset } from 'actions/asset'
 import {
   walletAddressesSelector,
   identityWalletSelector,
@@ -13,6 +14,7 @@ import {
   activeWalletSelector,
   walletAllIdsSelector
 } from 'selectors/wallet'
+import { activeWalletSelectedAssetsSelector } from 'selectors/asset'
 import * as walletCore from 'core/wallet'
 import { createHDBTCKeystore, createBTCKeystore } from 'core/keystore'
 import {
@@ -27,7 +29,12 @@ function* setActiveWallet(action: Action<SetActiveWalletParams>) {
   if (!action.payload) return
 
   const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+  yield put(actions.setActiveChain(activeWallet.chain))
   yield put(getBalance.requested(activeWallet))
+
+  if ((activeWallet.chain === 'EOS') && activeWallet.address) {
+    yield put(scanEOSAsset.requested(activeWallet))
+  }
 }
 
 function* deleteWallet(action: Action<DeleteWalletParams>) {

@@ -2,6 +2,7 @@ import { createAction } from 'redux-actions'
 import { createAsyncAction } from 'utils/redux'
 
 export const setActiveWallet = createAction<SetActiveWalletParams>('wallet/SET_ACTIVE_WALLET')
+export const setActiveChain = createAction<SetActiveChainParams>('wallet/SET_ACTIVE_CHAIN')
 export const setManagingWallet = createAction<SetManagingWalletParams>('wallet/SET_MANAGING_WALLET')
 export const setTransferWallet = createAction<SetTransferWalletParams>('wallet/SET_TRANSFER_WALLET')
 

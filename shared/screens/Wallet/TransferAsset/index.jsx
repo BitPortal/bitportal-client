@@ -23,9 +23,10 @@ import {
 import FastImage from 'react-native-fast-image'
 import TableView from 'react-native-tableview'
 import { transferWalletSelector } from 'selectors/wallet'
-import { transferWalletBalanceSelector } from 'selectors/balance'
 import { transferWalletFeeSelector } from 'selectors/fee'
 import { transferWalletsContactsSelector, selectedContactSelector } from 'selectors/contact'
+import { transferWalletBalanceSelector, transferAssetBalanceSelector } from 'selectors/balance'
+import { transferAssetSelector } from 'selectors/asset'
 import { Navigation } from 'react-native-navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Field, reduxForm, getFormSyncWarnings, getFormValues } from 'redux-form'
@@ -328,6 +329,7 @@ const CardField = ({
   available,
   symbol,
   chain,
+  iconUrl,
   separator
 }) => (
   <View style={{ width: '100%' }}>
@@ -335,10 +337,11 @@ const CardField = ({
       <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.4)', marginTop: 20 }}>{label}</Text>
     </View>
     <View style={{ width: '100%', alignItems: 'center', height: 72, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-      {!!chain && <FastImage
-        source={assetIcons[chain.toLowerCase()]}
-        style={{ width: 40, height: 40, marginRight: 16, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
-      />}
+      {!!chain && !iconUrl &&  <FastImage source={assetIcons[chain.toLowerCase()]} style={{ width: 40, height: 40, marginRight: 16, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }} />}
+      {!!iconUrl && <View style={{ width: 41, height: 41, marginRight: 16 }}>
+        <FastImage source={{ uri: iconUrl }} style={{ width: 40, height: 40, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }} />
+        <FastImage source={assetIcons[chain.toLowerCase()]} style={{ position: 'absolute', right: -8, bottom: 0, width: 20, height: 20, borderRadius: 10, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }} />
+      </View>}
       <View>
         <Text style={{ fontSize: 17 }}>{formatAddress(address)}</Text>
         <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginTop: 4 }}>{available} {symbol}</Text>
@@ -350,7 +353,8 @@ const CardField = ({
 
 const warn = (values, props) => {
   const warnings = {}
-  const { balance } = props
+  const { transferAsset, assetBalance, walletBalance } = props
+  const balance = (transferAsset && transferAsset.contract) ? assetBalance : walletBalance
   const available = balance && balance.balance
 
   if (!values.toAddress) {
@@ -377,8 +381,10 @@ const shouldError = () => true
     transfer: state.transfer,
     formSyncWarnings: getFormSyncWarnings('transferAssetForm')(state),
     formValues: getFormValues('transferAssetForm')(state),
-    activeWallet: transferWalletSelector(state),
-    balance: transferWalletBalanceSelector(state),
+    transferAsset: transferAssetSelector(state),
+    transferWallet: transferWalletSelector(state),
+    walletBalance: transferWalletBalanceSelector(state),
+    assetBalance: transferAssetBalanceSelector(state),
     contacts: transferWalletsContactsSelector(state),
     selectedContact: selectedContactSelector(state),
     fee: transferWalletFeeSelector(state)
@@ -450,7 +456,7 @@ export default class TransferAsset extends Component {
           children: [{
             component: {
               name: 'BitPortal.Camera',
-              passProps: { from: 'transfer', form: 'transferAssetForm', field: 'toAddress', chain: this.props.activeWallet.chain, symbol: this.props.activeWallet.symbol }
+              passProps: { from: 'transfer', form: 'transferAssetForm', field: 'toAddress', chain: this.props.transferWallet.chain, symbol: this.props.transferWallet.symbol }
             }
           }]
         }
@@ -495,7 +501,9 @@ export default class TransferAsset extends Component {
   }
 
   submit = (data) => {
-    const { activeWallet, formSyncWarnings, balance } = this.props
+    const { transferWallet, formSyncWarnings, balancetransferAsset, assetBalance, walletBalance } = this.props
+    const balance = (transferAsset && transferAsset.contract) ? assetBalance : walletBalance
+
     if (typeof formSyncWarnings === 'object') {
       const warning = formSyncWarnings.toAddress || formSyncWarnings.amount
       if (warning) {
@@ -525,9 +533,9 @@ export default class TransferAsset extends Component {
           onPress: password => this.props.actions.transfer.requested({
             ...data,
             password,
-            fromAddress: activeWallet.address,
-            chain: activeWallet.chain,
-            id: activeWallet.id,
+            fromAddress: transferWallet.address,
+            chain: transferWallet.chain,
+            id: transferWallet.id,
             feeRate: +this.state.feeRate || +this.state.initialFeeRate || this.state.fastestBTCFee || 45,
             symbol: balance.symbol,
             precision: balance.precision,
@@ -548,7 +556,7 @@ export default class TransferAsset extends Component {
       this.props.change('toAddress', this.props.selectedContact.address)
     }
 
-    this.props.actions.getBalance.requested(this.props.activeWallet)
+    this.props.actions.getBalance.requested(this.props.transferWallet)
   }
 
   componentWillUnmount() {
@@ -563,9 +571,9 @@ export default class TransferAsset extends Component {
       this.props.actions.setTransferWallet(this.props.presetWalletId)
     }
 
-    if (this.props.activeWallet.chain === 'BITCOIN') {
+    if (this.props.transferWallet.chain === 'BITCOIN') {
       this.props.actions.getBTCFees.requested()
-    } else if (this.props.activeWallet.chain === 'ETHEREUM') {
+    } else if (this.props.transferWallet.chain === 'ETHEREUM') {
       this.props.actions.getETHGasPrice.requested()
     }
 
@@ -582,8 +590,10 @@ export default class TransferAsset extends Component {
     }
 
     if (this.props.presetOpReturn) {
-      this.props.change('opreturn', this.props.presetOpReturn)
-      this.addOPReturn()
+      if (this.props.transferWallet.chain === 'BITCOIN') {
+        this.props.change('opreturn', this.props.presetOpReturn)
+        this.addOPReturn()
+      }
     }
   }
 
@@ -621,7 +631,7 @@ export default class TransferAsset extends Component {
     if (this.props.contacts && this.props.contacts.length) {
       this.setState({ selectContact: true, showSelectContact: true })
     } else {
-      const chain = this.props.activeWallet && this.props.activeWallet.chain
+      const chain = this.props.transferWallet && this.props.transferWallet.chain
       let chainSymbol
 
       if (chain === 'BITCOIN') {
@@ -669,7 +679,7 @@ export default class TransferAsset extends Component {
   }
 
   onToAddressBlur = () => {
-    const { contacts, selectedContact, formValues, activeWallet } = this.props
+    const { contacts, selectedContact, formValues, transferWallet } = this.props
 
     if (contacts && contacts.length && !selectedContact) {
       const toAddress = formValues && formValues.toAddress
@@ -680,7 +690,7 @@ export default class TransferAsset extends Component {
             id: contacts[index].id,
             address: contacts[index].address || contacts[index].accountName,
             name: contacts[index].name,
-            chain: activeWallet.chain
+            chain: transferWallet.chain
           })
         }
       }
@@ -783,15 +793,17 @@ export default class TransferAsset extends Component {
   }
 
   render() {
-    const { transfer, formValues, change, activeWallet, balance, intl, contacts, selectedContact } = this.props
+    const { transfer, formValues, change, transferWallet, transferAsset, assetBalance, walletBalance, intl, presetContact, contacts, selectedContact } = this.props
+    const balance = (transferAsset && transferAsset.contract) ? assetBalance : walletBalance
     const loading = transfer.loading
     const toAddress = formValues && formValues.toAddress
     const memo = formValues && formValues.memo
     const amount = formValues && formValues.amount
     const opreturn = formValues && formValues.opreturn
-    const symbol = activeWallet.symbol
+    const symbol = balance.symbol
+    const iconUrl = transferAsset.icon_url
     const available = balance && intl.formatNumber(balance.balance, { minimumFractionDigits: balance.precision, maximumFractionDigits: balance.precision })
-    const chain = activeWallet.chain
+    const chain = transferWallet.chain
 
     // fees and display related
     const showMinnerFee = chain === 'BITCOIN' || chain === 'ETHEREUM'
@@ -846,10 +858,11 @@ export default class TransferAsset extends Component {
             name="card"
             fieldName="card"
             component={CardField}
-            address={activeWallet.address}
+            address={transferWallet.address}
             available={available}
             symbol={symbol}
             chain={chain}
+            iconUrl={iconUrl}
             separator
           />
           <Field

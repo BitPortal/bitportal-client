@@ -101,8 +101,8 @@ export default class TransactionDetail extends Component {
     })
   }
 
-  componentDidAppear() {
-    // this.props.actions.getTransaction.requested({ ...this.props.activeWallet, transactionId: this.props.transaction.id })
+  componentDidMount() {
+    this.props.actions.getTransaction.requested({ ...this.props.activeWallet, transactionId: this.props.transaction.id })
   }
 
   render() {

@@ -3,29 +3,31 @@ import * as actions from 'actions/transaction'
 
 const initialState = {
   activeTransactionId: null,
+  transferTransactionId: null,
   byId: {},
   allIds: []
 }
 
 export default handleActions({
   [actions.updateTransactions] (state, action) {
-    const { id, items, pagination, canLoadMore } = action.payload
+    const { id, items, pagination, canLoadMore, assetId } = action.payload
+    state.byId[id] = state.byId[id] || {}
 
-    if (!state.byId[id]) {
-      state.byId[id] = { id, pagination, canLoadMore }
+    if (!state.byId[id][assetId]) {
+      state.byId[id][assetId] = { id, pagination, canLoadMore }
 
-      state.byId[id].items = {
+      state.byId[id][assetId].items = {
         byId: {},
         allIds: []
       }
     }
 
     items.forEach((item: any) => {
-      state.byId[id].items.byId[item.id] = item
-      const index = state.byId[id].items.allIds.findIndex((v: any) => v && v.id === item.id)
-      if (index === -1) state.byId[id].items.allIds.unshift({ id: item.id, timestamp: item.timestamp })
+      state.byId[id][assetId].items.byId[item.id] = item
+      const index = state.byId[id][assetId].items.allIds.findIndex((v: any) => v && v.id === item.id)
+      if (index === -1) state.byId[id][assetId].items.allIds.unshift({ id: item.id, timestamp: item.timestamp })
     })
-    state.byId[id].items.allIds.sort((a: any, b: any) => b.timestamp - a.timestamp)
+    state.byId[id][assetId].items.allIds.sort((a: any, b: any) => b.timestamp - a.timestamp)
 
     const index = state.allIds.findIndex((v: any) => v === id)
     if (index === -1)  state.allIds.push(id)
@@ -70,5 +72,6 @@ export default handleActions({
   },
   [actions.setActiveTransactionId] (state, action) {
     state.activeTransactionId = action.payload
+    state.transferTransactionId = action.payload
   }
 }, initialState)

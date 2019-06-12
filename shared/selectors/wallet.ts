@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect'
 
 export const activeWalletIdSelector = (state: RootState) => state.wallet.activeWalletId
+export const activeChainSelector = (state: RootState) => state.wallet.activeChain
 export const managingWalletIdSelector = (state: RootState) => state.wallet.managingWalletId
 export const transferWalletIdSelector = (state: RootState) => state.wallet.transferWalletId
 

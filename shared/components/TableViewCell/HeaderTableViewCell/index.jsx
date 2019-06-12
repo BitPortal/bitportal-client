@@ -5,16 +5,27 @@ import { Navigation } from 'react-native-navigation'
 
 const HeaderTableViewCell = (props) => {
   toAddAsset = () => {
-    if (props.data.chain === 'EOS') {
+    const { chain } = props.data
+
+    if (chain === 'ETHEREUM' || chain === 'EOS') {
+      let symbol
+
+      if (chain === 'ETHEREUM') {
+        symbol = 'ETH'
+      } else if (chain === 'EOS') {
+        symbol = 'EOS'
+      }
+
       Navigation.push(props.data.componentId, {
         component: {
-          name: 'BitPortal.EOSAssets'
-        }
-      })
-    } else if (props.data.chain === 'ETHEREUM') {
-      Navigation.push(props.data.componentId, {
-        component: {
-          name: 'BitPortal.ETHAssets'
+          name: 'BitPortal.AddAssets',
+          options: {
+            topBar: {
+              title: {
+                text: `添加${symbol}资产`
+              }
+            }
+          }
         }
       })
     }

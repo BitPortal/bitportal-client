@@ -44,6 +44,7 @@ import Welcome from 'screens/Welcome'
 import Wallet from 'screens/Wallet'
 import EOSAssets from 'screens/Wallet/EOSAssets'
 import ETHAssets from 'screens/Wallet/ETHAssets'
+import AddAssets from 'screens/Wallet/AddAssets'
 import Asset from 'screens/Wallet/Asset'
 import TransferAsset from 'screens/Wallet/TransferAsset'
 import ReceiveAsset from 'screens/Wallet/ReceiveAsset'
@@ -92,7 +93,7 @@ import Camera from 'screens/Camera'
 import Images from 'resources/images'
 import messages from 'resources/messages'
 
-export const registerScreens = (store, persistor) => {
+export const registerScreens = (store) => {
   AppRegistry.registerComponent('AssetTableViewCell', () => AssetTableViewCell)
   AppRegistry.registerComponent('HeaderTableViewCell', () => HeaderTableViewCell)
   AppRegistry.registerComponent('ContactHeaderTableViewCell', () => ContactHeaderTableViewCell)
@@ -136,9 +137,11 @@ export const registerScreens = (store, persistor) => {
 
   Navigation.registerComponentWithRedux('BitPortal.Welcome', () => Welcome, Provider, store)
 
-  Navigation.registerComponentWithRedux('BitPortal.Wallet', () => Wallet, PersistProvider, store)
-  Navigation.registerComponentWithRedux('BitPortal.EOSAssets', () => EOSAssets, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Wallet', () => Wallet, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.EOSAssets', () => EOSAssets, PersistProvider, store)
   Navigation.registerComponentWithRedux('BitPortal.ETHAssets', () => ETHAssets, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.AddAssets', () => AddAssets, Provider, store)
+
   Navigation.registerComponentWithRedux('BitPortal.Asset', () => Asset, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.TransferAsset', () => TransferAsset, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ReceiveAsset', () => ReceiveAsset, Provider, store)

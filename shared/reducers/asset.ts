@@ -2,37 +2,69 @@ import { handleActions } from 'utils/redux'
 import * as actions from 'actions/asset'
 
 const initialState = {
-  ETHEREUM: {
-    byId: {},
-    allIds: [],
-    selected: {}
-  },
-  EOS: {
-    byId: {},
-    allIds: [],
-    selected: {}
-  }
+  byId: {},
+  allIds: [],
+  selected: {},
+  activeAssetId: null,
+  transferAssetId: null
 }
 
 export default handleActions({
-  [actions.updateEOSAsset] (state, action) {
-    state.EOS.byId = state.EOS.byId || {}
-    state.EOS.allIds = state.EOS.allIds || []
+  [actions.setActiveAsset] (state, action) {
+    state.activeAssetId = action.payload
+    state.transferAssetId = action.payload
+  },
+  [actions.setTransferAsset] (state, action) {
+    state.transferAssetId = action.payload
+  },
+  [actions.updateAsset] (state, action) {
+    state.byId = state.byId || {}
+    state.allIds = state.allIds || []
 
-    action.payload.forEach(asset => {
-      state.EOS.byId[asset.id] = asset
-      const index = state.EOS.allIds.findIndex((v: any) => v === asset.id)
-      if (index === -1) state.EOS.allIds.push(asset.id)
+    const chain = action.payload.chain
+    action.payload.assets.forEach(asset => {
+      const contract = asset.contract || asset.account || asset.address
+      const id = `${chain}/${contract}/${asset.symbol}`
+      state.byId[id] = asset
+      state.byId[id].contract = contract
+      state.byId[id].chain = chain
+      const index = state.allIds.findIndex((v: any) => v === id)
+      if (index === -1) state.allIds.push(id)
     })
   },
-  [actions.updateETHAsset] (state, action) {
-    state.ETHEREUM.byId = state.ETHEREUM.byId || {}
-    state.ETHEREUM.allIds = state.ETHEREUM.allIds || []
+  [actions.selectAsset] (state, action) {
+    state.selected = state.selected || {}
+    const walletId = action.payload.walletId
+    const assetId = action.payload.assetId
 
-    action.payload.forEach(asset => {
-      state.ETHEREUM.byId[asset.id] = asset
-      const index = state.ETHEREUM.allIds.findIndex((v: any) => v === asset.id)
-      if (index === -1) state.ETHEREUM.allIds.push(asset.id)
+    if (!state.selected[walletId]) {
+      state.selected[walletId] = [assetId]
+    } else if (state.selected[walletId].indexOf(assetId) === -1) {
+      state.selected[walletId].unshift(assetId)
+    }
+  },
+  [actions.selectAssetList] (state, action) {
+    state.selected = state.selected || {}
+    const assets = action.payload
+
+    assets.forEach(asset => {
+      const walletId = asset.walletId
+      const assetId = asset.assetId
+
+      if (!state.selected[walletId]) {
+        state.selected[walletId] = [assetId]
+      } else if (state.selected[walletId].indexOf(assetId) === -1) {
+        state.selected[walletId].push(assetId)
+      }
     })
+  },
+  [actions.unselectAsset] (state, action) {
+    const walletId = action.payload.walletId
+    const assetId = action.payload.assetId
+
+    if (state.selected && state.selected[walletId] && state.selected[walletId].indexOf(assetId) !== -1) {
+      const index = state.selected[walletId].findIndex(id => id === assetId)
+      state.selected[walletId].splice(index, 1)
+    }
   }
 }, initialState)

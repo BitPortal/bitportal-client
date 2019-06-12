@@ -6,6 +6,7 @@ import { setExtraLocale } from 'utils/location'
 
 function* setLocale(action: Action<object>) {
   const locale = action.payload
+  console.log(storage)
   yield call(storage.setItem, 'bitportal_lang', locale, false, {
     path: '/',
     domain: 'bitportal.io',

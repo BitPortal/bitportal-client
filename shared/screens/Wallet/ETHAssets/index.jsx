@@ -6,12 +6,15 @@ import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 import * as assetActions from 'actions/asset'
 // import FastImage from 'react-native-fast-image'
-import { ethAssetSelector } from 'selectors/asset'
+import { assetSelector, selectedAssetIdsSelector } from 'selectors/asset'
+import { activeWalletSelector } from 'selectors/wallet'
 import styles from './styles'
 
 @connect(
   state => ({
-    ethAsset: ethAssetSelector(state)
+    ethAsset: assetSelector(state),
+    activeWallet: activeWalletSelector(state),
+    selectedAssetId: selectedAssetIdsSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -81,8 +84,30 @@ export default class ETHAssets extends Component {
     this.props.actions.getETHAsset.requested()
   }
 
+  onItemNotification = (data) => {
+    const { action } = data
+
+    if (action === 'add') {
+      const { account, symbol } = data
+
+      const chain = this.props.activeWallet.chain
+      const address = this.props.activeWallet.address
+      const walletId = `${chain}/${address}`
+      const assetId = `${chain}/${account}/${symbol}`
+      this.props.actions.selectAsset({ walletId, assetId })
+    } else if (action === 'remove') {
+      const { account, symbol } = data
+
+      const chain = this.props.activeWallet.chain
+      const address = this.props.activeWallet.address
+      const walletId = `${chain}/${address}`
+      const assetId = `${chain}/${account}/${symbol}`
+      this.props.actions.unselectAsset({ walletId, assetId })
+    }
+  }
+
   render() {
-    const { ethAsset } = this.props
+    const { ethAsset, selectedAssetId } = this.props
 
     return (
       <View style={styles.container}>
@@ -94,7 +119,7 @@ export default class ETHAssets extends Component {
           onRefresh={this.onRefresh}
           detailTextColor="#666666"
           cellSeparatorInset={{ left: 66 }}
-          onSwitchAccessoryChanged={this.onSwitchAccessoryChanged}
+          onItemNotification={this.onItemNotification}
         >
           <TableView.Section>
             {ethAsset.map(item => (
@@ -109,8 +134,7 @@ export default class ETHAssets extends Component {
                  current_supply={item.current_supply}
                  max_supply={item.max_supply}
                  rank_url={item.rank_url}
-                 accessoryType={5}
-                 switchOn={item.selected}
+                 selected={selectedAssetId && selectedAssetId.indexOf(`${item.chain}/${item.contract}/${item.symbol}`) !== -1}
                />
              ))}
           </TableView.Section>

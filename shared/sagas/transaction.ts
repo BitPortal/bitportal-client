@@ -318,7 +318,11 @@ function* getTransactions(action: Action) {
     const chain = action.payload.chain
     const address = action.payload.address
     const source = action.payload.source
+    const contract = action.payload.contract
+    const assetSymbol = action.payload.assetSymbol
     const walletId = action.payload.id
+
+    const assetId = contract ? `${contract}/${assetSymbol}` : 'syscoin'
 
     let id = `${chain}/${address}`
 
@@ -394,7 +398,7 @@ function* getTransactions(action: Action) {
         to: transactions.to
       }
 
-      yield put(actions.updateTransactions({ id, items, pagination, canLoadMore }))
+      yield put(actions.updateTransactions({ id, items, pagination, canLoadMore, assetId }))
     } else if (chain === 'ETHEREUM') {
       const startblock = 0
       const endblock = 99999999
@@ -421,13 +425,15 @@ function* getTransactions(action: Action) {
         endblock
       }
 
-      yield put(actions.updateTransactions({ id, items, pagination }))
+      yield put(actions.updateTransactions({ id, items, pagination, assetId }))
     } else if (chain === 'EOS') {
-      const position = 0
-      const offset = 2000
+      const tokenAccount = contract || 'eosio.token'
+      const position = -1
+      const offset = -100
       const transactions = yield call(eosChain.getTransactions, address, position, offset)
+      console.log('eos transactions', transactions)
       const items = transactions.actions
-        .filter((item: any) => item.action_trace.act.name === 'transfer' && item.action_trace.act.account === 'eosio.token')
+        .filter((item: any) => item.action_trace.act.name === 'transfer' && item.action_trace.act.account === tokenAccount)
         .map((item: any) => {
           const isSender = item.action_trace.act.data.from === address
           const transactionType = isSender ? 'send' : 'receive'
@@ -451,7 +457,7 @@ function* getTransactions(action: Action) {
         offset
       }
 
-      yield put(actions.updateTransactions({ id, items, pagination }))
+      yield put(actions.updateTransactions({ id, items, pagination, assetId }))
     } else if (chain === 'CHAINX') {
       const page = 0
       const pageSize = 200
@@ -480,7 +486,7 @@ function* getTransactions(action: Action) {
         pageSize
       }
 
-      yield put(actions.updateTransactions({ id, items, pagination }))
+      yield put(actions.updateTransactions({ id, items, pagination, assetId }))
     }
 
     yield put(actions.getTransactions.succeeded())
@@ -495,64 +501,75 @@ function* getTransaction(action: Action) {
   try {
     const chain = action.payload.chain
     const address = action.payload.address
+    const source = action.payload.source
     const walletId = action.payload.id
     const transactionId = action.payload.transactionId
 
     let id = `${chain}/${address}`
 
     if (chain === 'BITCOIN') {
+      let addresses
+
+      if (source === 'WIF') {
+        addresses = [address]
+      } else {
+        const allAddresses = yield select((state: RootState) => state.address)
+        const walletAddresses = allAddresses.byId[id]
+        assert(walletAddresses, 'No hd wallet addresses')
+        addresses = walletAddresses.external.allIds.concat(walletAddresses.change.allIds)
+      }
+
       const transaction = yield call(btcChain.getTransaction, transactionId)
-      console.log(transaction)
-      // const items = transactions.items
-      //   .map((item: any) => ({ ...item, id: item.txid, timestamp: +item.time * 1000 }))
-      //   .map((item: any) => {
-      //     const internalInput = []
-      //     const externalInput = []
-      //     item.vin.forEach((item: string) => {
-      //       if (addresses.indexOf(item.addr) !== -1) {
-      //         internalInput.push(item)
-      //       } else {
-      //         externalInput.push(item)
-      //       }
-      //     })
 
-      //     const internalOutput = []
-      //     const externalOutput = []
-      //     item.vout.forEach((item: string) => {
-      //       if (item.scriptPubKey && item.scriptPubKey.addresses && item.scriptPubKey.addresses.length) {
-      //         const scriptPubKeyAddresses = item.scriptPubKey.addresses
-      //         let hasInternalAddress = false
+      const item = transaction
+      item.id = item.txid
+      item.timestamp = +item.time * 1000
 
-      //         for (let i = 0; i < scriptPubKeyAddresses.length; i++) {
-      //           if (addresses.indexOf(scriptPubKeyAddresses[i]) !== -1) {
-      //             hasInternalAddress = true
-      //             break
-      //           }
-      //         }
+      const internalInput = []
+      const externalInput = []
+      item.vin.forEach((item: string) => {
+        if (addresses.indexOf(item.addr) !== -1) {
+          internalInput.push(item)
+        } else {
+          externalInput.push(item)
+        }
+      })
 
-      //         if (hasInternalAddress) {
-      //           internalOutput.push(item)
-      //         } else {
-      //           externalOutput.push(item)
-      //         }
-      //       } else {
-      //         externalOutput.push(item)
-      //       }
-      //     })
+      const internalOutput = []
+      const externalOutput = []
+      item.vout.forEach((item: string) => {
+        if (item.scriptPubKey && item.scriptPubKey.addresses && item.scriptPubKey.addresses.length) {
+          const scriptPubKeyAddresses = item.scriptPubKey.addresses
+          let hasInternalAddress = false
 
-      //     const internalInputValue = internalInput.reduce((value: number, input: any) => +value + +input.value, 0)
-      //     const externalInputValue = externalInput.reduce((value: number, input: any) => +value + +input.value, 0)
-      //     const internalOutputValue = internalOutput.reduce((value: number, input: any) => +value + +input.value, 0)
-      //     const externalOutputValue = externalOutput.reduce((value: number, input: any) => +value + +input.value, 0)
-      //     const fees = item.fees
-      //     const isSender = internalInputValue >= internalOutputValue + fees
-      //     const transactionType = isSender ? 'send' : 'receive'
-      //     const change = isSender ? +(+internalOutputValue + +fees - +internalInputValue).toFixed(8) : +(+internalOutputValue - +internalInputValue).toFixed(8)
-      //     const targetAddress = isSender ? externalOutput[0].scriptPubKey.addresses[0] : externalInput[0].addr
+          for (let i = 0; i < scriptPubKeyAddresses.length; i++) {
+            if (addresses.indexOf(scriptPubKeyAddresses[i]) !== -1) {
+              hasInternalAddress = true
+              break
+            }
+          }
 
-      //     return { ...item, change, transactionType, targetAddress }
-      //   }).reverse()
+          if (hasInternalAddress) {
+            internalOutput.push(item)
+          } else {
+            externalOutput.push(item)
+          }
+        } else {
+          externalOutput.push(item)
+        }
+      })
 
+      const internalInputValue = internalInput.reduce((value: number, input: any) => +value + +input.value, 0)
+      const externalInputValue = externalInput.reduce((value: number, input: any) => +value + +input.value, 0)
+      const internalOutputValue = internalOutput.reduce((value: number, input: any) => +value + +input.value, 0)
+      const externalOutputValue = externalOutput.reduce((value: number, input: any) => +value + +input.value, 0)
+      const fees = item.fees
+      const isSender = internalInputValue >= internalOutputValue + fees
+      const transactionType = isSender ? 'send' : 'receive'
+      const change = isSender ? +(+internalOutputValue + +fees - +internalInputValue).toFixed(8) : +(+internalOutputValue - +internalInputValue).toFixed(8)
+      const targetAddress = isSender ? externalOutput[0].scriptPubKey.addresses[0] : externalInput[0].addr
+
+      console.log({ ...item, change, transactionType, targetAddress })
 
     } else if (chain === 'ETHEREUM') {
       // const item = yield call(ethChain.getTransaction, transactionId)

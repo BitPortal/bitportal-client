@@ -1,6 +1,6 @@
 import assert from 'assert'
 import { delay } from 'redux-saga'
-import { takeLatest, put, call, select } from 'redux-saga/effects'
+import { takeLatest, put, call, select, all } from 'redux-saga/effects'
 import { getErrorMessage } from 'utils'
 import { updatePortfolio } from 'actions/portfolio'
 import * as actions from 'actions/balance'
@@ -48,15 +48,76 @@ function* getBalance(action: Action) {
       const result = yield call(eosChain.getBalance, address)
       balance = result.balance
       const { symbol, precision, contract } = result
-      yield put(actions.updateBalance({ id, chain, balance, symbol, precision, contract }))
+      yield put(actions.updateBalance({ id, chain, balance, symbol, precision }))
       yield put(actions.getBalance.succeeded({ walletId, balance }))
     } else if (chain === 'CHAINX') {
-      balance = yield call(chainxChain.getBalance, address)
-      yield put(actions.updateBalance({ id, chain, balance, symbol, precision: 8 }))
-      yield put(actions.getBalance.succeeded({ walletId, balance }))
+      // balance = yield call(chainxChain.getBalance, address)
+      // yield put(actions.updateBalance({ id, chain, balance, symbol, precision: 8 }))
+      // yield put(actions.getBalance.succeeded({ walletId, balance }))
     }
   } catch (e) {
     yield put(actions.getBalance.failed(getErrorMessage(e)))
+  }
+}
+
+function* getETHTokenBalance(action: Action) {
+  if (!action.payload) return
+
+  try {
+    const chain = action.payload.chain
+    const address = action.payload.address
+    const symbol = action.payload.symbol
+    const contract = action.payload.contract
+    const source = action.payload.source
+    const walletId = action.payload.id
+
+    let balance = '0'
+    let id = `${chain}/${address}/${contract}/${symbol}`
+
+    balance = yield call(ethChain.getTokenBalance, address)
+    yield put(actions.updateBalance({ id, chain, balance, symbol, precision: 8 }))
+    yield put(actions.getETHTokenBalance.succeeded({ walletId, balance }))
+  } catch (e) {
+    yield put(actions.getETHTokenBalance.failed(getErrorMessage(e)))
+  }
+}
+
+function* getEOSTokenBalance(action: Action) {
+  if (!action.payload) return
+
+  try {
+    const chain = action.payload.chain
+    const address = action.payload.address
+    const symbol = action.payload.symbol
+    const contract = action.payload.contract
+    const walletId = action.payload.id
+
+    let balance = '0'
+    let id = `${chain}/${address}`
+
+    const result = yield call(eosChain.getBalance, address, contract, symbol)
+    balance = result.balance
+    yield put(actions.updateBalance({ id, chain, balance: balance, symbol: result.symbol, precision: result.precision, contract }))
+    yield put(actions.getEOSTokenBalance.succeeded({ walletId, balance }))
+  } catch (e) {
+    yield put(actions.getEOSTokenBalance.failed(getErrorMessage(e)))
+  }
+}
+
+function* getEOSTokenBalanceList(action: Action) {
+  if (!action.payload) return
+
+  try {
+    const address = action.payload.activeWallet.address
+    const chain = action.payload.activeWallet.chain
+    const selectedAsset = action.payload.selectedAsset
+    const id = `${chain}/${address}`
+
+    const balanceList = yield all(selectedAsset.map(item => call(eosChain.getBalance, address, item.contract, item.symbol)))
+    yield put(actions.updateBalanceList({ id, chain, balanceList }))
+    yield put(actions.getEOSTokenBalanceList.succeeded())
+  } catch (e) {
+    yield put(actions.getEOSTokenBalanceList.failed(getErrorMessage(e)))
   }
 }
 
@@ -84,4 +145,7 @@ export default function* balanceSaga() {
   yield takeLatest(String(actions.getBalance.requested), getBalance)
   yield takeLatest(String(actions.getBalance.refresh), getBalance)
   yield takeLatest(String(actions.getBalance.succeeded), getBalanceSucceeded)
+  yield takeLatest(String(actions.getETHTokenBalance.requested), getETHTokenBalance)
+  yield takeLatest(String(actions.getEOSTokenBalance.requested), getEOSTokenBalance)
+  yield takeLatest(String(actions.getEOSTokenBalanceList.requested), getEOSTokenBalanceList)
 }
