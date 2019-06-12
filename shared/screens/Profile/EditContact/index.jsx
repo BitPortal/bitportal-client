@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, ScrollView, ActionSheetIOS, AlertIOS, Alert, Text, ActivityIndicator, Animated, TextInput, TouchableHighlight, Image, Keyboard, LayoutAnimation } from 'react-native'
+import { View, ScrollView, ActionSheetIOS, Alert, Text, ActivityIndicator, Animated, TextInput, TouchableHighlight, Image, Keyboard, LayoutAnimation } from 'react-native'
 import { Field, reduxForm, getFormValues, getFormSyncWarnings } from 'redux-form'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'

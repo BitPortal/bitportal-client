@@ -1,4 +1,4 @@
-import { AlertIOS, Alert } from 'react-native'
+import { Alert } from 'react-native'
 import { goSettingPermission } from 'utils/nativeUtil'
 import messages from 'resources/messages'
 
@@ -82,7 +82,7 @@ const prompt = (title = '', content = null, options = {}) => new Promise((resolv
     })
   }
 
-  AlertIOS.prompt(title, content, buttons, inputType)
+  Alert.prompt(title, content, buttons, inputType)
 })
 
 export default {

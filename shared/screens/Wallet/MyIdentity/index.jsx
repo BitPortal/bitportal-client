@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, ScrollView, ActionSheetIOS, AlertIOS, Alert, Text, ActivityIndicator, Animated } from 'react-native'
+import { View, ScrollView, ActionSheetIOS, Alert, Text, ActivityIndicator, Animated } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 import * as identityActions from 'actions/identity'
@@ -57,7 +57,7 @@ export default class MyIdentity extends Component {
   subscription = Navigation.events().bindComponent(this)
 
   deleteIdentity = (id) => {
-    AlertIOS.prompt(
+    Alert.prompt(
       '请输入钱包密码',
       null,
       [
@@ -81,7 +81,7 @@ export default class MyIdentity extends Component {
   }
 
   backupIdentity = (id) => {
-    AlertIOS.prompt(
+    Alert.prompt(
       '请输入钱包密码',
       null,
       [

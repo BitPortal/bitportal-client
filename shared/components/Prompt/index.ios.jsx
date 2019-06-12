@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { AlertIOS } from 'react-native'
+import { Alert } from 'react-native'
 import { connect } from 'react-redux'
 import messages from 'resources/messages'
 
@@ -17,7 +17,7 @@ export default class Prompt extends Component {
 
     if (nextProps.isVisible !== this.props.isVisible && nextProps.isVisible) {
       this.timer = setTimeout(() => {
-        AlertIOS.prompt(
+        Alert.prompt(
           nextProps.title || messages[locale].general_popup_label_password,
           nextProps.message || null,
           [

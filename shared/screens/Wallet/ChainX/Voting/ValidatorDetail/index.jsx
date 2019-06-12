@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, TouchableHighlight, AlertIOS, TextInput, Alert } from 'react-native'
+import { View, Text, TouchableOpacity, TouchableHighlight, TextInput, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { Field, reduxForm, getFormSyncWarnings, getFormValues } from 'redux-form'
 import { Navigation } from 'react-native-navigation'
@@ -135,7 +135,7 @@ export default class ChainXValidatorDetail extends Component {
       return
     }
     const hint = `本次操作将为该节点投票${parseFloat(votingAmount).toFixed(8)} PCX`
-    AlertIOS.prompt(
+    Alert.prompt(
       '请输入钱包密码',
       hint,
       [
@@ -158,7 +158,7 @@ export default class ChainXValidatorDetail extends Component {
   }
 
   toClaim = () => {
-    AlertIOS.prompt(
+    Alert.prompt(
       '请输入钱包密码',
       '本次操作将提取该节点的利息',
       [

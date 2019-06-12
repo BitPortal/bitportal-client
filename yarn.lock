@@ -7831,13 +7831,13 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-lodash@4.x.x, "lodash@>=3.5 <5", lodash@^4.0.0, lodash@^4.13.1, lodash@^4.15.0, lodash@^4.17.1, lodash@^4.17.10, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1:
-  version "4.17.10"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
-
-lodash@^4.17.11, lodash@^4.5.1:
+lodash@4.17.x, lodash@^4.17.11, lodash@^4.5.1:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
+
+"lodash@>=3.5 <5", lodash@^4.0.0, lodash@^4.13.1, lodash@^4.15.0, lodash@^4.17.1, lodash@^4.17.10, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1:
+  version "4.17.10"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 
 log-symbols@^2.1.0:
   version "2.2.0"
@@ -10880,12 +10880,13 @@ react-native-modal@^5.0.0, react-native-modal@^5.4.0:
     prop-types "^15.6.1"
     react-native-animatable "^1.2.4"
 
-react-native-navigation@^2.0.2636:
-  version "2.0.2636"
-  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-2.0.2636.tgz#5163de34f31aaa9d4d2d1d85906299a7f48b008c"
+react-native-navigation@^2.21.0-experimental.1:
+  version "2.21.0-experimental.1"
+  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-2.21.0-experimental.1.tgz#7a2dd9446914371ee898d7b3e7f3185bcbba66e7"
+  integrity sha512-ve9F2x2E5DLxClDC45tURl4r0hypU67tXD8fmCfW0XkQj0JoOz+v9zD+O3M/FND5zW19WWq5eD2VwTaDGVbqTA==
   dependencies:
     hoist-non-react-statics "3.x.x"
-    lodash "4.x.x"
+    lodash "4.17.x"
     prop-types "15.x.x"
     react-lifecycles-compat "2.0.0"
     tslib "1.9.3"

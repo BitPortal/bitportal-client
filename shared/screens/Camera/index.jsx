@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, ActionSheetIOS, AlertIOS, Alert, Text, ActivityIndicator, Linking, TouchableOpacity, Dimensions, TouchableHighlight, Platform } from 'react-native'
+import { View, ActionSheetIOS, Alert, Text, ActivityIndicator, Linking, TouchableOpacity, Dimensions, TouchableHighlight, Platform } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import * as walletActions from 'actions/wallet'
 import * as producerActions from 'actions/producer'
@@ -254,7 +254,7 @@ export default class Camera extends Component {
           const wallet = (this.props.activeWallet && this.props.activeWallet.chain === chain) ? this.props.activeWallet : this.selectWallet(chain)
 
           if (!wallet) {
-            AlertIOS.alert(
+            Alert.alert(
               `未检测到${symbol}钱包`,
               null,
               [

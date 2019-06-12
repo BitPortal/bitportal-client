@@ -12,7 +12,7 @@ import messages from 'resources/messages'
 
 addLocaleData(en)
 addLocaleData(zh)
-addLocaleData(ko)
+// addLocaleData(ko)
 
 const mapStateToProps = state => ({
   locale: state.intl.locale,

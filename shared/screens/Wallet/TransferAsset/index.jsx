@@ -10,7 +10,6 @@ import {
   Image,
   TextInput,
   Alert,
-  AlertIOS,
   ActivityIndicator,
   Keyboard,
   Dimensions,
@@ -519,7 +518,7 @@ export default class TransferAsset extends Component {
     }
     // Keyboard.dismiss()
 
-    AlertIOS.prompt(
+    Alert.prompt(
       '请输入钱包密码',
       null,
       [

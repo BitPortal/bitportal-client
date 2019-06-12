@@ -28,7 +28,7 @@ export default class Profile extends Component {
 
   subscription = Navigation.events().bindComponent(this)
 
-  state = { showView: false }
+  state = { showView: true }
 
   toLanguageSetting = () => {
     Navigation.push(this.props.componentId, {

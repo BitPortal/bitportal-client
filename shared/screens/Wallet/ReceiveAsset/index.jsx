@@ -11,7 +11,6 @@ import {
   Image,
   TextInput,
   Alert,
-  AlertIOS,
   ActivityIndicator,
   Keyboard,
   Dimensions,
@@ -149,7 +148,7 @@ export default class ReceiveAsset extends Component {
   }
 
   setAmount = () => {
-    AlertIOS.prompt(
+    Alert.prompt(
       '输入金额',
       null,
       [

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, ScrollView, ActionSheetIOS, AlertIOS, Alert, Text, ActivityIndicator, Animated, Clipboard } from 'react-native'
+import { View, ScrollView, ActionSheetIOS, Alert, Text, ActivityIndicator, Animated, Clipboard } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 import * as identityActions from 'actions/identity'
@@ -87,7 +87,7 @@ export default class Contact extends Component {
   }
 
   deleteContact = (id) => {
-    AlertIOS.alert(
+    Alert.alert(
       '确认删除',
       null,
       [
@@ -148,7 +148,7 @@ export default class Contact extends Component {
       const wallet = this.selectWallet(chain)
 
       if (!wallet) {
-        AlertIOS.alert(
+        Alert.alert(
           `未检测到${symbol}钱包`,
           null,
           [

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, Text, ScrollView, Dimensions, LayoutAnimation, TouchableHighlight, AlertIOS, ActivityIndicator, Alert } from 'react-native'
+import { View, Text, ScrollView, Dimensions, LayoutAnimation, TouchableHighlight, ActivityIndicator, Alert } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 import FastImage from 'react-native-fast-image'
@@ -109,7 +109,7 @@ export default class Voting extends Component {
     if (buttonId === 'cancel') {
       Navigation.dismissModal(this.props.componentId)
     } else if (buttonId === 'vote') {
-      AlertIOS.prompt(
+      Alert.prompt(
         '请输入钱包密码',
         null,
         [

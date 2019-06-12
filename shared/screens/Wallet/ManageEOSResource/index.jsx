@@ -14,8 +14,7 @@ import {
   Alert,
   ActivityIndicator,
   Dimensions,
-  Clipboard,
-  AlertIOS
+  Clipboard
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Navigation } from 'react-native-navigation'
@@ -404,7 +403,7 @@ export default class ManageEOSResource extends Component {
 
       Keyboard.dismiss()
 
-      AlertIOS.prompt(
+      Alert.prompt(
         '请输入钱包密码',
         null,
         [

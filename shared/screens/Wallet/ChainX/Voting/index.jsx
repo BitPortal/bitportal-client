@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, Text, AlertIOS, ActivityIndicator, Alert } from 'react-native'
+import { View, Text, ActivityIndicator, Alert } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 import { managingWalletSelector, activeWalletSelector } from 'selectors/wallet'
@@ -88,7 +88,7 @@ export default class ChainXVoting extends Component {
       // Navigation.dismissAllModals()
       Navigation.pop(this.props.componentId)
     } else if (buttonId === 'vote') {
-      AlertIOS.prompt(
+      Alert.prompt(
         '请输入钱包密码',
         null,
         [

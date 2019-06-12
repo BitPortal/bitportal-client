@@ -192,45 +192,48 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.Camera', () => Camera, Provider, store)
 }
 
+export const setDefaultOptions = () => {
+  Navigation.setDefaultOptions({
+    statusBar: {
+      visible: true
+    },
+    topBar: {
+      background: {
+        translucent: false,
+        color: '#F7F7F7'
+      },
+      drawBehind: true,
+      noBorder: false,
+      title: {
+        fontFamily: 'System'
+      },
+      subtitle: {
+        fontFamily: 'System'
+      },
+      largeTitle: {
+        visible: true,
+        fontSize: 30,
+        fontFamily: 'System'
+      }
+    },
+    layout: {
+      backgroundColor: '#F0EFF5',
+      orientation: ['portrait']
+    },
+    bottomTabs: {
+      visible: true,
+      translucent: true,
+      backgroundColor: '#F7F7F7',
+      drawBehind: false
+    }
+  })
+}
+
 export const startApp = (callback) => {
   StatusBar.setHidden(false, 'fade')
   StatusBar.setBarStyle('default', true)
   Navigation.events().registerAppLaunchedListener(() => {
-    Navigation.setDefaultOptions({
-      statusBar: {
-        visible: true
-      },
-      topBar: {
-        background: {
-          translucent: false,
-          color: '#F7F7F7'
-        },
-        drawBehind: true,
-        noBorder: false,
-        title: {
-          fontFamily: 'System'
-        },
-        subtitle: {
-          fontFamily: 'System'
-        },
-        largeTitle: {
-          visible: true,
-          fontSize: 30,
-          fontFamily: 'System'
-        }
-      },
-      layout: {
-        backgroundColor: '#F0EFF5',
-        orientation: ['portrait']
-      },
-      bottomTabs: {
-        visible: true,
-        translucent: true,
-        backgroundColor: '#F7F7F7',
-        drawBehind: false
-      }
-    })
-
+    setDefaultOptions()
     callback()
   })
 }

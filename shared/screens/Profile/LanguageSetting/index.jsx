@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 // import { View } from 'react-native'
 import { connect } from 'react-redux'
 import TableView from 'react-native-tableview'
+import { startTabBasedApp } from 'navigators'
 import * as intlActions from 'actions/intl'
 
 const { Section, Item } = TableView
@@ -37,6 +38,7 @@ export default class LanguageSetting extends Component {
 
   setLocale = (locale) => {
     this.props.actions.setLocale(locale)
+    startTabBasedApp()
   }
 
   render() {

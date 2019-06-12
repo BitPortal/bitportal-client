@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { injectIntl } from 'react-intl'
+import { injectIntl, FormattedMessage } from 'react-intl'
 import { View, Text, Clipboard, ActivityIndicator, TouchableHighlight } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
@@ -114,8 +114,6 @@ export default class Wallet extends Component {
     switching: false
   }
 
-  subscription = Navigation.events().bindComponent(this)
-
   navigationButtonPressed({ buttonId }) {
     if (buttonId === 'manage') {
       Navigation.showModal({
@@ -142,6 +140,9 @@ export default class Wallet extends Component {
   }
 
   async componentDidMount() {
+    console.log('walletcomponentDidMount')
+    this.navigationEventListener = Navigation.events().bindComponent(this)
+
     this.props.actions.scanIdentity.requested()
     this.props.actions.getTicker.requested()
     SplashScreen.hide()
@@ -159,6 +160,13 @@ export default class Wallet extends Component {
      * }*/
   }
 
+  componentWillUnmount() {
+    if (this.navigationEventListener) {
+      console.log('walletcomponentWillUnmount')
+      this.navigationEventListener.remove()
+    }
+  }
+
   async componentDidAppear() {
     this.setState({ switching: false })
 
@@ -170,7 +178,7 @@ export default class Wallet extends Component {
 
       this.props.actions.getBalance.requested(activeWallet)
 
-      if ((activeWallet.chain === 'EOS') && activeWallet.address) {
+      if (activeWallet && (activeWallet.chain === 'EOS') && activeWallet.address) {
         this.props.actions.scanEOSAsset.requested(activeWallet)
       }
     }
@@ -439,7 +447,7 @@ export default class Wallet extends Component {
             <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.7} onPress={this.toManage}>
               <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={{ color: '#666666', fontSize: 17 }}>
-                  暂无钱包
+                  <FormattedMessage id="no_wallet_yet" />
                 </Text>
                 <Text style={{ marginTop: 10, color: '#666666', borderWidth: 1, borderColor: '#666666', padding: 4, paddingRight: 8, paddingLeft: 8, borderRadius: 4 }}>开始添加</Text>
               </View>

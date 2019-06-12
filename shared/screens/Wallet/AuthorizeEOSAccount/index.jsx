@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, Text, TouchableOpacity, AlertIOS, Alert, ActivityIndicator } from 'react-native'
+import { View, Text, TouchableOpacity, Alert, ActivityIndicator } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Navigation } from 'react-native-navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
@@ -91,7 +91,7 @@ export default class AuthorizeEOSAccount extends Component {
   }
 
   authorize = () => {
-    AlertIOS.prompt(
+    Alert.prompt(
       '请输入钱包密码',
       null,
       [

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, ActionSheetIOS, AlertIOS, Alert, Text, ActivityIndicator } from 'react-native'
+import { View, ActionSheetIOS, Alert, Text, ActivityIndicator } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 import * as walletActions from 'actions/wallet'
@@ -77,7 +77,7 @@ export default class ManageWallet extends Component {
   }
 
   deleteWallet = (walletId, chain, address) => {
-    AlertIOS.prompt(
+    Alert.prompt(
       '请输入钱包密码',
       null,
       [
@@ -96,7 +96,7 @@ export default class ManageWallet extends Component {
   }
 
   exportMnemonics = (walletId) => {
-    AlertIOS.prompt(
+    Alert.prompt(
       '请输入钱包密码',
       null,
       [
@@ -115,7 +115,7 @@ export default class ManageWallet extends Component {
   }
 
   exportETHKeystore = (walletId) => {
-    AlertIOS.prompt(
+    Alert.prompt(
       '请输入钱包密码',
       null,
       [
@@ -138,7 +138,7 @@ export default class ManageWallet extends Component {
     const account = this.props.account[`${chain}/${address}`]
     const permissions = account && account.permissions
 
-    AlertIOS.prompt(
+    Alert.prompt(
       '请输入钱包密码',
       null,
       [
@@ -309,7 +309,7 @@ export default class ManageWallet extends Component {
     }, (buttonIndex) => {
       if (buttonIndex === 1) {
         if (segWit !== 'P2WPKH') {
-          AlertIOS.prompt(
+          Alert.prompt(
             '请输入钱包密码',
             null,
             [
@@ -328,7 +328,7 @@ export default class ManageWallet extends Component {
         }
       } else if (buttonIndex === 2) {
         if (segWit === 'P2WPKH') {
-          AlertIOS.prompt(
+          Alert.prompt(
             '请输入钱包密码',
             null,
             [
@@ -356,7 +356,7 @@ export default class ManageWallet extends Component {
       const { name } = data
       const oldName = name
 
-      AlertIOS.prompt(
+      Alert.prompt(
         '设置钱包名称',
         null,
         [
