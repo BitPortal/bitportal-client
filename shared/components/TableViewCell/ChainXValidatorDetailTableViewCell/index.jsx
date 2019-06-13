@@ -11,7 +11,7 @@ const ChainXValidatorDetailTableViewCell = (props) => {
     }
   }
 
-  formatBalance = (balance, num = 8) => (parseInt(balance) * Math.pow(10, -8)).toFixed(num).toString()
+  formatBalance = (balance, num = 8) => (parseInt(balance) * Math.pow(10, -num)).toFixed(num).toString()
 
   if (props.data.actionType) {
     return (
@@ -32,7 +32,6 @@ const ChainXValidatorDetailTableViewCell = (props) => {
         <Text
           style={{ fontSize: props.data.type === 'sessionKey' ? 15 : 17, textAlign: 'right', maxWidth: 240 }}
         >{props.data.detail}</Text>
-
       </View>
     </View>
   )

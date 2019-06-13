@@ -9,7 +9,7 @@ export const initRpc = () => {
 }
 
 export const initApibase = async () => {
-  const chainx = new ApiBase(new HttpProvider('https://w1.chainx.org/rpc'), ['https://w2.chainx.org/rpc'])
+  const chainx = new ApiBase(new HttpProvider('https://w1.chainx.org.cn/rpc'), ['https://w2.chainx.org/rpc'])
   await chainx._isReady
   return chainx
 }
@@ -37,9 +37,20 @@ export const getBalance = async (address: string) => {
   return (+balance.data[0].details.Free) * Math.pow(10, -8)
 }
 
+export const getPseduIntentions = async () => {
+  const provider = initRpc()
+  const asset = await provider.send('chainx_getPseduIntentions', [])
+  return asset
+}
+
+export const getPseduNominationRecords = async (address: string) => {
+  const provider = initRpc()
+  return await provider.send('chainx_getPseduNominationRecords', [chainxAccount.decodeAddress(address)])
+}
+
 export const getAsset = async (address: string) => {
   const provider = initRpc()
-  const asset = await provider.send('chainx_getAssetsByAccount', [chainxAccount.decodeAddress(address), 0, 1])
+  const asset = await provider.send('chainx_getAssetsByAccount', [chainxAccount.decodeAddress(address), 0, 10])
   return asset
 }
 
@@ -55,8 +66,14 @@ export const getTransaction = async (hash: string) => {
   return ''
 }
 
-export const getBlockNumber = async () => {
-
+export const getBlockHeight = async () => {
+  const result = await chainxScanApi('GET', '/chain/height', {})
+  console.log(result)
+  if (result && result.height) {
+    return result.height
+  } else {
+    return 0
+  }
 }
 
 export const getBlock = async (id: string | number, returnTransactionObjects: boolean) => {
@@ -105,7 +122,7 @@ export const transfer = async (password: string, keystore: any, fromAddress: str
   const chainx = await initApibase()
 
   // 生成转账交易
-  console.log('transfer params', fromAddress, toAddress, symbol, realAmount, memo)
+  // console.log('transfer params', fromAddress, toAddress, symbol, realAmount, memo)
   const extrinsic = chainx.tx.xAssets.transfer(toAddress, symbol, realAmount, memo)
 
   // 获取该账户交易次数
@@ -149,8 +166,8 @@ export const voteClaim = async (password: string, keystore: any, fromAddress: st
   return txId
 }
 
-export const depositClaim = async (password: string, keystore: any, fromAddress: string, asset = 'Bitcoin') => {
-  if (['Bitcoin', 'SDOT'].indexOf(asset) === -1) {
+export const depositClaim = async (password: string, keystore: any, fromAddress: string, asset = 'BTC') => {
+  if (['BTC', 'SDOT'].indexOf(asset) === -1) {
     throw new Error('Invalid asset' + asset.toString())
   }
   const chainx = await initApibase()

@@ -12,6 +12,9 @@ export const typeOf = (value: any) => Object.prototype.toString.call(value).slic
 
 const loadedScripts: string[] = []
 
+const { onEventObject } = require('./analytics')
+import { ERROR_GET_MESSAGE } from 'constants/analytics'
+
 export const loadScript = (src: string) => new Promise((resolve, reject) => {
   if (~loadedScripts.indexOf(src)) {
     resolve()
@@ -38,6 +41,11 @@ export const getErrorMessage = (error: any) => {
   ) {
     const errorObject = JSON.parse(error.message)
 
+    // Todo:: delete when it's table enough
+    try {
+      onEventObject(ERROR_GET_MESSAGE, errorObject)
+    } catch (e) {}
+
     if (
       errorObject.error
         && errorObject.error.details
@@ -54,6 +62,11 @@ export const getErrorMessage = (error: any) => {
 
   if (typeof error === 'string') {
     const errorObject = JSON.parse(error)
+
+    // Todo:: delete when it's table enough
+    try {
+      onEventObject(ERROR_GET_MESSAGE, errorObject)
+    } catch (e) {}
 
     if (
       errorObject.error

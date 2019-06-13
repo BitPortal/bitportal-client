@@ -75,6 +75,7 @@ import SwitchBTCAddress from 'screens/Wallet/SwitchBTCAddress'
 import TransactionDetail from 'screens/Wallet/TransactionDetail'
 import ProducerDetail from 'screens/Wallet/ProducerDetail'
 import ChainXDeposit from 'screens/Wallet/ChainX/Deposit'
+import ChainXDepositClaim from 'screens/Wallet/ChainX/Deposit/Claim'
 import ChainXVoting from 'screens/Wallet/ChainX/Voting'
 import ChainXValidatorDetail from 'screens/Wallet/ChainX/Voting/ValidatorDetail'
 import Discovery from 'screens/Discovery'
@@ -173,6 +174,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.TransactionDetail', () => TransactionDetail, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ProducerDetail', () => ProducerDetail, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ChainXDeposit', () => ChainXDeposit, PersistProvider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ChainXDepositClaim', () => ChainXDepositClaim, PersistProvider, store)
   Navigation.registerComponentWithRedux('BitPortal.ChainXVoting', () => ChainXVoting, PersistProvider, store)
   Navigation.registerComponentWithRedux('BitPortal.ChainXValidatorDetail', () => ChainXValidatorDetail, PersistProvider, store)
 

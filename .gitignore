@@ -37,6 +37,7 @@ DerivedData
 project.xcworkspace
 *jsbundle*
 ios/assets
+ios/Pods
 
 # Android/IntelliJ
 #

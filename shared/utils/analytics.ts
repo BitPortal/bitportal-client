@@ -1,4 +1,3 @@
-
 import { NativeModules } from 'react-native'
 
 const UMAnalyticsModule =  NativeModules.UMAnalyticsModule
@@ -29,11 +28,16 @@ const onEventTrackWithMap = (eventName: string, property: object) => (
   UMAnalyticsModule.trackWithMap(eventName, {...property,  date})
 )
 
+const onEventObject = (eventname: string, eventData: object) => {
+  AnalyticsUtil.onEventObject(eventId, {...eventData, date })
+}
+
 export {
   onEvent,
   onEventWithLabel,
   onEventWithMap,
   onEventWithMapAndCount,
   onEventTrack,
-  onEventTrackWithMap
+  onEventTrackWithMap,
+  onEventObject
 }
