@@ -341,10 +341,20 @@ function* getTransactions(action: Action) {
         addresses = walletAddresses.external.allIds.concat(walletAddresses.change.allIds)
       }
 
-      const fromIndex = 0
-      const toIndex = 10
+      let fromIndex = 0
+      let toIndex = 20
+
+      if (loadMore) {
+        const pagination = yield select(state => activeWalletTransactionsPaginationSelector(state))
+
+        if (pagination && pagination.to && pagination.pageSize) {
+          fromIndex = pagination.to
+          toIndex = pagination.pageSize + fromIndex
+        }
+      }
+
       const transactions = yield call(btcChain.getTransactions, addresses, fromIndex, toIndex)
-      const canLoadMore = transactions.items.length === 10
+      const canLoadMore = transactions.totalItems !== transactions.items.length && transactions.items.length === 20
       const items = transactions.items
         .map((item: any) => ({ ...item, id: item.txid, timestamp: +item.time * 1000 }))
         .map((item: any) => {
@@ -398,10 +408,15 @@ function* getTransactions(action: Action) {
       const pagination = {
         totalItems: transactions.totalItems,
         from: transactions.from,
-        to: transactions.to
+        to: transactions.to,
+        pageSize: 20
       }
 
-      yield put(actions.updateTransactions({ id, items, pagination, canLoadMore, assetId }))
+      if (loadMore) {
+        yield put(actions.updateTransactions({ id, items, pagination, assetId, canLoadMore, loadingMore: false }))
+      } else {
+        yield put(actions.addTransactions({ id, items, pagination, assetId, canLoadMore, loadingMore: false }))
+      }
     } else if (chain === 'ETHEREUM') {
       const startblock = 0
       const endblock = 99999999

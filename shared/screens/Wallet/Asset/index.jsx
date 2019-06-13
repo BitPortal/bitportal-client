@@ -119,14 +119,11 @@ export default class Asset extends Component {
   }
 
   componentDidAppear() {
-    const { activeWallet, activeAsset } = this.props
-    const contract = activeAsset.contract
-    const assetSymbol = activeAsset.symbol
-    this.props.actions.getTransactions.requested({ ...this.props.activeWallet, contract, assetSymbol })
+
   }
 
   componentDidDisappear() {
-    this.props.actions.getTransactions.succeeded()
+
   }
 
   componentDidMount() {
@@ -138,6 +135,10 @@ export default class Asset extends Component {
     } else {
       this.props.actions.getBalance.requested(activeWallet)
     }
+
+    const contract = activeAsset.contract
+    const assetSymbol = activeAsset.symbol
+    this.props.actions.getTransactions.requested({ ...this.props.activeWallet, contract, assetSymbol })
   }
 
   toTransactionDetail = (id, pending) => {
