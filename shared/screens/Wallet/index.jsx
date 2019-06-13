@@ -80,9 +80,6 @@ export default class Wallet extends Component {
   static get options() {
     return {
       topBar: {
-        title: {
-          text: '钱包'
-        },
         leftButtons: [
           {
             id: 'manage',

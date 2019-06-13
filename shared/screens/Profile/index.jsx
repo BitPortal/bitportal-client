@@ -3,9 +3,12 @@ import { View, LayoutAnimation } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 import TableView from 'react-native-tableview'
+import { injectIntl, FormattedMessage } from 'react-intl'
 import styles from './styles'
 
 const { Section, Item } = TableView
+
+@injectIntl
 
 @connect(
   state => ({
@@ -33,7 +36,14 @@ export default class Profile extends Component {
   toLanguageSetting = () => {
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.LanguageSetting'
+        name: 'BitPortal.LanguageSetting',
+        options: {
+          topBar: {
+            title: {
+              text: this.props.intl.formatMessage({ id: 'top_bar_title_language_setting' })
+            }
+          }
+        }
       }
     })
   }
@@ -41,23 +51,37 @@ export default class Profile extends Component {
   toCurrencySetting = () => {
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.CurrencySetting'
+        name: 'BitPortal.CurrencySetting',
+        options: {
+          topBar: {
+            title: {
+              text: this.props.intl.formatMessage({ id: 'top_bar_title_currency_setting' })
+            }
+          }
+        }
       }
     })
   }
 
-  toNodeSetting = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.NodeSetting'
-      }
-    })
-  }
+  /* toNodeSetting = () => {
+   *   Navigation.push(this.props.componentId, {
+   *     component: {
+   *       name: 'BitPortal.NodeSetting'
+   *     }
+   *   })
+   * }*/
 
   toContacts = () => {
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.Contacts'
+        name: 'BitPortal.Contacts',
+        options: {
+          topBar: {
+            title: {
+              text: this.props.intl.formatMessage({ id: 'top_bar_title_contacts' })
+            }
+          }
+        }
       }
     })
   }
@@ -65,7 +89,14 @@ export default class Profile extends Component {
   toMyIdentity = () => {
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.MyIdentity'
+        name: 'BitPortal.MyIdentity',
+        options: {
+          topBar: {
+            title: {
+              text: this.props.intl.formatMessage({ id: 'top_bar_title_my_identity' })
+            }
+          }
+        }
       }
     })
   }
@@ -145,7 +176,7 @@ export default class Profile extends Component {
   }
 
   render() {
-    const { identity, locale, currencySymbol } = this.props
+    const { identity, locale, currencySymbol, intl } = this.props
     const hasIdentity = !!identity.id
 
     if (!this.state.showView) return null
@@ -163,8 +194,9 @@ export default class Profile extends Component {
           <Item
             height={78}
             reactModuleForCell="IdentityTableViewCell"
-            name={hasIdentity ? identity.name : '数字身份'}
-            identifier={hasIdentity ? identity.identifier : '创建或恢复数字身份'}
+            hasIdentity={hasIdentity}
+            name={hasIdentity ? identity.name : intl.formatMessage({ id: 'identity_tableviewcell_identity' })}
+            identifier={hasIdentity ? identity.identifier : intl.formatMessage({ id: 'identity_tableviewcell_add_identity' })}
             onPress={hasIdentity ? this.toMyIdentity : this.toAddIdentity}
             arrow
           />
@@ -177,7 +209,7 @@ export default class Profile extends Component {
             reactModuleForCell="IdentityTableViewCell"
             arrow
             onPress={this.toContacts}
-            text="联系人"
+            text={intl.formatMessage({ id: 'identity_tableviewcell_contacts' })}
             isSetting
           />
           <Item
@@ -188,7 +220,7 @@ export default class Profile extends Component {
             arrow
             onPress={this.toLanguageSetting}
             isSetting
-            text="语言设置"
+            text={intl.formatMessage({ id: 'identity_tableviewcell_language_setting' })}
           />
           <Item
             key="currency"
@@ -198,7 +230,7 @@ export default class Profile extends Component {
             arrow
             onPress={this.toCurrencySetting}
             isSetting
-            text="货币单位"
+            text={intl.formatMessage({ id: 'identity_tableviewcell_currency_setting' })}
           />
           {/* <Item
               key="node"
@@ -248,7 +280,7 @@ export default class Profile extends Component {
             arrow
             onPress={this.toHelpCenter}
             isSetting
-            text="帮助中心"
+            text={intl.formatMessage({ id: 'identity_tableviewcell_help_center' })}
           />
           <Item
             key="aboutUs"
@@ -257,7 +289,7 @@ export default class Profile extends Component {
             arrow
             onPress={this.toAboutUs}
             isSetting
-            text="关于我们"
+            text={intl.formatMessage({ id: 'identity_tableviewcell_about_us' })}
           />
         </Section>
       </TableView>

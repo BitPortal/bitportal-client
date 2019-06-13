@@ -2,11 +2,16 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 // import { View } from 'react-native'
 import { connect } from 'react-redux'
+import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
-import { startTabBasedApp } from 'navigators'
+import { setBottomTabsLocale } from 'navigators'
 import * as intlActions from 'actions/intl'
+import { injectIntl, FormattedMessage } from 'react-intl'
+import messages from 'resources/messages'
 
 const { Section, Item } = TableView
+
+@injectIntl
 
 @connect(
   state => ({
@@ -23,9 +28,6 @@ export default class LanguageSetting extends Component {
   static get options() {
     return {
       topBar: {
-        title: {
-          text: '语言设置'
-        },
         largeTitle: {
           visible: false
         }
@@ -38,7 +40,17 @@ export default class LanguageSetting extends Component {
 
   setLocale = (locale) => {
     this.props.actions.setLocale(locale)
-    startTabBasedApp()
+    setBottomTabsLocale(locale)
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        title: {
+          text: messages[locale].top_bar_title_language_setting
+        },
+        backButton: {
+          title: messages[locale].top_bar_title_profile
+        }
+      }
+    })
   }
 
   render() {

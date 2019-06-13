@@ -1,3 +1,21 @@
 {
+  "tab_bar_title_wallet": "钱包",
+  "tab_bar_title_market": "市场",
+  "tab_bar_title_profile": "我的",
+  "top_bar_title_wallet": "钱包",
+  "top_bar_title_market": "市场",
+  "top_bar_title_profile": "我的",
+  "top_bar_title_language_setting": "语言设置",
+  "top_bar_title_currency_setting": "货币单位",
+  "top_bar_title_contacts": "联系人",
+  "top_bar_title_my_identity": "我的身份",
+  "top_bar_title_add_identity": "添加身份",
+  "identity_tableviewcell_identity": "数字身份",
+  "identity_tableviewcell_add_identity": "创建或恢复数字身份",
+  "identity_tableviewcell_contacts": "联系人",
+  "identity_tableviewcell_language_setting": "语言设置",
+  "identity_tableviewcell_currency_setting": "货币单位",
+  "identity_tableviewcell_help_center": "帮助中心",
+  "identity_tableviewcell_about_us": "关于我们",
   "no_wallet_yet": "暂无钱包"
 }

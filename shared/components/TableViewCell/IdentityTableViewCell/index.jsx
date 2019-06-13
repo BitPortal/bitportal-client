@@ -52,7 +52,7 @@ const IdentityTableViewCell = (props) => {
             <Text style={{ fontSize: 22, color: 'black', marginRight: 5, paddingBottom: 4 }}>{props.data.name}</Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ fontSize: 15 }}>{formatAddress(props.data.identifier)}</Text>
+            <Text style={{ fontSize: 15 }}>{props.data.hasIdentity ? formatAddress(props.data.identifier) : props.data.identifier}</Text>
           </View>
         </View>
       </View>

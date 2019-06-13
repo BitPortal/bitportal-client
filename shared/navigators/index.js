@@ -253,7 +253,8 @@ export const startSingleApp = () => {
   })
 }
 
-export const startTabBasedApp = () => {
+export const startTabBasedApp = (locale) => {
+  locale = locale || 'zh'
   Navigation.setRoot({
     root: {
       bottomTabs: {
@@ -265,13 +266,20 @@ export const startTabBasedApp = () => {
                 {
                   component: {
                     id: 'BitPortal.Wallet',
-                    name: 'BitPortal.Wallet'
+                    name: 'BitPortal.Wallet',
+                    options: {
+                      topBar: {
+                        title: {
+                          text: messages[locale].top_bar_title_wallet
+                        }
+                      }
+                    }
                   }
                 }
               ],
               options: {
                 bottomTab: {
-                  text: '钱包',
+                  text: messages[locale].tab_bar_title_wallet,
                   textColor: '#9D9D9D',
                   iconColor: '#9D9D9D',
                   selectedTextColor: '#007AFF',
@@ -288,13 +296,20 @@ export const startTabBasedApp = () => {
                 {
                   component: {
                     id: 'BitPortal.Market',
-                    name: 'BitPortal.Market'
+                    name: 'BitPortal.Market',
+                    options: {
+                      topBar: {
+                        title: {
+                          text: messages[locale].top_bar_title_market
+                        }
+                      }
+                    }
                   }
                 }
               ],
               options: {
                 bottomTab: {
-                  text: '市场',
+                  text: messages[locale].tab_bar_title_market,
                   textColor: '#9D9D9D',
                   iconColor: '#9D9D9D',
                   selectedTextColor: '#007AFF',
@@ -357,13 +372,20 @@ export const startTabBasedApp = () => {
                 {
                   component: {
                     id: 'BitPortal.Profile',
-                    name: 'BitPortal.Profile'
+                    name: 'BitPortal.Profile',
+                    options: {
+                      topBar: {
+                        title: {
+                          text: messages[locale].top_bar_title_profile
+                        }
+                      }
+                    }
                   }
                 }
               ],
               options: {
                 bottomTab: {
-                  text: '我的',
+                  text: messages[locale].tab_bar_title_profile,
                   textColor: '#9D9D9D',
                   iconColor: '#9D9D9D',
                   selectedTextColor: '#007AFF',
@@ -381,49 +403,65 @@ export const startTabBasedApp = () => {
 }
 
 export const setBottomTabsLocale = (locale) => {
+  locale = locale || 'zh'
   Navigation.mergeOptions('BitPortal.Wallet', {
+    topBar: {
+      title: {
+        text: messages[locale].top_bar_title_wallet
+      }
+    },
     bottomTab: {
-      text: messages[locale].general_nav_assets,
+      text: messages[locale].tab_bar_title_wallet,
       textColor: '#9D9D9D',
+      iconColor: '#9D9D9D',
       selectedTextColor: '#007AFF',
-      icon: Images.asset,
-      selectedIcon: Images.asset_press,
+      icon: require('resources/images/wallet_tab.png'),
       selectedIconColor: '#007AFF',
       testID: 'BITPORTAL_ASSETS'
     }
   })
 
   Navigation.mergeOptions('BitPortal.Market', {
+    topBar: {
+      title: {
+        text: messages[locale].top_bar_title_market
+      }
+    },
     bottomTab: {
-      text: messages[locale].general_nav_market,
+      text: messages[locale].tab_bar_title_market,
       textColor: '#9D9D9D',
+      iconColor: '#9D9D9D',
       selectedTextColor: '#007AFF',
-      icon: Images.market,
-      selectedIcon: Images.market_press,
+      icon: require('resources/images/market_tab.png'),
       selectedIconColor: '#007AFF',
       testID: 'BITPORTAL_MARKET'
     }
   })
 
-  Navigation.mergeOptions('BitPortal.Discovery', {
-    bottomTab: {
-      text: messages[locale].general_nav_discovery,
-      textColor: '#9D9D9D',
-      selectedTextColor: '#007AFF',
-      icon: Images.discovery,
-      selectedIcon: Images.discovery_press,
-      selectedIconColor: '#007AFF',
-      testID: 'BITPORTAL_DISCOVERY'
-    }
-  })
+  // Navigation.mergeOptions('BitPortal.Discovery', {
+  //   bottomTab: {
+  //     text: messages[locale].general_nav_discovery,
+  //     textColor: '#9D9D9D',
+  //     selectedTextColor: '#007AFF',
+  //     icon: Images.discovery,
+  //     selectedIcon: Images.discovery_press,
+  //     selectedIconColor: '#007AFF',
+  //     testID: 'BITPORTAL_DISCOVERY'
+  //   }
+  // })
 
   Navigation.mergeOptions('BitPortal.Profile', {
+    topBar: {
+      title: {
+        text: messages[locale].top_bar_title_profile
+      }
+    },
     bottomTab: {
-      text: messages[locale].general_nav_profile,
+      text: messages[locale].tab_bar_title_profile,
       textColor: '#9D9D9D',
+      iconColor: '#9D9D9D',
       selectedTextColor: '#007AFF',
-      icon: Images.profile,
-      selectedIcon: Images.profile_press,
+      icon: require('resources/images/profile_tab.png'),
       selectedIconColor: '#007AFF',
       testID: 'BITPORTAL_PROFILE'
     }

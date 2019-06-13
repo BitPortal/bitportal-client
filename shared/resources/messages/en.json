@@ -1,3 +1,21 @@
 {
+  "tab_bar_title_wallet": "Wallet",
+  "tab_bar_title_market": "Market",
+  "tab_bar_title_profile": "My Profile",
+  "top_bar_title_wallet": "Wallet",
+  "top_bar_title_market": "Market",
+  "top_bar_title_profile": "My Profile",
+  "top_bar_title_language_setting": "Language Setting",
+  "top_bar_title_currency_setting": "Currency Setting",
+  "top_bar_title_contacts": "Contacts",
+  "top_bar_title_my_identity": "My Identity",
+  "top_bar_title_add_identity": "My Identity",
+  "identity_tableviewcell_identity": "Digital Identity",
+  "identity_tableviewcell_add_identity": "Create or Recover Identity",
+  "identity_tableviewcell_contacts": "Contacts",
+  "identity_tableviewcell_language_setting": "Language Setting",
+  "identity_tableviewcell_currency_setting": "Currency Setting",
+  "identity_tableviewcell_help_center": "Help Center",
+  "identity_tableviewcell_about_us": "About Us",
   "no_wallet_yet": "No wallet yet"
 }
