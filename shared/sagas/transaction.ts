@@ -420,7 +420,20 @@ function* getTransactions(action: Action) {
     } else if (chain === 'ETHEREUM') {
       const startblock = 0
       const endblock = 99999999
-      const transactions = yield call(ethChain.getTransactions, address, startblock, endblock)
+
+      let page = 1
+      let offset = 10
+
+      if (loadMore) {
+        const pagination = yield select(state => activeWalletTransactionsPaginationSelector(state))
+
+        if (pagination && pagination.page) {
+          page = pagination.page + 1
+        }
+      }
+
+      const transactions = yield call(ethChain.getTransactions, address, startblock, endblock, page, offset)
+      const canLoadMore = transactions.length === 10
       const items = transactions.map((item: any) => {
         const isSender = item.from === address.toLowerCase()
         const transactionType = isSender ? 'send' : 'receive'
@@ -438,12 +451,17 @@ function* getTransactions(action: Action) {
       })
 
       const pagination = {
-        totalItems: items.length,
         startblock,
-        endblock
+        endblock,
+        page,
+        offset
       }
 
-      yield put(actions.updateTransactions({ id, items, pagination, assetId }))
+      if (loadMore) {
+        yield put(actions.updateTransactions({ id, items, pagination, assetId, canLoadMore, loadingMore: false }))
+      } else {
+        yield put(actions.addTransactions({ id, items, pagination, assetId, canLoadMore, loadingMore: false }))
+      }
     } else if (chain === 'EOS') {
       let page = 1
       const pageSize = 20
