@@ -13,6 +13,7 @@ import * as eosChain from 'core/chain/eos'
 import * as chainxChain from 'core/chain/chainx'
 import * as api from 'utils/api'
 import { managingWalletSelector } from 'selectors/wallet'
+import { activeWalletTransactionsPaginationSelector } from 'selectors/transaction'
 import { push, dismissAllModals } from 'utils/location'
 
 function* transfer(action: Action) {
@@ -319,12 +320,14 @@ function* getTransactions(action: Action) {
     const address = action.payload.address
     const source = action.payload.source
     const contract = action.payload.contract
+    const symbol = action.payload.symbol
     const assetSymbol = action.payload.assetSymbol
     const walletId = action.payload.id
-
+    const loadMore = action.payload.loadMore
     const assetId = contract ? `${contract}/${assetSymbol}` : 'syscoin'
-
     let id = `${chain}/${address}`
+
+    if (loadMore) yield put(actions.setLoadingMore({ id, assetId, loadingMore: true }))
 
     if (chain === 'BITCOIN') {
       let addresses
@@ -427,37 +430,51 @@ function* getTransactions(action: Action) {
 
       yield put(actions.updateTransactions({ id, items, pagination, assetId }))
     } else if (chain === 'EOS') {
-      const tokenAccount = contract || 'eosio.token'
-      const position = -1
-      const offset = -100
-      const transactions = yield call(eosChain.getTransactions, address, position, offset)
-      console.log('eos transactions', transactions)
-      const items = transactions.actions
-        .filter((item: any) => item.action_trace.act.name === 'transfer' && item.action_trace.act.account === tokenAccount)
-        .map((item: any) => {
-          const isSender = item.action_trace.act.data.from === address
-          const transactionType = isSender ? 'send' : 'receive'
-          const amount = item.action_trace.act.data.quantity.split(' ')[0]
-          const change = isSender ? -+amount : +amount
-          const targetAddress = isSender ? item.action_trace.act.data.to : item.action_trace.act.data.from
+      let page = 1
+      const pageSize = 20
 
-          return {
-            ...item,
-            id: item.action_trace.trx_id,
-            timestamp: +new Date(item.block_time),
-            change,
-            targetAddress,
-            transactionType
-          }
-        })
+      if (loadMore) {
+        const pagination = yield select(state => activeWalletTransactionsPaginationSelector(state))
 
-      const pagination = {
-        last_irreversible_block: transactions.last_irreversible_block,
-        position,
-        offset
+        if (pagination && pagination.page) {
+          page = pagination.page + 1
+        }
       }
 
-      yield put(actions.updateTransactions({ id, items, pagination, assetId }))
+      const tokenAccount = contract || 'eosio.token'
+      const symbol = symbol || assetSymbol
+      const transactions = yield call(api.getEOSTransactions, { account: address, code: tokenAccount, symbol, page, size: pageSize })
+
+      const items = transactions.data.trace_list.map((item: any) => {
+        const isSender = item.sender === address
+        const transactionType = isSender ? 'send' : 'receive'
+        const amount = item.quantity
+        const change = isSender ? -+amount : +amount
+        const targetAddress = isSender ? item.receiver : item.sender
+
+        return {
+            ...item,
+          id: item.trx_id,
+          timestamp: +new Date(item.timestamp),
+          change,
+          targetAddress,
+          transactionType
+        }
+      })
+
+      const totalItems = transactions.data.trace_count
+      const pagination = {
+        page,
+        pageSize,
+        totalItems,
+        last_irreversible_block_num: transactions.data.last_irreversible_block_num
+      }
+
+      if (loadMore) {
+        yield put(actions.updateTransactions({ id, items, pagination, assetId, canLoadMore: totalItems > (+page) * (+pageSize), loadingMore: false }))
+      } else {
+        yield put(actions.addTransactions({ id, items, pagination, assetId, canLoadMore: totalItems > (+page) * (+pageSize), loadingMore: false }))
+      }
     } else if (chain === 'CHAINX') {
       const page = 0
       const pageSize = 200

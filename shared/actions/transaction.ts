@@ -5,8 +5,10 @@ export const updateTransactions = createAction<UpdateTransactionsParams>('transa
 export const removeTransactions = createAction<RemoveTransactionParams>('transaction/REMOVE')
 export const updateTransaction = createAction<UpdateTransactionParams>('transaction/UPDATE')
 export const addTransaction = createAction<AddTransactionParams>('transaction/ADD')
+export const addTransactions = createAction<AddTransactionsParams>('transaction/ADD_LIST')
 export const sortTransaction = createAction<AddTransactionParams>('transaction/SORT')
 export const setActiveTransactionId = createAction<SetActiveTransactionIdParams>('transaction/SET_ACTIVE')
+export const setLoadingMore = createAction<SetLoadingMoreParams>('transaction/SET_LOADING_MORE')
 
 export const getTransactions = createAsyncAction('transaction/GET_LIST')
 export const getTransaction = createAsyncAction('transaction/GET')

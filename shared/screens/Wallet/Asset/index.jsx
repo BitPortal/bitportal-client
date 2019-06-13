@@ -8,7 +8,7 @@ import TableView from 'react-native-tableview'
 import { activeWalletSelector, activeChainSelector } from 'selectors/wallet'
 import { activeWalletBalanceSelector, activeAssetBalanceSelector } from 'selectors/balance'
 import { activeWalletTickerSelector } from 'selectors/ticker'
-import { activeWalletTransactionsSelector } from 'selectors/transaction'
+import { activeWalletTransactionsSelector, activeWalletTransactionsLoadingMoreSelector, activeWalletTransactionsCanLoadMoreSelector } from 'selectors/transaction'
 import { managingWalletChildAddressSelector } from 'selectors/address'
 import { activeAssetSelector } from 'selectors/asset'
 import FastImage from 'react-native-fast-image'
@@ -32,7 +32,9 @@ const { Section, Item } = TableView
     assetBalance: activeAssetBalanceSelector(state),
     ticker: activeWalletTickerSelector(state),
     transactions: activeWalletTransactionsSelector(state),
-    childAddress: managingWalletChildAddressSelector(state)
+    childAddress: managingWalletChildAddressSelector(state),
+    loadingMore: activeWalletTransactionsLoadingMoreSelector(state),
+    canLoadMore: activeWalletTransactionsCanLoadMoreSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -56,10 +58,6 @@ export default class Asset extends Component {
   }
 
   subscription = Navigation.events().bindComponent(this)
-
-  onRefresh = () => {
-
-  }
 
   toTransferAsset = () => {
     Navigation.showModal({
@@ -111,7 +109,7 @@ export default class Asset extends Component {
         options: {
           topBar: {
             title: {
-              text: `接收 ${this.props.activeWallet.symbol}`
+              text: `接收 ${this.props.activeAsset.symbol}`
             },
             noBorder: this.props.activeWallet.chain === 'BITCOIN' && this.props.childAddress && this.props.activeWallet.address !== this.props.childAddress
           }
@@ -151,7 +149,7 @@ export default class Asset extends Component {
         options: {
           topBar: {
             title: {
-              text: `${this.props.activeWallet.symbol} ${!pending ? '转账成功' : '转账中...'}`
+              text: `${this.props.activeAsset.symbol} ${!pending ? '转账成功' : '转账中...'}`
             }
           }
         },
@@ -165,7 +163,17 @@ export default class Asset extends Component {
   }
 
   onRefresh = () => {
-    this.props.actions.getTransactions.refresh(this.props.activeWallet)
+    const { activeWallet, activeAsset } = this.props
+    const contract = activeAsset.contract
+    const assetSymbol = activeAsset.symbol
+    this.props.actions.getTransactions.requested({ ...this.props.activeWallet, contract, assetSymbol })
+  }
+
+  loadMore = () => {
+    const { activeWallet, activeAsset } = this.props
+    const contract = activeAsset.contract
+    const assetSymbol = activeAsset.symbol
+    this.props.actions.getTransactions.requested({ ...this.props.activeWallet, contract, assetSymbol, loadMore: true })
   }
 
   formatAddress = (address) => {
@@ -198,7 +206,7 @@ export default class Asset extends Component {
   }
 
   render() {
-    const { ticker, walletBalance, activeWallet, activeAsset, intl, transactions, getTransactions, statusBarHeight, assetBalance } = this.props
+    const { ticker, walletBalance, activeWallet, activeAsset, intl, transactions, getTransactions, statusBarHeight, assetBalance, loadingMore, canLoadMore } = this.props
     const balance = activeAsset.contract ? assetBalance : walletBalance
     const transactionCount = transactions && transactions.length
     const precision = balance.precision
@@ -208,6 +216,34 @@ export default class Asset extends Component {
     const refreshing = getTransactions.refreshing
     const emptyTransactions = !!transactions && transactions.length === 0
     const chain = activeWallet ? activeWallet.chain : ''
+
+    let transactionCells = []
+
+    if (transactionCount) {
+      transactionCells = transactions.map((transaction: any, index: number) => (
+        <Item
+          reactModuleForCell="TransactionTableViewCell"
+          height={60}
+          key={transaction.id}
+          id={transaction.id}
+          change={intl.formatNumber(+transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}
+          date={transaction.timestamp && intl.formatDate(+transaction.timestamp, { year: 'numeric', month: 'numeric', day: 'numeric' })}
+          time={transaction.timestamp && intl.formatTime(+transaction.timestamp, { hour12: false, hour: 'numeric', minute: 'numeric', second: 'numeric' })}
+          transactionType={transaction.transactionType}
+          targetAddress={transaction.targetAddress}
+          symbol={symbol}
+          componentId={this.props.componentId}
+          showSeparator={true}
+          onPress={this.toTransactionDetail.bind(this, transaction.id, transaction.pending)}
+        />
+      ))
+    }
+
+    if (canLoadMore) {
+      transactionCells.push(
+        <Item key="loadMore" reactModuleForCell="LoadMoreTableViewCell" selectionStyle={TableView.Consts.CellSelectionStyle.None} onPress={!loadingMore ? this.loadMore : () => {}} loadingMore={loadingMore} height={60} />
+      )
+    }
 
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -279,24 +315,7 @@ export default class Asset extends Component {
               selectionStyle={TableView.Consts.CellSelectionStyle.None}
             />
           </Section>
-          {transactionCount && <Section>
-            {transactions.map((transaction: any, index: number) => <Item
-              reactModuleForCell="TransactionTableViewCell"
-              height={60}
-              key={transaction.id}
-              id={transaction.id}
-              change={intl.formatNumber(+transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}
-              date={transaction.timestamp && intl.formatDate(+transaction.timestamp, { year: 'numeric', month: 'numeric', day: 'numeric' })}
-              time={transaction.timestamp && intl.formatTime(+transaction.timestamp, { hour12: false, hour: 'numeric', minute: 'numeric', second: 'numeric' })}
-              transactionType={transaction.transactionType}
-              targetAddress={transaction.targetAddress}
-              symbol={symbol}
-              componentId={this.props.componentId}
-              showSeparator={transactionCount - 1 !== index}
-              onPress={this.toTransactionDetail.bind(this, transaction.id, transaction.pending)}
-            />
-            )}
-          </Section>}
+          {transactionCount && <Section>{transactionCells}</Section>}
         </TableView>
         )}
       </View>

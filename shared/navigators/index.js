@@ -37,6 +37,7 @@ import WalletCardCollectionViewCell from 'components/CollectionViewCell/WalletCa
 import FeaturedDappCollectionViewCell from 'components/CollectionViewCell/FeaturedDappCollectionViewCell'
 import SmallDappCollectionViewCell from 'components/CollectionViewCell/SmallDappCollectionViewCell'
 import LargeDappCollectionViewCell from 'components/CollectionViewCell/LargeDappCollectionViewCell'
+import LoadMoreTableViewCell from 'components/TableViewCell/LoadMoreTableViewCell'
 import IdentityHeader from 'components/Header/IdentityHeader'
 
 import Market from 'screens/Market'
@@ -121,6 +122,7 @@ export const registerScreens = (store) => {
   AppRegistry.registerComponent('SelectContactTableViewCell', () => SelectContactTableViewCell)
   AppRegistry.registerComponent('ContactDeleteTableViewCell', () => ContactDeleteTableViewCell)
   AppRegistry.registerComponent('AddressTableViewCell', () => AddressTableViewCell)
+  AppRegistry.registerComponent('LoadMoreTableViewCell', () => LoadMoreTableViewCell)
 
   AppRegistry.registerComponent('SelectEOSAccountTableViewCell', () => SelectEOSAccountTableViewCell)
   AppRegistry.registerComponent('SwitchEOSAccountTableViewCell', () => SwitchEOSAccountTableViewCell)

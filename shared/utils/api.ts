@@ -1,4 +1,3 @@
-import axios from 'axios'
 import {
   BITPORTAL_API_REST_URL,
   BITPORTAL_API_MARKET_URL,
@@ -67,45 +66,6 @@ export const fetchBase = async (
 
     return null
   })
-}
-
-export const axiosBase = async (
-  method: FetchMethod = 'GET',
-  endPoint: string = '/hello',
-  params: object = {},
-  options: FetchOptions = {}
-) => {
-  const baseUrl = options.baseUrl || BITPORTAL_API_REST_URL
-  const headers = options.headers || {}
-  const auth = options.auth
-
-  let url = baseUrl + endPoint
-
-  if (!headers.Accept) headers.Accept = 'application/json'
-  if (!headers['Content-Type']) headers['Content-Type'] = 'application/json'
-
-  if (auth) {
-    const token = await storage.getItem('bitportal_t')
-    const authorization = token && `Bearer ${token}`
-    headers.Authorization = authorization || null
-  }
-
-  const fetchOptions: any = { method, headers }
-
-  if (method === 'GET') {
-    const queryString: string = `${Object.keys(params)
-      .map(k => [k, params[k]].map(encodeURIComponent).join('='))
-      .join('&')}`
-    if (queryString) url += `?${queryString}`
-  }
-
-  return await axios({
-    method: method.toLowerCase(),
-    headers,
-    timeout: 20000,
-    url,
-    params
-  }).then(res => res.data)
 }
 
 const contentFetchBase = (
@@ -178,6 +138,16 @@ const eosxLightFetchBase = (
   baseUrl: 'https://api.light.xeos.me/api/account/eos'
 })
 
+const eosParkFetchBase = (
+  method: FetchMethod = 'GET',
+  endPoint: string = '/hello',
+  params: object = {},
+  options: object = {}
+) => fetchBase(method, endPoint, { ...params, apikey: 'a6c7a99c90bf5a703f8cd5323dd8ea04' }, {
+  ...options,
+  baseUrl: 'https://api.eospark.com/api'
+})
+
 export const getTicker = (params?: TickerParams) => marketFetchBase('GET', '/tickers', params)
 export const getChart = (params?: ChartParams) => marketFetchBase('GET', '/chart', params)
 export const getCurrencyRate = () => fetchBase('GET', '', {}, { baseUrl: CURRENCY_RATE_URL })
@@ -192,18 +162,14 @@ export const getETHAsset = (params: any) => cmsFetchBase('GET', '/ethtoken', par
 export const createEOSAccount = (params: any) => fetchBase('POST', '/registry/wallets/campaign/eoscreation', params)
 export const importEOSAccount = (params: any) => fetchBase('POST', '/registry/wallets/import', params)
 export const scanEOSAsset = (params: any) => eosxLightFetchBase('GET', `/${params.address}`)
-
 export const subscribe = (params: any) => traceFetchBase('POST', '/notification/subscribe', params)
 export const unsubscribe = (params: any) => traceFetchBase('POST', '/notification/unsubscribe', params)
-
 export const traceTransaction = (params: any) => traceFetchBase('POST', '/transaction', params)
 export const traceStake = (params: any) => traceFetchBase('POST', '/stake', params)
 export const traceVotes = (params: any) => traceFetchBase('POST', '/votes', params)
 export const traceImport = (params: any) => traceFetchBase('POST', '/registry/wallets/import', params)
-
 export const simpleWalletAuth = (params: any, baseUrl: string) => fetchBase('POST', '', params, { baseUrl })
 export const simpleWalletCallback = (baseUrl: string) => fetchBase('GET', '', undefined, { baseUrl })
-
 export const getBTCFees = (params: any) => bitcoinFeesBase('GET', '/fees/recommended')
-
 export const simpleWalletAuthorize = ({ loginUrl, ...params }) => fetchBase('POST', '', params, { baseUrl: loginUrl })
+export const getEOSTransactions = (params: any) => eosParkFetchBase('GET', '', { ...params, module: 'account', action: 'get_account_related_trx_info' })

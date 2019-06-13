@@ -52,6 +52,76 @@ export const activeWalletTransactionsSelector = createSelector(
   }
 )
 
+export const activeWalletTransactionsPaginationSelector = createSelector(
+  activeWalletSelector,
+  activeAssetSelector,
+  transactionSelector,
+  (activeWallet: any, activeAsset: any, transaction: any) => {
+    if (activeWallet) {
+      const { chain, address } = activeWallet
+      const id = `${chain}/${address}`
+      const activeWalletTransaction = transaction.byId[id]
+
+      if (activeWalletTransaction) {
+        if (activeAsset.contract && activeWallet.chain === activeAsset.chain && activeWalletTransaction[`${activeAsset.contract}/${activeAsset.symbol}`]) {
+          return activeWalletTransaction[`${activeAsset.contract}/${activeAsset.symbol}`].pagination
+        } else if (activeWallet.symbol === activeAsset.symbol && activeWallet.chain === activeAsset.chain && activeWalletTransaction.syscoin) {
+          return activeWalletTransaction.syscoin.pagination
+        }
+      }
+    }
+
+    return null
+  }
+)
+
+export const activeWalletTransactionsLoadingMoreSelector = createSelector(
+  activeWalletSelector,
+  activeAssetSelector,
+  transactionSelector,
+  (activeWallet: any, activeAsset: any, transaction: any) => {
+    if (activeWallet) {
+      const { chain, address } = activeWallet
+      const id = `${chain}/${address}`
+      const activeWalletTransaction = transaction.byId[id]
+
+      if (activeWalletTransaction) {
+        if (activeAsset.contract && activeWallet.chain === activeAsset.chain && activeWalletTransaction[`${activeAsset.contract}/${activeAsset.symbol}`]) {
+          return activeWalletTransaction[`${activeAsset.contract}/${activeAsset.symbol}`].loadingMore
+        } else if (activeWallet.symbol === activeAsset.symbol && activeWallet.chain === activeAsset.chain && activeWalletTransaction.syscoin) {
+          return activeWalletTransaction.syscoin.loadingMore
+        }
+      }
+    }
+
+    return null
+  }
+)
+
+
+export const activeWalletTransactionsCanLoadMoreSelector = createSelector(
+  activeWalletSelector,
+  activeAssetSelector,
+  transactionSelector,
+  (activeWallet: any, activeAsset: any, transaction: any) => {
+    if (activeWallet) {
+      const { chain, address } = activeWallet
+      const id = `${chain}/${address}`
+      const activeWalletTransaction = transaction.byId[id]
+
+      if (activeWalletTransaction) {
+        if (activeAsset.contract && activeWallet.chain === activeAsset.chain && activeWalletTransaction[`${activeAsset.contract}/${activeAsset.symbol}`]) {
+          return activeWalletTransaction[`${activeAsset.contract}/${activeAsset.symbol}`].canLoadMore
+        } else if (activeWallet.symbol === activeAsset.symbol && activeWallet.chain === activeAsset.chain && activeWalletTransaction.syscoin) {
+          return activeWalletTransaction.syscoin.canLoadMore
+        }
+      }
+    }
+
+    return null
+  }
+)
+
 export const activeWalletTransactionSelector = createSelector(
   activeWalletTransactionsByIdSelector,
   activeTransactionIdSelector,

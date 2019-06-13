@@ -123,9 +123,9 @@ export default class TransactionDetail extends Component {
             <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
               <View style={{ width: '50%' }}>
                 <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>收款帐号</Text>
-                <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.action_trace.act.data.to)}>
+                <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.receiver)}>
                   <View style={{ flexDirection: 'row', minHeight: 26, alignItems: 'center' }}>
-                    <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.action_trace.act.data.to} </Text>
+                    <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.receiver} </Text>
                     <Image
                       source={require('resources/images/copy_black.png')}
                       style={{ width: 18, height: 18, marginBottom: 2 }}
@@ -135,9 +135,9 @@ export default class TransactionDetail extends Component {
               </View>
               <View style={{ width: '50%' }}>
                 <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>付款帐号</Text>
-                <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.action_trace.act.data.from)}>
+                <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.sender)}>
                   <View style={{ flexDirection: 'row', minHeight: 26, alignItems: 'center' }}>
-                    <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.action_trace.act.data.from} </Text>
+                    <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.sender} </Text>
                     <Image
                       source={require('resources/images/copy_black.png')}
                       style={{ width: 18, height: 18, marginBottom: 2 }}
@@ -150,8 +150,8 @@ export default class TransactionDetail extends Component {
             <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
               <View>
                 <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>备注</Text>
-                {!!transaction.action_trace.act.data.memo && <Text style={{ fontSize: 15 }}>{transaction.action_trace.act.data.memo}</Text>}
-                {!transaction.action_trace.act.data.memo && <Text style={{ fontSize: 15 }}>无</Text>}
+                {!!transaction.memo && <Text style={{ fontSize: 15 }}>{transaction.memo}</Text>}
+                {!transaction.memo && <Text style={{ fontSize: 15 }}>无</Text>}
               </View>
               <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
             </View>
@@ -162,7 +162,7 @@ export default class TransactionDetail extends Component {
               </View>
               <View style={{ width: '50%' }}>
                 <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>合约帐号</Text>
-                <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.action_trace.act.account}</Text>
+                <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.code}</Text>
               </View>
               <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
             </View>
