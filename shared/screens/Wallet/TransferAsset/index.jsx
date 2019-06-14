@@ -329,6 +329,7 @@ const CardField = ({
   symbol,
   chain,
   iconUrl,
+  contract,
   separator
 }) => (
   <View style={{ width: '100%' }}>
@@ -336,9 +337,17 @@ const CardField = ({
       <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.4)', marginTop: 20 }}>{label}</Text>
     </View>
     <View style={{ width: '100%', alignItems: 'center', height: 72, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-      {!!chain && !iconUrl &&  <FastImage source={assetIcons[chain.toLowerCase()]} style={{ width: 40, height: 40, marginRight: 16, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }} />}
-      {!!iconUrl && <View style={{ width: 41, height: 41, marginRight: 16 }}>
-        <FastImage source={{ uri: iconUrl }} style={{ width: 40, height: 40, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }} />
+      {!!chain && !contract &&  <FastImage source={assetIcons[chain.toLowerCase()]} style={{ width: 40, height: 40, marginRight: 16, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }} />}
+      {!!contract && <View style={{ width: 41, height: 41, marginRight: 16 }}>
+        <View style={{ width: 40, height: 40, borderWidth: 0, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white', borderRadius: 20 }}>
+          <View style={{ position: 'absolute', top: 0, left: 0, width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center', backgroundColor: '#C7C7CC' }}>
+            <Text style={{ fontWeight: '500', fontSize: 20, color: 'white', paddingLeft: 1.6 }}>{symbol.slice(0, 1)}</Text>
+          </View>
+          <FastImage
+            source={{ uri: iconUrl }}
+            style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: iconUrl ? 'white' : 'rgba(0,0,0,0)', borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
+          />
+        </View>
         <FastImage source={assetIcons[chain.toLowerCase()]} style={{ position: 'absolute', right: -8, bottom: 0, width: 20, height: 20, borderRadius: 10, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }} />
       </View>}
       <View>
@@ -801,6 +810,7 @@ export default class TransferAsset extends Component {
     const opreturn = formValues && formValues.opreturn
     const symbol = balance.symbol
     const iconUrl = transferAsset.icon_url
+    const contract = transferAsset.contract
     const available = balance && intl.formatNumber(balance.balance, { minimumFractionDigits: balance.precision, maximumFractionDigits: balance.precision })
     const chain = transferWallet.chain
 
@@ -862,6 +872,7 @@ export default class TransferAsset extends Component {
             symbol={symbol}
             chain={chain}
             iconUrl={iconUrl}
+            contract={contract}
             separator
           />
           <Field

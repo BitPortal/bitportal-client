@@ -22,6 +22,7 @@ import FastImage from 'react-native-fast-image'
 import { activeWalletSelector } from 'selectors/wallet'
 import { activeWalletBalanceSelector } from 'selectors/balance'
 import { managingWalletChildAddressSelector } from 'selectors/address'
+import { activeAssetSelector } from 'selectors/asset'
 import { Navigation } from 'react-native-navigation'
 import QRCode from 'react-native-qrcode-svg'
 import EStyleSheet from 'react-native-extended-stylesheet'
@@ -64,6 +65,7 @@ const styles = EStyleSheet.create({
 @connect(
   state => ({
     activeWallet: activeWalletSelector(state),
+    activeAsset: activeAssetSelector(state),
     balance: activeWalletBalanceSelector(state),
     childAddress: managingWalletChildAddressSelector(state)
   }),
@@ -178,9 +180,15 @@ export default class ReceiveAsset extends Component {
     }
   }
 
-  getAddressUri = (address, amount, chain) => {
-    if (!!amount && +amount > 0 && !!chain) {
-      return `${chain.toLowerCase()}:${address}?amount=${amount}`
+  getAddressUri = (address, amount, chain, contract, symbol) => {
+    const params = {}
+    if (amount) params.amount = amount
+    if (contract) params.contract = contract
+    if (symbol) params.symbol = symbol
+    const queryString = Object.keys(params).map(k => [k, params[k]].join('=')).join('&')
+
+    if (!!queryString) {
+      return `${chain.toLowerCase()}:${address}?${queryString}`
     }
 
     return `${chain.toLowerCase()}:${address}`
@@ -191,13 +199,14 @@ export default class ReceiveAsset extends Component {
   }
 
   render() {
-    const { activeWallet, balance, intl, childAddress, statusBarHeight } = this.props
-    const symbol = activeWallet.symbol
+    const { activeWallet, activeAsset, balance, intl, childAddress, statusBarHeight } = this.props
+    const symbol = activeAsset.symbol
     const chain = activeWallet.chain
     const available = balance && intl.formatNumber(balance.balance, { minimumFractionDigits: balance.precision, maximumFractionDigits: balance.precision })
     const address = activeWallet.address
     const hasChildAddress = childAddress && childAddress !== address
-    const addressUri = this.getAddressUri(!this.state.selectedIndex ? address : childAddress, this.state.amount, chain)
+    const contract = activeAsset.contract
+    const addressUri = this.getAddressUri(!this.state.selectedIndex ? address : childAddress, this.state.amount, chain, contract, symbol)
 
     return (
       <View style={[styles.container, { backgroundColor: 'white' }]}>

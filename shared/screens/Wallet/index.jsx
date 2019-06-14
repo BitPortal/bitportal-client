@@ -386,10 +386,10 @@ export default class Wallet extends Component {
 
     if (data.isToken) {
       const assetId = `${data.chain}/${data.contract}/${data.symbol}`
-      this.props.actions.setTransferAsset(assetId)
+      this.props.actions.setActiveAsset(assetId)
     } else {
       const assetId = `${data.chain}/${data.symbol}`
-      this.props.actions.setTransferAsset(assetId)
+      this.props.actions.setActiveAsset(assetId)
     }
 
     Navigation.showModal({
@@ -487,7 +487,7 @@ export default class Wallet extends Component {
 
       if (selectedAsset && selectedAsset.length) {
         for (let i = 0; i < selectedAsset.length; i++) {
-          const assetBalance = assetsBalance[`${selectedAsset[i].contract}/${selectedAsset[i].symbol}`]
+          const assetBalance = assetsBalance && assetsBalance[`${selectedAsset[i].contract}/${selectedAsset[i].symbol}`]
 
           assetItems.push(
             <Item

@@ -54,7 +54,7 @@ export const transferAssetSelector = createSelector(
 export const selectedAssetIdsSelector = createSelector(
   activeWalletIdSelector,
   selectedAssetSelector,
-  (activeWalletId: string, selectedAsset: any) => selectedAsset[activeWalletId]
+  (activeWalletId: string, selectedAsset: any) => selectedAsset && selectedAsset[activeWalletId]
 )
 
 export const eosAssetAllIdsSelector = createSelector(

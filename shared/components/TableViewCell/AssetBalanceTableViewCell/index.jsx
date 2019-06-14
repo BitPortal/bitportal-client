@@ -6,8 +6,16 @@ import { assetIcons } from 'resources/images'
 const AssetBalanceTableViewCell = props => (
   <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, opacity: props.data.switching ? 0.4 : 1 }}>
     <View style={{ width: '60%', flexDirection: 'row' }}>
-      {!!props.data.chain && !props.data.icon_url && <FastImage source={assetIcons[props.data.chain.toLowerCase()]} style={{ width: 40, height: 40, marginRight: 10, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }} />}
-      {!!props.data.icon_url && <FastImage source={{ uri: props.data.icon_url }} style={{ width: 40, height: 40, marginRight: 10, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }} />}
+      {!!props.data.chain && !props.data.isToken && <FastImage source={assetIcons[props.data.chain.toLowerCase()]} style={{ width: 40, height: 40, marginRight: 10, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }} />}
+      {!!props.data.isToken && <View style={{ width: 40, height: 40, marginRight: 10, borderWidth: 0, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white', borderRadius: 20 }}>
+        <View style={{ position: 'absolute', top: 0, left: 0, width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center', backgroundColor: '#C7C7CC' }}>
+          <Text style={{ fontWeight: '500', fontSize: 20, color: 'white', paddingLeft: 1.6 }}>{props.data.symbol.slice(0, 1)}</Text>
+        </View>
+        <FastImage
+          source={{ uri: props.data.icon_url }}
+          style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: props.data.icon_url ? 'white' : 'rgba(0,0,0,0)', borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
+        />
+      </View>}
       <View style={{ flex: 1, justifyContent: 'center' }}>
         <Text style={{ fontSize: 17 }}>{`${props.data.name} (${props.data.symbol})`}</Text>
         {/* <Text style={{ fontSize: 15, color: '#888888' }}>{props.data.name}</Text> */}
