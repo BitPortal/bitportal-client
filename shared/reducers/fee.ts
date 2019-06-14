@@ -4,7 +4,7 @@ import * as actions from 'actions/fee'
 const initialState = {
   BITCOIN: {},
   ETHEREUM: {
-    gasLimit: 50000
+    gasLimit: 60000
   }
 }
 
@@ -14,6 +14,6 @@ export default handleActions({
   },
   [actions.updateETHGasPrice] (state, action) {
     state.ETHEREUM.gasPrice = action.payload
-    state.ETHEREUM.gasLimit = state.ETHEREUM.gasLimit || 50000
+    state.ETHEREUM.gasLimit = state.ETHEREUM.gasLimit || 60000
   }
 }, initialState)

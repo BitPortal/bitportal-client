@@ -447,7 +447,7 @@ export default class TransferAsset extends Component {
     halfHourBTCFee: 35,
     hourBTCFee: 20,
     feeRate: 0,
-    ethGasLimit: 50000,
+    ethGasLimit: 60000,
     ethGasPrice: 0,
     useGasPrice: 0,
     initialGwei: 0,
@@ -509,7 +509,7 @@ export default class TransferAsset extends Component {
   }
 
   submit = (data) => {
-    const { transferWallet, formSyncWarnings, balancetransferAsset, assetBalance, walletBalance } = this.props
+    const { transferWallet, formSyncWarnings, transferAsset, assetBalance, walletBalance } = this.props
     const balance = (transferAsset && transferAsset.contract) ? assetBalance : walletBalance
 
     if (typeof formSyncWarnings === 'object') {
@@ -545,9 +545,10 @@ export default class TransferAsset extends Component {
             chain: transferWallet.chain,
             id: transferWallet.id,
             feeRate: +this.state.feeRate || +this.state.initialFeeRate || this.state.fastestBTCFee || 45,
-            symbol: balance.symbol,
-            precision: balance.precision,
-            contract: balance.contract,
+            symbol: transferAsset.symbol,
+            precision: transferAsset.precision,
+            decimals: transferAsset.decimals,
+            contract: transferAsset.contract,
             componentId: this.props.componentId,
             memo: data.memo || (this.props.selectedContact && this.props.selectedContact.memo),
             gasLimit: this.state.ethGasLimit,

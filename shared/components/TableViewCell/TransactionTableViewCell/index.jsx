@@ -25,11 +25,14 @@ const TransactionTableViewCell = (props) => {
         <View style={{ flex: 1, height: 44, borderWidth: 0, borderColor: 'red', justifyContent: 'space-between' }}>
           <Text style={{ fontSize: 17, marginBottom: 4 }}>{this.formatAddress(props.data.targetAddress)}</Text>
           <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-            {props.data.transactionType === 'send' && <FastImage source={require('resources/images/sent.png')} style={{ width: 20, height: 20 }} />}
-            {props.data.transactionType === 'receive' && <FastImage source={require('resources/images/received.png')} style={{ width: 20, height: 20 }} />}
-            {props.data.transactionType === 'send' && <Text style={{ fontSize: 15, color: '#888888', lineHeight: 20 }}>发送</Text>}
-            {props.data.transactionType === 'receive' && <Text style={{ fontSize: 15, color: '#888888', lineHeight: 20 }}>接收</Text>}
-            <Text style={{ fontSize: 15, color: '#888888', lineHeight: 20 }}> {props.data.date} {props.data.time}</Text>
+            {props.data.transactionType === 'send' && !props.data.failed && <FastImage source={require('resources/images/sent.png')} style={{ width: 20, height: 20 }} />}
+            {props.data.transactionType === 'receive' && !props.data.failed && <FastImage source={require('resources/images/received.png')} style={{ width: 20, height: 20 }} />}
+            {!!props.data.failed && <FastImage source={require('resources/images/Error.png')} style={{ width: 20, height: 20, marginRight: 2 }} />}
+            {props.data.transactionType === 'send' && !props.data.failed && !props.data.pending && <Text style={{ fontSize: 15, color: '#888888', lineHeight: 20 }}>发送</Text>}
+            {props.data.transactionType === 'receive' && !props.data.failed && !props.data.pending && <Text style={{ fontSize: 15, color: '#888888', lineHeight: 20 }}>接收</Text>}
+            {!!props.data.failed && <Text style={{ fontSize: 15, color: '#888888', lineHeight: 20 }}>转账失败</Text>}
+            {!!props.data.pending && <Text style={{ fontSize: 15, color: '#888888', lineHeight: 20 }}>转账中...</Text>}
+            {!props.data.pending && <Text style={{ fontSize: 15, color: '#888888', lineHeight: 20 }}> {props.data.date} {props.data.time}</Text>}
           </View>
         </View>
       </View>

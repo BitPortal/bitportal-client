@@ -73,29 +73,34 @@ export default handleActions({
     if (index === -1)  state.allIds.push(id)
   },
   [actions.addTransaction] (state, action) {
-    const { id, item } = action.payload
+    const { id, item, assetId } = action.payload
+    state.byId[id] = state.byId[id] || {}
 
-    if (!state.byId[id]) {
-      state.byId[id] = { id }
+    if (!state.byId[id][assetId]) {
+      state.byId[id][assetId] = { id }
 
-      state.byId[id].items = {
-        byId: {},
-        allIds: []
+      state.byId[id][assetId].items = {
+        byId: { [item.id]: item },
+        allIds: [{ id: item.id, timestamp: item.timestamp }]
       }
-    }
-
-    state.byId[id].items.byId[item.id] = item
-    const itemIndex = state.byId[id].items.allIds.findIndex((v: any) => v && v.id === item.id)
-    if (itemIndex === -1) {
-      let insertIndex = 0
-      for (let i = 0; i < state.byId[id].items.allIds.length; i++) {
-        if (item.timestamp > state.byId[id].items.allIds[i].timestamp) {
-          insertIndex = i
-          break
+    } else {
+      const itemIndex = state.byId[id][assetId].items.allIds.findIndex((v: any) => v && v.id === item.id)
+      if (itemIndex === -1) {
+        let insertIndex = 0
+        for (let i = 0; i < state.byId[id][assetId].items.allIds.length; i++) {
+          if (item.timestamp > state.byId[id][assetId].items.allIds[i].timestamp) {
+            insertIndex = i
+            break
+          }
         }
+        state.byId[id][assetId].items.allIds.splice(insertIndex, 0, { id: item.id, timestamp: item.timestamp })
+        state.byId[id][assetId].items.byId[item.id] = item
+      } else {
+        state.byId[id][assetId].items.byId[item.id] = item
       }
-      state.byId[id].items.allIds.splice(insertIndex, 0, { id: item.id, timestamp: item.timestamp })
     }
+
+    state.byId[id][assetId].items.allIds.sort((a: any, b: any) => b.timestamp - a.timestamp)
 
     const index = state.allIds.findIndex((v: any) => v === id)
     if (index === -1)  state.allIds.push(id)

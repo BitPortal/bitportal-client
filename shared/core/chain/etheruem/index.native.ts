@@ -3,6 +3,7 @@ import secp256k1 from 'secp256k1'
 import { keccak256 } from 'core/crypto'
 import { signETHTransaction, decryptPrivateKey } from 'core/keystore'
 import { etherscanApi, web3 } from 'core/api'
+import { erc20ABI } from 'core/constants'
 
 export const getBalance = async (address: string, contractAddress: string) => {
   if (contractAddress) {
@@ -18,14 +19,6 @@ export const getBalance = async (address: string, contractAddress: string) => {
   } else {
     const balance = await web3.eth.getBalance(address)
     return (+balance) * Math.pow(10, -18)
-    // const result = await etherscanApi('GET', '', {
-    //   module: 'account',
-    //   action: 'balance',
-    //   address,
-    //   tag: 'latest'
-    // })
-
-    // return (+result.result) * Math.pow(10, -18)
   }
 }
 
@@ -163,6 +156,41 @@ export const transfer = async (password: string, keystore: any, fromAddress: str
     from: fromAddress,
     to: toAddress,
     value: web3.utils.toHex((+amount) * Math.pow(10, 18)),
+    data: data || ''
+  }
+
+  if (!nonce) {
+    const transactionCount = await web3.eth.getTransactionCount(fromAddress)
+    rawTx.nonce = web3.utils.toHex(transactionCount)
+  }
+
+  if (!gasPrice) {
+    const networkGasPrice = await web3.eth.getGasPrice()
+    rawTx.gasPrice = web3.utils.toHex(networkGasPrice)
+  } else {
+    rawTx.gasPrice = web3.utils.toHex(gasPrice)
+  }
+
+  if (!gasLimit) {
+    const estimateGas = await web3.eth.estimateGas(rawTx)
+    rawTx.gasLimit = estimateGas
+  } else {
+    rawTx.gasLimit = gasLimit
+  }
+
+  const rawTransaction = await signETHTransaction(rawTx, password, keystore)
+  const hash = await sendTransaction('0x' + rawTransaction.toString('hex'))
+  return hash
+}
+
+export const transferToken = async (password: string, keystore: any, fromAddress: string, toAddress: string, contract: string, amount: string, decimals: number, gasPrice?: string, gasLimit?: string, nonce?: string) => {
+  const tokenContract = new web3.eth.Contract(erc20ABI, contract, { from: fromAddress })
+  const data = tokenContract.methods.transfer(toAddress, web3.utils.toHex((+amount) * Math.pow(10, decimals))).encodeABI()
+
+  const rawTx = {
+    from: fromAddress,
+    to: contract,
+    value: '0x00',
     data: data || ''
   }
 

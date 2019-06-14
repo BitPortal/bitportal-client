@@ -145,8 +145,12 @@ export default class Asset extends Component {
     this.props.actions.getTransactions.requested({ ...this.props.activeWallet, contract, assetSymbol })
   }
 
-  toTransactionDetail = (id, pending) => {
+  toTransactionDetail = (id, pending, failed) => {
     this.props.actions.setActiveTransactionId(id)
+
+    let statusText = '转账成功'
+    if (pending) statusText = '转账中...'
+    if (failed) statusText = '转账失败'
 
     Navigation.push(this.props.componentId, {
       component: {
@@ -154,7 +158,7 @@ export default class Asset extends Component {
         options: {
           topBar: {
             title: {
-              text: `${this.props.activeAsset.symbol} ${!pending ? '转账成功' : '转账中...'}`
+              text: `${this.props.activeAsset.symbol} ${statusText}`
             }
           }
         },
@@ -236,10 +240,12 @@ export default class Asset extends Component {
           time={transaction.timestamp && intl.formatTime(+transaction.timestamp, { hour12: false, hour: 'numeric', minute: 'numeric', second: 'numeric' })}
           transactionType={transaction.transactionType}
           targetAddress={transaction.targetAddress}
+          failed={transaction.isError === '1'}
+          pending={transaction.pending}
           symbol={symbol}
           componentId={this.props.componentId}
           showSeparator={true}
-          onPress={this.toTransactionDetail.bind(this, transaction.id, transaction.pending)}
+          onPress={this.toTransactionDetail.bind(this, transaction.id, transaction.pending, transaction.isError === '1')}
         />
       ))
     }

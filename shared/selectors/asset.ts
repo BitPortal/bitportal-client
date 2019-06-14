@@ -24,7 +24,7 @@ export const activeAssetSelector = createSelector(
     } else if  (activeAssetId === 'ETHEREUM/ETH') {
       return { chain: 'ETHEREUM', symbol: 'ETH', precision: 8 }
     } else if  (activeAssetId === 'EOS/EOS') {
-      return { chain: 'EOS', symbol: 'EOS', precision: 8 }
+      return { chain: 'EOS', symbol: 'EOS', precision: 4 }
     } else if (byId) {
       return byId[activeAssetId]
     }
@@ -42,7 +42,7 @@ export const transferAssetSelector = createSelector(
     } else if  (transferAssetId === 'ETHEREUM/ETH') {
       return { chain: 'ETHEREUM', symbol: 'ETH', precision: 8 }
     } else if  (transferAssetId === 'EOS/EOS') {
-      return { chain: 'EOS', symbol: 'EOS', precision: 8 }
+      return { chain: 'EOS', symbol: 'EOS', precision: 4 }
     } else if (byId) {
       return byId[transferAssetId]
     }

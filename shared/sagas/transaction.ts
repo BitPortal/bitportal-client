@@ -20,15 +20,22 @@ function* transfer(action: Action) {
   if (!action.payload) return
 
   try {
-    const { chain, source, id, password, amount, symbol, precision, memo, contract, toAddress, fromAddress, feeRate, gasLimit, gasPrice, opreturn } = action.payload
+    const { chain, source, id, password, amount, symbol, precision, decimals, memo, contract, toAddress, fromAddress, feeRate, gasLimit, gasPrice, opreturn } = action.payload
 
+    const assetId = contract ? `${contract}/${symbol}` : 'syscoin'
     const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
     const identityKeystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
     const keystore = importedKeystore || identityKeystore
     assert(keystore && keystore.crypto, 'No keystore')
 
     if (chain === 'ETHEREUM') {
-      const hash = yield call(ethChain.transfer, password, keystore, fromAddress, toAddress, amount, gasPrice * Math.pow(10, 9), gasLimit)
+      let hash
+      if (contract) {
+        hash = yield call(ethChain.transferToken, password, keystore, fromAddress, toAddress, contract, amount, decimals, gasPrice * Math.pow(10, 9), gasLimit)
+      } else {
+        hash = yield call(ethChain.transfer, password, keystore, fromAddress, toAddress, amount, gasPrice * Math.pow(10, 9), gasLimit)
+      }
+
       const transaction = {
         id: hash,
         timestamp: +Date.now(),
@@ -44,7 +51,7 @@ function* transfer(action: Action) {
         pending: true
       }
 
-      yield put(actions.addTransaction({ id: `${chain}/${fromAddress}`, item: transaction }))
+      yield put(actions.addTransaction({ id: `${chain}/${fromAddress}`, item: transaction, assetId }))
       yield put(actions.setActiveTransactionId(hash))
     } else if (chain === 'BITCOIN') {
       const utxo = yield select((state: RootState) => state.utxo)
@@ -87,28 +94,24 @@ function* transfer(action: Action) {
       const allAccounts = yield select((state: RootState) => state.account)
       const account = allAccounts.byId[`${chain}/${fromAddress}`]
       assert(account, 'No eos account')
-      const hash = yield call(eosChain.transfer, password, keystore, fromAddress, toAddress, amount, symbol, precision, memo, contract, account.permissions)
+      const hash = yield call(eosChain.transfer, password, keystore, fromAddress, toAddress, amount, symbol, precision, memo, contract || 'eosio.token', account.permissions)
       const transaction = {
-        action_trace: {
-          act: {
-            account: contract,
-            data: {
-              from: fromAddress,
-              to: toAddress,
-              memo: memo
-            }
-          }
-        },
         id: hash,
+        trx_id: hash,
         timestamp: +Date.now(),
         change: -+amount,
         block_num: '--',
         targetAddress: toAddress,
         transactionType: 'send',
+        symbol,
+        memo,
+        sender: fromAddress,
+        receiver: toAddress,
+        code: contract || 'eosio.token',
         pending: true
       }
 
-      yield put(actions.addTransaction({ id: `${chain}/${fromAddress}`, item: transaction }))
+      yield put(actions.addTransaction({ id: `${chain}/${fromAddress}`, item: transaction, assetId }))
       yield put(actions.setActiveTransactionId(hash))
     } else if (chain === 'CHAINX') {
       const hash = memo ?
@@ -144,7 +147,7 @@ function* transfer(action: Action) {
       action.payload.componentId,
       {
         chain: chain,
-        precision: precision,
+        precision: precision || 8,
         symbol: symbol
       },
       {
@@ -422,7 +425,7 @@ function* getTransactions(action: Action) {
       const endblock = 99999999
 
       let page = 1
-      let offset = 10
+      let offset = 20
 
       if (loadMore) {
         const pagination = yield select(state => activeWalletTransactionsPaginationSelector(state))
@@ -433,7 +436,7 @@ function* getTransactions(action: Action) {
       }
 
       const transactions = yield call(ethChain.getTransactions, address, startblock, endblock, page, offset, contract)
-      const canLoadMore = transactions.length === 10
+      const canLoadMore = transactions.length === 20
       const items = transactions.map((item: any) => {
         const isSender = item.from === address.toLowerCase()
         const transactionType = isSender ? 'send' : 'receive'
