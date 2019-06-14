@@ -7,6 +7,7 @@ import { Navigation } from 'react-native-navigation'
 import { activeWalletSelector, identityBTCWalletSelector, importedBTCWalletSelector } from 'selectors/wallet'
 import FastImage from 'react-native-fast-image'
 import * as walletActions from 'actions/wallet'
+import * as assetActions from 'actions/asset'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { getDepositOpReturn, getAddressByAccount, getTrusteeSessionInfo } from 'core/chain/chainx'
 import Dialog from 'components/Dialog'
@@ -54,7 +55,8 @@ const styles = EStyleSheet.create({
   }),
   dispatch => ({
     actions: bindActionCreators({
-      ...walletActions
+      ...walletActions,
+      ...assetActions
     }, dispatch)
   })
 )
@@ -146,7 +148,8 @@ export default class ChainXDeposit extends Component {
       Dialog.alert('提示', '没有发现已经创建或导入的Bitcoin钱包')
       return false
     }
-
+    this.props.actions.setTransferWallet(presetWallet.id)
+    this.props.actions.setActiveAsset('BITCOIN/BTC')
     Navigation.showModal({
       stack: {
         children: [{
