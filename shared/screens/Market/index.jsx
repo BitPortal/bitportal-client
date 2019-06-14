@@ -6,6 +6,7 @@ import { View, Text, ActivityIndicator } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 import { tickerSelector } from 'selectors/ticker'
+import { currencySelector } from 'selectors/currency'
 import * as tickerActions from 'actions/ticker'
 
 const { Section, Item } = TableView
@@ -15,7 +16,8 @@ const { Section, Item } = TableView
 @connect(
   state => ({
     getTicker: state.getTicker,
-    ticker: tickerSelector(state)
+    ticker: tickerSelector(state),
+    currency: currencySelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -61,7 +63,7 @@ export default class Market extends Component {
   }
 
   render() {
-    const { ticker, intl, getTicker } = this.props
+    const { ticker, intl, getTicker, currency } = this.props
     const refreshing = getTicker.refreshing
     const loading = getTicker.loading
 
@@ -89,10 +91,10 @@ export default class Market extends Component {
               key={`${item.name}/${item.symbol}`}
               reactModuleForCell="MarketTableViewCell"
               height={60}
-              price={intl.formatNumber(item.price_usd, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              price={intl.formatNumber(item.price_usd * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               symbol={item.symbol}
               name={item.name}
-              currency="$"
+              currency={currency.sign}
               change={intl.formatNumber(item.percent_change_24h, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               componentId={this.props.componentId}
               selectionStyle={TableView.Consts.CellSelectionStyle.None}

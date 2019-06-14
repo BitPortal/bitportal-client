@@ -132,7 +132,7 @@ export default class Asset extends Component {
     this.props.actions.setActiveWallet(this.props.activeWallet.id)
     const { activeAsset, activeWallet, chain } = this.props
 
-    if (activeAsset.contract) {
+    if (activeAsset && activeAsset.contract) {
       if (activeWallet.chain === 'EOS') {
         this.props.actions.getEOSTokenBalance.requested({ ...activeWallet, contract: activeAsset.contract, assetSymbol: activeAsset.symbol })
       } else if (activeWallet.chain === 'ETHEREUM') {

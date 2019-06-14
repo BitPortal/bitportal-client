@@ -34,6 +34,8 @@ export const activeAssetSelector = createSelector(
       return { chain: 'ETHEREUM', symbol: 'ETH', precision: 8 }
     } else if  (activeAssetId === 'EOS/EOS') {
       return { chain: 'EOS', symbol: 'EOS', precision: 4 }
+    } else if  (activeAssetId === 'CHAINX/PCX') {
+      return { chain: 'CHAINX', symbol: 'PCX', precision: 8 }
     } else if (byId) {
       return byId[activeAssetId]
     }
@@ -52,6 +54,8 @@ export const transferAssetSelector = createSelector(
       return { chain: 'ETHEREUM', symbol: 'ETH', precision: 8 }
     } else if  (transferAssetId === 'EOS/EOS') {
       return { chain: 'EOS', symbol: 'EOS', precision: 4 }
+    } else if  (activeAssetId === 'CHAINX/PCX') {
+      return { chain: 'CHAINX', symbol: 'PCX', precision: 8 }
     } else if (byId) {
       return byId[transferAssetId]
     }
