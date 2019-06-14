@@ -148,6 +148,16 @@ const eosParkFetchBase = (
   baseUrl: 'https://api.eospark.com/api'
 })
 
+const exchangerateFetchBase = (
+  method: FetchMethod = 'GET',
+  endPoint: string = '/hello',
+  params: object = {},
+  options: object = {}
+) => fetchBase(method, endPoint, params, {
+  ...options,
+  baseUrl: 'https://api.exchangerate-api.com/v4/latest'
+})
+
 export const getTicker = (params?: TickerParams) => marketFetchBase('GET', '/tickers', params)
 export const getChart = (params?: ChartParams) => marketFetchBase('GET', '/chart', params)
 export const getCurrencyRate = () => fetchBase('GET', '', {}, { baseUrl: CURRENCY_RATE_URL })
@@ -174,3 +184,4 @@ export const getBTCFees = (params: any) => bitcoinFeesBase('GET', '/fees/recomme
 export const simpleWalletAuthorize = ({ loginUrl, ...params }) => fetchBase('POST', '', params, { baseUrl: loginUrl })
 export const getEOSTransactions = (params: any) => eosParkFetchBase('GET', '', { ...params, module: 'account', action: 'get_account_related_trx_info' })
 export const getEOSTransaction = (params: any) => eosParkFetchBase('GET', '', { ...params, module: 'transaction', action: 'get_transaction_detail_info', trx_id: params.hash })
+export const getCurrencyRates = (params: any) => exchangerateFetchBase('GET', '/USD', params)

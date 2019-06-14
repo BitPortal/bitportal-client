@@ -16,6 +16,7 @@ import * as accountActions from 'actions/account'
 import * as tickerActions from 'actions/ticker'
 import * as contactActions from 'actions/contact'
 import * as assetActions from 'actions/asset'
+import * as currencyActions from 'actions/currency'
 import {
   identityWalletSelector,
   importedWalletSelector,
@@ -25,6 +26,7 @@ import { activeWalletBalanceSelector, activeWalletAssetsBalanceSelector } from '
 import { activeWalletSelectedAssetsSelector } from 'selectors/asset'
 import { activeWalletTickerSelector } from 'selectors/ticker'
 import { accountResourcesByIdSelector } from 'selectors/account'
+import { currencySelector } from 'selectors/currency'
 import { managingWalletChildAddressSelector } from 'selectors/address'
 import { formatCycleTime, formatMemorySize } from 'utils/format'
 import Sound from 'react-native-sound'
@@ -61,7 +63,8 @@ const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
     portfolio: state.portfolio.byId,
     resources: accountResourcesByIdSelector(state),
     childAddress: managingWalletChildAddressSelector(state),
-    selectedAsset: activeWalletSelectedAssetsSelector(state)
+    selectedAsset: activeWalletSelectedAssetsSelector(state),
+    currency: currencySelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -71,7 +74,8 @@ const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
       ...accountActions,
       ...tickerActions,
       ...contactActions,
-      ...assetActions
+      ...assetActions,
+      ...currencyActions
     }, dispatch)
   })
 )
@@ -170,8 +174,6 @@ export default class Wallet extends Component {
 
     if (this.props.activeWalletId) {
       this.scrollToItem(this.state.activeWalletId)
-
-
       this.props.actions.getBalance.requested(activeWallet)
 
       if (activeWallet && activeWallet.address) {
@@ -182,6 +184,8 @@ export default class Wallet extends Component {
         }
       }
     }
+
+    this.props.actions.getCurrencyRates.requested()
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -421,7 +425,7 @@ export default class Wallet extends Component {
   }
 
   render() {
-    const { identity, identityWallets, importedWallets, scanIdentity, balance, getBalance, ticker, activeWallet, portfolio, resources, intl, selectedAsset, assetById } = this.props
+    const { identity, identityWallets, importedWallets, scanIdentity, balance, getBalance, ticker, activeWallet, portfolio, resources, intl, selectedAsset, assetById, currency } = this.props
     const loading = scanIdentity.loading
     const loaded = scanIdentity.loaded
     const error = scanIdentity.error
@@ -469,8 +473,8 @@ export default class Wallet extends Component {
           reactModuleForCell="AssetBalanceTableViewCell"
           height={60}
           balance={intl.formatNumber(balance.balance, { minimumFractionDigits: balance.precision, maximumFractionDigits: balance.precision })}
-          amount={(ticker && ticker[`${activeWallet.chain}/${activeWallet.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${activeWallet.symbol}`], { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
-          currency="$"
+          amount={(ticker && ticker[`${activeWallet.chain}/${activeWallet.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${activeWallet.symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
+          currency={currency.sign}
           symbol={balance.symbol}
           name={balance.symbol === chain ? chain : (!!chain && chain.charAt(0) + chain.slice(1).toLowerCase())}
           componentId={this.props.componentId}
@@ -498,8 +502,8 @@ export default class Wallet extends Component {
               reactModuleForCell="AssetBalanceTableViewCell"
               height={60}
               balance={intl.formatNumber(assetBalance ? assetBalance.balance : 0, { minimumFractionDigits: assetBalance ? assetBalance.precision : balance.precision, maximumFractionDigits: assetBalance ? assetBalance.precision : balance.precision })}
-              amount={(ticker && ticker[`${activeWallet.chain}/${selectedAsset[i].symbol}`]) ? intl.formatNumber(0 * +ticker[`${activeWallet.chain}/${selectedAsset[i].symbol}`], { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
-              currency="$"
+              amount={(ticker && ticker[`${activeWallet.chain}/${selectedAsset[i].symbol}`]) ? intl.formatNumber(0 * +ticker[`${activeWallet.chain}/${selectedAsset[i].symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
+              currency={currency.sign}
               symbol={selectedAsset[i].symbol}
               name={selectedAsset[i].name || selectedAsset[i].symbol}
               componentId={this.props.componentId}
@@ -566,8 +570,8 @@ export default class Wallet extends Component {
                     cpu={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatCycleTime(resources[`${wallet.chain}/${wallet.address}`].CPU) : '--'}
                     net={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatMemorySize(resources[`${wallet.chain}/${wallet.address}`].NET) : '--'}
                     ram={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatMemorySize(resources[`${wallet.chain}/${wallet.address}`].RAM) : '--'}
-                    currency="$"
-                    totalAsset={(portfolio && portfolio[`${wallet.chain}/${wallet.address}`]) ? intl.formatNumber(portfolio[`${wallet.chain}/${wallet.address}`].totalAsset, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
+                    currency={currency.sign}
+                    totalAsset={(portfolio && portfolio[`${wallet.chain}/${wallet.address}`]) ? intl.formatNumber(portfolio[`${wallet.chain}/${wallet.address}`].totalAsset * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
                     componentId={this.props.componentId}
                     separatorStyle={TableView.Consts.SeparatorStyle.None}
                   />
@@ -589,8 +593,8 @@ export default class Wallet extends Component {
                      cpu={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatCycleTime(resources[`${wallet.chain}/${wallet.address}`].CPU) : '--'}
                      net={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatMemorySize(resources[`${wallet.chain}/${wallet.address}`].NET) : '--'}
                      ram={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatMemorySize(resources[`${wallet.chain}/${wallet.address}`].RAM) : '--'}
-                     currency="$"
-                     totalAsset={(portfolio && portfolio[`${wallet.chain}/${wallet.address}`]) ? intl.formatNumber(portfolio[`${wallet.chain}/${wallet.address}`].totalAsset, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
+                     currency={currency.sign}
+                     totalAsset={(portfolio && portfolio[`${wallet.chain}/${wallet.address}`]) ? intl.formatNumber(portfolio[`${wallet.chain}/${wallet.address}`].totalAsset * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
                      componentId={this.props.componentId}
                      separatorStyle={TableView.Consts.SeparatorStyle.None}
                    />

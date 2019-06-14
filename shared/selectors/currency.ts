@@ -1,10 +1,10 @@
-import { DEFAULT_USD_RATE } from 'constants/market'
+import { createSelector } from 'reselect'
 
-export const getInitialCurrency = (presetCurrencySymbol?: string, presetCurrencyRate?: string) => {
-  const symbol = presetCurrencySymbol || 'USD'
+export const currencySymbolSelector = (state: RootState) => state.currency.symbol
+export const currencyListSelector = (state: RootState) => state.currency.list
 
-  return {
-    symbol,
-    rate: presetCurrencyRate || DEFAULT_USD_RATE[symbol]
-  }
-}
+export const currencySelector = createSelector(
+  currencySymbolSelector,
+  currencyListSelector,
+  (symbol: any, list: any) => list[symbol]
+)

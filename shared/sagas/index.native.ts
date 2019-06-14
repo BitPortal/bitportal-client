@@ -18,6 +18,7 @@ import utxoSaga from './utxo'
 import bridgeSaga from './bridge'
 import feeSaga from './fee'
 import assetSaga from './asset'
+import currencySaga from './currency'
 
 const sagas = {
   formSaga: fork(formSaga),
@@ -37,7 +38,8 @@ const sagas = {
   bridgeSaga: fork(bridgeSaga),
   keyAccountSaga: fork(keyAccountSaga),
   feeSaga: fork(feeSaga),
-  assetSaga: fork(assetSaga)
+  assetSaga: fork(assetSaga),
+  currencySaga: fork(currencySaga)
 }
 
 if (ENV === 'production') {

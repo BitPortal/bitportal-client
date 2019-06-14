@@ -11,6 +11,7 @@ import { activeWalletTickerSelector } from 'selectors/ticker'
 import { activeWalletTransactionsSelector, activeWalletTransactionsLoadingMoreSelector, activeWalletTransactionsCanLoadMoreSelector } from 'selectors/transaction'
 import { managingWalletChildAddressSelector } from 'selectors/address'
 import { activeAssetSelector } from 'selectors/asset'
+import { currencySelector } from 'selectors/currency'
 import FastImage from 'react-native-fast-image'
 import * as transactionActions from 'actions/transaction'
 import * as walletActions from 'actions/wallet'
@@ -34,7 +35,8 @@ const { Section, Item } = TableView
     transactions: activeWalletTransactionsSelector(state),
     childAddress: managingWalletChildAddressSelector(state),
     loadingMore: activeWalletTransactionsLoadingMoreSelector(state),
-    canLoadMore: activeWalletTransactionsCanLoadMoreSelector(state)
+    canLoadMore: activeWalletTransactionsCanLoadMoreSelector(state),
+    currency: currencySelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -215,7 +217,7 @@ export default class Asset extends Component {
   }
 
   render() {
-    const { ticker, walletBalance, activeWallet, activeAsset, intl, transactions, getTransactions, statusBarHeight, assetBalance, loadingMore, canLoadMore } = this.props
+    const { ticker, walletBalance, activeWallet, activeAsset, intl, transactions, getTransactions, statusBarHeight, assetBalance, loadingMore, canLoadMore, currency } = this.props
     const balance = activeAsset.contract ? assetBalance : walletBalance
     const transactionCount = transactions && transactions.length
     const precision = balance.precision
@@ -262,8 +264,8 @@ export default class Asset extends Component {
           <View style={{ width: '100%', justifyContent: 'space-between', alignItems: 'flex-start', flexDirection: 'row', paddingRight: 16, paddingLeft: 16 }}>
             <View style={{ justifyContent: 'center', alignItems: 'flex-start', width: '60%' }}>
               <Text style={{ fontSize: 26, fontWeight: '500' }}>{balance && intl.formatNumber(balance.balance, { minimumFractionDigits: balance.precision, maximumFractionDigits: balance.precision })}</Text>
-              {!assetBalance && <Text style={{ fontSize: 20, color: '#007AFF', marginTop: 4 }}>≈ ${(ticker && ticker[`${activeWallet.chain}/${activeWallet.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${activeWallet.symbol}`], { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</Text>}
-              {!!assetBalance && <Text style={{ fontSize: 20, color: '#007AFF', marginTop: 4 }}>≈ ${(ticker && ticker[`${activeWallet.chain}/${assetBalance.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${assetBalance.symbol}`], { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</Text>}
+              {!assetBalance && <Text style={{ fontSize: 20, color: '#007AFF', marginTop: 4 }}>≈ {currency.sign}{(ticker && ticker[`${activeWallet.chain}/${activeWallet.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${activeWallet.symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</Text>}
+              {!!assetBalance && <Text style={{ fontSize: 20, color: '#007AFF', marginTop: 4 }}>≈ {currency.sign}{(ticker && ticker[`${activeWallet.chain}/${assetBalance.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${assetBalance.symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</Text>}
             </View>
             {(!activeAsset || !activeAsset.contract) && !!chain && <FastImage source={assetIcons[chain.toLowerCase()]} style={{ width: 60, height: 60, borderRadius: 30, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }} />}
             {(!!activeAsset && !!activeAsset.contract) && <View style={{ width: 60, height: 60, borderWidth: 0, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white', borderRadius: 30 }}>

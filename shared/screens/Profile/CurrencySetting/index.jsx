@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators } from 'utils/redux'
 // import { View } from 'react-native'
 import { connect } from 'react-redux'
 import TableView from 'react-native-tableview'
@@ -10,6 +10,7 @@ const { Section, Item } = TableView
 @connect(
   state => ({
     currencySymbol: state.currency.symbol,
+    currencyList: state.currency.list,
     wallet: state.wallet
   }),
   dispatch => ({
@@ -40,8 +41,12 @@ export default class CurrencySetting extends Component {
     this.props.actions.setCurrency(symbol)
   }
 
+  componentDidMount() {
+    this.props.actions.getCurrencyRates.requested()
+  }
+
   render() {
-    const { currencySymbol } = this.props
+    const { currencySymbol, currencyList } = this.props
 
     return (
       <TableView
@@ -50,18 +55,15 @@ export default class CurrencySetting extends Component {
       >
         <Section />
         <Section>
-          <Item
-            accessoryType={currencySymbol === 'USD' ? TableView.Consts.AccessoryType.Checkmark : TableView.Consts.AccessoryType.None}
-            onPress={this.setCurrency.bind(this, 'USD')}
-          >
-            USD
-          </Item>
-          <Item
-            accessoryType={currencySymbol === 'CNY' ? TableView.Consts.AccessoryType.Checkmark : TableView.Consts.AccessoryType.None}
-            onPress={this.setCurrency.bind(this, 'CNY')}
-          >
-            CNY
-          </Item>
+          {Object.keys(currencyList).map(item =>
+            <Item
+              key={item}
+              accessoryType={currencySymbol === item ? TableView.Consts.AccessoryType.Checkmark : TableView.Consts.AccessoryType.None}
+              onPress={this.setCurrency.bind(this, item)}
+            >
+              {`${item} (${currencyList[item].sign})`}
+            </Item>
+           )}
         </Section>
       </TableView>
     )
