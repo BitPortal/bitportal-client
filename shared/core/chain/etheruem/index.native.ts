@@ -9,19 +9,35 @@ export const getBalance = async (address: string) => {
   return (+balance) * Math.pow(10, -18)
 }
 
-export const getTransactions = async (address: string, startblock: number = 0, endblock: number = 99999999, page: number = 1, offset: number = 20) => {
-  const result = await etherscanApi('GET', '', {
-    module: 'account',
-    action: 'txlist',
-    sort: 'desc',
-    startblock,
-    endblock,
-    address,
-    page,
-    offset
-  })
+export const getTransactions = async (address: string, startblock: number = 0, endblock: number = 99999999, page: number = 1, offset: number = 20, contract: string) => {
+  if (contract) {
+    const result = await etherscanApi('GET', '', {
+      module: 'account',
+      action: 'tokentx',
+      contractAddress: contract,
+      sort: 'desc',
+      startblock,
+      endblock,
+      address,
+      page,
+      offset
+    })
 
-  return result.result
+    return result.result
+  } else {
+    const result = await etherscanApi('GET', '', {
+      module: 'account',
+      action: 'txlist',
+      sort: 'desc',
+      startblock,
+      endblock,
+      address,
+      page,
+      offset
+    })
+
+    return result.result
+  }
 }
 
 export const getTransaction = async (hash: string) => {

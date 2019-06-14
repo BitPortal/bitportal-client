@@ -432,7 +432,7 @@ function* getTransactions(action: Action) {
         }
       }
 
-      const transactions = yield call(ethChain.getTransactions, address, startblock, endblock, page, offset)
+      const transactions = yield call(ethChain.getTransactions, address, startblock, endblock, page, offset, contract)
       const canLoadMore = transactions.length === 10
       const items = transactions.map((item: any) => {
         const isSender = item.from === address.toLowerCase()
