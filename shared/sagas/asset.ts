@@ -69,8 +69,15 @@ function* scanEOSAsset(action: Action) {
   }
 }
 
+function* handleAssetSearchTextChange(action: Action) {
+  yield delay(500)
+  const text = action.payload || ''
+  yield put(actions.setAssetSearchText(text))
+}
+
 export default function* assetSaga() {
   yield takeLatest(String(actions.getETHAsset.requested), getETHAsset)
   yield takeLatest(String(actions.getEOSAsset.requested), getEOSAsset)
   yield takeLatest(String(actions.scanEOSAsset.requested), scanEOSAsset)
+  yield takeLatest(String(actions.handleAssetSearchTextChange), handleAssetSearchTextChange)
 }

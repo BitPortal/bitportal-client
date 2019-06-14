@@ -5,6 +5,7 @@ const activeAssetIdSelector = (state: RootState) => state.asset.activeAssetId
 const transferAssetIdSelector = (state: RootState) => state.asset.transferAssetId
 export const assetByIdSelector = (state: RootState) => state.asset.byId
 const assetAllIdsSelector = (state: RootState) => state.asset.allIds
+export const assetSearchTextSelector = (state: RootState) => state.asset.searchText
 
 export const selectedAssetSelector = (state: RootState) => state.asset.selected
 
@@ -12,7 +13,15 @@ export const assetsSelector = createSelector(
   activeChainSelector,
   assetByIdSelector,
   assetAllIdsSelector,
-  (chain: any, byId: any, allIds: any) => allIds.filter(item => item.indexOf(chain) === 0).map(id => byId[id])
+  assetSearchTextSelector,
+  (chain: any, byId: any, allIds: any, searchText: string) => {
+    if (searchText) {
+      return allIds.filter(item => item.indexOf(chain) === 0).map(id => byId[id])
+        .filter(item => (item.symbol && item.symbol.toLowerCase().indexOf(searchText.toLowerCase()) !== -1) || (item.name && item.name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1) || (item.contract && item.contract.toLowerCase().indexOf(searchText.toLowerCase()) !== -1))
+    } else {
+      return allIds.filter(item => item.indexOf(chain) === 0).map(id => byId[id])
+    }
+  }
 )
 
 export const activeAssetSelector = createSelector(

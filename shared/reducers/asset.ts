@@ -6,7 +6,8 @@ const initialState = {
   allIds: [],
   selected: {},
   activeAssetId: null,
-  transferAssetId: null
+  transferAssetId: null,
+  searchText: ''
 }
 
 export default handleActions({
@@ -66,5 +67,8 @@ export default handleActions({
       const index = state.selected[walletId].findIndex(id => id === assetId)
       state.selected[walletId].splice(index, 1)
     }
+  },
+  [actions.setAssetSearchText] (state, action) {
+    state.searchText = action.payload
   }
 }, initialState)

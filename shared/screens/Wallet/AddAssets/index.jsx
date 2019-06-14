@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { View, Text, ActivityIndicator } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
+import Modal from 'react-native-modal'
 import * as assetActions from 'actions/asset'
 // import FastImage from 'react-native-fast-image'
 import { selectedAssetIdsSelector, assetsSelector } from 'selectors/asset'
@@ -29,11 +30,6 @@ import styles from './styles'
 export default class AddAssets extends Component {
   static get options() {
     return {
-      /* topBar: {
-       *   title: {
-       *     text: '添加资产'
-       *   },
-       * },*/
       bottomTabs: {
         visible: false,
         drawBehind: true,
@@ -44,15 +40,18 @@ export default class AddAssets extends Component {
 
   subscription = Navigation.events().bindComponent(this)
 
-  state = { searching: false, switching: false }
+  state = { searching: false, switching: false, showModal: false,  showModalContent: false, selecting: false, unselecting: false }
 
   tableViewRef = React.createRef()
 
   pendingAssetQueue = []
 
   searchBarUpdated({ text, isFocused }) {
-    this.setState({ searching: isFocused })
-
+    if (isFocused) {
+      this.props.actions.handleAssetSearchTextChange(text)
+    } else {
+      this.props.actions.handleAssetSearchTextChange('')
+    }
   }
 
   onRefresh = () => {
@@ -100,13 +99,27 @@ export default class AddAssets extends Component {
     const symbol = item.symbol
     const assetId = `${chain}/${contract}/${symbol}`
 
-    setTimeout(() => {
-      if (item.switchOn) {
-        this.props.actions.selectAsset({ walletId, assetId })
-      } else {
-        this.props.actions.unselectAsset({ walletId, assetId })
-      }
-    }, 500)
+    if (item.switchOn) {
+      this.props.actions.selectAsset({ walletId, assetId })
+
+      this.setState({ showModal: true, showModalContent: true, selecting: true }, () => {
+        setTimeout(() => {
+          this.setState({ showModal: false, selecting: false }, () => {
+            this.setState({ showModalContent: false })
+          })
+        }, 500)
+      })
+    } else {
+      this.props.actions.unselectAsset({ walletId, assetId })
+
+      this.setState({ showModal: true, showModalContent: true, unselecting: true }, () => {
+        setTimeout(() => {
+          this.setState({ showModal: false, unselecting: false }, () => {
+            this.setState({ showModalContent: false })
+          })
+        }, 500)
+      })
+    }
   }
 
   render() {
@@ -154,6 +167,24 @@ export default class AddAssets extends Component {
              ))}
           </TableView.Section>
         </TableView>
+        <Modal
+          isVisible={this.state.showModal}
+          backdropOpacity={0}
+          useNativeDriver
+          animationIn="fadeIn"
+          animationInTiming={200}
+          backdropTransitionInTiming={200}
+          animationOut="fadeOut"
+          animationOutTiming={200}
+          backdropTransitionOutTiming={200}
+        >
+          {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
+              {this.state.selecting && <Text style={{ fontSize: 17, fontWeight: 'bold' }}>添加中...</Text>}
+              {this.state.unselecting && <Text style={{ fontSize: 17, fontWeight: 'bold' }}>取消添加中...</Text>}
+            </View>
+          </View>}
+        </Modal>
       </View>
     )
   }
