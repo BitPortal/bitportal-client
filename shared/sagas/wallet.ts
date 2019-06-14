@@ -5,7 +5,7 @@ import { reset } from 'redux-form'
 import { getErrorMessage, getEOSErrorMessage } from 'utils'
 import * as actions from 'actions/wallet'
 import * as transactionActions from 'actions/transaction'
-import { getBalance } from 'actions/balance'
+import { getBalance, getETHTokenBalanceList } from 'actions/balance'
 import { scanEOSAsset } from 'actions/asset'
 import {
   walletAddressesSelector,
@@ -32,8 +32,12 @@ function* setActiveWallet(action: Action<SetActiveWalletParams>) {
   yield put(actions.setActiveChain(activeWallet.chain))
   yield put(getBalance.requested(activeWallet))
 
-  if ((activeWallet.chain === 'EOS') && activeWallet.address) {
-    yield put(scanEOSAsset.requested(activeWallet))
+  if (activeWallet.address) {
+    if (activeWallet.chain === 'EOS') {
+      yield put(scanEOSAsset.requested(activeWallet))
+    } else if (activeWallet.chain === 'ETHEREUM') {
+      yield put(getETHTokenBalanceList.requested(activeWallet))
+    }
   }
 }
 

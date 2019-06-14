@@ -137,7 +137,6 @@ export default class Wallet extends Component {
   }
 
   async componentDidMount() {
-    console.log('walletcomponentDidMount')
     this.navigationEventListener = Navigation.events().bindComponent(this)
 
     this.props.actions.scanIdentity.requested()
@@ -175,8 +174,12 @@ export default class Wallet extends Component {
 
       this.props.actions.getBalance.requested(activeWallet)
 
-      if (activeWallet && (activeWallet.chain === 'EOS') && activeWallet.address) {
-        this.props.actions.scanEOSAsset.requested(activeWallet)
+      if (activeWallet && activeWallet.address) {
+        if (activeWallet.chain === 'EOS') {
+          this.props.actions.scanEOSAsset.requested(activeWallet)
+        } else if (activeWallet.chain === 'ETHEREUM') {
+          this.props.actions.getETHTokenBalanceList.requested(activeWallet)
+        }
       }
     }
   }

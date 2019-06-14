@@ -4,9 +4,29 @@ import { keccak256 } from 'core/crypto'
 import { signETHTransaction, decryptPrivateKey } from 'core/keystore'
 import { etherscanApi, web3 } from 'core/api'
 
-export const getBalance = async (address: string) => {
-  const balance = await web3.eth.getBalance(address)
-  return (+balance) * Math.pow(10, -18)
+export const getBalance = async (address: string, contractAddress: string) => {
+  if (contractAddress) {
+    const result = await etherscanApi('GET', '', {
+      module: 'account',
+      action: 'tokenbalance',
+      contractAddress,
+      address,
+      tag: 'latest'
+    })
+
+    return (+result.result) * Math.pow(10, -18)
+  } else {
+    const balance = await web3.eth.getBalance(address)
+    return (+balance) * Math.pow(10, -18)
+    // const result = await etherscanApi('GET', '', {
+    //   module: 'account',
+    //   action: 'balance',
+    //   address,
+    //   tag: 'latest'
+    // })
+
+    // return (+result.result) * Math.pow(10, -18)
+  }
 }
 
 export const getTransactions = async (address: string, startblock: number = 0, endblock: number = 99999999, page: number = 1, offset: number = 20, contract: string) => {
