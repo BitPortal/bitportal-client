@@ -555,8 +555,11 @@ function* getTransaction(action: Action) {
     const chain = action.payload.chain
     const address = action.payload.address
     const source = action.payload.source
+    const contract = action.payload.contract
+    const assetSymbol = action.payload.assetSymbol
     const walletId = action.payload.id
     const transactionId = action.payload.transactionId
+    const assetId = contract ? `${contract}/${assetSymbol}` : 'syscoin'
 
     let id = `${chain}/${address}`
 
@@ -622,10 +625,10 @@ function* getTransaction(action: Action) {
       const change = isSender ? +(+internalOutputValue + +fees - +internalInputValue).toFixed(8) : +(+internalOutputValue - +internalInputValue).toFixed(8)
       const targetAddress = isSender ? externalOutput[0].scriptPubKey.addresses[0] : externalInput[0].addr
 
-      console.log({ ...item, change, transactionType, targetAddress })
-
+      yield put(actions.addTransaction({ id: `${chain}/${address}`, item: { ...item, change, transactionType, targetAddress }, assetId }))
     } else if (chain === 'ETHEREUM') {
-      // const item = yield call(ethChain.getTransaction, transactionId)
+      // const result = yield call(ethChain.getTransaction, transactionId)
+      // console.log(result)
       // const isSender = item.from === address.toLowerCase()
       // const transactionType = isSender ? 'send' : 'receive'
       // const change = (isSender ? -+item.value : +item.value) * Math.pow(10, -18)
@@ -639,27 +642,26 @@ function* getTransaction(action: Action) {
       //   targetAddress,
       //   transactionType
       // }
-      // yield put(actions.updateTransaction({ id, item: tx }))
+      // console.log(tx)
+      // yield put(actions.addTransaction({ id: `${chain}/${address}`, item: tx, assetId }))
     } else if (chain === 'EOS') {
-      // const item = yield call(eosChain.getTransaction, transactionId)
-      // item.action_trace = item.traces.find((item: any) => item.receipt.receiver === address)
-      // if (item.action_trace) {
-      //   const isSender = item.action_trace.act.data.from === address
-      //   const transactionType = isSender ? 'send' : 'receive'
-      //   const amount = item.action_trace.act.data.quantity.split(' ')[0]
-      //   const change = isSender ? -+amount : +amount
-      //   const targetAddress = isSender ? item.action_trace.act.data.to : item.action_trace.act.data.from
+      // const result = yield call(api.getEOSTransaction, { hash: transactionId })
+      // console.log(result)
+      // const isSender = result.sender === address
+      // const transactionType = isSender ? 'send' : 'receive'
+      // const amount = result.quantity
+      // const change = isSender ? -+amount : +amount
+      // const targetAddress = isSender ? result.receiver : result.sender
 
-      //   const tx = {
-      //     ...item,
-      //     id: item.action_trace.trx_id,
-      //     timestamp: +new Date(item.block_time),
-      //     change,
-      //     targetAddress,
-      //     transactionType
-      //   }
-      //   yield put(actions.updateTransaction({ id, item: tx }))
+      // const tx = {
+      //     ...result,
+      //   id: result.trx_id,
+      //   timestamp: +new Date(result.timestamp),
+      //   change,
+      //   targetAddress,
+      //   transactionType
       // }
+      // console.log(tx)
     } else if (chain === 'CHAINX') {
       const transaction = yield call(chainxChain.getTransaction, transactionId)
     }

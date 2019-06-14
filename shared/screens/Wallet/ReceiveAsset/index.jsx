@@ -109,12 +109,14 @@ export default class ReceiveAsset extends Component {
 
   navigationButtonPressed({ buttonId }) {
     if (buttonId === 'share') {
-      const { activeWallet } = this.props
+      const { activeWallet, activeAsset } = this.props
       const chain = activeWallet.chain
       const address = activeWallet.address
+      const contract = activeAsset.contract
+      const symbol = activeAsset.symbol
 
       ActionSheetIOS.showShareActionSheetWithOptions({
-        message: this.getAddressUri(address, this.state.amount, chain)
+        message: this.getAddressUri(address, this.state.amount, chain, contract, symbol)
       }, () => {}, () => {})
     } else if (buttonId === 'cancel') {
       Navigation.dismissAllModals()

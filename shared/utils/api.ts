@@ -173,3 +173,4 @@ export const simpleWalletCallback = (baseUrl: string) => fetchBase('GET', '', un
 export const getBTCFees = (params: any) => bitcoinFeesBase('GET', '/fees/recommended')
 export const simpleWalletAuthorize = ({ loginUrl, ...params }) => fetchBase('POST', '', params, { baseUrl: loginUrl })
 export const getEOSTransactions = (params: any) => eosParkFetchBase('GET', '', { ...params, module: 'account', action: 'get_account_related_trx_info' })
+export const getEOSTransaction = (params: any) => eosParkFetchBase('GET', '', { ...params, module: 'transaction', action: 'get_transaction_detail_info', trx_id: params.hash })

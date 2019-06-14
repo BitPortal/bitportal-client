@@ -9,6 +9,7 @@ import Modal from 'react-native-modal'
 import FastImage from 'react-native-fast-image'
 import { injectIntl } from 'react-intl'
 import { activeWalletSelector, transferWalletSelector } from 'selectors/wallet'
+import { transferAssetSelector } from 'selectors/asset'
 import { transferWalletTransactionSelector } from 'selectors/transaction'
 import Sound from 'react-native-sound'
 import * as transactionActions from 'actions/transaction'
@@ -31,7 +32,8 @@ const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
 @connect(
   state => ({
     getTransaction: state.getTransaction,
-    activeWallet: transferWalletSelector(state),
+    transferWallet: transferWalletSelector(state),
+    transferAsset: transferAssetSelector(state),
     transaction: transferWalletTransactionSelector(state)
   }),
   dispatch => ({
@@ -102,7 +104,7 @@ export default class TransactionDetail extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.getTransaction.requested({ ...this.props.activeWallet, transactionId: this.props.transaction.id })
+    this.props.actions.getTransaction.requested({ ...this.props.transferWallet, transactionId: this.props.transaction.id, contract: this.props.transferAsset.contract, assetSymbol: this.props.transferAsset.symbol })
   }
 
   render() {
