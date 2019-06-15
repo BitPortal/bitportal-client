@@ -7,6 +7,7 @@ import { Navigation } from 'react-native-navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { transferWalletSelector } from 'selectors/wallet'
 import * as transactionActions from 'actions/transaction'
+import * as accountActions from 'actions/account'
 import Modal from 'react-native-modal'
 
 const styles = EStyleSheet.create({
@@ -53,6 +54,7 @@ export const errorMessages = (error, messages) => {
   dispatch => ({
     actions: bindActionCreators({
       ...transactionActions,
+      ...accountActions
     }, dispatch)
   })
 )
@@ -111,6 +113,8 @@ export default class AuthorizeEOSAccount extends Component {
 
   componentDidAppear() {
     // this.props.actions.authorizeEOSAccount.failed()
+    const { authorizeWallet } = this.props
+    this.props.actions.getAccount.requested({ chain: authorizeWallet.chain, address: authorizeWallet.address })
   }
 
   componentWillUnmount() {
