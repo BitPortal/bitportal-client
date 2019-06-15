@@ -2,6 +2,7 @@ import { createAction } from 'redux-actions'
 import { createAsyncAction } from 'utils/redux'
 
 export const updateAsset = createAction<UpdateAsset>('asset/UPDATE')
+export const addAsset = createAction<AddAsset>('asset/Add')
 
 export const selectAsset = createAction<SelectAsset>('asset/SELECT')
 export const selectAssetList = createAction<SelectAssetList>('asset/SELECT_LIST')

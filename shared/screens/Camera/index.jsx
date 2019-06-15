@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { View, ActionSheetIOS, Alert, Text, ActivityIndicator, Linking, TouchableOpacity, Dimensions, TouchableHighlight, Platform } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import * as walletActions from 'actions/wallet'
+import * as assetActions from 'actions/asset'
 import * as producerActions from 'actions/producer'
 import QRCodeScanner, { CAMERA_FLASH_MODE } from 'react-native-qrcode-scanner'
 import { accountByIdSelector, managingAccountVotedProducersSelector } from 'selectors/account'
@@ -52,12 +53,14 @@ const toolBarMargin = (() => {
     identityWallet: identityWalletSelector(state),
     importedWallet: importedWalletSelector(state),
     activeWallet: activeWalletSelector(state),
-    balanceById: balanceByIdSelector(state)
+    balanceById: balanceByIdSelector(state),
+    assetAllIds: state.asset.allIds
   }),
   dispatch => ({
     actions: bindActionCreators({
       change,
-      ...walletActions
+      ...walletActions,
+      ...assetActions
     }, dispatch)
   })
 )
@@ -156,7 +159,7 @@ export default class Camera extends Component {
       const isJson = isJsonString(code)
       if (isJson) {
         Alert.alert(
-          `无效的${symbol}地址`,
+          `无效的${chain}地址`,
           '',
           [
             { text: '确定', onPress: () => {} }
@@ -179,7 +182,7 @@ export default class Camera extends Component {
 
         if (!isValid) {
           Alert.alert(
-            `无效的${symbol}地址`,
+            `无效的${chain}地址`,
             '',
             [
               { text: '确定', onPress: () => {} }
@@ -242,20 +245,40 @@ export default class Camera extends Component {
           )
         } else {
           const amount = query.amount || query.value
-          let symbol = null
-          if (chain === 'BITCOIN') {
-            symbol = 'BTC'
-          } else if (chain === 'ETHEREUM') {
-            symbol = 'ETH'
-          } else if (chain === 'EOS') {
-            symbol = 'EOS'
+          const contract = query.contract || query.contractAddress
+          let precision = query.precision
+          let symbol = query.symbol
+
+          if (!symbol || !contract) {
+            if (chain === 'BITCOIN') {
+              symbol = 'BTC'
+            } else if (chain === 'ETHEREUM') {
+              symbol = 'ETH'
+            } else if (chain === 'EOS') {
+              symbol = 'EOS'
+            } else if (chain === 'CHIANX') {
+              symbol = 'PCX'
+            }
+          }
+
+          if (contract && !symbol) {
+            Alert.alert(
+              `未检测到代币symbol`,
+              null,
+              [
+                {
+                  text: '确认',
+                  onPress: () => {}
+                }
+              ]
+            )
           }
 
           const wallet = (this.props.activeWallet && this.props.activeWallet.chain === chain) ? this.props.activeWallet : this.selectWallet(chain)
 
           if (!wallet) {
             Alert.alert(
-              `未检测到${symbol}钱包`,
+              `未检测到${chain}钱包`,
               null,
               [
                 {
@@ -265,32 +288,47 @@ export default class Camera extends Component {
               ]
             )
           } else {
-            this.props.actions.setTransferWallet(wallet.id)
+            const assetId = contract ? `${chain}/${contract}/${symbol}` : `${chain}/${symbol}`
+            if (!!contract && this.props.assetAllIds.indexOf(assetId) === -1) {
+              Alert.alert(
+                `尚未添加代币${symbol}`,
+                null,
+                [
+                  {
+                    text: '确认',
+                    onPress: () => {}
+                  }
+                ]
+              )
+            } else {
+              this.props.actions.setTransferWallet(wallet.id)
+              this.props.actions.setTransferAsset(assetId)
 
-            Navigation.setStackRoot(this.props.componentId, {
-              component: {
-                name: 'BitPortal.TransferAsset',
-                passProps: { presetAddress: address, presetAmount: amount },
-                options: {
-                  topBar: {
-                    title: {
-                      text: `发送${symbol}到`
+              Navigation.setStackRoot(this.props.componentId, {
+                component: {
+                  name: 'BitPortal.TransferAsset',
+                  passProps: { presetAddress: address, presetAmount: amount },
+                  options: {
+                    topBar: {
+                      title: {
+                        text: `发送${symbol}到`
+                      },
+                      leftButtons: [
+                        {
+                          id: 'cancel',
+                          text: '取消'
+                        }
+                      ]
                     },
-                    leftButtons: [
-                      {
-                        id: 'cancel',
-                        text: '取消'
+                    animations: {
+                      setStackRoot: {
+                        enabled: true
                       }
-                    ]
-                  },
-                  animations: {
-                    setStackRoot: {
-                      enabled: true
                     }
                   }
                 }
-              }
-            })
+              })
+            }
           }
         }
       }

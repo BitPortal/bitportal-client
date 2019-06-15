@@ -33,6 +33,20 @@ export default handleActions({
       if (index === -1) state.allIds.push(id)
     })
   },
+  [actions.addAsset] (state, action) {
+    state.byId = state.byId || {}
+    state.allIds = state.allIds || []
+
+    const chain = action.payload.chain
+    const asset = action.payload.asset
+    const contract = asset.contract || asset.account || asset.address
+    const id = `${chain}/${contract}/${asset.symbol}`
+    state.byId[id] = asset
+    state.byId[id].contract = contract
+    state.byId[id].chain = chain
+    const index = state.allIds.findIndex((v: any) => v === id)
+    if (index === -1) state.allIds.push(id)
+  },
   [actions.selectAsset] (state, action) {
     state.selected = state.selected || {}
     const walletId = action.payload.walletId
