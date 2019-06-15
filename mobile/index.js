@@ -20,8 +20,8 @@ EStyleSheet.build({})
 
 startApp(async () => {
   const localLocale = await storage.getItem('bitportal_lang')
-  const deviceLocale = DeviceInfo.getDeviceLocale()
-  const locale = localLocale || deviceLocale
+  // const deviceLocale = DeviceInfo.getDeviceLocale()
+  const locale = localLocale || 'zh'
   const store = configure({ intl: { locale }})
   registerScreens(store)
   store.runSaga(sagas)
