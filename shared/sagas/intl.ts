@@ -13,9 +13,7 @@ function* setLocale(action: Action<object>) {
     expires: new Date(Date.now() + (3600 * 1000 * 24 * 365))
   })
 
-  // setExtraLocale(locale)
-  // setDefaultOptions()
-  // startTabBasedApp()
+  setExtraLocale(locale)
 }
 
 export default function* intlSaga() {

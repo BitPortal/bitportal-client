@@ -457,7 +457,8 @@ export default class TransferAsset extends Component {
   navigationButtonPressed({ buttonId }) {
     if (buttonId === 'cancel') {
       // Keyboard.dismiss()
-      Navigation.dismissAllModals()
+      // Navigation.dismissAllModals()
+      Navigation.dismissModal(this.props.componentId)
     } else if (buttonId === 'scan') {
       Navigation.showModal({
         stack: {

@@ -393,19 +393,16 @@ export default class ManageWallet extends Component {
   chainxDeposit = async (walletId) => {
     const constants = await Navigation.constants()
 
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.ChainXDeposit',
-        passProps: {
-          statusBarHeight: constants.statusBarHeight
-        },
-        options: {
-          topBar: {
-            backButton: {
-              title: '返回'
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.ChainXDeposit',
+            passProps: {
+              statusBarHeight: constants.statusBarHeight
             }
           }
-        }
+        }]
       }
     })
   }

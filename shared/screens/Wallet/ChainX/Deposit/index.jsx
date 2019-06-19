@@ -66,6 +66,12 @@ export default class ChainXDeposit extends Component {
   static get options() {
     return {
       topBar: {
+        leftButtons: [
+          {
+            id: 'cancel',
+            text: '取消'
+          }
+        ],
         rightButtons: [
           {
             id: 'chainxDepositHistory',
@@ -105,6 +111,8 @@ export default class ChainXDeposit extends Component {
   navigationButtonPressed({buttonId}) {
     if (buttonId === 'chainxDepositHistory') {
       Dialog.alert('提示', '功能正在开发中...')
+    } else if (buttonId === 'cancel') {
+      Navigation.dismissModal(this.props.componentId)
     }
   }
 

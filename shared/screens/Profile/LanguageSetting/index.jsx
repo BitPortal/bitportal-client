@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
-import { setBottomTabsLocale } from 'navigators'
 import * as intlActions from 'actions/intl'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import messages from 'resources/messages'
@@ -40,7 +39,6 @@ export default class LanguageSetting extends Component {
 
   setLocale = (locale) => {
     this.props.actions.setLocale(locale)
-    setBottomTabsLocale(locale)
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
         title: {
