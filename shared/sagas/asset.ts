@@ -70,7 +70,7 @@ function* scanEOSAsset(action: Action) {
 }
 
 function* handleAssetSearchTextChange(action: Action) {
-  yield delay(500)
+  yield delay(200)
   const text = action.payload || ''
   yield put(actions.setAssetSearchText(text))
 }

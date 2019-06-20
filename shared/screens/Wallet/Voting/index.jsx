@@ -69,10 +69,11 @@ export default class Voting extends Component {
         subtitle: {
           text: '0 / 30 已选'
         },
-        drawBehind: true,
+        drawBehind: false,
         searchBar: true,
         searchBarHiddenWhenScrolling: true,
         searchBarPlaceholder: 'Search',
+        hideNavBarOnFocusSearchBar: false,
         largeTitle: {
           visible: false
         },
@@ -283,7 +284,7 @@ export default class Voting extends Component {
 
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
-        <View style={{ width: '100%', height: selectedIds.length ? 80 : 0, marginTop: !this.state.searching ? (statusBarHeight + 44 + 56) : (statusBarHeight + 56) }}>
+        <View style={{ width: '100%', height: selectedIds.length ? 80 : 0 }}>
           <ScrollView
             style={{ height: selectedIds.length ? 80 : 0 }}
             horizontal

@@ -40,11 +40,73 @@ export default class AddAssets extends Component {
 
   subscription = Navigation.events().bindComponent(this)
 
-  state = { searching: false, switching: false, showModal: false,  showModalContent: false, selecting: false, unselecting: false }
+  state = {
+    searching: false,
+    switching: false,
+    showModal: false,
+    showModalContent: false,
+    selecting: false,
+    unselecting: false,
+    assetsCount: 0,
+    getETHAssetLoading: false,
+    getETHAssetError: false,
+    getEOSAssetLoading: false,
+    getEOSAssetError: false
+  }
 
   tableViewRef = React.createRef()
 
   pendingAssetQueue = []
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      nextProps.getEOSAsset.loading !== prevState.getEOSAssetLoading
+      || nextProps.getEOSAsset.error !== prevState.getEOSAssetError
+      || nextProps.getETHAsset.loading !== prevState.getETHAssetLoading
+      || nextProps.getETHAsset.error !== prevState.getETHAssetError
+      || (nextProps.assets && nextProps.assets.length) !== prevState.assetsCount
+    ) {
+      return {
+        getEOSAssetLoading: nextProps.getEOSAsset.loading,
+        getEOSAssetError: nextProps.getEOSAsset.error,
+        getETHAssetLoading: nextProps.getETHAsset.loading,
+        getETHAssetError: nextProps.getETHAsset.error,
+        assetsCount: (nextProps.assets && nextProps.assets.length)
+      }
+    } else {
+      return null
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    /* if (
+     *   prevState.getEOSAssetLoading !== this.state.getEOSAssetLoading
+     *   || prevState.getEOSAssetError !== this.state.getEOSAssetError
+     *   || prevState.getETHAssetLoading !== this.state.getETHAssetLoading
+     *   || prevState.getETHAssetError !== this.state.getETHAssetError
+     *   || prevState.assetsCount !== this.state.assetsCount
+     * ) {
+     *   const { chain } = this.props
+
+     *   if (chain === 'ETHEREUM') {
+     *     Navigation.mergeOptions(this.props.componentId, {
+     *       topBar: {
+     *         searchBar: !(this.state.getETHAssetLoading && !this.state.assetsCount),
+     *         searchBarHiddenWhenScrolling: true,
+     *         searchBarPlaceholder: 'Search'
+     *       }
+     *     })
+     *   } else if (chain === 'EOS') {
+     *     Navigation.mergeOptions(this.props.componentId, {
+     *       topBar: {
+     *         searchBar: !(this.state.getEOSAssetLoading && !this.state.assetsCount),
+     *         searchBarHiddenWhenScrolling: true,
+     *         searchBarPlaceholder: 'Search'
+     *       }
+     *     })
+     *   }
+     * }*/
+  }
 
   searchBarUpdated({ text, isFocused }) {
     if (isFocused) {
@@ -65,14 +127,7 @@ export default class AddAssets extends Component {
   }
 
   componentDidAppear() {
-    // this.props.actions.getEOSAssetRequested()
-    /* Navigation.mergeOptions(this.props.componentId, {
-     *   topBar: {
-     *     searchBar: true,
-     *     searchBarHiddenWhenScrolling: true,
-     *     searchBarPlaceholder: 'Search'
-     *   }
-     * })*/
+    // this.props.actions.getETHAssetRequested()
   }
 
   componentWillUnmount() {

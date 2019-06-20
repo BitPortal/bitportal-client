@@ -42,6 +42,28 @@ export default class Market extends Component {
 
   subscription = Navigation.events().bindComponent(this)
 
+  state = {
+    getTickerLoading: false,
+    getTickerError: false,
+    tickerCount: 0
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      nextProps.getTicker.loading !== prevState.getTickerLoading
+      || nextProps.getTicker.error !== prevState.getTickerError
+      || (nextProps.ticker && nextProps.ticker.length) !== prevState.tickerCount
+    ) {
+      return {
+        getTickerLoading: nextProps.getTicker.loading,
+        getTickerError: nextProps.getTicker.error,
+        tickerCount: (nextProps.ticker && nextProps.ticker.length)
+      }
+    } else {
+      return null
+    }
+  }
+
   searchBarUpdated({ text, isFocused }) {
     if (isFocused) {
       this.props.actions.handleTickerSearchTextChange(text)
@@ -60,6 +82,22 @@ export default class Market extends Component {
 
   componentDidAppear() {
     this.props.actions.getTicker.requested()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    /* if (
+     *   prevState.getTickerLoading !== this.state.getTickerLoading
+     *   || prevState.getTickerError !== this.state.getTickerError
+     *   || prevState.tickerCount !== this.state.tickerCount
+     * ) {
+     *   Navigation.mergeOptions(this.props.componentId, {
+     *     topBar: {
+     *       searchBar: !(this.state.getTickerLoading && !this.state.tickerCount),
+     *       searchBarHiddenWhenScrolling: true,
+     *       searchBarPlaceholder: 'Search'
+     *     }
+     *   })
+     * }*/
   }
 
   render() {
