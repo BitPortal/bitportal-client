@@ -7406,6 +7406,11 @@ jest-worker@^24.0.0-alpha.6:
     merge-stream "^1.0.1"
     supports-color "^6.1.0"
 
+jetifier@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/jetifier/-/jetifier-1.1.0.tgz#a527d5d24fdef4dad829450740742a2887d2ac51"
+  integrity sha512-+vilDQbJ6ALFRCNuqea0smMGdyBG92u1uOCeRtijGLvTPyf5SNrUErYT3osd28y0+attxCbWvI3NM4LXc6u4dg==
+
 jju@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/jju/-/jju-1.3.0.tgz#dadd9ef01924bc728b03f2f7979bdbd62f7a2aaa"
