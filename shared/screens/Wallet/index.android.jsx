@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { injectIntl, FormattedMessage } from 'react-intl'
-import { View, Text, Clipboard, ActivityIndicator, TouchableHighlight } from 'react-native'
+import { View, Text, Clipboard, ActivityIndicator, TouchableHighlight, Dimensions } from 'react-native'
 import { Navigation } from 'react-native-navigation'
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
 import SplashScreen from 'react-native-splash-screen'
 import Modal from 'react-native-modal'
 import KeyboardManager from 'react-native-keyboard-manager'
@@ -28,7 +29,26 @@ import { currencySelector } from 'selectors/currency'
 import { managingWalletChildAddressSelector } from 'selectors/address'
 import { formatCycleTime, formatMemorySize } from 'utils/format'
 import * as api from 'utils/api'
+import FastImage from 'react-native-fast-image'
 import styles from './styles'
+
+export const FirstTabScreen = () => (
+  <View style={[{ flex: 1 }, { backgroundColor: '#EEEEEE' }]} />
+)
+
+export const SecondTabScreen = () => (
+  <View style={[{ flex: 1 }, { backgroundColor: '#EEEEEE' }]} />
+)
+
+export const ThirdTabScreen = () => (
+  <View style={[{ flex: 1 }, { backgroundColor: '#EEEEEE' }]} />
+)
+
+const icons = {
+  wallet: require('resources/images/wallet_android.png'),
+  market: require('resources/images/market_android.png'),
+  profile: require('resources/images/profile_android.png')
+}
 
 @injectIntl
 
@@ -71,21 +91,56 @@ export default class Wallet extends Component {
         leftButtons: [
           {
             id: 'manage',
-            icon: require('resources/images/List.png')
+            icon: require('resources/images/menu_android.png')
           }
         ],
         rightButtons: [
           {
             id: 'scan',
-            icon: require('resources/images/scan2_right.png')
+            icon: require('resources/images/scan_android.png')
           }
         ]
       }
     }
   }
 
+  state = {
+    index: 0,
+    routes: [
+      { key: 'wallet', icon: 'wallet' },
+      { key: 'market', icon: 'market' },
+      { key: 'profile', icon: 'profile' },
+    ]
+  }
+
+  componentDidMount() {
+    SplashScreen.hide()
+  }
+
+  onIndexChange = (index) => {
+    this.setState({ index })
+    const { intl } = this.props
+    const titles = [intl.formatMessage({ id: 'top_bar_title_wallet' }), intl.formatMessage({ id: 'top_bar_title_market' }), intl.formatMessage({ id: 'top_bar_title_profile' })]
+
+    Navigation.mergeOptions('BitPortal.Wallet', {
+      topBar: {
+        title: {
+          text: titles[index]
+        }
+      }
+    })
+  }
+
   render() {
-    console.log(this.props)
-    return null
+    return (
+      <TabView
+        swipeEnabled={false}
+        navigationState={this.state}
+        renderScene={SceneMap({ wallet: FirstTabScreen, market: SecondTabScreen, profile: ThirdTabScreen })}
+        renderTabBar={props => <TabBar {...props} style={{ backgroundColor: '#673AB7' }} indicatorStyle={{ backgroundColor: 'white', color: 'white' }} renderIcon={({ route, focused }) => <FastImage source={icons[route.icon]} style={{ width: 18, height: 18, opacity: focused ? 1 : 0.7 }} />} />}
+        onIndexChange={this.onIndexChange}
+        initialLayout={{ width: Dimensions.get('window').width }}
+      />
+    )
   }
 }

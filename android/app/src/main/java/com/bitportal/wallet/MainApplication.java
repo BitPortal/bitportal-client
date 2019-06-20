@@ -30,6 +30,9 @@ import cn.jpush.android.api.JPushInterface;
 import com.github.alinz.reactnativewebviewbridge.WebViewBridgePackage;
 import com.rnfs.RNFSPackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
+import com.swmansion.reanimated.ReanimatedPackage;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -80,7 +83,10 @@ public class MainApplication extends NavigationApplication {
       new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
       new WebViewBridgePackage(),
       new FastImageViewPackage(),
-      new RNFSPackage()
+      new RNFSPackage(),
+      new AsyncStoragePackage(),
+      new ReanimatedPackage(),
+      new RNGestureHandlerPackage()
     );
   }
 

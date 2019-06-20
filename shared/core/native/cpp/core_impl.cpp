@@ -3,6 +3,13 @@
 
 extern "C" {
 #include "trezor-crypto/pbkdf2.h"
+#include "trezor-crypto/bip32.h"
+#include "trezor-crypto/curves.h"
+#include "trezor-crypto/ecdsa.h"
+#include "trezor-crypto/secp256k1.h"
+#include "trezor-crypto/base58.h"
+#include "trezor-crypto/hasher.h"
+#include "trezor-crypto/memzero.h"
 #include "crypto/crypto.h"
 }
 
@@ -102,7 +109,66 @@ namespace core {
     bytesToHex(key, sizeof(key), keyHex);
     return (std::string) keyHex;
   }
-
+  
+  std::vector<std::unordered_map<std::string, std::string>> CoreImpl::scanHDBTCAddresses(const std::string & xpub, int32_t startIndex, int32_t endIndex, bool isSegWit) {
+    uint8_t buffer[78];
+    base58_decode_check(xpub.c_str(), HASHER_SHA2D, buffer, 78);
+    
+    uint32_t depth = buffer[4];
+    uint8_t chain_code[32];
+    uint8_t public_key[33];
+    uint8_t child_number_byte[4];
+    memcpy(chain_code, buffer + 13, 32);
+    memcpy(public_key, buffer + 45, 33);
+    memcpy(child_number_byte, buffer + 9, 4);
+    
+    char child_number_hex[9];
+    bytesToHex(child_number_byte, sizeof(child_number_byte), child_number_hex);
+    uint32_t child_number = (int)strtol(child_number_hex, NULL, 16);
+    
+    HDNode root;
+    hdnode_from_xpub(depth, child_number, chain_code, public_key, SECP256K1_NAME, &root);
+    
+    std::vector<std::unordered_map<std::string, std::string>> addresses;
+    HDNode node;
+    char address[MAX_ADDR_SIZE];
+    curve_point pub;
+    
+    for (int i = startIndex; i <= endIndex; i++) {
+      memcpy(&node, &root, sizeof(HDNode));
+      
+      hdnode_public_ckd(&node, 0);
+      hdnode_fill_public_key(&node);
+      ecdsa_read_pubkey(&secp256k1, node.public_key, &pub);
+      hdnode_public_ckd_address_optimized(&pub, node.chain_code, i, isSegWit ? 0x05 : 0, HASHER_SHA2, HASHER_SHA2D, address, sizeof(address), isSegWit);
+      
+      std::unordered_map<std::string, std::string> addressInfo;
+      addressInfo["address"] = address;
+      addressInfo["change"] = std::to_string(0);
+      addressInfo["index"] = std::to_string(i);
+      addresses.push_back(addressInfo);
+    }
+    
+    for (int i = startIndex; i <= endIndex; i++) {
+      memcpy(&node, &root, sizeof(HDNode));
+      
+      hdnode_public_ckd(&node, 1);
+      hdnode_fill_public_key(&node);
+      ecdsa_read_pubkey(&secp256k1, node.public_key, &pub);
+      hdnode_public_ckd_address_optimized(&pub, node.chain_code, i, isSegWit ? 0x05 : 0, HASHER_SHA2, HASHER_SHA2D, address, sizeof(address), isSegWit);
+      
+      std::unordered_map<std::string, std::string> addressInfo;
+      addressInfo["address"] = address;
+      addressInfo["change"] = std::to_string(1);
+      addressInfo["index"] = std::to_string(i);
+      addresses.push_back(addressInfo);
+    }
+    
+    memzero(chain_code, 32);
+    memzero(public_key, 33);
+    memzero(child_number_byte, 4);
+    return addresses;
+  }
 
   std::string CoreImpl::pbkdf2Legacy(const std::string & password, const std::string & salt, int32_t iterations, int8_t keylen, const std::string & digest) {
     const uint8_t *passwordBytes = (unsigned char *)(password.c_str());

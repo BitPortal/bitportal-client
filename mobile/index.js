@@ -10,18 +10,18 @@ import { AppRegistry } from 'react-native'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { startApp, startTabBasedApp, registerScreens } from 'navigators'
 import { persistStore } from 'redux-persist'
-import DeviceInfo from 'react-native-device-info'
+// import DeviceInfo from 'react-native-device-info'
 import configure from 'store'
 import sagas from 'sagas'
-import storage from 'utils/storage'
+// import storage from 'utils/storage'
 // import VersionNumber from 'react-native-version-number'
 
 EStyleSheet.build({})
 
 startApp(async () => {
-  const localLocale = await storage.getItem('bitportal_lang')
+  // const localLocale = await storage.getItem('bitportal_lang')
   // const deviceLocale = DeviceInfo.getDeviceLocale()
-  const locale = localLocale || 'zh'
+  const locale = 'zh'
   const store = configure({ intl: { locale }})
   registerScreens(store)
   store.runSaga(sagas)
