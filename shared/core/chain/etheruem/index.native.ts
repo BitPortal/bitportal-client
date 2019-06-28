@@ -5,7 +5,7 @@ import { signETHTransaction, decryptPrivateKey } from 'core/keystore'
 import { etherscanApi, web3 } from 'core/api'
 import { erc20ABI } from 'core/constants'
 
-export const getBalance = async (address: string, contractAddress: string) => {
+export const getBalance = async (address: string, contractAddress: string = null) => {
   if (contractAddress) {
     const result = await etherscanApi('GET', '', {
       module: 'account',
