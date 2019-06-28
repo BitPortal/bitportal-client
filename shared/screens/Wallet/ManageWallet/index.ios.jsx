@@ -79,7 +79,7 @@ export default class ManageWallet extends Component {
   deleteWallet = (walletId, chain, address) => {
     Alert.prompt(
       '请输入钱包密码',
-      null,
+      '将删除该钱包所有数据，请务必确保钱包已备份。',
       [
         {
           text: '取消',
@@ -87,7 +87,8 @@ export default class ManageWallet extends Component {
           style: 'cancel'
         },
         {
-          text: '确认',
+          text: '删除',
+          style: 'destructive',
           onPress: password => this.props.actions.deleteWallet.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, fromCard: this.props.fromCard, chain, address })
         }
       ],

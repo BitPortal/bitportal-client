@@ -7,7 +7,9 @@ import TableView from 'react-native-tableview'
 import FastImage from 'react-native-fast-image'
 import * as transactionActions from 'actions/transaction'
 import * as producerActions from 'actions/producer'
+import * as accountActions from 'actions/account'
 import { managingWalletSelector } from 'selectors/wallet'
+import { managingAccountSelector } from 'selectors/account'
 import {
   producerSelector,
   producerSelectedIdsSelector,
@@ -49,12 +51,14 @@ export const errorDetail = (error) => {
     producer: producerSelector(state),
     selectedIds: producerSelectedIdsSelector(state),
     selected: selectedProducerSelector(state),
-    allIds: producerIdsSelector(state)
+    allIds: producerIdsSelector(state),
+    account: managingAccountSelector(state),
   }),
   dispatch => ({
     actions: bindActionCreators({
       ...transactionActions,
-      ...producerActions
+      ...producerActions,
+      ...accountActions
     }, dispatch)
   })
 )
@@ -100,7 +104,7 @@ export default class Voting extends Component {
 
   subscription = Navigation.events().bindComponent(this)
 
-  state = { selected: 0, searching: false }
+  state = { selected: 0, searching: false, searchBarFocused: false }
 
   tableViewRef = React.createRef()
 
@@ -136,6 +140,8 @@ export default class Voting extends Component {
   }
 
   searchBarUpdated({ text, isFocused }) {
+    this.setState({ searchBarFocused: isFocused })
+
     this.setState({ searching: isFocused })
 
     if (isFocused) {
@@ -198,7 +204,7 @@ export default class Voting extends Component {
         }
       })
 
-      if (prevProps.selectedIds.length < this.props.selectedIds.length && this.props.selectedIds.length > 4) {
+      if (this.scrollView && prevProps.selectedIds.length < this.props.selectedIds.length && this.props.selectedIds.length > 4) {
         this.scrollView.scrollTo({ x: (Dimensions.get('window').width / 4) * this.props.selectedIds.length - Dimensions.get('window').width, animated: true })
       }
     }
@@ -225,6 +231,10 @@ export default class Voting extends Component {
 
   componentDidMount() {
     this.props.actions.getProducer.requested({ json: true, limit: 500 })
+
+    if (!this.props.account && this.props.wallet.address && this.props.wallet.chain) {
+      this.props.actions.getAccount.requested({ chain: this.props.wallet.chain, address: this.props.wallet.address, refreshProducer: true })
+    }
   }
 
   componentWillUnmount() {
@@ -270,6 +280,7 @@ export default class Voting extends Component {
   render() {
     const { producer, selectedIds, selected, vote, getProducer, statusBarHeight } = this.props
     const loading = vote.loading
+    const refreshing = getProducer.refreshing
 
     if (!getProducer.loaded && getProducer.loading) {
       return (
@@ -317,8 +328,10 @@ export default class Voting extends Component {
         <TableView
           style={{ flex: 1 }}
           tableViewCellStyle={TableView.Consts.CellStyle.Default}
+          canRefresh={!this.state.searchBarFocused}
+          refreshing={refreshing}
+          onRefresh={this.state.searchBarFocused ? () => {} : this.onRefresh}
           detailTextColor="#666666"
-          canRefresh
           showsVerticalScrollIndicator={false}
           cellSeparatorInset={{ left: 46 }}
           reactModuleForCell="ProducerTableViewCell"

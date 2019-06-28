@@ -45,7 +45,8 @@ export default class Market extends Component {
   state = {
     getTickerLoading: false,
     getTickerError: false,
-    tickerCount: 0
+    tickerCount: 0,
+    searchBarFocused: false
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -65,6 +66,8 @@ export default class Market extends Component {
   }
 
   searchBarUpdated({ text, isFocused }) {
+    this.setState({ searchBarFocused: isFocused })
+
     if (isFocused) {
       this.props.actions.handleTickerSearchTextChange(text)
     } else {
@@ -120,8 +123,8 @@ export default class Market extends Component {
       <TableView
         style={{ flex: 1, backgroundColor: 'white' }}
         canRefresh
-        refreshing={refreshing}
-        onRefresh={this.onRefresh}
+        refreshing={refreshing && !this.state.searchBarFocused}
+        onRefresh={this.state.searchBarFocused ? () => {} : this.onRefresh}
       >
         <Section>
           {ticker.map(item =>

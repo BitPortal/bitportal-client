@@ -4,8 +4,10 @@ import { getErrorMessage } from 'utils'
 import * as actions from 'actions/account'
 import { updateEOSWalletAddress, updateEOSWalletAccounts } from 'actions/wallet'
 import { getKeyAccount } from 'actions/keyAccount'
+import { setSelected } from 'actions/producer'
 import { getAccount as getEOSAccount, getEOSKeyAccountsByPublicKey } from 'core/chain/eos'
 import { identityEOSWalletSelector } from 'selectors/wallet'
+import { managingAccountVotedProducersSelector } from 'selectors/account'
 import secureStorage from 'core/storage/secureStorage'
 import { pop } from 'utils/location'
 import * as api from 'utils/api'
@@ -16,6 +18,7 @@ function* getAccount(action: Action) {
   try {
     const chain = action.payload.chain
     const address = action.payload.address
+    const refreshProducer = action.payload.refreshProducer
 
     let id = `${chain}/${address}`
 
@@ -23,6 +26,11 @@ function* getAccount(action: Action) {
       const result = yield call(getEOSAccount, address)
       result.id = id
       yield put(actions.updateAccount(result))
+
+      if (refreshProducer) {
+        const votedProducers = yield select(state => managingAccountVotedProducersSelector(state))
+        yield put(setSelected(votedProducers))
+      }
     }
 
     yield put(actions.getAccount.succeeded())

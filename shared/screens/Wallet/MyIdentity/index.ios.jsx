@@ -59,7 +59,7 @@ export default class MyIdentity extends Component {
   deleteIdentity = (id) => {
     Alert.prompt(
       '请输入钱包密码',
-      null,
+      '删除身份后将删除该身份下的所有钱包数据，请务必确保所有钱包已备份。',
       [
         {
           text: '取消',
@@ -67,7 +67,8 @@ export default class MyIdentity extends Component {
           style: 'cancel'
         },
         {
-          text: '确认',
+          text: '删除',
+          style: 'destructive',
           onPress: password => this.props.actions.deleteIdentity.requested({
             password,
             id,
