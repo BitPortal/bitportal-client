@@ -43,8 +43,6 @@ import IdentityHeader from 'components/Header/IdentityHeader'
 import Market from 'screens/Market'
 import Welcome from 'screens/Welcome'
 import Wallet from 'screens/Wallet'
-import EOSAssets from 'screens/Wallet/EOSAssets'
-import ETHAssets from 'screens/Wallet/ETHAssets'
 import AddAssets from 'screens/Wallet/AddAssets'
 import Asset from 'screens/Wallet/Asset'
 import TransferAsset from 'screens/Wallet/TransferAsset'
@@ -141,8 +139,6 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.Welcome', () => Welcome, Provider, store)
 
   Navigation.registerComponentWithRedux('BitPortal.Wallet', () => Wallet, Provider, store)
-  Navigation.registerComponentWithRedux('BitPortal.EOSAssets', () => EOSAssets, PersistProvider, store)
-  Navigation.registerComponentWithRedux('BitPortal.ETHAssets', () => ETHAssets, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.AddAssets', () => AddAssets, Provider, store)
 
   Navigation.registerComponentWithRedux('BitPortal.Asset', () => Asset, Provider, store)

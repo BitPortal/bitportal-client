@@ -1,4 +1,8 @@
 rootProject.name = 'bitportal'
+include ':@react-native-community_viewpager'
+project(':@react-native-community_viewpager').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/viewpager/android')
+include ':react-native-recyclerview-list-android'
+project(':react-native-recyclerview-list-android').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-recyclerview-list-android/android')
 include ':react-native-gesture-handler'
 project(':react-native-gesture-handler').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-gesture-handler/android')
 include ':react-native-reanimated'
@@ -27,8 +31,6 @@ include ':react-native-qrcode-local-image'
 project(':react-native-qrcode-local-image').projectDir = new File(settingsDir, '../node_modules/@remobile/react-native-qrcode-local-image/android')
 include ':react-native-image-crop-picker'
 project(':react-native-image-crop-picker').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-image-crop-picker/android')
-include ':react-native-restart'
-project(':react-native-restart').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-restart/android')
 include ':react-native-device-info'
 project(':react-native-device-info').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-device-info/android')
 include ':react-native-version-number'
