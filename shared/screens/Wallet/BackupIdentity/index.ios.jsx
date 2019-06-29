@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
+import { injectIntl } from 'react-intl'
 import { View, ScrollView, Text, TouchableHighlight, Image, TextInput, Alert, ActivityIndicator, LayoutAnimation } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Navigation } from 'react-native-navigation'
@@ -51,6 +52,8 @@ const shuffleArray = (array) => {
 
   return array
 }
+
+@injectIntl
 
 @connect(
   state => ({
@@ -218,15 +221,15 @@ export default class BackupIdentity extends Component {
   }
 
   render() {
-    const { mnemonics, validateMnemonics } = this.props
+    const { intl, mnemonics, validateMnemonics } = this.props
     const loading = validateMnemonics.loading
 
     return (
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={{ flex: 1, alignItems: 'center' }}>
           <View style={{ marginBottom: 14 }}>
-            {(this.props.backup && !this.props.fromIdentity) && <Text style={{ fontSize: 26, fontWeight: 'bold' }}>备份助记词</Text>}
-            {(!this.props.backup || !!this.props.fromIdentity) && <Text style={{ fontSize: 26, fontWeight: 'bold' }}>备份身份</Text>}
+            {(this.props.backup && !this.props.fromIdentity) && <Text style={{ fontSize: 26, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'manage_wallet_title_backup_mnemonics' })}</Text>}
+            {(!this.props.backup || !!this.props.fromIdentity) && <Text style={{ fontSize: 26, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'manage_wallet_title_backup_identity' })}</Text>}
             {loading
              && (
                <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 0, right: -25 }}>
@@ -236,10 +239,10 @@ export default class BackupIdentity extends Component {
             }
           </View>
           {!this.state.validating && <Text style={{ fontSize: 17, marginBottom: 16, paddingLeft: 32, paddingRight: 32, lineHeight: 22, textAlign: 'center' }}>
-            请仔细抄写下方助记词，我们将在下一步验证。
+            {intl.formatMessage({ id: 'mnemonics_backup_hint_write_down' })}
           </Text>}
           {this.state.validating && <Text style={{ fontSize: 17, marginBottom: 16, paddingLeft: 32, paddingRight: 32, lineHeight: 22, textAlign: 'center' }}>
-            请按顺序点击助记词，已确认您正确备份。
+            {intl.formatMessage({ id: 'mnemonics_backup_hint_verify_by_click' })}
           </Text>}
           <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, marginTop: 50, minHeight: 72 }}>
             {!this.state.validating && <Text style={{ fontSize: 17, lineHeight: 28 }}>{mnemonics}</Text>}
@@ -283,7 +286,7 @@ export default class BackupIdentity extends Component {
         >
           {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14 }}>
-              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>助记词顺序正确</Text>
+              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'identity_backup_hint_mnemonics_order_correct' })}</Text>
             </View>
           </View>}
         </Modal>

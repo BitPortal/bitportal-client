@@ -106,10 +106,6 @@ export default class AddAssets extends Component {
   }
 
   searchBarUpdated({ text, isFocused }) {
-    if (this.tableViewRef) {
-      this.tableViewRef.scrollToIndex({ index: 0, section: 0, animated: true })
-    }
-
     if (isFocused) {
       this.props.actions.handleAssetSearchTextChange(text)
     } else {
@@ -129,17 +125,6 @@ export default class AddAssets extends Component {
 
   componentDidAppear() {
     // this.props.actions.getETHAssetRequested()
-    const { assets } = this.props
-
-    if (assets && assets.length) {
-      Navigation.mergeOptions(this.props.componentId, {
-        topBar: {
-          searchBar: true,
-          searchBarHiddenWhenScrolling: true,
-          searchBarPlaceholder: 'Search'
-        }
-      })
-    }
   }
 
   componentWillUnmount() {
@@ -194,8 +179,8 @@ export default class AddAssets extends Component {
 
     if ((getEOSAsset.loading || getETHAsset.loading) && !assets.length) {
       return (
-        <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-          <View>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <View style={{ marginTop: 80 }}>
             <ActivityIndicator size="small" color="#666666" />
             <Text style={{ marginTop: 10, color: '#666666' }}>加载资产</Text>
           </View>
@@ -237,7 +222,7 @@ export default class AddAssets extends Component {
         </TableView>
         <Modal
           isVisible={this.state.showModal}
-          backdropOpacity={0.4}
+          backdropOpacity={0}
           useNativeDriver
           animationIn="fadeIn"
           animationInTiming={200}
@@ -247,7 +232,7 @@ export default class AddAssets extends Component {
           backdropTransitionOutTiming={200}
         >
           {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14 }}>
+            <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
               {this.state.selecting && <Text style={{ fontSize: 17, fontWeight: 'bold' }}>添加中...</Text>}
               {this.state.unselecting && <Text style={{ fontSize: 17, fontWeight: 'bold' }}>取消添加中...</Text>}
             </View>

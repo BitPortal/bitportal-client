@@ -520,7 +520,7 @@ export default class TransferAsset extends Component {
           warning,
           '',
           [
-            { text: '确定', onPress: () => console.log('OK Pressed') }
+            { text: intl.formatMessage({ id: 'alert_button_confirm' }), onPress: () => console.log('OK Pressed') }
           ]
         )
         return
@@ -836,7 +836,7 @@ export default class TransferAsset extends Component {
       >
         <View style={{ flex: 1, width: '100%', alignItems: 'center', borderTopWidth: 0, borderBottomWidth: 0, borderColor: '#C8C7CC' }}>
           <Field
-            label="地址"
+            label={intl.formatMessage({ id: 'send_input_label_to_address' })}
             placeholder={`请输入${symbol}${chain === 'EOS' ? '账户名' : '地址'}`}
             name="toAddress"
             fieldName="toAddress"
@@ -853,7 +853,7 @@ export default class TransferAsset extends Component {
             showMemo={showMemo}
           />
           <Field
-            label="备注"
+            label={intl.formatMessage({ id: 'send_input_label_send_memo' })}
             placeholder={(selectedContact && !!selectedContact.memo) ? `选填，默认为: ${selectedContact.memo}` : '添加备注 (选填)'}
             name="memo"
             fieldName="memo"
@@ -864,7 +864,7 @@ export default class TransferAsset extends Component {
             separator
           />
           <Field
-            label="支付帐号"
+            label={intl.formatMessage({ id: 'send_input_label_payer_account' })}
             placeholder=""
             name="card"
             fieldName="card"
@@ -878,7 +878,7 @@ export default class TransferAsset extends Component {
             separator
           />
           <Field
-            label="金额"
+            label={intl.formatMessage({ id: 'send_input_label_send_amount' })}
             placeholder="00.00"
             name="amount"
             fieldName="amount"
@@ -891,7 +891,7 @@ export default class TransferAsset extends Component {
           {showMinnerFee && chain === 'BITCOIN' && <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16 }}>
             <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
               <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
-                <Text style={{ fontSize: 15 }}>矿工费</Text>
+                <Text style={{ fontSize: 15 }}>{intl.formatMessage({id: 'send_label_mining_fee'})}</Text>
                 <TouchableHighlight
                   underlayColor="white"
                   activeOpacity={0.42}
@@ -938,9 +938,9 @@ export default class TransferAsset extends Component {
             </View>}
           </View>}
           {showMinnerFee && chain === 'ETHEREUM' && <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16 }}>
-            <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+            <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
               <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
-                <Text style={{ fontSize: 15 }}>矿工费</Text>
+                <Text style={{ fontSize: 15 }}>{intl.formatMessage({ id: 'send_input_label_mining_fee' })}</Text>
                 <TouchableHighlight
                   underlayColor="white"
                   activeOpacity={0.42}
@@ -990,7 +990,7 @@ export default class TransferAsset extends Component {
             <View style={{ position: 'absolute', height: 0.5, top: 0, right: 16, left: 16, backgroundColor: '#C8C7CC' }} />
             <View style={{ width: '100%', height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: 16, paddingRight: 16 }}>
               <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <Text style={{ fontSize: 15 }}>高级设置</Text>
+                <Text style={{ fontSize: 15 }}>{intl.formatMessage({ id: 'send_toggle_advanced_setting' })}</Text>
                 {/* <TouchableHighlight
                     underlayColor="white"
                     activeOpacity={0.42}
@@ -1020,7 +1020,7 @@ export default class TransferAsset extends Component {
             </View>
             {this.state.showOPReturn && <Field
               label="opreturn"
-              placeholder="输入OP_RETURN 16进制Hex"
+              placeholder={intl.formatMessage({ id: 'send_input_placeholder_opreturn_hex' })}
               name="opreturn"
               fieldName="opreturn"
               component={TextField}
@@ -1037,7 +1037,7 @@ export default class TransferAsset extends Component {
               onPress={this.props.handleSubmit(this.submit)}
               style={{ backgroundColor: '#007AFF', borderRadius: 10, height: 50, alignItems: 'center', justifyContent: 'center' }}
             >
-              <Text style={{ textAlign: 'center', color: 'white', fontSize: 17 }}>发送</Text>
+              <Text style={{ textAlign: 'center', color: 'white', fontSize: 17 }}>{intl.formatMessage({ id: 'send_button_send' })}</Text>
             </TouchableHighlight>
           </View>
         </View>

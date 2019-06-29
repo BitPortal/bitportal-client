@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
+import { injectIntl } from 'react-intl'
 import {
   View,
   ScrollView,
@@ -70,7 +71,6 @@ const TextField = ({
       placeholder={placeholder}
       onChangeText={onChange}
       keyboardType="default"
-      autoCapitalize='none'
       secureTextEntry={secureTextEntry}
       {...restInput}
     />
@@ -152,6 +152,8 @@ const warn = (values) => {
   return warnings
 }
 
+@injectIntl
+
 @reduxForm({ form: 'recoverIdentityForm', validate, warn })
 
 @connect(
@@ -191,6 +193,11 @@ export default class RecoverIdentity extends Component {
     }
   }
 
+  constructor(props) {
+    super(props);
+    Navigation.events().bindComponent(this); // <== Will be automatically unregistered when unmounted
+  }
+
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
       nextProps.invalid !== prevState.invalid
@@ -210,7 +217,6 @@ export default class RecoverIdentity extends Component {
   }
 
   state = { invalid: true, pristine: true, loading: false, error: null }
-  subscription = Navigation.events().bindComponent(this)
 
   componentDidUpdate(prevProps, prevState) {
     if (
@@ -301,7 +307,7 @@ export default class RecoverIdentity extends Component {
   }
 
   render() {
-    const { recoverIdentity, formValues, change } = this.props
+    const { intl, recoverIdentity, formValues, change } = this.props
     const loading = recoverIdentity.loading
     const mnemonics = formValues && formValues.mnemonics
     const password = formValues && formValues.password
@@ -309,73 +315,73 @@ export default class RecoverIdentity extends Component {
 
     return (
       <SafeAreaView style={styles.container}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
-      >
-        <View style={{ flex: 1, alignItems: 'center' }}>
-          <View style={{ marginBottom: 14 }}>
-            <Text style={{ fontSize: 26, fontWeight: 'bold' }}>恢复身份</Text>
-            {loading
-             && (
-               <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 0, right: -25 }}>
-                 <ActivityIndicator size="small" color="#000000" />
-               </View>
-             )
-            }
-          </View>
-          <View style={{ marginBottom: 16, height: 22 }}>
-            {!loading && <Text style={{ fontSize: 17, paddingLeft: 32, paddingRight: 32, lineHeight: 22, textAlign: 'center' }}>
-              输入您的助记词和密码信息
-            </Text>}
-          </View>
-          <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
-            <Field
-              placeholder="输入助记词，用空格分隔"
-              name="mnemonics"
-              fieldName="mnemonics"
-              component={TextAreaField}
-              showClearButton={!!mnemonics && mnemonics.length > 0}
-              change={change}
-            />
-            <TouchableHighlight underlayColor="rgba(0,0,0,0)" onPress={this.scan.bind(this, 'mnemonics')} style={{ width: 30, height: 30, position: 'absolute', right: 16, top: 4 }} activeOpacity={0.42}>
-              <FastImage
-                source={require('resources/images/scan2_right.png')}
-                style={{ width: 30, height: 30 }}
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View style={{ flex: 1, alignItems: 'center' }}>
+            <View style={{ marginBottom: 14 }}>
+              <Text style={{ fontSize: 26, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'identity_recovery_title' })}</Text>
+              {loading
+              && (
+                <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 0, right: -25 }}>
+                  <ActivityIndicator size="small" color="#000000" />
+                </View>
+              )
+              }
+            </View>
+            <View style={{ marginBottom: 16, height: 22 }}>
+              {!loading && <Text style={{ fontSize: 17, paddingLeft: 32, paddingRight: 32, lineHeight: 22, textAlign: 'center' }}>
+                {intl.formatMessage({ id: 'identity_recovery_sub_title' })}
+              </Text>}
+            </View>
+            <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
+              <Field
+                placeholder={intl.formatMessage({ id: 'identity_recovery_placeholder_input_mnemonics' })}
+                name="mnemonics"
+                fieldName="mnemonics"
+                component={TextAreaField}
+                showClearButton={!!mnemonics && mnemonics.length > 0}
+                change={change}
               />
-            </TouchableHighlight>
+              <TouchableHighlight underlayColor="rgba(0,0,0,0)" onPress={this.scan.bind(this, 'mnemonics')} style={{ width: 30, height: 30, position: 'absolute', right: 16, top: 4 }} activeOpacity={0.42}>
+                <FastImage
+                  source={require('resources/images/scan2_right.png')}
+                  style={{ width: 30, height: 30 }}
+                />
+              </TouchableHighlight>
+            </View>
+            <View style={{ width: '100%', height: 56, paddingLeft: 16, paddingRight: 16, paddingTop: 8, paddingBottom: 8, justifyContent: 'flex-end' }}>
+              <Text style={{ fontSize: 13, color: '#666666' }}>{intl.formatMessage({ id: 'identity_recovery_sub_title_setting_passwd' })}</Text>
+            </View>
+            <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
+              <Field
+                label={intl.formatMessage({ id: 'identity_input_label_wallet_passwd' })}
+                placeholder={intl.formatMessage({ id: 'identity_input_placeholder_wallet_passwd' })}
+                name="password"
+                fieldName="password"
+                component={TextField}
+                showClearButton={!!password && password.length > 0}
+                change={change}
+                secureTextEntry
+                separator={true}
+              />
+              <Field
+                label={intl.formatMessage({ id: 'identity_input_label_passwd_hint' })}
+                placeholder={intl.formatMessage({ id: 'identity_input_placeholder_label_passwd_hint' })}
+                name="passwordHint"
+                fieldName="passwordHint"
+                component={TextField}
+                showClearButton={!!passwordHint && passwordHint.length > 0}
+                change={change}
+                separator={false}
+              />
+            </View>
+            <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
+              <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>{intl.formatMessage({ id: 'identity_recovery_hint_passwd_recovery_passwd' })}</Text>
+            </View>
           </View>
-          <View style={{ width: '100%', height: 56, paddingLeft: 16, paddingRight: 16, paddingTop: 8, paddingBottom: 8, justifyContent: 'flex-end' }}>
-            <Text style={{ fontSize: 13, color: '#666666' }}>设置密码</Text>
-          </View>
-          <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
-            <Field
-              label="钱包密码"
-              placeholder="不少于8位字符，建议混合大小写字母，数字，符号"
-              name="password"
-              fieldName="password"
-              component={TextField}
-              showClearButton={!!password && password.length > 0}
-              change={change}
-              secureTextEntry
-              separator={true}
-            />
-            <Field
-              label="密码提示"
-              placeholder="可选"
-              name="passwordHint"
-              fieldName="passwordHint"
-              component={TextField}
-              showClearButton={!!passwordHint && passwordHint.length > 0}
-              change={change}
-              separator={false}
-            />
-          </View>
-          <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
-            <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。</Text>
-          </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
       </SafeAreaView>
     )
   }

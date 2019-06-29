@@ -371,6 +371,7 @@ export default class ManageEOSResource extends Component {
   subscription = Navigation.events().bindComponent(this)
 
   navigationButtonPressed({ buttonId }) {
+    const { intl } = this.props
     if (buttonId === 'submit') {
       const { formSyncWarnings } = this.props
       if (typeof formSyncWarnings === 'object') {
@@ -405,16 +406,16 @@ export default class ManageEOSResource extends Component {
       Keyboard.dismiss()
 
       Alert.prompt(
-        '请输入钱包密码',
+        intl.formatMessage({ id: 'alert_input_wallet_password' }),
         null,
         [
           {
-            text: '取消',
+            text: intl.formatMessage({ id: 'alert_button_cancel' }),
             onPress: () => console.log('Cancel Pressed'),
             style: 'cancel'
           },
           {
-            text: '确认',
+            text: intl.formatMessage({ id: 'alert_button_confirm' }),
             onPress: (password) => {
               const accountName = this.props.account.account_name
               const chain = this.props.chain
