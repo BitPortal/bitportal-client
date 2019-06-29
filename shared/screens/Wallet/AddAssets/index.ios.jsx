@@ -132,12 +132,14 @@ export default class AddAssets extends Component {
     const { assets } = this.props
 
     if (assets && assets.length) {
-      Navigation.mergeOptions(this.props.componentId, {
-        topBar: {
-          searchBar: true,
-          searchBarHiddenWhenScrolling: true,
-          searchBarPlaceholder: 'Search'
-        }
+      setTimeout(() => {
+        Navigation.mergeOptions(this.props.componentId, {
+          topBar: {
+            searchBar: true,
+            searchBarHiddenWhenScrolling: true,
+            searchBarPlaceholder: 'Search'
+          }
+        })
       })
     }
   }
