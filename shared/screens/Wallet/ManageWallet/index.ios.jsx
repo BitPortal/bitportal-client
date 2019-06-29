@@ -6,6 +6,8 @@ import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 import * as walletActions from 'actions/wallet'
 import * as producerActions from 'actions/producer'
+import * as balanceActions from 'actions/balance'
+import * as accountActions from 'actions/account'
 import { accountByIdSelector, managingAccountVotedProducersSelector } from 'selectors/account'
 import { managingWalletSelector } from 'selectors/wallet'
 import Modal from 'react-native-modal'
@@ -46,7 +48,9 @@ export const errorMessages = (error, messages) => {
   dispatch => ({
     actions: bindActionCreators({
       ...walletActions,
-      ...producerActions
+      ...producerActions,
+      ...balanceActions,
+      ...accountActions
     }, dispatch)
   })
 )
@@ -73,6 +77,20 @@ export default class ManageWallet extends Component {
   componentDidAppear() {
     if (this.props.fromCard) {
       this.props.actions.setActiveWallet(this.props.wallet.id)
+    }
+  }
+
+  componentDidMount() {
+    const { chain, address } = this.props.wallet
+
+    if (chain === 'EOS') {
+      this.props.actions.getBalance.requested(this.props.wallet)
+
+      const account = this.props.account[`${chain}/${address}`]
+
+      if (!account && address && chain) {
+        this.props.actions.getAccount.requested({ chain, address })
+      }
     }
   }
 

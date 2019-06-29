@@ -8,6 +8,7 @@ import * as api from 'utils/api'
 
 function* getTicker(action: Action) {
   try {
+    // yield delay(8000)
     const result = yield call(api.getTicker)
     yield put(actions.updateTicker(result))
     yield put(actions.getTicker.succeeded())

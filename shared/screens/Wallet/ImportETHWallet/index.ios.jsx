@@ -13,7 +13,8 @@ import {
   Keyboard,
   Alert,
   ActivityIndicator,
-  ActionSheetIOS
+  ActionSheetIOS,
+  SafeAreaView
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Navigation } from 'react-native-navigation'
@@ -467,6 +468,7 @@ export default class ImportETHWallet extends Component {
     const path = formValues && formValues.path
 
     return (
+      <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <View style={{ height: 52, width: '100%', justifyContent: 'center', paddingTop: 5, paddingBottom: 13, paddingLeft: 16, paddingRight: 16, backgroundColor: '#F7F7F7', borderColor: '#C8C7CC', borderBottomWidth: 0.5 }}>
           <SegmentedControlIOS
@@ -627,6 +629,7 @@ export default class ImportETHWallet extends Component {
           </View>}
         </Modal>
       </View>
+      </SafeAreaView>
     )
   }
 }

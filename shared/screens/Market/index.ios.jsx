@@ -32,10 +32,7 @@ export default class Market extends Component {
       topBar: {
         title: {
           text: '行情'
-        },
-        searchBar: true,
-        searchBarHiddenWhenScrolling: true,
-        searchBarPlaceholder: 'Search'
+        }
       }
     }
   }
@@ -44,19 +41,25 @@ export default class Market extends Component {
 
   state = {
     getTickerLoading: false,
+    getTickerLoaded: false,
     getTickerError: false,
     tickerCount: 0,
-    searchBarFocused: false
+    searchBarFocused: false,
+    canRefresh: false
   }
+
+  tableViewRef = React.createRef()
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
       nextProps.getTicker.loading !== prevState.getTickerLoading
+      || nextProps.getTicker.loaded !== prevState.getTickerLoaded
       || nextProps.getTicker.error !== prevState.getTickerError
       || (nextProps.ticker && nextProps.ticker.length) !== prevState.tickerCount
     ) {
       return {
         getTickerLoading: nextProps.getTicker.loading,
+        getTickerLoaded: nextProps.getTicker.loaded,
         getTickerError: nextProps.getTicker.error,
         tickerCount: (nextProps.ticker && nextProps.ticker.length)
       }
@@ -67,6 +70,10 @@ export default class Market extends Component {
 
   searchBarUpdated({ text, isFocused }) {
     this.setState({ searchBarFocused: isFocused })
+
+    if (this.tableViewRef) {
+      this.tableViewRef.scrollToIndex({ index: 0, section: 0, animated: true })
+    }
 
     if (isFocused) {
       this.props.actions.handleTickerSearchTextChange(text)
@@ -85,22 +92,35 @@ export default class Market extends Component {
 
   componentDidAppear() {
     this.props.actions.getTicker.requested()
+    // const { ticker } = this.props
+
+    /* if (ticker && ticker.length) {
+     *   setTimeout(() => {
+     *     Navigation.mergeOptions(this.props.componentId, {
+     *       topBar: {
+     *         searchBar: true,
+     *         searchBarHiddenWhenScrolling: true,
+     *         searchBarPlaceholder: 'Search'
+     *       }
+     *     })
+     *   })
+     * }*/
+
+    this.setState({ canRefresh: true })
   }
 
   componentDidUpdate(prevProps, prevState) {
-    /* if (
-     *   prevState.getTickerLoading !== this.state.getTickerLoading
-     *   || prevState.getTickerError !== this.state.getTickerError
-     *   || prevState.tickerCount !== this.state.tickerCount
-     * ) {
-     *   Navigation.mergeOptions(this.props.componentId, {
-     *     topBar: {
-     *       searchBar: !(this.state.getTickerLoading && !this.state.tickerCount),
-     *       searchBarHiddenWhenScrolling: true,
-     *       searchBarPlaceholder: 'Search'
-     *     }
-     *   })
-     * }*/
+    if (this.state.getTickerLoaded) {
+      setTimeout(() => {
+        Navigation.mergeOptions(this.props.componentId, {
+          topBar: {
+            searchBar: true,
+            searchBarHiddenWhenScrolling: true,
+            searchBarPlaceholder: 'Search'
+          }
+        })
+      })
+    }
   }
 
   render() {
@@ -121,9 +141,10 @@ export default class Market extends Component {
 
     return (
       <TableView
+        ref={(ref) => { this.tableViewRef = ref }}
         style={{ flex: 1, backgroundColor: 'white' }}
-        canRefresh
-        refreshing={refreshing && !this.state.searchBarFocused}
+        canRefresh={!this.state.searchBarFocused && this.state.getTickerLoaded && this.state.canRefresh}
+        refreshing={refreshing && !this.state.searchBarFocused && this.state.getTickerLoaded}
         onRefresh={this.state.searchBarFocused ? () => {} : this.onRefresh}
       >
         <Section>

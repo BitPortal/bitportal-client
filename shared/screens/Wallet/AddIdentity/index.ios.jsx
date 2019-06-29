@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { View, Text, TouchableOpacity, Image, SafeAreaView } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Navigation } from 'react-native-navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
@@ -97,7 +97,7 @@ export default class AddIdentity extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View
           style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
         >
@@ -122,7 +122,7 @@ export default class AddIdentity extends Component {
             <Text style={[styles.buttonText, { color: '#007AFF' }]}>恢复身份</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </SafeAreaView>
     )
   }
 }

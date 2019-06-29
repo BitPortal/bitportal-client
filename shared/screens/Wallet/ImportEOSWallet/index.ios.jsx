@@ -12,7 +12,8 @@ import {
   TouchableHighlight,
   Keyboard,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
+  SafeAreaView
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Navigation } from 'react-native-navigation'
@@ -354,6 +355,7 @@ export default class ImportEOSWallet extends Component {
     const passwordHint = formValues && formValues.passwordHint
 
     return (
+      <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
           <View style={{ flex: 1, alignItems: 'center' }}>
@@ -428,6 +430,7 @@ export default class ImportEOSWallet extends Component {
           </View>}
         </Modal>
       </View>
+      </SafeAreaView>
     )
   }
 }

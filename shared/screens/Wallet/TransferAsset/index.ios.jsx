@@ -17,7 +17,8 @@ import {
   ActionSheetIOS,
   Switch,
   Animated,
-  Easing
+  Easing,
+  SafeAreaView
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import TableView from 'react-native-tableview'
@@ -348,7 +349,7 @@ const CardField = ({
             style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: iconUrl ? 'white' : 'rgba(0,0,0,0)', borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
           />
         </View>
-        <FastImage source={assetIcons[chain.toLowerCase()]} style={{ position: 'absolute', right: -8, bottom: 0, width: 20, height: 20, borderRadius: 10, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }} />
+        <FastImage source={assetIcons[chain.toLowerCase()]} style={{ position: 'absolute', right: -4, bottom: 0, width: 16, height: 16, borderRadius: 8, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }} />
       </View>}
       <View>
         <Text style={{ fontSize: 17 }}>{formatAddress(address)}</Text>
@@ -828,13 +829,14 @@ export default class TransferAsset extends Component {
     const useGasPrice = this.state.useGasPrice || this.state.initialGwei || this.state.ethGasPrice || 4.00
 
     return (
+      <SafeAreaView style={{flex: 1 }}>
       <ScrollView
         style={[styles.container, { backgroundColor: 'white' }]}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{ backgroundColor: 'white' }}
       >
-        <View style={{ flex: 1, width: '100%', alignItems: 'center', borderTopWidth: 0, borderBottomWidth: 0, borderColor: '#C8C7CC' }}>
+          <View style={{ flex: 1, width: '100%', alignItems: 'center', borderTopWidth: 0, borderBottomWidth: 0, borderColor: '#C8C7CC', justifyContent: "flex-end" }}>
           <Field
             label="地址"
             placeholder={`请输入${symbol}${chain === 'EOS' ? '账户名' : '地址'}`}
@@ -1040,6 +1042,7 @@ export default class TransferAsset extends Component {
               <Text style={{ textAlign: 'center', color: 'white', fontSize: 17 }}>发送</Text>
             </TouchableHighlight>
           </View>
+          <View style={{ flex: 1 }} />
         </View>
         <Modal
           isVisible={this.state.selectContact}
@@ -1111,6 +1114,7 @@ export default class TransferAsset extends Component {
           </View>}
         </Modal>
       </ScrollView>
+      </SafeAreaView>
     )
   }
 }

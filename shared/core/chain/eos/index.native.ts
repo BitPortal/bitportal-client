@@ -212,8 +212,8 @@ export const transfer = async (
   const keyPairs = await walletCore.exportPrivateKeys(password, keystore)
   const permissionKey = await selectKeysForPermission(keyPairs, fromAccount, permissions, permission)
   const keyProvider = permissionKey.keys
-  const eos = await initEOS({ keyProvider })
-  const data = await eos.transaction({
+  const eosAPI = await initEOS({ keyProvider })
+  const data = await eosAPI.transaction({
     actions: [{
       account: contract,
       name: 'transfer',
@@ -247,8 +247,8 @@ export const vote = async (
   const keyPairs = await walletCore.exportPrivateKeys(password, keystore)
   const permissionKey = await selectKeysForPermission(keyPairs, accountName, permissions, permission)
   const keyProvider = permissionKey.keys
-  const eos = await initEOS({ keyProvider })
-  const data = await eos.transaction({
+  const eosAPI = await initEOS({ keyProvider })
+  const data = await eosAPI.transaction({
     actions: [{
       account: 'eosio',
       name: 'voteproducer',
@@ -281,8 +281,8 @@ export const buyRAM = async (
   const keyPairs = await walletCore.exportPrivateKeys(password, keystore)
   const permissionKey = await selectKeysForPermission(keyPairs, accountName, permissions, permission)
   const keyProvider = permissionKey.keys
-  const eos = await initEOS({ keyProvider })
-  const data = await eos.transaction({
+  const eosAPI = await initEOS({ keyProvider })
+  const data = await eosAPI.transaction({
     actions: [{
       account: 'eosio',
       name: 'buyram',
@@ -315,8 +315,8 @@ export const sellRAM = async (
   const keyPairs = await walletCore.exportPrivateKeys(password, keystore)
   const permissionKey = await selectKeysForPermission(keyPairs, accountName, permissions, permission)
   const keyProvider = permissionKey.keys
-  const eos = await initEOS({ keyProvider })
-  const data = await eos.transaction({
+  const eosAPI = await initEOS({ keyProvider })
+  const data = await eosAPI.transaction({
     actions: [{
       account: 'eosio',
       name: 'sellram',
@@ -349,8 +349,8 @@ export const delagateBW = async (
   const keyPairs = await walletCore.exportPrivateKeys(password, keystore)
   const permissionKey = await selectKeysForPermission(keyPairs, accountName, permissions, permission)
   const keyProvider = permissionKey.keys
-  const eos = await initEOS({ keyProvider })
-  const data = await eos.transaction({
+  const eosAPI = await initEOS({ keyProvider })
+  const data = await eosAPI.transaction({
     actions: [{
       account: 'eosio',
       name: 'delegatebw',
@@ -386,8 +386,8 @@ export const undelagateBW = async (
   const keyPairs = await walletCore.exportPrivateKeys(password, keystore)
   const permissionKey = await selectKeysForPermission(keyPairs, accountName, permissions, permission)
   const keyProvider = permissionKey.keys
-  const eos = await initEOS({ keyProvider })
-  const data = await eos.transaction({
+  const eosAPI = await initEOS({ keyProvider })
+  const data = await eosAPI.transaction({
     actions: [{
       account: 'eosio',
       name: 'undelegatebw',

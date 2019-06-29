@@ -30,3 +30,7 @@ export const setExtraLocale = (locale: Locale) => {
 export const showModal = (options: any) => {
   Navigation.showModal(options)
 }
+
+export const mergeOptions = (componentId: string, options: any) => {
+  Navigation.mergeOptions(componentId, options)
+}

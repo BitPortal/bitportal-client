@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, Text, TouchableHighlight } from 'react-native'
+import { View, Text, TouchableHighlight, NativeModules, StatusBarIOS, SafeAreaView } from 'react-native'
 import { injectIntl } from 'react-intl'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
@@ -19,6 +19,7 @@ import * as balanceActions from 'actions/balance'
 import { assetIcons } from 'resources/images'
 import chainxAccount from '@chainx/account'
 import styles from './styles'
+const { StatusBarManager } = NativeModules
 const { Section, Item } = TableView
 
 @injectIntl
@@ -60,6 +61,10 @@ export default class Asset extends Component {
   }
 
   subscription = Navigation.events().bindComponent(this)
+
+  state = {
+    statusBarHeight: 0
+  }
 
   toTransferAsset = () => {
     Navigation.showModal({
@@ -145,6 +150,21 @@ export default class Asset extends Component {
     const contract = activeAsset.contract
     const assetSymbol = activeAsset.symbol
     this.props.actions.getTransactions.requested({ ...this.props.activeWallet, contract, assetSymbol })
+
+    StatusBarManager.getHeight(response =>
+      this.setState({ statusBarHeight: response.height })
+    )
+
+    this.listener = StatusBarIOS.addListener('statusBarFrameWillChange',
+      (statusBarData) =>
+        this.setState({ statusBarHeight: statusBarData.frame.height })
+    )
+  }
+
+  componentWillUnmount () {
+    if (this.listener) {
+      this.listener.remove()
+    }
   }
 
   toTransactionDetail = (id, pending, failed) => {
@@ -259,8 +279,9 @@ export default class Asset extends Component {
     }
 
     return (
+      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <View style={{ flex: 1, backgroundColor: 'white' }}>
-        <View style={{ justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#F7F7F7', height: 180 + +statusBarHeight + 52, paddingTop: +statusBarHeight + 44 + 52 }}>
+        <View style={{ justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#F7F7F7', height: 136 }}>
           <View style={{ width: '100%', justifyContent: 'space-between', alignItems: 'flex-start', flexDirection: 'row', paddingRight: 16, paddingLeft: 16 }}>
             <View style={{ justifyContent: 'center', alignItems: 'flex-start', width: '60%' }}>
               <Text style={{ fontSize: 26, fontWeight: '500' }}>{balance && intl.formatNumber(balance.balance, { minimumFractionDigits: balance.precision, maximumFractionDigits: balance.precision })}</Text>
@@ -340,6 +361,7 @@ export default class Asset extends Component {
         </TableView>
         )}
       </View>
+      </SafeAreaView>
     )
   }
 }

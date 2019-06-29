@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, ScrollView, ActionSheetIOS, Alert, Text, ActivityIndicator, Animated, TextInput, TouchableHighlight, Image, Keyboard, LayoutAnimation } from 'react-native'
+import { View, ScrollView, ActionSheetIOS, Alert, Text, ActivityIndicator, Animated, TextInput, TouchableHighlight, Image, Keyboard, LayoutAnimation,
+  SafeAreaView } from 'react-native'
 import { Field, reduxForm, getFormValues, getFormSyncWarnings } from 'redux-form'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
@@ -476,7 +477,7 @@ export default class MyIdentity extends Component {
     const description = formValues && formValues.description
 
     return (
-      <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
         <View style={{ width: '100%', height: 0.5, backgroundColor: 'rgba(0,0,0,0)' }} />
         <ScrollView
           style={{ flex: 1, backgroundColor: 'white' }}
@@ -654,7 +655,7 @@ export default class MyIdentity extends Component {
         </TouchableHighlight>
           </View>
       </ScrollView>
-      </View>
+      </SafeAreaView>
     )
   }
 }

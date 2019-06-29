@@ -63,25 +63,23 @@ const WalletTableViewCell = (props) => {
   return (
     <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16 }}>
       <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-        <FastImage
-          source={walletIcons[props.data.chain.toLowerCase()]}
-          style={{
-            width: 40,
-            height: 40,
-            borderRadius: 10,
-            borderWidth: 0.5,
-            borderColor: 'rgba(0,0,0,0.2)',
-            backgroundColor: 'white',
-            marginRight: 10
-          }}
-        />
+        <View style={{ width: 40, height: 40, marginRight: 10 }}>
+          <FastImage
+            source={walletIcons[props.data.chain.toLowerCase()]}
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 10,
+              borderWidth: 0.5,
+              borderColor: 'rgba(0,0,0,0.2)',
+              backgroundColor: 'white'
+            }}
+          />
+          {props.data.isSelected && <Image source={require('resources/images/active_circle.png')} style={{ width: 16, height: 16, position: 'absolute', left: -4, top: -4, borderRadius: 8, backgroundColor: 'white' }} />}
+        </View>
         <View style={{ flex: 1, height: 44, borderWidth: 0, borderColor: 'red', justifyContent: 'space-between' }}>
           <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
             <Text style={{ fontSize: 17, color: 'black' }}>{props.data.name}</Text>
-            {props.data.isSelected && <Image
-              source={require('resources/images/selected.png')}
-              style={{ width: 16, height: 16, marginLeft: 5 }}
-            />}
           </View>
           <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
             {!!props.data.symbol && <View style={{ marginRight: 5, paddingHorizontal: 4, borderRadius: 4, borderWidth: 1, borderColor: '#666666', aligtnItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, Text, ScrollView, Dimensions, LayoutAnimation, TouchableHighlight, ActivityIndicator, Alert } from 'react-native'
+import { View, Text, ScrollView, Dimensions, LayoutAnimation, TouchableHighlight, ActivityIndicator, Alert, SafeAreaView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 import FastImage from 'react-native-fast-image'
@@ -68,10 +68,12 @@ export default class Voting extends Component {
     return {
       topBar: {
         title: {
-          text: 'EOS节点投票'
+          text: 'EOS节点投票',
+          fontWeight: '400'
         },
         subtitle: {
-          text: '0 / 30 已选'
+          text: '0 / 30 已选',
+          fontSize: 11
         },
         drawBehind: false,
         searchBar: true,
@@ -191,7 +193,8 @@ export default class Voting extends Component {
       Navigation.mergeOptions(this.props.componentId, {
         topBar: {
           subtitle: {
-            text: `${this.props.selectedIds.length} / 30 已选`
+            text: `${this.props.selectedIds.length} / 30 已选`,
+            fontSize: 11
           },
           rightButtons: [
             {
@@ -204,9 +207,11 @@ export default class Voting extends Component {
         }
       })
 
-      if (this.scrollView && prevProps.selectedIds.length < this.props.selectedIds.length && this.props.selectedIds.length > 4) {
-        this.scrollView.scrollTo({ x: (Dimensions.get('window').width / 4) * this.props.selectedIds.length - Dimensions.get('window').width, animated: true })
-      }
+      setTimeout(() => {
+        if (this.scrollView && prevProps.selectedIds.length < this.props.selectedIds.length && this.props.selectedIds.length > 4) {
+          this.scrollView.scrollToEnd({ animated: true })
+        }
+      })
     }
     LayoutAnimation.easeInEaseOut()
   }
@@ -215,7 +220,8 @@ export default class Voting extends Component {
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
         subtitle: {
-          text: `${this.props.selectedIds.length} / 30 已选`
+          text: `${this.props.selectedIds.length} / 30 已选`,
+          fontSize: 11
         },
         rightButtons: [
           {
@@ -232,9 +238,9 @@ export default class Voting extends Component {
   componentDidMount() {
     this.props.actions.getProducer.requested({ json: true, limit: 500 })
 
-    if (!this.props.account && this.props.wallet.address && this.props.wallet.chain) {
-      this.props.actions.getAccount.requested({ chain: this.props.wallet.chain, address: this.props.wallet.address, refreshProducer: true })
-    }
+    /* if (!this.props.account && this.props.wallet.address && this.props.wallet.chain) {
+     *   this.props.actions.getAccount.requested({ chain: this.props.wallet.chain, address: this.props.wallet.address, refreshProducer: true })
+     * }*/
   }
 
   componentWillUnmount() {
@@ -294,6 +300,7 @@ export default class Voting extends Component {
     }
 
     return (
+      <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <View style={{ width: '100%', height: selectedIds.length ? 80 : 0 }}>
           <ScrollView
@@ -401,6 +408,7 @@ export default class Voting extends Component {
           </View>}
         </Modal>
       </View>
+      </SafeAreaView>
     )
   }
 }

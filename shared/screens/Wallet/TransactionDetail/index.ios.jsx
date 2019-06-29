@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, ScrollView, ActionSheetIOS, Alert, Text, ActivityIndicator, Animated, Image, TouchableHighlight, Clipboard, RefreshControl } from 'react-native'
+import { View, ScrollView, ActionSheetIOS, Alert, Text, ActivityIndicator, Animated, Image, TouchableHighlight, Clipboard, RefreshControl, SafeAreaView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 import * as identityActions from 'actions/identity'
@@ -113,6 +113,7 @@ export default class TransactionDetail extends Component {
 
     if (transaction && chain === 'EOS') {
       return (
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
         <ScrollView
           style={{ flex: 1, backgroundColor: 'white' }}
           contentContainerStyle={{ backgroundColor: 'white' }}
@@ -202,9 +203,11 @@ export default class TransactionDetail extends Component {
             </View>}
           </Modal>
         </ScrollView>
+        </SafeAreaView>
       )
     } else if (transaction && chain === 'ETHEREUM') {
       return (
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
         <ScrollView
           style={{ flex: 1, backgroundColor: 'white' }}
           contentContainerStyle={{ backgroundColor: 'white' }}
@@ -301,9 +304,11 @@ export default class TransactionDetail extends Component {
             </View>}
           </Modal>
         </ScrollView>
+        </SafeAreaView>
       )
     } else if (transaction && chain === 'BITCOIN') {
       return (
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
         <ScrollView
           style={{ flex: 1, backgroundColor: 'white' }}
           contentContainerStyle={{ backgroundColor: 'white' }}
@@ -395,9 +400,11 @@ export default class TransactionDetail extends Component {
             </View>}
           </Modal>
         </ScrollView>
+        </SafeAreaView>
       )
     } else if (transaction && chain === 'CHAINX') {
       return (
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
         <ScrollView
           style={{ flex: 1, backgroundColor: 'white' }}
           contentContainerStyle={{ backgroundColor: 'white' }}
@@ -489,6 +496,7 @@ export default class TransactionDetail extends Component {
             </View>}
           </Modal>
         </ScrollView>
+        </SafeAreaView>
       )
     }
 

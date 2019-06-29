@@ -23,10 +23,7 @@ const HeaderTableViewCell = (props) => {
             topBar: {
               title: {
                 text: `添加${symbol}资产`
-              },
-              searchBar: true,
-              searchBarHiddenWhenScrolling: true,
-              searchBarPlaceholder: 'Search'
+              }
             }
           }
         }

@@ -16,7 +16,8 @@ import {
   Dimensions,
   Clipboard,
   ActionSheetIOS,
-  SegmentedControlIOS
+  SegmentedControlIOS,
+  SafeAreaView
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { activeWalletSelector } from 'selectors/wallet'
@@ -201,7 +202,7 @@ export default class ReceiveAsset extends Component {
   }
 
   render() {
-    const { activeWallet, activeAsset, balance, intl, childAddress, statusBarHeight } = this.props
+    const { activeWallet, activeAsset, balance, intl, childAddress } = this.props
     const symbol = activeAsset.symbol
     const chain = activeWallet.chain
     const available = balance && intl.formatNumber(balance.balance, { minimumFractionDigits: balance.precision, maximumFractionDigits: balance.precision })
@@ -211,8 +212,9 @@ export default class ReceiveAsset extends Component {
     const addressUri = this.getAddressUri(!this.state.selectedIndex ? address : childAddress, this.state.amount, chain, contract, symbol)
 
     return (
+      <SafeAreaView style={{ flex: 1 }}>
       <View style={[styles.container, { backgroundColor: 'white' }]}>
-        {hasChildAddress && chain === 'BITCOIN' && <View style={{ height: 52, width: '100%', justifyContent: 'center', paddingTop: 5, paddingBottom: 13, paddingLeft: 16, paddingRight: 16, backgroundColor: '#F7F7F7', borderColor: '#C8C7CC', borderBottomWidth: 0.5, marginTop: statusBarHeight + 44 }}>
+        {hasChildAddress && chain === 'BITCOIN' && <View style={{ height: 52, width: '100%', justifyContent: 'center', paddingTop: 5, paddingBottom: 13, paddingLeft: 16, paddingRight: 16, backgroundColor: '#F7F7F7', borderColor: '#C8C7CC', borderBottomWidth: 0.5 }}>
           <SegmentedControlIOS
             values={['主地址', '子地址']}
             selectedIndex={this.state.selectedIndex}
@@ -278,6 +280,7 @@ export default class ReceiveAsset extends Component {
         </View>}
       </Modal>
       </View>
+      </SafeAreaView>
     )
   }
 }

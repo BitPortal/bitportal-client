@@ -11746,9 +11746,10 @@ react-native-extended-stylesheet@^0.8.0:
     css-mediaquery "^0.1.2"
     object-resolve-path "^1.1.0"
 
-"react-native-fast-image@git+https://github.com/TerenceGe/react-native-fast-image.git":
-  version "5.0.13"
-  resolved "git+https://github.com/TerenceGe/react-native-fast-image.git#764ad41c9e286b5bbd2c56423fff2829cc8605dc"
+react-native-fast-image@^6.0.5:
+  version "6.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-6.0.5.tgz#c0b55bedd53571fa0850caaa256b5fad68c44487"
+  integrity sha512-xtEB/pA+jiJGdTi8eI7MKEV4cejqhf/ydt5r8EhU78YFDtppbxctNn8CBynNvlRpUjJIzVbVyggFxvZG6T2exQ==
 
 react-native-fs@^2.11.17:
   version "2.13.3"

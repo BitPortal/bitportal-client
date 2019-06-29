@@ -31,8 +31,6 @@ export default class Profile extends Component {
 
   subscription = Navigation.events().bindComponent(this)
 
-  state = { showView: true }
-
   toLanguageSetting = () => {
     Navigation.push(this.props.componentId, {
       component: {
@@ -168,7 +166,7 @@ export default class Profile extends Component {
   }
 
   componentDidAppear() {
-    this.setState({ showView: true })
+
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -178,8 +176,6 @@ export default class Profile extends Component {
   render() {
     const { identity, locale, currencySymbol, intl } = this.props
     const hasIdentity = !!identity.id
-
-    if (!this.state.showView) return null
 
     return (
       <TableView

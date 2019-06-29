@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { injectIntl, FormattedMessage } from 'react-intl'
-import { View, Text, Clipboard, ActivityIndicator, TouchableHighlight } from 'react-native'
+import { View, Text, Clipboard, ActivityIndicator, TouchableHighlight, Image } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 // import FastImage from 'react-native-fast-image'
@@ -32,6 +32,7 @@ import { formatCycleTime, formatMemorySize } from 'utils/format'
 import Sound from 'react-native-sound'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 import * as api from 'utils/api'
+import Profile from 'screens/Profile'
 
 import styles from './styles'
 const { Section, Item, CollectionView, CollectionViewItem } = TableView
@@ -45,6 +46,35 @@ const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
 
   console.log(`duration in seconds: ${copySound.getDuration()}number of channels: ${copySound.getNumberOfChannels()}`)
 })
+
+const PreloadedImages = () => (
+  <View style={{ position: 'absolute', left: -30, bottom: -30, width: 30, height: 30 }}>
+    <Image
+      source={require('resources/images/Userpic.png')}
+      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
+    />
+    <Image
+      source={require('resources/images/addressBookSetting.png')}
+      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
+    />
+    <Image
+      source={require('resources/images/CurrencySetting.png')}
+      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
+    />
+    <Image
+      source={require('resources/images/languageSetting.png')}
+      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
+    />
+    <Image
+      source={require('resources/images/helpCenterSetting.png')}
+      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
+    />
+    <Image
+      source={require('resources/images/abountUsSetting.png')}
+      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
+    />
+  </View>
+)
 
 @injectIntl
 
@@ -146,6 +176,8 @@ export default class Wallet extends Component {
     this.props.actions.scanIdentity.requested()
     this.props.actions.getTicker.requested()
     SplashScreen.hide()
+    KeyboardManager.setEnable(true)
+    KeyboardManager.setPreventShowingBottomBlankSpace(true)
     KeyboardManager.setToolbarDoneBarButtonItemText('完成')
     KeyboardManager.setToolbarPreviousNextButtonEnable(true)
     this.props.actions.setSelectedContact(null)
@@ -440,6 +472,7 @@ export default class Wallet extends Component {
             <ActivityIndicator size="small" color="#666666" />
             <Text style={{ marginTop: 10, color: '#666666' }}>加载钱包</Text>
           </View>
+          <PreloadedImages />
         </View>
       )
     }
@@ -457,6 +490,7 @@ export default class Wallet extends Component {
               </View>
             </TouchableHighlight>
           </View>
+          <PreloadedImages />
         </View>
       )
     }
@@ -616,6 +650,7 @@ export default class Wallet extends Component {
           </Section>
           {!!balance && (<Section headerHeight={0} uid="AssetBalanceTableViewCell" canEdit={!this.state.switching}>{assetItems}</Section>)}
         </TableView>
+        <PreloadedImages />
         <Modal
           isVisible={this.state.showModal}
           backdropOpacity={0}

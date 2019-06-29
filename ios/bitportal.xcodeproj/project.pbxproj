@@ -26,7 +26,6 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.mm */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		16554D4DB14148ABAB07206C /* libRCTRestart.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2959798F19F74958BA6F1982 /* libRCTRestart.a */; };
 		16E64946D5354C92BAF56AD2 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E378031D0A07409DB9E63E29 /* libRNSVG.a */; };
 		1808822A2135447300321418 /* NativeUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 180882292135447300321418 /* NativeUtils.m */; };
 		181BFEAA2129819400810CE2 /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18524C732125544300004FBC /* QBImagePicker.framework */; };
@@ -1075,7 +1074,6 @@
 				6EB423FA09184B7CB887CA2C /* libReactNativeKeyboardManager.a in Frameworks */,
 				8A6C70F270AA4DC4A9C3D4A6 /* libRNSound.a in Frameworks */,
 				72652B92899FFD553E8770B5 /* Pods_bitportal.framework in Frameworks */,
-				16554D4DB14148ABAB07206C /* libRCTRestart.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

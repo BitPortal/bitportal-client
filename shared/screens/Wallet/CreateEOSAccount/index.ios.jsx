@@ -13,7 +13,8 @@ import {
   Alert,
   ActivityIndicator,
   Dimensions,
-  Clipboard
+  Clipboard,
+  SafeAreaView
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Navigation } from 'react-native-navigation'
@@ -401,6 +402,7 @@ export default class CreateEOSAccount extends Component {
     const qrValue = { account: accountName, active: wallet.publicKeys[0], owner: wallet.publicKeys[0], blockchain: 'eos' }
 
     return (
+      <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <View style={{ height: 52, width: '100%', justifyContent: 'center', paddingTop: 5, paddingBottom: 13, paddingLeft: 16, paddingRight: 16, backgroundColor: '#F7F7F7', borderColor: '#C8C7CC', borderBottomWidth: 0.5 }}>
           <SegmentedControlIOS
@@ -575,6 +577,7 @@ export default class CreateEOSAccount extends Component {
           </View>}
         </Modal>
       </View>
+      </SafeAreaView>
     )
   }
 }
