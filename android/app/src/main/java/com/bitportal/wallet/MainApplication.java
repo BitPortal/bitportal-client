@@ -2,7 +2,6 @@ package com.bitportal.wallet;
 
 import com.remobile.qrcodeLocalImage.RCTQRCodeLocalImagePackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
-import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import com.facebook.react.ReactNativeHost;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.apsl.versionnumber.RNVersionNumberPackage;
@@ -30,6 +29,11 @@ import cn.jpush.android.api.JPushInterface;
 import com.github.alinz.reactnativewebviewbridge.WebViewBridgePackage;
 import com.rnfs.RNFSPackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
+import com.swmansion.reanimated.ReanimatedPackage;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import com.github.godness84.RNRecyclerViewList.RNRecyclerviewListPackage;
+import com.reactnativecommunity.viewpager.RNCViewPagerPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -72,7 +76,6 @@ public class MainApplication extends NavigationApplication {
       new BlurViewPackage(),
       new RNVersionNumberPackage(),
       new RNDeviceInfo(),
-      new ReactNativeRestartPackage(),
       new PickerPackage(),
       new RCTQRCodeLocalImagePackage(),
       new DplusReactPackage(),
@@ -80,7 +83,12 @@ public class MainApplication extends NavigationApplication {
       new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
       new WebViewBridgePackage(),
       new FastImageViewPackage(),
-      new RNFSPackage()
+      new RNFSPackage(),
+      new AsyncStoragePackage(),
+      new ReanimatedPackage(),
+      new RNGestureHandlerPackage(),
+      new RNRecyclerviewListPackage(),
+      new RNCViewPagerPackage()
     );
   }
 

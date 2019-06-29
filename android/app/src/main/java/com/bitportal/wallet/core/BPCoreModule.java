@@ -20,7 +20,7 @@ public class BPCoreModule extends ReactContextBaseJavaModule {
     public BPCoreModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
-        cppApi = Core.create();
+        // cppApi = Core.create();
     }
 
     @Override
@@ -37,9 +37,9 @@ public class BPCoreModule extends ReactContextBaseJavaModule {
             String digest,
             Promise promise) {
         try {
-            String reply = cppApi.pbkdf2(password, salt, iterations, (byte) keylen, digest);
-            Log.d("pbkdf2", String.format("reply = %s", reply));
-            promise.resolve(reply);
+            // String reply = cppApi.pbkdf2(password, salt, iterations, (byte) keylen, digest);
+            // Log.d("pbkdf2", String.format("reply = %s", reply));
+            promise.resolve("test");
         } catch (Exception e) {
             promise.reject("Err", e);
         }
@@ -55,9 +55,9 @@ public class BPCoreModule extends ReactContextBaseJavaModule {
         int dkLen,
         Promise promise) {
         try {
-            String reply = cppApi.scrypt(password, salt, N, (byte) r, (byte) p, (byte) dkLen);
-            Log.d("scrypt", String.format("reply = %s", reply));
-            promise.resolve(reply);
+            // String reply = cppApi.scrypt(password, salt, N, (byte) r, (byte) p, (byte) dkLen);
+            // Log.d("scrypt", String.format("reply = %s", reply));
+            promise.resolve("test");
         } catch (Exception e) {
             promise.reject("Err", e);
         }

@@ -8,7 +8,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
+        classpath 'com.android.tools.build:gradle:3.3.0'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -29,8 +29,8 @@ allprojects {
 
 ext {
     buildToolsVersion = "27.0.3"
+    compileSdkVersion = 28
     minSdkVersion = 19
-    compileSdkVersion = 26
     targetSdkVersion = 26
     supportLibVersion = "26.1.0"
 }
@@ -42,7 +42,7 @@ subprojects { subproject ->
                 variantFilter { variant ->
                     def names = variant.flavors*.name
                     // To check for a certain build type, use variant.buildType.name == "<buildType>"
-                    if (names.contains("reactNative51") || names.contains("reactNative56")) {
+                    if (names.contains("reactNative51") || names.contains("reactNative55") || names.contains("reactNative56") || names.contains("reactNative57")) {
                         // Gradle ignores any variants that satisfy the conditions above.
                         setIgnore(true)
                     }
