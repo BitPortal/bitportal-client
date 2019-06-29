@@ -208,7 +208,7 @@ export default class Voting extends Component {
       })
 
       setTimeout(() => {
-        if (this.scrollView && prevProps.selectedIds.length < this.props.selectedIds.length && this.props.selectedIds.length > 4) {
+        if (this.scrollView && prevProps.selectedIds.length && prevProps.selectedIds.length < this.props.selectedIds.length && this.props.selectedIds.length > 4) {
           this.scrollView.scrollToEnd({ animated: true })
         }
       })
