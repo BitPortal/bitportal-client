@@ -152,8 +152,9 @@ export default class ReceiveAsset extends Component {
   }
 
   setAmount = () => {
+    const { intl } = this.props
     Alert.prompt(
-      '输入金额',
+      intl.formatMessage({ id: 'receive_alert_title_input_amount' }),
       null,
       [
         {
@@ -201,7 +202,7 @@ export default class ReceiveAsset extends Component {
   }
 
   render() {
-    const { activeWallet, activeAsset, balance, intl, childAddress, statusBarHeight } = this.props
+    const { intl, activeWallet, activeAsset, balance, childAddress, statusBarHeight } = this.props
     const symbol = activeAsset.symbol
     const chain = activeWallet.chain
     const available = balance && intl.formatNumber(balance.balance, { minimumFractionDigits: balance.precision, maximumFractionDigits: balance.precision })
@@ -209,12 +210,14 @@ export default class ReceiveAsset extends Component {
     const hasChildAddress = childAddress && childAddress !== address
     const contract = activeAsset.contract
     const addressUri = this.getAddressUri(!this.state.selectedIndex ? address : childAddress, this.state.amount, chain, contract, symbol)
+    const value1 = intl.formatMessage({ id: 'receive_btc_text_main_address' })
+    const value2 = intl.formatMessage({ id: 'receive_btc_text_second_address' })
 
     return (
       <View style={[styles.container, { backgroundColor: 'white' }]}>
         {hasChildAddress && chain === 'BITCOIN' && <View style={{ height: 52, width: '100%', justifyContent: 'center', paddingTop: 5, paddingBottom: 13, paddingLeft: 16, paddingRight: 16, backgroundColor: '#F7F7F7', borderColor: '#C8C7CC', borderBottomWidth: 0.5, marginTop: statusBarHeight + 44 }}>
           <SegmentedControlIOS
-            values={['主地址', '子地址']}
+              values={[value1, value2]}
             selectedIndex={this.state.selectedIndex}
             onChange={this.changeSelectedIndex}
             style={{ width: '100%' }}
@@ -225,7 +228,7 @@ export default class ReceiveAsset extends Component {
         keyboardShouldPersistTaps="handled"
       >
         <View style={{ flex: 1, width: '100%', alignItems: 'center', padding: 16 }}>
-          <Text style={{ fontSize: 17, marginBottom: 16 }}>当前钱包地址用于接收{+this.state.amount > 0 ? this.state.amount : ''} {symbol}</Text>
+          <Text style={{ fontSize: 17, marginBottom: 16 }}>{intl.formatMessage({ id: 'receive_hint_above_qr_code' })}{+this.state.amount > 0 ? this.state.amount : ''} {symbol}</Text>
           <QRCode
             value={addressUri}
             size={200}
@@ -246,7 +249,7 @@ export default class ReceiveAsset extends Component {
             }}
             onPress={this.copy.bind(this, addressUri)}
           >
-            <Text style={{ textAlign: 'center', color: 'white', fontSize: 17 }}>复制钱包地址</Text>
+            <Text style={{ textAlign: 'center', color: 'white', fontSize: 17 }}>{intl.formatMessage({ id: 'receive_button_copy_address' })}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={{ marginTop: 16, flexDirection: 'row', alignItems: 'center' }}
@@ -256,7 +259,7 @@ export default class ReceiveAsset extends Component {
               source={require('resources/images/amount.png')}
               style={{ width: 28, height: 28, marginRight: 4 }}
             />
-            <Text style={{ textAlign: 'center', color: '#007AFF', fontSize: 17 }}>设置金额</Text>
+            <Text style={{ textAlign: 'center', color: '#007AFF', fontSize: 17 }}>{intl.formatMessage({ id: 'receive_button_setting_amount' })}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

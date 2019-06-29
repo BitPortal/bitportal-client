@@ -60,7 +60,10 @@ export default class WalletList extends Component {
     }
   }
 
-  subscription = Navigation.events().bindComponent(this)
+  constructor(props) {
+    super(props);
+    Navigation.events().bindComponent(this); // <== Will be automatically unregistered when unmounted
+  }
 
   tableViewRef = React.createRef()
 

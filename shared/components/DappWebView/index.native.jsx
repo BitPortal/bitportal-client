@@ -12,6 +12,7 @@ import {
 import WebViewBridge from 'react-native-webview-bridge'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
+import { injectIntl } from 'react-intl'
 import { Navigation } from 'react-native-navigation'
 import NavigationBar, {
   LinkingRightButton,

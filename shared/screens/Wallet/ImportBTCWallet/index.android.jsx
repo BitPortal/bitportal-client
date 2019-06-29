@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
+import { injectIntl } from 'react-intl'
 import {
   View,
   ScrollView,
@@ -180,6 +181,8 @@ const warn = (values) => {
 
 const shouldError = () => true
 
+@injectIntl
+
 @reduxForm({ form: 'importBTCWalletForm', validate, shouldError, warn })
 
 @connect(
@@ -256,7 +259,11 @@ export default class ImportBTCWallet extends Component {
     importBTCMnemonicsError: null
   }
 
-  subscription = Navigation.events().bindComponent(this)
+  componentDidAppear() {
+    if (this.props.fromCard) {
+      this.props.actions.setActiveWallet(this.props.wallet.id)
+    }
+  }
 
   navigationButtonPressed({ buttonId }) {
     if (buttonId === 'submit') {
@@ -363,7 +370,7 @@ export default class ImportBTCWallet extends Component {
   }
 
   render() {
-    const { formValues, change } = this.props
+    const { intl, formValues, change } = this.props
     const mnemonic = formValues && formValues.mnemonic
     const privateKey = formValues && formValues.privateKey
     const password = formValues && formValues.password

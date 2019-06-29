@@ -510,7 +510,7 @@ export default class TransferAsset extends Component {
   }
 
   submit = (data) => {
-    const { transferWallet, formSyncWarnings, transferAsset, assetBalance, walletBalance } = this.props
+    const { intl, transferWallet, formSyncWarnings, transferAsset, assetBalance, walletBalance } = this.props
     const balance = (transferAsset && transferAsset.contract) ? assetBalance : walletBalance
 
     if (typeof formSyncWarnings === 'object') {
@@ -529,16 +529,16 @@ export default class TransferAsset extends Component {
     // Keyboard.dismiss()
 
     Alert.prompt(
-      '请输入钱包密码',
+      intl.formatMessage({ id: 'alert_input_wallet_password' }),
       null,
       [
         {
-          text: '取消',
+          text: intl.formatMessage({ id: 'alert_button_cancel' }),
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel'
         },
         {
-          text: '确认',
+          text: intl.formatMessage({ id: 'alert_button_confirm' }),
           onPress: password => this.props.actions.transfer.requested({
             ...data,
             password,
@@ -1106,7 +1106,7 @@ export default class TransferAsset extends Component {
           {loading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
               <ActivityIndicator size="small" color="#000000" />
-              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>交易发送中...</Text>
+              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'transfer_alert_sending_transaction' })}</Text>
             </View>
           </View>}
         </Modal>

@@ -107,20 +107,21 @@ export default class Voting extends Component {
   pendingAssetQueue = []
 
   navigationButtonPressed({ buttonId }) {
+    const { intl } = this.props
     if (buttonId === 'cancel') {
       Navigation.dismissModal(this.props.componentId)
     } else if (buttonId === 'vote') {
       Alert.prompt(
-        '请输入钱包密码',
+        intl.formatMessage({ id: 'alert_input_wallet_password' }),
         null,
         [
           {
-            text: '取消',
+            text: intl.formatMessage({ id: 'alert_button_cancel' }),
             onPress: () => console.log('Cancel Pressed'),
             style: 'cancel'
           },
           {
-            text: '确认',
+            text: intl.formatMessage({ id: 'alert_button_confirm' }),
             onPress: password => this.props.actions.vote.requested({
               chain: this.props.wallet.chain,
               id: this.props.wallet.id,
