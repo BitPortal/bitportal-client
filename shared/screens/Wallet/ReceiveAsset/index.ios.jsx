@@ -215,7 +215,7 @@ export default class ReceiveAsset extends Component {
     const value2 = intl.formatMessage({ id: 'receive_btc_text_second_address' })
 
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <View style={[styles.container, { backgroundColor: 'white' }]}>
         {hasChildAddress && chain === 'BITCOIN' && <View style={{ height: 52, width: '100%', justifyContent: 'center', paddingTop: 5, paddingBottom: 13, paddingLeft: 16, paddingRight: 16, backgroundColor: '#F7F7F7', borderColor: '#C8C7CC', borderBottomWidth: 0.5 }}>
           <SegmentedControlIOS

@@ -304,7 +304,7 @@ export default class Voting extends Component {
     }
 
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <View style={{ width: '100%', height: selectedIds.length ? 80 : 0 }}>
           <ScrollView
