@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { FormattedNumber } from 'react-intl'
+import { injectIntl, FormattedNumber } from 'react-intl'
 import {
   View,
   ScrollView,
@@ -253,6 +253,8 @@ const warn = (values, props) => {
 }
 
 const shouldError = () => true
+
+@injectIntl
 
 @connect(
   state => ({
