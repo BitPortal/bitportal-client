@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { View, Text, ActivityIndicator, Alert } from 'react-native'
 import { connect } from 'react-redux'
+import { injectIntl } from 'react-intl'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 import Modal from 'react-native-modal'
@@ -20,6 +21,8 @@ export const errorMessages = (error, messages) => {
       return '导入失败'
   }
 }
+
+@injectIntl
 
 @connect(
   state => ({
@@ -140,7 +143,7 @@ export default class SelectEOSAccount extends Component {
   }
 
   render() {
-    const { keyAccounts, eosAccount } = this.props
+    const { intl, keyAccounts, eosAccount } = this.props
 
     return (
       <View style={{ flex: 1 }}>
@@ -160,9 +163,9 @@ export default class SelectEOSAccount extends Component {
                 accountName={account.accountName}
                 permissions={account.permissions.join(' • ')}
                 isSelected={this.state.selected.indexOf(account.accountName) !== -1}
-                exist={!!eosAccount.find((accountName: string) => accountName === account.accountName)}
+                exist={!!eosAccount.find((accountName) => accountName === account.accountName)}
               />
-             )}
+            )}
           </Section>
         </TableView>
         <Modal
@@ -181,7 +184,7 @@ export default class SelectEOSAccount extends Component {
           {(this.state.importEOSPrivateKeyLoading) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
               <ActivityIndicator size="small" color="#000000" />
-              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>导入中...</Text>
+              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'identity_loading_hint_importing' })}</Text>
             </View>
           </View>}
         </Modal>

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
+import { injectIntl } from 'react-intl'
 import { View, ScrollView, ActionSheetIOS, Alert, Text, ActivityIndicator, Animated } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
@@ -11,7 +12,7 @@ import styles from './styles'
 
 const { Section, Item } = TableView
 
-export const errorMessages = (error, messages) => {
+export const errorMessages = (error) => {
   if (!error) { return null }
 
   const message = typeof error === 'object' ? error.message : error
@@ -23,6 +24,8 @@ export const errorMessages = (error, messages) => {
       return '操作失败'
   }
 }
+
+@injectIntl
 
 @connect(
   state => ({
@@ -57,18 +60,18 @@ export default class MyIdentity extends Component {
   subscription = Navigation.events().bindComponent(this)
 
   deleteIdentity = (id) => {
+    const { intl } = this.props
     Alert.prompt(
-      '请输入钱包密码',
-      '删除身份后将删除该身份下的所有钱包数据，请务必确保所有钱包已备份。',
+      intl.formatMessage({ id: 'alert_input_wallet_password' }),
+      null,
       [
         {
-          text: '取消',
+          text: intl.formatMessage({ id: 'alert_button_cancel' }),
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel'
         },
         {
-          text: '删除',
-          style: 'destructive',
+          text: intl.formatMessage({ id: 'alert_button_confirm' }),
           onPress: password => this.props.actions.deleteIdentity.requested({
             password,
             id,
@@ -82,17 +85,18 @@ export default class MyIdentity extends Component {
   }
 
   backupIdentity = (id) => {
+    const { intl } = this.props
     Alert.prompt(
-      '请输入钱包密码',
+      intl.formatMessage({ id: 'alert_input_wallet_password' }),
       null,
       [
         {
-          text: '取消',
+          text: intl.formatMessage({ id: 'alert_button_cancel' }),
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel'
         },
         {
-          text: '确认',
+          text: intl.formatMessage({ id: 'alert_button_confirm' }),
           onPress: password => this.props.actions.backupIdentity.requested({ id, password, delay: 500, componentId: this.props.componentId })
         }
       ],
@@ -106,6 +110,7 @@ export default class MyIdentity extends Component {
   }
 
   onModalHide = () => {
+    const { intl } = this.props
     const deleteIdentityError = this.props.deleteIdentity.error
     const backupIdentityError = this.props.backupIdentity.error
     const error = deleteIdentityError || backupIdentityError
@@ -116,7 +121,7 @@ export default class MyIdentity extends Component {
           errorMessages(error),
           '',
           [
-            { text: '确定', onPress: () => this.clearError() }
+            { text: intl.formatMessage({ id: 'alert_button_confirm' }), onPress: () => this.clearError() }
           ]
         )
       }, 20)
@@ -124,7 +129,7 @@ export default class MyIdentity extends Component {
   }
 
   render() {
-    const { identity, backupIdentity, deleteIdentity } = this.props
+    const { intl, identity, backupIdentity, deleteIdentity } = this.props
     const id = identity.id
     const backupIdentityLoading = backupIdentity.loading
     const deleteIdentityLoading = deleteIdentity.loading
@@ -140,14 +145,14 @@ export default class MyIdentity extends Component {
           <Section>
             <Item
               reactModuleForCell="IdentityDetailTableViewCell"
-              text="头像"
+              text={intl.formatMessage({ id: 'identity_text_avatar' })}
               type="avatar"
               height={60}
               selectionStyle={TableView.Consts.CellSelectionStyle.None}
             />
             <Item
               reactModuleForCell="IdentityDetailTableViewCell"
-              text="身份名"
+              text={intl.formatMessage({ id: 'identity_text_name' })}
               type="name"
               detail={identity.name}
               height={60}
@@ -155,7 +160,7 @@ export default class MyIdentity extends Component {
             />
             <Item
               reactModuleForCell="IdentityDetailTableViewCell"
-              text="身份ID"
+              text={intl.formatMessage({ id: 'identity_text_id' })}
               type="identifier"
               detail={identity.identifier}
               height={60}
@@ -167,14 +172,14 @@ export default class MyIdentity extends Component {
               reactModuleForCell="IdentityDetailTableViewCell"
               key="mnemonic"
               actionType="mnemonic"
-              text="备份身份"
+              text={intl.formatMessage({ id: 'identity_button_backup_identity' })}
               onPress={this.backupIdentity.bind(this, id)}
             />
             <Item
               reactModuleForCell="IdentityDetailTableViewCell"
               key="delete"
               actionType="delete"
-              text="删除身份"
+              text={intl.formatMessage({ id: 'identity_button_delete_identity' })}
               onPress={this.deleteIdentity.bind(this, id)}
             />
           </Section>
@@ -194,8 +199,8 @@ export default class MyIdentity extends Component {
           {loading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
               <ActivityIndicator size="small" color="#000000" />
-              {deleteIdentityLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>验证密码...</Text>}
-              {!deleteIdentityLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>导出中...</Text>}
+              {deleteIdentityLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'identity_loading_hint_verifying_password' })}</Text>}
+              {!deleteIdentityLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'identity_loading_hint_exporting' })}</Text>}
             </View>
           </View>}
         </Modal>

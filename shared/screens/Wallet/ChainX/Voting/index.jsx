@@ -20,8 +20,6 @@ export const errorMessages = (error, messages) => {
   switch (String(message)) {
     case 'Invalid password':
       return '密码错误'
-    case 'EOS System Error':
-      return 'EOS系统错误'
     default:
       return '投票失败'
   }
@@ -151,7 +149,7 @@ export default class ChainXVoting extends Component {
     this.getNominationRecords()
     this.timer = setInterval(() => {
       this.updateBlockHeight();
-    }, 5000);
+    }, 1000);
   }
 
   updateBlockHeight = async () => {
@@ -163,21 +161,21 @@ export default class ChainXVoting extends Component {
 
   getValidators = async () => {
     const intentions = await getIntentions()
-    // console.log('getIntentions', intentions)
+    console.log('getIntentions', intentions)
     this.setState({ validator: intentions })
     this.setState({ loading: false })
     this.setState({ loaded: true })
   }
 
   getNominationRecords = async () => {
-    if (this.props.activeWallet && this.props.activeWallet.address) {
-      const records = await getNominationRecords(this.props.activeWallet.address)
-      this.setState({ userNominationRecords: records })
-      // console.log('ui getNominationRecords', this.state.userNominationRecords)
-      this.updateValidatorsByNomination()
-    } else {
+    if (!this.props.activeWallet || !this.props.activeWallet.address) {
       console.log('no active chainx address')
+      return
     }
+    const records = await getNominationRecords(this.props.activeWallet.address)
+    this.setState({ userNominationRecords: records })
+    // console.log('ui getNominationRecords', this.state.userNominationRecords)
+    this.updateValidatorsByNomination()
   }
 
   updateValidatorsByNomination = () => {
@@ -245,6 +243,7 @@ export default class ChainXVoting extends Component {
   render() {
     const { statusBarHeight } = this.props
     const loading = this.state.voteLoding
+    const validator = this.state.validator
 
     if (!this.state.loaded && this.state.loading) {
       return (
@@ -260,7 +259,7 @@ export default class ChainXVoting extends Component {
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <TableView
-          style={{ flex: 1, width: '100%', marginTop: !this.state.searching ? (statusBarHeight + 44 + 56) : (statusBarHeight + 56) }}
+          style={{ flex: 1, width: '100%', marginTop: 0 }}
           tableViewCellStyle={TableView.Consts.CellStyle.Default}
           detailTextColor="#666666"
           canRefresh
@@ -271,7 +270,7 @@ export default class ChainXVoting extends Component {
           ref={(ref) => { this.tableViewRef = ref; return null }}
         >
           <TableView.Section label="特别推荐 / 总票数">
-            {this.state.validator.filter(vali => vali.name === 'BitPortal').map(item => {
+            {validator.filter(vali => vali.name === 'BitPortal').map(item => {
               let pendingInterest = 0
               if (item && item.userNomination) {
                 // 最新总票龄 = 总票龄 + 总投票金额 *（当前高度 - 总票龄更新高度）
@@ -324,7 +323,7 @@ export default class ChainXVoting extends Component {
             })}
           </TableView.Section>
           <TableView.Section label="验证节点 / 总票数">
-            {this.state.validator.filter(vali => vali.isActive && vali.isValidator).sort((a, b) => b.totalNomination - a.totalNomination).map(item => {
+            {validator.filter(vali => vali.isActive && vali.isValidator).sort((a, b) => b.totalNomination - a.totalNomination).map(item => {
 
               let pendingInterest = 0
               if (item && item.userNomination) {
@@ -379,7 +378,7 @@ export default class ChainXVoting extends Component {
             })}
           </TableView.Section>
           <TableView.Section label="备选节点 / 总票数">
-            {this.state.validator.filter(vali => !vali.isValidator).sort((a, b) => b.totalNomination - a.totalNomination).map(item => {
+            {validator.filter(vali => !vali.isValidator).sort((a, b) => b.totalNomination - a.totalNomination).map(item => {
 
               let pendingInterest = 0
               if (item && item.userNomination) {

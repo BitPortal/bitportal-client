@@ -105,6 +105,8 @@ export const errorMessages = (error, messages) => {
       return '余额不足以支付手续费'
     case 'EOS System Error':
       return 'EOS系统错误'
+    case 'request timeout':
+      return '请求超时'
     default:
       return `转账失败 ${message.toString()}`
   }
@@ -606,6 +608,10 @@ export default class TransferAsset extends Component {
         this.addOPReturn()
       }
     }
+
+    if (this.props.transfer.loading) {
+      this.props.actions.transfer.failed()
+    }
   }
 
   clearError = () => {
@@ -829,7 +835,7 @@ export default class TransferAsset extends Component {
     const useGasPrice = this.state.useGasPrice || this.state.initialGwei || this.state.ethGasPrice || 4.00
 
     return (
-      <SafeAreaView style={{flex: 1 }}>
+      <SafeAreaView style={{flex: 1, backgroundColor: 'white' }}>
       <ScrollView
         style={[styles.container, { backgroundColor: 'white' }]}
         showsVerticalScrollIndicator={false}

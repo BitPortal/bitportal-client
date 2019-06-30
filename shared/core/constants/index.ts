@@ -86,7 +86,7 @@ export const eosNodes = [
 ]
 
 export const ethNodes = [
-  'https://mainnet.infura.io'
+  'https://mainnet.infura.io/v3/86e777894dec49388d35b56d914732a2'
 ]
 
 export const btcNodes = [

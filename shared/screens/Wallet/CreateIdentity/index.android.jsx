@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
+import { injectIntl } from 'react-intl'
 import {
   View,
   ScrollView,
@@ -105,6 +106,8 @@ const warn = (values) => {
 
   return warnings
 }
+
+@injectIntl
 
 @reduxForm({ form: 'createIdentityForm', validate, warn })
 
@@ -219,7 +222,7 @@ export default class CreateIdentity extends Component {
   }
 
   render() {
-    const { createIdentity, formValues, change } = this.props
+    const { intl, createIdentity, formValues, change } = this.props
     const loading = createIdentity.loading
     const name = formValues && formValues.name
     const password = formValues && formValues.password
@@ -231,7 +234,7 @@ export default class CreateIdentity extends Component {
         <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
           <View style={{ flex: 1, alignItems: 'center' }} onPress={() => console.log('press')}>
             <View style={{ marginBottom: 14 }}>
-              <Text style={{ fontSize: 26, fontWeight: 'bold' }}>创建身份</Text>
+              <Text style={{ fontSize: 26, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'identity_create_title' })}</Text>
               {loading
              && (
                <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 0, right: -25 }}>
@@ -242,13 +245,13 @@ export default class CreateIdentity extends Component {
             </View>
             <View style={{ marginBottom: 16, height: 22 }}>
               {!loading && <Text style={{ fontSize: 17, paddingLeft: 32, paddingRight: 32, lineHeight: 22, textAlign: 'center' }}>
-              输入您的身份信息
+                {intl.formatMessage({ id: 'identity_create_sub_title' })}
               </Text>}
             </View>
             {this.state.showForm && <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
               <Field
-              label="身份名"
-              placeholder="输入不超过12位的身份名"
+              label={intl.formatMessage({ id: 'identity_input_label_identity_name' })}
+              placeholder={intl.formatMessage({ id: 'identity_input_placeholder_identity_name' })}
               name="name"
               fieldName="name"
               component={TextField}
@@ -257,8 +260,8 @@ export default class CreateIdentity extends Component {
               separator
               />
               <Field
-              label="密码"
-              placeholder="不少于8位字符，建议混合大小写字母，数字，符号"
+              label={intl.formatMessage({ id: 'identity_input_label_wallet_passwd' })}
+              placeholder={intl.formatMessage({ id: 'identity_input_placeholder_wallet_passwd' })}
               name="password"
               fieldName="password"
               component={TextField}
@@ -268,8 +271,8 @@ export default class CreateIdentity extends Component {
               separator
               />
               <Field
-              label="密码提示"
-              placeholder="选填"
+              label={intl.formatMessage({ id: 'identity_input_label_passwd_hint' })}
+              placeholder={intl.formatMessage({ id: 'identity_input_placeholder_label_passwd_hint' })}
               name="passwordHint"
               fieldName="passwordHint"
               component={TextField}

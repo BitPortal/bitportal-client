@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FormattedNumber } from 'react-intl'
+import { injectIntl, FormattedNumber } from 'react-intl'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import {
@@ -17,6 +17,8 @@ import { FontScale } from 'utils/dimens'
 import { filterBgColor } from 'utils'
 import { ASSET_FRACTION, DEFAULT_SORT_FILTER } from 'constants/market'
 import styles from './styles'
+
+@injectIntl
 
 @connect(
   state => ({

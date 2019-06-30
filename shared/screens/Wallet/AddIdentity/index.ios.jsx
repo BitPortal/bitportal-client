@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
+import { injectIntl } from 'react-intl'
 import { View, Text, TouchableOpacity, Image, SafeAreaView } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Navigation } from 'react-native-navigation'
@@ -28,6 +29,8 @@ const styles = EStyleSheet.create({
     fontSize: 17
   }
 })
+
+@injectIntl
 
 @connect(
   state => ({
@@ -96,6 +99,7 @@ export default class AddIdentity extends Component {
   }
 
   render() {
+    const { intl } = this.props
     return (
       <SafeAreaView style={styles.container}>
         <View
@@ -108,18 +112,18 @@ export default class AddIdentity extends Component {
           />
         </View>
         <View style={{ width: '100%', height: 420, paddingHorizontal: 16, paddingVertical: 30 }}>
-          <Text style={{ fontSize: 30, marginBottom: 10, marginTop: 40 }}>创建您的</Text>
+          <Text style={{ fontSize: 30, marginBottom: 10, marginTop: 40 }}>{intl.formatMessage({ id: 'identity_add_title_1' })}</Text>
           <Text style={{ fontSize: 30, marginBottom: 20 }}>
-            币通 <Text style={{ color: '#007AFF' }}>数字身份</Text>
+            {intl.formatMessage({ id: 'identity_add_title_2' })} <Text style={{ color: '#007AFF' }}>{intl.formatMessage({ id: 'identity_add_title_3' })}</Text>
           </Text>
           <Text style={{ fontSize: 17, marginBottom: 80 }}>
-            只需一个身份，管理多链钱包
+            {intl.formatMessage({ id: 'identity_add_slogon' })}
           </Text>
           <TouchableOpacity style={styles.button} onPress={this.toCreateIdentity}>
-            <Text style={styles.buttonText}>创建身份</Text>
+            <Text style={styles.buttonText}>{intl.formatMessage({ id: 'identity_add_title_button_create_identity' })}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.button, { backgroundColor: '#EFEFF4' }]} onPress={this.toRecoverIdentity}>
-            <Text style={[styles.buttonText, { color: '#007AFF' }]}>恢复身份</Text>
+            <Text style={[styles.buttonText, { color: '#007AFF' }]}>{intl.formatMessage({ id: 'identity_add_title_button_recovery_identity' })}</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>

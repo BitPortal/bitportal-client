@@ -18,7 +18,8 @@ const images = {
   chainxVoting: require('resources/images/vote.png'),
   chainxWithdrawal: require('resources/images/backup.png'),
   chainxScan: require('resources/images/resources.png'),
-  chainxStats: require('resources/images/market_tab.png')
+  chainxStats: require('resources/images/market_tab.png'),
+  chainxTool: require('resources/images/chainx_icon.png')
 }
 
 const WalletManagementTableViewCell = (props) => {

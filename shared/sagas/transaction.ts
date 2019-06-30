@@ -1,6 +1,6 @@
 import assert from 'assert'
 import { delay } from 'redux-saga'
-import { takeLatest, put, call, select } from 'redux-saga/effects'
+import { takeLatest, put, call, select, race } from 'redux-saga/effects'
 import { getErrorMessage, getEOSErrorMessage } from 'utils'
 import { reset } from 'redux-form'
 import secureStorage from 'core/storage/secureStorage'
@@ -15,6 +15,7 @@ import * as api from 'utils/api'
 import { managingWalletSelector } from 'selectors/wallet'
 import { activeWalletTransactionsPaginationSelector } from 'selectors/transaction'
 import { push, dismissAllModals } from 'utils/location'
+import { timeoutInterval } from 'constants/chain'
 
 function* transfer(action: Action) {
   if (!action.payload) return
@@ -31,9 +32,21 @@ function* transfer(action: Action) {
     if (chain === 'ETHEREUM') {
       let hash
       if (contract) {
-        hash = yield call(ethChain.transferToken, password, keystore, fromAddress, toAddress, contract, amount, decimals, gasPrice * Math.pow(10, 9), gasLimit)
+        const { result, timeout } = yield race({
+          result: call(ethChain.transferToken, password, keystore, fromAddress, toAddress, contract, amount, decimals, gasPrice * Math.pow(10, 9), gasLimit),
+          timeout: delay(timeoutInterval)
+        })
+
+        assert(!timeout, 'request timeout')
+        hash = result
       } else {
-        hash = yield call(ethChain.transfer, password, keystore, fromAddress, toAddress, amount, gasPrice * Math.pow(10, 9), gasLimit)
+        const { result, timeout } = yield race({
+          result: call(ethChain.transfer, password, keystore, fromAddress, toAddress, amount, gasPrice * Math.pow(10, 9), gasLimit),
+          timeout: delay(timeoutInterval)
+        })
+
+        assert(!timeout, 'request timeout')
+        hash = result
       }
 
       const transaction = {
@@ -62,7 +75,14 @@ function* transfer(action: Action) {
       if (source === 'WIF') {
         const changeAddress = fromAddress
         const { inputs, outputs, fee } = yield call(btcChain.selectUTXO, walletUTXO, amount, toAddress, changeAddress, feeRate)
-        hash = yield call(btcChain.transferByWif, password, keystore, inputs, outputs, opreturn)
+
+        const { result, timeout } = yield race({
+          result: call(btcChain.transferByWif, password, keystore, inputs, outputs, opreturn),
+          timeout: delay(timeoutInterval)
+        })
+
+        assert(!timeout, 'request timeout')
+        hash = result
       } else {
         const address = yield select((state: RootState) => state.address)
         const walletAddress = address.byId[`${chain}/${fromAddress}`]
@@ -71,7 +91,14 @@ function* transfer(action: Action) {
         const changeAddress = btcChain.getChangeAddress(walletUTXO, walletAddress.change)
         const { inputs, outputs, fee } = yield call(btcChain.selectUTXO, walletUTXO, amount, toAddress, changeAddress, feeRate)
         const inputsWithIdx = btcChain.getInputsWithIdx(inputs, walletAddress)
-        hash = yield call(btcChain.transfer, password, keystore, inputsWithIdx, outputs, opreturn)
+
+        const { result, timeout } = yield race({
+          result: call(btcChain.transfer, password, keystore, inputsWithIdx, outputs, opreturn),
+          timeout: delay(timeoutInterval)
+        })
+
+        assert(!timeout, 'request timeout')
+        hash = result
       }
 
       const transaction = {
@@ -88,13 +115,21 @@ function* transfer(action: Action) {
         pending: true
       }
 
-      yield put(actions.addTransaction({ id: `${chain}/${fromAddress}`, item: transaction }))
+      yield put(actions.addTransaction({ id: `${chain}/${fromAddress}`, item: transaction, assetId }))
       yield put(actions.setActiveTransactionId(hash))
     } else if (chain === 'EOS') {
       const allAccounts = yield select((state: RootState) => state.account)
       const account = allAccounts.byId[`${chain}/${fromAddress}`]
       assert(account, 'No eos account')
-      const hash = yield call(eosChain.transfer, password, keystore, fromAddress, toAddress, amount, symbol, precision, memo, contract || 'eosio.token', account.permissions)
+
+      const { result, timeout } = yield race({
+        result: call(eosChain.transfer, password, keystore, fromAddress, toAddress, amount, symbol, precision, memo, contract || 'eosio.token', account.permissions),
+        timeout: delay(timeoutInterval)
+      })
+
+      assert(!timeout, 'request timeout')
+      const hash = result
+
       const transaction = {
         id: hash,
         trx_id: hash,
@@ -114,9 +149,25 @@ function* transfer(action: Action) {
       yield put(actions.addTransaction({ id: `${chain}/${fromAddress}`, item: transaction, assetId }))
       yield put(actions.setActiveTransactionId(hash))
     } else if (chain === 'CHAINX') {
-      const hash = memo ?
-        yield call(chainxChain.transfer, password, keystore, fromAddress, toAddress, symbol, amount, memo):
-        yield call(chainxChain.transfer, password, keystore, fromAddress, toAddress, symbol, amount)
+      let hash
+
+      if (memo) {
+        const { result, timeout } = yield race({
+          result: call(chainxChain.transfer, password, keystore, fromAddress, toAddress, symbol, amount, memo),
+          timeout: delay(timeoutInterval)
+        })
+
+        assert(!timeout, 'request timeout')
+        hash = result
+      } else {
+        const { result, timeout } = yield race({
+          result: call(chainxChain.transfer, password, keystore, fromAddress, toAddress, symbol, amount),
+          timeout: delay(timeoutInterval)
+        })
+
+        assert(!timeout, 'request timeout')
+        hash = result
+      }
 
       const transaction = {
         id: hash,
@@ -134,7 +185,7 @@ function* transfer(action: Action) {
         pending: true
       }
 
-      yield put(actions.addTransaction({ id: `${chain}/${fromAddress}`, item: transaction }))
+      yield put(actions.addTransaction({ id: `${chain}/${fromAddress}`, item: transaction, assetId }))
       yield put(actions.setActiveTransactionId(hash))
     }
 
@@ -142,21 +193,23 @@ function* transfer(action: Action) {
     yield put(reset('transferAssetForm'))
     yield delay(500)
 
-    if (action.payload.componentId) push(
-      'BitPortal.TransactionDetail',
-      action.payload.componentId,
-      {
-        chain: chain,
-        precision: precision || 8,
-        symbol: symbol
-      },
-      {
-        topBar: {
-          title: {
-            text: `${symbol} 转账中...`
+    if (action.payload.componentId) {
+      push(
+        'BitPortal.TransactionDetail',
+        action.payload.componentId,
+        {
+          chain: chain,
+          precision: precision || 8,
+          symbol: symbol
+        },
+        {
+          topBar: {
+            title: {
+              text: `${symbol} 转账中...`
+            }
           }
-        }
-      })
+        })
+    }
   } catch (e) {
     yield put(actions.transfer.failed(getErrorMessage(e)))
   }

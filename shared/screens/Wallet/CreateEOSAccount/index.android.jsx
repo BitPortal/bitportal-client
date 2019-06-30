@@ -15,6 +15,7 @@ import {
   Dimensions,
   Clipboard
 } from 'react-native'
+import { injectIntl } from 'react-intl'
 import FastImage from 'react-native-fast-image'
 import { Navigation } from 'react-native-navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'

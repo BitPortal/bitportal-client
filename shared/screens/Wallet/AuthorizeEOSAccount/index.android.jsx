@@ -93,17 +93,18 @@ export default class AuthorizeEOSAccount extends Component {
   }
 
   authorize = () => {
+    const { intl } = this.props
     Alert.prompt(
-      '请输入钱包密码',
+      intl.formatMessage({ id: 'alert_input_wallet_password' }),
       null,
       [
         {
-          text: '取消',
+          text: intl.formatMessage({ id: 'alert_button_cancel' }),
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel'
         },
         {
-          text: '确认',
+          text: intl.formatMessage({ id: 'alert_button_confirm' }),
           onPress: password => this.props.actions.authorizeEOSAccount.requested({ password, simpleWallet: this.props.simpleWallet, authorizeWallet: this.props.authorizeWallet })
         }
       ],

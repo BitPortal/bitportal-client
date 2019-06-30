@@ -217,10 +217,10 @@ export default class WalletList extends Component {
               height={44}
               onPress={this.toAddIdentity}
               type="add"
-              text="添加数字身份..."
+              text={intl.formatMessage({ id: 'general_title_add_identity' })}
             />
           </Section>}
-          {identityWalletsCount && <Section label="身份钱包">
+          {identityWalletsCount && <Section label={intl.formatMessage({ id: 'general_title_identity_wallet' })}>
             {identityWallets.map(wallet => <Item
                 height={60}
                 key={wallet.id}
@@ -251,7 +251,7 @@ export default class WalletList extends Component {
             />
             )}
           </Section>}
-          <Section label={importedWalletsCount ? '普通钱包' : ''}>
+          <Section label={importedWalletsCount ? intl.formatMessage({ id: 'general_title_import_wallet' }) : ''}>
             {importedWallets.map(wallet => <Item
                 height={60}
                 key={wallet.id}
@@ -277,13 +277,13 @@ export default class WalletList extends Component {
                   segWit: wallet.segWit,
                   source: wallet.source,
                 }) : () => {}}
-            />
+              />
             )}
             <Item
               height={44}
               onPress={this.toSelectChainType}
               type="add"
-              text="导入新钱包..."
+              text={intl.formatMessage({ id: 'wallet_list_text_import_wallet' })}
             />
           </Section>
         </TableView>

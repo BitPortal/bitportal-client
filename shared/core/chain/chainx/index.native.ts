@@ -32,7 +32,10 @@ const getPrivateKeyFromKeyStore = async (password: string, keystore: any) => {
 
 export const getBalance = async (address: string) => {
   const provider = initRpc()
-  const balance = await provider.send('chainx_getAssetsByAccount', [chainxAccount.decodeAddress(address), 0, 1]);
+  const balance = await provider.send('chainx_getAssetsByAccount', [chainxAccount.decodeAddress(address), 0, 1])
+  if (!balance || !balance.data || balance.data.length === 0) {
+    return 0
+  }
 
   return (+balance.data[0].details.Free) * Math.pow(10, -8)
 }

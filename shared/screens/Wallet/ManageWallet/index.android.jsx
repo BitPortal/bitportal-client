@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
+import { injectIntl, FormattedMessage } from 'react-intl'
 import { View, ActionSheetIOS, Alert, Text, ActivityIndicator } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
@@ -14,7 +15,7 @@ import styles from './styles'
 
 const { Section, Item } = TableView
 
-export const errorMessages = (error, messages) => {
+export const errorMessages = (error) => {
   if (!error) { return null }
 
   const message = typeof error === 'object' ? error.message : error
@@ -29,8 +30,11 @@ export const errorMessages = (error, messages) => {
   }
 }
 
+@injectIntl
+
 @connect(
   state => ({
+    locale: state.intl.locale,
     getProducer: state.getProducer,
     deleteWallet: state.deleteWallet,
     exportMnemonics: state.exportMnemonics,
@@ -68,7 +72,10 @@ export default class ManageWallet extends Component {
     }
   }
 
-  subscription = Navigation.events().bindComponent(this)
+  constructor(props) {
+    super(props);
+    Navigation.events().bindComponent(this)
+  }
 
   componentDidAppear() {
     if (this.props.fromCard) {
@@ -77,8 +84,9 @@ export default class ManageWallet extends Component {
   }
 
   deleteWallet = (walletId, chain, address) => {
+    const { intl } = this.props
     Alert.prompt(
-      '请输入钱包密码',
+      intl.formatMessage({ id: 'alert_input_wallet_password' }),
       null,
       [
         {
@@ -87,7 +95,7 @@ export default class ManageWallet extends Component {
           style: 'cancel'
         },
         {
-          text: '确认',
+          text: intl.formatMessage({ id: 'alert_button_confirm' }),
           onPress: password => this.props.actions.deleteWallet.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, fromCard: this.props.fromCard, chain, address })
         }
       ],
@@ -96,8 +104,9 @@ export default class ManageWallet extends Component {
   }
 
   exportMnemonics = (walletId) => {
+    const { intl } = this.props
     Alert.prompt(
-      '请输入钱包密码',
+      intl.formatMessage({ id: 'alert_input_wallet_password' }),
       null,
       [
         {
@@ -106,7 +115,7 @@ export default class ManageWallet extends Component {
           style: 'cancel'
         },
         {
-          text: '确认',
+          text: intl.formatMessage({ id: 'alert_button_confirm' }),
           onPress: password => this.props.actions.exportMnemonics.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, source: this.props.source })
         }
       ],
@@ -115,8 +124,9 @@ export default class ManageWallet extends Component {
   }
 
   exportETHKeystore = (walletId) => {
+    const { intl } = this.props
     Alert.prompt(
-      '请输入钱包密码',
+      intl.formatMessage({ id: 'alert_input_wallet_password' }),
       null,
       [
         {
@@ -125,7 +135,7 @@ export default class ManageWallet extends Component {
           style: 'cancel'
         },
         {
-          text: '确认',
+          text: intl.formatMessage({ id: 'alert_button_confirm' }),
           onPress: password => this.props.actions.exportETHKeystore.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, source: this.props.source })
         }
       ],
@@ -135,20 +145,21 @@ export default class ManageWallet extends Component {
 
   exportPrivateKey = (walletId, symbol) => {
     const { chain, address } = this.props.wallet
+    const { intl } = this.props
     const account = this.props.account[`${chain}/${address}`]
     const permissions = account && account.permissions
 
     Alert.prompt(
-      '请输入钱包密码',
+      intl.formatMessage({ id: 'alert_input_wallet_password' }),
       null,
       [
         {
-          text: '取消',
+          text: this.props.intl.formatMessage({ id: 'alert_button_cancel' }),
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel'
         },
         {
-          text: '确认',
+          text: this.props.intl.formatMessage({ id: 'alert_button_confirm' }),
           onPress: password => this.props.actions[`export${symbol}PrivateKey`].requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, source: this.props.source, address: this.props.address, permissions })
         }
       ],
@@ -298,7 +309,7 @@ export default class ManageWallet extends Component {
   }
 
   switchBTCAddressType = (walletId) => {
-    const { wallet } = this.props
+    const { intl, wallet } = this.props
     const segWit = (wallet && wallet.segWit) || this.props.segWit
     const source = (wallet && wallet.source) || this.props.source
 
@@ -310,16 +321,16 @@ export default class ManageWallet extends Component {
       if (buttonIndex === 1) {
         if (segWit !== 'P2WPKH') {
           Alert.prompt(
-            '请输入钱包密码',
+            intl.formatMessage({ id: 'alert_input_wallet_password'}),
             null,
             [
               {
-                text: '取消',
+                text: this.props.intl.formatMessage({ id: 'alert_button_cancel' }),
                 onPress: () => console.log('Cancel Pressed'),
                 style: 'cancel'
               },
               {
-                text: '确认',
+                text: this.props.intl.formatMessage({ id: 'alert_button_confirm' }),
                 onPress: password => this.props.actions.switchBTCAddressType.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, segWit, source })
               }
             ],
@@ -329,16 +340,16 @@ export default class ManageWallet extends Component {
       } else if (buttonIndex === 2) {
         if (segWit === 'P2WPKH') {
           Alert.prompt(
-            '请输入钱包密码',
+            intl.formatMessage({ id: 'alert_input_wallet_password' }),
             null,
             [
               {
-                text: '取消',
+                text: this.props.intl.formatMessage({ id: 'alert_button_cancel' }),
                 onPress: () => console.log('Cancel Pressed'),
                 style: 'cancel'
               },
               {
-                text: '确认',
+                text: this.props.intl.formatMessage({ id: 'alert_button_confirm' }),
                 onPress: password => this.props.actions.switchBTCAddressType.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, segWit, source })
               }
             ],
@@ -361,12 +372,12 @@ export default class ManageWallet extends Component {
         null,
         [
           {
-            text: '取消',
+            text: this.props.intl.formatMessage({ id: 'alert_button_cancel' }),
             onPress: () => console.log('Cancel Pressed'),
             style: 'cancel'
           },
           {
-            text: '确认',
+            text: this.props.intl.formatMessage({ id: 'alert_button_confirm' }),
             onPress: name => {
               if (name) {
                 if (name.length > 30) {
@@ -442,7 +453,7 @@ export default class ManageWallet extends Component {
   }
 
   chainxWithdrawal = async () => {
-    Dialog.alert('提示', 'Coming Soon')
+    Dialog.alert('Tips', 'Coming Soon')
     return
     const constants = await Navigation.constants()
 
@@ -516,6 +527,34 @@ export default class ManageWallet extends Component {
     })
   }
 
+  chainxToChainXTool = async () => {
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.WebView',
+            passProps: {
+              url: 'https://chainxtools.com?utm=bitportal'
+            },
+            options: {
+              topBar: {
+                title: {
+                  text: 'ChainXTool'
+                },
+                leftButtons: [
+                  {
+                    id: 'cancel',
+                    text: '取消'
+                  }
+                ]
+              }
+            }
+          }
+        }]
+      }
+    })
+  }
+
   render() {
     const { type, deleteWallet, exportMnemonics, exportBTCPrivateKey, exportETHKeystore, exportETHPrivateKey, exportEOSPrivateKey, switchBTCAddressType, wallet } = this.props
     const name = (wallet && wallet.name) || this.props.name
@@ -545,7 +584,7 @@ export default class ManageWallet extends Component {
           reactModuleForCell="WalletManagementTableViewCell"
           key="vote"
           actionType="vote"
-          text="节点投票"
+          text={this.props.intl.formatMessage({ id: 'manage_wallet_title_eos_voting' })}
           onPress={this.vote}
           arrow
         />
@@ -556,7 +595,7 @@ export default class ManageWallet extends Component {
           reactModuleForCell="WalletManagementTableViewCell"
           key="resources"
           actionType="resources"
-          text="资源管理"
+          text={this.props.intl.formatMessage({ id: 'manage_wallet_title_eos_resource' })}
           onPress={this.manageResource}
           arrow
         />
@@ -569,7 +608,7 @@ export default class ManageWallet extends Component {
             reactModuleForCell="WalletManagementTableViewCell"
             key="switchAccount"
             actionType="switchAccount"
-            text="切换账号"
+            text={this.props.intl.formatMessage({ id: 'manage_wallet_title_eos_switch_account' })}
             onPress={this.switchEOSAccount}
             arrow
           />
@@ -581,7 +620,7 @@ export default class ManageWallet extends Component {
             key="createAccount"
             actionType="createAccount"
             onPress={this.createNewAccount}
-            text="创建新账号"
+            text={this.props.intl.formatMessage({ id: 'manage_wallet_title_eos_create_account' })}
             arrow
           />
         )
@@ -595,7 +634,7 @@ export default class ManageWallet extends Component {
             reactModuleForCell="WalletManagementTableViewCell"
             key="address"
             actionType="address"
-            text="钱包地址"
+            text={this.props.intl.formatMessage({ id: 'manage_wallet_title_wallet_address' })}
             onPress={this.switchBTCAddress}
             arrow
           />
@@ -607,8 +646,8 @@ export default class ManageWallet extends Component {
           reactModuleForCell="WalletManagementTableViewCell"
           key="addressType"
           actionType="addressType"
-          text="切换地址类型"
-          detail={segWit === 'P2WPKH' ? '隔离见证' : '普通'}
+          text={this.props.intl.formatMessage({ id: 'manage_wallet_title_switch_address_type' })}
+          detail={segWit === 'P2WPKH' ? this.props.intl.formatMessage({ id: 'manage_wallet_type_btc_address_segwit' }) : this.props.intl.formatMessage({ id: 'manage_wallet_type_btc_address_common' })}
           onPress={this.switchBTCAddressType.bind(this, id)}
           arrow
         />
@@ -621,7 +660,7 @@ export default class ManageWallet extends Component {
           reactModuleForCell="WalletManagementTableViewCell"
           key="mnemonic"
           actionType="mnemonic"
-          text="备份助记词"
+          text={this.props.intl.formatMessage({ id: 'manage_wallet_title_backup_mnemonics' })}
           onPress={this.exportMnemonics.bind(this, id)}
           arrow
         />
@@ -634,7 +673,7 @@ export default class ManageWallet extends Component {
           reactModuleForCell="WalletManagementTableViewCell"
           key="privateKey"
           actionType="privateKey"
-          text="导出私钥"
+          text={this.props.intl.formatMessage({ id: 'manage_wallet_title_export_private_key' })}
           onPress={this.exportPrivateKey.bind(this, id, symbol)}
           arrow
         />
@@ -647,7 +686,7 @@ export default class ManageWallet extends Component {
           reactModuleForCell="WalletManagementTableViewCell"
           key="keystore"
           actionType="keystore"
-          text="导出Keystore"
+          text={this.props.intl.formatMessage({ id: 'manage_wallet_title_export_keysotre' })}
           onPress={this.exportETHKeystore.bind(this, id)}
           arrow
         />
@@ -660,7 +699,7 @@ export default class ManageWallet extends Component {
           reactModuleForCell="WalletManagementTableViewCell"
           key="chainxDeposit"
           actionType="chainxDeposit"
-          text="充值挖矿"
+          text={this.props.intl.formatMessage({ id: 'manage_wallet_title_chainx_deposit_mine' })}
           onPress={this.chainxDeposit.bind(this, id)}
           arrow
         />
@@ -670,7 +709,7 @@ export default class ManageWallet extends Component {
           reactModuleForCell="WalletManagementTableViewCell"
           key="chainxVoting"
           actionType="chainxVoting"
-          text="投票选举"
+          text={this.props.intl.formatMessage({ id: 'manage_wallet_title_chainx_voting' })}
           onPress={this.chainxVoting.bind(this, id)}
           arrow
         />
@@ -680,7 +719,7 @@ export default class ManageWallet extends Component {
           reactModuleForCell="WalletManagementTableViewCell"
           key="chainxWithdrawal"
           actionType="chainxWithdrawal"
-          text="资产提现"
+          text={this.props.intl.formatMessage({ id: 'manage_wallet_title_chainx_withdraw' })}
           onPress={this.chainxWithdrawal.bind(this, id)}
           arrow
         />
@@ -690,7 +729,7 @@ export default class ManageWallet extends Component {
           reactModuleForCell="WalletManagementTableViewCell"
           key="chainxScan"
           actionType="chainxScan"
-          text="区块浏览器"
+          text={this.props.intl.formatMessage({ id: 'manage_wallet_title_chainx_explorer' })}
           onPress={this.chainxToScan.bind(this, id)}
           arrow
         />
@@ -700,8 +739,18 @@ export default class ManageWallet extends Component {
           reactModuleForCell="WalletManagementTableViewCell"
           key="chainxStats"
           actionType="chainxStats"
-          text="节点状态"
+          text={this.props.intl.formatMessage({ id: 'manage_wallet_title_chainx_stats' })}
           onPress={this.chainxToStats.bind(this, id)}
+          arrow
+        />
+      )
+      accountActions.push(
+        <Item
+          reactModuleForCell="WalletManagementTableViewCell"
+          key="chainxTool"
+          actionType="chainxTool"
+          text="ChainXTool"
+          onPress={this.chainxToChainXTool.bind(this, id)}
           arrow
         />
       )
@@ -745,7 +794,7 @@ export default class ManageWallet extends Component {
               reactModuleForCell="WalletManagementTableViewCell"
               key="delete"
               actionType="delete"
-              text="删除钱包"
+              text={this.props.intl.formatMessage({ id: 'manage_wallet_text_delete_wallet' })}
               onPress={this.deleteWallet.bind(this, id, chain, address)}
               arrow
             />

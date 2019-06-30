@@ -17,7 +17,7 @@ const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
   timeout: null,
-  whitelist: ['____']
+  blacklist: ['form']
 }
 
 export default function configure(initialState: RootState = {}, history?: any): AppStore<RootState> {

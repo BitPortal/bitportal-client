@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
+import { injectIntl } from 'react-intl'
 import { View, Text, ScrollView, Dimensions, LayoutAnimation, TouchableHighlight, ActivityIndicator, Alert, SafeAreaView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
@@ -42,6 +43,8 @@ export const errorDetail = (error) => {
 
   return detail
 }
+
+@injectIntl
 
 @connect(
   state => ({
@@ -113,20 +116,21 @@ export default class Voting extends Component {
   pendingAssetQueue = []
 
   navigationButtonPressed({ buttonId }) {
+    const { intl } = this.props
     if (buttonId === 'cancel') {
       Navigation.dismissModal(this.props.componentId)
     } else if (buttonId === 'vote') {
       Alert.prompt(
-        '请输入钱包密码',
+        intl.formatMessage({ id: 'alert_input_wallet_password' }),
         null,
         [
           {
-            text: '取消',
+            text: intl.formatMessage({ id: 'alert_button_cancel' }),
             onPress: () => console.log('Cancel Pressed'),
             style: 'cancel'
           },
           {
-            text: '确认',
+            text: intl.formatMessage({ id: 'alert_button_confirm' }),
             onPress: password => this.props.actions.vote.requested({
               chain: this.props.wallet.chain,
               id: this.props.wallet.id,
@@ -300,7 +304,7 @@ export default class Voting extends Component {
     }
 
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <View style={{ width: '100%', height: selectedIds.length ? 80 : 0 }}>
           <ScrollView

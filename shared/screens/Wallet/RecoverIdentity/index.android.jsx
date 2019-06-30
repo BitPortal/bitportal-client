@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
+import { injectIntl } from 'react-intl'
 import {
   View,
   ScrollView,
@@ -69,7 +70,6 @@ const TextField = ({
       placeholder={placeholder}
       onChangeText={onChange}
       keyboardType="default"
-      autoCapitalize='none'
       secureTextEntry={secureTextEntry}
       {...restInput}
     />
@@ -151,6 +151,8 @@ const warn = (values) => {
   return warnings
 }
 
+@injectIntl
+
 @reduxForm({ form: 'recoverIdentityForm', validate, warn })
 
 @connect(
@@ -190,6 +192,33 @@ export default class RecoverIdentity extends Component {
     }
   }
 
+  constructor(props) {
+    super(props);
+    Navigation.events().bindComponent(this); // <== Will be automatically unregistered when unmounted
+  }
+
+  navigationButtonPressed({ buttonId }) {
+    if (buttonId === 'submit') {
+      const { formSyncWarnings } = this.props
+      if (typeof formSyncWarnings === 'object') {
+        const warning = formSyncWarnings.name || formSyncWarnings.password
+        if (warning) {
+          Alert.alert(
+            warning,
+            '',
+            [
+              { text: '确定', onPress: () => console.log('OK Pressed') }
+            ]
+          )
+          return
+        }
+      }
+
+      Keyboard.dismiss()
+      this.props.handleSubmit(this.submit)()
+    }
+  }
+
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
       nextProps.invalid !== prevState.invalid
@@ -209,7 +238,6 @@ export default class RecoverIdentity extends Component {
   }
 
   state = { invalid: true, pristine: true, loading: false, error: null }
-  subscription = Navigation.events().bindComponent(this)
 
   componentDidUpdate(prevProps, prevState) {
     if (
@@ -241,28 +269,6 @@ export default class RecoverIdentity extends Component {
           ]
         )
       }, 20)
-    }
-  }
-
-  navigationButtonPressed({ buttonId }) {
-    if (buttonId === 'submit') {
-      const { formSyncWarnings } = this.props
-      if (typeof formSyncWarnings === 'object') {
-        const warning = formSyncWarnings.name || formSyncWarnings.password
-        if (warning) {
-          Alert.alert(
-            warning,
-            '',
-            [
-              { text: '确定', onPress: () => console.log('OK Pressed') }
-            ]
-          )
-          return
-        }
-      }
-
-      Keyboard.dismiss()
-      this.props.handleSubmit(this.submit)()
     }
   }
 
@@ -300,7 +306,7 @@ export default class RecoverIdentity extends Component {
   }
 
   render() {
-    const { recoverIdentity, formValues, change } = this.props
+    const { intl, recoverIdentity, formValues, change } = this.props
     const loading = recoverIdentity.loading
     const mnemonics = formValues && formValues.mnemonics
     const password = formValues && formValues.password
@@ -315,7 +321,7 @@ export default class RecoverIdentity extends Component {
       >
         <View style={{ flex: 1, alignItems: 'center' }}>
           <View style={{ marginBottom: 14 }}>
-            <Text style={{ fontSize: 26, fontWeight: 'bold' }}>恢复身份</Text>
+            <Text style={{ fontSize: 26, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'identity_recovery_title' })}</Text>
             {loading
              && (
                <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 0, right: -25 }}>
@@ -326,12 +332,12 @@ export default class RecoverIdentity extends Component {
           </View>
           <View style={{ marginBottom: 16, height: 22 }}>
             {!loading && <Text style={{ fontSize: 17, paddingLeft: 32, paddingRight: 32, lineHeight: 22, textAlign: 'center' }}>
-              输入您的助记词和密码信息
+              {intl.formatMessage({ id: 'identity_recovery_sub_title' })}
             </Text>}
           </View>
           <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
             <Field
-              placeholder="输入助记词，用空格分隔"
+              placeholder={intl.formatMessage({ id: 'identity_input_placeholder_mnemonics' })}
               name="mnemonics"
               fieldName="mnemonics"
               component={TextAreaField}
@@ -346,12 +352,12 @@ export default class RecoverIdentity extends Component {
             </TouchableHighlight>
           </View>
           <View style={{ width: '100%', height: 56, paddingLeft: 16, paddingRight: 16, paddingTop: 8, paddingBottom: 8, justifyContent: 'flex-end' }}>
-            <Text style={{ fontSize: 13, color: '#666666' }}>设置密码</Text>
+            <Text style={{ fontSize: 13, color: '#666666' }}>{intl.formatMessage({ id: 'identity_recovery_sub_title_setting_passwd' })}</Text>
           </View>
           <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
             <Field
-              label="钱包密码"
-              placeholder="不少于8位字符，建议混合大小写字母，数字，符号"
+              label={intl.formatMessage({ id: 'identity_input_label_wallet_passwd' })}
+              placeholder={intl.formatMessage({ id: 'identity_input_placeholder_wallet_passwd' })}
               name="password"
               fieldName="password"
               component={TextField}
@@ -361,8 +367,8 @@ export default class RecoverIdentity extends Component {
               separator={true}
             />
             <Field
-              label="密码提示"
-              placeholder="可选"
+              label={intl.formatMessage({ id: 'identity_input_label_passwd_hint' })}
+              placeholder={intl.formatMessage({ id: 'identity_input_placeholder_label_passwd_hint' })}
               name="passwordHint"
               fieldName="passwordHint"
               component={TextField}
@@ -372,7 +378,7 @@ export default class RecoverIdentity extends Component {
             />
           </View>
           <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
-            <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。</Text>
+            <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>{intl.formatMessage({ id: 'identity_recovery_hint_passwd_recovery_passwd' })}</Text>
           </View>
         </View>
       </ScrollView>

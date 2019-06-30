@@ -30,10 +30,6 @@ import styles from './styles'
 export default class AddAssets extends Component {
   static get options() {
     return {
-      topBar: {
-        searchBarHiddenWhenScrolling: true,
-        searchBarPlaceholder: 'Search'
-      },
       bottomTabs: {
         visible: false,
         drawBehind: true,
@@ -57,7 +53,8 @@ export default class AddAssets extends Component {
     getEOSAssetLoaded: false,
     getEOSAssetLoading: false,
     getEOSAssetError: false,
-    getETHAssetLoaded: false
+    getETHAssetLoaded: false,
+    firstAppeared: false
   }
 
   tableViewRef = React.createRef()
@@ -90,6 +87,7 @@ export default class AddAssets extends Component {
     if (
       prevState.getEOSAssetLoaded !== this.state.getEOSAssetLoaded
       || prevState.getETHAssetLoaded !== this.state.getETHAssetLoaded
+      || prevState.firstAppeared !== this.state.firstAppeared
     ) {
       if ((this.state.getEOSAssetLoaded && this.props.chain === 'EOS') || (this.state.getETHAssetLoaded && this.props.chain === 'ETHEREUM')) {
         setTimeout(() => {
@@ -106,10 +104,6 @@ export default class AddAssets extends Component {
   }
 
   searchBarUpdated({ text, isFocused }) {
-    if (this.tableViewRef) {
-      this.tableViewRef.scrollToIndex({ index: 0, section: 0, animated: true })
-    }
-
     if (isFocused) {
       this.props.actions.handleAssetSearchTextChange(text)
     } else {
@@ -128,20 +122,7 @@ export default class AddAssets extends Component {
   }
 
   componentDidAppear() {
-    // this.props.actions.getETHAssetRequested()
-    const { assets } = this.props
-
-    if (assets && assets.length) {
-      setTimeout(() => {
-        Navigation.mergeOptions(this.props.componentId, {
-          topBar: {
-            searchBar: true,
-            searchBarHiddenWhenScrolling: true,
-            searchBarPlaceholder: 'Search'
-          }
-        })
-      })
-    }
+    this.setState({ firstAppeared: true })
   }
 
   componentWillUnmount() {
@@ -152,7 +133,7 @@ export default class AddAssets extends Component {
   }
 
   componentDidMount() {
-    const { chain } = this.props
+    const { chain, assets } = this.props
 
     if (chain === 'ETHEREUM') {
       this.props.actions.getETHAsset.requested()
@@ -196,8 +177,8 @@ export default class AddAssets extends Component {
 
     if ((getEOSAsset.loading || getETHAsset.loading) && !assets.length) {
       return (
-        <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-          <View>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <View style={{ marginTop: 80 }}>
             <ActivityIndicator size="small" color="#666666" />
             <Text style={{ marginTop: 10, color: '#666666' }}>加载资产</Text>
           </View>

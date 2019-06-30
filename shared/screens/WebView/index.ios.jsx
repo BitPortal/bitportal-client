@@ -923,7 +923,7 @@ export default class WebView extends Component {
     const isBookmarked = id ? (bookmarkedIds.indexOf(id) !== -1) : false
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F7F7' }}>
           <View style={{ flex: 1, width: '100%' }}>
             <WebViewBridge
               source={{ uri: url }}
@@ -943,11 +943,11 @@ export default class WebView extends Component {
               onProgress={this.onProgress}
               onError={this.onError}
             />
+            <Animated.View style={{ width: '100%', height: 2, position: 'absolute', top: 0, left: 0, opacity: this.state.progressOpacity }}>
+              <Animated.View style={{ height: '100%', width: this.state.progress, backgroundColor: '#007AFF' }} />
+            </Animated.View>
           </View>
-          <Animated.View style={{ width: '100%', height: 2, position: 'absolute', top: 64, left: 0, opacity: this.state.progressOpacity }}>
-            <Animated.View style={{ height: '100%', width: this.state.progress, backgroundColor: '#007AFF' }} />
-          </Animated.View>
-          <View style={{ width: '100%', height: tabHeight, backgroundColor: '#F7F7F7', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
+          <View style={{ width: '100%', height: 49, backgroundColor: '#F7F7F7', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
             <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
               <TouchableOpacity onPress={this.goBack}>
                 <FastImage

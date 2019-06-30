@@ -222,7 +222,7 @@ export const setDefaultOptions = () => {
     },
     bottomTabs: {
       visible: true,
-      translucent: true,
+      translucent: false,
       backgroundColor: '#F7F7F7',
       drawBehind: false
     }

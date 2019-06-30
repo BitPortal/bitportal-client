@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View, TouchableHighlight, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
+import { injectIntl } from 'react-intl'
 import { bindActionCreators } from 'redux'
 import { FormattedNumber, IntlProvider, FormattedMessage } from 'react-intl'
 import Colors from 'resources/colors'

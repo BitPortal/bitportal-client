@@ -153,8 +153,9 @@ export default class ReceiveAsset extends Component {
   }
 
   setAmount = () => {
+    const { intl } = this.props
     Alert.prompt(
-      '输入金额',
+      intl.formatMessage({ id: 'receive_alert_title_input_amount' }),
       null,
       [
         {
@@ -202,7 +203,7 @@ export default class ReceiveAsset extends Component {
   }
 
   render() {
-    const { activeWallet, activeAsset, balance, intl, childAddress } = this.props
+    const { intl, activeWallet, activeAsset, balance, childAddress, statusBarHeight } = this.props
     const symbol = activeAsset.symbol
     const chain = activeWallet.chain
     const available = balance && intl.formatNumber(balance.balance, { minimumFractionDigits: balance.precision, maximumFractionDigits: balance.precision })
@@ -210,75 +211,77 @@ export default class ReceiveAsset extends Component {
     const hasChildAddress = childAddress && childAddress !== address
     const contract = activeAsset.contract
     const addressUri = this.getAddressUri(!this.state.selectedIndex ? address : childAddress, this.state.amount, chain, contract, symbol)
+    const value1 = intl.formatMessage({ id: 'receive_btc_text_main_address' })
+    const value2 = intl.formatMessage({ id: 'receive_btc_text_second_address' })
 
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <View style={[styles.container, { backgroundColor: 'white' }]}>
         {hasChildAddress && chain === 'BITCOIN' && <View style={{ height: 52, width: '100%', justifyContent: 'center', paddingTop: 5, paddingBottom: 13, paddingLeft: 16, paddingRight: 16, backgroundColor: '#F7F7F7', borderColor: '#C8C7CC', borderBottomWidth: 0.5 }}>
           <SegmentedControlIOS
-            values={['主地址', '子地址']}
+            values={[value1, value2]}
             selectedIndex={this.state.selectedIndex}
             onChange={this.changeSelectedIndex}
             style={{ width: '100%' }}
           />
         </View>}
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
-      >
-        <View style={{ flex: 1, width: '100%', alignItems: 'center', padding: 16 }}>
-          <Text style={{ fontSize: 17, marginBottom: 16 }}>当前钱包地址用于接收{+this.state.amount > 0 ? this.state.amount : ''} {symbol}</Text>
-          <QRCode
-            value={addressUri}
-            size={200}
-          />
-          <Text style={{ fontSize: this.getAddressFontSize(!this.state.selectedIndex ? address : childAddress), marginTop: 16, marginBottom: 16, textAlign: 'center' }}>
-            {!this.state.selectedIndex ? address : childAddress}
-          </Text>
-          <TouchableOpacity
-            underlayColor="#007AFF"
-            activeOpacity={0.8}
-            style={{
-              width: '100%',
-              height: 50,
-              backgroundColor: '#007AFF',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: 10
-            }}
-            onPress={this.copy.bind(this, addressUri)}
-          >
-            <Text style={{ textAlign: 'center', color: 'white', fontSize: 17 }}>复制钱包地址</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ marginTop: 16, flexDirection: 'row', alignItems: 'center' }}
-            onPress={this.setAmount}
-          >
-            <FastImage
-              source={require('resources/images/amount.png')}
-              style={{ width: 28, height: 28, marginRight: 4 }}
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View style={{ flex: 1, width: '100%', alignItems: 'center', padding: 16 }}>
+            <Text style={{ fontSize: 17, marginBottom: 16 }}>{intl.formatMessage({ id: 'receive_hint_above_qr_code' })}{+this.state.amount > 0 ? this.state.amount : ''} {symbol}</Text>
+            <QRCode
+              value={addressUri}
+              size={200}
             />
-            <Text style={{ textAlign: 'center', color: '#007AFF', fontSize: 17 }}>设置金额</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-      <Modal
-        isVisible={this.state.showModal}
-        backdropOpacity={0}
-        useNativeDriver
-        animationIn="fadeIn"
-        animationInTiming={200}
-        backdropTransitionInTiming={200}
-        animationOut="fadeOut"
-        animationOutTiming={200}
-        backdropTransitionOutTiming={200}
-      >
-        {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
-            <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已复制</Text>
+            <Text style={{ fontSize: this.getAddressFontSize(!this.state.selectedIndex ? address : childAddress), marginTop: 16, marginBottom: 16, textAlign: 'center' }}>
+              {!this.state.selectedIndex ? address : childAddress}
+            </Text>
+            <TouchableOpacity
+              underlayColor="#007AFF"
+              activeOpacity={0.8}
+              style={{
+                width: '100%',
+                height: 50,
+                backgroundColor: '#007AFF',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: 10
+              }}
+              onPress={this.copy.bind(this, addressUri)}
+            >
+              <Text style={{ textAlign: 'center', color: 'white', fontSize: 17 }}>{intl.formatMessage({ id: 'receive_button_copy_address' })}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ marginTop: 16, flexDirection: 'row', alignItems: 'center' }}
+              onPress={this.setAmount}
+            >
+              <FastImage
+                source={require('resources/images/amount.png')}
+                style={{ width: 28, height: 28, marginRight: 4 }}
+              />
+              <Text style={{ textAlign: 'center', color: '#007AFF', fontSize: 17 }}>{intl.formatMessage({ id: 'receive_button_setting_amount' })}</Text>
+            </TouchableOpacity>
           </View>
-        </View>}
-      </Modal>
+        </ScrollView>
+        <Modal
+          isVisible={this.state.showModal}
+          backdropOpacity={0}
+          useNativeDriver
+          animationIn="fadeIn"
+          animationInTiming={200}
+          backdropTransitionInTiming={200}
+          animationOut="fadeOut"
+          animationOutTiming={200}
+          backdropTransitionOutTiming={200}
+        >
+          {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
+              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已复制</Text>
+            </View>
+          </View>}
+        </Modal>
       </View>
       </SafeAreaView>
     )
