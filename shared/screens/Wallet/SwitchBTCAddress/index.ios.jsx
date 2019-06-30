@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
-import { View, Text, ActivityIndicator, Alert } from 'react-native'
+import { View, Text, ActivityIndicator, Alert, SafeAreaView } from 'react-native'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
@@ -83,8 +83,8 @@ export default class SwitchBTCAddress extends Component {
     }
 
     return (
+      <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
-        <View style={{ width: '100%', height: statusBarHeight + 44, backgroundColor: 'rgba(0,0,0,0)' }} />
         <View style={{ width: '100%', padding: 16, borderColor: '#C8C7CC', borderBottomWidth: 0.5 }}>
           <Text style={{ fontSize: 14, color: '#666666', lineHeight: 18 }}>你可以使用不同的子地址用于收款，以保护你的隐私。选中的子地址将会显示在收款界面。</Text>
         </View>
@@ -109,6 +109,7 @@ export default class SwitchBTCAddress extends Component {
           </Section>
         </TableView>
       </View>
+      </SafeAreaView>
     )
   }
 }
