@@ -337,7 +337,7 @@ export default class RecoverIdentity extends Component {
             </View>
             <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
               <Field
-                placeholder={intl.formatMessage({ id: 'identity_recovery_placeholder_input_mnemonics' })}
+                placeholder={intl.formatMessage({ id: 'identity_input_placeholder_mnemonics' })}
                 name="mnemonics"
                 fieldName="mnemonics"
                 component={TextAreaField}
