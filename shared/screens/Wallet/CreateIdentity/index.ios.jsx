@@ -221,6 +221,12 @@ export default class CreateIdentity extends Component {
     })
   }
 
+  componentDidMount() {
+    if (this.props.createIdentity.loading) {
+      this.props.actions.createIdentity.failed()
+    }
+  }
+
   render() {
     const { intl, createIdentity, formValues, change } = this.props
     const loading = createIdentity.loading

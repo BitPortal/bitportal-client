@@ -53,7 +53,8 @@ export default class AddAssets extends Component {
     getEOSAssetLoaded: false,
     getEOSAssetLoading: false,
     getEOSAssetError: false,
-    getETHAssetLoaded: false
+    getETHAssetLoaded: false,
+    firstAppeared: false
   }
 
   tableViewRef = React.createRef()
@@ -86,6 +87,7 @@ export default class AddAssets extends Component {
     if (
       prevState.getEOSAssetLoaded !== this.state.getEOSAssetLoaded
       || prevState.getETHAssetLoaded !== this.state.getETHAssetLoaded
+      || prevState.firstAppeared !== this.state.firstAppeared
     ) {
       if ((this.state.getEOSAssetLoaded && this.props.chain === 'EOS') || (this.state.getETHAssetLoaded && this.props.chain === 'ETHEREUM')) {
         setTimeout(() => {
@@ -120,20 +122,7 @@ export default class AddAssets extends Component {
   }
 
   componentDidAppear() {
-    // this.props.actions.getETHAssetRequested()
-    const { assets } = this.props
-
-    if (assets && assets.length) {
-      setTimeout(() => {
-        Navigation.mergeOptions(this.props.componentId, {
-          topBar: {
-            searchBar: true,
-            searchBarHiddenWhenScrolling: true,
-            searchBarPlaceholder: 'Search'
-          }
-        })
-      })
-    }
+    this.setState({ firstAppeared: true })
   }
 
   componentWillUnmount() {
@@ -144,7 +133,7 @@ export default class AddAssets extends Component {
   }
 
   componentDidMount() {
-    const { chain } = this.props
+    const { chain, assets } = this.props
 
     if (chain === 'ETHEREUM') {
       this.props.actions.getETHAsset.requested()

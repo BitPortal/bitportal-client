@@ -291,6 +291,9 @@ export default class RecoverIdentity extends Component {
      *     drawBehind: false
      *   }
      * })*/
+    if (this.props.recoverIdentity.loading) {
+      this.props.actions.recoverIdentity.failed()
+    }
   }
 
   scan = (field) => {

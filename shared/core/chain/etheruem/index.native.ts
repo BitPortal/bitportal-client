@@ -4,6 +4,7 @@ import { keccak256 } from 'core/crypto'
 import { signETHTransaction, decryptPrivateKey } from 'core/keystore'
 import { etherscanApi, web3 } from 'core/api'
 import { erc20ABI } from 'core/constants'
+import Big from 'big.js'
 
 export const getBalance = async (address: string, contractAddress: string = null) => {
   if (contractAddress) {
@@ -60,7 +61,7 @@ export const getTransaction = async (hash: string) => {
 
 export const getETHGasPrice = async () => {
   const networkGasPrice = await web3.eth.getGasPrice()
-  return networkGasPrice * Math.pow(10, -9)
+  return +(new Big(networkGasPrice).times(new Big(Math.pow(10, -9)).round(9).toFixed(9)))
 }
 
 export const getCode = async (address: string) => {

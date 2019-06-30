@@ -22,3 +22,5 @@ export const CHAIN_ORDER = {
   EOS: 2,
   CHAINX: 3
 }
+
+export const timeoutInterval = 20000
