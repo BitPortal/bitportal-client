@@ -379,6 +379,7 @@ export default class ManageWallet extends Component {
   }
 
   onItemNotification = (data) => {
+    const { intl } = this.props
     const { action } = data
 
     if (action === 'toEditWallet') {
