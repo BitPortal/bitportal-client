@@ -30,10 +30,6 @@ import styles from './styles'
 export default class AddAssets extends Component {
   static get options() {
     return {
-      topBar: {
-        searchBarHiddenWhenScrolling: true,
-        searchBarPlaceholder: 'Search'
-      },
       bottomTabs: {
         visible: false,
         drawBehind: true,
@@ -125,6 +121,19 @@ export default class AddAssets extends Component {
 
   componentDidAppear() {
     // this.props.actions.getETHAssetRequested()
+    const { assets } = this.props
+
+    if (assets && assets.length) {
+      setTimeout(() => {
+        Navigation.mergeOptions(this.props.componentId, {
+          topBar: {
+            searchBar: true,
+            searchBarHiddenWhenScrolling: true,
+            searchBarPlaceholder: 'Search'
+          }
+        })
+      })
+    }
   }
 
   componentWillUnmount() {
@@ -222,7 +231,7 @@ export default class AddAssets extends Component {
         </TableView>
         <Modal
           isVisible={this.state.showModal}
-          backdropOpacity={0}
+          backdropOpacity={0.4}
           useNativeDriver
           animationIn="fadeIn"
           animationInTiming={200}
@@ -232,7 +241,7 @@ export default class AddAssets extends Component {
           backdropTransitionOutTiming={200}
         >
           {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
+            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14 }}>
               {this.state.selecting && <Text style={{ fontSize: 17, fontWeight: 'bold' }}>添加中...</Text>}
               {this.state.unselecting && <Text style={{ fontSize: 17, fontWeight: 'bold' }}>取消添加中...</Text>}
             </View>
