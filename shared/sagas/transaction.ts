@@ -88,7 +88,7 @@ function* transfer(action: Action) {
         pending: true
       }
 
-      yield put(actions.addTransaction({ id: `${chain}/${fromAddress}`, item: transaction }))
+      yield put(actions.addTransaction({ id: `${chain}/${fromAddress}`, item: transaction, assetId }))
       yield put(actions.setActiveTransactionId(hash))
     } else if (chain === 'EOS') {
       const allAccounts = yield select((state: RootState) => state.account)
@@ -134,7 +134,7 @@ function* transfer(action: Action) {
         pending: true
       }
 
-      yield put(actions.addTransaction({ id: `${chain}/${fromAddress}`, item: transaction }))
+      yield put(actions.addTransaction({ id: `${chain}/${fromAddress}`, item: transaction, assetId }))
       yield put(actions.setActiveTransactionId(hash))
     }
 
@@ -142,21 +142,23 @@ function* transfer(action: Action) {
     yield put(reset('transferAssetForm'))
     yield delay(500)
 
-    if (action.payload.componentId) push(
-      'BitPortal.TransactionDetail',
-      action.payload.componentId,
-      {
-        chain: chain,
-        precision: precision || 8,
-        symbol: symbol
-      },
-      {
-        topBar: {
-          title: {
-            text: `${symbol} 转账中...`
+    if (action.payload.componentId) {
+      push(
+        'BitPortal.TransactionDetail',
+        action.payload.componentId,
+        {
+          chain: chain,
+          precision: precision || 8,
+          symbol: symbol
+        },
+        {
+          topBar: {
+            title: {
+              text: `${symbol} 转账中...`
+            }
           }
-        }
-      })
+        })
+    }
   } catch (e) {
     yield put(actions.transfer.failed(getErrorMessage(e)))
   }
