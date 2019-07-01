@@ -217,6 +217,8 @@ export default class WalletList extends Component {
           <Section />
           {!identityWalletsCount && <Section>
             <Item
+              image={require('resources/images/Add.png')}
+              imageWidth={40}
               height={44}
               onPress={this.toAddIdentity}
               type="add"
@@ -283,6 +285,8 @@ export default class WalletList extends Component {
             />
             )}
             <Item
+              image={require('resources/images/arrow_right.png')}
+              imageWidth={40}
               height={44}
               onPress={this.toSelectChainType}
               type="add"
