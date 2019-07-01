@@ -10,7 +10,8 @@ import {
   TextInput,
   Alert,
   ActivityIndicator,
-  Keyboard
+  Keyboard,
+  SafeAreaView
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Navigation } from 'react-native-navigation'
@@ -235,8 +236,7 @@ export default class CreateIdentity extends Component {
     const passwordHint = formValues && formValues.passwordHint
 
     return (
-      <View style={styles.container}>
-        <View style={{ width: '100%', height: 0.5, backgroundColor: 'rgba(0,0,0,0)' }} />
+      <SafeAreaView style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
           <View style={{ flex: 1, alignItems: 'center' }} onPress={() => console.log('press')}>
             <View style={{ marginBottom: 14 }}>
@@ -289,7 +289,7 @@ export default class CreateIdentity extends Component {
             </View>}
           </View>
         </ScrollView>
-      </View>
+      </SafeAreaView>
     )
   }
 }
