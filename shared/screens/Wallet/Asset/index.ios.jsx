@@ -156,8 +156,11 @@ export default class Asset extends Component {
     )
 
     this.listener = StatusBarIOS.addListener('statusBarFrameWillChange',
-      (statusBarData) =>
-        this.setState({ statusBarHeight: statusBarData.frame.height })
+      (statusBarData) => {
+        StatusBarManager.getHeight(response =>
+          this.setState({ statusBarHeight: response.height })
+        )
+      }
     )
   }
 
@@ -279,8 +282,8 @@ export default class Asset extends Component {
     }
 
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <View style={{ width: '100%', height: this.props.statusBarHeight + 24 + 72, backgroundColor: '#F7F7F7' }} />
         <View style={{ justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#F7F7F7', height: 136 }}>
           <View style={{ width: '100%', justifyContent: 'space-between', alignItems: 'flex-start', flexDirection: 'row', paddingRight: 16, paddingLeft: 16 }}>
             <View style={{ justifyContent: 'center', alignItems: 'flex-start', width: '60%' }}>
@@ -361,7 +364,6 @@ export default class Asset extends Component {
         </TableView>
         )}
       </View>
-      </SafeAreaView>
     )
   }
 }
