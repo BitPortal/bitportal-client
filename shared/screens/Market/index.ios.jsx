@@ -32,7 +32,10 @@ export default class Market extends Component {
       topBar: {
         title: {
           text: '行情'
-        }
+        },
+        searchBar: true,
+        searchBarHiddenWhenScrolling: true,
+        searchBarPlaceholder: 'Search'
       }
     }
   }
@@ -110,17 +113,17 @@ export default class Market extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.getTickerLoaded) {
-      setTimeout(() => {
-        Navigation.mergeOptions(this.props.componentId, {
-          topBar: {
-            searchBar: true,
-            searchBarHiddenWhenScrolling: true,
-            searchBarPlaceholder: 'Search'
-          }
-        })
-      })
-    }
+    /* if (this.state.getTickerLoaded) {
+     *   setTimeout(() => {
+     *     Navigation.mergeOptions(this.props.componentId, {
+     *       topBar: {
+     *         searchBar: true,
+     *         searchBarHiddenWhenScrolling: true,
+     *         searchBarPlaceholder: 'Search'
+     *       }
+     *     })
+     *   })
+     * }*/
   }
 
   render() {
