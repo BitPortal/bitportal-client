@@ -14,17 +14,9 @@ const WalletTableViewCell = (props) => {
 
   if (props.data.type === 'add') {
     return (
-      <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16 }}>
-        <View style={{ flex: 1, flexDirection: 'row' }}>
-          {/* <View style={{ width: 40, height: 40, marginRight: 10, backgroundColor: '#EFEFF4', borderRadius: 4, alignItems: 'center', justifyContent: 'center' }}>
-              <FastImage
-              source={require('resources/images/Add.png')}
-              style={{ width: 30, height: 30 }}
-              />
-              </View> */}
-          <View style={{ flex: 1, justifyContent: 'center' }}>
-            <Text style={{ fontSize: 17, color: '#007AFF' }}>{props.data.text}</Text>
-          </View>
+      <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 56 }}>
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <Text style={{fontSize: 17, color: '#007AFF'}}>{props.data.text}</Text>
         </View>
       </View>
     )

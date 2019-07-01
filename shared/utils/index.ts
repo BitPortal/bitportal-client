@@ -44,7 +44,7 @@ export const getErrorMessage = (error: any) => {
     // Todo:: delete when it's table enough
     try {
       onEventObject(ERROR_GET_MESSAGE, errorObject)
-    } catch (e) {}
+    } catch (e) {console.error(e)}
 
     if (
       errorObject.error
@@ -66,7 +66,7 @@ export const getErrorMessage = (error: any) => {
     // Todo:: delete when it's table enough
     try {
       onEventObject(ERROR_GET_MESSAGE, errorObject)
-    } catch (e) {}
+    } catch (e) {console.error(e)}
 
     if (
       errorObject.error
