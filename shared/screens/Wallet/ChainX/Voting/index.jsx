@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, Text, ActivityIndicator, Alert } from 'react-native'
+import { View, Text, ActivityIndicator, Alert, SafeAreaView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 import { managingWalletSelector, activeWalletSelector } from 'selectors/wallet'
@@ -75,7 +75,6 @@ export default class ChainXVoting extends Component {
     userNominationRecords: [],
     loading: true,
     loaded: false,
-    voteLoding: false,
     blockHeight: 0
   }
 
@@ -87,29 +86,6 @@ export default class ChainXVoting extends Component {
     if (buttonId === 'cancel') {
       // Navigation.dismissAllModals()
       Navigation.pop(this.props.componentId)
-    } else if (buttonId === 'vote') {
-      Alert.prompt(
-        '请输入钱包密码',
-        null,
-        [
-          {
-            text: '取消',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel'
-          },
-          {
-            text: '确认',
-            onPress: password => this.props.actions.vote.requested({
-              chain: this.props.wallet.chain,
-              id: this.props.wallet.id,
-              accountName: this.props.wallet.address,
-              producers: this.props.selectedIds,
-              password
-            })
-          }
-        ],
-        'secure-text'
-      )
     }
   }
 
@@ -196,32 +172,6 @@ export default class ChainXVoting extends Component {
     this.timer && clearInterval(this.timer);
   }
 
-  onModalHide = () => {
-    const error = this.props.vote.error
-
-    if (error) {
-      setTimeout(() => {
-        Alert.alert(
-          errorMessages(error),
-          errorDetail(error),
-          [
-            { text: '确定', onPress: () => this.props.actions.vote.clearError() }
-          ]
-        )
-      }, 20)
-    } else {
-      setTimeout(() => {
-        Alert.alert(
-          '投票成功',
-          '',
-          [
-            { text: '确定', onPress: () => {} }
-          ]
-        )
-      }, 20)
-    }
-  }
-
   onAccessoryPress = (item, pendingInterestStr = '-') => {
     Navigation.showModal({
       stack: {
@@ -241,8 +191,6 @@ export default class ChainXVoting extends Component {
   formatBalance = (balance, num = 8) => (parseInt(balance) * Math.pow(10, -num)).toFixed(num)
 
   render() {
-    const { statusBarHeight } = this.props
-    const loading = this.state.voteLoding
     const validator = this.state.validator
 
     if (!this.state.loaded && this.state.loading) {
@@ -257,7 +205,7 @@ export default class ChainXVoting extends Component {
     }
 
     return (
-      <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
         <TableView
           style={{ flex: 1, width: '100%', marginTop: 0 }}
           tableViewCellStyle={TableView.Consts.CellStyle.Default}
@@ -433,26 +381,7 @@ export default class ChainXVoting extends Component {
             })}
           </TableView.Section>
         </TableView>
-        <Modal
-          isVisible={loading}
-          backdropOpacity={0.4}
-          useNativeDriver
-          animationIn="fadeIn"
-          animationInTiming={200}
-          backdropTransitionInTiming={200}
-          animationOut="fadeOut"
-          animationOutTiming={200}
-          backdropTransitionOutTiming={200}
-          onModalHide={this.onModalHide}
-        >
-          {loading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
-              <ActivityIndicator size="small" color="#000000" />
-              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>投票中...</Text>
-            </View>
-          </View>}
-        </Modal>
-      </View>
+      </SafeAreaView>
     )
   }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
 import { injectIntl } from 'react-intl'
 import { Navigation } from 'react-native-navigation'
 import { activeWalletSelector, identityBTCWalletSelector, importedBTCWalletSelector } from 'selectors/wallet'
@@ -288,7 +288,7 @@ export default class ChainXDeposit extends Component {
     // }
 
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View
           style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}
         >
@@ -309,7 +309,7 @@ export default class ChainXDeposit extends Component {
             ChainX <Text style={{color: '#007AFF'}}>充值挖矿</Text>
           </Text>
           <Text style={{fontSize: 17, marginBottom: 20}}>
-            充值BTC或映射SDOT（仅限Polkadot私募第一期），获得ChainX的PCX奖励
+            BitPortal将会自动帮您生成绑定的信息，您只需输入充值的BTC金额或映射的SDOT，便可以一键充值BTC到ChainX，参与ChainX充值挖矿。
           </Text>
           <Text style={{fontSize: 17, marginBottom: 5}}>
             当前ChainX地址：
@@ -345,7 +345,7 @@ export default class ChainXDeposit extends Component {
           </TouchableOpacity>
         </View>
         </ScrollView>
-      </View>
+      </SafeAreaView>
       //
       // <View style={styles.container}>
       //   <View styles={styles.container, { margin: '20%' }}>
