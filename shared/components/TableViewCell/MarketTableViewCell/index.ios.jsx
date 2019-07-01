@@ -6,7 +6,7 @@ const MarketTableViewCell = props => (
   <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16 }}>
     <View style={{ flex: 1, flexDirection: 'row' }}>
       <View style={{ width: 40, height: 40, marginRight: 10, borderRadius: 20 }}>
-        <View style={{ position: 'absolute', top: 0, left: 0, width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center', backgroundColor: '#C7C7CC' }}>
+        <View style={{ position: 'absolute', top: 0, left: 0, width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center', backgroundColor: '#B9C1CF' }}>
           <Text style={{ fontWeight: '500', fontSize: 20, color: 'white', paddingLeft: 1.6 }}>{props.data.symbol.slice(0, 1)}</Text>
         </View>
         <FastImage

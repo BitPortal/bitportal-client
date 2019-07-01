@@ -9,6 +9,8 @@ const initialState = {
 export default handleActions({
   [actions.updateAccount] (state, action) {
     const account = action.payload
+    state.byId = state.byId || {}
+    state.allIds = state.allIds || []
     state.byId[account.id] = account
     const index = state.allIds.findIndex((v: any) => v === account.id)
     if (index === -1) state.allIds.push(account.id)
