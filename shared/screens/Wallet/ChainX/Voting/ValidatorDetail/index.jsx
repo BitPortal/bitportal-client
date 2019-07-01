@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, TouchableHighlight, TextInput, Alert } from 'react-native'
+import { View, Text, TouchableOpacity, TouchableHighlight, TextInput, Alert, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'utils/redux'
+import { injectIntl, FormattedMessage } from 'react-intl'
 import { Field, reduxForm, getFormSyncWarnings, getFormValues } from 'redux-form'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
+import Modal from 'react-native-modal'
 import assert from 'assert'
 import * as balanceActions from 'actions/balance'
 import FastImage from 'react-native-fast-image'
@@ -18,7 +20,6 @@ import styles from './style'
 
 
 const { Section, Item } = TableView
-
 
 const TextField = ({
   input: { onChange, ...restInput },
@@ -65,6 +66,7 @@ const validate = (values) => {
   return errors
 }
 
+@injectIntl
 
 @reduxForm({ form: 'chainxVotingAmountForm', validate })
 
@@ -114,7 +116,10 @@ export default class ChainXValidatorDetail extends Component {
     }
   }
 
-  subscription = Navigation.events().bindComponent(this)
+  constructor(props) {
+    super(props);
+    Navigation.events().bindComponent(this); // <== Will be automatically unregistered when unmounted
+  }
 
   navigationButtonPressed({ buttonId }) {
     if (buttonId === 'cancel') {
@@ -144,9 +149,15 @@ export default class ChainXValidatorDetail extends Component {
     }
   }
 
+  state = {
+    txLoading: false,
+    txError: ''
+  }
+
   formatBalance = (balance, num = 8) => (parseInt(balance) * Math.pow(10, -num)).toFixed(num).toString()
 
   toVote = () => {
+    const { intl } = this.props
     const votingAmount = this.props.formValues && this.props.formValues.votingAmount
     if (!votingAmount) {
       Dialog.alert('提示', '请输入投票数量')
@@ -154,16 +165,16 @@ export default class ChainXValidatorDetail extends Component {
     }
     const hint = `本次操作将为该节点投票${parseFloat(votingAmount).toFixed(8)} PCX`
     Alert.prompt(
-      '请输入钱包密码',
+      intl.formatMessage({ id: 'alert_input_wallet_password' }),
       hint,
       [
         {
-          text: '取消',
+          text: intl.formatMessage({ id: 'alert_button_cancel' }),
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel'
         },
         {
-          text: '确认',
+          text: intl.formatMessage({ id: 'alert_button_confirm' }),
           onPress: password => this.vote(
             chainxAccount.encodeAddress(this.props.account),
             votingAmount,
@@ -176,17 +187,18 @@ export default class ChainXValidatorDetail extends Component {
   }
 
   toClaim = () => {
+    const { intl } = this.props
     Alert.prompt(
-      '请输入钱包密码',
+      intl.formatMessage({ id: 'alert_input_wallet_password' }),
       '本次操作将提取该节点的利息',
       [
         {
-          text: '取消',
+          text: intl.formatMessage({ id: 'alert_button_cancel' }),
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel'
         },
         {
-          text: '确认',
+          text: intl.formatMessage({ id: 'alert_button_confirm' }),
           onPress: password => this.voteClaim(
             chainxAccount.encodeAddress(this.props.account),
             password
@@ -200,6 +212,16 @@ export default class ChainXValidatorDetail extends Component {
   vote = async (targetAddress, amount, password) => {
     const { activeWallet } = this.props
     const id = activeWallet.id
+
+    this.setState({ txLoading: true })
+    setTimeout(() => {
+      if (this.state.txLoading === true) {
+        this.setState({
+          txLoading: false,
+          txError: '交易超时，请检查区块链浏览器以确认交易是否完成'
+        })
+      }
+    }, 30000)
 
     if (!activeWallet || activeWallet.chain !== 'CHAINX' || !activeWallet.id) {
       Dialog.alert('Error', '当前钱包并非有效的ChainX钱包')
@@ -223,6 +245,7 @@ export default class ChainXValidatorDetail extends Component {
             text: 'OK',
             onPress: () => {
               console.log('Ok Pressed')
+              this.setState({ txLoading: false })
               Navigation.pop(this.props.componentId, {
                 component: {
                   name: 'BitPortal.ChainXVoting'
@@ -241,11 +264,23 @@ export default class ChainXValidatorDetail extends Component {
         )
       } else {
         console.error('投票失败', tx.toString())
-        Dialog.alert('错误', '投票失败')
+        Alert.alert(
+          '错误',
+          `错误：${tx.toString()}`,
+          [
+            { text: 'OK', onPress: () => this.setState({ txLoading: false }) }
+          ]
+        )
       }
       this.props.actions.getBalance.refresh(this.props.activeWallet)
     } catch (e) {
-      Dialog.alert('投票失败', `错误：${e.toString()}`)
+      Alert.alert(
+        '错误',
+        `错误：${e.toString()}`,
+        [
+          { text: 'OK', onPress: () => this.setState({ txLoading: false }) }
+        ]
+      )
     }
   }
 
@@ -278,9 +313,24 @@ export default class ChainXValidatorDetail extends Component {
     }
   }
 
+  onModalHide = () => {
+    const error = this.state.txError
+
+    if (error !== '') {
+      setTimeout(() => {
+        Alert.alert(
+          'Error',
+          this.state.txError.toString(),
+          [
+            { text: '确定', onPress: () => this.setState({ txError: '' }) }
+          ]
+        )
+      }, 20)
+    }
+  }
 
   render() {
-    const { formValues, change, balance, name, account, about, isActive, isValidator, isTruestee, jackpot, jackpotAccount, sessionKey, pendingInterestStr } = this.props
+    const { formValues, change, intl, balance, name, account, about, isActive, isValidator, isTruestee, jackpot, jackpotAccount, sessionKey, pendingInterestStr } = this.props
     const votingAmount = formValues && formValues.passwordHint
     const formatedJackpot = jackpot && this.formatBalance(jackpot)
 
@@ -290,12 +340,12 @@ export default class ChainXValidatorDetail extends Component {
       items.push(
         <Item
           reactModuleForCell="ChainXValidatorDetailTableViewCell"
-          text="节点名称"
+          text={intl.formatMessage({ id: 'chainx_validator_detail_item_name' })}
           type="name"
           key="name"
           detail={name}
           height={60}
-          selectionStyle={TableView.Consts.CellSelectionStyle.None}
+          selectionStyle={TableView.Consts.CellSelectionStyle.Default}
         />
       )
     }
@@ -303,12 +353,12 @@ export default class ChainXValidatorDetail extends Component {
     items.push(
       <Item
         reactModuleForCell="ChainXValidatorDetailTableViewCell"
-        text="帐号"
+        text={intl.formatMessage({ id: 'chainx_validator_detail_item_account' })}
         key="account"
         type="account"
         detail={chainxAccount.encodeAddress(account)}
         height={60}
-        selectionStyle={TableView.Consts.CellSelectionStyle.None}
+        selectionStyle={TableView.Consts.CellSelectionStyle.Default}
       />
     )
 
@@ -316,35 +366,35 @@ export default class ChainXValidatorDetail extends Component {
       <Item
         key="jackpot"
         reactModuleForCell="ChainXValidatorDetailTableViewCell"
-        text="奖池"
+        text={intl.formatMessage({ id: 'chainx_validator_detail_item_jackpot' })}
         type="jackpot"
         detail={formatedJackpot}
         height={60}
-        selectionStyle={TableView.Consts.CellSelectionStyle.None}
+        selectionStyle={TableView.Consts.CellSelectionStyle.Default}
       />
     )
+
+    // items.push(
+    //   <Item
+    //     reactModuleForCell="ChainXValidatorDetailTableViewCell"
+    //     text="出块公钥"
+    //     type="sessionKey"
+    //     key="sessionKey"
+    //     detail={sessionKey}
+    //     height={60}
+    //     selectionStyle={TableView.Consts.CellSelectionStyle.Default}
+    //   />
+    // )
 
     items.push(
       <Item
         reactModuleForCell="ChainXValidatorDetailTableViewCell"
-        text="出块公钥"
-        type="sessionKey"
-        key="sessionKey"
-        detail={sessionKey}
-        height={60}
-        selectionStyle={TableView.Consts.CellSelectionStyle.None}
-      />
-    )
-
-    items.push(
-      <Item
-        reactModuleForCell="ChainXValidatorDetailTableViewCell"
-        text="介绍"
+        text={intl.formatMessage({ id: 'chainx_validator_detail_item_about' })}
         key="about"
         type="about"
         detail={about}
         height={100}
-        selectionStyle={TableView.Consts.CellSelectionStyle.None}
+        selectionStyle={TableView.Consts.CellSelectionStyle.Default}
       />
     )
 
@@ -356,7 +406,7 @@ export default class ChainXValidatorDetail extends Component {
         type="pendingInterest"
         detail={pendingInterestStr}
         height={60}
-        selectionStyle={TableView.Consts.CellSelectionStyle.None}
+        selectionStyle={TableView.Consts.CellSelectionStyle.Default}
       />
     )
 
@@ -394,6 +444,25 @@ export default class ChainXValidatorDetail extends Component {
             <Text style={[styles.buttonText, { color: '#007AFF' }]}>提息</Text>
           </TouchableOpacity>
         </View>
+        <Modal
+          isVisible={this.state.txLoading}
+          backdropOpacity={0.4}
+          useNativeDriver
+          animationIn="fadeIn"
+          animationInTiming={200}
+          backdropTransitionInTiming={200}
+          animationOut="fadeOut"
+          animationOutTiming={200}
+          backdropTransitionOutTiming={200}
+          onModalHide={this.onModalHide}
+        >
+          {this.state.txLoading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
+              <ActivityIndicator size="small" color="#000000" />
+              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>交易发送中...</Text>
+            </View>
+          </View>}
+        </Modal>
       </View>
     )
   }

@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, TouchableHighlight, AlertIOS, TextInput, Alert } from 'react-native'
+import { View, Text, TouchableOpacity, TouchableHighlight, TextInput, Alert, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
+import { injectIntl } from 'react-intl'
 import { Field, reduxForm, getFormSyncWarnings, getFormValues } from 'redux-form'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
+import Modal from 'react-native-modal'
 import assert from 'assert'
 import FastImage from 'react-native-fast-image'
 import { activeWalletSelector } from 'selectors/wallet'
@@ -16,6 +18,8 @@ import styles from './style'
 
 
 const { Section, Item } = TableView
+
+@injectIntl
 
 @connect(
   state => ({
@@ -61,7 +65,9 @@ export default class ChainXDepositClaim extends Component {
     sdotIntention: {},
     userBtcIntention: {},
     userSdotIntention: {},
-    loaded: false
+    loaded: false,
+    txLoading: false,
+    txError: ''
   }
 
   formatBalance = (balance, num = 8) => (parseInt(balance) * Math.pow(10, -num)).toFixed(num).toString()
@@ -118,7 +124,7 @@ export default class ChainXDepositClaim extends Component {
 
     this.timer = setInterval(() => {
       this.updateBlockHeight();
-    }, 5000);
+    }, 1000);
     this.setState({ loaded: true })
   }
 
@@ -127,23 +133,24 @@ export default class ChainXDepositClaim extends Component {
   }
 
   toDepositClaim = (asset) => {
+    const { intl } = this.props
     if (['BTC', 'SDOT'].indexOf(asset) === -1) {
       Dialog.alert('提示', '请指定资产')
       return
     }
 
     const hint = `本次操作将提取${asset}的充值利息`
-    AlertIOS.prompt(
-      '请输入钱包密码',
+    Alert.prompt(
+      intl.formatMessage({ id: 'alert_input_wallet_password' }),
       hint,
       [
         {
-          text: '取消',
+          text: intl.formatMessage({ id: 'alert_button_cancel' }),
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel'
         },
         {
-          text: '确认',
+          text: intl.formatMessage({ id: 'alert_button_confirm' }),
           onPress: password => this.DepositClaim(
             asset,
             password
@@ -154,9 +161,23 @@ export default class ChainXDepositClaim extends Component {
     )
   }
 
+  onTimeout = async () => {
+
+  }
+
   DepositClaim = async (asset, password) => {
     const { activeWallet } = this.props
     const id = activeWallet.id
+
+    this.setState({ txLoading: true })
+    setTimeout(() => {
+      if (this.state.txLoading === true) {
+        this.setState({
+          txLoading: false,
+          txError: '交易超时，请检查区块链结果'
+        })
+      }
+    }, 20000)
 
     if (!activeWallet || activeWallet.chain !== 'CHAINX' || !activeWallet.id) {
       Dialog.alert('Error', '当前钱包并非有效的ChainX钱包')
@@ -176,17 +197,20 @@ export default class ChainXDepositClaim extends Component {
         Alert.alert(
           '提取成功',
           `提取充值交易发送成功，请检查区块链信息!交易id:${tx.toString()}`,
-          {
-            text: 'OK',
-            onPress: () => {
-              console.log('Ok Pressed')
-            },
-            style: 'default'
-          }
+          [
+            { text: 'OK', onPress: () => this.setState({ txLoading: false }) }
+          ],
+          { cancelable: false, onDismiss: () => {} }
         )
       } else {
         console.error('提息失败', tx.toString())
-        Dialog.alert('错误', '提息失败')
+        Alert.alert(
+          '错误',
+          '提息失败',
+          [
+            { text: 'OK', onPress: () => this.setState({ txLoading: false }) }
+          ]
+        )
       }
       setTimeout(async () => {
         await this.updatePseduIntentions()
@@ -194,7 +218,15 @@ export default class ChainXDepositClaim extends Component {
         await this.updateBlockHeight()
       }, 2000)
     } catch (e) {
-      Dialog.alert('提息失败', `错误：${e.toString()}`)
+      this.setState({ txLoading: false })
+      Alert.alert(
+        '错误',
+        '提息失败',
+        [
+          { text: 'OK', onPress: () => this.setState({ txLoading: false }) }
+        ],
+        { cancelable: false, onDismiss: () => {} }
+      )
     }
   }
 
@@ -211,6 +243,23 @@ export default class ChainXDepositClaim extends Component {
     const pendingInterestWithoutDiscount = (latestUserDepositWeight / latestTotalDepositWeight) * intention.jackpot
     const pendingInterest = pendingInterestWithoutDiscount * ((100 - intention.discount) / 100)
     return pendingInterest > 0 ? pendingInterest : 0
+  }
+
+  onModalHide = () => {
+    const error = this.state.txError
+
+    if (error !== '') {
+      console.log('onModalHide txError', error)
+      setTimeout(() => {
+        Alert.alert(
+          'Error',
+          this.state.txError.toString(),
+          [
+            { text: '确定', onPress: () => this.setState( { txError: '' }) }
+          ]
+        )
+      }, 20)
+    }
   }
 
   render() {
@@ -355,6 +404,25 @@ export default class ChainXDepositClaim extends Component {
             <Text style={[styles.buttonText, { color: '#007AFF' }]}>SDOT映射提息</Text>
           </TouchableOpacity>
         </View>
+        <Modal
+          isVisible={this.state.txLoading}
+          backdropOpacity={0.4}
+          useNativeDriver
+          animationIn="fadeIn"
+          animationInTiming={200}
+          backdropTransitionInTiming={200}
+          animationOut="fadeOut"
+          animationOutTiming={200}
+          backdropTransitionOutTiming={200}
+          onModalHide={this.onModalHide}
+        >
+          {this.state.txLoading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
+              <ActivityIndicator size="small" color="#000000" />
+              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>交易发送中...</Text>
+            </View>
+          </View>}
+        </Modal>
       </View>
     )
   }
