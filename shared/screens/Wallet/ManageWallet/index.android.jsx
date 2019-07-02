@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { injectIntl, FormattedMessage } from 'react-intl'
-import { View, ActionSheetIOS, Alert, Text, ActivityIndicator } from 'react-native'
+import { View, ActionSheetIOS, Alert, Text, ActivityIndicator, SafeAreaView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 import * as walletActions from 'actions/wallet'
@@ -757,7 +757,7 @@ export default class ManageWallet extends Component {
     }
 
     return (
-      <View style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }}>
         <TableView
           style={{ flex: 1 }}
           tableViewStyle={TableView.Consts.Style.Grouped}
@@ -821,7 +821,7 @@ export default class ManageWallet extends Component {
             </View>
           </View>}
         </Modal>
-      </View>
+      </SafeAreaView>
     )
   }
 }
