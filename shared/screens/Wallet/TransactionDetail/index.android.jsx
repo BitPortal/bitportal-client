@@ -59,6 +59,7 @@ export default class TransactionDetail extends Component {
   }
 
   subscription = Navigation.events().bindComponent(this)
+
   state = { showModal: false, showModalContent: false, pending: false }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -101,6 +102,86 @@ export default class TransactionDetail extends Component {
         })
       }, 1000)
     })
+  }
+
+  toExplorer = (chain, txId, explorer = null) => {
+    const { intl } = this.props
+    let url
+    if (chain === 'BITCOIN') {
+      url = `https://btc.com/${txId.toString()}`
+    } else if (chain === 'ETHEREUM') {
+      url = `https://etherscan.io/tx/${txId.toString()}`
+    } else if (chain === 'EOS') {
+      url = `https://eospark.com/tx/${txId.toString()}`
+    } else if (chain === 'CHAINX') {
+      url = `https://scan.chainx.org/txs/${txId.toString()}`
+    } else {
+      console.error('Invalid Chain', chain)
+      throw new Error('Invalid Chain')
+    }
+
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.WebView',
+            passProps: {
+              url: url
+            },
+            options: {
+              topBar: {
+                title: {
+                  text: intl.formatMessage({ id: 'txn_detail_title_blockchain_explorer_webview' })
+                },
+                leftButtons: [
+                  {
+                    id: 'cancel',
+                    text: intl.formatMessage({ id: 'top_bar_button_cancel' })
+                  }
+                ]
+              }
+            }
+          }
+        }]
+      }
+    })
+  }
+
+  toTransactionIdUI = (transactionId) => {
+    const { intl } = this.props
+    return (
+      <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
+        <View>
+          <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>{intl.formatMessage({ id: 'txn_detail_label_txn_id' })}</Text>
+          <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transactionId)}>
+            <Text style={{ fontSize: 15 }}>
+              {transactionId}
+              <Image
+                source={require('resources/images/copy_black.png')}
+                style={{ width: 18, height: 18 }}
+              />
+            </Text>
+          </TouchableHighlight>
+        </View>
+      </View>
+    )
+  }
+
+  toExplorerUI = (chain, txId, explorer = null) => {
+    const { intl } = this.props
+    return (
+      <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
+        <View>
+          <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>{intl.formatMessage({ id: 'txn_detail_label_query_in_explorer' })}</Text>
+          <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.toExplorer.bind(this, chain, txId)}>
+            <Image
+              source={require('resources/images/share.png')}
+              style={{ width: 18, height: 18 }}
+            />
+          </TouchableHighlight>
+        </View>
+      </View>
+    )
   }
 
   componentDidMount() {
@@ -169,20 +250,8 @@ export default class TransactionDetail extends Component {
               </View>
               <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
             </View>
-            <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
-              <View>
-                <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>交易号</Text>
-                <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.id)}>
-                  <Text style={{ fontSize: 15 }}>
-                    {`${transaction.id} `}
-                     <Image
-                      source={require('resources/images/copy_black.png')}
-                      style={{ width: 18, height: 18 }}
-                    />
-                  </Text>
-                </TouchableHighlight>
-              </View>
-            </View>
+            {this.toTransactionIdUI(transaction.id)}
+            {this.toExplorerUI(chain, transaction.id)}
           </View>
           <Modal
             isVisible={this.state.showModal}
@@ -268,20 +337,8 @@ export default class TransactionDetail extends Component {
               </View>
               <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
             </View>
-            <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
-              <View>
-                <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>交易号</Text>
-                <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.id)}>
-                  <Text style={{ fontSize: 15 }}>
-                    {`${transaction.id} `}
-                    <Image
-                      source={require('resources/images/copy_black.png')}
-                      style={{ width: 18, height: 18 }}
-                    />
-                  </Text>
-                </TouchableHighlight>
-              </View>
-            </View>
+            {this.toTransactionIdUI(transaction.id)}
+            {this.toExplorerUI(chain, transaction.id)}
           </View>
           <Modal
             isVisible={this.state.showModal}
@@ -362,20 +419,8 @@ export default class TransactionDetail extends Component {
               </View>
               <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
             </View>
-            <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
-              <View>
-                <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>交易号</Text>
-                <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.id)}>
-                  <Text style={{ fontSize: 15 }}>
-                    {`${transaction.id} `}
-                    <Image
-                      source={require('resources/images/copy_black.png')}
-                      style={{ width: 18, height: 18 }}
-                    />
-                  </Text>
-                </TouchableHighlight>
-              </View>
-            </View>
+            {this.toTransactionIdUI(transaction.id)}
+            {this.toExplorerUI(chain, transaction.id)}
           </View>
           <Modal
             isVisible={this.state.showModal}
@@ -444,32 +489,20 @@ export default class TransactionDetail extends Component {
                 <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.confirmations}</Text>
               </View>
               {/*<View style={{ width: '50%' }}>*/}
-                {/*<Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>矿工费用</Text>*/}
-                {/*<Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.fees}</Text>*/}
+              {/*<Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>矿工费用</Text>*/}
+              {/*<Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.fees}</Text>*/}
               {/*</View>*/}
               <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
             </View>
             {/*<View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>*/}
-              {/*<View style={{ width: '50%' }}>*/}
-                {/*<Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>区块高度</Text>*/}
-                {/*<Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.blockheight}</Text>*/}
-              {/*</View>*/}
-              {/*<View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />*/}
+            {/*<View style={{ width: '50%' }}>*/}
+            {/*<Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>区块高度</Text>*/}
+            {/*<Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.blockheight}</Text>*/}
             {/*</View>*/}
-            <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
-              <View>
-                <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>交易号</Text>
-                <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.id)}>
-                  <Text style={{ fontSize: 15 }}>
-                    {`${transaction.id} `}
-                    <Image
-                      source={require('resources/images/copy_black.png')}
-                      style={{ width: 18, height: 18 }}
-                    />
-                  </Text>
-                </TouchableHighlight>
-              </View>
-            </View>
+            {/*<View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />*/}
+            {/*</View>*/}
+            {this.toTransactionIdUI(transaction.id)}
+            {this.toExplorerUI(chain, transaction.id)}
           </View>
           <Modal
             isVisible={this.state.showModal}
