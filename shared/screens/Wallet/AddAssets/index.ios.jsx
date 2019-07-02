@@ -109,6 +109,10 @@ export default class AddAssets extends Component {
     } else {
       this.props.actions.handleAssetSearchTextChange('')
     }
+
+    if (this.tableViewRef) {
+      this.tableViewRef.scrollToIndex({ index: 0, section: 0, animated: true })
+    }
   }
 
   onRefresh = () => {

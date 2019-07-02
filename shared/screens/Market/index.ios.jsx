@@ -33,9 +33,9 @@ export default class Market extends Component {
         title: {
           text: '行情'
         },
-        searchBar: true,
-        searchBarHiddenWhenScrolling: true,
-        searchBarPlaceholder: 'Search'
+        /* searchBar: true,
+         * searchBarHiddenWhenScrolling: true,
+         * searchBarPlaceholder: 'Search'*/
       }
     }
   }
@@ -48,7 +48,7 @@ export default class Market extends Component {
     getTickerError: false,
     tickerCount: 0,
     searchBarFocused: false,
-    canRefresh: false
+    firstAppeared: false
   }
 
   tableViewRef = React.createRef()
@@ -109,21 +109,26 @@ export default class Market extends Component {
      *   })
      * }*/
 
-    this.setState({ canRefresh: true })
+    this.setState({ firstAppeared: true })
   }
 
   componentDidUpdate(prevProps, prevState) {
-    /* if (this.state.getTickerLoaded) {
-     *   setTimeout(() => {
-     *     Navigation.mergeOptions(this.props.componentId, {
-     *       topBar: {
-     *         searchBar: true,
-     *         searchBarHiddenWhenScrolling: true,
-     *         searchBarPlaceholder: 'Search'
-     *       }
-     *     })
-     *   })
-     * }*/
+    if (
+      prevState.getTickerLoaded !== this.state.getTickerLoaded
+      || prevState.firstAppeared !== this.state.firstAppeared
+    ) {
+      if (this.state.getTickerLoaded) {
+        setTimeout(() => {
+          Navigation.mergeOptions(this.props.componentId, {
+            topBar: {
+              searchBar: true,
+              searchBarHiddenWhenScrolling: true,
+              searchBarPlaceholder: 'Search'
+            }
+          })
+        })
+      }
+    }
   }
 
   render() {
@@ -146,7 +151,7 @@ export default class Market extends Component {
       <TableView
         ref={(ref) => { this.tableViewRef = ref }}
         style={{ flex: 1, backgroundColor: 'white' }}
-        canRefresh={!this.state.searchBarFocused && this.state.getTickerLoaded && this.state.canRefresh}
+        canRefresh={this.state.firstAppeared}
         refreshing={refreshing && !this.state.searchBarFocused && this.state.getTickerLoaded}
         onRefresh={this.state.searchBarFocused ? () => {} : this.onRefresh}
       >
