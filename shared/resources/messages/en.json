@@ -103,6 +103,21 @@
 
   "transfer_alert_sending_transaction": "Sending the Transaction...",
 
+  "txn_detail_from_account": "Pay Account",
+  "txn_detail_to_account": "Receive Account",
+  "txn_detail_memo": "Memo",
+  "txn_detail_block_height": "Block Height",
+  "txn_detail_contract_account": "Contract Account",
+  "txn_detail_from_address": "Pay Address",
+  "txn_detail_to_address": "Receive Address",
+  "txn_detail_gas_amount": "Gas Amount",
+  "txn_detail_gas_price": "Gas Price",
+  "txn_detail_confirmations": "Confirmations",
+  "txn_detail_label_query_in_explorer": "Open in a Blockchain Explorer",
+  "txn_detail_label_txn_id": "Transaction Id",
+  "txn_detail_title_blockchain_explorer_webview": "Transaction Detail",
+
+
   "scan_simplewallet_signin_title_authorize": "账户授权",
   "scan_simplewallet_signin_text_name": "",
   "scan_simplewallet_signin_label_authority": "该应用将会得到以下权限",

@@ -103,6 +103,21 @@
 
   "transfer_alert_sending_transaction": "交易发送中",
 
+  "txn_detail_from_account": "付款帐号",
+  "txn_detail_to_account": "收款帐号",
+  "txn_detail_memo": "备注(memo)",
+  "txn_detail_block_height": "区块高度",
+  "txn_detail_contract_account": "合约帐号",
+  "txn_detail_from_address": "付款地址",
+  "txn_detail_to_address": "收款地址",
+  "txn_detail_gas_amount": "Gas消耗",
+  "txn_detail_gas_price": "Gas价格",
+  "txn_detail_confirmations": "确认数",
+  "txn_detail_label_query_in_explorer": "在区块链浏览器中查询",
+  "txn_detail_label_txn_id": "交易号",
+  "txn_detail_title_blockchain_explorer_webview": "交易详情",
+
+
   "scan_simplewallet_signin_title_authorize": "账户授权",
   "scan_simplewallet_signin_text_name": "",
   "scan_simplewallet_signin_label_authority": "该应用将会得到以下权限",
