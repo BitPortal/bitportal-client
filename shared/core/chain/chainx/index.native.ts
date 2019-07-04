@@ -51,7 +51,7 @@ export const getPseduNominationRecords = async (address: string) => {
   return await provider.send('chainx_getPseduNominationRecords', [chainxAccount.decodeAddress(address)])
 }
 
-export const getAsset = async (address: string) => {
+export const getAssetsBalance = async (address: string) => {
   const provider = initRpc()
   const asset = await provider.send('chainx_getAssetsByAccount', [chainxAccount.decodeAddress(address), 0, 10])
   return asset
@@ -119,14 +119,18 @@ export const getSdotMappingData = (address, nodeName = 'BitPotal') => {
   return getDepositOpReturn(address, nodeName)
 }
 
-export const transfer = async (password: string, keystore: any, fromAddress: string, toAddress: string, symbol: string, amount: string, memo: string = '') => {
-  const realAmount = (+amount) * Math.pow(10, 8)
+export const transfer = async (password: string, keystore: any, fromAddress: string, toAddress: string, symbol: string, precision: number, amount: string, memo: string = '') => {
+  const realAmount = (+amount) * Math.pow(10, parseInt(precision, 10))
 
   const chainx = await initApibase()
 
+  // if (['PCX', 'BTC', 'SDOT'].indexOf(symbol) === -1) {
+  //   throw new Error('Invalid ChainX Symbol')
+  // }
+
   // 生成转账交易
   // console.log('transfer params', fromAddress, toAddress, symbol, realAmount, memo)
-  const extrinsic = chainx.tx.xAssets.transfer(toAddress, symbol, realAmount, memo)
+  const extrinsic = chainx.tx.xAssets.transfer(toAddress, symbol, realAmount, memo ? memo : '')
 
   // 获取该账户交易次数
   const nonce = await chainx.query.system.accountNonce(fromAddress)
@@ -134,7 +138,7 @@ export const transfer = async (password: string, keystore: any, fromAddress: str
   const pk = await getPrivateKeyFromKeyStore(password, keystore)
 
   // const signed = extrinsic.sign(privateKeyHex, {nonce, acceleration = 1, blockHash: chainx.genesisHash })
-  const txId = await extrinsic.signAndSend(pk, { nonce, acceleration: 1 })
+  const txId = await extrinsic.signAndSend(pk, { nonce, acceleration: 2 })
   return txId
 }
 

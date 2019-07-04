@@ -1,6 +1,6 @@
 import assert from 'assert'
 import { delay } from 'redux-saga'
-import { takeLatest, takeEvery, put, call, select } from 'redux-saga/effects'
+import { takeLatest, takeEvery, race, put, call, select } from 'redux-saga/effects'
 import { reset } from 'redux-form'
 import { getErrorMessage, getEOSErrorMessage } from 'utils'
 import * as actions from 'actions/wallet'
@@ -23,6 +23,7 @@ import {
 } from 'core/chain/eos'
 import memoryStorage from 'core/storage/memoryStorage'
 import secureStorage from 'core/storage/secureStorage'
+import { chain } from 'core/constants'
 import { push, dismissAllModals, popToRoot, showModal } from 'utils/location'
 
 function* setActiveWallet(action: Action<SetActiveWalletParams>) {

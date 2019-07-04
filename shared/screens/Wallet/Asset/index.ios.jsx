@@ -313,7 +313,7 @@ export default class Asset extends Component {
                     source={require('resources/images/transfer_white.png')}
                     style={{ width: 26, height: 26, marginRight: 8 }}
                   />
-                  <Text style={{ color: 'white', fontSize: 17 }}>转账</Text>
+                  <Text style={{ color: 'white', fontSize: 17 }}>{intl.formatMessage({ id: 'transfer_button_send' })}</Text>
                 </View>
               </TouchableHighlight>
             </View>
@@ -324,7 +324,7 @@ export default class Asset extends Component {
                     source={require('resources/images/receive_white.png')}
                     style={{ width: 26, height: 26, marginRight: 8, marginBottom: 3 }}
                   />
-                  <Text style={{ color: 'white', fontSize: 17 }}>收款</Text>
+                  <Text style={{ color: 'white', fontSize: 17 }}>{intl.formatMessage({ id: 'transfer_button_receive' })}</Text>
                 </View>
               </TouchableHighlight>
             </View>

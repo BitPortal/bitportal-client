@@ -201,7 +201,7 @@ export default class Wallet extends Component {
   async componentDidAppear() {
     this.setState({ switching: false })
 
-    const { activeWallet, selectedAsset } = this.props
+    const { activeWallet } = this.props
 
     if (this.props.activeWalletId) {
       this.scrollToItem(this.state.activeWalletId)
@@ -212,6 +212,8 @@ export default class Wallet extends Component {
           this.props.actions.scanEOSAsset.requested(activeWallet)
         } else if (activeWallet.chain === 'ETHEREUM') {
           this.props.actions.getETHTokenBalanceList.requested(activeWallet)
+        } else if (activeWallet.chain === 'CHAINX') {
+          this.props.actions.getChainXTokenBalanceList.requested(activeWallet)
         }
       }
     }
@@ -469,7 +471,7 @@ export default class Wallet extends Component {
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <View style={{ marginTop: 80 }}>
             <ActivityIndicator size="small" color="#666666" />
-            <Text style={{ marginTop: 10, color: '#666666' }}>加载钱包</Text>
+            <Text style={{ marginTop: 10, color: '#666666' }}>{intl.formatMessage({ id: 'wallet_text_loading_wallet'})}</Text>
           </View>
           <PreloadedImages />
         </View>
@@ -516,8 +518,8 @@ export default class Wallet extends Component {
           chain={chain}
           showSeparator={selectedAsset && selectedAsset.length}
           swipeable={true}
-          trailingTitle="收款"
-          leadingTitle="转账"
+          trailingTitle={intl.formatMessage({ id: 'transfer_button_receive' })}
+          leadingTitle={intl.formatMessage({ id: 'transfer_button_send' })}
         />
       )
       const assetsBalance = this.props.assetsBalance
@@ -546,8 +548,8 @@ export default class Wallet extends Component {
               icon_url={selectedAsset[i].icon_url}
               swipeable={true}
               showSeparator={selectedAsset.length - 1 !== i}
-              trailingTitle="收款"
-              leadingTitle="转账"
+              trailingTitle={intl.formatMessage({ id: 'transfer_button_receive' })}
+              leadingTitle={intl.formatMessage({ id: 'transfer_button_send' })}
             />
           )
         }
@@ -638,13 +640,13 @@ export default class Wallet extends Component {
           <Section uid="HeaderTableViewCell">
             <Item
               reactModuleForCell="HeaderTableViewCell"
-              title="资产"
+              title={intl.formatMessage({ id: 'wallet_header_title_asset' })}
               height={48}
               componentId={this.props.componentId}
               selectionStyle={TableView.Consts.CellSelectionStyle.None}
               switching={this.state.switching}
               chain={chain}
-              hasRightButton={chain === 'ETHEREUM' || chain === 'EOS'}
+              hasRightButton={chain === 'ETHEREUM' || chain === 'EOS' || chain === 'CHAINX'}
             />
           </Section>
           {!!balance && (<Section headerHeight={0} uid="AssetBalanceTableViewCell" canEdit={!this.state.switching}>{assetItems}</Section>)}
