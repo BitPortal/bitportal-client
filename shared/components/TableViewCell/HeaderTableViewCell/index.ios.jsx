@@ -7,13 +7,15 @@ const HeaderTableViewCell = (props) => {
   toAddAsset = () => {
     const { chain } = props.data
 
-    if (chain === 'ETHEREUM' || chain === 'EOS') {
+    if (chain === 'ETHEREUM' || chain === 'EOS' || chain === 'CHAINX') {
       let symbol
 
       if (chain === 'ETHEREUM') {
         symbol = 'ETH'
       } else if (chain === 'EOS') {
         symbol = 'EOS'
+      } else if (chain === 'CHAINX') {
+        symbol = 'PCX'
       }
 
       Navigation.push(props.data.componentId, {

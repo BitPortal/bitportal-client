@@ -106,7 +106,7 @@ export const errorMessages = (error, messages) => {
     case 'EOS System Error':
       return 'EOS系统错误'
     case 'request timeout':
-      return '请求超时'
+      return '请求超时，请检查区块链浏览器以确定交易是否发出！'
     default:
       return `转账失败 ${message.toString()}`
   }
@@ -835,6 +835,7 @@ export default class TransferAsset extends Component {
     const useGasPrice = this.state.useGasPrice || this.state.initialGwei || this.state.ethGasPrice || 4.00
 
     return (
+      <SafeAreaView style={{ flex: 1 }}>
       <ScrollView
         style={[styles.container, { backgroundColor: 'white' }]}
         showsVerticalScrollIndicator={false}
@@ -1118,6 +1119,7 @@ export default class TransferAsset extends Component {
           </View>}
         </Modal>
       </ScrollView>
+      </SafeAreaView>
     )
   }
 }

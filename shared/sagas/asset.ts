@@ -28,6 +28,30 @@ function* getEOSAsset(action: Action) {
   }
 }
 
+function* getChainXAsset(action: Action) {
+  try {
+    const chainxAssets = [{
+      id: 'CHAINX/X-BTC',
+      chain: 'CHAINX',
+      symbol: 'BTC',
+      contract: 'XAssets',
+      precision: 8,
+      icon_url: 'https://cdn.bitportal.io/tokenicon/32/color/btc.png'
+    }, {
+      id: 'CHAINX/SDOT',
+      chain: 'CHAINX',
+      symbol: 'SDOT',
+      contract: 'XAssets',
+      precision: 3,
+      icon_url: 'https://cdn.bitportal.io/icons/dot.png'
+    }]
+    yield put(actions.updateAsset({ assets: chainxAssets, chain: 'CHAINX' }))
+    yield put(actions.getChainXAsset.succeeded())
+  } catch (e) {
+    yield put(actions.getChainXAsset.failed(getErrorMessage(e)))
+  }
+}
+
 function* scanEOSAsset(action: Action) {
   try {
     const eosAssetsAllIds = yield select(state => eosAssetAllIdsSelector(state))
@@ -78,6 +102,7 @@ function* handleAssetSearchTextChange(action: Action) {
 export default function* assetSaga() {
   yield takeLatest(String(actions.getETHAsset.requested), getETHAsset)
   yield takeLatest(String(actions.getEOSAsset.requested), getEOSAsset)
+  yield takeLatest(String(actions.getChainXAsset.requested), getChainXAsset)
   yield takeLatest(String(actions.scanEOSAsset.requested), scanEOSAsset)
   yield takeLatest(String(actions.handleAssetSearchTextChange), handleAssetSearchTextChange)
 }

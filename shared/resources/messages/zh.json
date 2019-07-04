@@ -49,6 +49,8 @@
   "alert_button_confirm": "确认",
   "alert_button_cancel": "取消",
   "wallet_list_text_import_wallet": "导入新钱包",
+  "wallet_text_loading_wallet": "加载钱包",
+  "wallet_header_title_asset": "资产",
 
   "mnemonics_backup_hint_write_down": "请仔细抄写下方助记词，我们将在下一步验证。",
   "mnemonics_backup_hint_verify_by_click": "请按顺序点击助记词，已确认您正确备份。",
