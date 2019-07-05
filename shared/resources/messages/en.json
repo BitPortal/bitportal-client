@@ -48,7 +48,7 @@
   "alert_button_delete": "Delete",
   "alert_button_confirm": "Confirm",
   "alert_button_cancel": "Cancel",
-  "wallet_list_text_import_wallet": "Import New Wallet...",
+  "wallet_list_text_import_wallet": "Import New Wallet",
 
   "mnemonics_backup_hint_write_down": "Please write down the following mnemonics. We will verify in the next step.",
   "mnemonics_backup_hint_verify_by_click": "Please click the mnemonics with previously order and make sure you have already backed up correctly.",
