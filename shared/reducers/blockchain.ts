@@ -2,7 +2,7 @@ import produce from 'immer'
 import { handleActions } from 'utils/redux'
 import * as actions from 'actions/blockchain'
 
-const initialState = {
+export const initialState = {
   data: {
 
   },

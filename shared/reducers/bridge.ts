@@ -2,7 +2,7 @@ import { handleActions } from 'utils/redux'
 import * as actions from 'actions/bridge'
 import { escapeJSONString } from 'utils'
 
-const initialState = {
+export const initialState = {
   pendingMessage: null,
   hasPendingMessage: false,
   loadingContract: false,

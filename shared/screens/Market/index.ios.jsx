@@ -154,12 +154,12 @@ export default class Market extends Component {
         canRefresh={this.state.firstAppeared}
         refreshing={refreshing && !this.state.searchBarFocused && this.state.getTickerLoaded}
         onRefresh={this.state.searchBarFocused ? () => {} : this.onRefresh}
+        reactModuleForCell="MarketTableViewCell"
       >
         <Section>
           {ticker.map(item =>
             <Item
               key={`${item.name}/${item.symbol}`}
-              reactModuleForCell="MarketTableViewCell"
               height={60}
               price={intl.formatNumber(item.price_usd * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               symbol={item.symbol}

@@ -1,7 +1,7 @@
 import { handleActions } from 'utils/redux'
 import * as actions from 'actions/fee'
 
-const initialState = {
+export const initialState = {
   BITCOIN: {},
   ETHEREUM: {
     gasLimit: 60000

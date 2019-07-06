@@ -1,10 +1,11 @@
 import { createSelector } from 'reselect'
 import { transferWalletSelector } from 'selectors/wallet'
+import { initialState } from 'reducers/contact'
 
-export const contactByIdSelector = (state: RootState) => state.contact.byId
-export const contactAllIdsSelector = (state: RootState) => state.contact.allIds
-export const activeContactIdSelector = (state: RootState) => state.contact.activeId
-export const selectedContactInfoSelector = (state: RootState) => state.contact.selected
+export const contactByIdSelector = (state: RootState) => state.contact.byId || initialState.byId
+export const contactAllIdsSelector = (state: RootState) => state.contact.allIds || initialState.allIds
+export const activeContactIdSelector = (state: RootState) => state.contact.activeId || initialState.activeId
+export const selectedContactInfoSelector = (state: RootState) => state.contact.selected || initialState.selected
 
 export const contactSelector = createSelector(
   contactByIdSelector,

@@ -1,15 +1,14 @@
 import { createSelector } from 'reselect'
+import { initialState } from 'reducers/wallet'
 
-export const activeWalletIdSelector = (state: RootState) => state.wallet.activeWalletId
-export const activeChainSelector = (state: RootState) => state.wallet.activeChain
-export const managingWalletIdSelector = (state: RootState) => state.wallet.managingWalletId
-export const transferWalletIdSelector = (state: RootState) => state.wallet.transferWalletId
-
-const identityWalletByIdSelector = (state: RootState) => state.wallet.identityWallets.byId
-const identityWalletAllIdsSelector = (state: RootState) => state.wallet.identityWallets.allIds
-
-const importedWalletByIdSelector = (state: RootState) => state.wallet.importedWallets.byId
-const importedWalletAllIdsSelector = (state: RootState) => state.wallet.importedWallets.allIds
+export const activeWalletIdSelector = (state: RootState) => state.wallet.activeWalletId || initialState.activeWalletId
+export const activeChainSelector = (state: RootState) => state.wallet.activeChain || initialState.activeChain
+export const managingWalletIdSelector = (state: RootState) => state.wallet.managingWalletId || initialState.managingWalletId
+export const transferWalletIdSelector = (state: RootState) => state.wallet.transferWalletId || initialState.transferWalletId
+const identityWalletByIdSelector = (state: RootState) => (state.wallet.identityWallets || initialState.identityWallets).byId
+const identityWalletAllIdsSelector = (state: RootState) => (state.wallet.identityWallets || initialState.identityWallets).allIds
+const importedWalletByIdSelector = (state: RootState) => (state.wallet.importedWallets || initialState.importedWallets).byId
+const importedWalletAllIdsSelector = (state: RootState) => (state.wallet.importedWallets || initialState.importedWallets).allIds
 
 export const walletAllIdsSelector = createSelector(
   identityWalletAllIdsSelector,

@@ -1,7 +1,8 @@
 import { createSelector } from 'reselect'
 import { transferWalletSelector } from 'selectors/wallet'
+import { initialState } from 'reducers/fee'
 
-export const feeSelector = (state: RootState) => state.fee
+export const feeSelector = (state: RootState) => state.fee || initialState
 
 export const transferWalletFeeSelector = createSelector(
   feeSelector,

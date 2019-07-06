@@ -1,9 +1,10 @@
 import { createSelector } from 'reselect'
+import { initialState } from 'reducers/producer'
 
-export const producerByIdSelector = (state: RootState) => state.producer.byId
-export const producerSearchTextSelector = (state: RootState) => state.producer.searchText
-export const producerAllIdsSelector = (state: RootState) => state.producer.allIds
-export const producerSelectedIdsSelector = (state: RootState) => state.producer.selectedIds || []
+export const producerByIdSelector = (state: RootState) => state.producer.byId || initialState.byId
+export const producerSearchTextSelector = (state: RootState) => state.producer.searchText || initialState.searchText
+export const producerAllIdsSelector = (state: RootState) => state.producer.allIds || initialState.allIds
+export const producerSelectedIdsSelector = (state: RootState) => state.producer.selectedIds || initialState.selectedIds
 
 export const producerSelector = createSelector(
   producerByIdSelector,

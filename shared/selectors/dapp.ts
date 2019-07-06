@@ -1,13 +1,12 @@
 import { createSelector } from 'reselect'
+import { initialState } from 'reducers/dapp'
 
-const dappByIdSelector = (state: RootState) => state.dapp.byId
-const dappAllIdsSelector = (state: RootState) => state.dapp.allIds
-const categoryFilterSelector = (state: RootState) => state.dapp.categoryFilter
-
-const dappRecommendByIdSelector = (state: RootState) => state.dapp.recommend.byId
-const dappRecommendAllIdsSelector = (state: RootState) => state.dapp.recommend.allIds
-
-export const dappBookmarkAllIdsSelector = (state: RootState) => state.dapp.bookmarked && state.dapp.bookmarked.allIds
+const dappByIdSelector = (state: RootState) => state.dapp.byId || initialState.byId
+const dappAllIdsSelector = (state: RootState) => state.dapp.allIds || initialState.allIds
+const categoryFilterSelector = (state: RootState) => state.dapp.categoryFilter || initialState.categoryFilter
+const dappRecommendByIdSelector = (state: RootState) => (state.dapp.recommend || initialState.recommend).byId
+const dappRecommendAllIdsSelector = (state: RootState) => (state.dapp.recommend || initialState.recommend).allIds
+export const dappBookmarkAllIdsSelector = (state: RootState) => (state.dapp.bookmarked || initialState.bookmarked).allIds
 
 export const dappSelector = createSelector(
   dappByIdSelector,

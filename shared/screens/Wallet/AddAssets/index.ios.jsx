@@ -202,13 +202,13 @@ export default class AddAssets extends Component {
           detailTextColor="#666666"
           cellSeparatorInset={{ left: 66 }}
           onSwitchAccessoryChanged={this.onSwitchAccessoryChanged}
+          reactModuleForCell="AssetTableViewCell"
         >
           <TableView.Section>
             {assets.map(item => (
                <TableView.Item
                  key={item.id}
                  height={60}
-                 reactModuleForCell="AssetTableViewCell"
                  selectionStyle={TableView.Consts.CellSelectionStyle.None}
                  icon_url={item.icon_url}
                  symbol={item.symbol}

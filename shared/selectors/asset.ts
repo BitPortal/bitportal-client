@@ -1,13 +1,13 @@
 import { createSelector } from 'reselect'
 import { activeWalletIdSelector, activeChainSelector } from 'selectors/wallet'
+import { initialState } from 'reducers/asset'
 
-const activeAssetIdSelector = (state: RootState) => state.asset.activeAssetId
-const transferAssetIdSelector = (state: RootState) => state.asset.transferAssetId
-export const assetByIdSelector = (state: RootState) => state.asset.byId
-const assetAllIdsSelector = (state: RootState) => state.asset.allIds
-export const assetSearchTextSelector = (state: RootState) => state.asset.searchText
-
-export const selectedAssetSelector = (state: RootState) => state.asset.selected
+const activeAssetIdSelector = (state: RootState) => state.asset.activeAssetId || initialState.activeAssetId
+const transferAssetIdSelector = (state: RootState) => state.asset.transferAssetId || initialState.transferAssetId
+export const assetByIdSelector = (state: RootState) => state.asset.byId || initialState.byId
+const assetAllIdsSelector = (state: RootState) => state.asset.allIds || initialState.allIds
+export const assetSearchTextSelector = (state: RootState) => state.asset.searchText || initialState.searchText
+export const selectedAssetSelector = (state: RootState) => state.asset.selected || initialState.selected
 
 export const assetsSelector = createSelector(
   activeChainSelector,

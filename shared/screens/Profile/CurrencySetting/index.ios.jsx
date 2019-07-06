@@ -4,13 +4,14 @@ import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import TableView from 'react-native-tableview'
 import * as currencyActions from 'actions/currency'
+import { currencySymbolSelector, currencyListSelector } from 'selectors/currency'
 
 const { Section, Item } = TableView
 
 @connect(
   state => ({
-    currencySymbol: state.currency.symbol,
-    currencyList: state.currency.list,
+    currencySymbol: currencySymbolSelector(state),
+    currencyList: currencyListSelector(state),
     wallet: state.wallet
   }),
   dispatch => ({

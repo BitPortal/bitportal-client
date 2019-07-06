@@ -1,7 +1,7 @@
 import { handleActions } from 'utils/redux'
 import * as actions from 'actions/utxo'
 
-const initialState = {
+export const initialState = {
   byId: {},
   allIds: []
 }

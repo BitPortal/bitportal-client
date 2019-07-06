@@ -1,7 +1,7 @@
 import { handleActions } from 'utils/redux'
 import * as actions from 'actions/currency'
 
-const initialState = {
+export const initialState = {
   list: {
     "USD": {
       "sign": "$",

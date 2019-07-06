@@ -1,7 +1,7 @@
 import { handleActions } from 'utils/redux'
 import * as actions from 'actions/transaction'
 
-const initialState = {
+export const initialState = {
   activeTransactionId: null,
   transferTransactionId: null,
   byId: {},

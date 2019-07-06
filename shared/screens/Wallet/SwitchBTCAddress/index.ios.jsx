@@ -91,11 +91,11 @@ export default class SwitchBTCAddress extends Component {
         <TableView
           style={{ flex: 1, backgroundColor: 'white' }}
           tableViewStyle={TableView.Consts.Style.Default}
+          reactModuleForCell="SwitchBTCAddressTableViewCell"
         >
           <Section>
             {addresses.map(item =>
               <Item
-                reactModuleForCell="SwitchBTCAddressTableViewCell"
                 height={60}
                 key={item.address}
                 onPress={this.selectBTCAddress.bind(this, item.address)}

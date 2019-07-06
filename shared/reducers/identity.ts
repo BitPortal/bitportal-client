@@ -1,7 +1,7 @@
 import { handleActions } from 'utils/redux'
 import * as actions from 'actions/identity'
 
-const initialState = {}
+export const initialState = {}
 
 export default handleActions({
   [actions.addIdentity] (state, action) {

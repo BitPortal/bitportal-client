@@ -2,7 +2,7 @@ import { handleActions } from 'utils/redux'
 import * as actions from 'actions/news'
 const PAGE_LENGTH = 10
 
-const initialState = {
+export const initialState = {
   listData: [],
   allIds: [],
   listError: null,

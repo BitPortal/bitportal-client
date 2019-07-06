@@ -1,8 +1,9 @@
 import { createSelector } from 'reselect'
 import { activeWalletSelector, managingWalletSelector, transferWalletSelector } from 'selectors/wallet'
 import { activeAssetSelector, transferAssetSelector } from 'selectors/asset'
+import { initialState } from 'reducers/balance'
 
-export const balanceByIdSelector = (state: RootState) => state.balance.byId
+export const balanceByIdSelector = (state: RootState) => state.balance.byId || initialState.byId
 
 export const activeWalletBalanceSelector = createSelector(
   activeWalletSelector,

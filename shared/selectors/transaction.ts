@@ -1,10 +1,11 @@
 import { createSelector } from 'reselect'
 import { activeWalletSelector, transferWalletSelector } from 'selectors/wallet'
 import { activeAssetSelector, transferAssetSelector } from 'selectors/asset'
+import { initialState } from 'reducers/transaction'
 
-export const transactionSelector = (state: RootState) => state.transaction
-export const activeTransactionIdSelector = (state: RootState) => state.transaction.activeTransactionId
-export const transferTransactionIdSelector = (state: RootState) => state.transaction.transferTransactionId
+export const transactionSelector = (state: RootState) => state.transaction || initialState
+export const activeTransactionIdSelector = (state: RootState) => state.transaction.activeTransactionId || initialState.activeTransactionId
+export const transferTransactionIdSelector = (state: RootState) => state.transaction.transferTransactionId || initialState.transferTransactionId
 
 export const activeWalletTransactionsByIdSelector = createSelector(
   activeWalletSelector,

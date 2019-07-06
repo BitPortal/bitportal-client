@@ -1,9 +1,10 @@
 import { createSelector } from 'reselect'
 import { activeWalletSelector } from 'selectors/wallet'
+import { initialState } from 'reducers/ticker'
 
-export const tickerByIdSelector = (state: RootState) => state.ticker.byId
-export const tickerAllIdsSelector = (state: RootState) => state.ticker.allIds
-export const tickerSearchTextSelector = (state: RootState) => state.ticker.searchText
+export const tickerByIdSelector = (state: RootState) => state.ticker.byId || initialState.byId
+export const tickerAllIdsSelector = (state: RootState) => state.ticker.allIds || initialState.allIds
+export const tickerSearchTextSelector = (state: RootState) => state.ticker.searchText || initialState.searchText
 
 export const eosRAMPriceSelector = (state: RootState) => state.ticker.resources && state.ticker.resources.byId['EOS/RAM'] && state.ticker.resources.byId['EOS/RAM'].price
 
