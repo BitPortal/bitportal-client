@@ -4,6 +4,7 @@ import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 import TableView from 'react-native-tableview'
 import { injectIntl, FormattedMessage } from 'react-intl'
+import { currencySymbolSelector } from 'selectors/currency'
 import styles from './styles'
 
 const { Section, Item } = TableView
@@ -13,7 +14,7 @@ const { Section, Item } = TableView
 @connect(
   state => ({
     locale: state.intl.locale,
-    currencySymbol: state.currency.symbol,
+    currencySymbol: currencySymbolSelector(state),
     identity: state.identity
   })
 )

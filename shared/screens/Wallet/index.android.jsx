@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { injectIntl, FormattedMessage } from 'react-intl'
-import { View, Text, Clipboard, ActivityIndicator, TouchableHighlight, Dimensions, Image, ScrollView, RefreshControl } from 'react-native'
+import { View, Text, Clipboard, ActivityIndicator, TouchableHighlight, Dimensions, Image, ScrollView, RefreshControl, TouchableNativeFeedback } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
 import SplashScreen from 'react-native-splash-screen'
@@ -31,6 +31,51 @@ import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview
 import RecyclerviewList, { DataSource } from 'react-native-recyclerview-list-android'
 import ViewPager from '@react-native-community/viewpager'
 import styles from './styles'
+
+const PreloadedImages = () => (
+  <View style={{ position: 'absolute', left: -30, bottom: -30, width: 30, height: 30 }}>
+    <Image
+      source={require('resources/images/home_tab.png')}
+      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
+    />
+    <Image
+      source={require('resources/images/home_tab_active.png')}
+      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
+    />
+    <Image
+      source={require('resources/images/contact_tab.png')}
+      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
+    />
+    <Image
+      source={require('resources/images/contact_tab_active.png')}
+      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
+    />
+    <Image
+      source={require('resources/images/settings_tab.png')}
+      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
+    />
+    <Image
+      source={require('resources/images/settings_tab_active.png')}
+      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
+    />
+    <Image
+      source={require('resources/images/help_tab.png')}
+      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
+    />
+    <Image
+      source={require('resources/images/help_tab_active.png')}
+      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
+    />
+    <Image
+      source={require('resources/images/aboutus_tab.png')}
+      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
+    />
+    <Image
+      source={require('resources/images/aboutus_tab_active.png')}
+      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
+    />
+  </View>
+)
 
 const dataProvider = new DataProvider((r1, r2) => r1.id !== r2.id)
 
@@ -138,7 +183,7 @@ export default class Wallet extends Component {
       <TouchableHighlight underlayColor="rgba(0,0,0,0)" activeOpacity={1} style={{ width: '100%', height: 60, paddingLeft: 16, paddingRight: 16 }} onPress={this.onPress}>
         <View style={{ width: '100%', height: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-            <FastImage source={assetIcons.bitcoin} style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: 'white', marginRight: 16, borderWidth: 1, borderColor: '#D1D3D4' }} />
+            <FastImage source={assetIcons.bitcoin} style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: 'white', marginRight: 16, borderWidth: 0.5, borderColor: '#D1D3D4' }} />
             <View>
               <Text style={{ color: 'black', fontWeight: '500', fontSize: 17 }}>BTC</Text>
               <Text style={{ fontSize: 15 }}>Bitcoin</Text>
@@ -184,9 +229,11 @@ export default class Wallet extends Component {
         <View style={{ flex: 1, backgroundColor: 'white' }}>
           <View style={{ paddingLeft: 16, width: '100%', height: 48, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
             <Text style={{ fontSize: 15, fontWeight: '500' }}>资产</Text>
-            <TouchableHighlight underlayColor="rgba(0,0,0,0)" activeOpacity={1} style={{ height: 48, alignItems: 'center', justifyContent: 'center', paddingRight: 16, paddingLeft: 16 }} onPress={this.addAssets}>
-              <Image source={require('resources/images/add_android.png')} style={{ width: 24, height: 24 }} />
-            </TouchableHighlight>
+            <TouchableNativeFeedback onPress={this.addAssets} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.4)', true)}>
+              <View style={{ height: 48, width: 56, alignItems: 'center', justifyContent: 'center', paddingRight: 16, paddingLeft: 16 }}>
+                <Image source={require('resources/images/add_android.png')} style={{ width: 24, height: 24 }} />
+              </View>
+            </TouchableNativeFeedback>
           </View>
           <RecyclerListView
             style={{ flex: 1, backgroundColor: 'white' }}
@@ -197,6 +244,7 @@ export default class Wallet extends Component {
             scrollViewProps={{ refreshControl: <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} /> }}
           />
         </View>
+        <PreloadedImages />
       </View>
     )
   }

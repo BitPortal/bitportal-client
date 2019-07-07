@@ -337,9 +337,6 @@ export default class ChainXDeposit extends Component {
           <TouchableOpacity style={styles.button} onPress={this.toDepositBTC}>
             <Text style={styles.buttonText}>绑定并充值BTC</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, {backgroundColor: '#EFEFF4'}]} onPress={this.toMappingSDOT.bind(this)}>
-            <Text style={[styles.buttonText, {color: '#007AFF'}]}>映射SDOT</Text>
-          </TouchableOpacity>
           <TouchableOpacity style={[styles.button, {backgroundColor: '#EFEFF4'}]} onPress={this.toClaimDeposit.bind(this)}>
             <Text style={[styles.buttonText, {color: '#007AFF'}]}>充值提息</Text>
           </TouchableOpacity>
