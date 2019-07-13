@@ -10,7 +10,8 @@ import {
   TextInput,
   Alert,
   ActivityIndicator,
-  Keyboard
+  Keyboard,
+  SafeAreaView
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Navigation } from 'react-native-navigation'
@@ -32,15 +33,13 @@ const styles = EStyleSheet.create({
     marginBottom: 20,
     borderRadius: 10
   },
-  buttonText: {
-    textAlign: 'center',
-    color: 'white',
-    fontSize: 17
-  },
   textFiled: {
-    height: '100%',
-    fontSize: 17,
-    width: '100% - 138'
+    fontSize: 16,
+    padding: 0,
+    paddingTop: 4,
+    paddingBottom: 4,
+    borderColor: 'rgba(0,0,0,0.12)',
+    borderBottomWidth: 1
   }
 })
 
@@ -55,8 +54,8 @@ const TextField = ({
   change,
   showClearButton
 }) => (
-  <View style={{ width: '100%', alignItems: 'center', height: 56, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-    <Text style={{ fontSize: 17, fontWeight: 'bold', marginRight: 16, width: 70 }}>{label}</Text>
+  <View style={{ width: '100%', height: 86, paddingLeft: 16, paddingRight: 16 }}>
+    <Text style={{ fontSize: 12, width: '100%', height: 16, marginBottom: 2 }}>{label}</Text>
     <TextInput
       style={styles.textFiled}
       autoCorrect={false}
@@ -67,15 +66,14 @@ const TextField = ({
       secureTextEntry={secureTextEntry}
       {...restInput}
     />
-    {showClearButton && active && <View style={{ height: '100%', position: 'absolute', right: 16, top: 0, width: 20, alignItems: 'center', justifyContent: 'center' }}>
+    {showClearButton && active && <View style={{ height: 38, position: 'absolute', right: 11, top: 18, width: 24, alignItems: 'center', justifyContent: 'center' }}>
       <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
         <FastImage
-          source={require('resources/images/clear.png')}
-          style={{ width: 14, height: 14 }}
+          source={require('resources/images/clear_android.png')}
+          style={{ width: 22, height: 22 }}
         />
       </TouchableHighlight>
     </View>}
-    {separator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: '#C8C7CC' }} />}
   </View>
 )
 
@@ -133,16 +131,15 @@ export default class CreateIdentity extends Component {
             id: 'next',
             text: '下一步',
             fontWeight: '400',
+            color: 'white',
             enabled: false
           }
         ],
         largeTitle: {
           visible: false
         },
-        noBorder: true,
-        background: {
-          color: 'white',
-          translucent: true
+        title: {
+          text: '创建身份'
         }
       }
     }
@@ -164,7 +161,7 @@ export default class CreateIdentity extends Component {
     }
   }
 
-  state = { invalid: true, pristine: true, loading: false, showForm: true }
+  state = { invalid: true, pristine: true, loading: false }
 
   subscription = Navigation.events().bindComponent(this)
 
@@ -181,6 +178,7 @@ export default class CreateIdentity extends Component {
               id: 'next',
               text: '下一步',
               fontWeight: '400',
+              color: 'white',
               enabled: !this.state.invalid && !this.state.pristine && !this.state.loading
             }
           ]
@@ -216,9 +214,7 @@ export default class CreateIdentity extends Component {
   }
 
   componentDidDisappear() {
-    this.setState({ showForm: false }, () => {
-      this.setState({ showForm: true })
-    })
+
   }
 
   render() {
@@ -229,61 +225,50 @@ export default class CreateIdentity extends Component {
     const passwordHint = formValues && formValues.passwordHint
 
     return (
-      <View style={styles.container}>
-        <View style={{ width: '100%', height: 0.5, backgroundColor: 'rgba(0,0,0,0)' }} />
+      <SafeAreaView style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
-          <View style={{ flex: 1, alignItems: 'center' }} onPress={() => console.log('press')}>
-            <View style={{ marginBottom: 14 }}>
-              <Text style={{ fontSize: 26, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'identity_create_title' })}</Text>
-              {loading
-             && (
-               <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 0, right: -25 }}>
-                 <ActivityIndicator size="small" color="#000000" />
-               </View>
-             )
-            }
-            </View>
-            <View style={{ marginBottom: 16, height: 22 }}>
-              {!loading && <Text style={{ fontSize: 17, paddingLeft: 32, paddingRight: 32, lineHeight: 22, textAlign: 'center' }}>
+          <View style={{ flex: 1 }} onPress={() => console.log('press')}>
+            <View style={{ marginBottom: 16, height: 22, marginTop: 30, marginBottom: 30 }}>
+              <Text style={{ fontSize: 20, color: 'black', paddingLeft: 16, paddingRight: 16, fontWeight: 'bold' }}>
                 {intl.formatMessage({ id: 'identity_create_sub_title' })}
-              </Text>}
+              </Text>
             </View>
-            {this.state.showForm && <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
+            <View style={{ width: '100%', alignItems: 'center' }}>
               <Field
-              label={intl.formatMessage({ id: 'identity_input_label_identity_name' })}
-              placeholder={intl.formatMessage({ id: 'identity_input_placeholder_identity_name' })}
-              name="name"
-              fieldName="name"
-              component={TextField}
-              showClearButton={!!name && name.length > 0}
-              change={change}
-              separator
+                label={intl.formatMessage({ id: 'identity_input_label_identity_name' })}
+                placeholder={intl.formatMessage({ id: 'identity_input_placeholder_identity_name' })}
+                name="name"
+                fieldName="name"
+                component={TextField}
+                showClearButton={!!name && name.length > 0}
+                change={change}
+                separator
               />
               <Field
-              label={intl.formatMessage({ id: 'identity_input_label_wallet_passwd' })}
-              placeholder={intl.formatMessage({ id: 'identity_input_placeholder_wallet_passwd' })}
-              name="password"
-              fieldName="password"
-              component={TextField}
-              showClearButton={!!password && password.length > 0}
-              change={change}
-              secureTextEntry
-              separator
+                label={intl.formatMessage({ id: 'identity_input_label_wallet_passwd' })}
+                placeholder={intl.formatMessage({ id: 'identity_input_placeholder_wallet_passwd' })}
+                name="password"
+                fieldName="password"
+                component={TextField}
+                showClearButton={!!password && password.length > 0}
+                change={change}
+                secureTextEntry
+                separator
               />
               <Field
-              label={intl.formatMessage({ id: 'identity_input_label_passwd_hint' })}
-              placeholder={intl.formatMessage({ id: 'identity_input_placeholder_label_passwd_hint' })}
-              name="passwordHint"
-              fieldName="passwordHint"
-              component={TextField}
-              showClearButton={!!passwordHint && passwordHint.length > 0}
-              change={change}
-              separator={false}
+                label={intl.formatMessage({ id: 'identity_input_label_passwd_hint' })}
+                placeholder={intl.formatMessage({ id: 'identity_input_placeholder_label_passwd_hint' })}
+                name="passwordHint"
+                fieldName="passwordHint"
+                component={TextField}
+                showClearButton={!!passwordHint && passwordHint.length > 0}
+                change={change}
+                separator={false}
               />
-            </View>}
+            </View>
           </View>
         </ScrollView>
-      </View>
+      </SafeAreaView>
     )
   }
 }

@@ -92,7 +92,15 @@ export default class Root extends Component {
           {
             id: 'scan',
             icon: require('resources/images/scan_android.png')
-          }
+          },
+          {
+            id: 'list',
+            icon: require('resources/images/list_android.png')
+          },
+          /* {
+           *   id: 'search',
+           *   icon: require('resources/images/search_android.png')
+           * }*/
         ]
       }
     }

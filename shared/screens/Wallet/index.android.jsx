@@ -74,6 +74,10 @@ const PreloadedImages = () => (
       source={require('resources/images/aboutus_tab_active.png')}
       style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
     />
+    <Image
+      source={require('resources/images/profile_placeholder_android.png')}
+      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
+    />
   </View>
 )
 

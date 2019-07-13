@@ -7,7 +7,7 @@
 */
 "NSPhotoLibraryUsageDescription" = "Enable album access";
 "NSBluetoothPeripheralUsageDescription" = "Enable bluetooth access";
-"NSCameraUsageDescription" = "\"BitPortal\" request to enable camera access to scan the QR code";
+"NSCameraUsageDescription" = "\"BitPortal\" request to enable camera access to scan the QR code to detect receiving address";
 "NSAppleMusicUsageDescription" = "Enable media access";
 "NSMotionUsageDescription" = "Enable fitness access";
 "NSSpeechRecognitionUsageDescription" = "Enable microphone access";
