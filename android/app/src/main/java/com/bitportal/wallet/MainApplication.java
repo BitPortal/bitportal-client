@@ -19,7 +19,7 @@ import com.facebook.soloader.SoLoader;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.reactnativenavigation.react.ReactGateway;
-import com.bitportal.wallet.core.BPCorePackage;
+import com.bitportal.core.BPCorePackage;
 import com.umeng.commonsdk.UMConfigure;
 import com.bitportal.wallet.umeng.RNUMConfigure;
 import com.bitportal.wallet.umeng.DplusReactPackage;

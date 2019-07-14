@@ -136,7 +136,7 @@ export default class Root extends Component {
     })
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     SplashScreen.hide()
   }
 
