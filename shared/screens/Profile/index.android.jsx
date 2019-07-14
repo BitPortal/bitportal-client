@@ -85,18 +85,6 @@ export default class Profile extends Component {
      * })*/
   }
 
-  toAddIdentity = () => {
-    /* Navigation.showModal({
-     *   stack: {
-     *     children: [{
-     *       component: {
-     *         name: 'BitPortal.AddIdentity'
-     *       }
-     *     }]
-     *   }
-     * })*/
-  }
-
   toAboutUs = () => {
     /* Navigation.push(this.props.componentId, {
      *   component: {
@@ -156,16 +144,27 @@ export default class Profile extends Component {
   }
 
   switchTab(type) {
-    Navigation.mergeOptions(this.props.componentId, {
-      sideMenu: {
-        left: {
-          visible: false
+    this.setState({ activeTab: type }, () => {
+      Navigation.mergeOptions(this.props.componentId, {
+        sideMenu: {
+          left: {
+            visible: false
+          }
         }
+      })
+    })
+  }
+
+  toAddIdentity() {
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.AddIdentity'
+          }
+        }]
       }
     })
-    setTimeout(() => {
-      this.setState({ activeTab: type })
-    }, 500)
   }
 
   render() {
@@ -186,11 +185,11 @@ export default class Profile extends Component {
             style={{ width: '100%', height: '100%', position: 'absolute', left: 0, top: 0 }}
           />
           <Image
-            source={require('resources/images/Userpic.png')}
-            style={{ width: 60, height: 60, position: 'absolute', left: 16, bottom: 60, backgroundColor: 'white', borderRadius: 30 }}
+            source={require('resources/images/profile_placeholder_android.png')}
+            style={{ width: 60, height: 60, position: 'absolute', left: 16, bottom: 76, backgroundColor: 'white', borderRadius: 30 }}
           />
-          <TouchableNativeFeedback onPress={() => {}} background={TouchableNativeFeedback.Ripple('rgba(255,255,255,0.4)', false)}>
-            <View style={{ width: '100%', height: 60, position: 'absolute', left: 0, bottom: 0, paddingLeft: 16, paddingRight: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+          <TouchableNativeFeedback onPress={this.toAddIdentity} background={TouchableNativeFeedback.Ripple('rgba(255,255,255,0.4)', false)}>
+            <View style={{ width: '100%', height: 60, position: 'absolute', left: 0, bottom: 8, paddingLeft: 16, paddingRight: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderRadius: 30 }}>
               <View style={{ alignItems: 'flex-start', justifyContent: 'center' }}>
                 <Text style={{ fontSize: 14, color: 'white', fontWeight: '500' }}>{hasIdentity ? identity.name : intl.formatMessage({ id: 'identity_tableviewcell_identity' })}</Text>
                 <Text style={{ fontSize: 14, color: 'white' }}>{hasIdentity ? identity.identifier : intl.formatMessage({ id: 'identity_tableviewcell_add_identity' })}</Text>

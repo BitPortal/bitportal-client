@@ -7,6 +7,8 @@ import Root from 'screens/Root'
 import Wallet from 'screens/Wallet'
 import Market from 'screens/Market'
 import Profile from 'screens/Profile'
+import AddIdentity from 'screens/Wallet/AddIdentity'
+import CreateIdentity from 'screens/Wallet/CreateIdentity'
 import NavigationBackground from 'components/NavigationBackground'
 import { FirstTabScreen, SecondTabScreen, ThirdTabScreen } from 'screens/Wallet'
 
@@ -18,6 +20,8 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.Wallet', () => Wallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Market', () => Market, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Profile', () => Profile, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.AddIdentity', () => AddIdentity, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.CreateIdentity', () => CreateIdentity, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.NavigationBackground', () => NavigationBackground, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.FirstTabScreen', () => gestureHandlerRootHOC(FirstTabScreen), Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.SecondTabScreen', () => gestureHandlerRootHOC(SecondTabScreen), Provider, store)

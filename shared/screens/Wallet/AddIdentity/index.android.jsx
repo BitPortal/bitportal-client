@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
-import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { View, Text, TouchableNativeFeedback, Image } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Navigation } from 'react-native-navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
 
 const styles = EStyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: '#673AB7',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
@@ -17,11 +17,12 @@ const styles = EStyleSheet.create({
   button: {
     width: '100%',
     height: 50,
-    backgroundColor: '#007AFF',
+    backgroundColor: '#FF5722',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 20,
-    borderRadius: 10
+    borderRadius: 2,
+    elevation: 3
   },
   buttonText: {
     textAlign: 'center',
@@ -48,7 +49,8 @@ export default class AddIdentity extends Component {
         rightButtons: [
           {
             id: 'skip',
-            text: '跳过'
+            text: '跳过',
+            color: 'white'
           }
         ],
         backButton: {
@@ -59,9 +61,10 @@ export default class AddIdentity extends Component {
         },
         noBorder: true,
         background: {
-          color: 'rgba(0,0,0,0)',
-          translucent: true
-        }
+          color: 'rgba(0,0,0,0)'
+        },
+        drawBehind: true,
+        elevation: 0
       }
     }
   }
@@ -83,11 +86,11 @@ export default class AddIdentity extends Component {
   }
 
   toRecoverIdentity = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.RecoverIdentity'
-      }
-    })
+    /* Navigation.push(this.props.componentId, {
+     *   component: {
+     *     name: 'BitPortal.RecoverIdentity'
+     *   }
+     * })*/
   }
 
   componentDidAppear() {
@@ -100,31 +103,36 @@ export default class AddIdentity extends Component {
 
   render() {
     const { intl } = this.props
+
     return (
       <View style={styles.container}>
         <View
-          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '50%', alignItems: 'center', justifyContent: 'center' }}
         >
           <FastImage
-            source={require('resources/images/AddIdentityBackground.png')}
-            style={{ width: '100%', height: '100%' }}
-            resizeMode="cover"
+            source={require('resources/images/add_identity_background.png')}
+            style={{ width: '70%', height: '100%' }}
+            resizeMode="contain"
           />
         </View>
-        <View style={{ width: '100%', height: 420, paddingHorizontal: 16, paddingVertical: 30 }}>
-          <Text style={{ fontSize: 30, marginBottom: 10, marginTop: 40 }}>{intl.formatMessage({ id: 'identity_add_title_1' })}</Text>
-          <Text style={{ fontSize: 30, marginBottom: 20 }}>
-            {intl.formatMessage({ id: 'identity_add_title_2' })} <Text style={{ color: '#007AFF' }}>{intl.formatMessage({ id: 'identity_add_title_3' })}</Text>
+        <View style={{ position: 'absolute', top: '50%', left: 0, width: '100%', height: '50%', paddingHorizontal: 24 }}>
+          <Text style={{ fontSize: 22, marginBottom: 10, color: 'white' }}>{intl.formatMessage({ id: 'identity_add_title_1' })}</Text>
+          <Text style={{ fontSize: 22, marginBottom: 20, color: 'white' }}>
+            {intl.formatMessage({ id: 'identity_add_title_2' })} <Text style={{ color: '#FF5722' }}>{intl.formatMessage({ id: 'identity_add_title_3' })}</Text>
           </Text>
-          <Text style={{ fontSize: 17, marginBottom: 80 }}>
+          <Text style={{ fontSize: 14, marginBottom: 30, color: 'rgba(255,255,255,0.87)' }}>
             {intl.formatMessage({ id: 'identity_add_slogon' })}
           </Text>
-          <TouchableOpacity style={styles.button} onPress={this.toCreateIdentity}>
-            <Text style={styles.buttonText}>{intl.formatMessage({ id: 'identity_add_title_button_create_identity' })}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, { backgroundColor: '#EFEFF4' }]} onPress={this.toRecoverIdentity}>
-            <Text style={[styles.buttonText, { color: '#007AFF' }]}>{intl.formatMessage({ id: 'identity_add_title_button_recovery_identity' })}</Text>
-          </TouchableOpacity>
+          <TouchableNativeFeedback onPress={this.toCreateIdentity} background={TouchableNativeFeedback.Ripple('rgba(255,255,255,0.4)', false)}>
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>{intl.formatMessage({ id: 'identity_add_title_button_create_identity' })}</Text>
+            </View>
+          </TouchableNativeFeedback>
+          <TouchableNativeFeedback onPress={this.toRecoverIdentity} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.4)', false)}>
+            <View style={[styles.button, { backgroundColor: 'white' }]}>
+              <Text style={[styles.buttonText, { color: '#673AB7' }]}>{intl.formatMessage({ id: 'identity_add_title_button_recovery_identity' })}</Text>
+            </View>
+          </TouchableNativeFeedback>
         </View>
       </View>
     )
