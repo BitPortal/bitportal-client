@@ -1,13 +1,17 @@
 package com.bitportal.core;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import android.util.Log;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.WritableArray;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.Arguments;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BPCoreModule extends ReactContextBaseJavaModule {
     private Core cppApi;
@@ -72,7 +76,18 @@ public class BPCoreModule extends ReactContextBaseJavaModule {
         Promise promise) {
         try {
             ArrayList<HashMap<String, String>> result = cppApi.scanHDBTCAddresses(xpub, startIndex, endIndex, isSegWit);
-            promise.resolve(result);
+
+            WritableArray writableArray = Arguments.createArray();
+
+            for (HashMap<String, String> hashMap : result) {
+                WritableMap writableMap = Arguments.createMap();
+                for (String key : hashMap.keySet()) {
+                    writableMap.putString(key, (String) hashMap.get(key));
+                }
+                writableArray.pushMap(writableMap);
+            }
+
+            promise.resolve(writableArray);
         } catch (Exception e) {
             promise.reject("scanHDBTCAddresses error", e);
         }
