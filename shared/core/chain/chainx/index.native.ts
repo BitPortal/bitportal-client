@@ -5,11 +5,11 @@ import chainxAccount from '@chainx/account'
 import { walletType } from 'core/constants'
 
 export const initRpc = () => {
-  return new HttpProvider('https://w1.chainx.org/rpc')
+  return new HttpProvider('http://chainx.bitportal.io:8080/rpc')
 }
 
 export const initApibase = async () => {
-  const chainx = new ApiBase(new HttpProvider('https://w1.chainx.org.cn/rpc'), ['https://w2.chainx.org/rpc'])
+  const chainx = new ApiBase(new HttpProvider('http://chainx.bitportal.io:8080/rpc'), ['http://chainx.bitportal.io:8080/rpc'])
   await chainx._isReady
   return chainx
 }
