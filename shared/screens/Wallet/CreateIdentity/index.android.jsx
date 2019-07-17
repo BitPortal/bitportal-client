@@ -18,6 +18,7 @@ import { Navigation } from 'react-native-navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Field, reduxForm, getFormSyncWarnings, getFormValues } from 'redux-form'
 import * as identityActions from 'actions/identity'
+import Modal from 'react-native-modal'
 
 const styles = EStyleSheet.create({
   container: {
@@ -55,9 +56,14 @@ const TextField = ({
   showClearButton
 }) => (
   <View style={{ width: '100%', height: 86, paddingLeft: 16, paddingRight: 16 }}>
-    <Text style={{ fontSize: 12, width: '100%', height: 16, marginBottom: 2 }}>{label}</Text>
+    <Text style={{ fontSize: 12, width: '100%', height: 16, marginBottom: 2, color: (touched && error) ? '#FF5722' : 'rgba(0,0,0,0.54)' }}>{label}</Text>
     <TextInput
-      style={styles.textFiled}
+      style={{
+        fontSize: 16,
+        padding: 0,
+        paddingTop: 4,
+        paddingBottom: 4
+      }}
       autoCorrect={false}
       autoCapitalize="none"
       placeholder={placeholder}
@@ -66,6 +72,7 @@ const TextField = ({
       secureTextEntry={secureTextEntry}
       {...restInput}
     />
+    <View style={{ height: (touched && error) ? 2 : 1, backgroundColor: (touched && error) ? '#FF5722' : 'rgba(0,0,0,0.12)', position: 'absolute', left: 16, right: 16, top: 53 }} />
     {showClearButton && active && <View style={{ height: 38, position: 'absolute', right: 11, top: 18, width: 24, alignItems: 'center', justifyContent: 'center' }}>
       <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
         <FastImage
@@ -74,6 +81,7 @@ const TextField = ({
         />
       </TouchableHighlight>
     </View>}
+    {touched && error && active && <Text style={{ fontSize: 12, width: '100%', color: 'rgba(0,0,0,0.38)', paddingTop: 6 }}>{error}</Text>}
   </View>
 )
 
@@ -82,10 +90,14 @@ const validate = (values) => {
 
   if (!values.name) {
     errors.name = '请输入身份名称'
+  } else if (values.name.length > 12) {
+    errors.name = '身份名不超过12位'
   }
 
   if (!values.password) {
     errors.password = '请输入密码'
+  } else if (values.password.length < 8) {
+    errors.password = '密码不少于8位字符'
   }
 
   return errors
@@ -94,13 +106,13 @@ const validate = (values) => {
 const warn = (values) => {
   const warnings = {}
 
-  if (values.name && values.name.length > 12) {
-    warnings.name = '身份名不超过12位'
-  }
+  /* if (values.name && values.name.length > 12) {
+   *   warnings.name = '身份名不超过12位'
+   * }
 
-  if (values.password && values.password.length < 8) {
-    warnings.password = '密码不少于8位字符'
-  }
+   * if (values.password && values.password.length < 8) {
+   *   warnings.password = '密码不少于8位字符'
+   * }*/
 
   return warnings
 }
@@ -189,20 +201,20 @@ export default class CreateIdentity extends Component {
 
   navigationButtonPressed({ buttonId }) {
     if (buttonId === 'next') {
-      const { formSyncWarnings } = this.props
-      if (typeof formSyncWarnings === 'object') {
-        const warning = formSyncWarnings.name || formSyncWarnings.password
-        if (warning) {
-          Alert.alert(
-            warning,
-            '',
-            [
-              { text: '确定', onPress: () => console.log('OK Pressed') }
-            ]
-          )
-          return
-        }
-      }
+      /* const { formSyncWarnings } = this.props
+       * if (typeof formSyncWarnings === 'object') {
+       *   const warning = formSyncWarnings.name || formSyncWarnings.password
+       *   if (warning) {
+       *     Alert.alert(
+       *       warning,
+       *       '',
+       *       [
+       *         { text: '确定', onPress: () => console.log('OK Pressed') }
+       *       ]
+       *     )
+       *     return
+       *   }
+       * }*/
 
       Keyboard.dismiss()
       this.props.handleSubmit(this.submit)()
@@ -210,7 +222,8 @@ export default class CreateIdentity extends Component {
   }
 
   submit = (data) => {
-    this.props.actions.createIdentity.requested({ ...data, componentId: this.props.componentId })
+    console.log(data)
+    // this.props.actions.createIdentity.requested({ ...data, componentId: this.props.componentId })
   }
 
   componentDidDisappear() {
@@ -268,6 +281,26 @@ export default class CreateIdentity extends Component {
             </View>
           </View>
         </ScrollView>
+        <Modal
+          isVisible={true}
+          backdropOpacity={0.4}
+          useNativeDriver
+          animationIn="fadeIn"
+          animationInTiming={200}
+          backdropTransitionInTiming={200}
+          animationOut="fadeOut"
+          animationOutTiming={200}
+          backdropTransitionOutTiming={200}
+          onModalHide={this.onModalHide}
+          onModalShow={this.onModalShow}
+        >
+          {(true) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ backgroundColor: 'white', padding: 10, borderRadius: 2, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
+              <ActivityIndicator size="small" color="#673AB7" />
+              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold', color: 'black' }}>创建中...</Text>
+            </View>
+          </View>}
+        </Modal>
       </SafeAreaView>
     )
   }
