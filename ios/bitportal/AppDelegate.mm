@@ -13,7 +13,7 @@
 #import <UserNotifications/UserNotifications.h>
 #endif
 
-
+#import <React/RCTBridge+Private.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import <ReactNativeNavigation.h>
@@ -21,6 +21,9 @@
 #import "RNUMConfigure.h"
 #import "UMAnalyticsModule.h"
 #import <UMAnalytics/MobClick.h>
+
+#import "test.h"
+#import "test_binding.h"
 
 @interface AppDelegate ()<JPUSHRegisterDelegate>
 
@@ -95,7 +98,6 @@
 
   NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
   [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
-
   // Umeng sdk:
   [UMConfigure setLogEnabled:NO];
   [RNUMConfigure initWithAppkey:@"5b46cc71f43e481b4f0000e7" channel:@"App Store"];
@@ -104,6 +106,14 @@
   // splash:
   [SplashScreen show];
   return YES;
+}
+
+- (void)handleJavaScriptDidLoadNotification:(__unused NSNotification*)notification {
+  // RCTCxxBridge* bridge = notification.userInfo[@"bridge"];
+  RCTCxxBridge * bridge = (RCTCxxBridge *)[ReactNativeNavigation getBridge];
+  
+  [bridge dispatchBlock:^{
+  } queue:RCTJSThread];
 }
 
 @end
