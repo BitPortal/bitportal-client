@@ -1,6 +1,6 @@
 import assert from 'assert'
 import { delay } from 'redux-saga'
-import { takeLatest, put, call, select, all } from 'redux-saga/effects'
+import { takeLatest, race, put, call, select, all } from 'redux-saga/effects'
 import { getErrorMessage } from 'utils'
 import { updatePortfolio } from 'actions/portfolio'
 import * as actions from 'actions/balance'
@@ -143,6 +143,43 @@ function* getETHTokenBalanceList(action: Action) {
   }
 }
 
+function* getChainXTokenBalanceList(action: Action) {
+  if (!action.payload) return
+
+  try {
+    const address = action.payload.address
+    const chain = action.payload.chain
+    const id = `${chain}/${address}`
+
+    const selectedAsset = yield select(state => activeWalletSelectedAssetsSelector(state))
+    assert(selectedAsset, 'No selected assets')
+    const { assetsBalance, timeout } = yield race({
+      assetsBalance: call(chainxChain.getAssetsBalance, address),
+      timeout: delay(1000)
+    })
+    if (timeout) {
+      throw new Error('request chainx assets timeout')
+    }
+    if (!assetsBalance) {
+      throw new Error('Empty assets balance', address)
+    }
+    const getBalanceBySymbol = (symbol) => {
+      const balance = assetsBalance.data.find((asset) => asset.name === symbol)
+      console.log('symbol', symbol, 'balance', balance)
+      if (balance && balance.details) {
+        return balance.details.Free
+      } else {
+        return 0
+      }
+    }
+    const balanceList = selectedAsset.map((asset, index) => ({ id, chain, symbol: selectedAsset[index].symbol, balance: getBalanceBySymbol(asset.symbol) * Math.pow(10, -1 *  asset.precision), contract: selectedAsset[index].contract }))
+    yield put(actions.updateBalanceList({ id, chain, balanceList }))
+    yield put(actions.getChainXTokenBalanceList.succeeded())
+  } catch (e) {
+    yield put(actions.getChainXTokenBalanceList.failed(getErrorMessage(e)))
+  }
+}
+
 function* getBalanceSucceeded(action: Action) {
   if (!action.payload) return
 
@@ -171,4 +208,5 @@ export default function* balanceSaga() {
   yield takeLatest(String(actions.getEOSTokenBalance.requested), getEOSTokenBalance)
   yield takeLatest(String(actions.getEOSTokenBalanceList.requested), getEOSTokenBalanceList)
   yield takeLatest(String(actions.getETHTokenBalanceList.requested), getETHTokenBalanceList)
+  yield takeLatest(String(actions.getChainXTokenBalanceList.requested), getChainXTokenBalanceList)
 }

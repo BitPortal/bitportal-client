@@ -149,11 +149,11 @@ function* transfer(action: Action) {
       yield put(actions.addTransaction({ id: `${chain}/${fromAddress}`, item: transaction, assetId }))
       yield put(actions.setActiveTransactionId(hash))
     } else if (chain === 'CHAINX') {
-      let hash
+      let hash = ''
 
       if (memo) {
         const { result, timeout } = yield race({
-          result: call(chainxChain.transfer, password, keystore, fromAddress, toAddress, symbol, amount, memo),
+          result: call(chainxChain.transfer, password, keystore, fromAddress, toAddress, symbol, precision, amount, memo),
           timeout: delay(timeoutInterval)
         })
 
@@ -161,7 +161,7 @@ function* transfer(action: Action) {
         hash = result
       } else {
         const { result, timeout } = yield race({
-          result: call(chainxChain.transfer, password, keystore, fromAddress, toAddress, symbol, amount),
+          result: call(chainxChain.transfer, password, keystore, fromAddress, toAddress, symbol, precision, amount, memo),
           timeout: delay(timeoutInterval)
         })
 

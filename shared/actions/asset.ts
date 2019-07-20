@@ -15,5 +15,6 @@ export const handleAssetSearchTextChange = createAction<HandleAssetSearchTextCha
 
 export const getETHAsset = createAsyncAction<GetETHAsset>('asset/GET_ETH')
 export const getEOSAsset = createAsyncAction<GetEOSAsset>('asset/GET_EOS')
+export const getChainXAsset = createAsyncAction<GetEOSAsset>('asset/GET_ChainX')
 
 export const scanEOSAsset = createAsyncAction<ScanEOSAsset>('asset/SCAN_EOS')

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, ScrollView, ActionSheetIOS, Alert, Text, ActivityIndicator, Animated, Image, TouchableHighlight, Clipboard, RefreshControl } from 'react-native'
+import { View, ScrollView, ActionSheetIOS, Alert, Text, ActivityIndicator, Animated, Image, TouchableHighlight, Clipboard, RefreshControl, SafeAreaView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
 import * as identityActions from 'actions/identity'
@@ -194,83 +194,85 @@ export default class TransactionDetail extends Component {
 
     if (transaction && chain === 'EOS') {
       return (
-        <ScrollView
-          style={{ flex: 1, backgroundColor: 'white' }}
-          contentContainerStyle={{ backgroundColor: 'white' }}
-        >
-          <View style={{ flex: 1, backgroundColor: '#F7F7F7', padding: 16, paddingTop: 0 }}>
-            {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}</Text>}
-            {+transaction.change <= 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}</Text>}
-            <Text style={{ fontSize: 17, color: 'rgba(0,0,0,0.48)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
-          </View>
-          <View style={{ flex: 1, backgroundColor: 'white', borderTopWidth: 0.5, borderColor: 'rgba(0,0,0,0.18)' }}>
-            <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
-              <View style={{ width: '50%' }}>
-                <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>收款帐号</Text>
-                <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.receiver)}>
-                  <View style={{ flexDirection: 'row', minHeight: 26, alignItems: 'center' }}>
-                    <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.receiver} </Text>
-                    <Image
-                      source={require('resources/images/copy_black.png')}
-                      style={{ width: 18, height: 18, marginBottom: 2 }}
-                    />
-                  </View>
-                </TouchableHighlight>
-              </View>
-              <View style={{ width: '50%' }}>
-                <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>付款帐号</Text>
-                <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.sender)}>
-                  <View style={{ flexDirection: 'row', minHeight: 26, alignItems: 'center' }}>
-                    <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.sender} </Text>
-                    <Image
-                      source={require('resources/images/copy_black.png')}
-                      style={{ width: 18, height: 18, marginBottom: 2 }}
-                    />
-                  </View>
-                </TouchableHighlight>
-              </View>
-              <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
-            </View>
-            <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
-              <View>
-                <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>备注</Text>
-                {!!transaction.memo && <Text style={{ fontSize: 15 }}>{transaction.memo}</Text>}
-                {!transaction.memo && <Text style={{ fontSize: 15 }}>无</Text>}
-              </View>
-              <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
-            </View>
-            <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
-              <View style={{ width: '50%' }}>
-                <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>区块高度</Text>
-                <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.block_num}</Text>
-              </View>
-              <View style={{ width: '50%' }}>
-                <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>合约帐号</Text>
-                <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.code}</Text>
-              </View>
-              <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
-            </View>
-            {this.toTransactionIdUI(transaction.id)}
-            {this.toExplorerUI(chain, transaction.id)}
-          </View>
-          <Modal
-            isVisible={this.state.showModal}
-            backdropOpacity={0}
-            useNativeDriver
-            animationIn="fadeIn"
-            animationInTiming={200}
-            backdropTransitionInTiming={200}
-            animationOut="fadeOut"
-            animationOutTiming={200}
-            backdropTransitionOutTiming={200}
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+          <ScrollView
+            style={{ flex: 1, backgroundColor: 'white' }}
+            contentContainerStyle={{ backgroundColor: 'white' }}
           >
-            {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
-                <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已复制</Text>
+            <View style={{ flex: 1, backgroundColor: '#F7F7F7', padding: 16, paddingTop: 0 }}>
+              {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}</Text>}
+              {+transaction.change <= 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}</Text>}
+              <Text style={{ fontSize: 17, color: 'rgba(0,0,0,0.48)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
+            </View>
+            <View style={{ flex: 1, backgroundColor: 'white', borderTopWidth: 0.5, borderColor: 'rgba(0,0,0,0.18)' }}>
+              <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
+                <View style={{ width: '50%' }}>
+                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>{intl.formatMessage({ id: 'txn_detail_to_account' })}</Text>
+                  <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.receiver)}>
+                    <View style={{ flexDirection: 'row', minHeight: 26, alignItems: 'center' }}>
+                      <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.receiver} </Text>
+                      <Image
+                        source={require('resources/images/copy_black.png')}
+                        style={{ width: 18, height: 18, marginBottom: 2 }}
+                      />
+                    </View>
+                  </TouchableHighlight>
+                </View>
+                <View style={{ width: '50%' }}>
+                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>{intl.formatMessage({ id: 'txn_detail_from_account' })}</Text>
+                  <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.sender)}>
+                    <View style={{ flexDirection: 'row', minHeight: 26, alignItems: 'center' }}>
+                      <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.sender} </Text>
+                      <Image
+                        source={require('resources/images/copy_black.png')}
+                        style={{ width: 18, height: 18, marginBottom: 2 }}
+                      />
+                    </View>
+                  </TouchableHighlight>
+                </View>
+                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
               </View>
-            </View>}
-          </Modal>
-        </ScrollView>
+              <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
+                <View>
+                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>{intl.formatMessage({ id: 'txn_detail_memo' })}</Text>
+                  {!!transaction.memo && <Text style={{ fontSize: 15 }}>{transaction.memo}</Text>}
+                  {!transaction.memo && <Text style={{ fontSize: 15 }}>无</Text>}
+                </View>
+                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
+              </View>
+              <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
+                <View style={{ width: '50%' }}>
+                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>{intl.formatMessage({ id: 'txn_detail_block_height' })}</Text>
+                  <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.block_num}</Text>
+                </View>
+                <View style={{ width: '50%' }}>
+                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>{intl.formatMessage({ id: 'txn_detail_contract_account' })}</Text>
+                  <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.code}</Text>
+                </View>
+                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
+              </View>
+              {this.toTransactionIdUI(transaction.id)}
+              {this.toExplorerUI(chain, transaction.id)}
+            </View>
+            <Modal
+              isVisible={this.state.showModal}
+              backdropOpacity={0}
+              useNativeDriver
+              animationIn="fadeIn"
+              animationInTiming={200}
+              backdropTransitionInTiming={200}
+              animationOut="fadeOut"
+              animationOutTiming={200}
+              backdropTransitionOutTiming={200}
+            >
+              {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
+                  <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已复制</Text>
+                </View>
+              </View>}
+            </Modal>
+          </ScrollView>
+        </SafeAreaView>
       )
     } else if (transaction && chain === 'ETHEREUM') {
       return (

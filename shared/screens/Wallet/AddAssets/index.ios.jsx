@@ -15,6 +15,7 @@ import styles from './styles'
   state => ({
     getETHAsset: state.getETHAsset,
     getEOSAsset: state.getEOSAsset,
+    getChainXAsset: state.getChainXAsset,
     chain: activeChainSelector(state),
     assets: assetsSelector(state),
     activeWallet: activeWalletSelector(state),
@@ -50,10 +51,13 @@ export default class AddAssets extends Component {
     assetsCount: 0,
     getETHAssetLoading: false,
     getETHAssetError: false,
+    getETHAssetLoaded: false,
     getEOSAssetLoaded: false,
     getEOSAssetLoading: false,
     getEOSAssetError: false,
-    getETHAssetLoaded: false,
+    getChainXAssetLoaded: false,
+    getChainXAssetLoading: false,
+    getChainXAssetError: false,
     firstAppeared: false
   }
 
@@ -67,9 +71,14 @@ export default class AddAssets extends Component {
       || nextProps.getEOSAsset.error !== prevState.getEOSAssetError
       || nextProps.getETHAsset.loading !== prevState.getETHAssetLoading
       || nextProps.getETHAsset.error !== prevState.getETHAssetError
+      || nextProps.getChainXAsset.loading !== prevState.getChainXAssetLoading
+      || nextProps.getChainXAsset.error !== prevState.getChainXAssetError
       || (nextProps.assets && nextProps.assets.length) !== prevState.assetsCount
     ) {
       return {
+        getChainXAssetLoading: nextProps.getChainXAsset.loading,
+        getChainXAssetLoaded: nextProps.getChainXAsset.loaded,
+        getChainXAssetError: nextProps.getChainXAsset.error,
         getEOSAssetLoading: nextProps.getEOSAsset.loading,
         getEOSAssetLoaded: nextProps.getEOSAsset.loaded,
         getEOSAssetError: nextProps.getEOSAsset.error,
@@ -87,9 +96,10 @@ export default class AddAssets extends Component {
     if (
       prevState.getEOSAssetLoaded !== this.state.getEOSAssetLoaded
       || prevState.getETHAssetLoaded !== this.state.getETHAssetLoaded
+      || prevState.getChainXAssetLoaded !== this.state.getChainXAssetLoaded
       || prevState.firstAppeared !== this.state.firstAppeared
     ) {
-      if ((this.state.getEOSAssetLoaded && this.props.chain === 'EOS') || (this.state.getETHAssetLoaded && this.props.chain === 'ETHEREUM')) {
+      if ((this.state.getEOSAssetLoaded && this.props.chain === 'EOS') || (this.state.getETHAssetLoaded && this.props.chain === 'ETHEREUM') || (this.state.getChainXAssetLoaded && this.props.chain === 'CHAINX')) {
         setTimeout(() => {
           Navigation.mergeOptions(this.props.componentId, {
             topBar: {
@@ -143,6 +153,8 @@ export default class AddAssets extends Component {
       this.props.actions.getETHAsset.requested()
     } else if (chain === 'EOS') {
       this.props.actions.getEOSAsset.requested()
+    } else if (chain === 'CHAINX') {
+      this.props.actions.getChainXAsset.requested()
     }
   }
 
@@ -177,9 +189,9 @@ export default class AddAssets extends Component {
   }
 
   render() {
-    const { assets, selectedAssetId, getETHAsset, getEOSAsset, chain } = this.props
+    const { assets, selectedAssetId, getETHAsset, getEOSAsset, getChainXAsset, chain } = this.props
 
-    if ((getEOSAsset.loading || getETHAsset.loading) && !assets.length) {
+    if ((getEOSAsset.loading || getETHAsset.loading || getChainXAsset.loading) && !assets.length) {
       return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <View style={{ marginTop: 80 }}>
@@ -213,9 +225,6 @@ export default class AddAssets extends Component {
                  icon_url={item.icon_url}
                  symbol={item.symbol}
                  contract={item.contract}
-                 current_supply={item.current_supply}
-                 max_supply={item.max_supply}
-                 rank_url={item.rank_url}
                  accessoryType={5}
                  switchOn={selectedAssetId && selectedAssetId.indexOf(`${chain}/${item.contract}/${item.symbol}`) !== -1}
                />
