@@ -22,7 +22,7 @@
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
-		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.mm */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
@@ -110,6 +110,10 @@
 		3446CAB220E8F39F00ACA3C8 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3446CAAF20E8EB1E00ACA3C8 /* libReactNativeNavigation.a */; };
 		3449499A2274C1BB00D8AB38 /* libRNCSlider.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 344949872274C19E00D8AB38 /* libRNCSlider.a */; };
 		3451193721BBAEE9004E9426 /* libInteractable.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 345118F321BBAEC6004E9426 /* libInteractable.a */; };
+		3452263922E03D43009913DF /* test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3452263722E03D43009913DF /* test.cpp */; };
+		3452263C22E03F69009913DF /* test_binding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3452263A22E03F69009913DF /* test_binding.cpp */; };
+		3452263D22E0478A009913DF /* libjsi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 345D6F4A229D9DAA009E56AC /* libjsi.a */; };
+		3452263E22E04799009913DF /* libjsiexecutor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 345D6F4C229D9DAA009E56AC /* libjsiexecutor.a */; };
 		345D6F6D229D9DAA009E56AC /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 345D6F17229D9DAA009E56AC /* JavaScriptCore.framework */; };
 		345D6FF6229DBA1F009E56AC /* libRNCAsyncStorage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 345D6FE2229DBA08009E56AC /* libRNCAsyncStorage.a */; };
 		346C2CE821E738A00030003C /* libReactNativeHaptic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 346C2CCF21E738780030003C /* libReactNativeHaptic.a */; };
@@ -769,7 +773,7 @@
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* bitportal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bitportal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = bitportal/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = bitportal/AppDelegate.m; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = bitportal/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = bitportal/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = bitportal/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = main.mm; path = bitportal/main.mm; sourceTree = "<group>"; };
@@ -943,6 +947,10 @@
 		3446CAA920E8EB1E00ACA3C8 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/lib/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		3449494A2274C19E00D8AB38 /* RNCSlider.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCSlider.xcodeproj; path = "../node_modules/@react-native-community/slider/ios/RNCSlider.xcodeproj"; sourceTree = "<group>"; };
 		345118EA21BBAEC6004E9426 /* Interactable.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Interactable.xcodeproj; path = "../node_modules/react-native-interactable/lib/ios/Interactable.xcodeproj"; sourceTree = "<group>"; };
+		3452263722E03D43009913DF /* test.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = test.cpp; sourceTree = "<group>"; };
+		3452263822E03D43009913DF /* test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = test.h; sourceTree = "<group>"; };
+		3452263A22E03F69009913DF /* test_binding.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = test_binding.cpp; sourceTree = "<group>"; };
+		3452263B22E03F69009913DF /* test_binding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = test_binding.h; sourceTree = "<group>"; };
 		345D6F17229D9DAA009E56AC /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		345D6FA1229DBA08009E56AC /* RNCAsyncStorage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCAsyncStorage.xcodeproj; path = "../node_modules/@react-native-community/async-storage/ios/RNCAsyncStorage.xcodeproj"; sourceTree = "<group>"; };
 		346C2C9A21E738770030003C /* ReactNativeHaptic.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeHaptic.xcodeproj; path = "../node_modules/react-native-haptic/ios/ReactNativeHaptic.xcodeproj"; sourceTree = "<group>"; };
@@ -1016,6 +1024,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3452263E22E04799009913DF /* libjsiexecutor.a in Frameworks */,
+				3452263D22E0478A009913DF /* libjsi.a in Frameworks */,
 				34A680E422C4E7A900BBE21E /* libRNGestureHandler.a in Frameworks */,
 				34A680DA22C4E76E00BBE21E /* libRNReanimated.a in Frameworks */,
 				345D6FF6229DBA1F009E56AC /* libRNCAsyncStorage.a in Frameworks */,
@@ -1152,12 +1162,13 @@
 		13B07FAE1A68108700A75B9A /* bitportal */ = {
 			isa = PBXGroup;
 			children = (
+				3452263622E03D31009913DF /* test */,
 				343A5CF92285673E00DC76D6 /* injectMetaMask.js */,
 				3410CA9622854EEE005FAF2A /* injectScatter.js */,
 				34D1CC3021A70F3F001E6A5F /* copy.wav */,
 				18B18427213672030037A46D /* bitportal.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
-				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				180882282135447300321418 /* NativeUtils.h */,
 				180882292135447300321418 /* NativeUtils.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -1662,6 +1673,17 @@
 				345118F321BBAEC6004E9426 /* libInteractable.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		3452263622E03D31009913DF /* test */ = {
+			isa = PBXGroup;
+			children = (
+				3452263722E03D43009913DF /* test.cpp */,
+				3452263822E03D43009913DF /* test.h */,
+				3452263A22E03F69009913DF /* test_binding.cpp */,
+				3452263B22E03F69009913DF /* test_binding.h */,
+			);
+			path = test;
 			sourceTree = "<group>";
 		};
 		345D6FA2229DBA08009E56AC /* Products */ = {
@@ -2828,6 +2850,7 @@
 				18F2826B2177351C00DEB13F /* blake256.c in Sources */,
 				18F2827A2177351C00DEB13F /* nem.c in Sources */,
 				18F282902177351C00DEB13F /* aescrypt.c in Sources */,
+				3452263C22E03F69009913DF /* test_binding.cpp in Sources */,
 				18F282822177351C00DEB13F /* groestl.c in Sources */,
 				18F282A12177351D00DEB13F /* DJIError.mm in Sources */,
 				18F2826E2177351C00DEB13F /* rfc6979.c in Sources */,
@@ -2848,7 +2871,7 @@
 				18F2828D2177351C00DEB13F /* ecdsa.c in Sources */,
 				18F282A02177351D00DEB13F /* DJIProxyCaches.mm in Sources */,
 				18F282632177351C00DEB13F /* sha2.c in Sources */,
-				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				18F282732177351C00DEB13F /* ed25519-keccak.c in Sources */,
 				13B07FC11A68108700A75B9A /* main.mm in Sources */,
 				18F282692177351C00DEB13F /* rc4.c in Sources */,
@@ -2870,6 +2893,7 @@
 				18F282962177351C00DEB13F /* chacha20poly1305.c in Sources */,
 				18F282672177351C00DEB13F /* rand.c in Sources */,
 				1808822A2135447300321418 /* NativeUtils.m in Sources */,
+				3452263922E03D43009913DF /* test.cpp in Sources */,
 				18F282982177351C00DEB13F /* UMPushModule.m in Sources */,
 				18F282762177351C00DEB13F /* ed25519-donna-basepoint-table.c in Sources */,
 				18F2826D2177351C00DEB13F /* curves.c in Sources */,
@@ -2903,6 +2927,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CODE_SIGN_ENTITLEMENTS = bitportal/bitportal.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -2945,6 +2970,9 @@
 					"$(SRCROOT)/../node_modules/react-native-restart/ios/RCTRestart/**",
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/RNGestureHandler/**",
 					"$(SRCROOT)/../node_modules/react-native-reanimated/ios/RNReanimated/**",
+					"$(SRCROOT)/../node_modules/react-native/third-party/glog-0.3.5/src",
+					"$(SRCROOT)/../node_modules/react-native/third-party/boost_1_63_0",
+					"$(SRCROOT)/../node_modules/react-native/third-party/folly-2018.10.22.00",
 				);
 				INFOPLIST_FILE = bitportal/Info.plist;
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
@@ -2954,6 +2982,14 @@
 					"$(inherited)",
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
 					"\"$(SRCROOT)/bitportal\"",
+				);
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-iquote",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/IGListKit/IGListKit.framework/Headers\"",
+					"-DFOLLY_NO_CONFIG",
+					"-DFOLLY_USE_LIBCPP=1",
+					"-DFOLLY_MOBILE=1",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2976,6 +3012,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CODE_SIGN_ENTITLEMENTS = bitportal/bitportal.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -3017,6 +3054,9 @@
 					"$(SRCROOT)/../node_modules/react-native-restart/ios/RCTRestart/**",
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/RNGestureHandler/**",
 					"$(SRCROOT)/../node_modules/react-native-reanimated/ios/RNReanimated/**",
+					"$(SRCROOT)/../node_modules/react-native/third-party/glog-0.3.5/src",
+					"$(SRCROOT)/../node_modules/react-native/third-party/boost_1_63_0",
+					"$(SRCROOT)/../node_modules/react-native/third-party/folly-2018.10.22.00",
 				);
 				INFOPLIST_FILE = bitportal/Info.plist;
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
@@ -3028,6 +3068,14 @@
 					"\"$(SRCROOT)/bitportal\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-iquote",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/IGListKit/IGListKit.framework/Headers\"",
+					"-DFOLLY_NO_CONFIG",
+					"-DFOLLY_USE_LIBCPP=1",
+					"-DFOLLY_MOBILE=1",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
