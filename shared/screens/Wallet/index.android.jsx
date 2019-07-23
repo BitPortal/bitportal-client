@@ -30,6 +30,7 @@ import FastImage from 'react-native-fast-image'
 import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview'
 import RecyclerviewList, { DataSource } from 'react-native-recyclerview-list-android'
 import ViewPager from '@react-native-community/viewpager'
+import Loading from 'components/Loading'
 import styles from './styles'
 
 const PreloadedImages = () => (
@@ -147,23 +148,15 @@ export default class Wallet extends Component {
     }
   )
 
-  layoutProvider2 = new LayoutProvider(
-    index => {
-      return 0
-    },
-    (type, dim) => {
-      dim.width = Dimensions.get('window').width
-      dim.height = 200
-    }
-  )
-
   state = {
     refreshing: false,
     dataProvider: dataProvider.cloneWithRows(balances)
   }
 
   componentDidMount() {
-
+    this.props.actions.scanIdentity.requested()
+    this.props.actions.getTicker.requested()
+    this.props.actions.setSelectedContact(null)
   }
 
   addAssets = () => {
@@ -176,6 +169,14 @@ export default class Wallet extends Component {
 
   onPress = () => {
     console.log('onPress')
+  }
+
+  toManage = () => {
+    Navigation.push('BitPortal.Root', {
+      component: {
+        name: 'BitPortal.WalletList'
+      }
+    })
   }
 
   onRefresh = () => {
@@ -202,15 +203,44 @@ export default class Wallet extends Component {
     )
   }
 
-  rowRenderer2 = (type, data) => {
-    return (
-      <View style={{ backgroundColor: 'white', width: '100%', height: 176, borderRadius: 2, elevation: 3 }}>
-        <Text>{data.id}</Text>
-      </View>
-    )
-  }
-
   render() {
+    const { identity, identityWallets, importedWallets, scanIdentity, balance, getBalance, ticker, activeWallet, portfolio, resources, intl, selectedAsset, assetById, currency } = this.props
+    const loading = scanIdentity.loading
+    const loaded = scanIdentity.loaded
+    const error = scanIdentity.error
+    const identityWalletsCount = identityWallets.length
+    const importedWalletsCount = importedWallets.length
+    const chain = activeWallet ? activeWallet.chain : ''
+
+    if (loading && !identityWalletsCount && !importedWalletsCount) {
+      return (
+        <Loading
+          text={intl.formatMessage({ id: 'wallet_text_loading_wallet'})}
+          extraModule={<PreloadedImages />}
+        />
+      )
+    }
+
+    if ((!!loaded || !!error) && !identityWalletsCount && !importedWalletsCount) {
+      return (
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <View>
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <Text style={{ color: 'rgba(0,0,0,0.54)', fontSize: 14, marginBottom: 4 }}>
+                <FormattedMessage id="no_wallet_yet" />
+              </Text>
+              <TouchableNativeFeedback onPress={this.toManage} background={TouchableNativeFeedback.SelectableBackground()}>
+                <View style={{ padding: 4, paddingRight: 8, paddingLeft: 8, borderRadius: 2, backgroundColor: '#673AB7', elevation: 3 }}>
+                    <Text style={{ color: 'white', fontSize: 14 }}>开始添加</Text>
+                  </View>
+                </TouchableNativeFeedback>
+              </View>
+          </View>
+          <PreloadedImages />
+        </View>
+      )
+    }
+
     return (
       <View style={{ flex: 1 }}>
         <View style={{ height: 222, width: '100%', justifyContent: 'center' }}>
@@ -233,7 +263,7 @@ export default class Wallet extends Component {
         <View style={{ flex: 1, backgroundColor: 'white' }}>
           <View style={{ paddingLeft: 16, width: '100%', height: 48, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
             <Text style={{ fontSize: 15, fontWeight: '500' }}>资产</Text>
-            <TouchableNativeFeedback onPress={this.addAssets} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.4)', true)}>
+            <TouchableNativeFeedback onPress={this.addAssets} background={TouchableNativeFeedback.Ripple('rgba(255,255,255,0.4)', false)}>
               <View style={{ height: 48, width: 56, alignItems: 'center', justifyContent: 'center', paddingRight: 16, paddingLeft: 16 }}>
                 <Image source={require('resources/images/add_android.png')} style={{ width: 24, height: 24 }} />
               </View>

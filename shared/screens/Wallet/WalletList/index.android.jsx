@@ -2,17 +2,13 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
-import { View, ActionSheetIOS } from 'react-native'
+import { View, Text, ActionSheetIOS, Dimensions, TouchableHighlight, FlatList } from 'react-native'
 import { Navigation } from 'react-native-navigation'
-import TableView from 'react-native-tableview'
 import { identityWalletSelector, importedWalletSelector, hasIdentityEOSWalletSelector } from 'selectors/wallet'
-// import FastImage from 'react-native-fast-image'
 import * as walletActions from 'actions/wallet'
 import * as accountActions from 'actions/account'
 import * as keyAccountActions from 'actions/keyAccount'
 import styles from './styles'
-
-const { Section, Item } = TableView
 
 @injectIntl
 
@@ -41,12 +37,6 @@ export default class WalletList extends Component {
         title: {
           text: '管理钱包列表'
         },
-        leftButtons: [
-          {
-            id: 'cancel',
-            text: '取消'
-          }
-        ],
         /* rightButtons: [
          *   {
          *     id: 'edit',
@@ -65,47 +55,15 @@ export default class WalletList extends Component {
     Navigation.events().bindComponent(this); // <== Will be automatically unregistered when unmounted
   }
 
-  tableViewRef = React.createRef()
-
-  pendingAssetQueue = []
+  state = {
+  }
 
   navigationButtonPressed({ buttonId }) {
-    if (buttonId === 'cancel') {
-      Navigation.dismissModal(this.props.componentId)
-    } else if (buttonId === 'edit') {
-      // this.setState({ editting: true })
-      Navigation.mergeOptions(this.props.componentId, {
-        topBar: {
-          rightButtons: [
-            {
-              id: 'done',
-              text: '完成'
-            }
-          ]
-        }
-      })
-    } else if (buttonId === 'done') {
-      // this.setState({ editting: false })
-      Navigation.mergeOptions(this.props.componentId, {
-        topBar: {
-          rightButtons: [
-            {
-              id: 'edit',
-              text: '编辑'
-            }
-          ]
-        }
-      })
-    }
+
   }
 
   searchBarUpdated({ text }) {
-    // this.setState({ searching: isFocused })
-    if (this.pendingAssetQueue.length) {
-      this.props.actions.toggleEOSAssetList(this.pendingAssetQueue)
-      this.pendingAssetQueue = []
-    }
-    this.props.actions.searchEOSAssetRequested(text)
+
   }
 
   toAddIdentity = () => {
@@ -196,6 +154,22 @@ export default class WalletList extends Component {
     }
   }
 
+  renderItem = ({ item }) => {
+    return (
+      <TouchableHighlight underlayColor="rgba(0,0,0,0)" activeOpacity={1} style={{ width: '100%', height: 60, paddingLeft: 16, paddingRight: 16 }} onPress={this.onPress}>
+        <Text style={{ fontSize: 15 }}>{item.text}</Text>
+      </TouchableHighlight>
+    )
+  }
+
+  renderHeader = () => {
+    return (
+      <View style={{ width: '100%', paddingHorizontal: 16 }}>
+        <Text style={{ fontSize: 16, color: 'black', }}>身份钱包</Text>
+      </View>
+    )
+  }
+
   render() {
     const { identityWallets, importedWallets, activeWalletId, intl, syncingEOSAccount } = this.props
     const identityWalletsCount = identityWallets.length
@@ -203,97 +177,11 @@ export default class WalletList extends Component {
 
     return (
       <View style={styles.container}>
-        <TableView
-          style={{ flex: 1 }}
-          tableViewStyle={TableView.Consts.Style.Grouped}
-          tableViewCellStyle={TableView.Consts.CellStyle.Default}
-          detailTextColor="#666666"
-          showsVerticalScrollIndicator={false}
-          cellSeparatorInset={{ left: 16 }}
-          reactModuleForCell="WalletTableViewCell"
-          onItemNotification={this.onItemNotification}
-          moveWithinSectionOnly
-        >
-          <Section />
-          {!identityWalletsCount && <Section>
-            <Item
-              image={require('resources/images/Add.png')}
-              imageWidth={40}
-              height={44}
-              onPress={this.toAddIdentity}
-              type="add"
-              text={intl.formatMessage({ id: 'general_title_add_identity' })}
-            />
-          </Section>}
-          {identityWalletsCount && <Section label={intl.formatMessage({ id: 'general_title_identity_wallet' })}>
-            {identityWallets.map(wallet => <Item
-                height={60}
-                key={wallet.id}
-                uid={wallet.id}
-                name={wallet.name}
-                symbol={wallet.symbol}
-                chain={wallet.chain}
-                isSegwit={wallet.symbol === 'BTC' && wallet.segWit === 'P2WPKH'}
-                address={wallet.address}
-                segWit={wallet.segWit}
-                source={wallet.source}
-                componentId={this.props.componentId}
-                isSelected={wallet.id === activeWalletId}
-                syncingEOSAccount={syncingEOSAccount}
-                selectionStyle={(wallet.chain !== 'EOS' || !!wallet.address) ? TableView.Consts.CellSelectionStyle.Default : (syncingEOSAccount ? TableView.Consts.CellSelectionStyle.None : TableView.Consts.CellSelectionStyle.Default)}
-                accessoryType={(wallet.chain !== 'EOS' || !!wallet.address) ? TableView.Consts.AccessoryType.DetailButton : (syncingEOSAccount ? TableView.Consts.AccessoryType.None : TableView.Consts.AccessoryType.DisclosureIndicator)}
-                onPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.switchWallet.bind(this, wallet.id) : (syncingEOSAccount ? () => {} : this.createEOSAccount.bind(this, wallet.id))}
-                onAccessoryPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.toManageWallet.bind(this, {
-                  id: wallet.id,
-                  type: 'identity',
-                  name: wallet.name,
-                  address: wallet.address,
-                  chain: wallet.chain,
-                  symbol: wallet.symbol,
-                  segWit: wallet.segWit,
-                  source: wallet.source,
-                }) : () => {}}
-            />
-            )}
-          </Section>}
-          <Section label={importedWalletsCount ? intl.formatMessage({ id: 'general_title_import_wallet' }) : ''}>
-            {importedWallets.map(wallet => <Item
-                height={60}
-                key={wallet.id}
-                uid={wallet.id}
-                name={wallet.name}
-                symbol={wallet.symbol}
-                chain={wallet.chain}
-                isSegwit={wallet.symbol === 'BTC' && wallet.segWit === 'P2WPKH'}
-                address={wallet.address}
-                segWit={wallet.segWit}
-                source={wallet.source}
-                componentId={this.props.componentId}
-                isSelected={wallet.id === activeWalletId}
-                accessoryType={(wallet.chain !== 'EOS' || !!wallet.address) ? TableView.Consts.AccessoryType.DetailButton : TableView.Consts.AccessoryType.DisclosureIndicator}
-                onPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.switchWallet.bind(this, wallet.id) : this.createEOSAccount.bind(this, wallet.id)}
-                onAccessoryPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.toManageWallet.bind(this, {
-                  id: wallet.id,
-                  type: 'imported',
-                  name: wallet.name,
-                  address: wallet.address,
-                  chain: wallet.chain,
-                  symbol: wallet.symbol,
-                  segWit: wallet.segWit,
-                  source: wallet.source,
-                }) : () => {}}
-            />
-            )}
-            <Item
-              image={require('resources/images/arrow_right.png')}
-              imageWidth={40}
-              height={44}
-              onPress={this.toSelectChainType}
-              type="add"
-              text={intl.formatMessage({ id: 'wallet_list_text_import_wallet' })}
-            />
-          </Section>
-        </TableView>
+        <FlatList
+          data={[{ key: 'home', text: '主页', type: 'home' }, { key: 'contact', text: '联系人', type: 'contact' }, { key: 'settings', text: '设置', type: 'settings' }, { key: 'help', text: '帮助中心', type: 'help' }, { key: 'aboutUs', text: '关于我们', type: 'aboutUs' }]}
+          renderItem={this.renderItem}
+          ListHeaderComponent={this.renderHeader}
+        />
       </View>
     )
   }

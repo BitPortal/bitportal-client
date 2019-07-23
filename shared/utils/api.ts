@@ -138,14 +138,15 @@ const eosxLightFetchBase = (
   baseUrl: 'https://api.light.xeos.me/api/account/eos'
 })
 
-const eosParkFetchBase = (
+const blockdogFetchBase = (
   method: FetchMethod = 'GET',
   endPoint: string = '/hello',
   params: object = {},
   options: object = {}
-) => fetchBase(method, endPoint, { ...params, apikey: 'a6c7a99c90bf5a703f8cd5323dd8ea04' }, {
+) => fetchBase(method, endPoint, { ...params }, {
   ...options,
-  baseUrl: 'https://api.eospark.com/api'
+  headers: { apikey: '8cddc265-fdfc-4cdc-ba55-bc1c9c9a26cd' },
+  baseUrl: 'https://open-api.eos.blockdog.com/v1'
 })
 
 const exchangerateFetchBase = (
@@ -182,6 +183,6 @@ export const simpleWalletAuth = (params: any, baseUrl: string) => fetchBase('POS
 export const simpleWalletCallback = (baseUrl: string) => fetchBase('GET', '', undefined, { baseUrl })
 export const getBTCFees = (params: any) => bitcoinFeesBase('GET', '/fees/recommended')
 export const simpleWalletAuthorize = ({ loginUrl, ...params }) => fetchBase('POST', '', params, { baseUrl: loginUrl })
-export const getEOSTransactions = (params: any) => eosParkFetchBase('GET', '', { ...params, module: 'account', action: 'get_account_related_trx_info' })
-export const getEOSTransaction = (params: any) => eosParkFetchBase('GET', '', { ...params, module: 'transaction', action: 'get_transaction_detail_info', trx_id: params.hash })
+export const getEOSTransactions = (params: any) => blockdogFetchBase('POST', '/third/get_account_transfer', params)
+export const getEOSTransaction = (params: any) => blockdogFetchBase('POST', '/third/get_transaction', params)
 export const getCurrencyRates = (params: any) => exchangerateFetchBase('GET', '/USD', params)

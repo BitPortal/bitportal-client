@@ -109,7 +109,7 @@ export default class Root extends Component {
   subscription = Navigation.events().bindComponent(this)
 
   state = {
-    index: 1,
+    index: 0,
     routes: [
       { key: 'wallet', icon: 'wallet' },
       { key: 'market', icon: 'market' },
@@ -122,6 +122,9 @@ export default class Root extends Component {
       case 'sideMenu':
         this.toggleSideMenu()
         break
+      case 'list':
+        this.toManage()
+        break
       default:
     }
   }
@@ -132,6 +135,14 @@ export default class Root extends Component {
         left: {
           visible: true
         }
+      }
+    })
+  }
+
+  toManage = () => {
+    Navigation.push('BitPortal.Root', {
+      component: {
+        name: 'BitPortal.WalletList'
       }
     })
   }

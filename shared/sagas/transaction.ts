@@ -532,31 +532,46 @@ function* getTransactions(action: Action) {
 
       const tokenAccount = contract || 'eosio.token'
       const symbol = symbol || assetSymbol
-      const transactions = yield call(api.getEOSTransactions, { account: address, code: tokenAccount, symbol, page, size: pageSize })
+      const transactions = yield call(api.getEOSTransactions, { account_name: address, code: tokenAccount, symbol, type: 3, sort: 1, page, size: pageSize })
+      console.log(transactions)
 
-      const items = transactions.data.trace_list.map((item: any) => {
-        const isSender = item.sender === address
+      const items = transactions.list.map((item: any) => {
+        const sender = item.data.from
+        const receiver = item.data.to
+        const memo = item.data.memo
+        const block_num = item.blockNum
+        const code = item.account
+        const status = item.status
+        const isSender = item.data.from === address
         const transactionType = isSender ? 'send' : 'receive'
-        const amount = item.quantity
+        const amount = item.data.quantity && item.data.quantity.split(' ')[0]
+        const symbol = item.data.quantity && item.data.quantity.split(' ')[1]
         const change = isSender ? -+amount : +amount
-        const targetAddress = isSender ? item.receiver : item.sender
+        const targetAddress = isSender ? item.data.to : item.data.from
 
         return {
             ...item,
-          id: item.trx_id,
-          timestamp: +new Date(item.timestamp),
+          id: item.id,
+          timestamp: +new Date(item.blockTime),
           change,
+          amount,
+          symbol,
+          sender,
+          receiver,
+          memo,
+          block_num,
+          code,
+          status,
           targetAddress,
           transactionType
         }
       })
 
-      const totalItems = transactions.data.trace_count
+      const totalItems = transactions.total
       const pagination = {
         page,
         pageSize,
-        totalItems,
-        last_irreversible_block_num: transactions.data.last_irreversible_block_num
+        totalItems
       }
 
       if (loadMore) {
