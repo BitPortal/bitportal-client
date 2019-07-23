@@ -25,7 +25,7 @@
 #import "test.h"
 #import "test_binding.h"
 
-@interface AppDelegate ()<JPUSHRegisterDelegate, RNNBridgeManagerDelegate>
+@interface AppDelegate ()<JPUSHRegisterDelegate>
 
 @end
 
@@ -97,7 +97,7 @@
                         channel:@"app store" apsForProduction:false];
 
   NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
-  [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions bridgeManagerDelegate:self];
+  [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
   // Umeng sdk:
   [UMConfigure setLogEnabled:NO];
   [RNUMConfigure initWithAppkey:@"5b46cc71f43e481b4f0000e7" channel:@"App Store"];
