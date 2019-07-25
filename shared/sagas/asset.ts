@@ -32,6 +32,7 @@ function* getChainXAsset(action: Action) {
   try {
     const chainxAssets = [{
       id: 'CHAINX/X-BTC',
+      name: 'X-BTC',
       chain: 'CHAINX',
       symbol: 'BTC',
       contract: 'XAssets',
@@ -39,6 +40,7 @@ function* getChainXAsset(action: Action) {
       icon_url: 'https://cdn.bitportal.io/tokenicon/32/color/btc.png'
     }, {
       id: 'CHAINX/SDOT',
+      name: 'Shadow DOT',
       chain: 'CHAINX',
       symbol: 'SDOT',
       contract: 'XAssets',
@@ -46,8 +48,9 @@ function* getChainXAsset(action: Action) {
       icon_url: 'https://cdn.bitportal.io/icons/dot.png'
     }, {
       id: 'CHAINX/L-BTC',
+      name: 'Lock-up BTC',
       chain: 'CHAINX',
-      symbol: 'LBTC',
+      symbol: 'L-BTC',
       contract: 'XAssets',
       precision: 8,
       icon_url: 'https://cdn.bitportal.io/icons/chainx_lbtc.png'
