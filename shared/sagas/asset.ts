@@ -44,6 +44,13 @@ function* getChainXAsset(action: Action) {
       contract: 'XAssets',
       precision: 3,
       icon_url: 'https://cdn.bitportal.io/icons/dot.png'
+    }, {
+      id: 'CHAINX/L-BTC',
+      chain: 'CHAINX',
+      symbol: 'LBTC',
+      contract: 'XAssets',
+      precision: 8,
+      icon_url: 'https://cdn.bitportal.io/icons/chainx_lbtc.png'
     }]
     yield put(actions.updateAsset({ assets: chainxAssets, chain: 'CHAINX' }))
     yield put(actions.getChainXAsset.succeeded())
