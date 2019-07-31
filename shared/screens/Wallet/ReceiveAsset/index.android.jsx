@@ -27,18 +27,7 @@ import { Navigation } from 'react-native-navigation'
 import QRCode from 'react-native-qrcode-svg'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import * as transactionActions from 'actions/transaction'
-import Sound from 'react-native-sound'
 import Modal from 'react-native-modal'
-
-Sound.setCategory('Playback')
-const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
-  if (error) {
-    console.log('failed to load the sound', error)
-    return
-  }
-
-  console.log(`duration in seconds: ${copySound.getDuration()}number of channels: ${copySound.getNumberOfChannels()}`)
-})
 
 const styles = EStyleSheet.create({
   container: {
@@ -134,14 +123,6 @@ export default class ReceiveAsset extends Component {
   copy = (address) => {
     this.setState({ showModal: true, showModalContent: true }, () => {
       Clipboard.setString(address)
-      copySound.play((success) => {
-        if (success) {
-          console.log('successfully finished playing')
-        } else {
-          console.log('playback failed due to audio decoding errors')
-          copySound.reset()
-        }
-      })
 
       setTimeout(() => {
         this.setState({ showModal: false }, () => {

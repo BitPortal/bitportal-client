@@ -155,13 +155,5 @@ export default class Market extends Component {
         scrollViewProps={{ refreshControl: <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} /> }}
       />
     )
-
-    /* return (
-     *   <RecyclerviewList
-     *     style={{ flex: 1, backgroundColor: 'white'  }}
-     *     dataSource={this.state.dataSource}
-     *     renderItem={({ item, index }) => (<MarketTableViewCell intl={intl} currency={currency} data={item} />)}
-     *   />
-     * )*/
   }
 }

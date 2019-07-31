@@ -191,7 +191,7 @@ export default class CreateIdentity extends Component {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
         <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
-          <View style={{ flex: 1 }} onPress={() => console.log('press')}>
+          <View style={{ flex: 1 }}>
             <View style={{ marginBottom: 16, height: 22, marginTop: 30, marginBottom: 30 }}>
               <Text style={{ fontSize: 20, color: 'black', paddingLeft: 16, paddingRight: 16, fontWeight: 'bold' }}>
                 {intl.formatMessage({ id: 'identity_create_sub_title' })}
@@ -229,6 +229,9 @@ export default class CreateIdentity extends Component {
                 change={change}
                 separator={false}
               />
+              <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
+                <Text style={{ fontSize: 13, color: 'rgba(0,0,0,0.54)', lineHeight: 18 }}>{intl.formatMessage({ id: 'identity_recovery_hint_passwd_recovery_passwd' })}</Text>
+              </View>
             </View>
           </View>
         </ScrollView>

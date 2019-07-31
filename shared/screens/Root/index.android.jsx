@@ -88,20 +88,16 @@ export default class Root extends Component {
             color: 'white'
           }
         ],
-        rightButtons: [
-          {
-            id: 'scan',
-            icon: require('resources/images/scan_android.png')
-          },
-          {
-            id: 'list',
-            icon: require('resources/images/list_android.png')
-          },
-          /* {
-           *   id: 'search',
-           *   icon: require('resources/images/search_android.png')
-           * }*/
-        ]
+        /* rightButtons: [
+         *   {
+         *     id: 'scan',
+         *     icon: require('resources/images/scan_android.png')
+         *   },
+         *   {
+         *     id: 'list',
+         *     icon: require('resources/images/list_android.png')
+         *   }
+         * ]*/
       }
     }
   }
@@ -147,8 +143,49 @@ export default class Root extends Component {
     })
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     SplashScreen.hide()
+  }
+
+  componentDidAppear() {
+    let rightButtons = []
+    const index = this.state.index
+
+    if (!index) {
+      rightButtons = [
+        {
+          id: 'scan',
+          icon: require('resources/images/scan_android.png')
+        },
+        {
+          id: 'list',
+          icon: require('resources/images/list_android.png')
+        }
+      ]
+    } else if (index == 1) {
+      rightButtons = [
+        {
+          id: 'search',
+          icon: require('resources/images/search_android.png')
+        }
+      ]
+    } else if (index == 2) {
+
+    }
+
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        rightButtons
+      }
+    })
+  }
+
+  componentDidDisappear() {
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        rightButtons: []
+      }
+    })
   }
 
   onIndexChange = (index) => {
@@ -156,11 +193,36 @@ export default class Root extends Component {
     const { intl } = this.props
     const titles = [intl.formatMessage({ id: 'top_bar_title_wallet' }), intl.formatMessage({ id: 'top_bar_title_market' }), intl.formatMessage({ id: 'top_bar_title_profile' })]
 
+    let rightButtons = []
+
+    if (!index) {
+      rightButtons = [
+        {
+          id: 'scan',
+          icon: require('resources/images/scan_android.png')
+        },
+        {
+          id: 'list',
+          icon: require('resources/images/list_android.png')
+        }
+      ]
+    } else if (index == 1) {
+      rightButtons = [
+        {
+          id: 'search',
+          icon: require('resources/images/search_android.png')
+        }
+      ]
+    } else if (index == 2) {
+
+    }
+
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
         title: {
           text: titles[index]
-        }
+        },
+        rightButtons
       }
     })
   }

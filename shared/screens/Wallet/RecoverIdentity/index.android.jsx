@@ -11,13 +11,17 @@ import {
   TextInput,
   Alert,
   ActivityIndicator,
-  Keyboard
+  Keyboard,
+  SafeAreaView,
+  TouchableNativeFeedback
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Navigation } from 'react-native-navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Field, reduxForm, getFormSyncWarnings, getFormValues } from 'redux-form'
 import * as identityActions from 'actions/identity'
+import { TextField, TextArea } from 'components/Form'
+import Modal from 'react-native-modal'
 
 const styles = EStyleSheet.create({
   container: {
@@ -49,41 +53,6 @@ const styles = EStyleSheet.create({
     width: '100% - 52'
   }
 })
-
-const TextField = ({
-  input: { onChange, ...restInput },
-  meta: { touched, error, active },
-  label,
-  fieldName,
-  placeholder,
-  secureTextEntry,
-  separator,
-  change,
-  showClearButton
-}) => (
-  <View style={{ width: '100%', alignItems: 'center', height: 56, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-    <Text style={{ fontSize: 17, fontWeight: 'bold', marginRight: 16, width: 70 }}>{label}</Text>
-    <TextInput
-      style={styles.textFiled}
-      autoCorrect={false}
-      autoCapitalize="none"
-      placeholder={placeholder}
-      onChangeText={onChange}
-      keyboardType="default"
-      secureTextEntry={secureTextEntry}
-      {...restInput}
-    />
-    {showClearButton && active && <View style={{ height: '100%', position: 'absolute', right: 16, top: 0, width: 20, height: '100%', alignItems: 'center', justifyContent: 'center' }}>
-      <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
-        <FastImage
-          source={require('resources/images/clear.png')}
-          style={{ width: 14, height: 14 }}
-        />
-      </TouchableHighlight>
-    </View>}
-    {separator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: '#C8C7CC' }} />}
-  </View>
-)
 
 const TextAreaField = ({
   input: { onChange, ...restInput },
@@ -136,6 +105,8 @@ const validate = (values) => {
 
   if (!values.password) {
     errors.password = '请输入密码'
+  } else if (values.password && values.password.length < 8) {
+    errors.password = '密码不少于8位字符'
   }
 
   return errors
@@ -143,10 +114,6 @@ const validate = (values) => {
 
 const warn = (values) => {
   const warnings = {}
-
-  if (values.password && values.password.length < 8) {
-    warnings.password = '密码不少于8位字符'
-  }
 
   return warnings
 }
@@ -175,45 +142,24 @@ export default class RecoverIdentity extends Component {
         rightButtons: [
           {
             id: 'submit',
-            text: '确认',
-            fontWeight: '400',
+            icon: require('resources/images/check_android.png'),
             enabled: false
           }
         ],
         largeTitle: {
           visible: false
         },
-        noBorder: true,
-        background: {
-          color: 'white',
-          translucent: true
+        title: {
+          text: '恢复身份'
         }
       }
     }
   }
 
-  constructor(props) {
-    super(props);
-    Navigation.events().bindComponent(this); // <== Will be automatically unregistered when unmounted
-  }
+  subscription = Navigation.events().bindComponent(this)
 
   navigationButtonPressed({ buttonId }) {
     if (buttonId === 'submit') {
-      const { formSyncWarnings } = this.props
-      if (typeof formSyncWarnings === 'object') {
-        const warning = formSyncWarnings.name || formSyncWarnings.password
-        if (warning) {
-          Alert.alert(
-            warning,
-            '',
-            [
-              { text: '确定', onPress: () => console.log('OK Pressed') }
-            ]
-          )
-          return
-        }
-      }
-
       Keyboard.dismiss()
       this.props.handleSubmit(this.submit)()
     }
@@ -249,26 +195,14 @@ export default class RecoverIdentity extends Component {
         topBar: {
           rightButtons: [
             {
+
               id: 'submit',
-              text: '确认',
-              fontWeight: '400',
+              icon: require('resources/images/check_android.png'),
               enabled: !this.state.invalid && !this.state.pristine && !this.state.loading
             }
           ]
         }
       })
-    }
-
-    if (prevState.error !== this.state.error && this.state.error) {
-      setTimeout(() => {
-        Alert.alert(
-          errorMessages(this.state.error),
-          '',
-          [
-            { text: '确定', onPress: () => this.clearError() }
-          ]
-        )
-      }, 20)
     }
   }
 
@@ -305,6 +239,20 @@ export default class RecoverIdentity extends Component {
     })
   }
 
+  onModalHide = () => {
+    if (this.state.error) {
+      setTimeout(() => {
+        Alert.alert(
+          errorMessages(this.state.error),
+          '',
+          [
+            { text: '确定', onPress: () => this.clearError() }
+          ]
+        )
+      }, 20)
+    }
+  }
+
   render() {
     const { intl, recoverIdentity, formValues, change } = this.props
     const loading = recoverIdentity.loading
@@ -313,48 +261,32 @@ export default class RecoverIdentity extends Component {
     const passwordHint = formValues && formValues.passwordHint
 
     return (
-      <View style={styles.container}>
-        <View style={{ width: '100%', height: 0.5, backgroundColor: 'rgba(0,0,0,0)' }} />
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
-      >
-        <View style={{ flex: 1, alignItems: 'center' }}>
-          <View style={{ marginBottom: 14 }}>
-            <Text style={{ fontSize: 26, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'identity_recovery_title' })}</Text>
-            {loading
-             && (
-               <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 0, right: -25 }}>
-                 <ActivityIndicator size="small" color="#000000" />
-               </View>
-             )
-            }
-          </View>
-          <View style={{ marginBottom: 16, height: 22 }}>
-            {!loading && <Text style={{ fontSize: 17, paddingLeft: 32, paddingRight: 32, lineHeight: 22, textAlign: 'center' }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+      <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+        <View style={{ flex: 1 }}>
+          <View style={{ marginBottom: 16, height: 22, marginTop: 30, marginBottom: 30 }}>
+            <Text style={{ fontSize: 20, color: 'black', paddingLeft: 16, paddingRight: 16, fontWeight: 'bold' }}>
               {intl.formatMessage({ id: 'identity_recovery_sub_title' })}
-            </Text>}
+            </Text>
           </View>
-          <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
+        <View style={{ width: '100%', alignItems: 'center' }}>
+          <View style={{ width: '100%' }}>
             <Field
+              label="助记词"
               placeholder={intl.formatMessage({ id: 'identity_input_placeholder_mnemonics' })}
               name="mnemonics"
               fieldName="mnemonics"
-              component={TextAreaField}
+              component={TextArea}
               showClearButton={!!mnemonics && mnemonics.length > 0}
               change={change}
+              separator={true}
+              rightComponent={<TouchableNativeFeedback onPress={() => {}} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', true)} useForeground={true}>
+                <View style={{ width: 30, height: 30, position: 'absolute', top: 37, right: 9, alignItems: 'center', justifyContent: 'center' }}>
+                  <FastImage source={require('resources/images/scan_purple_android.png')} style={{ width: 24, height: 24 }} />
+                </View>
+              </TouchableNativeFeedback>}
             />
-            <TouchableHighlight underlayColor="rgba(0,0,0,0)" onPress={this.scan.bind(this, 'mnemonics')} style={{ width: 30, height: 30, position: 'absolute', right: 16, top: 4 }} activeOpacity={0.42}>
-              <FastImage
-                source={require('resources/images/scan2_right.png')}
-                style={{ width: 30, height: 30 }}
-              />
-            </TouchableHighlight>
           </View>
-          <View style={{ width: '100%', height: 56, paddingLeft: 16, paddingRight: 16, paddingTop: 8, paddingBottom: 8, justifyContent: 'flex-end' }}>
-            <Text style={{ fontSize: 13, color: '#666666' }}>{intl.formatMessage({ id: 'identity_recovery_sub_title_setting_passwd' })}</Text>
-          </View>
-          <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
             <Field
               label={intl.formatMessage({ id: 'identity_input_label_wallet_passwd' })}
               placeholder={intl.formatMessage({ id: 'identity_input_placeholder_wallet_passwd' })}
@@ -378,11 +310,30 @@ export default class RecoverIdentity extends Component {
             />
           </View>
           <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
-            <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>{intl.formatMessage({ id: 'identity_recovery_hint_passwd_recovery_passwd' })}</Text>
+            <Text style={{ fontSize: 13, color: 'rgba(0,0,0,0.54)', lineHeight: 18 }}>{intl.formatMessage({ id: 'identity_recovery_hint_passwd_recovery_passwd' })}</Text>
           </View>
         </View>
+        <Modal
+          isVisible={loading}
+          backdropOpacity={0.4}
+          useNativeDriver
+          animationIn="fadeIn"
+          animationInTiming={200}
+          backdropTransitionInTiming={200}
+          animationOut="fadeOut"
+          animationOutTiming={200}
+          backdropTransitionOutTiming={200}
+          onModalHide={this.onModalHide}
+        >
+          {loading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 16 }}>
+            <View style={{ backgroundColor: 'white', padding: 16, borderRadius: 3, alignItem: 'center', justifyContent: 'center', flexDirection: 'row', elevation: 4 }}>
+              <ActivityIndicator size="small" color="#673AB7" />
+              <Text style={{ fontSize: 15, marginLeft: 10, fontWeight: 'bold', color: 'black' }}>恢复身份中...</Text>
+            </View>
+          </View>}
+        </Modal>
       </ScrollView>
-      </View>
+      </SafeAreaView>
     )
   }
 }

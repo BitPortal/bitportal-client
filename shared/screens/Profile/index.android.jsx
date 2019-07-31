@@ -167,6 +167,14 @@ export default class Profile extends Component {
     })
   }
 
+  formatAddress = (address) => {
+    if (address && address.length > 20) {
+      return `${address.slice(0, 10)}....${address.slice(-10)}`
+    } else {
+      return address
+    }
+  }
+
   render() {
     const { identity, locale, currencySymbol, intl } = this.props
     const hasIdentity = !!identity.id
@@ -192,7 +200,7 @@ export default class Profile extends Component {
             <View style={{ width: '100%', height: 60, position: 'absolute', left: 0, bottom: 8, paddingLeft: 16, paddingRight: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderRadius: 30 }}>
               <View style={{ alignItems: 'flex-start', justifyContent: 'center' }}>
                 <Text style={{ fontSize: 14, color: 'white', fontWeight: '500' }}>{hasIdentity ? identity.name : intl.formatMessage({ id: 'identity_tableviewcell_identity' })}</Text>
-                <Text style={{ fontSize: 14, color: 'white' }}>{hasIdentity ? identity.identifier : intl.formatMessage({ id: 'identity_tableviewcell_add_identity' })}</Text>
+                <Text style={{ fontSize: 14, color: 'white' }}>{hasIdentity ? this.formatAddress(identity.identifier) : intl.formatMessage({ id: 'identity_tableviewcell_add_identity' })}</Text>
               </View>
               <Image
                 source={require('resources/images/chevron_right.png')}

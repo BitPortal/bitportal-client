@@ -2,27 +2,6 @@
 
 BitPortal client for web, ios, android, windows, macOS and browser extension
 
-## teck stack
-- [x] [React](https://facebook.github.io/react/)
-- [x] [React Native](https://facebook.github.io/react-native/)
-- [x] [Typescript](https://www.typescriptlang.org/)
-- [x] [Redux](https://github.com/reactjs/redux)
-- [x] [Immutable](http://facebook.github.io/immutable-js)
-- [x] [React Router](https://reacttraining.com/react-router/)
-- [x] [Redux Native Navigation](https://github.com/wix/react-native-navigation)
-- [x] [React Intl](https://github.com/yahoo/react-intl)
-- [x] [Redux Actions](https://github.com/acdlite/redux-actions)
-- [x] [Redux Saga](https://github.com/yelouafi/redux-saga)
-- [x] [Redux Form](http://redux-form.com)
-- [x] [Reselect](https://github.com/reactjs/reselect)
-- [x] [PostCSS](https://github.com/postcss/postcss)
-- [x] [CSS modules](https://github.com/outpunk/postcss-modules)
-- [x] [Enzyme](https://github.com/airbnb/enzyme)
-- [x] [Webpack](https://webpack.js.org)
-- [x] [Babel](https://babeljs.io/)
-- [x] [Express](https://github.com/expressjs/express)
-- [x] [Electron](https://github.com/electron/electron)
-
 ## get repo
 ```sh
 $ git clone https://github.com/BitPortal/bitportal-client.git
@@ -30,12 +9,13 @@ $ git clone https://github.com/BitPortal/bitportal-client.git
 
 ## install
 ```sh
-$ npm install -g full-icu
 $ yarn install
 ```
 
 ## run website
 ```sh
+$ npm install -g full-icu
+
 # run website in dev (http://dev.bitportal.io:3009)
 $ yarn run web
 

@@ -28,6 +28,7 @@ import { activeWalletTickerSelector } from 'selectors/ticker'
 import { accountResourcesByIdSelector } from 'selectors/account'
 import { currencySelector } from 'selectors/currency'
 import { managingWalletChildAddressSelector } from 'selectors/address'
+import { getNameBySymbol } from 'utils'
 import { formatCycleTime, formatMemorySize } from 'utils/format'
 import Sound from 'react-native-sound'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
@@ -255,21 +256,9 @@ export default class Wallet extends Component {
     })
   }
 
-  getNameBySymbol = (symbol) => {
-    if (symbol === 'BTC') {
-      return 'Bitcoin'
-    } else if (symbol === 'ETH') {
-      return 'Etheruem'
-    } else if (symbol === 'PCX') {
-      return 'ChainX'
-    } else {
-      return symbol
-    }
-  }
-
   toAsset = async (symbol, asset) => {
     const constants = await Navigation.constants()
-    const name = this.getNameBySymbol(symbol)
+    const name = getNameBySymbol(symbol)
 
     if (!asset) {
       const assetId = `${this.props.activeWallet.chain}/${symbol}`

@@ -2,18 +2,36 @@ import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { injectIntl, FormattedMessage } from 'react-intl'
-import { View, ActionSheetIOS, Alert, Text, ActivityIndicator, SafeAreaView } from 'react-native'
+import { View, ActionSheetIOS, Alert, Text, ActivityIndicator, SafeAreaView, SectionList, TouchableNativeFeedback } from 'react-native'
 import { Navigation } from 'react-native-navigation'
-import TableView from 'react-native-tableview'
 import * as walletActions from 'actions/wallet'
 import * as producerActions from 'actions/producer'
 import { accountByIdSelector, managingAccountVotedProducersSelector } from 'selectors/account'
 import { managingWalletSelector } from 'selectors/wallet'
 import Modal from 'react-native-modal'
 import Dialog from 'components/Dialog'
+import { walletIcons } from 'resources/images'
+import FastImage from 'react-native-fast-image'
 import styles from './styles'
 
-const { Section, Item } = TableView
+const images = {
+  vote: require('resources/images/vote_android.png'),
+  mnemonic: require('resources/images/backup_android.png'),
+  switchAccount: require('resources/images/switch_android.png'),
+  address: require('resources/images/wallet_address_android.png'),
+  addressType: require('resources/images/switch_android.png'),
+  keystore: require('resources/images/export_keystore_android.png'),
+  resources: require('resources/images/resource_android.png'),
+  createAccount: require('resources/images/add_grey_android.png'),
+  privateKey: require('resources/images/private_key_android.png'),
+  chainxDeposit: require('resources/images/switch_android.png'),
+  chainxVoting: require('resources/images/vote_android.png'),
+  chainxWithdrawal: require('resources/images/backup_android.png'),
+  chainxScan: require('resources/images/resource_android.png'),
+  chainxTool: require('resources/images/chainx_icon.png'),
+  chainxStats: require('resources/images/chart_android.png'),
+  delete: require('resources/images/delete_android.png')
+}
 
 export const errorMessages = (error) => {
   if (!error) { return null }
@@ -64,7 +82,8 @@ export default class ManageWallet extends Component {
         },
         largeTitle: {
           visible: false
-        }
+        },
+        elevation: 0
       },
       bottomTabs: {
         visible: false
@@ -433,23 +452,6 @@ export default class ManageWallet extends Component {
         }
       }
     })
-    //
-    // Navigation.showModal({
-    //   stack: {
-    //     children: [{
-    //       component: {
-    //         name: 'BitPortal.ChainXVoting'
-    //       },
-    //       options: {
-    //         topBar: {
-    //           searchBar: true,
-    //           searchBarHiddenWhenScrolling: false,
-    //           searchBarPlaceholder: 'Search'
-    //         }
-    //       }
-    //     }]
-    //   }
-    // })
   }
 
   chainxWithdrawal = async () => {
@@ -555,8 +557,38 @@ export default class ManageWallet extends Component {
     })
   }
 
+  formatAddress = (address) => {
+    if (address && address.length > 16) {
+      return `${address.slice(0, 8)}....${address.slice(-8)}`
+    } else {
+      return address
+    }
+  }
+
+  renderItem = ({ item, index }) => {
+    return (
+      <TouchableNativeFeedback onPress={this.props.onPress} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.4)', false)}>
+        <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 2, height: 48 }}>
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            <FastImage
+              source={images[item.actionType]}
+              style={{ width: 24, height: 24, marginRight: 30 }}
+            />
+            <View style={{ flex: 1, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', height: '100%' }}>
+              <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)', fontWeight: 'bold' }}>{item.text}</Text>
+            </View>
+          </View>
+        </View>
+      </TouchableNativeFeedback>
+    )
+  }
+
+  renderHeader = ({ section: { isFirst } }) => {
+    return !isFirst ? <View style={{ width: '100%', height: 1, backgroundColor: 'rgba(0,0,0,0.12)' }} /> : null
+  }
+
   render() {
-    const { type, deleteWallet, exportMnemonics, exportBTCPrivateKey, exportETHKeystore, exportETHPrivateKey, exportEOSPrivateKey, switchBTCAddressType, wallet } = this.props
+    const { deleteWallet, exportMnemonics, exportBTCPrivateKey, exportETHKeystore, exportETHPrivateKey, exportEOSPrivateKey, switchBTCAddressType, wallet } = this.props
     const name = (wallet && wallet.name) || this.props.name
     const address = (wallet && wallet.address) || this.props.address
     const chain = (wallet && wallet.chain) || this.props.chain
@@ -579,229 +611,150 @@ export default class ManageWallet extends Component {
     const exportActions = []
 
     if (chain === 'EOS') {
-      editActions.push(
-        <Item
-          reactModuleForCell="WalletManagementTableViewCell"
-          key="vote"
-          actionType="vote"
-          text={this.props.intl.formatMessage({ id: 'manage_wallet_title_eos_voting' })}
-          onPress={this.vote}
-          arrow
-        />
-      )
+      editActions.push({
+        key: 'vote',
+        actionType: 'vote',
+        text: this.props.intl.formatMessage({ id: 'manage_wallet_title_eos_voting' })
+      })
 
-      editActions.push(
-        <Item
-          reactModuleForCell="WalletManagementTableViewCell"
-          key="resources"
-          actionType="resources"
-          text={this.props.intl.formatMessage({ id: 'manage_wallet_title_eos_resource' })}
-          onPress={this.manageResource}
-          arrow
-        />
-      )
-
+      editActions.push({
+        key: 'resources',
+        actionType: 'resources',
+        text: this.props.intl.formatMessage({ id: 'manage_wallet_title_eos_resource' })
+      })
 
       if (source === 'RECOVERED_IDENTITY' || source === 'NEW_IDENTITY') {
-        accountActions.push(
-          <Item
-            reactModuleForCell="WalletManagementTableViewCell"
-            key="switchAccount"
-            actionType="switchAccount"
-            text={this.props.intl.formatMessage({ id: 'manage_wallet_title_eos_switch_account' })}
-            onPress={this.switchEOSAccount}
-            arrow
-          />
-        )
+        accountActions.push({
+          key: 'switchAccount',
+          actionType: 'switchAccount',
+          text: this.props.intl.formatMessage({ id: 'manage_wallet_title_eos_switch_account' })
+        })
 
-        accountActions.push(
-          <Item
-            reactModuleForCell="WalletManagementTableViewCell"
-            key="createAccount"
-            actionType="createAccount"
-            onPress={this.createNewAccount}
-            text={this.props.intl.formatMessage({ id: 'manage_wallet_title_eos_create_account' })}
-            arrow
-          />
-        )
+        accountActions.push({
+          key: 'createAccount',
+          actionType: 'createAccount',
+          text: this.props.intl.formatMessage({ id: 'manage_wallet_title_eos_create_account' })
+        })
       }
     }
 
     if (chain === 'BITCOIN') {
       if (source !== 'WIF') {
-        editActions.push(
-          <Item
-            reactModuleForCell="WalletManagementTableViewCell"
-            key="address"
-            actionType="address"
-            text={this.props.intl.formatMessage({ id: 'manage_wallet_title_wallet_address' })}
-            onPress={this.switchBTCAddress}
-            arrow
-          />
-        )
+        editActions.push({
+          key: 'address',
+          actionType: 'address',
+          text: this.props.intl.formatMessage({ id: 'manage_wallet_title_wallet_address' })
+        })
       }
 
-      editActions.push(
-        <Item
-          reactModuleForCell="WalletManagementTableViewCell"
-          key="addressType"
-          actionType="addressType"
-          text={this.props.intl.formatMessage({ id: 'manage_wallet_title_switch_address_type' })}
-          detail={segWit === 'P2WPKH' ? this.props.intl.formatMessage({ id: 'manage_wallet_type_btc_address_segwit' }) : this.props.intl.formatMessage({ id: 'manage_wallet_type_btc_address_common' })}
-          onPress={this.switchBTCAddressType.bind(this, id)}
-          arrow
-        />
-      )
+      editActions.push({
+        key: 'addressType',
+        actionType: 'addressType',
+        text: this.props.intl.formatMessage({ id: 'manage_wallet_title_switch_address_type' }),
+        detail: segWit === 'P2WPKH' ? this.props.intl.formatMessage({ id: 'manage_wallet_type_btc_address_segwit' }) : this.props.intl.formatMessage({ id: 'manage_wallet_type_btc_address_common' })
+      })
     }
 
-    if (type === 'identity' || source === 'MNEMONIC') {
-      exportActions.push(
-        <Item
-          reactModuleForCell="WalletManagementTableViewCell"
-          key="mnemonic"
-          actionType="mnemonic"
-          text={this.props.intl.formatMessage({ id: 'manage_wallet_title_backup_mnemonics' })}
-          onPress={this.exportMnemonics.bind(this, id)}
-          arrow
-        />
-      )
+    if (source === 'NEW_IDENTITY' || source === 'RECOVERED_IDENTITY' || source === 'MNEMONIC') {
+      exportActions.push({
+        key: 'mnemonic',
+        actionType: 'mnemonic',
+        text: this.props.intl.formatMessage({ id: 'manage_wallet_title_backup_mnemonics' })
+      })
     }
 
     if (source === 'PRIVATE' || source === 'WIF' || source === 'KEYSTORE' || chain === 'ETHEREUM' || chain === 'EOS') {
-      exportActions.push(
-        <Item
-          reactModuleForCell="WalletManagementTableViewCell"
-          key="privateKey"
-          actionType="privateKey"
-          text={this.props.intl.formatMessage({ id: 'manage_wallet_title_export_private_key' })}
-          onPress={this.exportPrivateKey.bind(this, id, symbol)}
-          arrow
-        />
-      )
+      exportActions.push({
+        key: 'privateKey',
+        actionType: 'privateKey',
+        text: this.props.intl.formatMessage({ id: 'manage_wallet_title_export_private_key' })
+      })
     }
 
     if (chain === 'ETHEREUM') {
-      exportActions.push(
-        <Item
-          reactModuleForCell="WalletManagementTableViewCell"
-          key="keystore"
-          actionType="keystore"
-          text={this.props.intl.formatMessage({ id: 'manage_wallet_title_export_keysotre' })}
-          onPress={this.exportETHKeystore.bind(this, id)}
-          arrow
-        />
-      )
+      exportActions.push({
+        key: 'keystore',
+        actionType: 'keystore',
+        text: this.props.intl.formatMessage({ id: 'manage_wallet_title_export_keysotre' })
+      })
     }
 
     if (chain === 'CHAINX') {
-      editActions.push(
-        <Item
-          reactModuleForCell="WalletManagementTableViewCell"
-          key="chainxDeposit"
-          actionType="chainxDeposit"
-          text={this.props.intl.formatMessage({ id: 'manage_wallet_title_chainx_deposit_mine' })}
-          onPress={this.chainxDeposit.bind(this, id)}
-          arrow
-        />
-      )
-      editActions.push(
-        <Item
-          reactModuleForCell="WalletManagementTableViewCell"
-          key="chainxVoting"
-          actionType="chainxVoting"
-          text={this.props.intl.formatMessage({ id: 'manage_wallet_title_chainx_voting' })}
-          onPress={this.chainxVoting.bind(this, id)}
-          arrow
-        />
-      )
-      editActions.push(
-        <Item
-          reactModuleForCell="WalletManagementTableViewCell"
-          key="chainxWithdrawal"
-          actionType="chainxWithdrawal"
-          text={this.props.intl.formatMessage({ id: 'manage_wallet_title_chainx_withdraw' })}
-          onPress={this.chainxWithdrawal.bind(this, id)}
-          arrow
-        />
-      )
-      accountActions.push(
-        <Item
-          reactModuleForCell="WalletManagementTableViewCell"
-          key="chainxScan"
-          actionType="chainxScan"
-          text={this.props.intl.formatMessage({ id: 'manage_wallet_title_chainx_explorer' })}
-          onPress={this.chainxToScan.bind(this, id)}
-          arrow
-        />
-      )
-      accountActions.push(
-        <Item
-          reactModuleForCell="WalletManagementTableViewCell"
-          key="chainxStats"
-          actionType="chainxStats"
-          text={this.props.intl.formatMessage({ id: 'manage_wallet_title_chainx_stats' })}
-          onPress={this.chainxToStats.bind(this, id)}
-          arrow
-        />
-      )
-      accountActions.push(
-        <Item
-          reactModuleForCell="WalletManagementTableViewCell"
-          key="chainxTool"
-          actionType="chainxTool"
-          text="ChainXTool"
-          onPress={this.chainxToChainXTool.bind(this, id)}
-          arrow
-        />
-      )
+      editActions.push({
+        key: 'chainxDeposit',
+        actionType: 'chainxDeposit',
+        text: this.props.intl.formatMessage({ id: 'manage_wallet_title_chainx_deposit_mine' })
+      })
+
+      editActions.push({
+        key: 'chainxVoting',
+        actionType: 'chainxVoting',
+        text: this.props.intl.formatMessage({ id: 'manage_wallet_title_chainx_voting' })
+      })
+
+      editActions.push({
+        key: 'chainxWithdrawal',
+        actionType: 'chainxWithdrawal',
+        text: this.props.intl.formatMessage({ id: 'manage_wallet_title_chainx_withdraw' })
+      })
+
+      accountActions.push({
+        key: 'chainxScan',
+        actionType: 'chainxScan',
+        text: this.props.intl.formatMessage({ id: 'manage_wallet_title_chainx_explorer' })
+      })
+
+      accountActions.push({
+        key: 'chainxStats',
+        actionType: 'chainxStats',
+        text: this.props.intl.formatMessage({ id: 'manage_wallet_title_chainx_stats' })
+      })
+
+      accountActions.push({
+        key: 'chainxTool',
+        actionType: 'chainxTool',
+        text: 'ChainXTool'
+      })
     }
 
+    const sections = []
+    if (editActions.length) sections.push({ data: editActions })
+    if (accountActions.length) sections.push({ data: accountActions })
+    if (exportActions.length) sections.push({ data: exportActions })
+
+    if (source !== 'RECOVERED_IDENTITY' && source !== 'NEW_IDENTITY') {
+      sections.push({ data: [{
+        key: 'delete',
+        actionType: 'delete',
+        text: this.props.intl.formatMessage({ id: 'manage_wallet_text_delete_wallet' })
+      }] })
+    }
+
+    sections[0].isFirst = true
+
     return (
-      <SafeAreaView style={{ flex: 1 }}>
-        <TableView
-          style={{ flex: 1 }}
-          tableViewStyle={TableView.Consts.Style.Grouped}
-          tableViewCellStyle={TableView.Consts.CellStyle.Value1}
-          detailTextColor="#666666"
+      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+        <View style={{ justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#673AB7', paddingBottom: 16, elevation: 4, marginBottom: 12 }}>
+          <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', paddingRight: 16, paddingLeft: 16 }}>
+            {!!chain && <View style={{ width: 40, height: 40, backgroundColor: 'white', borderRadius: 20 }}>
+              <FastImage source={walletIcons[chain.toLowerCase()]} style={{ width: 40, height: 40, borderRadius: 4, backgroundColor: 'white' }} />
+             </View>
+            }
+        <View style={{ justifyContent: 'center', alignItems: 'flex-start', marginLeft: 16 }}>
+          <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'white' }}>{name}</Text>
+          <Text style={{ fontSize: 16, color: 'rgba(255,255,255,0.7)' }}>{this.formatAddress(address)}</Text>
+        </View>
+          </View>
+        </View>
+        <SectionList
+          renderSectionHeader={this.renderHeader}
+          renderItem={this.renderItem}
           showsVerticalScrollIndicator={false}
-          moveWithinSectionOnly
-          cellSeparatorInset={{ left: 61 }}
-          onItemNotification={this.onItemNotification}
-        >
-          <Section />
-          <Section>
-            <Item
-              height={78}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
-              name={name}
-              address={address}
-              chain={chain}
-              reactModuleForCell="WalletManagementTableViewCell"
-              componentId={this.props.componentId}
-            />
-          </Section>
-          {editActions.length > 0 && <Section>
-            {editActions}
-          </Section>}
-          {accountActions.length > 0 && <Section>
-            {accountActions}
-          </Section>}
-          {exportActions.length > 0 && <Section>
-            {exportActions}
-          </Section>}
-          {type === 'imported' && <Section>
-            <Item
-              reactModuleForCell="WalletManagementTableViewCell"
-              key="delete"
-              actionType="delete"
-              text={this.props.intl.formatMessage({ id: 'manage_wallet_text_delete_wallet' })}
-              onPress={this.deleteWallet.bind(this, id, chain, address)}
-              arrow
-            />
-          </Section>}
-        </TableView>
+          sections={sections}
+          keyExtractor={(item, index) => item.key}
+        />
         <Modal
-          isVisible={loading}
+        isVisible={loading}
           backdropOpacity={0.4}
           useNativeDriver
           animationIn="fadeIn"

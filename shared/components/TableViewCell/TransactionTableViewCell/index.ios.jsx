@@ -3,10 +3,6 @@ import { View, Text, TouchableHighlight, NativeModules } from 'react-native'
 import FastImage from 'react-native-fast-image'
 
 const TransactionTableViewCell = (props) => {
-  toManageWallet = () => {
-    NativeModules.RNTableViewManager.sendNotification(props.tableViewReactTag, { action: 'toManageWallet' })
-  }
-
   formatAddress = (address) => {
     if (address && address.length > 16) {
       return `${address.slice(0, 8)}....${address.slice(-8)}`

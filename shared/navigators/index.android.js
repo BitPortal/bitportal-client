@@ -5,12 +5,15 @@ import Provider, { PersistProvider } from 'components/Provider'
 
 import Root from 'screens/Root'
 import Wallet from 'screens/Wallet'
+import Asset from 'screens/Wallet/Asset'
 import Market from 'screens/Market'
 import Profile from 'screens/Profile'
 import AddIdentity from 'screens/Wallet/AddIdentity'
+import RecoverIdentity from 'screens/Wallet/RecoverIdentity'
 import CreateIdentity from 'screens/Wallet/CreateIdentity'
 import WalletList from 'screens/Wallet/WalletList'
-import NavigationBackground from 'components/NavigationBackground'
+import SelectChainType from 'screens/Wallet/SelectChainType'
+import ManageWallet from 'screens/Wallet/ManageWallet'
 import { FirstTabScreen, SecondTabScreen, ThirdTabScreen } from 'screens/Wallet'
 
 import Images from 'resources/images'
@@ -19,12 +22,15 @@ import messages from 'resources/messages'
 export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.Root', () => Root, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Wallet', () => Wallet, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Asset', () => Asset, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Market', () => Market, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ManageWallet', () => ManageWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Profile', () => Profile, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.AddIdentity', () => AddIdentity, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.RecoverIdentity', () => RecoverIdentity, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.CreateIdentity', () => CreateIdentity, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.WalletList', () => WalletList, Provider, store)
-  Navigation.registerComponentWithRedux('BitPortal.NavigationBackground', () => NavigationBackground, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.SelectChainType', () => SelectChainType, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.FirstTabScreen', () => gestureHandlerRootHOC(FirstTabScreen), Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.SecondTabScreen', () => gestureHandlerRootHOC(SecondTabScreen), Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ThirdTabScreen', () => gestureHandlerRootHOC(ThirdTabScreen), Provider, store)
@@ -39,11 +45,7 @@ export const setDefaultOptions = () => {
       background: {
         translucent: true,
         drawBehind: false,
-        color: '#673AB7',
-        /* component: {
-         *   name: 'BitPortal.NavigationBackground',
-         *   clipToBounds: true
-         * }*/
+        color: '#673AB7'
       },
       noBorder: false,
       title: {

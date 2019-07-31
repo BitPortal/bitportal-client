@@ -21,6 +21,7 @@ function* scanIdentity(action: Action<ScanIdentityParams>) {
     assert(!(Object.keys(allItems).length === 0 && allItems.constructor === Object), 'No keystores')
 
     const activeWalletId = yield select((state: RootState) => state.wallet.activeWalletId)
+
     const identityKeystore = Object.keys(allItems).filter(item => !item.indexOf('IDENTITY_KEYSTORE')).map((item) => {
       const info = allItems[item]
       return JSON.parse(info)
@@ -128,7 +129,6 @@ function* recoverIdentity(action: Action<RecoverIdentityParams>) {
     }
 
     const identityInfo = walletCore.getIdentityMetaData(identityKeystore)
-
     const walletsInfo = identityWallets.map(walletCore.getWalletMetaData)
 
     yield put(actions.addIdentity(identityInfo))

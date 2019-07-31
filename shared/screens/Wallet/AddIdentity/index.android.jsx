@@ -21,7 +21,7 @@ const styles = EStyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 20,
-    borderRadius: 2,
+    borderRadius: 4,
     elevation: 3
   },
   buttonText: {
@@ -86,11 +86,11 @@ export default class AddIdentity extends Component {
   }
 
   toRecoverIdentity = () => {
-    /* Navigation.push(this.props.componentId, {
-     *   component: {
-     *     name: 'BitPortal.RecoverIdentity'
-     *   }
-     * })*/
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.RecoverIdentity'
+      }
+    })
   }
 
   componentDidAppear() {

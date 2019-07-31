@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, Text, TouchableHighlight } from 'react-native'
+import { View, Text, TouchableNativeFeedback, RefreshControl, Dimensions } from 'react-native'
 import { injectIntl } from 'react-intl'
 import { Navigation } from 'react-native-navigation'
-import TableView from 'react-native-tableview'
 import { activeWalletSelector, activeChainSelector } from 'selectors/wallet'
 import { activeWalletBalanceSelector, activeAssetBalanceSelector } from 'selectors/balance'
 import { activeWalletTickerSelector } from 'selectors/ticker'
@@ -17,9 +16,11 @@ import * as transactionActions from 'actions/transaction'
 import * as walletActions from 'actions/wallet'
 import * as balanceActions from 'actions/balance'
 import { assetIcons } from 'resources/images'
+import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview'
 import chainxAccount from '@chainx/account'
 import styles from './styles'
-const { Section, Item } = TableView
+
+const dataProvider = new DataProvider((r1, r2) => r1.key !== r2.key)
 
 @injectIntl
 
@@ -51,7 +52,14 @@ export default class Asset extends Component {
   static get options() {
     return {
       topBar: {
-        noBorder: true
+        noBorder: true,
+        elevation: 0,
+        /* rightButtons: [
+         *   {
+         *     id: 'qrcode',
+         *     icon: require('resources/images/qrcode_android.png')
+         *   }
+         * ]*/
       },
       bottomTabs: {
         visible: false
@@ -61,71 +69,125 @@ export default class Asset extends Component {
 
   subscription = Navigation.events().bindComponent(this)
 
-  toTransferAsset = () => {
-    Navigation.showModal({
-      stack: {
-        children: [{
-          component: {
-            name: 'BitPortal.TransferAsset',
-            options: {
-              topBar: {
-                title: {
-                  text: `发送${this.props.activeAsset.symbol}到`
-                },
-                leftButtons: [
-                  {
-                    id: 'cancel',
-                    text: '取消'
-                  }
-                ]
-              }
-            }
-          }
-        }]
+  layoutProvider = new LayoutProvider(
+    index => {
+      if (index === 0) {
+        return 0
+      } else {
+        return 1
       }
-    })
+    },
+    (type, dim) => {
+      switch (type) {
+        case 0:
+          dim.width = Dimensions.get('window').width
+          dim.height = 48
+          break
+        default:
+          dim.width = Dimensions.get('window').width
+          dim.height = 60
+      }
+    }
+  )
 
+  state = {
+    dataProvider: dataProvider.cloneWithRows([]),
+    refreshing: false
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { walletBalance, activeAsset, intl, transactions, assetBalance, loadingMore, canLoadMore } = nextProps
+    const balance = activeAsset.contract ? assetBalance : walletBalance
+    const transactionCount = transactions && transactions.length
+    const precision = balance.precision
+    const symbol = balance.symbol
+
+    let transactionCells = []
+
+    if (transactionCount) {
+      transactionCells = transactions.map((transaction: any, index: number) => ({
+        key: transaction.id,
+        id: transaction.id,
+        change: intl.formatNumber(+transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision }),
+        date: transaction.timestamp && intl.formatDate(+transaction.timestamp, { year: 'numeric', month: 'numeric', day: 'numeric' }),
+        time: transaction.timestamp && intl.formatTime(+transaction.timestamp, { hour12: false, hour: 'numeric', minute: 'numeric', second: 'numeric' }),
+        transactionType: transaction.transactionType,
+        targetAddress: transaction.targetAddress,
+        failed: transaction.isError === '1',
+        pending: transaction.pending,
+        symbol: symbol
+      }))
+    }
+
+    /* if (canLoadMore) {
+     *   transactionCells.push({
+     *     key: 'loadMore'
+     *   })
+     * }*/
+
+    return { dataProvider: dataProvider.cloneWithRows([{ title: '交易记录' }, ...transactionCells]) }
+  }
+
+  toTransferAsset = () => {
+    /* Navigation.showModal({
+     *   stack: {
+     *     children: [{
+     *       component: {
+     *         name: 'BitPortal.TransferAsset',
+     *         options: {
+     *           topBar: {
+     *             title: {
+     *               text: `发送${this.props.activeAsset.symbol}到`
+     *             },
+     *             leftButtons: [
+     *               {
+     *                 id: 'cancel',
+     *                 text: '取消'
+     *               }
+     *             ]
+     *           }
+     *         }
+     *       }
+     *     }]
+     *   }
+     * })*/
+  }
+
+  toReceiveAsset = () => {
     /* Navigation.push(this.props.componentId, {
      *   component: {
-     *     name: 'BitPortal.TransferAsset',
+     *     name: 'BitPortal.ReceiveAsset',
      *     options: {
      *       topBar: {
      *         title: {
-     *           text: `发送${this.props.activeWallet.symbol}到`
-     *         }
+     *           text: `接收 ${this.props.activeAsset.symbol}`
+     *         },
+     *         noBorder: this.props.activeWallet.chain === 'BITCOIN' && this.props.childAddress && this.props.activeWallet.address !== this.props.childAddress
      *       }
      *     }
      *   }
      * })*/
   }
 
-  toReceiveAsset = async () => {
-    const constants = await Navigation.constants()
-
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.ReceiveAsset',
-        passProps: {
-          statusBarHeight: constants.statusBarHeight
-        },
-        options: {
-          topBar: {
-            title: {
-              text: `接收 ${this.props.activeAsset.symbol}`
-            },
-            noBorder: this.props.activeWallet.chain === 'BITCOIN' && this.props.childAddress && this.props.activeWallet.address !== this.props.childAddress
+  componentDidAppear() {
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        rightButtons: [
+          {
+            id: 'qrcode',
+            icon: require('resources/images/qrcode_android.png')
           }
-        }
+        ]
       }
     })
   }
 
-  componentDidAppear() {
-
-  }
-
   componentDidDisappear() {
-
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        rightButtons: []
+      }
+    })
   }
 
   componentDidMount() {
@@ -187,7 +249,8 @@ export default class Asset extends Component {
     this.props.actions.getTransactions.requested({ ...this.props.activeWallet, contract, assetSymbol, loadMore: true })
   }
 
-  formatAddress = (address) => {
+  formatAddress = (address, splitLength) => {
+    const sl = splitLength || 20
     if (address && address.length > 20) {
       return `${address.slice(0, 10)}....${address.slice(-10)}`
     } else {
@@ -216,8 +279,42 @@ export default class Asset extends Component {
     })
   }
 
+  renderItem = (type, data) => {
+    if (!type) return (
+      <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48 }}>
+        <Text style={{ color: 'rgba(0,0,0,0.87)', fontSize: 15 }}>{data.title}</Text>
+      </View>
+    )
+
+    return (
+      <TouchableNativeFeedback onPress={() => {}} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.3)', false)} useForeground={true}>
+        <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 8, paddingBottom: 8 }}>
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: '100%' }}>
+            <View style={{ flex: 1, height: 44, borderWidth: 0, borderColor: 'red', justifyContent: 'space-between' }}>
+              <Text style={{ fontSize: 17, marginBottom: 4, color: 'black' }}>{this.formatAddress(data.targetAddress)}</Text>
+              <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                {data.transactionType === 'send' && !data.failed && <FastImage source={require('resources/images/sent.png')} style={{ width: 20, height: 20 }} />}
+                {data.transactionType === 'receive' && !data.failed && <FastImage source={require('resources/images/received.png')} style={{ width: 20, height: 20 }} />}
+                {!!data.failed && <FastImage source={require('resources/images/error_android.png')} style={{ width: 20, height: 20, marginRight: 2 }} />}
+                {data.transactionType === 'send' && !data.failed && !data.pending && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}>发送</Text>}
+                {data.transactionType === 'receive' && !data.failed && !data.pending && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}>接收</Text>}
+                {!!data.failed && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}>转账失败</Text>}
+                {!!data.pending && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}>转账中...</Text>}
+                {!data.pending && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}> {data.date} {data.time}</Text>}
+              </View>
+            </View>
+          </View>
+          <View style={{ justifyContent: 'center', alignItems: 'flex-end', height: 44 }}>
+            {data.transactionType === 'send' && <Text style={{ fontSize: 17, color: 'black' }}>{data.change}</Text>}
+            {data.transactionType === 'receive' && <Text style={{ fontSize: 17, color: '#4CD964' }}>+{data.change}</Text>}
+          </View>
+        </View>
+      </TouchableNativeFeedback>
+    )
+  }
+
   render() {
-    const { ticker, walletBalance, activeWallet, activeAsset, intl, transactions, getTransactions, statusBarHeight, assetBalance, loadingMore, canLoadMore, currency } = this.props
+    const { ticker, walletBalance, activeWallet, activeAsset, intl, transactions, getTransactions, assetBalance, loadingMore, canLoadMore, currency } = this.props
     const balance = activeAsset.contract ? assetBalance : walletBalance
     const transactionCount = transactions && transactions.length
     const precision = balance.precision
@@ -228,117 +325,47 @@ export default class Asset extends Component {
     const emptyTransactions = !!transactions && transactions.length === 0
     const chain = activeWallet ? activeWallet.chain : ''
 
-    let transactionCells = []
-
-    if (transactionCount) {
-      transactionCells = transactions.map((transaction: any, index: number) => (
-        <Item
-          reactModuleForCell="TransactionTableViewCell"
-          height={60}
-          key={transaction.id}
-          id={transaction.id}
-          change={intl.formatNumber(+transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}
-          date={transaction.timestamp && intl.formatDate(+transaction.timestamp, { year: 'numeric', month: 'numeric', day: 'numeric' })}
-          time={transaction.timestamp && intl.formatTime(+transaction.timestamp, { hour12: false, hour: 'numeric', minute: 'numeric', second: 'numeric' })}
-          transactionType={transaction.transactionType}
-          targetAddress={transaction.targetAddress}
-          failed={transaction.isError === '1'}
-          pending={transaction.pending}
-          symbol={symbol}
-          componentId={this.props.componentId}
-          showSeparator={true}
-          onPress={this.toTransactionDetail.bind(this, transaction.id, transaction.pending, transaction.isError === '1')}
-        />
-      ))
-    }
-
-    if (canLoadMore) {
-      transactionCells.push(
-        <Item key="loadMore" reactModuleForCell="LoadMoreTableViewCell" selectionStyle={TableView.Consts.CellSelectionStyle.None} onPress={!loadingMore ? this.loadMore : () => {}} loadingMore={loadingMore} height={60} />
-      )
-    }
-
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
-        <View style={{ justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#F7F7F7', height: 180 + +statusBarHeight + 52, paddingTop: +statusBarHeight + 44 + 52 }}>
-          <View style={{ width: '100%', justifyContent: 'space-between', alignItems: 'flex-start', flexDirection: 'row', paddingRight: 16, paddingLeft: 16 }}>
-            <View style={{ justifyContent: 'center', alignItems: 'flex-start', width: '60%' }}>
-              <Text style={{ fontSize: 26, fontWeight: '500' }}>{balance && intl.formatNumber(balance.balance, { minimumFractionDigits: balance.precision, maximumFractionDigits: balance.precision })}</Text>
-              {!assetBalance && <Text style={{ fontSize: 20, color: '#007AFF', marginTop: 4 }}>≈ {currency.sign}{(ticker && ticker[`${activeWallet.chain}/${activeWallet.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${activeWallet.symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</Text>}
-              {!!assetBalance && <Text style={{ fontSize: 20, color: '#007AFF', marginTop: 4 }}>≈ {currency.sign}{(ticker && ticker[`${activeWallet.chain}/${assetBalance.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${assetBalance.symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</Text>}
-            </View>
-            {(!activeAsset || !activeAsset.contract) && !!chain && <FastImage source={assetIcons[chain.toLowerCase()]} style={{ width: 60, height: 60, borderRadius: 30, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }} />}
-            {(!!activeAsset && !!activeAsset.contract) && <View style={{ width: 60, height: 60, borderWidth: 0, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white', borderRadius: 30 }}>
-              <View style={{ position: 'absolute', top: 0, left: 0, width: 60, height: 60, borderRadius: 30, alignItems: 'center', justifyContent: 'center', backgroundColor: '#B9C1CF' }}>
+        <View style={{ justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#673AB7', paddingTop: 0, paddingBottom: 20, elevation: 4 }}>
+          <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', paddingRight: 16, paddingLeft: 16 }}>
+            {(!activeAsset || !activeAsset.contract) && !!chain &&
+             <View style={{ width: 56, height: 56, backgroundColor: 'white', borderRadius: 28 }}>
+               <FastImage source={assetIcons[chain.toLowerCase()]} style={{ width: 56, height: 56, borderRadius: 28, backgroundColor: 'white' }} />
+             </View>
+            }
+            {(!!activeAsset && !!activeAsset.contract) && <View style={{ width: 56, height: 56, backgroundColor: 'white', borderRadius: 28 }}>
+              <View style={{ position: 'absolute', top: 0, left: 0, width: 56, height: 56, borderRadius: 28, alignItems: 'center', justifyContent: 'center', backgroundColor: '#B9C1CF' }}>
                 <Text style={{ fontWeight: '500', fontSize: 28, color: 'white', paddingLeft: 1.6 }}>{activeAsset.symbol.slice(0, 1)}</Text>
               </View>
               <FastImage
                 source={{ uri: activeAsset.icon_url }}
-                style={{ width: 60, height: 60, borderRadius: 30, backgroundColor: activeAsset.icon_url ? 'white' : 'rgba(0,0,0,0)', borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
+                style={{ width: 56, height: 56, borderRadius: 28, backgroundColor: activeAsset.icon_url ? 'white' : 'rgba(0,0,0,0)' }}
               />
             </View>}
-          </View>
-          {/* <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16 }}>
-              <Text style={{ fontSize: 17, color: 'rgba(0,0,0,0.48)' }}>{this.formatAddress(activeWallet.address)}</Text>
-              </View> */}
-          <View style={{ justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, marginTop: 12 }}>
-            <View style={{ width: '50%', paddingRight: 8 }}>
-              <TouchableHighlight underlayColor="#007AFF" style={{ padding: 5 }} activeOpacity={0.7} style={{ backgroundColor: '#007AFF', borderRadius: 10, height: 48, alignItems: 'center', justifyContent: 'center' }} onPress={this.toTransferAsset}>
-                <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
-                  <FastImage
-                    source={require('resources/images/transfer_white.png')}
-                    style={{ width: 26, height: 26, marginRight: 8 }}
-                  />
-                  <Text style={{ color: 'white', fontSize: 17 }}>转账</Text>
-                </View>
-              </TouchableHighlight>
-            </View>
-            <View style={{ width: '50%', paddingLeft: 8 }}>
-              <TouchableHighlight underlayColor="#007AFF" style={{ padding: 5 }} activeOpacity={0.7} style={{ backgroundColor: '#007AFF', borderRadius: 10, height: 48, alignItems: 'center', justifyContent: 'center' }} onPress={this.toReceiveAsset}>
-                <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
-                  <FastImage
-                    source={require('resources/images/receive_white.png')}
-                    style={{ width: 26, height: 26, marginRight: 8, marginBottom: 3 }}
-                  />
-                  <Text style={{ color: 'white', fontSize: 17 }}>收款</Text>
-                </View>
-              </TouchableHighlight>
-            </View>
-          </View>
-          <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 0, backgroundColor: '#C8C7CC' }} />
+        <View style={{ justifyContent: 'center', alignItems: 'flex-start', marginLeft: 16 }}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white' }}>{balance && intl.formatNumber(balance.balance, { minimumFractionDigits: balance.precision, maximumFractionDigits: balance.precision })}</Text>
+          {!assetBalance && <Text style={{ fontSize: 18, color: 'rgba(255,255,255,0.7)' }}>≈ {currency.sign}{(ticker && ticker[`${activeWallet.chain}/${activeWallet.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${activeWallet.symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</Text>}
+          {!!assetBalance && <Text style={{ fontSize: 18, color: 'rgba(255,255,255,0.7)' }}>≈ {currency.sign}{(ticker && ticker[`${activeWallet.chain}/${assetBalance.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${assetBalance.symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</Text>}
+          {/* <Text style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)' }}>{this.formatAddress(activeWallet.address)}</Text> */}
         </View>
-        {chain === 'CHAINX' && (<View style={{ marginTop: 50, alignItems: 'center' }}>
-          <Text style={{fontSize: 18, color: '#007AFF' }} onPress={this.toChainXHistory}>ChainX的更多记录请点击这里...</Text>
-        </View>)}
-        {chain !== 'CHAINX' && (
-        <TableView
-          style={{ flex: 1, backgroundColor: 'white' }}
-          tableViewCellStyle={TableView.Consts.CellStyle.Default}
-          detailTextColor="#666666"
-          headerBackgroundColor="white"
-          headerTextColor="black"
-          headerFontSize={17}
-          onItemNotification={this.onItemNotification}
-          separatorStyle={TableView.Consts.SeparatorStyle.None}
-          onRefresh={this.onRefresh}
-          refreshing={refreshing}
-          canRefresh={hasTransactions}
-          canLoadMore={true}
-        >
-          <Section uid="HeaderTableViewCell">
-            <Item
-              reactModuleForCell="HeaderTableViewCell"
-              title={emptyTransactions ? '暂无交易记录' : '交易记录'}
-              loading={(!refreshing && loading) && (!hasTransactions || emptyTransactions)}
-              loadingTitle="获取交易记录..."
-              height={48}
-              componentId={this.props.componentId}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
+          </View>
+        </View>
+        <TouchableNativeFeedback onPress={() => {}} background={TouchableNativeFeedback.Ripple('rgba(255,255,255,0.3)', true)} useForeground={true}>
+          <View style={{ width: 56, height: 56, borderRadius: 28, alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 48, right: 16, backgroundColor: '#FF5722', elevation: 10, zIndex: 1 }}>
+            <FastImage
+              source={require('resources/images/send_android.png')}
+              style={{ width: 24, height: 24 }}
             />
-          </Section>
-          {transactionCount && <Section>{transactionCells}</Section>}
-        </TableView>
-        )}
+          </View>
+        </TouchableNativeFeedback>
+        {chain !== 'CHAINX' && <RecyclerListView
+          layoutProvider={this.layoutProvider}
+          dataProvider={this.state.dataProvider}
+          rowRenderer={this.renderItem}
+          renderAheadOffset={60 * 10}
+          scrollViewProps={{ refreshControl: <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} /> }}
+        />}
       </View>
     )
   }
