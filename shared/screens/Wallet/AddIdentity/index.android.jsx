@@ -113,6 +113,7 @@ export default class AddIdentity extends Component {
             source={require('resources/images/add_identity_background.png')}
             style={{ width: '70%', height: '100%' }}
             resizeMode="contain"
+            resizeMethod="resize"
           />
         </View>
         <View style={{ position: 'absolute', top: '50%', left: 0, width: '100%', height: '50%', paddingHorizontal: 24 }}>
@@ -123,12 +124,12 @@ export default class AddIdentity extends Component {
           <Text style={{ fontSize: 14, marginBottom: 30, color: 'rgba(255,255,255,0.87)' }}>
             {intl.formatMessage({ id: 'identity_add_slogon' })}
           </Text>
-          <TouchableNativeFeedback onPress={this.toCreateIdentity} background={TouchableNativeFeedback.Ripple('rgba(255,255,255,0.4)', false)}>
+          <TouchableNativeFeedback onPress={this.toCreateIdentity} background={TouchableNativeFeedback.Ripple('rgba(255,255,255,0.3)', false)}>
             <View style={styles.button}>
               <Text style={styles.buttonText}>{intl.formatMessage({ id: 'identity_add_title_button_create_identity' })}</Text>
             </View>
           </TouchableNativeFeedback>
-          <TouchableNativeFeedback onPress={this.toRecoverIdentity} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.4)', false)}>
+          <TouchableNativeFeedback onPress={this.toRecoverIdentity} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.3)', false)}>
             <View style={[styles.button, { backgroundColor: 'white' }]}>
               <Text style={[styles.buttonText, { color: '#673AB7' }]}>{intl.formatMessage({ id: 'identity_add_title_button_recovery_identity' })}</Text>
             </View>

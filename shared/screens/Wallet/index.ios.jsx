@@ -490,6 +490,7 @@ export default class Wallet extends Component {
 
     const assetItems = []
     if (balance) {
+      console.log('balance', balance)
       assetItems.push(
         <Item
           key={activeWallet.address}

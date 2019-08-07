@@ -25,7 +25,20 @@ export default class SelectChainType extends Component {
       },
       bottomTabs: {
         visible: false
+      },
+      sideMenu: {
+        left: {
+          enabled: false
+        }
       }
+    }
+  }
+
+  subscription = Navigation.events().bindComponent(this)
+
+  navigationButtonPressed({ buttonId }) {
+    if (buttonId === 'cancel') {
+      Navigation.dismissModal(this.props.componentId)
     }
   }
 
@@ -61,10 +74,25 @@ export default class SelectChainType extends Component {
     })
   }
 
+  onPress = (chain) => {
+    switch (chain) {
+      case 'bitcoin':
+        this.toImportBTCWallet()
+        return
+      case 'ethereum':
+        this.toImportETHWallet()
+        return
+      case 'eos':
+        this.toImportEOSWallet()
+        return
+      default:
+    }
+  }
+
   renderItem = ({ item }) => {
     return (
       <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 8, marginTop: 8, marginBottom: item.isLast ? 8 : 0 }}>
-        <TouchableNativeFeedback onPress={() => {}} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', false)} useForeground={true}>
+        <TouchableNativeFeedback onPress={this.onPress.bind(this, item.chain)} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', false)} useForeground={true}>
           <View style={{ width: '100%', backgroundColor: 'white', borderRadius: 4, padding: 8, alignItems: 'center', justifyContent: 'center', elevation: 2 }}>
             <FastImage
               source={chainIcons[item.chain]}
@@ -78,10 +106,12 @@ export default class SelectChainType extends Component {
 
   render() {
     return (
-      <FlatList
-        data={[{ key: 'bitcoin', chain: 'bitcoin' }, { key: 'ethereum', chain: 'ethereum' }, { key: 'eos', chain: 'eos' }, { key: 'chainx', chain: 'chainx', isLast: true }]}
-        renderItem={this.renderItem}
-      />
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <FlatList
+          data={[{ key: 'bitcoin', chain: 'bitcoin' }, { key: 'ethereum', chain: 'ethereum' }, { key: 'eos', chain: 'eos' }, { key: 'chainx', chain: 'chainx', isLast: true }]}
+          renderItem={this.renderItem}
+        />
+      </View>
     )
   }
 }

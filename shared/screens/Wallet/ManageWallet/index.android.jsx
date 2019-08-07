@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { injectIntl, FormattedMessage } from 'react-intl'
-import { View, ActionSheetIOS, Alert, Text, ActivityIndicator, SafeAreaView, SectionList, TouchableNativeFeedback } from 'react-native'
+import { View, ActionSheetIOS, Alert, Text, ActivityIndicator, SafeAreaView, SectionList, TouchableNativeFeedback, TextInput } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import * as walletActions from 'actions/wallet'
 import * as producerActions from 'actions/producer'
@@ -12,6 +12,7 @@ import Modal from 'react-native-modal'
 import Dialog from 'components/Dialog'
 import { walletIcons } from 'resources/images'
 import FastImage from 'react-native-fast-image'
+import IndicatorModal from 'components/Modal/IndicatorModal'
 import styles from './styles'
 
 const images = {
@@ -30,7 +31,7 @@ const images = {
   chainxScan: require('resources/images/resource_android.png'),
   chainxTool: require('resources/images/chainx_icon.png'),
   chainxStats: require('resources/images/chart_android.png'),
-  delete: require('resources/images/delete_android.png')
+  delete: require('resources/images/delete_orange_android.png')
 }
 
 export const errorMessages = (error) => {
@@ -87,13 +88,22 @@ export default class ManageWallet extends Component {
       },
       bottomTabs: {
         visible: false
+      },
+      sideMenu: {
+        left: {
+          enabled: false
+        }
       }
     }
   }
 
-  constructor(props) {
-    super(props);
-    Navigation.events().bindComponent(this)
+  subscription = Navigation.events().bindComponent(this)
+
+  state = {
+    showSimpleModal: false,
+    showPrompt: false,
+    password: '',
+    requestPasswordAction: null
   }
 
   componentDidAppear() {
@@ -102,88 +112,46 @@ export default class ManageWallet extends Component {
     }
   }
 
-  deleteWallet = (walletId, chain, address) => {
-    const { intl } = this.props
-    Alert.prompt(
-      intl.formatMessage({ id: 'alert_input_wallet_password' }),
-      null,
-      [
-        {
-          text: '取消',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel'
-        },
-        {
-          text: intl.formatMessage({ id: 'alert_button_confirm' }),
-          onPress: password => this.props.actions.deleteWallet.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, fromCard: this.props.fromCard, chain, address })
-        }
-      ],
-      'secure-text'
-    )
+  deleteWallet = () => {
+    const { wallet } = this.props
+    const password = this.state.password
+    const walletId = (wallet && wallet.id) || this.props.id
+    const address = (wallet && wallet.address) || this.props.address
+    const chain = (wallet && wallet.chain) || this.props.chain
+
+    this.props.actions.deleteWallet.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, fromCard: this.props.fromCard, chain, address })
   }
 
-  exportMnemonics = (walletId) => {
-    const { intl } = this.props
-    Alert.prompt(
-      intl.formatMessage({ id: 'alert_input_wallet_password' }),
-      null,
-      [
-        {
-          text: '取消',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel'
-        },
-        {
-          text: intl.formatMessage({ id: 'alert_button_confirm' }),
-          onPress: password => this.props.actions.exportMnemonics.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, source: this.props.source })
-        }
-      ],
-      'secure-text'
-    )
+  exportMnemonics = () => {
+    const { wallet } = this.props
+    const password = this.state.password
+    const walletId = (wallet && wallet.id) || this.props.id
+    const source = (wallet && wallet.source) || this.props.source
+
+    this.props.actions.exportMnemonics.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, source })
   }
 
-  exportETHKeystore = (walletId) => {
-    const { intl } = this.props
-    Alert.prompt(
-      intl.formatMessage({ id: 'alert_input_wallet_password' }),
-      null,
-      [
-        {
-          text: '取消',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel'
-        },
-        {
-          text: intl.formatMessage({ id: 'alert_button_confirm' }),
-          onPress: password => this.props.actions.exportETHKeystore.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, source: this.props.source })
-        }
-      ],
-      'secure-text'
-    )
+  exportETHKeystore = () => {
+    const { wallet } = this.props
+    const password = this.state.password
+    const walletId = (wallet && wallet.id) || this.props.id
+    const source = (wallet && wallet.source) || this.props.source
+
+    this.props.actions.exportETHKeystore.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, source })
   }
 
-  exportPrivateKey = (walletId, symbol) => {
-    const { chain, address } = this.props.wallet
-    const { intl } = this.props
+  exportPrivateKey = () => {
+    const { wallet, intl } = this.props
+    const password = this.state.password
+    const walletId = (wallet && wallet.id) || this.props.id
+    const source = (wallet && wallet.source) || this.props.source
+    const chain = (wallet && wallet.chain) || this.props.chain
+    const address = (wallet && wallet.address) || this.props.address
+    const symbol = (wallet && wallet.symbol) || this.props.symbol
     const account = this.props.account[`${chain}/${address}`]
     const permissions = account && account.permissions
 
-    Alert.prompt(
-      intl.formatMessage({ id: 'alert_input_wallet_password' }),
-      null,
-      [
-        {
-          text: this.props.intl.formatMessage({ id: 'alert_button_cancel' }),
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel'
-        },
-        {
-          text: this.props.intl.formatMessage({ id: 'alert_button_confirm' }),
-          onPress: password => this.props.actions[`export${symbol}PrivateKey`].requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, source: this.props.source, address: this.props.address, permissions })
-        }
-      ],
-      'secure-text'
-    )
+    this.props.actions[`export${symbol}PrivateKey`].requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, source, address, permissions })
   }
 
   switchEOSAccount = () => {
@@ -201,22 +169,10 @@ export default class ManageWallet extends Component {
     })
   }
 
-  switchBTCAddress = async () => {
-    const constants = await Navigation.constants()
-
+  switchBTCAddress = () => {
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.SwitchBTCAddress',
-        passProps: {
-          statusBarHeight: constants.statusBarHeight
-        },
-        options: {
-          topBar: {
-            backButton: {
-              title: '返回'
-            }
-          }
-        }
+        name: 'BitPortal.SwitchBTCAddress'
       }
     })
   }
@@ -302,6 +258,7 @@ export default class ManageWallet extends Component {
     this.props.actions.exportETHPrivateKey.clearError()
     this.props.actions.exportEOSPrivateKey.clearError()
     this.props.actions.switchBTCAddressType.clearError()
+    this.setState({ requestPasswordAction: null })
   }
 
   onModalHide = () => {
@@ -315,68 +272,25 @@ export default class ManageWallet extends Component {
     const error = deleteWalletError || exportMnemonicsError || exportBTCPrivateKeyError || exportETHKeystoreError || exportETHPrivateKeyError || exportEOSPrivateKeyError || switchBTCAddressTypeError
 
     if (error) {
-      setTimeout(() => {
-        Alert.alert(
-          errorMessages(error),
-          '',
-          [
-            { text: '确定', onPress: () => this.clearError() }
-          ]
-        )
-      }, 20)
+      Alert.alert(
+        errorMessages(error),
+        '',
+        [
+          { text: '确定', onPress: () => this.clearError() }
+        ],
+        { cancelable: false }
+      )
     }
   }
 
-  switchBTCAddressType = (walletId) => {
-    const { intl, wallet } = this.props
-    const segWit = (wallet && wallet.segWit) || this.props.segWit
+  switchBTCAddressType = () => {
+    const { wallet, intl } = this.props
+    const password = this.state.password
+    const walletId = (wallet && wallet.id) || this.props.id
     const source = (wallet && wallet.source) || this.props.source
+    const segWit = (wallet && wallet.segWit) || this.props.segWit
 
-    ActionSheetIOS.showActionSheetWithOptions({
-      title: '切换地址类型',
-      options: ['取消', `隔离见证`, `普通`],
-      cancelButtonIndex: 0,
-    }, (buttonIndex) => {
-      if (buttonIndex === 1) {
-        if (segWit !== 'P2WPKH') {
-          Alert.prompt(
-            intl.formatMessage({ id: 'alert_input_wallet_password'}),
-            null,
-            [
-              {
-                text: this.props.intl.formatMessage({ id: 'alert_button_cancel' }),
-                onPress: () => console.log('Cancel Pressed'),
-                style: 'cancel'
-              },
-              {
-                text: this.props.intl.formatMessage({ id: 'alert_button_confirm' }),
-                onPress: password => this.props.actions.switchBTCAddressType.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, segWit, source })
-              }
-            ],
-            'secure-text'
-          )
-        }
-      } else if (buttonIndex === 2) {
-        if (segWit === 'P2WPKH') {
-          Alert.prompt(
-            intl.formatMessage({ id: 'alert_input_wallet_password' }),
-            null,
-            [
-              {
-                text: this.props.intl.formatMessage({ id: 'alert_button_cancel' }),
-                onPress: () => console.log('Cancel Pressed'),
-                style: 'cancel'
-              },
-              {
-                text: this.props.intl.formatMessage({ id: 'alert_button_confirm' }),
-                onPress: password => this.props.actions.switchBTCAddressType.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, segWit, source })
-              }
-            ],
-            'secure-text'
-          )
-        }
-      }
-    })
+    this.props.actions.switchBTCAddressType.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, segWit, source })
   }
 
   onItemNotification = (data) => {
@@ -437,9 +351,7 @@ export default class ManageWallet extends Component {
     })
   }
 
-  chainxVoting = async (walletId) => {
-    const constants = await Navigation.constants()
-
+  chainxVoting = (walletId) => {
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.ChainXVoting'
@@ -454,10 +366,9 @@ export default class ManageWallet extends Component {
     })
   }
 
-  chainxWithdrawal = async () => {
+  chainxWithdrawal = () => {
     Dialog.alert('Tips', 'Coming Soon')
     return
-    const constants = await Navigation.constants()
 
     Navigation.push({
       component: {
@@ -473,7 +384,7 @@ export default class ManageWallet extends Component {
     })
   }
 
-  chainxToStats = async () => {
+  chainxToStats = () => {
     Navigation.showModal({
       stack: {
         children: [{
@@ -501,7 +412,7 @@ export default class ManageWallet extends Component {
     })
   }
 
-  chainxToScan = async () => {
+  chainxToScan = () => {
     Navigation.showModal({
       stack: {
         children: [{
@@ -565,9 +476,107 @@ export default class ManageWallet extends Component {
     }
   }
 
+  onPress = (type) => {
+    switch (type) {
+      case 'address':
+        this.switchBTCAddress()
+        return
+      case 'addressType':
+        this.setState({ showSimpleModal: true })
+        return
+      case 'mnemonic':
+        this.requestPassword('mnemonic')
+        return
+      case 'privateKey':
+        this.requestPassword('privateKey')
+        return
+      case 'keystore':
+        this.requestPassword('keystore')
+        return
+      case 'delete':
+        this.requestPassword('delete')
+        return
+      case 'resources':
+        this.manageResource()
+        return
+      case 'vote':
+      case 'switchAccount':
+      case 'createAccount':
+      case 'chainxDeposit':
+      case 'chainxVoting':
+      case 'chainxWithdrawal':
+      case 'chainxScan':
+      case 'chainxTool':
+    }
+  }
+
+  selectAddressType = (selectedSegWit) => {
+    const { wallet } = this.props
+    const segWit = (wallet && wallet.segWit) || this.props.segWit
+
+    this.setState({ showSimpleModal: false })
+
+    if (selectedSegWit !== segWit) {
+      setTimeout(() => {
+        this.requestPassword('addressType')
+      })
+    }
+  }
+
+  requestPassword = (requestPasswordAction) => {
+    this.setState({ showPrompt: true, showSimpleModal: false, password: '', requestPasswordAction })
+  }
+
+  changePassword = (text) => {
+    this.setState({ password: text })
+  }
+
+  clearPassword = () => {
+    this.setState({ password: '', showPrompt: false })
+  }
+
+  submitPassword = () => {
+    this.setState({ showPrompt: false })
+    const type = this.state.requestPasswordAction
+
+    switch (type) {
+      case 'addressType':
+        this.switchBTCAddressType()
+        return
+      case 'mnemonic':
+        this.exportMnemonics()
+        return
+      case 'privateKey':
+        this.exportPrivateKey()
+        return
+      case 'keystore':
+        this.exportETHKeystore()
+        return
+      case 'vote':
+      case 'resources':
+      case 'switchAccount':
+      case 'createAccount':
+      case 'delete':
+        this.deleteWallet()
+        return
+      case 'chainxDeposit':
+      case 'chainxVoting':
+      case 'chainxWithdrawal':
+      case 'chainxScan':
+      case 'chainxTool':
+    }
+  }
+
+  hidePrompt = () => {
+    this.setState({ showPrompt: false })
+  }
+
   renderItem = ({ item, index }) => {
+    const { intl, wallet } = this.props
+    const segWit = (wallet && wallet.segWit) || this.props.segWit
+
     return (
-      <TouchableNativeFeedback onPress={this.props.onPress} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.4)', false)}>
+      <TouchableNativeFeedback onPress={this.onPress.bind(this, item.actionType)} background={TouchableNativeFeedback.SelectableBackground()}>
         <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 2, height: 48 }}>
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
             <FastImage
@@ -575,8 +584,12 @@ export default class ManageWallet extends Component {
               style={{ width: 24, height: 24, marginRight: 30 }}
             />
             <View style={{ flex: 1, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', height: '100%' }}>
-              <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)', fontWeight: 'bold' }}>{item.text}</Text>
+              <Text style={{ fontSize: 14, color: item.actionType === 'delete' ? '#FF5722' : 'rgba(0,0,0,0.87)', fontWeight: '500' }}>{item.text}</Text>
             </View>
+            {item.actionType === 'addressType' && <View style={{ position: 'absolute', right: 16 }}>
+              {segWit === 'P2WPKH' && <Text style={{ fontSize: 12, color: 'rgba(0,0,0,0.6)' }}>隔离见证</Text>}
+              {segWit !== 'P2WPKH' && <Text style={{ fontSize: 12, color: 'rgba(0,0,0,0.6)' }}>普通</Text>}
+            </View>}
           </View>
         </View>
       </TouchableNativeFeedback>
@@ -585,6 +598,14 @@ export default class ManageWallet extends Component {
 
   renderHeader = ({ section: { isFirst } }) => {
     return !isFirst ? <View style={{ width: '100%', height: 1, backgroundColor: 'rgba(0,0,0,0.12)' }} /> : null
+  }
+
+  onBackdropPress = () => {
+    this.setState({ showSimpleModal: false })
+  }
+
+  onSimpleModalHide = () => {
+    // this.setState({ showPrompt: true })
   }
 
   render() {
@@ -736,14 +757,11 @@ export default class ManageWallet extends Component {
       <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
         <View style={{ justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#673AB7', paddingBottom: 16, elevation: 4, marginBottom: 12 }}>
           <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', paddingRight: 16, paddingLeft: 16 }}>
-            {!!chain && <View style={{ width: 40, height: 40, backgroundColor: 'white', borderRadius: 20 }}>
-              <FastImage source={walletIcons[chain.toLowerCase()]} style={{ width: 40, height: 40, borderRadius: 4, backgroundColor: 'white' }} />
-             </View>
-            }
-        <View style={{ justifyContent: 'center', alignItems: 'flex-start', marginLeft: 16 }}>
-          <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'white' }}>{name}</Text>
-          <Text style={{ fontSize: 16, color: 'rgba(255,255,255,0.7)' }}>{this.formatAddress(address)}</Text>
-        </View>
+            {!!chain && <View style={{ width: 40, height: 40, backgroundColor: 'white', borderRadius: 20 }}><FastImage source={walletIcons[chain.toLowerCase()]} style={{ width: 40, height: 40, borderRadius: 4, backgroundColor: 'white' }} /></View>}
+            <View style={{ justifyContent: 'center', alignItems: 'flex-start', marginLeft: 16 }}>
+              <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'white' }}>{name}</Text>
+              <Text style={{ fontSize: 16, color: 'rgba(255,255,255,0.7)' }}>{this.formatAddress(address)}</Text>
+            </View>
           </View>
         </View>
         <SectionList
@@ -753,24 +771,88 @@ export default class ManageWallet extends Component {
           sections={sections}
           keyExtractor={(item, index) => item.key}
         />
+        <IndicatorModal onModalHide={this.onModalHide} isVisible={loading} message="验证密码..." />
         <Modal
-        isVisible={loading}
-          backdropOpacity={0.4}
+          isVisible={this.state.showSimpleModal}
+          backdropOpacity={0.6}
           useNativeDriver
           animationIn="fadeIn"
-          animationInTiming={200}
-          backdropTransitionInTiming={200}
+          animationInTiming={500}
+          backdropTransitionInTiming={500}
           animationOut="fadeOut"
-          animationOutTiming={200}
-          backdropTransitionOutTiming={200}
-          onModalHide={this.onModalHide}
+          animationOutTiming={500}
+          backdropTransitionOutTiming={500}
+          onBackdropPress={this.onBackdropPress}
+          onModalHide={this.onSimpleModalHide}
         >
-          {loading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
-              <ActivityIndicator size="small" color="#000000" />
-              {deleteWalletLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>验证密码...</Text>}
-              {switchBTCAddressTypeLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>切换中...</Text>}
-              {(!deleteWalletLoading && !switchBTCAddressTypeLoading) && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>导出中...</Text>}
+          {(this.state.showSimpleModal) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 6 }}>
+            <View style={{ backgroundColor: 'white', borderRadius: 4, alignItem: 'center', elevation: 14, minWidth: 240 }}>
+              <View style={{ paddingHorizontal: 24, paddingBottom: 9, paddingTop: 20 }}>
+                <Text style={{ fontSize: 20, color: 'rgba(0,0,0,0.87)', fontWeight: '500' }}>切换地址类型</Text>
+              </View>
+              <View style={{ paddingBottom: 12, paddingTop: 6, paddingHorizontal: 16 }}>
+                <TouchableNativeFeedback onPress={this.selectAddressType.bind(this, 'P2WPKH')} background={TouchableNativeFeedback.SelectableBackground()}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', height: 48 }}>
+                    {segWit === 'P2WPKH' ? <FastImage source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, margin: 8 }} /> : <FastImage source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, margin: 8 }} />}
+                    <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>隔离见证</Text>
+                  </View>
+                </TouchableNativeFeedback>
+                <TouchableNativeFeedback onPress={this.selectAddressType.bind(this, 'NONE')} background={TouchableNativeFeedback.SelectableBackground()}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', height: 48 }}>
+                    {segWit === 'P2WPKH' ? <FastImage source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, margin: 8 }} /> : <FastImage source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, margin: 8 }} />}
+                    <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>普通</Text>
+                  </View>
+                </TouchableNativeFeedback>
+              </View>
+            </View>
+          </View>}
+        </Modal>
+        <Modal
+          isVisible={this.state.showPrompt}
+          backdropOpacity={0.6}
+          useNativeDriver
+          animationIn="fadeIn"
+          animationInTiming={500}
+          backdropTransitionInTiming={500}
+          animationOut="fadeOut"
+          animationOutTiming={500}
+          backdropTransitionOutTiming={500}
+        >
+          {(this.state.showPrompt) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 6 }}>
+            <View style={{ backgroundColor: 'white', paddingTop: 14, paddingBottom: 11, paddingHorizontal: 24, borderRadius: 2, alignItem: 'center', justifyContent: 'space-between', elevation: 14, width: '100%' }}>
+              <View style={{ marginBottom: 30 }}>
+                <Text style={{ fontSize: 20, color: 'black', marginBottom: 12 }}>请输入密码</Text>
+                {/* <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.54)', marginBottom: 12 }}>This is a prompt</Text> */}
+                <TextInput
+                  style={{
+                    fontSize: 16,
+                    padding: 0,
+                    width: '100%',
+                    borderBottomWidth: 2,
+                    borderColor: '#169689'
+                  }}
+                  autoFocus={true}
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  placeholder="Password"
+                  keyboardType="default"
+                  secureTextEntry={true}
+                  onChangeText={this.changePassword}
+                  onSubmitEditing={this.submitPassword}
+                />
+              </View>
+              <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+                <TouchableNativeFeedback onPress={this.clearPassword} background={TouchableNativeFeedback.SelectableBackground()}>
+                  <View style={{ padding: 10, borderRadius: 2, marginRight: 8 }}>
+                    <Text style={{ color: '#169689', fontSize: 14 }}>取消</Text>
+                  </View>
+                </TouchableNativeFeedback>
+                <TouchableNativeFeedback onPress={this.submitPassword} background={TouchableNativeFeedback.SelectableBackground()}>
+                  <View style={{ padding: 10, borderRadius: 2 }}>
+                    <Text style={{ color: '#169689', fontSize: 14 }}>确定</Text>
+                  </View>
+                </TouchableNativeFeedback>
+              </View>
             </View>
           </View>}
         </Modal>

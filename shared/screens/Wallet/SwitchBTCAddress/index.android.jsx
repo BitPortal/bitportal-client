@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
-import { View, Text, ActivityIndicator, Alert } from 'react-native'
+import { View, Text, ActivityIndicator, Alert, TouchableNativeFeedback, Dimensions } from 'react-native'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
-import TableView from 'react-native-tableview'
 import Modal from 'react-native-modal'
 import { managingWalletSelector } from 'selectors/wallet'
 import { managingWalletAddressSelector, managingWalletChildAddressSelector } from 'selectors/address'
+import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview'
+import FastImage from 'react-native-fast-image'
 import * as walletActions from 'actions/wallet'
 import * as accountActions from 'actions/account'
 import * as addressActions from 'actions/address'
 
-const { Section, Item } = TableView
+const dataProvider = new DataProvider((r1, r2) => r1.address !== r2.address)
 
 @connect(
   state => ({
@@ -49,7 +50,33 @@ export default class SwitchBTCAddress extends Component {
     }
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { wallet, addresses, childAddress } = nextProps
+    const address = childAddress || (wallet && wallet.address)
+
+    if (addresses) {
+      return { dataProvider: dataProvider.cloneWithRows(addresses), extendedState: { address } }
+    } else {
+      return { extendedState: { address } }
+    }
+  }
+
   subscription = Navigation.events().bindComponent(this)
+
+  state = {
+    dataProvider: dataProvider.cloneWithRows([]),
+    extendedState: { address: null }
+  }
+
+  layoutProvider = new LayoutProvider(
+    index => {
+      return 0
+    },
+    (type, dim) => {
+      dim.width = Dimensions.get('window').width
+      dim.height = 72
+    }
+  )
 
   selectBTCAddress = (address) => {
     const { wallet } = this.props
@@ -67,8 +94,22 @@ export default class SwitchBTCAddress extends Component {
     }
   }
 
+  renderItem = (type, data) => {
+    return (
+      <TouchableNativeFeedback onPress={this.selectBTCAddress.bind(this, data.address)} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.3)', false)} useForeground={true}>
+        <View style={{ paddingHorizontal: 16, height: 72, alignItems: 'center', flexDirection: 'row', borderBottomWidth: 1, borderColor: 'rgba(0,0,0,0.12)' }}>
+          <View>
+            <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)' }}>{data.address}</Text>
+            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)' }}>{`xpub ${data.change}/${data.index}`}</Text>
+          </View>
+          {this.state.extendedState.address && this.state.extendedState.address === data.address && <FastImage source={require('resources/images/circle_check_android.png')} style={{ height: 24, width: 24, position: 'absolute', right: 16 }} />}
+        </View>
+      </TouchableNativeFeedback>
+    )
+  }
+
   render() {
-    const { wallet, addresses, statusBarHeight, childAddress } = this.props
+    const { wallet, addresses, childAddress } = this.props
     const address = childAddress || (wallet && wallet.address)
 
     if (!addresses) {
@@ -83,31 +124,17 @@ export default class SwitchBTCAddress extends Component {
     }
 
     return (
-      <View style={{ flex: 1 }}>
-        <View style={{ width: '100%', height: statusBarHeight + 44, backgroundColor: 'rgba(0,0,0,0)' }} />
-        <View style={{ width: '100%', padding: 16, borderColor: '#C8C7CC', borderBottomWidth: 0.5 }}>
-          <Text style={{ fontSize: 14, color: '#666666', lineHeight: 18 }}>你可以使用不同的子地址用于收款，以保护你的隐私。选中的子地址将会显示在收款界面。</Text>
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <View style={{ width: '100%', padding: 16, backgroundColor: '#EEEEEE', height: 72, borderBottomWidth: 0, borderColor: 'rgba(0,0,0,0.12)' }}>
+          <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.54)' }}>你可以使用不同的子地址用于收款，以保护你的隐私。选中的子地址将会显示在收款界面。</Text>
         </View>
-        <TableView
-          style={{ flex: 1, backgroundColor: 'white' }}
-          tableViewStyle={TableView.Consts.Style.Default}
-        >
-          <Section>
-            {addresses.map(item =>
-              <Item
-                reactModuleForCell="SwitchBTCAddressTableViewCell"
-                height={60}
-                key={item.address}
-                onPress={this.selectBTCAddress.bind(this, item.address)}
-                selectionStyle={item.address === address ? TableView.Consts.CellSelectionStyle.None : TableView.Consts.CellSelectionStyle.Default}
-                accessoryType={item.address === address ? TableView.Consts.AccessoryType.Checkmark : TableView.Consts.AccessoryType.None}
-                address={item.address}
-                change={item.change}
-                index={item.index}
-              />
-             )}
-          </Section>
-        </TableView>
+        <RecyclerListView
+          layoutProvider={this.layoutProvider}
+          dataProvider={this.state.dataProvider}
+          rowRenderer={this.renderItem}
+          renderAheadOffset={48 * 10}
+          extendedState={this.state.extendedState}
+        />
       </View>
     )
   }

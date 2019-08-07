@@ -20,8 +20,8 @@ import { Navigation } from 'react-native-navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Field, reduxForm, getFormSyncWarnings, getFormValues } from 'redux-form'
 import * as identityActions from 'actions/identity'
-import { TextField, TextArea } from 'components/Form'
-import Modal from 'react-native-modal'
+import { OutlinedTextArea, OutlinedTextField } from 'components/Form'
+import IndicatorModal from 'components/Modal/IndicatorModal'
 
 const styles = EStyleSheet.create({
   container: {
@@ -53,35 +53,6 @@ const styles = EStyleSheet.create({
     width: '100% - 52'
   }
 })
-
-const TextAreaField = ({
-  input: { onChange, ...restInput },
-  meta: { touched, error, active },
-  placeholder,
-  fieldName,
-  change,
-  showClearButton
-}) => (
-  <View style={{ width: '100%', alignItems: 'center', height: 100, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-    <TextInput
-      style={styles.textAreaFiled}
-      multiline={true}
-      autoCorrect={false}
-      autoCapitalize="none"
-      placeholder={placeholder}
-      onChangeText={onChange}
-      {...restInput}
-    />
-    {showClearButton && active && <View style={{ position: 'absolute', right: 13, bottom: 4, width: 20, height: 20, alignItems: 'center', justifyContent: 'center' }}>
-      <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
-        <FastImage
-          source={require('resources/images/clear.png')}
-          style={{ width: 14, height: 14 }}
-        />
-      </TouchableHighlight>
-    </View>}
-  </View>
-)
 
 export const errorMessages = (error, messages) => {
   if (!error) { return null }
@@ -262,77 +233,59 @@ export default class RecoverIdentity extends Component {
 
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-      <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
-        <View style={{ flex: 1 }}>
-          <View style={{ marginBottom: 16, height: 22, marginTop: 30, marginBottom: 30 }}>
-            <Text style={{ fontSize: 20, color: 'black', paddingLeft: 16, paddingRight: 16, fontWeight: 'bold' }}>
-              {intl.formatMessage({ id: 'identity_recovery_sub_title' })}
-            </Text>
-          </View>
-        <View style={{ width: '100%', alignItems: 'center' }}>
-          <View style={{ width: '100%' }}>
-            <Field
-              label="助记词"
-              placeholder={intl.formatMessage({ id: 'identity_input_placeholder_mnemonics' })}
-              name="mnemonics"
-              fieldName="mnemonics"
-              component={TextArea}
-              showClearButton={!!mnemonics && mnemonics.length > 0}
-              change={change}
-              separator={true}
-              rightComponent={<TouchableNativeFeedback onPress={() => {}} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', true)} useForeground={true}>
-                <View style={{ width: 30, height: 30, position: 'absolute', top: 37, right: 9, alignItems: 'center', justifyContent: 'center' }}>
-                  <FastImage source={require('resources/images/scan_purple_android.png')} style={{ width: 24, height: 24 }} />
-                </View>
-              </TouchableNativeFeedback>}
-            />
-          </View>
-            <Field
-              label={intl.formatMessage({ id: 'identity_input_label_wallet_passwd' })}
-              placeholder={intl.formatMessage({ id: 'identity_input_placeholder_wallet_passwd' })}
-              name="password"
-              fieldName="password"
-              component={TextField}
-              showClearButton={!!password && password.length > 0}
-              change={change}
-              secureTextEntry
-              separator={true}
-            />
-            <Field
-              label={intl.formatMessage({ id: 'identity_input_label_passwd_hint' })}
-              placeholder={intl.formatMessage({ id: 'identity_input_placeholder_label_passwd_hint' })}
-              name="passwordHint"
-              fieldName="passwordHint"
-              component={TextField}
-              showClearButton={!!passwordHint && passwordHint.length > 0}
-              change={change}
-              separator={false}
-            />
-          </View>
-          <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
-            <Text style={{ fontSize: 13, color: 'rgba(0,0,0,0.54)', lineHeight: 18 }}>{intl.formatMessage({ id: 'identity_recovery_hint_passwd_recovery_passwd' })}</Text>
-          </View>
-        </View>
-        <Modal
-          isVisible={loading}
-          backdropOpacity={0.4}
-          useNativeDriver
-          animationIn="fadeIn"
-          animationInTiming={200}
-          backdropTransitionInTiming={200}
-          animationOut="fadeOut"
-          animationOutTiming={200}
-          backdropTransitionOutTiming={200}
-          onModalHide={this.onModalHide}
-        >
-          {loading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 16 }}>
-            <View style={{ backgroundColor: 'white', padding: 16, borderRadius: 3, alignItem: 'center', justifyContent: 'center', flexDirection: 'row', elevation: 4 }}>
-              <ActivityIndicator size="small" color="#673AB7" />
-              <Text style={{ fontSize: 15, marginLeft: 10, fontWeight: 'bold', color: 'black' }}>恢复身份中...</Text>
+        <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+          <View style={{ flex: 1 }}>
+            <View style={{ marginBottom: 16, height: 22, marginTop: 30, marginBottom: 30 }}>
+              <Text style={{ fontSize: 20, color: 'black', paddingLeft: 16, paddingRight: 16, fontWeight: 'bold' }}>
+                {intl.formatMessage({ id: 'identity_recovery_sub_title' })}
+              </Text>
             </View>
-          </View>}
-        </Modal>
-      </ScrollView>
+            <View style={{ width: '100%', alignItems: 'center' }}>
+              <View style={{ width: '100%' }}>
+                <Field
+                  label="助记词"
+                  placeholder={intl.formatMessage({ id: 'identity_input_placeholder_mnemonics' })}
+                  name="mnemonics"
+                  fieldName="mnemonics"
+                  component={OutlinedTextArea}
+                  nonEmpty={!!mnemonics && mnemonics.length > 0}
+                  change={change}
+                  separator={true}
+                  trailingIcon={<TouchableNativeFeedback onPress={() => {}} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', true)} useForeground={true}>
+                    <View style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
+                      <FastImage source={require('resources/images/scan_purple_android.png')} style={{ width: 24, height: 24 }} />
+                    </View>
+                  </TouchableNativeFeedback>}
+                />
+              </View>
+              <Field
+                label={intl.formatMessage({ id: 'identity_input_label_wallet_passwd' })}
+                placeholder={intl.formatMessage({ id: 'identity_input_placeholder_wallet_passwd' })}
+                name="password"
+                fieldName="password"
+                component={OutlinedTextField}
+                nonEmpty={!!password && password.length > 0}
+                change={change}
+                secureTextEntry
+                separator={true}
+              />
+              <Field
+                label={intl.formatMessage({ id: 'identity_input_label_passwd_hint' })}
+                placeholder={intl.formatMessage({ id: 'identity_input_placeholder_label_passwd_hint' })}
+                name="passwordHint"
+                fieldName="passwordHint"
+                component={OutlinedTextField}
+                nonEmpty={!!passwordHint && passwordHint.length > 0}
+                change={change}
+                separator={false}
+              />
+            </View>
+            <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 16, justifyContent: 'flex-start' }}>
+              <Text style={{ fontSize: 13, color: 'rgba(0,0,0,0.54)', lineHeight: 18 }}>{intl.formatMessage({ id: 'identity_recovery_hint_passwd_recovery_passwd' })}</Text>
+            </View>
+          </View>
+          <IndicatorModal isVisible={loading} message="恢复身份中..." onModalHide={this.onModalHide} />
+        </ScrollView>
       </SafeAreaView>
     )
   }

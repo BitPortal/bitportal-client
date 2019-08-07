@@ -220,7 +220,13 @@ function* deleteIdentity(action: Action<LogoutIdentityParams>) {
       }
     }
 
-    if (action.payload.componentId) popToRoot(action.payload.componentId)
+    if (action.payload.componentId) {
+      if (action.payload.fromModal) {
+        dismissAllModals()
+      } else {
+        popToRoot(action.payload.componentId)
+      }
+    }
   } catch (e) {
     yield put(actions.deleteIdentity.failed(getErrorMessage(e)))
   }

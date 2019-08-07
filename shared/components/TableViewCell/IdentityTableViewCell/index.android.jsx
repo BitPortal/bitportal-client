@@ -33,7 +33,7 @@ export default class IdentityTableViewCell extends Component {
 
   render() {
     return (
-      <TouchableNativeFeedback onPress={this.props.onPress} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.4)', false)}>
+      <TouchableNativeFeedback onPress={this.props.onPress} background={TouchableNativeFeedback.SelectableBackground()}>
         <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 2, height: 48, backgroundColor: this.props.data.active ? '#EEEEEE' : 'rgba(0,0,0,0)' }}>
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
             <FastImage

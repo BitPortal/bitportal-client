@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
-import { View, ScrollView, Text, TouchableHighlight, Image, TextInput, Alert, ActivityIndicator, LayoutAnimation } from 'react-native'
+import { View, ScrollView, Text, TouchableHighlight, Image, TextInput, Alert, ActivityIndicator, LayoutAnimation, UIManager } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Navigation } from 'react-native-navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
@@ -70,21 +70,24 @@ export default class BackupIdentity extends Component {
   static get options() {
     return {
       topBar: {
+        title: {
+          text: '备份助记词'
+        },
+        leftButtons: [
+          {
+            id: 'cancel',
+            icon: require('resources/images/cancel_android.png'),
+            color: 'white'
+          }
+        ],
         rightButtons: [
           {
             id: 'next',
             text: '下一步',
-            fontWeight: '400'
+            fontWeight: '400',
+            color: 'white'
           }
-        ],
-        largeTitle: {
-          visible: false
-        },
-        noBorder: true,
-        background: {
-          color: 'white',
-          translucent: true
-        }
+        ]
       }
     }
   }
@@ -117,6 +120,7 @@ export default class BackupIdentity extends Component {
                 id: 'verify',
                 text: '验证',
                 fontWeight: '400',
+                color: 'white',
                 enabled: this.props.mnemonics.split(' ').length === this.state.userEntry.split(' ').length
               }
             ]
@@ -130,7 +134,8 @@ export default class BackupIdentity extends Component {
           '',
           [
             { text: '确定', onPress: () => console.log('OK Pressed') }
-          ]
+          ],
+          { cancelable: false }
         )
       } else {
         this.setState({ showModal: true, showModalContent: true }, () => {
@@ -157,6 +162,7 @@ export default class BackupIdentity extends Component {
               id: 'verify',
               text: '验证',
               fontWeight: '400',
+              color: 'white',
               enabled: this.props.mnemonics.split(' ').length === this.state.userEntry.split(' ').length && !this.state.loading
             }
           ]
@@ -217,7 +223,7 @@ export default class BackupIdentity extends Component {
   }
 
   componentDidMount() {
-
+    UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true)
   }
 
   render() {
@@ -227,34 +233,25 @@ export default class BackupIdentity extends Component {
     return (
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={{ flex: 1, alignItems: 'center' }}>
-          <View style={{ marginBottom: 14 }}>
-            {(this.props.backup && !this.props.fromIdentity) && <Text style={{ fontSize: 26, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'manage_wallet_title_backup_mnemonics' })}</Text>}
-            {(!this.props.backup || !!this.props.fromIdentity) && <Text style={{ fontSize: 26, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'manage_wallet_title_backup_identity' })}</Text>}
-            {loading
-             && (
-               <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 0, right: -25 }}>
-                 <ActivityIndicator size="small" color="#000000" />
-               </View>
-             )
-            }
+          <View style={{ marginTop: 30, marginBottom: 30 }}>
+            {!this.state.validating && <Text style={{ fontSize: 20, color: 'black', paddingLeft: 16, paddingRight: 16, fontWeight: 'bold' }}>
+              {intl.formatMessage({ id: 'mnemonics_backup_hint_write_down' })}
+            </Text>}
+            {this.state.validating && <Text style={{ fontSize: 20, color: 'black', paddingLeft: 16, paddingRight: 16, fontWeight: 'bold' }}>
+              {intl.formatMessage({ id: 'mnemonics_backup_hint_verify_by_click' })}
+            </Text>}
           </View>
-          {!this.state.validating && <Text style={{ fontSize: 17, marginBottom: 16, paddingLeft: 32, paddingRight: 32, lineHeight: 22, textAlign: 'center' }}>
-            {intl.formatMessage({ id: 'mnemonics_backup_hint_write_down' })}
-          </Text>}
-          {this.state.validating && <Text style={{ fontSize: 17, marginBottom: 16, paddingLeft: 32, paddingRight: 32, lineHeight: 22, textAlign: 'center' }}>
-            {intl.formatMessage({ id: 'mnemonics_backup_hint_verify_by_click' })}
-          </Text>}
-          <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, marginTop: 50, minHeight: 72 }}>
-            {!this.state.validating && <Text style={{ fontSize: 17, lineHeight: 28 }}>{mnemonics}</Text>}
+          <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 1, borderBottomWidth: 1, borderColor: 'rgba(0,0,0,0.12)', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 72 }}>
+            {!this.state.validating && <Text style={{ fontSize: 17, lineHeight: 28, color: 'rgba(0,0,0,0.87)' }}>{mnemonics}</Text>}
             {this.state.validating && !!this.state.userEntry && <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap' }}>
              {this.state.userEntry.split(' ').map((word, index) => (
                 <TouchableHighlight
                   key={`${word}-${index}`}
                   underlayColor="rgba(255,255,255,0)"
                   onPress={this.onPressWord.bind(this, word, 'userEntry', index)}
-                  style={{ borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.3)', paddingTop: 2, paddingBottom: 4, paddingHorizontal: 8, marginRight: 10, marginBottom: 10, borderRadius: 9, backgroundColor: '#F8F8F8' }}
+                  style={{ borderWidth: 1, borderColor: 'rgba(0,0,0,0.12)', paddingTop: 2, paddingBottom: 4, paddingHorizontal: 8, marginRight: 10, marginBottom: 10, borderRadius: 4, backgroundColor: '#F8F8F8' }}
                 >
-                  <Text style={{ fontSize: 17, color: 'rgba(0,0,0,1)' }}>{word}</Text>
+                  <Text style={{ fontSize: 17, color: 'rgba(0,0,0,0.87)' }}>{word}</Text>
                 </TouchableHighlight>
               ))}
             </View>}
@@ -265,16 +262,16 @@ export default class BackupIdentity extends Component {
                   key={`${word}-${index}`}
                   underlayColor="rgba(255,255,255,0)"
                   onPress={this.onPressWord.bind(this, word, 'shuffledMnemonics', index)}
-                  style={{ borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.3)', paddingTop: 2, paddingBottom: 4, paddingHorizontal: 8, marginRight: 10, marginBottom: 10, borderRadius: 9, backgroundColor: '#F8F8F8' }}
+                  style={{ borderWidth: 1, borderColor: 'rgba(0,0,0,0.12)', paddingTop: 2, paddingBottom: 4, paddingHorizontal: 8, marginRight: 10, marginBottom: 10, borderRadius: 4, backgroundColor: '#F8F8F8' }}
                 >
-                  <Text style={{ fontSize: 17, color: 'rgba(0,0,0,1)' }}>{word}</Text>
+                  <Text style={{ fontSize: 17, color: 'rgba(0,0,0,0.87)' }}>{word}</Text>
                 </TouchableHighlight>
               ))}
           </View>}
         </View>
         <Modal
           isVisible={this.state.showModal}
-          backdropOpacity={0.4}
+          backdropOpacity={0}
           useNativeDriver
           animationIn="fadeIn"
           animationInTiming={200}
@@ -284,9 +281,9 @@ export default class BackupIdentity extends Component {
           backdropTransitionOutTiming={200}
           onModalHide={this.onModalHide}
         >
-          {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14 }}>
-              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'identity_backup_hint_mnemonics_order_correct' })}</Text>
+          {this.state.showModal && <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
+            <View style={{ backgroundColor: 'rgba(0,0,0,0.87)', padding: 16, borderRadius: 4, height: 48, elevation: 1, justifyContent: 'center', width: '100%' }}>
+              <Text style={{ fontSize: 14, color: 'white' }}>助记词顺序正确!</Text>
             </View>
           </View>}
         </Modal>

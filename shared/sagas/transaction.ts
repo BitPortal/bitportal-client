@@ -265,6 +265,7 @@ function* buyRAM(action: Action) {
 
     yield put(actions.buyRAM.succeeded())
     yield put(reset('manageEOSResourcesForm'))
+    yield put(reset('tradeEOSRAMForm'))
     yield put(getAccount.requested({ chain, address: accountName }))
 
     const managingWallet = yield select((state: RootState) => managingWalletSelector(state))
@@ -297,6 +298,7 @@ function* sellRAM(action: Action) {
 
     yield put(actions.sellRAM.succeeded())
     yield put(reset('manageEOSResourcesForm'))
+    yield put(reset('tradeEOSRAMForm'))
     yield put(getAccount.requested({ chain, address: accountName }))
 
     const managingWallet = yield select((state: RootState) => managingWalletSelector(state))
@@ -328,6 +330,7 @@ function* delegateBW(action: Action) {
 
     yield put(actions.delegateBW.succeeded())
     yield put(reset('manageEOSResourcesForm'))
+    yield put(reset('tradeEOSBandWidthForm'))
     yield put(getAccount.requested({ chain, address: accountName }))
 
     const managingWallet = yield select((state: RootState) => managingWalletSelector(state))
@@ -359,6 +362,7 @@ function* undelegateBW(action: Action) {
 
     yield put(actions.undelegateBW.succeeded())
     yield put(reset('manageEOSResourcesForm'))
+    yield put(reset('tradeEOSBandWidthForm'))
     yield put(getAccount.requested({ chain, address: accountName }))
 
     const managingWallet = yield select((state: RootState) => managingWalletSelector(state))

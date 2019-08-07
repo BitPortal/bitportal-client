@@ -239,7 +239,7 @@ const warn = (values, props) => {
 
   if (isNaN(values.undelegateCPUAmount)) {
     warnings.undelegateCPUAmount = '无效的CPU数量'
-  }  else if (!selfDelegatedBandwidth || +selfDelegatedBandwidth.net_weight.split(' ')[0] < +values.undelegateCPUAmount) {
+  }  else if (!selfDelegatedBandwidth || +selfDelegatedBandwidth.cpu_weight.split(' ')[0] < +values.undelegateCPUAmount) {
     warnings.undelegateCPUAmount = '可赎回CPU数量不足'
   }
 

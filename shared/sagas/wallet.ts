@@ -312,6 +312,7 @@ function* importETHKeystore(action: Action<ImportETHKeystoreParams>) {
     const name = 'ETH-Wallet'
 
     let keystoreObject
+
     try {
       keystoreObject = JSON.parse(keystoreText)
     } catch (e) {

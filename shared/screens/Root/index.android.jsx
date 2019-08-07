@@ -81,6 +81,10 @@ export default class Root extends Component {
   static get options() {
     return {
       topBar: {
+        title: {
+          text: '钱包'
+        },
+        elevation: 0,
         leftButtons: [
           {
             id: 'sideMenu',
@@ -108,8 +112,7 @@ export default class Root extends Component {
     index: 0,
     routes: [
       { key: 'wallet', icon: 'wallet' },
-      { key: 'market', icon: 'market' },
-      { key: 'profile', icon: 'profile' },
+      { key: 'market', icon: 'market' }
     ]
   }
 
@@ -136,9 +139,13 @@ export default class Root extends Component {
   }
 
   toManage = () => {
-    Navigation.push('BitPortal.Root', {
-      component: {
-        name: 'BitPortal.WalletList'
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.WalletList'
+          }
+        }]
       }
     })
   }

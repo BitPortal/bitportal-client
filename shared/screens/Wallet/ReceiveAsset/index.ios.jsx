@@ -249,7 +249,7 @@ export default class ReceiveAsset extends Component {
                 justifyContent: 'center',
                 borderRadius: 10
               }}
-              onPress={this.copy.bind(this, addressUri)}
+              onPress={this.copy.bind(this, !this.state.selectedIndex ? address : childAddress)}
             >
               <Text style={{ textAlign: 'center', color: 'white', fontSize: 17 }}>{intl.formatMessage({ id: 'receive_button_copy_address' })}</Text>
             </TouchableOpacity>

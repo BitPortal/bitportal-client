@@ -19,8 +19,8 @@ import { Navigation } from 'react-native-navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Field, reduxForm, getFormSyncWarnings, getFormValues } from 'redux-form'
 import * as identityActions from 'actions/identity'
-import Modal from 'react-native-modal'
-import { TextField } from 'components/Form'
+import IndicatorModal from 'components/Modal/IndicatorModal'
+import { OutlinedTextField } from 'components/Form'
 
 const validate = (values) => {
   const errors = {}
@@ -110,7 +110,7 @@ export default class CreateIdentity extends Component {
     }
   }
 
-  state = { invalid: true, pristine: true, loading: false, showPrompt: true }
+  state = { invalid: true, pristine: true, loading: false }
 
   subscription = Navigation.events().bindComponent(this)
 
@@ -138,47 +138,13 @@ export default class CreateIdentity extends Component {
 
   navigationButtonPressed({ buttonId }) {
     if (buttonId === 'next') {
-      /* const { formSyncWarnings } = this.props
-       * if (typeof formSyncWarnings === 'object') {
-       *   const warning = formSyncWarnings.name || formSyncWarnings.password
-       *   if (warning) {
-       *     Alert.alert(
-       *       warning,
-       *       '',
-       *       [
-       *         { text: '确定', onPress: () => console.log('OK Pressed') }
-       *       ]
-       *     )
-       *     return
-       *   }
-       * }*/
-
       Keyboard.dismiss()
       this.props.handleSubmit(this.submit)()
     }
   }
 
   submit = (data) => {
-    console.log(data)
-    // this.props.actions.createIdentity.requested({ ...data, componentId: this.props.componentId })
-  }
-
-  componentDidMount() {
-    /* Alert.alert(
-     *   '请输入密码',
-     *   'this is an alert',
-     *   [
-     *     { text: '确定', onPress: () => console.log('OK Pressed') }
-     *   ]
-     * )*/
-    // this.setState({ showPrompt: true })
-    /* setTimeout(function () {
-     *   this.setState({ showPrompt: true })
-     * }.bind(this), 2000)*/
-  }
-
-  hidePrompt = () => {
-    this.setState({ showPrompt: false })
+    this.props.actions.createIdentity.requested({ ...data, componentId: this.props.componentId })
   }
 
   render() {
@@ -203,107 +169,36 @@ export default class CreateIdentity extends Component {
                 placeholder={intl.formatMessage({ id: 'identity_input_placeholder_identity_name' })}
                 name="name"
                 fieldName="name"
-                component={TextField}
-                showClearButton={!!name && name.length > 0}
+                component={OutlinedTextField}
+                nonEmpty={!!name && name.length > 0}
                 change={change}
-                separator
               />
               <Field
                 label={intl.formatMessage({ id: 'identity_input_label_wallet_passwd' })}
                 placeholder={intl.formatMessage({ id: 'identity_input_placeholder_wallet_passwd' })}
                 name="password"
                 fieldName="password"
-                component={TextField}
-                showClearButton={!!password && password.length > 0}
+                component={OutlinedTextField}
+                nonEmpty={!!password && password.length > 0}
                 change={change}
                 secureTextEntry
-                separator
               />
               <Field
                 label={intl.formatMessage({ id: 'identity_input_label_passwd_hint' })}
                 placeholder={intl.formatMessage({ id: 'identity_input_placeholder_label_passwd_hint' })}
                 name="passwordHint"
                 fieldName="passwordHint"
-                component={TextField}
-                showClearButton={!!passwordHint && passwordHint.length > 0}
+                component={OutlinedTextField}
+                nonEmpty={!!passwordHint && passwordHint.length > 0}
                 change={change}
-                separator={false}
               />
-              <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
+              <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 16, justifyContent: 'flex-start' }}>
                 <Text style={{ fontSize: 13, color: 'rgba(0,0,0,0.54)', lineHeight: 18 }}>{intl.formatMessage({ id: 'identity_recovery_hint_passwd_recovery_passwd' })}</Text>
               </View>
             </View>
           </View>
         </ScrollView>
-        <Modal
-          isVisible={false}
-          backdropOpacity={0.4}
-          useNativeDriver
-          animationIn="fadeIn"
-          animationInTiming={200}
-          backdropTransitionInTiming={200}
-          animationOut="fadeOut"
-          animationOutTiming={200}
-          backdropTransitionOutTiming={200}
-          onModalHide={this.onModalHide}
-          onModalShow={this.onModalShow}
-        >
-          {(true) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 16 }}>
-            <View style={{ backgroundColor: 'white', padding: 16, borderRadius: 3, alignItem: 'center', justifyContent: 'center', flexDirection: 'row', elevation: 4 }}>
-              <ActivityIndicator size="small" color="#673AB7" />
-              <Text style={{ fontSize: 15, marginLeft: 10, fontWeight: 'bold', color: 'black' }}>创建中...</Text>
-            </View>
-          </View>}
-        </Modal>
-        <Modal
-          isVisible={this.state.showPrompt}
-          backdropOpacity={0.4}
-          useNativeDriver
-          animationIn="fadeIn"
-          animationInTiming={200}
-          backdropTransitionInTiming={200}
-          animationOut="fadeOut"
-          animationOutTiming={200}
-          backdropTransitionOutTiming={200}
-          onModalHide={this.onModalHide}
-          onModalShow={this.onModalShow}
-        >
-          {(this.state.showPrompt) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 6 }}>
-            <View style={{ backgroundColor: 'white', paddingTop: 14, paddingBottom: 11, paddingHorizontal: 24, borderRadius: 2, alignItem: 'center', justifyContent: 'space-between', elevation: 4, width: '100%' }}>
-              <View style={{ marginBottom: 30 }}>
-                <Text style={{ fontSize: 20, color: 'black', marginBottom: 12 }}>请输入密码</Text>
-                {/* <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.54)', marginBottom: 12 }}>This is a prompt</Text> */}
-                <TextInput
-                  style={{
-                    fontSize: 16,
-                    padding: 0,
-                    width: '100%',
-                    borderBottomWidth: 2,
-                    borderColor: '#169689'
-                  }}
-                  autoFocus={true}
-                  autoCorrect={false}
-                  autoCapitalize="none"
-                  placeholder="Password"
-                  keyboardType="default"
-                  secureTextEntry={true}
-                />
-              </View>
-              <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
-                <TouchableNativeFeedback onPress={this.hidePrompt} background={TouchableNativeFeedback.SelectableBackground()}>
-                  <View style={{ padding: 10, borderRadius: 2, marginRight: 8 }}>
-                    <Text style={{ color: '#169689', fontSize: 14 }}>取消</Text>
-                  </View>
-                </TouchableNativeFeedback>
-                <TouchableNativeFeedback onPress={this.hidePrompt} background={TouchableNativeFeedback.SelectableBackground()}>
-                  <View style={{ padding: 10, borderRadius: 2 }}>
-                    <Text style={{ color: '#169689', fontSize: 14 }}>确定</Text>
-                  </View>
-                </TouchableNativeFeedback>
-              </View>
-            </View>
-          </View>}
-        </Modal>
+        <IndicatorModal isVisible={loading} message="创建中..." onModalHide={this.onModalHide} />
       </SafeAreaView>
     )
   }

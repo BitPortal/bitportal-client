@@ -11,10 +11,21 @@ import Profile from 'screens/Profile'
 import AddIdentity from 'screens/Wallet/AddIdentity'
 import RecoverIdentity from 'screens/Wallet/RecoverIdentity'
 import CreateIdentity from 'screens/Wallet/CreateIdentity'
+import ImportBTCWallet from 'screens/Wallet/ImportBTCWallet'
+import ImportETHWallet from 'screens/Wallet/ImportETHWallet'
+import ImportEOSWallet from 'screens/Wallet/ImportEOSWallet'
 import WalletList from 'screens/Wallet/WalletList'
 import SelectChainType from 'screens/Wallet/SelectChainType'
 import ManageWallet from 'screens/Wallet/ManageWallet'
-import { FirstTabScreen, SecondTabScreen, ThirdTabScreen } from 'screens/Wallet'
+import SwitchBTCAddress from 'screens/Wallet/SwitchBTCAddress'
+import BackupIdentity from 'screens/Wallet/BackupIdentity'
+import MyIdentity from 'screens/Wallet/MyIdentity'
+import ExportBTCPrivateKey from 'screens/Wallet/ExportBTCPrivateKey'
+import ExportETHPrivateKey from 'screens/Wallet/ExportETHPrivateKey'
+import ExportETHKeystore from 'screens/Wallet/ExportETHKeystore'
+import ExportEOSPrivateKey from 'screens/Wallet/ExportEOSPrivateKey'
+import SelectEOSAccount from 'screens/Wallet/SelectEOSAccount'
+import ManageEOSResource from 'screens/Wallet/ManageEOSResource'
 
 import Images from 'resources/images'
 import messages from 'resources/messages'
@@ -25,15 +36,24 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.Asset', () => Asset, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Market', () => Market, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ManageWallet', () => ManageWallet, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ImportBTCWallet', () => ImportBTCWallet, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ImportETHWallet', () => ImportETHWallet, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ImportEOSWallet', () => ImportEOSWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Profile', () => Profile, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.AddIdentity', () => AddIdentity, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.RecoverIdentity', () => RecoverIdentity, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.CreateIdentity', () => CreateIdentity, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.WalletList', () => WalletList, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.SelectChainType', () => SelectChainType, Provider, store)
-  Navigation.registerComponentWithRedux('BitPortal.FirstTabScreen', () => gestureHandlerRootHOC(FirstTabScreen), Provider, store)
-  Navigation.registerComponentWithRedux('BitPortal.SecondTabScreen', () => gestureHandlerRootHOC(SecondTabScreen), Provider, store)
-  Navigation.registerComponentWithRedux('BitPortal.ThirdTabScreen', () => gestureHandlerRootHOC(ThirdTabScreen), Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.SwitchBTCAddress', () => SwitchBTCAddress, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.BackupIdentity', () => BackupIdentity, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.MyIdentity', () => MyIdentity, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ExportBTCPrivateKey', () => ExportBTCPrivateKey, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ExportETHPrivateKey', () => ExportETHPrivateKey, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ExportETHKeystore', () => ExportETHKeystore, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ExportEOSPrivateKey', () => ExportEOSPrivateKey, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.SelectEOSAccount', () => SelectEOSAccount, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ManageEOSResource', () => ManageEOSResource, Provider, store)
 }
 
 export const setDefaultOptions = () => {
@@ -115,15 +135,7 @@ export const startTabBasedApp = (locale) => {
               {
                 component: {
                   id: 'BitPortal.Root',
-                  name: 'BitPortal.Root',
-                  options: {
-                    topBar: {
-                      title: {
-                        text: messages[locale].top_bar_title_wallet
-                      },
-                      elevation: 0
-                    }
-                  }
+                  name: 'BitPortal.Root'
                 }
               }
             ]

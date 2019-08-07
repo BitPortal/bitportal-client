@@ -2,15 +2,13 @@ import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
-import { View, ScrollView, ActionSheetIOS, Alert, Text, ActivityIndicator, Animated } from 'react-native'
+import { View, ScrollView, Alert, Text, ActivityIndicator, Animated, SectionList, TouchableNativeFeedback, TextInput } from 'react-native'
 import { Navigation } from 'react-native-navigation'
-import TableView from 'react-native-tableview'
 import * as identityActions from 'actions/identity'
 import Modal from 'react-native-modal'
 import FastImage from 'react-native-fast-image'
+import IndicatorModal from 'components/Modal/IndicatorModal'
 import styles from './styles'
-
-const { Section, Item } = TableView
 
 export const errorMessages = (error) => {
   if (!error) { return null }
@@ -44,17 +42,38 @@ export default class MyIdentity extends Component {
   static get options() {
     return {
       topBar: {
-        largeTitle: {
-          visible: false
-        },
+        leftButtons: [
+          {
+            id: 'cancel',
+            icon: require('resources/images/cancel_android.png'),
+            color: 'white'
+          }
+        ],
         title: {
           text: '我的身份'
         }
-      },
-      bottomTabs: {
-        visible: false
       }
     }
+  }
+
+  subscription = Navigation.events().bindComponent(this)
+
+  state = { showPrompt: false, password: '', requestPasswordAction: null }
+
+  navigationButtonPressed({ buttonId }) {
+    if (buttonId === 'cancel') {
+      Navigation.dismissModal(this.props.componentId)
+    }
+  }
+
+  toggleSideMenu() {
+    Navigation.mergeOptions(this.props.componentId, {
+      sideMenu: {
+        left: {
+          visible: true
+        }
+      }
+    })
   }
 
   componentDidAppear() {
@@ -63,49 +82,26 @@ export default class MyIdentity extends Component {
     }
   }
 
-  deleteIdentity = (id) => {
-    const { intl } = this.props
-    Alert.prompt(
-      intl.formatMessage({ id: 'alert_input_wallet_password' }),
-      null,
-      [
-        {
-          text: intl.formatMessage({ id: 'alert_button_cancel' }),
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel'
-        },
-        {
-          text: intl.formatMessage({ id: 'alert_button_confirm' }),
-          onPress: password => this.props.actions.deleteIdentity.requested({
-            password,
-            id,
-            delay: 500,
-            componentId: this.props.componentId
-          })
-        }
-      ],
-      'secure-text'
-    )
+  deleteIdentity = () => {
+    const { identity } = this.props
+    const id  = identity.id
+    const password = this.state.password
+
+    this.props.actions.deleteIdentity.requested({
+      password,
+      id,
+      delay: 500,
+      componentId: this.props.componentId,
+      fromModal: true
+    })
   }
 
-  backupIdentity = (id) => {
-    const { intl } = this.props
-    Alert.prompt(
-      intl.formatMessage({ id: 'alert_input_wallet_password' }),
-      null,
-      [
-        {
-          text: intl.formatMessage({ id: 'alert_button_cancel' }),
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel'
-        },
-        {
-          text: intl.formatMessage({ id: 'alert_button_confirm' }),
-          onPress: password => this.props.actions.backupIdentity.requested({ id, password, delay: 500, componentId: this.props.componentId })
-        }
-      ],
-      'secure-text'
-    )
+  backupIdentity = () => {
+    const { identity } = this.props
+    const id  = identity.id
+    const password = this.state.password
+
+    this.props.actions.backupIdentity.requested({ id, password, delay: 500, componentId: this.props.componentId })
   }
 
   clearError = () => {
@@ -132,6 +128,74 @@ export default class MyIdentity extends Component {
     }
   }
 
+  renderHeader = ({ section: { isFirst } }) => {
+    return !isFirst ? <View style={{ width: '100%', height: 1, backgroundColor: 'rgba(0,0,0,0.12)' }} /> : null
+  }
+
+  onPress = (type) => {
+    this.requestPassword(type)
+  }
+
+  requestPassword = (requestPasswordAction) => {
+    this.setState({ showPrompt: true, showSimpleModal: false, password: '', requestPasswordAction })
+  }
+
+  changePassword = (text) => {
+    this.setState({ password: text })
+  }
+
+  clearPassword = () => {
+    this.setState({ password: '', showPrompt: false })
+  }
+
+  submitPassword = () => {
+    this.setState({ showPrompt: false })
+    const type = this.state.requestPasswordAction
+
+    switch (type) {
+      case 'mnemonic':
+        this.backupIdentity()
+        return
+      case 'delete':
+        this.deleteIdentity()
+        return
+    }
+  }
+
+  hidePrompt = () => {
+    this.setState({ showPrompt: false })
+  }
+
+  renderItem = ({ item, index }) => {
+    if (item.actionType) {
+      return (
+        <TouchableNativeFeedback onPress={this.onPress.bind(this, item.actionType)} background={TouchableNativeFeedback.SelectableBackground()}>
+          <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 2, height: 48 }}>
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+              <View style={{ flex: 1, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', height: '100%' }}>
+                <Text style={{ fontSize: 14, color: item.actionType === 'delete' ? '#FF5722' : 'rgba(0,0,0,0.87)', fontWeight: '500' }}>{item.text}</Text>
+              </View>
+            </View>
+          </View>
+        </TouchableNativeFeedback>
+      )
+    } else {
+      return (
+        <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 2, height: 48 }}>
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            <View style={{ flex: 1, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', height: '100%' }}>
+              <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)', fontWeight: '500' }}>{item.text}</Text>
+            </View>
+            <View style={{ position: 'absolute', right: 16 }}>
+              {item.type === 'avatar' && <FastImage source={require('resources/images/profile_placeholder_android.png')} style={{ width: 40, height: 40, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.12)' }} />}
+              {item.type !== 'avatar' && <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)', maxWidth: 300, textAlign: 'right' }}>{item.detail}</Text>}
+            </View>
+          </View>
+        </View>
+      )
+    }
+  }
+
   render() {
     const { intl, identity, backupIdentity, deleteIdentity } = this.props
     const id = identity.id
@@ -139,72 +203,67 @@ export default class MyIdentity extends Component {
     const deleteIdentityLoading = deleteIdentity.loading
     const loading = backupIdentityLoading || deleteIdentityLoading
 
+    const sections = []
+    sections.push({ data: [{ key: 'avatar', type: 'avatar', text: intl.formatMessage({ id: 'identity_text_avatar' }) }, { key: 'name', type: 'name', text: intl.formatMessage({ id: 'identity_text_name' }), detail: identity.name }, { type: 'identifier', text: intl.formatMessage({ id: 'identity_text_id' }), detail: identity.identifier }] })
+    sections.push({ data: [{ key: 'mnemonic', actionType: 'mnemonic', text: intl.formatMessage({ id: 'identity_button_backup_identity' }) }, { key: 'delete', actionType: 'delete', text: intl.formatMessage({ id: 'identity_button_delete_identity' }) }] })
+    sections[0].isFirst = true
+
     return (
-      <View style={{ flex: 1 }}>
-        <TableView
-          style={{ flex: 1 }}
-          tableViewStyle={TableView.Consts.Style.Grouped}
-        >
-          <Section />
-          <Section>
-            <Item
-              reactModuleForCell="IdentityDetailTableViewCell"
-              text={intl.formatMessage({ id: 'identity_text_avatar' })}
-              type="avatar"
-              height={60}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            />
-            <Item
-              reactModuleForCell="IdentityDetailTableViewCell"
-              text={intl.formatMessage({ id: 'identity_text_name' })}
-              type="name"
-              detail={identity.name}
-              height={60}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            />
-            <Item
-              reactModuleForCell="IdentityDetailTableViewCell"
-              text={intl.formatMessage({ id: 'identity_text_id' })}
-              type="identifier"
-              detail={identity.identifier}
-              height={60}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            />
-          </Section>
-          <Section>
-            <Item
-              reactModuleForCell="IdentityDetailTableViewCell"
-              key="mnemonic"
-              actionType="mnemonic"
-              text={intl.formatMessage({ id: 'identity_button_backup_identity' })}
-              onPress={this.backupIdentity.bind(this, id)}
-            />
-            <Item
-              reactModuleForCell="IdentityDetailTableViewCell"
-              key="delete"
-              actionType="delete"
-              text={intl.formatMessage({ id: 'identity_button_delete_identity' })}
-              onPress={this.deleteIdentity.bind(this, id)}
-            />
-          </Section>
-        </TableView>
+      <View style={{ flex: 1, paddingTop: 12, backgroundColor: 'white' }}>
+        <SectionList
+          renderSectionHeader={this.renderHeader}
+          renderItem={this.renderItem}
+          showsVerticalScrollIndicator={false}
+          sections={sections}
+          keyExtractor={(item, index) => item.key}
+        />
+        <IndicatorModal onModalHide={this.onModalHide} isVisible={loading} message="验证密码..." />
         <Modal
-          isVisible={loading}
-          backdropOpacity={0.4}
+          isVisible={this.state.showPrompt}
+          backdropOpacity={0.6}
           useNativeDriver
           animationIn="fadeIn"
-          animationInTiming={200}
-          backdropTransitionInTiming={200}
+          animationInTiming={500}
+          backdropTransitionInTiming={500}
           animationOut="fadeOut"
-          animationOutTiming={200}
-          backdropTransitionOutTiming={200}
-          onModalHide={this.onModalHide}
+          animationOutTiming={500}
+          backdropTransitionOutTiming={500}
         >
-          {loading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
-              <ActivityIndicator size="small" color="#000000" />
-              {deleteIdentityLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'identity_loading_hint_verifying_password' })}</Text>}
-              {!deleteIdentityLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'identity_loading_hint_exporting' })}</Text>}
+          {(this.state.showPrompt) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 6 }}>
+            <View style={{ backgroundColor: 'white', paddingTop: 14, paddingBottom: 11, paddingHorizontal: 24, borderRadius: 2, alignItem: 'center', justifyContent: 'space-between', elevation: 14, width: '100%' }}>
+              <View style={{ marginBottom: 30 }}>
+                <Text style={{ fontSize: 20, color: 'black', marginBottom: 12 }}>请输入密码</Text>
+                {/* <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.54)', marginBottom: 12 }}>This is a prompt</Text> */}
+                <TextInput
+                  style={{
+                    fontSize: 16,
+                    padding: 0,
+                    width: '100%',
+                    borderBottomWidth: 2,
+                    borderColor: '#169689'
+                  }}
+                  autoFocus={true}
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  placeholder="Password"
+                  keyboardType="default"
+                  secureTextEntry={true}
+                  onChangeText={this.changePassword}
+                  onSubmitEditing={this.submitPassword}
+                />
+              </View>
+              <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+                <TouchableNativeFeedback onPress={this.clearPassword} background={TouchableNativeFeedback.SelectableBackground()}>
+                  <View style={{ padding: 10, borderRadius: 2, marginRight: 8 }}>
+                    <Text style={{ color: '#169689', fontSize: 14 }}>取消</Text>
+                  </View>
+                </TouchableNativeFeedback>
+                <TouchableNativeFeedback onPress={this.submitPassword} background={TouchableNativeFeedback.SelectableBackground()}>
+                  <View style={{ padding: 10, borderRadius: 2 }}>
+                    <Text style={{ color: '#169689', fontSize: 14 }}>确定</Text>
+                  </View>
+                </TouchableNativeFeedback>
+              </View>
             </View>
           </View>}
         </Modal>

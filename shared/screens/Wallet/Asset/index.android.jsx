@@ -20,7 +20,7 @@ import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview
 import chainxAccount from '@chainx/account'
 import styles from './styles'
 
-const dataProvider = new DataProvider((r1, r2) => r1.key !== r2.key)
+const dataProvider = new DataProvider((r1, r2) => r1.key !== r2.key || r1.pending !== r2.pending)
 
 @injectIntl
 
@@ -63,6 +63,11 @@ export default class Asset extends Component {
       },
       bottomTabs: {
         visible: false
+      },
+      sideMenu: {
+        left: {
+          enabled: false
+        }
       }
     }
   }

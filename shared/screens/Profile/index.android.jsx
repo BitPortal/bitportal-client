@@ -22,7 +22,8 @@ export default class Profile extends Component {
   subscription = Navigation.events().bindComponent(this)
 
   state = {
-    activeTab: 'home'
+    activeTab: 'home',
+    activeTabComponentId: 'BitPortal.Root'
   }
 
   toLanguageSetting = () => {
@@ -71,18 +72,15 @@ export default class Profile extends Component {
   }
 
   toMyIdentity = () => {
-    /* Navigation.push(this.props.componentId, {
-     *   component: {
-     *     name: 'BitPortal.MyIdentity',
-     *     options: {
-     *       topBar: {
-     *         title: {
-     *           text: this.props.intl.formatMessage({ id: 'top_bar_title_my_identity' })
-     *         }
-     *       }
-     *     }
-     *   }
-     * })*/
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.MyIdentity'
+          }
+        }]
+      }
+    })
   }
 
   toAboutUs = () => {
@@ -139,10 +137,6 @@ export default class Profile extends Component {
 
   }
 
-  componentDidAppear() {
-
-  }
-
   switchTab(type) {
     this.setState({ activeTab: type }, () => {
       Navigation.mergeOptions(this.props.componentId, {
@@ -153,6 +147,32 @@ export default class Profile extends Component {
         }
       })
     })
+
+    let activeTabComponentId
+
+    if (type === 'home') {
+      activeTabComponentId = 'BitPortal.Root'
+    } else if (type === 'myIdentity') {
+      activeTabComponentId = 'BitPortal.MyIdentity'
+    }
+
+    if (activeTabComponentId && activeTabComponentId !== this.state.activeTabComponentId) {
+      Navigation.setStackRoot(this.state.activeTabComponentId, [{
+        component: {
+          id: activeTabComponentId,
+          name: activeTabComponentId,
+          options: {
+            animations: {
+              setStackRoot: {
+                enabled: true
+              }
+            }
+          }
+        }
+      }])
+
+      this.setState({ activeTabComponentId })
+    }
   }
 
   toAddIdentity() {
@@ -181,11 +201,12 @@ export default class Profile extends Component {
 
     return (
       <View style={{ flex: 1, backgroundColor: '#FAFAFA' }}>
-        <View style={{ width: '100%', height: 172 }}>
+        <View style={{ width: '100%', height: 172, backgroundColor: '#673AB7' }}>
           <FastImage
             source={require('resources/images/profile_background_android.png')}
-            style={{ width: '100%', height: '100%', position: 'absolute', left: 0, top: 0 }}
+            style={{ width: 535, height: 172, position: 'absolute', left: 0, top: 0 }}
             resizeMode="cover"
+            resizeMethod="resize"
           />
           <LinearGradient
             colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.12)', 'rgba(0,0,0,0.25)', 'rgba(0,0,0,0.50)', 'rgba(0,0,0,0.75)']}
@@ -196,7 +217,7 @@ export default class Profile extends Component {
             source={require('resources/images/profile_placeholder_android.png')}
             style={{ width: 60, height: 60, position: 'absolute', left: 16, bottom: 76, backgroundColor: 'white', borderRadius: 30 }}
           />
-          <TouchableNativeFeedback onPress={this.toAddIdentity} background={TouchableNativeFeedback.Ripple('rgba(255,255,255,0.4)', false)}>
+          <TouchableNativeFeedback onPress={!hasIdentity ? this.toAddIdentity : this.toMyIdentity} background={TouchableNativeFeedback.Ripple('rgba(255,255,255,0.4)', false)}>
             <View style={{ width: '100%', height: 60, position: 'absolute', left: 0, bottom: 8, paddingLeft: 16, paddingRight: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderRadius: 30 }}>
               <View style={{ alignItems: 'flex-start', justifyContent: 'center' }}>
                 <Text style={{ fontSize: 14, color: 'white', fontWeight: '500' }}>{hasIdentity ? identity.name : intl.formatMessage({ id: 'identity_tableviewcell_identity' })}</Text>

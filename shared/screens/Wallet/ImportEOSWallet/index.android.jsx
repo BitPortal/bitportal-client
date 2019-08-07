@@ -13,142 +13,15 @@ import {
   TouchableHighlight,
   Keyboard,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
+  TouchableNativeFeedback
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Navigation } from 'react-native-navigation'
-import EStyleSheet from 'react-native-extended-stylesheet'
 import { Field, reduxForm, getFormValues, getFormSyncWarnings } from 'redux-form'
-import Modal from 'react-native-modal'
+import { FilledTextField, FilledTextArea } from 'components/Form'
+import IndicatorModal from 'components/Modal/IndicatorModal'
 import * as walletActions from 'actions/wallet'
-
-const styles = EStyleSheet.create({
-  container: {
-    flex: 1,
-    // backgroundColor: 'white'
-  },
-  button: {
-    width: '100%',
-    height: 50,
-    backgroundColor: '#007AFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 20,
-    borderRadius: 10
-  },
-  buttonText: {
-    textAlign: 'center',
-    color: 'white',
-    fontSize: 17
-  },
-  textAreaFiled: {
-    height: '100%',
-    fontSize: 17,
-    width: '100% - 52'
-  },
-  textFiled: {
-    height: '100%',
-    fontSize: 17,
-    width: '100% - 138'
-  },
-  noLable: {
-    width: '100% - 52'
-  },
-  button: {
-    width: '100%',
-    height: 50,
-    backgroundColor: '#007AFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 20,
-    borderRadius: 10
-  },
-  buttonText: {
-    textAlign: 'center',
-    color: 'white',
-    fontSize: 17
-  }
-})
-
-const TextField = ({
-  input: { onChange, ...restInput },
-  meta: { touched, error, active },
-  label,
-  placeholder,
-  separator,
-  secureTextEntry,
-  fieldName,
-  change,
-  showClearButton,
-  editable,
-  switchable,
-  onSwitch
-}) => (
-  <View style={{ width: '100%', alignItems: 'center', height: 44, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-    {!!label && !switchable && <Text style={{ fontSize: 17, marginRight: 16, width: 70 }}>{label}</Text>}
-    {!!label && !!switchable &&
-     <View style={{ borderRightWidth: 0.5, borderColor: '#C8C7CC', height: '100%', marginRight: 16, width: 70, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
-       <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.7} onPress={onSwitch} style={{ width: 57, height: '100%', justifyContent: 'center' }}>
-         <Text style={{ fontSize: 15, color: '#007AFF' }}>{label}</Text>
-       </TouchableHighlight>
-       <Image
-         source={require('resources/images/arrowRight.png')}
-         style={{ width: 8, height: 13, marginRight: 10 }}
-       />
-     </View>
-    }
-    <TextInput
-      style={[styles.textFiled, !label ? styles.noLable : {}]}
-      autoCorrect={false}
-      autoCapitalize="none"
-      placeholder={placeholder}
-      onChangeText={onChange}
-      secureTextEntry={secureTextEntry}
-      editable={typeof editable === 'boolean' ? editable : true}
-      {...restInput}
-    />
-    {showClearButton && active && <View style={{ height: '100%', position: 'absolute', right: 16, top: 0, width: 20, height: '100%', alignItems: 'center', justifyContent: 'center' }}>
-      <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
-        <FastImage
-          source={require('resources/images/clear.png')}
-          style={{ width: 14, height: 14 }}
-        />
-      </TouchableHighlight>
-    </View>}
-    {separator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: '#C8C7CC' }} />}
-  </View>
-)
-
-const TextAreaField = ({
-  input: { onChange, ...restInput },
-  meta: { touched, error, active },
-  placeholder,
-  fieldName,
-  change,
-  showClearButton,
-  separator
-}) => (
-  <View style={{ width: '100%', alignItems: 'center', height: 88, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-    <TextInput
-      style={styles.textAreaFiled}
-      multiline={true}
-      autoCorrect={false}
-      autoCapitalize="none"
-      placeholder={placeholder}
-      onChangeText={onChange}
-      {...restInput}
-    />
-    {showClearButton && active && <View style={{ position: 'absolute', right: 13, bottom: 4, width: 20, height: 20, alignItems: 'center', justifyContent: 'center' }}>
-      <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
-        <FastImage
-          source={require('resources/images/clear.png')}
-          style={{ width: 14, height: 14 }}
-        />
-      </TouchableHighlight>
-    </View>}
-    {separator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: '#C8C7CC' }} />}
-  </View>
-)
 
 export const errorMessages = (error, messages) => {
   if (!error) { return null }
@@ -177,6 +50,8 @@ const validate = (values) => {
 
   if (!values.password) {
     errors.password = '请输入密码'
+  } else if (values.password.length < 8) {
+    errors.password = '密码不少于8位字符'
   }
 
   return errors
@@ -184,10 +59,6 @@ const validate = (values) => {
 
 const warn = (values) => {
   const warnings = {}
-
-  if (values.password && values.password.length < 8) {
-    warnings.password = '密码不少于8位字符'
-  }
 
   return warnings
 }
@@ -218,15 +89,10 @@ export default class ImportEOSWallet extends Component {
             id: 'next',
             text: '下一步',
             fontWeight: '400',
+            color: 'white',
             enabled: false
           }
         ],
-        largeTitle: {
-          visible: false
-        },
-        backButton: {
-          title: '返回'
-        },
         title: {
           text: '导入EOS钱包'
         },
@@ -265,21 +131,6 @@ export default class ImportEOSWallet extends Component {
 
   navigationButtonPressed({ buttonId }) {
     if (buttonId === 'next') {
-      const { formSyncWarnings } = this.props
-      if (typeof formSyncWarnings === 'object') {
-        const warning = formSyncWarnings.password
-        if (warning) {
-          Alert.alert(
-            warning,
-            '',
-            [
-              { text: '确定', onPress: () => console.log('OK Pressed') }
-            ]
-          )
-          return
-        }
-      }
-
       Keyboard.dismiss()
       this.props.handleSubmit(this.submit)()
     }
@@ -303,6 +154,7 @@ export default class ImportEOSWallet extends Component {
               id: 'next',
               text: '下一步',
               fontWeight: '400',
+              color: 'white',
               enabled: !this.state.invalid && !this.state.pristine && !this.state.getKeyAccountsLoading
             }
           ]
@@ -336,16 +188,16 @@ export default class ImportEOSWallet extends Component {
   }
 
   scan = (field) => {
-    Navigation.showModal({
-      stack: {
-        children: [{
-          component: {
-            name: 'BitPortal.Camera',
-            passProps: { from: 'import', form: 'importEOSWalletForm', field }
-          }
-        }]
-      }
-    })
+    /* Navigation.showModal({
+     *   stack: {
+     *     children: [{
+     *       component: {
+     *         name: 'BitPortal.Camera',
+     *         passProps: { from: 'import', form: 'importEOSWalletForm', field }
+     *       }
+     *     }]
+     *   }
+     * })*/
   }
 
   render() {
@@ -355,79 +207,52 @@ export default class ImportEOSWallet extends Component {
     const passwordHint = formValues && formValues.passwordHint
 
     return (
-      <View style={styles.container}>
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
         <ScrollView showsVerticalScrollIndicator={false} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
-          <View style={{ flex: 1, alignItems: 'center' }}>
-            <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-              <Text style={{ fontSize: 13, color: '#666666' }}>输入私钥</Text>
-            </View>
-            <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
+          <View style={{ paddingTop: 16 }}>
+            <View style={{ width: '100%' }}>
               <Field
-                placeholder="必填"
+                label="私钥"
                 name="privateKey"
                 fieldName="privateKey"
-                component={TextAreaField}
+                component={FilledTextArea}
                 change={change}
-                showClearButton={!!privateKey && privateKey.length > 0}
-              />
-              <TouchableHighlight underlayColor="rgba(0,0,0,0)" onPress={this.scan.bind(this, 'privateKey')} style={{ width: 30, height: 30, position: 'absolute', right: 16, top: 4 }} activeOpacity={0.42}>
-                <FastImage
-                  source={require('resources/images/scan2_right.png')}
-                  style={{ width: 30, height: 30 }}
-                />
-              </TouchableHighlight>
-            </View>
-            <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-              <Text style={{ fontSize: 13, color: '#666666' }}>设置密码</Text>
-            </View>
-            <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
-              <Field
-                label="钱包密码"
-                placeholder="不少于8位字符，建议混合大小写字母，数字，符号"
-                name="password"
-                fieldName="password"
-                change={change}
-                component={TextField}
-                separator={true}
-                showClearButton={!!password && password.length > 0}
-                secureTextEntry
-              />
-              <Field
-                label="密码提示"
-                placeholder="选填"
-                name="passwordHint"
-                fieldName="passwordHint"
-                change={change}
-                component={TextField}
-                showClearButton={!!passwordHint && passwordHint.length > 0}
-                separator={false}
+                nonEmpty={!!privateKey && privateKey.length > 0}
+                trailingIcon={<TouchableNativeFeedback onPress={() => {}} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', true)} useForeground={true}>
+                  <View style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
+                    <FastImage source={require('resources/images/scan_purple_android.png')} style={{ width: 24, height: 24 }} />
+                  </View>
+                </TouchableNativeFeedback>}
               />
             </View>
-            <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
-              <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48, borderTopWidth: 1, borderColor: 'rgba(0,0,0,0.12)' }}>
+              <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>设置密码</Text>
             </View>
+            <Field
+              label="钱包密码"
+              placeholder="不少于8位字符，建议混合大小写字母，数字，符号"
+              name="password"
+              fieldName="password"
+              change={change}
+              component={FilledTextField}
+              nonEmpty={!!password && password.length > 0}
+              secureTextEntry
+            />
+            <Field
+              label="密码提示"
+              placeholder="选填"
+              name="passwordHint"
+              fieldName="passwordHint"
+              change={change}
+              component={FilledTextField}
+              nonEmpty={!!passwordHint && passwordHint.length > 0}
+            />
+          </View>
+          <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 16, justifyContent: 'flex-start' }}>
+            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)', lineHeight: 18 }}>如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。</Text>
           </View>
         </ScrollView>
-        <Modal
-          isVisible={this.state.getKeyAccountsLoading}
-          backdropOpacity={0.4}
-          useNativeDriver
-          animationIn="fadeIn"
-          animationInTiming={200}
-          backdropTransitionInTiming={200}
-          animationOut="fadeOut"
-          animationOutTiming={200}
-          backdropTransitionOutTiming={200}
-          onModalHide={this.onModalHide}
-          onModalShow={this.onModalShow}
-        >
-          {(this.state.getKeyAccountsLoading) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
-              <ActivityIndicator size="small" color="#000000" />
-              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>获取帐户中...</Text>
-            </View>
-          </View>}
-        </Modal>
+        <IndicatorModal isVisible={this.state.getKeyAccountsLoading} message="获取帐户中..." onModalHide={this.onModalHide} onModalShow={this.onModalShow} />
       </View>
     )
   }

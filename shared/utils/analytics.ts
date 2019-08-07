@@ -29,7 +29,7 @@ const onEventTrackWithMap = (eventName: string, property: object) => (
 )
 
 const onEventObject = (eventname: string, eventData: object) => {
-  AnalyticsUtil.onEventObject(eventId, {...eventData, date })
+  // AnalyticsUtil.onEventObject(eventId, {...eventData, date })
 }
 
 export {
