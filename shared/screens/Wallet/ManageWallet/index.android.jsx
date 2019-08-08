@@ -103,7 +103,9 @@ export default class ManageWallet extends Component {
     showSimpleModal: false,
     showPrompt: false,
     password: '',
-    requestPasswordAction: null
+    requestPasswordAction: null,
+    showWalletNamePrompt: false,
+    walletName: ''
   }
 
   componentDidAppear() {
@@ -157,14 +159,7 @@ export default class ManageWallet extends Component {
   switchEOSAccount = () => {
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.SwitchEOSAccount',
-        options: {
-          topBar: {
-            backButton: {
-              title: '返回'
-            }
-          }
-        }
+        name: 'BitPortal.SwitchEOSAccount'
       }
     })
   }
@@ -178,54 +173,27 @@ export default class ManageWallet extends Component {
   }
 
   createNewAccount = () => {
-    /* Navigation.showModal({
-     *   stack: {
-     *     children: [{
-     *       component: {
-     *         name: 'BitPortal.CreateEOSAccount'
-     *       },
-     *       options: {
-     *         topBar: {
-     *           backButton: {
-     *             title: '返回'
-     *           }
-     *         }
-     *       }
-     *     }]
-     *   }
-     * })*/
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.CreateEOSAccount',
-        options: {
-          topBar: {
-            backButton: {
-              title: '返回'
-            }
-          }
-        }
+        name: 'BitPortal.CreateEOSAccount'
       }
     })
   }
 
-  vote = async () => {
+  vote = () => {
     if (this.props.getProducer.loaded) this.props.actions.setSelected(this.props.votedProducers)
     this.props.actions.handleProducerSearchTextChange('')
-    const constants = await Navigation.constants()
 
+    /* Navigation.push(this.props.componentId, {
+     *   component: {
+     *     name: 'BitPortal.Voting'
+     *   }
+     * })*/
     Navigation.showModal({
       stack: {
         children: [{
           component: {
-            name: 'BitPortal.Voting',
-            passProps: { statusBarHeight: constants.statusBarHeight }
-          },
-          options: {
-            topBar: {
-              searchBar: true,
-              searchBarHiddenWhenScrolling: false,
-              searchBarPlaceholder: 'Search'
-            }
+            name: 'BitPortal.Voting'
           }
         }]
       }
@@ -332,6 +300,13 @@ export default class ManageWallet extends Component {
         name
       )
     }
+  }
+
+  setWalletName = () => {
+    const { wallet } = this.props
+    const oldName = (wallet && wallet.name) || this.props.name
+    const name = this.state.walletName
+    this.props.actions.setWalletName.requested({ oldName, name, id: wallet.id })
   }
 
   chainxDeposit = async (walletId) => {
@@ -499,9 +474,15 @@ export default class ManageWallet extends Component {
       case 'resources':
         this.manageResource()
         return
-      case 'vote':
-      case 'switchAccount':
       case 'createAccount':
+        this.createNewAccount()
+        return
+      case 'switchAccount':
+        this.switchEOSAccount()
+        return
+      case 'vote':
+        this.vote()
+        return
       case 'chainxDeposit':
       case 'chainxVoting':
       case 'chainxWithdrawal':
@@ -569,6 +550,25 @@ export default class ManageWallet extends Component {
 
   hidePrompt = () => {
     this.setState({ showPrompt: false })
+  }
+
+  requestChangeWalletName = () => {
+    const { wallet } = this.props
+    const name = (wallet && wallet.name) || this.props.name
+    this.setState({ showWalletNamePrompt: true, walletName: name })
+  }
+
+  changeWalletName = (text) => {
+    this.setState({ walletName: text })
+  }
+
+  cancelChangeWalletName = () => {
+    this.setState({ showWalletNamePrompt: false })
+  }
+
+  submitWalletName = () => {
+    this.setWalletName()
+    this.setState({ showWalletNamePrompt: false })
   }
 
   renderItem = ({ item, index }) => {
@@ -759,7 +759,14 @@ export default class ManageWallet extends Component {
           <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', paddingRight: 16, paddingLeft: 16 }}>
             {!!chain && <View style={{ width: 40, height: 40, backgroundColor: 'white', borderRadius: 20 }}><FastImage source={walletIcons[chain.toLowerCase()]} style={{ width: 40, height: 40, borderRadius: 4, backgroundColor: 'white' }} /></View>}
             <View style={{ justifyContent: 'center', alignItems: 'flex-start', marginLeft: 16 }}>
-              <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'white' }}>{name}</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'white', marginRight: 2 }}>{name}</Text>
+                <TouchableNativeFeedback onPress={this.requestChangeWalletName} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
+                  <View style={{ height: 24, width: 24, borderRadius: 12, alignItems: 'center', justifyContent: 'center' }}>
+                    <FastImage source={require('resources/images/edit_android.png')} style={{ height: 16, width: 16 }} />
+                  </View>
+                </TouchableNativeFeedback>
+              </View>
               <Text style={{ fontSize: 16, color: 'rgba(255,255,255,0.7)' }}>{this.formatAddress(address)}</Text>
             </View>
           </View>
@@ -848,6 +855,54 @@ export default class ManageWallet extends Component {
                   </View>
                 </TouchableNativeFeedback>
                 <TouchableNativeFeedback onPress={this.submitPassword} background={TouchableNativeFeedback.SelectableBackground()}>
+                  <View style={{ padding: 10, borderRadius: 2 }}>
+                    <Text style={{ color: '#169689', fontSize: 14 }}>确定</Text>
+                  </View>
+                </TouchableNativeFeedback>
+              </View>
+            </View>
+          </View>}
+        </Modal>
+        <Modal
+          isVisible={this.state.showWalletNamePrompt}
+          backdropOpacity={0.6}
+          useNativeDriver
+          animationIn="fadeIn"
+          animationInTiming={500}
+          backdropTransitionInTiming={500}
+          animationOut="fadeOut"
+          animationOutTiming={500}
+          backdropTransitionOutTiming={500}
+        >
+          {(this.state.showWalletNamePrompt) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 6 }}>
+            <View style={{ backgroundColor: 'white', paddingTop: 14, paddingBottom: 11, paddingHorizontal: 24, borderRadius: 2, alignItem: 'center', justifyContent: 'space-between', elevation: 14, width: '100%' }}>
+              <View style={{ marginBottom: 30 }}>
+                <Text style={{ fontSize: 20, color: 'black', marginBottom: 12 }}>设置钱包名称</Text>
+                {/* <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.54)', marginBottom: 12 }}>This is a prompt</Text> */}
+                <TextInput
+                  style={{
+                    fontSize: 16,
+                    padding: 0,
+                    width: '100%',
+                    borderBottomWidth: 2,
+                    borderColor: '#169689'
+                  }}
+                  autoFocus={true}
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  keyboardType="default"
+                  value={this.state.walletName}
+                  onChangeText={this.changeWalletName}
+                  onSubmitEditing={this.submitWalletName}
+                />
+              </View>
+              <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+                <TouchableNativeFeedback onPress={this.cancelChangeWalletName} background={TouchableNativeFeedback.SelectableBackground()}>
+                  <View style={{ padding: 10, borderRadius: 2, marginRight: 8 }}>
+                    <Text style={{ color: '#169689', fontSize: 14 }}>取消</Text>
+                  </View>
+                </TouchableNativeFeedback>
+                <TouchableNativeFeedback onPress={this.submitWalletName} background={TouchableNativeFeedback.SelectableBackground()}>
                   <View style={{ padding: 10, borderRadius: 2 }}>
                     <Text style={{ color: '#169689', fontSize: 14 }}>确定</Text>
                   </View>

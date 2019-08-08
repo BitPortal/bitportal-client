@@ -110,7 +110,6 @@ export const registerScreens = (store) => {
   AppRegistry.registerComponent('ChainXValidatorTableViewCell', () => ChainXValidatorTableViewCell)
   AppRegistry.registerComponent('ChainXValidatorDetailTableViewCell', () => ChainXValidatorDetailTableViewCell)
 
-
   AppRegistry.registerComponent('WalletCardCollectionViewCell', () => WalletCardCollectionViewCell)
   AppRegistry.registerComponent('FeaturedDappCollectionViewCell', () => FeaturedDappCollectionViewCell)
   AppRegistry.registerComponent('SmallDappCollectionViewCell', () => SmallDappCollectionViewCell)

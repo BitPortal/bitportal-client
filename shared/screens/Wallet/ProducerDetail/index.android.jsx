@@ -1,18 +1,14 @@
 import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, ScrollView, ActionSheetIOS, Alert, Text, ActivityIndicator, Animated } from 'react-native'
+import { View, ScrollView, ActionSheetIOS, Alert, Text, ActivityIndicator, Animated, SectionList } from 'react-native'
 import { Navigation } from 'react-native-navigation'
-import TableView from 'react-native-tableview'
 import * as identityActions from 'actions/identity'
 import Modal from 'react-native-modal'
 import FastImage from 'react-native-fast-image'
 import styles from './styles'
 
-const { Section, Item } = TableView
-
-
-export default class MyIdentity extends Component {
+export default class ProducerDetail extends Component {
   static get options() {
     return {
       topBar: {
@@ -34,88 +30,79 @@ export default class MyIdentity extends Component {
 
   subscription = Navigation.events().bindComponent(this)
 
+  renderItem = ({ item, index }) => {
+    return (
+      <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 2, height: 48 }}>
+        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+          <View style={{ flex: 1, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', height: '100%' }}>
+            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)', fontWeight: '500' }}>{item.text}</Text>
+          </View>
+          <View style={{ position: 'absolute', right: 16 }}>
+            {item.type === 'avatar' && <FastImage source={require('resources/images/profile_placeholder_android.png')} style={{ width: 40, height: 40, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.12)' }} />}
+            {item.type !== 'avatar' && <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)', maxWidth: 300, textAlign: 'right' }}>{item.detail}</Text>}
+          </View>
+        </View>
+      </View>
+    )
+  }
+
   render() {
-    console.log(this.props)
     const { owner, info, producer_key } = this.props
     const title = info && info.title
     const location = info && info.org && info.org.location
 
     const items = []
-    items.push(
-      <Item
-        reactModuleForCell="ProducerDetailTableViewCell"
-        text="Logo"
-        type="avatar"
-        key="avatar"
-        height={60}
-        logo={info && info.org && info.org.branding && info.org.branding.logo}
-        selectionStyle={TableView.Consts.CellSelectionStyle.None}
-      />
-    )
+    items.push({
+      text: 'Logo',
+      type: 'avatar',
+      key: 'avatar',
+      logo: info && info.org && info.org.branding && info.org.branding.logo
+    })
 
     if (title) {
-      items.push(
-        <Item
-          reactModuleForCell="ProducerDetailTableViewCell"
-          text="节点名称"
-          type="title"
-          key="title"
-          detail={title}
-          height={60}
-          selectionStyle={TableView.Consts.CellSelectionStyle.None}
-        />
-      )
+      items.push({
+        text: '节点名称',
+        type: 'title',
+        key: 'title',
+        detail: title
+      })
     }
 
-    items.push(
-      <Item
-        reactModuleForCell="ProducerDetailTableViewCell"
-        text="合约帐号"
-        key="owner"
-        type="owner"
-        detail={owner}
-        height={60}
-        selectionStyle={TableView.Consts.CellSelectionStyle.None}
-      />
-    )
+    items.push({
+      text: '合约帐号',
+      key: 'owner',
+      type: 'owner',
+      detail: owner
+    })
 
     if (location) {
-      items.push(
-        <Item
-          reactModuleForCell="ProducerDetailTableViewCell"
-          text="节点位置"
-          key="location"
-          type="location"
-          detail={location}
-          height={60}
-          selectionStyle={TableView.Consts.CellSelectionStyle.None}
-        />
-      )
+      items.push({
+        text: '节点位置',
+        key: 'location',
+        type: 'location',
+        detail: location
+      })
     }
 
-    items.push(
-      <Item
-        reactModuleForCell="ProducerDetailTableViewCell"
-        text="节点公钥"
-        type="identifier"
-        key="identifier"
-        detail={producer_key}
-        height={60}
-        selectionStyle={TableView.Consts.CellSelectionStyle.None}
-      />
-    )
+    items.push({
+      text: '节点公钥',
+      type: 'identifier',
+      key: 'identifier',
+      detail: producer_key
+    })
+
+    const sections = []
+    sections.push({ data: items })
+    sections[0].isFirst = true
 
     return (
-      <View style={{ flex: 1 }}>
-        <TableView
-          style={{ flex: 1 }}
-          tableViewStyle={TableView.Consts.Style.Grouped}
-        >
-          <Section />
-          <Section>
-            {items}
-          </Section>
-        </TableView>
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <SectionList
+          renderItem={this.renderItem}
+          showsVerticalScrollIndicator={false}
+          sections={sections}
+          keyExtractor={(item, index) => item.key}
+        />
       </View>
     )
   }

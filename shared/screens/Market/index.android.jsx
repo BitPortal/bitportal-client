@@ -10,6 +10,7 @@ import * as tickerActions from 'actions/ticker'
 import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview'
 import MarketTableViewCell from 'components/TableViewCell/MarketTableViewCell'
 import FastImage from 'react-native-fast-image'
+import Loading from 'components/Loading'
 
 const dataProvider = new DataProvider((r1, r2) => r1.name !== r2.name || r1.price_usd !== r2.price_usd || r1.percent_change_24h !== r2.percent_change_24h)
 
@@ -137,12 +138,7 @@ export default class Market extends Component {
 
     if (loading && !ticker.length) {
       return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <View>
-            <ActivityIndicator size="small" color="#666666" />
-            <Text style={{ marginTop: 10, color: '#666666' }}>加载行情</Text>
-          </View>
-        </View>
+        <Loading text="加载行情..." />
       )
     }
 

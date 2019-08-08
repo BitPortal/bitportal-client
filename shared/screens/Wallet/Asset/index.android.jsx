@@ -20,7 +20,7 @@ import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview
 import chainxAccount from '@chainx/account'
 import styles from './styles'
 
-const dataProvider = new DataProvider((r1, r2) => r1.key !== r2.key || r1.pending !== r2.pending)
+const dataProvider = new DataProvider((r1, r2) => r1.key !== r2.key || r1.pending !== r2.pending || r1.title !== r2.title)
 
 @injectIntl
 
@@ -101,11 +101,12 @@ export default class Asset extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const { walletBalance, activeAsset, intl, transactions, assetBalance, loadingMore, canLoadMore } = nextProps
+    const { walletBalance, activeAsset, intl, transactions, assetBalance, loadingMore, canLoadMore, getTransactions } = nextProps
     const balance = activeAsset.contract ? assetBalance : walletBalance
     const transactionCount = transactions && transactions.length
     const precision = balance.precision
     const symbol = balance.symbol
+    const loading = getTransactions.loading
 
     let transactionCells = []
 
@@ -124,13 +125,19 @@ export default class Asset extends Component {
       }))
     }
 
-    /* if (canLoadMore) {
-     *   transactionCells.push({
-     *     key: 'loadMore'
-     *   })
-     * }*/
+    if (loadingMore) {
+      transactionCells.push({
+        key: 'loadingMore',
+        title: '加载中...'
+      })
+    } else if (canLoadMore) {
+      transactionCells.push({
+        key: 'loadMore',
+        title: '加载更多'
+      })
+    }
 
-    return { dataProvider: dataProvider.cloneWithRows([{ title: '交易记录' }, ...transactionCells]) }
+    return { dataProvider: dataProvider.cloneWithRows([{ title: loading ? '获取交易记录...' : (transactionCount ? '交易记录' : '暂无交易记录') }, ...transactionCells]) }
   }
 
   toTransferAsset = () => {
@@ -285,14 +292,32 @@ export default class Asset extends Component {
   }
 
   renderItem = (type, data) => {
-    if (!type) return (
-      <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48 }}>
-        <Text style={{ color: 'rgba(0,0,0,0.87)', fontSize: 15 }}>{data.title}</Text>
-      </View>
-    )
+    if (!type) {
+      return (
+        <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48 }}>
+          <Text style={{ color: 'rgba(0,0,0,0.87)', fontSize: 15 }}>{data.title}</Text>
+        </View>
+      )
+    }
+
+    if (data.key === 'loadingMore') {
+      return (
+        <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 60, justifyContent: 'center' }}>
+          <Text style={{ color: 'rgba(0,0,0,0.54)', fontSize: 14 }}>{data.title}</Text>
+        </View>
+      )
+    } else if (data.key === 'loadMore') {
+      return (
+        <TouchableNativeFeedback onPress={this.loadMore} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 60, justifyContent: 'center' }}>
+            <Text style={{ color: '#673AB7', fontSize: 14 }}>{data.title}</Text>
+          </View>
+        </TouchableNativeFeedback>
+      )
+    }
 
     return (
-      <TouchableNativeFeedback onPress={() => {}} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.3)', false)} useForeground={true}>
+      <TouchableNativeFeedback onPress={() => {}} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
         <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 8, paddingBottom: 8 }}>
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: '100%' }}>
             <View style={{ flex: 1, height: 44, borderWidth: 0, borderColor: 'red', justifyContent: 'space-between' }}>

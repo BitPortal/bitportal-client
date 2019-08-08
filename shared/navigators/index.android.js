@@ -26,6 +26,10 @@ import ExportETHKeystore from 'screens/Wallet/ExportETHKeystore'
 import ExportEOSPrivateKey from 'screens/Wallet/ExportEOSPrivateKey'
 import SelectEOSAccount from 'screens/Wallet/SelectEOSAccount'
 import ManageEOSResource from 'screens/Wallet/ManageEOSResource'
+import CreateEOSAccount from 'screens/Wallet/CreateEOSAccount'
+import SwitchEOSAccount from 'screens/Wallet/SwitchEOSAccount'
+import Voting from 'screens/Wallet/Voting'
+import ProducerDetail from 'screens/Wallet/ProducerDetail'
 
 import Images from 'resources/images'
 import messages from 'resources/messages'
@@ -54,6 +58,10 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.ExportEOSPrivateKey', () => ExportEOSPrivateKey, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.SelectEOSAccount', () => SelectEOSAccount, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ManageEOSResource', () => ManageEOSResource, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.CreateEOSAccount', () => CreateEOSAccount, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.SwitchEOSAccount', () => SwitchEOSAccount, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Voting', () => Voting, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ProducerDetail', () => ProducerDetail, Provider, store)
 }
 
 export const setDefaultOptions = () => {

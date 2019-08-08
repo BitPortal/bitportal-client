@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
-import { View, Text, ActivityIndicator, Alert } from 'react-native'
+import { View, Text, ActivityIndicator, Alert, Dimensions, TouchableNativeFeedback } from 'react-native'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
-import TableView from 'react-native-tableview'
 import Modal from 'react-native-modal'
 import { identityEOSWalletSelector, managingWalletSelector } from 'selectors/wallet'
 import { managingWalletKeyAccountSelector } from 'selectors/keyAccount'
 import * as walletActions from 'actions/wallet'
 import * as accountActions from 'actions/account'
 import * as keyAccountActions from 'actions/keyAccount'
+import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview'
+import FastImage from 'react-native-fast-image'
 
-const { Section, Item } = TableView
+const dataProvider = new DataProvider((r1, r2) => r1.key !== r2.key)
 
 @connect(
   state => ({
@@ -49,6 +50,39 @@ export default class SwitchEOSAccount extends Component {
 
   subscription = Navigation.events().bindComponent(this)
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { wallet, keyAccounts } = nextProps
+    const address = wallet && wallet.address
+
+
+    const accounts = keyAccounts.map(account => ({
+      key: account.accountName,
+      accountName: account.accountName,
+      permissions: account.permissions.join(' • ')
+    }))
+
+    if (accounts) {
+      return { dataProvider: dataProvider.cloneWithRows(accounts), extendedState: { address } }
+    } else {
+      return { extendedState: { address } }
+    }
+  }
+
+  state = {
+    dataProvider: dataProvider.cloneWithRows([]),
+    extendedState: { address: null }
+  }
+
+  layoutProvider = new LayoutProvider(
+    index => {
+      return 0
+    },
+    (type, dim) => {
+      dim.width = Dimensions.get('window').width
+      dim.height = 60
+    }
+  )
+
   selectEOSAccount = (accountName) => {
     const { wallet } = this.props
     const address = wallet && wallet.address
@@ -63,32 +97,32 @@ export default class SwitchEOSAccount extends Component {
     this.props.actions.getKeyAccount.requested(this.props.wallet)
   }
 
-  render() {
-    const { wallet, keyAccounts } = this.props
-    const address = wallet && wallet.address
-
+  renderItem = (type, data) => {
     return (
-      <View style={{ flex: 1 }}>
-        <TableView
-          style={{ flex: 1 }}
-          tableViewStyle={TableView.Consts.Style.Grouped}
-        >
-          <Section />
-          {keyAccounts && <Section>
-            {keyAccounts.map(account =>
-              <Item
-                height={60}
-                key={account.accountName}
-                reactModuleForCell="SwitchEOSAccountTableViewCell"
-                onPress={this.selectEOSAccount.bind(this, account.accountName)}
-                selectionStyle={account.accountName === address ? TableView.Consts.CellSelectionStyle.None : TableView.Consts.CellSelectionStyle.Default}
-                accessoryType={account.accountName === address ? TableView.Consts.AccessoryType.Checkmark : TableView.Consts.AccessoryType.None}
-                accountName={account.accountName}
-                permissions={account.permissions.join(' • ')}
-              />
-             )}
-          </Section>}
-        </TableView>
+      <TouchableNativeFeedback onPress={this.selectEOSAccount.bind(this, data.accountName)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
+        <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, width: '100%' }}>
+          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ flex: 1 }}>
+              <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)' }}>{data.accountName}</Text>
+              <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)' }}>{data.permissions}</Text>
+            </View>
+          </View>
+          {this.state.extendedState.address && this.state.extendedState.address === data.accountName && <FastImage source={require('resources/images/circle_check_android.png')} style={{ height: 24, width: 24, position: 'absolute', right: 16 }} />}
+        </View>
+      </TouchableNativeFeedback>
+    )
+  }
+
+  render() {
+    return (
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <RecyclerListView
+          layoutProvider={this.layoutProvider}
+          dataProvider={this.state.dataProvider}
+          rowRenderer={this.renderItem}
+          renderAheadOffset={60 * 10}
+          extendedState={this.state.extendedState}
+        />
       </View>
     )
   }

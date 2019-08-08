@@ -236,12 +236,12 @@ export default class Wallet extends Component {
   }
 
   onRefresh = () => {
-
+    this.props.actions.getBalance.refresh(this.props.activeWallet)
   }
 
   rowRenderer = (type, data) => {
     return (
-      <TouchableNativeFeedback onPress={this.toAsset.bind(this, data.symbol, data.isToken ? { symbol: data.symbol, contract: data.contract, name: data.name } : null)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
+      <TouchableNativeFeedback onPress={this.toAsset.bind(this, data.symbol, data.isToken ? { chain: data.chain, symbol: data.symbol, contract: data.contract, name: data.name } : null)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
         <View style={{ width: '100%', height: 60, paddingLeft: 16, paddingRight: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
             {!!data.chain && !data.isToken && <FastImage source={assetIcons[data.chain.toLowerCase()]} style={{ width: 40, height: 40, marginRight: 16, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}/>}
@@ -493,35 +493,35 @@ export default class Wallet extends Component {
             onPageSelected={this.onPageSelected}
           >
             {identityWallets.filter(wallet => !!wallet.address).concat(importedWallets).map((wallet) => {
-            const totalAsset = (portfolio && portfolio[`${wallet.chain}/${wallet.address}`]) ? intl.formatNumber(portfolio[`${wallet.chain}/${wallet.address}`].totalAsset * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'
+               const totalAsset = (portfolio && portfolio[`${wallet.chain}/${wallet.address}`]) ? intl.formatNumber(portfolio[`${wallet.chain}/${wallet.address}`].totalAsset * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'
 
-            return (
-            <View key={wallet.id} style={{ backgroundColor: '#673AB7', width: '100%', height: 176, borderRadius: 4, elevation: 3, overflow: 'hidden' }}>
-              <Image
-                source={require('resources/images/card_bg_android.png')}
-                style={{
-                      width: '100%',
-                      height: '100%'
-                      }}
-                resizeMethod="resize"
-              />
-              {/* <View style={{ width: 400, height: 400, borderRadius: 200, position: 'absolute', left: 89, top: -288, backgroundColor: 'rgba(0,0,0,0.1)' }} />
-              <View style={{ width: 400, height: 400, borderRadius: 200, position: 'absolute', left: 210, top: 41, backgroundColor: 'rgba(0,0,0,0.1)' }} /> */}
-              <View style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
-                <View style={{ position: 'absolute', top: 12, left: 12, right: 32, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Image
-                      source={walletIcons[wallet.chain.toLowerCase()]}
-                      style={{
-                            width: 40,
-                            height: 40,
-                            borderRadius: 4,
-                            borderWidth: 0,
-                            borderColor: 'rgba(0,0,0,0.2)',
-                            backgroundColor: 'white',
-                            marginRight: 10
-                            }}
-                      resizeMethod="resize"
+               return (
+                 <View key={wallet.id} style={{ backgroundColor: '#673AB7', width: '100%', height: 176, borderRadius: 4, elevation: 3, overflow: 'hidden' }}>
+                   <Image
+                     source={require('resources/images/card_bg_android.png')}
+                     style={{
+                       width: '100%',
+                       height: '100%'
+                     }}
+                     resizeMethod="resize"
+                   />
+                   {/* <View style={{ width: 400, height: 400, borderRadius: 200, position: 'absolute', left: 89, top: -288, backgroundColor: 'rgba(0,0,0,0.1)' }} />
+                       <View style={{ width: 400, height: 400, borderRadius: 200, position: 'absolute', left: 210, top: 41, backgroundColor: 'rgba(0,0,0,0.1)' }} /> */}
+                   <View style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
+                     <View style={{ position: 'absolute', top: 12, left: 12, right: 32, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                         <Image
+                           source={walletIcons[wallet.chain.toLowerCase()]}
+                           style={{
+                             width: 40,
+                             height: 40,
+                             borderRadius: 4,
+                             borderWidth: 0,
+                             borderColor: 'rgba(0,0,0,0.2)',
+                             backgroundColor: 'white',
+                             marginRight: 10
+                           }}
+                           resizeMethod="resize"
                          />
                          <View>
                            <Text style={{ fontSize: 17, color: 'white' }}>{wallet.name}</Text>
@@ -547,42 +547,42 @@ export default class Wallet extends Component {
                            />
                          </View>
                        </TouchableNativeFeedback>
-                </View>
-                {wallet.chain === 'EOS' &&
-                 <View style={{ position: 'absolute', right: 44, left: 12, bottom: 16, flex: 1, alignItems: 'flex-end', justifyContent: 'center', flexDirection: 'row' }}>
-                   <View style={{ flex: 1, alignItems: 'flex-start' }}>
-                     <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                       <Text style={{ color: 'white', fontSize: 20, marginRight: 1, marginBottom: 1, marginTop: 1 }}>{currency.sign}</Text>
-                       <Text style={{ color: 'white', fontSize: 24 }}>{`${totalAsset.split('.')[0]}.`}</Text>
-                       <Text style={{ color: 'white', fontSize: 20, marginBottom: 1, marginTop: 1 }}>{totalAsset.split('.')[1]}</Text>
                      </View>
-                     <Text style={{ color: 'white', fontSize: 15, marginTop: 8 }}>总资产</Text>
-                   </View>
-                   <View style={{ alignItems: 'flex-end', height: 74, width: 110, justifyContent: 'space-between' }}>
-                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'space-between', width: '100%' }}>
-                       <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: 15 }}>CPU</Text>
-                       <Text style={{ color: 'white', fontSize: 15 }}>{(resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatCycleTime(resources[`${wallet.chain}/${wallet.address}`].CPU) : '--'}</Text>
-                     </View>
-                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'space-between', width: '100%' }}>
-                       <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: 15 }}>NET</Text>
+                     {wallet.chain === 'EOS' &&
+                      <View style={{ position: 'absolute', right: 44, left: 12, bottom: 16, flex: 1, alignItems: 'flex-end', justifyContent: 'center', flexDirection: 'row' }}>
+                        <View style={{ flex: 1, alignItems: 'flex-start' }}>
+                          <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                            <Text style={{ color: 'white', fontSize: 20, marginRight: 1, marginBottom: 1, marginTop: 1 }}>{currency.sign}</Text>
+                            <Text style={{ color: 'white', fontSize: 24 }}>{`${totalAsset.split('.')[0]}.`}</Text>
+                            <Text style={{ color: 'white', fontSize: 20, marginBottom: 1, marginTop: 1 }}>{totalAsset.split('.')[1]}</Text>
+                          </View>
+                          <Text style={{ color: 'white', fontSize: 15, marginTop: 8 }}>总资产</Text>
+                        </View>
+                        <View style={{ alignItems: 'flex-end', height: 74, width: 110, justifyContent: 'space-between' }}>
+                          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'space-between', width: '100%' }}>
+                            <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: 15 }}>CPU</Text>
+                            <Text style={{ color: 'white', fontSize: 15 }}>{(resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatCycleTime(resources[`${wallet.chain}/${wallet.address}`].CPU) : '--'}</Text>
+                          </View>
+                          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'space-between', width: '100%' }}>
+                            <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: 15 }}>NET</Text>
 
-                       <Text style={{ color: 'white', fontSize: 15 }}>{(resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatMemorySize(resources[`${wallet.chain}/${wallet.address}`].NET) : '--'}</Text>
-                     </View>
-                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'space-between', width: '100%' }}>
-                       <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: 15 }}>RAM</Text>
-                       <Text style={{ color: 'white', fontSize: 15 }}>{(resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatMemorySize(resources[`${wallet.chain}/${wallet.address}`].RAM) : '--'}</Text>
-                     </View>
-                   </View>
-                 </View>}
+                            <Text style={{ color: 'white', fontSize: 15 }}>{(resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatMemorySize(resources[`${wallet.chain}/${wallet.address}`].NET) : '--'}</Text>
+                          </View>
+                          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'space-between', width: '100%' }}>
+                            <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: 15 }}>RAM</Text>
+                            <Text style={{ color: 'white', fontSize: 15 }}>{(resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatMemorySize(resources[`${wallet.chain}/${wallet.address}`].RAM) : '--'}</Text>
+                          </View>
+                        </View>
+                      </View>}
                      {wallet.chain !== 'EOS' && <View style={{ position: 'absolute', right: 44, left: 12, bottom: 12, flex: 1, alignItems: 'flex-end', justifyContent: 'center', flexDirection: 'row' }}>
-                       <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                         <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-                           <Text style={{ color: 'white', fontSize: 20, marginRight: 2, marginBottom: 1, marginTop: 2 }}>{currency.sign}</Text>
-                           <Text style={{ color: 'white', fontSize: 26 }}>{`${totalAsset.split('.')[0]}.`}</Text>
-                           <Text style={{ color: 'white', fontSize: 22, marginBottom: 1, marginTop: 1 }}>{totalAsset.split('.')[1]}</Text>
-                         </View>
-                         <Text style={{ color: 'white', fontSize: 15, marginTop: 4 }}>总资产</Text>
-                       </View>
+                        <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                          <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                            <Text style={{ color: 'white', fontSize: 20, marginRight: 2, marginBottom: 1, marginTop: 2 }}>{currency.sign}</Text>
+                            <Text style={{ color: 'white', fontSize: 26 }}>{`${totalAsset.split('.')[0]}.`}</Text>
+                            <Text style={{ color: 'white', fontSize: 22, marginBottom: 1, marginTop: 1 }}>{totalAsset.split('.')[1]}</Text>
+                          </View>
+                          <Text style={{ color: 'white', fontSize: 15, marginTop: 4 }}>总资产</Text>
+                        </View>
                      </View>}
                    </View>
                  </View>
@@ -605,7 +605,7 @@ export default class Wallet extends Component {
             dataProvider={this.state.dataProvider}
             rowRenderer={this.rowRenderer}
             renderAheadOffset={60 * 10}
-            scrollViewProps={{ refreshControl: <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} /> }}
+            scrollViewProps={{ refreshControl: <RefreshControl refreshing={getBalanceRefreshing} onRefresh={this.onRefresh} /> }}
           />
         </View>
         <Modal

@@ -96,7 +96,7 @@ export default class SwitchBTCAddress extends Component {
 
   renderItem = (type, data) => {
     return (
-      <TouchableNativeFeedback onPress={this.selectBTCAddress.bind(this, data.address)} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.3)', false)} useForeground={true}>
+      <TouchableNativeFeedback onPress={this.selectBTCAddress.bind(this, data.address)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
         <View style={{ paddingHorizontal: 16, height: 72, alignItems: 'center', flexDirection: 'row', borderBottomWidth: 1, borderColor: 'rgba(0,0,0,0.12)' }}>
           <View>
             <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)' }}>{data.address}</Text>

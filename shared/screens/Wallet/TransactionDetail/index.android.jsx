@@ -11,21 +11,10 @@ import { injectIntl } from 'react-intl'
 import { activeWalletSelector, transferWalletSelector } from 'selectors/wallet'
 import { transferAssetSelector } from 'selectors/asset'
 import { transferWalletTransactionSelector } from 'selectors/transaction'
-import Sound from 'react-native-sound'
 import * as transactionActions from 'actions/transaction'
 import styles from './styles'
 
 const { Section, Item } = TableView
-
-Sound.setCategory('Playback')
-const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
-  if (error) {
-    console.log('failed to load the sound', error)
-    return
-  }
-
-  console.log(`duration in seconds: ${copySound.getDuration()}number of channels: ${copySound.getNumberOfChannels()}`)
-})
 
 @injectIntl
 
@@ -85,21 +74,9 @@ export default class TransactionDetail extends Component {
   }
 
   copy = (text) => {
-    this.setState({ showModal: true, showModalContent: true }, () => {
-      Clipboard.setString(text)
-      copySound.play((success) => {
-        if (success) {
-          console.log('successfully finished playing')
-        } else {
-          console.log('playback failed due to audio decoding errors')
-          copySound.reset()
-        }
-      })
-
+    this.setState({ showModal: true }, () => {
       setTimeout(() => {
-        this.setState({ showModal: false }, () => {
-          this.setState({ showModalContent: false })
-        })
+        this.setState({ showModal: false })
       }, 1000)
     })
   }
@@ -265,7 +242,7 @@ export default class TransactionDetail extends Component {
               animationOutTiming={200}
               backdropTransitionOutTiming={200}
             >
-              {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              {this.state.showModal && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
                   <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已复制</Text>
                 </View>

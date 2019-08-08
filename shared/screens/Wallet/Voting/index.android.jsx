@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
-import { View, Text, ScrollView, Dimensions, LayoutAnimation, TouchableHighlight, ActivityIndicator, Alert } from 'react-native'
+import { View, Text, ScrollView, Dimensions, LayoutAnimation, TouchableHighlight, ActivityIndicator, Alert, UIManager, TouchableNativeFeedback, TextInput, Keyboard } from 'react-native'
 import { Navigation } from 'react-native-navigation'
-import TableView from 'react-native-tableview'
 import FastImage from 'react-native-fast-image'
 import * as transactionActions from 'actions/transaction'
 import * as producerActions from 'actions/producer'
@@ -17,7 +16,11 @@ import {
   producerIdsSelector
 } from 'selectors/producer'
 import Modal from 'react-native-modal'
-import styles from './styles'
+import Loading from 'components/Loading'
+import IndicatorModal from 'components/Modal/IndicatorModal'
+import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview'
+
+const dataProvider = new DataProvider((r1, r2) => r1.key !== r2.key || r1.selected !== r2.selected)
 
 export const errorMessages = (error, messages) => {
   if (!error) { return null }
@@ -67,43 +70,67 @@ export default class Voting extends Component {
     return {
       topBar: {
         title: {
-          text: 'EOS节点投票'
-        },
-        subtitle: {
-          text: '0 / 30 已选'
+          text: '0/30 已选节点'
         },
         drawBehind: false,
-        searchBar: true,
-        searchBarHiddenWhenScrolling: true,
-        searchBarPlaceholder: 'Search',
-        hideNavBarOnFocusSearchBar: false,
-        largeTitle: {
-          visible: false
-        },
         leftButtons: [
           {
             id: 'cancel',
-            text: '取消'
+            icon: require('resources/images/cancel_android.png'),
+            color: 'white'
           }
         ],
         rightButtons: [
           {
             id: 'vote',
-            text: '投票',
-            fontWeight: '400',
+            icon: require('resources/images/check_android.png'),
             enabled: false
           }
         ]
-      },
-      bottomTabs: {
-        visible: false
       }
+    }
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { producer, selectedIds } = nextProps
+
+    const producerList = producer.map(item => ({
+      key: item.owner,
+      logo: item.info && item.info.org && item.info.org.branding && item.info.org.branding.logo,
+      owner: item.owner,
+      selected: selectedIds && selectedIds.indexOf(item.owner) !== -1,
+      teamName: item.info && item.info.org && item.info.org.name,
+      max_supply: item.max_supply,
+      rank_url: item.rank_url,
+      itemInfo: item
+    }))
+
+    if (producerList) {
+      return { dataProvider: dataProvider.cloneWithRows(producerList) }
+    } else {
+      return null
     }
   }
 
   subscription = Navigation.events().bindComponent(this)
 
-  state = { selected: 0, searching: false }
+  state = {
+    selected: 0,
+    searching: false,
+    dataProvider: dataProvider.cloneWithRows([]),
+    showPrompt: false,
+    password: ''
+  }
+
+  layoutProvider = new LayoutProvider(
+    index => {
+      return 0
+    },
+    (type, dim) => {
+      dim.width = Dimensions.get('window').width
+      dim.height = 60
+    }
+  )
 
   tableViewRef = React.createRef()
 
@@ -114,28 +141,8 @@ export default class Voting extends Component {
     if (buttonId === 'cancel') {
       Navigation.dismissModal(this.props.componentId)
     } else if (buttonId === 'vote') {
-      Alert.prompt(
-        intl.formatMessage({ id: 'alert_input_wallet_password' }),
-        null,
-        [
-          {
-            text: intl.formatMessage({ id: 'alert_button_cancel' }),
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel'
-          },
-          {
-            text: intl.formatMessage({ id: 'alert_button_confirm' }),
-            onPress: password => this.props.actions.vote.requested({
-              chain: this.props.wallet.chain,
-              id: this.props.wallet.id,
-              accountName: this.props.wallet.address,
-              producers: this.props.selectedIds,
-              password
-            })
-          }
-        ],
-        'secure-text'
-      )
+      Keyboard.dismiss()
+      this.requestPassword()
     }
   }
 
@@ -177,9 +184,9 @@ export default class Voting extends Component {
 
     if (index !== -1) {
       if (index < 21) {
-        this.tableViewRef.scrollToIndex({ index, section: 0, animated: true })
+        this.tableViewRef.scrollToOffset(0, index * 60, true)
       } else {
-        this.tableViewRef.scrollToIndex({ index: index - 21, section: 1, animated: true })
+        this.tableViewRef.scrollToOffset(0, index * 60, true)
       }
     }
   }
@@ -188,14 +195,13 @@ export default class Voting extends Component {
     if (this.props.selectedIds && prevProps.selectedIds.length !== this.props.selectedIds.length) {
       Navigation.mergeOptions(this.props.componentId, {
         topBar: {
-          subtitle: {
-            text: `${this.props.selectedIds.length} / 30 已选`
+          title: {
+            text: `${this.props.selectedIds.length}/30 已选节点`
           },
           rightButtons: [
             {
               id: 'vote',
-              text: '投票',
-              fontWeight: '400',
+              icon: require('resources/images/check_android.png'),
               enabled: !!this.props.selectedIds.length
             }
           ]
@@ -203,6 +209,7 @@ export default class Voting extends Component {
       })
 
       if (prevProps.selectedIds.length < this.props.selectedIds.length && this.props.selectedIds.length > 4) {
+        console.log('scrollTo')
         this.scrollView.scrollTo({ x: (Dimensions.get('window').width / 4) * this.props.selectedIds.length - Dimensions.get('window').width, animated: true })
       }
     }
@@ -212,14 +219,13 @@ export default class Voting extends Component {
   componentDidAppear() {
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
-        subtitle: {
-          text: `${this.props.selectedIds.length} / 30 已选`
+        title: {
+          text: `${this.props.selectedIds.length}/30 已选节点`
         },
         rightButtons: [
           {
             id: 'vote',
-            text: '投票',
-            fontWeight: '400',
+            icon: require('resources/images/check_android.png'),
             enabled: !!this.props.selectedIds.length
           }
         ]
@@ -229,6 +235,7 @@ export default class Voting extends Component {
 
   componentDidMount() {
     this.props.actions.getProducer.requested({ json: true, limit: 500 })
+    // UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true)
   }
 
   componentWillUnmount() {
@@ -271,123 +278,158 @@ export default class Voting extends Component {
     })
   }
 
+  renderItem = (type, data) => {
+    return (
+      <TouchableNativeFeedback onPress={this.onPress.bind(this, data.owner)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
+        <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 4 }}>
+          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+            {data.selected && <FastImage source={require('resources/images/circle_check_android.png')} style={{ width: 24, height: 24, marginRight: 10 }} />}
+            {!data.selected && <FastImage source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, marginRight: 10 }} />}
+            <View style={{ width: 40, height: 40, marginRight: 10 }}>
+              {!data.logo && <FastImage source={require('resources/images/producer.png')} style={{ width: 40, height: 40, marginRight: 10, borderRadius: 40, position: 'absolute', top: 0, left: 0 }} />}
+              {data.logo && <FastImage source={{ uri: `https://storage.googleapis.com/bitportal-cms/bp/${data.logo}` }} style={{ width: 40, height: 40, marginRight: 10, borderRadius: 40, position: 'absolute', top: 0, left: 0, borderWidth: 1, borderColor: '#C8C7CE' }} />}
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)' }} numberOfLines={1} ellipsizeMode="tail">{data.teamName || data.owner}</Text>
+              <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)' }} numberOfLines={1} ellipsizeMode="tail">@{data.owner}</Text>
+            </View>
+          </View>
+          <TouchableNativeFeedback onPress={this.onAccessoryPress.bind(this, data.itemInfo)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
+            <View style={{ width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center' }}>
+              <FastImage
+                source={require('resources/images/more_android.png')}
+                style={{ width: 24, height: 24, borderRadius: 12 }}
+              />
+            </View>
+          </TouchableNativeFeedback>
+        </View>
+      </TouchableNativeFeedback>
+    )
+  }
+
+  requestPassword = () => {
+    this.setState({ showPrompt: true, password: '' })
+  }
+
+  changePassword = (text) => {
+    this.setState({ password: text })
+  }
+
+  clearPassword = () => {
+    this.setState({ password: '', showPrompt: false })
+  }
+
+  submitPassword = () => {
+    this.setState({ showPrompt: false })
+
+    this.props.actions.vote.requested({
+      chain: this.props.wallet.chain,
+      id: this.props.wallet.id,
+      accountName: this.props.wallet.address,
+      producers: this.props.selectedIds,
+      password: this.state.password
+    })
+  }
+
   render() {
     const { producer, selectedIds, selected, vote, getProducer, statusBarHeight } = this.props
     const loading = vote.loading
 
-    if (!getProducer.loaded && getProducer.loading) {
-      return (
-        <View style={styles.container}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-            <ActivityIndicator size="small" color="#000000" />
-            <Text style={{ fontSize: 17, marginLeft: 5 }}>获取节点中...</Text>
-          </View>
-        </View>
-      )
-    }
+    /* if (!getProducer.loaded && getProducer.loading) {
+     *   return (
+     *     <Loading text="获取节点中..." />
+     *   )
+     * }*/
 
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
-        <View style={{ width: '100%', height: selectedIds.length ? 80 : 0 }}>
+        <View style={{ width: '100%', height: selectedIds.length ? 80 : 0, backgroundColor: '#EEEEEE' }}>
           <ScrollView
             style={{ height: selectedIds.length ? 80 : 0 }}
             horizontal
             showsHorizontalScrollIndicator={false}
             ref={(ref) => { this.scrollView = ref; return null }}
           >
-            {selected.map(item => <TouchableHighlight key={item.owner} underlayColor="rgba(0,0,0,0)" onPress={this.onSelectedPress.bind(this, item.owner)} style={{ height: 66, width: Dimensions.get('window').width / 4, backgroundColor: 'white', marginTop: 7, flex: 1, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column' }}>
-              <View style={{ height: '100%', width: '100%', flex: 1, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column' }}>
-                <View style={{ width: 40, height: 40 }}>
-                  <FastImage
-                    source={require('resources/images/producer.png')}
-                    style={{ width: 40, height: 40, position: 'absolute', top: 0, left: 0 }}
-                  />
-                  {item.info && item.info.org && item.info.org.branding && item.info.org.branding.logo && <FastImage source={{ uri: `https://storage.googleapis.com/bitportal-cms/bp/${item.info && item.info.org && item.info.org.branding && item.info.org.branding.logo}` }} style={{ width: 40, height: 40, position: 'absolute', top: 0, left: 0, borderRadius: 20, borderWidth: 1, borderColor: '#C8C7CE', backgroundColor: 'white' }} />}
-                </View>
-                <Text style={{ color: 'black', fontSize: 11 }}>{item.owner}</Text>
-                <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ position: 'absolute', top: -2, right: 22, width: 20, height: 20, borderRadius: 10, padding: 2 }} activeOpacity={0.42} onPress={this.onPress.bind(this, item.owner)}>
-                  <View style={{ backgroundColor: 'white', width: 16, height: 16, borderRadius: 8, padding: 1 }}>
+            {selected.map(item => <TouchableNativeFeedback key={item.owner} onPress={this.onSelectedPress.bind(this, item.owner)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
+              <View style={{ height: '100%', paddingVertical: 7, width: Dimensions.get('window').width / 4, backgroundColor: '#EEEEEE', flex: 1, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column' }}>
+                <View style={{ height: '100%', width: '100%', flex: 1, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column' }}>
+                  <View style={{ width: 40, height: 40 }}>
                     <FastImage
-                      source={require('resources/images/clear.png')}
-                      style={{ width: 14, height: 14 }}
+                      source={require('resources/images/producer.png')}
+                      style={{ width: 40, height: 40, position: 'absolute', top: 0, left: 0 }}
                     />
+                    {item.info && item.info.org && item.info.org.branding && item.info.org.branding.logo && <FastImage source={{ uri: `https://storage.googleapis.com/bitportal-cms/bp/${item.info && item.info.org && item.info.org.branding && item.info.org.branding.logo}` }} style={{ width: 40, height: 40, position: 'absolute', top: 0, left: 0, borderRadius: 20, borderWidth: 1, borderColor: '#C8C7CE', backgroundColor: 'white' }} />}
                   </View>
-                </TouchableHighlight>
+                  <Text style={{ color: 'rgba(0,0,0,0.87)', fontSize: 11 }}>{item.owner}</Text>
+                  <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ position: 'absolute', top: -2, right: 22, width: 20, height: 20, borderRadius: 10, padding: 2 }} activeOpacity={0.42} onPress={this.onPress.bind(this, item.owner)}>
+                    <View style={{ backgroundColor: 'white', width: 16, height: 16, borderRadius: 8, padding: 1 }}>
+                      <FastImage
+                        source={require('resources/images/clear_grey_android.png')}
+                        style={{ width: 14, height: 14 }}
+                      />
+                    </View>
+                  </TouchableHighlight>
+                </View>
               </View>
-            </TouchableHighlight>
+            </TouchableNativeFeedback>
              )}
           </ScrollView>
         </View>
-        <TableView
-          style={{ flex: 1 }}
-          tableViewCellStyle={TableView.Consts.CellStyle.Default}
-          detailTextColor="#666666"
-          canRefresh
-          showsVerticalScrollIndicator={false}
-          cellSeparatorInset={{ left: 46 }}
-          reactModuleForCell="ProducerTableViewCell"
-          headerBackgroundColor="#F7F7F7"
-          ref={(ref) => { this.tableViewRef = ref; return null }}
-        >
-          <TableView.Section label="当前出块节点">
-            {producer.slice(0, 21).map(item => (
-               <TableView.Item
-                 key={item.owner}
-                 height={60}
-                 selectionStyle={TableView.Consts.CellSelectionStyle.None}
-                 logo={item.info && item.info.org && item.info.org.branding && item.info.org.branding.logo}
-                 owner={item.owner}
-                 selected={item.selected}
-                 selectedAccessoryImage={require('resources/images/circle_selected_accessory.png')}
-                 leftAccessoryImage={true}
-                 cellHeight={60}
-                 teamName={item.info && item.info.org && item.info.org.name}
-                 max_supply={item.max_supply}
-                 rank_url={item.rank_url}
-                 onPress={this.onPress.bind(this, item.owner)}
-                 accessoryType={TableView.Consts.AccessoryType.DetailButton}
-                 onAccessoryPress={this.onAccessoryPress.bind(this, item)}
-               />
-             ))}
-          </TableView.Section>
-          <TableView.Section label="备选节点">
-            {producer.slice(21, -1).map(item => (
-               <TableView.Item
-                 key={item.owner}
-                 height={60}
-                 selectionStyle={TableView.Consts.CellSelectionStyle.None}
-                 logo={item.info && item.info.org && item.info.org.branding && item.info.org.branding.logo}
-                 owner={item.owner}
-                 selected={item.selected}
-                 selectedAccessoryImage={require('resources/images/circle_selected_accessory.png')}
-                 leftAccessoryImage={true}
-                 cellHeight={60}
-                 teamName={item.info && item.info.org && item.info.org.name}
-                 max_supply={item.max_supply}
-                 rank_url={item.rank_url}
-                 onPress={this.onPress.bind(this, item.owner)}
-                 accessoryType={TableView.Consts.AccessoryType.DetailButton}
-                 onAccessoryPress={this.onAccessoryPress.bind(this, item)}
-               />
-             ))}
-          </TableView.Section>
-        </TableView>
+        <RecyclerListView
+          ref={(ref) => { this.tableViewRef = ref }}
+          layoutProvider={this.layoutProvider}
+          dataProvider={this.state.dataProvider}
+          rowRenderer={this.renderItem}
+          renderAheadOffset={60 * 10}
+        />
+
+        <IndicatorModal isVisible={loading} message="投票中..." onModalHide={this.onModalHide} />
         <Modal
-          isVisible={loading}
-          backdropOpacity={0.4}
+          isVisible={this.state.showPrompt}
+          backdropOpacity={0.6}
           useNativeDriver
           animationIn="fadeIn"
-          animationInTiming={200}
-          backdropTransitionInTiming={200}
+          animationInTiming={500}
+          backdropTransitionInTiming={500}
           animationOut="fadeOut"
-          animationOutTiming={200}
-          backdropTransitionOutTiming={200}
-          onModalHide={this.onModalHide}
+          animationOutTiming={500}
+          backdropTransitionOutTiming={500}
         >
-          {loading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
-              <ActivityIndicator size="small" color="#000000" />
-              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>投票中...</Text>
+          {(this.state.showPrompt) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 6 }}>
+            <View style={{ backgroundColor: 'white', paddingTop: 14, paddingBottom: 11, paddingHorizontal: 24, borderRadius: 2, alignItem: 'center', justifyContent: 'space-between', elevation: 14, width: '100%' }}>
+              <View style={{ marginBottom: 30 }}>
+                <Text style={{ fontSize: 20, color: 'black', marginBottom: 12 }}>请输入密码</Text>
+                {/* <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.54)', marginBottom: 12 }}>This is a prompt</Text> */}
+                <TextInput
+                  style={{
+                    fontSize: 16,
+                    padding: 0,
+                    width: '100%',
+                    borderBottomWidth: 2,
+                    borderColor: '#169689'
+                  }}
+                  autoFocus={true}
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  placeholder="Password"
+                  keyboardType="default"
+                  secureTextEntry={true}
+                  onChangeText={this.changePassword}
+                  onSubmitEditing={this.submitPassword}
+                />
+              </View>
+              <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+                <TouchableNativeFeedback onPress={this.clearPassword} background={TouchableNativeFeedback.SelectableBackground()}>
+                  <View style={{ padding: 10, borderRadius: 2, marginRight: 8 }}>
+                    <Text style={{ color: '#169689', fontSize: 14 }}>取消</Text>
+                  </View>
+                </TouchableNativeFeedback>
+                <TouchableNativeFeedback onPress={this.submitPassword} background={TouchableNativeFeedback.SelectableBackground()}>
+                  <View style={{ padding: 10, borderRadius: 2 }}>
+                    <Text style={{ color: '#169689', fontSize: 14 }}>确定</Text>
+                  </View>
+                </TouchableNativeFeedback>
+              </View>
             </View>
           </View>}
         </Modal>
