@@ -328,7 +328,7 @@ export const startTabBasedApp = (locale) => {
               ],
               options: {
                 bottomTab: {
-                  text: '应用',
+                  text: messages[locale].tab_bar_title_discovery,
                   textColor: '#9D9D9D',
                   iconColor: '#9D9D9D',
                   selectedTextColor: '#007AFF',
@@ -434,17 +434,17 @@ export const setBottomTabsLocale = (locale) => {
     }
   })
 
-  // Navigation.mergeOptions('BitPortal.Discovery', {
-  //   bottomTab: {
-  //     text: messages[locale].general_nav_discovery,
-  //     textColor: '#9D9D9D',
-  //     selectedTextColor: '#007AFF',
-  //     icon: Images.discovery,
-  //     selectedIcon: Images.discovery_press,
-  //     selectedIconColor: '#007AFF',
-  //     testID: 'BITPORTAL_DISCOVERY'
-  //   }
-  // })
+  Navigation.mergeOptions('BitPortal.Discovery', {
+    bottomTab: {
+      text: messages[locale].general_nav_discovery,
+      textColor: '#9D9D9D',
+      selectedTextColor: '#007AFF',
+      icon: Images.discovery,
+      selectedIcon: Images.discovery_press,
+      selectedIconColor: '#007AFF',
+      testID: 'BITPORTAL_DISCOVERY'
+    }
+  })
 
   Navigation.mergeOptions('BitPortal.Profile', {
     topBar: {
