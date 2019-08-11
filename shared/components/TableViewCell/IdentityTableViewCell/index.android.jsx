@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableHighlight, TouchableNativeFeedback } from 'react-native'
+import { View, Text, TouchableHighlight, TouchableNativeFeedback, Image } from 'react-native'
 import { Navigation } from 'react-native-navigation'
-import FastImage from 'react-native-fast-image'
 
 const images = {
   home: {
@@ -36,7 +35,7 @@ export default class IdentityTableViewCell extends Component {
       <TouchableNativeFeedback onPress={this.props.onPress} background={TouchableNativeFeedback.SelectableBackground()}>
         <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 2, height: 48, backgroundColor: this.props.data.active ? '#EEEEEE' : 'rgba(0,0,0,0)' }}>
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-            <FastImage
+            <Image
               source={images[this.props.data.type][this.props.data.active ? 'active' : 'normal']}
               style={{ width: 24, height: 24, marginRight: 32, opacity: this.props.data.active ? 1 : 0.54 }}
             />

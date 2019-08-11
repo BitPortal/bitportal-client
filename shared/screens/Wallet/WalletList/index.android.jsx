@@ -196,7 +196,7 @@ export default class WalletList extends Component {
               </View>
               {!this.props.syncingEOSAccount &&
                <View style={{ position: 'absolute', right: 4, width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center' }}>
-                 <FastImage
+                 <Image
                    source={require('resources/images/arrow_right_android.png')}
                    style={{ width: 24, height: 24, borderRadius: 12 }}
                  />
@@ -239,7 +239,7 @@ export default class WalletList extends Component {
             <View style={{ position: 'absolute', right: 4, height: 36, width: 36, borderRadius: 18, overflow: 'hidden', alignItems: 'center', justifyContent: 'center' }}>
               <TouchableNativeFeedback onPress={this.toManageWallet.bind(this, item.id)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
                 <View style={{ width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center' }}>
-                  <FastImage
+                  <Image
                     source={require('resources/images/more_android.png')}
                     style={{ width: 24, height: 24, borderRadius: 12 }}
                   />
@@ -308,7 +308,7 @@ export default class WalletList extends Component {
         />
         <TouchableNativeFeedback onPress={this.onAddPress} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', true)} useForeground={true}>
           <View style={{ width: 56, height: 56, borderRadius: 28, alignItems: 'center', justifyContent: 'center', position: 'absolute', bottom: 16, right: 16, backgroundColor: '#FF5722', elevation: 10 }}>
-            <FastImage
+            <Image
               source={require('resources/images/add_white_android.png')}
               style={{ width: 24, height: 24 }}
             />

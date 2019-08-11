@@ -8,6 +8,11 @@ import Wallet from 'screens/Wallet'
 import Asset from 'screens/Wallet/Asset'
 import Market from 'screens/Market'
 import Profile from 'screens/Profile'
+import Settings from 'screens/Profile/Settings'
+import LanguageSetting from 'screens/Profile/LanguageSetting'
+import CurrencySetting from 'screens/Profile/CurrencySetting'
+import Contacts from 'screens/Profile/Contacts'
+import EditContact from 'screens/Profile/EditContact'
 import AddIdentity from 'screens/Wallet/AddIdentity'
 import RecoverIdentity from 'screens/Wallet/RecoverIdentity'
 import CreateIdentity from 'screens/Wallet/CreateIdentity'
@@ -30,6 +35,8 @@ import CreateEOSAccount from 'screens/Wallet/CreateEOSAccount'
 import SwitchEOSAccount from 'screens/Wallet/SwitchEOSAccount'
 import Voting from 'screens/Wallet/Voting'
 import ProducerDetail from 'screens/Wallet/ProducerDetail'
+import ReceiveAsset from 'screens/Wallet/ReceiveAsset'
+import TransactionDetail from 'screens/Wallet/TransactionDetail'
 
 import Images from 'resources/images'
 import messages from 'resources/messages'
@@ -44,6 +51,11 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.ImportETHWallet', () => ImportETHWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ImportEOSWallet', () => ImportEOSWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Profile', () => Profile, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Settings', () => Settings, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.LanguageSetting', () => LanguageSetting, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.CurrencySetting', () => CurrencySetting, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Contacts', () => Contacts, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.EditContact', () => EditContact, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.AddIdentity', () => AddIdentity, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.RecoverIdentity', () => RecoverIdentity, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.CreateIdentity', () => CreateIdentity, Provider, store)
@@ -62,6 +74,8 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.SwitchEOSAccount', () => SwitchEOSAccount, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Voting', () => Voting, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ProducerDetail', () => ProducerDetail, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ReceiveAsset', () => ReceiveAsset, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.TransactionDetail', () => TransactionDetail, Provider, store)
 }
 
 export const setDefaultOptions = () => {

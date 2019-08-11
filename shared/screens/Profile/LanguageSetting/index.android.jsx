@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
-// import { View } from 'react-native'
+import { View, Text, TouchableNativeFeedback, FlatList, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
-import TableView from 'react-native-tableview'
 import * as intlActions from 'actions/intl'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import messages from 'resources/messages'
-
-const { Section, Item } = TableView
 
 @injectIntl
 
@@ -26,14 +23,19 @@ const { Section, Item } = TableView
 export default class LanguageSetting extends Component {
   static get options() {
     return {
-      topBar: {
-        largeTitle: {
-          visible: false
-        }
-      },
-      bottomTabs: {
-        visible: false
-      }
+      topBar: {}
+    }
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { locale } = nextProps
+
+    return { extendedState: { locale } }
+  }
+
+  state ={
+    extendedState: {
+      locale: this.props.locale
     }
   }
 
@@ -43,38 +45,36 @@ export default class LanguageSetting extends Component {
       topBar: {
         title: {
           text: messages[locale].top_bar_title_language_setting
-        },
-        backButton: {
-          title: messages[locale].top_bar_title_profile
         }
       }
     })
+  }
+
+  renderItem = ({ item }) => {
+    return (
+      <TouchableNativeFeedback onPress={this.setLocale.bind(this, item.key)} background={TouchableNativeFeedback.SelectableBackground()}>
+        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, height: 48 }}>
+          {this.state.extendedState.locale === item.key ? <Image source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, marginRight: 30 }} /> : <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, marginRight: 30 }} />}
+          <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)' }}>{item.text}</Text>
+        </View>
+      </TouchableNativeFeedback>
+    )
   }
 
   render() {
     const { locale } = this.props
 
     return (
-      <TableView
-        style={{ flex: 1 }}
-        tableViewStyle={TableView.Consts.Style.Grouped}
-      >
-        <Section />
-        <Section>
-          <Item
-            accessoryType={locale === 'en' ? TableView.Consts.AccessoryType.Checkmark : TableView.Consts.AccessoryType.None}
-            onPress={this.setLocale.bind(this, 'en')}
-          >
-            English
-          </Item>
-          <Item
-            accessoryType={locale === 'zh' ? TableView.Consts.AccessoryType.Checkmark : TableView.Consts.AccessoryType.None}
-            onPress={this.setLocale.bind(this, 'zh')}
-          >
-            中文
-          </Item>
-        </Section>
-      </TableView>
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <FlatList
+          data={[
+            { key: 'en', text: 'English' },
+            { key: 'zh', text: '中文' }
+          ]}
+          renderItem={this.renderItem}
+          extendedState={this.state.extendedState}
+        />
+      </View>
     )
   }
 }

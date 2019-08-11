@@ -215,7 +215,6 @@ dependencies {
     implementation project(':react-native-navigation')
     implementation project(':react-native-device-info')
     implementation project(':react-native-version-number')
-    implementation project(':react-native-blur')
     implementation project(':react-native-camera')
     implementation project(':react-native-randombytes')
     implementation project(':react-native-linear-gradient')

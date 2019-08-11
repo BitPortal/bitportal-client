@@ -484,11 +484,12 @@ export class OutlinedTextField extends Component {
       secureTextEntry,
       separator,
       change,
-      nonEmpty
+      nonEmpty,
+      containerStyle
     } = this.props
 
     return (
-      <View style={{ width: '100%', height: 96, paddingLeft: 16, paddingRight: 16 }}>
+      <View style={[{ width: '100%', height: 96, paddingLeft: 16, paddingRight: 16 }, containerStyle]}>
         <View
           style={{
             borderRadius: 4,

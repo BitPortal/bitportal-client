@@ -26,49 +26,23 @@ export default class Profile extends Component {
     activeTabComponentId: 'BitPortal.Root'
   }
 
-  toLanguageSetting = () => {
-    /* Navigation.push(this.props.componentId, {
-     *   component: {
-     *     name: 'BitPortal.LanguageSetting',
-     *     options: {
-     *       topBar: {
-     *         title: {
-     *           text: this.props.intl.formatMessage({ id: 'top_bar_title_language_setting' })
-     *         }
-     *       }
-     *     }
-     *   }
-     * })*/
-  }
-
-  toCurrencySetting = () => {
-    /* Navigation.push(this.props.componentId, {
-     *   component: {
-     *     name: 'BitPortal.CurrencySetting',
-     *     options: {
-     *       topBar: {
-     *         title: {
-     *           text: this.props.intl.formatMessage({ id: 'top_bar_title_currency_setting' })
-     *         }
-     *       }
-     *     }
-     *   }
-     * })*/
-  }
-
   toContacts = () => {
-    /* Navigation.push(this.props.componentId, {
-     *   component: {
-     *     name: 'BitPortal.Contacts',
-     *     options: {
-     *       topBar: {
-     *         title: {
-     *           text: this.props.intl.formatMessage({ id: 'top_bar_title_contacts' })
-     *         }
-     *       }
-     *     }
-     *   }
-     * })*/
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.Contacts',
+            options: {
+              topBar: {
+                title: {
+                  text: this.props.intl.formatMessage({ id: 'top_bar_title_contacts' })
+                }
+              }
+            }
+          }
+        }]
+      }
+    })
   }
 
   toMyIdentity = () => {
@@ -137,41 +111,23 @@ export default class Profile extends Component {
 
   }
 
-  switchTab(type) {
-    this.setState({ activeTab: type }, () => {
-      Navigation.mergeOptions(this.props.componentId, {
-        sideMenu: {
-          left: {
-            visible: false
+  toSettings = () => {
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.Settings'
           }
-        }
-      })
+        }]
+      }
     })
+  }
 
-    let activeTabComponentId
-
-    if (type === 'home') {
-      activeTabComponentId = 'BitPortal.Root'
-    } else if (type === 'myIdentity') {
-      activeTabComponentId = 'BitPortal.MyIdentity'
-    }
-
-    if (activeTabComponentId && activeTabComponentId !== this.state.activeTabComponentId) {
-      Navigation.setStackRoot(this.state.activeTabComponentId, [{
-        component: {
-          id: activeTabComponentId,
-          name: activeTabComponentId,
-          options: {
-            animations: {
-              setStackRoot: {
-                enabled: true
-              }
-            }
-          }
-        }
-      }])
-
-      this.setState({ activeTabComponentId })
+  switchTab(type) {
+    if (type === 'settings') {
+      this.toSettings()
+    } else if (type === 'contact') {
+      this.toContacts()
     }
   }
 
@@ -232,7 +188,7 @@ export default class Profile extends Component {
         </View>
         <View style={{ paddingTop: 8 }}>
           <FlatList
-            data={[{ key: 'home', text: '主页', type: 'home', active: this.state.activeTab === 'home' }, { key: 'contact', text: '联系人', type: 'contact', active: this.state.activeTab === 'contact' }, { key: 'settings', text: '设置', type: 'settings', active: this.state.activeTab === 'settings' }, { key: 'help', text: '帮助中心', type: 'help', active: this.state.activeTab === 'help' }, { key: 'aboutUs', text: '关于我们', type: 'aboutUs', active: this.state.activeTab === 'aboutUs' }]}
+            data={[{ key: 'contact', text: '联系人', type: 'contact', active: this.state.activeTab === 'contact' }, { key: 'settings', text: '设置', type: 'settings', active: this.state.activeTab === 'settings' }, { key: 'help', text: '帮助中心', type: 'help', active: this.state.activeTab === 'help' }, { key: 'aboutUs', text: '关于我们', type: 'aboutUs', active: this.state.activeTab === 'aboutUs' }]}
             renderItem={({ item }) => <IdentityTableViewCell key={item.key} data={item} onPress={this.switchTab.bind(this, item.type)} />}
           />
         </View>

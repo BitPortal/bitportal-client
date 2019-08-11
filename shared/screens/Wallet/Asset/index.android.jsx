@@ -61,9 +61,6 @@ export default class Asset extends Component {
          *   }
          * ]*/
       },
-      bottomTabs: {
-        visible: false
-      },
       sideMenu: {
         left: {
           enabled: false
@@ -140,6 +137,15 @@ export default class Asset extends Component {
     return { dataProvider: dataProvider.cloneWithRows([{ title: loading ? '获取交易记录...' : (transactionCount ? '交易记录' : '暂无交易记录') }, ...transactionCells]) }
   }
 
+  navigationButtonPressed({ buttonId }) {
+    switch (buttonId) {
+      case 'qrcode':
+        this.toReceiveAsset()
+        break
+      default:
+    }
+  }
+
   toTransferAsset = () => {
     /* Navigation.showModal({
      *   stack: {
@@ -166,19 +172,18 @@ export default class Asset extends Component {
   }
 
   toReceiveAsset = () => {
-    /* Navigation.push(this.props.componentId, {
-     *   component: {
-     *     name: 'BitPortal.ReceiveAsset',
-     *     options: {
-     *       topBar: {
-     *         title: {
-     *           text: `接收 ${this.props.activeAsset.symbol}`
-     *         },
-     *         noBorder: this.props.activeWallet.chain === 'BITCOIN' && this.props.childAddress && this.props.activeWallet.address !== this.props.childAddress
-     *       }
-     *     }
-     *   }
-     * })*/
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.ReceiveAsset',
+        options: {
+          topBar: {
+            title: {
+              text: `接收 ${this.props.activeAsset.symbol}`
+            }
+          }
+        }
+      }
+    })
   }
 
   componentDidAppear() {
@@ -317,7 +322,7 @@ export default class Asset extends Component {
     }
 
     return (
-      <TouchableNativeFeedback onPress={() => {}} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
+      <TouchableNativeFeedback onPress={this.toTransactionDetail.bind(this, data.id, data.pending, data.failed)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
         <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 8, paddingBottom: 8 }}>
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: '100%' }}>
             <View style={{ flex: 1, height: 44, borderWidth: 0, borderColor: 'red', justifyContent: 'space-between' }}>

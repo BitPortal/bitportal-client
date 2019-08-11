@@ -83,10 +83,8 @@ import Profile from 'screens/Profile'
 import Contacts from 'screens/Profile/Contacts'
 import Contact from 'screens/Profile/Contact'
 import EditContact from 'screens/Profile/EditContact'
-import News from 'screens/News'
 import LanguageSetting from 'screens/Profile/LanguageSetting'
 import CurrencySetting from 'screens/Profile/CurrencySetting'
-import NodeSetting from 'screens/Profile/NodeSetting'
 import WebView from 'screens/WebView'
 import Camera from 'screens/Camera'
 
@@ -133,7 +131,6 @@ export const registerScreens = (store) => {
   AppRegistry.registerComponent('DappFooterTableViewCell', () => DappFooterTableViewCell)
   AppRegistry.registerComponent('DappCategoryTableViewCell', () => DappCategoryTableViewCell)
   AppRegistry.registerComponent('SmallDappTableViewCell', () => SmallDappTableViewCell)
-  AppRegistry.registerComponent('NewsTableViewCell', () => NewsTableViewCell)
 
   Navigation.registerComponentWithRedux('BitPortal.Welcome', () => Welcome, Provider, store)
 
@@ -182,10 +179,8 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.Contacts', () => Contacts, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Contact', () => Contact, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.EditContact', () => EditContact, Provider, store)
-  Navigation.registerComponentWithRedux('BitPortal.News', () => News, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.LanguageSetting', () => LanguageSetting, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.CurrencySetting', () => CurrencySetting, Provider, store)
-  Navigation.registerComponentWithRedux('BitPortal.NodeSetting', () => NodeSetting, Provider, store)
 
   Navigation.registerComponentWithRedux('BitPortal.WebView', () => WebView, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Camera', () => Camera, Provider, store)

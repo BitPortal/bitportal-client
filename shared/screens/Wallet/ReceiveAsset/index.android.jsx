@@ -16,7 +16,7 @@ import {
   Dimensions,
   Clipboard,
   ActionSheetIOS,
-  SegmentedControlIOS
+  TouchableNativeFeedback
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { activeWalletSelector } from 'selectors/wallet'
@@ -67,22 +67,11 @@ const styles = EStyleSheet.create({
 export default class ReceiveAsset extends Component {
   static get options() {
     return {
-      topBar: {
-        largeTitle: {
-          visible: false
-        },
-        backButton: {
-          title: '返回'
-        },
-        rightButtons: [
-          {
-            id: 'share',
-            icon: require('resources/images/share.png')
-          }
-        ]
-      },
-      bottomTabs: {
-        visible: false
+      topBar: {},
+      sideMenu: {
+        left: {
+          enabled: false
+        }
       }
     }
   }
@@ -91,9 +80,10 @@ export default class ReceiveAsset extends Component {
 
   state = {
     showModal: false,
-    showModalContent: false,
     amount: 0,
-    selectedIndex: 0
+    selectedIndex: 0,
+    promptAmount: '',
+    showAmountPrompt: false
   }
 
   navigationButtonPressed({ buttonId }) {
@@ -104,9 +94,9 @@ export default class ReceiveAsset extends Component {
       const contract = activeAsset.contract
       const symbol = activeAsset.symbol
 
-      ActionSheetIOS.showShareActionSheetWithOptions({
-        message: this.getAddressUri(address, this.state.amount, chain, contract, symbol)
-      }, () => {}, () => {})
+      /* ActionSheetIOS.showShareActionSheetWithOptions({
+       *   message: this.getAddressUri(address, this.state.amount, chain, contract, symbol)
+       * }, () => {}, () => {})*/
     } else if (buttonId === 'cancel') {
       Navigation.dismissAllModals()
     }
@@ -120,38 +110,39 @@ export default class ReceiveAsset extends Component {
 
   }
 
+  componentDidAppear() {
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        rightButtons: [
+          {
+            id: 'share',
+            icon: require('resources/images/share_android.png')
+          }
+        ]
+      }
+    })
+  }
+
+  componentDidDisappear() {
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        rightButtons: []
+      }
+    })
+  }
+
   copy = (address) => {
-    this.setState({ showModal: true, showModalContent: true }, () => {
+    this.setState({ showModal: true }, () => {
       Clipboard.setString(address)
 
       setTimeout(() => {
-        this.setState({ showModal: false }, () => {
-          this.setState({ showModalContent: false })
-        })
+        this.setState({ showModal: false })
       }, 1000)
     })
   }
 
   setAmount = () => {
-    const { intl } = this.props
-    Alert.prompt(
-      intl.formatMessage({ id: 'receive_alert_title_input_amount' }),
-      null,
-      [
-        {
-          text: '取消',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel'
-        },
-        {
-          text: '确认',
-          onPress: amount => this.setState({ amount })
-        }
-      ],
-      'plain-text',
-      '',
-      'numeric'
-    )
+    this.requestAmount()
   }
 
   getAddressFontSize = (address) => {
@@ -182,6 +173,22 @@ export default class ReceiveAsset extends Component {
     this.setState({ selectedIndex: e.nativeEvent.selectedSegmentIndex })
   }
 
+  requestAmount = () => {
+    this.setState({ showAmountPrompt: true, promptAmount: '' })
+  }
+
+  changeAmount = (text) => {
+    this.setState({ promptAmount: text })
+  }
+
+  cancelChangeAmount = () => {
+    this.setState({ showAmountPrompt: false })
+  }
+
+  submitAmount = () => {
+    this.setState({ showAmountPrompt: false, amount: !!+this.state.promptAmount ? +this.state.promptAmount : 0 })
+  }
+
   render() {
     const { intl, activeWallet, activeAsset, balance, childAddress, statusBarHeight } = this.props
     const symbol = activeAsset.symbol
@@ -197,51 +204,58 @@ export default class ReceiveAsset extends Component {
     return (
       <View style={[styles.container, { backgroundColor: 'white' }]}>
         {hasChildAddress && chain === 'BITCOIN' && <View style={{ height: 52, width: '100%', justifyContent: 'center', paddingTop: 5, paddingBottom: 13, paddingLeft: 16, paddingRight: 16, backgroundColor: '#F7F7F7', borderColor: '#C8C7CC', borderBottomWidth: 0.5, marginTop: statusBarHeight + 44 }}>
-          <SegmentedControlIOS
+          {/* <SegmentedControlIOS
               values={[value1, value2]}
-            selectedIndex={this.state.selectedIndex}
-            onChange={this.changeSelectedIndex}
-            style={{ width: '100%' }}
-          />
+              selectedIndex={this.state.selectedIndex}
+              onChange={this.changeSelectedIndex}
+              style={{ width: '100%' }}
+              /> */}
         </View>}
       <ScrollView
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
         <View style={{ flex: 1, width: '100%', alignItems: 'center', padding: 16 }}>
-          <Text style={{ fontSize: 17, marginBottom: 16 }}>{intl.formatMessage({ id: 'receive_hint_above_qr_code' })}{+this.state.amount > 0 ? this.state.amount : ''} {symbol}</Text>
+          <Text style={{ fontSize: 16, marginBottom: 16, color: 'rgba(0,0,0,0.87)' }}>{intl.formatMessage({ id: 'receive_hint_above_qr_code' })}{+this.state.amount > 0 ? this.state.amount : ''} {symbol}</Text>
           <QRCode
             value={addressUri}
             size={200}
           />
-          <Text style={{ fontSize: this.getAddressFontSize(!this.state.selectedIndex ? address : childAddress), marginTop: 16, marginBottom: 16, textAlign: 'center' }}>
+          <Text style={{ fontSize: this.getAddressFontSize(!this.state.selectedIndex ? address : childAddress), marginTop: 16, marginBottom: 16, textAlign: 'center', color: 'rgba(0,0,0,0.87)' }}>
             {!this.state.selectedIndex ? address : childAddress}
           </Text>
-          <TouchableOpacity
-            underlayColor="#007AFF"
-            activeOpacity={0.8}
-            style={{
-              width: '100%',
-              height: 50,
-              backgroundColor: '#007AFF',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: 10
-            }}
-            onPress={this.copy.bind(this, addressUri)}
-          >
-            <Text style={{ textAlign: 'center', color: 'white', fontSize: 17 }}>{intl.formatMessage({ id: 'receive_button_copy_address' })}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ marginTop: 16, flexDirection: 'row', alignItems: 'center' }}
-            onPress={this.setAmount}
-          >
-            <FastImage
-              source={require('resources/images/amount.png')}
-              style={{ width: 28, height: 28, marginRight: 4 }}
-            />
-            <Text style={{ textAlign: 'center', color: '#007AFF', fontSize: 17 }}>{intl.formatMessage({ id: 'receive_button_setting_amount' })}</Text>
-          </TouchableOpacity>
+          <TouchableNativeFeedback onPress={this.copy.bind(this, !this.state.selectedIndex ? address : childAddress)} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.3)', false)}>
+            <View
+              style={{
+                width: '100%',
+                height: 50,
+                backgroundColor: '#673AB7',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: 4,
+                elevation: 2
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: 'center',
+                  color: 'white',
+                  fontSize: 17
+                }}
+              >
+                {intl.formatMessage({ id: 'receive_button_copy_address' })}
+              </Text>
+            </View>
+          </TouchableNativeFeedback>
+          <TouchableNativeFeedback onPress={this.setAmount} background={TouchableNativeFeedback.SelectableBackground()}>
+            <View style={{ marginTop: 10, flexDirection: 'row', alignItems: 'center', paddingVertical: 6, paddingHorizontal: 10 }}>
+              <FastImage
+                source={require('resources/images/amount_android.png')}
+                style={{ width: 28, height: 28, marginRight: 4 }}
+              />
+              <Text style={{ textAlign: 'center', color: '#673AB7', fontSize: 17 }}>{intl.formatMessage({ id: 'receive_button_setting_amount' })}</Text>
+            </View>
+          </TouchableNativeFeedback>
         </View>
       </ScrollView>
       <Modal
@@ -254,10 +268,57 @@ export default class ReceiveAsset extends Component {
         animationOut="fadeOut"
         animationOutTiming={200}
         backdropTransitionOutTiming={200}
+        onModalHide={this.onModalHide}
       >
-        {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
-            <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已复制</Text>
+        {this.state.showModal && <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
+          <View style={{ backgroundColor: 'rgba(0,0,0,0.87)', padding: 16, borderRadius: 4, height: 48, elevation: 1, justifyContent: 'center', width: '100%' }}>
+            <Text style={{ fontSize: 14, color: 'white' }}>已复制</Text>
+          </View>
+        </View>}
+      </Modal>
+      <Modal
+        isVisible={this.state.showAmountPrompt}
+        backdropOpacity={0.6}
+        useNativeDriver
+        animationIn="fadeIn"
+        animationInTiming={500}
+        backdropTransitionInTiming={500}
+        animationOut="fadeOut"
+        animationOutTiming={500}
+        backdropTransitionOutTiming={500}
+      >
+        {(this.state.showAmountPrompt) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 6 }}>
+          <View style={{ backgroundColor: 'white', paddingTop: 14, paddingBottom: 11, paddingHorizontal: 24, borderRadius: 2, alignItem: 'center', justifyContent: 'space-between', elevation: 14, width: '100%' }}>
+            <View style={{ marginBottom: 30 }}>
+              <Text style={{ fontSize: 20, color: 'black', marginBottom: 12 }}>设置金额</Text>
+              <TextInput
+                style={{
+                  fontSize: 16,
+                  padding: 0,
+                  width: '100%',
+                  borderBottomWidth: 2,
+                  borderColor: '#169689'
+                }}
+                autoFocus={true}
+                autoCorrect={false}
+                autoCapitalize="none"
+                keyboardType="numeric"
+                onChangeText={this.changeAmount}
+                onSubmitEditing={this.submitAmount}
+              />
+            </View>
+            <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+              <TouchableNativeFeedback onPress={this.cancelChangeAmount} background={TouchableNativeFeedback.SelectableBackground()}>
+                <View style={{ padding: 10, borderRadius: 2, marginRight: 8 }}>
+                  <Text style={{ color: '#169689', fontSize: 14 }}>取消</Text>
+                </View>
+              </TouchableNativeFeedback>
+              <TouchableNativeFeedback onPress={this.submitAmount} background={TouchableNativeFeedback.SelectableBackground()}>
+                <View style={{ padding: 10, borderRadius: 2 }}>
+                  <Text style={{ color: '#169689', fontSize: 14 }}>确定</Text>
+                </View>
+              </TouchableNativeFeedback>
+            </View>
           </View>
         </View>}
       </Modal>

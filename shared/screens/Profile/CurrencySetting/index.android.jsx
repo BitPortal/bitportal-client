@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
-// import { View } from 'react-native'
+import { View, Text, TouchableNativeFeedback, FlatList, Image } from 'react-native'
 import { connect } from 'react-redux'
-import TableView from 'react-native-tableview'
 import * as currencyActions from 'actions/currency'
-
-const { Section, Item } = TableView
+import { currencySymbolSelector, currencyListSelector } from 'selectors/currency'
 
 @connect(
   state => ({
-    currencySymbol: state.currency.symbol,
-    currencyList: state.currency.list,
+    currencySymbol: currencySymbolSelector(state),
+    currencyList: currencyListSelector(state),
     wallet: state.wallet
   }),
   dispatch => ({
@@ -27,13 +25,19 @@ export default class CurrencySetting extends Component {
         title: {
           text: '货币单位'
         },
-        largeTitle: {
-          visible: false
-        }
-      },
-      bottomTabs: {
-        visible: false
       }
+    }
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { currencySymbol } = nextProps
+
+    return { extendedState: { currencySymbol } }
+  }
+
+  state ={
+    extendedState: {
+      currencySymbol: this.props.currencySymbol
     }
   }
 
@@ -45,27 +49,33 @@ export default class CurrencySetting extends Component {
     this.props.actions.getCurrencyRates.requested()
   }
 
+  renderItem = ({ item }) => {
+    return (
+      <TouchableNativeFeedback onPress={this.setCurrency.bind(this, item.key)} background={TouchableNativeFeedback.SelectableBackground()}>
+        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, height: 48 }}>
+          {this.state.extendedState.currencySymbol === item.key ? <Image source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, marginRight: 30 }} /> : <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, marginRight: 30 }} />}
+          <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)' }}>{item.text}</Text>
+        </View>
+      </TouchableNativeFeedback>
+    )
+  }
+
   render() {
     const { currencySymbol, currencyList } = this.props
 
+    const items = Object.keys(currencyList).map(item => ({
+      key: item,
+      text: `${item} (${currencyList[item].sign})`
+    }))
+
     return (
-      <TableView
-        style={{ flex: 1 }}
-        tableViewStyle={TableView.Consts.Style.Grouped}
-      >
-        <Section />
-        <Section>
-          {Object.keys(currencyList).map(item =>
-            <Item
-              key={item}
-              accessoryType={currencySymbol === item ? TableView.Consts.AccessoryType.Checkmark : TableView.Consts.AccessoryType.None}
-              onPress={this.setCurrency.bind(this, item)}
-            >
-              {`${item} (${currencyList[item].sign})`}
-            </Item>
-           )}
-        </Section>
-      </TableView>
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <FlatList
+          data={items}
+          renderItem={this.renderItem}
+          extendedState={this.state.extendedState}
+        />
+      </View>
     )
   }
 }

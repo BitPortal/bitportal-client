@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { injectIntl, FormattedMessage } from 'react-intl'
-import { View, ActionSheetIOS, Alert, Text, ActivityIndicator, SafeAreaView, SectionList, TouchableNativeFeedback, TextInput } from 'react-native'
+import { View, ActionSheetIOS, Alert, Text, ActivityIndicator, SafeAreaView, SectionList, TouchableNativeFeedback, TextInput, Image } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import * as walletActions from 'actions/wallet'
 import * as producerActions from 'actions/producer'
@@ -579,7 +579,7 @@ export default class ManageWallet extends Component {
       <TouchableNativeFeedback onPress={this.onPress.bind(this, item.actionType)} background={TouchableNativeFeedback.SelectableBackground()}>
         <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 2, height: 48 }}>
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-            <FastImage
+            <Image
               source={images[item.actionType]}
               style={{ width: 24, height: 24, marginRight: 30 }}
             />

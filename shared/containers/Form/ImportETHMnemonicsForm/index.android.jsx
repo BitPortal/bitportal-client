@@ -244,7 +244,7 @@ export default class ImportETHMnemonicsForm extends Component {
                 separator={true}
                 trailingIcon={<TouchableNativeFeedback onPress={() => {}} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', true)} useForeground={true}>
                   <View style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
-                    <FastImage source={require('resources/images/scan_purple_android.png')} style={{ width: 24, height: 24 }} />
+                    <Image source={require('resources/images/scan_purple_android.png')} style={{ width: 24, height: 24 }} />
                   </View>
                 </TouchableNativeFeedback>}
               />
@@ -316,19 +316,19 @@ export default class ImportETHMnemonicsForm extends Component {
               <View style={{ paddingBottom: 12, paddingTop: 6, paddingHorizontal: 16 }}>
                 <TouchableNativeFeedback onPress={this.onSwitchPath.bind(this, 1)} background={TouchableNativeFeedback.SelectableBackground()}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', height: 48, paddingRight: 8 }}>
-                    {this.state.pathIndex === 1 ? <FastImage source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, margin: 8 }} /> : <FastImage source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, margin: 8 }} />}
+                    {this.state.pathIndex === 1 ? <Image source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, margin: 8 }} /> : <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, margin: 8 }} />}
                     <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>m/44'/60'/0'/0/0 默认</Text>
                   </View>
                 </TouchableNativeFeedback>
                 <TouchableNativeFeedback onPress={this.onSwitchPath.bind(this, 2)} background={TouchableNativeFeedback.SelectableBackground()}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', height: 48, paddingRight: 8 }}>
-                    {this.state.pathIndex === 2 ? <FastImage source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, margin: 8 }} /> : <FastImage source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, margin: 8 }} />}
+                    {this.state.pathIndex === 2 ? <Image source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, margin: 8 }} /> : <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, margin: 8 }} />}
                     <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>m/44'/60'/0'/0 Ledger</Text>
                   </View>
                 </TouchableNativeFeedback>
                 <TouchableNativeFeedback onPress={this.onSwitchPath.bind(this, 3)} background={TouchableNativeFeedback.SelectableBackground()}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', height: 48, paddingRight: 8 }}>
-                    {this.state.pathIndex === 3 ? <FastImage source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, margin: 8 }} /> : <FastImage source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, margin: 8 }} />}
+                    {this.state.pathIndex === 3 ? <Image source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, margin: 8 }} /> : <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, margin: 8 }} />}
                     <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>m/44'/60'/1'/0/0 自定义路径</Text>
                   </View>
                 </TouchableNativeFeedback>

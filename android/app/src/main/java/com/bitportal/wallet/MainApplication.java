@@ -5,7 +5,6 @@ import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.apsl.versionnumber.RNVersionNumberPackage;
-import com.cmcewen.blurview.BlurViewPackage;
 import org.reactnative.camera.RNCameraPackage;
 import com.bitgo.randombytes.RandomBytesPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
@@ -73,7 +72,6 @@ public class MainApplication extends NavigationApplication {
       new RandomBytesPackage(),
       new RNSensitiveInfoPackage(),
       new RNCameraPackage(),
-      new BlurViewPackage(),
       new RNVersionNumberPackage(),
       new RNDeviceInfo(),
       new PickerPackage(),

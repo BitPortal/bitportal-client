@@ -15,16 +15,6 @@ import * as contactActions from 'actions/contact'
 import * as walletActions from 'actions/wallet'
 import styles from './styles'
 
-Sound.setCategory('Playback')
-const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
-  if (error) {
-    console.log('failed to load the sound', error)
-    return
-  }
-
-  console.log(`duration in seconds: ${copySound.getDuration()}number of channels: ${copySound.getNumberOfChannels()}`)
-})
-
 const { Section, Item } = TableView
 
 export const errorMessages = (error, messages) => {
@@ -82,8 +72,7 @@ export default class Contact extends Component {
   subscription = Navigation.events().bindComponent(this)
 
   state = {
-    showModal: false,
-    showModalContent: false
+    showModal: false
   }
 
   deleteContact = (id) => {
@@ -126,21 +115,10 @@ export default class Contact extends Component {
     const { action } = data
 
     if (action === 'copy') {
-      this.setState({ showModal: true, showModalContent: true }, () => {
+      this.setState({ showModal: true }, () => {
         Clipboard.setString(data.text)
-        copySound.play((success) => {
-          if (success) {
-            console.log('successfully finished playing')
-          } else {
-            console.log('playback failed due to audio decoding errors')
-            copySound.reset()
-          }
-        })
-
         setTimeout(() => {
-          this.setState({ showModal: false }, () => {
-            this.setState({ showModalContent: false })
-          })
+          this.setState({ showModal: false })
         }, 1000)
       })
     } else if (action === 'transfer') {
@@ -212,15 +190,15 @@ export default class Contact extends Component {
   }
 
   render() {
-    const { statusBarHeight, contact } = this.props
+    const { contact } = this.props
 
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
-        <View style={{ justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#F7F7F7', width: '100%', height: 180 + +statusBarHeight, paddingTop: +statusBarHeight + 44, paddingLeft: 16, paddingRight: 16, paddingBottom: 16 }}>
+        <View style={{ justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#F7F7F7', width: '100%', height: 180, paddingTop: 44, paddingLeft: 16, paddingRight: 16, paddingBottom: 16 }}>
           <View style={{ height: 61 }}>
             <FastImage
-              source={require('resources/images/Userpic2.png')}
-              style={{ width: 60, height: 60, borderRadius: 10, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
+              source={require('resources/images/profile_placeholder_android.png')}
+              style={{ width: 60, height: 60, borderRadius: 30, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
             />
           </View>
           <View style={{ height: 61, alignItems: 'center', justifyContent: 'center' }}>
@@ -342,10 +320,11 @@ export default class Contact extends Component {
           animationOut="fadeOut"
           animationOutTiming={200}
           backdropTransitionOutTiming={200}
+          onModalHide={this.onModalHide}
         >
-          {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
-              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已复制</Text>
+          {this.state.showModal && <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
+            <View style={{ backgroundColor: 'rgba(0,0,0,0.87)', padding: 16, borderRadius: 4, height: 48, elevation: 1, justifyContent: 'center', width: '100%' }}>
+              <Text style={{ fontSize: 14, color: 'white' }}>已复制</Text>
             </View>
           </View>}
         </Modal>
