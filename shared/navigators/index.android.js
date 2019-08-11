@@ -38,6 +38,7 @@ import Voting from 'screens/Wallet/Voting'
 import ProducerDetail from 'screens/Wallet/ProducerDetail'
 import ReceiveAsset from 'screens/Wallet/ReceiveAsset'
 import TransactionDetail from 'screens/Wallet/TransactionDetail'
+import AddAssets from 'screens/Wallet/AddAssets'
 
 import Images from 'resources/images'
 import messages from 'resources/messages'
@@ -78,6 +79,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.ProducerDetail', () => ProducerDetail, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ReceiveAsset', () => ReceiveAsset, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.TransactionDetail', () => TransactionDetail, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.AddAssets', () => AddAssets, Provider, store)
 }
 
 export const setDefaultOptions = () => {

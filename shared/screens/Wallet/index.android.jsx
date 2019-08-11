@@ -202,11 +202,33 @@ export default class Wallet extends Component {
   }
 
   addAssets = () => {
-    Navigation.push('BitPortal.Root', {
-      component: {
-        name: 'BitPortal.Market'
+    const { activeWallet } = this.props
+    const chain = activeWallet ? activeWallet.chain : ''
+
+    if (chain === 'ETHEREUM' || chain === 'EOS' || chain === 'CHAINX') {
+      let symbol
+
+      if (chain === 'ETHEREUM') {
+        symbol = 'ETH'
+      } else if (chain === 'EOS') {
+        symbol = 'EOS'
+      } else if (chain === 'CHAINX') {
+        symbol = 'PCX'
       }
-    })
+
+      Navigation.push('BitPortal.Root', {
+        component: {
+          name: 'BitPortal.AddAssets',
+          options: {
+            topBar: {
+              title: {
+                text: `添加${symbol}资产`
+              }
+            }
+          }
+        }
+      })
+    }
   }
 
   onPress = () => {
@@ -593,11 +615,11 @@ export default class Wallet extends Component {
         <View style={{ flex: 1, backgroundColor: 'white' }}>
           <View style={{ paddingLeft: 16, width: '100%', height: 48, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
             <Text style={{ fontSize: 15, fontWeight: '500' }}>资产</Text>
-            <TouchableNativeFeedback onPress={this.addAssets} background={TouchableNativeFeedback.Ripple('rgba(255,255,255,0.3)', false)}>
-              <View style={{ height: 48, width: 56, alignItems: 'center', justifyContent: 'center', paddingRight: 16, paddingLeft: 16 }}>
+            {chain !== 'BITCOIN' && <TouchableNativeFeedback onPress={this.addAssets} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.3)', false)}>
+              <View style={{ height: 48, width: 48, borderTadius: 24, alignItems: 'center', justifyContent: 'center', paddingRight: 16, paddingLeft: 16 }}>
                 <Image source={require('resources/images/add_android.png')} style={{ width: 24, height: 24 }} />
               </View>
-            </TouchableNativeFeedback>
+            </TouchableNativeFeedback>}
           </View>
           <RecyclerListView
             style={{ flex: 1, backgroundColor: 'white' }}
