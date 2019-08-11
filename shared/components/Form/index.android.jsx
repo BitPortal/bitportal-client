@@ -485,7 +485,8 @@ export class OutlinedTextField extends Component {
       separator,
       change,
       nonEmpty,
-      containerStyle
+      containerStyle,
+      autoFocus
     } = this.props
 
     return (
@@ -528,6 +529,7 @@ export class OutlinedTextField extends Component {
               borderWidth: (active ? 2 : 1),
             }}
             autoCorrect={false}
+            autoFocus={!!autoFocus}
             autoCapitalize="none"
             onChangeText={onChange}
             keyboardType="default"

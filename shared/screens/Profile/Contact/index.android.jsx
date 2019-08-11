@@ -1,34 +1,16 @@
 import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, ScrollView, ActionSheetIOS, Alert, Text, ActivityIndicator, Animated, Clipboard } from 'react-native'
+import { View, ScrollView, ActionSheetIOS, Alert, Text, ActivityIndicator, Animated, Clipboard, TouchableNativeFeedback, SectionList, Image } from 'react-native'
 import { Navigation } from 'react-native-navigation'
-import TableView from 'react-native-tableview'
 import * as identityActions from 'actions/identity'
 import Modal from 'react-native-modal'
-import Sound from 'react-native-sound'
 import FastImage from 'react-native-fast-image'
 import { activeContactSelector } from 'selectors/contact'
 import { identityWalletSelector, importedWalletSelector } from 'selectors/wallet'
 import { balanceByIdSelector } from 'selectors/balance'
 import * as contactActions from 'actions/contact'
 import * as walletActions from 'actions/wallet'
-import styles from './styles'
-
-const { Section, Item } = TableView
-
-export const errorMessages = (error, messages) => {
-  if (!error) { return null }
-
-  const message = typeof error === 'object' ? error.message : error
-
-  switch (String(message)) {
-    case 'Invalid password':
-      return '密码错误'
-    default:
-      return '操作失败'
-  }
-}
 
 @connect(
   state => ({
@@ -49,22 +31,16 @@ export default class Contact extends Component {
   static get options() {
     return {
       topBar: {
-        largeTitle: {
-          visible: false
-        },
         title: {
-          text: ''
+          text: '联系人详情'
         },
         rightButtons: [
           {
-            id: 'edit',
-            text: '编辑'
+            id: 'delete',
+            icon: require('resources/images/delete_white_android.png'),
+            color: 'white'
           }
-        ],
-        noBorder: true
-      },
-      bottomTabs: {
-        visible: false
+        ]
       }
     }
   }
@@ -75,7 +51,7 @@ export default class Contact extends Component {
     showModal: false
   }
 
-  deleteContact = (id) => {
+  deleteContact = () => {
     Alert.alert(
       '确认删除',
       null,
@@ -92,7 +68,8 @@ export default class Contact extends Component {
             Navigation.pop(this.props.componentId)
           }
         }
-      ]
+      ],
+      { cancelable: false }
     )
   }
 
@@ -108,7 +85,25 @@ export default class Contact extends Component {
           }]
         }
       })
+    } else if (buttonId === 'delete') {
+      this.deleteContact(this.props.contact.id)
     }
+  }
+
+  edit = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.EditContact',
+        passProps: { editMode: true, contact: this.props.contact },
+        options: {
+          topBar: {
+            title: {
+              text: '编辑联系人'
+            }
+          }
+        }
+      }
+    })
   }
 
   onItemNotification = (data) => {
@@ -189,12 +184,89 @@ export default class Contact extends Component {
     return null
   }
 
+  renderHeader = ({ section: { isFirst } }) => {
+    return !isFirst ? <View style={{ width: '100%', height: 1, backgroundColor: 'rgba(0,0,0,0.12)' }} /> : null
+  }
+
+  formatAddress = (address) => {
+    if (address && address.length > 20) {
+      return `${address.slice(0, 10)}....${address.slice(-10)}`
+    } else {
+      return address
+    }
+  }
+
+  copy = (text) => {
+    this.setState({ showModal: true }, () => {
+      Clipboard.setString(text)
+
+      setTimeout(() => {
+        this.setState({ showModal: false })
+      }, 1000)
+    })
+  }
+
+  renderItem = ({ item, index }) => {
+    return (
+      <TouchableNativeFeedback onPress={this.copy.bind(this, item.address)} background={TouchableNativeFeedback.SelectableBackground()}>
+        <View style={{ flex: 1, justifyContent: 'center', paddingHorizontal: 16, height: 60 }}>
+          <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)' }}>{item.label}</Text>
+          <Text style={{ fontSize: 14, color: '#673AB7' }}>{this.formatAddress(item.address)}</Text>
+        </View>
+      </TouchableNativeFeedback>
+    )
+  }
+
   render() {
     const { contact } = this.props
 
+    let sections = []
+
+    if (contact && contact.btc && contact.btc.length) {
+      const btcAddresses = contact.btc.map((item, index) => ({
+        key: index,
+        address: item.address,
+        label: 'BTC 地址',
+        chain: 'BITCOIN',
+        symbol: 'BTC',
+        name: contact.name
+      }))
+
+      sections.push({ data: btcAddresses })
+    }
+
+    if (contact && contact.eth && contact.eth.length) {
+      const ethAddresses = contact.eth.map((item, index) => ({
+        key: index,
+        address: item.address,
+        label: 'ETH 地址',
+        chain: 'ETHEREUM',
+        symbol: 'ETH',
+        name: contact.name
+      }))
+
+      sections.push({ data: ethAddresses })
+    }
+
+    if (contact && contact.eos && contact.eos.length) {
+      const eosAddresses = contact.eos.map((item, index) => ({
+        key: index,
+        address: item.accountName,
+        note: item.memo,
+        label: 'EOS 账户名',
+        chain: 'EOS',
+        symbol: 'EOS',
+        name: contact.name
+      }))
+
+      sections.push({ data: eosAddresses })
+    }
+
+    if (sections[0]) sections[0].isFirst = true
+
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
-        <View style={{ justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#F7F7F7', width: '100%', height: 180, paddingTop: 44, paddingLeft: 16, paddingRight: 16, paddingBottom: 16 }}>
+        <View style={{ justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#EEEEEE', width: '100%', height: 160, paddingTop: 24, paddingLeft: 16, paddingRight: 16, paddingBottom: 16 }}>
           <View style={{ height: 61 }}>
             <FastImage
               source={require('resources/images/profile_placeholder_android.png')}
@@ -202,114 +274,25 @@ export default class Contact extends Component {
             />
           </View>
           <View style={{ height: 61, alignItems: 'center', justifyContent: 'center' }}>
-            <Text style={{ fontSize: 24 }} numberOfLines={1}>{contact && contact.name}</Text>
-            {contact && contact.description && <Text style={{ fontSize: 17, color: 'rgba(0,0,0,0.5)', paddingTop: 3 }} numberOfLines={1}>{contact && contact.description}</Text>}
+            <Text style={{ fontSize: 24, color: 'rgba(0,0,0,0.87)' }} numberOfLines={1}>{contact && contact.name}</Text>
+            {contact && contact.description && <Text style={{ fontSize: 17, color: 'rgba(0,0,0,0.54)', paddingTop: 3 }} numberOfLines={1}>{contact && contact.description}</Text>}
           </View>
-          <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 0, backgroundColor: '#C8C7CC' }} />
         </View>
-        <TableView
-          style={{ flex: 1 }}
-          tableViewStyle={TableView.Consts.Style.Default}
-          separatorStyle={TableView.Consts.SeparatorStyle.None}
-          onItemNotification={this.onItemNotification}
-        >
-          <Section />
-          {contact && contact.btc && contact.btc.length && <Section>
-            {contact.btc.map((item, index) =>
-              <Item
-                key={index}
-                reactModuleForCell="AddressTableViewCell"
-                address={item.address}
-                label="BTC 地址"
-                height={60}
-                selectionStyle={TableView.Consts.CellSelectionStyle.None}
-                showSeparator
-                chain="BITCOIN"
-                symbol="BTC"
-                name={contact.name}
-              />
-             )}
-          </Section>}
-          {(contact && contact.btc && contact.btc.length) && (contact && contact.eth && contact.eth.length) && <Section>
-            <Item
-              reactModuleForCell="ContactHeaderTableViewCell"
-              title=""
-              height={20}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
-              showSeparator
+        <SectionList
+          renderSectionHeader={this.renderHeader}
+          renderItem={this.renderItem}
+          showsVerticalScrollIndicator={false}
+          sections={sections}
+          keyExtractor={(item, index) => item.key}
+        />
+        <TouchableNativeFeedback onPress={this.edit} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', true)} useForeground={true}>
+          <View style={{ width: 56, height: 56, borderRadius: 28, alignItems: 'center', justifyContent: 'center', position: 'absolute', bottom: 16, right: 16, backgroundColor: '#FF5722', elevation: 10, zIndex: 2 }}>
+            <Image
+              source={require('resources/images/edit_android.png')}
+              style={{ width: 24, height: 24 }}
             />
-          </Section>}
-          {contact && contact.eth && contact.eth.length && <Section>
-            {contact.eth.map((item, index) =>
-              <Item
-                key={index}
-                reactModuleForCell="AddressTableViewCell"
-                address={item.address}
-                label="ETH 地址"
-                height={60}
-                selectionStyle={TableView.Consts.CellSelectionStyle.None}
-                showSeparator
-                chain="ETHEREUM"
-                symbol="ETH"
-                name={contact.name}
-              />
-             )}
-          </Section>}
-          {((contact && contact.btc && contact.btc.length) || (contact && contact.eth && contact.eth.length)) && (contact && contact.eos && contact.eos.length) && <Section>
-            <Item
-              reactModuleForCell="ContactHeaderTableViewCell"
-              title=""
-              height={20}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
-              showSeparator
-            />
-          </Section>}
-          {contact && contact.eos && contact.eos.length && <Section>
-            {contact.eos.map((item, index) =>
-              <Item
-                key={index}
-                reactModuleForCell="AddressTableViewCell"
-                address={item.accountName}
-                note={item.memo}
-                label="EOS 账户名"
-                height={60}
-                chain="EOS"
-                symbol="EOS"
-                name={contact.name}
-                selectionStyle={TableView.Consts.CellSelectionStyle.None}
-                showSeparator
-              />
-             )}
-          </Section>}
-        <Section>
-          <Item
-            reactModuleForCell="ContactHeaderTableViewCell"
-            title=""
-            height={44}
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            showSeparator
-          />
-        </Section>
-          {contact && <Section>
-            <Item
-              reactModuleForCell="ContactDeleteTableViewCell"
-              key="delete"
-              actionType="delete"
-              text="删除联系人"
-              height={44}
-              onPress={this.deleteContact.bind(this, contact.id)}
-            />
-          </Section>}
-          <Section>
-            <Item
-              reactModuleForCell="ContactHeaderTableViewCell"
-              title=""
-              height={44}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
-              showSeparator
-            />
-          </Section>
-        </TableView>
+          </View>
+        </TouchableNativeFeedback>
         <Modal
           isVisible={this.state.showModal}
           backdropOpacity={0}
@@ -323,7 +306,7 @@ export default class Contact extends Component {
           onModalHide={this.onModalHide}
         >
           {this.state.showModal && <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
-            <View style={{ backgroundColor: 'rgba(0,0,0,0.87)', padding: 16, borderRadius: 4, height: 48, elevation: 1, justifyContent: 'center', width: '100%' }}>
+            <View style={{ backgroundColor: 'rgba(0,0,0,0.87)', padding: 16, borderRadius: 4, height: 48, elevation: 1, justifyContent: 'center', width: '100%', marginBottom: 72 }}>
               <Text style={{ fontSize: 14, color: 'white' }}>已复制</Text>
             </View>
           </View>}

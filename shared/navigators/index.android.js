@@ -12,6 +12,7 @@ import Settings from 'screens/Profile/Settings'
 import LanguageSetting from 'screens/Profile/LanguageSetting'
 import CurrencySetting from 'screens/Profile/CurrencySetting'
 import Contacts from 'screens/Profile/Contacts'
+import Contact from 'screens/Profile/Contact'
 import EditContact from 'screens/Profile/EditContact'
 import AddIdentity from 'screens/Wallet/AddIdentity'
 import RecoverIdentity from 'screens/Wallet/RecoverIdentity'
@@ -55,6 +56,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.LanguageSetting', () => LanguageSetting, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.CurrencySetting', () => CurrencySetting, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Contacts', () => Contacts, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Contact', () => Contact, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.EditContact', () => EditContact, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.AddIdentity', () => AddIdentity, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.RecoverIdentity', () => RecoverIdentity, Provider, store)

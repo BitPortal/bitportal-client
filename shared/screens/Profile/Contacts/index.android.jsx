@@ -67,6 +67,7 @@ export default class Contacts extends Component {
       section.items.forEach(item => {
         contacts.push({
           key: item.id,
+          id: item.id,
           name: item.name,
           description: item.description,
           hasBTC: !!item.btc && !!item.btc.length,

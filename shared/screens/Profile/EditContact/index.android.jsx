@@ -91,7 +91,7 @@ export default class EditContact extends Component {
         rightButtons: [
           {
             id: 'done',
-            text: '保存',
+            icon: require('resources/images/check_android.png'),
             color: 'white'
           }
         ],
