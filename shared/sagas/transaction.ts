@@ -537,7 +537,6 @@ function* getTransactions(action: Action) {
       const tokenAccount = contract || 'eosio.token'
       const symbol = symbol || assetSymbol
       const transactions = yield call(api.getEOSTransactions, { account_name: address, code: tokenAccount, symbol, type: 3, sort: 1, page, size: pageSize })
-      console.log(transactions)
 
       const items = transactions.list.map((item: any) => {
         const sender = item.data.from

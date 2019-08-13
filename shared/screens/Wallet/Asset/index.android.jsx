@@ -147,28 +147,28 @@ export default class Asset extends Component {
   }
 
   toTransferAsset = () => {
-    /* Navigation.showModal({
-     *   stack: {
-     *     children: [{
-     *       component: {
-     *         name: 'BitPortal.TransferAsset',
-     *         options: {
-     *           topBar: {
-     *             title: {
-     *               text: `发送${this.props.activeAsset.symbol}到`
-     *             },
-     *             leftButtons: [
-     *               {
-     *                 id: 'cancel',
-     *                 text: '取消'
-     *               }
-     *             ]
-     *           }
-     *         }
-     *       }
-     *     }]
-     *   }
-     * })*/
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.TransferAsset',
+            options: {
+              topBar: {
+                /* title: {
+                 *   text: `发送${this.props.activeAsset.symbol}到`
+                 * },*/
+                leftButtons: [
+                  {
+                    id: 'cancel',
+                    icon: require('resources/images/cancel_android.png')
+                  }
+                ]
+              }
+            }
+          }
+        }]
+      }
+    })
   }
 
   toReceiveAsset = () => {
@@ -386,7 +386,7 @@ export default class Asset extends Component {
         </View>
           </View>
         </View>
-        <TouchableNativeFeedback onPress={() => {}} background={TouchableNativeFeedback.Ripple('rgba(255,255,255,0.3)', true)} useForeground={true}>
+        <TouchableNativeFeedback onPress={this.toTransferAsset} background={TouchableNativeFeedback.Ripple('rgba(255,255,255,0.3)', true)} useForeground={true}>
           <View style={{ width: 56, height: 56, borderRadius: 28, alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 48, right: 16, backgroundColor: '#FF5722', elevation: 10, zIndex: 1 }}>
             <FastImage
               source={require('resources/images/send_android.png')}

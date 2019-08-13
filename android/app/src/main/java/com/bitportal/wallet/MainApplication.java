@@ -33,6 +33,7 @@ import com.swmansion.reanimated.ReanimatedPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.github.godness84.RNRecyclerViewList.RNRecyclerviewListPackage;
 import com.reactnativecommunity.viewpager.RNCViewPagerPackage;
+import com.reactnativecommunity.slider.ReactSliderPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -86,7 +87,8 @@ public class MainApplication extends NavigationApplication {
       new ReanimatedPackage(),
       new RNGestureHandlerPackage(),
       new RNRecyclerviewListPackage(),
-      new RNCViewPagerPackage()
+      new RNCViewPagerPackage(),
+      new ReactSliderPackage()
     );
   }
 

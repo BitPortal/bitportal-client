@@ -199,7 +199,7 @@ export default class TransactionDetail extends Component {
                   <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)' }}>{intl.formatMessage({ id: 'txn_detail_from_account' })}</Text>
                   <TouchableHighlight underlayColor="rgba(255,255,255,0)" onPress={this.copy.bind(this, transaction.sender)}>
                     <View style={{ flexDirection: 'row', minHeight: 26, alignItems: 'center', color: 'rgba(0,0,0,0.87)' }}>
-                      <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.sender} </Text>
+                      <Text style={{ fontSize: 20, lineHeight: 26, color: 'rgba(0,0,0,0.87)' }}>{transaction.sender} </Text>
                       <Image
                         source={require('resources/images/copy_grey_android.png')}
                         style={{ width: 16, height: 16, marginTop: 4 }}
