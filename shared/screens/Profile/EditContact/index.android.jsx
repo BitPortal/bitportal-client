@@ -435,7 +435,7 @@ export default class EditContact extends Component {
               <View key={id} style={{ width: '100%', flexDirection: 'row' }}>
                 <View style={{ width: 40, height: 56, alignItems: 'flex-end', justifyContent: 'center' }}>
                   <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ width: 24, height: 24 }} onPress={this.removeBTCAddress.bind(this, id)}>
-                    <FastImage
+                    <Image
                       source={require('resources/images/remove_circle_grey_android.png')}
                       style={{ width: 24, height: 24 }}
                     />
@@ -473,7 +473,7 @@ export default class EditContact extends Component {
               <View key={id} style={{ width: '100%', flexDirection: 'row' }}>
                 <View style={{ width: 40, height: 56, alignItems: 'flex-end', justifyContent: 'center' }}>
                   <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ width: 24, height: 24 }} onPress={this.removeETHAddress.bind(this, id)}>
-                    <FastImage
+                    <Image
                       source={require('resources/images/remove_circle_grey_android.png')}
                       style={{ width: 24, height: 24 }}
                     />
@@ -511,7 +511,7 @@ export default class EditContact extends Component {
               <View key={id} style={{ width: '100%', flexDirection: 'row' }}>
                 <View style={{ width: 40, height: 56, alignItems: 'flex-end', justifyContent: 'center' }}>
                   <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ width: 24, height: 24 }} onPress={this.removeEOSAccountName.bind(this, id)}>
-                    <FastImage
+                    <Image
                       source={require('resources/images/remove_circle_grey_android.png')}
                       style={{ width: 24, height: 24 }}
                     />

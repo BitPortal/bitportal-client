@@ -5,7 +5,7 @@ import { bindActionCreators } from 'utils/redux'
 import { View, Text, ActivityIndicator } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import TableView from 'react-native-tableview'
-import { tickerSelector } from 'selectors/ticker'
+import { tickerWidthSearchSelector } from 'selectors/ticker'
 import { currencySelector } from 'selectors/currency'
 import * as tickerActions from 'actions/ticker'
 
@@ -16,7 +16,7 @@ const { Section, Item } = TableView
 @connect(
   state => ({
     getTicker: state.getTicker,
-    ticker: tickerSelector(state),
+    ticker: tickerWidthSearchSelector(state),
     currency: currencySelector(state)
   }),
   dispatch => ({

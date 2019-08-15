@@ -110,7 +110,7 @@ export default class Settings extends Component {
     return (
       <TouchableNativeFeedback onPress={this.onPress.bind(this, item.type)} background={TouchableNativeFeedback.SelectableBackground()}>
         <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, height: 60 }}>
-          <FastImage
+          <Image
             source={images[item.type]}
             style={{ width: 24, height: 24, marginRight: 30 }}
           />

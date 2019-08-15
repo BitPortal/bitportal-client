@@ -197,7 +197,7 @@ export default class ImportETHKeystoreForm extends Component {
                 separator={true}
                 trailingIcon={<TouchableNativeFeedback onPress={() => {}} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', true)} useForeground={true}>
                   <View style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
-                    <FastImage source={require('resources/images/scan_purple_android.png')} style={{ width: 24, height: 24 }} />
+                    <Image source={require('resources/images/scan_purple_android.png')} style={{ width: 24, height: 24 }} />
                   </View>
                 </TouchableNativeFeedback>}
               />

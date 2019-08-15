@@ -13,6 +13,13 @@ export const assetsSelector = createSelector(
   activeChainSelector,
   assetByIdSelector,
   assetAllIdsSelector,
+  (chain: any, byId: any, allIds: any, searchText: string) => allIds.filter(item => item.indexOf(chain) === 0).map(id => byId[id])
+)
+
+export const assetsWithSearchSelector = createSelector(
+  activeChainSelector,
+  assetByIdSelector,
+  assetAllIdsSelector,
   assetSearchTextSelector,
   (chain: any, byId: any, allIds: any, searchText: string) => {
     if (searchText) {
@@ -20,6 +27,21 @@ export const assetsSelector = createSelector(
         .filter(item => (item.symbol && item.symbol.toLowerCase().indexOf(searchText.toLowerCase()) !== -1) || (item.name && item.name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1) || (item.contract && item.contract.toLowerCase().indexOf(searchText.toLowerCase()) !== -1))
     } else {
       return allIds.filter(item => item.indexOf(chain) === 0).map(id => byId[id])
+    }
+  }
+)
+
+export const assetsSearchSelector = createSelector(
+  activeChainSelector,
+  assetByIdSelector,
+  assetAllIdsSelector,
+  assetSearchTextSelector,
+  (chain: any, byId: any, allIds: any, searchText: string) => {
+    if (searchText) {
+      return allIds.filter(item => item.indexOf(chain) === 0).map(id => byId[id])
+        .filter(item => (item.symbol && item.symbol.toLowerCase().indexOf(searchText.toLowerCase()) !== -1) || (item.name && item.name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1) || (item.contract && item.contract.toLowerCase().indexOf(searchText.toLowerCase()) !== -1))
+    } else {
+      return []
     }
   }
 )

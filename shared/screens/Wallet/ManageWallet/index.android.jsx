@@ -763,7 +763,7 @@ export default class ManageWallet extends Component {
                 <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'white', marginRight: 2 }}>{name}</Text>
                 <TouchableNativeFeedback onPress={this.requestChangeWalletName} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
                   <View style={{ height: 24, width: 24, borderRadius: 12, alignItems: 'center', justifyContent: 'center' }}>
-                    <FastImage source={require('resources/images/edit_android.png')} style={{ height: 16, width: 16 }} />
+                    <Image source={require('resources/images/edit_android.png')} style={{ height: 16, width: 16 }} />
                   </View>
                 </TouchableNativeFeedback>
               </View>
@@ -800,13 +800,13 @@ export default class ManageWallet extends Component {
               <View style={{ paddingBottom: 12, paddingTop: 6, paddingHorizontal: 16 }}>
                 <TouchableNativeFeedback onPress={this.selectAddressType.bind(this, 'P2WPKH')} background={TouchableNativeFeedback.SelectableBackground()}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', height: 48 }}>
-                    {segWit === 'P2WPKH' ? <FastImage source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, margin: 8 }} /> : <FastImage source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, margin: 8 }} />}
+                    {segWit === 'P2WPKH' ? <Image source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, margin: 8 }} /> : <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, margin: 8 }} />}
                     <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>隔离见证</Text>
                   </View>
                 </TouchableNativeFeedback>
                 <TouchableNativeFeedback onPress={this.selectAddressType.bind(this, 'NONE')} background={TouchableNativeFeedback.SelectableBackground()}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', height: 48 }}>
-                    {segWit === 'P2WPKH' ? <FastImage source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, margin: 8 }} /> : <FastImage source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, margin: 8 }} />}
+                    {segWit === 'P2WPKH' ? <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, margin: 8 }} /> : <Image source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, margin: 8 }} />}
                     <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>普通</Text>
                   </View>
                 </TouchableNativeFeedback>

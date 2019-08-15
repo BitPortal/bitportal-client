@@ -11,12 +11,31 @@ export const eosRAMPriceSelector = (state: RootState) => state.ticker.resources 
 export const tickerSelector = createSelector(
   tickerByIdSelector,
   tickerAllIdsSelector,
+  (byId: any, allIds: any) => allIds.map(id => byId[id])
+)
+
+export const tickerWidthSearchSelector = createSelector(
+  tickerByIdSelector,
+  tickerAllIdsSelector,
   tickerSearchTextSelector,
   (byId: any, allIds: any, searchText: string) => {
     if (searchText) {
       return allIds.map(id => byId[id]).filter(item => item.symbol.toLowerCase().indexOf(searchText.toLowerCase()) !== -1 || item.name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1)
     } else {
       return allIds.map(id => byId[id])
+    }
+  }
+)
+
+export const tickerSearchSelector = createSelector(
+  tickerByIdSelector,
+  tickerAllIdsSelector,
+  tickerSearchTextSelector,
+  (byId: any, allIds: any, searchText: string) => {
+    if (searchText) {
+      return allIds.map(id => byId[id]).filter(item => item.symbol.toLowerCase().indexOf(searchText.toLowerCase()) !== -1 || item.name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1)
+    } else {
+      return []
     }
   }
 )

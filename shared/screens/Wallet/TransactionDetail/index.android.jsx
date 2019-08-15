@@ -111,7 +111,7 @@ export default class TransactionDetail extends Component {
                 leftButtons: [
                   {
                     id: 'cancel',
-                    text: intl.formatMessage({ id: 'top_bar_button_cancel' })
+                    icon: require('resources/images/cancel_android.png')
                   }
                 ]
               }

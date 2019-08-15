@@ -8,7 +8,8 @@ import {
   Animated,
   Easing,
   Dimensions,
-  TouchableNativeFeedback
+  TouchableNativeFeedback,
+  Image
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import EStyleSheet from 'react-native-extended-stylesheet'
@@ -45,7 +46,7 @@ export const TextField = ({
     <View style={{ height: (touched && error) ? 2 : 1, backgroundColor: (touched && error) ? '#FF5722' : 'rgba(0,0,0,0.12)', position: 'absolute', left: 16, right: 16, top: 53 }} />
     {showClearButton && active && <View style={{ height: 38, position: 'absolute', right: 11, top: 18, width: 24, alignItems: 'center', justifyContent: 'center' }}>
       <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
-        <FastImage
+        <Image
           source={require('resources/images/clear_android.png')}
           style={{ width: 22, height: 22 }}
         />
@@ -157,7 +158,7 @@ export class FilledTextField extends Component {
                  }}
                >
                  <Text style={{ color: 'rgba(0,0,0,0.6)', fontSize: 16 }}>{switchLabel}</Text>
-                 <FastImage source={require('resources/images/dropdown_android.png')} style={{ width: 24, height: 24, position: 'absolute', right: 12, top: 16 }} />
+                 <Image source={require('resources/images/dropdown_android.png')} style={{ width: 24, height: 24, position: 'absolute', right: 12, top: 16 }} />
                </View>
              </TouchableNativeFeedback>
            </View>
@@ -210,7 +211,7 @@ export class FilledTextField extends Component {
           />
           {nonEmpty && active && <View style={{ height: 56, position: 'absolute', right: 10, top: 0, width: 24, alignItems: 'center', justifyContent: 'center' }}>
             <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
-              <FastImage
+              <Image
                 source={require('resources/images/clear_circle_android.png')}
                 style={{ width: 24, height: 24 }}
               />
@@ -262,7 +263,7 @@ export const TextArea = ({
     <View style={{ height: (touched && error) ? 2 : 1, backgroundColor: (touched && error) ? '#FF5722' : 'rgba(0,0,0,0.12)', position: 'absolute', left: 16, right: 16, top: 85 }} />
     {(showClearButton && active) && <View style={{ height: 38, position: 'absolute', right: 39, top: 34, width: 24, alignItems: 'center', justifyContent: 'center' }}>
       <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
-        <FastImage
+        <Image
           source={require('resources/images/clear_android.png')}
           style={{ width: 22, height: 22 }}
         />
@@ -390,7 +391,7 @@ export class FilledTextArea extends Component {
           />
           {nonEmpty && active && <View style={{ height: 36, position: 'absolute', right: trailingIcon ? 37 : 7, top: 29, width: 30, alignItems: 'center', justifyContent: 'center' }}>
             <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
-              <FastImage
+              <Image
                 source={require('resources/images/clear_circle_android.png')}
                 style={{ width: 24, height: 24 }}
               />
@@ -538,7 +539,7 @@ export class OutlinedTextField extends Component {
           />
           {nonEmpty && active && <View style={{ height: 56, position: 'absolute', right: 10, top: 0, width: 24, alignItems: 'center', justifyContent: 'center' }}>
             <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
-              <FastImage
+              <Image
                 source={require('resources/images/clear_circle_android.png')}
                 style={{ width: 24, height: 24 }}
               />
@@ -682,7 +683,7 @@ export class OutlinedTextArea extends Component {
           />
           {nonEmpty && active && <View style={{ height: 36, position: 'absolute', right: trailingIcon ? 37 : 7, top: 29, width: 30, alignItems: 'center', justifyContent: 'center' }}>
             <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
-              <FastImage
+              <Image
                 source={require('resources/images/clear_circle_android.png')}
                 style={{ width: 24, height: 24 }}
               />

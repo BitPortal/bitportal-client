@@ -7,6 +7,7 @@ import Root from 'screens/Root'
 import Wallet from 'screens/Wallet'
 import Asset from 'screens/Wallet/Asset'
 import Market from 'screens/Market'
+import SearchMarket from 'screens/Market/SearchMarket'
 import Profile from 'screens/Profile'
 import Settings from 'screens/Profile/Settings'
 import LanguageSetting from 'screens/Profile/LanguageSetting'
@@ -40,6 +41,8 @@ import ReceiveAsset from 'screens/Wallet/ReceiveAsset'
 import TransactionDetail from 'screens/Wallet/TransactionDetail'
 import AddAssets from 'screens/Wallet/AddAssets'
 import TransferAsset from 'screens/Wallet/TransferAsset'
+import Camera from 'screens/Camera'
+import WebView from 'screens/WebView'
 
 import Images from 'resources/images'
 import messages from 'resources/messages'
@@ -49,6 +52,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.Wallet', () => Wallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Asset', () => Asset, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Market', () => Market, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.SearchMarket', () => SearchMarket, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ManageWallet', () => ManageWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ImportBTCWallet', () => ImportBTCWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ImportETHWallet', () => ImportETHWallet, Provider, store)
@@ -82,6 +86,8 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.TransactionDetail', () => TransactionDetail, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.AddAssets', () => AddAssets, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.TransferAsset', () => TransferAsset, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Camera', () => Camera, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.WebView', () => WebView, Provider, store)
 }
 
 export const setDefaultOptions = () => {
@@ -116,6 +122,9 @@ export const setDefaultOptions = () => {
     layout: {
       backgroundColor: '#EEEEEE',
       orientation: ['portrait']
+    },
+    bottomTabs: {
+      visible: false
     }
   })
 }

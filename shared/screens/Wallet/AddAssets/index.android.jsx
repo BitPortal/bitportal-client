@@ -5,28 +5,34 @@ import { View, Text, ActivityIndicator, ScrollView, TouchableNativeFeedback, Dim
 import { Navigation } from 'react-native-navigation'
 import Modal from 'react-native-modal'
 import * as assetActions from 'actions/asset'
+import * as uiActions from 'actions/ui'
 import FastImage from 'react-native-fast-image'
-import { selectedAssetIdsSelector, assetsSelector } from 'selectors/asset'
+import { selectedAssetIdsSelector, assetsSelector, assetsSearchSelector } from 'selectors/asset'
 import { activeWalletSelector, activeChainSelector } from 'selectors/wallet'
 import IndicatorModal from 'components/Modal/IndicatorModal'
 import Loading from 'components/Loading'
 import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview'
+import SearchBar from 'components/Form/SearchBar'
 
 const dataProvider = new DataProvider((r1, r2) => r1.key !== r2.key)
+const searchDataProvider = new DataProvider((r1, r2) => r1.key !== r2.key)
 
 @connect(
   state => ({
+    ui: state.ui,
     getETHAsset: state.getETHAsset,
     getEOSAsset: state.getEOSAsset,
     getChainXAsset: state.getChainXAsset,
     chain: activeChainSelector(state),
     assets: assetsSelector(state),
+    searchAssets: assetsSearchSelector(state),
     activeWallet: activeWalletSelector(state),
     selectedAssetId: selectedAssetIdsSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
-      ...assetActions
+      ...assetActions,
+      ...uiActions
     }, dispatch)
   })
 )
@@ -58,6 +64,7 @@ export default class AddAssets extends Component {
     selecting: false,
     unselecting: false,
     assetsCount: 0,
+    searchAssetsCount: 0,
     getETHAssetLoading: false,
     getETHAssetError: false,
     getETHAssetLoaded: false,
@@ -69,6 +76,7 @@ export default class AddAssets extends Component {
     getChainXAssetError: false,
     firstAppeared: false,
     dataProvider: dataProvider.cloneWithRows([]),
+    searchDataProvider: searchDataProvider.cloneWithRows([]),
     extendedState: {
       selectedAssetId: []
     }
@@ -79,11 +87,23 @@ export default class AddAssets extends Component {
   pendingAssetQueue = []
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const { assets, selectedAssetId } = nextProps
+    const { assets, searchAssets, selectedAssetId } = nextProps
     let assetsCells = []
 
     if (assets) {
       assetsCells = assets.map(item => ({
+        key: item.id,
+        icon_url: item.icon_url,
+        symbol: item.symbol,
+        contract: item.contract,
+        chain: item.chain
+      }))
+    }
+
+    let searchAssetsCells = []
+
+    if (searchAssets) {
+      searchAssetsCells = searchAssets.map(item => ({
         key: item.id,
         icon_url: item.icon_url,
         symbol: item.symbol,
@@ -100,6 +120,7 @@ export default class AddAssets extends Component {
       || nextProps.getChainXAsset.loading !== prevState.getChainXAssetLoading
       || nextProps.getChainXAsset.error !== prevState.getChainXAssetError
       || (nextProps.assets && nextProps.assets.length) !== prevState.assetsCount
+      || (nextProps.searchAssets && nextProps.searchAssets.length) !== prevState.SearchAssetsCount
     ) {
       return {
         getChainXAssetLoading: nextProps.getChainXAsset.loading,
@@ -112,52 +133,61 @@ export default class AddAssets extends Component {
         getETHAssetLoaded: nextProps.getETHAsset.loaded,
         getETHAssetError: nextProps.getETHAsset.error,
         assetsCount: (nextProps.assets && nextProps.assets.length),
+        searchAssetsCount: (nextProps.searchAssets && nextProps.searchAssets.length),
         dataProvider: dataProvider.cloneWithRows(assetsCells),
+        searchDataProvider: searchDataProvider.cloneWithRows(searchAssetsCells),
         extendedState: { selectedAssetId }
       }
     } else {
       return ({
         dataProvider: dataProvider.cloneWithRows(assetsCells),
+        searchDataProvider: searchDataProvider.cloneWithRows(searchAssetsCells),
         extendedState: { selectedAssetId }
       })
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (
-      prevState.getEOSAssetLoaded !== this.state.getEOSAssetLoaded
-      || prevState.getETHAssetLoaded !== this.state.getETHAssetLoaded
-      || prevState.getChainXAssetLoaded !== this.state.getChainXAssetLoaded
-      || prevState.firstAppeared !== this.state.firstAppeared
-    ) {
-      if ((this.state.getEOSAssetLoaded && this.props.chain === 'EOS') || (this.state.getETHAssetLoaded && this.props.chain === 'ETHEREUM') || (this.state.getChainXAssetLoaded && this.props.chain === 'CHAINX')) {
-        setTimeout(() => {
-          Navigation.mergeOptions(this.props.componentId, {
-            topBar: {
-              searchBar: true,
-              searchBarHiddenWhenScrolling: true,
-              searchBarPlaceholder: 'Search'
-            }
-          })
-        })
-      }
-    }
-  }
-
-  searchBarUpdated({ text, isFocused }) {
-    if (isFocused) {
-      this.props.actions.handleAssetSearchTextChange(text)
-    } else {
-      this.props.actions.handleAssetSearchTextChange('')
-    }
-
-    if (this.tableViewRef) {
-      this.tableViewRef.scrollToIndex({ index: 0, section: 0, animated: true })
-    }
+    /* if (
+     *   prevState.getEOSAssetLoaded !== this.state.getEOSAssetLoaded
+     *   || prevState.getETHAssetLoaded !== this.state.getETHAssetLoaded
+     *   || prevState.getChainXAssetLoaded !== this.state.getChainXAssetLoaded
+     *   || prevState.firstAppeared !== this.state.firstAppeared
+     * ) {
+     *   if ((this.state.getEOSAssetLoaded && this.props.chain === 'EOS') || (this.state.getETHAssetLoaded && this.props.chain === 'ETHEREUM') || (this.state.getChainXAssetLoaded && this.props.chain === 'CHAINX')) {
+     *     setTimeout(() => {
+     *       Navigation.mergeOptions(this.props.componentId, {
+     *         topBar: {
+     *           searchBar: true,
+     *           searchBarHiddenWhenScrolling: true,
+     *           searchBarPlaceholder: 'Search'
+     *         }
+     *       })
+     *     })
+     *   }
+     * }*/
   }
 
   onRefresh = () => {
 
+  }
+
+  navigationButtonPressed({ buttonId }) {
+    switch (buttonId) {
+      case 'search':
+        this.toSearch()
+        break
+      default:
+    }
+  }
+
+  toSearch = () => {
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        height: 64
+      }
+    })
+    this.props.actions.showSearchBar()
   }
 
   componentDidAppear() {
@@ -197,6 +227,8 @@ export default class AddAssets extends Component {
   }
 
   componentDidDisappear() {
+    this.onBackPress()
+
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
         rightButtons: []
@@ -266,8 +298,26 @@ export default class AddAssets extends Component {
     )
   }
 
+  onBackPress = () => {
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        height: 56
+      }
+    })
+    this.props.actions.handleAssetSearchTextChange('')
+    this.props.actions.hideSearchBar()
+  }
+
+  searchBarUpdated = ({ text }) => {
+    this.props.actions.handleAssetSearchTextChange(text)
+  }
+
+  searchBarCleared = () => {
+    this.props.actions.handleAssetSearchTextChange('')
+  }
+
   render() {
-    const { assets, selectedAssetId, getETHAsset, getEOSAsset, getChainXAsset, chain } = this.props
+    const { assets, selectedAssetId, getETHAsset, getEOSAsset, getChainXAsset, chain, ui } = this.props
 
     if ((getEOSAsset.loading || getETHAsset.loading || getChainXAsset.loading) && !assets.length) {
       return (<Loading text="加载资产" />)
@@ -275,6 +325,35 @@ export default class AddAssets extends Component {
 
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <Modal
+          isVisible={ui.searchBarEnabled}
+          backdropOpacity={0.4}
+          useNativeDriver
+          animationIn="fadeIn"
+          animationInTiming={100}
+          backdropTransitionInTiming={100}
+          animationOut="fadeOut"
+          animationOutTiming={100}
+          backdropTransitionOutTiming={100}
+          style={{ margin: 0 }}
+          onBackdropPress={this.onBackPress}
+        >
+          <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
+            <SearchBar onBackPress={this.onBackPress} searchBarUpdated={this.searchBarUpdated} searchBarCleared={this.searchBarCleared} hasSearchResult={!!this.state.searchAssetsCount} />
+            <View style={{ height: 60 * this.state.searchAssetsCount, width: '100%', paddingHorizontal: 8, maxHeight: (Dimensions.get('window').height - 64 - 16 - 8) }}>
+              <View style={{ flex: 1, backgroundColor: 'white', borderBottomLeftRadius: 4, borderBottomRightRadius: 4, overflow: 'hidden' }}>
+                {!!this.state.searchAssetsCount && <RecyclerListView
+                                                     style={{ backgroundColor: 'white', flex: 1 }}
+                                                     layoutProvider={this.layoutProvider}
+                                                     dataProvider={this.state.searchDataProvider}
+                                                     rowRenderer={this.renderItem}
+                                                     renderAheadOffset={60 * 10}
+                                                     extendedState={this.state.extendedState}
+                                                   />}
+              </View>
+            </View>
+          </View>
+        </Modal>
         <RecyclerListView
           layoutProvider={this.layoutProvider}
           dataProvider={this.state.dataProvider}
@@ -282,7 +361,7 @@ export default class AddAssets extends Component {
           renderAheadOffset={60 * 10}
           extendedState={this.state.extendedState}
         />
-        <IndicatorModal isVisible={this.state.showModal} message={this.state.selecting ? '添加中...' : '取消添加中...'} />
+        {/* <IndicatorModal isVisible={this.state.showModal} message={this.state.selecting ? '添加中...' : '取消添加中...'} /> */}
       </View>
     )
   }

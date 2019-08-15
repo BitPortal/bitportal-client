@@ -9,12 +9,31 @@ export const producerSelectedIdsSelector = (state: RootState) => state.producer.
 export const producerSelector = createSelector(
   producerByIdSelector,
   producerAllIdsSelector,
+  (byId: any, allIds: any) => allIds.map(id => byId[id])
+)
+
+export const producerWithSearchSelector = createSelector(
+  producerByIdSelector,
+  producerAllIdsSelector,
   producerSearchTextSelector,
   (byId: any, allIds: any, searchText: string) => {
     if (searchText) {
       return allIds.map(id => byId[id]).filter(item => item.owner.toLowerCase().indexOf(searchText.toLowerCase()) !== -1)
     } else {
       return allIds.map(id => byId[id])
+    }
+  }
+)
+
+export const producerSearchSelector = createSelector(
+  producerByIdSelector,
+  producerAllIdsSelector,
+  producerSearchTextSelector,
+  (byId: any, allIds: any, searchText: string) => {
+    if (searchText) {
+      return allIds.map(id => byId[id]).filter(item => item.owner.toLowerCase().indexOf(searchText.toLowerCase()) !== -1)
+    } else {
+      return []
     }
   }
 )

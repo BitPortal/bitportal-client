@@ -188,7 +188,7 @@ export default class ImportBTCPrivateKeyForm extends Component {
                 separator={true}
                 trailingIcon={<TouchableNativeFeedback onPress={() => {}} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', true)} useForeground={true}>
                   <View style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
-                    <FastImage source={require('resources/images/scan_purple_android.png')} style={{ width: 24, height: 24 }} />
+                    <Image source={require('resources/images/scan_purple_android.png')} style={{ width: 24, height: 24 }} />
                   </View>
                 </TouchableNativeFeedback>}
               />
@@ -199,15 +199,15 @@ export default class ImportBTCPrivateKeyForm extends Component {
               </View>
               <TouchableNativeFeedback onPress={this.changeAddressType.bind(this, true)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48 }}>
-                  {isSegWit && <FastImage source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
-                  {!isSegWit && <FastImage source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
+                  {isSegWit && <Image source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
+                  {!isSegWit && <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
                   <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)' }}>隔离见证</Text>
                 </View>
               </TouchableNativeFeedback>
               <TouchableNativeFeedback onPress={this.changeAddressType.bind(this, false)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48 }}>
-                  {!isSegWit && <FastImage source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
-                  {isSegWit && <FastImage source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
+                  {!isSegWit && <Image source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
+                  {isSegWit && <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
                   <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)' }}>普通</Text>
                 </View>
               </TouchableNativeFeedback>

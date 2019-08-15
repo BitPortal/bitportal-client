@@ -288,8 +288,8 @@ export default class TradeEOSBandWidthForm extends Component {
               </View>
               <TouchableNativeFeedback onPress={this.toggleBandWidth.bind(this, true)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 60 }}>
-                  {this.props.delegate && <FastImage source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
-                  {!this.props.delegate && <FastImage source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
+                  {this.props.delegate && <Image source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
+                  {!this.props.delegate && <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
                   <View>
                     <Text style={{ fontSize: 16, marginBottom: 2, color: 'rgba(0,0,0,0.87)' }}>抵押 CPU/NET</Text>
                     <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)' }}>
@@ -300,8 +300,8 @@ export default class TradeEOSBandWidthForm extends Component {
               </TouchableNativeFeedback>
               <TouchableNativeFeedback onPress={this.toggleBandWidth.bind(this, false)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 60 }}>
-                  {!this.props.delegate && <FastImage source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
-                  {this.props.delegate && <FastImage source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
+                  {!this.props.delegate && <Image source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
+                  {this.props.delegate && <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
                   <View>
                     <Text style={{ fontSize: 16, marginBottom: 2, color: 'rgba(0,0,0,0.87)' }}>赎回 CPU/NET</Text>
                     <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)' }}>

@@ -16,6 +16,7 @@ import * as tickerActions from 'actions/ticker'
 import * as contactActions from 'actions/contact'
 import * as assetActions from 'actions/asset'
 import * as currencyActions from 'actions/currency'
+import * as uiActions from 'actions/ui'
 import { identityWalletSelector, importedWalletSelector, activeWalletSelector } from 'selectors/wallet'
 import { activeWalletBalanceSelector, activeWalletAssetsBalanceSelector } from 'selectors/balance'
 import { activeWalletSelectedAssetsSelector } from 'selectors/asset'
@@ -72,7 +73,8 @@ const icons = {
       ...tickerActions,
       ...contactActions,
       ...assetActions,
-      ...currencyActions
+      ...currencyActions,
+      ...uiActions
     }, dispatch)
   })
 )
@@ -81,27 +83,17 @@ export default class Root extends Component {
   static get options() {
     return {
       topBar: {
+        elevation: 0,
         title: {
           text: '钱包'
         },
-        elevation: 0,
         leftButtons: [
           {
             id: 'sideMenu',
             icon: require('resources/images/menu_android_small.png'),
             color: 'white'
           }
-        ],
-        /* rightButtons: [
-         *   {
-         *     id: 'scan',
-         *     icon: require('resources/images/scan_android.png')
-         *   },
-         *   {
-         *     id: 'list',
-         *     icon: require('resources/images/list_android.png')
-         *   }
-         * ]*/
+        ]
       }
     }
   }
@@ -124,8 +116,46 @@ export default class Root extends Component {
       case 'list':
         this.toManage()
         break
+      case 'scan':
+        this.toCamera()
+        break
+      case 'search':
+        this.toSearch()
+        break
       default:
     }
+  }
+
+  toSearch = () => {
+    this.props.actions.showSearchBar()
+    // this.setState({ searchBarEnabled: true })
+    /* Navigation.showModal({
+     *   stack: {
+     *     children: [{
+     *       component: {
+     *         name: 'BitPortal.SearchMarket'
+     *       }
+     *     }]
+     *   }
+     * })*/
+    /* Navigation.push('BitPortal.Root', {
+     *   component: {
+     *     name: 'BitPortal.SearchMarket'
+     *   }
+     * })*/
+  }
+
+  toCamera = () => {
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.Camera',
+            passProps: { from: 'wallet' }
+          }
+        }]
+      }
+    })
   }
 
   toggleSideMenu() {
@@ -155,48 +185,18 @@ export default class Root extends Component {
   }
 
   componentDidAppear() {
-    let rightButtons = []
-    const index = this.state.index
+    this.setNavBar(this.state.index)
 
-    if (!index) {
-      rightButtons = [
-        {
-          id: 'scan',
-          icon: require('resources/images/scan_android.png')
-        },
-        {
-          id: 'list',
-          icon: require('resources/images/list_android.png')
-        }
-      ]
-    } else if (index == 1) {
-      rightButtons = [
-        {
-          id: 'search',
-          icon: require('resources/images/search_android.png')
-        }
-      ]
-    } else if (index == 2) {
-
+    if (!this.state.index) {
+      if (this.props.activeWallet) {
+        this.props.actions.getBalance.requested(this.props.activeWallet)
+      }
+    } else if (this.state.index === 1) {
+      this.props.actions.getTicker.requested()
     }
-
-    Navigation.mergeOptions(this.props.componentId, {
-      topBar: {
-        rightButtons
-      }
-    })
   }
 
-  componentDidDisappear() {
-    Navigation.mergeOptions(this.props.componentId, {
-      topBar: {
-        rightButtons: []
-      }
-    })
-  }
-
-  onIndexChange = (index) => {
-    this.setState({ index })
+  setNavBar = (index) => {
     const { intl } = this.props
     const titles = [intl.formatMessage({ id: 'top_bar_title_wallet' }), intl.formatMessage({ id: 'top_bar_title_market' }), intl.formatMessage({ id: 'top_bar_title_profile' })]
 
@@ -229,22 +229,52 @@ export default class Root extends Component {
         title: {
           text: titles[index]
         },
-        rightButtons
+        rightButtons,
+        leftButtons: [
+          {
+            id: 'sideMenu',
+            icon: require('resources/images/menu_android_small.png'),
+            color: 'white'
+          }
+        ]
       }
     })
   }
 
+  componentDidDisappear() {
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        rightButtons: []
+      }
+    })
+  }
+
+  onIndexChange = (index) => {
+    this.setState({ index })
+    this.setNavBar(index)
+
+    if (!index) {
+      if (this.props.activeWallet) {
+        this.props.actions.getBalance.requested(this.props.activeWallet)
+      }
+    } else if (index === 1) {
+      this.props.actions.getTicker.requested()
+    }
+  }
+
   render() {
     return (
-      <TabView
-        swipeEnabled={false}
-        scrollEnabled={false}
-        navigationState={this.state}
-        renderScene={SceneMap({ wallet: WalletScreen, market: MarketScreen, profile: ThirdTabScreen })}
-        renderTabBar={props => <TabBar {...props} style={{ backgroundColor: '#673AB7' }} indicatorStyle={{ backgroundColor: 'white', color: 'white' }} renderIcon={({ route, focused }) => <Image source={icons[route.icon]} style={{ width: 18, height: 18, opacity: focused ? 1 : 0.7 }} />} />}
-        onIndexChange={this.onIndexChange}
-        initialLayout={{ width: Dimensions.get('window').width }}
-      />
+      <View style={{ flex: 1 }}>
+        <TabView
+          swipeEnabled={false}
+          scrollEnabled={false}
+          navigationState={this.state}
+          renderScene={SceneMap({ wallet: WalletScreen, market: MarketScreen, profile: ThirdTabScreen })}
+          renderTabBar={props => <TabBar {...props} style={{ backgroundColor: '#673AB7' }} indicatorStyle={{ backgroundColor: 'white', color: 'white' }} renderIcon={({ route, focused }) => <Image source={icons[route.icon]} style={{ width: 18, height: 18, opacity: focused ? 1 : 0.7 }} />} />}
+          onIndexChange={this.onIndexChange}
+          initialLayout={{ width: Dimensions.get('window').width }}
+        />
+      </View>
     )
   }
 }

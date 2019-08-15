@@ -158,7 +158,7 @@ export default class Profile extends Component {
     return (
       <View style={{ flex: 1, backgroundColor: '#FAFAFA' }}>
         <View style={{ width: '100%', height: 172, backgroundColor: '#673AB7' }}>
-          <FastImage
+          <Image
             source={require('resources/images/profile_background_android.png')}
             style={{ width: 535, height: 172, position: 'absolute', left: 0, top: 0 }}
             resizeMode="cover"

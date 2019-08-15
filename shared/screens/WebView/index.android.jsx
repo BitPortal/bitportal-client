@@ -13,7 +13,6 @@ import {
   TouchableHighlight,
   Image,
   LayoutAnimation,
-  ActionSheetIOS,
   ScrollView,
   Animated,
   Easing,
@@ -118,7 +117,7 @@ export default class WebView extends Component {
         rightButtons: [
           {
             id: 'refresh',
-            icon: require('resources/images/refresh.png')
+            icon: require('resources/images/refresh_android.png')
           }
         ]
       },
@@ -261,7 +260,7 @@ export default class WebView extends Component {
     return (
       <View style={[styles.center, styles.content]}>
         <Text style={styles.text18}>
-          <FormattedMessage id="webview_error_text_load_failed" />
+          加载失败
         </Text>
       </View>
     )
@@ -923,8 +922,7 @@ export default class WebView extends Component {
     return (
       <IntlProvider messages={messages[locale]}>
         <View>
-          <View style={{ width: '100%', height: this.state.navigationHeight, backgroundColor: 'rgba(0,0,0,0)' }} />
-          <View style={{ width: '100%', height: Dimensions.get('window').height - tabHeight + 1 - this.state.navigationHeight }}>
+          <View style={{ width: '100%', height: '100%' }}>
             <WebViewBridge
               source={{ uri: url }}
               ref={(e) => { this.webviewbridge = e }}
@@ -944,42 +942,42 @@ export default class WebView extends Component {
               onError={this.onError}
             />
           </View>
-          <Animated.View style={{ width: '100%', height: 2, position: 'absolute', top: this.state.navigationHeight, left: 0, opacity: this.state.progressOpacity }}>
-            <Animated.View style={{ height: '100%', width: this.state.progress, backgroundColor: '#007AFF' }} />
-          </Animated.View>
-          <View style={{ width: '100%', height: tabHeight, backgroundColor: '#F7F7F7', alignItems: 'center', justifyContent: 'center', flex: 1, flexDirection: 'row' }}>
-            <View style={{ position: 'absolute', top: 0, left: 0, width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          {/* <Animated.View style={{ width: '100%', height: 2, position: 'absolute', top: 0, left: 0, opacity: this.state.progressOpacity }}>
+              <Animated.View style={{ height: '100%', width: this.state.progress, backgroundColor: '#007AFF' }} />
+              </Animated.View> */}
+          {/* <View style={{ width: '100%', height: tabHeight, backgroundColor: '#F7F7F7', alignItems: 'center', justifyContent: 'center', flex: 1, flexDirection: 'row' }}>
+              <View style={{ position: 'absolute', top: 0, left: 0, width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
               <TouchableOpacity onPress={this.goBack}>
-                <FastImage
-                  source={require('resources/images/arrow_left_tab.png')}
-                  style={{ width: 30, height: 30 }}
-                />
+              <FastImage
+              source={require('resources/images/arrow_left_tab.png')}
+              style={{ width: 30, height: 30 }}
+              />
               </TouchableOpacity>
-            </View>
-            <View style={{ position: 'absolute', top: 0, left: '25%', width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+              </View>
+              <View style={{ position: 'absolute', top: 0, left: '25%', width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
               <TouchableOpacity onPress={this.goForward}>
-                <FastImage
-                  source={require('resources/images/arrow_right_tab.png')}
-                  style={{ width: 30, height: 30 }}
-                />
+              <FastImage
+              source={require('resources/images/arrow_right_tab.png')}
+              style={{ width: 30, height: 30 }}
+              />
               </TouchableOpacity>
-            </View>
-            <View style={{ position: 'absolute', top: 0, left: '50%', width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+              </View>
+              <View style={{ position: 'absolute', top: 0, left: '50%', width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
               <TouchableOpacity onPress={this.shareDapp}>
-                <FastImage
-                  source={require('resources/images/share.png')}
-                  style={{ width: 32, height: 32 }}
-                />
+              <FastImage
+              source={require('resources/images/share.png')}
+              style={{ width: 32, height: 32 }}
+              />
               </TouchableOpacity>
-            </View>
-            <View style={{ position: 'absolute', top: 0, left: '75%', width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+              </View>
+              <View style={{ position: 'absolute', top: 0, left: '75%', width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
               <TouchableOpacity onPress={this.bookmark}>
-                {isBookmarked && <FastImage source={require('resources/images/bookmarked_tab.png')} style={{ width: 30, height: 30 }} />}
-                {!isBookmarked && <FastImage source={require('resources/images/bookmark_tab.png')} style={{ width: 30, height: 30 }} />}
+              {isBookmarked && <FastImage source={require('resources/images/bookmarked_tab.png')} style={{ width: 30, height: 30 }} />}
+              {!isBookmarked && <FastImage source={require('resources/images/bookmark_tab.png')} style={{ width: 30, height: 30 }} />}
               </TouchableOpacity>
-            </View>
-            <View style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: 0.5, backgroundColor: 'rgba(0,0,0,0.2)' }} />
-          </View>
+              </View>
+              <View style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: 0.5, backgroundColor: 'rgba(0,0,0,0.2)' }} />
+              </View> */}
           {this.props.loadingContract && <View style={{ position: 'absolute', right: 0, left: 0, top: 0, bottom: 0 }}>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
               <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>

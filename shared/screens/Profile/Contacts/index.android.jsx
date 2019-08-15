@@ -120,7 +120,7 @@ export default class Contacts extends Component {
       <TouchableNativeFeedback onPress={this.onPress.bind(this, data.id)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
         <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16 }}>
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-            <FastImage
+            <Image
               source={require('resources/images/profile_placeholder_android.png')}
               style={{ width: 40, height: 40, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', marginRight: 16 }}
             />
@@ -131,19 +131,19 @@ export default class Contacts extends Component {
               </View>
               <View style={{ width: 60, height: 60 }}>
                 {data.hasEOS && <View style={{ backgroundColor: 'white', width: 30, height: 30, borderRadius: 20, position: 'absolute', top: 15, right: (data.hasBTC && data.hasETH) ? 36 : ((!data.hasBTC && !data.hasETH) ? -8 : 14) }}>
-                  <FastImage
+                  <Image
                     source={walletIcons['eos']}
                     style={{ backgroundColor: 'white', width: '100%', height: '100%', borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
                   />
                 </View>}
             {data.hasETH && <View style={{ backgroundColor: 'white', width: 30, height: 30, borderRadius: 20, position: 'absolute', top: 15, right: data.hasBTC ? 14 : -8 }}>
-                  <FastImage
+                  <Image
                     source={walletIcons['ethereum']}
                     style={{ backgroundColor: 'white', width: '100%', height: '100%', borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
                   />
             </View>}
             {data.hasBTC && <View style={{ backgroundColor: 'white', width: 30, height: 30, borderRadius: 20, position: 'absolute', top: 15, right: -8 }}>
-              <FastImage
+              <Image
                 source={walletIcons['bitcoin']}
                 style={{ backgroundColor: 'white', width: '100%', height: '100%', borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
               />

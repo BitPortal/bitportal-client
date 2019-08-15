@@ -266,7 +266,7 @@ export default class Wallet extends Component {
       <TouchableNativeFeedback onPress={this.toAsset.bind(this, data.symbol, data.isToken ? { chain: data.chain, symbol: data.symbol, contract: data.contract, name: data.name } : null)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
         <View style={{ width: '100%', height: 60, paddingLeft: 16, paddingRight: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-            {!!data.chain && !data.isToken && <FastImage source={assetIcons[data.chain.toLowerCase()]} style={{ width: 40, height: 40, marginRight: 16, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}/>}
+            {!!data.chain && !data.isToken && <Image source={assetIcons[data.chain.toLowerCase()]} style={{ width: 40, height: 40, marginRight: 16, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}/>}
             {!!data.isToken && <View style={{
               width: 40,
               height: 40,
@@ -615,7 +615,7 @@ export default class Wallet extends Component {
         <View style={{ flex: 1, backgroundColor: 'white' }}>
           <View style={{ paddingLeft: 16, width: '100%', height: 48, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
             <Text style={{ fontSize: 15, fontWeight: '500' }}>资产</Text>
-            {chain !== 'BITCOIN' && <TouchableNativeFeedback onPress={this.addAssets} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.3)', false)}>
+            {chain !== 'BITCOIN' && <TouchableNativeFeedback onPress={this.addAssets} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.3)', true)}>
               <View style={{ height: 48, width: 48, borderTadius: 24, alignItems: 'center', justifyContent: 'center', paddingRight: 16, paddingLeft: 16 }}>
                 <Image source={require('resources/images/add_android.png')} style={{ width: 24, height: 24 }} />
               </View>

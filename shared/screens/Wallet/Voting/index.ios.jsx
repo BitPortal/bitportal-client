@@ -12,7 +12,7 @@ import * as accountActions from 'actions/account'
 import { managingWalletSelector } from 'selectors/wallet'
 import { managingAccountSelector } from 'selectors/account'
 import {
-  producerSelector,
+  producerWithSearchSelector,
   producerSelectedIdsSelector,
   selectedProducerSelector,
   producerAllIdsSelector,
@@ -51,7 +51,7 @@ export const errorDetail = (error) => {
     vote: state.vote,
     getProducer: state.getProducer,
     wallet: managingWalletSelector(state),
-    producer: producerSelector(state),
+    producer: producerWithSearchSelector(state),
     selectedIds: producerSelectedIdsSelector(state),
     selected: selectedProducerSelector(state),
     allIds: producerIdsSelector(state),

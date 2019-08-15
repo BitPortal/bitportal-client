@@ -17,7 +17,6 @@ import {
   Dimensions,
   Clipboard
 } from 'react-native'
-import FastImage from 'react-native-fast-image'
 import { Navigation } from 'react-native-navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Field, reduxForm, getFormValues, getFormSyncWarnings } from 'redux-form'
@@ -258,8 +257,8 @@ export default class TradeEOSRAMForm extends Component {
               </View>
               <TouchableNativeFeedback onPress={this.toggleRAM.bind(this, true)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 60 }}>
-                  {this.props.buy && <FastImage source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
-                  {!this.props.buy && <FastImage source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
+                  {this.props.buy && <Image source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
+                  {!this.props.buy && <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
                   <View>
                     <Text style={{ fontSize: 16, marginBottom: 2, color: 'rgba(0,0,0,0.87)' }}>买入 RAM</Text>
                     <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)' }}>
@@ -270,8 +269,8 @@ export default class TradeEOSRAMForm extends Component {
               </TouchableNativeFeedback>
               <TouchableNativeFeedback onPress={this.toggleRAM.bind(this, false)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 60 }}>
-                  {!this.props.buy && <FastImage source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
-                  {this.props.buy && <FastImage source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
+                  {!this.props.buy && <Image source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
+                  {this.props.buy && <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
                   <View>
                     <Text style={{ fontSize: 16, marginBottom: 2, color: 'rgba(0,0,0,0.87)' }}>卖出 RAM</Text>
                     <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)' }}>

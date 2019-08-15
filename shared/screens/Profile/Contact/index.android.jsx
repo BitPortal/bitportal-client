@@ -268,7 +268,7 @@ export default class Contact extends Component {
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <View style={{ justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#EEEEEE', width: '100%', height: 160, paddingTop: 24, paddingLeft: 16, paddingRight: 16, paddingBottom: 16 }}>
           <View style={{ height: 61 }}>
-            <FastImage
+            <Image
               source={require('resources/images/profile_placeholder_android.png')}
               style={{ width: 60, height: 60, borderRadius: 30, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
             />

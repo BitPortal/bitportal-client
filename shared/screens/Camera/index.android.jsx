@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, ActionSheetIOS, Alert, Text, ActivityIndicator, Linking, TouchableOpacity, Dimensions, TouchableHighlight, Platform } from 'react-native'
+import { View, ActionSheetIOS, Alert, Text, ActivityIndicator, Linking, TouchableOpacity, Dimensions, TouchableHighlight, Platform, Image } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import * as walletActions from 'actions/wallet'
 import * as assetActions from 'actions/asset'
@@ -19,34 +19,6 @@ import { checkPhoto } from 'utils/permissions'
 import { isJsonString } from 'utils'
 import urlParse from 'url-parse'
 import { validateBTCAddress, validateETHAddress, validateEOSAccountName } from 'utils/validate'
-
-const toolBarMargin = (() => {
-  const isIphoneX = () => {
-    let dimensions
-    if (Platform.OS !== 'ios') {
-      return false
-    }
-    if (Platform.isPad || Platform.isTVOS) {
-      return false
-    }
-    dimensions = Dimensions.get('window')
-    if (dimensions.height === 812 || dimensions.width === 812) { // Checks for iPhone X in portrait or landscape
-      return true
-    }
-    if (dimensions.height === 896 || dimensions.width === 896) {
-      return true
-    }
-    return false
-  }
-
-  if (isIphoneX()) {
-    return 60 // iPhone X
-  } else if (Platform.OS == 'ios') {
-    return 32 // Other iPhones
-  } else {
-    return 32 // Android
-  }
-})()
 
 @connect(
   state => ({
@@ -72,10 +44,8 @@ export default class Camera extends Component {
         backgroundColor: 'black',
       },
       topBar: {
-        visible: false
-      },
-      bottomTabs: {
-        visible: false
+        visible: false,
+        height: 0
       }
     }
   }
@@ -87,7 +57,10 @@ export default class Camera extends Component {
   }
 
   componentDidAppear() {
-    this.setState({ showScanner: true })
+    setTimeout(() => {
+      console.log('componentDidAppear')
+      this.setState({ showScanner: true })
+    })
   }
 
   componentDidMount() {
@@ -310,13 +283,10 @@ export default class Camera extends Component {
                   passProps: { presetAddress: address, presetAmount: amount },
                   options: {
                     topBar: {
-                      title: {
-                        text: `发送${symbol}到`
-                      },
                       leftButtons: [
                         {
                           id: 'cancel',
-                          text: '取消'
+                          icon: require('resources/images/cancel_android.png')
                         }
                       ]
                     },
@@ -364,9 +334,9 @@ export default class Camera extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, background: 'black' }}>
         <QRCodeScanner
-          cameraStyle={{ height: Dimensions.get('window').height }}
+          cameraStyle={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
           topViewStyle={{ flex: 0, height: 0 }}
           bottomViewStyle={{ flex: 0, height: 0 }}
           showMarker={true}
@@ -381,24 +351,20 @@ export default class Camera extends Component {
           <View style={{ position: 'absolute', bottom: 0, left: 0, width: Dimensions.get('window').width, height: (Dimensions.get('window').height - 240) / 2, backgroundColor: 'rgba(0,0,0,0.6)' }} />
           <View style={{ position: 'absolute', top: (Dimensions.get('window').height - 240) / 2, left: 0, width: (Dimensions.get('window').width - 240) / 2, height: 240, backgroundColor: 'rgba(0,0,0,0.6)' }} />
           <View style={{ position: 'absolute', top: (Dimensions.get('window').height - 240) / 2, right: 0, width: (Dimensions.get('window').width - 240) / 2, height: 240, backgroundColor: 'rgba(0,0,0,0.6)' }} />
-          <FastImage
-            source={require('resources/images/camera_marker.png')}
-            style={{ width: 240, height: 240, position: 'absolute', top: (Dimensions.get('window').height - 240) / 2, left: (Dimensions.get('window').width - 240) / 2 }}
-          />
         </View>
-        <TouchableHighlight underlayColor="rgba(0,0,0,0)" activeOpacity={0.42} style={{ position: 'absolute', left: 20, top: toolBarMargin, width: 28, height: 28 }} onPress={this.dismiss}>
-          <View style={{ width: 28, height: 28, backgroundColor: 'white', borderRadius: 14 }}>
-            <FastImage
-              source={require('resources/images/nav_cancel.png')}
+        <TouchableHighlight underlayColor="rgba(0,0,0,0)" activeOpacity={0.42} style={{ position: 'absolute', left: 20, top: 32, width: 28, height: 28 }} onPress={this.dismiss}>
+          <View style={{ width: 28, height: 28, borderRadius: 14, alignItems: 'center', justifyContent: 'center' }}>
+            <Image
+              source={require('resources/images/cancel_circle_white_android.png')}
               style={{ width: 28, height: 28 }}
             />
           </View>
         </TouchableHighlight>
-        <TouchableHighlight underlayColor="rgba(0,0,0,0)" activeOpacity={0.42} style={{ position: 'absolute', right: 20, top: toolBarMargin, width: 28, height: 28, borderRadius: 14 }} onPress={this.getLocalImage}>
-          <View style={{ width: 28, height: 28 }}>
-            <FastImage
-              source={require('resources/images/photos.png')}
-              style={{ width: 28, height: 28 }}
+        <TouchableHighlight underlayColor="rgba(0,0,0,0)" activeOpacity={0.42} style={{ position: 'absolute', right: 20, top: 32, width: 28, height: 28, borderRadius: 14 }} onPress={this.getLocalImage}>
+          <View style={{ width: 28, height: 28, borderRadius: 14, alignItems: 'center', justifyContent: 'center' }}>
+            <Image
+              source={require('resources/images/photo_libary_android.png')}
+              style={{ width: 24, height: 24 }}
             />
           </View>
         </TouchableHighlight>
@@ -407,38 +373,13 @@ export default class Camera extends Component {
           <Text style={{ fontSize: 17, color: 'white', marginTop: 16 }}>将镜头对准二维码进行扫描</Text>
         </View>
         <TouchableHighlight underlayColor="rgba(0,0,0,0)" activeOpacity={0.42} style={{ position: 'absolute', right: (Dimensions.get('window').width / 2) - 14, top: (Dimensions.get('window').height / 2) + 120 + 20, width: 28, height: 28 }} onPress={this.switchFlashMode}>
-          <View style={{ width: 28, height: 28 }}>
-            <FastImage
-              source={require('resources/images/flame.png')}
+          <View style={{ width: 28, height: 28, borderRadius: 14, alignItems: 'center', justifyContent: 'center' }}>
+            <Image
+              source={require('resources/images/highlight_android.png')}
               style={{ width: 28, height: 28 }}
             />
           </View>
         </TouchableHighlight>
-        {/* <View style={{ position: 'absolute', bottom: toolBarMargin, left: 16, right: 16, backgroundColor: 'rgba(255,255,255,0.5)', borderRadius: 14, height: 60, padding: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-            <View style={{ height: 44, width: '50%', paddingRight: 4 }}>
-            <View
-            style={{
-            backgroundColor: 'white',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: 44,
-            width: '100%',
-            borderRadius: 8,
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.2,
-            shadowRadius: 2,
-            shadowColor: '#666'
-            }}
-            >
-            <Text style={{ fontSize: 17, color: 'rgba(0,0,0,0.7)' }}>转账</Text>
-            </View>
-            </View>
-            <View style={{ height: 44, width: '50%', paddingLeft: 4 }}>
-            <View style={{ backgroundColor: 'rgba(0,0,0,0)', alignItems: 'center', justifyContent: 'center', height: 44, width: '100%', borderRadius: 8 }}>
-            <Text style={{ fontSize: 17, color: 'rgba(0,0,0,0.7)' }}>导入</Text>
-            </View>
-            </View>
-            </View> */}
       </View>
     )
   }

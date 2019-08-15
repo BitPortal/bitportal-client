@@ -7,9 +7,11 @@ import { Navigation } from 'react-native-navigation'
 import FastImage from 'react-native-fast-image'
 import * as transactionActions from 'actions/transaction'
 import * as producerActions from 'actions/producer'
+import * as uiActions from 'actions/ui'
 import { managingWalletSelector } from 'selectors/wallet'
 import {
   producerSelector,
+  producerSearchSelector,
   producerSelectedIdsSelector,
   selectedProducerSelector,
   producerAllIdsSelector,
@@ -19,8 +21,10 @@ import Modal from 'react-native-modal'
 import Loading from 'components/Loading'
 import IndicatorModal from 'components/Modal/IndicatorModal'
 import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview'
+import SearchBar from 'components/Form/SearchBar'
 
 const dataProvider = new DataProvider((r1, r2) => r1.key !== r2.key || r1.selected !== r2.selected)
+const searchDataProvider = new DataProvider((r1, r2) => r1.key !== r2.key || r1.selected !== r2.selected)
 
 export const errorMessages = (error, messages) => {
   if (!error) { return null }
@@ -49,10 +53,12 @@ export const errorDetail = (error) => {
 
 @connect(
   state => ({
+    ui: state.ui,
     vote: state.vote,
     getProducer: state.getProducer,
     wallet: managingWalletSelector(state),
     producer: producerSelector(state),
+    searchProducer: producerSearchSelector(state),
     selectedIds: producerSelectedIdsSelector(state),
     selected: selectedProducerSelector(state),
     allIds: producerIdsSelector(state)
@@ -60,7 +66,8 @@ export const errorDetail = (error) => {
   dispatch => ({
     actions: bindActionCreators({
       ...transactionActions,
-      ...producerActions
+      ...producerActions,
+      ...uiActions
     }, dispatch)
   })
 )
@@ -92,7 +99,7 @@ export default class Voting extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const { producer, selectedIds } = nextProps
+    const { producer, selectedIds, searchProducer } = nextProps
 
     const producerList = producer.map(item => ({
       key: item.owner,
@@ -105,11 +112,18 @@ export default class Voting extends Component {
       itemInfo: item
     }))
 
-    if (producerList) {
-      return { dataProvider: dataProvider.cloneWithRows(producerList) }
-    } else {
-      return null
-    }
+    const searchProducerList = searchProducer.map(item => ({
+      key: item.owner,
+      logo: item.info && item.info.org && item.info.org.branding && item.info.org.branding.logo,
+      owner: item.owner,
+      selected: selectedIds && selectedIds.indexOf(item.owner) !== -1,
+      teamName: item.info && item.info.org && item.info.org.name,
+      max_supply: item.max_supply,
+      rank_url: item.rank_url,
+      itemInfo: item
+    }))
+
+    return { dataProvider: dataProvider.cloneWithRows(producerList || []), searchDataProvider: searchDataProvider.cloneWithRows(searchProducerList || []) }
   }
 
   subscription = Navigation.events().bindComponent(this)
@@ -118,6 +132,7 @@ export default class Voting extends Component {
     selected: 0,
     searching: false,
     dataProvider: dataProvider.cloneWithRows([]),
+    searchDataProvider: searchDataProvider.cloneWithRows([]),
     showPrompt: false,
     password: ''
   }
@@ -143,16 +158,13 @@ export default class Voting extends Component {
     } else if (buttonId === 'vote') {
       Keyboard.dismiss()
       this.requestPassword()
-    }
-  }
-
-  searchBarUpdated({ text, isFocused }) {
-    this.setState({ searching: isFocused })
-
-    if (isFocused) {
-      this.props.actions.handleProducerSearchTextChange(text)
-    } else {
-      this.props.actions.handleProducerSearchTextChange('')
+    } else if (buttonId === 'search') {
+      Navigation.mergeOptions(this.props.componentId, {
+        topBar: {
+          height: 64
+        }
+      })
+      this.props.actions.showSearchBar()
     }
   }
 
@@ -203,15 +215,24 @@ export default class Voting extends Component {
               id: 'vote',
               icon: require('resources/images/check_android.png'),
               enabled: !!this.props.selectedIds.length
+            },
+            {
+              id: 'search',
+              icon: require('resources/images/search_android.png')
             }
           ]
         }
       })
 
-      if (prevProps.selectedIds.length < this.props.selectedIds.length && this.props.selectedIds.length > 4) {
-        console.log('scrollTo')
-        this.scrollView.scrollTo({ x: (Dimensions.get('window').width / 4) * this.props.selectedIds.length - Dimensions.get('window').width, animated: true })
-      }
+      /* if (prevProps.selectedIds.length < this.props.selectedIds.length && this.props.selectedIds.length > 4) {
+       *   console.log('scrollTo')
+       *   this.scrollView.scrollTo({ x: (Dimensions.get('window').width / 4) * this.props.selectedIds.length - Dimensions.get('window').width, animated: true })
+       * }*/
+      setTimeout(() => {
+        if (this.scrollView && prevProps.selectedIds.length && prevProps.selectedIds.length < this.props.selectedIds.length && this.props.selectedIds.length > 4) {
+          this.scrollView.scrollToEnd({ animated: true })
+        }
+      })
     }
     LayoutAnimation.easeInEaseOut()
   }
@@ -227,8 +248,22 @@ export default class Voting extends Component {
             id: 'vote',
             icon: require('resources/images/check_android.png'),
             enabled: !!this.props.selectedIds.length
+          },
+          {
+            id: 'search',
+            icon: require('resources/images/search_android.png')
           }
         ]
+      }
+    })
+  }
+
+  componentDidDisappear() {
+    this.onBackPress()
+
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        rightButtons: []
       }
     })
   }
@@ -270,6 +305,7 @@ export default class Voting extends Component {
   }
 
   onAccessoryPress = (item) => {
+    this.onBackPress()
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.ProducerDetail',
@@ -331,18 +367,66 @@ export default class Voting extends Component {
     })
   }
 
+  onBackPress = () => {
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        height: 56
+      }
+    })
+    this.props.actions.handleProducerSearchTextChange('')
+    this.props.actions.hideSearchBar()
+  }
+
+  searchBarUpdated = ({ text }) => {
+    this.props.actions.handleProducerSearchTextChange(text)
+  }
+
+  searchBarCleared = () => {
+    this.props.actions.handleProducerSearchTextChange('')
+  }
+
   render() {
-    const { producer, selectedIds, selected, vote, getProducer, statusBarHeight } = this.props
+    const { producer, searchProducer, selectedIds, selected, vote, getProducer, ui } = this.props
     const loading = vote.loading
 
-    /* if (!getProducer.loaded && getProducer.loading) {
-     *   return (
-     *     <Loading text="获取节点中..." />
-     *   )
-     * }*/
+    if (!getProducer.loaded && getProducer.loading) {
+      return (
+        <Loading text="获取节点中..." />
+      )
+    }
 
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <Modal
+          isVisible={ui.searchBarEnabled}
+          backdropOpacity={0.4}
+          useNativeDriver
+          animationIn="fadeIn"
+          animationInTiming={100}
+          backdropTransitionInTiming={100}
+          animationOut="fadeOut"
+          animationOutTiming={100}
+          backdropTransitionOutTiming={100}
+          style={{ margin: 0 }}
+          onBackdropPress={this.onBackPress}
+        >
+          <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
+            <SearchBar onBackPress={this.onBackPress} searchBarUpdated={this.searchBarUpdated} searchBarCleared={this.searchBarCleared} hasSearchResult={!!searchProducer.length} />
+            <View style={{ height: 60 * searchProducer.length, width: '100%', paddingHorizontal: 8, maxHeight: (Dimensions.get('window').height - 64 - 16 - 8) }}>
+              <View
+                style={{ flex: 1, backgroundColor: 'white', borderBottomLeftRadius: 4, borderBottomRightRadius: 4, overflow: 'hidden' }}
+              >
+                {!!searchProducer.length && <RecyclerListView
+                                                     layoutProvider={this.layoutProvider}
+                                                     dataProvider={this.state.searchDataProvider}
+                                                     rowRenderer={this.renderItem}
+                                                     renderAheadOffset={60 * 10}
+                                                   />}
+              </View>
+            </View>
+          </View>
+        </Modal>
+
         <View style={{ width: '100%', height: selectedIds.length ? 80 : 0, backgroundColor: '#EEEEEE' }}>
           <ScrollView
             style={{ height: selectedIds.length ? 80 : 0 }}

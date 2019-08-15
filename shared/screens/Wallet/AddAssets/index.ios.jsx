@@ -7,7 +7,7 @@ import TableView from 'react-native-tableview'
 import Modal from 'react-native-modal'
 import * as assetActions from 'actions/asset'
 // import FastImage from 'react-native-fast-image'
-import { selectedAssetIdsSelector, assetsSelector } from 'selectors/asset'
+import { selectedAssetIdsSelector, assetsWithSearchSelector } from 'selectors/asset'
 import { activeWalletSelector, activeChainSelector } from 'selectors/wallet'
 import styles from './styles'
 
@@ -17,7 +17,7 @@ import styles from './styles'
     getEOSAsset: state.getEOSAsset,
     getChainXAsset: state.getChainXAsset,
     chain: activeChainSelector(state),
-    assets: assetsSelector(state),
+    assets: assetsWithSearchSelector(state),
     activeWallet: activeWalletSelector(state),
     selectedAssetId: selectedAssetIdsSelector(state)
   }),
