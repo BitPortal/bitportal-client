@@ -1,11 +1,10 @@
 import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, ScrollView, ActionSheetIOS, Alert, Text, ActivityIndicator, Animated, SectionList } from 'react-native'
+import { View, ScrollView, ActionSheetIOS, Alert, Text, ActivityIndicator, Animated, SectionList, Image } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import * as identityActions from 'actions/identity'
 import Modal from 'react-native-modal'
-import FastImage from 'react-native-fast-image'
 import styles from './styles'
 
 export default class ProducerDetail extends Component {
@@ -38,7 +37,7 @@ export default class ProducerDetail extends Component {
             <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)', fontWeight: '500' }}>{item.text}</Text>
           </View>
           <View style={{ position: 'absolute', right: 16 }}>
-            {item.type === 'avatar' && <FastImage source={require('resources/images/profile_placeholder_android.png')} style={{ width: 40, height: 40, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.12)' }} />}
+            {item.type === 'avatar' && <Image source={require('resources/images/profile_placeholder_android.png')} style={{ width: 40, height: 40, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.12)' }} />}
             {item.type !== 'avatar' && <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)', maxWidth: 300, textAlign: 'right' }}>{item.detail}</Text>}
           </View>
         </View>

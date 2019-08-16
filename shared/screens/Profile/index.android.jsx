@@ -3,7 +3,6 @@ import { View, Text, Image, FlatList, TouchableNativeFeedback } from 'react-nati
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 import { injectIntl, FormattedMessage } from 'react-intl'
-import FastImage from 'react-native-fast-image'
 import LinearGradient from 'react-native-linear-gradient'
 import { currencySymbolSelector } from 'selectors/currency'
 import IdentityTableViewCell from 'components/TableViewCell/IdentityTableViewCell'

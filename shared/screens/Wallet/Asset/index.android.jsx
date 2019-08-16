@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, Text, TouchableNativeFeedback, RefreshControl, Dimensions } from 'react-native'
+import { View, Text, TouchableNativeFeedback, RefreshControl, Dimensions, Image } from 'react-native'
 import { injectIntl } from 'react-intl'
 import { Navigation } from 'react-native-navigation'
 import { activeWalletSelector, activeChainSelector } from 'selectors/wallet'
@@ -328,9 +328,9 @@ export default class Asset extends Component {
             <View style={{ flex: 1, height: 44, borderWidth: 0, borderColor: 'red', justifyContent: 'space-between' }}>
               <Text style={{ fontSize: 17, marginBottom: 4, color: 'black' }}>{this.formatAddress(data.targetAddress)}</Text>
               <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                {data.transactionType === 'send' && !data.failed && <FastImage source={require('resources/images/sent.png')} style={{ width: 20, height: 20 }} />}
-                {data.transactionType === 'receive' && !data.failed && <FastImage source={require('resources/images/received.png')} style={{ width: 20, height: 20 }} />}
-                {!!data.failed && <FastImage source={require('resources/images/error_android.png')} style={{ width: 20, height: 20, marginRight: 2 }} />}
+                {data.transactionType === 'send' && !data.failed && <Image source={require('resources/images/sent.png')} style={{ width: 20, height: 20 }} />}
+                {data.transactionType === 'receive' && !data.failed && <Image source={require('resources/images/received.png')} style={{ width: 20, height: 20 }} />}
+                {!!data.failed && <Image source={require('resources/images/error_android.png')} style={{ width: 20, height: 20, marginRight: 2 }} />}
                 {data.transactionType === 'send' && !data.failed && !data.pending && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}>发送</Text>}
                 {data.transactionType === 'receive' && !data.failed && !data.pending && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}>接收</Text>}
                 {!!data.failed && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}>转账失败</Text>}
@@ -366,7 +366,7 @@ export default class Asset extends Component {
           <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', paddingRight: 16, paddingLeft: 16 }}>
             {(!activeAsset || !activeAsset.contract) && !!chain &&
              <View style={{ width: 56, height: 56, backgroundColor: 'white', borderRadius: 28 }}>
-               <FastImage source={assetIcons[chain.toLowerCase()]} style={{ width: 56, height: 56, borderRadius: 28, backgroundColor: 'white' }} />
+               <Image source={assetIcons[chain.toLowerCase()]} style={{ width: 56, height: 56, borderRadius: 28, backgroundColor: 'white' }} />
              </View>
             }
             {(!!activeAsset && !!activeAsset.contract) && <View style={{ width: 56, height: 56, backgroundColor: 'white', borderRadius: 28 }}>
@@ -388,7 +388,7 @@ export default class Asset extends Component {
         </View>
         <TouchableNativeFeedback onPress={this.toTransferAsset} background={TouchableNativeFeedback.Ripple('rgba(255,255,255,0.3)', true)} useForeground={true}>
           <View style={{ width: 56, height: 56, borderRadius: 28, alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 48, right: 16, backgroundColor: '#FF5722', elevation: 10, zIndex: 1 }}>
-            <FastImage
+            <Image
               source={require('resources/images/send_android.png')}
               style={{ width: 24, height: 24 }}
             />

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, ActivityIndicator } from 'react-native'
+import { View, Text, ActivityIndicator, Dimensions } from 'react-native'
 import Modal from 'react-native-modal'
 
 const IndicatorModal = ({ isVisible, message, onModalHide, onModalShow }) => (

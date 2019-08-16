@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { injectIntl, FormattedMessage } from 'react-intl'
-import { View, ActionSheetIOS, Alert, Text, ActivityIndicator, SafeAreaView, SectionList, TouchableNativeFeedback, TextInput, Image } from 'react-native'
+import { View, ActionSheetIOS, Alert, Text, ActivityIndicator, SafeAreaView, SectionList, TouchableNativeFeedback, TextInput, Image, Dimensions } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import * as walletActions from 'actions/wallet'
 import * as producerActions from 'actions/producer'
@@ -11,7 +11,6 @@ import { managingWalletSelector } from 'selectors/wallet'
 import Modal from 'react-native-modal'
 import Dialog from 'components/Dialog'
 import { walletIcons } from 'resources/images'
-import FastImage from 'react-native-fast-image'
 import IndicatorModal from 'components/Modal/IndicatorModal'
 import styles from './styles'
 
@@ -757,7 +756,7 @@ export default class ManageWallet extends Component {
       <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
         <View style={{ justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#673AB7', paddingBottom: 16, elevation: 4, marginBottom: 12 }}>
           <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', paddingRight: 16, paddingLeft: 16 }}>
-            {!!chain && <View style={{ width: 40, height: 40, backgroundColor: 'white', borderRadius: 20 }}><FastImage source={walletIcons[chain.toLowerCase()]} style={{ width: 40, height: 40, borderRadius: 4, backgroundColor: 'white' }} /></View>}
+            {!!chain && <View style={{ width: 40, height: 40, backgroundColor: 'white', borderRadius: 20 }}><Image source={walletIcons[chain.toLowerCase()]} style={{ width: 40, height: 40, borderRadius: 4, backgroundColor: 'white' }} /></View>}
             <View style={{ justifyContent: 'center', alignItems: 'flex-start', marginLeft: 16 }}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'white', marginRight: 2 }}>{name}</Text>

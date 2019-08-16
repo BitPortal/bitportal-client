@@ -109,7 +109,7 @@ export default class AddIdentity extends Component {
         <View
           style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '50%', alignItems: 'center', justifyContent: 'center' }}
         >
-          <FastImage
+          <Image
             source={require('resources/images/add_identity_background.png')}
             style={{ width: '70%', height: '100%' }}
             resizeMode="contain"

@@ -340,7 +340,7 @@ export default class AddAssets extends Component {
         >
           <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
             <SearchBar onBackPress={this.onBackPress} searchBarUpdated={this.searchBarUpdated} searchBarCleared={this.searchBarCleared} hasSearchResult={!!this.state.searchAssetsCount} />
-            <View style={{ height: 60 * this.state.searchAssetsCount, width: '100%', paddingHorizontal: 8, maxHeight: (Dimensions.get('window').height - 64 - 16 - 8) }}>
+            <View style={{ height: 60 * this.state.searchAssetsCount, width: '100%', paddingHorizontal: 8, maxHeight: (Dimensions.get('window').height - 16) }}>
               <View style={{ flex: 1, backgroundColor: 'white', borderBottomLeftRadius: 4, borderBottomRightRadius: 4, overflow: 'hidden' }}>
                 {!!this.state.searchAssetsCount && <RecyclerListView
                                                      style={{ backgroundColor: 'white', flex: 1 }}

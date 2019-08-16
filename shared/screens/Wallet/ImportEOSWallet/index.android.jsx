@@ -16,7 +16,6 @@ import {
   ActivityIndicator,
   TouchableNativeFeedback
 } from 'react-native'
-import FastImage from 'react-native-fast-image'
 import { Navigation } from 'react-native-navigation'
 import { Field, reduxForm, getFormValues, getFormSyncWarnings } from 'redux-form'
 import { FilledTextField, FilledTextArea } from 'components/Form'
@@ -220,7 +219,7 @@ export default class ImportEOSWallet extends Component {
                 nonEmpty={!!privateKey && privateKey.length > 0}
                 trailingIcon={<TouchableNativeFeedback onPress={() => {}} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', true)} useForeground={true}>
                   <View style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
-                    <FastImage source={require('resources/images/scan_purple_android.png')} style={{ width: 24, height: 24 }} />
+                    <Image source={require('resources/images/scan_purple_android.png')} style={{ width: 24, height: 24 }} />
                   </View>
                 </TouchableNativeFeedback>}
               />

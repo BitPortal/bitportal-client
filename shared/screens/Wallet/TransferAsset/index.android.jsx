@@ -165,14 +165,14 @@ const AddressField = ({
     {!!showContact && (
     <View style={{ alignItems: 'center', flexDirection: 'row' }}>
       <View style={{ width: 40, height: 40, marginRight: 16 }}>
-        <FastImage
+        <Image
           source={require('resources/images/profile_placeholder_android.png')}
           style={{ width: 40, height: 40, borderRadius: 20 }}
         />
         <View style={{ height: 34, width: 34, borderRadius: 17, position: 'absolute', right: -15, top: -15, alignItems: 'center', justifyContent: 'center' }}>
           <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'flex-start', justifyContent: 'flex-end', padding: 5 }} activeOpacity={0.8} onPress={clearContact}>
             <View style={{ width: 18, height: 18, borderRadius: 9, backgroundColor: 'white' }}>
-              <FastImage
+              <Image
                 source={require('resources/images/remove_circle_orange_android.png')}
                  style={{ width: 18, height: 18 }}
               />
@@ -337,7 +337,7 @@ const CardField = ({
       <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)', marginTop: 20 }}>{label}</Text>
     </View>
     <View style={{ width: '100%', alignItems: 'center', height: 72, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-      {!!chain && !contract &&  <FastImage source={assetIcons[chain.toLowerCase()]} style={{ width: 40, height: 40, marginRight: 16, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }} />}
+      {!!chain && !contract &&  <Image source={assetIcons[chain.toLowerCase()]} style={{ width: 40, height: 40, marginRight: 16, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }} />}
       {!!contract && <View style={{ width: 41, height: 41, marginRight: 16 }}>
         <View style={{ width: 40, height: 40, borderWidth: 0, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white', borderRadius: 20 }}>
           <View style={{ position: 'absolute', top: 0, left: 0, width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center', backgroundColor: '#B9C1CF' }}>
@@ -348,7 +348,7 @@ const CardField = ({
             style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: iconUrl ? 'white' : 'rgba(0,0,0,0)', borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
           />
         </View>
-        <FastImage source={assetIcons[chain.toLowerCase()]} style={{ position: 'absolute', right: -8, bottom: 0, width: 20, height: 20, borderRadius: 10, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }} />
+        <Image source={assetIcons[chain.toLowerCase()]} style={{ position: 'absolute', right: -8, bottom: 0, width: 20, height: 20, borderRadius: 10, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }} />
       </View>}
       <View>
         <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)' }}>{formatAddress(address)}</Text>

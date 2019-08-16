@@ -18,7 +18,6 @@ import {
   ActionSheetIOS,
   TouchableNativeFeedback
 } from 'react-native'
-import FastImage from 'react-native-fast-image'
 import { activeWalletSelector } from 'selectors/wallet'
 import { activeWalletBalanceSelector } from 'selectors/balance'
 import { managingWalletChildAddressSelector } from 'selectors/address'
@@ -249,7 +248,7 @@ export default class ReceiveAsset extends Component {
           </TouchableNativeFeedback>
           <TouchableNativeFeedback onPress={this.setAmount} background={TouchableNativeFeedback.SelectableBackground()}>
             <View style={{ marginTop: 10, flexDirection: 'row', alignItems: 'center', paddingVertical: 6, paddingHorizontal: 10 }}>
-              <FastImage
+              <Image
                 source={require('resources/images/amount_android.png')}
                 style={{ width: 28, height: 28, marginRight: 4 }}
               />

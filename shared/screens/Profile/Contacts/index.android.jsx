@@ -5,7 +5,6 @@ import { View, Text, TouchableNativeFeedback, Image, Dimensions } from 'react-na
 import { injectIntl } from 'react-intl'
 import { Navigation } from 'react-native-navigation'
 import { contactSelector } from 'selectors/contact'
-import FastImage from 'react-native-fast-image'
 import * as contactActions from 'actions/contact'
 import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview'
 import { walletIcons } from 'resources/images'

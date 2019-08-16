@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
-import { View, Text, ActivityIndicator, Alert, TouchableNativeFeedback, Dimensions } from 'react-native'
+import { View, Text, ActivityIndicator, Alert, TouchableNativeFeedback, Dimensions, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import Modal from 'react-native-modal'
 import { managingWalletSelector } from 'selectors/wallet'
 import { managingWalletAddressSelector, managingWalletChildAddressSelector } from 'selectors/address'
 import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview'
-import FastImage from 'react-native-fast-image'
 import * as walletActions from 'actions/wallet'
 import * as accountActions from 'actions/account'
 import * as addressActions from 'actions/address'
@@ -102,7 +101,7 @@ export default class SwitchBTCAddress extends Component {
             <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)' }}>{data.address}</Text>
             <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)' }}>{`xpub ${data.change}/${data.index}`}</Text>
           </View>
-          {this.state.extendedState.address && this.state.extendedState.address === data.address && <FastImage source={require('resources/images/circle_check_android.png')} style={{ height: 24, width: 24, position: 'absolute', right: 16 }} />}
+          {this.state.extendedState.address && this.state.extendedState.address === data.address && <Image source={require('resources/images/circle_check_android.png')} style={{ height: 24, width: 24, position: 'absolute', right: 16 }} />}
         </View>
       </TouchableNativeFeedback>
     )

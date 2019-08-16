@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
-import { View, Text, ScrollView, Dimensions, LayoutAnimation, TouchableHighlight, ActivityIndicator, Alert, UIManager, TouchableNativeFeedback, TextInput, Keyboard } from 'react-native'
+import { View, Text, ScrollView, Dimensions, LayoutAnimation, TouchableHighlight, ActivityIndicator, Alert, UIManager, TouchableNativeFeedback, TextInput, Keyboard, Image } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import FastImage from 'react-native-fast-image'
 import * as transactionActions from 'actions/transaction'
@@ -319,10 +319,10 @@ export default class Voting extends Component {
       <TouchableNativeFeedback onPress={this.onPress.bind(this, data.owner)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
         <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 4 }}>
           <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-            {data.selected && <FastImage source={require('resources/images/circle_check_android.png')} style={{ width: 24, height: 24, marginRight: 10 }} />}
-            {!data.selected && <FastImage source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, marginRight: 10 }} />}
+            {data.selected && <Image source={require('resources/images/circle_check_android.png')} style={{ width: 24, height: 24, marginRight: 10 }} />}
+            {!data.selected && <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, marginRight: 10 }} />}
             <View style={{ width: 40, height: 40, marginRight: 10 }}>
-              {!data.logo && <FastImage source={require('resources/images/producer.png')} style={{ width: 40, height: 40, marginRight: 10, borderRadius: 40, position: 'absolute', top: 0, left: 0 }} />}
+              {!data.logo && <Image source={require('resources/images/producer.png')} style={{ width: 40, height: 40, marginRight: 10, borderRadius: 40, position: 'absolute', top: 0, left: 0 }} />}
               {data.logo && <FastImage source={{ uri: `https://storage.googleapis.com/bitportal-cms/bp/${data.logo}` }} style={{ width: 40, height: 40, marginRight: 10, borderRadius: 40, position: 'absolute', top: 0, left: 0, borderWidth: 1, borderColor: '#C8C7CE' }} />}
             </View>
             <View style={{ flex: 1 }}>
@@ -332,7 +332,7 @@ export default class Voting extends Component {
           </View>
           <TouchableNativeFeedback onPress={this.onAccessoryPress.bind(this, data.itemInfo)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
             <View style={{ width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center' }}>
-              <FastImage
+              <Image
                 source={require('resources/images/more_android.png')}
                 style={{ width: 24, height: 24, borderRadius: 12 }}
               />
@@ -412,7 +412,7 @@ export default class Voting extends Component {
         >
           <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
             <SearchBar onBackPress={this.onBackPress} searchBarUpdated={this.searchBarUpdated} searchBarCleared={this.searchBarCleared} hasSearchResult={!!searchProducer.length} />
-            <View style={{ height: 60 * searchProducer.length, width: '100%', paddingHorizontal: 8, maxHeight: (Dimensions.get('window').height - 64 - 16 - 8) }}>
+            <View style={{ height: 60 * searchProducer.length, width: '100%', paddingHorizontal: 8, maxHeight: (Dimensions.get('window').height - 16) }}>
               <View
                 style={{ flex: 1, backgroundColor: 'white', borderBottomLeftRadius: 4, borderBottomRightRadius: 4, overflow: 'hidden' }}
               >
@@ -438,7 +438,7 @@ export default class Voting extends Component {
               <View style={{ height: '100%', paddingVertical: 7, width: Dimensions.get('window').width / 4, backgroundColor: '#EEEEEE', flex: 1, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column' }}>
                 <View style={{ height: '100%', width: '100%', flex: 1, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column' }}>
                   <View style={{ width: 40, height: 40 }}>
-                    <FastImage
+                    <Image
                       source={require('resources/images/producer.png')}
                       style={{ width: 40, height: 40, position: 'absolute', top: 0, left: 0 }}
                     />
@@ -447,7 +447,7 @@ export default class Voting extends Component {
                   <Text style={{ color: 'rgba(0,0,0,0.87)', fontSize: 11 }}>{item.owner}</Text>
                   <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ position: 'absolute', top: -2, right: 22, width: 20, height: 20, borderRadius: 10, padding: 2 }} activeOpacity={0.42} onPress={this.onPress.bind(this, item.owner)}>
                     <View style={{ backgroundColor: 'white', width: 16, height: 16, borderRadius: 8, padding: 1 }}>
-                      <FastImage
+                      <Image
                         source={require('resources/images/clear_grey_android.png')}
                         style={{ width: 14, height: 14 }}
                       />

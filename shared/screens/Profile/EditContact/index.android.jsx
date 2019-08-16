@@ -7,7 +7,6 @@ import { Field, reduxForm, getFormValues, getFormSyncWarnings } from 'redux-form
 import { Navigation } from 'react-native-navigation'
 import * as contactActions from 'actions/contact'
 import Modal from 'react-native-modal'
-import FastImage from 'react-native-fast-image'
 import uuidv4 from 'uuid/v4'
 import { validateBTCAddress, validateETHAddress, validateEOSAccountName } from 'utils/validate'
 import { findDuplicate } from 'utils'

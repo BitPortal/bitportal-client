@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { View, Text, FlatList, TouchableNativeFeedback } from 'react-native'
+import { View, Text, FlatList, TouchableNativeFeedback, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
-import FastImage from 'react-native-fast-image'
 import { chainIcons } from 'resources/images'
 
 @connect(
@@ -94,7 +93,7 @@ export default class SelectChainType extends Component {
       <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 8, marginTop: 8, marginBottom: item.isLast ? 8 : 0 }}>
         <TouchableNativeFeedback onPress={this.onPress.bind(this, item.chain)} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', false)} useForeground={true}>
           <View style={{ width: '100%', backgroundColor: 'white', borderRadius: 4, padding: 8, alignItems: 'center', justifyContent: 'center', elevation: 2 }}>
-            <FastImage
+            <Image
               source={chainIcons[item.chain]}
               style={{ width: 200, height: 60 }}
             />

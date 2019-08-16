@@ -30,7 +30,6 @@ import Url from 'url-parse'
 import * as bridgeActions from 'actions/bridge'
 import * as dappActions from 'actions/dapp'
 import SearchWebsiteForm from 'components/Form/SearchWebsiteForm'
-import FastImage from 'react-native-fast-image'
 import Modal from 'react-native-modal'
 import { activeWalletSelector } from 'selectors/wallet'
 import { activeWalletBalanceSelector } from 'selectors/balance'
@@ -302,6 +301,7 @@ export default class WebView extends Component {
   }
 
   onProgress = (data) => {
+    console.log(data)
     if (data > 0 && data < 1) {
       Animated.timing(this.state.progress, {
         toValue: 0.1 * Dimensions.get('window').width + Dimensions.get('window').width * 0.9 * data,
@@ -948,7 +948,7 @@ export default class WebView extends Component {
           {/* <View style={{ width: '100%', height: tabHeight, backgroundColor: '#F7F7F7', alignItems: 'center', justifyContent: 'center', flex: 1, flexDirection: 'row' }}>
               <View style={{ position: 'absolute', top: 0, left: 0, width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
               <TouchableOpacity onPress={this.goBack}>
-              <FastImage
+              <Image
               source={require('resources/images/arrow_left_tab.png')}
               style={{ width: 30, height: 30 }}
               />
@@ -956,7 +956,7 @@ export default class WebView extends Component {
               </View>
               <View style={{ position: 'absolute', top: 0, left: '25%', width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
               <TouchableOpacity onPress={this.goForward}>
-              <FastImage
+              <Image
               source={require('resources/images/arrow_right_tab.png')}
               style={{ width: 30, height: 30 }}
               />
@@ -964,7 +964,7 @@ export default class WebView extends Component {
               </View>
               <View style={{ position: 'absolute', top: 0, left: '50%', width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
               <TouchableOpacity onPress={this.shareDapp}>
-              <FastImage
+              <Image
               source={require('resources/images/share.png')}
               style={{ width: 32, height: 32 }}
               />
@@ -972,8 +972,8 @@ export default class WebView extends Component {
               </View>
               <View style={{ position: 'absolute', top: 0, left: '75%', width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
               <TouchableOpacity onPress={this.bookmark}>
-              {isBookmarked && <FastImage source={require('resources/images/bookmarked_tab.png')} style={{ width: 30, height: 30 }} />}
-              {!isBookmarked && <FastImage source={require('resources/images/bookmark_tab.png')} style={{ width: 30, height: 30 }} />}
+              {isBookmarked && <Image source={require('resources/images/bookmarked_tab.png')} style={{ width: 30, height: 30 }} />}
+              {!isBookmarked && <Image source={require('resources/images/bookmark_tab.png')} style={{ width: 30, height: 30 }} />}
               </TouchableOpacity>
               </View>
               <View style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: 0.5, backgroundColor: 'rgba(0,0,0,0.2)' }} />
@@ -998,7 +998,7 @@ export default class WebView extends Component {
               <View style={{ height: 44, borderBottomWidth: 0.5, borderColor: '#E3E3E4', flex: 1, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
                 {!this.state.showSideCard && <Text style={{ fontSize: 17, fontWeight: 'bold' }}>交易详情</Text>}
                 {!!this.state.showSideCard && <TouchableOpacity onPress={this.toPrev} style={{ height: 44 }} style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <FastImage
+                  <Image
                     source={require('resources/images/arrow_left_short.png')}
                     style={{ height: 18, width: 10, marginRight: 5 }}
                   />

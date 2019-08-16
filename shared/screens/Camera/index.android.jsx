@@ -11,7 +11,6 @@ import { accountByIdSelector, managingAccountVotedProducersSelector } from 'sele
 import { identityWalletSelector, importedWalletSelector, activeWalletSelector } from 'selectors/wallet'
 import { balanceByIdSelector } from 'selectors/balance'
 import Modal from 'react-native-modal'
-import FastImage from 'react-native-fast-image'
 import QRDecode from '@remobile/react-native-qrcode-local-image'
 import ImagePicker from 'react-native-image-crop-picker'
 import { change } from 'redux-form'
@@ -60,7 +59,7 @@ export default class Camera extends Component {
     setTimeout(() => {
       console.log('componentDidAppear')
       this.setState({ showScanner: true })
-    })
+    }, 1000)
   }
 
   componentDidMount() {
@@ -336,7 +335,7 @@ export default class Camera extends Component {
     return (
       <View style={{ flex: 1, background: 'black' }}>
         <QRCodeScanner
-          cameraStyle={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
+          cameraStyle={{ height: Dimensions.get('window').height + 56 }}
           topViewStyle={{ flex: 0, height: 0 }}
           bottomViewStyle={{ flex: 0, height: 0 }}
           showMarker={true}
@@ -346,11 +345,11 @@ export default class Camera extends Component {
           reactivate={false}
           flashMode={this.state.torchOn ? CAMERA_FLASH_MODE.torch : CAMERA_FLASH_MODE.off}
         />
-        <View style={{ position: 'absolute', top: 0, left: 0, width: Dimensions.get('window').width, height: Dimensions.get('window').height, alignItems: 'center', justifyContent: 'center' }}>
-          <View style={{ position: 'absolute', top: 0, left: 0, width: Dimensions.get('window').width, height: (Dimensions.get('window').height - 240) / 2, backgroundColor: 'rgba(0,0,0,0.6)' }} />
-          <View style={{ position: 'absolute', bottom: 0, left: 0, width: Dimensions.get('window').width, height: (Dimensions.get('window').height - 240) / 2, backgroundColor: 'rgba(0,0,0,0.6)' }} />
-          <View style={{ position: 'absolute', top: (Dimensions.get('window').height - 240) / 2, left: 0, width: (Dimensions.get('window').width - 240) / 2, height: 240, backgroundColor: 'rgba(0,0,0,0.6)' }} />
-          <View style={{ position: 'absolute', top: (Dimensions.get('window').height - 240) / 2, right: 0, width: (Dimensions.get('window').width - 240) / 2, height: 240, backgroundColor: 'rgba(0,0,0,0.6)' }} />
+        <View style={{ position: 'absolute', top: 0, left: 0, width: Dimensions.get('window').width, height: (Dimensions.get('window').height + 56), alignItems: 'center', justifyContent: 'center' }}>
+          <View style={{ position: 'absolute', top: 0, left: 0, width: Dimensions.get('window').width, height: ((Dimensions.get('window').height + 56) - 240) / 2, backgroundColor: 'rgba(0,0,0,0.6)' }} />
+          <View style={{ position: 'absolute', bottom: 0, left: 0, width: Dimensions.get('window').width, height: ((Dimensions.get('window').height + 56) - 240) / 2, backgroundColor: 'rgba(0,0,0,0.6)' }} />
+          <View style={{ position: 'absolute', top: ((Dimensions.get('window').height + 56) - 240) / 2, left: 0, width: (Dimensions.get('window').width - 240) / 2, height: 240, backgroundColor: 'rgba(0,0,0,0.6)' }} />
+          <View style={{ position: 'absolute', top: ((Dimensions.get('window').height + 56) - 240) / 2, right: 0, width: (Dimensions.get('window').width - 240) / 2, height: 240, backgroundColor: 'rgba(0,0,0,0.6)' }} />
         </View>
         <TouchableHighlight underlayColor="rgba(0,0,0,0)" activeOpacity={0.42} style={{ position: 'absolute', left: 20, top: 32, width: 28, height: 28 }} onPress={this.dismiss}>
           <View style={{ width: 28, height: 28, borderRadius: 14, alignItems: 'center', justifyContent: 'center' }}>
@@ -368,11 +367,11 @@ export default class Camera extends Component {
             />
           </View>
         </TouchableHighlight>
-        <View style={{ width: Dimensions.get('window').width, position: 'absolute', left: 0, top: (Dimensions.get('window').height / 2) - 240, height: 120, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={{ width: Dimensions.get('window').width, position: 'absolute', left: 0, top: ((Dimensions.get('window').height + 56) / 2) - 240, height: 120, alignItems: 'center', justifyContent: 'center' }}>
           <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'white' }}>扫描二维码</Text>
           <Text style={{ fontSize: 17, color: 'white', marginTop: 16 }}>将镜头对准二维码进行扫描</Text>
         </View>
-        <TouchableHighlight underlayColor="rgba(0,0,0,0)" activeOpacity={0.42} style={{ position: 'absolute', right: (Dimensions.get('window').width / 2) - 14, top: (Dimensions.get('window').height / 2) + 120 + 20, width: 28, height: 28 }} onPress={this.switchFlashMode}>
+        <TouchableHighlight underlayColor="rgba(0,0,0,0)" activeOpacity={0.42} style={{ position: 'absolute', right: (Dimensions.get('window').width / 2) - 14, top: ((Dimensions.get('window').height + 56) / 2) + 120 + 20, width: 28, height: 28 }} onPress={this.switchFlashMode}>
           <View style={{ width: 28, height: 28, borderRadius: 14, alignItems: 'center', justifyContent: 'center' }}>
             <Image
               source={require('resources/images/highlight_android.png')}

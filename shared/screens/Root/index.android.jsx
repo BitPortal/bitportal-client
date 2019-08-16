@@ -6,7 +6,6 @@ import { View, Text, Clipboard, ActivityIndicator, TouchableHighlight, Dimension
 import { Navigation } from 'react-native-navigation'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
 import SplashScreen from 'react-native-splash-screen'
-import Modal from 'react-native-modal'
 import KeyboardManager from 'react-native-keyboard-manager'
 import * as walletActions from 'actions/wallet'
 import * as identityActions from 'actions/identity'

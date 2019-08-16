@@ -5,7 +5,6 @@ import { View, ScrollView, ActionSheetIOS, Alert, Text, ActivityIndicator, Anima
 import { Navigation } from 'react-native-navigation'
 import * as identityActions from 'actions/identity'
 import Modal from 'react-native-modal'
-import FastImage from 'react-native-fast-image'
 import { activeContactSelector } from 'selectors/contact'
 import { identityWalletSelector, importedWalletSelector } from 'selectors/wallet'
 import { balanceByIdSelector } from 'selectors/balance'

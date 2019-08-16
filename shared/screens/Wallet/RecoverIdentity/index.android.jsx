@@ -15,7 +15,6 @@ import {
   SafeAreaView,
   TouchableNativeFeedback
 } from 'react-native'
-import FastImage from 'react-native-fast-image'
 import { Navigation } from 'react-native-navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Field, reduxForm, getFormSyncWarnings, getFormValues } from 'redux-form'
@@ -253,7 +252,7 @@ export default class RecoverIdentity extends Component {
                   separator={true}
                   trailingIcon={<TouchableNativeFeedback onPress={() => {}} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', true)} useForeground={true}>
                     <View style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
-                      <FastImage source={require('resources/images/scan_purple_android.png')} style={{ width: 24, height: 24 }} />
+                      <Image source={require('resources/images/scan_purple_android.png')} style={{ width: 24, height: 24 }} />
                     </View>
                   </TouchableNativeFeedback>}
                 />

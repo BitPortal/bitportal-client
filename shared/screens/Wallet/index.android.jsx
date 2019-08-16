@@ -81,6 +81,12 @@ const PreloadedImages = () => (
       source={require('resources/images/profile_placeholder_android.png')}
       style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
     />
+    <Image
+      source={require('resources/images/profile_background_android.png')}
+      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
+      resizeMode="cover"
+      resizeMethod="resize"
+    />
   </View>
 )
 

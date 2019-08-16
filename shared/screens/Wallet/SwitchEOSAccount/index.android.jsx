@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
-import { View, Text, ActivityIndicator, Alert, Dimensions, TouchableNativeFeedback } from 'react-native'
+import { View, Text, ActivityIndicator, Alert, Dimensions, TouchableNativeFeedback, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import Modal from 'react-native-modal'
@@ -10,7 +10,6 @@ import * as walletActions from 'actions/wallet'
 import * as accountActions from 'actions/account'
 import * as keyAccountActions from 'actions/keyAccount'
 import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview'
-import FastImage from 'react-native-fast-image'
 
 const dataProvider = new DataProvider((r1, r2) => r1.key !== r2.key)
 
@@ -107,7 +106,7 @@ export default class SwitchEOSAccount extends Component {
               <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)' }}>{data.permissions}</Text>
             </View>
           </View>
-          {this.state.extendedState.address && this.state.extendedState.address === data.accountName && <FastImage source={require('resources/images/circle_check_android.png')} style={{ height: 24, width: 24, position: 'absolute', right: 16 }} />}
+          {this.state.extendedState.address && this.state.extendedState.address === data.accountName && <Image source={require('resources/images/circle_check_android.png')} style={{ height: 24, width: 24, position: 'absolute', right: 16 }} />}
         </View>
       </TouchableNativeFeedback>
     )
