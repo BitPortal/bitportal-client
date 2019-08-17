@@ -37,6 +37,7 @@ import globalMessages from 'resources/messages'
 import { walletIcons } from 'resources/images'
 import { dappBookmarkAllIdsSelector } from 'selectors/dapp'
 import { hex_to_ascii } from 'utils'
+import RNWebView from 'react-native-webview'
 import localMessages from './messages'
 import styles from './styles'
 
@@ -110,13 +111,30 @@ export default class WebView extends Component {
   static get options() {
     return {
       topBar: {
-        largeTitle: {
-          visible: false
-        },
+        rightButtonColor: 'white',
         rightButtons: [
           {
+            id: 'share',
+            icon: require('resources/images/share_android.png'),
+            text: '分享',
+            color: 'white'
+          },
+          {
             id: 'refresh',
-            icon: require('resources/images/refresh_android.png')
+            icon: require('resources/images/refresh_android.png'),
+            text: '刷新',
+            color: 'white'
+          },
+          {
+            id: 'next',
+            icon: require('resources/images/next_android.png'),
+            text: '下一页'
+          },
+
+          {
+            id: 'previous',
+            icon: require('resources/images/previous_android.png'),
+            text: '上一页'
           }
         ]
       },
@@ -207,16 +225,34 @@ export default class WebView extends Component {
       this.onLoadStart()
     } else if (buttonId === 'cancel') {
       Navigation.dismissModal(this.props.componentId)
+    } else if (buttonId === 'previous') {
+      this.goBack()
+    } else if (buttonId === 'next') {
+      this.goForward()
+    } else if(buttonId === 'share') {
+      this.share()
     }
   }
 
   textInput = React.createRef()
 
-  share = () => {
+  share = async () => {
     try {
-      Share.share({ url: this.props.uri, title: this.props.title })
-    } catch (e) {
-      console.warn('share error --', e)
+      const result = await Share.share({
+        url: this.props.url, title: this.props.title
+      })
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message)
     }
   }
 
@@ -300,8 +336,8 @@ export default class WebView extends Component {
     }, 500)
   }
 
-  onProgress = (data) => {
-    console.log(data)
+  onProgress = (e) => {
+    const data = e.nativeEvent.progress
     if (data > 0 && data < 1) {
       Animated.timing(this.state.progress, {
         toValue: 0.1 * Dimensions.get('window').width + Dimensions.get('window').width * 0.9 * data,
@@ -918,6 +954,32 @@ export default class WebView extends Component {
       id
     } = this.props
     const isBookmarked = id ? (bookmarkedIds.indexOf(id) !== -1) : false
+
+    if (!inject) {
+      return (
+        <View style={{ flex: 1 }}>
+          <RNWebView
+            source={{ uri: url }}
+            ref={(e) => { this.webviewbridge = e }}
+            renderError={this.renderError}
+            renderLoading={() => {}}
+            startInLoadingState={true}
+            automaticallyAdjustContentInsets={false}
+            onNavigationStateChange={this.onNavigationStateChange}
+            javaScriptEnabled={true}
+            domStorageEnabled={true}
+            decelerationRate="normal"
+            scalesPageToFit={true}
+            nativeConfig={{ props: { backgroundColor: 'white', flex: 1 } }}
+            onLoadProgress={this.onProgress}
+            onError={this.onError}
+          />
+          <Animated.View style={{ width: '100%', height: 2, position: 'absolute', top: 0, left: 0, opacity: this.state.progressOpacity }}>
+            <Animated.View style={{ height: '100%', width: this.state.progress, backgroundColor: '#007AFF' }} />
+          </Animated.View>
+        </View>
+      )
+    }
 
     return (
       <IntlProvider messages={messages[locale]}>

@@ -107,7 +107,7 @@ export default class ReceiveAsset extends Component {
         } else if (result.action === Share.dismissedAction) {
           // dismissed
         }
-      });
+      })
       /* ActionSheetIOS.showShareActionSheetWithOptions({
        *   message: this.getAddressUri(address, this.state.amount, chain, contract, symbol)
        * }, () => {}, () => {})*/

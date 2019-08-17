@@ -217,7 +217,7 @@ export default class WebView extends Component {
 
   share = () => {
     try {
-      Share.share({ url: this.props.uri, title: this.props.title })
+      Share.share({ url: this.props.url, title: this.props.title })
     } catch (e) {
       console.warn('share error --', e)
     }
