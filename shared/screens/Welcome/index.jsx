@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import * as versionActions from 'actions/version'
 import { Navigation } from 'react-native-navigation'
 import { startTabBasedApp } from 'navigators'
 import { View, Text, ImageBackground, TouchableHighlight } from 'react-native'
@@ -56,7 +55,6 @@ const Page3 = ({ goToHomePage }) => (
   }),
   dispatch => ({
     actions: bindActionCreators({
-      ...versionActions
     }, dispatch)
   }),
   null,
@@ -76,7 +74,7 @@ export default class Welcome extends Component {
     if (this.props.from === 'about') {
       Navigation.pop(this.props.componentId)
     } else {
-      this.props.actions.setVersionInfo(VersionNumber.appVersion)
+      // this.props.actions.setVersionInfo(VersionNumber.appVersion)
       startTabBasedApp(this.props.locale)
     }
   }

@@ -31,7 +31,6 @@ import com.dylanvann.fastimage.FastImageViewPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.swmansion.reanimated.ReanimatedPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
-import com.github.godness84.RNRecyclerViewList.RNRecyclerviewListPackage;
 import com.reactnativecommunity.viewpager.RNCViewPagerPackage;
 import com.reactnativecommunity.slider.ReactSliderPackage;
 
@@ -86,7 +85,6 @@ public class MainApplication extends NavigationApplication {
       new AsyncStoragePackage(),
       new ReanimatedPackage(),
       new RNGestureHandlerPackage(),
-      new RNRecyclerviewListPackage(),
       new RNCViewPagerPackage(),
       new ReactSliderPackage()
     );
@@ -105,5 +103,9 @@ public class MainApplication extends NavigationApplication {
   @Override
   public List<ReactPackage> createAdditionalReactPackages() {
     return getPackages();
+  }
+
+  public String getFileProviderAuthority() {
+    return BuildConfig.APPLICATION_ID + ".provider";
   }
 }

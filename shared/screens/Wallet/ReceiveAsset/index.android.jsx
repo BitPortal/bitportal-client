@@ -16,7 +16,8 @@ import {
   Dimensions,
   Clipboard,
   ActionSheetIOS,
-  TouchableNativeFeedback
+  TouchableNativeFeedback,
+  Share
 } from 'react-native'
 import { activeWalletSelector } from 'selectors/wallet'
 import { activeWalletBalanceSelector } from 'selectors/balance'
@@ -26,6 +27,7 @@ import { Navigation } from 'react-native-navigation'
 import QRCode from 'react-native-qrcode-svg'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import * as transactionActions from 'actions/transaction'
+// import RNShare from 'react-native-share'
 import Modal from 'react-native-modal'
 
 const styles = EStyleSheet.create({
@@ -93,6 +95,19 @@ export default class ReceiveAsset extends Component {
       const contract = activeAsset.contract
       const symbol = activeAsset.symbol
 
+      Share.share({
+        message: this.getAddressUri(!this.state.selectedIndex ? address : childAddress, this.state.amount, chain, contract, symbol)
+      }).then(result => {
+        if (result.action === Share.sharedAction) {
+          if (result.activityType) {
+            // shared with activity type of result.activityType
+          } else {
+            // shared
+          }
+        } else if (result.action === Share.dismissedAction) {
+          // dismissed
+        }
+      });
       /* ActionSheetIOS.showShareActionSheetWithOptions({
        *   message: this.getAddressUri(address, this.state.amount, chain, contract, symbol)
        * }, () => {}, () => {})*/
@@ -110,8 +125,14 @@ export default class ReceiveAsset extends Component {
   }
 
   componentDidAppear() {
+    const { activeWallet, childAddress } = this.props
+    const chain = activeWallet.chain
+    const address = activeWallet.address
+    const hasChildAddress = childAddress && childAddress !== address
+
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
+        elevation: hasChildAddress && chain === 'BITCOIN' ? 0 : 4,
         rightButtons: [
           {
             id: 'share',
@@ -165,11 +186,11 @@ export default class ReceiveAsset extends Component {
       return `${chain.toLowerCase()}:${address}?${queryString}`
     }
 
-    return `${chain.toLowerCase()}:${address}`
+    return address
   }
 
-  changeSelectedIndex = (e) => {
-    this.setState({ selectedIndex: e.nativeEvent.selectedSegmentIndex })
+  changeSelectedIndex = (index) => {
+    this.setState({ selectedIndex: index })
   }
 
   requestAmount = () => {
@@ -202,16 +223,22 @@ export default class ReceiveAsset extends Component {
 
     return (
       <View style={[styles.container, { backgroundColor: 'white' }]}>
-        {hasChildAddress && chain === 'BITCOIN' && <View style={{ height: 52, width: '100%', justifyContent: 'center', paddingTop: 5, paddingBottom: 13, paddingLeft: 16, paddingRight: 16, backgroundColor: '#F7F7F7', borderColor: '#C8C7CC', borderBottomWidth: 0.5, marginTop: statusBarHeight + 44 }}>
-          {/* <SegmentedControlIOS
-              values={[value1, value2]}
-              selectedIndex={this.state.selectedIndex}
-              onChange={this.changeSelectedIndex}
-              style={{ width: '100%' }}
-              /> */}
+        {hasChildAddress && chain === 'BITCOIN' && <View style={{ height: 48, width: '100%', flexDirection: 'row', justifyContent: 'center', backgroundColor: '#673AB7', elevation: 4 }}>
+          <TouchableNativeFeedback onPress={this.changeSelectedIndex.bind(this, 0)} background={TouchableNativeFeedback.Ripple('rgba(255,255,255,0.3)', true)}>
+            <View style={{ width: '50%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+              <Text style={{ fontSize: 16, color: 'white' }}>主地址</Text>
+              {!this.state.selectedIndex && <View style={{ width: '100%', height: 2, backgroundColor: 'white', position: 'absolute', bottom: 0, left: 0 }} />}
+            </View>
+          </TouchableNativeFeedback>
+          <TouchableNativeFeedback onPress={this.changeSelectedIndex.bind(this, 1)} background={TouchableNativeFeedback.Ripple('rgba(255,255,255,0.3)', true)}>
+            <View style={{ width: '50%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+              <Text style={{ fontSize: 16, color: 'white' }}>子地址</Text>
+              {this.state.selectedIndex === 1 && <View style={{ width: '100%', height: 2, backgroundColor: 'white', position: 'absolute', bottom: 0, left: 0 }} />}
+            </View>
+          </TouchableNativeFeedback>
         </View>}
-      <ScrollView
-        showsVerticalScrollIndicator={false}
+        <ScrollView
+          showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
         <View style={{ flex: 1, width: '100%', alignItems: 'center', padding: 16 }}>

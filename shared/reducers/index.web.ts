@@ -7,7 +7,6 @@ import chart from './chart'
 import wallet from './wallet'
 import eosAccount from './eosAccount'
 import keystore from './keystore'
-import news from './news'
 import balance from './balance'
 import producer from './producer'
 import currency from './currency'
@@ -32,7 +31,6 @@ export default combineReducers({
   keystore,
   ticker,
   chart,
-  news,
   balance,
   producer,
   currency,
