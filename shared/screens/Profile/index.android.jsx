@@ -57,53 +57,61 @@ export default class Profile extends Component {
   }
 
   toAboutUs = () => {
-    /* Navigation.push(this.props.componentId, {
-     *   component: {
-     *     name: 'BitPortal.WebView',
-     *     passProps: {
-     *       url: 'https://www.bitportal.io/',
-     *       id: 99999
-     *     }
-     *   },
-     *   options: {
-     *     topBar: {
-     *       title: {
-     *         text: 'BitPortal 官网'
-     *       },
-     *       leftButtons: [
-     *         {
-     *           id: 'cancel',
-     *           text: '返回'
-     *         }
-     *       ]
-     *     }
-     *   }
-     * })*/
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.WebView',
+            passProps: {
+              url: 'https://www.bitportal.io/',
+              id: 99999
+            },
+            options: {
+              topBar: {
+                title: {
+                  text: 'BitPortal 官网'
+                },
+                leftButtons: [
+                  {
+                    id: 'cancel',
+                    icon: require('resources/images/cancel_android.png')
+                  }
+                ]
+              }
+            }
+          }
+        }]
+      }
+    })
   }
 
   toHelpCenter = () => {
-    /* Navigation.push(this.props.componentId, {
-     *   component: {
-     *     name: 'BitPortal.WebView',
-     *     passProps: {
-     *       url: 'https://www.bitportal.io/help/',
-     *       id: 99999
-     *     }
-     *   },
-     *   options: {
-     *     topBar: {
-     *       title: {
-     *         text: 'BitPortal 帮助中心'
-     *       },
-     *       leftButtons: [
-     *         {
-     *           id: 'cancel',
-     *           text: '返回'
-     *         }
-     *       ]
-     *     }
-     *   }
-     * })*/
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.WebView',
+            passProps: {
+              url: 'https://www.bitportal.io/help/',
+              id: 99999
+            },
+            options: {
+              topBar: {
+                title: {
+                  text: 'BitPortal 帮助中心'
+                },
+                leftButtons: [
+                  {
+                    id: 'cancel',
+                    icon: require('resources/images/cancel_android.png')
+                  }
+                ]
+              }
+            }
+          }
+        }]
+      }
+    })
   }
 
   componentDidMount() {
@@ -127,6 +135,10 @@ export default class Profile extends Component {
       this.toSettings()
     } else if (type === 'contact') {
       this.toContacts()
+    } else if (type === 'help') {
+      this.toHelpCenter()
+    } else if (type === 'aboutUs') {
+      this.toAboutUs()
     }
   }
 

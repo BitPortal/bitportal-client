@@ -250,7 +250,7 @@ export default class RecoverIdentity extends Component {
                   nonEmpty={!!mnemonics && mnemonics.length > 0}
                   change={change}
                   separator={true}
-                  trailingIcon={<TouchableNativeFeedback onPress={() => {}} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', true)} useForeground={true}>
+                  trailingIcon={<TouchableNativeFeedback onPress={this.scan.bind(this, 'mnemonics')} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', true)} useForeground={true}>
                     <View style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
                       <Image source={require('resources/images/scan_purple_android.png')} style={{ width: 24, height: 24 }} />
                     </View>

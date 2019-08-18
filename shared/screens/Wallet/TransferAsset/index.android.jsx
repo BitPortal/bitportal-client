@@ -465,16 +465,17 @@ export default class TransferAsset extends Component {
       // Navigation.dismissAllModals()
       Navigation.dismissModal(this.props.componentId)
     } else if (buttonId === 'scan') {
-      /* Navigation.showModal({
-       *   stack: {
-       *     children: [{
-       *       component: {
-       *         name: 'BitPortal.Camera',
-       *         passProps: { from: 'transfer', form: 'transferAssetForm', field: 'toAddress', chain: this.props.transferWallet.chain, symbol: this.props.transferWallet.symbol }
-       *       }
-       *     }]
-       *   }
-       * })*/
+      console.log(buttonId)
+      Navigation.showModal({
+        stack: {
+          children: [{
+            component: {
+              name: 'BitPortal.Camera',
+              passProps: { from: 'transfer', form: 'transferAssetForm', field: 'toAddress', chain: this.props.transferWallet.chain, symbol: this.props.transferWallet.symbol }
+            }
+          }]
+        }
+      })
     }
   }
 

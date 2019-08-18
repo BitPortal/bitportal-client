@@ -155,16 +155,16 @@ export default class ImportBTCMnemonicsForm extends Component {
   }
 
   scan = (field) => {
-    /* Navigation.showModal({
-     *   stack: {
-     *     children: [{
-     *       component: {
-     *         name: 'BitPortal.Camera',
-     *         passProps: { from: 'import', form: 'importBTCWalletForm', field }
-     *       }
-     *     }]
-     *   }
-     * })*/
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.Camera',
+            passProps: { from: 'import', form: 'importBTCMnemonicsForm', field }
+          }
+        }]
+      }
+    })
   }
 
   render() {
@@ -187,7 +187,7 @@ export default class ImportBTCMnemonicsForm extends Component {
                 nonEmpty={!!mnemonic && mnemonic.length > 0}
                 change={change}
                 separator={true}
-                trailingIcon={<TouchableNativeFeedback onPress={() => {}} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', true)} useForeground={true}>
+                trailingIcon={<TouchableNativeFeedback onPress={this.scan.bind(this, 'mnemonic')} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', true)} useForeground={true}>
                   <View style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
                     <Image source={require('resources/images/scan_purple_android.png')} style={{ width: 24, height: 24 }} />
                   </View>

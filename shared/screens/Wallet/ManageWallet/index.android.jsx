@@ -375,7 +375,7 @@ export default class ManageWallet extends Component {
                 leftButtons: [
                   {
                     id: 'cancel',
-                    text: '取消'
+                    icon: require('resources/images/cancel_android.png')
                   }
                 ]
               }
@@ -403,7 +403,7 @@ export default class ManageWallet extends Component {
                 leftButtons: [
                   {
                     id: 'cancel',
-                    text: '取消'
+                    icon: require('resources/images/cancel_android.png')
                   }
                 ]
               }
@@ -414,7 +414,7 @@ export default class ManageWallet extends Component {
     })
   }
 
-  chainxToChainXTool = async () => {
+  chainxToChainXTool = () => {
     Navigation.showModal({
       stack: {
         children: [{
@@ -431,7 +431,7 @@ export default class ManageWallet extends Component {
                 leftButtons: [
                   {
                     id: 'cancel',
-                    text: '取消'
+                    icon: require('resources/images/cancel_android.png')
                   }
                 ]
               }
@@ -482,11 +482,18 @@ export default class ManageWallet extends Component {
       case 'vote':
         this.vote()
         return
+      case 'chainxScan':
+        this.chainxToScan()
+        return
+      case 'chainxStats':
+        this.chainxToStats()
+        return
+      case 'chainxTool':
+        this.chainxToChainXTool()
+        return
+      case 'chainxWithdrawal':
       case 'chainxDeposit':
       case 'chainxVoting':
-      case 'chainxWithdrawal':
-      case 'chainxScan':
-      case 'chainxTool':
     }
   }
 
@@ -532,10 +539,6 @@ export default class ManageWallet extends Component {
       case 'keystore':
         this.exportETHKeystore()
         return
-      case 'vote':
-      case 'resources':
-      case 'switchAccount':
-      case 'createAccount':
       case 'delete':
         this.deleteWallet()
         return
@@ -712,11 +715,11 @@ export default class ManageWallet extends Component {
         text: this.props.intl.formatMessage({ id: 'manage_wallet_title_chainx_voting' })
       })
 
-      editActions.push({
-        key: 'chainxWithdrawal',
-        actionType: 'chainxWithdrawal',
-        text: this.props.intl.formatMessage({ id: 'manage_wallet_title_chainx_withdraw' })
-      })
+      /* editActions.push({
+       *   key: 'chainxWithdrawal',
+       *   actionType: 'chainxWithdrawal',
+       *   text: this.props.intl.formatMessage({ id: 'manage_wallet_title_chainx_withdraw' })
+       * })*/
 
       accountActions.push({
         key: 'chainxScan',

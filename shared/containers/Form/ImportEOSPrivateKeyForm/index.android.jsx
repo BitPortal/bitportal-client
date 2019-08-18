@@ -167,16 +167,16 @@ export default class ImportEOSPrivateKeyForm extends Component {
   }
 
   scan = (field) => {
-    /* Navigation.showModal({
-     *   stack: {
-     *     children: [{
-     *       component: {
-     *         name: 'BitPortal.Camera',
-     *         passProps: { from: 'import', form: 'importETHWalletForm', field }
-     *       }
-     *     }]
-     *   }
-     * })*/
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.Camera',
+            passProps: { from: 'import', form: 'importEOSPrivateKeyForm', field }
+          }
+        }]
+      }
+    })
   }
 
   render() {
@@ -198,7 +198,7 @@ export default class ImportEOSPrivateKeyForm extends Component {
                 nonEmpty={!!privateKey && privateKey.length > 0}
                 change={change}
                 separator={true}
-                trailingIcon={<TouchableNativeFeedback onPress={() => {}} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', true)} useForeground={true}>
+                trailingIcon={<TouchableNativeFeedback onPress={this.scan.bind(this, 'privateKey')} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', true)} useForeground={true}>
                   <View style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
                     <Image source={require('resources/images/scan_purple_android.png')} style={{ width: 24, height: 24 }} />
                   </View>
