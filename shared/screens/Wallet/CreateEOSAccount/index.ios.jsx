@@ -399,7 +399,7 @@ export default class CreateEOSAccount extends Component {
     const { formValues, change, wallet } = this.props
     const accountName = formValues && formValues.accountName
     const inviteCode = formValues && formValues.inviteCode
-    const qrValue = { account: accountName, active: wallet.publicKeys[0], owner: wallet.publicKeys[0], blockchain: 'eos' }
+    const qrValue = `eos:createAccount?name=${accountName || ''}&active=${wallet.publicKeys[0] || ''}&owner=${wallet.publicKeys[0] || ''}`
 
     return (
       <SafeAreaView style={{ flex: 1 }}>
@@ -488,7 +488,7 @@ export default class CreateEOSAccount extends Component {
             <View style={{ width: '100%', alignItems: 'flex-start', justifyContent: 'space-between', paddingTop: 16, paddingBottom: 16 , paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
               <View style={{ backgroundColor: 'white' }}>
                 <QRCode
-                  value={JSON.stringify(qrValue)}
+                  value={qrValue}
                   size={120}
                   color="black"
                 />

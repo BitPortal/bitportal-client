@@ -105,10 +105,6 @@ export default class Market extends Component {
     this.props.actions.getTicker.requested()
   }
 
-  componentDidDisappear() {
-    this.onBackPress()
-  }
-
   componentDidUpdate(prevProps, prevState) {
     /* if (
      *   prevState.getTickerLoading !== this.state.getTickerLoading

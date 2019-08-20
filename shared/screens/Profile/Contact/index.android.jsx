@@ -147,7 +147,7 @@ export default class Contact extends Component {
                     leftButtons: [
                       {
                         id: 'cancel',
-                        text: '取消'
+                        icon: require('resources/images/cancel_android.png')
                       }
                     ]
                   }

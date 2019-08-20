@@ -6,6 +6,7 @@ import { getErrorMessage, getEOSErrorMessage } from 'utils'
 import * as actions from 'actions/wallet'
 import * as transactionActions from 'actions/transaction'
 import { getBalance, getETHTokenBalanceList } from 'actions/balance'
+import { getAccount } from 'actions/account'
 import { scanEOSAsset } from 'actions/asset'
 import {
   walletAddressesSelector,
@@ -36,6 +37,7 @@ function* setActiveWallet(action: Action<SetActiveWalletParams>) {
   if (activeWallet.address) {
     if (activeWallet.chain === 'EOS') {
       yield put(scanEOSAsset.requested(activeWallet))
+      yield put(getAccount.requested(activeWallet))
     } else if (activeWallet.chain === 'ETHEREUM') {
       yield put(getETHTokenBalanceList.requested(activeWallet))
     }

@@ -21,3 +21,4 @@ export const delegateBW = createAsyncAction('transaction/delegate_BW')
 export const undelegateBW = createAsyncAction('transaction/undelegate_BW')
 
 export const authorizeEOSAccount = createAsyncAction('transaction/AUTHORIZE_EOS_ACCOUNT')
+export const authorizeCreateEOSAccount = createAsyncAction('transaction/AUTHORIZE_CREATE_EOS_ACCOUNT')

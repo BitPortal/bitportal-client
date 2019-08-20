@@ -899,7 +899,7 @@ export default class TransferAsset extends Component {
           {showMinnerFee && chain === 'BITCOIN' && <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16 }}>
             <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
               <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
-                <Text style={{ fontSize: 15 }}>{intl.formatMessage({id: 'send_label_mining_fee'})}</Text>
+                <Text style={{ fontSize: 15 }}>{intl.formatMessage({id: 'send_input_label_mining_fee'})}</Text>
                 <TouchableHighlight
                   underlayColor="white"
                   activeOpacity={0.42}

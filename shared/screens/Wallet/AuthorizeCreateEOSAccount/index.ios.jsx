@@ -7,8 +7,10 @@ import FastImage from 'react-native-fast-image'
 import { Navigation } from 'react-native-navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { transferWalletSelector } from 'selectors/wallet'
+import { eosRAMPriceSelector } from 'selectors/ticker'
 import * as transactionActions from 'actions/transaction'
 import * as accountActions from 'actions/account'
+import * as tickerActions from 'actions/ticker'
 import Modal from 'react-native-modal'
 
 const styles = EStyleSheet.create({
@@ -43,7 +45,7 @@ export const errorMessages = (error, messages) => {
     case 'Invalid password':
       return '密码错误'
     default:
-      return '授权失败'
+      return '创建失败'
   }
 }
 
@@ -51,18 +53,20 @@ export const errorMessages = (error, messages) => {
 
 @connect(
   state => ({
-    authorizeEOSAccount: state.authorizeEOSAccount,
-    authorizeWallet: transferWalletSelector(state)
+    authorizeCreateEOSAccount: state.authorizeCreateEOSAccount,
+    authorizeWallet: transferWalletSelector(state),
+    ramPrice: eosRAMPriceSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
       ...transactionActions,
-      ...accountActions
+      ...accountActions,
+      ...tickerActions
     }, dispatch)
   })
 )
 
-export default class AuthorizeEOSAccount extends Component {
+export default class AuthorizeCreateEOSAccount extends Component {
   static get options() {
     return {
       topBar: {
@@ -108,7 +112,7 @@ export default class AuthorizeEOSAccount extends Component {
         },
         {
           text: intl.formatMessage({ id: 'alert_button_confirm' }),
-          onPress: password => this.props.actions.authorizeEOSAccount.requested({ password, simpleWallet: this.props.simpleWallet, authorizeWallet: this.props.authorizeWallet })
+          onPress: password => this.props.actions.authorizeCreateEOSAccount.requested({ password, name: this.props.name, active: this.props.active, owner: this.props.owner, authorizeWallet: this.props.authorizeWallet })
         }
       ],
       'secure-text'
@@ -116,9 +120,12 @@ export default class AuthorizeEOSAccount extends Component {
   }
 
   componentDidAppear() {
-    // this.props.actions.authorizeEOSAccount.failed()
-    const { authorizeWallet } = this.props
-    this.props.actions.getAccount.requested({ chain: authorizeWallet.chain, address: authorizeWallet.address })
+    this.props.actions.authorizeCreateEOSAccount.failed()
+    // this.props.actions.authorizeCreateEOSAccount.requested({ chain: authorizeWallet.chain, address: authorizeWallet.address })
+  }
+
+  componentDidMount() {
+    this.props.actions.getEOSRAMTicker.requested()
   }
 
   componentWillUnmount() {
@@ -126,7 +133,7 @@ export default class AuthorizeEOSAccount extends Component {
   }
 
   onModalHide = () => {
-    const error = this.props.authorizeEOSAccount.error
+    const error = this.props.authorizeCreateEOSAccount.error
 
     if (error) {
       setTimeout(() => {
@@ -142,12 +149,12 @@ export default class AuthorizeEOSAccount extends Component {
   }
 
   clearError = () => {
-    this.props.actions.authorizeEOSAccount.clearError()
+    this.props.actions.authorizeCreateEOSAccount.clearError()
   }
 
   render() {
-    const { simpleWallet, authorizeWallet, authorizeEOSAccount } = this.props
-    const loading = authorizeEOSAccount.loading
+    const { name, active, owner, authorizeWallet, authorizeCreateEOSAccount, ramPrice, intl } = this.props
+    const loading = authorizeCreateEOSAccount.loading
 
     return (
       <View style={styles.container}>
@@ -161,24 +168,21 @@ export default class AuthorizeEOSAccount extends Component {
           />
         </View>
         <View style={{ width: '100%', height: 500, paddingHorizontal: 16, paddingVertical: 30 }}>
-          <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }}>
-            <FastImage
-              source={{ uri: simpleWallet.dappIcon }}
-              style={{ width: 80, height: 80, borderRadius: 40, backgroundColor: 'white' }}
-            />
-            <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 10 }}>
-              {simpleWallet.dappName}
-            </Text>
-          </View>
           <View style={{ marginTop: 40, width: '100%' }}>
             <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.5)' }}>
-              授权后该应用将获得一下权限：
+              授权创建EOS账户：
             </Text>
             <Text style={{ fontSize: 17, marginTop: 12, marginBottom: 4 }}>
-              获取您的eos帐号信息
+              新建账户名: {name}
             </Text>
-            <Text style={{ fontSize: 15 }}>
-              注意：帐号授权不会向DAPP提供您的私钥
+            <Text style={{ fontSize: 17, marginTop: 6, marginBottom: 4 }}>
+              Active Key: {active}
+            </Text>
+            <Text style={{ fontSize: 17, marginTop: 6, marginBottom: 4 }}>
+              Owner Key: {owner}
+            </Text>
+            <Text style={{ fontSize: 15, color: '#007AFF', marginTop: 12 }}>
+              {`注意：授权帐号将消耗一些EOS为新帐号购买内存(8192 bytes${typeof ramPrice === 'number' ? ` ≈ ${intl.formatNumber(ramPrice * (8192 / 1024), { minimumFractionDigits: 0, maximumFractionDigits: 4 })} EOS` : ''})和代理资源(0.1 EOS)`}
             </Text>
           </View>
           <View style={{ marginBottom: 40, marginTop: 40, width: '100%' }}>
@@ -190,7 +194,7 @@ export default class AuthorizeEOSAccount extends Component {
             </Text>
           </View>
           <TouchableOpacity style={styles.button} onPress={this.authorize}>
-            <Text style={styles.buttonText}>确认授权</Text>
+            <Text style={styles.buttonText}>确认创建</Text>
           </TouchableOpacity>
         </View>
         <Modal
@@ -208,7 +212,7 @@ export default class AuthorizeEOSAccount extends Component {
           {loading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
               <ActivityIndicator size="small" color="#000000" />
-              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>授权中...</Text>
+              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>创建中...</Text>
             </View>
           </View>}
         </Modal>

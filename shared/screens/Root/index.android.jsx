@@ -187,9 +187,24 @@ export default class Root extends Component {
     this.setNavBar(this.state.index)
 
     if (!this.state.index) {
-      if (this.props.activeWallet) {
-        this.props.actions.getBalance.requested(this.props.activeWallet)
+      const { activeWalletId, activeWallet } = this.props
+
+      if (activeWalletId) {
+        this.props.actions.getBalance.requested(activeWallet)
+
+        if (activeWallet && activeWallet.address) {
+          if (activeWallet.chain === 'EOS') {
+            this.props.actions.scanEOSAsset.requested(activeWallet)
+            this.props.actions.getAccount.requested(activeWallet)
+          } else if (activeWallet.chain === 'ETHEREUM') {
+            this.props.actions.getETHTokenBalanceList.requested(activeWallet)
+          } else if (activeWallet.chain === 'CHAINX') {
+            this.props.actions.getChainXTokenBalanceList.requested(activeWallet)
+          }
+        }
       }
+
+      this.props.actions.getCurrencyRates.requested()
     } else if (this.state.index === 1) {
       this.props.actions.getTicker.requested()
     }

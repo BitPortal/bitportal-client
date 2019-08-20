@@ -82,8 +82,8 @@ export default class Discovery extends Component {
        *   )
        * }*/
       else {
-        // const inject = loadScatterSync()
-        const inject = loadMetaMaskSync()
+        const inject = loadScatterSync()
+        // const inject = loadMetaMaskSync()
 
         Navigation.push(this.props.componentId, {
           component: {

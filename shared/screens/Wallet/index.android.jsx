@@ -264,6 +264,9 @@ export default class Wallet extends Component {
 
   onRefresh = () => {
     this.props.actions.getBalance.refresh(this.props.activeWallet)
+    if (this.props.activeWallet && this.props.activeWallet.chain === 'EOS') {
+      this.props.actions.getAccount.refresh(this.props.activeWallet)
+    }
   }
 
   rowRenderer = (type, data) => {

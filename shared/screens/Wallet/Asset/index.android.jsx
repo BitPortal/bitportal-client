@@ -279,19 +279,29 @@ export default class Asset extends Component {
     const address = this.props.activeWallet.address
     const publicKey = chainxAccount.decodeAddress(address)
     const url = `https://scan.chainx.org/accounts/${publicKey}`
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.WebView',
-        passProps: {
-          url: url
-        },
-        options: {
-          topBar: {
-            title: {
-              text: 'ChainX历史记录'
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.WebView',
+            passProps: {
+              url: url
+            },
+            options: {
+              topBar: {
+                title: {
+                  text: 'ChainX历史记录'
+                },
+                leftButtons: [
+                  {
+                    id: 'cancel',
+                    icon: require('resources/images/cancel_android.png')
+                  }
+                ]
+              }
             }
           }
-        }
+        }]
       }
     })
   }
@@ -400,7 +410,11 @@ export default class Asset extends Component {
           rowRenderer={this.renderItem}
           renderAheadOffset={60 * 10}
           scrollViewProps={{ refreshControl: <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} /> }}
-        />}
+                               />}
+
+        {chain === 'CHAINX' && (<View style={{ marginTop: 50, alignItems: 'center' }}>
+          <Text style={{fontSize: 18, color: '#673AB7' }} onPress={this.toChainXHistory}>ChainX的更多记录请点击这里...</Text>
+        </View>)}
       </View>
     )
   }

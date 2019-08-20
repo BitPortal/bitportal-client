@@ -792,6 +792,35 @@ function* authorizeEOSAccount(action: Action) {
   }
 }
 
+function* authorizeCreateEOSAccount(action: Action) {
+  if (!action.payload) return
+
+  try {
+    const { password, authorizeWallet, name, active, owner } = action.payload
+    yield delay(500)
+    const id = authorizeWallet.id
+    const chain = authorizeWallet.chain
+    const accountName = authorizeWallet.address
+
+    const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    const identityKeystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    const keystore = importedKeystore || identityKeystore
+    assert(keystore && keystore.crypto, 'No keystore')
+
+    assert(chain === 'EOS', 'Invalid chain type')
+
+    const allAccounts = yield select((state: RootState) => state.account)
+    const account = allAccounts.byId[`${chain}/${accountName}`]
+    assert(account, 'No eos account')
+
+    yield call(eosChain.createAccount, password, keystore, accountName, name, active, owner, account.permissions)
+    yield put(actions.authorizeCreateEOSAccount.succeeded())
+    dismissAllModals()
+  } catch (e) {
+    yield put(actions.authorizeCreateEOSAccount.failed(getErrorMessage(e)))
+  }
+}
+
 export default function* transactionSaga() {
   yield takeLatest(String(actions.buyRAM.requested), buyRAM)
   yield takeLatest(String(actions.sellRAM.requested), sellRAM)
@@ -804,4 +833,5 @@ export default function* transactionSaga() {
   yield takeLatest(String(actions.getTransaction.requested), getTransaction)
   yield takeLatest(String(actions.getTransaction.refresh), getTransaction)
   yield takeLatest(String(actions.authorizeEOSAccount.requested), authorizeEOSAccount)
+  yield takeLatest(String(actions.authorizeCreateEOSAccount.requested), authorizeCreateEOSAccount)
 }

@@ -52,6 +52,7 @@ import ManageWallet from 'screens/Wallet/ManageWallet'
 import Voting from 'screens/Wallet/Voting'
 import AddIdentity from 'screens/Wallet/AddIdentity'
 import AuthorizeEOSAccount from 'screens/Wallet/AuthorizeEOSAccount'
+import AuthorizeCreateEOSAccount from 'screens/Wallet/AuthorizeCreateEOSAccount'
 import MyIdentity from 'screens/Wallet/MyIdentity'
 import CreateIdentity from 'screens/Wallet/CreateIdentity'
 import RecoverIdentity from 'screens/Wallet/RecoverIdentity'
@@ -145,6 +146,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.Voting', () => Voting, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.AddIdentity', () => AddIdentity, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.AuthorizeEOSAccount', () => AuthorizeEOSAccount, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.AuthorizeCreateEOSAccount', () => AuthorizeCreateEOSAccount, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.MyIdentity', () => MyIdentity, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.IdentityHeader', () => IdentityHeader, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.CreateIdentity', () => CreateIdentity, Provider, store)
@@ -314,52 +316,52 @@ export const startTabBasedApp = (locale) => {
               }
             }
           },
-          // {
-          //   stack: {
-          //     children: [
-          //       {
-          //         component: {
-          //           id: 'BitPortal.Discovery',
-          //           name: 'BitPortal.Discovery'
-          //         }
-          //       }
-          //     ],
-          //     options: {
-          //       bottomTab: {
-          //         text: '应用',
-          //         textColor: '#9D9D9D',
-          //         iconColor: '#9D9D9D',
-          //         selectedTextColor: '#007AFF',
-          //         icon: require('resources/images/app_tab.png'),
-          //         selectedIconColor: '#007AFF',
-          //         testID: 'BITPORTAL_DISCOVERY'
-          //       }
-          //     }
-          //   }
-          // },
-          // {
-          //   stack: {
-          //     children: [
-          //       {
-          //         component: {
-          //           id: 'BitPortal.News',
-          //           name: 'BitPortal.News'
-          //         }
-          //       }
-          //     ],
-          //     options: {
-          //       bottomTab: {
-          //         text: '资讯',
-          //         textColor: '#9D9D9D',
-          //         iconColor: '#9D9D9D',
-          //         selectedTextColor: '#007AFF',
-          //         icon: require('resources/images/news_tab.png'),
-          //         selectedIconColor: '#007AFF',
-          //         testID: 'BITPORTAL_NEWS'
-          //       }
-          //     }
-          //   }
-          // },
+          {
+            stack: {
+              children: [
+                {
+                  component: {
+                    id: 'BitPortal.Discovery',
+                    name: 'BitPortal.Discovery'
+                  }
+                }
+              ],
+              options: {
+                bottomTab: {
+                  text: '应用',
+                  textColor: '#9D9D9D',
+                  iconColor: '#9D9D9D',
+                  selectedTextColor: '#007AFF',
+                  icon: require('resources/images/app_tab.png'),
+                  selectedIconColor: '#007AFF',
+                  testID: 'BITPORTAL_DISCOVERY'
+                }
+              }
+            }
+          },
+          /* {
+           *   stack: {
+           *     children: [
+           *       {
+           *         component: {
+           *           id: 'BitPortal.News',
+           *           name: 'BitPortal.News'
+           *         }
+           *       }
+           *     ],
+           *     options: {
+           *       bottomTab: {
+           *         text: '资讯',
+           *         textColor: '#9D9D9D',
+           *         iconColor: '#9D9D9D',
+           *         selectedTextColor: '#007AFF',
+           *         icon: require('resources/images/news_tab.png'),
+           *         selectedIconColor: '#007AFF',
+           *         testID: 'BITPORTAL_NEWS'
+           *       }
+           *     }
+           *   }
+           * },*/
           {
             stack: {
               children: [

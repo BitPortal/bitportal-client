@@ -165,7 +165,6 @@ function* getChainXTokenBalanceList(action: Action) {
     }
     const getBalanceBySymbol = (symbol) => {
       const balance = assetsBalance.data.find((asset) => asset.name === symbol)
-      console.log('symbol', symbol, 'balance', balance)
       if (balance && balance.details) {
         return balance.details.Free
       } else {
@@ -195,8 +194,6 @@ function* getBalanceSucceeded(action: Action) {
 
     totalAsset = (balance && price) ? +price * +balance : 0
     yield put(updatePortfolio({ id: `${wallet.chain}/${wallet.address}`, totalAsset }))
-
-    if (wallet.chain === 'EOS') yield put(getAccount.requested(wallet))
   }
 }
 

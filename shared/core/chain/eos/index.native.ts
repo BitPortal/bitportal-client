@@ -410,6 +410,88 @@ export const undelagateBW = async (
   return data.transaction_id
 }
 
+export const createAccount = async (
+  password: string,
+  keystore: any,
+  accountName: string,
+  newAccountName: any,
+  newAccountActive: any,
+  newAccountOwner: any,
+  permissions: any,
+  permission?: string
+) => {
+  const keyPairs = await walletCore.exportPrivateKeys(password, keystore)
+  const permissionKey = await selectKeysForPermission(keyPairs, accountName, permissions, permission)
+  const keyProvider = permissionKey.keys
+  const eosAPI = await initEOS({ keyProvider })
+  const data = await eosAPI.transaction({
+    actions: [
+      {
+        account: 'eosio',
+        name: 'newaccount',
+        authorization: [{
+          actor: accountName,
+          permission: permissionKey.name
+        }],
+        data: {
+          creator: accountName,
+          name: newAccountName,
+          owner: {
+            threshold: 1,
+            keys: [{
+              key: newAccountOwner,
+              weight: 1
+            }],
+            accounts: [],
+            waits: []
+          },
+          active: {
+            threshold: 1,
+            keys: [{
+              key: newAccountActive,
+              weight: 1
+            }],
+            accounts: [],
+            waits: []
+          }
+        }
+      },
+      {
+        account: 'eosio',
+        name: 'delegatebw',
+        authorization: [{
+          actor: accountName,
+          permission: permissionKey.name
+        }],
+        data: {
+          from: accountName,
+          receiver: newAccountName,
+          stake_net_quantity: '0.0500 EOS',
+          stake_cpu_quantity: '0.0500 EOS',
+          transfer: 0
+        }
+      },
+      {
+        account: 'eosio',
+        name: 'buyrambytes',
+        authorization: [{
+          actor: accountName,
+          permission: permissionKey.name
+        }],
+        data: {
+          payer: accountName,
+          receiver: newAccountName,
+          bytes: 8192
+        }
+      }
+    ],
+    broadcast: false,
+    sign: true
+  })
+
+  return data.transaction_id
+}
+
 export const sign = async (
   password: string,
   keystore: any,

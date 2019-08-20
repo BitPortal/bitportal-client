@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, ActionSheetIOS, Alert, Text, ActivityIndicator, Linking, TouchableOpacity, Dimensions, TouchableHighlight, Platform, Image } from 'react-native'
+import { View, ActionSheetIOS, Alert, Text, ActivityIndicator, Linking, TouchableOpacity, Dimensions, TouchableHighlight, Platform, Image, NativeModules } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import * as walletActions from 'actions/wallet'
 import * as assetActions from 'actions/asset'
@@ -18,6 +18,11 @@ import { checkPhoto } from 'utils/permissions'
 import { isJsonString } from 'utils'
 import urlParse from 'url-parse'
 import { validateBTCAddress, validateETHAddress, validateEOSAccountName } from 'utils/validate'
+
+const QRreader = (fileUrl) => {
+  var QRScanReader = NativeModules.QRScanReader
+  return QRScanReader.readerQR(fileUrl)
+}
 
 @connect(
   state => ({
@@ -82,18 +87,17 @@ export default class Camera extends Component {
     if (authorized) {
       const options = { smartAlbums: ['UserLibrary', 'PhotoStream'], cropping: false, mediaType: 'photo' }
       ImagePicker.openPicker(options).then((image) => {
-        return QRDecode.decode(image.path, (error, result) => {
-          if (error) {
-            Alert.alert(
-              '二维码识别失败，请重新尝试或更换晰度更高的图片',
-              '',
-              [
-                { text: '确定', onPress: () => {} }
-              ]
-            )
-          } else {
-            this.parseQrCode(result)
-          }
+        const path = image.path.indexOf('file://') === 0 ? image.path.slice(7) : image.path
+        QRreader(path).then((result) => {
+          this.parseQrCode(result)
+        }).catch((error) => {
+          Alert.alert(
+            '二维码识别失败，请重新尝试或更换晰度更高的图片',
+            '',
+            [
+              { text: '确定', onPress: () => {} }
+            ]
+          )
         })
       }).catch((error) => {
         if (error.code === 'E_PICKER_CANCELLED') {
@@ -176,12 +180,22 @@ export default class Camera extends Component {
           const wallet = (this.props.activeWallet && this.props.activeWallet.chain === 'EOS') ? this.props.activeWallet : this.selectWallet('EOS')
           this.props.actions.setTransferWallet(wallet.id)
 
-          Navigation.setStackRoot(this.props.componentId, {
-            component: {
-              name: 'BitPortal.AuthorizeEOSAccount',
-              passProps: { simpleWallet: json }
-            }
-          })
+          if (!wallet) {
+            Alert.alert(
+              '未检测到可授权的EOS账户',
+              '',
+              [
+                { text: '确定', onPress: () => {} }
+              ]
+            )
+          } else {
+            Navigation.setStackRoot(this.props.componentId, {
+              component: {
+                name: 'BitPortal.AuthorizeEOSAccount',
+                passProps: { simpleWallet: json }
+              }
+            })
+          }
         } else {
           Alert.alert(
             code,
@@ -208,13 +222,53 @@ export default class Camera extends Component {
         }
 
         if (!chain) {
-          Alert.alert(
-            code,
-            '',
-            [
-              { text: '确定', onPress: () => {} }
-            ]
-          )
+          if (protocol === 'eos:' && pathname === 'createAccount') {
+            const name = query.name
+            const active = query.active
+            const owner = query.owner
+
+            if (!validateEOSAccountName(name)) {
+              Alert.alert(
+                `无效的EOS账户名`,
+                null,
+                [
+                  {
+                    text: '确认',
+                    onPress: () => {}
+                  }
+                ]
+              )
+            } else {
+              const wallet = (this.props.activeWallet && this.props.activeWallet.chain === 'EOS' && this.props.balanceById[`${this.props.activeWallet.chain}/${this.props.activeWallet.address}`] && this.props.balanceById[`${this.props.activeWallet.chain}/${this.props.activeWallet.address}`].syscoin && +this.props.balanceById[`${this.props.activeWallet.chain}/${this.props.activeWallet.address}`].syscoin.balance >= 0.5) ? this.props.activeWallet : this.selectWallet('EOS', 0.5)
+
+              if (!wallet) {
+                Alert.alert(
+                  '未检测到可授权的EOS账户',
+                  '',
+                  [
+                    { text: '确定', onPress: () => {} }
+                  ]
+                )
+              } else {
+                this.props.actions.setTransferWallet(wallet.id)
+
+                Navigation.setStackRoot(this.props.componentId, {
+                  component: {
+                    name: 'BitPortal.AuthorizeCreateEOSAccount',
+                    passProps: { name, active, owner }
+                  }
+                })
+              }
+            }
+          } else {
+            Alert.alert(
+              code,
+              '',
+              [
+                { text: '确定', onPress: () => {} }
+              ]
+            )
+          }
         } else {
           const amount = query.amount || query.value
           const contract = query.contract || query.contractAddress
@@ -282,6 +336,9 @@ export default class Camera extends Component {
                   passProps: { presetAddress: address, presetAmount: amount },
                   options: {
                     topBar: {
+                      title: {
+                        text: `发送${symbol}到`
+                      },
                       leftButtons: [
                         {
                           id: 'cancel',
@@ -308,23 +365,19 @@ export default class Camera extends Component {
     const selectedIdentityWallet = this.props.identityWallet.filter(wallet => wallet.address && wallet.chain === chain)
     const selectedImportedWallet = this.props.importedWallet.filter(wallet => wallet.address && wallet.chain === chain)
 
-    if (selectedIdentityWallet.length) {
-      const index = selectedIdentityWallet.findIndex(wallet => this.props.balanceById[`${wallet.chain}/${wallet.address}`] && +this.props.balanceById[`${wallet.chain}/${wallet.address}`].balance >= minimalBalance)
-      if (index !== -1) {
-        return selectedIdentityWallet[index]
-      } else {
-        return selectedIdentityWallet[0]
-      }
-    } else if (selectedImportedWallet.length) {
-      const index = selectedImportedWallet.findIndex(wallet => this.props.balanceById[`${wallet.chain}/${wallet.address}`] && +this.props.balanceById[`${wallet.chain}/${wallet.address}`].balance >= minimalBalance)
-      if (index !== -1) {
-        return selectedImportedWallet[index]
-      } else {
-        return selectedImportedWallet[0]
-      }
+    const identityIndex = selectedIdentityWallet.findIndex(wallet => this.props.balanceById[`${wallet.chain}/${wallet.address}`] && this.props.balanceById[`${wallet.chain}/${wallet.address}`].syscoin && +this.props.balanceById[`${wallet.chain}/${wallet.address}`].syscoin.balance >= minimalBalance)
+
+    if (identityIndex !== -1) {
+      return selectedIdentityWallet[identityIndex]
     }
 
-    return null
+    const importedIndex = selectedImportedWallet.findIndex(wallet => this.props.balanceById[`${wallet.chain}/${wallet.address}`] && this.props.balanceById[`${wallet.chain}/${wallet.address}`].syscoin && +this.props.balanceById[`${wallet.chain}/${wallet.address}`].syscoin.balance >= minimalBalance)
+
+    if (importedIndex !== -1) {
+      return selectedImportedWallet[importedIndex]
+    }
+
+    return selectedIdentityWallet[0] || selectedImportedWallet[0]
   }
 
   dismiss = () => {

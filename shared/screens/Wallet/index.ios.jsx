@@ -199,7 +199,7 @@ export default class Wallet extends Component {
   componentWillUnmount() {
   }
 
-  async componentDidAppear() {
+  componentDidAppear() {
     this.setState({ switching: false })
 
     const { activeWallet } = this.props
@@ -211,6 +211,7 @@ export default class Wallet extends Component {
       if (activeWallet && activeWallet.address) {
         if (activeWallet.chain === 'EOS') {
           this.props.actions.scanEOSAsset.requested(activeWallet)
+          this.props.actions.getAccount.requested(activeWallet)
         } else if (activeWallet.chain === 'ETHEREUM') {
           this.props.actions.getETHTokenBalanceList.requested(activeWallet)
         } else if (activeWallet.chain === 'CHAINX') {
@@ -370,6 +371,9 @@ export default class Wallet extends Component {
 
   onRefresh = () => {
     this.props.actions.getBalance.refresh(this.props.activeWallet)
+    if (this.props.activeWallet && this.props.activeWallet.chain === 'EOS') {
+      this.props.actions.getAccount.refresh(this.props.activeWallet)
+    }
   }
 
   onLeadingSwipe = (data) => {
@@ -490,7 +494,6 @@ export default class Wallet extends Component {
 
     const assetItems = []
     if (balance) {
-      console.log('balance', balance)
       assetItems.push(
         <Item
           key={activeWallet.address}

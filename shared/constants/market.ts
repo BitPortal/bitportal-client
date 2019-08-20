@@ -39,7 +39,7 @@ export const ASSET_FRACTION = {
 
 export const DEFAULT_USD_RATE = {
   USD: 1,
-  CNY: 6.4
+  CNY: 7
 }
 
 export const DEFAULT_SORT_FILTER = 'quote_volume'

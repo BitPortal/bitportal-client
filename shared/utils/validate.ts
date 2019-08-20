@@ -26,4 +26,4 @@ export const validateBTCAddress = (value: string) => {
 
 export const validateETHAddress = (value: string) => web3.utils.isAddress(value)
 
-export const validateEOSAccountName = (value: any) => !!value && /([1-5]|[a-z])+$/.test(value) && value.length === 12
+export const validateEOSAccountName = (value: any) => !!value && /^([1-5]|[a-z.])*$/.test(value) && value.length <= 12
