@@ -144,7 +144,6 @@
   "send_label_balance": "Balance",
   "send_text_memo": "메모",
   "send_error_text_memo_max_character": "최대 입력 가능한 글자수를 초과했습니다.",
-  "send_button_send": "보내기",
   "send_error_popup_text_send_failed": "거래 실패",
   "send_confirm_title_confirm": "Confirm",
   "send_confirm_label_from": "보내기",
@@ -466,5 +465,23 @@
   "scan_simplewallet_trade_button_confirmpayment": "Payment Confirmation",
   "scan_simplewallet_trade_label_desc": "Description",
   "scan_simplewallet_trade_continue": "Continue",
-  "scan_simplewallet_trade_success": "Transaction Successful"
+  "scan_simplewallet_trade_success": "Transaction Successful",
+
+
+  "transfer_button_send": "Transfer",
+  "transfer_button_receive": "Receive",
+  "send_input_label_to_address": "Address",
+  "send_input_label_payer_account": "Payer",
+  "send_input_label_send_amount": "Amount",
+  "send_input_label_send_memo": "Memo",
+  "send_input_label_mining_fee": "Mining Fee",
+  "send_button_send": "Send",
+  "send_input_placeholder_opreturn_hex": "Input OP_RETURN (HEX)",
+  "send_toggle_advanced_setting": "Advanced Setting",
+  "receive_btc_text_main_address": "Main Address",
+  "receive_btc_text_second_address": "Sub Address",
+  "receive_hint_above_qr_code": "Current Address is to receive",
+  "receive_button_copy_address": "Copy Address",
+  "receive_button_setting_amount": "Setting Amount",
+  "receive_alert_title_input_amount": "Input Amount",
 }

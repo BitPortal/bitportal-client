@@ -899,7 +899,7 @@ export default class TransferAsset extends Component {
           {showMinnerFee && chain === 'BITCOIN' && <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16 }}>
             <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
               <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
-                <Text style={{ fontSize: 15 }}>{intl.formatMessage({id: 'send_input_label_mining_fee'})}</Text>
+                <Text style={{ fontSize: 15 }}>{intl.formatMessage({ id: 'send_input_label_mining_fee' })}</Text>
                 <TouchableHighlight
                   underlayColor="white"
                   activeOpacity={0.42}
@@ -946,7 +946,7 @@ export default class TransferAsset extends Component {
             </View>}
           </View>}
           {showMinnerFee && chain === 'ETHEREUM' && <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16 }}>
-            <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+            <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
               <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
                 <Text style={{ fontSize: 15 }}>{intl.formatMessage({ id: 'send_input_label_mining_fee' })}</Text>
                 <TouchableHighlight
@@ -999,17 +999,6 @@ export default class TransferAsset extends Component {
             <View style={{ width: '100%', height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: 16, paddingRight: 16 }}>
               <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <Text style={{ fontSize: 15 }}>{intl.formatMessage({ id: 'send_toggle_advanced_setting' })}</Text>
-                {/* <TouchableHighlight
-                    underlayColor="white"
-                    activeOpacity={0.42}
-                    onPress={this.showOPReturnTip}
-                    style={{ width: 28, height: 28 }}
-                    >
-                    <FastImage
-                    source={require('resources/images/Info.png')}
-                    style={{ width: 28, height: 28, marginLeft: 4 }}
-                    />
-                    </TouchableHighlight> */}
               </View>
               <View>
                 {!this.state.showOPReturn && <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ width: 40, height: 50, justifyContent: 'center', alignItems: 'flex-end' }} onPress={this.addOPReturn}>
@@ -1036,6 +1025,11 @@ export default class TransferAsset extends Component {
               change={change}
               separator
             />}
+            {this.state.showOPReturn && <View style={{ width: '100%', height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: 16, paddingRight: 16 }}>
+              <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <Text style={{ fontSize: 13, color: 'rgba(0,0,0,0.4)' }}>{opreturn && new Buffer.from(opreturn, 'hex').toString()}</Text>
+              </View>
+            </View>}
           </View>
           }
           <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, marginTop: showMinnerFee ? 4 : 16, marginBottom: 20 }}>

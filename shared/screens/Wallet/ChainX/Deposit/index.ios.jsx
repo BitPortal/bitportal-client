@@ -124,7 +124,6 @@ export default class ChainXDeposit extends Component {
     this.setState({ bindedBTCAddress })
     this.setState({ depositBTCAddress })
     this.setState({ loaded: true })
-    Dialog.alert('提示', 'ChainX主网最近暂停了BTC的充值，仅开放提现功能，具体请关注官方公告。使用本功能前，请务必确保主链已开放该功能。')
   }
 
   onRefresh = () => {
