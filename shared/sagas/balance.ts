@@ -155,7 +155,7 @@ function* getChainXTokenBalanceList(action: Action) {
     assert(selectedAsset, 'No selected assets')
     const { assetsBalance, timeout } = yield race({
       assetsBalance: call(chainxChain.getAssetsBalance, address),
-      timeout: delay(1000)
+      timeout: delay(5000)
     })
     if (timeout) {
       throw new Error('request chainx assets timeout')
