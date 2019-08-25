@@ -526,7 +526,7 @@ export default class Wallet extends Component {
                const totalAsset = (portfolio && portfolio[`${wallet.chain}/${wallet.address}`]) ? intl.formatNumber(portfolio[`${wallet.chain}/${wallet.address}`].totalAsset * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'
 
                return (
-                 <View key={wallet.id} style={{ backgroundColor: '#673AB7', width: '100%', height: 176, borderRadius: 4, elevation: 3, overflow: 'hidden' }}>
+                 <View key={wallet.id} style={{ backgroundColor: '#673AB7', width: Dimensions.get('window').width - 32, height: 176, borderRadius: 4, elevation: 3, overflow: 'hidden' }}>
                    <Image
                      source={require('resources/images/card_bg_android.png')}
                      style={{

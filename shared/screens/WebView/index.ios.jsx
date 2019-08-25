@@ -22,7 +22,6 @@ import {
   Alert,
   SafeAreaView
 } from 'react-native'
-import WebViewBridge from 'react-native-webview-bridge'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
@@ -39,7 +38,7 @@ import { activeWalletBalanceSelector } from 'selectors/balance'
 import globalMessages from 'resources/messages'
 import { walletIcons } from 'resources/images'
 import { dappBookmarkAllIdsSelector } from 'selectors/dapp'
-import { hex_to_ascii } from 'utils'
+import RNWebView from 'react-native-webview'
 import localMessages from './messages'
 import styles from './styles'
 
@@ -72,6 +71,28 @@ const tabHeight = (() => {
     return 56 // Android
   }
 })()
+
+const injectedJavascript = inject => `(function() {
+  window.ReactNativeWebView = {
+    postMessage: function(data) {
+        window.webkit.messageHandlers.ReactNativeWebView.postMessage(String(data));
+    }
+  };
+
+  window.WebViewBridge = {
+    onMessage: function() {
+      return null;
+    },
+    send: function(data) {
+      window.ReactNativeWebView.postMessage(data);
+    },
+  };
+  var event = new Event('WebViewBridge');
+  window.dispatchEvent(event);
+  ${inject}
+})()`
+
+const generateOnMessageFunction = data => `(function() { window.WebViewBridge.onMessage('${data}'); })()`
 
 export const errorMessages = (error, messages) => {
   if (!error) { return null }
@@ -186,7 +207,7 @@ export default class WebView extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.messageToSend && prevProps.messageToSend !== this.props.messageToSend && this.webviewbridge) {
-      this.webviewbridge.sendToBridge(this.props.messageToSend)
+      this.sendMessageToWebView(this.props.messageToSend)
     } else if (prevState.showSideCard !== this.state.showSideCard) {
       LayoutAnimation.easeInEaseOut()
     } else if (prevProps.error !== this.props.error && !!this.props.error) {
@@ -198,6 +219,10 @@ export default class WebView extends Component {
         ]
       )
     }
+  }
+
+  sendMessageToWebView = (message) => {
+    this.webviewbridge.injectJavaScript(generateOnMessageFunction(message))
   }
 
   /* componentWillUnmount() {
@@ -262,7 +287,7 @@ export default class WebView extends Component {
     return (
       <View style={[styles.center, styles.content]}>
         <Text style={styles.text18}>
-          <FormattedMessage id="webview_error_text_load_failed" />
+          加载失败
         </Text>
       </View>
     )
@@ -275,8 +300,8 @@ export default class WebView extends Component {
     this.props.actions.setHost(host)
   }
 
-  onBridgeMessage = (message) => {
-    this.props.actions.receiveMessage(message)
+  onBridgeMessage = (event) => {
+    this.props.actions.receiveMessage(event.nativeEvent.data)
   }
 
   rejectMessage = () => {
@@ -290,10 +315,11 @@ export default class WebView extends Component {
   }
 
   closePrompt = () => {
-    this.setState({ showPrompt: false })
-    setTimeout(() => {
-      this.rejectMessage()
-    }, 200)
+    this.setState({ showPrompt: false }, () => {
+      setTimeout(() => {
+        this.rejectMessage()
+      }, 500)
+    })
   }
 
   onModalHide = () => {
@@ -303,7 +329,8 @@ export default class WebView extends Component {
     }, 500)
   }
 
-  onProgress = (data) => {
+  onProgress = (e) => {
+    const data = e.nativeEvent.progress
     if (data > 0 && data < 1) {
       Animated.timing(this.state.progress, {
         toValue: 0.1 * Dimensions.get('window').width + Dimensions.get('window').width * 0.9 * data,
@@ -586,26 +613,7 @@ export default class WebView extends Component {
             <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
           </View>
         </TouchableHighlight>
-        <Animated.View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, opacity: this.state.passwordTextInputOpacity, paddingHorizontal: 18 }}>
-          <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>输入密码</Text>
-          <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row' }}>
-            <TextInput
-              style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, width: '100%' }}
-              autoCorrect={false}
-              autoCapitalize="none"
-              onChangeText={this.onPasswordChange}
-              value={this.state.passwordValue}
-              ref={this.textInput}
-              onBlur={this.onPasswordBlur}
-              onSubmitEditing={this.submit}
-              disabled
-              secureTextEntry
-              focuses
-            />
-          </View>
-          {(!!this.state.largeAmount || !!this.props.resolving) && <View style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0 }} />}
-          <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
-        </Animated.View>
+        {this.renderPasswordInput()}
       </Fragment>
     )
   }
@@ -664,9 +672,7 @@ export default class WebView extends Component {
         <Animated.Text style={{ fontSize: 13, color: '#A2A2A6', width: 95, position: 'absolute', left: 18, top: 15, opacity: this.state.amountLabelOpacity }}>
             支付金额
         </Animated.Text>
-        <Animated.View
-            style={{ flexDirection: 'row', marginLeft: this.state.amountMarginLeft }}
-        >
+        <Animated.View style={{ flexDirection: 'row', marginLeft: this.state.amountMarginLeft }}>
           <Animated.Text style={{ fontSize: this.state.amountFontSize }}>
             {action.data.quantity.split(' ')[0]}
           </Animated.Text>
@@ -690,37 +696,47 @@ export default class WebView extends Component {
           <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
         </View>
       </TouchableHighlight>
+      {this.renderPasswordInput()}
+    </Fragment>
+  )
+
+  renderPasswordInput = () => {
+    return (
       <Animated.View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, opacity: this.state.passwordTextInputOpacity, paddingHorizontal: 18 }}>
         <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>输入密码</Text>
         <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row' }}>
           <TextInput
-              style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, width: '100%' }}
-              autoCorrect={false}
-              autoCapitalize="none"
-              onChangeText={this.onPasswordChange}
-              value={this.state.passwordValue}
-              ref={this.textInput}
-              onBlur={this.onPasswordBlur}
-              onSubmitEditing={this.submit}
-              disabled
-              secureTextEntry
-              focuses
+            style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, width: '100%' }}
+            autoCorrect={false}
+            autoCapitalize="none"
+            onChangeText={this.onPasswordChange}
+            value={this.state.passwordValue}
+            ref={this.textInput}
+            onBlur={this.onPasswordBlur}
+            onSubmitEditing={this.submit}
+            disabled
+            secureTextEntry
+            focuses
           />
         </View>
         {(!!this.state.largeAmount || !!this.props.resolving) && <View style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0 }} />}
         <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
       </Animated.View>
-      {/* <Animated.View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, opacity: this.state.whiteListOpacity, paddingHorizontal: 18 }}>
-            <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>白名单</Text>
-            <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', height: '100%', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Text style={{ fontSize: 13 }}>开启后无需输入交易密码</Text>
-            <Switch value={this.state.whiteListOpen} onValueChange={this.onWhiteListChange} />
-            </View>
-            {(!!this.state.largeAmount || !!this.props.resolving) && <View style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0 }} />}
-            <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
-            </Animated.View> */}
-    </Fragment>
-  )
+    )
+  }
+
+  renderSubmitButton = () => {
+    return (
+      <View style={{ paddingTop: 10, paddingBottom: 10, position: 'absolute', bottom: 0, left: 0, width: '100%', paddingHorizontal: 18 }}>
+        <TouchableOpacity style={{ backgroundColor: '#007AFF', borderRadius: 10, width: '100%', height: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.7} onPress={this.state.largeAmount ? this.changeAmountSize : this.submit} disabled={!!this.props.resolving}>
+          {(!!this.state.largeAmount || !this.state.passwordValue) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>确认交易</Text>}
+          {(!this.state.largeAmount && !!this.state.passwordValue && !this.props.resolving) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>验证密码</Text>}
+          {(!this.state.largeAmount && !!this.state.passwordValue && !!this.props.resolving) && <ActivityIndicator size="small" color="#ffffff" style={{ marginRight: 5 }} />}
+          {(!this.state.largeAmount && !!this.state.passwordValue && !!this.props.resolving) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>验证密码中...</Text>}
+        </TouchableOpacity>
+      </View>
+    )
+  }
 
   renderTransactionDetail = (message) => {
     if (message.type === 'requestSignature') {
@@ -777,14 +793,7 @@ export default class WebView extends Component {
           <View style={{ height: 340 }}>
             {(name === 'transfer' && account === 'eosio.token') && this.renderTransferAction(action)}
             {(name !== 'transfer' || account !== 'eosio.token') && this.renderContractAction(action)}
-            <View style={{ paddingTop: 10, paddingBottom: 10, position: 'absolute', bottom: 0, left: 0, width: '100%', paddingHorizontal: 18 }}>
-              <TouchableOpacity style={{ backgroundColor: '#007AFF', borderRadius: 10, width: '100%', height: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.7} onPress={this.state.largeAmount ? this.changeAmountSize : this.submit} disabled={!!this.props.resolving}>
-                {(!!this.state.largeAmount || !this.state.passwordValue) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>确认交易</Text>}
-                {(!this.state.largeAmount && !!this.state.passwordValue && !this.props.resolving) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>验证密码</Text>}
-                {(!this.state.largeAmount && !!this.state.passwordValue && !!this.props.resolving) && <ActivityIndicator size="small" color="#ffffff" style={{ marginRight: 5 }} />}
-                {(!this.state.largeAmount && !!this.state.passwordValue && !!this.props.resolving) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>验证密码中...</Text>}
-              </TouchableOpacity>
-            </View>
+            {this.renderSubmitButton()}
           </View>
         )
       }
@@ -805,34 +814,8 @@ export default class WebView extends Component {
             </View>
             <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
           </View>
-          <Animated.View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, opacity: this.state.passwordTextInputOpacity, paddingHorizontal: 18 }}>
-            <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>输入密码</Text>
-            <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row' }}>
-              <TextInput
-                style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, width: '100%' }}
-                autoCorrect={false}
-                autoCapitalize="none"
-                onChangeText={this.onPasswordChange}
-                value={this.state.passwordValue}
-                ref={this.textInput}
-                onBlur={this.onPasswordBlur}
-                onSubmitEditing={this.submit}
-                disabled
-                secureTextEntry
-                focuses
-              />
-            </View>
-            {(!!this.state.largeAmount || !!this.props.resolving) && <View style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0 }} />}
-            <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
-          </Animated.View>
-          <View style={{ paddingTop: 10, paddingBottom: 10, position: 'absolute', bottom: 0, left: 0, width: '100%', paddingHorizontal: 18 }}>
-            <TouchableOpacity style={{ backgroundColor: '#007AFF', borderRadius: 10, width: '100%', height: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.7} onPress={this.state.largeAmount ? this.changeAmountSize : this.submit} disabled={!!this.props.resolving}>
-              {(!!this.state.largeAmount || !this.state.passwordValue) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>确认签名</Text>}
-              {(!this.state.largeAmount && !!this.state.passwordValue && !this.props.resolving) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>验证密码</Text>}
-              {(!this.state.largeAmount && !!this.state.passwordValue && !!this.props.resolving) && <ActivityIndicator size="small" color="#ffffff" style={{ marginRight: 5 }} />}
-              {(!this.state.largeAmount && !!this.state.passwordValue && !!this.props.resolving) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>验证密码中...</Text>}
-            </TouchableOpacity>
-          </View>
+          {this.renderPasswordInput()}
+          {this.renderSubmitButton()}
         </View>
       )
     } else if (message.type === 'eth_rpc_request') {
@@ -870,44 +853,252 @@ export default class WebView extends Component {
             <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
               <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>签名内容</Text>
               <ScrollView contentContainerStyle={{ width: Dimensions.get('window').width - 36 - 95, justifyContent: 'space-between', flexDirection: 'row' }} style={{ maxHeight: 32 }}>
-                <Text style={{ fontSize: 13 }}>{hex_to_ascii(message.payload.params[0])}</Text>
+                <Text style={{ fontSize: 13 }} ellipsizeMode="tail" numberOfLines={200}>{message.info.data}</Text>
               </ScrollView>
               <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
             </View>
-            <Animated.View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, opacity: this.state.passwordTextInputOpacity, paddingHorizontal: 18 }}>
-              <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>输入密码</Text>
-              <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row' }}>
-                <TextInput
-                  style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, width: '100%' }}
-                  autoCorrect={false}
-                  autoCapitalize="none"
-                  onChangeText={this.onPasswordChange}
-                  value={this.state.passwordValue}
-                  ref={this.textInput}
-                  onBlur={this.onPasswordBlur}
-                  onSubmitEditing={this.submit}
-                  disabled
-                  secureTextEntry
-                  focuses
-                />
+            {this.renderPasswordInput()}
+            {this.renderSubmitButton()}
+          </View>
+        )
+      } else if (message.payload.method === 'eth_sign') {
+        return (
+          <View style={{ height: 335 }}>
+            <Animated.View style={{ paddingVertical: this.state.amountContainerPaddingVertical, height: this.state.amountContainerHeight, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 18 }}>
+              <View
+                style={{ flexDirection: 'row', position: 'absolute', left: '-100%', top: 25, opacity: 1 }}
+                onLayout={(event) => {
+                    const layout = event.nativeEvent.layout
+                    this.setState({
+                      largeAmountWidth: layout.width,
+                      amountMarginLeft: new Animated.Value((Dimensions.get('window').width - layout.width) / 2 - 18)
+                    })
+                  }}
+              >
+                <Text style={{ fontSize: 24 }}>
+                  ETH 签名
+                </Text>
               </View>
-              {(!!this.state.largeAmount || !!this.props.resolving) && <View style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0 }} />}
+              <Animated.Text style={{ fontSize: 13, color: '#A2A2A6', width: 95, position: 'absolute', left: 18, top: 15, opacity: this.state.amountLabelOpacity }}>
+                当前操作
+              </Animated.Text>
+              <Animated.View
+                style={{ flexDirection: 'row', marginLeft: this.state.amountMarginLeft }}
+              >
+                <Animated.Text style={{ fontSize: this.state.actionFontSize }}>
+                  ETH 签名
+                </Animated.Text>
+              </Animated.View>
               <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
             </Animated.View>
-            <View style={{ paddingTop: 10, paddingBottom: 10, position: 'absolute', bottom: 0, left: 0, width: '100%', paddingHorizontal: 18 }}>
-              <TouchableOpacity style={{ backgroundColor: '#007AFF', borderRadius: 10, width: '100%', height: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.7} onPress={this.state.largeAmount ? this.changeAmountSize : this.submit} disabled={!!this.props.resolving}>
-                {(!!this.state.largeAmount || !this.state.passwordValue) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>确认签名</Text>}
-                {(!this.state.largeAmount && !!this.state.passwordValue && !this.props.resolving) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>验证密码</Text>}
-                {(!this.state.largeAmount && !!this.state.passwordValue && !!this.props.resolving) && <ActivityIndicator size="small" color="#ffffff" style={{ marginRight: 5 }} />}
-                {(!this.state.largeAmount && !!this.state.passwordValue && !!this.props.resolving) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>验证密码中...</Text>}
-              </TouchableOpacity>
+            {this.renderActiveWallet()}
+            <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
+              <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>签名内容</Text>
+              <ScrollView contentContainerStyle={{ width: Dimensions.get('window').width - 36 - 95, justifyContent: 'space-between', flexDirection: 'row' }} style={{ maxHeight: 32 }}>
+                <Text style={{ fontSize: 13 }} ellipsizeMode="tail" numberOfLines={200}>{message.info.data}</Text>
+              </ScrollView>
+              <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
             </View>
+            <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
+              <Text style={{ fontSize: 13, color: 'rgba(255,59,48,1)', width: 95 }}>注意</Text>
+              <Text style={{ fontSize: 13, color: 'rgba(255,59,48,1)', width: Dimensions.get('window').width - 36 - 95 }}>本操作具有极大的安全风险，请确保当前网站是您信任的站点。</Text>
+              <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+            </View>
+            {this.renderPasswordInput()}
+            {this.renderSubmitButton()}
+          </View>
+        )
+      } else if (message.payload.method === 'eth_signTypedData') {
+        return (
+          <View style={{ height: 310 }}>
+            <Animated.View style={{ paddingVertical: this.state.amountContainerPaddingVertical, height: this.state.amountContainerHeight, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 18 }}>
+              <View
+                style={{ flexDirection: 'row', position: 'absolute', left: '-100%', top: 25, opacity: 1 }}
+                onLayout={(event) => {
+                    const layout = event.nativeEvent.layout
+                    this.setState({
+                      largeAmountWidth: layout.width,
+                      amountMarginLeft: new Animated.Value((Dimensions.get('window').width - layout.width) / 2 - 18)
+                    })
+                  }}
+              >
+                <Text style={{ fontSize: 24 }}>
+                  申请签名
+                </Text>
+              </View>
+              <Animated.Text style={{ fontSize: 13, color: '#A2A2A6', width: 95, position: 'absolute', left: 18, top: 15, opacity: this.state.amountLabelOpacity }}>
+                当前操作
+              </Animated.Text>
+              <Animated.View
+                style={{ flexDirection: 'row', marginLeft: this.state.amountMarginLeft }}
+              >
+                <Animated.Text style={{ fontSize: this.state.actionFontSize }}>
+                  申请签名
+                </Animated.Text>
+              </Animated.View>
+              <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+            </Animated.View>
+            {this.renderActiveWallet()}
+            <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
+              <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>签名内容</Text>
+              <ScrollView contentContainerStyle={{ width: Dimensions.get('window').width - 36 - 95 }} style={{ maxHeight: 52 }}>
+                {message.info.data.map(data =>
+                  <Text key={data.name} style={{ fontSize: 13 }}>{`${data.name}: ${data.value}`}</Text>
+                 )}
+              </ScrollView>
+              <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+            </View>
+            {this.renderPasswordInput()}
+            {this.renderSubmitButton()}
+          </View>
+        )
+      } else if (message.payload.method === 'eth_signTypedData_v3' || message.payload.method === 'eth_signTypedData_v4') {
+        return (
+          <View style={{ height: 310 }}>
+            <Animated.View style={{ paddingVertical: this.state.amountContainerPaddingVertical, height: this.state.amountContainerHeight, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 18 }}>
+              <View
+                style={{ flexDirection: 'row', position: 'absolute', left: '-100%', top: 25, opacity: 1 }}
+                onLayout={(event) => {
+                    const layout = event.nativeEvent.layout
+                    this.setState({
+                      largeAmountWidth: layout.width,
+                      amountMarginLeft: new Animated.Value((Dimensions.get('window').width - layout.width) / 2 - 18)
+                    })
+                  }}
+              >
+                <Text style={{ fontSize: 24 }}>
+                  申请签名
+                </Text>
+              </View>
+              <Animated.Text style={{ fontSize: 13, color: '#A2A2A6', width: 95, position: 'absolute', left: 18, top: 15, opacity: this.state.amountLabelOpacity }}>
+                当前操作
+              </Animated.Text>
+              <Animated.View
+                style={{ flexDirection: 'row', marginLeft: this.state.amountMarginLeft }}
+              >
+                <Animated.Text style={{ fontSize: this.state.actionFontSize }}>
+                  申请签名
+                </Animated.Text>
+              </Animated.View>
+              <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+            </Animated.View>
+            {this.renderActiveWallet()}
+            <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
+              <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>签名内容</Text>
+              <ScrollView contentContainerStyle={{ width: Dimensions.get('window').width - 36 - 95 }} style={{ maxHeight: 52 }}>
+                <Text style={{ fontSize: 13 }}>{typeof message.info.data === 'object' ? JSON.stringify(message.info.data, null, 2) : message.info.data}</Text>
+              </ScrollView>
+              <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+            </View>
+            {this.renderPasswordInput()}
+            {this.renderSubmitButton()}
+          </View>
+        )
+      } else if (message.payload.method === 'eth_sendTransaction' || message.payload.method === 'eth_signTransaction') {
+        const info = message.info
+        const amount = this.props.intl.formatNumber(info.amount, { minimumFractionDigits: 4, maximumFractionDigits: 8 })
+        const gasFee = this.props.intl.formatNumber(info.gasFee, { minimumFractionDigits: 4, maximumFractionDigits: 8 })
+        const gasPrice = this.props.intl.formatNumber(info.gasPrice * 1000 * 1000 * 1000, { minimumFractionDigits: 0, maximumFractionDigits: 9 })
+        const gasLimit = info.gas
+        const total = this.props.intl.formatNumber(+amount + +gasFee, { minimumFractionDigits: 4, maximumFractionDigits: 8 })
+
+        return (
+          <View style={{ height: 330 }}>
+            <Animated.View style={{ paddingVertical: this.state.amountContainerPaddingVertical, height: this.state.amountContainerHeight, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 18 }}>
+              <View
+                style={{ flexDirection: 'row', position: 'absolute', left: '-100%', top: 25, opacity: 1 }}
+                onLayout={(event) => {
+                    const layout = event.nativeEvent.layout
+                    this.setState({
+                      largeAmountWidth: layout.width,
+                      amountMarginLeft: new Animated.Value((Dimensions.get('window').width - layout.width) / 2 - 18)
+                    })
+                  }}
+              >
+                <Text style={{ fontSize: 30 }}>
+                  {amount}
+                </Text>
+                <Text style={{ fontSize: 18, marginTop: 5, marginLeft: 4 }}>
+                  ETH
+                </Text>
+              </View>
+              <Animated.Text style={{ fontSize: 13, color: '#A2A2A6', width: 95, position: 'absolute', left: 18, top: 15, opacity: this.state.amountLabelOpacity }}>
+                支付金额
+              </Animated.Text>
+              <Animated.View
+                style={{ flexDirection: 'row', marginLeft: this.state.amountMarginLeft }}
+              >
+                <Animated.Text style={{ fontSize: this.state.amountFontSize }}>
+                  {amount}
+                </Animated.Text>
+                <Animated.Text style={{ fontSize: this.state.symbolFontSize, marginTop: this.state.symbolMarginTop, marginLeft: 4 }}>
+                  ETH
+                </Animated.Text>
+              </Animated.View>
+              <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+            </Animated.View>
+            {this.renderActiveWallet()}
+            <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
+              <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>发送到</Text>
+              <View style={{ width: Dimensions.get('window').width - 36 - 95, justifyContent: 'space-between', flexDirection: 'row', maxHeight: 32 }}>
+                <Text style={{ fontSize: 13 }}>{this.formatAddress(info.toAddress)}</Text>
+              </View>
+              <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+            </View>
+            {/* <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
+                <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>金额</Text>
+                <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', maxHeight: 32 }}>
+                <View>
+                <Text style={{ fontSize: 13 }}>{amount} ETH</Text>
+                </View>
+                </View>
+                <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+                </View> */}
+            <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
+              <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>矿工费</Text>
+              <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', maxHeight: 32 }}>
+                <View>
+                  <Text style={{ fontSize: 13 }}>{gasFee} ether</Text>
+                  <Text style={{ fontSize: 13 }}>{(`${gasPrice} gwei * ${gasLimit}`)}</Text>
+                </View>
+              </View>
+              <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+            </View>
+            {/* <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
+                <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>DATA</Text>
+                <ScrollView contentContainerStyle={{ width: Dimensions.get('window').width - 36 - 95, justifyContent: 'space-between', flexDirection: 'row' }} style={{ maxHeight: 32 }}>
+                <Text style={{ fontSize: 13 }}>{info.data}</Text>
+                </ScrollView>
+                <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
+                </View> */}
+            {this.renderPasswordInput()}
+            {this.renderSubmitButton()}
           </View>
         )
       } else {
         return null
       }
     }
+  }
+
+  onLoadEnd = () => {
+    Animated.sequence([
+      Animated.timing(this.state.progress, {
+        toValue: Dimensions.get('window').width,
+        duration: 300,
+        easing: Easing.inOut(Easing.quad)
+      }),
+      Animated.timing(this.state.progressOpacity, {
+        toValue: 0,
+        duration: 300,
+        easing: Easing.inOut(Easing.quad)
+      }),
+      Animated.timing(this.state.progress, {
+        toValue: 0,
+        duration: 10,
+        easing: Easing.inOut(Easing.quad)
+      })
+    ]).start()
   }
 
   render() {
@@ -921,10 +1112,11 @@ export default class WebView extends Component {
     } = this.props
     const isBookmarked = id ? (bookmarkedIds.indexOf(id) !== -1) : false
 
+    // https://danfinlay.github.io/js-eth-personal-sign-examples
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F7F7' }}>
           <View style={{ flex: 1, width: '100%' }}>
-            <WebViewBridge
+            <RNWebView
               source={{ uri: url }}
               ref={(e) => { this.webviewbridge = e }}
               renderError={this.renderError}
@@ -935,11 +1127,11 @@ export default class WebView extends Component {
               javaScriptEnabled={true}
               domStorageEnabled={true}
               decelerationRate="normal"
-              scalesPageToFit={true}
-              nativeConfig={{ props: { backgroundColor: Colors.minorThemeColor, flex: 1 } }}
-              onBridgeMessage={this.onBridgeMessage}
-              injectedJavaScriptBeforeLoad={inject || ''}
-              onProgress={this.onProgress}
+              useWebKit={true}
+              nativeConfig={{ props: { backgroundColor: '#F7F7F7', flex: 1 } }}
+              onMessage={this.onBridgeMessage}
+              injectedJavaScriptBeforeLoad={injectedJavascript(inject || '')}
+              onLoadProgress={this.onProgress}
               onError={this.onError}
             />
             <Animated.View style={{ width: '100%', height: 2, position: 'absolute', top: 0, left: 0, opacity: this.state.progressOpacity }}>

@@ -14,7 +14,6 @@ import { eosAccountNameSelector } from 'selectors/eosAccount'
 import { activeAssetSelector, activeAssetBalanceSelector } from 'selectors/balance'
 import { eosPriceSelector } from 'selectors/ticker'
 import TransferCard from 'screens/Assets/AssetsTransfer/TransferCard'
-import Prompt from 'components/Prompt'
 import Alert from 'components/Alert'
 import ContactIcon from 'components/FormRightContent/TransferContact'
 import CurrencyUnit from 'components/FormRightContent/TransferCurrency'
@@ -211,12 +210,6 @@ export default class TransferAssetsForm extends Component {
             memo={this.state.memo}
             symbol={this.state.symbol}
             transfer={this.showPrompt}
-          />
-          <Prompt
-            isVisible={this.state.showPrompt}
-            type="secure-text"
-            callback={this.submit}
-            dismiss={this.closePrompt}
           />
         </FormContainer>
       </IntlProvider>

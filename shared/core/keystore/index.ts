@@ -28,7 +28,7 @@ const decipherBuffer = (decipher: any, data: any) => {
   return Buffer.concat([decipher.update(data), decipher.final()])
 }
 
-const toChecksumAddress = async (address: string) => {
+export const toChecksumAddress = async (address: string) => {
   const rawAddress = address.toLowerCase().replace('0x', '')
   const hash = (await keccak256(rawAddress)).toString('hex')
   let ret = '0x'

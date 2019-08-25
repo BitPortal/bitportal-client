@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'utils/redux'
 import { Navigation } from 'react-native-navigation'
-import { Alert } from 'react-native'
+import { Alert, View, Text, Dimensions, Image, FlatList, ScrollView, TouchableNativeFeedback } from 'react-native'
 import * as dappActions from 'actions/dapp'
 import {
   dappSelector,
@@ -13,8 +13,11 @@ import {
   dappRecommendSelector,
   dappBookmarkSelector
 } from 'selectors/dapp'
+import ViewPager from '@react-native-community/viewpager'
 import { loadScatter, loadScatterSync, loadMetaMask, loadMetaMaskSync } from 'utils/inject'
+import LinearGradient from 'react-native-linear-gradient'
 import { activeWalletSelector } from 'selectors/wallet'
+import FastImage from 'react-native-fast-image'
 
 @connect(
   state => ({
@@ -48,8 +51,6 @@ export default class Discovery extends Component {
       }
     }
   }
-
-  subscription = Navigation.events().bindComponent(this)
 
   onItemNotification = (data) => {
     const { action } = data
@@ -91,7 +92,13 @@ export default class Discovery extends Component {
               topBar: {
                 title: {
                   text: title
-                }
+                },
+                leftButtons: [
+                  {
+                    id: 'cancel',
+                    icon: require('resources/images/cancel_android.png')
+                  }
+                ]
               }
             }
           }
@@ -149,337 +156,194 @@ export default class Discovery extends Component {
     this.props.actions.getDappRecommend.requested()
   }
 
+  toDapp = (data) => {
+    const { url, id, display_name } = data
+    const inject = loadScatterSync()
+    // const inject = loadMetaMaskSync()
+
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.WebView',
+            passProps: { url, inject, id },
+            options: {
+              topBar: {
+                title: {
+                  text: display_name.zh
+                },
+                leftButtons: [
+                  {
+                    id: 'cancel',
+                    icon: require('resources/images/cancel_android.png')
+                  }
+                ]
+              }
+            }
+          }
+        }]
+      }
+    })
+  }
+
+  renderItem = ({ item, index }) => {
+    return (
+      <TouchableNativeFeedback onPress={this.toDapp.bind(this, item)} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.3)', false)}>
+        <View style={{ marginRight: 8, marginLeft: !index ? 16 : 0, width: (Dimensions.get('window').width - 48) / 3, marginVertical: 4, elevation: 2, backgroundColor: 'white', overflow: 'hidden', borderRadius: 4 }}>
+          <FastImage
+            source={{ uri: item.icon_url }}
+            style={{ width: (Dimensions.get('window').width - 48) / 3, height: (Dimensions.get('window').width - 48) / 3 }}
+            resizeMethod="resize"
+            resizeMode="cover"
+          />
+          <View style={{ width: '100%', height: 52, justifyContent: 'center', paddingHorizontal: 8 }}>
+            <Text style={{ width: '100%', fontSize: 12, color: 'rgba(0,0,0,0.87)', lineHeight: 16 }} numberOfLines={2} ellipsizeMode="tail">
+              {item.display_name.zh} - {item.description.zh}
+            </Text>
+          </View>
+        </View>
+      </TouchableNativeFeedback>
+    )
+  }
+
   render() {
     const { dapp, newDapp, hotDapp, gameDapp, toolDapp, featured, bookmarked } = this.props
 
     return (
-      <TableView
-        style={{ flex: 1, backgroundColor: 'white' }}
-        headerBackgroundColor="white"
-        headerTextColor="black"
-        separatorStyle={TableView.Consts.SeparatorStyle.None}
-        onItemNotification={this.onItemNotification}
-        onCollectionViewDidSelectItem={this.onCollectionViewDidSelectItem}
-      >
-        <Section>
-          <Item
-            height={318}
-            containCollectionView
-            collectionViewInsideTableViewCell="FeaturedDappCollectionViewCell"
-            collectionViewInsideTableViewCellKey="FeaturedDappCollectionViewCell"
+      <ScrollView style={{ flex: 1, backgroundColor: 'white' }} showsVerticalScrollIndicator={false}>
+        <View style={{ height: 206, width: '100%', justifyContent: 'flex-end' }}>
+          <ViewPager
+            style={{ height: 190, width: '100%', overflow: 'visible' }}
+            pageMargin={16}
+            ref={(ref) => { this.viewPager = ref }}
+            onPageSelected={this.onPageSelected}
           >
-            <CollectionView>
-              {featured.map(item =>
-                <CollectionViewItem
-                  reactModuleForCollectionViewCell="FeaturedDappCollectionViewCell"
-                  height="315"
-                  title={item.title}
-                  description={item.title}
-                  img={item.img_url}
-                  url={item.jump_url}
-                  key={item.id}
-                  uid={item.id}
+            {featured.map(item =>
+              <View key={item.id} style={{ backgroundColor: 'white', width: Dimensions.get('window').width - 32, height: 176, borderRadius: 4, elevation: 3, overflow: 'hidden' }}>
+                <FastImage
+                  source={{ uri: item.img_url }}
+                  style={{
+                    width: '100%',
+                    height: '100%'
+                  }}
+                  resizeMethod="resize"
+                  resizeMode="cover"
                 />
-               )}
-            </CollectionView>
-          </Item>
-        </Section>
-        {bookmarked && !!bookmarked.length && <Section>
-          <Item
-            reactModuleForCell="DappHeaderTableViewCell"
-            height={44}
-            title="我的收藏"
-            buttonText="更多"
-            category="bookmarked"
-            componentId={this.props.componentId}
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            showSeparator
-          />
-        </Section>}
-        {bookmarked && !!bookmarked.length && <Section>
-          <Item
-            height={bookmarked.length >= 3 ? 234 : bookmarked.length * 78}
-            containCollectionView
-            collectionViewInsideTableViewCell="SmallDappCollectionViewCell"
-            collectionViewInsideTableViewCellKey="SmallDappCollectionViewCellNew"
-          >
-            <CollectionView>
-              {bookmarked.map((item, index) =>
-                <CollectionViewItem
-                  key={item.id}
-                  uid={item.id}
-                  reactModuleForCollectionViewCell="SmallDappCollectionViewCell"
-                  reactModuleForCollectionViewCellKey="SmallDappCollectionViewCellNew"
-                  height="78"
-                  description={item.description.zh}
-                  name={item.display_name.zh}
-                  icon={item.icon_url}
-                  url={item.url}
-                  showSeparator={index % (bookmarked.length >= 3 ? 3 : bookmarked.length) !== ((bookmarked.length >= 3 ? 3 : bookmarked.length) - 1)}
-                />
-               )}
-            </CollectionView>
-          </Item>
-        </Section>}
-        {bookmarked && !!bookmarked.length && <Section>
-          <Item
-            reactModuleForCell="DappFooterTableViewCell"
-            height={16}
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
-          />
-        </Section>}
-        <Section>
-          <Item
-            reactModuleForCell="DappHeaderTableViewCell"
-            height={44}
-            title="最新上架"
-            buttonText="更多"
-            category="new"
-            componentId={this.props.componentId}
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            showSeparator
-          />
-        </Section>
-        <Section>
-          <Item
-            height={234}
-            containCollectionView
-            collectionViewInsideTableViewCell="SmallDappCollectionViewCell"
-            collectionViewInsideTableViewCellKey="SmallDappCollectionViewCellNew"
-          >
-            <CollectionView>
-              {newDapp.map((item, index) =>
-                <CollectionViewItem
-                  key={item.id}
-                  uid={item.id}
-                  reactModuleForCollectionViewCell="SmallDappCollectionViewCell"
-                  reactModuleForCollectionViewCellKey="SmallDappCollectionViewCellNew"
-                  height="78"
-                  description={item.description.zh}
-                  name={item.display_name.zh}
-                  icon={item.icon_url}
-                  url={item.url}
-                  showSeparator={index % 3 !== 2}
-                />
-               )}
-            </CollectionView>
-          </Item>
-        </Section>
-        <Section>
-          <Item
-            reactModuleForCell="DappFooterTableViewCell"
-            height={16}
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
-          />
-        </Section>
-        <Section>
-          <Item
-            reactModuleForCell="DappHeaderTableViewCell"
-            height={44}
-            title="热门应用"
-            buttonText="更多"
-            category="hot"
-            componentId={this.props.componentId}
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            showSeparator
-          />
-        </Section>
-        <Section>
-          <Item
-            height={234}
-            containCollectionView
-            collectionViewInsideTableViewCell="LargeDappCollectionViewCell"
-            collectionViewInsideTableViewCellKey="LargeDappCollectionViewCellHot"
-          >
-            <CollectionView>
-              {hotDapp.map((item, index) =>
-                <CollectionViewItem
-                  key={item.id}
-                  uid={item.id}
-                  reactModuleForCollectionViewCell="LargeDappCollectionViewCell"
-                  reactModuleForCollectionViewCellKey="LargeDappCollectionViewCellNew"
-                  height="117"
-                  description={item.description.zh}
-                  name={item.display_name.zh}
-                  icon={item.icon_url}
-                  url={item.url}
-                  showSeparator={index % 2 !== 1}
-                />
-               )}
-            </CollectionView>
-          </Item>
-        </Section>
-        <Section>
-          <Item
-            reactModuleForCell="DappFooterTableViewCell"
-            height={16}
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
-          />
-        </Section>
-        <Section>
-          <Item
-            reactModuleForCell="DappHeaderTableViewCell"
-            height={44}
-            title="游戏"
-            buttonText="更多"
-            category="game"
-            componentId={this.props.componentId}
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            showSeparator
-          />
-        </Section>
-        <Section>
-          <Item
-            height={234}
-            containCollectionView
-            collectionViewInsideTableViewCell="SmallDappCollectionViewCell"
-            collectionViewInsideTableViewCellKey="SmallDappCollectionViewCellGame"
-          >
-            <CollectionView>
-              {gameDapp.map((item, index) =>
-                <CollectionViewItem
-                  key={item.id}
-                  uid={item.id}
-                  reactModuleForCollectionViewCell="SmallDappCollectionViewCell"
-                  reactModuleForCollectionViewCellKey="SmallDappCollectionViewCellGame"
-                  height="78"
-                  description={item.description.zh}
-                  name={item.display_name.zh}
-                  icon={item.icon_url}
-                  url={item.url}
-                  showSeparator={index % 3 !== 2}
-                />
-               )}
-            </CollectionView>
-          </Item>
-        </Section>
-        <Section>
-          <Item
-            reactModuleForCell="DappFooterTableViewCell"
-            height={16}
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
-          />
-        </Section>
-        <Section>
-          <Item
-            reactModuleForCell="DappHeaderTableViewCell"
-            height={44}
-            title="工具"
-            buttonText="更多"
-            category="tool"
-            componentId={this.props.componentId}
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            showSeparator
-          />
-        </Section>
-        <Section>
-          <Item
-            height={234}
-            containCollectionView
-            collectionViewInsideTableViewCell="SmallDappCollectionViewCell"
-            collectionViewInsideTableViewCellKey="SmallDappCollectionViewCellTool"
-          >
-            <CollectionView>
-              {toolDapp.map((item, index) =>
-                <CollectionViewItem
-                  key={item.id}
-                  uid={item.id}
-                  reactModuleForCollectionViewCell="SmallDappCollectionViewCell"
-                  reactModuleForCollectionViewCellKey="SmallDappCollectionViewCellTool"
-                  height="78"
-                  description={item.description.zh}
-                  name={item.display_name.zh}
-                  icon={item.icon_url}
-                  url={item.url}
-                  showSeparator={index % 3 !== 2}
-                />
-               )}
-            </CollectionView>
-          </Item>
-        </Section>
-        <Section>
-          <Item
-            reactModuleForCell="DappFooterTableViewCell"
-            height={16}
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
-          />
-        </Section>
-        <Section>
-          <Item
-            reactModuleForCell="DappHeaderTableViewCell"
-            height={44}
-            title="所有分类"
-            buttonText="更多"
-            componentId={this.props.componentId}
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            showSeparator
-          />
-        </Section>
-        <Section>
-          <Item
-            reactModuleForCell="DappCategoryTableViewCell"
-            height={44}
-            category="system"
-            name="系统"
-            onPress={this.toDappList.bind(this, '系统', 'system')}
-            showSeparator
-          />
-          <Item
-            reactModuleForCell="DappCategoryTableViewCell"
-            height={44}
-            category="game"
-            name="游戏"
-            onPress={this.toDappList.bind(this, '游戏', 'game')}
-            showSeparator
-          />
-          <Item
-            reactModuleForCell="DappCategoryTableViewCell"
-            height={44}
-            category="exchange"
-            name="去中心交易平台"
-            onPress={this.toDappList.bind(this, '去中心交易平台', 'exchange')}
-            showSeparator
-          />
-          <Item
-            reactModuleForCell="DappCategoryTableViewCell"
-            height={44}
-            category="marketplace"
-            name="市场"
-            onPress={this.toDappList.bind(this, '市场', 'marketplace')}
-            showSeparator
-          />
-          <Item
-            reactModuleForCell="DappCategoryTableViewCell"
-            height={44}
-            category="tool"
-            name="工具"
-            onPress={this.toDappList.bind(this, '工具', 'tool')}
-            showSeparator
-          />
-          <Item
-            reactModuleForCell="DappCategoryTableViewCell"
-            height={44}
-            category="explorer"
-            name="区块链浏览器"
-            onPress={this.toDappList.bind(this, '区块链浏览器', 'explorer')}
-            showSeparator
-          />
-          <Item
-            reactModuleForCell="DappCategoryTableViewCell"
-            height={44}
-            category="news"
-            name="资讯"
-            onPress={this.toDappList.bind(this, '资讯', 'news')}
-          />
-        </Section>
-        <Section>
-          <Item
-            reactModuleForCell="DappFooterTableViewCell"
-            height={16}
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
-          />
-        </Section>
-      </TableView>
+                {/* <LinearGradient
+                    colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.12)', 'rgba(0,0,0,0.25)', 'rgba(0,0,0,0.50)', 'rgba(0,0,0,0.75)']}
+                    locations={[0, 0.3, 0.5, 0.75, 1]}
+                    style={{ width: '100%', height: '100%', position: 'absolute', left: 0, top: 0 }}
+                    />
+                    <View style={{ height: 51, width: Dimensions.get('window').width - 32, paddingHorizontal: 16, justifyContent: 'center', position: 'absolute', bottom: 16, left: 0 }}>
+                    <Text style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)' }}>{item.title}</Text>
+                    <Text style={{ fontSize: 24, color: 'rgba(255,255,255,1)' }}>{item.sub_title}</Text>
+                    </View> */}
+              </View>
+             )}
+          </ViewPager>
+        </View>
+        {bookmarked && !!bookmarked.length && <View style={{ height: 300 }}>
+          <View style={{ height: 48 }}>
+            <Text>我的收藏</Text>
+            <Text>更多</Text>
+          </View>
+          <View style={{ height: 248, marginTop: 4 }}>
+
+          </View>
+        </View>}
+        <View style={{ height: (Dimensions.get('window').width - 48) / 3 + 52 + 4 + 48 }}>
+          <View style={{ height: 48, paddingHorizontal: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 4 }}>
+            <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)', fontWeight: 'bold' }}>最新上架</Text>
+            <Image
+              source={require('resources/images/arrow_forward_android.png')}
+              style={{
+                width: 24,
+                height: 24
+              }}
+            />
+          </View>
+          <View style={{ height: (Dimensions.get('window').width - 48) / 3 + 52 + 4 }}>
+            <FlatList
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              data={newDapp}
+              keyExtractor={(item, index) => item.id}
+              renderItem={this.renderItem}
+            />
+          </View>
+        </View>
+        <View style={{ height: (Dimensions.get('window').width - 48) / 3 + 52 + 4 + 48 }}>
+          <View style={{ height: 48, paddingHorizontal: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 4 }}>
+            <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)', fontWeight: 'bold' }}>热门应用</Text>
+            <Image
+              source={require('resources/images/arrow_forward_android.png')}
+              style={{
+                width: 24,
+                height: 24
+              }}
+            />
+          </View>
+          <View style={{ height: (Dimensions.get('window').width - 48) / 3 + 52 + 4 }}>
+            <FlatList
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              data={hotDapp}
+              keyExtractor={(item, index) => item.id}
+              renderItem={this.renderItem}
+            />
+          </View>
+        </View>
+        <View style={{ height: (Dimensions.get('window').width - 48) / 3 + 52 + 4 + 48 }}>
+          <View style={{ height: 48, paddingHorizontal: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 4 }}>
+            <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)', fontWeight: 'bold' }}>游戏</Text>
+            <Image
+              source={require('resources/images/arrow_forward_android.png')}
+              style={{
+                width: 24,
+                height: 24
+              }}
+            />
+          </View>
+          <View style={{ height: (Dimensions.get('window').width - 48) / 3 + 52 + 4 }}>
+            <FlatList
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              data={gameDapp}
+              keyExtractor={(item, index) => item.id}
+              renderItem={this.renderItem}
+            />
+          </View>
+        </View>
+        <View style={{ height: (Dimensions.get('window').width - 48) / 3 + 52 + 4 + 48 }}>
+          <View style={{ height: 48, paddingHorizontal: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 4 }}>
+            <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)', fontWeight: 'bold' }}>工具</Text>
+            <Image
+              source={require('resources/images/arrow_forward_android.png')}
+              style={{
+                width: 24,
+                height: 24
+              }}
+            />
+          </View>
+          <View style={{ height: (Dimensions.get('window').width - 48) / 3 + 52 + 4 }}>
+            <FlatList
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              data={toolDapp}
+              keyExtractor={(item, index) => item.id}
+              renderItem={this.renderItem}
+            />
+          </View>
+        </View>
+        <View>
+          <View style={{ height: 48, paddingHorizontal: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 4 }}>
+            <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)', fontWeight: 'bold' }}>所有分类</Text>
+          </View>
+          <View style={{ }}>
+
+          </View>
+        </View>
+      </ScrollView>
     )
   }
 }

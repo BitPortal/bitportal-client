@@ -23,7 +23,6 @@ import ActionSheet from 'react-native-actionsheet'
 import Url from 'url-parse'
 import * as dappBrwoserActions from 'actions/dappBrowser'
 import ActionModal from 'components/ActionModal'
-import Prompt from 'components/Prompt'
 import Loading from 'components/Loading'
 import Alert from 'components/Alert'
 import globalMessages from 'resources/messages'
@@ -253,12 +252,6 @@ export default class DappWebView extends Component {
               confirm={this.showPrompt}
             />
             <Alert message={errorMessages(error, messages[locale])} dismiss={this.props.actions.clearPasswordError} delay={500} />
-            <Prompt
-              isVisible={this.state.showPrompt}
-              type="secure-text"
-              callback={this.resolveMessage}
-              dismiss={this.closePrompt}
-            />
             <ActionSheet
               ref={(o) => { this.actionSheet = o }}
               title=""

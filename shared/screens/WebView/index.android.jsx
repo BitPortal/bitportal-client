@@ -20,7 +20,6 @@ import {
   Switch,
   Alert
 } from 'react-native'
-import WebViewBridge from 'react-native-webview-bridge'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
@@ -38,6 +37,7 @@ import { walletIcons } from 'resources/images'
 import { dappBookmarkAllIdsSelector } from 'selectors/dapp'
 import { hex_to_ascii } from 'utils'
 import RNWebView from 'react-native-webview'
+import IndicatorModal from 'components/Modal/IndicatorModal'
 import localMessages from './messages'
 import styles from './styles'
 
@@ -70,6 +70,23 @@ const tabHeight = (() => {
     return 56 // Android
   }
 })()
+
+const injectedJavascript = inject => `(function() {
+  window.WebViewBridge = {
+    onMessage: function() {
+      return null;
+    },
+    send: function(data) {
+      window.ReactNativeWebView.postMessage(data);
+    },
+  };
+  var event = new Event('WebViewBridge');
+  window.dispatchEvent(event);
+  console.log('loaded');
+  ${inject}
+})()`
+
+const generateOnMessageFunction = data => `(function() { window.WebViewBridge.onMessage('${data}'); })()`
 
 export const errorMessages = (error, messages) => {
   if (!error) { return null }
@@ -201,7 +218,7 @@ export default class WebView extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.messageToSend && prevProps.messageToSend !== this.props.messageToSend && this.webviewbridge) {
-      this.webviewbridge.sendToBridge(this.props.messageToSend)
+      this.sendMessageToWebView(this.props.messageToSend)
     } else if (prevState.showSideCard !== this.state.showSideCard) {
       LayoutAnimation.easeInEaseOut()
     } else if (prevProps.error !== this.props.error && !!this.props.error) {
@@ -213,6 +230,10 @@ export default class WebView extends Component {
         ]
       )
     }
+  }
+
+  sendMessageToWebView = (message) => {
+    this.webviewbridge.injectJavaScript(generateOnMessageFunction(message))
   }
 
   /* componentWillUnmount() {
@@ -308,8 +329,8 @@ export default class WebView extends Component {
     this.props.actions.setHost(host)
   }
 
-  onBridgeMessage = (message) => {
-    this.props.actions.receiveMessage(message)
+  onBridgeMessage = (event) => {
+    this.props.actions.receiveMessage(event.nativeEvent.data)
   }
 
   rejectMessage = () => {
@@ -324,9 +345,7 @@ export default class WebView extends Component {
 
   closePrompt = () => {
     this.setState({ showPrompt: false })
-    setTimeout(() => {
-      this.rejectMessage()
-    }, 200)
+    this.rejectMessage()
   }
 
   onModalHide = () => {
@@ -744,15 +763,6 @@ export default class WebView extends Component {
         {(!!this.state.largeAmount || !!this.props.resolving) && <View style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0 }} />}
         <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
       </Animated.View>
-      {/* <Animated.View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, opacity: this.state.whiteListOpacity, paddingHorizontal: 18 }}>
-            <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>白名单</Text>
-            <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', height: '100%', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Text style={{ fontSize: 13 }}>开启后无需输入交易密码</Text>
-            <Switch value={this.state.whiteListOpen} onValueChange={this.onWhiteListChange} />
-            </View>
-            {(!!this.state.largeAmount || !!this.props.resolving) && <View style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0 }} />}
-            <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
-            </Animated.View> */}
     </Fragment>
   )
 
@@ -983,71 +993,28 @@ export default class WebView extends Component {
 
     return (
       <IntlProvider messages={messages[locale]}>
-        <View>
-          <View style={{ width: '100%', height: '100%' }}>
-            <WebViewBridge
-              source={{ uri: url }}
-              ref={(e) => { this.webviewbridge = e }}
-              renderError={this.renderError}
-              renderLoading={() => {}}
-              startInLoadingState={true}
-              automaticallyAdjustContentInsets={false}
-              onNavigationStateChange={this.onNavigationStateChange}
-              javaScriptEnabled={true}
-              domStorageEnabled={true}
-              decelerationRate="normal"
-              scalesPageToFit={true}
-              nativeConfig={{ props: { backgroundColor: Colors.minorThemeColor, flex: 1 } }}
-              onBridgeMessage={this.onBridgeMessage}
-              injectedJavaScriptBeforeLoad={inject || ''}
-              onProgress={this.onProgress}
-              onError={this.onError}
-            />
-          </View>
-          {/* <Animated.View style={{ width: '100%', height: 2, position: 'absolute', top: 0, left: 0, opacity: this.state.progressOpacity }}>
-              <Animated.View style={{ height: '100%', width: this.state.progress, backgroundColor: '#007AFF' }} />
-              </Animated.View> */}
-          {/* <View style={{ width: '100%', height: tabHeight, backgroundColor: '#F7F7F7', alignItems: 'center', justifyContent: 'center', flex: 1, flexDirection: 'row' }}>
-              <View style={{ position: 'absolute', top: 0, left: 0, width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-              <TouchableOpacity onPress={this.goBack}>
-              <Image
-              source={require('resources/images/arrow_left_tab.png')}
-              style={{ width: 30, height: 30 }}
-              />
-              </TouchableOpacity>
-              </View>
-              <View style={{ position: 'absolute', top: 0, left: '25%', width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-              <TouchableOpacity onPress={this.goForward}>
-              <Image
-              source={require('resources/images/arrow_right_tab.png')}
-              style={{ width: 30, height: 30 }}
-              />
-              </TouchableOpacity>
-              </View>
-              <View style={{ position: 'absolute', top: 0, left: '50%', width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-              <TouchableOpacity onPress={this.shareDapp}>
-              <Image
-              source={require('resources/images/share.png')}
-              style={{ width: 32, height: 32 }}
-              />
-              </TouchableOpacity>
-              </View>
-              <View style={{ position: 'absolute', top: 0, left: '75%', width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-              <TouchableOpacity onPress={this.bookmark}>
-              {isBookmarked && <Image source={require('resources/images/bookmarked_tab.png')} style={{ width: 30, height: 30 }} />}
-              {!isBookmarked && <Image source={require('resources/images/bookmark_tab.png')} style={{ width: 30, height: 30 }} />}
-              </TouchableOpacity>
-              </View>
-              <View style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: 0.5, backgroundColor: 'rgba(0,0,0,0.2)' }} />
-              </View> */}
-          {this.props.loadingContract && <View style={{ position: 'absolute', right: 0, left: 0, top: 0, bottom: 0 }}>
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
-                <ActivityIndicator size="small" color="#000000" />
-                <Text style={{ fontSize: 17, fontWeight: 'bold', marginLeft: 5 }}>合约加载中...</Text>
-              </View>
-            </View>
-          </View>}
+        <View style={{ flex: 1 }}>
+          <RNWebView
+            source={{ uri: url }}
+            ref={(e) => { this.webviewbridge = e }}
+            renderError={this.renderError}
+            renderLoading={() => {}}
+            startInLoadingState={true}
+            automaticallyAdjustContentInsets={false}
+            onNavigationStateChange={this.onNavigationStateChange}
+            javaScriptEnabled={true}
+            domStorageEnabled={true}
+            decelerationRate="normal"
+            useWebKit={true}
+            onMessage={this.onBridgeMessage}
+            injectedJavaScriptBeforeLoad={injectedJavascript(inject || '')}
+            onLoadProgress={this.onProgress}
+            onError={this.onError}
+          />
+          <Animated.View style={{ width: '100%', height: 2, position: 'absolute', top: 0, left: 0, opacity: this.state.progressOpacity }}>
+            <Animated.View style={{ height: '100%', width: this.state.progress, backgroundColor: '#007AFF' }} />
+          </Animated.View>
+          <IndicatorModal isVisible={this.props.loadingContract} message="合约加载中..." />
           <Modal
             animationIn="slideInUp"
             animationOut="slideOutDown"
