@@ -150,5 +150,8 @@
   "chainx_validator_detail_item_name": "节点名",
   "chainx_validator_detail_item_account": "账号",
   "chainx_validator_detail_item_about": "关于",
-  "chainx_validator_detail_item_jackpot": "奖池"
+  "chainx_validator_detail_item_jackpot": "奖池",
+
+  "export_key_button_copy_keystore": "Copy Keystore"
+
 }

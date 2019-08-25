@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { ScrollView, View, TextInput, Text, TouchableOpacity, Clipboard } from 'react-native'
+import { injectIntl } from 'react-intl'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import Sound from 'react-native-sound'
@@ -16,6 +17,8 @@ const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
 
   console.log(`duration in seconds: ${copySound.getDuration()}number of channels: ${copySound.getNumberOfChannels()}`)
 })
+
+@injectIntl
 
 @connect(
   state => ({
@@ -67,7 +70,7 @@ export default class ExportETHKeystore extends Component {
   }
 
   render() {
-    const { keystore } = this.props
+    const { keystore, intl } = this.props
     const keystoreText = JSON.stringify(keystore)
 
     return (
@@ -115,7 +118,7 @@ export default class ExportETHKeystore extends Component {
                 fontSize: 17
               }}
             >
-              复制 Keystore
+              {intl.formatMessage({ id: 'export_key_button_copy_keystore' })}
             </Text>
           </TouchableOpacity>
         </View>
@@ -132,7 +135,7 @@ export default class ExportETHKeystore extends Component {
         >
           {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
-              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已复制</Text>
+              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'general_toast_text_copied' })}</Text>
             </View>
           </View>}
         </Modal>

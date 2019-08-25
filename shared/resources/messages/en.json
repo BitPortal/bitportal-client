@@ -150,5 +150,7 @@
   "chainx_validator_detail_item_name": "Name",
   "chainx_validator_detail_item_account": "Account",
   "chainx_validator_detail_item_about": "About",
-  "chainx_validator_detail_item_jackpot": "Jackpot"
+  "chainx_validator_detail_item_jackpot": "Jackpot",
+
+  "export_key_button_copy_keystore": "复制 Keystore"
 }

@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import { ScrollView, View, TextInput, Text, TouchableNativeFeedback, Clipboard } from 'react-native'
+import { injectIntl } from 'react-intl'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import Modal from 'react-native-modal'
+
+@injectIntl
 
 @connect(
   state => ({
@@ -35,7 +38,7 @@ export default class ExportETHKeystore extends Component {
   }
 
   render() {
-    const { keystore } = this.props
+    const { keystore, intl } = this.props
     const keystoreText = JSON.stringify(keystore)
 
     return (
@@ -80,7 +83,7 @@ export default class ExportETHKeystore extends Component {
                   fontSize: 17
                 }}
               >
-                复制 Keystore
+                {intl.formatMessage({ id: 'export_key_button_copy_keystore' })}
               </Text>
             </View>
           </TouchableNativeFeedback>
@@ -99,7 +102,7 @@ export default class ExportETHKeystore extends Component {
         >
           {this.state.showModal && <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'rgba(0,0,0,0.87)', padding: 16, borderRadius: 4, height: 48, elevation: 1, justifyContent: 'center', width: '100%' }}>
-              <Text style={{ fontSize: 14, color: 'white' }}>已复制</Text>
+              <Text style={{ fontSize: 14, color: 'white' }}>{intl.formatMessage({ id: 'general_toast_text_copied' })}</Text>
             </View>
           </View>}
         </Modal>
