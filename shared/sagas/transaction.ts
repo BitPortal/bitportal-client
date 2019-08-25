@@ -460,7 +460,15 @@ function* getTransactions(action: Action) {
           const isSender = internalInputValue >= internalOutputValue + fees
           const transactionType = isSender ? 'send' : 'receive'
           const change = isSender ? +(+internalOutputValue + +fees - +internalInputValue).toFixed(8) : +(+internalOutputValue - +internalInputValue).toFixed(8)
-          const targetAddress = isSender ? externalOutput[0].scriptPubKey.addresses[0] : externalInput[0].addr
+          let targetAddress = ''
+          // Todo:: handle more complex situations
+          if (isSender) {
+            // if no external output value, then it is internal transfer
+            const isInternalTransfer = (externalOutputValue === 0)
+            targetAddress = isInternalTransfer ? internalOutput[0].scriptPubKey.addresses[0] : externalOutput[0].scriptPubKey.addresses[0]
+          } else {
+            targetAddress = externalInput[0].addr
+          }
 
           return { ...item, change, transactionType, targetAddress }
         }).reverse()
