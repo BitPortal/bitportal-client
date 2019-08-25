@@ -13,7 +13,6 @@ import { IntlProvider } from 'react-intl'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { eosAccountSelector } from 'selectors/eosAccount'
 import { eosBalanceSelector } from 'selectors/balance'
-import Prompt from 'components/Prompt'
 import Alert from 'components/Alert'
 import messages from 'resources/messages'
 
@@ -167,15 +166,6 @@ export default class TradeRAMForm extends Component {
             />
             <Alert message={errorMessages(error, messages[locale])} subMessage={errorMessageDetail(error)} dismiss={this.props.actions.clearRAMError} />
             <Alert message={!!showSuccess && messages[locale].resource_popup_text_transaction_successful} dismiss={this.props.actions.hideSuccessModal} />
-            <Prompt
-              isVisible={this.state.isVisible}
-              title={messages[locale].general_popup_label_password}
-              negativeText={messages[locale].general_popup_button_cancel}
-              positiveText={messages[locale].general_popup_button_confirm}
-              type="secure-text"
-              callback={this.handleConfirm}
-              dismiss={this.closePrompt}
-            />
           </FormContainer>
         </View>
       </IntlProvider>

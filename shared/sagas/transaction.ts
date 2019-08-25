@@ -91,11 +91,13 @@ function* transfer(action: Action) {
         const changeAddress = btcChain.getChangeAddress(walletUTXO, walletAddress.change)
         const { inputs, outputs, fee } = yield call(btcChain.selectUTXO, walletUTXO, amount, toAddress, changeAddress, feeRate)
         const inputsWithIdx = btcChain.getInputsWithIdx(inputs, walletAddress)
+        console.log('select inputsWithIdx', inputsWithIdx)
 
         const { result, timeout } = yield race({
           result: call(btcChain.transfer, password, keystore, inputsWithIdx, outputs, opreturn),
           timeout: delay(timeoutInterval)
         })
+        console.log('result transfer', result)
 
         assert(!timeout, 'request timeout')
         hash = result
@@ -647,6 +649,7 @@ function* getTransaction(action: Action) {
       }
 
       const transaction = yield call(btcChain.getTransaction, transactionId)
+      console.log('transaction', transaction)
 
       const item = transaction
       item.id = item.txid

@@ -233,7 +233,7 @@ function* pendArbitrarySignature(messageActionType: string, payload: any, messag
   }))
 }
 
-function* pendETHRPCRequest(messageActionType: string, payload: any, messageId: string) {
+function* pendETHRPCRequest(messageActionType: string, payload: any, messageId: string, info: any = {}) {
   const hasPendingMessage = yield select((state: RootState) => state.bridge.hasPendingMessage)
   if (hasPendingMessage) {
     const pendingMessageActionType = yield select((state: RootState) => state.bridge.pendingMessage.type)
@@ -256,7 +256,8 @@ function* pendETHRPCRequest(messageActionType: string, payload: any, messageId: 
     payload,
     type: messageActionType,
     info: {
-      blockchain
+      blockchain,
+      ...info
     }
   }))
 }
@@ -447,6 +448,193 @@ function* resolveETHPersonalSign(password: string, params: any, messageId: strin
   }
 }
 
+function* resolveETHSignTypedData(password: string, params: any, messageId: string) {
+  try {
+    const data = params[0]
+    const wallet = yield select((state: RootState) => activeWalletSelector(state))
+    const id = wallet.id
+
+    const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    const identityKeystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    const keystore = importedKeystore || identityKeystore
+    assert(keystore && keystore.crypto, 'No keystore')
+
+    const signature = yield call(
+      ethChain.typedDataSign,
+      password,
+      keystore,
+      data
+    )
+
+    yield put(actions.clearMessage())
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionSucceeded',
+      payload: {
+        data: signature
+      }
+    }))
+  } catch (error) {
+    yield put(actions.resolveMessageFailed(error.message))
+  }
+}
+
+function* resolveETHSignTypedDataV3(password: string, params: any, messageId: string) {
+  try {
+    const data = params[1]
+    const wallet = yield select((state: RootState) => activeWalletSelector(state))
+    const id = wallet.id
+
+    const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    const identityKeystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    const keystore = importedKeystore || identityKeystore
+    assert(keystore && keystore.crypto, 'No keystore')
+
+    const signature = yield call(
+      ethChain.typedDataSignV3,
+      password,
+      keystore,
+      data
+    )
+
+    yield put(actions.clearMessage())
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionSucceeded',
+      payload: {
+        data: signature
+      }
+    }))
+  } catch (error) {
+    yield put(actions.resolveMessageFailed(error.message))
+  }
+}
+
+
+function* resolveETHSignTypedDataV4(password: string, params: any, messageId: string) {
+  try {
+    const data = params[1]
+    const wallet = yield select((state: RootState) => activeWalletSelector(state))
+    const id = wallet.id
+
+    const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    const identityKeystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    const keystore = importedKeystore || identityKeystore
+    assert(keystore && keystore.crypto, 'No keystore')
+
+    const signature = yield call(
+      ethChain.typedDataSignV4,
+      password,
+      keystore,
+      data
+    )
+
+    yield put(actions.clearMessage())
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionSucceeded',
+      payload: {
+        data: signature
+      }
+    }))
+  } catch (error) {
+    yield put(actions.resolveMessageFailed(error.message))
+  }
+}
+
+function* resolveETHSign(password: string, params: any, messageId: string) {
+  try {
+    const data = params[1]
+    const wallet = yield select((state: RootState) => activeWalletSelector(state))
+    const id = wallet.id
+
+    const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    const identityKeystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    const keystore = importedKeystore || identityKeystore
+    assert(keystore && keystore.crypto, 'No keystore')
+
+    const signature = yield call(
+      ethChain.ethSign,
+      password,
+      keystore,
+      data
+    )
+
+    yield put(actions.clearMessage())
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionSucceeded',
+      payload: {
+        data: signature
+      }
+    }))
+  } catch (error) {
+    yield put(actions.resolveMessageFailed(error.message))
+  }
+}
+
+function* resolveETHSendTransaction(password: string, params: any, messageId: string, info: any) {
+  try {
+    const data = params[0]
+    const wallet = yield select((state: RootState) => activeWalletSelector(state))
+    const id = wallet.id
+
+    const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    const identityKeystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    const keystore = importedKeystore || identityKeystore
+    assert(keystore && keystore.crypto, 'No keystore')
+
+    const hash = yield call(
+      ethChain.sendTransaction,
+      password,
+      keystore,
+      { ...data, gasLimit: info.gas }
+    )
+
+    yield put(actions.clearMessage())
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionSucceeded',
+      payload: {
+        data: hash
+      }
+    }))
+  } catch (error) {
+    yield put(actions.resolveMessageFailed(error.message))
+  }
+}
+
+function* resolveETHSignTransaction(password: string, params: any, messageId: string, info: any) {
+  try {
+    const data = params[0]
+    const wallet = yield select((state: RootState) => activeWalletSelector(state))
+    const id = wallet.id
+
+    const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    const identityKeystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    const keystore = importedKeystore || identityKeystore
+    assert(keystore && keystore.crypto, 'No keystore')
+
+    const result = yield call(
+      ethChain.sendTransaction,
+      password,
+      keystore,
+      { ...data, gasLimit: info.gas }
+    )
+
+    yield put(actions.clearMessage())
+    yield put(actions.sendMessage({
+      messageId,
+      type: 'actionSucceeded',
+      payload: {
+        data: result
+      }
+    }))
+  } catch (error) {
+    yield put(actions.resolveMessageFailed(error.message))
+  }
+}
+
 function* resolveRequestSignature(password: string, info: any, messageId: string) {
   try {
     const buf = info.buf
@@ -553,7 +741,7 @@ function* receiveMessage(action: Action<string>) {
     const messageId = messageAction.messageId
     const payload = messageAction.payload
     const messageActionType = messageAction.type
-    console.log(action)
+    console.log('receive bridge message', action)
 
     switch (messageActionType) {
     // case 'getCurrentWallet':
@@ -828,13 +1016,12 @@ function* receiveMessage(action: Action<string>) {
           {
             const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
             assert(activeWallet && activeWallet.chain === 'ETHEREUM' && !!activeWallet.address, 'No active ETHEREUM wallet in BitPortal!')
-            // const t = yield call(ethChain.getStorageAt, '0x407d73d8a49eeb85d32cf465507dd71d507100c1', 0)
-            // console.log(t)
+
             yield put(actions.sendMessage({
               messageId,
               type: 'actionSucceeded',
               payload: {
-                data: [activeWallet.address]
+                data: [activeWallet.address.toLowerCase()]
               }
             }))
           }
@@ -856,20 +1043,9 @@ function* receiveMessage(action: Action<string>) {
               messageId,
               type: 'actionSucceeded',
               payload: {
-                data: `MetaMask/v6.4.1`
+                data: 'MetaMask/v6.4.1'
               }
             }))
-          }
-          break
-        case 'personal_sign':
-          {
-            const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
-            assert(activeWallet && activeWallet.chain === 'ETHEREUM' && !!activeWallet.address, 'No active ETHEREUM wallet in BitPortal!')
-            assert(String(activeWallet.address).toLowerCase() === String(payload.params[1]).toLowerCase(), `No wallet of address: ${payload.params[1]}`)
-
-            yield pendETHRPCRequest(messageActionType, {
-                ...payload
-            }, messageId)
           }
           break
         case 'eth_getCode':
@@ -902,44 +1078,36 @@ function* receiveMessage(action: Action<string>) {
           break
         case 'net_listening':
           {
+            const result = yield call(ethChain.isListening)
             yield put(actions.sendMessage({
               messageId,
               type: 'actionSucceeded',
               payload: {
-                data: true
+                data: result || true
               }
             }))
           }
           break
         case 'net_peerCount':
           {
+            const result = yield call(ethChain.getPeerCount)
             yield put(actions.sendMessage({
               messageId,
               type: 'actionSucceeded',
               payload: {
-                data: '0x2'
-              }
-            }))
-          }
-          break
-        case 'eth_call':
-          {
-            yield put(actions.sendMessage({
-              messageId,
-              type: 'actionSucceeded',
-              payload: {
-                data: '0x'
+                data: result || '0x2'
               }
             }))
           }
           break
         case 'eth_protocolVersion':
           {
+            const result = yield call(ethChain.getProtocolVersion)
             yield put(actions.sendMessage({
               messageId,
               type: 'actionSucceeded',
               payload: {
-                data: '54'
+                data: result || '63'
               }
             }))
           }
@@ -997,7 +1165,7 @@ function* receiveMessage(action: Action<string>) {
         case 'eth_getBlockByNumber':
           {
             assert(payload.params && payload.params[0], 'Invalid params!')
-            const block = yield call(ethChain.getBlock, payload.params[0], Boolean(payload.params[1]))
+            const block = yield call(ethChain.getBlock, !isNaN(payload.params[0]) ? +payload.params[0] : payload.params[0], Boolean(payload.params[1]))
             yield put(actions.sendMessage({
               messageId,
               type: 'actionSucceeded',
@@ -1007,10 +1175,10 @@ function* receiveMessage(action: Action<string>) {
             }))
           }
           break
-        case 'eth_getBlockTransactionCountByNumber':
+        case 'eth_getBlockByHash':
           {
             assert(payload.params && payload.params[0], 'Invalid params!')
-            const block = yield call(ethChain.getBlockTransactionCountByNumber, payload.params[0])
+            const block = yield call(ethChain.getBlock, payload.params[0], Boolean(payload.params[1]))
             yield put(actions.sendMessage({
               messageId,
               type: 'actionSucceeded',
@@ -1034,51 +1202,179 @@ function* receiveMessage(action: Action<string>) {
           }
           break
         case 'eth_getTransactionByBlockHashAndIndex':
-        case 'eth_getTransactionByBlockNumberAndIndex':
-        case 'eth_getTransactionByHash':
-        case 'eth_getTransactionCount':
-        case 'eth_getTransactionReceipt':
-        case 'eth_getUncleByBlockHashAndIndex':
-        case 'eth_getUncleByBlockNumberAndIndex':
-        case 'eth_getUncleCountByBlockHash':
-        case 'eth_getUncleCountByBlockNumber':
-        case 'eth_getWork':
-        case 'eth_hashrate':
-        case 'eth_mining':
-        case 'eth_newBlockFilter':
-        case 'eth_newFilter':
-        case 'eth_newPendingTransactionFilter':
-        case 'eth_sendRawTransaction':
-        case 'eth_sendTransaction':
-        case 'eth_sign':
-        case 'eth_signTransaction':
-        case 'eth_signTypedData':
-        case 'eth_submitHashrate':
-        case 'eth_submitWork':
-        case 'eth_syncing':
-        case 'eth_uninstallFilter':
-        case 'eth_getBlockTransactionCountByHash':
           {
-            assert(payload.params && payload.params[0], 'Invalid params!')
-            const block = yield call(ethChain.getBlockTransactionCountByNumber, payload.params[0])
+            assert(payload.params && payload.params[0] && payload.params[1], 'Invalid params!')
+            const transaction = yield call(ethChain.getTransactionFromBlock, payload.params[0], +payload.params[1])
             yield put(actions.sendMessage({
               messageId,
               type: 'actionSucceeded',
               payload: {
-                data: block
+                data: transaction
               }
             }))
           }
           break
-        case 'eth_getBlockByHash':
+        case 'eth_getTransactionByBlockNumberAndIndex':
           {
-            assert(payload.params && payload.params[0], 'Invalid params!')
-            const block = yield call(ethChain.getBlock, payload.params[0], Boolean(payload.params[1]))
+            assert(payload.params && payload.params[0] && payload.params[1], 'Invalid params!')
+            const transaction = yield call(ethChain.getTransactionFromBlock, !isNaN(payload.params[0]) ? +payload.params[0] : payload.params[0], +payload.params[1])
             yield put(actions.sendMessage({
               messageId,
               type: 'actionSucceeded',
               payload: {
-                data: block
+                data: transaction
+              }
+            }))
+          }
+          break
+        case 'eth_getTransactionByHash':
+          {
+            assert(payload.params && payload.params[0], 'Invalid params!')
+            const transaction = yield call(ethChain.getTransaction, payload.params[0])
+            yield put(actions.sendMessage({
+              messageId,
+              type: 'actionSucceeded',
+              payload: {
+                data: transaction
+              }
+            }))
+          }
+          break
+        case 'eth_getTransactionCount':
+          {
+            assert(payload.params && payload.params[0], 'Invalid params!')
+            const count = yield call(ethChain.getTransactionCount, payload.params[0], payload.params[1])
+            yield put(actions.sendMessage({
+              messageId,
+              type: 'actionSucceeded',
+              payload: {
+                data: count
+              }
+            }))
+          }
+          break
+        case 'eth_getTransactionReceipt':
+          {
+            assert(payload.params && payload.params[0], 'Invalid params!')
+            const receipt = yield call(ethChain.getTransactionReceipt, payload.params[0])
+            yield put(actions.sendMessage({
+              messageId,
+              type: 'actionSucceeded',
+              payload: {
+                data: receipt
+              }
+            }))
+          }
+          break
+        case 'eth_getUncleByBlockHashAndIndex':
+          {
+            assert(payload.params && payload.params[0] && payload.params[1], 'Invalid params!')
+            const transaction = yield call(ethChain.getUncle, payload.params[0], +payload.params[1], !!payload.params[2])
+            yield put(actions.sendMessage({
+              messageId,
+              type: 'actionSucceeded',
+              payload: {
+                data: transaction
+              }
+            }))
+          }
+          break
+        case 'eth_getUncleByBlockNumberAndIndex':
+          {
+            assert(payload.params && payload.params[0] && payload.params[1], 'Invalid params!')
+            const transaction = yield call(ethChain.getUncle, !isNaN(payload.params[0]) ? +payload.params[0] : payload.params[0], +payload.params[1], !!payload.params[2])
+            yield put(actions.sendMessage({
+              messageId,
+              type: 'actionSucceeded',
+              payload: {
+                data: transaction
+              }
+            }))
+          }
+          break
+        case 'eth_getBlockTransactionCountByHash':
+          {
+            assert(payload.params && payload.params[0], 'Invalid params!')
+            const count = yield call(ethChain.getBlockTransactionCount, payload.params[0])
+            yield put(actions.sendMessage({
+              messageId,
+              type: 'actionSucceeded',
+              payload: {
+                data: count
+              }
+            }))
+          }
+          break
+        case 'eth_getBlockTransactionCountByNumber':
+          {
+            assert(payload.params && payload.params[0], 'Invalid params!')
+            const count = yield call(ethChain.getBlockTransactionCount, !isNaN(payload.params[0]) ? +payload.params[0] : payload.params[0])
+            yield put(actions.sendMessage({
+              messageId,
+              type: 'actionSucceeded',
+              payload: {
+                data: count
+              }
+            }))
+          }
+          break
+        case 'eth_getWork':
+          {
+            const result = yield call(ethChain.getWork)
+            yield put(actions.sendMessage({
+              messageId,
+              type: 'actionSucceeded',
+              payload: {
+                data: result
+              }
+            }))
+          }
+          break
+        case 'eth_hashrate':
+          {
+            const result = yield call(ethChain.getHashrate)
+            yield put(actions.sendMessage({
+              messageId,
+              type: 'actionSucceeded',
+              payload: {
+                data: result
+              }
+            }))
+          }
+          break
+        case 'eth_mining':
+          {
+            const result = yield call(ethChain.isMining)
+            yield put(actions.sendMessage({
+              messageId,
+              type: 'actionSucceeded',
+              payload: {
+                data: result || true
+              }
+            }))
+          }
+          break
+        case 'eth_syncing':
+          {
+            const result = yield call(ethChain.isSyncing)
+            yield put(actions.sendMessage({
+              messageId,
+              type: 'actionSucceeded',
+              payload: {
+                data: result || true
+              }
+            }))
+          }
+          break
+        case 'eth_submitWork':
+          {
+            assert(payload.params && payload.params[0] && payload.params[1] && payload.params[2], 'Invalid params!')
+            const result = yield call(ethChain.submitWork, payload.params[0], payload.params[1], payload.params[2])
+            yield put(actions.sendMessage({
+              messageId,
+              type: 'actionSucceeded',
+              payload: {
+                data: result
               }
             }))
           }
@@ -1097,6 +1393,169 @@ function* receiveMessage(action: Action<string>) {
             }))
           }
           break
+        case 'eth_call':
+          {
+            assert(payload.params && payload.params[0] && typeof payload.params[0] === 'object', 'Invalid params!')
+            const result = yield call(ethChain.call, payload.params[0], payload.params[1])
+            yield put(actions.sendMessage({
+              messageId,
+              type: 'actionSucceeded',
+              payload: {
+                data: result
+              }
+            }))
+          }
+          break
+        case 'personal_sign':
+          {
+            const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+            assert(activeWallet && activeWallet.chain === 'ETHEREUM' && !!activeWallet.address, 'No active ETHEREUM wallet in BitPortal!')
+
+            assert(payload.params && payload.params[0] && payload.params[1], 'Invalid params!')
+            assert(typeof payload.params[1] === 'string' || typeof payload.params[1] === number, 'Invalid address params!')
+
+            if (typeof payload.params[1] === 'string') {
+              assert(String(activeWallet.address).toLowerCase() === String(payload.params[1]).toLowerCase(), `No wallet of address: ${payload.params[1]}`)
+            } else {
+              assert(payload.params[1] == 0, `Invalid address index: ${payload.params[1]}`)
+            }
+
+            const info = {
+              data: ethChain.hexToUtf8(payload.params[0])
+            }
+
+            yield pendETHRPCRequest(messageActionType, payload, messageId, info)
+          }
+          break
+        case 'personal_ecRecover':
+          {
+            const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+            assert(activeWallet && activeWallet.chain === 'ETHEREUM' && !!activeWallet.address, 'No active ETHEREUM wallet in BitPortal!')
+            assert(payload.params && payload.params[0] && payload.params[1], 'Invalid params!')
+
+            const result = yield call(ethChain.personalEcRecover, payload.params[0], payload.params[1])
+            yield put(actions.sendMessage({
+              messageId,
+              type: 'actionSucceeded',
+              payload: {
+                data: result
+              }
+            }))
+          }
+          break
+        case 'eth_signTransaction':
+        case 'eth_sendTransaction':
+          {
+            const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+            assert(activeWallet && activeWallet.chain === 'ETHEREUM' && !!activeWallet.address, 'No active ETHEREUM wallet in BitPortal!')
+            assert(payload.params && payload.params[0] && typeof payload.params[0] === 'object' && payload.params[0].from && payload.params[0].to, 'Invalid params!')
+            assert(String(activeWallet.address).toLowerCase() === String(payload.params[0].from).toLowerCase(), `No wallet of address: ${payload.params[1]}`)
+
+            const params = payload.params[0]
+
+            let gasPrice
+            if (!params.gasPrice) {
+              const price = yield call(ethChain.getGasPrice)
+              gasPrice = ethChain.bigValuePow(+price, -18)
+            } else {
+              gasPrice = ethChain.bigValuePow(+params.gasPrice, -18)
+            }
+
+            let gas = (params.gas && +params.gas)
+            if (!gas) {
+              gas = yield call(ethChain.estimateGas, params)
+            }
+
+            const data = ethChain.decodeData(params.data)
+
+            const info = {
+              fromAddress: params.from,
+              toAddress: params.to,
+              amount: ethChain.bigValuePow(+(params.value || 0), -18),
+              data: params.data,
+              gasPrice,
+              gas,
+              gasFee: gas * gasPrice,
+              data
+            }
+
+            yield pendETHRPCRequest(messageActionType, payload, messageId, info)
+          }
+          break
+        case 'eth_sendRawTransaction':
+          {
+            assert(payload.params && payload.params[0], 'Invalid params!')
+            const result = yield call(ethChain.sendRawTransaction, payload.params[0])
+            yield put(actions.sendMessage({
+              messageId,
+              type: 'actionSucceeded',
+              payload: {
+                data: result
+              }
+            }))
+          }
+          break
+        case 'eth_signTypedData':
+          {
+            const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+            assert(activeWallet && activeWallet.chain === 'ETHEREUM' && !!activeWallet.address, 'No active ETHEREUM wallet in BitPortal!')
+            assert(payload.params && payload.params[0] && typeof payload.params[0] === 'object' && payload.params[1], 'Invalid params!')
+            assert(String(activeWallet.address).toLowerCase() === String(payload.params[1]).toLowerCase(), `No wallet of address: ${payload.params[1]}`)
+
+            const info = {
+              data: payload.params[0]
+            }
+
+            yield pendETHRPCRequest(messageActionType, payload, messageId, info)
+          }
+          break
+        case 'eth_signTypedData_v3':
+        case 'eth_signTypedData_v4':
+          {
+            const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+            assert(activeWallet && activeWallet.chain === 'ETHEREUM' && !!activeWallet.address, 'No active ETHEREUM wallet in BitPortal!')
+            assert(payload.params && payload.params[0] && payload.params[1], 'Invalid params!')
+            assert(String(activeWallet.address).toLowerCase() === String(payload.params[0]).toLowerCase(), `No wallet of address: ${payload.params[1]}`)
+
+            const typedData = JSON.parse(payload.params[1])
+            delete typedData.types
+            delete typedData.primaryType
+
+            const info = {
+              data: typedData
+            }
+
+            yield pendETHRPCRequest(messageActionType, payload, messageId, info)
+          }
+          break
+        case 'eth_sign':
+          // {
+          //   const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+          //   assert(activeWallet && activeWallet.chain === 'ETHEREUM' && !!activeWallet.address, 'No active ETHEREUM wallet in BitPortal!')
+
+          //   assert(payload.params && payload.params[0] && payload.params[1], 'Invalid params!')
+          //   assert(typeof payload.params[0] === 'string' || typeof payload.params[0] === number, 'Invalid address params!')
+
+          //   if (typeof payload.params[0] === 'string') {
+          //     assert(String(activeWallet.address).toLowerCase() === String(payload.params[0]).toLowerCase(), `No wallet of address: ${payload.params[1]}`)
+          //   } else {
+          //     assert(payload.params[0] == 0, `Invalid address index: ${payload.params[1]}`)
+          //   }
+
+          //   const info = {
+          //     data: payload.params[1]
+          //   }
+
+          //   yield pendETHRPCRequest(messageActionType, payload, messageId, info)
+          // }
+          // break
+        case 'eth_submitHashrate':
+        case 'eth_uninstallFilter':
+        case 'eth_getUncleCountByBlockHash':
+        case 'eth_getUncleCountByBlockNumber':
+        case 'eth_newBlockFilter':
+        case 'eth_newFilter':
+        case 'eth_newPendingTransactionFilter':
         case 'eth_getFilterChanges':
         case 'eth_getFilterLogs':
         case 'eth_getLogs':
@@ -1107,7 +1566,7 @@ function* receiveMessage(action: Action<string>) {
               type: 'actionFailed',
               payload: {
                 error: {
-                  message: `Unsupported action: ${method}`
+                  message: `Unsupported rpc api: ${method}`
                 }
               }
             }))
@@ -1151,7 +1610,7 @@ function* rejectMessage() {
 
   if (messageId && !resolving) {
     yield put(actions.clearMessage())
-    yield delay(500)
+    // yield delay(500)
     yield put(actions.sendMessage({
       messageId,
       type: 'actionFailed',
@@ -1198,8 +1657,21 @@ function* resolveMessage(action: Action<any>) {
       case 'eth_rpc_request':
         const method = pendingMessage.payload.method
         const params = pendingMessage.payload.params
+        const info = pendingMessage.info
         if (method === 'personal_sign') {
           yield resolveETHPersonalSign(password, params, messageId)
+        } else if (method === 'eth_sign') {
+          yield resolveETHSign(password, params, messageId)
+        } else if (method === 'eth_signTypedData') {
+          yield resolveETHSignTypedData(password, params, messageId)
+        } else if (method === 'eth_signTypedData_v3') {
+          yield resolveETHSignTypedDataV3(password, params, messageId)
+        } else if (method === 'eth_signTypedData_v4') {
+          yield resolveETHSignTypedDataV4(password, params, messageId)
+        } else if (method === 'eth_sendTransaction') {
+          yield resolveETHSendTransaction(password, params, messageId, info)
+        } else if (method === 'eth_signTransaction') {
+          yield resolveETHSignTransaction(password, params, messageId, info)
         }
         break
       default:

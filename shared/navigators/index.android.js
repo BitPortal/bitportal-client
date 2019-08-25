@@ -7,6 +7,7 @@ import Root from 'screens/Root'
 import Wallet from 'screens/Wallet'
 import Asset from 'screens/Wallet/Asset'
 import Market from 'screens/Market'
+import Discovery from 'screens/Discovery'
 import SearchMarket from 'screens/Market/SearchMarket'
 import Profile from 'screens/Profile'
 import Settings from 'screens/Profile/Settings'
@@ -88,6 +89,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.TransferAsset', () => TransferAsset, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Camera', () => Camera, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.WebView', () => WebView, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.Discovery', () => Discovery, Provider, store)
 }
 
 export const setDefaultOptions = () => {
@@ -137,21 +139,6 @@ export const startApp = (callback) => {
     callback()
   })
 }
-
-/* export const startSingleApp = () => {
- *   Navigation.setRoot({
- *     root: {
- *       component: {
- *         name: 'BitPortal.Welcome',
- *         options: {
- *           topBar: {
- *             visible: false
- *           }
- *         }
- *       }
- *     }
- *   })
- * }*/
 
 export const startTabBasedApp = (locale) => {
   locale = locale || 'zh'

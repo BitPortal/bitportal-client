@@ -26,21 +26,14 @@ import { managingWalletChildAddressSelector } from 'selectors/address'
 import { formatCycleTime, formatMemorySize } from 'utils/format'
 import WalletScreen from 'screens/Wallet'
 import MarketScreen from 'screens/Market'
+import DiscoveryScreen from 'screens/Discovery'
 import * as api from 'utils/api'
 import FastImage from 'react-native-fast-image'
-
-export const SecondTabScreen = () => (
-  <View style={[{ flex: 1 }, { backgroundColor: '#EEEEEE' }]} />
-)
-
-export const ThirdTabScreen = () => (
-  <View style={[{ flex: 1 }, { backgroundColor: '#EEEEEE' }]} />
-)
 
 const icons = {
   wallet: require('resources/images/wallet_android.png'),
   market: require('resources/images/market_android.png'),
-  profile: require('resources/images/profile_android.png')
+  discovery: require('resources/images/dapp_android.png')
 }
 
 @injectIntl
@@ -103,7 +96,8 @@ export default class Root extends Component {
     index: 0,
     routes: [
       { key: 'wallet', icon: 'wallet' },
-      { key: 'market', icon: 'market' }
+      { key: 'market', icon: 'market' },
+      { key: 'discovery', icon: 'discovery' }
     ]
   }
 
@@ -212,7 +206,7 @@ export default class Root extends Component {
 
   setNavBar = (index) => {
     const { intl } = this.props
-    const titles = [intl.formatMessage({ id: 'top_bar_title_wallet' }), intl.formatMessage({ id: 'top_bar_title_market' }), intl.formatMessage({ id: 'top_bar_title_profile' })]
+    const titles = [intl.formatMessage({ id: 'top_bar_title_wallet' }), intl.formatMessage({ id: 'top_bar_title_market' }), '应用']
 
     let rightButtons = []
 
@@ -283,8 +277,8 @@ export default class Root extends Component {
           swipeEnabled={false}
           scrollEnabled={false}
           navigationState={this.state}
-          renderScene={SceneMap({ wallet: WalletScreen, market: MarketScreen, profile: ThirdTabScreen })}
-          renderTabBar={props => <TabBar {...props} style={{ backgroundColor: '#673AB7' }} indicatorStyle={{ backgroundColor: 'white', color: 'white' }} renderIcon={({ route, focused }) => <Image source={icons[route.icon]} style={{ width: 18, height: 18, opacity: focused ? 1 : 0.7 }} />} />}
+          renderScene={SceneMap({ wallet: WalletScreen, market: MarketScreen, discovery: DiscoveryScreen })}
+          renderTabBar={props => <TabBar {...props} style={{ backgroundColor: '#673AB7' }} indicatorStyle={{ backgroundColor: 'white', color: 'white' }} renderIcon={({ route, focused }) => <Image source={icons[route.icon]} style={{ width: 24, height: 24, opacity: focused ? 1 : 0.7 }} />} />}
           onIndexChange={this.onIndexChange}
           initialLayout={{ width: Dimensions.get('window').width }}
         />

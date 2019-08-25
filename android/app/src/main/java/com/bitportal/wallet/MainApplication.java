@@ -26,7 +26,6 @@ import com.bitportal.wallet.nativeutils.NativeUtilsPackage;
 import com.bitportal.wallet.qrcode.QRScanReaderPackage;
 import cn.jpush.reactnativejpush.JPushPackage;
 import cn.jpush.android.api.JPushInterface;
-import com.github.alinz.reactnativewebviewbridge.WebViewBridgePackage;
 import com.rnfs.RNFSPackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
@@ -82,7 +81,6 @@ public class MainApplication extends NavigationApplication {
       new NativeUtilsPackage(),
       new QRScanReaderPackage(),
       new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
-      new WebViewBridgePackage(),
       new FastImageViewPackage(),
       new RNFSPackage(),
       new AsyncStoragePackage(),

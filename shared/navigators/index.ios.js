@@ -41,7 +41,6 @@ import LoadMoreTableViewCell from 'components/TableViewCell/LoadMoreTableViewCel
 import IdentityHeader from 'components/Header/IdentityHeader'
 
 import Market from 'screens/Market'
-import Welcome from 'screens/Welcome'
 import Wallet from 'screens/Wallet'
 import AddAssets from 'screens/Wallet/AddAssets'
 import Asset from 'screens/Wallet/Asset'
@@ -132,8 +131,6 @@ export const registerScreens = (store) => {
   AppRegistry.registerComponent('DappFooterTableViewCell', () => DappFooterTableViewCell)
   AppRegistry.registerComponent('DappCategoryTableViewCell', () => DappCategoryTableViewCell)
   AppRegistry.registerComponent('SmallDappTableViewCell', () => SmallDappTableViewCell)
-
-  Navigation.registerComponentWithRedux('BitPortal.Welcome', () => Welcome, Provider, store)
 
   Navigation.registerComponentWithRedux('BitPortal.Wallet', () => Wallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.AddAssets', () => AddAssets, Provider, store)
@@ -231,21 +228,6 @@ export const startApp = (callback) => {
   Navigation.events().registerAppLaunchedListener(() => {
     setDefaultOptions()
     callback()
-  })
-}
-
-export const startSingleApp = () => {
-  Navigation.setRoot({
-    root: {
-      component: {
-        name: 'BitPortal.Welcome',
-        options: {
-          topBar: {
-            visible: false
-          }
-        }
-      }
-    }
   })
 }
 
