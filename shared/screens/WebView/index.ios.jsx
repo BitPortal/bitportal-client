@@ -1112,11 +1112,12 @@ export default class WebView extends Component {
     } = this.props
     const isBookmarked = id ? (bookmarkedIds.indexOf(id) !== -1) : false
 
+    // https://danfinlay.github.io/js-eth-personal-sign-examples
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F7F7' }}>
           <View style={{ flex: 1, width: '100%' }}>
             <RNWebView
-              source={{ uri: 'https://danfinlay.github.io/js-eth-personal-sign-examples' }}
+              source={{ uri: url }}
               ref={(e) => { this.webviewbridge = e }}
               renderError={this.renderError}
               renderLoading={() => {}}
