@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { activeWalletSelector, managingWalletSelector } from './wallet'
+import { activeWalletSelector, managingWalletSelector, bridgeWalletSelector } from './wallet'
 import { initialState } from 'reducers/wallet'
 
 export const accountByIdSelector = (state: RootState) => state.account.byId || initialState.byId
@@ -26,6 +26,16 @@ export const accountResourcesByIdSelector = createSelector(
 
 export const activeAccountSelector = createSelector(
   activeWalletSelector,
+  accountByIdSelector,
+  (wallet: any, byId: any) => {
+    if (!byId || !wallet || wallet.chain !== 'EOS' || !wallet.address) return null
+    const id = `${wallet.chain}/${wallet.address}`
+    return byId[id]
+  }
+)
+
+export const bridgeAccountSelector = createSelector(
+  bridgeWalletSelector,
   accountByIdSelector,
   (wallet: any, byId: any) => {
     if (!byId || !wallet || wallet.chain !== 'EOS' || !wallet.address) return null

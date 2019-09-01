@@ -5,7 +5,7 @@ import { View, Text } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { categoryDappSelector } from 'selectors/dapp'
 import * as dappActions from 'actions/dapp'
-import TableView from 'react-native-tableview'
+import TableView from 'components/TableView'
 import { loadScatterSync } from 'utils/inject'
 const { Section, Item } = TableView
 

@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
-import { View, Text, ScrollView, Dimensions, LayoutAnimation, TouchableHighlight, ActivityIndicator, Alert, SafeAreaView } from 'react-native'
+import { View, Text, ScrollView, Dimensions, LayoutAnimation, TouchableHighlight, ActivityIndicator, Alert, SafeAreaView, NativeModules } from 'react-native'
 import { Navigation } from 'react-native-navigation'
-import TableView from 'react-native-tableview'
+import TableView from 'components/TableView'
 import FastImage from 'react-native-fast-image'
 import * as transactionActions from 'actions/transaction'
 import * as producerActions from 'actions/producer'
@@ -20,6 +20,7 @@ import {
 } from 'selectors/producer'
 import Modal from 'react-native-modal'
 import styles from './styles'
+const SPAlert = NativeModules.SPAlert
 
 export const errorMessages = (error, messages) => {
   if (!error) { return null }
@@ -266,15 +267,7 @@ export default class Voting extends Component {
         )
       }, 20)
     } else {
-      setTimeout(() => {
-        Alert.alert(
-          '投票成功',
-          '',
-          [
-            { text: '确定', onPress: () => {} }
-          ]
-        )
-      }, 20)
+      SPAlert.presentDone('投票成功!')
     }
   }
 

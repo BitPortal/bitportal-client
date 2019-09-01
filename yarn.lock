@@ -888,90 +888,140 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@chainx/account@^2.13.0":
-  version "2.13.0"
-  resolved "https://registry.yarnpkg.com/@chainx/account/-/account-2.13.0.tgz#628eca27f4af24b4e523d40a34680d7c1c2131f5"
-  integrity sha512-MyedCtUJsf5EbLl8SbIFA5qdhQXMd8A+XpPveWCd9ucF5JHoV6LfUoI290P2IHi0LS6O4T/gMvvPCgW1it+n9g==
+"@chainx/account@^2.20.2":
+  version "2.20.2"
+  resolved "https://registry.yarnpkg.com/@chainx/account/-/account-2.20.2.tgz#2b0c996f439c09fbeb20c21f791a7ffc12ccd1c6"
+  integrity sha512-ff9YU7kQ8He36i5fvalFO8S9HZBWqLaKcEqHnozxWvw5RgI2cxGzLz4GiYdjnXC0QzmTOP5/DSxZOy8A916Bnw==
   dependencies:
-    "@chainx/keystore" "^2.13.0"
-    "@polkadot/keyring" "^0.91.1"
+    "@chainx/keyring" "^2.20.2"
+    "@chainx/keystore" "^2.20.2"
     bip32 "^1.0.2"
     bs58 "^4.0.1"
     tweetnacl "^1.0.0"
 
-"@chainx/extrinsics@^2.13.0":
-  version "2.13.0"
-  resolved "https://registry.yarnpkg.com/@chainx/extrinsics/-/extrinsics-2.13.0.tgz#de8fd759335207716a6e673cd29327d0c78d7e1a"
-  integrity sha512-2ZBvi9ynFO1CGvqX8Kp0ixnrpn2iQFAyna6J69HgBWwNa+AHl5JCGme87dTA9C4p3nct9Lo9bvGT3TAmACT4Rw==
+"@chainx/extrinsics@^2.20.2":
+  version "2.20.2"
+  resolved "https://registry.yarnpkg.com/@chainx/extrinsics/-/extrinsics-2.20.2.tgz#b6a0ba588e1ee7d5cc0482e415487d2f5a2ea1bc"
+  integrity sha512-tLQWMY9+xv3TpjT4WUGw8UvWXTsYfxFEXpbkqsZkFHztWrwNuBoB6nne8qquR3NBKMZgxYjYiwKEJnOA51rSrA==
   dependencies:
-    "@chainx/types" "^2.13.0"
-    "@polkadot/keyring" "^0.91.1"
-    "@polkadot/util" "^0.91.1"
+    "@chainx/keyring" "^2.20.2"
+    "@chainx/types" "^2.20.2"
+    "@chainx/util" "^2.20.2"
 
-"@chainx/jsonrpc@^2.13.0":
-  version "2.13.0"
-  resolved "https://registry.yarnpkg.com/@chainx/jsonrpc/-/jsonrpc-2.13.0.tgz#08f43288e50ef81f36f060fcd92ffd9f8d8fcc95"
-  integrity sha512-B+gjrG2+gDfEANkLlQqvVMhvlQgmaZ8x/tB8lW4ol+wKewzLSsKmDIvCy1P1f0MPH1PD5O/5Dr8noJ2b1/mEIw==
+"@chainx/jsonrpc@^2.20.2":
+  version "2.20.2"
+  resolved "https://registry.yarnpkg.com/@chainx/jsonrpc/-/jsonrpc-2.20.2.tgz#ce1135ed700ca963a0d22af2589b67122e916dee"
+  integrity sha512-OlAt3FM9gax/rZ3QO5Wq5aovbirTLFM3gPaV4tONNgLAxTQ5aF12mOTEOFhGEmiWRXmsFITJI0+Z5CUfrTeoLw==
 
-"@chainx/keystore@^2.13.0":
-  version "2.13.0"
-  resolved "https://registry.yarnpkg.com/@chainx/keystore/-/keystore-2.13.0.tgz#0b219d0753b4b8ac80c065992c98b5159abd4c8f"
-  integrity sha512-0Dm7Mv1aA5eACW9Z39PnzgyVm70+7UQVvuNkBcEbPFAdScdx06LcQ75oY09GdBbQ4ILNwCAIhbLg3QDf9ZxB9Q==
+"@chainx/keyring@^2.20.2":
+  version "2.20.2"
+  resolved "https://registry.yarnpkg.com/@chainx/keyring/-/keyring-2.20.2.tgz#5dd6210c065cc89fe9cd9eff579065d3f8f9bf9d"
+  integrity sha512-5P4jGSNiiVQUzOFY0liGp/Z9mIni6kLJsK8HWwKg2ytJwTEi9KxcOIbaZfjYHyEqx+4JNHvowZoOvNkBGO8qvg==
   dependencies:
-    "@polkadot/util" "^0.91.1"
+    "@babel/runtime" "^7.4.5"
+    "@chainx/util" "^2.20.2"
+    "@chainx/util-crypto" "^2.20.2"
+    "@types/bs58" "^4.0.0"
+    bs58 "^4.0.1"
+
+"@chainx/keystore@^2.20.2":
+  version "2.20.2"
+  resolved "https://registry.yarnpkg.com/@chainx/keystore/-/keystore-2.20.2.tgz#9401202e7cb4508a0566d8d7e5799ae7fdde2428"
+  integrity sha512-Zk8RDlOu7+WtFo8OOXcS4i1o6HK3ekhH49tY3DHbFbOtvUJBXZfVGpIuU+9zVcdC5oUkysDG/ZvOMDc1sxzZ+A==
+  dependencies:
+    "@chainx/util" "^2.20.2"
     blakejs "^1.1.0"
     crypto-browserify "^3.12.0"
     pbkdf2 "^3.0.17"
     randombytes "^2.0.6"
 
-"@chainx/rpc-core@^2.13.0":
-  version "2.13.0"
-  resolved "https://registry.yarnpkg.com/@chainx/rpc-core/-/rpc-core-2.13.0.tgz#89d963a1e06b06449231aa995738a04ec76b653e"
-  integrity sha512-jslvRN6eKI6TXvNr2fEniXbeyrKXUsRd2JheFZux2GhmZPZCN7i/zqm00KyG+1EV0r+PaqTQiXGTdTCY4IN+jQ==
+"@chainx/rpc-core@^2.20.2":
+  version "2.20.2"
+  resolved "https://registry.yarnpkg.com/@chainx/rpc-core/-/rpc-core-2.20.2.tgz#3ee2285b2b0593d4f24356bf4fc50d20e297b811"
+  integrity sha512-7p+y9PNif0o3w6sxi/MI/7drD2yMLgJzxliOLE4ey47BTYMnw5eTFJBCUYnOZu6w91DU072gMPbabQu7ucP9AA==
   dependencies:
-    "@chainx/jsonrpc" "^2.13.0"
-    "@chainx/rpc-provider" "^2.13.0"
-    "@chainx/storage" "^2.13.0"
-    "@chainx/types" "^2.13.0"
-    "@polkadot/util" "^0.91.1"
+    "@chainx/jsonrpc" "^2.20.2"
+    "@chainx/rpc-provider" "^2.20.2"
+    "@chainx/storage" "^2.20.2"
+    "@chainx/types" "^2.20.2"
+    "@chainx/util" "^2.20.2"
 
-"@chainx/rpc-provider@^2.13.0":
-  version "2.13.0"
-  resolved "https://registry.yarnpkg.com/@chainx/rpc-provider/-/rpc-provider-2.13.0.tgz#0b5653b5675bff6f77ac52590721af4bb085176a"
-  integrity sha512-KQlpfVR6uNX3rvFgFiMsR3tB6gu2iJqSw1LMNGO0WLLjr9W9Kmcp8UmiEUM4jnuqyt5j27q/jvGSeDEjf60MaA==
+"@chainx/rpc-provider@^2.20.2":
+  version "2.20.2"
+  resolved "https://registry.yarnpkg.com/@chainx/rpc-provider/-/rpc-provider-2.20.2.tgz#84eda12a541f6cad79aa81e336647d846998df4f"
+  integrity sha512-bkKjCDZc3XV0MblpGgcvsdZpy7c6nfcATJpnFc8kahTytqGM3CkADhNws9Tvv+TwxW1SPeTZT6jwc9rus1+7Gg==
   dependencies:
-    "@polkadot/util" "^0.91.1"
+    "@chainx/util" "^2.20.2"
     eventemitter3 "^3.1.0"
     isomorphic-fetch "^2.2.1"
     websocket "^1.0.28"
 
-"@chainx/rpc-rx@^2.13.0":
-  version "2.13.0"
-  resolved "https://registry.yarnpkg.com/@chainx/rpc-rx/-/rpc-rx-2.13.0.tgz#a7057bdf3f20425781e5b26a46eb8b66f35f0579"
-  integrity sha512-wuy7WWQKUJbVx7KjsP96a1PtSkD5hCh87I3FhE+LGxDrNiifYkjWHotWUmX+gwV2EW2hI47XQiJPwu7eCse5xw==
+"@chainx/rpc-rx@^2.20.2":
+  version "2.20.2"
+  resolved "https://registry.yarnpkg.com/@chainx/rpc-rx/-/rpc-rx-2.20.2.tgz#0b58cf948c8e328ed197b02f1f6d3a09669e3131"
+  integrity sha512-tQ82y2nDCiVDVREVzPfKCXY4Tt10+LraGwcN6Y93lz8171jtuPYTjIYu4MPcLw8l+QBT1dPcjl9K5+uJXuBLYg==
   dependencies:
-    "@chainx/rpc-core" "^2.13.0"
-    "@polkadot/util" "^0.91.1"
+    "@chainx/rpc-core" "^2.20.2"
+    "@chainx/util" "^2.20.2"
     rxjs "^6.3.3"
 
-"@chainx/storage@^2.13.0":
-  version "2.13.0"
-  resolved "https://registry.yarnpkg.com/@chainx/storage/-/storage-2.13.0.tgz#165a4f80a4260fac699d3f6fd431ebad5235117d"
-  integrity sha512-6xD6oHcH57mmaC9Lkl/OMtaigf3kc5Tywx5MhbVurMR5gz1D11wa3JCgfJkOMAQg7GgyKMi2NtiFm8m64mZ81A==
+"@chainx/storage@^2.20.2":
+  version "2.20.2"
+  resolved "https://registry.yarnpkg.com/@chainx/storage/-/storage-2.20.2.tgz#8bae767674bb69e38e64c0748195f4632ea71ab0"
+  integrity sha512-mWcMtwdCGLQKtfWt7+JT7POuGXxUyxKvVxQ/R1b2CkFhMiFeIZK42/rpGm7Z/CsIW/iM45RyIgeLImf7PqF6cQ==
   dependencies:
-    "@chainx/types" "^2.13.0"
-    "@polkadot/util" "^0.91.1"
-    "@polkadot/util-crypto" "^0.91.1"
+    "@chainx/types" "^2.20.2"
+    "@chainx/util" "^2.20.2"
+    "@chainx/util-crypto" "^2.20.2"
 
-"@chainx/types@^2.13.0":
-  version "2.13.0"
-  resolved "https://registry.yarnpkg.com/@chainx/types/-/types-2.13.0.tgz#9d20624a36e276e98a5230bd2a99cb90a5405e3b"
-  integrity sha512-l7Jsl8zcJFoMBcp4aYMOKpj2FfdATQrFAK7lOxFpahp5B2y28wfo2cpRLdsQa/oQ2heK82M83QLOi92wTsPHkQ==
+"@chainx/types@^2.20.2":
+  version "2.20.2"
+  resolved "https://registry.yarnpkg.com/@chainx/types/-/types-2.20.2.tgz#d8b8d40566676b0ef3779b22072288facaf27dba"
+  integrity sha512-m3JvymkvSN9VpZu4WFiUDkQkODNf5t9MYp7uj7UJJ/MIvmZQVg/UWpFwuidW7ScqBiq1HWSPLrurI62Agxnz/Q==
   dependencies:
-    "@polkadot/keyring" "^0.91.1"
-    "@polkadot/util" "^0.91.1"
+    "@chainx/keyring" "^2.20.2"
+    "@chainx/util" "^2.20.2"
     bitcoinjs-lib "^4.0.2"
     bn.js "^4.11.8"
+
+"@chainx/util-crypto@^2.20.2":
+  version "2.20.2"
+  resolved "https://registry.yarnpkg.com/@chainx/util-crypto/-/util-crypto-2.20.2.tgz#e7decdf087e8705609998d1777ba4c47f5098e77"
+  integrity sha512-YxD/mq2EBnBoeZ015ZkbvAyaariutikukiB691j07U/cHgL74EGSgbVPtlWC76IYEGkA6TWVtePv7GjhHHz/8g==
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    "@chainx/util" "^2.20.2"
+    "@chainx/wasm-crypto" "^2.20.2"
+    "@types/bip39" "^2.4.2"
+    "@types/pbkdf2" "^3.0.0"
+    "@types/secp256k1" "^3.5.0"
+    "@types/webassembly-js-api" "^0.0.2"
+    "@types/xxhashjs" "^0.2.1"
+    bip39 "^2.5.0"
+    blakejs "^1.1.0"
+    js-sha3 "^0.8.0"
+    secp256k1 "^3.7.0"
+    tweetnacl "^1.0.1"
+    xxhashjs "^0.2.2"
+
+"@chainx/util@^2.20.2":
+  version "2.20.2"
+  resolved "https://registry.yarnpkg.com/@chainx/util/-/util-2.20.2.tgz#ec58ca55d5a7637c035ae2f1d96308bdc944eea3"
+  integrity sha512-8ariunWQzIdww2y4EdVxDsnRs+TzHb9Ubhx57NZHZb/EnacpmovGFfrUMy+ZiVHFv7bg0vkVUWkNe+pVWUEJ2g==
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    "@types/bn.js" "^4.11.5"
+    "@types/deasync" "^0.1.0"
+    bn.js "^4.11.8"
+    camelcase "^5.3.1"
+    chalk "^2.4.2"
+    ip-regex "^4.1.0"
+    moment "^2.24.0"
+
+"@chainx/wasm-crypto@^2.20.2":
+  version "2.20.2"
+  resolved "https://registry.yarnpkg.com/@chainx/wasm-crypto/-/wasm-crypto-2.20.2.tgz#59363a40f091004dc31a115af2f4596fbfc53da9"
+  integrity sha512-BNEZ/HTHKmlkIhIRw9ijO114I8P2K5+k0i73tVIZYEUlG+8O5oP87qDWKdGuT/Gezjz1vm7f/Xe1FsQa9ZwuUA==
 
 "@csstools/convert-colors@^1.4.0":
   version "1.4.0"
@@ -1009,56 +1059,6 @@
     inversify "^5.0.0"
     reflect-metadata "^0.1.12"
     tslib "^1.8.1"
-
-"@polkadot/keyring@^0.91.1":
-  version "0.91.1"
-  resolved "https://registry.yarnpkg.com/@polkadot/keyring/-/keyring-0.91.1.tgz#9d0d06ffb7c1ebc575304cab0e3699c76637a694"
-  integrity sha512-XYWbqWK8CAeuPFg1llS65r2sO7k2qTalJMHPQiaIVETPXQGx4SCzzMzBkD9eVvHTs9KfamynOQrspflhjHtgbg==
-  dependencies:
-    "@babel/runtime" "^7.4.5"
-    "@polkadot/util" "^0.91.1"
-    "@polkadot/util-crypto" "^0.91.1"
-    "@types/bs58" "^4.0.0"
-    bs58 "^4.0.1"
-
-"@polkadot/util-crypto@^0.91.1":
-  version "0.91.1"
-  resolved "https://registry.yarnpkg.com/@polkadot/util-crypto/-/util-crypto-0.91.1.tgz#c9e48df45588af7fa7822652d9938764274e548f"
-  integrity sha512-o1CU1fwf0zxTJfuXgWs+IBJ8qIsZK9Pk7dSKR+YcDP3RYYCF8kRp+PDw/BHtvOhSerLKn9rxECjmtk+5sVVzkQ==
-  dependencies:
-    "@babel/runtime" "^7.4.5"
-    "@polkadot/util" "^0.91.1"
-    "@polkadot/wasm-crypto" "^0.10.1"
-    "@types/bip39" "^2.4.2"
-    "@types/pbkdf2" "^3.0.0"
-    "@types/secp256k1" "^3.5.0"
-    "@types/webassembly-js-api" "^0.0.2"
-    "@types/xxhashjs" "^0.2.1"
-    bip39 "^2.5.0"
-    blakejs "^1.1.0"
-    js-sha3 "^0.8.0"
-    secp256k1 "^3.7.0"
-    tweetnacl "^1.0.1"
-    xxhashjs "^0.2.2"
-
-"@polkadot/util@^0.91.1":
-  version "0.91.1"
-  resolved "https://registry.yarnpkg.com/@polkadot/util/-/util-0.91.1.tgz#f5f2323e1bad387ab136d198f7293331b060b348"
-  integrity sha512-NqW3FlKQl0wh4mt/QpmGduE0VLBSsb6S45pyjgM3P7Fz37EyrOOZa8s7IBdIck2dtY3MwAy8JWGJjpTnMHXh8Q==
-  dependencies:
-    "@babel/runtime" "^7.4.5"
-    "@types/bn.js" "^4.11.5"
-    "@types/deasync" "^0.1.0"
-    bn.js "^4.11.8"
-    camelcase "^5.3.1"
-    chalk "^2.4.2"
-    ip-regex "^4.1.0"
-    moment "^2.24.0"
-
-"@polkadot/wasm-crypto@^0.10.1":
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/@polkadot/wasm-crypto/-/wasm-crypto-0.10.1.tgz#284e57e102050cca1586b7b1f008f64224147eb4"
-  integrity sha512-hI3OYftMGJkDetTe1DeU9aH4euk6WVmAMFszslNrCxHMFFkemEgACykwpyuOdCjv24VZP/cMsrVskKix1GzSYQ==
 
 "@react-native-community/async-storage@^1.4.2":
   version "1.5.0"
@@ -3593,19 +3593,19 @@ chai@^4.1.2:
     pathval "^1.1.0"
     type-detect "^4.0.5"
 
-chainx.js@^2.13.0-alpha.4:
-  version "2.13.1"
-  resolved "https://registry.yarnpkg.com/chainx.js/-/chainx.js-2.13.1.tgz#d2ee7125bb11d6e1523fb4fbade427acb4679e00"
-  integrity sha512-c3+CMkf9xtwRQhFd2GbEBSQgqjxYv7AKlw30E9d1vNGZeHikQnt56xk1/GukHxuLnAXnq7VcNotlKShW/m9BaQ==
+chainx.js@^2.20.3:
+  version "2.20.3"
+  resolved "https://registry.yarnpkg.com/chainx.js/-/chainx.js-2.20.3.tgz#c711e4b291a9832d32f926fac1b4cc7bfd67599e"
+  integrity sha512-K39wahnRWCOGNjG8TTRw0qiXy/7XAXNWZ1rZJO5cLR8ZxLAq4EZKjgBS8MsZwf4A8FZ2W4Tb+e+32PRdXcX/KA==
   dependencies:
-    "@chainx/account" "^2.13.0"
-    "@chainx/extrinsics" "^2.13.0"
-    "@chainx/rpc-provider" "^2.13.0"
-    "@chainx/rpc-rx" "^2.13.0"
-    "@chainx/storage" "^2.13.0"
-    "@chainx/types" "^2.13.0"
-    "@polkadot/keyring" "^0.91.1"
-    "@polkadot/util" "^0.91.1"
+    "@chainx/account" "^2.20.2"
+    "@chainx/extrinsics" "^2.20.2"
+    "@chainx/keyring" "^2.20.2"
+    "@chainx/rpc-provider" "^2.20.2"
+    "@chainx/rpc-rx" "^2.20.2"
+    "@chainx/storage" "^2.20.2"
+    "@chainx/types" "^2.20.2"
+    "@chainx/util" "^2.20.2"
     eventemitter3 "^3.1.0"
     rxjs "^6.3.3"
 
@@ -11442,12 +11442,6 @@ react-native-tab-view@2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.6.1.tgz#6b2400527b992f9410fd818c2dcff151044a07c1"
   integrity sha512-56F3uUItJ/v3yabp7cUu5GVDCX+0/ARuezJSd1/9HxUyaBB8kc17X+pyK8+vE0rie0ky3gJsKhm2mvyFi7LGnA==
-
-"react-native-tableview@git+https://github.com/TerenceGe/react-native-tableview.git":
-  version "2.4.1"
-  resolved "git+https://github.com/TerenceGe/react-native-tableview.git#d55dac63d080c5a36253ae03530885f207d3aa95"
-  dependencies:
-    prop-types "^15.6.2"
 
 "react-native-typescript-transformer@git+https://github.com/TerenceGe/react-native-typescript-transformer.git":
   version "1.2.10"

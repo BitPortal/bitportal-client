@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
 import { View, ActionSheetIOS, Alert, Text, ActivityIndicator, SafeAreaView } from 'react-native'
 import { Navigation } from 'react-native-navigation'
-import TableView from 'react-native-tableview'
+import TableView from 'components/TableView'
 import * as walletActions from 'actions/wallet'
 import * as producerActions from 'actions/producer'
 import * as balanceActions from 'actions/balance'
@@ -101,7 +101,7 @@ export default class ManageWallet extends Component {
   }
 
   deleteWallet = (walletId, chain, address) => {
-    const { intl } = this.props
+    const { intl, wallet } = this.props
     Alert.prompt(
       intl.formatMessage({ id: 'alert_input_wallet_password' }),
       '将删除该钱包所有数据，请务必确保钱包已备份。',
@@ -114,7 +114,7 @@ export default class ManageWallet extends Component {
         {
           text: intl.formatMessage({ id: 'alert_button_delete' }),
           style: 'destructive',
-          onPress: password => this.props.actions.deleteWallet.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, fromCard: this.props.fromCard, chain, address })
+          onPress: password => this.props.actions.deleteWallet.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, fromCard: this.props.fromCard, chain: wallet.chain, address: wallet.address })
         }
       ],
       'secure-text'
@@ -122,7 +122,7 @@ export default class ManageWallet extends Component {
   }
 
   exportMnemonics = (walletId) => {
-    const { intl } = this.props
+    const { intl, wallet } = this.props
     Alert.prompt(
       intl.formatMessage({ id: 'alert_input_wallet_password' }),
       null,
@@ -134,7 +134,7 @@ export default class ManageWallet extends Component {
         },
         {
           text: intl.formatMessage({ id: 'alert_button_confirm' }),
-          onPress: password => this.props.actions.exportMnemonics.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, source: this.props.source })
+          onPress: password => this.props.actions.exportMnemonics.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, source: wallet.source })
         }
       ],
       'secure-text'
@@ -142,7 +142,7 @@ export default class ManageWallet extends Component {
   }
 
   exportETHKeystore = (walletId) => {
-    const { intl } = this.props
+    const { intl, wallet } = this.props
     Alert.prompt(
       intl.formatMessage({ id: 'alert_input_wallet_password' }),
       null,
@@ -154,7 +154,7 @@ export default class ManageWallet extends Component {
         },
         {
           text: intl.formatMessage({ id: 'alert_button_confirm' }),
-          onPress: password => this.props.actions.exportETHKeystore.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, source: this.props.source })
+          onPress: password => this.props.actions.exportETHKeystore.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, source: wallet.source })
         }
       ],
       'secure-text'
@@ -162,7 +162,7 @@ export default class ManageWallet extends Component {
   }
 
   exportPrivateKey = (walletId, symbol) => {
-    const { chain, address } = this.props.wallet
+    const { chain, address, source } = this.props.wallet
     const { intl } = this.props
     const account = this.props.account[`${chain}/${address}`]
     const permissions = account && account.permissions
@@ -178,7 +178,7 @@ export default class ManageWallet extends Component {
         },
         {
           text: intl.formatMessage({ id: 'alert_button_confirm' }),
-          onPress: password => this.props.actions[`export${symbol}PrivateKey`].requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, source: this.props.source, address: this.props.address, permissions })
+          onPress: password => this.props.actions[`export${symbol}PrivateKey`].requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, source, address, permissions })
         }
       ],
       'secure-text'
@@ -281,7 +281,7 @@ export default class ManageWallet extends Component {
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.ManageEOSResource',
-        passProps: { chain: chain || this.props.chain, walletId: id || this.props.id, address: address || this.props.address },
+        passProps: { chain, walletId: id, address },
         options: {
           topBar: {
             backButton: {
@@ -328,8 +328,8 @@ export default class ManageWallet extends Component {
 
   switchBTCAddressType = (walletId) => {
     const { intl, wallet } = this.props
-    const segWit = (wallet && wallet.segWit) || this.props.segWit
-    const source = (wallet && wallet.source) || this.props.source
+    const segWit = wallet && wallet.segWit
+    const source = wallet && wallet.source
 
     ActionSheetIOS.showActionSheetWithOptions({
       title: '切换地址类型',
@@ -576,13 +576,13 @@ export default class ManageWallet extends Component {
 
   render() {
     const { intl, type, deleteWallet, exportMnemonics, exportBTCPrivateKey, exportETHKeystore, exportETHPrivateKey, exportEOSPrivateKey, switchBTCAddressType, wallet } = this.props
-    const name = (wallet && wallet.name) || this.props.name
-    const address = (wallet && wallet.address) || this.props.address
-    const chain = (wallet && wallet.chain) || this.props.chain
-    const source = (wallet && wallet.source) || this.props.source
-    const id = (wallet && wallet.id) || this.props.id
-    const symbol = (wallet && wallet.symbol) || this.props.symbol
-    const segWit = (wallet && wallet.segWit) || this.props.segWit
+    const name = wallet && wallet.name
+    const address = wallet && wallet.address
+    const chain = wallet && wallet.chain
+    const source = wallet && wallet.source
+    const id = wallet && wallet.id
+    const symbol = wallet && wallet.symbol
+    const segWit = wallet && wallet.segWit
 
     const deleteWalletLoading = deleteWallet.loading
     const exportMnemonicsLoading = exportMnemonics.loading
@@ -673,7 +673,7 @@ export default class ManageWallet extends Component {
       )
     }
 
-    if (type === 'identity' || source === 'MNEMONIC') {
+    if (source === 'RECOVERED_IDENTITY' || source === 'NEW_IDENTITY' || source === 'MNEMONIC') {
       exportActions.push(
         <Item
           reactModuleForCell="WalletManagementTableViewCell"
@@ -808,7 +808,7 @@ export default class ManageWallet extends Component {
           {exportActions.length > 0 && <Section>
             {exportActions}
           </Section>}
-          {type === 'imported' && <Section>
+          {!(source === 'RECOVERED_IDENTITY' || source === 'NEW_IDENTITY') && <Section>
             <Item
               reactModuleForCell="WalletManagementTableViewCell"
               key="delete"

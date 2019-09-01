@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
-import { View, ScrollView, Text, TouchableHighlight, Image, TextInput, Alert, ActivityIndicator, LayoutAnimation } from 'react-native'
+import { View, ScrollView, Text, TouchableHighlight, Image, TextInput, Alert, ActivityIndicator, LayoutAnimation, NativeModules } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Navigation } from 'react-native-navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import Modal from 'react-native-modal'
 import { Field, reduxForm, formValueSelector } from 'redux-form'
 import * as identityActions from 'actions/identity'
+const SPAlert = NativeModules.SPAlert
 
 const styles = EStyleSheet.create({
   container: {
@@ -99,7 +100,7 @@ export default class BackupIdentity extends Component {
     }
   }
 
-  state = { validating: false, shuffledMnemonics: '', userEntry: '', loading: false, showModal: false, showModalContent: false }
+  state = { validating: false, shuffledMnemonics: '', userEntry: '', loading: false }
   subscription = Navigation.events().bindComponent(this)
 
   navigationButtonPressed({ buttonId }) {
@@ -133,15 +134,8 @@ export default class BackupIdentity extends Component {
           ]
         )
       } else {
-        this.setState({ showModal: true, showModalContent: true }, () => {
-          setTimeout(() => {
-            this.setState({ showModal: false, showModalContent: false }, () => {
-              if (!this.props.backup) {
-                this.props.actions.validateMnemonics.requested({ componentId: this.props.componentId })
-              }
-            })
-          }, 1000)
-        })
+        SPAlert.presentDone('助记词顺序正确!')
+        this.props.actions.validateMnemonics.requested({ componentId: this.props.componentId, delay: 2000, backup: this.props.backup })
       }
     } else if (buttonId === 'cancel') {
       Navigation.dismissModal(this.props.componentId)
@@ -200,14 +194,6 @@ export default class BackupIdentity extends Component {
     }
   }
 
-  onModalHide = () => {
-    setTimeout(() => {
-      if (this.props.backup) {
-        Navigation.dismissModal(this.props.componentId)
-      }
-    }, 20)
-  }
-
   componentDidAppear() {
 
   }
@@ -217,11 +203,11 @@ export default class BackupIdentity extends Component {
   }
 
   componentDidMount() {
-
+    // this.props.actions.validateMnemonics.succeeded()
   }
 
   render() {
-    const { intl, mnemonics, validateMnemonics } = this.props
+    const { intl, mnemonics, validateMnemonics, backup } = this.props
     const loading = validateMnemonics.loading
 
     return (
@@ -230,13 +216,12 @@ export default class BackupIdentity extends Component {
           <View style={{ marginBottom: 14 }}>
             {(this.props.backup && !this.props.fromIdentity) && <Text style={{ fontSize: 26, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'manage_wallet_title_backup_mnemonics' })}</Text>}
             {(!this.props.backup || !!this.props.fromIdentity) && <Text style={{ fontSize: 26, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'manage_wallet_title_backup_identity' })}</Text>}
-            {loading
-             && (
-               <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 0, right: -25 }}>
-                 <ActivityIndicator size="small" color="#000000" />
-               </View>
-             )
-            }
+            {/* {loading && !backup && (
+                <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 0, right: -25 }}>
+                <ActivityIndicator size="small" color="#000000" />
+                </View>
+                )
+                } */}
           </View>
           {!this.state.validating && <Text style={{ fontSize: 17, marginBottom: 16, paddingLeft: 32, paddingRight: 32, lineHeight: 22, textAlign: 'center' }}>
             {intl.formatMessage({ id: 'mnemonics_backup_hint_write_down' })}
@@ -272,24 +257,6 @@ export default class BackupIdentity extends Component {
               ))}
           </View>}
         </View>
-        <Modal
-          isVisible={this.state.showModal}
-          backdropOpacity={0.4}
-          useNativeDriver
-          animationIn="fadeIn"
-          animationInTiming={200}
-          backdropTransitionInTiming={200}
-          animationOut="fadeOut"
-          animationOutTiming={200}
-          backdropTransitionOutTiming={200}
-          onModalHide={this.onModalHide}
-        >
-          {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14 }}>
-              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'identity_backup_hint_mnemonics_order_correct' })}</Text>
-            </View>
-          </View>}
-        </Modal>
       </ScrollView>
     )
   }

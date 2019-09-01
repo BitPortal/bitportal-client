@@ -14,7 +14,8 @@ export const initialState = {
   managingWalletId: null,
   transferWalletId: null,
   bridgeWalletId: null,
-  activeChain: null
+  activeChain: null,
+  bridgeChain: null
 }
 
 export default handleActions({
@@ -32,6 +33,9 @@ export default handleActions({
   },
   [actions.setTransferWallet] (state, action) {
     state.transferWalletId = action.payload
+  },
+  [actions.setBridgeWallet] (state, action) {
+    state.bridgeWalletId = action.payload
   },
   [actions.addIdentityWallets] (state, action) {
     action.payload.forEach(wallet => {

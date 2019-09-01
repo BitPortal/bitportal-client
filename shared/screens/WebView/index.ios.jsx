@@ -41,6 +41,7 @@ import { dappBookmarkAllIdsSelector } from 'selectors/dapp'
 import RNWebView from 'react-native-webview'
 import localMessages from './messages'
 import styles from './styles'
+import BrowserAddressBar from 'components/Form/BrowserAddressBar'
 
 const messages = { ...globalMessages, ...localMessages }
 
@@ -136,13 +137,7 @@ export default class WebView extends Component {
       topBar: {
         largeTitle: {
           visible: false
-        },
-        rightButtons: [
-          {
-            id: 'refresh',
-            icon: require('resources/images/refresh.png')
-          }
-        ]
+        }
       },
       bottomTabs: {
         visible: false
@@ -188,10 +183,15 @@ export default class WebView extends Component {
     showBookmarkContent: false,
     showCancelBookmark: false,
     showCancelBookmarkContent: false,
-    uri: 'https://build-prguimiryr.now.sh/'
+    url: this.props.url,
+    originurl: this.props.url
   }
 
   subscription = Navigation.events().bindComponent(this)
+
+  searchBarUpdated({ text, isFocused, isSubmitting }) {
+    console.log({ text, isFocused, isSubmitting })
+  }
 
   async componentDidMount() {
     this.props.actions.clearMessage()
@@ -230,15 +230,23 @@ export default class WebView extends Component {
    * }*/
 
   navigationButtonPressed({ buttonId }) {
-    if (buttonId === 'refresh') {
-      this.webviewbridge.reload()
-      this.onLoadStart()
+    if (buttonId === 'account') {
+
     } else if (buttonId === 'cancel') {
       Navigation.dismissModal(this.props.componentId)
     }
   }
 
   textInput = React.createRef()
+
+  cancel = () => {
+    Navigation.dismissModal(this.props.componentId)
+  }
+
+  refresh = () => {
+    this.webviewbridge.reload()
+    this.onLoadStart()
+  }
 
   share = () => {
     try {
@@ -298,6 +306,10 @@ export default class WebView extends Component {
     const hostname = url.hostname
     const host = hostname.indexOf('www.') === 0 ? hostname.replace('www.', '') : hostname
     this.props.actions.setHost(host)
+
+    if (this.state.url !== navState.url) {
+      this.setState({ url: navState.url })
+    }
   }
 
   onBridgeMessage = (event) => {
@@ -332,11 +344,15 @@ export default class WebView extends Component {
   onProgress = (e) => {
     const data = e.nativeEvent.progress
     if (data > 0 && data < 1) {
-      Animated.timing(this.state.progress, {
-        toValue: 0.1 * Dimensions.get('window').width + Dimensions.get('window').width * 0.9 * data,
-        duration: 300,
-        easing: Easing.inOut(Easing.quad)
-      }).start()
+      if (!this.state.progressOpacity._value) {
+        this.onLoadStart()
+      } else {
+        Animated.timing(this.state.progress, {
+          toValue: 0.1 * Dimensions.get('window').width + Dimensions.get('window').width * 0.9 * data,
+          duration: 300,
+          easing: Easing.inOut(Easing.quad)
+        }).start()
+      }
     } else if (data === 1) {
       this.onLoadEnd()
     }
@@ -378,6 +394,12 @@ export default class WebView extends Component {
   }
 
   onError = () => {
+    console.log('onError', this.props.url)
+    this.onLoadEnd()
+  }
+
+  renderError = () => {
+    console.log('renderError', this.props.url)
     this.onLoadEnd()
   }
 
@@ -653,8 +675,8 @@ export default class WebView extends Component {
     <Fragment>
       <Animated.View style={{ paddingVertical: this.state.amountContainerPaddingVertical, height: this.state.amountContainerHeight, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 18 }}>
         <View
-            style={{ flexDirection: 'row', position: 'absolute', left: '-100%', top: 25, opacity: 1 }}
-            onLayout={(event) => {
+          style={{ flexDirection: 'row', position: 'absolute', left: '-100%', top: 25, opacity: 1 }}
+          onLayout={(event) => {
               const layout = event.nativeEvent.layout
               this.setState({
                 largeAmountWidth: layout.width,
@@ -670,7 +692,7 @@ export default class WebView extends Component {
           </Text>
         </View>
         <Animated.Text style={{ fontSize: 13, color: '#A2A2A6', width: 95, position: 'absolute', left: 18, top: 15, opacity: this.state.amountLabelOpacity }}>
-            支付金额
+          支付金额
         </Animated.Text>
         <Animated.View style={{ flexDirection: 'row', marginLeft: this.state.amountMarginLeft }}>
           <Animated.Text style={{ fontSize: this.state.amountFontSize }}>
@@ -774,12 +796,12 @@ export default class WebView extends Component {
                     <Text style={{ fontSize: 13, color: '#A2A2A6', height: 20 }}>{key}</Text>
                     <Text style={{ fontSize: 13 }}>{typeof action.data[key] === 'object' ? JSON.stringify(action.data[key]) : action.data[key]}</Text>
                   </View>
-                  )}
+                   )}
                 </View>
                 {(index !== actions.length - 1) && <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />}
               </View>
             </Fragment>
-            )}
+             )}
           </ScrollView>
         )
       } else if (actions.length >= 1) {
@@ -826,12 +848,12 @@ export default class WebView extends Component {
               <View
                 style={{ flexDirection: 'row', position: 'absolute', left: '-100%', top: 25, opacity: 1 }}
                 onLayout={(event) => {
-                  const layout = event.nativeEvent.layout
-                  this.setState({
-                    largeAmountWidth: layout.width,
-                    amountMarginLeft: new Animated.Value((Dimensions.get('window').width - layout.width) / 2 - 18)
-                  })
-                }}
+                    const layout = event.nativeEvent.layout
+                    this.setState({
+                      largeAmountWidth: layout.width,
+                      amountMarginLeft: new Animated.Value((Dimensions.get('window').width - layout.width) / 2 - 18)
+                    })
+                  }}
               >
                 <Text style={{ fontSize: 24 }}>
                   个人签名
@@ -1079,7 +1101,7 @@ export default class WebView extends Component {
         return null
       }
     }
-  }
+}
 
   onLoadEnd = () => {
     Animated.sequence([
@@ -1101,6 +1123,10 @@ export default class WebView extends Component {
     ]).start()
   }
 
+  loadPage = (url) => {
+    this.setState({ originurl: url })
+  }
+
   render() {
     const {
       title,
@@ -1108,65 +1134,80 @@ export default class WebView extends Component {
       inject,
       url,
       bookmarkedIds,
-      id
+      id,
+      hasAddressBar
     } = this.props
     const isBookmarked = id ? (bookmarkedIds.indexOf(id) !== -1) : false
 
     // https://danfinlay.github.io/js-eth-personal-sign-examples
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F7F7' }}>
-          <View style={{ flex: 1, width: '100%' }}>
-            <RNWebView
-              source={{ uri: url }}
-              ref={(e) => { this.webviewbridge = e }}
-              renderError={this.renderError}
-              renderLoading={() => {}}
-              startInLoadingState={true}
-              automaticallyAdjustContentInsets={false}
-              onNavigationStateChange={this.onNavigationStateChange}
-              javaScriptEnabled={true}
-              domStorageEnabled={true}
-              decelerationRate="normal"
-              useWebKit={true}
-              nativeConfig={{ props: { backgroundColor: '#F7F7F7', flex: 1 } }}
-              onMessage={this.onBridgeMessage}
-              injectedJavaScriptBeforeLoad={injectedJavascript(inject || '')}
-              onLoadProgress={this.onProgress}
-              onError={this.onError}
-            />
-            <Animated.View style={{ width: '100%', height: 2, position: 'absolute', top: 0, left: 0, opacity: this.state.progressOpacity }}>
-              <Animated.View style={{ height: '100%', width: this.state.progress, backgroundColor: '#007AFF' }} />
-            </Animated.View>
+      {hasAddressBar && <View style={{ height: 52, width: '100%' }}>
+            <BrowserAddressBar url={this.state.url} close={this.cancel} chain="ETHEREUM" loadPage={this.loadPage} />
+      </View>}
+      <View style={{ flex: 1, width: '100%' }}>
+          <RNWebView
+            source={{ uri: this.state.originurl }}
+            ref={(e) => { this.webviewbridge = e }}
+            renderError={this.renderError}
+            renderLoading={() => {}}
+            startInLoadingState={true}
+            automaticallyAdjustContentInsets={false}
+            javaScriptEnabled={true}
+            domStorageEnabled={true}
+            decelerationRate="normal"
+            useWebKit={true}
+            nativeConfig={{ props: { backgroundColor: '#F7F7F7', flex: 1 } }}
+            onMessage={this.onBridgeMessage}
+            injectedJavaScriptBeforeLoad={injectedJavascript(inject || '')}
+            onLoadProgress={this.onProgress}
+            onError={this.onError}
+            renderError={this.renderError}
+            onNavigationStateChange={this.onNavigationStateChange}
+            allowsLinkPreview
+            originWhitelist={['https://*', 'http://*']}
+          />
+          <Animated.View style={{ width: '100%', height: 2, position: 'absolute', top: 0, left: 0, opacity: this.state.progressOpacity }}>
+            <Animated.View style={{ height: '100%', width: this.state.progress, backgroundColor: '#007AFF' }} />
+          </Animated.View>
+        </View>
+        <View style={{ width: '100%', height: 49, backgroundColor: '#F7F7F7', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
+          <View style={{ width: '20%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <TouchableOpacity onPress={this.goBack}>
+              <FastImage
+                source={require('resources/images/arrow_left_tab.png')}
+                style={{ width: 30, height: 30 }}
+              />
+            </TouchableOpacity>
           </View>
-          <View style={{ width: '100%', height: 49, backgroundColor: '#F7F7F7', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
-            <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-              <TouchableOpacity onPress={this.goBack}>
+          <View style={{ width: '20%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <TouchableOpacity onPress={this.goForward}>
+              <FastImage
+                source={require('resources/images/arrow_right_tab.png')}
+                style={{ width: 30, height: 30 }}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={{ width: '20%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <TouchableOpacity onPress={this.shareDapp}>
+              <FastImage
+                source={require('resources/images/share.png')}
+                style={{ width: 32, height: 32 }}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <TouchableOpacity onPress={this.bookmark}>
+              {isBookmarked && <FastImage source={require('resources/images/bookmarked_tab.png')} style={{ width: 30, height: 30 }} />}
+              {!isBookmarked && <FastImage source={require('resources/images/bookmark_tab.png')} style={{ width: 30, height: 30 }} />}
+            </TouchableOpacity>
+          </View>
+            <View style={{ width: '20%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+              <TouchableOpacity onPress={this.refresh}>
                 <FastImage
-                  source={require('resources/images/arrow_left_tab.png')}
+                  source={require('resources/images/refresh.png')}
                   style={{ width: 30, height: 30 }}
                 />
-              </TouchableOpacity>
-            </View>
-            <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-              <TouchableOpacity onPress={this.goForward}>
-                <FastImage
-                  source={require('resources/images/arrow_right_tab.png')}
-                  style={{ width: 30, height: 30 }}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-              <TouchableOpacity onPress={this.shareDapp}>
-                <FastImage
-                  source={require('resources/images/share.png')}
-                  style={{ width: 32, height: 32 }}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-              <TouchableOpacity onPress={this.bookmark}>
-                {isBookmarked && <FastImage source={require('resources/images/bookmarked_tab.png')} style={{ width: 30, height: 30 }} />}
-                {!isBookmarked && <FastImage source={require('resources/images/bookmark_tab.png')} style={{ width: 30, height: 30 }} />}
               </TouchableOpacity>
             </View>
             <View style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: 0.5, backgroundColor: 'rgba(0,0,0,0.2)' }} />

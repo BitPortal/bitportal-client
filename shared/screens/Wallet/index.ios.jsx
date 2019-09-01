@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { injectIntl, FormattedMessage } from 'react-intl'
-import { View, Text, Clipboard, ActivityIndicator, TouchableHighlight, Image, Alert } from 'react-native'
+import { View, Text, Clipboard, ActivityIndicator, TouchableHighlight, Image, Alert, NativeModules } from 'react-native'
 import { Navigation } from 'react-native-navigation'
-import TableView from 'react-native-tableview'
+import TableView from 'components/TableView'
 // import FastImage from 'react-native-fast-image'
 import SplashScreen from 'react-native-splash-screen'
 import Modal from 'react-native-modal'
@@ -38,6 +38,8 @@ import Profile from 'screens/Profile'
 import styles from './styles'
 const { Section, Item, CollectionView, CollectionViewItem } = TableView
 
+const SPAlert = NativeModules.SPAlert
+
 Sound.setCategory('Playback')
 const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
   if (error) {
@@ -47,35 +49,6 @@ const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
 
   console.log(`duration in seconds: ${copySound.getDuration()}number of channels: ${copySound.getNumberOfChannels()}`)
 })
-
-const PreloadedImages = () => (
-  <View style={{ position: 'absolute', left: -30, bottom: -30, width: 30, height: 30 }}>
-    <Image
-      source={require('resources/images/Userpic.png')}
-      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
-    />
-    <Image
-      source={require('resources/images/addressBookSetting.png')}
-      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
-    />
-    <Image
-      source={require('resources/images/CurrencySetting.png')}
-      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
-    />
-    <Image
-      source={require('resources/images/languageSetting.png')}
-      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
-    />
-    <Image
-      source={require('resources/images/helpCenterSetting.png')}
-      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
-    />
-    <Image
-      source={require('resources/images/abountUsSetting.png')}
-      style={{ width: 29, height: 29, position: 'absolute', left: 0, top: 0 }}
-    />
-  </View>
-)
 
 @injectIntl
 
@@ -335,23 +308,16 @@ export default class Wallet extends Component {
         }
       })
     } else if (action === 'copy') {
-      this.setState({ showModal: true, showModalContent: true }, () => {
-        Clipboard.setString(data.text)
-        copySound.play((success) => {
-          if (success) {
-            console.log('successfully finished playing')
-          } else {
-            console.log('playback failed due to audio decoding errors')
-            copySound.reset()
-          }
-        })
-
-        setTimeout(() => {
-          this.setState({ showModal: false }, () => {
-            this.setState({ showModalContent: false })
-          })
-        }, 1000)
+      Clipboard.setString(data.text)
+      copySound.play((success) => {
+        if (success) {
+          console.log('successfully finished playing')
+        } else {
+          copySound.reset()
+        }
       })
+
+      SPAlert.presentMessage('已复制')
     }
   }
 
@@ -450,6 +416,48 @@ export default class Wallet extends Component {
     })
   }
 
+  onAddAssetsPress = (data) => {
+    const { chain } = data
+
+    if (chain === 'ETHEREUM' || chain === 'EOS' || chain === 'CHAINX') {
+      let symbol
+
+      if (chain === 'ETHEREUM') {
+        symbol = 'ETH'
+      } else if (chain === 'EOS') {
+        symbol = 'EOS'
+      } else if (chain === 'CHAINX') {
+        symbol = 'PCX'
+      }
+
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.AddAssets',
+          options: {
+            topBar: {
+              title: {
+                text: `添加${symbol}资产`
+              }
+            }
+          }
+        }
+      })
+    }
+  }
+
+  onMoreAccessoryPress = (data) => {
+    if (data && data.uid) {
+      this.props.actions.setManagingWallet(data.uid)
+
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: 'BitPortal.ManageWallet',
+          passProps: { fromCard: true }
+        }
+      })
+    }
+  }
+
   render() {
     const { identity, identityWallets, importedWallets, scanIdentity, balance, getBalance, ticker, activeWallet, portfolio, resources, intl, selectedAsset, assetById, currency } = this.props
     const loading = scanIdentity.loading
@@ -466,7 +474,6 @@ export default class Wallet extends Component {
             <ActivityIndicator size="small" color="#666666" />
             <Text style={{ marginTop: 10, color: '#666666' }}>{intl.formatMessage({ id: 'wallet_text_loading_wallet'})}</Text>
           </View>
-          <PreloadedImages />
         </View>
       )
     }
@@ -484,7 +491,6 @@ export default class Wallet extends Component {
               </View>
             </TouchableHighlight>
           </View>
-          <PreloadedImages />
         </View>
       )
     }
@@ -568,6 +574,7 @@ export default class Wallet extends Component {
           ref={(ref) => { this.tableView = ref }}
           onLeadingSwipe={this.onLeadingSwipe}
           onTrailingSwipe={this.onTrailingSwipe}
+          onMoreAccessoryPress={this.onMoreAccessoryPress}
         >
           <Section uid="WalletCardCollectionViewCell">
             <Item
@@ -602,6 +609,8 @@ export default class Wallet extends Component {
                     totalAsset={(portfolio && portfolio[`${wallet.chain}/${wallet.address}`]) ? intl.formatNumber(portfolio[`${wallet.chain}/${wallet.address}`].totalAsset * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
                     componentId={this.props.componentId}
                     separatorStyle={TableView.Consts.SeparatorStyle.None}
+                    accessoryType={1}
+                    moreButtonImage={require('resources/images/circle_more.png')}
                   />
                  )}
                  {importedWallets.map(wallet =>
@@ -625,6 +634,8 @@ export default class Wallet extends Component {
                      totalAsset={(portfolio && portfolio[`${wallet.chain}/${wallet.address}`]) ? intl.formatNumber(portfolio[`${wallet.chain}/${wallet.address}`].totalAsset * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
                      componentId={this.props.componentId}
                      separatorStyle={TableView.Consts.SeparatorStyle.None}
+                     accessoryType={1}
+                     moreButtonImage={require('resources/images/circle_more.png')}
                    />
                  )}
               </CollectionView>
@@ -637,14 +648,13 @@ export default class Wallet extends Component {
               height={48}
               componentId={this.props.componentId}
               selectionStyle={TableView.Consts.CellSelectionStyle.None}
-              switching={this.state.switching}
               chain={chain}
-              hasRightButton={chain === 'ETHEREUM' || chain === 'EOS' || chain === 'CHAINX'}
+              accessoryType={(chain === 'ETHEREUM' || chain === 'EOS' || chain === 'CHAINX') ? 7 : TableView.Consts.AccessoryType.None}
+              onAddAccessoryPress={!this.state.switching ? this.onAddAssetsPress : () => {}}
             />
           </Section>
           {!!balance && (<Section headerHeight={0} uid="AssetBalanceTableViewCell" canEdit={!this.state.switching}>{assetItems}</Section>)}
         </TableView>
-        <PreloadedImages />
         <Modal
           isVisible={this.state.showModal}
           backdropOpacity={0}

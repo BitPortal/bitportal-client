@@ -87,24 +87,32 @@ function* createIdentity(action: Action<CreateIdentityParams>) {
 
 function* validateMnemonics(action: Action<ValidateMnemonicsResult>) {
   try {
-    const identity = yield call(memoryStorage.getItem, 'identity', true)
-    const identityKeystore = identity.keystore
-    yield call(secureStorage.setItem, `IDENTITY_KEYSTORE_${identityKeystore.id}`, identityKeystore, true)
-    const identityWallets = identity.wallets
-    for (const wallet of identityWallets) {
-      yield call(secureStorage.setItem, `IDENTITY_WALLET_KEYSTORE_${wallet.id}`, wallet, true)
+    const backup = action.payload.backup
+    const delayInterval = action.payload.delay
+    const componentId = action.payload.componentId
+
+    if (!backup) {
+      const identity = yield call(memoryStorage.getItem, 'identity', true)
+      const identityKeystore = identity.keystore
+      yield call(secureStorage.setItem, `IDENTITY_KEYSTORE_${identityKeystore.id}`, identityKeystore, true)
+      const identityWallets = identity.wallets
+      for (const wallet of identityWallets) {
+        yield call(secureStorage.setItem, `IDENTITY_WALLET_KEYSTORE_${wallet.id}`, wallet, true)
+      }
+
+      const identityInfo = walletCore.getIdentityMetaData(identityKeystore)
+
+      const walletsInfo = identityWallets.map(walletCore.getWalletMetaData)
+
+      yield put(actions.addIdentity(identityInfo))
+      yield put(actions.addIdentityWallets(walletsInfo))
+      yield put(actions.setActiveWallet(walletsInfo[0].id))
+      yield call(memoryStorage.removeItem, 'identity')
     }
 
-    const identityInfo = walletCore.getIdentityMetaData(identityKeystore)
-
-    const walletsInfo = identityWallets.map(walletCore.getWalletMetaData)
-
+    if (delayInterval) yield delay(delayInterval)
+    if (componentId) dismissAllModals()
     yield put(actions.validateMnemonics.succeeded())
-    yield put(actions.addIdentity(identityInfo))
-    yield put(actions.addIdentityWallets(walletsInfo))
-    yield put(actions.setActiveWallet(walletsInfo[0].id))
-    if (action.payload.componentId) dismissAllModals()
-    yield call(memoryStorage.removeItem, 'identity')
   } catch (e) {
     yield put(actions.validateMnemonics.failed(getErrorMessage(e)))
   }

@@ -5,6 +5,7 @@ export const activeWalletIdSelector = (state: RootState) => state.wallet.activeW
 export const activeChainSelector = (state: RootState) => state.wallet.activeChain || initialState.activeChain
 export const managingWalletIdSelector = (state: RootState) => state.wallet.managingWalletId || initialState.managingWalletId
 export const transferWalletIdSelector = (state: RootState) => state.wallet.transferWalletId || initialState.transferWalletId
+export const bridgeWalletIdSelector = (state: RootState) => state.wallet.bridgeWalletId || initialState.bridgeWalletId
 const identityWalletByIdSelector = (state: RootState) => (state.wallet.identityWallets || initialState.identityWallets).byId
 const identityWalletAllIdsSelector = (state: RootState) => (state.wallet.identityWallets || initialState.identityWallets).allIds
 const importedWalletByIdSelector = (state: RootState) => (state.wallet.importedWallets || initialState.importedWallets).byId
@@ -44,6 +45,13 @@ export const transferWalletSelector = createSelector(
   identityWalletByIdSelector,
   importedWalletByIdSelector,
   (transferWalletId: string, identityWallets: any, importedWallets: any) => transferWalletId && (identityWallets[transferWalletId] || importedWallets[transferWalletId])
+)
+
+export const bridgeWalletSelector = createSelector(
+  bridgeWalletIdSelector,
+  identityWalletByIdSelector,
+  importedWalletByIdSelector,
+  (bridgeWalletId: string, identityWallets: any, importedWallets: any) => bridgeWalletId && (identityWallets[bridgeWalletId] || importedWallets[bridgeWalletId])
 )
 
 export const identityWalletSelector = createSelector(

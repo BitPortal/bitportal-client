@@ -120,7 +120,6 @@
     "react-native-splash-screen": "3.0.1",
     "react-native-svg": "^9.4.0",
     "react-native-tab-view": "2.6.1",
-    "react-native-tableview": "git+https://github.com/TerenceGe/react-native-tableview.git",
     "react-native-vector-icons": "^4.5.0",
     "react-native-version-number": "^0.3.3",
     "react-native-webview": "^6.9.0",

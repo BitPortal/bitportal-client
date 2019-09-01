@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 // import { View } from 'react-native'
 import { connect } from 'react-redux'
-import TableView from 'react-native-tableview'
+import TableView from 'components/TableView'
 import * as currencyActions from 'actions/currency'
 import { currencySymbolSelector, currencyListSelector } from 'selectors/currency'
 

@@ -66,7 +66,7 @@ const WalletCardCollectionViewCell = (props) => {
             borderRadius: 10
           }}
         />
-        <View style={{ position: 'absolute', top: 12, left: 12, right: 4, flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+        <View style={{ position: 'absolute', top: 12, left: 12, right: 4, flex: 1, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Image
               source={walletIcons[props.data.chain.toLowerCase()]}
@@ -93,12 +93,12 @@ const WalletCardCollectionViewCell = (props) => {
               </TouchableHighlight>}
             </View>
           </View>
-          <TouchableHighlight onPress={this.toManageWallet} underlayColor="rgba(255,255,255,0)" style={{ padding: 8, borderRadius: 22 }} activeOpacity={0.42}>
-            <Image
+          {/* <TouchableHighlight onPress={this.toManageWallet} underlayColor="rgba(255,255,255,0)" style={{ padding: 8, borderRadius: 22 }} activeOpacity={0.42}>
+              <Image
               source={require('resources/images/circle_more.png')}
               style={{ width: 28, height: 28, borderRadius: 4 }}
-            />
-          </TouchableHighlight>
+              />
+              </TouchableHighlight> */}
         </View>
           {/* <View style={{ height: 36, width: 36, borderRadius: 10, backgroundColor: 'rgba(255,255,255,0.145)', justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
               <Image

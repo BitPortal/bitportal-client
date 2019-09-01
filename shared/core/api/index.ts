@@ -52,7 +52,6 @@ export const insightApi = async (
   })
 }
 
-
 export const chainSoApi = async (
   method: FetchMethod = 'GET',
   endPoint: string = '/hello',
@@ -81,6 +80,46 @@ export const chainSoApi = async (
   return fetch(url, fetchOptions).then((res: any) => {
     if (!res.ok) {
       return res.json().then((e: any) => Promise.reject({ message: e.data.tx_hex }))
+    }
+
+    const contentType = res.headers.get('content-type')
+
+    if (/json/.test(contentType)) {
+      return res.json()
+    }
+
+    return null
+  })
+}
+
+export const blockCypherApi = async (
+  method: FetchMethod = 'GET',
+  endPoint: string = '/hello',
+  params: object = {},
+  options: FetchOptions = {}
+) => {
+  const baseUrl = 'https://api.blockcypher.com/v1'
+  const headers = options.headers || {}
+
+  let url = baseUrl + endPoint
+
+  if (!headers.Accept) headers.Accept = 'application/json'
+  if (!headers['Content-Type']) headers['Content-Type'] = 'application/json'
+
+  const fetchOptions: any = { method, headers }
+
+  if (method === 'GET') {
+    const queryString: string = `${Object.keys(params)
+      .map(k => [k, params[k]].map(encodeURIComponent).join('='))
+      .join('&')}`
+    if (queryString) url += `?${queryString}`
+  } else if (method === 'POST' || method === 'PUT') {
+    fetchOptions.body = JSON.stringify(params)
+  }
+
+  return fetch(url, fetchOptions).then((res: any) => {
+    if (!res.ok) {
+      return res.json().then((e: any) => Promise.reject({ message: e }))
     }
 
     const contentType = res.headers.get('content-type')

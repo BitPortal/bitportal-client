@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'utils/redux'
-import TableView from 'react-native-tableview'
+import TableView from 'components/TableView'
 import { Navigation } from 'react-native-navigation'
-import { Alert } from 'react-native'
+import { Alert, View, Text, ScrollView } from 'react-native'
 import * as dappActions from 'actions/dapp'
 import {
   dappSelector,
@@ -16,6 +16,7 @@ import {
 } from 'selectors/dapp'
 import { loadScatter, loadScatterSync, loadMetaMask, loadMetaMaskSync } from 'utils/inject'
 import { activeWalletSelector } from 'selectors/wallet'
+import { transfromUrlText } from 'utils'
 const { Section, Item, CollectionView, CollectionViewItem } = TableView
 
 @connect(
@@ -41,17 +42,65 @@ export default class Discovery extends Component {
     return {
       topBar: {
         title: {
-          text: '应用'
+          text: '浏览器',
+          height: 0
+        },
+        largeTitle: {
+          visible: true
         },
         searchBar: true,
-        searchBarHiddenWhenScrolling: true,
-        searchBarPlaceholder: 'Search',
-        rightImage: require('resources/images/ETHWallet.png')
+        searchBarHiddenWhenScrolling: false,
+        searchBarPlaceholder: '搜索或输入url'
       }
     }
   }
 
   subscription = Navigation.events().bindComponent(this)
+
+  searchBarUpdated({ text, isFocused, isSubmitting }) {
+    console.log({ text, isFocused, isSubmitting })
+    if (isSubmitting) {
+      Navigation.mergeOptions(this.props.componentId, {
+        topBar: {
+          title: {
+            text: '浏览器'
+          },
+          largeTitle: {
+            visible: true
+          },
+          searchBar: true,
+          searchBarHiddenWhenScrolling: false,
+          searchBarPlaceholder: '搜索或输入url'
+        }
+      })
+
+      const url = transfromUrlText(text)
+
+      Navigation.mergeOptions(this.props.componentId, {
+        topBar: {
+          searchBar: true,
+          searchBarHiddenWhenScrolling: false,
+          searchBarDeactive: true
+        }
+      })
+
+      Navigation.showModal({
+        stack: {
+          children: [{
+            component: {
+              name: 'BitPortal.WebView',
+              passProps: { url, hasAddressBar: true },
+              options: {
+                topBar: {
+                  addressBar: true
+                }
+              }
+            }
+          }]
+        }
+      })
+    }
+  }
 
   onItemNotification = (data) => {
     const { action } = data
@@ -71,31 +120,20 @@ export default class Discovery extends Component {
             { text: '确定', onPress: () => {} }
           ]
         )
-      }
-      /* else if (wallet.chain !== 'EOS') {
-       *   Alert.alert(
-       *     '请切换到EOS钱包',
-       *     '',
-       *     [
-       *       { text: '确定', onPress: () => {} }
-       *     ]
-       *   )
-       * }*/
-      else {
-        // const inject = loadScatterSync()
-        const inject = loadMetaMaskSync()
-
-        Navigation.push(this.props.componentId, {
-          component: {
-            name: 'BitPortal.WebView',
-            passProps: { url, inject, id },
-            options: {
-              topBar: {
-                title: {
-                  text: title
+      } else {
+        Navigation.showModal({
+          stack: {
+            children: [{
+              component: {
+                name: 'BitPortal.WebView',
+                passProps: { url, hasAddressBar: true },
+                options: {
+                  topBar: {
+                    visible: false
+                  }
                 }
               }
-            }
+            }]
           }
         })
       }
@@ -106,16 +144,13 @@ export default class Discovery extends Component {
     const { url, title, uid } = data
 
     if (title) {
-      const inject = loadScatterSync()
       Navigation.push(this.props.componentId, {
         component: {
           name: 'BitPortal.WebView',
-          passProps: { url, inject, id: uid },
+          passProps: { url, hasAddressBar: true },
           options: {
             topBar: {
-              title: {
-                text: title
-              }
+              visible: false
             }
           }
         }
@@ -153,6 +188,27 @@ export default class Discovery extends Component {
 
   render() {
     const { dapp, newDapp, hotDapp, gameDapp, toolDapp, featured, bookmarked } = this.props
+
+    return (
+      <TableView
+        style={{ flex: 1, backgroundColor: 'white' }}
+        headerBackgroundColor="white"
+        headerTextColor="black"
+        separatorStyle={TableView.Consts.SeparatorStyle.None}
+        onItemNotification={this.onItemNotification}
+        onCollectionViewDidSelectItem={this.onCollectionViewDidSelectItem}
+      >
+        <Section>
+          <Item
+            reactModuleForCell="DappHeaderTableViewCell"
+            height={44}
+            title=""
+            componentId={this.props.componentId}
+            selectionStyle={TableView.Consts.CellSelectionStyle.None}
+          />
+        </Section>
+      </TableView>
+    )
 
     return (
       <TableView

@@ -45,7 +45,6 @@ import TransferAsset from 'screens/Wallet/TransferAsset'
 import Camera from 'screens/Camera'
 import WebView from 'screens/WebView'
 
-import Images from 'resources/images'
 import messages from 'resources/messages'
 
 export const registerScreens = (store) => {

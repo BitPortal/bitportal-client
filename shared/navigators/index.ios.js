@@ -88,7 +88,6 @@ import CurrencySetting from 'screens/Profile/CurrencySetting'
 import WebView from 'screens/WebView'
 import Camera from 'screens/Camera'
 
-import Images from 'resources/images'
 import messages from 'resources/messages'
 
 export const registerScreens = (store) => {
@@ -218,7 +217,8 @@ export const setDefaultOptions = () => {
       translucent: false,
       backgroundColor: '#F7F7F7',
       drawBehind: false
-    }
+    },
+    // modalPresentationStyle: 'sheets'
   })
 }
 
@@ -298,29 +298,29 @@ export const startTabBasedApp = (locale) => {
               }
             }
           },
-          {
-            stack: {
-              children: [
-                {
-                  component: {
-                    id: 'BitPortal.Discovery',
-                    name: 'BitPortal.Discovery'
-                  }
-                }
-              ],
-              options: {
-                bottomTab: {
-                  text: messages[locale].tab_bar_title_discovery,
-                  textColor: '#9D9D9D',
-                  iconColor: '#9D9D9D',
-                  selectedTextColor: '#007AFF',
-                  icon: require('resources/images/app_tab.png'),
-                  selectedIconColor: '#007AFF',
-                  testID: 'BITPORTAL_DISCOVERY'
-                }
-              }
-            }
-          },
+          /* {
+           *   stack: {
+           *     children: [
+           *       {
+           *         component: {
+           *           id: 'BitPortal.Discovery',
+           *           name: 'BitPortal.Discovery'
+           *         }
+           *       }
+           *     ],
+           *     options: {
+           *       bottomTab: {
+           *         text: '浏览器',
+           *         textColor: '#9D9D9D',
+           *         iconColor: '#9D9D9D',
+           *         selectedTextColor: '#007AFF',
+           *         icon: require('resources/images/browser.png'),
+           *         selectedIconColor: '#007AFF',
+           *         testID: 'BITPORTAL_DISCOVERY'
+           *       }
+           *     }
+           *   }
+           * },*/
           /* {
            *   stack: {
            *     children: [
@@ -421,8 +421,7 @@ export const setBottomTabsLocale = (locale) => {
       text: messages[locale].general_nav_discovery,
       textColor: '#9D9D9D',
       selectedTextColor: '#007AFF',
-      icon: Images.discovery,
-      selectedIcon: Images.discovery_press,
+      icon: require('resources/images/browser.png'),
       selectedIconColor: '#007AFF',
       testID: 'BITPORTAL_DISCOVERY'
     }

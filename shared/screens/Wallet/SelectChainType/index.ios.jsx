@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 // import { View } from 'react-native'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
-import TableView from 'react-native-tableview'
+import TableView from 'components/TableView'
 
 const { Section, Item } = TableView
 

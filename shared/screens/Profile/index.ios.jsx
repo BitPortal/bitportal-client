@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, LayoutAnimation } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
-import TableView from 'react-native-tableview'
+import TableView from 'components/TableView'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { currencySymbolSelector } from 'selectors/currency'
 import styles from './styles'
@@ -203,90 +203,51 @@ export default class Profile extends Component {
             height={44}
             key="addressBook"
             type="addressBook"
-            reactModuleForCell="IdentityTableViewCell"
             arrow
             onPress={this.toContacts}
-            text={intl.formatMessage({ id: 'identity_tableviewcell_contacts' })}
+            label={intl.formatMessage({ id: 'identity_tableviewcell_contacts' })}
             isSetting
+            image={require('resources/images/addressBookSetting.png')}
           />
           <Item
             key="language"
             type="language"
             detail={locale === 'zh' ? '中文' : 'English'}
-            reactModuleForCell="IdentityTableViewCell"
             arrow
             onPress={this.toLanguageSetting}
             isSetting
-            text={intl.formatMessage({ id: 'identity_tableviewcell_language_setting' })}
+            label={intl.formatMessage({ id: 'identity_tableviewcell_language_setting' })}
+            image={require('resources/images/languageSetting.png')}
           />
           <Item
             key="currency"
             type="currency"
             detail={currencySymbol}
-            reactModuleForCell="IdentityTableViewCell"
             arrow
             onPress={this.toCurrencySetting}
             isSetting
-            text={intl.formatMessage({ id: 'identity_tableviewcell_currency_setting' })}
+            label={intl.formatMessage({ id: 'identity_tableviewcell_currency_setting' })}
+            image={require('resources/images/CurrencySetting.png')}
           />
-          {/* <Item
-              key="node"
-              type="node"
-              reactModuleForCell="IdentityTableViewCell"
-              arrow
-              onPress={this.toNodeSetting}
-              isSetting
-              text="节点设置"
-              /> */}
         </Section>
-        {/*<Section>*/}
-          {/*<Item*/}
-            {/*key="privacyMode"*/}
-            {/*type="privacyMode"*/}
-            {/*reactModuleForCell="IdentityTableViewCell"*/}
-            {/*selectionStyle={TableView.Consts.CellSelectionStyle.None}*/}
-            {/*accessoryType={5}*/}
-            {/*switchOn={false}*/}
-            {/*isSetting*/}
-            {/*text="隐私模式"*/}
-          {/*/>*/}
-          {/*<Item*/}
-            {/*key="darkMode"*/}
-            {/*type="darkMode"*/}
-            {/*reactModuleForCell="IdentityTableViewCell"*/}
-            {/*selectionStyle={TableView.Consts.CellSelectionStyle.None}*/}
-            {/*accessoryType={5}*/}
-            {/*switchOn={false}*/}
-            {/*isSetting*/}
-            {/*text="夜间模式"*/}
-          {/*/>*/}
-        {/*</Section>*/}
         <Section arrow>
-          {/*<Item*/}
-            {/*key="inviteFrends"*/}
-            {/*type="inviteFrends"*/}
-            {/*reactModuleForCell="IdentityTableViewCell"*/}
-            {/*arrow*/}
-            {/*isSetting*/}
-            {/*text="邀请好友"*/}
-          {/*/>*/}
           <Item
             key="helpCenter"
             type="helpCenter"
-            reactModuleForCell="IdentityTableViewCell"
             arrow
             onPress={this.toHelpCenter}
             isSetting
-            text={intl.formatMessage({ id: 'identity_tableviewcell_help_center' })}
+            label={intl.formatMessage({ id: 'identity_tableviewcell_help_center' })}
+            image={require('resources/images/helpCenterSetting.png')}
           />
           <Item
             key="aboutUs"
             type="aboutUs"
-            reactModuleForCell="IdentityTableViewCell"
             arrow
             onPress={this.toAboutUs}
             isSetting
-            text={intl.formatMessage({ id: 'identity_tableviewcell_about_us' })}
+            label={intl.formatMessage({ id: 'identity_tableviewcell_about_us' })}
+            image={require('resources/images/abountUsSetting.png')}
           />
         </Section>
       </TableView>

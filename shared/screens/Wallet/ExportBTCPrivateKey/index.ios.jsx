@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import Sound from 'react-native-sound'
 import Modal from 'react-native-modal'
-import TableView from 'react-native-tableview'
+import TableView from 'components/TableView'
 const { Section, Item } = TableView
 
 Sound.setCategory('Playback')

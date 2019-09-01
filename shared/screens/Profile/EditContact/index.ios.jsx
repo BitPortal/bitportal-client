@@ -5,7 +5,7 @@ import { View, ScrollView, ActionSheetIOS, Alert, Text, ActivityIndicator, Anima
   SafeAreaView } from 'react-native'
 import { Field, reduxForm, getFormValues, getFormSyncWarnings } from 'redux-form'
 import { Navigation } from 'react-native-navigation'
-import TableView from 'react-native-tableview'
+import TableView from 'components/TableView'
 import * as contactActions from 'actions/contact'
 import Modal from 'react-native-modal'
 import FastImage from 'react-native-fast-image'

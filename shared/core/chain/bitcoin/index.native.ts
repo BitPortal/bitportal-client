@@ -8,7 +8,7 @@ import secp256k1 from 'secp256k1'
 import bs58check from 'bs58check'
 import { segWit } from 'core/constants'
 import { NativeModules } from 'react-native'
-import { insightApi, chainSoApi } from 'core/api'
+import { insightApi, chainSoApi, blockCypherApi } from 'core/api'
 
 const bip32 = bitcoin.bip32
 const { scanHDBTCAddresses } = NativeModules.BPCoreModule
@@ -170,8 +170,8 @@ export const transfer = async (password: string, keystore: any, inputs: any, out
   const tx = txb.build()
   const tx_hex = tx.toHex()
 
-  const result = await chainSoApi('POST', '/send_tx/BTC', { tx_hex })
-  return result.data.txid
+  const result = await blockCypherApi('POST', '/btc/main/txs/push', { tx: tx_hex, token: 'f368d0922a8d4df09d8832192279ffe3' })
+  return result.tx.hash
 }
 
 
@@ -211,6 +211,6 @@ export const transferByWif = async (password: string, keystore: any, inputs: any
   const tx = txb.build()
   const tx_hex = tx.toHex()
 
-  const result = await chainSoApi('POST', '/send_tx/BTC', { tx_hex })
-  return result.data.txid
+  const result = await blockCypherApi('POST', '/btc/main/txs/push', { tx: tx_hex, token: 'f368d0922a8d4df09d8832192279ffe3' })
+  return result.tx.hash
 }

@@ -4,8 +4,8 @@ import { call, put, select, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/bridge'
 import { parseMessageId, typeOf, validateEOSActions } from 'utils'
-import { activeAccountSelector } from 'selectors/account'
-import { activeWalletSelector } from 'selectors/wallet'
+import { bridgeAccountSelector } from 'selectors/account'
+import { bridgeWalletSelector } from 'selectors/wallet'
 import secureStorage from 'core/storage/secureStorage'
 import {
   initEOS,
@@ -420,7 +420,7 @@ function* resolveSignEOSData(password: string, info: any, messageId: string) {
 function* resolveETHPersonalSign(password: string, params: any, messageId: string) {
   try {
     const data = params[0]
-    const wallet = yield select((state: RootState) => activeWalletSelector(state))
+    const wallet = yield select((state: RootState) => bridgeWalletSelector(state))
     const id = wallet.id
 
     const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
@@ -451,7 +451,7 @@ function* resolveETHPersonalSign(password: string, params: any, messageId: strin
 function* resolveETHSignTypedData(password: string, params: any, messageId: string) {
   try {
     const data = params[0]
-    const wallet = yield select((state: RootState) => activeWalletSelector(state))
+    const wallet = yield select((state: RootState) => bridgeWalletSelector(state))
     const id = wallet.id
 
     const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
@@ -482,7 +482,7 @@ function* resolveETHSignTypedData(password: string, params: any, messageId: stri
 function* resolveETHSignTypedDataV3(password: string, params: any, messageId: string) {
   try {
     const data = params[1]
-    const wallet = yield select((state: RootState) => activeWalletSelector(state))
+    const wallet = yield select((state: RootState) => bridgeWalletSelector(state))
     const id = wallet.id
 
     const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
@@ -514,7 +514,7 @@ function* resolveETHSignTypedDataV3(password: string, params: any, messageId: st
 function* resolveETHSignTypedDataV4(password: string, params: any, messageId: string) {
   try {
     const data = params[1]
-    const wallet = yield select((state: RootState) => activeWalletSelector(state))
+    const wallet = yield select((state: RootState) => bridgeWalletSelector(state))
     const id = wallet.id
 
     const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
@@ -545,7 +545,7 @@ function* resolveETHSignTypedDataV4(password: string, params: any, messageId: st
 function* resolveETHSign(password: string, params: any, messageId: string) {
   try {
     const data = params[1]
-    const wallet = yield select((state: RootState) => activeWalletSelector(state))
+    const wallet = yield select((state: RootState) => bridgeWalletSelector(state))
     const id = wallet.id
 
     const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
@@ -576,7 +576,7 @@ function* resolveETHSign(password: string, params: any, messageId: string) {
 function* resolveETHSendTransaction(password: string, params: any, messageId: string, info: any) {
   try {
     const data = params[0]
-    const wallet = yield select((state: RootState) => activeWalletSelector(state))
+    const wallet = yield select((state: RootState) => bridgeWalletSelector(state))
     const id = wallet.id
 
     const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
@@ -607,7 +607,7 @@ function* resolveETHSendTransaction(password: string, params: any, messageId: st
 function* resolveETHSignTransaction(password: string, params: any, messageId: string, info: any) {
   try {
     const data = params[0]
-    const wallet = yield select((state: RootState) => activeWalletSelector(state))
+    const wallet = yield select((state: RootState) => bridgeWalletSelector(state))
     const id = wallet.id
 
     const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
@@ -639,8 +639,8 @@ function* resolveRequestSignature(password: string, info: any, messageId: string
   try {
     const buf = info.buf
     const permission = [...new Set(info.transaction.actions.map((action: any) => action.authorization.map((auth: any) => auth.permission)).flat())][0]
-    const wallet = yield select((state: RootState) => activeWalletSelector(state))
-    const account = yield select((state: RootState) => activeAccountSelector(state))
+    const wallet = yield select((state: RootState) => bridgeWalletSelector(state))
+    const account = yield select((state: RootState) => bridgeAccountSelector(state))
     const accountName = wallet.address
     const id = wallet.id
     const permissions = account && account.permissions
@@ -677,8 +677,8 @@ function* resolveRequestArbitrarySignature(password: string, info: any, messageI
     const data = info.data
     const isHash = info.isHash
     const permission = info.permission
-    const wallet = yield select((state: RootState) => activeWalletSelector(state))
-    const account = yield select((state: RootState) => activeAccountSelector(state))
+    const wallet = yield select((state: RootState) => bridgeWalletSelector(state))
+    const account = yield select((state: RootState) => bridgeAccountSelector(state))
     const accountName = wallet.address
     const id = wallet.id
     const permissions = account && account.permissions
@@ -887,9 +887,9 @@ function* receiveMessage(action: Action<string>) {
     //   break
     case 'getOrRequestIdentity':
       {
-        const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+        const activeWallet = yield select((state: RootState) => bridgeWalletSelector(state))
         assert(activeWallet && activeWallet.chain === 'EOS', 'No active EOS wallet in BitPortal!')
-        const activeAccount = yield select((state: RootState) => activeAccountSelector(state))
+        const activeAccount = yield select((state: RootState) => bridgeAccountSelector(state))
         const permissions = activeAccount && activeAccount.permissions
         const permissionPublicKeyPairs = yield call(getEOSPermissionPublicKeyPairs, activeWallet.publicKeys, activeWallet.address, permissions)
         const activePermissionPublicKeyPair = yield call(getActivePermissionPublicKeyPair, permissionPublicKeyPairs)
@@ -914,7 +914,7 @@ function* receiveMessage(action: Action<string>) {
       break
     case 'abiCache':
       {
-        const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+        const activeWallet = yield select((state: RootState) => bridgeWalletSelector(state))
         assert(activeWallet && activeWallet.chain === 'EOS'&& !!activeWallet.address, 'No active EOS wallet in BitPortal!')
         const contract = yield call(getContract, payload.abiContractName)
         yield put(actions.sendMessage({
@@ -928,7 +928,7 @@ function* receiveMessage(action: Action<string>) {
       break
     case 'requestSignature':
       {
-        const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+        const activeWallet = yield select((state: RootState) => bridgeWalletSelector(state))
         assert(activeWallet && activeWallet.chain === 'EOS' && !!activeWallet.address, 'No active EOS wallet in BitPortal!')
 
         const transactionActions = payload.transaction.actions
@@ -943,7 +943,7 @@ function* receiveMessage(action: Action<string>) {
         const errorMessage = validateEOSActions(newActions, activeWallet.address)
         assert(!errorMessage, errorMessage)
 
-        const activeAccount = yield select((state: RootState) => activeAccountSelector(state))
+        const activeAccount = yield select((state: RootState) => bridgeAccountSelector(state))
         const permissions = activeAccount && activeAccount.permissions
         const permissionPublicKeyPairs = yield call(getEOSPermissionPublicKeyPairs, activeWallet.publicKeys, activeWallet.address, permissions)
         const activePermissionPublicKeyPair = yield call(getActivePermissionPublicKeyPair, permissionPublicKeyPairs)
@@ -958,10 +958,10 @@ function* receiveMessage(action: Action<string>) {
       break
     case 'requestArbitrarySignature':
       {
-        const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+        const activeWallet = yield select((state: RootState) => bridgeWalletSelector(state))
         assert(activeWallet && activeWallet.chain === 'EOS' && !!activeWallet.address, 'No active EOS wallet in BitPortal!')
 
-        const activeAccount = yield select((state: RootState) => activeAccountSelector(state))
+        const activeAccount = yield select((state: RootState) => bridgeAccountSelector(state))
         const permissions = activeAccount && activeAccount.permissions
         const permissionPublicKeyPairs = yield call(getEOSPermissionPublicKeyPairs, activeWallet.publicKeys, activeWallet.address, permissions)
         const activePermissionPublicKeyPair = yield call(getActivePermissionPublicKeyPair, permissionPublicKeyPairs)
@@ -976,10 +976,10 @@ function* receiveMessage(action: Action<string>) {
       break
     case 'authenticate':
       {
-        const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+        const activeWallet = yield select((state: RootState) => bridgeWalletSelector(state))
         assert(activeWallet && activeWallet.chain === 'EOS' && !!activeWallet.address, 'No active EOS wallet in BitPortal!')
 
-        const activeAccount = yield select((state: RootState) => activeAccountSelector(state))
+        const activeAccount = yield select((state: RootState) => bridgeAccountSelector(state))
         const permissions = activeAccount && activeAccount.permissions
         const permissionPublicKeyPairs = yield call(getEOSPermissionPublicKeyPairs, activeWallet.publicKeys, activeWallet.address, permissions)
         const activePermissionPublicKeyPair = yield call(getActivePermissionPublicKeyPair, permissionPublicKeyPairs)
@@ -1014,7 +1014,7 @@ function* receiveMessage(action: Action<string>) {
         case 'eth_requestAccounts':
         case 'eth_accounts':
           {
-            const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+            const activeWallet = yield select((state: RootState) => bridgeWalletSelector(state))
             assert(activeWallet && activeWallet.chain === 'ETHEREUM' && !!activeWallet.address, 'No active ETHEREUM wallet in BitPortal!')
 
             yield put(actions.sendMessage({
@@ -1064,7 +1064,7 @@ function* receiveMessage(action: Action<string>) {
           break
         case 'eth_coinbase':
           {
-            const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+            const activeWallet = yield select((state: RootState) => bridgeWalletSelector(state))
             assert(activeWallet && activeWallet.chain === 'ETHEREUM' && !!activeWallet.address, 'No active ETHEREUM wallet in BitPortal!')
 
             yield put(actions.sendMessage({
@@ -1408,7 +1408,7 @@ function* receiveMessage(action: Action<string>) {
           break
         case 'personal_sign':
           {
-            const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+            const activeWallet = yield select((state: RootState) => bridgeWalletSelector(state))
             assert(activeWallet && activeWallet.chain === 'ETHEREUM' && !!activeWallet.address, 'No active ETHEREUM wallet in BitPortal!')
 
             assert(payload.params && payload.params[0] && payload.params[1], 'Invalid params!')
@@ -1429,7 +1429,7 @@ function* receiveMessage(action: Action<string>) {
           break
         case 'personal_ecRecover':
           {
-            const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+            const activeWallet = yield select((state: RootState) => bridgeWalletSelector(state))
             assert(activeWallet && activeWallet.chain === 'ETHEREUM' && !!activeWallet.address, 'No active ETHEREUM wallet in BitPortal!')
             assert(payload.params && payload.params[0] && payload.params[1], 'Invalid params!')
 
@@ -1446,7 +1446,7 @@ function* receiveMessage(action: Action<string>) {
         case 'eth_signTransaction':
         case 'eth_sendTransaction':
           {
-            const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+            const activeWallet = yield select((state: RootState) => bridgeWalletSelector(state))
             assert(activeWallet && activeWallet.chain === 'ETHEREUM' && !!activeWallet.address, 'No active ETHEREUM wallet in BitPortal!')
             assert(payload.params && payload.params[0] && typeof payload.params[0] === 'object' && payload.params[0].from && payload.params[0].to, 'Invalid params!')
             assert(String(activeWallet.address).toLowerCase() === String(payload.params[0].from).toLowerCase(), `No wallet of address: ${payload.params[1]}`)
@@ -1497,7 +1497,7 @@ function* receiveMessage(action: Action<string>) {
           break
         case 'eth_signTypedData':
           {
-            const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+            const activeWallet = yield select((state: RootState) => bridgeWalletSelector(state))
             assert(activeWallet && activeWallet.chain === 'ETHEREUM' && !!activeWallet.address, 'No active ETHEREUM wallet in BitPortal!')
             assert(payload.params && payload.params[0] && typeof payload.params[0] === 'object' && payload.params[1], 'Invalid params!')
             assert(String(activeWallet.address).toLowerCase() === String(payload.params[1]).toLowerCase(), `No wallet of address: ${payload.params[1]}`)
@@ -1512,7 +1512,7 @@ function* receiveMessage(action: Action<string>) {
         case 'eth_signTypedData_v3':
         case 'eth_signTypedData_v4':
           {
-            const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+            const activeWallet = yield select((state: RootState) => bridgeWalletSelector(state))
             assert(activeWallet && activeWallet.chain === 'ETHEREUM' && !!activeWallet.address, 'No active ETHEREUM wallet in BitPortal!')
             assert(payload.params && payload.params[0] && payload.params[1], 'Invalid params!')
             assert(String(activeWallet.address).toLowerCase() === String(payload.params[0]).toLowerCase(), `No wallet of address: ${payload.params[1]}`)
@@ -1529,26 +1529,27 @@ function* receiveMessage(action: Action<string>) {
           }
           break
         case 'eth_sign':
-          // {
-          //   const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
-          //   assert(activeWallet && activeWallet.chain === 'ETHEREUM' && !!activeWallet.address, 'No active ETHEREUM wallet in BitPortal!')
+          {
+            const activeWallet = yield select((state: RootState) => bridgeWalletSelector(state))
+            assert(activeWallet && activeWallet.chain === 'ETHEREUM' && !!activeWallet.address, 'No active ETHEREUM wallet in BitPortal!')
 
-          //   assert(payload.params && payload.params[0] && payload.params[1], 'Invalid params!')
-          //   assert(typeof payload.params[0] === 'string' || typeof payload.params[0] === number, 'Invalid address params!')
+            assert(payload.params && payload.params[0] && payload.params[1], 'Invalid params!')
+            assert(typeof payload.params[0] === 'string' || typeof payload.params[0] === number, 'Invalid address params!')
 
-          //   if (typeof payload.params[0] === 'string') {
-          //     assert(String(activeWallet.address).toLowerCase() === String(payload.params[0]).toLowerCase(), `No wallet of address: ${payload.params[1]}`)
-          //   } else {
-          //     assert(payload.params[0] == 0, `Invalid address index: ${payload.params[1]}`)
-          //   }
+            if (typeof payload.params[0] === 'string')
+            {
+              assert(String(activeWallet.address).toLowerCase() === String(payload.params[0]).toLowerCase(), `No wallet of address: ${payload.params[1]}`)
+            } else {
+              assert(payload.params[0] == 0, `Invalid address index: ${payload.params[1]}`)
+            }
 
-          //   const info = {
-          //     data: payload.params[1]
-          //   }
+            const info = {
+              data: payload.params[1]
+            }
 
-          //   yield pendETHRPCRequest(messageActionType, payload, messageId, info)
-          // }
-          // break
+            yield pendETHRPCRequest(messageActionType, payload, messageId, info)
+          }
+          break
         case 'eth_submitHashrate':
         case 'eth_uninstallFilter':
         case 'eth_getUncleCountByBlockHash':
@@ -1655,23 +1656,25 @@ function* resolveMessage(action: Action<any>) {
       case 'requestArbitrarySignature':
         yield resolveRequestArbitrarySignature(password, info, messageId)
       case 'eth_rpc_request':
-        const method = pendingMessage.payload.method
-        const params = pendingMessage.payload.params
-        const info = pendingMessage.info
-        if (method === 'personal_sign') {
-          yield resolveETHPersonalSign(password, params, messageId)
-        } else if (method === 'eth_sign') {
-          yield resolveETHSign(password, params, messageId)
-        } else if (method === 'eth_signTypedData') {
-          yield resolveETHSignTypedData(password, params, messageId)
-        } else if (method === 'eth_signTypedData_v3') {
-          yield resolveETHSignTypedDataV3(password, params, messageId)
-        } else if (method === 'eth_signTypedData_v4') {
-          yield resolveETHSignTypedDataV4(password, params, messageId)
-        } else if (method === 'eth_sendTransaction') {
-          yield resolveETHSendTransaction(password, params, messageId, info)
-        } else if (method === 'eth_signTransaction') {
-          yield resolveETHSignTransaction(password, params, messageId, info)
+        {
+          const method = pendingMessage.payload.method
+          const params = pendingMessage.payload.params
+          const info = pendingMessage.info
+          if (method === 'personal_sign') {
+            yield resolveETHPersonalSign(password, params, messageId)
+          } else if (method === 'eth_sign') {
+            yield resolveETHSign(password, params, messageId)
+          } else if (method === 'eth_signTypedData') {
+            yield resolveETHSignTypedData(password, params, messageId)
+          } else if (method === 'eth_signTypedData_v3') {
+            yield resolveETHSignTypedDataV3(password, params, messageId)
+          } else if (method === 'eth_signTypedData_v4') {
+            yield resolveETHSignTypedDataV4(password, params, messageId)
+          } else if (method === 'eth_sendTransaction') {
+            yield resolveETHSendTransaction(password, params, messageId, info)
+          } else if (method === 'eth_signTransaction') {
+            yield resolveETHSignTransaction(password, params, messageId, info)
+          }
         }
         break
       default:

@@ -18,10 +18,11 @@ import {
   Switch,
   Animated,
   Easing,
-  SafeAreaView
+  SafeAreaView,
+  Platform
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
-import TableView from 'react-native-tableview'
+import TableView from 'components/TableView'
 import { transferWalletSelector } from 'selectors/wallet'
 import { transferWalletFeeSelector } from 'selectors/fee'
 import { transferWalletsContactsSelector, selectedContactSelector } from 'selectors/contact'
@@ -40,6 +41,32 @@ import Slider from '@react-native-community/slider'
 import { assetIcons, walletIcons } from 'resources/images'
 
 const { Section, Item } = TableView
+
+const tabHeight = (() => {
+  const isIphoneX = () => {
+    let dimensions
+    if (Platform.OS !== 'ios') {
+      return false
+    }
+    if (Platform.isPad || Platform.isTVOS) {
+      return false
+    }
+    dimensions = Dimensions.get('window')
+    if (dimensions.height === 812 || dimensions.width === 812) { // Checks for iPhone X in portrait or landscape
+      return true
+    }
+    if (dimensions.height === 896 || dimensions.width === 896) {
+      return true
+    }
+    return false
+  }
+
+  if (isIphoneX()) {
+    return 32 // iPhone X
+  } else {
+    return 16 // Other iPhones
+  }
+})()
 
 const styles = EStyleSheet.create({
   container: {
@@ -1050,7 +1077,7 @@ export default class TransferAsset extends Component {
           useNativeDriver
           animationIn="slideInUp"
           animationOut="slideOutDown"
-          style={{ margin: 16, justifyContent: 'flex-end' }}
+          style={{ margin: 16, justifyContent: 'flex-end', marginBottom: tabHeight }}
         >
           {this.state.showSelectContact && <View>
             <View style={{ width: '100%', height: 64 * 5, borderWidth: 0.5, borderColor: '#C8C7CC', borderRadius: 12, overflow: 'hidden' }}>

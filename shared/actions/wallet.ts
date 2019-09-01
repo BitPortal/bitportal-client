@@ -5,6 +5,8 @@ export const setActiveWallet = createAction<SetActiveWalletParams>('wallet/SET_A
 export const setActiveChain = createAction<SetActiveChainParams>('wallet/SET_ACTIVE_CHAIN')
 export const setManagingWallet = createAction<SetManagingWalletParams>('wallet/SET_MANAGING_WALLET')
 export const setTransferWallet = createAction<SetTransferWalletParams>('wallet/SET_TRANSFER_WALLET')
+export const setBridgeWallet = createAction<SetBridgeWalletParams>('wallet/SET_BRIDGE_WALLET')
+export const setBridgeChain = createAction<SetBridgeChainParams>('wallet/SET_BRIDGE_CHAIN')
 
 export const addIdentityWallet = createAction<AddIdentityWalletParams>('wallet/ADD_IDENTITY_WALLET')
 export const addIdentityWallets = createAction<AddIdentityWalletsParams>('wallet/ADD_IDENTITY_WALLETS')
@@ -45,4 +47,3 @@ export const setWalletName = createAsyncAction('wallet/SET_NAME')
 export const importChainxMnemonics = createAsyncAction('wallet/IMPORT_CHAINX_MNEMONICS')
 export const importChainxPrivateKey = createAsyncAction('wallet/IMPORT_CHAINX_PRIVATEKEY')
 export const exportPCXPrivateKey = createAsyncAction('wallet/EXPORT_PCX_PRIVATEKEY')
-
