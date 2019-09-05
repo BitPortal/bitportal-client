@@ -145,6 +145,10 @@
 		34A680E422C4E7A900BBE21E /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34A680E122C4E79A00BBE21E /* libRNGestureHandler.a */; };
 		34AEC4FA230BDDCB002B9C99 /* libRNCWebView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34AEC4E3230BDD9B002B9C99 /* libRNCWebView.a */; };
 		34D1CC3121A70F40001E6A5F /* copy.wav in Resources */ = {isa = PBXBuildFile; fileRef = 34D1CC3021A70F3F001E6A5F /* copy.wav */; };
+		34FAC26A232142ED0084A60F /* AddressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC269232142ED0084A60F /* AddressBar.swift */; };
+		34FAC26C232142F60084A60F /* SPFakeBarNavigationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC26B232142F50084A60F /* SPFakeBarNavigationStyle.swift */; };
+		34FAC26E232142FF0084A60F /* SPFakeBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC26D232142FF0084A60F /* SPFakeBarView.swift */; };
+		34FAC270232145000084A60F /* TGAddressBarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC26F232145000084A60F /* TGAddressBarManager.m */; };
 		3C4507934177471B93375682 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE5CE8E4DC4D17BDEAF27C /* libRNRandomBytes.a */; };
 		4077FA79AD0344B59132A336 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEC2D3945DC40A5BA3B3E50 /* CoreTelephony.framework */; };
 		4D3E192C76DB455FB2A83058 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F6FFFE3A1A14B14B05FDE01 /* libz.tbd */; };
@@ -985,6 +989,10 @@
 		34AEC4A6230BDD9B002B9C99 /* RNCWebView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCWebView.xcodeproj; path = "../node_modules/react-native-webview/ios/RNCWebView.xcodeproj"; sourceTree = "<group>"; };
 		34D1CC3021A70F3F001E6A5F /* copy.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = copy.wav; path = ../shared/resources/sounds/copy.wav; sourceTree = "<group>"; };
 		34DAEC4967524A5CAF94D0B9 /* imageCropPicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = imageCropPicker.xcodeproj; path = "../node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj"; sourceTree = "<group>"; };
+		34FAC269232142ED0084A60F /* AddressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressBar.swift; sourceTree = "<group>"; };
+		34FAC26B232142F50084A60F /* SPFakeBarNavigationStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPFakeBarNavigationStyle.swift; sourceTree = "<group>"; };
+		34FAC26D232142FF0084A60F /* SPFakeBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPFakeBarView.swift; sourceTree = "<group>"; };
+		34FAC26F232145000084A60F /* TGAddressBarManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TGAddressBarManager.m; sourceTree = "<group>"; };
 		3632CD6C22A0B71B44C0363E /* Pods-bitportal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bitportal.release.xcconfig"; path = "Pods/Target Support Files/Pods-bitportal/Pods-bitportal.release.xcconfig"; sourceTree = "<group>"; };
 		38C4780193CC49979A90CDFD /* ReactNativePermissions.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePermissions.xcodeproj; path = "../node_modules/react-native-permissions/ios/ReactNativePermissions.xcodeproj"; sourceTree = "<group>"; };
 		41F22B0429D24A1B96F7A5CE /* libRNSensitiveInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSensitiveInfo.a; sourceTree = "<group>"; };
@@ -1176,6 +1184,7 @@
 		13B07FAE1A68108700A75B9A /* bitportal */ = {
 			isa = PBXGroup;
 			children = (
+				34FAC21B232142C30084A60F /* NavigationBar */,
 				344C9CC22317B7ED004E26AD /* SPAlert */,
 				3483B067231430D600444855 /* TableView */,
 				3452263622E03D31009913DF /* test */,
@@ -1194,6 +1203,7 @@
 				18F2817F2177351C00DEB13F /* third-party-modules */,
 				344C9DB723181B9C004E26AD /* SPAlertViewManager.swift */,
 				344C9DB923181CA4004E26AD /* SPAlertViewManager.m */,
+				34FAC26F232145000084A60F /* TGAddressBarManager.m */,
 			);
 			name = bitportal;
 			sourceTree = "<group>";
@@ -1818,6 +1828,16 @@
 				34D1CC2F21A70CC0001E6A5F /* libRNSound.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		34FAC21B232142C30084A60F /* NavigationBar */ = {
+			isa = PBXGroup;
+			children = (
+				34FAC26D232142FF0084A60F /* SPFakeBarView.swift */,
+				34FAC26B232142F50084A60F /* SPFakeBarNavigationStyle.swift */,
+				34FAC269232142ED0084A60F /* AddressBar.swift */,
+			);
+			path = NavigationBar;
 			sourceTree = "<group>";
 		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
@@ -2842,6 +2862,7 @@
 				18F2827B2177351C00DEB13F /* secp256k1.c in Sources */,
 				18F282882177351C00DEB13F /* bip32.c in Sources */,
 				344C9DBA23181CA4004E26AD /* SPAlertViewManager.m in Sources */,
+				34FAC270232145000084A60F /* TGAddressBarManager.m in Sources */,
 				18F2829D2177351D00DEB13F /* UMAnalyticsModule.m in Sources */,
 				18F2826B2177351C00DEB13F /* blake256.c in Sources */,
 				18F2827A2177351C00DEB13F /* nem.c in Sources */,
@@ -2872,6 +2893,7 @@
 				18F282782177351C00DEB13F /* curve25519-donna-32bit.c in Sources */,
 				18F282832177351C00DEB13F /* nist256p1.c in Sources */,
 				18F2828D2177351C00DEB13F /* ecdsa.c in Sources */,
+				34FAC26E232142FF0084A60F /* SPFakeBarView.swift in Sources */,
 				18F282A02177351D00DEB13F /* DJIProxyCaches.mm in Sources */,
 				18F282632177351C00DEB13F /* sha2.c in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
@@ -2906,7 +2928,9 @@
 				3483B0E1231430D700444855 /* RNTableView.m in Sources */,
 				18F282962177351C00DEB13F /* chacha20poly1305.c in Sources */,
 				18F282672177351C00DEB13F /* rand.c in Sources */,
+				34FAC26A232142ED0084A60F /* AddressBar.swift in Sources */,
 				1808822A2135447300321418 /* NativeUtils.m in Sources */,
+				34FAC26C232142F60084A60F /* SPFakeBarNavigationStyle.swift in Sources */,
 				3452263922E03D43009913DF /* test.cpp in Sources */,
 				3483B0DE231430D700444855 /* RNTableViewCellWithCollectionViewInside.m in Sources */,
 				344C9D192317B7ED004E26AD /* SPAlertIconHeartView.swift in Sources */,
@@ -2993,7 +3017,7 @@
 				INFOPLIST_FILE = bitportal/Info.plist;
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
 				INFOPLIST_PREPROCESS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3078,7 +3102,7 @@
 				INFOPLIST_FILE = bitportal/Info.plist;
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
 				INFOPLIST_PREPROCESS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3145,7 +3169,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -3185,7 +3209,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_INSTALL_OBJC_HEADER = NO;

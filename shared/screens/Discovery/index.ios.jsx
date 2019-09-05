@@ -92,7 +92,7 @@ export default class Discovery extends Component {
               passProps: { url, hasAddressBar: true },
               options: {
                 topBar: {
-                  addressBar: true
+                  visible: false
                 }
               }
             }

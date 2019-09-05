@@ -298,29 +298,29 @@ export const startTabBasedApp = (locale) => {
               }
             }
           },
-          /* {
-           *   stack: {
-           *     children: [
-           *       {
-           *         component: {
-           *           id: 'BitPortal.Discovery',
-           *           name: 'BitPortal.Discovery'
-           *         }
-           *       }
-           *     ],
-           *     options: {
-           *       bottomTab: {
-           *         text: '浏览器',
-           *         textColor: '#9D9D9D',
-           *         iconColor: '#9D9D9D',
-           *         selectedTextColor: '#007AFF',
-           *         icon: require('resources/images/browser.png'),
-           *         selectedIconColor: '#007AFF',
-           *         testID: 'BITPORTAL_DISCOVERY'
-           *       }
-           *     }
-           *   }
-           * },*/
+          {
+            stack: {
+              children: [
+                {
+                  component: {
+                    id: 'BitPortal.Discovery',
+                    name: 'BitPortal.Discovery'
+                  }
+                }
+              ],
+              options: {
+                bottomTab: {
+                  text: '浏览器',
+                  textColor: '#9D9D9D',
+                  iconColor: '#9D9D9D',
+                  selectedTextColor: '#007AFF',
+                  icon: require('resources/images/browser.png'),
+                  selectedIconColor: '#007AFF',
+                  testID: 'BITPORTAL_DISCOVERY'
+                }
+              }
+            }
+          },
           /* {
            *   stack: {
            *     children: [

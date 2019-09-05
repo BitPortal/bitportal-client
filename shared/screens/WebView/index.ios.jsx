@@ -20,7 +20,8 @@ import {
   TextInput,
   Switch,
   Alert,
-  SafeAreaView
+  SafeAreaView,
+  requireNativeComponent
 } from 'react-native'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
@@ -43,6 +44,7 @@ import localMessages from './messages'
 import styles from './styles'
 import BrowserAddressBar from 'components/Form/BrowserAddressBar'
 
+const TGAddressBar = requireNativeComponent('TGAddressBar')
 const messages = { ...globalMessages, ...localMessages }
 
 const tabHeight = (() => {
@@ -1139,12 +1141,9 @@ export default class WebView extends Component {
     } = this.props
     const isBookmarked = id ? (bookmarkedIds.indexOf(id) !== -1) : false
 
-    // https://danfinlay.github.io/js-eth-personal-sign-examples
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F7F7' }}>
-      {hasAddressBar && <View style={{ height: 52, width: '100%' }}>
-            <BrowserAddressBar url={this.state.url} close={this.cancel} chain="ETHEREUM" loadPage={this.loadPage} />
-      </View>}
+        {hasAddressBar && <TGAddressBar style={{ height: 50 }} />}
       <View style={{ flex: 1, width: '100%' }}>
           <RNWebView
             source={{ uri: this.state.originurl }}
