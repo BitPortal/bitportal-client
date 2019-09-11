@@ -5,7 +5,7 @@
 //  Created by Pavlo Aksonov on 07.08.15.
 //  Copyright (c) 2015 Pavlo Aksonov. All rights reserved.
 //
-
+#import "bitportal-Swift.h"
 #import "RNTableView.h"
 #import "RNTableViewCellWithCollectionViewInside.h"
 #import "SnappingCollectionViewLayout.h"
@@ -68,6 +68,11 @@
 -(void)setSectionIndexTitlesEnabled:(BOOL)sectionIndexTitlesEnabled
 {
     _sectionIndexTitlesEnabled = sectionIndexTitlesEnabled;
+}
+
+-(void)setScrollToDismissEnabled:(BOOL)scrollToDismissEnabled
+{
+  _scrollToDismissEnabled = scrollToDismissEnabled;
 }
 
 - (void)insertReactSubview:(UIView *)subview atIndex:(NSInteger)atIndex
@@ -234,6 +239,7 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
     _collectionViewInsideTableViewCell = @"CollectionViewInsideTableViewCell";
     [_tableView registerClass:[RNReactModuleCell class] forCellReuseIdentifier:_reactModuleCellReuseIndentifier];
     _oldSections = [NSMutableArray array];
+  
     [self addSubview:_tableView];
 }
 
@@ -691,6 +697,7 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
     if (item[@"selectionStyle"] != nil) {
         cell.selectionStyle = [RCTConvert int:item[@"selectionStyle"]];
     }
+    cell.transform = CGAffineTransformIdentity;
     return cell;
 }
 
@@ -928,6 +935,13 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
 #pragma mark - Scrolling
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  if (_scrollToDismissEnabled) {
+     NSDictionary *userInfo =  @{@"scrollView": _tableView};
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabeleview onScrollViewScroll" object:nil userInfo:userInfo];
+    
+    // [SPStorkController scrollViewDidScroll: scrollView];
+  }
+  
     if (!self.onScroll) {
         // When rendering, `self.tableView.delegate` may be set before `onScroll` is passed in.
         return;

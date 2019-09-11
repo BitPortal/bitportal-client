@@ -38,6 +38,7 @@ import FeaturedDappCollectionViewCell from 'components/CollectionViewCell/Featur
 import SmallDappCollectionViewCell from 'components/CollectionViewCell/SmallDappCollectionViewCell'
 import LargeDappCollectionViewCell from 'components/CollectionViewCell/LargeDappCollectionViewCell'
 import LoadMoreTableViewCell from 'components/TableViewCell/LoadMoreTableViewCell'
+import DappTrendingTableViewCell from 'components/TableViewCell/DappTrendingTableViewCell'
 import IdentityHeader from 'components/Header/IdentityHeader'
 
 import Market from 'screens/Market'
@@ -47,6 +48,7 @@ import Asset from 'screens/Wallet/Asset'
 import TransferAsset from 'screens/Wallet/TransferAsset'
 import ReceiveAsset from 'screens/Wallet/ReceiveAsset'
 import WalletList from 'screens/Wallet/WalletList'
+import SelectBridgeWallet from 'screens/Wallet/SelectBridgeWallet'
 import ManageWallet from 'screens/Wallet/ManageWallet'
 import Voting from 'screens/Wallet/Voting'
 import AddIdentity from 'screens/Wallet/AddIdentity'
@@ -130,6 +132,7 @@ export const registerScreens = (store) => {
   AppRegistry.registerComponent('DappFooterTableViewCell', () => DappFooterTableViewCell)
   AppRegistry.registerComponent('DappCategoryTableViewCell', () => DappCategoryTableViewCell)
   AppRegistry.registerComponent('SmallDappTableViewCell', () => SmallDappTableViewCell)
+  AppRegistry.registerComponent('DappTrendingTableViewCell', () => DappTrendingTableViewCell)
 
   Navigation.registerComponentWithRedux('BitPortal.Wallet', () => Wallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.AddAssets', () => AddAssets, Provider, store)
@@ -138,6 +141,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.TransferAsset', () => TransferAsset, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ReceiveAsset', () => ReceiveAsset, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.WalletList', () => WalletList, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.SelectBridgeWallet', () => SelectBridgeWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ManageWallet', () => ManageWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Voting', () => Voting, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.AddIdentity', () => AddIdentity, Provider, store)

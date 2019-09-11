@@ -3,6 +3,7 @@ import { initialState } from 'reducers/wallet'
 
 export const activeWalletIdSelector = (state: RootState) => state.wallet.activeWalletId || initialState.activeWalletId
 export const activeChainSelector = (state: RootState) => state.wallet.activeChain || initialState.activeChain
+export const bridgeChainSelector = (state: RootState) => state.wallet.bridgeChain || initialState.bridgeChain
 export const managingWalletIdSelector = (state: RootState) => state.wallet.managingWalletId || initialState.managingWalletId
 export const transferWalletIdSelector = (state: RootState) => state.wallet.transferWalletId || initialState.transferWalletId
 export const bridgeWalletIdSelector = (state: RootState) => state.wallet.bridgeWalletId || initialState.bridgeWalletId
@@ -83,7 +84,7 @@ export const hasIdentityEOSWalletSelector = createSelector(
   (identityWallets: any) => {
     if (identityWallets && identityWallets.length) {
       const index = identityWallets.findIndex((wallet: any) => wallet.chain === 'EOS')
-      return !!identityWallets[index].address
+      return !!(identityWallets[index] && identityWallets[index].address)
     }
 
     return false
@@ -140,4 +141,22 @@ export const eosAccountSelector = createSelector(
   identityWalletSelector,
   importedWalletSelector,
   (identityWallets: any, importedWallets: any) => identityWallets.concat(importedWallets).filter((wallet) => wallet.chain === 'EOS').map((wallet: any) => wallet.address).filter((address: string) => !!address)
+)
+
+export const eosWalletSelector = createSelector(
+  identityWalletSelector,
+  importedWalletSelector,
+  (identityWallets: any, importedWallets: any) => identityWallets.concat(importedWallets).filter((wallet) => wallet.chain === 'EOS').filter((address: string) => !!address)
+)
+
+export const ethWalletSelector = createSelector(
+  identityWalletSelector,
+  importedWalletSelector,
+  (identityWallets: any, importedWallets: any) => identityWallets.concat(importedWallets).filter((wallet) => wallet.chain === 'ETHEREUM')
+)
+
+export const bridgeWalletListSelector = createSelector(
+  identityWalletSelector,
+  importedWalletSelector,
+  (identityWallets: any, importedWallets: any) => identityWallets.concat(importedWallets).filter((wallet) => wallet.chain === 'ETHEREUM' || wallet.chain === 'EOS').filter((wallet: string) => !!wallet.address)
 )

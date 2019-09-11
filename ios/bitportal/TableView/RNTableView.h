@@ -83,6 +83,7 @@
 
 @property(nonatomic, assign) BOOL scrollEnabled;
 @property(nonatomic, assign) BOOL sectionIndexTitlesEnabled;
+@property(nonatomic, assign) BOOL scrollToDismissEnabled;
 
 @property(nonatomic, copy) RCTBubblingEventBlock onWillDisplayCell;
 @property(nonatomic, copy) RCTBubblingEventBlock onEndDisplayingCell;

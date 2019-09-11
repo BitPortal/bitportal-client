@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { activeWalletSelector, managingWalletSelector, transferWalletSelector } from 'selectors/wallet'
+import { activeWalletSelector, managingWalletSelector, transferWalletSelector, bridgeWalletSelector } from 'selectors/wallet'
 import { activeAssetSelector, transferAssetSelector } from 'selectors/asset'
 import { initialState } from 'reducers/balance'
 
@@ -46,6 +46,22 @@ export const managingWalletBalanceSelector = createSelector(
         return balanceById[`${managingWallet.chain}/${managingWallet.address}`].syscoin
       } else {
         return ({ balance: '0', symbol: managingWallet.symbol, precision: managingWallet.chain === 'EOS' ? 4 : 8, contract: managingWallet.chain === 'EOS' ? 'eosio.token' : null })
+      }
+    }
+
+    return null
+  }
+)
+
+export const bridgeWalletBalanceSelector = createSelector(
+  bridgeWalletSelector,
+  balanceByIdSelector,
+  (bridgeWallet: string, balanceById: any) => {
+    if (bridgeWallet) {
+      if (balanceById[`${bridgeWallet.chain}/${bridgeWallet.address}`] && balanceById[`${bridgeWallet.chain}/${bridgeWallet.address}`].syscoin) {
+        return balanceById[`${bridgeWallet.chain}/${bridgeWallet.address}`].syscoin
+      } else {
+        return ({ balance: '0', symbol: bridgeWallet.symbol, precision: bridgeWallet.chain === 'EOS' ? 4 : 8, contract: bridgeWallet.chain === 'EOS' ? 'eosio.token' : null })
       }
     }
 

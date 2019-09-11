@@ -5,6 +5,7 @@ import TableView from 'components/TableView'
 import { Navigation } from 'react-native-navigation'
 import { Alert, View, Text, ScrollView } from 'react-native'
 import * as dappActions from 'actions/dapp'
+import * as walletActions from 'actions/wallet'
 import {
   dappSelector,
   newDappSelector,
@@ -15,7 +16,7 @@ import {
   dappBookmarkSelector
 } from 'selectors/dapp'
 import { loadScatter, loadScatterSync, loadMetaMask, loadMetaMaskSync } from 'utils/inject'
-import { activeWalletSelector } from 'selectors/wallet'
+import { activeWalletSelector, bridgeWalletSelector, identityWalletSelector, importedWalletSelector } from 'selectors/wallet'
 import { transfromUrlText } from 'utils'
 const { Section, Item, CollectionView, CollectionViewItem } = TableView
 
@@ -29,10 +30,14 @@ const { Section, Item, CollectionView, CollectionViewItem } = TableView
     featured: dappRecommendSelector(state),
     bookmarked: dappBookmarkSelector(state),
     wallet: activeWalletSelector(state),
+    bridgeWallet: bridgeWalletSelector(state),
+    identityWallet: identityWalletSelector(state),
+    importedWallet: importedWalletSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
-      ...dappActions
+      ...dappActions,
+      ...walletActions
     }, dispatch)
   })
 )
@@ -58,7 +63,6 @@ export default class Discovery extends Component {
   subscription = Navigation.events().bindComponent(this)
 
   searchBarUpdated({ text, isFocused, isSubmitting }) {
-    console.log({ text, isFocused, isSubmitting })
     if (isSubmitting) {
       Navigation.mergeOptions(this.props.componentId, {
         topBar: {
@@ -175,15 +179,56 @@ export default class Discovery extends Component {
   }
 
   async componentDidMount() {
-    this.props.actions.getDapp.requested()
-    this.props.actions.getDappRecommend.requested()
+    // this.props.actions.getDapp.requested()
+    // this.props.actions.getDappRecommend.requested()
     await loadScatter()
     await loadMetaMask()
   }
 
   componentDidAppear() {
-    this.props.actions.getDapp.requested()
-    this.props.actions.getDappRecommend.requested()
+    // this.props.actions.getDapp.requested()
+    // this.props.actions.getDappRecommend.requested()
+  }
+
+  openDapp = (url, chain) => {
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        searchBar: true,
+        searchBarHiddenWhenScrolling: false,
+        searchBarDeactive: true
+      }
+    })
+
+    if (!this.props.bridgeWallet || this.props.bridgeWallet.chain !== chain) {
+      const selectedWallet = this.selectWallet(chain)
+
+      if (selectedWallet) {
+        this.props.actions.setBridgeWallet(selectedWallet.id)
+        this.props.actions.setBridgeChain(selectedWallet.chain)
+      }
+    }
+
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.WebView',
+            passProps: { url, hasAddressBar: true },
+            options: {
+              topBar: {
+                visible: false
+              }
+            }
+          }
+        }]
+      }
+    })
+  }
+
+  selectWallet = (chain) => {
+    const selectedIdentityWallet = this.props.identityWallet.filter(wallet => wallet.address && wallet.chain === chain)
+    const selectedImportedWallet = this.props.importedWallet.filter(wallet => wallet.address && wallet.chain === chain)
+    return selectedIdentityWallet[0] || selectedImportedWallet[0]
   }
 
   render() {
@@ -202,9 +247,63 @@ export default class Discovery extends Component {
           <Item
             reactModuleForCell="DappHeaderTableViewCell"
             height={44}
-            title=""
-            componentId={this.props.componentId}
+            title="热门推荐"
             selectionStyle={TableView.Consts.CellSelectionStyle.None}
+          />
+          <Item
+            reactModuleForCell="DappTrendingTableViewCell"
+            height={44}
+            title="MakerDAO"
+            onPress={this.openDapp.bind(this, 'https://cdp.makerdao.com', 'ETHEREUM')}
+            showSeparator
+          />
+          <Item
+            reactModuleForCell="DappTrendingTableViewCell"
+            height={44}
+            title="0x Protocol"
+            onPress={this.openDapp.bind(this, 'https://0x.org/portal/account', 'ETHEREUM')}
+            showSeparator
+          />
+          <Item
+            reactModuleForCell="DappTrendingTableViewCell"
+            height={44}
+            title="KyberSwap"
+            onPress={this.openDapp.bind(this, 'https://kyberswap.com/swap/eth_knc', 'ETHEREUM')}
+            showSeparator
+          />
+          <Item
+            reactModuleForCell="DappTrendingTableViewCell"
+            height={44}
+            title="Crypto Kitties"
+            onPress={this.openDapp.bind(this, 'http://www.cryptokitties.co', 'ETHEREUM')}
+            showSeparator
+          />
+          <Item
+            reactModuleForCell="DappTrendingTableViewCell"
+            height={44}
+            title="PRA Candy Box"
+            onPress={this.openDapp.bind(this, 'https://chain.pro/candybox', 'EOS')}
+            showSeparator
+          />
+          <Item
+            reactModuleForCell="DappTrendingTableViewCell"
+            height={44}
+            title="Newdex"
+            onPress={this.openDapp.bind(this, 'https://newdex.340wan.com', 'EOS')}
+            showSeparator
+          />
+          <Item
+            reactModuleForCell="DappTrendingTableViewCell"
+            height={44}
+            title="WhaleEx"
+            onPress={this.openDapp.bind(this, 'https://w.whaleex.com.cn/wallet', 'EOS')}
+            showSeparator
+          />
+          <Item
+            reactModuleForCell="DappTrendingTableViewCell"
+            height={44}
+            title="EOSX"
+            onPress={this.openDapp.bind(this, 'https://www.myeoskit.com', 'EOS')}
           />
         </Section>
       </TableView>

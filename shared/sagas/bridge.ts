@@ -3,6 +3,7 @@ import { delay } from 'redux-saga'
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 import { Action } from 'redux-actions'
 import * as actions from 'actions/bridge'
+import { updateBridgeWalletInfo } from 'actions/wallet'
 import { parseMessageId, typeOf, validateEOSActions } from 'utils'
 import { bridgeAccountSelector } from 'selectors/account'
 import { bridgeWalletSelector } from 'selectors/wallet'
@@ -197,6 +198,8 @@ function* pendRequestSignature(messageActionType: string, payload: any, messageI
       blockchain
     }
   }))
+
+  yield put(updateBridgeWalletInfo())
 }
 
 function* pendArbitrarySignature(messageActionType: string, payload: any, messageId: string) {
@@ -231,6 +234,8 @@ function* pendArbitrarySignature(messageActionType: string, payload: any, messag
       permission
     }
   }))
+
+  yield put(updateBridgeWalletInfo())
 }
 
 function* pendETHRPCRequest(messageActionType: string, payload: any, messageId: string, info: any = {}) {
@@ -260,6 +265,8 @@ function* pendETHRPCRequest(messageActionType: string, payload: any, messageId: 
       ...info
     }
   }))
+
+  yield put(updateBridgeWalletInfo())
 }
 
 function* resolveTransferEOSAsset(password: string, info: any, messageId: string) {
@@ -741,7 +748,7 @@ function* receiveMessage(action: Action<string>) {
     const messageId = messageAction.messageId
     const payload = messageAction.payload
     const messageActionType = messageAction.type
-    console.log('receive bridge message', action)
+    // console.log('receive bridge message', action)
 
     switch (messageActionType) {
     // case 'getCurrentWallet':

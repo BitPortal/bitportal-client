@@ -149,6 +149,25 @@
 		34FAC26C232142F60084A60F /* SPFakeBarNavigationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC26B232142F50084A60F /* SPFakeBarNavigationStyle.swift */; };
 		34FAC26E232142FF0084A60F /* SPFakeBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC26D232142FF0084A60F /* SPFakeBarView.swift */; };
 		34FAC270232145000084A60F /* TGAddressBarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC26F232145000084A60F /* TGAddressBarManager.m */; };
+		34FAC31B2322B4FB0084A60F /* TGAddressBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC31A2322B4FA0084A60F /* TGAddressBarManager.swift */; };
+		34FAC3592323F10E0084A60F /* SPStorkHaptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC3452323F10D0084A60F /* SPStorkHaptic.swift */; };
+		34FAC35A2323F10E0084A60F /* SPStorkArrowMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC3462323F10D0084A60F /* SPStorkArrowMode.swift */; };
+		34FAC35B2323F10E0084A60F /* SPStorkSeque.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC3472323F10D0084A60F /* SPStorkSeque.swift */; };
+		34FAC35C2323F10E0084A60F /* SPStorkCodeDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC3492323F10D0084A60F /* SPStorkCodeDraw.swift */; };
+		34FAC35D2323F10E0084A60F /* SPStorkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC34A2323F10E0084A60F /* SPStorkController.swift */; };
+		34FAC35E2323F10E0084A60F /* SPStorkTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC34C2323F10E0084A60F /* SPStorkTransitioningDelegate.swift */; };
+		34FAC35F2323F10E0084A60F /* SPStorkPresentingAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC34D2323F10E0084A60F /* SPStorkPresentingAnimationController.swift */; };
+		34FAC3602323F10E0084A60F /* SPStorkPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC34E2323F10E0084A60F /* SPStorkPresentationController.swift */; };
+		34FAC3612323F10E0084A60F /* SPStorkDismissingAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC34F2323F10E0084A60F /* SPStorkDismissingAnimationController.swift */; };
+		34FAC3622323F10E0084A60F /* SPStorkViewControllerExtenshion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC3512323F10E0084A60F /* SPStorkViewControllerExtenshion.swift */; };
+		34FAC3632323F10E0084A60F /* SPStorkCloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC3532323F10E0084A60F /* SPStorkCloseButton.swift */; };
+		34FAC3642323F10E0084A60F /* SPStorkIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC3542323F10E0084A60F /* SPStorkIndicatorView.swift */; };
+		34FAC3652323F10E0084A60F /* SPStorkCloseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC3552323F10E0084A60F /* SPStorkCloseView.swift */; };
+		34FAC3662323F10E0084A60F /* SPStorkControllerConfirmDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC3572323F10E0084A60F /* SPStorkControllerConfirmDelegate.swift */; };
+		34FAC3672323F10E0084A60F /* SPStorkControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC3582323F10E0084A60F /* SPStorkControllerDelegate.swift */; };
+		34FAC44523268ED10084A60F /* NavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC44423268ED10084A60F /* NavBar.swift */; };
+		34FAC49423268F880084A60F /* NavBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC49323268F880084A60F /* NavBarManager.swift */; };
+		34FAC49623268F9A0084A60F /* NavBarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC49523268F9A0084A60F /* NavBarManager.m */; };
 		3C4507934177471B93375682 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE5CE8E4DC4D17BDEAF27C /* libRNRandomBytes.a */; };
 		4077FA79AD0344B59132A336 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEC2D3945DC40A5BA3B3E50 /* CoreTelephony.framework */; };
 		4D3E192C76DB455FB2A83058 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F6FFFE3A1A14B14B05FDE01 /* libz.tbd */; };
@@ -993,6 +1012,25 @@
 		34FAC26B232142F50084A60F /* SPFakeBarNavigationStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPFakeBarNavigationStyle.swift; sourceTree = "<group>"; };
 		34FAC26D232142FF0084A60F /* SPFakeBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPFakeBarView.swift; sourceTree = "<group>"; };
 		34FAC26F232145000084A60F /* TGAddressBarManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TGAddressBarManager.m; sourceTree = "<group>"; };
+		34FAC31A2322B4FA0084A60F /* TGAddressBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TGAddressBarManager.swift; sourceTree = "<group>"; };
+		34FAC3452323F10D0084A60F /* SPStorkHaptic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkHaptic.swift; sourceTree = "<group>"; };
+		34FAC3462323F10D0084A60F /* SPStorkArrowMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkArrowMode.swift; sourceTree = "<group>"; };
+		34FAC3472323F10D0084A60F /* SPStorkSeque.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkSeque.swift; sourceTree = "<group>"; };
+		34FAC3492323F10D0084A60F /* SPStorkCodeDraw.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkCodeDraw.swift; sourceTree = "<group>"; };
+		34FAC34A2323F10E0084A60F /* SPStorkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkController.swift; sourceTree = "<group>"; };
+		34FAC34C2323F10E0084A60F /* SPStorkTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkTransitioningDelegate.swift; sourceTree = "<group>"; };
+		34FAC34D2323F10E0084A60F /* SPStorkPresentingAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkPresentingAnimationController.swift; sourceTree = "<group>"; };
+		34FAC34E2323F10E0084A60F /* SPStorkPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkPresentationController.swift; sourceTree = "<group>"; };
+		34FAC34F2323F10E0084A60F /* SPStorkDismissingAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkDismissingAnimationController.swift; sourceTree = "<group>"; };
+		34FAC3512323F10E0084A60F /* SPStorkViewControllerExtenshion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkViewControllerExtenshion.swift; sourceTree = "<group>"; };
+		34FAC3532323F10E0084A60F /* SPStorkCloseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkCloseButton.swift; sourceTree = "<group>"; };
+		34FAC3542323F10E0084A60F /* SPStorkIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkIndicatorView.swift; sourceTree = "<group>"; };
+		34FAC3552323F10E0084A60F /* SPStorkCloseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkCloseView.swift; sourceTree = "<group>"; };
+		34FAC3572323F10E0084A60F /* SPStorkControllerConfirmDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkControllerConfirmDelegate.swift; sourceTree = "<group>"; };
+		34FAC3582323F10E0084A60F /* SPStorkControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkControllerDelegate.swift; sourceTree = "<group>"; };
+		34FAC44423268ED10084A60F /* NavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBar.swift; sourceTree = "<group>"; };
+		34FAC49323268F880084A60F /* NavBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarManager.swift; sourceTree = "<group>"; };
+		34FAC49523268F9A0084A60F /* NavBarManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NavBarManager.m; sourceTree = "<group>"; };
 		3632CD6C22A0B71B44C0363E /* Pods-bitportal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bitportal.release.xcconfig"; path = "Pods/Target Support Files/Pods-bitportal/Pods-bitportal.release.xcconfig"; sourceTree = "<group>"; };
 		38C4780193CC49979A90CDFD /* ReactNativePermissions.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePermissions.xcodeproj; path = "../node_modules/react-native-permissions/ios/ReactNativePermissions.xcodeproj"; sourceTree = "<group>"; };
 		41F22B0429D24A1B96F7A5CE /* libRNSensitiveInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSensitiveInfo.a; sourceTree = "<group>"; };
@@ -1184,6 +1222,7 @@
 		13B07FAE1A68108700A75B9A /* bitportal */ = {
 			isa = PBXGroup;
 			children = (
+				34FAC3432323F10D0084A60F /* SPStorkController */,
 				34FAC21B232142C30084A60F /* NavigationBar */,
 				344C9CC22317B7ED004E26AD /* SPAlert */,
 				3483B067231430D600444855 /* TableView */,
@@ -1204,6 +1243,9 @@
 				344C9DB723181B9C004E26AD /* SPAlertViewManager.swift */,
 				344C9DB923181CA4004E26AD /* SPAlertViewManager.m */,
 				34FAC26F232145000084A60F /* TGAddressBarManager.m */,
+				34FAC31A2322B4FA0084A60F /* TGAddressBarManager.swift */,
+				34FAC49323268F880084A60F /* NavBarManager.swift */,
+				34FAC49523268F9A0084A60F /* NavBarManager.m */,
 			);
 			name = bitportal;
 			sourceTree = "<group>";
@@ -1836,8 +1878,79 @@
 				34FAC26D232142FF0084A60F /* SPFakeBarView.swift */,
 				34FAC26B232142F50084A60F /* SPFakeBarNavigationStyle.swift */,
 				34FAC269232142ED0084A60F /* AddressBar.swift */,
+				34FAC44423268ED10084A60F /* NavBar.swift */,
 			);
 			path = NavigationBar;
+			sourceTree = "<group>";
+		};
+		34FAC3432323F10D0084A60F /* SPStorkController */ = {
+			isa = PBXGroup;
+			children = (
+				34FAC3442323F10D0084A60F /* Models */,
+				34FAC3472323F10D0084A60F /* SPStorkSeque.swift */,
+				34FAC3482323F10D0084A60F /* CodeDraw */,
+				34FAC34A2323F10E0084A60F /* SPStorkController.swift */,
+				34FAC34B2323F10E0084A60F /* TransitioningDelegate */,
+				34FAC3502323F10E0084A60F /* Extenshion */,
+				34FAC3522323F10E0084A60F /* Views */,
+				34FAC3562323F10E0084A60F /* Protocols */,
+			);
+			path = SPStorkController;
+			sourceTree = "<group>";
+		};
+		34FAC3442323F10D0084A60F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				34FAC3452323F10D0084A60F /* SPStorkHaptic.swift */,
+				34FAC3462323F10D0084A60F /* SPStorkArrowMode.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		34FAC3482323F10D0084A60F /* CodeDraw */ = {
+			isa = PBXGroup;
+			children = (
+				34FAC3492323F10D0084A60F /* SPStorkCodeDraw.swift */,
+			);
+			path = CodeDraw;
+			sourceTree = "<group>";
+		};
+		34FAC34B2323F10E0084A60F /* TransitioningDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				34FAC34C2323F10E0084A60F /* SPStorkTransitioningDelegate.swift */,
+				34FAC34D2323F10E0084A60F /* SPStorkPresentingAnimationController.swift */,
+				34FAC34E2323F10E0084A60F /* SPStorkPresentationController.swift */,
+				34FAC34F2323F10E0084A60F /* SPStorkDismissingAnimationController.swift */,
+			);
+			path = TransitioningDelegate;
+			sourceTree = "<group>";
+		};
+		34FAC3502323F10E0084A60F /* Extenshion */ = {
+			isa = PBXGroup;
+			children = (
+				34FAC3512323F10E0084A60F /* SPStorkViewControllerExtenshion.swift */,
+			);
+			path = Extenshion;
+			sourceTree = "<group>";
+		};
+		34FAC3522323F10E0084A60F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				34FAC3532323F10E0084A60F /* SPStorkCloseButton.swift */,
+				34FAC3542323F10E0084A60F /* SPStorkIndicatorView.swift */,
+				34FAC3552323F10E0084A60F /* SPStorkCloseView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		34FAC3562323F10E0084A60F /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				34FAC3572323F10E0084A60F /* SPStorkControllerConfirmDelegate.swift */,
+				34FAC3582323F10E0084A60F /* SPStorkControllerDelegate.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
@@ -2855,6 +2968,7 @@
 				18F2826C2177351C00DEB13F /* cash_addr.c in Sources */,
 				18F282702177351C00DEB13F /* ed25519-donna-32bit-tables.c in Sources */,
 				18F282802177351C00DEB13F /* ripemd160.c in Sources */,
+				34FAC3642323F10E0084A60F /* SPStorkIndicatorView.swift in Sources */,
 				3483B0DB231430D700444855 /* RNTableViewManager.m in Sources */,
 				18F282972177351C00DEB13F /* core_impl.cpp in Sources */,
 				3483B0DA231430D700444855 /* DiffableObject.m in Sources */,
@@ -2863,14 +2977,21 @@
 				18F282882177351C00DEB13F /* bip32.c in Sources */,
 				344C9DBA23181CA4004E26AD /* SPAlertViewManager.m in Sources */,
 				34FAC270232145000084A60F /* TGAddressBarManager.m in Sources */,
+				34FAC3652323F10E0084A60F /* SPStorkCloseView.swift in Sources */,
 				18F2829D2177351D00DEB13F /* UMAnalyticsModule.m in Sources */,
 				18F2826B2177351C00DEB13F /* blake256.c in Sources */,
+				34FAC35B2323F10E0084A60F /* SPStorkSeque.swift in Sources */,
 				18F2827A2177351C00DEB13F /* nem.c in Sources */,
+				34FAC3612323F10E0084A60F /* SPStorkDismissingAnimationController.swift in Sources */,
 				344C9D172317B7ED004E26AD /* SPAlertView.swift in Sources */,
 				18F282902177351C00DEB13F /* aescrypt.c in Sources */,
 				3452263C22E03F69009913DF /* test_binding.cpp in Sources */,
+				34FAC35F2323F10E0084A60F /* SPStorkPresentingAnimationController.swift in Sources */,
 				18F282822177351C00DEB13F /* groestl.c in Sources */,
+				34FAC35E2323F10E0084A60F /* SPStorkTransitioningDelegate.swift in Sources */,
+				34FAC3622323F10E0084A60F /* SPStorkViewControllerExtenshion.swift in Sources */,
 				18F282A12177351D00DEB13F /* DJIError.mm in Sources */,
+				34FAC49423268F880084A60F /* NavBarManager.swift in Sources */,
 				18F2826E2177351C00DEB13F /* rfc6979.c in Sources */,
 				3483B0E3231430D700444855 /* SnappingCollectionViewLayout.m in Sources */,
 				18F282922177351C00DEB13F /* aestab.c in Sources */,
@@ -2878,20 +2999,26 @@
 				344C9D1A2317B7ED004E26AD /* SPAlertIconDoneView.swift in Sources */,
 				3483B0D9231430D700444855 /* JSONDataSource.m in Sources */,
 				18F2828F2177351C00DEB13F /* aeskey.c in Sources */,
+				34FAC3672323F10E0084A60F /* SPStorkControllerDelegate.swift in Sources */,
 				3483B0E6231430D700444855 /* RNReactModuleCollectionViewCell.m in Sources */,
+				34FAC3632323F10E0084A60F /* SPStorkCloseButton.swift in Sources */,
 				3483B0DD231430D700444855 /* RNTableHeaderViewManager.m in Sources */,
 				18F282912177351C00DEB13F /* aes_modes.c in Sources */,
 				18F2828A2177351C00DEB13F /* blake2s.c in Sources */,
+				34FAC44523268ED10084A60F /* NavBar.swift in Sources */,
 				18F282792177351C00DEB13F /* ed25519-donna-impl-base.c in Sources */,
 				18F282892177351C00DEB13F /* address.c in Sources */,
 				18F2829A2177351D00DEB13F /* RNUMConfigure.m in Sources */,
 				18F282712177351C00DEB13F /* ed25519.c in Sources */,
+				34FAC35C2323F10E0084A60F /* SPStorkCodeDraw.swift in Sources */,
 				18F2828B2177351C00DEB13F /* sha3.c in Sources */,
+				34FAC3662323F10E0084A60F /* SPStorkControllerConfirmDelegate.swift in Sources */,
 				18F282772177351C00DEB13F /* modm-donna-32bit.c in Sources */,
 				18F282952177351C00DEB13F /* poly1305-donna.c in Sources */,
 				18F282652177351C00DEB13F /* base32.c in Sources */,
 				18F282782177351C00DEB13F /* curve25519-donna-32bit.c in Sources */,
 				18F282832177351C00DEB13F /* nist256p1.c in Sources */,
+				34FAC3592323F10E0084A60F /* SPStorkHaptic.swift in Sources */,
 				18F2828D2177351C00DEB13F /* ecdsa.c in Sources */,
 				34FAC26E232142FF0084A60F /* SPFakeBarView.swift in Sources */,
 				18F282A02177351D00DEB13F /* DJIProxyCaches.mm in Sources */,
@@ -2906,10 +3033,12 @@
 				3483B0D7231430D700444855 /* RNTableViewCell.m in Sources */,
 				18F282932177351C00DEB13F /* chacha_merged.c in Sources */,
 				18F2825F2177351C00DEB13F /* SSKeychain.m in Sources */,
+				34FAC35A2323F10E0084A60F /* SPStorkArrowMode.swift in Sources */,
 				344C9D182317B7ED004E26AD /* SPAlertPreset.swift in Sources */,
 				18F2826F2177351C00DEB13F /* curve25519-donna-scalarmult-base.c in Sources */,
 				344C9D1C2317B7ED004E26AD /* SPAlert.swift in Sources */,
 				18F282612177351C00DEB13F /* bip39.c in Sources */,
+				34FAC3602323F10E0084A60F /* SPStorkPresentationController.swift in Sources */,
 				3483B0E7231430D700444855 /* RNReactModuleCell.m in Sources */,
 				18F282602177351C00DEB13F /* crypto.c in Sources */,
 				3483B0D8231430D700444855 /* RNAppGlobals.m in Sources */,
@@ -2919,14 +3048,17 @@
 				18F282852177351C00DEB13F /* memzero.c in Sources */,
 				3483B0DF231430D700444855 /* RNTableFooterView.m in Sources */,
 				18F282722177351C00DEB13F /* curve25519-donna-helpers.c in Sources */,
+				34FAC49623268F9A0084A60F /* NavBarManager.m in Sources */,
 				344C9D1B2317B7ED004E26AD /* SPAlertHaptic.swift in Sources */,
 				18F282942177351C00DEB13F /* rfc7539.c in Sources */,
 				18F2828E2177351C00DEB13F /* pbkdf2.c in Sources */,
 				18F2828C2177351C00DEB13F /* base58.c in Sources */,
+				34FAC35D2323F10E0084A60F /* SPStorkController.swift in Sources */,
 				18F282662177351C00DEB13F /* hasher.c in Sources */,
 				18F2829F2177351D00DEB13F /* BPCoreModule.mm in Sources */,
 				3483B0E1231430D700444855 /* RNTableView.m in Sources */,
 				18F282962177351C00DEB13F /* chacha20poly1305.c in Sources */,
+				34FAC31B2322B4FB0084A60F /* TGAddressBarManager.swift in Sources */,
 				18F282672177351C00DEB13F /* rand.c in Sources */,
 				34FAC26A232142ED0084A60F /* AddressBar.swift in Sources */,
 				1808822A2135447300321418 /* NativeUtils.m in Sources */,

@@ -8,7 +8,7 @@ import * as walletActions from 'actions/wallet'
 import * as walletCore from 'core/wallet'
 import memoryStorage from 'core/storage/memoryStorage'
 import secureStorage from 'core/storage/secureStorage'
-import { importedWalletSelector, activeWalletIdSelector } from 'selectors/wallet'
+import { importedWalletSelector, activeWalletIdSelector, bridgeWalletIdSelector } from 'selectors/wallet'
 import { push, dismissAllModals, showModal, popToRoot } from 'utils/location'
 import { CHAIN_ORDER } from 'constants/chain'
 
@@ -226,6 +226,13 @@ function* deleteIdentity(action: Action<LogoutIdentityParams>) {
       if (importedWallets && importedWallets.length) {
         yield put(actions.setActiveWallet(importedWallets[0].id))
       }
+    }
+
+    const bridgeWalletId = yield select((state: RootState) => bridgeWalletIdSelector(state))
+
+    if (walletIDs.indexOf(bridgeWalletId) !== -1) {
+      yield put(walletActions.setBridgeWallet(null))
+      yield put(walletActions.setBridgeChain(null))
     }
 
     if (action.payload.componentId) {

@@ -13,7 +13,8 @@ import {
   identityWalletSelector,
   importedWalletSelector,
   activeWalletSelector,
-  walletAllIdsSelector
+  walletAllIdsSelector,
+  bridgeWalletSelector
 } from 'selectors/wallet'
 import { activeWalletSelectedAssetsSelector } from 'selectors/asset'
 import * as walletCore from 'core/wallet'
@@ -44,6 +45,20 @@ function* setActiveWallet(action: Action<SetActiveWalletParams>) {
   }
 }
 
+function* updateBridgeWalletInfo(action: Action<UpdateBridgeWalletInfoParams>) {
+  const bridgeWallet = yield select((state: RootState) => bridgeWalletSelector(state))
+  yield put(getBalance.requested(bridgeWallet))
+
+  if (bridgeWallet.address) {
+    if (bridgeWallet.chain === 'EOS') {
+      yield put(scanEOSAsset.requested(bridgeWallet))
+      yield put(getAccount.requested(bridgeWallet))
+    } else if (bridgeWallet.chain === 'ETHEREUM') {
+      yield put(getETHTokenBalanceList.requested(bridgeWallet))
+    }
+  }
+}
+
 function* deleteWallet(action: Action<DeleteWalletParams>) {
   if (!action.payload) return
   if (action.payload.delay) yield delay(action.payload.delay)
@@ -64,6 +79,13 @@ function* deleteWallet(action: Action<DeleteWalletParams>) {
       const walletAllIds = yield select((state: RootState) => walletAllIdsSelector(state))
       const walletAllIdsAfterAction = walletAllIds.filter((walletId: string) => walletId !== id)
       if (walletAllIdsAfterAction.length > 0) yield put(actions.setActiveWallet(walletAllIdsAfterAction[0]))
+    }
+
+    const bridgeWallet = yield select((state: RootState) => bridgeWalletSelector(state))
+
+    if (bridgeWallet.id === id) {
+      yield put(actions.setBridgeWallet(null))
+      yield put(actions.setBridgeChain(null))
     }
 
     const fromCard = action.payload.fromCard
@@ -733,4 +755,5 @@ export default function* walletSaga() {
   yield takeLatest(String(actions.importChainxMnemonics.requested), importChainxMnemonics)
   yield takeLatest(String(actions.importChainxPrivateKey.requested), importChainxPrivateKey)
   yield takeLatest(String(actions.exportPCXPrivateKey.requested), exportPCXPrivateKey)
+  yield takeLatest(String(actions.updateBridgeWalletInfo), updateBridgeWalletInfo)
 }

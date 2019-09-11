@@ -43,7 +43,8 @@ export const subscribe = function() {
     const messageId = action.messageId
     const payload = action.payload
 
-    switch (action.type) {
+    if (resolvers && resolvers[messageId]) {
+      switch (action.type) {
       case 'actionSucceeded':
         resolvers[messageId].resolve(payload.data)
         delete resolvers[messageId]
@@ -54,6 +55,7 @@ export const subscribe = function() {
         break
       default:
         break
+      }
     }
   }
 }

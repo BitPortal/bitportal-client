@@ -26,7 +26,6 @@
 #import "test_binding.h"
 
 @interface AppDelegate ()<JPUSHRegisterDelegate>
-
 @end
 
 @implementation AppDelegate
@@ -106,6 +105,10 @@
   // splash:
   [SplashScreen show];
   return YES;
+}
+
+- (void)application:(UIApplication *)application didChangeStatusBarFrame:(CGRect)oldStatusBarFrame {
+
 }
 
 - (void)installHostObject:(RCTCxxBridge *)bridge {

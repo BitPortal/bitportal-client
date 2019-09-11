@@ -22,11 +22,13 @@ export default handleActions({
   [actions.setActiveChain] (state, action) {
     state.activeChain = action.payload
   },
+  [actions.setBridgeChain] (state, action) {
+    state.bridgeChain = action.payload
+  },
   [actions.setActiveWallet] (state, action) {
     state.activeWalletId = action.payload
     state.managingWalletId = action.payload
     state.transferWalletId = action.payload
-    state.bridgeWalletId = action.payload
   },
   [actions.setManagingWallet] (state, action) {
     state.managingWalletId = action.payload

@@ -34,15 +34,17 @@ import * as dappActions from 'actions/dapp'
 import SearchWebsiteForm from 'components/Form/SearchWebsiteForm'
 import FastImage from 'react-native-fast-image'
 import Modal from 'react-native-modal'
-import { activeWalletSelector } from 'selectors/wallet'
-import { activeWalletBalanceSelector } from 'selectors/balance'
+import { bridgeWalletSelector, bridgeChainSelector, bridgeWalletIdSelector } from 'selectors/wallet'
+import { bridgeWalletBalanceSelector } from 'selectors/balance'
 import globalMessages from 'resources/messages'
 import { walletIcons } from 'resources/images'
 import { dappBookmarkAllIdsSelector } from 'selectors/dapp'
 import RNWebView from 'react-native-webview'
 import localMessages from './messages'
 import styles from './styles'
-import BrowserAddressBar from 'components/Form/BrowserAddressBar'
+import urlParse from 'url-parse'
+import { transfromUrlText } from 'utils'
+import { loadScatterSync, loadMetaMaskSync } from 'utils/inject'
 
 const TGAddressBar = requireNativeComponent('TGAddressBar')
 const messages = { ...globalMessages, ...localMessages }
@@ -75,26 +77,6 @@ const tabHeight = (() => {
   }
 })()
 
-const injectedJavascript = inject => `(function() {
-  window.ReactNativeWebView = {
-    postMessage: function(data) {
-        window.webkit.messageHandlers.ReactNativeWebView.postMessage(String(data));
-    }
-  };
-
-  window.WebViewBridge = {
-    onMessage: function() {
-      return null;
-    },
-    send: function(data) {
-      window.ReactNativeWebView.postMessage(data);
-    },
-  };
-  var event = new Event('WebViewBridge');
-  window.dispatchEvent(event);
-  ${inject}
-})()`
-
 const generateOnMessageFunction = data => `(function() { window.WebViewBridge.onMessage('${data}'); })()`
 
 export const errorMessages = (error, messages) => {
@@ -106,6 +88,9 @@ export const errorMessages = (error, messages) => {
     case 'Key derivation failed - possibly wrong passphrase':
       return messages.webview_invalid_password
     default:
+      if (message.indexOf('transaction underpriced') !== -1) {
+        return '余额不足'
+      }
       return messages.webview_signing_failed
   }
 }
@@ -121,9 +106,11 @@ export const errorMessages = (error, messages) => {
     pendingMessage: state.bridge.pendingMessage,
     resolving: state.bridge.resolving,
     error: state.bridge.error,
-    activeWallet: activeWalletSelector(state),
-    balance: activeWalletBalanceSelector(state),
-    bookmarkedIds: dappBookmarkAllIdsSelector(state)
+    activeWallet: bridgeWalletSelector(state),
+    bridgeWalletId: bridgeWalletIdSelector(state),
+    balance:  bridgeWalletBalanceSelector(state),
+    bookmarkedIds: dappBookmarkAllIdsSelector(state),
+    chain: bridgeChainSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -148,9 +135,11 @@ export default class WebView extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.messageToSend !== prevState.messageToSend) {
+    if (nextProps.messageToSend !== prevState.messageToSend || nextProps.bridgeWalletId !== prevState.bridgeWalletId || nextProps.chain !== prevState.chain) {
       return {
-        messageToSend: nextProps.messageToSend
+        messageToSend: nextProps.messageToSend,
+        bridgeWalletId: nextProps.bridgeWalletId,
+        chain: nextProps.chain
       }
     } else {
       return null
@@ -186,14 +175,12 @@ export default class WebView extends Component {
     showCancelBookmark: false,
     showCancelBookmarkContent: false,
     url: this.props.url,
-    originurl: this.props.url
+    originurl: this.props.url,
+    bridgeWalletId: this.props.bridgeWalletId,
+    chain: this.props.chain
   }
 
   subscription = Navigation.events().bindComponent(this)
-
-  searchBarUpdated({ text, isFocused, isSubmitting }) {
-    console.log({ text, isFocused, isSubmitting })
-  }
 
   async componentDidMount() {
     this.props.actions.clearMessage()
@@ -214,12 +201,16 @@ export default class WebView extends Component {
       LayoutAnimation.easeInEaseOut()
     } else if (prevProps.error !== this.props.error && !!this.props.error) {
       Alert.alert(
-        '密码错误',
+        errorMessages(this.props.error),
         '',
         [
           { text: '确定', onPress: () => this.props.actions.clearPasswordError() }
         ]
       )
+    } else if (prevState.bridgeWalletId !== this.state.bridgeWalletId) {
+      setTimeout(() => {
+        this.refresh()
+      })
     }
   }
 
@@ -248,6 +239,16 @@ export default class WebView extends Component {
   refresh = () => {
     this.webviewbridge.reload()
     this.onLoadStart()
+  }
+
+  loadBridgeByChain = (chain) => {
+    if (chain === 'EOS') {
+      return loadScatterSync()
+    } else if (chain === 'ETHEREUM') {
+      return loadMetaMaskSync()
+    }
+
+    return ''
   }
 
   share = () => {
@@ -1129,21 +1130,88 @@ export default class WebView extends Component {
     this.setState({ originurl: url })
   }
 
+  parseUrlTitle = (data) => {
+    try {
+      if (data) {
+        const url = urlParse(data)
+        const hostname = url.hostname
+        return hostname.indexOf('www.') === 0 ? hostname.slice(4) : hostname
+      }
+    } catch(error) {
+      return null
+    }
+
+    return null
+  }
+
+  isHttps = (data) => {
+    try {
+      if (data) {
+        const url = urlParse(data)
+        const protocol = url.protocol
+        return protocol === 'https:'
+      }
+    } catch(error) {
+      return false
+    }
+
+    return false
+  }
+
+  onLeftButtonClicked = () => {
+    Navigation.dismissModal(this.props.componentId)
+  }
+
+  onRightButtonClicked = () => {
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.SelectBridgeWallet',
+            options: {
+              modalPresentationStyle: 'sheets'
+            }
+          }
+        }]
+      }
+    })
+  }
+
+  onSubmit = (event) => {
+    event.persist()
+    const text = event.nativeEvent.text
+    const url = transfromUrlText(text)
+    this.setState({ originurl: url })
+  }
+
   render() {
     const {
       title,
       locale,
-      inject,
       url,
       bookmarkedIds,
       id,
-      hasAddressBar
+      hasAddressBar,
+      chain,
+      activeWallet
     } = this.props
-    const isBookmarked = id ? (bookmarkedIds.indexOf(id) !== -1) : false
+    // const isBookmarked = id ? (bookmarkedIds.indexOf(id) !== -1) : false
+    const inject = this.loadBridgeByChain(chain)
 
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F7F7' }}>
-        {hasAddressBar && <TGAddressBar style={{ height: 50 }} />}
+        {hasAddressBar && (
+           <TGAddressBar
+             style={{ height: 50, width: '100%' }}
+             value={this.state.url}
+             title={this.parseUrlTitle(this.state.url)}
+             isSecure={this.isHttps(this.state.url)}
+             onLeftButtonClicked={this.onLeftButtonClicked}
+             onRightButtonClicked={this.onRightButtonClicked}
+             onSubmit={this.onSubmit}
+             chain={chain}
+           />
+         )}
       <View style={{ flex: 1, width: '100%' }}>
           <RNWebView
             source={{ uri: this.state.originurl }}
@@ -1158,11 +1226,13 @@ export default class WebView extends Component {
             useWebKit={true}
             nativeConfig={{ props: { backgroundColor: '#F7F7F7', flex: 1 } }}
             onMessage={this.onBridgeMessage}
-            injectedJavaScriptBeforeLoad={injectedJavascript(inject || '')}
+            injectedJavaScriptBeforeLoad={inject}
+            injectedJavaScript={chain === 'EOS' ? inject : ''}
             onLoadProgress={this.onProgress}
             onError={this.onError}
             renderError={this.renderError}
             onNavigationStateChange={this.onNavigationStateChange}
+            allowsBackForwardNavigationGestures
             allowsLinkPreview
             originWhitelist={['https://*', 'http://*']}
           />
@@ -1171,7 +1241,7 @@ export default class WebView extends Component {
           </Animated.View>
         </View>
         <View style={{ width: '100%', height: 49, backgroundColor: '#F7F7F7', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
-          <View style={{ width: '20%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <TouchableOpacity onPress={this.goBack}>
               <FastImage
                 source={require('resources/images/arrow_left_tab.png')}
@@ -1179,7 +1249,7 @@ export default class WebView extends Component {
               />
             </TouchableOpacity>
           </View>
-          <View style={{ width: '20%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <TouchableOpacity onPress={this.goForward}>
               <FastImage
                 source={require('resources/images/arrow_right_tab.png')}
@@ -1187,7 +1257,7 @@ export default class WebView extends Component {
               />
             </TouchableOpacity>
           </View>
-          <View style={{ width: '20%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <TouchableOpacity onPress={this.shareDapp}>
               <FastImage
                 source={require('resources/images/share.png')}
@@ -1195,13 +1265,14 @@ export default class WebView extends Component {
               />
             </TouchableOpacity>
           </View>
-          <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <TouchableOpacity onPress={this.bookmark}>
+          {/* <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+              <TouchableOpacity onPress={this.bookmark}>
               {isBookmarked && <FastImage source={require('resources/images/bookmarked_tab.png')} style={{ width: 30, height: 30 }} />}
               {!isBookmarked && <FastImage source={require('resources/images/bookmark_tab.png')} style={{ width: 30, height: 30 }} />}
-            </TouchableOpacity>
-          </View>
-            <View style={{ width: '20%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+              </TouchableOpacity>
+              </View> */}
+
+            <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
               <TouchableOpacity onPress={this.refresh}>
                 <FastImage
                   source={require('resources/images/refresh.png')}
@@ -1244,41 +1315,7 @@ export default class WebView extends Component {
               {!!this.props.pendingMessage && this.renderTransactionDetail(this.props.pendingMessage)}
             </View>
           </Modal>
-          <Modal
-            isVisible={this.state.showBookmark}
-            backdropOpacity={0}
-            useNativeDriver
-            animationIn="fadeIn"
-            animationInTiming={200}
-            backdropTransitionInTiming={200}
-            animationOut="fadeOut"
-            animationOutTiming={200}
-            backdropTransitionOutTiming={200}
-          >
-            {this.state.showBookmarkContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
-                <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已收藏</Text>
-              </View>
-            </View>}
-          </Modal>
-          <Modal
-            isVisible={this.state.showCancelBookmark}
-            backdropOpacity={0}
-            useNativeDriver
-            animationIn="fadeIn"
-            animationInTiming={200}
-            backdropTransitionInTiming={200}
-            animationOut="fadeOut"
-            animationOutTiming={200}
-            backdropTransitionOutTiming={200}
-          >
-            {this.state.showCancelBookmarkContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
-                <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已取消收藏</Text>
-              </View>
-            </View>}
-          </Modal>
-        </SafeAreaView>
+      </SafeAreaView>
     )
   }
 }

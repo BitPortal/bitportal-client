@@ -15,7 +15,7 @@
   "scripts": {
     "web": "cross-env NODE_ENV=development APP_ENV=development TARGET=web webpack-dev-server -d --history-api-fallback --inline --progress --port 3009 --host dev.bitportal.io",
     "mobile": "watchman watch-del-all && rm -fr $TMPDIR/react-* && cross-env NODE_ENV=production node node_modules/react-native/local-cli/cli.js start -- --reset-cache",
-    "ios": "react-native run-ios --scheme bitportal-development --port 8080 --simulator='iPhone 6s' ",
+    "ios": "react-native run-ios --scheme bitportal-development --port 8080 --simulator='iPhone X' ",
     "ios:staging": "react-native run-ios --scheme bitportal-staging --port 8080",
     "ios:production": "react-native run-ios --scheme bitportal-production --port 8080",
     "android": "ENVFILE=.env.development react-native run-android --port 8081",

@@ -47,3 +47,5 @@ export const setWalletName = createAsyncAction('wallet/SET_NAME')
 export const importChainxMnemonics = createAsyncAction('wallet/IMPORT_CHAINX_MNEMONICS')
 export const importChainxPrivateKey = createAsyncAction('wallet/IMPORT_CHAINX_PRIVATEKEY')
 export const exportPCXPrivateKey = createAsyncAction('wallet/EXPORT_PCX_PRIVATEKEY')
+
+export const updateBridgeWalletInfo = createAction<UpdateBridgeWalletInfoParams>('wallet/UPDATE_BRIDGE_WALLET_INFO')

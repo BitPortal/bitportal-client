@@ -377,6 +377,8 @@ export const transfromUrlText = (text) => {
   if (valid) {
     if (text.indexOf('//') === 0) {
       return 'http:' + text
+    } else if (text.indexOf('www.') === 0) {
+      return 'http://' + text
     } else {
       return text
     }

@@ -7,6 +7,23 @@ const setupDappAutoReload = require('./auto-reload.js')
 const MetamaskInpageProvider = require('./metamask-inpage-provider')
 const createStandardProvider = require('./createStandardProvider').default
 
+window.ReactNativeWebView = {
+  postMessage: function(data) {
+    window.webkit.messageHandlers.ReactNativeWebView.postMessage(String(data))
+  }
+}
+
+window.WebViewBridge = {
+  onMessage: function() {
+    return null
+  },
+  send: function(data) {
+    window.ReactNativeWebView.postMessage(data)
+  }
+}
+var event = new Event('WebViewBridge')
+window.dispatchEvent(event)
+
 let warned = false
 
 restoreContextAfterImports()
