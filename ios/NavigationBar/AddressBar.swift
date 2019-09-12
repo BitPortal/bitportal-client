@@ -375,6 +375,9 @@ class AddressBar: UIView, UITextFieldDelegate {
     textFieldContainer.addSubview(rightViewContainer)
     textFieldContainer.addSubview(leftViewContainer)
     textFieldContainer.addSubview(clearButtonContainer)
+    textFieldContainer.bringSubviewToFront(clearButtonContainer)
+    textFieldContainer.bringSubviewToFront(leftViewContainer)
+    textFieldContainer.bringSubviewToFront(rightViewContainer)
     
     configureNavbar()
     configureAddressBar()

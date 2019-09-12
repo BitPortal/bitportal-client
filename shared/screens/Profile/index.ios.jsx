@@ -207,7 +207,7 @@ export default class Profile extends Component {
             onPress={this.toContacts}
             label={intl.formatMessage({ id: 'identity_tableviewcell_contacts' })}
             isSetting
-            image={require('resources/images/addressBookSetting.png')}
+            image="addressBookSetting.png"
           />
           <Item
             key="language"
@@ -217,7 +217,7 @@ export default class Profile extends Component {
             onPress={this.toLanguageSetting}
             isSetting
             label={intl.formatMessage({ id: 'identity_tableviewcell_language_setting' })}
-            image={require('resources/images/languageSetting.png')}
+            image="languageSetting.png"
           />
           <Item
             key="currency"
@@ -227,7 +227,7 @@ export default class Profile extends Component {
             onPress={this.toCurrencySetting}
             isSetting
             label={intl.formatMessage({ id: 'identity_tableviewcell_currency_setting' })}
-            image={require('resources/images/CurrencySetting.png')}
+            image="currencySetting.png"
           />
         </Section>
         <Section arrow>
@@ -238,7 +238,7 @@ export default class Profile extends Component {
             onPress={this.toHelpCenter}
             isSetting
             label={intl.formatMessage({ id: 'identity_tableviewcell_help_center' })}
-            image={require('resources/images/helpCenterSetting.png')}
+            image="helpCenterSetting.png"
           />
           <Item
             key="aboutUs"
@@ -247,7 +247,7 @@ export default class Profile extends Component {
             onPress={this.toAboutUs}
             isSetting
             label={intl.formatMessage({ id: 'identity_tableviewcell_about_us' })}
-            image={require('resources/images/abountUsSetting.png')}
+            image="abountUsSetting.png"
           />
         </Section>
       </TableView>
