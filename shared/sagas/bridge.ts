@@ -595,7 +595,7 @@ function* resolveETHSendTransaction(password: string, params: any, messageId: st
       ethChain.sendTransaction,
       password,
       keystore,
-      { ...data, gasLimit: info.gas }
+      { ...data, gasLimit: info.gas, gasPrice: info.gasPriceHex }
     )
 
     yield put(actions.clearMessage())
@@ -626,7 +626,7 @@ function* resolveETHSignTransaction(password: string, params: any, messageId: st
       ethChain.sendTransaction,
       password,
       keystore,
-      { ...data, gasLimit: info.gas }
+      { ...data, gasLimit: info.gas, gasPrice: info.gasPriceHex }
     )
 
     yield put(actions.clearMessage())
@@ -1461,11 +1461,14 @@ function* receiveMessage(action: Action<string>) {
             const params = payload.params[0]
 
             let gasPrice
+            let gasPriceHex
             if (!params.gasPrice) {
               const price = yield call(ethChain.getGasPrice)
               gasPrice = ethChain.bigValuePow(+price, -18)
+              gasPriceHex = price
             } else {
               gasPrice = ethChain.bigValuePow(+params.gasPrice, -18)
+              gasPriceHex = params.gasPrice
             }
 
             let gas = (params.gas && +params.gas)
@@ -1483,7 +1486,8 @@ function* receiveMessage(action: Action<string>) {
               gasPrice,
               gas,
               gasFee: gas * gasPrice,
-              data
+              data,
+              gasPriceHex
             }
 
             yield pendETHRPCRequest(messageActionType, payload, messageId, info)

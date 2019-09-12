@@ -91,7 +91,7 @@ export const getEstimategas = async (params: any) => {
 
 export const getGasPrice = async () => {
   const networkGasPrice = await web3.eth.getGasPrice()
-  return '0x' + (+networkGasPrice).toString('16')
+  return web3.utils.toHex(networkGasPrice)
 }
 
 export const getWeb3Balance = async (address: string) => {

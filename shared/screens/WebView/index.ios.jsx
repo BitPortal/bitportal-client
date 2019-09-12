@@ -89,7 +89,7 @@ export const errorMessages = (error, messages) => {
       return messages.webview_invalid_password
     default:
       if (message.indexOf('transaction underpriced') !== -1) {
-        return '余额不足'
+        return 'Gas定价过低'
       }
       return messages.webview_signing_failed
   }
