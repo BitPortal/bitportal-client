@@ -580,6 +580,25 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
         cell = [self setupCollectionViewInsideTableViewCell:tableView data:item indexPath:indexPath collectionViewInsideTableViewCell:item[@"collectionViewInsideTableViewCell"] collectionViewInsideTableViewCellKey:item[@"collectionViewInsideTableViewCellKey"]];
     } else if (item[@"reactModuleForCell"] != nil && ![item[@"reactModuleForCell"] isEqualToString:@""]) {
         cell = [self setupReactModuleCell:tableView data:item indexPath:indexPath reactModuleForCell:item[@"reactModuleForCell"]];
+      if (item[@"image"]) {
+        UIImage *image;
+        if ([item[@"image"] isKindOfClass:[NSString class]])
+        {
+          image = [UIImage imageNamed:item[@"image"]];
+        } else {
+          image = [RCTConvert UIImage:item[@"image"]];
+        }
+        if ([item[@"imageWidth"] intValue]) {
+          CGSize itemSize = CGSizeMake([item[@"imageWidth"] intValue], image.size.height);
+          CGPoint itemPoint = CGPointMake((itemSize.width - image.size.width) / 2, (itemSize.height - image.size.height) / 2);
+          UIGraphicsBeginImageContextWithOptions(itemSize, NO, UIScreen.mainScreen.scale);
+          [image drawAtPoint:itemPoint];
+          cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
+          UIGraphicsEndImageContext();
+        } else {
+          cell.imageView.image = image;
+        }
+      }
     } else if (self.reactModuleForCell != nil && ![self.reactModuleForCell isEqualToString:@""]) {
         cell = [self setupReactModuleCell:tableView data:item indexPath:indexPath reactModuleForCell:_reactModuleForCell];
     } else {

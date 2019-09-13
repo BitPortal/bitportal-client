@@ -26,6 +26,10 @@ export const assetsWithSearchSelector = createSelector(
       return allIds.filter(item => item.indexOf(chain) === 0).map(id => byId[id])
         .filter(item => (item.symbol && item.symbol.toLowerCase().indexOf(searchText.toLowerCase()) !== -1) || (item.name && item.name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1) || (item.contract && item.contract.toLowerCase().indexOf(searchText.toLowerCase()) !== -1))
     } else {
+      if (chain === 'ETHEREUM') {
+        return allIds.filter(item => item.indexOf(chain) === 0).map(id => byId[id]).filter(item => item.display_priority > 0)
+      }
+
       return allIds.filter(item => item.indexOf(chain) === 0).map(id => byId[id])
     }
   }

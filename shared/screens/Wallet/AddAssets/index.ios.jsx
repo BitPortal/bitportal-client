@@ -115,9 +115,9 @@ export default class AddAssets extends Component {
 
   searchBarUpdated({ text, isFocused }) {
     if (isFocused) {
-      this.props.actions.handleAssetSearchTextChange(text)
+      this.props.actions.handleAssetSearchTextChange({ text, chain: this.props.chain })
     } else {
-      this.props.actions.handleAssetSearchTextChange('')
+      this.props.actions.handleAssetSearchTextChange({ text: '', chain: this.props.chain })
     }
 
     if (this.tableViewRef) {
@@ -150,7 +150,7 @@ export default class AddAssets extends Component {
     const { chain, assets } = this.props
 
     if (chain === 'ETHEREUM') {
-      this.props.actions.getETHAsset.requested()
+      this.props.actions.getETHAsset.requested({ display_priority_gt: 0 })
     } else if (chain === 'EOS') {
       this.props.actions.getEOSAsset.requested()
     } else if (chain === 'CHAINX') {

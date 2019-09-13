@@ -195,6 +195,7 @@ export default class Profile extends Component {
             name={hasIdentity ? identity.name : intl.formatMessage({ id: 'identity_tableviewcell_identity' })}
             identifier={hasIdentity ? identity.identifier : intl.formatMessage({ id: 'identity_tableviewcell_add_identity' })}
             onPress={hasIdentity ? this.toMyIdentity : this.toAddIdentity}
+            image="Userpic.png"
             arrow
           />
         </Section>

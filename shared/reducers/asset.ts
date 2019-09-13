@@ -5,6 +5,7 @@ export const initialState = {
   byId: {},
   allIds: [],
   selected: {},
+  display: {},
   activeAssetId: null,
   transferAssetId: null,
   searchText: ''

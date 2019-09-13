@@ -205,7 +205,7 @@ export default class AddAssets extends Component {
     const { chain, assets } = this.props
 
     if (chain === 'ETHEREUM') {
-      this.props.actions.getETHAsset.requested()
+      this.props.actions.getETHAsset.requested({ display_priority_gt: 0 })
     } else if (chain === 'EOS') {
       this.props.actions.getEOSAsset.requested()
     } else if (chain === 'CHAINX') {
@@ -304,16 +304,12 @@ export default class AddAssets extends Component {
         height: 56
       }
     })
-    this.props.actions.handleAssetSearchTextChange('')
+    this.props.actions.handleAssetSearchTextChange({ text: '', chain: this.props.chain })
     this.props.actions.hideSearchBar()
   }
 
-  searchBarUpdated = ({ text }) => {
-    this.props.actions.handleAssetSearchTextChange(text)
-  }
-
   searchBarCleared = () => {
-    this.props.actions.handleAssetSearchTextChange('')
+    this.props.actions.handleAssetSearchTextChange({ text: '', chain: this.props.chain })
   }
 
   render() {

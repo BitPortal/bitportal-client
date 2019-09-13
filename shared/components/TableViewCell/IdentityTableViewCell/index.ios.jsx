@@ -12,12 +12,8 @@ const IdentityTableViewCell = (props) => {
   }
 
   return (
-    <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16 }}>
+    <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16 + 56 + 16, paddingRight: 16 }}>
       <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Image
-          source={require('resources/images/Userpic.png')}
-          style={{ width: 56, height: 56, marginRight: 16 }}
-        />
         <View style={{ flex: 1, borderWidth: 0, borderColor: 'red', justifyContent: 'center' }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text style={{ fontSize: 22, color: 'black', marginRight: 5, paddingBottom: 4 }}>{props.data.name}</Text>
