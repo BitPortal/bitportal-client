@@ -72,11 +72,12 @@ function* getETHTokenBalance(action: Action) {
     const source = action.payload.source
     const walletId = action.payload.id
     const assetSymbol = action.payload.assetSymbol
+    const decimals = action.payload.decimals
 
     let balance = '0'
     let id = `${chain}/${address}`
 
-    balance = yield call(ethChain.getBalance, address, contract)
+    balance = yield call(ethChain.getBalance, address, contract, decimals)
     yield put(actions.updateBalance({ id, chain, balance, precision: 8, contract, symbol: assetSymbol }))
     yield put(actions.getETHTokenBalance.succeeded({ walletId, balance }))
   } catch (e) {
@@ -133,8 +134,8 @@ function* getETHTokenBalanceList(action: Action) {
 
     const selectedAsset = yield select(state => activeWalletSelectedAssetsSelector(state))
     assert(selectedAsset, 'No selected assets')
-    const contractAddressList = selectedAsset.map(item => item.contract)
-    const result = yield all(contractAddressList.map(contractAddress => call(ethChain.getBalance, address, contractAddress)))
+    const contractAddressList = selectedAsset.map(item => ({ contract: item.contract, decimals: item.decimals }))
+    const result = yield all(contractAddressList.map(item => call(ethChain.getBalance, address, item.contract, item.decimals)))
     const balanceList = result.map((balance, index) => ({ id, chain, precision: 8, symbol: selectedAsset[index].symbol, balance, contract: selectedAsset[index].contract }))
     yield put(actions.updateBalanceList({ id, chain, balanceList }))
     yield put(actions.getETHTokenBalanceList.succeeded())

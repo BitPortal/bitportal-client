@@ -159,6 +159,16 @@ const exchangerateFetchBase = (
   baseUrl: 'https://api.exchangerate-api.com/v4/latest'
 })
 
+const ethplorerFetchBase = (
+  method: FetchMethod = 'GET',
+  endPoint: string = '/hello',
+  params: object = {},
+  options: object = {}
+) => fetchBase(method, endPoint, { ...params, apiKey: 'freekey' }, {
+  ...options,
+  baseUrl: 'http://api.ethplorer.io'
+})
+
 export const getTicker = (params?: TickerParams) => marketFetchBase('GET', '/tickers', params)
 export const getChart = (params?: ChartParams) => marketFetchBase('GET', '/chart', params)
 export const getCurrencyRate = () => fetchBase('GET', '', {}, { baseUrl: CURRENCY_RATE_URL })
@@ -173,6 +183,7 @@ export const getETHAsset = (params: any) => cmsFetchBase('GET', '/ethtoken', par
 export const createEOSAccount = (params: any) => fetchBase('POST', '/registry/wallets/campaign/eoscreation', params)
 export const importEOSAccount = (params: any) => fetchBase('POST', '/registry/wallets/import', params)
 export const scanEOSAsset = (params: any) => eosxLightFetchBase('GET', `/${params.address}`)
+export const scanETHAsset = (params: any) => ethplorerFetchBase('GET', `/getAddressInfo/${params.address}`)
 export const subscribe = (params: any) => traceFetchBase('POST', '/notification/subscribe', params)
 export const unsubscribe = (params: any) => traceFetchBase('POST', '/notification/unsubscribe', params)
 export const traceTransaction = (params: any) => traceFetchBase('POST', '/transaction', params)

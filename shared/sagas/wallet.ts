@@ -7,7 +7,7 @@ import * as actions from 'actions/wallet'
 import * as transactionActions from 'actions/transaction'
 import { getBalance, getETHTokenBalanceList } from 'actions/balance'
 import { getAccount } from 'actions/account'
-import { scanEOSAsset } from 'actions/asset'
+import { scanEOSAsset, scanETHAsset } from 'actions/asset'
 import {
   walletAddressesSelector,
   identityWalletSelector,
@@ -40,6 +40,7 @@ function* setActiveWallet(action: Action<SetActiveWalletParams>) {
       yield put(scanEOSAsset.requested(activeWallet))
       yield put(getAccount.requested(activeWallet))
     } else if (activeWallet.chain === 'ETHEREUM') {
+      yield put(scanETHAsset.requested(activeWallet))
       yield put(getETHTokenBalanceList.requested(activeWallet))
     }
   }
@@ -54,6 +55,7 @@ function* updateBridgeWalletInfo(action: Action<UpdateBridgeWalletInfoParams>) {
       yield put(scanEOSAsset.requested(bridgeWallet))
       yield put(getAccount.requested(bridgeWallet))
     } else if (bridgeWallet.chain === 'ETHEREUM') {
+      yield put(scanETHAsset.requested(bridgeWallet))
       yield put(getETHTokenBalanceList.requested(bridgeWallet))
     }
   }

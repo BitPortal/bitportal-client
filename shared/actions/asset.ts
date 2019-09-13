@@ -18,3 +18,4 @@ export const getEOSAsset = createAsyncAction<GetEOSAsset>('asset/GET_EOS')
 export const getChainXAsset = createAsyncAction<GetEOSAsset>('asset/GET_ChainX')
 
 export const scanEOSAsset = createAsyncAction<ScanEOSAsset>('asset/SCAN_EOS')
+export const scanETHAsset = createAsyncAction<ScanETHAsset>('asset/SCAN_ETH')

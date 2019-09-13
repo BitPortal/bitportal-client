@@ -11,7 +11,13 @@ import sigUtil from 'eth-sig-util'
 
 addABI(abi)
 
-export const getBalance = async (address: string, contractAddress: string = null) => {
+export const getBalance = async (address: string, contractAddress: string = null, tokenDecimals: number) => {
+  let decimals = 18
+
+  if (typeof tokenDecimals === 'number') {
+    decimals = tokenDecimals
+  }
+
   if (contractAddress) {
     const result = await etherscanApi('GET', '', {
       module: 'account',
@@ -21,10 +27,10 @@ export const getBalance = async (address: string, contractAddress: string = null
       tag: 'latest'
     })
 
-    return (+result.result) * Math.pow(10, -18)
+    return (+result.result) * Math.pow(10, -decimals)
   } else {
     const balance = await web3.eth.getBalance(address)
-    return (+balance) * Math.pow(10, -18)
+    return (+balance) * Math.pow(10, -decimals)
   }
 }
 

@@ -104,6 +104,43 @@ function* scanEOSAsset(action: Action) {
   }
 }
 
+function* scanETHAsset(action: Action) {
+  try {
+    const activeWallet = action.payload
+    const result = yield call(api.scanETHAsset, activeWallet)
+
+    assert(result && result.tokens && typeof result.tokens === 'object', 'no tokens')
+
+    const assets = result.tokens.map(item => ({
+      address: item.tokenInfo.address,
+      contract: item.tokenInfo.address,
+      decimals: +item.tokenInfo.decimals,
+      symbol: item.tokenInfo.symbol,
+      name: item.tokenInfo.name,
+      chain: 'ETHEREUM',
+      icon_url: ''
+    }))
+    yield put(actions.updateAsset({ assets, chain: 'ETHEREUM' }))
+
+    const selectedAssets = assets.map(item => ({ walletId: `${activeWallet.id}`, assetId: `ETHEREUM/${item.contract}/${item.symbol}` }))
+    yield put(actions.selectAssetList(selectedAssets))
+
+    const balances = result.tokens.map(item => ({
+      contract: item.tokenInfo.address,
+      decimals: +item.tokenInfo.decimals,
+      precision: 8,
+      symbol: item.tokenInfo.symbol,
+      chain: 'ETHEREUM',
+      balance: (+item.balance) * Math.pow(10, -item.tokenInfo.decimals)
+    }))
+    yield put(updateBalanceList({ id: `ETHEREUM/${activeWallet.address}`, chain: activeWallet.chain, balanceList: balances }))
+
+    yield put(actions.scanETHAsset.succeeded())
+  } catch (e) {
+    yield put(actions.scanETHAsset.failed(getErrorMessage(e)))
+  }
+}
+
 function* handleAssetSearchTextChange(action: Action) {
   yield delay(200)
   const text = action.payload.text || ''
@@ -121,5 +158,6 @@ export default function* assetSaga() {
   yield takeLatest(String(actions.getEOSAsset.requested), getEOSAsset)
   yield takeLatest(String(actions.getChainXAsset.requested), getChainXAsset)
   yield takeLatest(String(actions.scanEOSAsset.requested), scanEOSAsset)
+  yield takeLatest(String(actions.scanETHAsset.requested), scanETHAsset)
   yield takeLatest(String(actions.handleAssetSearchTextChange), handleAssetSearchTextChange)
 }

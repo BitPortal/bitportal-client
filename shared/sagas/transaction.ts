@@ -503,11 +503,13 @@ function* getTransactions(action: Action) {
       }
 
       const transactions = yield call(ethChain.getTransactions, address, startblock, endblock, page, offset, contract)
+
       const canLoadMore = transactions.length === 20
       const items = transactions.map((item: any) => {
+        const decimals = +(item && item.tokenDecimal)
         const isSender = item.from === address.toLowerCase()
         const transactionType = isSender ? 'send' : 'receive'
-        const change = (isSender ? -+item.value : +item.value) * Math.pow(10, -18)
+        const change = (isSender ? -+item.value : +item.value) * Math.pow(10, -decimals)
         const targetAddress = isSender ? item.to : item.from
 
         return {
