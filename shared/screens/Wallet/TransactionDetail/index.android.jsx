@@ -173,8 +173,8 @@ export default class TransactionDetail extends Component {
       return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
           <View style={{ backgroundColor: '#673AB7', padding: 16, paddingTop: 0, elevation: 4 }}>
-            {+transaction.change > 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}</Text>}
-            {+transaction.change <= 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}</Text>}
+            {+transaction.change > 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
+            {+transaction.change <= 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
             <Text style={{ fontSize: 16, color: 'rgba(255,255,255,0.7)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
           </View>
           <ScrollView
@@ -256,8 +256,8 @@ export default class TransactionDetail extends Component {
       return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
           <View style={{ backgroundColor: '#673AB7', padding: 16, paddingTop: 0, elevation: 4 }}>
-            {+transaction.change > 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}</Text>}
-            {+transaction.change <= 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}</Text>}
+            {+transaction.change > 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
+            {+transaction.change <= 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
             <Text style={{ fontSize: 16, color: 'rgba(255,255,255,0.7)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
           </View>
         <ScrollView
@@ -350,8 +350,8 @@ export default class TransactionDetail extends Component {
       return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
           <View style={{ backgroundColor: '#673AB7', padding: 16, paddingTop: 0, elevation: 4 }}>
-            {+transaction.change > 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}</Text>}
-            {+transaction.change <= 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}</Text>}
+            {+transaction.change > 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
+            {+transaction.change <= 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
             <Text style={{ fontSize: 16, color: 'rgba(255,255,255,0.7)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
           </View>
         <ScrollView
@@ -439,8 +439,8 @@ export default class TransactionDetail extends Component {
       return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
           <View style={{ backgroundColor: '#673AB7', padding: 16, paddingTop: 0, elevation: 4 }}>
-            {+transaction.change > 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}</Text>}
-            {+transaction.change <= 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}</Text>}
+            {+transaction.change > 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
+            {+transaction.change <= 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
             <Text style={{ fontSize: 16, color: 'rgba(255,255,255,0.7)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
           </View>
         <ScrollView

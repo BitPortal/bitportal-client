@@ -155,7 +155,7 @@ export default class Wallet extends Component {
     if (balance) {
       assetItems.push({
         key: activeWallet.address,
-        balance: intl.formatNumber(balance.balance, { minimumFractionDigits: balance.precision, maximumFractionDigits: balance.precision }),
+        balance: intl.formatNumber(balance.balance, { minimumFractionDigits: 0, maximumFractionDigits: balance.precision }),
         amount: (ticker && ticker[`${activeWallet.chain}/${activeWallet.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${activeWallet.symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00',
         currency: currency.sign,
         symbol: balance.symbol,
@@ -171,7 +171,7 @@ export default class Wallet extends Component {
             key: selectedAsset[i].contract,
             isToken: true,
             contract: selectedAsset[i].contract,
-            balance: intl.formatNumber(assetBalance ? assetBalance.balance : 0, { minimumFractionDigits: assetBalance ? assetBalance.precision : balance.precision, maximumFractionDigits: assetBalance ? assetBalance.precision : balance.precision }),
+            balance: intl.formatNumber(assetBalance ? assetBalance.balance : 0, { minimumFractionDigits: 0, maximumFractionDigits: assetBalance ? assetBalance.precision : balance.precision }),
             amount: (ticker && ticker[`${activeWallet.chain}/${selectedAsset[i].symbol}`]) ? intl.formatNumber(0 * +ticker[`${activeWallet.chain}/${selectedAsset[i].symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00',
             currency: currency.sign,
             symbol: selectedAsset[i].symbol,
@@ -190,6 +190,7 @@ export default class Wallet extends Component {
     this.props.actions.scanIdentity.requested()
     this.props.actions.getTicker.requested()
     this.props.actions.setSelectedContact(null)
+    // this.props.actions.handleAssetSearchTextChange({ text: '', chain: this.props.chain })
   }
 
   componentDidUpdate(prevProps, prevState) {

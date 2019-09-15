@@ -506,7 +506,11 @@ function* getTransactions(action: Action) {
 
       const canLoadMore = transactions.length === 20
       const items = transactions.map((item: any) => {
-        const decimals = +(item && item.tokenDecimal)
+        let decimals = 18
+        if (item && item.tokenDecimal) {
+          decimals = +(item && item.tokenDecimal)
+        }
+
         const isSender = item.from === address.toLowerCase()
         const transactionType = isSender ? 'send' : 'receive'
         const change = (isSender ? -+item.value : +item.value) * Math.pow(10, -decimals)

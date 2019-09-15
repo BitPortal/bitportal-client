@@ -200,8 +200,8 @@ export default class TransactionDetail extends Component {
           contentContainerStyle={{ backgroundColor: 'white' }}
           >
             <View style={{ flex: 1, backgroundColor: '#F7F7F7', padding: 16, paddingTop: 0 }}>
-              {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}</Text>}
-              {+transaction.change <= 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}</Text>}
+              {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
+              {+transaction.change <= 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
               <Text style={{ fontSize: 17, color: 'rgba(0,0,0,0.48)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
             </View>
             <View style={{ flex: 1, backgroundColor: 'white', borderTopWidth: 0.5, borderColor: 'rgba(0,0,0,0.18)' }}>
@@ -282,8 +282,8 @@ export default class TransactionDetail extends Component {
           contentContainerStyle={{ backgroundColor: 'white' }}
           >
             <View style={{ flex: 1, backgroundColor: '#F7F7F7', padding: 16, paddingTop: 0 }}>
-              {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}</Text>}
-              {+transaction.change <= 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}</Text>}
+              {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
+              {+transaction.change <= 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
               <Text style={{ fontSize: 17, color: 'rgba(0,0,0,0.48)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
             </View>
             <View style={{ flex: 1, backgroundColor: 'white', borderTopWidth: 0.5, borderColor: 'rgba(0,0,0,0.18)' }}>
@@ -371,8 +371,8 @@ export default class TransactionDetail extends Component {
           contentContainerStyle={{ backgroundColor: 'white' }}
           >
             <View style={{ flex: 1, backgroundColor: '#F7F7F7', padding: 16, paddingTop: 0 }}>
-              {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}</Text>}
-              {+transaction.change <= 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}</Text>}
+              {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
+              {+transaction.change <= 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
               <Text style={{ fontSize: 17, color: 'rgba(0,0,0,0.48)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
             </View>
             <View style={{ flex: 1, backgroundColor: 'white', borderTopWidth: 0.5, borderColor: 'rgba(0,0,0,0.18)' }}>
@@ -455,8 +455,8 @@ export default class TransactionDetail extends Component {
           contentContainerStyle={{ backgroundColor: 'white' }}
           >
             <View style={{ flex: 1, backgroundColor: '#F7F7F7', padding: 16, paddingTop: 0 }}>
-              {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}</Text>}
-              {+transaction.change <= 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision })}</Text>}
+              {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
+              {+transaction.change <= 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
               <Text style={{ fontSize: 17, color: 'rgba(0,0,0,0.48)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
             </View>
             <View style={{ flex: 1, backgroundColor: 'white', borderTopWidth: 0.5, borderColor: 'rgba(0,0,0,0.18)' }}>

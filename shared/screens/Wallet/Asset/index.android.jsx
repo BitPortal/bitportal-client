@@ -111,7 +111,7 @@ export default class Asset extends Component {
       transactionCells = transactions.map((transaction: any, index: number) => ({
         key: transaction.id,
         id: transaction.id,
-        change: intl.formatNumber(+transaction.change, { minimumFractionDigits: precision, maximumFractionDigits: precision }),
+        change: intl.formatNumber(+transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision }),
         date: transaction.timestamp && intl.formatDate(+transaction.timestamp, { year: 'numeric', month: 'numeric', day: 'numeric' }),
         time: transaction.timestamp && intl.formatTime(+transaction.timestamp, { hour12: false, hour: 'numeric', minute: 'numeric', second: 'numeric' }),
         transactionType: transaction.transactionType,
@@ -389,7 +389,7 @@ export default class Asset extends Component {
               />
             </View>}
         <View style={{ justifyContent: 'center', alignItems: 'flex-start', marginLeft: 16 }}>
-          <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white' }}>{balance && intl.formatNumber(balance.balance, { minimumFractionDigits: balance.precision, maximumFractionDigits: balance.precision })}</Text>
+          <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white' }}>{balance && intl.formatNumber(balance.balance, { minimumFractionDigits: 0, maximumFractionDigits: balance.precision })}</Text>
           {!assetBalance && <Text style={{ fontSize: 18, color: 'rgba(255,255,255,0.7)' }}>≈ {currency.sign}{(ticker && ticker[`${activeWallet.chain}/${activeWallet.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${activeWallet.symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</Text>}
           {!!assetBalance && <Text style={{ fontSize: 18, color: 'rgba(255,255,255,0.7)' }}>≈ {currency.sign}{(ticker && ticker[`${activeWallet.chain}/${assetBalance.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${assetBalance.symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</Text>}
           {/* <Text style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)' }}>{this.formatAddress(activeWallet.address)}</Text> */}

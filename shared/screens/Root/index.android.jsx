@@ -191,6 +191,7 @@ export default class Root extends Component {
             this.props.actions.scanEOSAsset.requested(activeWallet)
             this.props.actions.getAccount.requested(activeWallet)
           } else if (activeWallet.chain === 'ETHEREUM') {
+            this.props.actions.scanETHAsset.requested(activeWallet)
             this.props.actions.getETHTokenBalanceList.requested(activeWallet)
           } else if (activeWallet.chain === 'CHAINX') {
             this.props.actions.getChainXTokenBalanceList.requested(activeWallet)

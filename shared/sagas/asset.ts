@@ -10,7 +10,7 @@ import * as api from 'utils/api'
 function* getETHAsset(action: Action) {
   try {
     const result = yield call(api.getETHAsset, action.payload)
-    // console.log('getETHAsset', result)
+    console.log('getETHAsset', result)
     yield put(actions.updateAsset({ assets: result, chain: 'ETHEREUM' }))
     yield put(actions.getETHAsset.succeeded())
   } catch (e) {
@@ -149,7 +149,7 @@ function* handleAssetSearchTextChange(action: Action) {
   const chain = action.payload.chain
 
   if (chain === 'ETHEREUM' && !!text) {
-    yield put(actions.getETHAsset.requested({ name_contains: text }))
+    yield put(actions.getETHAsset.requested({ name_contains: text, symbol_contains: text }))
   }
 }
 

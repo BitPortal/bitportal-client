@@ -13,7 +13,13 @@ export const assetsSelector = createSelector(
   activeChainSelector,
   assetByIdSelector,
   assetAllIdsSelector,
-  (chain: any, byId: any, allIds: any, searchText: string) => allIds.filter(item => item.indexOf(chain) === 0).map(id => byId[id])
+  (chain: any, byId: any, allIds: any, searchText: string) => {
+    if (chain === 'ETHEREUM') {
+      return allIds.filter(item => item.indexOf(chain) === 0).map(id => byId[id]).filter(item => item.display_priority > 0)
+    }
+
+    return allIds.filter(item => item.indexOf(chain) === 0).map(id => byId[id])
+  }
 )
 
 export const assetsWithSearchSelector = createSelector(

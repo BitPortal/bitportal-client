@@ -312,6 +312,10 @@ export default class AddAssets extends Component {
     this.props.actions.handleAssetSearchTextChange({ text: '', chain: this.props.chain })
   }
 
+  searchBarUpdated = (data) => {
+    this.props.actions.handleAssetSearchTextChange({ text: data.text, chain: this.props.chain })
+  }
+
   render() {
     const { assets, selectedAssetId, getETHAsset, getEOSAsset, getChainXAsset, chain, ui } = this.props
 

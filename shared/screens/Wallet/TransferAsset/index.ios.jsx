@@ -847,7 +847,7 @@ export default class TransferAsset extends Component {
     const symbol = balance.symbol
     const iconUrl = transferAsset.icon_url
     const contract = transferAsset.contract
-    const available = balance && intl.formatNumber(balance.balance, { minimumFractionDigits: balance.precision, maximumFractionDigits: balance.precision })
+    const available = balance && intl.formatNumber(balance.balance, { minimumFractionDigits: 0, maximumFractionDigits: balance.precision })
     const chain = transferWallet.chain
 
     // fees and display related
@@ -948,7 +948,7 @@ export default class TransferAsset extends Component {
                 <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
                   <View style={{ alignItems: 'flex-end', marginRight: 4, width: 180 }}>
                     <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
-                      {`≈ ${intl.formatNumber(feeRate * 226 * Math.pow(10, -8), { minimumFractionDigits: balance.precision, maximumFractionDigits: balance.precision })} btc`}
+                      {`≈ ${intl.formatNumber(feeRate * 226 * Math.pow(10, -8), { minimumFractionDigits: 0, maximumFractionDigits: balance.precision })} btc`}
                     </Text>
                     {this.state.customFee && <Text style={{ fontSize: 13, color: 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
                       {`${(feeRate)} sat/b ${this.getSpeedText(feeRate)}`}
@@ -997,7 +997,7 @@ export default class TransferAsset extends Component {
                 <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
                   <View style={{ alignItems: 'flex-end', marginRight: 4, width: 180 }}>
                     <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
-                      {`${intl.formatNumber(useGasPrice * this.state.ethGasLimit * Math.pow(10, -9), { minimumFractionDigits: balance.precision, maximumFractionDigits: balance.precision })} ether`}
+                      {`${intl.formatNumber(useGasPrice * this.state.ethGasLimit * Math.pow(10, -9), { minimumFractionDigits: 0, maximumFractionDigits: balance.precision })} ether`}
                     </Text>
                     {this.state.customFee && <Text style={{ fontSize: 13, color: 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
                       {`${intl.formatNumber(useGasPrice, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} gwei x ${this.state.ethGasLimit}`}

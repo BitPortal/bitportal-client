@@ -507,7 +507,7 @@ export default class Wallet extends Component {
           onPress={!this.state.switching ? this.toAsset.bind(this, balance.symbol, null) : () => {}}
           reactModuleForCell="AssetBalanceTableViewCell"
           height={60}
-          balance={intl.formatNumber(balance.balance, { minimumFractionDigits: balance.precision, maximumFractionDigits: balance.precision })}
+          balance={intl.formatNumber(balance.balance, { minimumFractionDigits: 0, maximumFractionDigits: balance.precision })}
           amount={(ticker && ticker[`${activeWallet.chain}/${activeWallet.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${activeWallet.symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
           currency={currency.sign}
           symbol={balance.symbol}
@@ -536,7 +536,7 @@ export default class Wallet extends Component {
               onPress={!this.state.switching ? this.toAsset.bind(this, balance.symbol, selectedAsset[i]) : () => {}}
               reactModuleForCell="AssetBalanceTableViewCell"
               height={60}
-              balance={intl.formatNumber(assetBalance ? assetBalance.balance : 0, { minimumFractionDigits: assetBalance ? assetBalance.precision : balance.precision, maximumFractionDigits: assetBalance ? assetBalance.precision : balance.precision })}
+              balance={intl.formatNumber(assetBalance ? assetBalance.balance : 0, { minimumFractionDigits: 0, maximumFractionDigits: assetBalance ? assetBalance.precision : balance.precision })}
               amount={(ticker && ticker[`${activeWallet.chain}/${selectedAsset[i].symbol}`]) ? intl.formatNumber(0 * +ticker[`${activeWallet.chain}/${selectedAsset[i].symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
               currency={currency.sign}
               symbol={selectedAsset[i].symbol}
