@@ -3,11 +3,11 @@
   "version": "1.5.1",
   "description": "bitportal client",
   "main": "desktop/main.js",
+  "precommit": [],
   "engines": {
     "node": ">=8.0.0",
     "npm": "^3.0.0"
   },
-  "pre-commit": [],
   "skpm": {
     "main": "sketch/BitPortal.sketchplugin",
     "manifest": "sketch/manifest.json"

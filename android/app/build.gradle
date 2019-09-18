@@ -1,4 +1,6 @@
 apply plugin: "com.android.application"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
 
 project.ext.envConfigFiles = [
     debug: ".env.development",
@@ -193,6 +195,7 @@ android {
 }
 
 dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation project(':react-native-webview')
     implementation project(':@react-native-community_viewpager')
     implementation project(':react-native-gesture-handler')

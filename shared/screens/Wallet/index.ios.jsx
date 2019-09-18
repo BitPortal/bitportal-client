@@ -104,10 +104,7 @@ export default class Wallet extends Component {
     }
   }
 
-  constructor(props) {
-    super(props);
-    Navigation.events().bindComponent(this); // <== Will be automatically unregistered when unmounted
-  }
+  subscription = Navigation.events().bindComponent(this)
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.activeWalletId !== prevState.activeWalletId) {
@@ -613,32 +610,32 @@ export default class Wallet extends Component {
                     accessoryType={1}
                     moreButtonImage={require('resources/images/circle_more.png')}
                   />
-                 )}
-                 {importedWallets.map(wallet =>
-                   <CollectionViewItem
-                     key={wallet.id}
-                     uid={wallet.id}
-                     type="imported"
-                     height="190"
-                     reactModuleForCollectionViewCell="WalletCardCollectionViewCell"
-                     reactModuleForCollectionViewCellKey="WalletCardCollectionViewCell"
-                     address={wallet.address}
-                     name={wallet.name}
-                     chain={wallet.chain}
-                     symbol={wallet.symbol}
-                     segWit={wallet.segWit}
-                     source={wallet.source}
-                     cpu={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatCycleTime(resources[`${wallet.chain}/${wallet.address}`].CPU) : '--'}
-                     net={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatMemorySize(resources[`${wallet.chain}/${wallet.address}`].NET) : '--'}
-                     ram={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatMemorySize(resources[`${wallet.chain}/${wallet.address}`].RAM) : '--'}
-                     currency={currency.sign}
-                     totalAsset={(portfolio && portfolio[`${wallet.chain}/${wallet.address}`]) ? intl.formatNumber(portfolio[`${wallet.chain}/${wallet.address}`].totalAsset * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
-                     componentId={this.props.componentId}
-                     separatorStyle={TableView.Consts.SeparatorStyle.None}
-                     accessoryType={1}
-                     moreButtonImage={require('resources/images/circle_more.png')}
-                   />
-                 )}
+                )}
+                {importedWallets.map(wallet =>
+                  <CollectionViewItem
+                    key={wallet.id}
+                    uid={wallet.id}
+                    type="imported"
+                    height="190"
+                    reactModuleForCollectionViewCell="WalletCardCollectionViewCell"
+                    reactModuleForCollectionViewCellKey="WalletCardCollectionViewCell"
+                    address={wallet.address}
+                    name={wallet.name}
+                    chain={wallet.chain}
+                    symbol={wallet.symbol}
+                    segWit={wallet.segWit}
+                    source={wallet.source}
+                    cpu={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatCycleTime(resources[`${wallet.chain}/${wallet.address}`].CPU) : '--'}
+                    net={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatMemorySize(resources[`${wallet.chain}/${wallet.address}`].NET) : '--'}
+                    ram={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatMemorySize(resources[`${wallet.chain}/${wallet.address}`].RAM) : '--'}
+                    currency={currency.sign}
+                    totalAsset={(portfolio && portfolio[`${wallet.chain}/${wallet.address}`]) ? intl.formatNumber(portfolio[`${wallet.chain}/${wallet.address}`].totalAsset * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
+                    componentId={this.props.componentId}
+                    separatorStyle={TableView.Consts.SeparatorStyle.None}
+                    accessoryType={1}
+                    moreButtonImage={require('resources/images/circle_more.png')}
+                  />
+                )}
               </CollectionView>
             </Item>
           </Section>

@@ -236,10 +236,6 @@ export default class WebView extends Component {
     this.webviewbridge.injectJavaScript(generateOnMessageFunction(message))
   }
 
-  /* componentWillUnmount() {
-   *   this.props.actions.clearMessage()
-   * }*/
-
   navigationButtonPressed({ buttonId }) {
     if (buttonId === 'refresh') {
       this.webviewbridge.reload()
@@ -744,23 +740,43 @@ export default class WebView extends Component {
         </View>
       </TouchableHighlight>
       <Animated.View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, opacity: this.state.passwordTextInputOpacity, paddingHorizontal: 18 }}>
-        <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>输入密码</Text>
+        <Text
+	  style={{
+	    paddingTop: 15,
+	    paddingBottom: 15,
+	    fontSize: 13,
+	    color: '#A2A2A6',
+	    width: 95
+	  }}
+	>
+	  输入密码
+	</Text>
         <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row' }}>
           <TextInput
-              style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, width: '100%' }}
-              autoCorrect={false}
-              autoCapitalize="none"
-              onChangeText={this.onPasswordChange}
-              value={this.state.passwordValue}
-              ref={this.textInput}
-              onBlur={this.onPasswordBlur}
-              onSubmitEditing={this.submit}
-              disabled
-              secureTextEntry
-              focuses
+            style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, width: '100%' }}
+            autoCorrect={false}
+            autoCapitalize="none"
+            onChangeText={this.onPasswordChange}
+            value={this.state.passwordValue}
+            ref={this.textInput}
+            onBlur={this.onPasswordBlur}
+            onSubmitEditing={this.submit}
+            disabled
+            secureTextEntry
+            focuses
           />
         </View>
-        {(!!this.state.largeAmount || !!this.props.resolving) && <View style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0 }} />}
+        {(!!this.state.largeAmount || !!this.props.resolving) &&
+	 <View
+	   style={{
+	     position: 'absolute',
+	     left: 0,
+	     top: 0,
+	     right: 0,
+	     bottom: 0
+	   }}
+	 />
+	}
         <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
       </Animated.View>
     </Fragment>
