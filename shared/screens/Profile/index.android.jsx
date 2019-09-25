@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, Image, FlatList, TouchableNativeFeedback } from 'react-native'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 import { connect } from 'react-redux'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import LinearGradient from 'react-native-linear-gradient'

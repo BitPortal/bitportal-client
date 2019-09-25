@@ -15,7 +15,7 @@ import {
   SafeAreaView,
   TouchableNativeFeedback
 } from 'react-native'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Field, reduxForm, getFormSyncWarnings, getFormValues } from 'redux-form'
 import * as identityActions from 'actions/identity'

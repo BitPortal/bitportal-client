@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, TouchableHighlight, Image } from 'react-native'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 
 const IdentityTableViewCell = (props) => {
   formatAddress = (address) => {

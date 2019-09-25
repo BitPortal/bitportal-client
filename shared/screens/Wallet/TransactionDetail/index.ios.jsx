@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { View, ScrollView, ActionSheetIOS, Alert, Text, ActivityIndicator, Animated, Image, TouchableHighlight, Clipboard, RefreshControl, SafeAreaView } from 'react-native'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 import TableView from 'components/TableView'
 import * as identityActions from 'actions/identity'
 import Modal from 'react-native-modal'
@@ -50,7 +50,11 @@ export default class TransactionDetail extends Component {
         backButton: {
           title: '返回'
         },
-        noBorder: true
+        noBorder: true,        
+        background: {
+          translucent: false,
+          color: '#F7F7F7'
+        },
       },
       bottomTabs: {
         visible: false
@@ -196,8 +200,8 @@ export default class TransactionDetail extends Component {
       return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
           <ScrollView
-          style={{ flex: 1, backgroundColor: 'white' }}
-          contentContainerStyle={{ backgroundColor: 'white' }}
+            style={{ flex: 1, backgroundColor: 'white' }}
+            contentContainerStyle={{ backgroundColor: 'white' }}
           >
             <View style={{ flex: 1, backgroundColor: '#F7F7F7', padding: 16, paddingTop: 0 }}>
               {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
@@ -212,8 +216,8 @@ export default class TransactionDetail extends Component {
                     <View style={{ flexDirection: 'row', minHeight: 26, alignItems: 'center' }}>
                       <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.receiver} </Text>
                       <Image
-                      source={require('resources/images/copy_black.png')}
-                      style={{ width: 18, height: 18, marginBottom: 2 }}
+                        source={require('resources/images/copy_black.png')}
+                        style={{ width: 18, height: 18, marginBottom: 2 }}
                       />
                     </View>
                   </TouchableHighlight>
@@ -224,8 +228,8 @@ export default class TransactionDetail extends Component {
                     <View style={{ flexDirection: 'row', minHeight: 26, alignItems: 'center' }}>
                       <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.sender} </Text>
                       <Image
-                      source={require('resources/images/copy_black.png')}
-                      style={{ width: 18, height: 18, marginBottom: 2 }}
+                        source={require('resources/images/copy_black.png')}
+                        style={{ width: 18, height: 18, marginBottom: 2 }}
                       />
                     </View>
                   </TouchableHighlight>
@@ -255,15 +259,15 @@ export default class TransactionDetail extends Component {
               {this.toExplorerUI(chain, transaction.id)}
             </View>
             <Modal
-            isVisible={this.state.showModal}
-            backdropOpacity={0}
-            useNativeDriver
-            animationIn="fadeIn"
-            animationInTiming={200}
-            backdropTransitionInTiming={200}
-            animationOut="fadeOut"
-            animationOutTiming={200}
-            backdropTransitionOutTiming={200}
+              isVisible={this.state.showModal}
+              backdropOpacity={0}
+              useNativeDriver
+              animationIn="fadeIn"
+              animationInTiming={200}
+              backdropTransitionInTiming={200}
+              animationOut="fadeOut"
+              animationOutTiming={200}
+              backdropTransitionOutTiming={200}
             >
               {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>

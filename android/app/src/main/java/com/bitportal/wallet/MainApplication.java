@@ -24,7 +24,7 @@ import com.bitportal.wallet.umeng.RNUMConfigure;
 import com.bitportal.wallet.umeng.DplusReactPackage;
 import com.bitportal.wallet.nativeutils.NativeUtilsPackage;
 import com.bitportal.wallet.qrcode.QRScanReaderPackage;
-import com.bitportal.wallet.customToast.CustomToastPackage;
+import com.bitportal.wallet.materialDialog.MaterialDialogPackage;
 import cn.jpush.reactnativejpush.JPushPackage;
 import cn.jpush.android.api.JPushInterface;
 import com.rnfs.RNFSPackage;
@@ -92,7 +92,7 @@ public class MainApplication extends NavigationApplication {
 	     new RNCViewPagerPackage(),
 	     new ReactSliderPackage(),
 	     new RNCWebViewPackage(),
-	     new CustomToastPackage()
+             new MaterialDialogPackage()
 	     );
     }
 

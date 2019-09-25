@@ -17,7 +17,7 @@ import {
   Clipboard
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { submit } from 'redux-form'
 import Modal from 'react-native-modal'

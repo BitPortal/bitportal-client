@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, TouchableHighlight, TextInput, Alert, Act
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
 import { Field, reduxForm, getFormSyncWarnings, getFormValues } from 'redux-form'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 import TableView from 'components/TableView'
 import Modal from 'react-native-modal'
 import assert from 'assert'

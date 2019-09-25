@@ -1,5 +1,5 @@
 import { AppRegistry, StatusBar } from 'react-native'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 import Provider, { PersistProvider } from 'components/Provider'
 import AssetTableViewCell from 'components/TableViewCell/AssetTableViewCell'
 import HeaderTableViewCell from 'components/TableViewCell/HeaderTableViewCell'

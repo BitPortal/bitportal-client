@@ -3,7 +3,7 @@ import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { View, Text, Clipboard, ActivityIndicator, TouchableHighlight, Dimensions, Image, NativeModules } from 'react-native'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
 import SplashScreen from 'react-native-splash-screen'
 import KeyboardManager from 'react-native-keyboard-manager'
@@ -30,7 +30,7 @@ import DiscoveryScreen from 'screens/Discovery'
 import * as api from 'utils/api'
 import FastImage from 'react-native-fast-image'
 
-const ToastExample = NativeModules.ToastExample
+const MaterialDialog = NativeModules.MaterialDialog
 
 const icons = {
   wallet: require('resources/images/wallet_android.png'),
@@ -177,7 +177,7 @@ export default class Root extends Component {
 
   componentDidMount() {
     SplashScreen.hide()
-    ToastExample.show('Awesome', ToastExample.SHORT)
+    MaterialDialog.show('Awesome', MaterialDialog.SHORT)
   }
 
   componentDidAppear() {

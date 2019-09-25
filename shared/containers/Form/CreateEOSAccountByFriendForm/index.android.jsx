@@ -15,7 +15,7 @@ import {
   Clipboard
 } from 'react-native'
 import { injectIntl } from 'react-intl'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Field, reduxForm, getFormValues, getFormSyncWarnings } from 'redux-form'
 import Modal from 'react-native-modal'

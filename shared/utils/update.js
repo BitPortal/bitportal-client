@@ -1,6 +1,6 @@
 import { Platform, Linking } from 'react-native'
 import VersionNumber from 'react-native-version-number'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 import messages from 'resources/messages'
 
 const actionNegative = 'actionNegative'

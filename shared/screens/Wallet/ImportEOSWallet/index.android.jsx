@@ -16,7 +16,7 @@ import {
   ActivityIndicator,
   TouchableNativeFeedback
 } from 'react-native'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 import { Field, reduxForm, getFormValues, getFormSyncWarnings } from 'redux-form'
 import { FilledTextField, FilledTextArea } from 'components/Form'
 import IndicatorModal from 'components/Modal/IndicatorModal'

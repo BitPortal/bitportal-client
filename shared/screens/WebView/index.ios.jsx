@@ -25,7 +25,7 @@ import {
 } from 'react-native'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 import { FormattedMessage, IntlProvider, injectIntl } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
 import Url from 'url-parse'
@@ -280,15 +280,15 @@ export default class WebView extends Component {
   linking = () => {
     const url = this.props.uri
     Linking.canOpenURL(url)
-      .then((supported) => {
-        if (!supported) {
-          // console.log(`Can't handle url: ${url}`);
-        } else {
-          console.log('open', url)
-          Linking.openURL(url)
-        }
-      })
-      .catch(err => console.error('An error occurred', err))
+                    .then((supported) => {
+                      if (!supported) {
+                        // console.log(`Can't handle url: ${url}`);
+                      } else {
+                        console.log('open', url)
+                        Linking.openURL(url)
+                      }
+                    })
+                    .catch(err => console.error('An error occurred', err))
   }
 
   renderError = (e) => {
@@ -680,12 +680,12 @@ export default class WebView extends Component {
         <View
           style={{ flexDirection: 'row', position: 'absolute', left: '-100%', top: 25, opacity: 1 }}
           onLayout={(event) => {
-              const layout = event.nativeEvent.layout
-              this.setState({
-                largeAmountWidth: layout.width,
-                amountMarginLeft: new Animated.Value((Dimensions.get('window').width - layout.width) / 2 - 18)
-              })
-            }}
+            const layout = event.nativeEvent.layout
+            this.setState({
+              largeAmountWidth: layout.width,
+              amountMarginLeft: new Animated.Value((Dimensions.get('window').width - layout.width) / 2 - 18)
+            })
+          }}
         >
           <Text style={{ fontSize: 30 }}>
             {action.data.quantity.split(' ')[0]}
@@ -799,12 +799,12 @@ export default class WebView extends Component {
                     <Text style={{ fontSize: 13, color: '#A2A2A6', height: 20 }}>{key}</Text>
                     <Text style={{ fontSize: 13 }}>{typeof action.data[key] === 'object' ? JSON.stringify(action.data[key]) : action.data[key]}</Text>
                   </View>
-                   )}
+                  )}
                 </View>
                 {(index !== actions.length - 1) && <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />}
               </View>
             </Fragment>
-             )}
+            )}
           </ScrollView>
         )
       } else if (actions.length >= 1) {
@@ -851,12 +851,12 @@ export default class WebView extends Component {
               <View
                 style={{ flexDirection: 'row', position: 'absolute', left: '-100%', top: 25, opacity: 1 }}
                 onLayout={(event) => {
-                    const layout = event.nativeEvent.layout
-                    this.setState({
-                      largeAmountWidth: layout.width,
-                      amountMarginLeft: new Animated.Value((Dimensions.get('window').width - layout.width) / 2 - 18)
-                    })
-                  }}
+                  const layout = event.nativeEvent.layout
+                  this.setState({
+                    largeAmountWidth: layout.width,
+                    amountMarginLeft: new Animated.Value((Dimensions.get('window').width - layout.width) / 2 - 18)
+                  })
+                }}
               >
                 <Text style={{ fontSize: 24 }}>
                   个人签名
@@ -893,12 +893,12 @@ export default class WebView extends Component {
               <View
                 style={{ flexDirection: 'row', position: 'absolute', left: '-100%', top: 25, opacity: 1 }}
                 onLayout={(event) => {
-                    const layout = event.nativeEvent.layout
-                    this.setState({
-                      largeAmountWidth: layout.width,
-                      amountMarginLeft: new Animated.Value((Dimensions.get('window').width - layout.width) / 2 - 18)
-                    })
-                  }}
+                  const layout = event.nativeEvent.layout
+                  this.setState({
+                    largeAmountWidth: layout.width,
+                    amountMarginLeft: new Animated.Value((Dimensions.get('window').width - layout.width) / 2 - 18)
+                  })
+                }}
               >
                 <Text style={{ fontSize: 24 }}>
                   ETH 签名
@@ -940,12 +940,12 @@ export default class WebView extends Component {
               <View
                 style={{ flexDirection: 'row', position: 'absolute', left: '-100%', top: 25, opacity: 1 }}
                 onLayout={(event) => {
-                    const layout = event.nativeEvent.layout
-                    this.setState({
-                      largeAmountWidth: layout.width,
-                      amountMarginLeft: new Animated.Value((Dimensions.get('window').width - layout.width) / 2 - 18)
-                    })
-                  }}
+                  const layout = event.nativeEvent.layout
+                  this.setState({
+                    largeAmountWidth: layout.width,
+                    amountMarginLeft: new Animated.Value((Dimensions.get('window').width - layout.width) / 2 - 18)
+                  })
+                }}
               >
                 <Text style={{ fontSize: 24 }}>
                   申请签名
@@ -969,7 +969,7 @@ export default class WebView extends Component {
               <ScrollView contentContainerStyle={{ width: Dimensions.get('window').width - 36 - 95 }} style={{ maxHeight: 52 }}>
                 {message.info.data.map(data =>
                   <Text key={data.name} style={{ fontSize: 13 }}>{`${data.name}: ${data.value}`}</Text>
-                 )}
+                )}
               </ScrollView>
               <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
             </View>
@@ -984,12 +984,12 @@ export default class WebView extends Component {
               <View
                 style={{ flexDirection: 'row', position: 'absolute', left: '-100%', top: 25, opacity: 1 }}
                 onLayout={(event) => {
-                    const layout = event.nativeEvent.layout
-                    this.setState({
-                      largeAmountWidth: layout.width,
-                      amountMarginLeft: new Animated.Value((Dimensions.get('window').width - layout.width) / 2 - 18)
-                    })
-                  }}
+                  const layout = event.nativeEvent.layout
+                  this.setState({
+                    largeAmountWidth: layout.width,
+                    amountMarginLeft: new Animated.Value((Dimensions.get('window').width - layout.width) / 2 - 18)
+                  })
+                }}
               >
                 <Text style={{ fontSize: 24 }}>
                   申请签名
@@ -1033,12 +1033,12 @@ export default class WebView extends Component {
               <View
                 style={{ flexDirection: 'row', position: 'absolute', left: '-100%', top: 25, opacity: 1 }}
                 onLayout={(event) => {
-                    const layout = event.nativeEvent.layout
-                    this.setState({
-                      largeAmountWidth: layout.width,
-                      amountMarginLeft: new Animated.Value((Dimensions.get('window').width - layout.width) / 2 - 18)
-                    })
-                  }}
+                  const layout = event.nativeEvent.layout
+                  this.setState({
+                    largeAmountWidth: layout.width,
+                    amountMarginLeft: new Animated.Value((Dimensions.get('window').width - layout.width) / 2 - 18)
+                  })
+                }}
               >
                 <Text style={{ fontSize: 30 }}>
                   {amount}
@@ -1201,18 +1201,18 @@ export default class WebView extends Component {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F7F7' }}>
         {hasAddressBar && (
-           <TGAddressBar
-             style={{ height: 50, width: '100%' }}
-             value={this.state.url}
-             title={this.parseUrlTitle(this.state.url)}
-             isSecure={this.isHttps(this.state.url)}
-             onLeftButtonClicked={this.onLeftButtonClicked}
-             onRightButtonClicked={this.onRightButtonClicked}
-             onSubmit={this.onSubmit}
-             chain={chain}
-           />
-         )}
-      <View style={{ flex: 1, width: '100%' }}>
+          <TGAddressBar
+            style={{ height: 50, width: '100%' }}
+            value={this.state.url}
+            title={this.parseUrlTitle(this.state.url)}
+            isSecure={this.isHttps(this.state.url)}
+            onLeftButtonClicked={this.onLeftButtonClicked}
+            onRightButtonClicked={this.onRightButtonClicked}
+            onSubmit={this.onSubmit}
+            chain={chain}
+          />
+        )}
+        <View style={{ flex: 1, width: '100%' }}>
           <RNWebView
             source={{ uri: this.state.originurl }}
             ref={(e) => { this.webviewbridge = e }}
@@ -1272,49 +1272,49 @@ export default class WebView extends Component {
               </TouchableOpacity>
               </View> */}
 
-            <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-              <TouchableOpacity onPress={this.refresh}>
+          <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <TouchableOpacity onPress={this.refresh}>
+              <FastImage
+                source={require('resources/images/refresh.png')}
+                style={{ width: 30, height: 30 }}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: 0.5, backgroundColor: 'rgba(0,0,0,0.2)' }} />
+        </View>
+        {this.props.loadingContract && <View style={{ position: 'absolute', right: 0, left: 0, top: 0, bottom: 0 }}>
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
+              <ActivityIndicator size="small" color="#000000" />
+              <Text style={{ fontSize: 17, fontWeight: 'bold', marginLeft: 5 }}>合约加载中...</Text>
+            </View>
+          </View>
+        </View>}
+        <Modal
+          animationIn="slideInUp"
+          animationOut="slideOutDown"
+          isVisible={!!this.props.hasPendingMessage && !this.props.loadingContract && !!this.state.showPrompt}
+          onModalHide={this.onModalHide}
+          backdropOpacity={0.4}
+          style={{ margin: 0 }}
+        >
+          <View style={{ backgroundColor: '#F7F7F8', position: 'absolute', bottom: 0, left: 0, right: 0, paddingBottom: tabHeight - 44 }}>
+            <View style={{ height: 44, borderBottomWidth: 0.5, borderColor: '#E3E3E4', flex: 1, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
+              {!this.state.showSideCard && <Text style={{ fontSize: 17, fontWeight: 'bold' }}>交易详情</Text>}
+              {!!this.state.showSideCard && <TouchableOpacity onPress={this.toPrev} style={{ height: 44 }} style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <FastImage
-                  source={require('resources/images/refresh.png')}
-                  style={{ width: 30, height: 30 }}
+                  source={require('resources/images/arrow_left_short.png')}
+                  style={{ height: 18, width: 10, marginRight: 5 }}
                 />
+                <Text style={{ fontSize: 17, color: '#007AFF', lineHeight: 44 }}>返回</Text>
+              </TouchableOpacity>}
+              <TouchableOpacity onPress={!this.props.resolving ? this.closePrompt : () => {}} style={{ height: 44 }} disabled={this.props.resolving}>
+                <Text style={{ fontSize: 17, color: '#007AFF', lineHeight: 44 }}>取消</Text>
               </TouchableOpacity>
             </View>
-            <View style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: 0.5, backgroundColor: 'rgba(0,0,0,0.2)' }} />
+            {!!this.props.pendingMessage && this.renderTransactionDetail(this.props.pendingMessage)}
           </View>
-          {this.props.loadingContract && <View style={{ position: 'absolute', right: 0, left: 0, top: 0, bottom: 0 }}>
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
-                <ActivityIndicator size="small" color="#000000" />
-                <Text style={{ fontSize: 17, fontWeight: 'bold', marginLeft: 5 }}>合约加载中...</Text>
-              </View>
-            </View>
-          </View>}
-          <Modal
-            animationIn="slideInUp"
-            animationOut="slideOutDown"
-            isVisible={!!this.props.hasPendingMessage && !this.props.loadingContract && !!this.state.showPrompt}
-            onModalHide={this.onModalHide}
-            backdropOpacity={0.4}
-            style={{ margin: 0 }}
-          >
-            <View style={{ backgroundColor: '#F7F7F8', position: 'absolute', bottom: 0, left: 0, right: 0, paddingBottom: tabHeight - 44 }}>
-              <View style={{ height: 44, borderBottomWidth: 0.5, borderColor: '#E3E3E4', flex: 1, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
-                {!this.state.showSideCard && <Text style={{ fontSize: 17, fontWeight: 'bold' }}>交易详情</Text>}
-                {!!this.state.showSideCard && <TouchableOpacity onPress={this.toPrev} style={{ height: 44 }} style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <FastImage
-                    source={require('resources/images/arrow_left_short.png')}
-                    style={{ height: 18, width: 10, marginRight: 5 }}
-                  />
-                  <Text style={{ fontSize: 17, color: '#007AFF', lineHeight: 44 }}>返回</Text>
-                </TouchableOpacity>}
-                <TouchableOpacity onPress={!this.props.resolving ? this.closePrompt : () => {}} style={{ height: 44 }} disabled={this.props.resolving}>
-                  <Text style={{ fontSize: 17, color: '#007AFF', lineHeight: 44 }}>取消</Text>
-                </TouchableOpacity>
-              </View>
-              {!!this.props.pendingMessage && this.renderTransactionDetail(this.props.pendingMessage)}
-            </View>
-          </Modal>
+        </Modal>
       </SafeAreaView>
     )
   }

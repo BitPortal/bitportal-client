@@ -75,3 +75,5 @@ core/compiler/src/
 core/compiler/dist/
 core/compiler/sysroot/
 core/compiler/wasmception-*-bin.tar.gz
+
+*TAGS

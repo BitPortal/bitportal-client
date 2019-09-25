@@ -1,5 +1,5 @@
 import { AppRegistry, StatusBar } from 'react-native'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler'
 import Provider, { PersistProvider } from 'components/Provider'
 

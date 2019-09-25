@@ -1,4 +1,4 @@
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 import { setBottomTabsLocale } from 'navigators'
 
 export const push = (location: string, componentId: string, passProps: object = {}, options: object = {}) => {

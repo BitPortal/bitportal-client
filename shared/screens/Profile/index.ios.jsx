@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, LayoutAnimation } from 'react-native'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 import { connect } from 'react-redux'
 import TableView from 'components/TableView'
 import { injectIntl, FormattedMessage } from 'react-intl'
@@ -186,7 +186,6 @@ export default class Profile extends Component {
         cellSeparatorInset={{ left: 61 }}
         onSwitchAccessoryChanged={() => {}}
       >
-        <Section />
         <Section>
           <Item
             height={78}

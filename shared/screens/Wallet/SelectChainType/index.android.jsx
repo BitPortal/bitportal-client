@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, FlatList, TouchableNativeFeedback, Image } from 'react-native'
 import { connect } from 'react-redux'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 import { chainIcons } from 'resources/images'
 
 @connect(

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableHighlight, TouchableNativeFeedback, Image } from 'react-native'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 
 const images = {
   home: {

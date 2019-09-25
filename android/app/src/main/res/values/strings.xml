@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">BitPortal</string>
+  <string name="app_name">BitPortal</string>
+  <string name="drawer_close">Drawer Close</string>
+  <string name="drawer_open">Drawer Open</string>
 </resources>

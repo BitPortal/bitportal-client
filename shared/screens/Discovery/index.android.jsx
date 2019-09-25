@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'utils/redux'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 import { Alert, View, Text, Dimensions, Image, FlatList, ScrollView, TouchableNativeFeedback } from 'react-native'
 import * as dappActions from 'actions/dapp'
 import {

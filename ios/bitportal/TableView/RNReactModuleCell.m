@@ -35,6 +35,7 @@
         [self.contentView addSubview:_rootView];
         _rootView.frame = self.contentView.frame;
         _rootView.autoresizingMask = UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight;
+        _rootView.backgroundColor = [UIColor clearColor];
     } else {
         //Ask react to re-render us with new data
         _rootView.appProperties = props;

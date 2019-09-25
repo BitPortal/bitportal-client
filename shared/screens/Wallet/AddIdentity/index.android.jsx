@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
 import { View, Text, TouchableNativeFeedback, Image } from 'react-native'
 import FastImage from 'react-native-fast-image'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
 
 const styles = EStyleSheet.create({

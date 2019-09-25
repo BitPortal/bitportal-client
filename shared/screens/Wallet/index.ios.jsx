@@ -3,7 +3,7 @@ import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { View, Text, Clipboard, ActivityIndicator, TouchableHighlight, Image, Alert, NativeModules } from 'react-native'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 import TableView from 'components/TableView'
 // import FastImage from 'react-native-fast-image'
 import SplashScreen from 'react-native-splash-screen'
@@ -167,6 +167,7 @@ export default class Wallet extends Component {
   }
 
   componentWillUnmount() {
+
   }
 
   componentDidAppear() {

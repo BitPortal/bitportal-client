@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { View, ScrollView, ActionSheetIOS, Alert, Text, ActivityIndicator, Animated, TextInput, TouchableHighlight, Image, Keyboard, LayoutAnimation,
   SafeAreaView } from 'react-native'
 import { Field, reduxForm, getFormValues, getFormSyncWarnings } from 'redux-form'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 import TableView from 'components/TableView'
 import * as contactActions from 'actions/contact'
 import Modal from 'react-native-modal'

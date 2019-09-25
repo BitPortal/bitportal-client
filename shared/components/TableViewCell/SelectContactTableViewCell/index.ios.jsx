@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, TouchableHighlight } from 'react-native'
 import FastImage from 'react-native-fast-image'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 
 const SelectContactTableViewCell = (props) => {
   formatAddress = (address) => {

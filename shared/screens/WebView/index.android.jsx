@@ -22,7 +22,7 @@ import {
 } from 'react-native'
 import Colors from 'resources/colors'
 import { connect } from 'react-redux'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 import { FormattedMessage, IntlProvider, injectIntl } from 'react-intl'
 import ActionSheet from 'react-native-actionsheet'
 import Url from 'url-parse'

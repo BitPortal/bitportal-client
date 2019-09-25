@@ -17,7 +17,7 @@ import {
   Dimensions,
   Clipboard
 } from 'react-native'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Field, reduxForm, getFormValues, getFormSyncWarnings } from 'redux-form'
 import { FilledTextField } from 'components/Form'

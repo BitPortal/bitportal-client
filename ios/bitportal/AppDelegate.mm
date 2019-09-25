@@ -16,7 +16,7 @@
 #import <React/RCTBridge+Private.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
-#import <ReactNativeNavigation.h>
+#import "ReactNativeNavigation.h"
 #import "SplashScreen.h"
 #import "RNUMConfigure.h"
 #import "UMAnalyticsModule.h"

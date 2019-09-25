@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, TouchableHighlight, Image, NativeModules } from 'react-native'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 import { walletIcons } from 'resources/images'
 
 const images = {

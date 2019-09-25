@@ -101,7 +101,6 @@
 		279ACDBA87444D5D9230BA0D /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3693ECD00D2451D9DFE9083 /* Zocial.ttf */; };
 		3410CA9722854EEE005FAF2A /* injectScatter.js in Resources */ = {isa = PBXBuildFile; fileRef = 3410CA9622854EEE005FAF2A /* injectScatter.js */; };
 		343A5D452285673E00DC76D6 /* injectMetaMask.js in Resources */ = {isa = PBXBuildFile; fileRef = 343A5CF92285673E00DC76D6 /* injectMetaMask.js */; };
-		3446CAB220E8F39F00ACA3C8 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3446CAAF20E8EB1E00ACA3C8 /* libReactNativeNavigation.a */; };
 		3449499A2274C1BB00D8AB38 /* libRNCSlider.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 344949872274C19E00D8AB38 /* libRNCSlider.a */; };
 		344C9D172317B7ED004E26AD /* SPAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344C9CC32317B7ED004E26AD /* SPAlertView.swift */; };
 		344C9D182317B7ED004E26AD /* SPAlertPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344C9CC42317B7ED004E26AD /* SPAlertPreset.swift */; };
@@ -144,27 +143,166 @@
 		34A680DA22C4E76E00BBE21E /* libRNReanimated.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34A680D722C4E75C00BBE21E /* libRNReanimated.a */; };
 		34A680E422C4E7A900BBE21E /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34A680E122C4E79A00BBE21E /* libRNGestureHandler.a */; };
 		34AEC4FA230BDDCB002B9C99 /* libRNCWebView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34AEC4E3230BDD9B002B9C99 /* libRNCWebView.a */; };
+		34C81918233B4C0C0090AD79 /* RNNTopTabsOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8178A233B4C080090AD79 /* RNNTopTabsOptions.m */; };
+		34C81919233B4C0C0090AD79 /* NullBool.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8178C233B4C080090AD79 /* NullBool.m */; };
+		34C8191A233B4C0C0090AD79 /* RNNElementTransitionOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8178D233B4C080090AD79 /* RNNElementTransitionOptions.m */; };
+		34C8191B233B4C0C0090AD79 /* Dictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8178E233B4C080090AD79 /* Dictionary.m */; };
+		34C8191C233B4C0C0090AD79 /* Param.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8178F233B4C080090AD79 /* Param.m */; };
+		34C8191D233B4C0C0090AD79 /* BoolParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81790233B4C080090AD79 /* BoolParser.m */; };
+		34C8191E233B4C0C0090AD79 /* RNNSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81791233B4C080090AD79 /* RNNSplashScreen.m */; };
+		34C8191F233B4C0C0090AD79 /* RNNSideMenuSideOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81793233B4C080090AD79 /* RNNSideMenuSideOptions.m */; };
+		34C81920233B4C0C0090AD79 /* RNNFontAttributesCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81796233B4C080090AD79 /* RNNFontAttributesCreator.m */; };
+		34C81921233B4C0C0090AD79 /* RNNNavigationControllerPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81798233B4C080090AD79 /* RNNNavigationControllerPresenter.m */; };
+		34C81922233B4C0C0090AD79 /* NullIntNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81799233B4C080090AD79 /* NullIntNumber.m */; };
+		34C81923233B4C0C0090AD79 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8179C233B4C080090AD79 /* Constants.m */; };
+		34C81924233B4C0C0090AD79 /* RNNCustomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8179D233B4C080090AD79 /* RNNCustomViewController.m */; };
+		34C81925233B4C0C0090AD79 /* NullNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8179E233B4C080090AD79 /* NullNumber.m */; };
+		34C81926233B4C0C0090AD79 /* RNNStatusBarOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8179F233B4C080090AD79 /* RNNStatusBarOptions.m */; };
+		34C81927233B4C0C0090AD79 /* RNNBackgroundOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817A0233B4C080090AD79 /* RNNBackgroundOptions.m */; };
+		34C81928233B4C0C0090AD79 /* RNNTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817A3233B4C080090AD79 /* RNNTransition.m */; };
+		34C81929233B4C0C0090AD79 /* RNNLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817A4233B4C080090AD79 /* RNNLayoutManager.m */; };
+		34C8192A233B4C0C0090AD79 /* TextParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817A6233B4C080090AD79 /* TextParser.m */; };
+		34C8192B233B4C0C0090AD79 /* ColorParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817A9233B4C080090AD79 /* ColorParser.m */; };
+		34C8192C233B4C0C0090AD79 /* RNNAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817AA233B4C080090AD79 /* RNNAnimatedView.m */; };
+		34C8192D233B4C0C0090AD79 /* RNNTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817AC233B4C080090AD79 /* RNNTabBarController.m */; };
+		34C8192E233B4C0C0090AD79 /* RNNLayoutOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817AE233B4C080090AD79 /* RNNLayoutOptions.m */; };
+		34C8192F233B4C0C0090AD79 /* SideMenuOpenGestureModeParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817B0233B4C080090AD79 /* SideMenuOpenGestureModeParser.m */; };
+		34C81930233B4C0C0090AD79 /* RNNSharedElementAnimationOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817B3233B4C080090AD79 /* RNNSharedElementAnimationOptions.m */; };
+		34C81931233B4C0C0090AD79 /* UIViewController+LayoutProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817B5233B4C080090AD79 /* UIViewController+LayoutProtocol.m */; };
+		34C81932233B4C0C0090AD79 /* Double.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817B7233B4C080090AD79 /* Double.m */; };
+		34C81933233B4C0C0090AD79 /* RNNAnimationsOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817B8233B4C080090AD79 /* RNNAnimationsOptions.m */; };
+		34C81934233B4C0C0090AD79 /* RNNNavigationStackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817BB233B4C080090AD79 /* RNNNavigationStackManager.m */; };
+		34C81935233B4C0C0090AD79 /* RCTConvert+UIBarButtonSystemItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817BC233B4C080090AD79 /* RCTConvert+UIBarButtonSystemItem.m */; };
+		34C81936233B4C0C0090AD79 /* RNNSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817BD233B4C080090AD79 /* RNNSegmentedControl.m */; };
+		34C81937233B4C0C0090AD79 /* RNNBridgeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817C0233B4C080090AD79 /* RNNBridgeManager.m */; };
+		34C81938233B4C0C0090AD79 /* RNNAnimationsTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817C4233B4C080090AD79 /* RNNAnimationsTransitionDelegate.m */; };
+		34C81939233B4C0C0090AD79 /* UITabBarController+RNNOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817C6233B4C080090AD79 /* UITabBarController+RNNOptions.m */; };
+		34C8193A233B4C0C0090AD79 /* RNNLayoutInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817C7233B4C080090AD79 /* RNNLayoutInfo.m */; };
+		34C8193B233B4C0C0090AD79 /* RNNTopTabOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817C8233B4C080090AD79 /* RNNTopTabOptions.m */; };
+		34C8193C233B4C0C0090AD79 /* RNNCommandsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817C9233B4C090090AD79 /* RNNCommandsHandler.m */; };
+		34C8193D233B4C0C0090AD79 /* UIImage+insets.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817CD233B4C090090AD79 /* UIImage+insets.m */; };
+		34C8193E233B4C0C0090AD79 /* RNNErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817D3233B4C090090AD79 /* RNNErrorHandler.m */; };
+		34C8193F233B4C0C0090AD79 /* RNNBottomTabOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817D6233B4C090090AD79 /* RNNBottomTabOptions.m */; };
+		34C81940233B4C0C0090AD79 /* RNNBridgeModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817D9233B4C090090AD79 /* RNNBridgeModule.m */; };
+		34C81941233B4C0C0090AD79 /* RNNPushAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817DA233B4C090090AD79 /* RNNPushAnimation.m */; };
+		34C81942233B4C0C0090AD79 /* RNNElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817DB233B4C090090AD79 /* RNNElement.m */; };
+		34C81943233B4C0D0090AD79 /* RNNSubtitleOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817DC233B4C090090AD79 /* RNNSubtitleOptions.m */; };
+		34C81944233B4C0D0090AD79 /* NullColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817DD233B4C090090AD79 /* NullColor.m */; };
+		34C81945233B4C0D0090AD79 /* RNNSplitViewControllerPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817DE233B4C090090AD79 /* RNNSplitViewControllerPresenter.m */; };
+		34C81946233B4C0D0090AD79 /* Number.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817DF233B4C090090AD79 /* Number.m */; };
+		34C81947233B4C0D0090AD79 /* RNNOverlayWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817E1233B4C090090AD79 /* RNNOverlayWindow.m */; };
+		34C81948233B4C0D0090AD79 /* UIViewController+RNNOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817E2233B4C090090AD79 /* UIViewController+RNNOptions.m */; };
+		34C81949233B4C0D0090AD79 /* RNNModalManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817E4233B4C090090AD79 /* RNNModalManager.m */; };
+		34C8194A233B4C0D0090AD79 /* RNNTitleOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817E6233B4C090090AD79 /* RNNTitleOptions.m */; };
+		34C8194B233B4C0D0090AD79 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34C817E7233B4C090090AD79 /* libOCMock.a */; };
+		34C8194C233B4C0D0090AD79 /* RNNNavigationOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817E8233B4C090090AD79 /* RNNNavigationOptions.m */; };
+		34C8194D233B4C0D0090AD79 /* RNNSideMenuChildVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817EA233B4C090090AD79 /* RNNSideMenuChildVC.m */; };
+		34C8194E233B4C0D0090AD79 /* RNNReactRootViewCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817ED233B4C090090AD79 /* RNNReactRootViewCreator.m */; };
+		34C8194F233B4C0D0090AD79 /* SideMenuOpenMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817EF233B4C090090AD79 /* SideMenuOpenMode.m */; };
+		34C81950233B4C0D0090AD79 /* RNNViewControllerPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817F2233B4C090090AD79 /* RNNViewControllerPresenter.m */; };
+		34C81951233B4C0D0090AD79 /* NullDouble.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817F7233B4C090090AD79 /* NullDouble.m */; };
+		34C81952233B4C0D0090AD79 /* RNNUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817FA233B4C090090AD79 /* RNNUtils.m */; };
+		34C81953233B4C0D0090AD79 /* NullText.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817FC233B4C090090AD79 /* NullText.m */; };
+		34C81954233B4C0D0090AD79 /* RNNAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817FD233B4C090090AD79 /* RNNAnimator.m */; };
+		34C81955233B4C0D0090AD79 /* RCCDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81800233B4C090090AD79 /* RCCDrawerController.m */; };
+		34C81956233B4C0D0090AD79 /* MMDrawerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81802233B4C090090AD79 /* MMDrawerBarButtonItem.m */; };
+		34C81957233B4C0D0090AD79 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81803233B4C090090AD79 /* UIViewController+MMDrawerController.m */; };
+		34C81958233B4C0D0090AD79 /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81805233B4C090090AD79 /* MMDrawerController.m */; };
+		34C81959233B4C0D0090AD79 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8180A233B4C090090AD79 /* MMDrawerVisualState.m */; };
+		34C8195A233B4C0D0090AD79 /* MMExampleDrawerVisualStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8180C233B4C090090AD79 /* MMExampleDrawerVisualStateManager.m */; };
+		34C8195B233B4C0D0090AD79 /* RCCDrawerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8180D233B4C090090AD79 /* RCCDrawerHelper.m */; };
+		34C8195C233B4C0D0090AD79 /* RCCTheSideBarManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8180F233B4C090090AD79 /* RCCTheSideBarManagerViewController.m */; };
+		34C8195D233B4C0D0090AD79 /* TheSidebarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81812233B4C090090AD79 /* TheSidebarController.m */; };
+		34C8195E233B4C0D0090AD79 /* SidebarAirbnbAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81816233B4C090090AD79 /* SidebarAirbnbAnimation.m */; };
+		34C8195F233B4C0D0090AD79 /* SidebarLuvocracyAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81817233B4C090090AD79 /* SidebarLuvocracyAnimation.m */; };
+		34C81960233B4C0D0090AD79 /* SidebarFacebookAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81819233B4C090090AD79 /* SidebarFacebookAnimation.m */; };
+		34C81961233B4C0D0090AD79 /* SidebarFeedlyAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8181B233B4C090090AD79 /* SidebarFeedlyAnimation.m */; };
+		34C81962233B4C0D0090AD79 /* SidebarFlipboardAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8181D233B4C090090AD79 /* SidebarFlipboardAnimation.m */; };
+		34C81963233B4C0D0090AD79 /* SidebarAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8181F233B4C090090AD79 /* SidebarAnimation.m */; };
+		34C81964233B4C0D0090AD79 /* SidebarWunderlistAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81821233B4C090090AD79 /* SidebarWunderlistAnimation.m */; };
+		34C81965233B4C0D0090AD79 /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81824233B4C090090AD79 /* Image.m */; };
+		34C81966233B4C0D0090AD79 /* RNNTabBarPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81825233B4C090090AD79 /* RNNTabBarPresenter.m */; };
+		34C81967233B4C0D0090AD79 /* RNNSideMenuOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81827233B4C090090AD79 /* RNNSideMenuOptions.m */; };
+		34C81968233B4C0D0090AD79 /* RNNReactComponentRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81828233B4C090090AD79 /* RNNReactComponentRegistry.m */; };
+		34C81969233B4C0D0090AD79 /* ReactNativeNavigation.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81829233B4C090090AD79 /* ReactNativeNavigation.m */; };
+		34C8196A233B4C0D0090AD79 /* RNNInsetsOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8182B233B4C090090AD79 /* RNNInsetsOptions.m */; };
+		34C8196B233B4C0D0090AD79 /* InteractivePopGestureDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8182E233B4C090090AD79 /* InteractivePopGestureDelegate.m */; };
+		34C8196C233B4C0D0090AD79 /* RNNRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8182F233B4C090090AD79 /* RNNRootViewController.m */; };
+		34C8196D233B4C0D0090AD79 /* RNNSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81830233B4C090090AD79 /* RNNSplitViewController.m */; };
+		34C8196E233B4C0D0090AD79 /* RNNLayoutNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81832233B4C090090AD79 /* RNNLayoutNode.m */; };
+		34C8196F233B4C0D0090AD79 /* RNNBackButtonOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81834233B4C090090AD79 /* RNNBackButtonOptions.m */; };
+		34C81970233B4C0D0090AD79 /* RNNSwizzles.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81835233B4C0A0090AD79 /* RNNSwizzles.m */; };
+		34C81971233B4C0D0090AD79 /* RNNTransitionStateHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81838233B4C0A0090AD79 /* RNNTransitionStateHolder.m */; };
+		34C81972233B4C0D0090AD79 /* DoubleParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8183E233B4C0A0090AD79 /* DoubleParser.m */; };
+		34C81973233B4C0D0090AD79 /* RNNEventEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81840233B4C0A0090AD79 /* RNNEventEmitter.m */; };
+		34C81974233B4C0D0090AD79 /* RNNOverlayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81843233B4C0A0090AD79 /* RNNOverlayManager.m */; };
+		34C81975233B4C0D0090AD79 /* RNNNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81844233B4C0A0090AD79 /* RNNNavigationController.m */; };
+		34C81976233B4C0D0090AD79 /* RNNAnimationConfigurationOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81845233B4C0A0090AD79 /* RNNAnimationConfigurationOptions.m */; };
+		34C81977233B4C0D0090AD79 /* UIImage+tint.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81847233B4C0A0090AD79 /* UIImage+tint.m */; };
+		34C81978233B4C0D0090AD79 /* RNNBottomTabsOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8184D233B4C0A0090AD79 /* RNNBottomTabsOptions.m */; };
+		34C81979233B4C0D0090AD79 /* UINavigationController+RNNOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81850233B4C0A0090AD79 /* UINavigationController+RNNOptions.m */; };
+		34C8197A233B4C0D0090AD79 /* RNNDefaultOptionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81852233B4C0A0090AD79 /* RNNDefaultOptionsHelper.m */; };
+		34C8197B233B4C0D0090AD79 /* RNNInteractivePopAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81856233B4C0A0090AD79 /* RNNInteractivePopAnimator.m */; };
+		34C8197C233B4C0D0090AD79 /* RNNOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81859233B4C0A0090AD79 /* RNNOptions.m */; };
+		34C8197D233B4C0D0090AD79 /* NullDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8185B233B4C0A0090AD79 /* NullDictionary.m */; };
+		34C8197E233B4C0D0090AD79 /* RNNTabBarItemCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8185C233B4C0A0090AD79 /* RNNTabBarItemCreator.m */; };
+		34C8197F233B4C0D0090AD79 /* RNNOverlayOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8185D233B4C0A0090AD79 /* RNNOverlayOptions.m */; };
+		34C81980233B4C0D0090AD79 /* RNNTopTabsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8185E233B4C0A0090AD79 /* RNNTopTabsViewController.m */; };
+		34C81981233B4C0D0090AD79 /* DictionaryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81863233B4C0A0090AD79 /* DictionaryParser.m */; };
+		34C81982233B4C0D0090AD79 /* Text.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81864233B4C0A0090AD79 /* Text.m */; };
+		34C81983233B4C0D0090AD79 /* RNNComponentOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81867233B4C0A0090AD79 /* RNNComponentOptions.m */; };
+		34C81984233B4C0D0090AD79 /* RNNSideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81869233B4C0A0090AD79 /* RNNSideMenuController.m */; };
+		34C81985233B4C0D0090AD79 /* RNNSideMenuPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8186B233B4C0A0090AD79 /* RNNSideMenuPresenter.m */; };
+		34C81986233B4C0D0090AD79 /* RNNUIBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8186C233B4C0A0090AD79 /* RNNUIBarButtonItem.m */; };
+		34C81987233B4C0D0090AD79 /* RNNReactView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8186D233B4C0A0090AD79 /* RNNReactView.m */; };
+		34C81988233B4C0D0090AD79 /* RNNElementFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81871233B4C0A0090AD79 /* RNNElementFinder.m */; };
+		34C81989233B4C0D0090AD79 /* SPStorkHaptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C81875233B4C0A0090AD79 /* SPStorkHaptic.swift */; };
+		34C8198A233B4C0D0090AD79 /* SPStorkArrowMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C81876233B4C0A0090AD79 /* SPStorkArrowMode.swift */; };
+		34C8198B233B4C0D0090AD79 /* SPStorkSeque.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C81877233B4C0A0090AD79 /* SPStorkSeque.swift */; };
+		34C8198C233B4C0D0090AD79 /* SPStorkCodeDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C81879233B4C0A0090AD79 /* SPStorkCodeDraw.swift */; };
+		34C8198D233B4C0D0090AD79 /* SPStorkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C8187A233B4C0A0090AD79 /* SPStorkController.swift */; };
+		34C8198E233B4C0D0090AD79 /* SPStorkTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C8187C233B4C0A0090AD79 /* SPStorkTransitioningDelegate.swift */; };
+		34C8198F233B4C0D0090AD79 /* SPStorkPresentingAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C8187D233B4C0A0090AD79 /* SPStorkPresentingAnimationController.swift */; };
+		34C81990233B4C0D0090AD79 /* SPStorkPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C8187E233B4C0A0090AD79 /* SPStorkPresentationController.swift */; };
+		34C81991233B4C0D0090AD79 /* SPStorkDismissingAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C8187F233B4C0A0090AD79 /* SPStorkDismissingAnimationController.swift */; };
+		34C81992233B4C0D0090AD79 /* SPStorkViewControllerExtenshion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C81881233B4C0A0090AD79 /* SPStorkViewControllerExtenshion.swift */; };
+		34C81993233B4C0D0090AD79 /* SPStorkCloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C81883233B4C0A0090AD79 /* SPStorkCloseButton.swift */; };
+		34C81994233B4C0D0090AD79 /* SPStorkIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C81884233B4C0A0090AD79 /* SPStorkIndicatorView.swift */; };
+		34C81995233B4C0D0090AD79 /* SPStorkCloseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C81885233B4C0A0090AD79 /* SPStorkCloseView.swift */; };
+		34C81996233B4C0D0090AD79 /* SPStorkControllerConfirmDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C81887233B4C0A0090AD79 /* SPStorkControllerConfirmDelegate.swift */; };
+		34C81997233B4C0D0090AD79 /* SPStorkControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C81888233B4C0A0090AD79 /* SPStorkControllerDelegate.swift */; };
+		34C81998233B4C0D0090AD79 /* RNNBasePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8188B233B4C0B0090AD79 /* RNNBasePresenter.m */; };
+		34C81999233B4C0D0090AD79 /* RNNButtonOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8188E233B4C0B0090AD79 /* RNNButtonOptions.m */; };
+		34C8199A233B4C0D0090AD79 /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81898233B4C0B0090AD79 /* HMSegmentedControl.m */; };
+		34C8199B233B4C0D0090AD79 /* ImageParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C81899233B4C0B0090AD79 /* ImageParser.m */; };
+		34C8199C233B4C0D0090AD79 /* RNNViewLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8189A233B4C0B0090AD79 /* RNNViewLocation.m */; };
+		34C8199D233B4C0D0090AD79 /* RNNPreviewOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8189B233B4C0B0090AD79 /* RNNPreviewOptions.m */; };
+		34C8199E233B4C0D0090AD79 /* UIViewController+SideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8189D233B4C0B0090AD79 /* UIViewController+SideMenuController.m */; };
+		34C8199F233B4C0D0090AD79 /* NumberParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8189E233B4C0B0090AD79 /* NumberParser.m */; };
+		34C819A0233B4C0D0090AD79 /* RNNCustomTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C8189F233B4C0B0090AD79 /* RNNCustomTitleView.m */; };
+		34C819A1233B4C0D0090AD79 /* RCTHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C818A0233B4C0B0090AD79 /* RCTHelpers.m */; };
+		34C819A2233B4C0D0090AD79 /* NullImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C818A2233B4C0B0090AD79 /* NullImage.m */; };
+		34C819A3233B4C0D0090AD79 /* Bool.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C818A3233B4C0B0090AD79 /* Bool.m */; };
+		34C819A4233B4C0D0090AD79 /* RNNTopBarOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C818B1233B4C0B0090AD79 /* RNNTopBarOptions.m */; };
+		34C819A5233B4C0D0090AD79 /* VICMAImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C818B3233B4C0B0090AD79 /* VICMAImageView.m */; };
+		34C819A6233B4C0D0090AD79 /* RNNExternalComponentStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C818B4233B4C0B0090AD79 /* RNNExternalComponentStore.m */; };
+		34C819A7233B4C0D0090AD79 /* RNNLargeTitleOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C818BA233B4C0B0090AD79 /* RNNLargeTitleOptions.m */; };
+		34C819A8233B4C0D0090AD79 /* RNNElementView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C818BD233B4C0B0090AD79 /* RNNElementView.m */; };
+		34C819A9233B4C0D0090AD79 /* RNNSplitViewOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C818BE233B4C0B0090AD79 /* RNNSplitViewOptions.m */; };
+		34C819AA233B4C0D0090AD79 /* RNNNavigationButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C818C1233B4C0B0090AD79 /* RNNNavigationButtons.m */; };
+		34C819AB233B4C0D0090AD79 /* RNNTitleViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C818C2233B4C0B0090AD79 /* RNNTitleViewHelper.m */; };
+		34C819AC233B4C0D0090AD79 /* IntNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C818C3233B4C0B0090AD79 /* IntNumber.m */; };
+		34C819AD233B4C0D0090AD79 /* RNNControllerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C818C5233B4C0B0090AD79 /* RNNControllerFactory.m */; };
+		34C819AE233B4C0D0090AD79 /* RNNScreenTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C818C7233B4C0B0090AD79 /* RNNScreenTransition.m */; };
+		34C819AF233B4C0D0090AD79 /* Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C818CA233B4C0C0090AD79 /* Color.m */; };
+		34C819B0233B4C0D0090AD79 /* UISplitViewController+RNNOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C818CB233B4C0C0090AD79 /* UISplitViewController+RNNOptions.m */; };
+		34C819B1233B4C0D0090AD79 /* IntNumberParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C818CC233B4C0C0090AD79 /* IntNumberParser.m */; };
 		34D1CC3121A70F40001E6A5F /* copy.wav in Resources */ = {isa = PBXBuildFile; fileRef = 34D1CC3021A70F3F001E6A5F /* copy.wav */; };
 		34FAC26A232142ED0084A60F /* AddressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC269232142ED0084A60F /* AddressBar.swift */; };
 		34FAC26C232142F60084A60F /* SPFakeBarNavigationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC26B232142F50084A60F /* SPFakeBarNavigationStyle.swift */; };
 		34FAC26E232142FF0084A60F /* SPFakeBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC26D232142FF0084A60F /* SPFakeBarView.swift */; };
 		34FAC270232145000084A60F /* TGAddressBarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC26F232145000084A60F /* TGAddressBarManager.m */; };
 		34FAC31B2322B4FB0084A60F /* TGAddressBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC31A2322B4FA0084A60F /* TGAddressBarManager.swift */; };
-		34FAC3592323F10E0084A60F /* SPStorkHaptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC3452323F10D0084A60F /* SPStorkHaptic.swift */; };
-		34FAC35A2323F10E0084A60F /* SPStorkArrowMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC3462323F10D0084A60F /* SPStorkArrowMode.swift */; };
-		34FAC35B2323F10E0084A60F /* SPStorkSeque.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC3472323F10D0084A60F /* SPStorkSeque.swift */; };
-		34FAC35C2323F10E0084A60F /* SPStorkCodeDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC3492323F10D0084A60F /* SPStorkCodeDraw.swift */; };
-		34FAC35D2323F10E0084A60F /* SPStorkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC34A2323F10E0084A60F /* SPStorkController.swift */; };
-		34FAC35E2323F10E0084A60F /* SPStorkTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC34C2323F10E0084A60F /* SPStorkTransitioningDelegate.swift */; };
-		34FAC35F2323F10E0084A60F /* SPStorkPresentingAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC34D2323F10E0084A60F /* SPStorkPresentingAnimationController.swift */; };
-		34FAC3602323F10E0084A60F /* SPStorkPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC34E2323F10E0084A60F /* SPStorkPresentationController.swift */; };
-		34FAC3612323F10E0084A60F /* SPStorkDismissingAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC34F2323F10E0084A60F /* SPStorkDismissingAnimationController.swift */; };
-		34FAC3622323F10E0084A60F /* SPStorkViewControllerExtenshion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC3512323F10E0084A60F /* SPStorkViewControllerExtenshion.swift */; };
-		34FAC3632323F10E0084A60F /* SPStorkCloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC3532323F10E0084A60F /* SPStorkCloseButton.swift */; };
-		34FAC3642323F10E0084A60F /* SPStorkIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC3542323F10E0084A60F /* SPStorkIndicatorView.swift */; };
-		34FAC3652323F10E0084A60F /* SPStorkCloseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC3552323F10E0084A60F /* SPStorkCloseView.swift */; };
-		34FAC3662323F10E0084A60F /* SPStorkControllerConfirmDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC3572323F10E0084A60F /* SPStorkControllerConfirmDelegate.swift */; };
-		34FAC3672323F10E0084A60F /* SPStorkControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC3582323F10E0084A60F /* SPStorkControllerDelegate.swift */; };
 		34FAC44523268ED10084A60F /* NavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC44423268ED10084A60F /* NavBar.swift */; };
 		34FAC49423268F880084A60F /* NavBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC49323268F880084A60F /* NavBarManager.swift */; };
 		34FAC49623268F9A0084A60F /* NavBarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC49523268F9A0084A60F /* NavBarManager.m */; };
@@ -462,20 +600,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = E72EC1401F7ABB5A0001BC90;
 			remoteInfo = "RNDeviceInfo-tvOS";
-		};
-		3446CAAE20E8EB1E00ACA3C8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3446CAA920E8EB1E00ACA3C8 /* ReactNativeNavigation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D8AFADBD1BEE6F3F00A4592D;
-			remoteInfo = ReactNativeNavigation;
-		};
-		3446CAB020E8EB1E00ACA3C8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3446CAA920E8EB1E00ACA3C8 /* ReactNativeNavigation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7B49FEBB1E95090800DEB3EA;
-			remoteInfo = ReactNativeNavigationTests;
 		};
 		344949862274C19E00D8AB38 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -949,7 +1073,6 @@
 		2DCE5CE8E4DC4D17BDEAF27C /* libRNRandomBytes.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNRandomBytes.a; sourceTree = "<group>"; };
 		3410CA9622854EEE005FAF2A /* injectScatter.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = injectScatter.js; path = bitportal/injectScatter.js; sourceTree = "<group>"; };
 		343A5CF92285673E00DC76D6 /* injectMetaMask.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = injectMetaMask.js; path = bitportal/injectMetaMask.js; sourceTree = "<group>"; };
-		3446CAA920E8EB1E00ACA3C8 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/lib/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		3449494A2274C19E00D8AB38 /* RNCSlider.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCSlider.xcodeproj; path = "../node_modules/@react-native-community/slider/ios/RNCSlider.xcodeproj"; sourceTree = "<group>"; };
 		344C9CC32317B7ED004E26AD /* SPAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPAlertView.swift; sourceTree = "<group>"; };
 		344C9CC42317B7ED004E26AD /* SPAlertPreset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPAlertPreset.swift; sourceTree = "<group>"; };
@@ -1006,6 +1129,317 @@
 		34A680D122C4E75C00BBE21E /* RNReanimated.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNReanimated.xcodeproj; path = "../node_modules/react-native-reanimated/ios/RNReanimated.xcodeproj"; sourceTree = "<group>"; };
 		34A680DB22C4E79900BBE21E /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
 		34AEC4A6230BDD9B002B9C99 /* RNCWebView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCWebView.xcodeproj; path = "../node_modules/react-native-webview/ios/RNCWebView.xcodeproj"; sourceTree = "<group>"; };
+		34C8178A233B4C080090AD79 /* RNNTopTabsOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNTopTabsOptions.m; sourceTree = "<group>"; };
+		34C8178B233B4C080090AD79 /* RNNBottomTabsOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNBottomTabsOptions.h; sourceTree = "<group>"; };
+		34C8178C233B4C080090AD79 /* NullBool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NullBool.m; sourceTree = "<group>"; };
+		34C8178D233B4C080090AD79 /* RNNElementTransitionOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNElementTransitionOptions.m; sourceTree = "<group>"; };
+		34C8178E233B4C080090AD79 /* Dictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dictionary.m; sourceTree = "<group>"; };
+		34C8178F233B4C080090AD79 /* Param.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Param.m; sourceTree = "<group>"; };
+		34C81790233B4C080090AD79 /* BoolParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoolParser.m; sourceTree = "<group>"; };
+		34C81791233B4C080090AD79 /* RNNSplashScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNSplashScreen.m; sourceTree = "<group>"; };
+		34C81792233B4C080090AD79 /* UIImage+tint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+tint.h"; sourceTree = "<group>"; };
+		34C81793233B4C080090AD79 /* RNNSideMenuSideOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNSideMenuSideOptions.m; sourceTree = "<group>"; };
+		34C81794233B4C080090AD79 /* RNNNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNNavigationController.h; sourceTree = "<group>"; };
+		34C81795233B4C080090AD79 /* RNNAnimationConfigurationOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNAnimationConfigurationOptions.h; sourceTree = "<group>"; };
+		34C81796233B4C080090AD79 /* RNNFontAttributesCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNFontAttributesCreator.m; sourceTree = "<group>"; };
+		34C81797233B4C080090AD79 /* RNNOverlayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNOverlayManager.h; sourceTree = "<group>"; };
+		34C81798233B4C080090AD79 /* RNNNavigationControllerPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNNavigationControllerPresenter.m; sourceTree = "<group>"; };
+		34C81799233B4C080090AD79 /* NullIntNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NullIntNumber.m; sourceTree = "<group>"; };
+		34C8179A233B4C080090AD79 /* DoubleParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoubleParser.h; sourceTree = "<group>"; };
+		34C8179B233B4C080090AD79 /* RNNEventEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNEventEmitter.h; sourceTree = "<group>"; };
+		34C8179C233B4C080090AD79 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		34C8179D233B4C080090AD79 /* RNNCustomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNCustomViewController.m; sourceTree = "<group>"; };
+		34C8179E233B4C080090AD79 /* NullNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NullNumber.m; sourceTree = "<group>"; };
+		34C8179F233B4C080090AD79 /* RNNStatusBarOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNStatusBarOptions.m; sourceTree = "<group>"; };
+		34C817A0233B4C080090AD79 /* RNNBackgroundOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNBackgroundOptions.m; sourceTree = "<group>"; };
+		34C817A1233B4C080090AD79 /* RNNTransitionStateHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNTransitionStateHolder.h; sourceTree = "<group>"; };
+		34C817A2233B4C080090AD79 /* RNNSwizzles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNSwizzles.h; sourceTree = "<group>"; };
+		34C817A3233B4C080090AD79 /* RNNTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNTransition.m; sourceTree = "<group>"; };
+		34C817A4233B4C080090AD79 /* RNNLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNLayoutManager.m; sourceTree = "<group>"; };
+		34C817A5233B4C080090AD79 /* RNNLayoutNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNLayoutNode.h; sourceTree = "<group>"; };
+		34C817A6233B4C080090AD79 /* TextParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextParser.m; sourceTree = "<group>"; };
+		34C817A7233B4C080090AD79 /* RNNBackButtonOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNBackButtonOptions.h; sourceTree = "<group>"; };
+		34C817A8233B4C080090AD79 /* RNNSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNSplitViewController.h; sourceTree = "<group>"; };
+		34C817A9233B4C080090AD79 /* ColorParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorParser.m; sourceTree = "<group>"; };
+		34C817AA233B4C080090AD79 /* RNNAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNAnimatedView.m; sourceTree = "<group>"; };
+		34C817AB233B4C080090AD79 /* RNNElementFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNElementFinder.h; sourceTree = "<group>"; };
+		34C817AC233B4C080090AD79 /* RNNTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNTabBarController.m; sourceTree = "<group>"; };
+		34C817AD233B4C080090AD79 /* RNNSideMenuPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNSideMenuPresenter.h; sourceTree = "<group>"; };
+		34C817AE233B4C080090AD79 /* RNNLayoutOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNLayoutOptions.m; sourceTree = "<group>"; };
+		34C817AF233B4C080090AD79 /* RNNUIBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNUIBarButtonItem.h; sourceTree = "<group>"; };
+		34C817B0233B4C080090AD79 /* SideMenuOpenGestureModeParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideMenuOpenGestureModeParser.m; sourceTree = "<group>"; };
+		34C817B1233B4C080090AD79 /* RNNReactView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNReactView.h; sourceTree = "<group>"; };
+		34C817B2233B4C080090AD79 /* RCTConvert+Modal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RCTConvert+Modal.h"; sourceTree = "<group>"; };
+		34C817B3233B4C080090AD79 /* RNNSharedElementAnimationOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNSharedElementAnimationOptions.m; sourceTree = "<group>"; };
+		34C817B4233B4C080090AD79 /* RNNSideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNSideMenuController.h; sourceTree = "<group>"; };
+		34C817B5233B4C080090AD79 /* UIViewController+LayoutProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+LayoutProtocol.m"; sourceTree = "<group>"; };
+		34C817B6233B4C080090AD79 /* RNNComponentOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNComponentOptions.h; sourceTree = "<group>"; };
+		34C817B7233B4C080090AD79 /* Double.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Double.m; sourceTree = "<group>"; };
+		34C817B8233B4C080090AD79 /* RNNAnimationsOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNAnimationsOptions.m; sourceTree = "<group>"; };
+		34C817B9233B4C080090AD79 /* DictionaryParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DictionaryParser.h; sourceTree = "<group>"; };
+		34C817BA233B4C080090AD79 /* Text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Text.h; sourceTree = "<group>"; };
+		34C817BB233B4C080090AD79 /* RNNNavigationStackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNNavigationStackManager.m; sourceTree = "<group>"; };
+		34C817BC233B4C080090AD79 /* RCTConvert+UIBarButtonSystemItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RCTConvert+UIBarButtonSystemItem.m"; sourceTree = "<group>"; };
+		34C817BD233B4C080090AD79 /* RNNSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNSegmentedControl.m; sourceTree = "<group>"; };
+		34C817BE233B4C080090AD79 /* RNNOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNOptions.h; sourceTree = "<group>"; };
+		34C817BF233B4C080090AD79 /* RNNTabBarItemCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNTabBarItemCreator.h; sourceTree = "<group>"; };
+		34C817C0233B4C080090AD79 /* RNNBridgeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNBridgeManager.m; sourceTree = "<group>"; };
+		34C817C1233B4C080090AD79 /* NullDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NullDictionary.h; sourceTree = "<group>"; };
+		34C817C2233B4C080090AD79 /* RNNOverlayOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNOverlayOptions.h; sourceTree = "<group>"; };
+		34C817C3233B4C080090AD79 /* RNNTopTabsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNTopTabsViewController.h; sourceTree = "<group>"; };
+		34C817C4233B4C080090AD79 /* RNNAnimationsTransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNAnimationsTransitionDelegate.m; sourceTree = "<group>"; };
+		34C817C5233B4C080090AD79 /* RNNInteractivePopAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNInteractivePopAnimator.h; sourceTree = "<group>"; };
+		34C817C6233B4C080090AD79 /* UITabBarController+RNNOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarController+RNNOptions.m"; sourceTree = "<group>"; };
+		34C817C7233B4C080090AD79 /* RNNLayoutInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNLayoutInfo.m; sourceTree = "<group>"; };
+		34C817C8233B4C080090AD79 /* RNNTopTabOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNTopTabOptions.m; sourceTree = "<group>"; };
+		34C817C9233B4C090090AD79 /* RNNCommandsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNCommandsHandler.m; sourceTree = "<group>"; };
+		34C817CA233B4C090090AD79 /* RNNDefaultOptionsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNDefaultOptionsHelper.h; sourceTree = "<group>"; };
+		34C817CB233B4C090090AD79 /* UINavigationController+RNNOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+RNNOptions.h"; sourceTree = "<group>"; };
+		34C817CC233B4C090090AD79 /* NullImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NullImage.h; sourceTree = "<group>"; };
+		34C817CD233B4C090090AD79 /* UIImage+insets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+insets.m"; sourceTree = "<group>"; };
+		34C817CE233B4C090090AD79 /* Bool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bool.h; sourceTree = "<group>"; };
+		34C817CF233B4C090090AD79 /* RCTHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTHelpers.h; sourceTree = "<group>"; };
+		34C817D0233B4C090090AD79 /* RNNCustomTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNCustomTitleView.h; sourceTree = "<group>"; };
+		34C817D1233B4C090090AD79 /* NumberParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberParser.h; sourceTree = "<group>"; };
+		34C817D2233B4C090090AD79 /* RNNPreviewOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNPreviewOptions.h; sourceTree = "<group>"; };
+		34C817D3233B4C090090AD79 /* RNNErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNErrorHandler.m; sourceTree = "<group>"; };
+		34C817D4233B4C090090AD79 /* UIViewController+SideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SideMenuController.h"; sourceTree = "<group>"; };
+		34C817D5233B4C090090AD79 /* RNNViewLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNViewLocation.h; sourceTree = "<group>"; };
+		34C817D6233B4C090090AD79 /* RNNBottomTabOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNBottomTabOptions.m; sourceTree = "<group>"; };
+		34C817D7233B4C090090AD79 /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
+		34C817D8233B4C090090AD79 /* ImageParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageParser.h; sourceTree = "<group>"; };
+		34C817D9233B4C090090AD79 /* RNNBridgeModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNBridgeModule.m; sourceTree = "<group>"; };
+		34C817DA233B4C090090AD79 /* RNNPushAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNPushAnimation.m; sourceTree = "<group>"; };
+		34C817DB233B4C090090AD79 /* RNNElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNElement.m; sourceTree = "<group>"; };
+		34C817DC233B4C090090AD79 /* RNNSubtitleOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNSubtitleOptions.m; sourceTree = "<group>"; };
+		34C817DD233B4C090090AD79 /* NullColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NullColor.m; sourceTree = "<group>"; };
+		34C817DE233B4C090090AD79 /* RNNSplitViewControllerPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNSplitViewControllerPresenter.m; sourceTree = "<group>"; };
+		34C817DF233B4C090090AD79 /* Number.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Number.m; sourceTree = "<group>"; };
+		34C817E0233B4C090090AD79 /* RNNButtonOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNButtonOptions.h; sourceTree = "<group>"; };
+		34C817E1233B4C090090AD79 /* RNNOverlayWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNOverlayWindow.m; sourceTree = "<group>"; };
+		34C817E2233B4C090090AD79 /* UIViewController+RNNOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RNNOptions.m"; sourceTree = "<group>"; };
+		34C817E3233B4C090090AD79 /* RNNBasePresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNBasePresenter.h; sourceTree = "<group>"; };
+		34C817E4233B4C090090AD79 /* RNNModalManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNModalManager.m; sourceTree = "<group>"; };
+		34C817E5233B4C090090AD79 /* ReactNativeNavigation-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ReactNativeNavigation-Bridging-Header.h"; sourceTree = "<group>"; };
+		34C817E6233B4C090090AD79 /* RNNTitleOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNTitleOptions.m; sourceTree = "<group>"; };
+		34C817E7233B4C090090AD79 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOCMock.a; sourceTree = "<group>"; };
+		34C817E8233B4C090090AD79 /* RNNNavigationOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNNavigationOptions.m; sourceTree = "<group>"; };
+		34C817E9233B4C090090AD79 /* IntNumberParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntNumberParser.h; sourceTree = "<group>"; };
+		34C817EA233B4C090090AD79 /* RNNSideMenuChildVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNSideMenuChildVC.m; sourceTree = "<group>"; };
+		34C817EB233B4C090090AD79 /* UISplitViewController+RNNOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UISplitViewController+RNNOptions.h"; sourceTree = "<group>"; };
+		34C817EC233B4C090090AD79 /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
+		34C817ED233B4C090090AD79 /* RNNReactRootViewCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNReactRootViewCreator.m; sourceTree = "<group>"; };
+		34C817EE233B4C090090AD79 /* RNNScreenTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNScreenTransition.h; sourceTree = "<group>"; };
+		34C817EF233B4C090090AD79 /* SideMenuOpenMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideMenuOpenMode.m; sourceTree = "<group>"; };
+		34C817F0233B4C090090AD79 /* RNNLeafProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNLeafProtocol.h; sourceTree = "<group>"; };
+		34C817F1233B4C090090AD79 /* RNNControllerFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNControllerFactory.h; sourceTree = "<group>"; };
+		34C817F2233B4C090090AD79 /* RNNViewControllerPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNViewControllerPresenter.m; sourceTree = "<group>"; };
+		34C817F3233B4C090090AD79 /* RNNLayoutProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNLayoutProtocol.h; sourceTree = "<group>"; };
+		34C817F4233B4C090090AD79 /* IntNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntNumber.h; sourceTree = "<group>"; };
+		34C817F5233B4C090090AD79 /* RNNBridgeManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNBridgeManagerDelegate.h; sourceTree = "<group>"; };
+		34C817F6233B4C090090AD79 /* RNNNavigationButtons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNNavigationButtons.h; sourceTree = "<group>"; };
+		34C817F7233B4C090090AD79 /* NullDouble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NullDouble.m; sourceTree = "<group>"; };
+		34C817F8233B4C090090AD79 /* RNNTitleViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNTitleViewHelper.h; sourceTree = "<group>"; };
+		34C817F9233B4C090090AD79 /* RNNElementView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNElementView.h; sourceTree = "<group>"; };
+		34C817FA233B4C090090AD79 /* RNNUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNUtils.m; sourceTree = "<group>"; };
+		34C817FB233B4C090090AD79 /* RNNSplitViewOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNSplitViewOptions.h; sourceTree = "<group>"; };
+		34C817FC233B4C090090AD79 /* NullText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NullText.m; sourceTree = "<group>"; };
+		34C817FD233B4C090090AD79 /* RNNAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNAnimator.m; sourceTree = "<group>"; };
+		34C817FF233B4C090090AD79 /* RCCTheSideBarManagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCTheSideBarManagerViewController.h; sourceTree = "<group>"; };
+		34C81800233B4C090090AD79 /* RCCDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCDrawerController.m; sourceTree = "<group>"; };
+		34C81802233B4C090090AD79 /* MMDrawerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerBarButtonItem.m; sourceTree = "<group>"; };
+		34C81803233B4C090090AD79 /* UIViewController+MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MMDrawerController.m"; sourceTree = "<group>"; };
+		34C81804233B4C090090AD79 /* MMExampleDrawerVisualStateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMExampleDrawerVisualStateManager.h; sourceTree = "<group>"; };
+		34C81805233B4C090090AD79 /* MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerController.m; sourceTree = "<group>"; };
+		34C81806233B4C090090AD79 /* MMDrawerController+Subclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMDrawerController+Subclass.h"; sourceTree = "<group>"; };
+		34C81807233B4C090090AD79 /* MMDrawerVisualState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerVisualState.h; sourceTree = "<group>"; };
+		34C81808233B4C090090AD79 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
+		34C81809233B4C090090AD79 /* UIViewController+MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MMDrawerController.h"; sourceTree = "<group>"; };
+		34C8180A233B4C090090AD79 /* MMDrawerVisualState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerVisualState.m; sourceTree = "<group>"; };
+		34C8180B233B4C090090AD79 /* MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerController.h; sourceTree = "<group>"; };
+		34C8180C233B4C090090AD79 /* MMExampleDrawerVisualStateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMExampleDrawerVisualStateManager.m; sourceTree = "<group>"; };
+		34C8180D233B4C090090AD79 /* RCCDrawerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCDrawerHelper.m; sourceTree = "<group>"; };
+		34C8180E233B4C090090AD79 /* RCCDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCDrawerController.h; sourceTree = "<group>"; };
+		34C8180F233B4C090090AD79 /* RCCTheSideBarManagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCCTheSideBarManagerViewController.m; sourceTree = "<group>"; };
+		34C81810233B4C090090AD79 /* RCCDrawerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCDrawerHelper.h; sourceTree = "<group>"; };
+		34C81812233B4C090090AD79 /* TheSidebarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TheSidebarController.m; sourceTree = "<group>"; };
+		34C81813233B4C090090AD79 /* TheSidebarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TheSidebarController.h; sourceTree = "<group>"; };
+		34C81815233B4C090090AD79 /* SidebarFlipboardAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarFlipboardAnimation.h; sourceTree = "<group>"; };
+		34C81816233B4C090090AD79 /* SidebarAirbnbAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarAirbnbAnimation.m; sourceTree = "<group>"; };
+		34C81817233B4C090090AD79 /* SidebarLuvocracyAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarLuvocracyAnimation.m; sourceTree = "<group>"; };
+		34C81818233B4C090090AD79 /* SidebarWunderlistAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarWunderlistAnimation.h; sourceTree = "<group>"; };
+		34C81819233B4C090090AD79 /* SidebarFacebookAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarFacebookAnimation.m; sourceTree = "<group>"; };
+		34C8181A233B4C090090AD79 /* SidebarAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarAnimation.h; sourceTree = "<group>"; };
+		34C8181B233B4C090090AD79 /* SidebarFeedlyAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarFeedlyAnimation.m; sourceTree = "<group>"; };
+		34C8181C233B4C090090AD79 /* SidebarAirbnbAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarAirbnbAnimation.h; sourceTree = "<group>"; };
+		34C8181D233B4C090090AD79 /* SidebarFlipboardAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarFlipboardAnimation.m; sourceTree = "<group>"; };
+		34C8181E233B4C090090AD79 /* SidebarLuvocracyAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarLuvocracyAnimation.h; sourceTree = "<group>"; };
+		34C8181F233B4C090090AD79 /* SidebarAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarAnimation.m; sourceTree = "<group>"; };
+		34C81820233B4C090090AD79 /* SidebarFacebookAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarFacebookAnimation.h; sourceTree = "<group>"; };
+		34C81821233B4C090090AD79 /* SidebarWunderlistAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SidebarWunderlistAnimation.m; sourceTree = "<group>"; };
+		34C81822233B4C090090AD79 /* SidebarFeedlyAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SidebarFeedlyAnimation.h; sourceTree = "<group>"; };
+		34C81823233B4C090090AD79 /* RCCDrawerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCCDrawerProtocol.h; sourceTree = "<group>"; };
+		34C81824233B4C090090AD79 /* Image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Image.m; sourceTree = "<group>"; };
+		34C81825233B4C090090AD79 /* RNNTabBarPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNTabBarPresenter.m; sourceTree = "<group>"; };
+		34C81826233B4C090090AD79 /* RNNLargeTitleOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNLargeTitleOptions.h; sourceTree = "<group>"; };
+		34C81827233B4C090090AD79 /* RNNSideMenuOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNSideMenuOptions.m; sourceTree = "<group>"; };
+		34C81828233B4C090090AD79 /* RNNReactComponentRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNReactComponentRegistry.m; sourceTree = "<group>"; };
+		34C81829233B4C090090AD79 /* ReactNativeNavigation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReactNativeNavigation.m; sourceTree = "<group>"; };
+		34C8182A233B4C090090AD79 /* RNNTopBarOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNTopBarOptions.h; sourceTree = "<group>"; };
+		34C8182B233B4C090090AD79 /* RNNInsetsOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNInsetsOptions.m; sourceTree = "<group>"; };
+		34C8182C233B4C090090AD79 /* RNNExternalComponentStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNExternalComponentStore.h; sourceTree = "<group>"; };
+		34C8182D233B4C090090AD79 /* VICMAImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VICMAImageView.h; sourceTree = "<group>"; };
+		34C8182E233B4C090090AD79 /* InteractivePopGestureDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InteractivePopGestureDelegate.m; sourceTree = "<group>"; };
+		34C8182F233B4C090090AD79 /* RNNRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNRootViewController.m; sourceTree = "<group>"; };
+		34C81830233B4C090090AD79 /* RNNSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNSplitViewController.m; sourceTree = "<group>"; };
+		34C81831233B4C090090AD79 /* RNNLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNLayoutManager.h; sourceTree = "<group>"; };
+		34C81832233B4C090090AD79 /* RNNLayoutNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNLayoutNode.m; sourceTree = "<group>"; };
+		34C81833233B4C090090AD79 /* TextParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextParser.h; sourceTree = "<group>"; };
+		34C81834233B4C090090AD79 /* RNNBackButtonOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNBackButtonOptions.m; sourceTree = "<group>"; };
+		34C81835233B4C0A0090AD79 /* RNNSwizzles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNSwizzles.m; sourceTree = "<group>"; };
+		34C81836233B4C0A0090AD79 /* RCTConvert+SideMenuOpenGestureMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RCTConvert+SideMenuOpenGestureMode.h"; sourceTree = "<group>"; };
+		34C81837233B4C0A0090AD79 /* RNNTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNTransition.h; sourceTree = "<group>"; };
+		34C81838233B4C0A0090AD79 /* RNNTransitionStateHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNTransitionStateHolder.m; sourceTree = "<group>"; };
+		34C81839233B4C0A0090AD79 /* NullNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NullNumber.h; sourceTree = "<group>"; };
+		34C8183A233B4C0A0090AD79 /* RNNBackgroundOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNBackgroundOptions.h; sourceTree = "<group>"; };
+		34C8183B233B4C0A0090AD79 /* RNNStatusBarOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNStatusBarOptions.h; sourceTree = "<group>"; };
+		34C8183C233B4C0A0090AD79 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		34C8183D233B4C0A0090AD79 /* RNNCustomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNCustomViewController.h; sourceTree = "<group>"; };
+		34C8183E233B4C0A0090AD79 /* DoubleParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoubleParser.m; sourceTree = "<group>"; };
+		34C8183F233B4C0A0090AD79 /* NullIntNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NullIntNumber.h; sourceTree = "<group>"; };
+		34C81840233B4C0A0090AD79 /* RNNEventEmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNEventEmitter.m; sourceTree = "<group>"; };
+		34C81841233B4C0A0090AD79 /* RNNFontAttributesCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNFontAttributesCreator.h; sourceTree = "<group>"; };
+		34C81842233B4C0A0090AD79 /* RNNNavigationControllerPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNNavigationControllerPresenter.h; sourceTree = "<group>"; };
+		34C81843233B4C0A0090AD79 /* RNNOverlayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNOverlayManager.m; sourceTree = "<group>"; };
+		34C81844233B4C0A0090AD79 /* RNNNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNNavigationController.m; sourceTree = "<group>"; };
+		34C81845233B4C0A0090AD79 /* RNNAnimationConfigurationOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNAnimationConfigurationOptions.m; sourceTree = "<group>"; };
+		34C81846233B4C0A0090AD79 /* RNNSideMenuSideOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNSideMenuSideOptions.h; sourceTree = "<group>"; };
+		34C81847233B4C0A0090AD79 /* UIImage+tint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+tint.m"; sourceTree = "<group>"; };
+		34C81848233B4C0A0090AD79 /* BoolParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoolParser.h; sourceTree = "<group>"; };
+		34C81849233B4C0A0090AD79 /* Param.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Param.h; sourceTree = "<group>"; };
+		34C8184A233B4C0A0090AD79 /* RNNSplashScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNSplashScreen.h; sourceTree = "<group>"; };
+		34C8184B233B4C0A0090AD79 /* RNNElementTransitionOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNElementTransitionOptions.h; sourceTree = "<group>"; };
+		34C8184C233B4C0A0090AD79 /* Dictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dictionary.h; sourceTree = "<group>"; };
+		34C8184D233B4C0A0090AD79 /* RNNBottomTabsOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNBottomTabsOptions.m; sourceTree = "<group>"; };
+		34C8184E233B4C0A0090AD79 /* NullBool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NullBool.h; sourceTree = "<group>"; };
+		34C8184F233B4C0A0090AD79 /* RNNTopTabsOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNTopTabsOptions.h; sourceTree = "<group>"; };
+		34C81850233B4C0A0090AD79 /* UINavigationController+RNNOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+RNNOptions.m"; sourceTree = "<group>"; };
+		34C81851233B4C0A0090AD79 /* RNNRootViewCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNRootViewCreator.h; sourceTree = "<group>"; };
+		34C81852233B4C0A0090AD79 /* RNNDefaultOptionsHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNDefaultOptionsHelper.m; sourceTree = "<group>"; };
+		34C81853233B4C0A0090AD79 /* RNNCommandsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNCommandsHandler.h; sourceTree = "<group>"; };
+		34C81854233B4C0A0090AD79 /* RNNLayoutInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNLayoutInfo.h; sourceTree = "<group>"; };
+		34C81855233B4C0A0090AD79 /* RNNTopTabOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNTopTabOptions.h; sourceTree = "<group>"; };
+		34C81856233B4C0A0090AD79 /* RNNInteractivePopAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNInteractivePopAnimator.m; sourceTree = "<group>"; };
+		34C81857233B4C0A0090AD79 /* UITabBarController+RNNOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarController+RNNOptions.h"; sourceTree = "<group>"; };
+		34C81858233B4C0A0090AD79 /* RNNAnimationsTransitionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNAnimationsTransitionDelegate.h; sourceTree = "<group>"; };
+		34C81859233B4C0A0090AD79 /* RNNOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNOptions.m; sourceTree = "<group>"; };
+		34C8185A233B4C0A0090AD79 /* RNNBridgeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNBridgeManager.h; sourceTree = "<group>"; };
+		34C8185B233B4C0A0090AD79 /* NullDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NullDictionary.m; sourceTree = "<group>"; };
+		34C8185C233B4C0A0090AD79 /* RNNTabBarItemCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNTabBarItemCreator.m; sourceTree = "<group>"; };
+		34C8185D233B4C0A0090AD79 /* RNNOverlayOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNOverlayOptions.m; sourceTree = "<group>"; };
+		34C8185E233B4C0A0090AD79 /* RNNTopTabsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNTopTabsViewController.m; sourceTree = "<group>"; };
+		34C8185F233B4C0A0090AD79 /* RNNNavigationStackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNNavigationStackManager.h; sourceTree = "<group>"; };
+		34C81860233B4C0A0090AD79 /* RCTConvert+UIBarButtonSystemItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RCTConvert+UIBarButtonSystemItem.h"; sourceTree = "<group>"; };
+		34C81861233B4C0A0090AD79 /* RNNSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNSegmentedControl.h; sourceTree = "<group>"; };
+		34C81862233B4C0A0090AD79 /* RNNAnimationsOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNAnimationsOptions.h; sourceTree = "<group>"; };
+		34C81863233B4C0A0090AD79 /* DictionaryParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DictionaryParser.m; sourceTree = "<group>"; };
+		34C81864233B4C0A0090AD79 /* Text.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Text.m; sourceTree = "<group>"; };
+		34C81865233B4C0A0090AD79 /* Double.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Double.h; sourceTree = "<group>"; };
+		34C81866233B4C0A0090AD79 /* UIViewController+LayoutProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+LayoutProtocol.h"; sourceTree = "<group>"; };
+		34C81867233B4C0A0090AD79 /* RNNComponentOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNComponentOptions.m; sourceTree = "<group>"; };
+		34C81868233B4C0A0090AD79 /* RNNSharedElementAnimationOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNSharedElementAnimationOptions.h; sourceTree = "<group>"; };
+		34C81869233B4C0A0090AD79 /* RNNSideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNSideMenuController.m; sourceTree = "<group>"; };
+		34C8186A233B4C0A0090AD79 /* RNNLayoutOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNLayoutOptions.h; sourceTree = "<group>"; };
+		34C8186B233B4C0A0090AD79 /* RNNSideMenuPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNSideMenuPresenter.m; sourceTree = "<group>"; };
+		34C8186C233B4C0A0090AD79 /* RNNUIBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNUIBarButtonItem.m; sourceTree = "<group>"; };
+		34C8186D233B4C0A0090AD79 /* RNNReactView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNReactView.m; sourceTree = "<group>"; };
+		34C8186E233B4C0A0090AD79 /* SideMenuOpenGestureModeParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideMenuOpenGestureModeParser.h; sourceTree = "<group>"; };
+		34C8186F233B4C0A0090AD79 /* RNNAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNAnimatedView.h; sourceTree = "<group>"; };
+		34C81870233B4C0A0090AD79 /* ColorParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorParser.h; sourceTree = "<group>"; };
+		34C81871233B4C0A0090AD79 /* RNNElementFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNElementFinder.m; sourceTree = "<group>"; };
+		34C81872233B4C0A0090AD79 /* RNNTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNTabBarController.h; sourceTree = "<group>"; };
+		34C81875233B4C0A0090AD79 /* SPStorkHaptic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkHaptic.swift; sourceTree = "<group>"; };
+		34C81876233B4C0A0090AD79 /* SPStorkArrowMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkArrowMode.swift; sourceTree = "<group>"; };
+		34C81877233B4C0A0090AD79 /* SPStorkSeque.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkSeque.swift; sourceTree = "<group>"; };
+		34C81879233B4C0A0090AD79 /* SPStorkCodeDraw.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkCodeDraw.swift; sourceTree = "<group>"; };
+		34C8187A233B4C0A0090AD79 /* SPStorkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkController.swift; sourceTree = "<group>"; };
+		34C8187C233B4C0A0090AD79 /* SPStorkTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkTransitioningDelegate.swift; sourceTree = "<group>"; };
+		34C8187D233B4C0A0090AD79 /* SPStorkPresentingAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkPresentingAnimationController.swift; sourceTree = "<group>"; };
+		34C8187E233B4C0A0090AD79 /* SPStorkPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkPresentationController.swift; sourceTree = "<group>"; };
+		34C8187F233B4C0A0090AD79 /* SPStorkDismissingAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkDismissingAnimationController.swift; sourceTree = "<group>"; };
+		34C81881233B4C0A0090AD79 /* SPStorkViewControllerExtenshion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkViewControllerExtenshion.swift; sourceTree = "<group>"; };
+		34C81883233B4C0A0090AD79 /* SPStorkCloseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkCloseButton.swift; sourceTree = "<group>"; };
+		34C81884233B4C0A0090AD79 /* SPStorkIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkIndicatorView.swift; sourceTree = "<group>"; };
+		34C81885233B4C0A0090AD79 /* SPStorkCloseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkCloseView.swift; sourceTree = "<group>"; };
+		34C81887233B4C0A0090AD79 /* SPStorkControllerConfirmDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkControllerConfirmDelegate.swift; sourceTree = "<group>"; };
+		34C81888233B4C0A0090AD79 /* SPStorkControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkControllerDelegate.swift; sourceTree = "<group>"; };
+		34C81889233B4C0B0090AD79 /* RNNNavigationOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNNavigationOptions.h; sourceTree = "<group>"; };
+		34C8188A233B4C0B0090AD79 /* RNNTitleOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNTitleOptions.h; sourceTree = "<group>"; };
+		34C8188B233B4C0B0090AD79 /* RNNBasePresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNBasePresenter.m; sourceTree = "<group>"; };
+		34C8188C233B4C0B0090AD79 /* UIViewController+RNNOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RNNOptions.h"; sourceTree = "<group>"; };
+		34C8188D233B4C0B0090AD79 /* RNNModalManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNModalManager.h; sourceTree = "<group>"; };
+		34C8188E233B4C0B0090AD79 /* RNNButtonOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNButtonOptions.m; sourceTree = "<group>"; };
+		34C8188F233B4C0B0090AD79 /* Number.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Number.h; sourceTree = "<group>"; };
+		34C81890233B4C0B0090AD79 /* RNNSplitViewControllerPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNSplitViewControllerPresenter.h; sourceTree = "<group>"; };
+		34C81891233B4C0B0090AD79 /* RNNOverlayWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNOverlayWindow.h; sourceTree = "<group>"; };
+		34C81892233B4C0B0090AD79 /* RNNSubtitleOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNSubtitleOptions.h; sourceTree = "<group>"; };
+		34C81893233B4C0B0090AD79 /* NullColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NullColor.h; sourceTree = "<group>"; };
+		34C81894233B4C0B0090AD79 /* RNNBridgeModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNBridgeModule.h; sourceTree = "<group>"; };
+		34C81895233B4C0B0090AD79 /* RNNPushAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNPushAnimation.h; sourceTree = "<group>"; };
+		34C81896233B4C0B0090AD79 /* RNNElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNElement.h; sourceTree = "<group>"; };
+		34C81897233B4C0B0090AD79 /* RNNBottomTabOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNBottomTabOptions.h; sourceTree = "<group>"; };
+		34C81898233B4C0B0090AD79 /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentedControl.m; sourceTree = "<group>"; };
+		34C81899233B4C0B0090AD79 /* ImageParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageParser.m; sourceTree = "<group>"; };
+		34C8189A233B4C0B0090AD79 /* RNNViewLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNViewLocation.m; sourceTree = "<group>"; };
+		34C8189B233B4C0B0090AD79 /* RNNPreviewOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNPreviewOptions.m; sourceTree = "<group>"; };
+		34C8189C233B4C0B0090AD79 /* RNNErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNErrorHandler.h; sourceTree = "<group>"; };
+		34C8189D233B4C0B0090AD79 /* UIViewController+SideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SideMenuController.m"; sourceTree = "<group>"; };
+		34C8189E233B4C0B0090AD79 /* NumberParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberParser.m; sourceTree = "<group>"; };
+		34C8189F233B4C0B0090AD79 /* RNNCustomTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNCustomTitleView.m; sourceTree = "<group>"; };
+		34C818A0233B4C0B0090AD79 /* RCTHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTHelpers.m; sourceTree = "<group>"; };
+		34C818A1233B4C0B0090AD79 /* UIImage+insets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+insets.h"; sourceTree = "<group>"; };
+		34C818A2233B4C0B0090AD79 /* NullImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NullImage.m; sourceTree = "<group>"; };
+		34C818A3233B4C0B0090AD79 /* Bool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bool.m; sourceTree = "<group>"; };
+		34C818A4233B4C0B0090AD79 /* RNNRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNRootViewController.h; sourceTree = "<group>"; };
+		34C818A5233B4C0B0090AD79 /* InteractivePopGestureDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteractivePopGestureDelegate.h; sourceTree = "<group>"; };
+		34C818A7233B4C0B0090AD79 /* OCMockObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMockObject.h; sourceTree = "<group>"; };
+		34C818A8233B4C0B0090AD79 /* OCMMacroState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMMacroState.h; sourceTree = "<group>"; };
+		34C818A9233B4C0B0090AD79 /* OCMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMock.h; sourceTree = "<group>"; };
+		34C818AA233B4C0B0090AD79 /* NSNotificationCenter+OCMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+OCMAdditions.h"; sourceTree = "<group>"; };
+		34C818AB233B4C0B0090AD79 /* OCMFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMFunctions.h; sourceTree = "<group>"; };
+		34C818AC233B4C0B0090AD79 /* OCMStubRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMStubRecorder.h; sourceTree = "<group>"; };
+		34C818AD233B4C0B0090AD79 /* OCMRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMRecorder.h; sourceTree = "<group>"; };
+		34C818AE233B4C0B0090AD79 /* OCMLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMLocation.h; sourceTree = "<group>"; };
+		34C818AF233B4C0B0090AD79 /* OCMConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMConstraint.h; sourceTree = "<group>"; };
+		34C818B0233B4C0B0090AD79 /* OCMArg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMArg.h; sourceTree = "<group>"; };
+		34C818B1233B4C0B0090AD79 /* RNNTopBarOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNTopBarOptions.m; sourceTree = "<group>"; };
+		34C818B2233B4C0B0090AD79 /* RNNInsetsOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNInsetsOptions.h; sourceTree = "<group>"; };
+		34C818B3233B4C0B0090AD79 /* VICMAImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VICMAImageView.m; sourceTree = "<group>"; };
+		34C818B4233B4C0B0090AD79 /* RNNExternalComponentStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNExternalComponentStore.m; sourceTree = "<group>"; };
+		34C818B5233B4C0B0090AD79 /* ReactNativeNavigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReactNativeNavigation.h; sourceTree = "<group>"; };
+		34C818B6233B4C0B0090AD79 /* RNNReactComponentRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNReactComponentRegistry.h; sourceTree = "<group>"; };
+		34C818B7233B4C0B0090AD79 /* RNNSideMenuOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNSideMenuOptions.h; sourceTree = "<group>"; };
+		34C818B8233B4C0B0090AD79 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
+		34C818B9233B4C0B0090AD79 /* RNNTabBarPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNTabBarPresenter.h; sourceTree = "<group>"; };
+		34C818BA233B4C0B0090AD79 /* RNNLargeTitleOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNLargeTitleOptions.m; sourceTree = "<group>"; };
+		34C818BB233B4C0B0090AD79 /* NullText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NullText.h; sourceTree = "<group>"; };
+		34C818BC233B4C0B0090AD79 /* RNNAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNAnimator.h; sourceTree = "<group>"; };
+		34C818BD233B4C0B0090AD79 /* RNNElementView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNElementView.m; sourceTree = "<group>"; };
+		34C818BE233B4C0B0090AD79 /* RNNSplitViewOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNSplitViewOptions.m; sourceTree = "<group>"; };
+		34C818BF233B4C0B0090AD79 /* RNNUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNUtils.h; sourceTree = "<group>"; };
+		34C818C0233B4C0B0090AD79 /* NullDouble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NullDouble.h; sourceTree = "<group>"; };
+		34C818C1233B4C0B0090AD79 /* RNNNavigationButtons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNNavigationButtons.m; sourceTree = "<group>"; };
+		34C818C2233B4C0B0090AD79 /* RNNTitleViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNTitleViewHelper.m; sourceTree = "<group>"; };
+		34C818C3233B4C0B0090AD79 /* IntNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntNumber.m; sourceTree = "<group>"; };
+		34C818C4233B4C0B0090AD79 /* SideMenuOpenMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideMenuOpenMode.h; sourceTree = "<group>"; };
+		34C818C5233B4C0B0090AD79 /* RNNControllerFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNControllerFactory.m; sourceTree = "<group>"; };
+		34C818C6233B4C0B0090AD79 /* RNNViewControllerPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNViewControllerPresenter.h; sourceTree = "<group>"; };
+		34C818C7233B4C0B0090AD79 /* RNNScreenTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNScreenTransition.m; sourceTree = "<group>"; };
+		34C818C8233B4C0C0090AD79 /* RNNReactRootViewCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNReactRootViewCreator.h; sourceTree = "<group>"; };
+		34C818C9233B4C0C0090AD79 /* RNNSideMenuChildVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNSideMenuChildVC.h; sourceTree = "<group>"; };
+		34C818CA233B4C0C0090AD79 /* Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Color.m; sourceTree = "<group>"; };
+		34C818CB233B4C0C0090AD79 /* UISplitViewController+RNNOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISplitViewController+RNNOptions.m"; sourceTree = "<group>"; };
+		34C818CC233B4C0C0090AD79 /* IntNumberParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntNumberParser.m; sourceTree = "<group>"; };
 		34D1CC3021A70F3F001E6A5F /* copy.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = copy.wav; path = ../shared/resources/sounds/copy.wav; sourceTree = "<group>"; };
 		34DAEC4967524A5CAF94D0B9 /* imageCropPicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = imageCropPicker.xcodeproj; path = "../node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj"; sourceTree = "<group>"; };
 		34FAC269232142ED0084A60F /* AddressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressBar.swift; sourceTree = "<group>"; };
@@ -1013,21 +1447,6 @@
 		34FAC26D232142FF0084A60F /* SPFakeBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPFakeBarView.swift; sourceTree = "<group>"; };
 		34FAC26F232145000084A60F /* TGAddressBarManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TGAddressBarManager.m; sourceTree = "<group>"; };
 		34FAC31A2322B4FA0084A60F /* TGAddressBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TGAddressBarManager.swift; sourceTree = "<group>"; };
-		34FAC3452323F10D0084A60F /* SPStorkHaptic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkHaptic.swift; sourceTree = "<group>"; };
-		34FAC3462323F10D0084A60F /* SPStorkArrowMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkArrowMode.swift; sourceTree = "<group>"; };
-		34FAC3472323F10D0084A60F /* SPStorkSeque.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkSeque.swift; sourceTree = "<group>"; };
-		34FAC3492323F10D0084A60F /* SPStorkCodeDraw.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkCodeDraw.swift; sourceTree = "<group>"; };
-		34FAC34A2323F10E0084A60F /* SPStorkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkController.swift; sourceTree = "<group>"; };
-		34FAC34C2323F10E0084A60F /* SPStorkTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkTransitioningDelegate.swift; sourceTree = "<group>"; };
-		34FAC34D2323F10E0084A60F /* SPStorkPresentingAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkPresentingAnimationController.swift; sourceTree = "<group>"; };
-		34FAC34E2323F10E0084A60F /* SPStorkPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkPresentationController.swift; sourceTree = "<group>"; };
-		34FAC34F2323F10E0084A60F /* SPStorkDismissingAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkDismissingAnimationController.swift; sourceTree = "<group>"; };
-		34FAC3512323F10E0084A60F /* SPStorkViewControllerExtenshion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkViewControllerExtenshion.swift; sourceTree = "<group>"; };
-		34FAC3532323F10E0084A60F /* SPStorkCloseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkCloseButton.swift; sourceTree = "<group>"; };
-		34FAC3542323F10E0084A60F /* SPStorkIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkIndicatorView.swift; sourceTree = "<group>"; };
-		34FAC3552323F10E0084A60F /* SPStorkCloseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkCloseView.swift; sourceTree = "<group>"; };
-		34FAC3572323F10E0084A60F /* SPStorkControllerConfirmDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkControllerConfirmDelegate.swift; sourceTree = "<group>"; };
-		34FAC3582323F10E0084A60F /* SPStorkControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPStorkControllerDelegate.swift; sourceTree = "<group>"; };
 		34FAC44423268ED10084A60F /* NavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBar.swift; sourceTree = "<group>"; };
 		34FAC49323268F880084A60F /* NavBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarManager.swift; sourceTree = "<group>"; };
 		34FAC49523268F9A0084A60F /* NavBarManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NavBarManager.m; sourceTree = "<group>"; };
@@ -1050,7 +1469,6 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		88E898A8F89E428EB8826709 /* Foundation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		893DAF850B9A49529528429B /* RNSVG.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSVG.xcodeproj; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; };
-		89FF76833E4343689BE91DCE /* libReactNativeNavigation.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeNavigation.a; sourceTree = "<group>"; };
 		8A4E69A5531D42558266115F /* libReactNativePermissions.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativePermissions.a; sourceTree = "<group>"; };
 		8CAF6A9DF72B40DF845AC359 /* CoreGraphics.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		9528833972234C60B5F47256 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
@@ -1098,13 +1516,13 @@
 				345D6F6D229D9DAA009E56AC /* JavaScriptCore.framework in Frameworks */,
 				34763E1A229438B7002AEA19 /* libART.a in Frameworks */,
 				3449499A2274C1BB00D8AB38 /* libRNCSlider.a in Frameworks */,
+				34C8194B233B4C0D0090AD79 /* libOCMock.a in Frameworks */,
 				346C2D1521E74B170030003C /* libRNReactNativeHapticFeedback.a in Frameworks */,
 				344C9E68231C0F9A004E26AD /* RSKImageCropper.framework in Frameworks */,
 				346C2CE821E738A00030003C /* libReactNativeHaptic.a in Frameworks */,
 				18B18429213675180037A46D /* UserNotifications.framework in Frameworks */,
 				18284831212564E300F2BE57 /* libRCTQRCodeLocalImage.a in Frameworks */,
 				18A2AA5220F70A4300CD3D3C /* libsqlite3.tbd in Frameworks */,
-				3446CAB220E8F39F00ACA3C8 /* libReactNativeNavigation.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -1222,7 +1640,7 @@
 		13B07FAE1A68108700A75B9A /* bitportal */ = {
 			isa = PBXGroup;
 			children = (
-				34FAC3432323F10D0084A60F /* SPStorkController */,
+				34C81789233B4C080090AD79 /* Navigation */,
 				34FAC21B232142C30084A60F /* NavigationBar */,
 				344C9CC22317B7ED004E26AD /* SPAlert */,
 				3483B067231430D600444855 /* TableView */,
@@ -1381,7 +1799,6 @@
 			isa = PBXGroup;
 			children = (
 				E378031D0A07409DB9E63E29 /* libRNSVG.a */,
-				89FF76833E4343689BE91DCE /* libReactNativeNavigation.a */,
 				7E266F30BB5544C48714E51F /* libRNVectorIcons.a */,
 				5F6EC61CB1F246A29B1C589D /* libSplashScreen.a */,
 				41F22B0429D24A1B96F7A5CE /* libRNSensitiveInfo.a */,
@@ -1697,15 +2114,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3446CAAA20E8EB1E00ACA3C8 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3446CAAF20E8EB1E00ACA3C8 /* libReactNativeNavigation.a */,
-				3446CAB120E8EB1E00ACA3C8 /* ReactNativeNavigationTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		3449494B2274C19E00D8AB38 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1864,6 +2272,421 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		34C81789233B4C080090AD79 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				34C8178A233B4C080090AD79 /* RNNTopTabsOptions.m */,
+				34C8178B233B4C080090AD79 /* RNNBottomTabsOptions.h */,
+				34C8178C233B4C080090AD79 /* NullBool.m */,
+				34C8178D233B4C080090AD79 /* RNNElementTransitionOptions.m */,
+				34C8178E233B4C080090AD79 /* Dictionary.m */,
+				34C8178F233B4C080090AD79 /* Param.m */,
+				34C81790233B4C080090AD79 /* BoolParser.m */,
+				34C81791233B4C080090AD79 /* RNNSplashScreen.m */,
+				34C81792233B4C080090AD79 /* UIImage+tint.h */,
+				34C81793233B4C080090AD79 /* RNNSideMenuSideOptions.m */,
+				34C81794233B4C080090AD79 /* RNNNavigationController.h */,
+				34C81795233B4C080090AD79 /* RNNAnimationConfigurationOptions.h */,
+				34C81796233B4C080090AD79 /* RNNFontAttributesCreator.m */,
+				34C81797233B4C080090AD79 /* RNNOverlayManager.h */,
+				34C81798233B4C080090AD79 /* RNNNavigationControllerPresenter.m */,
+				34C81799233B4C080090AD79 /* NullIntNumber.m */,
+				34C8179A233B4C080090AD79 /* DoubleParser.h */,
+				34C8179B233B4C080090AD79 /* RNNEventEmitter.h */,
+				34C8179C233B4C080090AD79 /* Constants.m */,
+				34C8179D233B4C080090AD79 /* RNNCustomViewController.m */,
+				34C8179E233B4C080090AD79 /* NullNumber.m */,
+				34C8179F233B4C080090AD79 /* RNNStatusBarOptions.m */,
+				34C817A0233B4C080090AD79 /* RNNBackgroundOptions.m */,
+				34C817A1233B4C080090AD79 /* RNNTransitionStateHolder.h */,
+				34C817A2233B4C080090AD79 /* RNNSwizzles.h */,
+				34C817A3233B4C080090AD79 /* RNNTransition.m */,
+				34C817A4233B4C080090AD79 /* RNNLayoutManager.m */,
+				34C817A5233B4C080090AD79 /* RNNLayoutNode.h */,
+				34C817A6233B4C080090AD79 /* TextParser.m */,
+				34C817A7233B4C080090AD79 /* RNNBackButtonOptions.h */,
+				34C817A8233B4C080090AD79 /* RNNSplitViewController.h */,
+				34C817A9233B4C080090AD79 /* ColorParser.m */,
+				34C817AA233B4C080090AD79 /* RNNAnimatedView.m */,
+				34C817AB233B4C080090AD79 /* RNNElementFinder.h */,
+				34C817AC233B4C080090AD79 /* RNNTabBarController.m */,
+				34C817AD233B4C080090AD79 /* RNNSideMenuPresenter.h */,
+				34C817AE233B4C080090AD79 /* RNNLayoutOptions.m */,
+				34C817AF233B4C080090AD79 /* RNNUIBarButtonItem.h */,
+				34C817B0233B4C080090AD79 /* SideMenuOpenGestureModeParser.m */,
+				34C817B1233B4C080090AD79 /* RNNReactView.h */,
+				34C817B2233B4C080090AD79 /* RCTConvert+Modal.h */,
+				34C817B3233B4C080090AD79 /* RNNSharedElementAnimationOptions.m */,
+				34C817B4233B4C080090AD79 /* RNNSideMenuController.h */,
+				34C817B5233B4C080090AD79 /* UIViewController+LayoutProtocol.m */,
+				34C817B6233B4C080090AD79 /* RNNComponentOptions.h */,
+				34C817B7233B4C080090AD79 /* Double.m */,
+				34C817B8233B4C080090AD79 /* RNNAnimationsOptions.m */,
+				34C817B9233B4C080090AD79 /* DictionaryParser.h */,
+				34C817BA233B4C080090AD79 /* Text.h */,
+				34C817BB233B4C080090AD79 /* RNNNavigationStackManager.m */,
+				34C817BC233B4C080090AD79 /* RCTConvert+UIBarButtonSystemItem.m */,
+				34C817BD233B4C080090AD79 /* RNNSegmentedControl.m */,
+				34C817BE233B4C080090AD79 /* RNNOptions.h */,
+				34C817BF233B4C080090AD79 /* RNNTabBarItemCreator.h */,
+				34C817C0233B4C080090AD79 /* RNNBridgeManager.m */,
+				34C817C1233B4C080090AD79 /* NullDictionary.h */,
+				34C817C2233B4C080090AD79 /* RNNOverlayOptions.h */,
+				34C817C3233B4C080090AD79 /* RNNTopTabsViewController.h */,
+				34C817C4233B4C080090AD79 /* RNNAnimationsTransitionDelegate.m */,
+				34C817C5233B4C080090AD79 /* RNNInteractivePopAnimator.h */,
+				34C817C6233B4C080090AD79 /* UITabBarController+RNNOptions.m */,
+				34C817C7233B4C080090AD79 /* RNNLayoutInfo.m */,
+				34C817C8233B4C080090AD79 /* RNNTopTabOptions.m */,
+				34C817C9233B4C090090AD79 /* RNNCommandsHandler.m */,
+				34C817CA233B4C090090AD79 /* RNNDefaultOptionsHelper.h */,
+				34C817CB233B4C090090AD79 /* UINavigationController+RNNOptions.h */,
+				34C817CC233B4C090090AD79 /* NullImage.h */,
+				34C817CD233B4C090090AD79 /* UIImage+insets.m */,
+				34C817CE233B4C090090AD79 /* Bool.h */,
+				34C817CF233B4C090090AD79 /* RCTHelpers.h */,
+				34C817D0233B4C090090AD79 /* RNNCustomTitleView.h */,
+				34C817D1233B4C090090AD79 /* NumberParser.h */,
+				34C817D2233B4C090090AD79 /* RNNPreviewOptions.h */,
+				34C817D3233B4C090090AD79 /* RNNErrorHandler.m */,
+				34C817D4233B4C090090AD79 /* UIViewController+SideMenuController.h */,
+				34C817D5233B4C090090AD79 /* RNNViewLocation.h */,
+				34C817D6233B4C090090AD79 /* RNNBottomTabOptions.m */,
+				34C817D7233B4C090090AD79 /* HMSegmentedControl.h */,
+				34C817D8233B4C090090AD79 /* ImageParser.h */,
+				34C817D9233B4C090090AD79 /* RNNBridgeModule.m */,
+				34C817DA233B4C090090AD79 /* RNNPushAnimation.m */,
+				34C817DB233B4C090090AD79 /* RNNElement.m */,
+				34C817DC233B4C090090AD79 /* RNNSubtitleOptions.m */,
+				34C817DD233B4C090090AD79 /* NullColor.m */,
+				34C817DE233B4C090090AD79 /* RNNSplitViewControllerPresenter.m */,
+				34C817DF233B4C090090AD79 /* Number.m */,
+				34C817E0233B4C090090AD79 /* RNNButtonOptions.h */,
+				34C817E1233B4C090090AD79 /* RNNOverlayWindow.m */,
+				34C817E2233B4C090090AD79 /* UIViewController+RNNOptions.m */,
+				34C817E3233B4C090090AD79 /* RNNBasePresenter.h */,
+				34C817E4233B4C090090AD79 /* RNNModalManager.m */,
+				34C817E5233B4C090090AD79 /* ReactNativeNavigation-Bridging-Header.h */,
+				34C817E6233B4C090090AD79 /* RNNTitleOptions.m */,
+				34C817E7233B4C090090AD79 /* libOCMock.a */,
+				34C817E8233B4C090090AD79 /* RNNNavigationOptions.m */,
+				34C817E9233B4C090090AD79 /* IntNumberParser.h */,
+				34C817EA233B4C090090AD79 /* RNNSideMenuChildVC.m */,
+				34C817EB233B4C090090AD79 /* UISplitViewController+RNNOptions.h */,
+				34C817EC233B4C090090AD79 /* Color.h */,
+				34C817ED233B4C090090AD79 /* RNNReactRootViewCreator.m */,
+				34C817EE233B4C090090AD79 /* RNNScreenTransition.h */,
+				34C817EF233B4C090090AD79 /* SideMenuOpenMode.m */,
+				34C817F0233B4C090090AD79 /* RNNLeafProtocol.h */,
+				34C817F1233B4C090090AD79 /* RNNControllerFactory.h */,
+				34C817F2233B4C090090AD79 /* RNNViewControllerPresenter.m */,
+				34C817F3233B4C090090AD79 /* RNNLayoutProtocol.h */,
+				34C817F4233B4C090090AD79 /* IntNumber.h */,
+				34C817F5233B4C090090AD79 /* RNNBridgeManagerDelegate.h */,
+				34C817F6233B4C090090AD79 /* RNNNavigationButtons.h */,
+				34C817F7233B4C090090AD79 /* NullDouble.m */,
+				34C817F8233B4C090090AD79 /* RNNTitleViewHelper.h */,
+				34C817F9233B4C090090AD79 /* RNNElementView.h */,
+				34C817FA233B4C090090AD79 /* RNNUtils.m */,
+				34C817FB233B4C090090AD79 /* RNNSplitViewOptions.h */,
+				34C817FC233B4C090090AD79 /* NullText.m */,
+				34C817FD233B4C090090AD79 /* RNNAnimator.m */,
+				34C817FE233B4C090090AD79 /* RNNSideMenu */,
+				34C81824233B4C090090AD79 /* Image.m */,
+				34C81825233B4C090090AD79 /* RNNTabBarPresenter.m */,
+				34C81826233B4C090090AD79 /* RNNLargeTitleOptions.h */,
+				34C81827233B4C090090AD79 /* RNNSideMenuOptions.m */,
+				34C81828233B4C090090AD79 /* RNNReactComponentRegistry.m */,
+				34C81829233B4C090090AD79 /* ReactNativeNavigation.m */,
+				34C8182A233B4C090090AD79 /* RNNTopBarOptions.h */,
+				34C8182B233B4C090090AD79 /* RNNInsetsOptions.m */,
+				34C8182C233B4C090090AD79 /* RNNExternalComponentStore.h */,
+				34C8182D233B4C090090AD79 /* VICMAImageView.h */,
+				34C8182E233B4C090090AD79 /* InteractivePopGestureDelegate.m */,
+				34C8182F233B4C090090AD79 /* RNNRootViewController.m */,
+				34C81830233B4C090090AD79 /* RNNSplitViewController.m */,
+				34C81831233B4C090090AD79 /* RNNLayoutManager.h */,
+				34C81832233B4C090090AD79 /* RNNLayoutNode.m */,
+				34C81833233B4C090090AD79 /* TextParser.h */,
+				34C81834233B4C090090AD79 /* RNNBackButtonOptions.m */,
+				34C81835233B4C0A0090AD79 /* RNNSwizzles.m */,
+				34C81836233B4C0A0090AD79 /* RCTConvert+SideMenuOpenGestureMode.h */,
+				34C81837233B4C0A0090AD79 /* RNNTransition.h */,
+				34C81838233B4C0A0090AD79 /* RNNTransitionStateHolder.m */,
+				34C81839233B4C0A0090AD79 /* NullNumber.h */,
+				34C8183A233B4C0A0090AD79 /* RNNBackgroundOptions.h */,
+				34C8183B233B4C0A0090AD79 /* RNNStatusBarOptions.h */,
+				34C8183C233B4C0A0090AD79 /* Constants.h */,
+				34C8183D233B4C0A0090AD79 /* RNNCustomViewController.h */,
+				34C8183E233B4C0A0090AD79 /* DoubleParser.m */,
+				34C8183F233B4C0A0090AD79 /* NullIntNumber.h */,
+				34C81840233B4C0A0090AD79 /* RNNEventEmitter.m */,
+				34C81841233B4C0A0090AD79 /* RNNFontAttributesCreator.h */,
+				34C81842233B4C0A0090AD79 /* RNNNavigationControllerPresenter.h */,
+				34C81843233B4C0A0090AD79 /* RNNOverlayManager.m */,
+				34C81844233B4C0A0090AD79 /* RNNNavigationController.m */,
+				34C81845233B4C0A0090AD79 /* RNNAnimationConfigurationOptions.m */,
+				34C81846233B4C0A0090AD79 /* RNNSideMenuSideOptions.h */,
+				34C81847233B4C0A0090AD79 /* UIImage+tint.m */,
+				34C81848233B4C0A0090AD79 /* BoolParser.h */,
+				34C81849233B4C0A0090AD79 /* Param.h */,
+				34C8184A233B4C0A0090AD79 /* RNNSplashScreen.h */,
+				34C8184B233B4C0A0090AD79 /* RNNElementTransitionOptions.h */,
+				34C8184C233B4C0A0090AD79 /* Dictionary.h */,
+				34C8184D233B4C0A0090AD79 /* RNNBottomTabsOptions.m */,
+				34C8184E233B4C0A0090AD79 /* NullBool.h */,
+				34C8184F233B4C0A0090AD79 /* RNNTopTabsOptions.h */,
+				34C81850233B4C0A0090AD79 /* UINavigationController+RNNOptions.m */,
+				34C81851233B4C0A0090AD79 /* RNNRootViewCreator.h */,
+				34C81852233B4C0A0090AD79 /* RNNDefaultOptionsHelper.m */,
+				34C81853233B4C0A0090AD79 /* RNNCommandsHandler.h */,
+				34C81854233B4C0A0090AD79 /* RNNLayoutInfo.h */,
+				34C81855233B4C0A0090AD79 /* RNNTopTabOptions.h */,
+				34C81856233B4C0A0090AD79 /* RNNInteractivePopAnimator.m */,
+				34C81857233B4C0A0090AD79 /* UITabBarController+RNNOptions.h */,
+				34C81858233B4C0A0090AD79 /* RNNAnimationsTransitionDelegate.h */,
+				34C81859233B4C0A0090AD79 /* RNNOptions.m */,
+				34C8185A233B4C0A0090AD79 /* RNNBridgeManager.h */,
+				34C8185B233B4C0A0090AD79 /* NullDictionary.m */,
+				34C8185C233B4C0A0090AD79 /* RNNTabBarItemCreator.m */,
+				34C8185D233B4C0A0090AD79 /* RNNOverlayOptions.m */,
+				34C8185E233B4C0A0090AD79 /* RNNTopTabsViewController.m */,
+				34C8185F233B4C0A0090AD79 /* RNNNavigationStackManager.h */,
+				34C81860233B4C0A0090AD79 /* RCTConvert+UIBarButtonSystemItem.h */,
+				34C81861233B4C0A0090AD79 /* RNNSegmentedControl.h */,
+				34C81862233B4C0A0090AD79 /* RNNAnimationsOptions.h */,
+				34C81863233B4C0A0090AD79 /* DictionaryParser.m */,
+				34C81864233B4C0A0090AD79 /* Text.m */,
+				34C81865233B4C0A0090AD79 /* Double.h */,
+				34C81866233B4C0A0090AD79 /* UIViewController+LayoutProtocol.h */,
+				34C81867233B4C0A0090AD79 /* RNNComponentOptions.m */,
+				34C81868233B4C0A0090AD79 /* RNNSharedElementAnimationOptions.h */,
+				34C81869233B4C0A0090AD79 /* RNNSideMenuController.m */,
+				34C8186A233B4C0A0090AD79 /* RNNLayoutOptions.h */,
+				34C8186B233B4C0A0090AD79 /* RNNSideMenuPresenter.m */,
+				34C8186C233B4C0A0090AD79 /* RNNUIBarButtonItem.m */,
+				34C8186D233B4C0A0090AD79 /* RNNReactView.m */,
+				34C8186E233B4C0A0090AD79 /* SideMenuOpenGestureModeParser.h */,
+				34C8186F233B4C0A0090AD79 /* RNNAnimatedView.h */,
+				34C81870233B4C0A0090AD79 /* ColorParser.h */,
+				34C81871233B4C0A0090AD79 /* RNNElementFinder.m */,
+				34C81872233B4C0A0090AD79 /* RNNTabBarController.h */,
+				34C81873233B4C0A0090AD79 /* SPStorkController */,
+				34C81889233B4C0B0090AD79 /* RNNNavigationOptions.h */,
+				34C8188A233B4C0B0090AD79 /* RNNTitleOptions.h */,
+				34C8188B233B4C0B0090AD79 /* RNNBasePresenter.m */,
+				34C8188C233B4C0B0090AD79 /* UIViewController+RNNOptions.h */,
+				34C8188D233B4C0B0090AD79 /* RNNModalManager.h */,
+				34C8188E233B4C0B0090AD79 /* RNNButtonOptions.m */,
+				34C8188F233B4C0B0090AD79 /* Number.h */,
+				34C81890233B4C0B0090AD79 /* RNNSplitViewControllerPresenter.h */,
+				34C81891233B4C0B0090AD79 /* RNNOverlayWindow.h */,
+				34C81892233B4C0B0090AD79 /* RNNSubtitleOptions.h */,
+				34C81893233B4C0B0090AD79 /* NullColor.h */,
+				34C81894233B4C0B0090AD79 /* RNNBridgeModule.h */,
+				34C81895233B4C0B0090AD79 /* RNNPushAnimation.h */,
+				34C81896233B4C0B0090AD79 /* RNNElement.h */,
+				34C81897233B4C0B0090AD79 /* RNNBottomTabOptions.h */,
+				34C81898233B4C0B0090AD79 /* HMSegmentedControl.m */,
+				34C81899233B4C0B0090AD79 /* ImageParser.m */,
+				34C8189A233B4C0B0090AD79 /* RNNViewLocation.m */,
+				34C8189B233B4C0B0090AD79 /* RNNPreviewOptions.m */,
+				34C8189C233B4C0B0090AD79 /* RNNErrorHandler.h */,
+				34C8189D233B4C0B0090AD79 /* UIViewController+SideMenuController.m */,
+				34C8189E233B4C0B0090AD79 /* NumberParser.m */,
+				34C8189F233B4C0B0090AD79 /* RNNCustomTitleView.m */,
+				34C818A0233B4C0B0090AD79 /* RCTHelpers.m */,
+				34C818A1233B4C0B0090AD79 /* UIImage+insets.h */,
+				34C818A2233B4C0B0090AD79 /* NullImage.m */,
+				34C818A3233B4C0B0090AD79 /* Bool.m */,
+				34C818A4233B4C0B0090AD79 /* RNNRootViewController.h */,
+				34C818A5233B4C0B0090AD79 /* InteractivePopGestureDelegate.h */,
+				34C818A6233B4C0B0090AD79 /* OCMock */,
+				34C818B1233B4C0B0090AD79 /* RNNTopBarOptions.m */,
+				34C818B2233B4C0B0090AD79 /* RNNInsetsOptions.h */,
+				34C818B3233B4C0B0090AD79 /* VICMAImageView.m */,
+				34C818B4233B4C0B0090AD79 /* RNNExternalComponentStore.m */,
+				34C818B5233B4C0B0090AD79 /* ReactNativeNavigation.h */,
+				34C818B6233B4C0B0090AD79 /* RNNReactComponentRegistry.h */,
+				34C818B7233B4C0B0090AD79 /* RNNSideMenuOptions.h */,
+				34C818B8233B4C0B0090AD79 /* Image.h */,
+				34C818B9233B4C0B0090AD79 /* RNNTabBarPresenter.h */,
+				34C818BA233B4C0B0090AD79 /* RNNLargeTitleOptions.m */,
+				34C818BB233B4C0B0090AD79 /* NullText.h */,
+				34C818BC233B4C0B0090AD79 /* RNNAnimator.h */,
+				34C818BD233B4C0B0090AD79 /* RNNElementView.m */,
+				34C818BE233B4C0B0090AD79 /* RNNSplitViewOptions.m */,
+				34C818BF233B4C0B0090AD79 /* RNNUtils.h */,
+				34C818C0233B4C0B0090AD79 /* NullDouble.h */,
+				34C818C1233B4C0B0090AD79 /* RNNNavigationButtons.m */,
+				34C818C2233B4C0B0090AD79 /* RNNTitleViewHelper.m */,
+				34C818C3233B4C0B0090AD79 /* IntNumber.m */,
+				34C818C4233B4C0B0090AD79 /* SideMenuOpenMode.h */,
+				34C818C5233B4C0B0090AD79 /* RNNControllerFactory.m */,
+				34C818C6233B4C0B0090AD79 /* RNNViewControllerPresenter.h */,
+				34C818C7233B4C0B0090AD79 /* RNNScreenTransition.m */,
+				34C818C8233B4C0C0090AD79 /* RNNReactRootViewCreator.h */,
+				34C818C9233B4C0C0090AD79 /* RNNSideMenuChildVC.h */,
+				34C818CA233B4C0C0090AD79 /* Color.m */,
+				34C818CB233B4C0C0090AD79 /* UISplitViewController+RNNOptions.m */,
+				34C818CC233B4C0C0090AD79 /* IntNumberParser.m */,
+			);
+			name = Navigation;
+			path = bitportal/Navigation;
+			sourceTree = "<group>";
+		};
+		34C817FE233B4C090090AD79 /* RNNSideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				34C817FF233B4C090090AD79 /* RCCTheSideBarManagerViewController.h */,
+				34C81800233B4C090090AD79 /* RCCDrawerController.m */,
+				34C81801233B4C090090AD79 /* MMDrawerController */,
+				34C8180D233B4C090090AD79 /* RCCDrawerHelper.m */,
+				34C8180E233B4C090090AD79 /* RCCDrawerController.h */,
+				34C8180F233B4C090090AD79 /* RCCTheSideBarManagerViewController.m */,
+				34C81810233B4C090090AD79 /* RCCDrawerHelper.h */,
+				34C81811233B4C090090AD79 /* TheSidebarController */,
+				34C81823233B4C090090AD79 /* RCCDrawerProtocol.h */,
+			);
+			path = RNNSideMenu;
+			sourceTree = "<group>";
+		};
+		34C81801233B4C090090AD79 /* MMDrawerController */ = {
+			isa = PBXGroup;
+			children = (
+				34C81802233B4C090090AD79 /* MMDrawerBarButtonItem.m */,
+				34C81803233B4C090090AD79 /* UIViewController+MMDrawerController.m */,
+				34C81804233B4C090090AD79 /* MMExampleDrawerVisualStateManager.h */,
+				34C81805233B4C090090AD79 /* MMDrawerController.m */,
+				34C81806233B4C090090AD79 /* MMDrawerController+Subclass.h */,
+				34C81807233B4C090090AD79 /* MMDrawerVisualState.h */,
+				34C81808233B4C090090AD79 /* MMDrawerBarButtonItem.h */,
+				34C81809233B4C090090AD79 /* UIViewController+MMDrawerController.h */,
+				34C8180A233B4C090090AD79 /* MMDrawerVisualState.m */,
+				34C8180B233B4C090090AD79 /* MMDrawerController.h */,
+				34C8180C233B4C090090AD79 /* MMExampleDrawerVisualStateManager.m */,
+			);
+			path = MMDrawerController;
+			sourceTree = "<group>";
+		};
+		34C81811233B4C090090AD79 /* TheSidebarController */ = {
+			isa = PBXGroup;
+			children = (
+				34C81812233B4C090090AD79 /* TheSidebarController.m */,
+				34C81813233B4C090090AD79 /* TheSidebarController.h */,
+				34C81814233B4C090090AD79 /* Animations */,
+			);
+			path = TheSidebarController;
+			sourceTree = "<group>";
+		};
+		34C81814233B4C090090AD79 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				34C81815233B4C090090AD79 /* SidebarFlipboardAnimation.h */,
+				34C81816233B4C090090AD79 /* SidebarAirbnbAnimation.m */,
+				34C81817233B4C090090AD79 /* SidebarLuvocracyAnimation.m */,
+				34C81818233B4C090090AD79 /* SidebarWunderlistAnimation.h */,
+				34C81819233B4C090090AD79 /* SidebarFacebookAnimation.m */,
+				34C8181A233B4C090090AD79 /* SidebarAnimation.h */,
+				34C8181B233B4C090090AD79 /* SidebarFeedlyAnimation.m */,
+				34C8181C233B4C090090AD79 /* SidebarAirbnbAnimation.h */,
+				34C8181D233B4C090090AD79 /* SidebarFlipboardAnimation.m */,
+				34C8181E233B4C090090AD79 /* SidebarLuvocracyAnimation.h */,
+				34C8181F233B4C090090AD79 /* SidebarAnimation.m */,
+				34C81820233B4C090090AD79 /* SidebarFacebookAnimation.h */,
+				34C81821233B4C090090AD79 /* SidebarWunderlistAnimation.m */,
+				34C81822233B4C090090AD79 /* SidebarFeedlyAnimation.h */,
+			);
+			path = Animations;
+			sourceTree = "<group>";
+		};
+		34C81873233B4C0A0090AD79 /* SPStorkController */ = {
+			isa = PBXGroup;
+			children = (
+				34C81874233B4C0A0090AD79 /* Models */,
+				34C81877233B4C0A0090AD79 /* SPStorkSeque.swift */,
+				34C81878233B4C0A0090AD79 /* CodeDraw */,
+				34C8187A233B4C0A0090AD79 /* SPStorkController.swift */,
+				34C8187B233B4C0A0090AD79 /* TransitioningDelegate */,
+				34C81880233B4C0A0090AD79 /* Extenshion */,
+				34C81882233B4C0A0090AD79 /* Views */,
+				34C81886233B4C0A0090AD79 /* Protocols */,
+			);
+			path = SPStorkController;
+			sourceTree = "<group>";
+		};
+		34C81874233B4C0A0090AD79 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				34C81875233B4C0A0090AD79 /* SPStorkHaptic.swift */,
+				34C81876233B4C0A0090AD79 /* SPStorkArrowMode.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		34C81878233B4C0A0090AD79 /* CodeDraw */ = {
+			isa = PBXGroup;
+			children = (
+				34C81879233B4C0A0090AD79 /* SPStorkCodeDraw.swift */,
+			);
+			path = CodeDraw;
+			sourceTree = "<group>";
+		};
+		34C8187B233B4C0A0090AD79 /* TransitioningDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				34C8187C233B4C0A0090AD79 /* SPStorkTransitioningDelegate.swift */,
+				34C8187D233B4C0A0090AD79 /* SPStorkPresentingAnimationController.swift */,
+				34C8187E233B4C0A0090AD79 /* SPStorkPresentationController.swift */,
+				34C8187F233B4C0A0090AD79 /* SPStorkDismissingAnimationController.swift */,
+			);
+			path = TransitioningDelegate;
+			sourceTree = "<group>";
+		};
+		34C81880233B4C0A0090AD79 /* Extenshion */ = {
+			isa = PBXGroup;
+			children = (
+				34C81881233B4C0A0090AD79 /* SPStorkViewControllerExtenshion.swift */,
+			);
+			path = Extenshion;
+			sourceTree = "<group>";
+		};
+		34C81882233B4C0A0090AD79 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				34C81883233B4C0A0090AD79 /* SPStorkCloseButton.swift */,
+				34C81884233B4C0A0090AD79 /* SPStorkIndicatorView.swift */,
+				34C81885233B4C0A0090AD79 /* SPStorkCloseView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		34C81886233B4C0A0090AD79 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				34C81887233B4C0A0090AD79 /* SPStorkControllerConfirmDelegate.swift */,
+				34C81888233B4C0A0090AD79 /* SPStorkControllerDelegate.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		34C818A6233B4C0B0090AD79 /* OCMock */ = {
+			isa = PBXGroup;
+			children = (
+				34C818A7233B4C0B0090AD79 /* OCMockObject.h */,
+				34C818A8233B4C0B0090AD79 /* OCMMacroState.h */,
+				34C818A9233B4C0B0090AD79 /* OCMock.h */,
+				34C818AA233B4C0B0090AD79 /* NSNotificationCenter+OCMAdditions.h */,
+				34C818AB233B4C0B0090AD79 /* OCMFunctions.h */,
+				34C818AC233B4C0B0090AD79 /* OCMStubRecorder.h */,
+				34C818AD233B4C0B0090AD79 /* OCMRecorder.h */,
+				34C818AE233B4C0B0090AD79 /* OCMLocation.h */,
+				34C818AF233B4C0B0090AD79 /* OCMConstraint.h */,
+				34C818B0233B4C0B0090AD79 /* OCMArg.h */,
+			);
+			path = OCMock;
+			sourceTree = "<group>";
+		};
 		34D1CC2B21A70CBF001E6A5F /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1881,76 +2704,6 @@
 				34FAC44423268ED10084A60F /* NavBar.swift */,
 			);
 			path = NavigationBar;
-			sourceTree = "<group>";
-		};
-		34FAC3432323F10D0084A60F /* SPStorkController */ = {
-			isa = PBXGroup;
-			children = (
-				34FAC3442323F10D0084A60F /* Models */,
-				34FAC3472323F10D0084A60F /* SPStorkSeque.swift */,
-				34FAC3482323F10D0084A60F /* CodeDraw */,
-				34FAC34A2323F10E0084A60F /* SPStorkController.swift */,
-				34FAC34B2323F10E0084A60F /* TransitioningDelegate */,
-				34FAC3502323F10E0084A60F /* Extenshion */,
-				34FAC3522323F10E0084A60F /* Views */,
-				34FAC3562323F10E0084A60F /* Protocols */,
-			);
-			path = SPStorkController;
-			sourceTree = "<group>";
-		};
-		34FAC3442323F10D0084A60F /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				34FAC3452323F10D0084A60F /* SPStorkHaptic.swift */,
-				34FAC3462323F10D0084A60F /* SPStorkArrowMode.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		34FAC3482323F10D0084A60F /* CodeDraw */ = {
-			isa = PBXGroup;
-			children = (
-				34FAC3492323F10D0084A60F /* SPStorkCodeDraw.swift */,
-			);
-			path = CodeDraw;
-			sourceTree = "<group>";
-		};
-		34FAC34B2323F10E0084A60F /* TransitioningDelegate */ = {
-			isa = PBXGroup;
-			children = (
-				34FAC34C2323F10E0084A60F /* SPStorkTransitioningDelegate.swift */,
-				34FAC34D2323F10E0084A60F /* SPStorkPresentingAnimationController.swift */,
-				34FAC34E2323F10E0084A60F /* SPStorkPresentationController.swift */,
-				34FAC34F2323F10E0084A60F /* SPStorkDismissingAnimationController.swift */,
-			);
-			path = TransitioningDelegate;
-			sourceTree = "<group>";
-		};
-		34FAC3502323F10E0084A60F /* Extenshion */ = {
-			isa = PBXGroup;
-			children = (
-				34FAC3512323F10E0084A60F /* SPStorkViewControllerExtenshion.swift */,
-			);
-			path = Extenshion;
-			sourceTree = "<group>";
-		};
-		34FAC3522323F10E0084A60F /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				34FAC3532323F10E0084A60F /* SPStorkCloseButton.swift */,
-				34FAC3542323F10E0084A60F /* SPStorkIndicatorView.swift */,
-				34FAC3552323F10E0084A60F /* SPStorkCloseView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		34FAC3562323F10E0084A60F /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				34FAC3572323F10E0084A60F /* SPStorkControllerConfirmDelegate.swift */,
-				34FAC3582323F10E0084A60F /* SPStorkControllerDelegate.swift */,
-			);
-			path = Protocols;
 			sourceTree = "<group>";
 		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
@@ -1983,7 +2736,6 @@
 				346C2D0F21E74AFE0030003C /* RNReactNativeHapticFeedback.xcodeproj */,
 				346C2C9A21E738770030003C /* ReactNativeHaptic.xcodeproj */,
 				1828482B2125643100F2BE57 /* RCTQRCodeLocalImage.xcodeproj */,
-				3446CAA920E8EB1E00ACA3C8 /* ReactNativeNavigation.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -2239,10 +2991,6 @@
 				{
 					ProductGroup = 184F5B5321760849002A1192 /* Products */;
 					ProjectRef = 721257168F454099810D6D12 /* ReactNativeKeyboardManager.xcodeproj */;
-				},
-				{
-					ProductGroup = 3446CAAA20E8EB1E00ACA3C8 /* Products */;
-					ProjectRef = 3446CAA920E8EB1E00ACA3C8 /* ReactNativeNavigation.xcodeproj */;
 				},
 				{
 					ProductGroup = 182722D0209EEC6A00EB50F2 /* Products */;
@@ -2582,20 +3330,6 @@
 			fileType = archive.ar;
 			path = "libRNDeviceInfo-tvOS.a";
 			remoteRef = 3446CAA720E8E57B00ACA3C8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3446CAAF20E8EB1E00ACA3C8 /* libReactNativeNavigation.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libReactNativeNavigation.a;
-			remoteRef = 3446CAAE20E8EB1E00ACA3C8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3446CAB120E8EB1E00ACA3C8 /* ReactNativeNavigationTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ReactNativeNavigationTests.xctest;
-			remoteRef = 3446CAB020E8EB1E00ACA3C8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		344949872274C19E00D8AB38 /* libRNCSlider.a */ = {
@@ -2966,112 +3700,250 @@
 			buildActionMask = 2147483647;
 			files = (
 				18F2826C2177351C00DEB13F /* cash_addr.c in Sources */,
+				34C8193B233B4C0C0090AD79 /* RNNTopTabOptions.m in Sources */,
 				18F282702177351C00DEB13F /* ed25519-donna-32bit-tables.c in Sources */,
 				18F282802177351C00DEB13F /* ripemd160.c in Sources */,
-				34FAC3642323F10E0084A60F /* SPStorkIndicatorView.swift in Sources */,
+				34C81977233B4C0D0090AD79 /* UIImage+tint.m in Sources */,
+				34C81953233B4C0D0090AD79 /* NullText.m in Sources */,
 				3483B0DB231430D700444855 /* RNTableViewManager.m in Sources */,
+				34C8199B233B4C0D0090AD79 /* ImageParser.m in Sources */,
+				34C8194E233B4C0D0090AD79 /* RNNReactRootViewCreator.m in Sources */,
 				18F282972177351C00DEB13F /* core_impl.cpp in Sources */,
+				34C81920233B4C0C0090AD79 /* RNNFontAttributesCreator.m in Sources */,
 				3483B0DA231430D700444855 /* DiffableObject.m in Sources */,
+				34C81947233B4C0D0090AD79 /* RNNOverlayWindow.m in Sources */,
+				34C81929233B4C0C0090AD79 /* RNNLayoutManager.m in Sources */,
+				34C81928233B4C0C0090AD79 /* RNNTransition.m in Sources */,
 				18F282742177351C00DEB13F /* ed25519-sha3.c in Sources */,
 				18F2827B2177351C00DEB13F /* secp256k1.c in Sources */,
 				18F282882177351C00DEB13F /* bip32.c in Sources */,
+				34C819A9233B4C0D0090AD79 /* RNNSplitViewOptions.m in Sources */,
 				344C9DBA23181CA4004E26AD /* SPAlertViewManager.m in Sources */,
+				34C81933233B4C0C0090AD79 /* RNNAnimationsOptions.m in Sources */,
 				34FAC270232145000084A60F /* TGAddressBarManager.m in Sources */,
-				34FAC3652323F10E0084A60F /* SPStorkCloseView.swift in Sources */,
 				18F2829D2177351D00DEB13F /* UMAnalyticsModule.m in Sources */,
+				34C8193D233B4C0C0090AD79 /* UIImage+insets.m in Sources */,
 				18F2826B2177351C00DEB13F /* blake256.c in Sources */,
-				34FAC35B2323F10E0084A60F /* SPStorkSeque.swift in Sources */,
 				18F2827A2177351C00DEB13F /* nem.c in Sources */,
-				34FAC3612323F10E0084A60F /* SPStorkDismissingAnimationController.swift in Sources */,
+				34C8196B233B4C0D0090AD79 /* InteractivePopGestureDelegate.m in Sources */,
+				34C81999233B4C0D0090AD79 /* RNNButtonOptions.m in Sources */,
+				34C8199C233B4C0D0090AD79 /* RNNViewLocation.m in Sources */,
+				34C8192B233B4C0C0090AD79 /* ColorParser.m in Sources */,
+				34C81935233B4C0C0090AD79 /* RCTConvert+UIBarButtonSystemItem.m in Sources */,
+				34C819A8233B4C0D0090AD79 /* RNNElementView.m in Sources */,
+				34C81965233B4C0D0090AD79 /* Image.m in Sources */,
 				344C9D172317B7ED004E26AD /* SPAlertView.swift in Sources */,
+				34C81966233B4C0D0090AD79 /* RNNTabBarPresenter.m in Sources */,
 				18F282902177351C00DEB13F /* aescrypt.c in Sources */,
+				34C8194F233B4C0D0090AD79 /* SideMenuOpenMode.m in Sources */,
 				3452263C22E03F69009913DF /* test_binding.cpp in Sources */,
-				34FAC35F2323F10E0084A60F /* SPStorkPresentingAnimationController.swift in Sources */,
+				34C81978233B4C0D0090AD79 /* RNNBottomTabsOptions.m in Sources */,
 				18F282822177351C00DEB13F /* groestl.c in Sources */,
-				34FAC35E2323F10E0084A60F /* SPStorkTransitioningDelegate.swift in Sources */,
-				34FAC3622323F10E0084A60F /* SPStorkViewControllerExtenshion.swift in Sources */,
+				34C8198A233B4C0D0090AD79 /* SPStorkArrowMode.swift in Sources */,
+				34C81969233B4C0D0090AD79 /* ReactNativeNavigation.m in Sources */,
+				34C819A6233B4C0D0090AD79 /* RNNExternalComponentStore.m in Sources */,
 				18F282A12177351D00DEB13F /* DJIError.mm in Sources */,
 				34FAC49423268F880084A60F /* NavBarManager.swift in Sources */,
 				18F2826E2177351C00DEB13F /* rfc6979.c in Sources */,
+				34C81991233B4C0D0090AD79 /* SPStorkDismissingAnimationController.swift in Sources */,
+				34C819A1233B4C0D0090AD79 /* RCTHelpers.m in Sources */,
+				34C81984233B4C0D0090AD79 /* RNNSideMenuController.m in Sources */,
 				3483B0E3231430D700444855 /* SnappingCollectionViewLayout.m in Sources */,
+				34C81960233B4C0D0090AD79 /* SidebarFacebookAnimation.m in Sources */,
+				34C819AC233B4C0D0090AD79 /* IntNumber.m in Sources */,
+				34C8195F233B4C0D0090AD79 /* SidebarLuvocracyAnimation.m in Sources */,
+				34C81945233B4C0D0090AD79 /* RNNSplitViewControllerPresenter.m in Sources */,
+				34C8196F233B4C0D0090AD79 /* RNNBackButtonOptions.m in Sources */,
+				34C8197A233B4C0D0090AD79 /* RNNDefaultOptionsHelper.m in Sources */,
+				34C8199D233B4C0D0090AD79 /* RNNPreviewOptions.m in Sources */,
 				18F282922177351C00DEB13F /* aestab.c in Sources */,
+				34C81951233B4C0D0090AD79 /* NullDouble.m in Sources */,
+				34C8191D233B4C0C0090AD79 /* BoolParser.m in Sources */,
+				34C8199A233B4C0D0090AD79 /* HMSegmentedControl.m in Sources */,
 				344C9DB823181B9C004E26AD /* SPAlertViewManager.swift in Sources */,
+				34C81994233B4C0D0090AD79 /* SPStorkIndicatorView.swift in Sources */,
+				34C81931233B4C0C0090AD79 /* UIViewController+LayoutProtocol.m in Sources */,
+				34C81948233B4C0D0090AD79 /* UIViewController+RNNOptions.m in Sources */,
 				344C9D1A2317B7ED004E26AD /* SPAlertIconDoneView.swift in Sources */,
 				3483B0D9231430D700444855 /* JSONDataSource.m in Sources */,
+				34C81950233B4C0D0090AD79 /* RNNViewControllerPresenter.m in Sources */,
+				34C81923233B4C0C0090AD79 /* Constants.m in Sources */,
 				18F2828F2177351C00DEB13F /* aeskey.c in Sources */,
-				34FAC3672323F10E0084A60F /* SPStorkControllerDelegate.swift in Sources */,
+				34C819A7233B4C0D0090AD79 /* RNNLargeTitleOptions.m in Sources */,
+				34C81941233B4C0C0090AD79 /* RNNPushAnimation.m in Sources */,
+				34C81967233B4C0D0090AD79 /* RNNSideMenuOptions.m in Sources */,
 				3483B0E6231430D700444855 /* RNReactModuleCollectionViewCell.m in Sources */,
-				34FAC3632323F10E0084A60F /* SPStorkCloseButton.swift in Sources */,
+				34C81971233B4C0D0090AD79 /* RNNTransitionStateHolder.m in Sources */,
+				34C81973233B4C0D0090AD79 /* RNNEventEmitter.m in Sources */,
+				34C81954233B4C0D0090AD79 /* RNNAnimator.m in Sources */,
 				3483B0DD231430D700444855 /* RNTableHeaderViewManager.m in Sources */,
+				34C81937233B4C0C0090AD79 /* RNNBridgeManager.m in Sources */,
+				34C8197F233B4C0D0090AD79 /* RNNOverlayOptions.m in Sources */,
+				34C81998233B4C0D0090AD79 /* RNNBasePresenter.m in Sources */,
 				18F282912177351C00DEB13F /* aes_modes.c in Sources */,
+				34C81975233B4C0D0090AD79 /* RNNNavigationController.m in Sources */,
 				18F2828A2177351C00DEB13F /* blake2s.c in Sources */,
 				34FAC44523268ED10084A60F /* NavBar.swift in Sources */,
+				34C81974233B4C0D0090AD79 /* RNNOverlayManager.m in Sources */,
 				18F282792177351C00DEB13F /* ed25519-donna-impl-base.c in Sources */,
+				34C8192D233B4C0C0090AD79 /* RNNTabBarController.m in Sources */,
 				18F282892177351C00DEB13F /* address.c in Sources */,
+				34C81972233B4C0D0090AD79 /* DoubleParser.m in Sources */,
 				18F2829A2177351D00DEB13F /* RNUMConfigure.m in Sources */,
 				18F282712177351C00DEB13F /* ed25519.c in Sources */,
-				34FAC35C2323F10E0084A60F /* SPStorkCodeDraw.swift in Sources */,
+				34C8191B233B4C0C0090AD79 /* Dictionary.m in Sources */,
+				34C81961233B4C0D0090AD79 /* SidebarFeedlyAnimation.m in Sources */,
+				34C81943233B4C0D0090AD79 /* RNNSubtitleOptions.m in Sources */,
 				18F2828B2177351C00DEB13F /* sha3.c in Sources */,
-				34FAC3662323F10E0084A60F /* SPStorkControllerConfirmDelegate.swift in Sources */,
+				34C819A5233B4C0D0090AD79 /* VICMAImageView.m in Sources */,
+				34C81932233B4C0C0090AD79 /* Double.m in Sources */,
+				34C81996233B4C0D0090AD79 /* SPStorkControllerConfirmDelegate.swift in Sources */,
 				18F282772177351C00DEB13F /* modm-donna-32bit.c in Sources */,
 				18F282952177351C00DEB13F /* poly1305-donna.c in Sources */,
+				34C8194D233B4C0D0090AD79 /* RNNSideMenuChildVC.m in Sources */,
+				34C8199F233B4C0D0090AD79 /* NumberParser.m in Sources */,
 				18F282652177351C00DEB13F /* base32.c in Sources */,
 				18F282782177351C00DEB13F /* curve25519-donna-32bit.c in Sources */,
+				34C8193C233B4C0C0090AD79 /* RNNCommandsHandler.m in Sources */,
+				34C8197C233B4C0D0090AD79 /* RNNOptions.m in Sources */,
+				34C819A2233B4C0D0090AD79 /* NullImage.m in Sources */,
+				34C8192A233B4C0C0090AD79 /* TextParser.m in Sources */,
+				34C8198B233B4C0D0090AD79 /* SPStorkSeque.swift in Sources */,
+				34C81981233B4C0D0090AD79 /* DictionaryParser.m in Sources */,
 				18F282832177351C00DEB13F /* nist256p1.c in Sources */,
-				34FAC3592323F10E0084A60F /* SPStorkHaptic.swift in Sources */,
+				34C81942233B4C0C0090AD79 /* RNNElement.m in Sources */,
+				34C81946233B4C0D0090AD79 /* Number.m in Sources */,
+				34C8199E233B4C0D0090AD79 /* UIViewController+SideMenuController.m in Sources */,
 				18F2828D2177351C00DEB13F /* ecdsa.c in Sources */,
 				34FAC26E232142FF0084A60F /* SPFakeBarView.swift in Sources */,
 				18F282A02177351D00DEB13F /* DJIProxyCaches.mm in Sources */,
 				18F282632177351C00DEB13F /* sha2.c in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
+				34C81958233B4C0D0090AD79 /* MMDrawerController.m in Sources */,
+				34C819AB233B4C0D0090AD79 /* RNNTitleViewHelper.m in Sources */,
+				34C819AF233B4C0D0090AD79 /* Color.m in Sources */,
 				18F282732177351C00DEB13F /* ed25519-keccak.c in Sources */,
+				34C81988233B4C0D0090AD79 /* RNNElementFinder.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.mm in Sources */,
+				34C81922233B4C0C0090AD79 /* NullIntNumber.m in Sources */,
+				34C81986233B4C0D0090AD79 /* RNNUIBarButtonItem.m in Sources */,
+				34C81982233B4C0D0090AD79 /* Text.m in Sources */,
+				34C81983233B4C0D0090AD79 /* RNNComponentOptions.m in Sources */,
 				18F282692177351C00DEB13F /* rc4.c in Sources */,
+				34C81919233B4C0C0090AD79 /* NullBool.m in Sources */,
 				3483B0DC231430D700444855 /* RNTableFooterViewManager.m in Sources */,
+				34C8193F233B4C0C0090AD79 /* RNNBottomTabOptions.m in Sources */,
+				34C81925233B4C0C0090AD79 /* NullNumber.m in Sources */,
+				34C8194C233B4C0D0090AD79 /* RNNNavigationOptions.m in Sources */,
+				34C8198E233B4C0D0090AD79 /* SPStorkTransitioningDelegate.swift in Sources */,
+				34C81995233B4C0D0090AD79 /* SPStorkCloseView.swift in Sources */,
 				18F282622177351C00DEB13F /* hmac.c in Sources */,
+				34C81927233B4C0C0090AD79 /* RNNBackgroundOptions.m in Sources */,
 				3483B0E4231430D700444855 /* RNTableHeaderView.m in Sources */,
+				34C81924233B4C0C0090AD79 /* RNNCustomViewController.m in Sources */,
+				34C8197E233B4C0D0090AD79 /* RNNTabBarItemCreator.m in Sources */,
+				34C8191F233B4C0C0090AD79 /* RNNSideMenuSideOptions.m in Sources */,
+				34C8198F233B4C0D0090AD79 /* SPStorkPresentingAnimationController.swift in Sources */,
 				3483B0D7231430D700444855 /* RNTableViewCell.m in Sources */,
 				18F282932177351C00DEB13F /* chacha_merged.c in Sources */,
+				34C8198D233B4C0D0090AD79 /* SPStorkController.swift in Sources */,
 				18F2825F2177351C00DEB13F /* SSKeychain.m in Sources */,
-				34FAC35A2323F10E0084A60F /* SPStorkArrowMode.swift in Sources */,
+				34C8192C233B4C0C0090AD79 /* RNNAnimatedView.m in Sources */,
+				34C81921233B4C0C0090AD79 /* RNNNavigationControllerPresenter.m in Sources */,
+				34C81964233B4C0D0090AD79 /* SidebarWunderlistAnimation.m in Sources */,
 				344C9D182317B7ED004E26AD /* SPAlertPreset.swift in Sources */,
 				18F2826F2177351C00DEB13F /* curve25519-donna-scalarmult-base.c in Sources */,
 				344C9D1C2317B7ED004E26AD /* SPAlert.swift in Sources */,
+				34C81959233B4C0D0090AD79 /* MMDrawerVisualState.m in Sources */,
+				34C8196E233B4C0D0090AD79 /* RNNLayoutNode.m in Sources */,
 				18F282612177351C00DEB13F /* bip39.c in Sources */,
-				34FAC3602323F10E0084A60F /* SPStorkPresentationController.swift in Sources */,
+				34C81997233B4C0D0090AD79 /* SPStorkControllerDelegate.swift in Sources */,
+				34C81989233B4C0D0090AD79 /* SPStorkHaptic.swift in Sources */,
+				34C8193E233B4C0C0090AD79 /* RNNErrorHandler.m in Sources */,
+				34C8195D233B4C0D0090AD79 /* TheSidebarController.m in Sources */,
+				34C8197D233B4C0D0090AD79 /* NullDictionary.m in Sources */,
+				34C81936233B4C0C0090AD79 /* RNNSegmentedControl.m in Sources */,
 				3483B0E7231430D700444855 /* RNReactModuleCell.m in Sources */,
 				18F282602177351C00DEB13F /* crypto.c in Sources */,
+				34C8196C233B4C0D0090AD79 /* RNNRootViewController.m in Sources */,
+				34C81985233B4C0D0090AD79 /* RNNSideMenuPresenter.m in Sources */,
+				34C81962233B4C0D0090AD79 /* SidebarFlipboardAnimation.m in Sources */,
+				34C819B0233B4C0D0090AD79 /* UISplitViewController+RNNOptions.m in Sources */,
+				34C819A4233B4C0D0090AD79 /* RNNTopBarOptions.m in Sources */,
+				34C81987233B4C0D0090AD79 /* RNNReactView.m in Sources */,
 				3483B0D8231430D700444855 /* RNAppGlobals.m in Sources */,
+				34C81940233B4C0C0090AD79 /* RNNBridgeModule.m in Sources */,
 				3483B0E5231430D700444855 /* RNCellViewManager.m in Sources */,
+				34C8195C233B4C0D0090AD79 /* RCCTheSideBarManagerViewController.m in Sources */,
 				18F282872177351C00DEB13F /* script.c in Sources */,
+				34C819AE233B4C0D0090AD79 /* RNNScreenTransition.m in Sources */,
+				34C8192E233B4C0C0090AD79 /* RNNLayoutOptions.m in Sources */,
+				34C819A3233B4C0D0090AD79 /* Bool.m in Sources */,
 				18F2829E2177351D00DEB13F /* BPCore+Private.mm in Sources */,
 				18F282852177351C00DEB13F /* memzero.c in Sources */,
 				3483B0DF231430D700444855 /* RNTableFooterView.m in Sources */,
+				34C81968233B4C0D0090AD79 /* RNNReactComponentRegistry.m in Sources */,
+				34C81956233B4C0D0090AD79 /* MMDrawerBarButtonItem.m in Sources */,
 				18F282722177351C00DEB13F /* curve25519-donna-helpers.c in Sources */,
 				34FAC49623268F9A0084A60F /* NavBarManager.m in Sources */,
 				344C9D1B2317B7ED004E26AD /* SPAlertHaptic.swift in Sources */,
+				34C8196D233B4C0D0090AD79 /* RNNSplitViewController.m in Sources */,
+				34C81930233B4C0C0090AD79 /* RNNSharedElementAnimationOptions.m in Sources */,
 				18F282942177351C00DEB13F /* rfc7539.c in Sources */,
+				34C8195E233B4C0D0090AD79 /* SidebarAirbnbAnimation.m in Sources */,
 				18F2828E2177351C00DEB13F /* pbkdf2.c in Sources */,
 				18F2828C2177351C00DEB13F /* base58.c in Sources */,
-				34FAC35D2323F10E0084A60F /* SPStorkController.swift in Sources */,
+				34C819AD233B4C0D0090AD79 /* RNNControllerFactory.m in Sources */,
 				18F282662177351C00DEB13F /* hasher.c in Sources */,
+				34C81939233B4C0C0090AD79 /* UITabBarController+RNNOptions.m in Sources */,
 				18F2829F2177351D00DEB13F /* BPCoreModule.mm in Sources */,
 				3483B0E1231430D700444855 /* RNTableView.m in Sources */,
 				18F282962177351C00DEB13F /* chacha20poly1305.c in Sources */,
+				34C8197B233B4C0D0090AD79 /* RNNInteractivePopAnimator.m in Sources */,
+				34C81990233B4C0D0090AD79 /* SPStorkPresentationController.swift in Sources */,
+				34C81970233B4C0D0090AD79 /* RNNSwizzles.m in Sources */,
 				34FAC31B2322B4FB0084A60F /* TGAddressBarManager.swift in Sources */,
 				18F282672177351C00DEB13F /* rand.c in Sources */,
+				34C8195A233B4C0D0090AD79 /* MMExampleDrawerVisualStateManager.m in Sources */,
+				34C8194A233B4C0D0090AD79 /* RNNTitleOptions.m in Sources */,
+				34C81926233B4C0C0090AD79 /* RNNStatusBarOptions.m in Sources */,
+				34C81963233B4C0D0090AD79 /* SidebarAnimation.m in Sources */,
+				34C819AA233B4C0D0090AD79 /* RNNNavigationButtons.m in Sources */,
 				34FAC26A232142ED0084A60F /* AddressBar.swift in Sources */,
 				1808822A2135447300321418 /* NativeUtils.m in Sources */,
+				34C819B1233B4C0D0090AD79 /* IntNumberParser.m in Sources */,
+				34C81944233B4C0D0090AD79 /* NullColor.m in Sources */,
+				34C8196A233B4C0D0090AD79 /* RNNInsetsOptions.m in Sources */,
+				34C8191C233B4C0C0090AD79 /* Param.m in Sources */,
 				34FAC26C232142F60084A60F /* SPFakeBarNavigationStyle.swift in Sources */,
+				34C8195B233B4C0D0090AD79 /* RCCDrawerHelper.m in Sources */,
+				34C81938233B4C0C0090AD79 /* RNNAnimationsTransitionDelegate.m in Sources */,
 				3452263922E03D43009913DF /* test.cpp in Sources */,
 				3483B0DE231430D700444855 /* RNTableViewCellWithCollectionViewInside.m in Sources */,
+				34C8193A233B4C0C0090AD79 /* RNNLayoutInfo.m in Sources */,
+				34C8191A233B4C0C0090AD79 /* RNNElementTransitionOptions.m in Sources */,
 				344C9D192317B7ED004E26AD /* SPAlertIconHeartView.swift in Sources */,
+				34C81955233B4C0D0090AD79 /* RCCDrawerController.m in Sources */,
+				34C8191E233B4C0C0090AD79 /* RNNSplashScreen.m in Sources */,
+				34C81992233B4C0D0090AD79 /* SPStorkViewControllerExtenshion.swift in Sources */,
+				34C8198C233B4C0D0090AD79 /* SPStorkCodeDraw.swift in Sources */,
 				18F282982177351C00DEB13F /* UMPushModule.m in Sources */,
+				34C81957233B4C0D0090AD79 /* UIViewController+MMDrawerController.m in Sources */,
 				3483B0E0231430D700444855 /* RNCellView.m in Sources */,
+				34C81980233B4C0D0090AD79 /* RNNTopTabsViewController.m in Sources */,
+				34C81976233B4C0D0090AD79 /* RNNAnimationConfigurationOptions.m in Sources */,
+				34C81993233B4C0D0090AD79 /* SPStorkCloseButton.swift in Sources */,
+				34C81952233B4C0D0090AD79 /* RNNUtils.m in Sources */,
 				18F282762177351C00DEB13F /* ed25519-donna-basepoint-table.c in Sources */,
+				34C81934233B4C0C0090AD79 /* RNNNavigationStackManager.m in Sources */,
 				18F2826D2177351C00DEB13F /* curves.c in Sources */,
+				34C8192F233B4C0C0090AD79 /* SideMenuOpenGestureModeParser.m in Sources */,
+				34C819A0233B4C0D0090AD79 /* RNNCustomTitleView.m in Sources */,
+				34C81918233B4C0C0090AD79 /* RNNTopTabsOptions.m in Sources */,
 				18F282862177351C00DEB13F /* blake2b.c in Sources */,
+				34C81979233B4C0D0090AD79 /* UINavigationController+RNNOptions.m in Sources */,
 				18F2827C2177351C00DEB13F /* bignum.c in Sources */,
+				34C81949233B4C0D0090AD79 /* RNNModalManager.m in Sources */,
 				18F2827E2177351C00DEB13F /* segwit_addr.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3117,7 +3989,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-navigation/lib/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 					"$(SRCROOT)/../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo/**",
@@ -3154,6 +4025,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
+					"$(PROJECT_DIR)/bitportal/Navigation",
 				);
 				OTHER_CFLAGS = (
 					"$(inherited)",
@@ -3202,7 +4074,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-navigation/lib/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios",
 					"$(SRCROOT)/../node_modules/react-native-sensitive-info/ios/RNSensitiveInfo/**",
@@ -3239,6 +4110,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
+					"$(PROJECT_DIR)/bitportal/Navigation",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (

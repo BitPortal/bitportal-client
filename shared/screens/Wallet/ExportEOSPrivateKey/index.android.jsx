@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { ScrollView, View, TextInput, Text, TouchableNativeFeedback, Clipboard } from 'react-native'
 import { connect } from 'react-redux'
-import { Navigation } from 'react-native-navigation'
+import { Navigation } from 'components/Navigation'
 import Modal from 'react-native-modal'
 
 @connect(
