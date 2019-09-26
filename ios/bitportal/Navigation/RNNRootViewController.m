@@ -53,23 +53,6 @@
 -(void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	[self.eventEmitter sendComponentDidAppear:self.layoutInfo.componentId componentName:self.layoutInfo.name];
-	
-	if ([self.layoutInfo.name isEqualToString:@"BitPortal.SelectBridgeWallet"]) {
-		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(onScrollViewScroll:)
-													 name:@"tabeleview onScrollViewScroll"
-												   object:nil];
-	}
-}
-
--(void)onScrollViewScroll:(NSNotification*)notification {
-	if ([notification.name isEqualToString:@"tabeleview onScrollViewScroll"])
-	{
-		NSDictionary *userInfo = notification.userInfo;
-		UIScrollView *scrollView = userInfo[@"scrollView"];
-		// NSLog (@"scrollView.contentOffset.y: %f", scrollView.contentOffset.y);
-		[SPStorkController2 scrollViewDidScroll: scrollView];
-	}
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

@@ -1640,6 +1640,7 @@
 		13B07FAE1A68108700A75B9A /* bitportal */ = {
 			isa = PBXGroup;
 			children = (
+				34C81873233B4C0A0090AD79 /* SPStorkController */,
 				34C81789233B4C080090AD79 /* Navigation */,
 				34FAC21B232142C30084A60F /* NavigationBar */,
 				344C9CC22317B7ED004E26AD /* SPAlert */,
@@ -2471,7 +2472,6 @@
 				34C81870233B4C0A0090AD79 /* ColorParser.h */,
 				34C81871233B4C0A0090AD79 /* RNNElementFinder.m */,
 				34C81872233B4C0A0090AD79 /* RNNTabBarController.h */,
-				34C81873233B4C0A0090AD79 /* SPStorkController */,
 				34C81889233B4C0B0090AD79 /* RNNNavigationOptions.h */,
 				34C8188A233B4C0B0090AD79 /* RNNTitleOptions.h */,
 				34C8188B233B4C0B0090AD79 /* RNNBasePresenter.m */,

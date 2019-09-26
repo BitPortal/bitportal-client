@@ -955,10 +955,7 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
   if (_scrollToDismissEnabled) {
-     NSDictionary *userInfo =  @{@"scrollView": _tableView};
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"tabeleview onScrollViewScroll" object:nil userInfo:userInfo];
-    
-    // [SPStorkController scrollViewDidScroll: scrollView];
+    [SPStorkController2 scrollViewDidScroll: scrollView];
   }
   
     if (!self.onScroll) {

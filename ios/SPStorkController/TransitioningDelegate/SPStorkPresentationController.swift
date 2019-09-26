@@ -541,8 +541,10 @@ extension SPStorkPresentationController {
     }
     
     private func updateSnapshot() {
-        guard let currentSnapshotView = presentingViewController.view.snapshotView(afterScreenUpdates: true) else { return }
-        self.snapshotView?.removeFromSuperview()
+      // set afterScreenUpdates to false to fix ios 13 scale issue
+      guard let currentSnapshotView = presentingViewController.view.snapshotView(afterScreenUpdates: false) else { return }
+      
+      self.snapshotView?.removeFromSuperview()
 	    self.snapshotViewContainer.addSubview(currentSnapshotView)
         self.constraints(view: currentSnapshotView, to: self.snapshotViewContainer)
         self.snapshotView = currentSnapshotView
