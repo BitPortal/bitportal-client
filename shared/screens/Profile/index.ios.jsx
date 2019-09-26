@@ -25,6 +25,10 @@ export default class Profile extends Component {
       topBar: {
         title: {
           text: '我的'
+        },
+        noBorder: true,
+        background: {
+          color: 'rgba(0,0,0,0)'
         }
       }
     }

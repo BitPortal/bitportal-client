@@ -284,6 +284,7 @@ export default class Voting extends Component {
     const { producer, selectedIds, selected, vote, getProducer, statusBarHeight } = this.props
     const loading = vote.loading
     const refreshing = getProducer.refreshing
+    console.log('selectedIds', selectedIds)
 
     if (!getProducer.loaded && getProducer.loading) {
       return (
@@ -298,113 +299,113 @@ export default class Voting extends Component {
 
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-      <View style={{ flex: 1, backgroundColor: 'white' }}>
-        <View style={{ width: '100%', height: selectedIds.length ? 80 : 0 }}>
-          <ScrollView
-            style={{ height: selectedIds.length ? 80 : 0 }}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            ref={(ref) => { this.scrollView = ref; return null }}
-          >
-            {selected.map(item => <TouchableHighlight key={item.owner} underlayColor="rgba(0,0,0,0)" onPress={this.onSelectedPress.bind(this, item.owner)} style={{ height: 66, width: Dimensions.get('window').width / 4, backgroundColor: 'white', marginTop: 7, flex: 1, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column' }}>
-              <View style={{ height: '100%', width: '100%', flex: 1, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column' }}>
-                <View style={{ width: 40, height: 40 }}>
-                  <FastImage
-                    source={require('resources/images/producer.png')}
-                    style={{ width: 40, height: 40, position: 'absolute', top: 0, left: 0 }}
-                  />
-                  {item.info && item.info.org && item.info.org.branding && item.info.org.branding.logo && <FastImage source={{ uri: `https://storage.googleapis.com/bitportal-cms/bp/${item.info && item.info.org && item.info.org.branding && item.info.org.branding.logo}` }} style={{ width: 40, height: 40, position: 'absolute', top: 0, left: 0, borderRadius: 20, borderWidth: 1, borderColor: '#C8C7CE', backgroundColor: 'white' }} />}
-                </View>
-                <Text style={{ color: 'black', fontSize: 11 }}>{item.owner}</Text>
-                <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ position: 'absolute', top: -2, right: 22, width: 20, height: 20, borderRadius: 10, padding: 2 }} activeOpacity={0.42} onPress={this.onPress.bind(this, item.owner)}>
-                  <View style={{ backgroundColor: 'white', width: 16, height: 16, borderRadius: 8, padding: 1 }}>
+        <View style={{ flex: 1, backgroundColor: 'white' }}>
+          <View style={{ width: '100%', height: selectedIds.length ? 80 : 0 }}>
+            <ScrollView
+              style={{ height: selectedIds.length ? 80 : 0 }}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              ref={(ref) => { this.scrollView = ref; return null }}
+            >
+              {selected.map(item => <TouchableHighlight key={item.owner} underlayColor="rgba(0,0,0,0)" onPress={this.onSelectedPress.bind(this, item.owner)} style={{ height: 66, width: Dimensions.get('window').width / 4, backgroundColor: 'white', marginTop: 7, flex: 1, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column' }}>
+                <View style={{ height: '100%', width: '100%', flex: 1, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column' }}>
+                  <View style={{ width: 40, height: 40 }}>
                     <FastImage
-                      source={require('resources/images/clear.png')}
-                      style={{ width: 14, height: 14 }}
+                      source={require('resources/images/producer.png')}
+                      style={{ width: 40, height: 40, position: 'absolute', top: 0, left: 0 }}
                     />
+                    {item.info && item.info.org && item.info.org.branding && item.info.org.branding.logo && <FastImage source={{ uri: `https://storage.googleapis.com/bitportal-cms/bp/${item.info && item.info.org && item.info.org.branding && item.info.org.branding.logo}` }} style={{ width: 40, height: 40, position: 'absolute', top: 0, left: 0, borderRadius: 20, borderWidth: 1, borderColor: '#C8C7CE', backgroundColor: 'white' }} />}
                   </View>
-                </TouchableHighlight>
+                  <Text style={{ color: 'black', fontSize: 11 }}>{item.owner}</Text>
+                  <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ position: 'absolute', top: -2, right: 22, width: 20, height: 20, borderRadius: 10, padding: 2 }} activeOpacity={0.42} onPress={this.onPress.bind(this, item.owner)}>
+                    <View style={{ backgroundColor: 'white', width: 16, height: 16, borderRadius: 8, padding: 1 }}>
+                      <FastImage
+                        source={require('resources/images/clear.png')}
+                        style={{ width: 14, height: 14 }}
+                      />
+                    </View>
+                  </TouchableHighlight>
+                </View>
+              </TouchableHighlight>
+              )}
+            </ScrollView>
+          </View>
+          <TableView
+            style={{ flex: 1 }}
+            tableViewCellStyle={TableView.Consts.CellStyle.Default}
+            canRefresh={!this.state.searchBarFocused}
+            refreshing={refreshing}
+            onRefresh={this.state.searchBarFocused ? () => {} : this.onRefresh}
+            detailTextColor="#666666"
+            showsVerticalScrollIndicator={false}
+            cellSeparatorInset={{ left: 46 }}
+            reactModuleForCell="ProducerTableViewCell"
+            headerBackgroundColor="#F7F7F7"
+            ref={(ref) => { this.tableViewRef = ref; return null }}
+          >
+            <TableView.Section label="当前出块节点">
+              {producer.slice(0, 21).map(item => (
+                <TableView.Item
+                  key={item.owner}
+                  height={60}
+                  selectionStyle={TableView.Consts.CellSelectionStyle.None}
+                  logo={item.info && item.info.org && item.info.org.branding && item.info.org.branding.logo}
+                  owner={item.owner}
+                  selected={item.selected}
+                  selectedAccessoryImage={require('resources/images/circle_selected_accessory.png')}
+                  leftAccessoryImage={true}
+                  cellHeight={60}
+                  teamName={item.info && item.info.org && item.info.org.name}
+                  max_supply={item.max_supply}
+                  rank_url={item.rank_url}
+                  onPress={this.onPress.bind(this, item.owner)}
+                  accessoryType={TableView.Consts.AccessoryType.DetailButton}
+                  onAccessoryPress={this.onAccessoryPress.bind(this, item)}
+                />
+              ))}
+            </TableView.Section>
+            <TableView.Section label="备选节点">
+              {producer.slice(21, -1).map(item => (
+                <TableView.Item
+                  key={item.owner}
+                  height={60}
+                  selectionStyle={TableView.Consts.CellSelectionStyle.None}
+                  logo={item.info && item.info.org && item.info.org.branding && item.info.org.branding.logo}
+                  owner={item.owner}
+                  selected={item.selected}
+                  selectedAccessoryImage={require('resources/images/circle_selected_accessory.png')}
+                  leftAccessoryImage={true}
+                  cellHeight={60}
+                  teamName={item.info && item.info.org && item.info.org.name}
+                  max_supply={item.max_supply}
+                  rank_url={item.rank_url}
+                  onPress={this.onPress.bind(this, item.owner)}
+                  accessoryType={TableView.Consts.AccessoryType.DetailButton}
+                  onAccessoryPress={this.onAccessoryPress.bind(this, item)}
+                />
+              ))}
+            </TableView.Section>
+          </TableView>
+          <Modal
+            isVisible={loading}
+            backdropOpacity={0.4}
+            useNativeDriver
+            animationIn="fadeIn"
+            animationInTiming={200}
+            backdropTransitionInTiming={200}
+            animationOut="fadeOut"
+            animationOutTiming={200}
+            backdropTransitionOutTiming={200}
+            onModalHide={this.onModalHide}
+          >
+            {loading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
+                <ActivityIndicator size="small" color="#000000" />
+                <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>投票中...</Text>
               </View>
-            </TouchableHighlight>
-             )}
-          </ScrollView>
+            </View>}
+          </Modal>
         </View>
-        <TableView
-          style={{ flex: 1 }}
-          tableViewCellStyle={TableView.Consts.CellStyle.Default}
-          canRefresh={!this.state.searchBarFocused}
-          refreshing={refreshing}
-          onRefresh={this.state.searchBarFocused ? () => {} : this.onRefresh}
-          detailTextColor="#666666"
-          showsVerticalScrollIndicator={false}
-          cellSeparatorInset={{ left: 46 }}
-          reactModuleForCell="ProducerTableViewCell"
-          headerBackgroundColor="#F7F7F7"
-          ref={(ref) => { this.tableViewRef = ref; return null }}
-        >
-          <TableView.Section label="当前出块节点">
-            {producer.slice(0, 21).map(item => (
-               <TableView.Item
-                 key={item.owner}
-                 height={60}
-                 selectionStyle={TableView.Consts.CellSelectionStyle.None}
-                 logo={item.info && item.info.org && item.info.org.branding && item.info.org.branding.logo}
-                 owner={item.owner}
-                 selected={item.selected}
-                 selectedAccessoryImage={require('resources/images/circle_selected_accessory.png')}
-                 leftAccessoryImage={true}
-                 cellHeight={60}
-                 teamName={item.info && item.info.org && item.info.org.name}
-                 max_supply={item.max_supply}
-                 rank_url={item.rank_url}
-                 onPress={this.onPress.bind(this, item.owner)}
-                 accessoryType={TableView.Consts.AccessoryType.DetailButton}
-                 onAccessoryPress={this.onAccessoryPress.bind(this, item)}
-               />
-             ))}
-          </TableView.Section>
-          <TableView.Section label="备选节点">
-            {producer.slice(21, -1).map(item => (
-               <TableView.Item
-                 key={item.owner}
-                 height={60}
-                 selectionStyle={TableView.Consts.CellSelectionStyle.None}
-                 logo={item.info && item.info.org && item.info.org.branding && item.info.org.branding.logo}
-                 owner={item.owner}
-                 selected={item.selected}
-                 selectedAccessoryImage={require('resources/images/circle_selected_accessory.png')}
-                 leftAccessoryImage={true}
-                 cellHeight={60}
-                 teamName={item.info && item.info.org && item.info.org.name}
-                 max_supply={item.max_supply}
-                 rank_url={item.rank_url}
-                 onPress={this.onPress.bind(this, item.owner)}
-                 accessoryType={TableView.Consts.AccessoryType.DetailButton}
-                 onAccessoryPress={this.onAccessoryPress.bind(this, item)}
-               />
-             ))}
-          </TableView.Section>
-        </TableView>
-        <Modal
-          isVisible={loading}
-          backdropOpacity={0.4}
-          useNativeDriver
-          animationIn="fadeIn"
-          animationInTiming={200}
-          backdropTransitionInTiming={200}
-          animationOut="fadeOut"
-          animationOutTiming={200}
-          backdropTransitionOutTiming={200}
-          onModalHide={this.onModalHide}
-        >
-          {loading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
-              <ActivityIndicator size="small" color="#000000" />
-              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>投票中...</Text>
-            </View>
-          </View>}
-        </Modal>
-      </View>
       </SafeAreaView>
     )
   }

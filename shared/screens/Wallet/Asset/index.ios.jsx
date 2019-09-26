@@ -156,11 +156,11 @@ export default class Asset extends Component {
     )
 
     this.listener = StatusBarIOS.addListener('statusBarFrameWillChange',
-      (statusBarData) => {
-        StatusBarManager.getHeight(response =>
-          this.setState({ statusBarHeight: response.height })
-        )
-      }
+                                             (statusBarData) => {
+                                               StatusBarManager.getHeight(response =>
+                                                 this.setState({ statusBarHeight: response.height })
+                                               )
+                                             }
     )
   }
 
@@ -292,8 +292,7 @@ export default class Asset extends Component {
     }
 
     return (
-      <View style={{ flex: 1, backgroundColor: 'white' }}>
-        <View style={{ width: '100%', height: this.props.statusBarHeight + 24 + 72, backgroundColor: '#F7F7F7' }} />
+      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
         <View style={{ justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#F7F7F7', height: 136 }}>
           <View style={{ width: '100%', justifyContent: 'space-between', alignItems: 'flex-start', flexDirection: 'row', paddingRight: 16, paddingLeft: 16 }}>
             <View style={{ justifyContent: 'center', alignItems: 'flex-start', width: '60%' }}>
@@ -345,35 +344,35 @@ export default class Asset extends Component {
           <Text style={{fontSize: 18, color: '#007AFF' }} onPress={this.toChainXHistory}>ChainX的更多记录请点击这里...</Text>
         </View>)}
         {chain !== 'CHAINX' && (
-        <TableView
-          style={{ flex: 1, backgroundColor: 'white' }}
-          tableViewCellStyle={TableView.Consts.CellStyle.Default}
-          detailTextColor="#666666"
-          headerBackgroundColor="white"
-          headerTextColor="black"
-          headerFontSize={17}
-          onItemNotification={this.onItemNotification}
-          separatorStyle={TableView.Consts.SeparatorStyle.None}
-          onRefresh={this.onRefresh}
-          refreshing={refreshing}
-          canRefresh={hasTransactions}
-          canLoadMore={true}
-        >
-          <Section uid="HeaderTableViewCell">
-            <Item
-              reactModuleForCell="HeaderTableViewCell"
-              title={emptyTransactions ? '暂无交易记录' : '交易记录'}
-              loading={(!refreshing && loading) && (!hasTransactions || emptyTransactions)}
-              loadingTitle="获取交易记录..."
-              height={48}
-              componentId={this.props.componentId}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            />
-          </Section>
-          {transactionCount && <Section>{transactionCells}</Section>}
-        </TableView>
+          <TableView
+            style={{ flex: 1, backgroundColor: 'white' }}
+            tableViewCellStyle={TableView.Consts.CellStyle.Default}
+            detailTextColor="#666666"
+            headerBackgroundColor="white"
+            headerTextColor="black"
+            headerFontSize={17}
+            onItemNotification={this.onItemNotification}
+            separatorStyle={TableView.Consts.SeparatorStyle.None}
+            onRefresh={this.onRefresh}
+            refreshing={refreshing}
+            canRefresh={hasTransactions}
+            canLoadMore={true}
+          >
+            <Section uid="HeaderTableViewCell">
+              <Item
+                reactModuleForCell="HeaderTableViewCell"
+                title={emptyTransactions ? '暂无交易记录' : '交易记录'}
+                loading={(!refreshing && loading) && (!hasTransactions || emptyTransactions)}
+                loadingTitle="获取交易记录..."
+                height={48}
+                componentId={this.props.componentId}
+                selectionStyle={TableView.Consts.CellSelectionStyle.None}
+              />
+            </Section>
+            {transactionCount && <Section>{transactionCells}</Section>}
+          </TableView>
         )}
-      </View>
+      </SafeAreaView>
     )
   }
 }

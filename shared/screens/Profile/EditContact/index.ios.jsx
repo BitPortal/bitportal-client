@@ -182,9 +182,6 @@ export default class MyIdentity extends Component {
           color: 'white',
           translucent: true
         }
-      },
-      bottomTabs: {
-        visible: false
       }
     }
   }
@@ -478,7 +475,6 @@ export default class MyIdentity extends Component {
 
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-        <View style={{ width: '100%', height: 0.5, backgroundColor: 'rgba(0,0,0,0)' }} />
         <ScrollView
           style={{ flex: 1, backgroundColor: 'white' }}
           showsVerticalScrollIndicator={false}
@@ -544,18 +540,18 @@ export default class MyIdentity extends Component {
                 />
                 {(index !== this.state.btcIds.length - 1) && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />}
               </View>
-             )}
-        <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%', height: 40 }} onPress={this.addBTCAddress}>
-            <View style={{ width: '100%', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 16 }}>
-              <FastImage
-                source={require('resources/images/add_green.png')}
-                style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }}
-              />
-              <Text style={{ fontSize: 15 }}>添加BTC地址</Text>
-              <View style={{ position: 'absolute', height: 0.5, top: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
-              <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
-            </View>
-        </TouchableHighlight>
+            )}
+            <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%', height: 40 }} onPress={this.addBTCAddress}>
+              <View style={{ width: '100%', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 16 }}>
+                <FastImage
+                  source={require('resources/images/add_green.png')}
+                  style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }}
+                />
+                <Text style={{ fontSize: 15 }}>添加BTC地址</Text>
+                <View style={{ position: 'absolute', height: 0.5, top: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
+                <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
+              </View>
+            </TouchableHighlight>
           </View>
           <View style={{ width: '100%', marginTop: 40 }}>
             {this.state.ethIds.map((id, index) =>
@@ -581,80 +577,80 @@ export default class MyIdentity extends Component {
                 />
                 {(index !== this.state.ethIds.length - 1) && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />}
               </View>
-             )}
-        <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%', height: 40 }} onPress={this.addETHAddress}>
-            <View style={{ width: '100%', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 16 }}>
-              <FastImage
-                source={require('resources/images/add_green.png')}
-                style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }}
-              />
-              <Text style={{ fontSize: 15 }}>添加ETH地址</Text>
-              <View style={{ position: 'absolute', height: 0.5, top: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
-              <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
-            </View>
-        </TouchableHighlight>
+            )}
+            <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%', height: 40 }} onPress={this.addETHAddress}>
+              <View style={{ width: '100%', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 16 }}>
+                <FastImage
+                  source={require('resources/images/add_green.png')}
+                  style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }}
+                />
+                <Text style={{ fontSize: 15 }}>添加ETH地址</Text>
+                <View style={{ position: 'absolute', height: 0.5, top: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
+                <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
+              </View>
+            </TouchableHighlight>
           </View>
           <View style={{ width: '100%', marginTop: 40 }}>
-          {this.state.eosIds.map((id, index) =>
-            <View key={id} style={{ width: '100%', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 16 }}>
-              <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }} onPress={this.removeEOSAccountName.bind(this, id)}>
-                <FastImage
-                  source={require('resources/images/remove_red.png')}
-                  style={{ width: 28 * 0.8, height: 30 * 0.8 }}
-                />
-              </TouchableHighlight>
-              <View style={{ width: '100%', alignItems: 'center', height: 40, paddingRight: 16, flexDirection: 'row' }}>
-                 <View style={{ borderRightWidth: 0.5, borderColor: '#C8C7CC', height: '100%', width: 42, justifyContent: 'center', alignItems: 'center', paddingRight: 10 }}>
-                   <Text style={{ width: 30, height: '100%', justifyContent: 'center', alignItems: 'center', fontSize: 15, lineHeight: 40 }} numberOfLines={1}>EOS</Text>
-                 </View>
-                 <View style={{ flex: 1, height: 40, flexDirection: 'row' }}>
-                   <Field
-                     label="EOS"
-                     placeholder="账户名"
-                     name={`eos_accountName_${id}`}
-                     fieldName={`eos_accountName_${id}`}
-                     change={change}
-                     component={MiniTextField}
-                     switchable
-                     onSwitch={() => {}}
-                     showClearButton={!!formValues && formValues[`eos_accountName_${id}`] && formValues[`eos_accountName_${id}`].length > 0}
-                     autoFocus={!editMode || id > contact.eos.length - 1}
-                     autoCapitalize="none"
-                     rightBorder
-                     clearButtonRight={6}
-                   />
-                   <Field
-                     label="EOS"
-                     placeholder="默认备注"
-                     name={`eos_memo_${id}`}
-                     fieldName={`eos_memo_${id}`}
-                     change={change}
-                     component={MiniTextField}
-                     switchable
-                     onSwitch={() => {}}
-                     showClearButton={!!formValues && formValues[`eos_memo_${id}`] && formValues[`eos_memo_${id}`].length > 0}
-                     autoFocus={false}
-                     autoCapitalize="none"
-                     clearButtonRight={16}
-                   />
-                 </View>
+            {this.state.eosIds.map((id, index) =>
+              <View key={id} style={{ width: '100%', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 16 }}>
+                <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }} onPress={this.removeEOSAccountName.bind(this, id)}>
+                  <FastImage
+                    source={require('resources/images/remove_red.png')}
+                    style={{ width: 28 * 0.8, height: 30 * 0.8 }}
+                  />
+                </TouchableHighlight>
+                <View style={{ width: '100%', alignItems: 'center', height: 40, paddingRight: 16, flexDirection: 'row' }}>
+                  <View style={{ borderRightWidth: 0.5, borderColor: '#C8C7CC', height: '100%', width: 42, justifyContent: 'center', alignItems: 'center', paddingRight: 10 }}>
+                    <Text style={{ width: 30, height: '100%', justifyContent: 'center', alignItems: 'center', fontSize: 15, lineHeight: 40 }} numberOfLines={1}>EOS</Text>
+                  </View>
+                  <View style={{ flex: 1, height: 40, flexDirection: 'row' }}>
+                    <Field
+                      label="EOS"
+                      placeholder="账户名"
+                      name={`eos_accountName_${id}`}
+                      fieldName={`eos_accountName_${id}`}
+                      change={change}
+                      component={MiniTextField}
+                      switchable
+                      onSwitch={() => {}}
+                      showClearButton={!!formValues && formValues[`eos_accountName_${id}`] && formValues[`eos_accountName_${id}`].length > 0}
+                      autoFocus={!editMode || id > contact.eos.length - 1}
+                      autoCapitalize="none"
+                      rightBorder
+                      clearButtonRight={6}
+                    />
+                    <Field
+                      label="EOS"
+                      placeholder="默认备注"
+                      name={`eos_memo_${id}`}
+                      fieldName={`eos_memo_${id}`}
+                      change={change}
+                      component={MiniTextField}
+                      switchable
+                      onSwitch={() => {}}
+                      showClearButton={!!formValues && formValues[`eos_memo_${id}`] && formValues[`eos_memo_${id}`].length > 0}
+                      autoFocus={false}
+                      autoCapitalize="none"
+                      clearButtonRight={16}
+                    />
+                  </View>
+                </View>
+                {(index !== this.state.eosIds.length - 1) && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />}
               </View>
-              {(index !== this.state.eosIds.length - 1) && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />}
-            </View>
-           )}
-        <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%', height: 40 }} onPress={this.addEOSAccountName}>
-          <View style={{ width: '100%', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 16 }}>
-            <FastImage
-              source={require('resources/images/add_green.png')}
-              style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }}
-            />
-            <Text style={{ fontSize: 15 }}>添加EOS账户</Text>
-            <View style={{ position: 'absolute', height: 0.5, top: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
-            <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
+            )}
+            <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%', height: 40 }} onPress={this.addEOSAccountName}>
+              <View style={{ width: '100%', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 16 }}>
+                <FastImage
+                  source={require('resources/images/add_green.png')}
+                  style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }}
+                />
+                <Text style={{ fontSize: 15 }}>添加EOS账户</Text>
+                <View style={{ position: 'absolute', height: 0.5, top: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
+                <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
+              </View>
+            </TouchableHighlight>
           </View>
-        </TouchableHighlight>
-          </View>
-      </ScrollView>
+        </ScrollView>
       </SafeAreaView>
     )
   }

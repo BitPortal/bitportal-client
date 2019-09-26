@@ -12,6 +12,27 @@ const NSInteger TOP_BAR_TRANSPARENT_TAG = 78264803;
 
 @implementation RNNNavigationController
 
+- (UINavigationBarAppearance*)getNavigaitonBarStandardAppearance  API_AVAILABLE(ios(13.0)) {
+  if (!self.navigationBar.standardAppearance) {
+    self.navigationBar.standardAppearance = [UINavigationBarAppearance new];
+  }
+  return self.navigationBar.standardAppearance;
+}
+
+- (UINavigationBarAppearance*)getNavigaitonBarCompactAppearance  API_AVAILABLE(ios(13.0)) {
+  if (!self.navigationBar.compactAppearance) {
+    self.navigationBar.compactAppearance = [UINavigationBarAppearance new];
+  }
+  return self.navigationBar.compactAppearance;
+}
+
+- (UINavigationBarAppearance*)getNavigaitonBarScrollEdgeAppearance  API_AVAILABLE(ios(13.0)) {
+  if (!self.navigationBar.scrollEdgeAppearance) {
+    self.navigationBar.scrollEdgeAppearance = [UINavigationBarAppearance new];
+  }
+  return self.navigationBar.scrollEdgeAppearance;
+}
+
 - (void)viewDidLayoutSubviews {
 	[super viewDidLayoutSubviews];
 	[self.presenter applyOptionsOnViewDidLayoutSubviews:self.resolveOptions];
@@ -69,16 +90,24 @@ const NSInteger TOP_BAR_TRANSPARENT_TAG = 78264803;
 			[self.navigationBar setBackgroundColor:[UIColor clearColor]];
 			self.navigationBar.shadowImage = [UIImage new];
 			[self.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+      
+      if (@available(iOS 13.0, *)) {
+        UINavigationBarAppearance *standardAppearance = [self getNavigaitonBarStandardAppearance];
+        [standardAppearance configureWithTransparentBackground];
+
+        UINavigationBarAppearance *compactAppearance = [self getNavigaitonBarCompactAppearance];
+        [compactAppearance configureWithTransparentBackground];
+
+        UINavigationBarAppearance *scrollEdgeAppearance = [self getNavigaitonBarScrollEdgeAppearance];
+        [scrollEdgeAppearance configureWithTransparentBackground];
+      }
 		} else {
-			if (@available(iOS 13.0, *)) {
-				UINavigationBarAppearance *standardAppearance = [UINavigationBarAppearance new];
-				[standardAppearance configureWithDefaultBackground];
-				standardAppearance.backgroundColor = backgroundColor;
-				self.navigationBar.standardAppearance = standardAppearance;
-				self.navigationBar.scrollEdgeAppearance = standardAppearance;
-			} else {
-				self.navigationBar.barTintColor = backgroundColor;
-			}
+      self.navigationBar.barTintColor = backgroundColor;
+      if (@available(iOS 13.0, *)) {
+        [self getNavigaitonBarStandardAppearance].backgroundColor =  backgroundColor;
+        [self getNavigaitonBarCompactAppearance].backgroundColor = backgroundColor;
+        [self getNavigaitonBarScrollEdgeAppearance].backgroundColor = backgroundColor;
+      }
 			
 			UIView *transparentView = [self.navigationBar viewWithTag:TOP_BAR_TRANSPARENT_TAG];
 			if (transparentView){
@@ -99,6 +128,11 @@ const NSInteger TOP_BAR_TRANSPARENT_TAG = 78264803;
 		}
 		
 		self.navigationBar.barTintColor = nil;
+    if (@available(iOS 13.0, *)) {
+      [self getNavigaitonBarStandardAppearance].backgroundColor =  nil;
+      [self getNavigaitonBarCompactAppearance].backgroundColor = nil;
+      [self getNavigaitonBarScrollEdgeAppearance].backgroundColor = nil;
+    }
 	}
 }
 

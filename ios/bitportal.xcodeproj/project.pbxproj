@@ -174,7 +174,7 @@
 		34C81934233B4C0C0090AD79 /* RNNNavigationStackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817BB233B4C080090AD79 /* RNNNavigationStackManager.m */; };
 		34C81935233B4C0C0090AD79 /* RCTConvert+UIBarButtonSystemItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817BC233B4C080090AD79 /* RCTConvert+UIBarButtonSystemItem.m */; };
 		34C81936233B4C0C0090AD79 /* RNNSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817BD233B4C080090AD79 /* RNNSegmentedControl.m */; };
-		34C81937233B4C0C0090AD79 /* RNNBridgeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817C0233B4C080090AD79 /* RNNBridgeManager.m */; };
+		34C81937233B4C0C0090AD79 /* RNNBridgeManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 34C817C0233B4C080090AD79 /* RNNBridgeManager.mm */; };
 		34C81938233B4C0C0090AD79 /* RNNAnimationsTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817C4233B4C080090AD79 /* RNNAnimationsTransitionDelegate.m */; };
 		34C81939233B4C0C0090AD79 /* UITabBarController+RNNOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817C6233B4C080090AD79 /* UITabBarController+RNNOptions.m */; };
 		34C8193A233B4C0C0090AD79 /* RNNLayoutInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817C7233B4C080090AD79 /* RNNLayoutInfo.m */; };
@@ -1183,7 +1183,7 @@
 		34C817BD233B4C080090AD79 /* RNNSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNSegmentedControl.m; sourceTree = "<group>"; };
 		34C817BE233B4C080090AD79 /* RNNOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNOptions.h; sourceTree = "<group>"; };
 		34C817BF233B4C080090AD79 /* RNNTabBarItemCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNTabBarItemCreator.h; sourceTree = "<group>"; };
-		34C817C0233B4C080090AD79 /* RNNBridgeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNBridgeManager.m; sourceTree = "<group>"; };
+		34C817C0233B4C080090AD79 /* RNNBridgeManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RNNBridgeManager.mm; sourceTree = "<group>"; };
 		34C817C1233B4C080090AD79 /* NullDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NullDictionary.h; sourceTree = "<group>"; };
 		34C817C2233B4C080090AD79 /* RNNOverlayOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNOverlayOptions.h; sourceTree = "<group>"; };
 		34C817C3233B4C080090AD79 /* RNNTopTabsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNTopTabsViewController.h; sourceTree = "<group>"; };
@@ -2330,7 +2330,7 @@
 				34C817BD233B4C080090AD79 /* RNNSegmentedControl.m */,
 				34C817BE233B4C080090AD79 /* RNNOptions.h */,
 				34C817BF233B4C080090AD79 /* RNNTabBarItemCreator.h */,
-				34C817C0233B4C080090AD79 /* RNNBridgeManager.m */,
+				34C817C0233B4C080090AD79 /* RNNBridgeManager.mm */,
 				34C817C1233B4C080090AD79 /* NullDictionary.h */,
 				34C817C2233B4C080090AD79 /* RNNOverlayOptions.h */,
 				34C817C3233B4C080090AD79 /* RNNTopTabsViewController.h */,
@@ -3777,7 +3777,7 @@
 				34C81973233B4C0D0090AD79 /* RNNEventEmitter.m in Sources */,
 				34C81954233B4C0D0090AD79 /* RNNAnimator.m in Sources */,
 				3483B0DD231430D700444855 /* RNTableHeaderViewManager.m in Sources */,
-				34C81937233B4C0C0090AD79 /* RNNBridgeManager.m in Sources */,
+				34C81937233B4C0C0090AD79 /* RNNBridgeManager.mm in Sources */,
 				34C8197F233B4C0D0090AD79 /* RNNOverlayOptions.m in Sources */,
 				34C81998233B4C0D0090AD79 /* RNNBasePresenter.m in Sources */,
 				18F282912177351C00DEB13F /* aes_modes.c in Sources */,

@@ -1,4 +1,3 @@
-#import "BitPortal-Swift.h"
 #import "RNNRootViewController.h"
 #import <React/RCTConvert.h>
 #import "RNNAnimator.h"
@@ -243,10 +242,6 @@
 
 -(void)onButtonPress:(RNNUIBarButtonItem *)barButtonItem {
 	[self.eventEmitter sendOnNavigationButtonPressed:self.layoutInfo.componentId buttonId:barButtonItem.buttonId];
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-	
 }
 
 @end

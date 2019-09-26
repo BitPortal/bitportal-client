@@ -22,9 +22,6 @@
 #import "UMAnalyticsModule.h"
 #import <UMAnalytics/MobClick.h>
 
-#import "test.h"
-#import "test_binding.h"
-
 @interface AppDelegate ()<JPUSHRegisterDelegate>
 @end
 
@@ -109,19 +106,5 @@
 
 - (void)application:(UIApplication *)application didChangeStatusBarFrame:(CGRect)oldStatusBarFrame {
 
-}
-
-- (void)installHostObject:(RCTCxxBridge *)bridge {
-  RCTCxxBridge * cxxbridge = (RCTCxxBridge *)bridge;
-  
-  [cxxbridge dispatchBlock:^{
-    if (!cxxbridge || cxxbridge.runtime == nullptr) {
-      return;
-    }
-    facebook::jsi::Runtime* runtime = (facebook::jsi::Runtime*)cxxbridge.runtime;
-    auto test = std::make_unique<example::Test>();
-    std::shared_ptr<example::TestBinding> testBinding_ = std::make_shared<example::TestBinding>(std::move(test));
-    example::TestBinding::install((*runtime),  testBinding_);
-  } queue:RCTJSThread];
 }
 @end

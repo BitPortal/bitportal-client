@@ -6,6 +6,27 @@ const NSInteger BLUR_TOPBAR_TAG = 78264802;
 
 @implementation UINavigationController (RNNOptions)
 
+- (UINavigationBarAppearance*)getNavigaitonBarStandardAppearance  API_AVAILABLE(ios(13.0)) {
+  if (!self.navigationBar.standardAppearance) {
+    self.navigationBar.standardAppearance = [UINavigationBarAppearance new];
+  }
+  return self.navigationBar.standardAppearance;
+}
+
+- (UINavigationBarAppearance*)getNavigaitonBarCompactAppearance  API_AVAILABLE(ios(13.0)) {
+  if (!self.navigationBar.compactAppearance) {
+    self.navigationBar.compactAppearance = [UINavigationBarAppearance new];
+  }
+  return self.navigationBar.compactAppearance;
+}
+
+- (UINavigationBarAppearance*)getNavigaitonBarScrollEdgeAppearance  API_AVAILABLE(ios(13.0)) {
+  if (!self.navigationBar.scrollEdgeAppearance) {
+    self.navigationBar.scrollEdgeAppearance = [UINavigationBarAppearance new];
+  }
+  return self.navigationBar.scrollEdgeAppearance;
+}
+
 - (void)rnn_setInteractivePopGestureEnabled:(BOOL)enabled {
 	self.interactivePopGestureRecognizer.enabled = enabled;
 }
@@ -37,8 +58,27 @@ const NSInteger BLUR_TOPBAR_TAG = 78264802;
 - (void)rnn_setNavigationBarNoBorder:(BOOL)noBorder {
 	if (noBorder) {
 		[self.navigationBar setShadowImage:[[UIImage alloc] init]];
+    if (@available(iOS 13.0, *)) {
+      [self getNavigaitonBarStandardAppearance].shadowImage =  [[UIImage alloc] init];
+      [self getNavigaitonBarCompactAppearance].shadowImage = [[UIImage alloc] init];
+      [self getNavigaitonBarScrollEdgeAppearance].shadowImage = [[UIImage alloc] init];
+      
+      [self getNavigaitonBarStandardAppearance].shadowColor =  [UIColor clearColor];
+      [self getNavigaitonBarCompactAppearance].shadowColor = [UIColor clearColor];
+      [self getNavigaitonBarScrollEdgeAppearance].shadowColor = [UIColor clearColor];
+    }
 	} else {
 		[self.navigationBar setShadowImage:nil];
+    if (@available(iOS 13.0, *)) {
+      [self getNavigaitonBarStandardAppearance].shadowImage =  nil;
+      [self getNavigaitonBarCompactAppearance].shadowImage = nil;
+      [self getNavigaitonBarScrollEdgeAppearance].shadowImage = nil;
+      
+      UIColor* defaultShadowColor = [UINavigationBarAppearance new].shadowColor;
+      [self getNavigaitonBarStandardAppearance].shadowColor =  defaultShadowColor;
+      [self getNavigaitonBarCompactAppearance].shadowColor = defaultShadowColor;
+      [self getNavigaitonBarScrollEdgeAppearance].shadowColor = defaultShadowColor;
+    }
 	}
 }
 
@@ -51,10 +91,15 @@ const NSInteger BLUR_TOPBAR_TAG = 78264802;
 	
 	if (fontAttributes.allKeys.count > 0) {
 		self.navigationBar.titleTextAttributes = fontAttributes;
+    if (@available(iOS 13.0, *)) {
+      [self getNavigaitonBarStandardAppearance].titleTextAttributes =  fontAttributes;
+      [self getNavigaitonBarCompactAppearance].titleTextAttributes = fontAttributes;
+      [self getNavigaitonBarScrollEdgeAppearance].titleTextAttributes = fontAttributes;
+    }
 	}
 }
 
-- (void)rnn_setNavigationBarLargeTitleVisible:(BOOL)visible {
+- (void)rnn_setNavigationBarLargeTitleVisible:(BOOL)visible API_AVAILABLE(ios(11.0)){
 	if (@available(iOS 11.0, *)) {
 		if (visible){
 			self.navigationBar.prefersLargeTitles = YES;
@@ -64,10 +109,15 @@ const NSInteger BLUR_TOPBAR_TAG = 78264802;
 	}
 }
 
-- (void)rnn_setNavigationBarLargeTitleFontFamily:(NSString *)fontFamily fontSize:(NSNumber *)fontSize color:(UIColor *)color {
+- (void)rnn_setNavigationBarLargeTitleFontFamily:(NSString *)fontFamily fontSize:(NSNumber *)fontSize color:(UIColor *)color API_AVAILABLE(ios(11.0)) {
 	if (@available(iOS 11.0, *)) {
 		NSDictionary* fontAttributes = [RNNFontAttributesCreator createFontAttributesWithFontFamily:fontFamily fontSize:fontSize color:color];
 		self.navigationBar.largeTitleTextAttributes = fontAttributes;
+    if (@available(iOS 13.0, *)) {
+      [self getNavigaitonBarStandardAppearance].largeTitleTextAttributes =  fontAttributes;
+      [self getNavigaitonBarCompactAppearance].largeTitleTextAttributes = fontAttributes;
+      [self getNavigaitonBarScrollEdgeAppearance].largeTitleTextAttributes = fontAttributes;
+    }
 	}
 }
 

@@ -38,10 +38,10 @@
 	[navigationController rnn_hideBarsOnScroll:[options.topBar.hideOnScroll getWithDefaultValue:NO]];
 	[navigationController rnn_setNavigationBarNoBorder:[options.topBar.noBorder getWithDefaultValue:NO]];
 	[navigationController rnn_setBarStyle:[RCTConvert UIBarStyle:[options.topBar.barStyle getWithDefaultValue:@"default"]]];
-	[navigationController rnn_setNavigationBarTranslucent:[options.topBar.background.translucent getWithDefaultValue:NO]];
 	[navigationController rnn_setNavigationBarClipsToBounds:[options.topBar.background.clipToBounds getWithDefaultValue:NO]];
 	[navigationController rnn_setNavigationBarBlur:[options.topBar.background.blur getWithDefaultValue:NO]];
 	[navigationController setTopBarBackgroundColor:[options.topBar.background.color getWithDefaultValue:nil]];
+  [navigationController rnn_setNavigationBarTranslucent:[options.topBar.background.translucent getWithDefaultValue:NO]];
 	[navigationController rnn_setNavigationBarLargeTitleVisible:[options.topBar.largeTitle.visible getWithDefaultValue:NO]];
 	[navigationController rnn_setNavigationBarLargeTitleFontFamily:[options.topBar.largeTitle.fontFamily getWithDefaultValue:nil] fontSize:[options.topBar.largeTitle.fontSize getWithDefaultValue:nil] color:[options.topBar.largeTitle.color getWithDefaultValue:nil]];
 	[navigationController rnn_setNavigationBarFontFamily:[options.topBar.title.fontFamily getWithDefaultValue:nil] fontSize:[options.topBar.title.fontSize getWithDefaultValue:nil] color:[options.topBar.title.color getWithDefaultValue:nil]];
@@ -102,10 +102,6 @@
 		[navigationController rnn_setBarStyle:[RCTConvert UIBarStyle:newOptions.topBar.barStyle.get]];
 	}
 	
-	if (newOptions.topBar.background.translucent.hasValue) {
-		[navigationController rnn_setNavigationBarTranslucent:[newOptions.topBar.background.translucent get]];
-	}
-	
 	if (newOptions.topBar.background.clipToBounds.hasValue) {
 		[navigationController rnn_setNavigationBarClipsToBounds:[newOptions.topBar.background.clipToBounds get]];
 	}
@@ -118,6 +114,10 @@
 		[navigationController setTopBarBackgroundColor:newOptions.topBar.background.color.get];
 	}
 	
+  if (newOptions.topBar.background.translucent.hasValue) {
+    [navigationController rnn_setNavigationBarTranslucent:[newOptions.topBar.background.translucent get]];
+  }
+  
 	if (newOptions.topBar.largeTitle.visible.hasValue) {
 		[navigationController rnn_setNavigationBarLargeTitleVisible:newOptions.topBar.largeTitle.visible.get];
 	}

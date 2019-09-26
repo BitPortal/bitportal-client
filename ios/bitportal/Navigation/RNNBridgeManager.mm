@@ -10,6 +10,10 @@
 #import "RNNReactRootViewCreator.h"
 #import "RNNReactComponentRegistry.h"
 
+#import <React/RCTBridge+Private.h>
+#import "test.h"
+#import "test_binding.h"
+
 @interface RNNBridgeManager() <RCTBridgeDelegate>
 
 @property (nonatomic, strong, readwrite) RCTBridge *bridge;
@@ -41,11 +45,11 @@
 		_bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:_launchOptions];
 	
 		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(onJavaScriptLoaded)
+                           selector:@selector(onJavaScriptLoaded)
 				 									 name:RCTJavaScriptDidLoadNotification
 												   object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self
-												 selector:@selector(onJavaScriptWillLoad)
+                           selector:@selector(onJavaScriptWillLoad)
 													 name:RCTJavaScriptWillStartLoadingNotification
 												   object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self
