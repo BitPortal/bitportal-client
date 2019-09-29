@@ -11,7 +11,6 @@ import {
 import LinearGradientContainer from 'components/LinearGradientContainer'
 import { noop } from 'utils'
 import Colors from 'resources/colors'
-import Tips from 'components/Tips'
 import styles from './styles'
 
 type KeyboardAppearance = 'default' | 'light' | 'dark'
@@ -42,7 +41,6 @@ interface TextFieldProps {
   keyboardType?: KeyboardType,
   leftContent?: JSX.Element | string,
   rightContent?: JSX.Element | string,
-  tips?: JSX.Element | string,
   info?: JSX.Element | string,
   placeholder?: string
   returnKeyType?: ReturnKeyType
@@ -117,7 +115,6 @@ export const TextField: React.SFC<TextFieldProps> = ({
   label,
   keyboardType,
   rightContent,
-  tips,
   info,
   placeholder
 }) => (
@@ -127,7 +124,6 @@ export const TextField: React.SFC<TextFieldProps> = ({
       {!(touched && error) &&
         <View style={styles.between}>
           {label && <Text style={styles.label}>{label}</Text>}
-          {tips && <Tips tips={tips} />}
         </View>
       }
       {info && <View style={styles.info}>{info}</View>}
@@ -183,7 +179,6 @@ export const TextAreaField: React.SFC<TextFieldProps> = ({
   input: { onChange, ...restInput },
   meta: { touched, error },
   label,
-  tips,
   placeholder
 }) => (
   <FieldItem>
@@ -192,7 +187,6 @@ export const TextAreaField: React.SFC<TextFieldProps> = ({
       {!(touched && error) &&
         <View style={styles.between}>
           {label && <Text style={styles.label}>{label}</Text>}
-          {tips && <Tips tips={tips} />}
         </View>
       }
     </FieldInfo>
@@ -221,7 +215,6 @@ export const PasswordField: React.SFC<TextFieldProps> = ({
   label,
   placeholder,
   rightContent,
-  tips,
   info
 }) => (
   <FieldItem>
@@ -230,7 +223,6 @@ export const PasswordField: React.SFC<TextFieldProps> = ({
       {!(touched && error) &&
         <View style={styles.between}>
           {label && <Text style={styles.label}>{label}</Text>}
-          {tips && <Tips tips={tips} />}
         </View>
       }
       {info && <View>{info}</View>}
