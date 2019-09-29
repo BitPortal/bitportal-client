@@ -9,6 +9,7 @@
 	self.visible = [BoolParser parse:dict key:@"visible"];
 	self.color = [ColorParser parse:dict key:@"color"];
 	self.fontFamily = [TextParser parse:dict key:@"fontFamily"];
+  self.displayMode = [TextParser parse:dict key:@"displayMode"];
 	
 	return self;
 }

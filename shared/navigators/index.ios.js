@@ -195,7 +195,7 @@ export const setDefaultOptions = () => {
     },
     topBar: {
       background: {
-        translucent: false,
+        translucent: true,
         color: '#F7F7F7'
       },
       drawBehind: true,
@@ -208,7 +208,6 @@ export const setDefaultOptions = () => {
       },
       largeTitle: {
         visible: true,
-        fontSize: 30,
         fontFamily: 'System'
       }
     },
@@ -237,6 +236,7 @@ export const startApp = (callback) => {
 
 export const startTabBasedApp = (locale) => {
   locale = locale || 'zh'
+  
   Navigation.setRoot({
     root: {
       bottomTabs: {
@@ -325,29 +325,6 @@ export const startTabBasedApp = (locale) => {
               }
             }
           },
-          /* {
-           *   stack: {
-           *     children: [
-           *       {
-           *         component: {
-           *           id: 'BitPortal.News',
-           *           name: 'BitPortal.News'
-           *         }
-           *       }
-           *     ],
-           *     options: {
-           *       bottomTab: {
-           *         text: '资讯',
-           *         textColor: '#9D9D9D',
-           *         iconColor: '#9D9D9D',
-           *         selectedTextColor: '#007AFF',
-           *         icon: require('resources/images/news_tab.png'),
-           *         selectedIconColor: '#007AFF',
-           *         testID: 'BITPORTAL_NEWS'
-           *       }
-           *     }
-           *   }
-           * },*/
           {
             stack: {
               children: [

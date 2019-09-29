@@ -99,32 +99,8 @@
 									isFocused:searchController.searchBar.isFirstResponder];
 }
 
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-	if (self.resolveOptions.topBar.addressBar.hasValue) {
-		[searchBar setShowsCancelButton:YES animated:YES];
-	}
-}
-
-- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
-	if (self.resolveOptions.topBar.addressBar.hasValue) {
-		[searchBar setShowsCancelButton:NO animated:YES];
-	}
-}
-
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-		if (self.resolveOptions.topBar.addressBar.hasValue) {
-			[self.eventEmitter sendOnSearchBarUpdated:self.layoutInfo.componentId
-												 text:searchText
-											isFocused:searchBar.isFirstResponder];
-		}
-}
-
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
 	[self.eventEmitter sendOnSearchBarCancelPressed:self.layoutInfo.componentId];
-	if (self.resolveOptions.topBar.addressBar.hasValue) {
-		[searchBar setShowsCancelButton:NO animated:YES];
-		[searchBar resignFirstResponder];
-	}
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
@@ -132,10 +108,6 @@
 		text:searchBar.text
 		isFocused:searchBar.isFirstResponder
 		isSubmitting:YES];
-	if (self.resolveOptions.topBar.addressBar.hasValue) {
-		[searchBar setShowsCancelButton:NO animated:YES];
-		[searchBar resignFirstResponder];
-	}
 }
 
 -(BOOL)isCustomTransitioned {

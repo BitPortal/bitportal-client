@@ -37,7 +37,7 @@ export default class Contacts extends Component {
           }
         ],
         largeTitle: {
-          visible: false
+          displayMode: 'never'
         }
       },
       bottomTabs: {
@@ -62,6 +62,16 @@ export default class Contacts extends Component {
         }
       })
     }
+  }
+
+  componentDidAppear() {
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        largeTitle: {
+          visible: false
+        }
+      }
+    })
   }
 
   onItemNotification = (data) => {

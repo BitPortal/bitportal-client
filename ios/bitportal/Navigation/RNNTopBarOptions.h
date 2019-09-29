@@ -22,7 +22,6 @@
 @property (nonatomic, strong) Bool* noBorder;
 @property (nonatomic, strong) Bool* animate;
 @property (nonatomic, strong) Bool* searchBar;
-@property (nonatomic, strong) Bool* addressBar;
 @property (nonatomic, strong) Bool* searchBarDeactive;
 @property (nonatomic, strong) Bool* searchBarHiddenWhenScrolling;
 @property (nonatomic, strong) Bool* hideNavBarOnFocusSearchBar;

@@ -263,10 +263,10 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
 -(void)onRefreshBegin:(UIRefreshControl *)sender{
     self.onRefresh(@{});
     
-    if(self.refreshing == NO) {
-        [self.tableView.refreshControl endRefreshing];
-        self.tableView.refreshControl.layer.zPosition -= 1;
-    }
+//    if(self.refreshing == NO) {
+//        [self.tableView.refreshControl endRefreshing];
+//        self.tableView.refreshControl.layer.zPosition -= 1;
+//    }
 }
 
 -(void)startRefreshing {

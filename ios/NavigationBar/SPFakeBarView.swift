@@ -120,6 +120,10 @@ open class SPFakeBarView: UIView {
          
          */
         
+      if #available(iOS 13.0, *) {
+         let effect =  UIBlurEffect(style: UIBlurEffect.Style.systemThickMaterial)
+         self.blurView = UIVisualEffectView.init(effect: effect)
+      } else {
         var isDarkMode: Bool {
             if #available(iOS 12.0, *) {
                 if self.traitCollection.userInterfaceStyle == .dark {
@@ -134,6 +138,8 @@ open class SPFakeBarView: UIView {
         
         let effect = UIBlurEffect(style: isDarkMode ? .dark : .extraLight)
         self.blurView = UIVisualEffectView.init(effect: effect)
+      }
+      
         self.addSubview(self.blurView)
         self.blurView.translatesAutoresizingMaskIntoConstraints = false
         self.blurView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true

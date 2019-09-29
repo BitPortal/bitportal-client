@@ -47,14 +47,8 @@ export default class WalletList extends Component {
             text: '取消'
           }
         ],
-        /* rightButtons: [
-         *   {
-         *     id: 'edit',
-         *     text: '编辑'
-         *   }
-         * ],*/
         largeTitle: {
-          visible: false
+          displayMode: 'never'
         }
       }
     }

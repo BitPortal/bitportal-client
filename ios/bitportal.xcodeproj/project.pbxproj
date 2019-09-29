@@ -140,6 +140,8 @@
 		3483B0E6231430D700444855 /* RNReactModuleCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3483B084231430D600444855 /* RNReactModuleCollectionViewCell.m */; };
 		3483B0E7231430D700444855 /* RNReactModuleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3483B086231430D600444855 /* RNReactModuleCell.m */; };
 		348C50C621A4375500F99792 /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 348C507F21A4375500F99792 /* IQKeyboardManager.bundle */; };
+		34A66A97233F1307003C2C2B /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A66A4A233F1306003C2C2B /* TableViewController.swift */; };
+		34A66A98233F1307003C2C2B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A66A96233F1306003C2C2B /* ViewController.swift */; };
 		34A680DA22C4E76E00BBE21E /* libRNReanimated.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34A680D722C4E75C00BBE21E /* libRNReanimated.a */; };
 		34A680E422C4E7A900BBE21E /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34A680E122C4E79A00BBE21E /* libRNGestureHandler.a */; };
 		34AEC4FA230BDDCB002B9C99 /* libRNCWebView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34AEC4E3230BDD9B002B9C99 /* libRNCWebView.a */; };
@@ -194,7 +196,6 @@
 		34C81948233B4C0D0090AD79 /* UIViewController+RNNOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817E2233B4C090090AD79 /* UIViewController+RNNOptions.m */; };
 		34C81949233B4C0D0090AD79 /* RNNModalManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817E4233B4C090090AD79 /* RNNModalManager.m */; };
 		34C8194A233B4C0D0090AD79 /* RNNTitleOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817E6233B4C090090AD79 /* RNNTitleOptions.m */; };
-		34C8194B233B4C0D0090AD79 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34C817E7233B4C090090AD79 /* libOCMock.a */; };
 		34C8194C233B4C0D0090AD79 /* RNNNavigationOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817E8233B4C090090AD79 /* RNNNavigationOptions.m */; };
 		34C8194D233B4C0D0090AD79 /* RNNSideMenuChildVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817EA233B4C090090AD79 /* RNNSideMenuChildVC.m */; };
 		34C8194E233B4C0D0090AD79 /* RNNReactRootViewCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C817ED233B4C090090AD79 /* RNNReactRootViewCreator.m */; };
@@ -1126,6 +1127,8 @@
 		3483B087231430D600444855 /* RNTableViewCellWithCollectionViewInside.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTableViewCellWithCollectionViewInside.h; sourceTree = "<group>"; };
 		3483B088231430D600444855 /* RNTableHeaderViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTableHeaderViewManager.h; sourceTree = "<group>"; };
 		348C507F21A4375500F99792 /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = IQKeyboardManager.bundle; path = "../node_modules/react-native-keyboard-manager/ios/IQKeyboardManager/Resources/IQKeyboardManager.bundle"; sourceTree = "<group>"; };
+		34A66A4A233F1306003C2C2B /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		34A66A96233F1306003C2C2B /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		34A680D122C4E75C00BBE21E /* RNReanimated.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNReanimated.xcodeproj; path = "../node_modules/react-native-reanimated/ios/RNReanimated.xcodeproj"; sourceTree = "<group>"; };
 		34A680DB22C4E79900BBE21E /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
 		34AEC4A6230BDD9B002B9C99 /* RNCWebView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCWebView.xcodeproj; path = "../node_modules/react-native-webview/ios/RNCWebView.xcodeproj"; sourceTree = "<group>"; };
@@ -1222,7 +1225,6 @@
 		34C817E4233B4C090090AD79 /* RNNModalManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNModalManager.m; sourceTree = "<group>"; };
 		34C817E5233B4C090090AD79 /* ReactNativeNavigation-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ReactNativeNavigation-Bridging-Header.h"; sourceTree = "<group>"; };
 		34C817E6233B4C090090AD79 /* RNNTitleOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNTitleOptions.m; sourceTree = "<group>"; };
-		34C817E7233B4C090090AD79 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOCMock.a; sourceTree = "<group>"; };
 		34C817E8233B4C090090AD79 /* RNNNavigationOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNNavigationOptions.m; sourceTree = "<group>"; };
 		34C817E9233B4C090090AD79 /* IntNumberParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntNumberParser.h; sourceTree = "<group>"; };
 		34C817EA233B4C090090AD79 /* RNNSideMenuChildVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNSideMenuChildVC.m; sourceTree = "<group>"; };
@@ -1516,7 +1518,6 @@
 				345D6F6D229D9DAA009E56AC /* JavaScriptCore.framework in Frameworks */,
 				34763E1A229438B7002AEA19 /* libART.a in Frameworks */,
 				3449499A2274C1BB00D8AB38 /* libRNCSlider.a in Frameworks */,
-				34C8194B233B4C0D0090AD79 /* libOCMock.a in Frameworks */,
 				346C2D1521E74B170030003C /* libRNReactNativeHapticFeedback.a in Frameworks */,
 				344C9E68231C0F9A004E26AD /* RSKImageCropper.framework in Frameworks */,
 				346C2CE821E738A00030003C /* libReactNativeHaptic.a in Frameworks */,
@@ -1640,6 +1641,8 @@
 		13B07FAE1A68108700A75B9A /* bitportal */ = {
 			isa = PBXGroup;
 			children = (
+				34A66A4A233F1306003C2C2B /* TableViewController.swift */,
+				34A66A96233F1306003C2C2B /* ViewController.swift */,
 				34C81873233B4C0A0090AD79 /* SPStorkController */,
 				34C81789233B4C080090AD79 /* Navigation */,
 				34FAC21B232142C30084A60F /* NavigationBar */,
@@ -2369,7 +2372,6 @@
 				34C817E4233B4C090090AD79 /* RNNModalManager.m */,
 				34C817E5233B4C090090AD79 /* ReactNativeNavigation-Bridging-Header.h */,
 				34C817E6233B4C090090AD79 /* RNNTitleOptions.m */,
-				34C817E7233B4C090090AD79 /* libOCMock.a */,
 				34C817E8233B4C090090AD79 /* RNNNavigationOptions.m */,
 				34C817E9233B4C090090AD79 /* IntNumberParser.h */,
 				34C817EA233B4C090090AD79 /* RNNSideMenuChildVC.m */,
@@ -3801,6 +3803,7 @@
 				18F282772177351C00DEB13F /* modm-donna-32bit.c in Sources */,
 				18F282952177351C00DEB13F /* poly1305-donna.c in Sources */,
 				34C8194D233B4C0D0090AD79 /* RNNSideMenuChildVC.m in Sources */,
+				34A66A98233F1307003C2C2B /* ViewController.swift in Sources */,
 				34C8199F233B4C0D0090AD79 /* NumberParser.m in Sources */,
 				18F282652177351C00DEB13F /* base32.c in Sources */,
 				18F282782177351C00DEB13F /* curve25519-donna-32bit.c in Sources */,
@@ -3883,6 +3886,7 @@
 				18F282852177351C00DEB13F /* memzero.c in Sources */,
 				3483B0DF231430D700444855 /* RNTableFooterView.m in Sources */,
 				34C81968233B4C0D0090AD79 /* RNNReactComponentRegistry.m in Sources */,
+				34A66A97233F1307003C2C2B /* TableViewController.swift in Sources */,
 				34C81956233B4C0D0090AD79 /* MMDrawerBarButtonItem.m in Sources */,
 				18F282722177351C00DEB13F /* curve25519-donna-helpers.c in Sources */,
 				34FAC49623268F9A0084A60F /* NavBarManager.m in Sources */,
@@ -4027,6 +4031,7 @@
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
 					"$(PROJECT_DIR)/bitportal/Navigation",
 				);
+				MARKETING_VERSION = 0.9.8;
 				OTHER_CFLAGS = (
 					"$(inherited)",
 					"-iquote",
@@ -4112,6 +4117,7 @@
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
 					"$(PROJECT_DIR)/bitportal/Navigation",
 				);
+				MARKETING_VERSION = 0.9.8;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"$(inherited)",

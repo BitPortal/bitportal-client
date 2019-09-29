@@ -236,7 +236,7 @@ export default class Discovery extends Component {
 
     return (
       <TableView
-        style={{ flex: 1, backgroundColor: 'white' }}
+        style={{ flex: 1 }}
         headerBackgroundColor="white"
         headerTextColor="black"
         separatorStyle={TableView.Consts.SeparatorStyle.None}

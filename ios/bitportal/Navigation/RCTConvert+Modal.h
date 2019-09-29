@@ -6,6 +6,12 @@
 
 @implementation RCTConvert (Modal)
 
+RCT_ENUM_CONVERTER(UINavigationItemLargeTitleDisplayMode,
+                   (@{@"automatic": @(UINavigationItemLargeTitleDisplayModeAutomatic),
+                      @"always": @(UINavigationItemLargeTitleDisplayModeAlways),
+                      @"never": @(UINavigationItemLargeTitleDisplayModeNever),
+                   }), UINavigationItemLargeTitleDisplayModeAutomatic, integerValue)
+
 RCT_ENUM_CONVERTER(UIModalTransitionStyle,
 				   (@{@"coverVertical": @(UIModalTransitionStyleCoverVertical),
 					  @"flipHorizontal": @(UIModalTransitionStyleFlipHorizontal),

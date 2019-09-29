@@ -1199,7 +1199,7 @@ export default class WebView extends Component {
     const inject = this.loadBridgeByChain(chain)
 
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F7F7' }}>
+      <SafeAreaView style={{ flex: 1 }}>
         {hasAddressBar && (
           <TGAddressBar
             style={{ height: 50, width: '100%' }}
@@ -1224,7 +1224,6 @@ export default class WebView extends Component {
             domStorageEnabled={true}
             decelerationRate="normal"
             useWebKit={true}
-            nativeConfig={{ props: { backgroundColor: '#F7F7F7', flex: 1 } }}
             onMessage={this.onBridgeMessage}
             injectedJavaScriptBeforeLoad={inject}
             injectedJavaScript={chain === 'EOS' ? inject : ''}

@@ -16,15 +16,28 @@
 }
 
 - (void)rnn_setTabBarBackgroundColor:(UIColor *)backgroundColor {
-	self.tabBar.barTintColor = backgroundColor;
+  if (@available(iOS 13.0, *)) {
+    // UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleSystemThinMaterial];
+    // self.tabBar.backgroundImage = [UIVisualEffectView initWithEffect: effect];
+  } else {
+    self.tabBar.barTintColor = backgroundColor;
+  }
 }
 
 - (void)rnn_setTabBarStyle:(UIBarStyle)barStyle {
-	self.tabBar.barStyle = barStyle;
+  if (@available(iOS 13.0, *)) {
+    self.tabBar.barStyle = UIBarStyleDefault;
+  } else {
+    self.tabBar.barStyle = barStyle;
+  }
 }
 
 - (void)rnn_setTabBarTranslucent:(BOOL)translucent {
-	self.tabBar.translucent = translucent;
+  if (@available(iOS 13.0, *)) {
+    // self.tabBar.translucent = true;
+  } else {
+    self.tabBar.translucent = translucent;
+  }
 }
 
 - (void)rnn_setTabBarHideShadow:(BOOL)hideShadow {

@@ -11,6 +11,6 @@ import UIKit
 @objc(TGAddressBarManager)
 class TGAddressBarManager: RCTViewManager {
   @objc override func view() -> UIView! {
-    return AddressBar()
+    return AddressBar.init(style: .stork)
   }
 }

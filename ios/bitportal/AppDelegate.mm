@@ -7,6 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+#import "BitPortal-Swift.h"
 #import "AppDelegate.h"
 #import <RCTJPushModule.h>
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max
@@ -103,6 +104,21 @@
   [SplashScreen show];
   return YES;
 }
+
+//- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+//{
+//  self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+//  UIViewController *vc = [TableViewController new];
+//  UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+//  if (@available(iOS 11.0, *)) {
+//    nvc.navigationBar.prefersLargeTitles = YES;
+//  }
+//
+//  self.window.rootViewController = nvc;
+//  [self.window makeKeyAndVisible];
+//
+//  return YES;
+//}
 
 - (void)application:(UIApplication *)application didChangeStatusBarFrame:(CGRect)oldStatusBarFrame {
 

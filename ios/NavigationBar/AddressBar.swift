@@ -9,7 +9,7 @@
 import UIKit
 
 @objc(AddressBar)
-class AddressBar: UIView, UITextFieldDelegate {
+class AddressBar: SPFakeBarView, UITextFieldDelegate {
   
   var onLeftButtonClicked: RCTDirectEventBlock?
   var onRightButtonClicked: RCTDirectEventBlock?
@@ -106,7 +106,7 @@ class AddressBar: UIView, UITextFieldDelegate {
   var cancelButtonLeadingAnchorConstraint: NSLayoutConstraint?
   var cancelButtonTrailingAnchorConstraint: NSLayoutConstraint?
   var textFieldContainerTrailingAnchorConstraint: NSLayoutConstraint?
-  var addressBarTopAnchorConstraint: NSLayoutConstraint?
+  // var addressBarTopAnchorConstraint: NSLayoutConstraint?
   
   var textFieldTrailingAnchorConstraint: NSLayoutConstraint?
   var textFieldLeadingAnchorConstraint: NSLayoutConstraint?
@@ -115,8 +115,8 @@ class AddressBar: UIView, UITextFieldDelegate {
   var titleViewCenterXAnchorConstraint: NSLayoutConstraint?
   
   private func configureNavbar() {
-    // let statusBarHeight = UIApplication.shared.statusBarFrame.height
-    // self.height = 50
+    let statusBarHeight = UIApplication.shared.statusBarFrame.height
+    self.height = 50 + statusBarHeight
   }
   
   private func configureAddressBar() {
@@ -124,9 +124,10 @@ class AddressBar: UIView, UITextFieldDelegate {
     addressBar.translatesAutoresizingMaskIntoConstraints = false
     addressBar.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
     addressBar.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-    addressBar.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
-    addressBarTopAnchorConstraint = addressBar.topAnchor.constraint(equalTo: self.topAnchor, constant: 0)
-    addressBarTopAnchorConstraint?.isActive = true
+    addressBar.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+    addressBar.heightAnchor.constraint(equalToConstant: 50).isActive = true
+    // addressBarTopAnchorConstraint = addressBar.topAnchor.constraint(equalTo: self.topAnchor, constant: 0)
+    // addressBarTopAnchorConstraint?.isActive = true
   }
   
   private func configureTextFieldContainer() {
@@ -220,13 +221,22 @@ class AddressBar: UIView, UITextFieldDelegate {
 //    titleView.titleLabel?.sizeToFit()
     titleView.titleLabel?.font = UIFont.systemFont(ofSize: 17)
     titleView.setTitle(self.titleViewText, for: .normal)
-    titleView.setTitleColor(.black, for: .normal)
+    if #available(iOS 13.0, *) {
+      titleView.setTitleColor(.label, for: .normal)
+    } else {
+      titleView.setTitleColor(.black, for: .normal)
+    }
     titleView.imageView?.contentMode = .scaleAspectFit
     titleView.imageEdgeInsets = UIEdgeInsets(top: 10, left: -6, bottom: 10, right: 0)
     // titleView.backgroundColor = .blue
     
     if (isSecure) {
-      titleView.setImage(UIImage.init(named: "secure_address.png"), for: .normal)
+      if #available(iOS 13.0, *) {
+        titleView.tintColor = .label
+        titleView.setImage(UIImage.init(named: "secure_address.png")?.withTintColor(.label, renderingMode: .alwaysTemplate), for: .normal)
+      } else {
+        titleView.setImage(UIImage.init(named: "secure_address.png"), for: .normal)
+      }
     } else {
       titleView.setImage(nil, for: .normal)
     }
@@ -353,7 +363,11 @@ class AddressBar: UIView, UITextFieldDelegate {
   
   private func configureSeparator() {
     separator.translatesAutoresizingMaskIntoConstraints = false
-    separator.backgroundColor = UIColor.init(red: 191 / 255.0, green: 191 / 255.0, blue: 191 / 255.0, alpha: 1)
+    if #available(iOS 13.0, *) {
+      separator.backgroundColor = .separator
+    } else {
+      separator.backgroundColor = UIColor.init(red: 191 / 255.0, green: 191 / 255.0, blue: 191 / 255.0, alpha: 1)
+    }
     separator.leadingAnchor.constraint(equalTo: self.addressBar.leadingAnchor).isActive = true
     separator.trailingAnchor.constraint(equalTo: self.addressBar.trailingAnchor).isActive = true
     separator.bottomAnchor.constraint(equalTo: self.addressBar.bottomAnchor).isActive = true
@@ -400,6 +414,11 @@ class AddressBar: UIView, UITextFieldDelegate {
   public override init(frame: CGRect) {
     super.init(frame: frame)
     self.commonInit()
+  }
+  
+  public override init(style: SPFakeBarNavigationStyle) {
+      super.init(style: style)
+      self.commonInit()
   }
   
   required public init?(coder aDecoder: NSCoder) {

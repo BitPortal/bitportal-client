@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { injectIntl, FormattedMessage } from 'react-intl'
-import { View, Text, Clipboard, ActivityIndicator, TouchableHighlight, Image, Alert, NativeModules } from 'react-native'
+import { View, Text, Clipboard, ActivityIndicator, TouchableHighlight, Image, Alert, NativeModules, ScrollView } from 'react-native'
 import { Navigation } from 'components/Navigation'
 import TableView from 'components/TableView'
 // import FastImage from 'react-native-fast-image'
@@ -204,19 +204,24 @@ export default class Wallet extends Component {
   scrollToItem = (walletId) => {
     const { identityWallets, importedWallets } = this.props
     const index = identityWallets.filter(wallet => !!wallet.address).concat(importedWallets).findIndex(wallet => wallet.id === walletId)
-    if (index !== -1) {
+    if (index !== -1 && this.tableView) {
       this.tableView.scrollCollectonViewToItem({ itemIndex: index })
     }
   }
 
   toManage = () => {
-    Navigation.showModal({
-      stack: {
-        children: [{
-          component: {
-            name: 'BitPortal.WalletList'
-          }
-        }]
+    /* Navigation.showModal({
+     *   stack: {
+     *     children: [{
+     *       component: {
+     *         name: 'BitPortal.WalletList'
+     *       }
+     *     }]
+     *   }
+     * }) */
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.WalletList'
       }
     })
   }
@@ -555,123 +560,104 @@ export default class Wallet extends Component {
     }
 
     return (
-      <View style={styles.container}>
-        <TableView
-          style={{ flex: 1, height: 44 * 20 + 22 }}
-          tableViewCellStyle={TableView.Consts.CellStyle.Default}
-          canRefresh
-          refreshing={getBalanceRefreshing}
-          onRefresh={this.onRefresh}
-          headerBackgroundColor="white"
-          headerTextColor="black"
-          headerFontSize={22}
-          cellSeparatorInset={{ left: 66, right: 16 }}
-          separatorStyle={TableView.Consts.SeparatorStyle.None}
-          onItemNotification={this.onItemNotification}
-          onScrollViewDidEndDecelerating={this.onScrollViewDidEndDecelerating}
-          onCollectionViewDidSelectItem={() => {}}
-          ref={(ref) => { this.tableView = ref }}
-          onLeadingSwipe={this.onLeadingSwipe}
-          onTrailingSwipe={this.onTrailingSwipe}
-          onMoreAccessoryPress={this.onMoreAccessoryPress}
-        >
-          <Section uid="WalletCardCollectionViewCell">
-            <Item
-              height="205"
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
-              containCollectionView
-              collectionViewInitialIndex={collectionViewInitialIndex}
-              cellCount={identityWalletsCount}
-              collectionViewInsideTableViewCell="WalletCardCollectionViewCell"
-              collectionViewInsideTableViewCellKey="WalletCardCollectionViewCell"
-              disablePress
-            >
-              <CollectionView>
-                {identityWallets.filter(wallet => !!wallet.address).map(wallet =>
-                  <CollectionViewItem
-                    key={wallet.id}
-                    uid={wallet.id}
-                    type="identity"
-                    height="190"
-                    reactModuleForCollectionViewCell="WalletCardCollectionViewCell"
-                    reactModuleForCollectionViewCellKey="WalletCardCollectionViewCell"
-                    address={wallet.address}
-                    name={wallet.name}
-                    chain={wallet.chain}
-                    symbol={wallet.symbol}
-                    segWit={wallet.segWit}
-                    source={wallet.source}
-                    cpu={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatCycleTime(resources[`${wallet.chain}/${wallet.address}`].CPU) : '--'}
-                    net={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatMemorySize(resources[`${wallet.chain}/${wallet.address}`].NET) : '--'}
-                    ram={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatMemorySize(resources[`${wallet.chain}/${wallet.address}`].RAM) : '--'}
-                    currency={currency.sign}
-                    totalAsset={(portfolio && portfolio[`${wallet.chain}/${wallet.address}`]) ? intl.formatNumber(portfolio[`${wallet.chain}/${wallet.address}`].totalAsset * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
-                    componentId={this.props.componentId}
-                    separatorStyle={TableView.Consts.SeparatorStyle.None}
-                    accessoryType={1}
-                    moreButtonImage={require('resources/images/circle_more.png')}
-                  />
-                )}
-                {importedWallets.map(wallet =>
-                  <CollectionViewItem
-                    key={wallet.id}
-                    uid={wallet.id}
-                    type="imported"
-                    height="190"
-                    reactModuleForCollectionViewCell="WalletCardCollectionViewCell"
-                    reactModuleForCollectionViewCellKey="WalletCardCollectionViewCell"
-                    address={wallet.address}
-                    name={wallet.name}
-                    chain={wallet.chain}
-                    symbol={wallet.symbol}
-                    segWit={wallet.segWit}
-                    source={wallet.source}
-                    cpu={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatCycleTime(resources[`${wallet.chain}/${wallet.address}`].CPU) : '--'}
-                    net={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatMemorySize(resources[`${wallet.chain}/${wallet.address}`].NET) : '--'}
-                    ram={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatMemorySize(resources[`${wallet.chain}/${wallet.address}`].RAM) : '--'}
-                    currency={currency.sign}
-                    totalAsset={(portfolio && portfolio[`${wallet.chain}/${wallet.address}`]) ? intl.formatNumber(portfolio[`${wallet.chain}/${wallet.address}`].totalAsset * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
-                    componentId={this.props.componentId}
-                    separatorStyle={TableView.Consts.SeparatorStyle.None}
-                    accessoryType={1}
-                    moreButtonImage={require('resources/images/circle_more.png')}
-                  />
-                )}
-              </CollectionView>
-            </Item>
-          </Section>
-          <Section uid="HeaderTableViewCell">
-            <Item
-              reactModuleForCell="HeaderTableViewCell"
-              title={intl.formatMessage({ id: 'wallet_header_title_asset' })}
-              height={48}
-              componentId={this.props.componentId}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
-              chain={chain}
-              accessoryType={(chain === 'ETHEREUM' || chain === 'EOS' || chain === 'CHAINX') ? 7 : TableView.Consts.AccessoryType.None}
-              onAddAccessoryPress={!this.state.switching ? this.onAddAssetsPress : () => {}}
-            />
-          </Section>
-          {!!balance && (<Section headerHeight={0} uid="AssetBalanceTableViewCell" canEdit={!this.state.switching}>{assetItems}</Section>)}
-        </TableView>
-        <Modal
-          isVisible={this.state.showModal}
-          backdropOpacity={0}
-          useNativeDriver
-          animationIn="fadeIn"
-          animationInTiming={200}
-          backdropTransitionInTiming={200}
-          animationOut="fadeOut"
-          animationOutTiming={200}
-          backdropTransitionOutTiming={200}
-        >
-          {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
-              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'general_toast_text_copied' })}</Text>
-            </View>
-          </View>}
-        </Modal>
-      </View>
+      <TableView
+        style={{ flex: 1 }}
+        tableViewCellStyle={TableView.Consts.CellStyle.Default}
+        canRefresh
+        refreshing={getBalanceRefreshing}
+        onRefresh={this.onRefresh}
+        headerBackgroundColor="white"
+        headerTextColor="black"
+        headerFontSize={22}
+        cellSeparatorInset={{ left: 66, right: 16 }}
+        separatorStyle={TableView.Consts.SeparatorStyle.None}
+        onItemNotification={this.onItemNotification}
+        onScrollViewDidEndDecelerating={this.onScrollViewDidEndDecelerating}
+        onCollectionViewDidSelectItem={() => {}}
+        ref={(ref) => { this.tableView = ref }}
+        onLeadingSwipe={this.onLeadingSwipe}
+        onTrailingSwipe={this.onTrailingSwipe}
+        onMoreAccessoryPress={this.onMoreAccessoryPress}
+      >
+        <Section uid="WalletCardCollectionViewCell">
+          <Item
+            height="205"
+            selectionStyle={TableView.Consts.CellSelectionStyle.None}
+            containCollectionView
+            collectionViewInitialIndex={collectionViewInitialIndex}
+            cellCount={identityWalletsCount}
+            collectionViewInsideTableViewCell="WalletCardCollectionViewCell"
+            collectionViewInsideTableViewCellKey="WalletCardCollectionViewCell"
+            disablePress
+          >
+            <CollectionView>
+              {identityWallets.filter(wallet => !!wallet.address).map(wallet =>
+                <CollectionViewItem
+                  key={wallet.id}
+                  uid={wallet.id}
+                  type="identity"
+                  height="190"
+                  reactModuleForCollectionViewCell="WalletCardCollectionViewCell"
+                  reactModuleForCollectionViewCellKey="WalletCardCollectionViewCell"
+                  address={wallet.address}
+                  name={wallet.name}
+                  chain={wallet.chain}
+                  symbol={wallet.symbol}
+                  segWit={wallet.segWit}
+                  source={wallet.source}
+                  cpu={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatCycleTime(resources[`${wallet.chain}/${wallet.address}`].CPU) : '--'}
+                  net={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatMemorySize(resources[`${wallet.chain}/${wallet.address}`].NET) : '--'}
+                  ram={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatMemorySize(resources[`${wallet.chain}/${wallet.address}`].RAM) : '--'}
+                  currency={currency.sign}
+                  totalAsset={(portfolio && portfolio[`${wallet.chain}/${wallet.address}`]) ? intl.formatNumber(portfolio[`${wallet.chain}/${wallet.address}`].totalAsset * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
+                  componentId={this.props.componentId}
+                  separatorStyle={TableView.Consts.SeparatorStyle.None}
+                  accessoryType={1}
+                  moreButtonImage={require('resources/images/circle_more.png')}
+                />
+              )}
+              {importedWallets.map(wallet =>
+                <CollectionViewItem
+                  key={wallet.id}
+                  uid={wallet.id}
+                  type="imported"
+                  height="190"
+                  reactModuleForCollectionViewCell="WalletCardCollectionViewCell"
+                  reactModuleForCollectionViewCellKey="WalletCardCollectionViewCell"
+                  address={wallet.address}
+                  name={wallet.name}
+                  chain={wallet.chain}
+                  symbol={wallet.symbol}
+                  segWit={wallet.segWit}
+                  source={wallet.source}
+                  cpu={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatCycleTime(resources[`${wallet.chain}/${wallet.address}`].CPU) : '--'}
+                  net={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatMemorySize(resources[`${wallet.chain}/${wallet.address}`].NET) : '--'}
+                  ram={(wallet.chain === 'EOS' && resources && resources[`${wallet.chain}/${wallet.address}`]) ? formatMemorySize(resources[`${wallet.chain}/${wallet.address}`].RAM) : '--'}
+                  currency={currency.sign}
+                  totalAsset={(portfolio && portfolio[`${wallet.chain}/${wallet.address}`]) ? intl.formatNumber(portfolio[`${wallet.chain}/${wallet.address}`].totalAsset * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
+                  componentId={this.props.componentId}
+                  separatorStyle={TableView.Consts.SeparatorStyle.None}
+                  accessoryType={1}
+                  moreButtonImage={require('resources/images/circle_more.png')}
+                />
+              )}
+            </CollectionView>
+          </Item>
+        </Section>
+        <Section uid="HeaderTableViewCell">
+          <Item
+            reactModuleForCell="HeaderTableViewCell"
+            title={intl.formatMessage({ id: 'wallet_header_title_asset' })}
+            height={48}
+            componentId={this.props.componentId}
+            selectionStyle={TableView.Consts.CellSelectionStyle.None}
+            chain={chain}
+            accessoryType={(chain === 'ETHEREUM' || chain === 'EOS' || chain === 'CHAINX') ? 7 : TableView.Consts.AccessoryType.None}
+            onAddAccessoryPress={!this.state.switching ? this.onAddAssetsPress : () => {}}
+          />
+        </Section>
+        {!!balance && (<Section headerHeight={0} uid="AssetBalanceTableViewCell" canEdit={!this.state.switching}>{assetItems}</Section>)}
+      </TableView>
     )
   }
 }

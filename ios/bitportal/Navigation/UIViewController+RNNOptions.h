@@ -10,8 +10,6 @@
 
 - (void)rnn_setSearchBarWithPlaceholder:(NSString *)placeholder hideNavBarOnFocusSearchBar:(BOOL)hideNavBarOnFocusSearchBar;
 
-- (void)rnn_setAddressBar;
-
 - (void)rnn_setSearchBarHiddenWhenScrolling:(BOOL)searchBarHidden;
 
 - (void)rnn_setDrawBehindTopBar:(BOOL)drawBehind;
@@ -22,7 +20,7 @@
 
 - (void)rnn_setTabBarItemBadge:(NSString *)badge;
 
-- (void)rnn_setTopBarPrefersLargeTitle:(BOOL)prefersLargeTitle;
+- (void)rnn_setTopBarLargeTitleDisplayMode:(UINavigationItemLargeTitleDisplayMode)displayMode;
 
 - (void)rnn_setNavigationItemTitle:(NSString *)title;
 

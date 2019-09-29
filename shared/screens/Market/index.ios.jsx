@@ -150,7 +150,7 @@ export default class Market extends Component {
     return (
       <TableView
         ref={(ref) => { this.tableViewRef = ref }}
-        style={{ flex: 1, backgroundColor: 'white' }}
+        style={{ flex: 1 }}
         canRefresh={this.state.firstAppeared}
         refreshing={refreshing && !this.state.searchBarFocused && this.state.getTickerLoaded}
         onRefresh={this.state.searchBarFocused ? () => {} : this.onRefresh}
@@ -169,7 +169,7 @@ export default class Market extends Component {
               componentId={this.props.componentId}
               selectionStyle={TableView.Consts.CellSelectionStyle.None}
             />
-           )}
+          )}
         </Section>
       </TableView>
     )

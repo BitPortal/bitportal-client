@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, LayoutAnimation } from 'react-native'
+import { View, LayoutAnimation, TouchableOpacity, Text } from 'react-native'
 import { Navigation } from 'components/Navigation'
 import { connect } from 'react-redux'
 import TableView from 'components/TableView'
@@ -26,10 +26,10 @@ export default class Profile extends Component {
         title: {
           text: '我的'
         },
-        noBorder: true,
-        background: {
-          color: 'rgba(0,0,0,0)'
-        }
+        largeTitle: {
+          displayMode: 'always'
+        },
+        noBorder: true
       }
     }
   }
@@ -171,7 +171,13 @@ export default class Profile extends Component {
   }
 
   componentDidAppear() {
-
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        largeTitle: {
+          displayMode: 'always'
+        }
+      }
+    })
   }
 
   componentDidUpdate(prevProps, prevState) {

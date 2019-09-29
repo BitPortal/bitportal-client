@@ -7,17 +7,21 @@ const NSInteger BLUR_STATUS_TAG = 78264801;
 @implementation UIViewController (RNNOptions)
 
 - (void)rnn_setBackgroundImage:(UIImage *)backgroundImage {
-	if (backgroundImage) {
-		UIImageView* backgroundImageView = (self.view.subviews.count > 0) ? self.view.subviews[0] : nil;
-		if (![backgroundImageView isKindOfClass:[UIImageView class]]) {
-			backgroundImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-			[self.view insertSubview:backgroundImageView atIndex:0];
-		}
-		
-		backgroundImageView.layer.masksToBounds = YES;
-		backgroundImageView.image = backgroundImage;
-		[backgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
-	}
+  if (@available(iOS 13.0, *)) {
+
+  } else {
+    if (backgroundImage) {
+      UIImageView* backgroundImageView = (self.view.subviews.count > 0) ? self.view.subviews[0] : nil;
+      if (![backgroundImageView isKindOfClass:[UIImageView class]]) {
+        backgroundImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+        [self.view insertSubview:backgroundImageView atIndex:0];
+      }
+      
+      backgroundImageView.layer.masksToBounds = YES;
+      backgroundImageView.image = backgroundImage;
+      [backgroundImageView setContentMode:UIViewContentModeScaleAspectFill];
+    }
+  }
 }
 
 - (void)rnn_setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle {
@@ -51,16 +55,6 @@ const NSInteger BLUR_STATUS_TAG = 78264801;
 	}
 }
 
-- (void)rnn_setAddressBar {
-}
-
-- (void)displayTitleClick:(id)sender {
-	UISearchBar *searchBar = (UISearchBar *)self.navigationItem.titleView;
-	[searchBar becomeFirstResponder];
-	searchBar.showsCancelButton = YES;
-	NSLog(@"displayTitleClick");
-}
-
 - (void)rnn_setSearchBarHiddenWhenScrolling:(BOOL)searchBarHidden {
 	if (@available(iOS 11.0, *)) {
 		self.navigationItem.hidesSearchBarWhenScrolling = searchBarHidden;
@@ -78,21 +72,29 @@ const NSInteger BLUR_STATUS_TAG = 78264801;
 }
 
 - (void)rnn_setDrawBehindTopBar:(BOOL)drawBehind {
-	if (drawBehind) {
-		[self setExtendedLayoutIncludesOpaqueBars:YES];
-		self.edgesForExtendedLayout |= UIRectEdgeTop;
-	} else {
-		self.edgesForExtendedLayout &= ~UIRectEdgeTop;
-	}
+  if (@available(iOS 13.0, *)) {
+    
+  } else {
+    if (drawBehind) {
+      [self setExtendedLayoutIncludesOpaqueBars:YES];
+      self.edgesForExtendedLayout |= UIRectEdgeTop;
+    } else {
+      self.edgesForExtendedLayout &= ~UIRectEdgeTop;
+    }
+  }
 }
 
 - (void)rnn_setDrawBehindTabBar:(BOOL)drawBehindTabBar {
-	if (drawBehindTabBar) {
-		[self setExtendedLayoutIncludesOpaqueBars:YES];
-		self.edgesForExtendedLayout |= UIRectEdgeBottom;
-	} else {
-		self.edgesForExtendedLayout &= ~UIRectEdgeBottom;
-	}
+  if (@available(iOS 13.0, *)) {
+    
+  } else {
+    if (drawBehindTabBar) {
+      [self setExtendedLayoutIncludesOpaqueBars:YES];
+      self.edgesForExtendedLayout |= UIRectEdgeBottom;
+    } else {
+      self.edgesForExtendedLayout &= ~UIRectEdgeBottom;
+    }
+  }
 }
 
 - (void)rnn_setTabBarItemBadge:(NSString *)badge {
@@ -112,22 +114,18 @@ const NSInteger BLUR_STATUS_TAG = 78264801;
 }
 
 - (void)rnn_setStatusBarStyle:(NSString *)style animated:(BOOL)animated {
-	if (animated) {
-		[UIView animateWithDuration:[self statusBarAnimationDuration:animated] animations:^{
-			[self setNeedsStatusBarAppearanceUpdate];
-		}];
-	} else {
-		[self setNeedsStatusBarAppearanceUpdate];
-	}
+  if (animated) {
+    [UIView animateWithDuration:[self statusBarAnimationDuration:animated] animations:^{
+      [self setNeedsStatusBarAppearanceUpdate];
+    }];
+  } else {
+    [self setNeedsStatusBarAppearanceUpdate];
+  }
 }
 
-- (void)rnn_setTopBarPrefersLargeTitle:(BOOL)prefersLargeTitle {
+- (void)rnn_setTopBarLargeTitleDisplayMode:(UINavigationItemLargeTitleDisplayMode)displayMode API_AVAILABLE(ios(11.0)) {
 	if (@available(iOS 11.0, *)) {
-		if (prefersLargeTitle) {
-			self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAlways;
-		} else {
-			self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-		}
+    self.navigationItem.largeTitleDisplayMode = displayMode;
 	}
 }
 
@@ -149,7 +147,11 @@ const NSInteger BLUR_STATUS_TAG = 78264801;
 }
 
 - (void)rnn_setBackgroundColor:(UIColor *)backgroundColor {
-	self.view.backgroundColor = backgroundColor;
+  if (@available(iOS 13.0, *)) {
+    self.view.backgroundColor = [UIColor systemBackgroundColor];
+  } else {
+    self.view.backgroundColor = backgroundColor;
+  }
 }
 
 - (void)rnn_setBackButtonVisible:(BOOL)visible {

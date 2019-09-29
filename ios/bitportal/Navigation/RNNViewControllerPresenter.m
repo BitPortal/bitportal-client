@@ -6,6 +6,7 @@
 #import "RNNCustomTitleView.h"
 #import "RNNTitleViewHelper.h"
 #import "UIViewController+LayoutProtocol.h"
+#import "RCTConvert+Modal.h"
 
 @interface RNNViewControllerPresenter() {
 	RNNReactView* _customTitleView;
@@ -34,7 +35,7 @@
 	UIViewController* viewController = self.bindedViewController;
 	[viewController rnn_setBackgroundImage:[options.backgroundImage getWithDefaultValue:nil]];
 	[viewController rnn_setNavigationItemTitle:[options.topBar.title.text getWithDefaultValue:nil]];
-	[viewController rnn_setTopBarPrefersLargeTitle:[options.topBar.largeTitle.visible getWithDefaultValue:NO]];
+  [viewController rnn_setTopBarLargeTitleDisplayMode:[RCTConvert UINavigationItemLargeTitleDisplayMode:[options.topBar.largeTitle.displayMode getWithDefaultValue:@"automatic"]]];
 	[viewController rnn_setTabBarItemBadgeColor:[options.bottomTab.badgeColor getWithDefaultValue:nil]];
 	[viewController rnn_setStatusBarBlur:[options.statusBar.blur getWithDefaultValue:NO]];
 	[viewController rnn_setStatusBarStyle:[options.statusBar.style getWithDefaultValue:@"default"] animated:[options.statusBar.animate getWithDefaultValue:YES]];
@@ -59,10 +60,6 @@
 	}
 	
 	[self setTitleViewWithSubtitle:options];
-	
-	if (options.topBar.addressBar.hasValue) {
-		[viewController rnn_setAddressBar];
-	}
 }
 
 - (void)applyOptionsOnInit:(RNNNavigationOptions *)options {
@@ -80,7 +77,7 @@
 	[viewController rnn_setModalTransitionStyle:[RCTConvert UIModalTransitionStyle:[options.modalTransitionStyle getWithDefaultValue:@"coverVertical"]]];
 	[viewController rnn_setDrawBehindTopBar:[options.topBar.drawBehind getWithDefaultValue:NO]];
 	[viewController rnn_setDrawBehindTabBar:[options.bottomTabs.drawBehind getWithDefaultValue:NO] || ![options.bottomTabs.visible getWithDefaultValue:YES]];
-	
+  
 	if ((options.topBar.leftButtons || options.topBar.rightButtons)) {
 		[_navigationButtons applyLeftButtons:options.topBar.leftButtons rightButtons:options.topBar.rightButtons defaultLeftButtonStyle:options.topBar.leftButtonStyle defaultRightButtonStyle:options.topBar.rightButtonStyle];
 	}
@@ -121,16 +118,16 @@
 		}
 	}
 	
-	if (newOptions.topBar.drawBehind.hasValue) {
-		[viewController rnn_setDrawBehindTopBar:newOptions.topBar.drawBehind.get];
-	}
-	
 	if (newOptions.topBar.title.text.hasValue) {
 		[viewController rnn_setNavigationItemTitle:newOptions.topBar.title.text.get];
 	}
+  
+  if (newOptions.topBar.drawBehind.hasValue) {
+    [viewController rnn_setDrawBehindTopBar:newOptions.topBar.drawBehind.get];
+  }
 	
-	if (newOptions.topBar.largeTitle.visible.hasValue) {
-		[viewController rnn_setTopBarPrefersLargeTitle:newOptions.topBar.largeTitle.visible.get];
+	if (newOptions.topBar.largeTitle.displayMode.hasValue) {
+		[viewController rnn_setTopBarLargeTitleDisplayMode:[RCTConvert UINavigationItemLargeTitleDisplayMode:[newOptions.topBar.largeTitle.displayMode getWithDefaultValue:@"automatic"]]];
 	}
 	
 	if (newOptions.bottomTabs.drawBehind.hasValue) {

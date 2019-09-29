@@ -1,5 +1,7 @@
+#import "BitPortal-Swift.h"
 #import "RNNNavigationStackManager.h"
 #import "RNNErrorHandler.h"
+#import "RNNRootViewController.h"
 #import <React/RCTI18nUtil.h>
 
 typedef void (^RNNAnimationBlock)(void);
@@ -73,7 +75,7 @@ typedef void (^RNNAnimationBlock)(void);
 
 - (void)setStackChildren:(NSArray<UIViewController *> *)children fromViewController:(UIViewController *)fromViewController animated:(BOOL)animated completion:(RNNTransitionCompletionBlock)completion rejection:(RNNTransitionRejectionBlock)rejection {
 	UINavigationController* nvc = fromViewController.navigationController;
-	
+  
 	[self performAnimationBlock:^{
 		[nvc setViewControllers:children animated:animated];
 	} completion:completion];

@@ -1,3 +1,4 @@
+#import "BitPortal-Swift.h"
 #import "RNNControllerFactory.h"
 #import "RNNLayoutNode.h"
 #import "RNNSplitViewController.h"
@@ -140,10 +141,10 @@
 	RNNNavigationOptions* options = [[RNNNavigationOptions alloc] initWithDict:node.data[@"options"]];;
 	
 	NSArray *childViewControllers = [self extractChildrenViewControllersFromNode:node];
+  
+	 RNNNavigationController* stack = [[RNNNavigationController alloc] initWithLayoutInfo:layoutInfo creator:_creator options:options defaultOptions:_defaultOptions presenter:presenter eventEmitter:_eventEmitter childViewControllers:childViewControllers];
 	
-	RNNNavigationController* stack = [[RNNNavigationController alloc] initWithLayoutInfo:layoutInfo creator:_creator options:options defaultOptions:_defaultOptions presenter:presenter eventEmitter:_eventEmitter childViewControllers:childViewControllers];
-	
-	return stack;
+	 return stack;
 }
 
 -(UIViewController *)createTabs:(RNNLayoutNode*)node {

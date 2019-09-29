@@ -104,15 +104,17 @@
 	CGRect labelframe = subtitleLabel.frame;
 	labelframe.size = labelSize;
 	subtitleLabel.frame = labelframe;
-	[subtitleLabel sizeToFit];
-	
-	[subtitleLabel setFont:[UIFont systemFontOfSize:11]];
+  [subtitleLabel setFont:[UIFont systemFontOfSize:11]];
 	
 	if (_subtitleOptions.color.hasValue) {
 		UIColor *color = _subtitleOptions.color.get;
 		subtitleLabel.textColor = color;
 	}
+  if (@available(iOS 13.0, *)) {
+    subtitleLabel.textColor = [UIColor labelColor];
+  }
 	
+  [subtitleLabel sizeToFit];
 	[self.titleView addSubview:subtitleLabel];
 	
 	return subtitleLabel;

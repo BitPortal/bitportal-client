@@ -148,7 +148,7 @@
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:itemData[@"reactModuleForCollectionViewCell"] forIndexPath:indexPath];
     }
     
-    //    cell.backgroundColor=[UIColor greenColor];
+    // cell.backgroundColor=[UIColor greenColor];
     return cell;
 }
 
