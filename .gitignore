@@ -10,6 +10,7 @@ coverage
 tools/csvInput/*
 tools/csvOutput/*
 tools/i18n/output*
+tools/codeGenerator/output*
 __tests__
 
 # OSX

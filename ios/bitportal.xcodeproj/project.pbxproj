@@ -99,15 +99,8 @@
 		279ACDBA87444D5D9230BA0D /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3693ECD00D2451D9DFE9083 /* Zocial.ttf */; };
 		3410CA9722854EEE005FAF2A /* injectScatter.js in Resources */ = {isa = PBXBuildFile; fileRef = 3410CA9622854EEE005FAF2A /* injectScatter.js */; };
 		341A99DA23432AA0002E1EC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341A99D923432AA0002E1EC8 /* AppDelegate.swift */; };
-		341A9A09234423BE002E1EC8 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341A9A08234423BE002E1EC8 /* ProfileView.swift */; };
-		341A9A0B23442420002E1EC8 /* ProfileViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341A9A0A23442420002E1EC8 /* ProfileViewManager.swift */; };
-		341A9A0D23442515002E1EC8 /* ProfileViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 341A9A0C23442515002E1EC8 /* ProfileViewManager.m */; };
 		341A9A15234477EB002E1EC8 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341A9A14234477EB002E1EC8 /* ProfileTableViewCell.swift */; };
 		341A9A192344906F002E1EC8 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341A9A182344906F002E1EC8 /* SettingTableViewCell.swift */; };
-		341A9A1E2344A89E002E1EC8 /* LanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341A9A1D2344A89E002E1EC8 /* LanguageView.swift */; };
-		341A9A202344A8E6002E1EC8 /* LanguageViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341A9A1F2344A8E6002E1EC8 /* LanguageViewManager.swift */; };
-		341A9A222344A8F8002E1EC8 /* LanguageViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 341A9A212344A8F8002E1EC8 /* LanguageViewManager.m */; };
-		341A9A252344B0D9002E1EC8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341A9A242344B0D9002E1EC8 /* HomeViewController.swift */; };
 		343A5D452285673E00DC76D6 /* injectMetaMask.js in Resources */ = {isa = PBXBuildFile; fileRef = 343A5CF92285673E00DC76D6 /* injectMetaMask.js */; };
 		3449499A2274C1BB00D8AB38 /* libRNCSlider.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 344949872274C19E00D8AB38 /* libRNCSlider.a */; };
 		344C9D172317B7ED004E26AD /* SPAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344C9CC32317B7ED004E26AD /* SPAlertView.swift */; };
@@ -133,6 +126,142 @@
 		34763E1A229438B7002AEA19 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34763DCC22943899002AEA19 /* libART.a */; };
 		3482126B2345A9F5003E1916 /* ReactNativeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3482126A2345A9F5003E1916 /* ReactNativeViewController.m */; };
 		3482126E2345AB43003E1916 /* ReactNativeModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 3482126D2345AB43003E1916 /* ReactNativeModule.m */; };
+		348214D42345EC8D003E1916 /* ManageEOSResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482141F2345EC81003E1916 /* ManageEOSResourceManager.swift */; };
+		348214D52345EC8D003E1916 /* ManageEOSResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214202345EC81003E1916 /* ManageEOSResourceManager.m */; };
+		348214D62345EC8D003E1916 /* ManageEOSResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214212345EC81003E1916 /* ManageEOSResource.swift */; };
+		348214D72345EC8D003E1916 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214232345EC81003E1916 /* ProfileView.swift */; };
+		348214D82345EC8D003E1916 /* ProfileViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214242345EC81003E1916 /* ProfileViewManager.swift */; };
+		348214D92345EC8D003E1916 /* ProfileViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214252345EC81003E1916 /* ProfileViewManager.m */; };
+		348214DA2345EC8D003E1916 /* SwitchEOSAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214272345EC81003E1916 /* SwitchEOSAccount.swift */; };
+		348214DB2345EC8D003E1916 /* SwitchEOSAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214282345EC81003E1916 /* SwitchEOSAccountManager.swift */; };
+		348214DC2345EC8D003E1916 /* SwitchEOSAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214292345EC81003E1916 /* SwitchEOSAccountManager.m */; };
+		348214DD2345EC8D003E1916 /* Voting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482142B2345EC81003E1916 /* Voting.swift */; };
+		348214DE2345EC8D003E1916 /* VotingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482142C2345EC81003E1916 /* VotingManager.swift */; };
+		348214DF2345EC8D003E1916 /* VotingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3482142D2345EC81003E1916 /* VotingManager.m */; };
+		348214E02345EC8D003E1916 /* WalletList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482142F2345EC82003E1916 /* WalletList.swift */; };
+		348214E12345EC8D003E1916 /* WalletListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214302345EC82003E1916 /* WalletListManager.swift */; };
+		348214E22345EC8D003E1916 /* WalletListManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214312345EC82003E1916 /* WalletListManager.m */; };
+		348214E32345EC8D003E1916 /* ContactsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214332345EC82003E1916 /* ContactsManager.m */; };
+		348214E42345EC8D003E1916 /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214342345EC82003E1916 /* Contacts.swift */; };
+		348214E52345EC8D003E1916 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214352345EC82003E1916 /* ContactsManager.swift */; };
+		348214E62345EC8D003E1916 /* DappListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214372345EC82003E1916 /* DappListManager.swift */; };
+		348214E72345EC8D003E1916 /* DappList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214382345EC82003E1916 /* DappList.swift */; };
+		348214E82345EC8D003E1916 /* DappListManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214392345EC82003E1916 /* DappListManager.m */; };
+		348214E92345EC8D003E1916 /* SelectChainTypeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482143B2345EC83003E1916 /* SelectChainTypeManager.swift */; };
+		348214EA2345EC8D003E1916 /* SelectChainType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482143C2345EC83003E1916 /* SelectChainType.swift */; };
+		348214EB2345EC8D003E1916 /* SelectChainTypeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3482143D2345EC83003E1916 /* SelectChainTypeManager.m */; };
+		348214EC2345EC8D003E1916 /* SwitchBTCAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482143F2345EC83003E1916 /* SwitchBTCAddress.swift */; };
+		348214ED2345EC8D003E1916 /* SwitchBTCAddressManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214402345EC83003E1916 /* SwitchBTCAddressManager.swift */; };
+		348214EE2345EC8D003E1916 /* SwitchBTCAddressManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214412345EC83003E1916 /* SwitchBTCAddressManager.m */; };
+		348214EF2345EC8E003E1916 /* AuthorizeCreateEOSAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214432345EC83003E1916 /* AuthorizeCreateEOSAccount.swift */; };
+		348214F02345EC8E003E1916 /* AuthorizeCreateEOSAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214442345EC83003E1916 /* AuthorizeCreateEOSAccountManager.m */; };
+		348214F12345EC8E003E1916 /* AuthorizeCreateEOSAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214452345EC83003E1916 /* AuthorizeCreateEOSAccountManager.swift */; };
+		348214F22345EC8E003E1916 /* ExportETHPrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214472345EC84003E1916 /* ExportETHPrivateKey.swift */; };
+		348214F32345EC8E003E1916 /* ExportETHPrivateKeyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214482345EC84003E1916 /* ExportETHPrivateKeyManager.m */; };
+		348214F42345EC8E003E1916 /* ExportETHPrivateKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214492345EC84003E1916 /* ExportETHPrivateKeyManager.swift */; };
+		348214F52345EC8E003E1916 /* EditContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482144B2345EC84003E1916 /* EditContact.swift */; };
+		348214F62345EC8E003E1916 /* EditContactManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3482144C2345EC84003E1916 /* EditContactManager.m */; };
+		348214F72345EC8E003E1916 /* EditContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482144D2345EC84003E1916 /* EditContactManager.swift */; };
+		348214F82345EC8E003E1916 /* ProducerDetailManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3482144F2345EC85003E1916 /* ProducerDetailManager.m */; };
+		348214F92345EC8E003E1916 /* ProducerDetailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214502345EC85003E1916 /* ProducerDetailManager.swift */; };
+		348214FA2345EC8E003E1916 /* ProducerDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214512345EC85003E1916 /* ProducerDetail.swift */; };
+		348214FB2345EC8E003E1916 /* AuthorizeEOSAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214532345EC85003E1916 /* AuthorizeEOSAccountManager.swift */; };
+		348214FC2345EC8E003E1916 /* AuthorizeEOSAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214542345EC85003E1916 /* AuthorizeEOSAccountManager.m */; };
+		348214FD2345EC8E003E1916 /* AuthorizeEOSAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214552345EC85003E1916 /* AuthorizeEOSAccount.swift */; };
+		348214FE2345EC8E003E1916 /* ExportBTCPrivateKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214572345EC85003E1916 /* ExportBTCPrivateKeyManager.swift */; };
+		348214FF2345EC8E003E1916 /* ExportBTCPrivateKeyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214582345EC85003E1916 /* ExportBTCPrivateKeyManager.m */; };
+		348215002345EC8E003E1916 /* ExportBTCPrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214592345EC85003E1916 /* ExportBTCPrivateKey.swift */; };
+		348215012345EC8E003E1916 /* ChainXDepositManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3482145B2345EC85003E1916 /* ChainXDepositManager.m */; };
+		348215022345EC8E003E1916 /* ChainXDeposit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482145C2345EC85003E1916 /* ChainXDeposit.swift */; };
+		348215032345EC8E003E1916 /* ChainXDepositManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482145D2345EC85003E1916 /* ChainXDepositManager.swift */; };
+		348215042345EC8E003E1916 /* BrowserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3482145F2345EC86003E1916 /* BrowserManager.m */; };
+		348215052345EC8E003E1916 /* BrowserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214602345EC86003E1916 /* BrowserManager.swift */; };
+		348215062345EC8E003E1916 /* Browser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214612345EC86003E1916 /* Browser.swift */; };
+		348215072345EC8E003E1916 /* ReceiveAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214632345EC86003E1916 /* ReceiveAsset.swift */; };
+		348215082345EC8E003E1916 /* ReceiveAssetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214642345EC86003E1916 /* ReceiveAssetManager.swift */; };
+		348215092345EC8E003E1916 /* ReceiveAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214652345EC86003E1916 /* ReceiveAssetManager.m */; };
+		3482150A2345EC8E003E1916 /* CreateIdentityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214672345EC86003E1916 /* CreateIdentityManager.swift */; };
+		3482150B2345EC8E003E1916 /* CreateIdentityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214682345EC86003E1916 /* CreateIdentityManager.m */; };
+		3482150C2345EC8E003E1916 /* CreateIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214692345EC86003E1916 /* CreateIdentity.swift */; };
+		3482150D2345EC8E003E1916 /* TransferAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482146B2345EC86003E1916 /* TransferAsset.swift */; };
+		3482150E2345EC8E003E1916 /* TransferAssetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482146C2345EC86003E1916 /* TransferAssetManager.swift */; };
+		3482150F2345EC8E003E1916 /* TransferAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3482146D2345EC86003E1916 /* TransferAssetManager.m */; };
+		348215102345EC8E003E1916 /* ImportBTCWalletManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3482146F2345EC87003E1916 /* ImportBTCWalletManager.m */; };
+		348215112345EC8E003E1916 /* ImportBTCWalletManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214702345EC87003E1916 /* ImportBTCWalletManager.swift */; };
+		348215122345EC8E003E1916 /* ImportBTCWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214712345EC87003E1916 /* ImportBTCWallet.swift */; };
+		348215132345EC8E003E1916 /* CreateEOSAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214732345EC87003E1916 /* CreateEOSAccountManager.m */; };
+		348215142345EC8E003E1916 /* CreateEOSAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214742345EC87003E1916 /* CreateEOSAccount.swift */; };
+		348215152345EC8E003E1916 /* CreateEOSAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214752345EC87003E1916 /* CreateEOSAccountManager.swift */; };
+		348215162345EC8E003E1916 /* AssetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214772345EC87003E1916 /* AssetManager.swift */; };
+		348215172345EC8E003E1916 /* AssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214782345EC87003E1916 /* AssetManager.m */; };
+		348215182345EC8E003E1916 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214792345EC87003E1916 /* Asset.swift */; };
+		348215192345EC8E003E1916 /* ChainXValidatorDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482147B2345EC87003E1916 /* ChainXValidatorDetail.swift */; };
+		3482151A2345EC8E003E1916 /* ChainXValidatorDetailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482147C2345EC87003E1916 /* ChainXValidatorDetailManager.swift */; };
+		3482151B2345EC8E003E1916 /* ChainXValidatorDetailManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3482147D2345EC87003E1916 /* ChainXValidatorDetailManager.m */; };
+		3482151C2345EC8E003E1916 /* ExportETHKeystore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482147F2345EC88003E1916 /* ExportETHKeystore.swift */; };
+		3482151D2345EC8E003E1916 /* ExportETHKeystoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214802345EC88003E1916 /* ExportETHKeystoreManager.m */; };
+		3482151E2345EC8E003E1916 /* ExportETHKeystoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214812345EC88003E1916 /* ExportETHKeystoreManager.swift */; };
+		3482151F2345EC8E003E1916 /* ExportPCXPrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214832345EC88003E1916 /* ExportPCXPrivateKey.swift */; };
+		348215202345EC8E003E1916 /* ExportPCXPrivateKeyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214842345EC88003E1916 /* ExportPCXPrivateKeyManager.m */; };
+		348215212345EC8E003E1916 /* ExportPCXPrivateKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214852345EC88003E1916 /* ExportPCXPrivateKeyManager.swift */; };
+		348215222345EC8E003E1916 /* CurrencyViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214872345EC88003E1916 /* CurrencyViewManager.m */; };
+		348215232345EC8E003E1916 /* CurrencyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214882345EC88003E1916 /* CurrencyView.swift */; };
+		348215242345EC8E003E1916 /* CurrencyViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214892345EC88003E1916 /* CurrencyViewManager.swift */; };
+		348215252345EC8E003E1916 /* TransactionDetailManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482148B2345EC88003E1916 /* TransactionDetailManager.swift */; };
+		348215262345EC8E003E1916 /* TransactionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482148C2345EC88003E1916 /* TransactionDetail.swift */; };
+		348215272345EC8E003E1916 /* TransactionDetailManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3482148D2345EC88003E1916 /* TransactionDetailManager.m */; };
+		348215282345EC8E003E1916 /* ImportEOSWalletManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482148F2345EC89003E1916 /* ImportEOSWalletManager.swift */; };
+		348215292345EC8E003E1916 /* ImportEOSWalletManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214902345EC89003E1916 /* ImportEOSWalletManager.m */; };
+		3482152A2345EC8E003E1916 /* ImportEOSWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214912345EC89003E1916 /* ImportEOSWallet.swift */; };
+		3482152B2345EC8E003E1916 /* ChainXVotingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214932345EC89003E1916 /* ChainXVotingManager.swift */; };
+		3482152C2345EC8E003E1916 /* ChainXVoting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214942345EC89003E1916 /* ChainXVoting.swift */; };
+		3482152D2345EC8E003E1916 /* ChainXVotingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214952345EC89003E1916 /* ChainXVotingManager.m */; };
+		3482152E2345EC8E003E1916 /* AddIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214972345EC89003E1916 /* AddIdentity.swift */; };
+		3482152F2345EC8E003E1916 /* AddIdentityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214982345EC89003E1916 /* AddIdentityManager.swift */; };
+		348215302345EC8E003E1916 /* AddIdentityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214992345EC89003E1916 /* AddIdentityManager.m */; };
+		348215312345EC8E003E1916 /* CameraManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3482149B2345EC89003E1916 /* CameraManager.m */; };
+		348215322345EC8E003E1916 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482149C2345EC89003E1916 /* CameraManager.swift */; };
+		348215332345EC8E003E1916 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482149D2345EC89003E1916 /* Camera.swift */; };
+		348215342345EC8E003E1916 /* ImportChainxWalletManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482149F2345EC8A003E1916 /* ImportChainxWalletManager.swift */; };
+		348215352345EC8E003E1916 /* ImportChainxWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214A02345EC8A003E1916 /* ImportChainxWallet.swift */; };
+		348215362345EC8E003E1916 /* ImportChainxWalletManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214A12345EC8A003E1916 /* ImportChainxWalletManager.m */; };
+		348215372345EC8E003E1916 /* ManageWalletManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214A32345EC8A003E1916 /* ManageWalletManager.swift */; };
+		348215382345EC8E003E1916 /* ManageWalletManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214A42345EC8A003E1916 /* ManageWalletManager.m */; };
+		348215392345EC8E003E1916 /* ManageWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214A52345EC8A003E1916 /* ManageWallet.swift */; };
+		3482153A2345EC8E003E1916 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214A72345EC8A003E1916 /* HomeViewController.swift */; };
+		3482153B2345EC8E003E1916 /* ImportETHWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214A92345EC8A003E1916 /* ImportETHWallet.swift */; };
+		3482153C2345EC8E003E1916 /* ImportETHWalletManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214AA2345EC8A003E1916 /* ImportETHWalletManager.swift */; };
+		3482153D2345EC8E003E1916 /* ImportETHWalletManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214AB2345EC8A003E1916 /* ImportETHWalletManager.m */; };
+		3482153E2345EC8E003E1916 /* RecoverIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214AD2345EC8B003E1916 /* RecoverIdentity.swift */; };
+		3482153F2345EC8E003E1916 /* RecoverIdentityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214AE2345EC8B003E1916 /* RecoverIdentityManager.swift */; };
+		348215402345EC8E003E1916 /* RecoverIdentityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214AF2345EC8B003E1916 /* RecoverIdentityManager.m */; };
+		348215412345EC8E003E1916 /* LanguageViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214B12345EC8B003E1916 /* LanguageViewManager.m */; };
+		348215422345EC8E003E1916 /* LanguageViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214B22345EC8B003E1916 /* LanguageViewManager.swift */; };
+		348215432345EC8E003E1916 /* LanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214B32345EC8B003E1916 /* LanguageView.swift */; };
+		348215442345EC8E003E1916 /* SelectBridgeWalletManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214B52345EC8B003E1916 /* SelectBridgeWalletManager.m */; };
+		348215452345EC8E003E1916 /* SelectBridgeWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214B62345EC8B003E1916 /* SelectBridgeWallet.swift */; };
+		348215462345EC8E003E1916 /* SelectBridgeWalletManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214B72345EC8B003E1916 /* SelectBridgeWalletManager.swift */; };
+		348215472345EC8E003E1916 /* SelectEOSAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214B92345EC8C003E1916 /* SelectEOSAccountManager.m */; };
+		348215482345EC8E003E1916 /* SelectEOSAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214BA2345EC8C003E1916 /* SelectEOSAccountManager.swift */; };
+		348215492345EC8E003E1916 /* SelectEOSAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214BB2345EC8C003E1916 /* SelectEOSAccount.swift */; };
+		3482154A2345EC8E003E1916 /* BackupIdentityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214BD2345EC8C003E1916 /* BackupIdentityManager.m */; };
+		3482154B2345EC8E003E1916 /* BackupIdentityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214BE2345EC8C003E1916 /* BackupIdentityManager.swift */; };
+		3482154C2345EC8E003E1916 /* BackupIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214BF2345EC8C003E1916 /* BackupIdentity.swift */; };
+		3482154D2345EC8E003E1916 /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214C12345EC8C003E1916 /* ContactManager.swift */; };
+		3482154E2345EC8E003E1916 /* ContactManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214C22345EC8C003E1916 /* ContactManager.m */; };
+		3482154F2345EC8E003E1916 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214C32345EC8C003E1916 /* Contact.swift */; };
+		348215502345EC8E003E1916 /* MyIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214C52345EC8C003E1916 /* MyIdentity.swift */; };
+		348215512345EC8E003E1916 /* MyIdentityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214C62345EC8C003E1916 /* MyIdentityManager.swift */; };
+		348215522345EC8E003E1916 /* MyIdentityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214C72345EC8C003E1916 /* MyIdentityManager.m */; };
+		348215532345EC8E003E1916 /* AddAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214C92345EC8D003E1916 /* AddAssets.swift */; };
+		348215542345EC8E003E1916 /* AddAssetsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214CA2345EC8D003E1916 /* AddAssetsManager.m */; };
+		348215552345EC8E003E1916 /* AddAssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214CB2345EC8D003E1916 /* AddAssetsManager.swift */; };
+		348215562345EC8E003E1916 /* ChainXDepositClaimManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214CD2345EC8D003E1916 /* ChainXDepositClaimManager.swift */; };
+		348215572345EC8E003E1916 /* ChainXDepositClaimManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214CE2345EC8D003E1916 /* ChainXDepositClaimManager.m */; };
+		348215582345EC8E003E1916 /* ChainXDepositClaim.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214CF2345EC8D003E1916 /* ChainXDepositClaim.swift */; };
+		348215592345EC8E003E1916 /* ExportEOSPrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214D12345EC8D003E1916 /* ExportEOSPrivateKey.swift */; };
+		3482155A2345EC8E003E1916 /* ExportEOSPrivateKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348214D22345EC8D003E1916 /* ExportEOSPrivateKeyManager.swift */; };
+		3482155B2345EC8E003E1916 /* ExportEOSPrivateKeyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 348214D32345EC8D003E1916 /* ExportEOSPrivateKeyManager.m */; };
 		3483B0D7231430D700444855 /* RNTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3483B068231430D600444855 /* RNTableViewCell.m */; };
 		3483B0D8231430D700444855 /* RNAppGlobals.m in Sources */ = {isa = PBXBuildFile; fileRef = 3483B069231430D600444855 /* RNAppGlobals.m */; };
 		3483B0D9231430D700444855 /* JSONDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 3483B06A231430D600444855 /* JSONDataSource.m */; };
@@ -1079,15 +1208,8 @@
 		2DCE5CE8E4DC4D17BDEAF27C /* libRNRandomBytes.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNRandomBytes.a; sourceTree = "<group>"; };
 		3410CA9622854EEE005FAF2A /* injectScatter.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = injectScatter.js; path = bitportal/injectScatter.js; sourceTree = "<group>"; };
 		341A99D923432AA0002E1EC8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		341A9A08234423BE002E1EC8 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
-		341A9A0A23442420002E1EC8 /* ProfileViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewManager.swift; sourceTree = "<group>"; };
-		341A9A0C23442515002E1EC8 /* ProfileViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileViewManager.m; sourceTree = "<group>"; };
 		341A9A14234477EB002E1EC8 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		341A9A182344906F002E1EC8 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
-		341A9A1D2344A89E002E1EC8 /* LanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageView.swift; sourceTree = "<group>"; };
-		341A9A1F2344A8E6002E1EC8 /* LanguageViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewManager.swift; sourceTree = "<group>"; };
-		341A9A212344A8F8002E1EC8 /* LanguageViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LanguageViewManager.m; sourceTree = "<group>"; };
-		341A9A242344B0D9002E1EC8 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		343A5CF92285673E00DC76D6 /* injectMetaMask.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = injectMetaMask.js; path = bitportal/injectMetaMask.js; sourceTree = "<group>"; };
 		3449494A2274C19E00D8AB38 /* RNCSlider.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCSlider.xcodeproj; path = "../node_modules/@react-native-community/slider/ios/RNCSlider.xcodeproj"; sourceTree = "<group>"; };
 		344C9CC32317B7ED004E26AD /* SPAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPAlertView.swift; sourceTree = "<group>"; };
@@ -1114,6 +1236,142 @@
 		3482126C2345AB43003E1916 /* ReactNativeModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReactNativeModule.h; sourceTree = "<group>"; };
 		3482126D2345AB43003E1916 /* ReactNativeModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReactNativeModule.m; sourceTree = "<group>"; };
 		348212E92345B37C003E1916 /* bitportal-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "bitportal-Bridging-Header.h"; sourceTree = "<group>"; };
+		3482141F2345EC81003E1916 /* ManageEOSResourceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageEOSResourceManager.swift; sourceTree = "<group>"; };
+		348214202345EC81003E1916 /* ManageEOSResourceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageEOSResourceManager.m; sourceTree = "<group>"; };
+		348214212345EC81003E1916 /* ManageEOSResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageEOSResource.swift; sourceTree = "<group>"; };
+		348214232345EC81003E1916 /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		348214242345EC81003E1916 /* ProfileViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewManager.swift; sourceTree = "<group>"; };
+		348214252345EC81003E1916 /* ProfileViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewManager.m; sourceTree = "<group>"; };
+		348214272345EC81003E1916 /* SwitchEOSAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchEOSAccount.swift; sourceTree = "<group>"; };
+		348214282345EC81003E1916 /* SwitchEOSAccountManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchEOSAccountManager.swift; sourceTree = "<group>"; };
+		348214292345EC81003E1916 /* SwitchEOSAccountManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchEOSAccountManager.m; sourceTree = "<group>"; };
+		3482142B2345EC81003E1916 /* Voting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Voting.swift; sourceTree = "<group>"; };
+		3482142C2345EC81003E1916 /* VotingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VotingManager.swift; sourceTree = "<group>"; };
+		3482142D2345EC81003E1916 /* VotingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VotingManager.m; sourceTree = "<group>"; };
+		3482142F2345EC82003E1916 /* WalletList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletList.swift; sourceTree = "<group>"; };
+		348214302345EC82003E1916 /* WalletListManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletListManager.swift; sourceTree = "<group>"; };
+		348214312345EC82003E1916 /* WalletListManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WalletListManager.m; sourceTree = "<group>"; };
+		348214332345EC82003E1916 /* ContactsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsManager.m; sourceTree = "<group>"; };
+		348214342345EC82003E1916 /* Contacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contacts.swift; sourceTree = "<group>"; };
+		348214352345EC82003E1916 /* ContactsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = "<group>"; };
+		348214372345EC82003E1916 /* DappListManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DappListManager.swift; sourceTree = "<group>"; };
+		348214382345EC82003E1916 /* DappList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DappList.swift; sourceTree = "<group>"; };
+		348214392345EC82003E1916 /* DappListManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DappListManager.m; sourceTree = "<group>"; };
+		3482143B2345EC83003E1916 /* SelectChainTypeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectChainTypeManager.swift; sourceTree = "<group>"; };
+		3482143C2345EC83003E1916 /* SelectChainType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectChainType.swift; sourceTree = "<group>"; };
+		3482143D2345EC83003E1916 /* SelectChainTypeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectChainTypeManager.m; sourceTree = "<group>"; };
+		3482143F2345EC83003E1916 /* SwitchBTCAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchBTCAddress.swift; sourceTree = "<group>"; };
+		348214402345EC83003E1916 /* SwitchBTCAddressManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchBTCAddressManager.swift; sourceTree = "<group>"; };
+		348214412345EC83003E1916 /* SwitchBTCAddressManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchBTCAddressManager.m; sourceTree = "<group>"; };
+		348214432345EC83003E1916 /* AuthorizeCreateEOSAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizeCreateEOSAccount.swift; sourceTree = "<group>"; };
+		348214442345EC83003E1916 /* AuthorizeCreateEOSAccountManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorizeCreateEOSAccountManager.m; sourceTree = "<group>"; };
+		348214452345EC83003E1916 /* AuthorizeCreateEOSAccountManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizeCreateEOSAccountManager.swift; sourceTree = "<group>"; };
+		348214472345EC84003E1916 /* ExportETHPrivateKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportETHPrivateKey.swift; sourceTree = "<group>"; };
+		348214482345EC84003E1916 /* ExportETHPrivateKeyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExportETHPrivateKeyManager.m; sourceTree = "<group>"; };
+		348214492345EC84003E1916 /* ExportETHPrivateKeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportETHPrivateKeyManager.swift; sourceTree = "<group>"; };
+		3482144B2345EC84003E1916 /* EditContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditContact.swift; sourceTree = "<group>"; };
+		3482144C2345EC84003E1916 /* EditContactManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditContactManager.m; sourceTree = "<group>"; };
+		3482144D2345EC84003E1916 /* EditContactManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditContactManager.swift; sourceTree = "<group>"; };
+		3482144F2345EC85003E1916 /* ProducerDetailManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProducerDetailManager.m; sourceTree = "<group>"; };
+		348214502345EC85003E1916 /* ProducerDetailManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProducerDetailManager.swift; sourceTree = "<group>"; };
+		348214512345EC85003E1916 /* ProducerDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProducerDetail.swift; sourceTree = "<group>"; };
+		348214532345EC85003E1916 /* AuthorizeEOSAccountManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizeEOSAccountManager.swift; sourceTree = "<group>"; };
+		348214542345EC85003E1916 /* AuthorizeEOSAccountManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorizeEOSAccountManager.m; sourceTree = "<group>"; };
+		348214552345EC85003E1916 /* AuthorizeEOSAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizeEOSAccount.swift; sourceTree = "<group>"; };
+		348214572345EC85003E1916 /* ExportBTCPrivateKeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportBTCPrivateKeyManager.swift; sourceTree = "<group>"; };
+		348214582345EC85003E1916 /* ExportBTCPrivateKeyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExportBTCPrivateKeyManager.m; sourceTree = "<group>"; };
+		348214592345EC85003E1916 /* ExportBTCPrivateKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportBTCPrivateKey.swift; sourceTree = "<group>"; };
+		3482145B2345EC85003E1916 /* ChainXDepositManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChainXDepositManager.m; sourceTree = "<group>"; };
+		3482145C2345EC85003E1916 /* ChainXDeposit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChainXDeposit.swift; sourceTree = "<group>"; };
+		3482145D2345EC85003E1916 /* ChainXDepositManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChainXDepositManager.swift; sourceTree = "<group>"; };
+		3482145F2345EC86003E1916 /* BrowserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserManager.m; sourceTree = "<group>"; };
+		348214602345EC86003E1916 /* BrowserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserManager.swift; sourceTree = "<group>"; };
+		348214612345EC86003E1916 /* Browser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Browser.swift; sourceTree = "<group>"; };
+		348214632345EC86003E1916 /* ReceiveAsset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiveAsset.swift; sourceTree = "<group>"; };
+		348214642345EC86003E1916 /* ReceiveAssetManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiveAssetManager.swift; sourceTree = "<group>"; };
+		348214652345EC86003E1916 /* ReceiveAssetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiveAssetManager.m; sourceTree = "<group>"; };
+		348214672345EC86003E1916 /* CreateIdentityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateIdentityManager.swift; sourceTree = "<group>"; };
+		348214682345EC86003E1916 /* CreateIdentityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateIdentityManager.m; sourceTree = "<group>"; };
+		348214692345EC86003E1916 /* CreateIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateIdentity.swift; sourceTree = "<group>"; };
+		3482146B2345EC86003E1916 /* TransferAsset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferAsset.swift; sourceTree = "<group>"; };
+		3482146C2345EC86003E1916 /* TransferAssetManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferAssetManager.swift; sourceTree = "<group>"; };
+		3482146D2345EC86003E1916 /* TransferAssetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferAssetManager.m; sourceTree = "<group>"; };
+		3482146F2345EC87003E1916 /* ImportBTCWalletManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImportBTCWalletManager.m; sourceTree = "<group>"; };
+		348214702345EC87003E1916 /* ImportBTCWalletManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportBTCWalletManager.swift; sourceTree = "<group>"; };
+		348214712345EC87003E1916 /* ImportBTCWallet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportBTCWallet.swift; sourceTree = "<group>"; };
+		348214732345EC87003E1916 /* CreateEOSAccountManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateEOSAccountManager.m; sourceTree = "<group>"; };
+		348214742345EC87003E1916 /* CreateEOSAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEOSAccount.swift; sourceTree = "<group>"; };
+		348214752345EC87003E1916 /* CreateEOSAccountManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEOSAccountManager.swift; sourceTree = "<group>"; };
+		348214772345EC87003E1916 /* AssetManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetManager.swift; sourceTree = "<group>"; };
+		348214782345EC87003E1916 /* AssetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetManager.m; sourceTree = "<group>"; };
+		348214792345EC87003E1916 /* Asset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
+		3482147B2345EC87003E1916 /* ChainXValidatorDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChainXValidatorDetail.swift; sourceTree = "<group>"; };
+		3482147C2345EC87003E1916 /* ChainXValidatorDetailManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChainXValidatorDetailManager.swift; sourceTree = "<group>"; };
+		3482147D2345EC87003E1916 /* ChainXValidatorDetailManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChainXValidatorDetailManager.m; sourceTree = "<group>"; };
+		3482147F2345EC88003E1916 /* ExportETHKeystore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportETHKeystore.swift; sourceTree = "<group>"; };
+		348214802345EC88003E1916 /* ExportETHKeystoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExportETHKeystoreManager.m; sourceTree = "<group>"; };
+		348214812345EC88003E1916 /* ExportETHKeystoreManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportETHKeystoreManager.swift; sourceTree = "<group>"; };
+		348214832345EC88003E1916 /* ExportPCXPrivateKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportPCXPrivateKey.swift; sourceTree = "<group>"; };
+		348214842345EC88003E1916 /* ExportPCXPrivateKeyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExportPCXPrivateKeyManager.m; sourceTree = "<group>"; };
+		348214852345EC88003E1916 /* ExportPCXPrivateKeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportPCXPrivateKeyManager.swift; sourceTree = "<group>"; };
+		348214872345EC88003E1916 /* CurrencyViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrencyViewManager.m; sourceTree = "<group>"; };
+		348214882345EC88003E1916 /* CurrencyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyView.swift; sourceTree = "<group>"; };
+		348214892345EC88003E1916 /* CurrencyViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyViewManager.swift; sourceTree = "<group>"; };
+		3482148B2345EC88003E1916 /* TransactionDetailManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionDetailManager.swift; sourceTree = "<group>"; };
+		3482148C2345EC88003E1916 /* TransactionDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionDetail.swift; sourceTree = "<group>"; };
+		3482148D2345EC88003E1916 /* TransactionDetailManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransactionDetailManager.m; sourceTree = "<group>"; };
+		3482148F2345EC89003E1916 /* ImportEOSWalletManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportEOSWalletManager.swift; sourceTree = "<group>"; };
+		348214902345EC89003E1916 /* ImportEOSWalletManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImportEOSWalletManager.m; sourceTree = "<group>"; };
+		348214912345EC89003E1916 /* ImportEOSWallet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportEOSWallet.swift; sourceTree = "<group>"; };
+		348214932345EC89003E1916 /* ChainXVotingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChainXVotingManager.swift; sourceTree = "<group>"; };
+		348214942345EC89003E1916 /* ChainXVoting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChainXVoting.swift; sourceTree = "<group>"; };
+		348214952345EC89003E1916 /* ChainXVotingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChainXVotingManager.m; sourceTree = "<group>"; };
+		348214972345EC89003E1916 /* AddIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddIdentity.swift; sourceTree = "<group>"; };
+		348214982345EC89003E1916 /* AddIdentityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddIdentityManager.swift; sourceTree = "<group>"; };
+		348214992345EC89003E1916 /* AddIdentityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddIdentityManager.m; sourceTree = "<group>"; };
+		3482149B2345EC89003E1916 /* CameraManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraManager.m; sourceTree = "<group>"; };
+		3482149C2345EC89003E1916 /* CameraManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
+		3482149D2345EC89003E1916 /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		3482149F2345EC8A003E1916 /* ImportChainxWalletManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportChainxWalletManager.swift; sourceTree = "<group>"; };
+		348214A02345EC8A003E1916 /* ImportChainxWallet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportChainxWallet.swift; sourceTree = "<group>"; };
+		348214A12345EC8A003E1916 /* ImportChainxWalletManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImportChainxWalletManager.m; sourceTree = "<group>"; };
+		348214A32345EC8A003E1916 /* ManageWalletManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageWalletManager.swift; sourceTree = "<group>"; };
+		348214A42345EC8A003E1916 /* ManageWalletManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageWalletManager.m; sourceTree = "<group>"; };
+		348214A52345EC8A003E1916 /* ManageWallet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageWallet.swift; sourceTree = "<group>"; };
+		348214A72345EC8A003E1916 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		348214A92345EC8A003E1916 /* ImportETHWallet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportETHWallet.swift; sourceTree = "<group>"; };
+		348214AA2345EC8A003E1916 /* ImportETHWalletManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportETHWalletManager.swift; sourceTree = "<group>"; };
+		348214AB2345EC8A003E1916 /* ImportETHWalletManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImportETHWalletManager.m; sourceTree = "<group>"; };
+		348214AD2345EC8B003E1916 /* RecoverIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoverIdentity.swift; sourceTree = "<group>"; };
+		348214AE2345EC8B003E1916 /* RecoverIdentityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoverIdentityManager.swift; sourceTree = "<group>"; };
+		348214AF2345EC8B003E1916 /* RecoverIdentityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecoverIdentityManager.m; sourceTree = "<group>"; };
+		348214B12345EC8B003E1916 /* LanguageViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LanguageViewManager.m; sourceTree = "<group>"; };
+		348214B22345EC8B003E1916 /* LanguageViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageViewManager.swift; sourceTree = "<group>"; };
+		348214B32345EC8B003E1916 /* LanguageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageView.swift; sourceTree = "<group>"; };
+		348214B52345EC8B003E1916 /* SelectBridgeWalletManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectBridgeWalletManager.m; sourceTree = "<group>"; };
+		348214B62345EC8B003E1916 /* SelectBridgeWallet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectBridgeWallet.swift; sourceTree = "<group>"; };
+		348214B72345EC8B003E1916 /* SelectBridgeWalletManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectBridgeWalletManager.swift; sourceTree = "<group>"; };
+		348214B92345EC8C003E1916 /* SelectEOSAccountManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectEOSAccountManager.m; sourceTree = "<group>"; };
+		348214BA2345EC8C003E1916 /* SelectEOSAccountManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectEOSAccountManager.swift; sourceTree = "<group>"; };
+		348214BB2345EC8C003E1916 /* SelectEOSAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectEOSAccount.swift; sourceTree = "<group>"; };
+		348214BD2345EC8C003E1916 /* BackupIdentityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackupIdentityManager.m; sourceTree = "<group>"; };
+		348214BE2345EC8C003E1916 /* BackupIdentityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupIdentityManager.swift; sourceTree = "<group>"; };
+		348214BF2345EC8C003E1916 /* BackupIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupIdentity.swift; sourceTree = "<group>"; };
+		348214C12345EC8C003E1916 /* ContactManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
+		348214C22345EC8C003E1916 /* ContactManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactManager.m; sourceTree = "<group>"; };
+		348214C32345EC8C003E1916 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		348214C52345EC8C003E1916 /* MyIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyIdentity.swift; sourceTree = "<group>"; };
+		348214C62345EC8C003E1916 /* MyIdentityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyIdentityManager.swift; sourceTree = "<group>"; };
+		348214C72345EC8C003E1916 /* MyIdentityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyIdentityManager.m; sourceTree = "<group>"; };
+		348214C92345EC8D003E1916 /* AddAssets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAssets.swift; sourceTree = "<group>"; };
+		348214CA2345EC8D003E1916 /* AddAssetsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddAssetsManager.m; sourceTree = "<group>"; };
+		348214CB2345EC8D003E1916 /* AddAssetsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAssetsManager.swift; sourceTree = "<group>"; };
+		348214CD2345EC8D003E1916 /* ChainXDepositClaimManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChainXDepositClaimManager.swift; sourceTree = "<group>"; };
+		348214CE2345EC8D003E1916 /* ChainXDepositClaimManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChainXDepositClaimManager.m; sourceTree = "<group>"; };
+		348214CF2345EC8D003E1916 /* ChainXDepositClaim.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChainXDepositClaim.swift; sourceTree = "<group>"; };
+		348214D12345EC8D003E1916 /* ExportEOSPrivateKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportEOSPrivateKey.swift; sourceTree = "<group>"; };
+		348214D22345EC8D003E1916 /* ExportEOSPrivateKeyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportEOSPrivateKeyManager.swift; sourceTree = "<group>"; };
+		348214D32345EC8D003E1916 /* ExportEOSPrivateKeyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExportEOSPrivateKeyManager.m; sourceTree = "<group>"; };
 		3483B068231430D600444855 /* RNTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNTableViewCell.m; sourceTree = "<group>"; };
 		3483B069231430D600444855 /* RNAppGlobals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNAppGlobals.m; sourceTree = "<group>"; };
 		3483B06A231430D600444855 /* JSONDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONDataSource.m; sourceTree = "<group>"; };
@@ -2108,21 +2366,54 @@
 		341A9A0423442309002E1EC8 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				341A9A232344AFAE002E1EC8 /* Home */,
-				341A9A1A2344A84E002E1EC8 /* Language */,
-				341A9A0523442333002E1EC8 /* Profile */,
+				348214C82345EC8D003E1916 /* AddAssets */,
+				348214962345EC89003E1916 /* AddIdentity */,
+				348214762345EC87003E1916 /* Asset */,
+				348214422345EC83003E1916 /* AuthorizeCreateEOSAccount */,
+				348214522345EC85003E1916 /* AuthorizeEOSAccount */,
+				348214BC2345EC8C003E1916 /* BackupIdentity */,
+				3482145E2345EC85003E1916 /* Browser */,
+				3482149A2345EC89003E1916 /* Camera */,
+				3482145A2345EC85003E1916 /* ChainXDeposit */,
+				348214CC2345EC8D003E1916 /* ChainXDepositClaim */,
+				3482147A2345EC87003E1916 /* ChainXValidatorDetail */,
+				348214922345EC89003E1916 /* ChainXVoting */,
+				348214C02345EC8C003E1916 /* Contact */,
+				348214322345EC82003E1916 /* Contacts */,
+				348214722345EC87003E1916 /* CreateEOSAccount */,
+				348214662345EC86003E1916 /* CreateIdentity */,
+				348214862345EC88003E1916 /* Currency */,
+				348214362345EC82003E1916 /* DappList */,
+				3482144A2345EC84003E1916 /* EditContact */,
+				348214562345EC85003E1916 /* ExportBTCPrivateKey */,
+				348214D02345EC8D003E1916 /* ExportEOSPrivateKey */,
+				3482147E2345EC88003E1916 /* ExportETHKeystore */,
+				348214462345EC84003E1916 /* ExportETHPrivateKey */,
+				348214822345EC88003E1916 /* ExportPCXPrivateKey */,
+				348214A62345EC8A003E1916 /* Home */,
+				3482146E2345EC87003E1916 /* ImportBTCWallet */,
+				3482149E2345EC8A003E1916 /* ImportChainxWallet */,
+				3482148E2345EC89003E1916 /* ImportEOSWallet */,
+				348214A82345EC8A003E1916 /* ImportETHWallet */,
+				348214B02345EC8B003E1916 /* Language */,
+				3482141E2345EC81003E1916 /* ManageEOSResource */,
+				348214A22345EC8A003E1916 /* ManageWallet */,
+				348214C42345EC8C003E1916 /* MyIdentity */,
+				3482144E2345EC85003E1916 /* ProducerDetail */,
+				348214222345EC81003E1916 /* Profile */,
+				348214622345EC86003E1916 /* ReceiveAsset */,
+				348214AC2345EC8B003E1916 /* RecoverIdentity */,
+				348214B42345EC8B003E1916 /* SelectBridgeWallet */,
+				3482143A2345EC83003E1916 /* SelectChainType */,
+				348214B82345EC8C003E1916 /* SelectEOSAccount */,
+				3482143E2345EC83003E1916 /* SwitchBTCAddress */,
+				348214262345EC81003E1916 /* SwitchEOSAccount */,
+				3482148A2345EC88003E1916 /* TransactionDetail */,
+				3482146A2345EC86003E1916 /* TransferAsset */,
+				3482142A2345EC81003E1916 /* Voting */,
+				3482142E2345EC82003E1916 /* WalletList */,
 			);
 			path = Screens;
-			sourceTree = "<group>";
-		};
-		341A9A0523442333002E1EC8 /* Profile */ = {
-			isa = PBXGroup;
-			children = (
-				341A9A08234423BE002E1EC8 /* ProfileView.swift */,
-				341A9A0A23442420002E1EC8 /* ProfileViewManager.swift */,
-				341A9A0C23442515002E1EC8 /* ProfileViewManager.m */,
-			);
-			path = Profile;
 			sourceTree = "<group>";
 		};
 		341A9A112344318C002E1EC8 /* Components */ = {
@@ -2152,24 +2443,6 @@
 				344C9DB923181CA4004E26AD /* SPAlertViewManager.m */,
 			);
 			path = Modal;
-			sourceTree = "<group>";
-		};
-		341A9A1A2344A84E002E1EC8 /* Language */ = {
-			isa = PBXGroup;
-			children = (
-				341A9A1D2344A89E002E1EC8 /* LanguageView.swift */,
-				341A9A1F2344A8E6002E1EC8 /* LanguageViewManager.swift */,
-				341A9A212344A8F8002E1EC8 /* LanguageViewManager.m */,
-			);
-			path = Language;
-			sourceTree = "<group>";
-		};
-		341A9A232344AFAE002E1EC8 /* Home */ = {
-			isa = PBXGroup;
-			children = (
-				341A9A242344B0D9002E1EC8 /* HomeViewController.swift */,
-			);
-			path = Home;
 			sourceTree = "<group>";
 		};
 		341B2DF2209B34E400FA6067 /* Products */ = {
@@ -2294,6 +2567,464 @@
 				34C81873233B4C0A0090AD79 /* SPStorkController */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		3482141E2345EC81003E1916 /* ManageEOSResource */ = {
+			isa = PBXGroup;
+			children = (
+				3482141F2345EC81003E1916 /* ManageEOSResourceManager.swift */,
+				348214202345EC81003E1916 /* ManageEOSResourceManager.m */,
+				348214212345EC81003E1916 /* ManageEOSResource.swift */,
+			);
+			path = ManageEOSResource;
+			sourceTree = "<group>";
+		};
+		348214222345EC81003E1916 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				348214232345EC81003E1916 /* ProfileView.swift */,
+				348214242345EC81003E1916 /* ProfileViewManager.swift */,
+				348214252345EC81003E1916 /* ProfileViewManager.m */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		348214262345EC81003E1916 /* SwitchEOSAccount */ = {
+			isa = PBXGroup;
+			children = (
+				348214272345EC81003E1916 /* SwitchEOSAccount.swift */,
+				348214282345EC81003E1916 /* SwitchEOSAccountManager.swift */,
+				348214292345EC81003E1916 /* SwitchEOSAccountManager.m */,
+			);
+			path = SwitchEOSAccount;
+			sourceTree = "<group>";
+		};
+		3482142A2345EC81003E1916 /* Voting */ = {
+			isa = PBXGroup;
+			children = (
+				3482142B2345EC81003E1916 /* Voting.swift */,
+				3482142C2345EC81003E1916 /* VotingManager.swift */,
+				3482142D2345EC81003E1916 /* VotingManager.m */,
+			);
+			path = Voting;
+			sourceTree = "<group>";
+		};
+		3482142E2345EC82003E1916 /* WalletList */ = {
+			isa = PBXGroup;
+			children = (
+				3482142F2345EC82003E1916 /* WalletList.swift */,
+				348214302345EC82003E1916 /* WalletListManager.swift */,
+				348214312345EC82003E1916 /* WalletListManager.m */,
+			);
+			path = WalletList;
+			sourceTree = "<group>";
+		};
+		348214322345EC82003E1916 /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				348214332345EC82003E1916 /* ContactsManager.m */,
+				348214342345EC82003E1916 /* Contacts.swift */,
+				348214352345EC82003E1916 /* ContactsManager.swift */,
+			);
+			path = Contacts;
+			sourceTree = "<group>";
+		};
+		348214362345EC82003E1916 /* DappList */ = {
+			isa = PBXGroup;
+			children = (
+				348214372345EC82003E1916 /* DappListManager.swift */,
+				348214382345EC82003E1916 /* DappList.swift */,
+				348214392345EC82003E1916 /* DappListManager.m */,
+			);
+			path = DappList;
+			sourceTree = "<group>";
+		};
+		3482143A2345EC83003E1916 /* SelectChainType */ = {
+			isa = PBXGroup;
+			children = (
+				3482143B2345EC83003E1916 /* SelectChainTypeManager.swift */,
+				3482143C2345EC83003E1916 /* SelectChainType.swift */,
+				3482143D2345EC83003E1916 /* SelectChainTypeManager.m */,
+			);
+			path = SelectChainType;
+			sourceTree = "<group>";
+		};
+		3482143E2345EC83003E1916 /* SwitchBTCAddress */ = {
+			isa = PBXGroup;
+			children = (
+				3482143F2345EC83003E1916 /* SwitchBTCAddress.swift */,
+				348214402345EC83003E1916 /* SwitchBTCAddressManager.swift */,
+				348214412345EC83003E1916 /* SwitchBTCAddressManager.m */,
+			);
+			path = SwitchBTCAddress;
+			sourceTree = "<group>";
+		};
+		348214422345EC83003E1916 /* AuthorizeCreateEOSAccount */ = {
+			isa = PBXGroup;
+			children = (
+				348214432345EC83003E1916 /* AuthorizeCreateEOSAccount.swift */,
+				348214442345EC83003E1916 /* AuthorizeCreateEOSAccountManager.m */,
+				348214452345EC83003E1916 /* AuthorizeCreateEOSAccountManager.swift */,
+			);
+			path = AuthorizeCreateEOSAccount;
+			sourceTree = "<group>";
+		};
+		348214462345EC84003E1916 /* ExportETHPrivateKey */ = {
+			isa = PBXGroup;
+			children = (
+				348214472345EC84003E1916 /* ExportETHPrivateKey.swift */,
+				348214482345EC84003E1916 /* ExportETHPrivateKeyManager.m */,
+				348214492345EC84003E1916 /* ExportETHPrivateKeyManager.swift */,
+			);
+			path = ExportETHPrivateKey;
+			sourceTree = "<group>";
+		};
+		3482144A2345EC84003E1916 /* EditContact */ = {
+			isa = PBXGroup;
+			children = (
+				3482144B2345EC84003E1916 /* EditContact.swift */,
+				3482144C2345EC84003E1916 /* EditContactManager.m */,
+				3482144D2345EC84003E1916 /* EditContactManager.swift */,
+			);
+			path = EditContact;
+			sourceTree = "<group>";
+		};
+		3482144E2345EC85003E1916 /* ProducerDetail */ = {
+			isa = PBXGroup;
+			children = (
+				3482144F2345EC85003E1916 /* ProducerDetailManager.m */,
+				348214502345EC85003E1916 /* ProducerDetailManager.swift */,
+				348214512345EC85003E1916 /* ProducerDetail.swift */,
+			);
+			path = ProducerDetail;
+			sourceTree = "<group>";
+		};
+		348214522345EC85003E1916 /* AuthorizeEOSAccount */ = {
+			isa = PBXGroup;
+			children = (
+				348214532345EC85003E1916 /* AuthorizeEOSAccountManager.swift */,
+				348214542345EC85003E1916 /* AuthorizeEOSAccountManager.m */,
+				348214552345EC85003E1916 /* AuthorizeEOSAccount.swift */,
+			);
+			path = AuthorizeEOSAccount;
+			sourceTree = "<group>";
+		};
+		348214562345EC85003E1916 /* ExportBTCPrivateKey */ = {
+			isa = PBXGroup;
+			children = (
+				348214572345EC85003E1916 /* ExportBTCPrivateKeyManager.swift */,
+				348214582345EC85003E1916 /* ExportBTCPrivateKeyManager.m */,
+				348214592345EC85003E1916 /* ExportBTCPrivateKey.swift */,
+			);
+			path = ExportBTCPrivateKey;
+			sourceTree = "<group>";
+		};
+		3482145A2345EC85003E1916 /* ChainXDeposit */ = {
+			isa = PBXGroup;
+			children = (
+				3482145B2345EC85003E1916 /* ChainXDepositManager.m */,
+				3482145C2345EC85003E1916 /* ChainXDeposit.swift */,
+				3482145D2345EC85003E1916 /* ChainXDepositManager.swift */,
+			);
+			path = ChainXDeposit;
+			sourceTree = "<group>";
+		};
+		3482145E2345EC85003E1916 /* Browser */ = {
+			isa = PBXGroup;
+			children = (
+				3482145F2345EC86003E1916 /* BrowserManager.m */,
+				348214602345EC86003E1916 /* BrowserManager.swift */,
+				348214612345EC86003E1916 /* Browser.swift */,
+			);
+			path = Browser;
+			sourceTree = "<group>";
+		};
+		348214622345EC86003E1916 /* ReceiveAsset */ = {
+			isa = PBXGroup;
+			children = (
+				348214632345EC86003E1916 /* ReceiveAsset.swift */,
+				348214642345EC86003E1916 /* ReceiveAssetManager.swift */,
+				348214652345EC86003E1916 /* ReceiveAssetManager.m */,
+			);
+			path = ReceiveAsset;
+			sourceTree = "<group>";
+		};
+		348214662345EC86003E1916 /* CreateIdentity */ = {
+			isa = PBXGroup;
+			children = (
+				348214672345EC86003E1916 /* CreateIdentityManager.swift */,
+				348214682345EC86003E1916 /* CreateIdentityManager.m */,
+				348214692345EC86003E1916 /* CreateIdentity.swift */,
+			);
+			path = CreateIdentity;
+			sourceTree = "<group>";
+		};
+		3482146A2345EC86003E1916 /* TransferAsset */ = {
+			isa = PBXGroup;
+			children = (
+				3482146B2345EC86003E1916 /* TransferAsset.swift */,
+				3482146C2345EC86003E1916 /* TransferAssetManager.swift */,
+				3482146D2345EC86003E1916 /* TransferAssetManager.m */,
+			);
+			path = TransferAsset;
+			sourceTree = "<group>";
+		};
+		3482146E2345EC87003E1916 /* ImportBTCWallet */ = {
+			isa = PBXGroup;
+			children = (
+				3482146F2345EC87003E1916 /* ImportBTCWalletManager.m */,
+				348214702345EC87003E1916 /* ImportBTCWalletManager.swift */,
+				348214712345EC87003E1916 /* ImportBTCWallet.swift */,
+			);
+			path = ImportBTCWallet;
+			sourceTree = "<group>";
+		};
+		348214722345EC87003E1916 /* CreateEOSAccount */ = {
+			isa = PBXGroup;
+			children = (
+				348214732345EC87003E1916 /* CreateEOSAccountManager.m */,
+				348214742345EC87003E1916 /* CreateEOSAccount.swift */,
+				348214752345EC87003E1916 /* CreateEOSAccountManager.swift */,
+			);
+			path = CreateEOSAccount;
+			sourceTree = "<group>";
+		};
+		348214762345EC87003E1916 /* Asset */ = {
+			isa = PBXGroup;
+			children = (
+				348214772345EC87003E1916 /* AssetManager.swift */,
+				348214782345EC87003E1916 /* AssetManager.m */,
+				348214792345EC87003E1916 /* Asset.swift */,
+			);
+			path = Asset;
+			sourceTree = "<group>";
+		};
+		3482147A2345EC87003E1916 /* ChainXValidatorDetail */ = {
+			isa = PBXGroup;
+			children = (
+				3482147B2345EC87003E1916 /* ChainXValidatorDetail.swift */,
+				3482147C2345EC87003E1916 /* ChainXValidatorDetailManager.swift */,
+				3482147D2345EC87003E1916 /* ChainXValidatorDetailManager.m */,
+			);
+			path = ChainXValidatorDetail;
+			sourceTree = "<group>";
+		};
+		3482147E2345EC88003E1916 /* ExportETHKeystore */ = {
+			isa = PBXGroup;
+			children = (
+				3482147F2345EC88003E1916 /* ExportETHKeystore.swift */,
+				348214802345EC88003E1916 /* ExportETHKeystoreManager.m */,
+				348214812345EC88003E1916 /* ExportETHKeystoreManager.swift */,
+			);
+			path = ExportETHKeystore;
+			sourceTree = "<group>";
+		};
+		348214822345EC88003E1916 /* ExportPCXPrivateKey */ = {
+			isa = PBXGroup;
+			children = (
+				348214832345EC88003E1916 /* ExportPCXPrivateKey.swift */,
+				348214842345EC88003E1916 /* ExportPCXPrivateKeyManager.m */,
+				348214852345EC88003E1916 /* ExportPCXPrivateKeyManager.swift */,
+			);
+			path = ExportPCXPrivateKey;
+			sourceTree = "<group>";
+		};
+		348214862345EC88003E1916 /* Currency */ = {
+			isa = PBXGroup;
+			children = (
+				348214872345EC88003E1916 /* CurrencyViewManager.m */,
+				348214882345EC88003E1916 /* CurrencyView.swift */,
+				348214892345EC88003E1916 /* CurrencyViewManager.swift */,
+			);
+			path = Currency;
+			sourceTree = "<group>";
+		};
+		3482148A2345EC88003E1916 /* TransactionDetail */ = {
+			isa = PBXGroup;
+			children = (
+				3482148B2345EC88003E1916 /* TransactionDetailManager.swift */,
+				3482148C2345EC88003E1916 /* TransactionDetail.swift */,
+				3482148D2345EC88003E1916 /* TransactionDetailManager.m */,
+			);
+			path = TransactionDetail;
+			sourceTree = "<group>";
+		};
+		3482148E2345EC89003E1916 /* ImportEOSWallet */ = {
+			isa = PBXGroup;
+			children = (
+				3482148F2345EC89003E1916 /* ImportEOSWalletManager.swift */,
+				348214902345EC89003E1916 /* ImportEOSWalletManager.m */,
+				348214912345EC89003E1916 /* ImportEOSWallet.swift */,
+			);
+			path = ImportEOSWallet;
+			sourceTree = "<group>";
+		};
+		348214922345EC89003E1916 /* ChainXVoting */ = {
+			isa = PBXGroup;
+			children = (
+				348214932345EC89003E1916 /* ChainXVotingManager.swift */,
+				348214942345EC89003E1916 /* ChainXVoting.swift */,
+				348214952345EC89003E1916 /* ChainXVotingManager.m */,
+			);
+			path = ChainXVoting;
+			sourceTree = "<group>";
+		};
+		348214962345EC89003E1916 /* AddIdentity */ = {
+			isa = PBXGroup;
+			children = (
+				348214972345EC89003E1916 /* AddIdentity.swift */,
+				348214982345EC89003E1916 /* AddIdentityManager.swift */,
+				348214992345EC89003E1916 /* AddIdentityManager.m */,
+			);
+			path = AddIdentity;
+			sourceTree = "<group>";
+		};
+		3482149A2345EC89003E1916 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				3482149B2345EC89003E1916 /* CameraManager.m */,
+				3482149C2345EC89003E1916 /* CameraManager.swift */,
+				3482149D2345EC89003E1916 /* Camera.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		3482149E2345EC8A003E1916 /* ImportChainxWallet */ = {
+			isa = PBXGroup;
+			children = (
+				3482149F2345EC8A003E1916 /* ImportChainxWalletManager.swift */,
+				348214A02345EC8A003E1916 /* ImportChainxWallet.swift */,
+				348214A12345EC8A003E1916 /* ImportChainxWalletManager.m */,
+			);
+			path = ImportChainxWallet;
+			sourceTree = "<group>";
+		};
+		348214A22345EC8A003E1916 /* ManageWallet */ = {
+			isa = PBXGroup;
+			children = (
+				348214A32345EC8A003E1916 /* ManageWalletManager.swift */,
+				348214A42345EC8A003E1916 /* ManageWalletManager.m */,
+				348214A52345EC8A003E1916 /* ManageWallet.swift */,
+			);
+			path = ManageWallet;
+			sourceTree = "<group>";
+		};
+		348214A62345EC8A003E1916 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				348214A72345EC8A003E1916 /* HomeViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		348214A82345EC8A003E1916 /* ImportETHWallet */ = {
+			isa = PBXGroup;
+			children = (
+				348214A92345EC8A003E1916 /* ImportETHWallet.swift */,
+				348214AA2345EC8A003E1916 /* ImportETHWalletManager.swift */,
+				348214AB2345EC8A003E1916 /* ImportETHWalletManager.m */,
+			);
+			path = ImportETHWallet;
+			sourceTree = "<group>";
+		};
+		348214AC2345EC8B003E1916 /* RecoverIdentity */ = {
+			isa = PBXGroup;
+			children = (
+				348214AD2345EC8B003E1916 /* RecoverIdentity.swift */,
+				348214AE2345EC8B003E1916 /* RecoverIdentityManager.swift */,
+				348214AF2345EC8B003E1916 /* RecoverIdentityManager.m */,
+			);
+			path = RecoverIdentity;
+			sourceTree = "<group>";
+		};
+		348214B02345EC8B003E1916 /* Language */ = {
+			isa = PBXGroup;
+			children = (
+				348214B12345EC8B003E1916 /* LanguageViewManager.m */,
+				348214B22345EC8B003E1916 /* LanguageViewManager.swift */,
+				348214B32345EC8B003E1916 /* LanguageView.swift */,
+			);
+			path = Language;
+			sourceTree = "<group>";
+		};
+		348214B42345EC8B003E1916 /* SelectBridgeWallet */ = {
+			isa = PBXGroup;
+			children = (
+				348214B52345EC8B003E1916 /* SelectBridgeWalletManager.m */,
+				348214B62345EC8B003E1916 /* SelectBridgeWallet.swift */,
+				348214B72345EC8B003E1916 /* SelectBridgeWalletManager.swift */,
+			);
+			path = SelectBridgeWallet;
+			sourceTree = "<group>";
+		};
+		348214B82345EC8C003E1916 /* SelectEOSAccount */ = {
+			isa = PBXGroup;
+			children = (
+				348214B92345EC8C003E1916 /* SelectEOSAccountManager.m */,
+				348214BA2345EC8C003E1916 /* SelectEOSAccountManager.swift */,
+				348214BB2345EC8C003E1916 /* SelectEOSAccount.swift */,
+			);
+			path = SelectEOSAccount;
+			sourceTree = "<group>";
+		};
+		348214BC2345EC8C003E1916 /* BackupIdentity */ = {
+			isa = PBXGroup;
+			children = (
+				348214BD2345EC8C003E1916 /* BackupIdentityManager.m */,
+				348214BE2345EC8C003E1916 /* BackupIdentityManager.swift */,
+				348214BF2345EC8C003E1916 /* BackupIdentity.swift */,
+			);
+			path = BackupIdentity;
+			sourceTree = "<group>";
+		};
+		348214C02345EC8C003E1916 /* Contact */ = {
+			isa = PBXGroup;
+			children = (
+				348214C12345EC8C003E1916 /* ContactManager.swift */,
+				348214C22345EC8C003E1916 /* ContactManager.m */,
+				348214C32345EC8C003E1916 /* Contact.swift */,
+			);
+			path = Contact;
+			sourceTree = "<group>";
+		};
+		348214C42345EC8C003E1916 /* MyIdentity */ = {
+			isa = PBXGroup;
+			children = (
+				348214C52345EC8C003E1916 /* MyIdentity.swift */,
+				348214C62345EC8C003E1916 /* MyIdentityManager.swift */,
+				348214C72345EC8C003E1916 /* MyIdentityManager.m */,
+			);
+			path = MyIdentity;
+			sourceTree = "<group>";
+		};
+		348214C82345EC8D003E1916 /* AddAssets */ = {
+			isa = PBXGroup;
+			children = (
+				348214C92345EC8D003E1916 /* AddAssets.swift */,
+				348214CA2345EC8D003E1916 /* AddAssetsManager.m */,
+				348214CB2345EC8D003E1916 /* AddAssetsManager.swift */,
+			);
+			path = AddAssets;
+			sourceTree = "<group>";
+		};
+		348214CC2345EC8D003E1916 /* ChainXDepositClaim */ = {
+			isa = PBXGroup;
+			children = (
+				348214CD2345EC8D003E1916 /* ChainXDepositClaimManager.swift */,
+				348214CE2345EC8D003E1916 /* ChainXDepositClaimManager.m */,
+				348214CF2345EC8D003E1916 /* ChainXDepositClaim.swift */,
+			);
+			path = ChainXDepositClaim;
+			sourceTree = "<group>";
+		};
+		348214D02345EC8D003E1916 /* ExportEOSPrivateKey */ = {
+			isa = PBXGroup;
+			children = (
+				348214D12345EC8D003E1916 /* ExportEOSPrivateKey.swift */,
+				348214D22345EC8D003E1916 /* ExportEOSPrivateKeyManager.swift */,
+				348214D32345EC8D003E1916 /* ExportEOSPrivateKeyManager.m */,
+			);
+			path = ExportEOSPrivateKey;
 			sourceTree = "<group>";
 		};
 		3483B067231430D600444855 /* TableView */ = {
@@ -3800,69 +4531,104 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				341A9A0D23442515002E1EC8 /* ProfileViewManager.m in Sources */,
 				18F2826C2177351C00DEB13F /* cash_addr.c in Sources */,
+				348215222345EC8E003E1916 /* CurrencyViewManager.m in Sources */,
+				348215472345EC8E003E1916 /* SelectEOSAccountManager.m in Sources */,
 				3482126E2345AB43003E1916 /* ReactNativeModule.m in Sources */,
 				34C8193B233B4C0C0090AD79 /* RNNTopTabOptions.m in Sources */,
 				18F282702177351C00DEB13F /* ed25519-donna-32bit-tables.c in Sources */,
+				348215572345EC8E003E1916 /* ChainXDepositClaimManager.m in Sources */,
+				3482150F2345EC8E003E1916 /* TransferAssetManager.m in Sources */,
+				348214EE2345EC8D003E1916 /* SwitchBTCAddressManager.m in Sources */,
+				348214F12345EC8E003E1916 /* AuthorizeCreateEOSAccountManager.swift in Sources */,
+				348215362345EC8E003E1916 /* ImportChainxWalletManager.m in Sources */,
 				18F282802177351C00DEB13F /* ripemd160.c in Sources */,
+				348215372345EC8E003E1916 /* ManageWalletManager.swift in Sources */,
 				34C81977233B4C0D0090AD79 /* UIImage+tint.m in Sources */,
 				34C81953233B4C0D0090AD79 /* NullText.m in Sources */,
 				3483B0DB231430D700444855 /* RNTableViewManager.m in Sources */,
 				34C8199B233B4C0D0090AD79 /* ImageParser.m in Sources */,
+				348215212345EC8E003E1916 /* ExportPCXPrivateKeyManager.swift in Sources */,
 				34C8194E233B4C0D0090AD79 /* RNNReactRootViewCreator.m in Sources */,
 				18F282972177351C00DEB13F /* core_impl.cpp in Sources */,
 				34C81920233B4C0C0090AD79 /* RNNFontAttributesCreator.m in Sources */,
+				348214DE2345EC8D003E1916 /* VotingManager.swift in Sources */,
+				3482150A2345EC8E003E1916 /* CreateIdentityManager.swift in Sources */,
 				3483B0DA231430D700444855 /* DiffableObject.m in Sources */,
+				348214F32345EC8E003E1916 /* ExportETHPrivateKeyManager.m in Sources */,
 				34C81947233B4C0D0090AD79 /* RNNOverlayWindow.m in Sources */,
 				34C81929233B4C0C0090AD79 /* RNNLayoutManager.m in Sources */,
 				34C81928233B4C0C0090AD79 /* RNNTransition.m in Sources */,
 				18F282742177351C00DEB13F /* ed25519-sha3.c in Sources */,
+				348215142345EC8E003E1916 /* CreateEOSAccount.swift in Sources */,
+				348215322345EC8E003E1916 /* CameraManager.swift in Sources */,
 				18F2827B2177351C00DEB13F /* secp256k1.c in Sources */,
+				348215492345EC8E003E1916 /* SelectEOSAccount.swift in Sources */,
+				3482152C2345EC8E003E1916 /* ChainXVoting.swift in Sources */,
 				18F282882177351C00DEB13F /* bip32.c in Sources */,
 				34C819A9233B4C0D0090AD79 /* RNNSplitViewOptions.m in Sources */,
 				344C9DBA23181CA4004E26AD /* SPAlertViewManager.m in Sources */,
 				34C81933233B4C0C0090AD79 /* RNNAnimationsOptions.m in Sources */,
+				348215512345EC8E003E1916 /* MyIdentityManager.swift in Sources */,
 				34FAC270232145000084A60F /* TGAddressBarManager.m in Sources */,
 				18F2829D2177351D00DEB13F /* UMAnalyticsModule.m in Sources */,
 				34C8193D233B4C0C0090AD79 /* UIImage+insets.m in Sources */,
+				348215032345EC8E003E1916 /* ChainXDepositManager.swift in Sources */,
 				18F2826B2177351C00DEB13F /* blake256.c in Sources */,
 				18F2827A2177351C00DEB13F /* nem.c in Sources */,
+				348214E82345EC8D003E1916 /* DappListManager.m in Sources */,
 				34C8196B233B4C0D0090AD79 /* InteractivePopGestureDelegate.m in Sources */,
+				348215332345EC8E003E1916 /* Camera.swift in Sources */,
+				3482151C2345EC8E003E1916 /* ExportETHKeystore.swift in Sources */,
 				34C81999233B4C0D0090AD79 /* RNNButtonOptions.m in Sources */,
 				34C8199C233B4C0D0090AD79 /* RNNViewLocation.m in Sources */,
+				348214DB2345EC8D003E1916 /* SwitchEOSAccountManager.swift in Sources */,
 				34C8192B233B4C0C0090AD79 /* ColorParser.m in Sources */,
 				34C81935233B4C0C0090AD79 /* RCTConvert+UIBarButtonSystemItem.m in Sources */,
 				34C819A8233B4C0D0090AD79 /* RNNElementView.m in Sources */,
+				348215352345EC8E003E1916 /* ImportChainxWallet.swift in Sources */,
+				348214FC2345EC8E003E1916 /* AuthorizeEOSAccountManager.m in Sources */,
 				34C81965233B4C0D0090AD79 /* Image.m in Sources */,
+				3482150C2345EC8E003E1916 /* CreateIdentity.swift in Sources */,
 				344C9D172317B7ED004E26AD /* SPAlertView.swift in Sources */,
 				34C81966233B4C0D0090AD79 /* RNNTabBarPresenter.m in Sources */,
+				3482154C2345EC8E003E1916 /* BackupIdentity.swift in Sources */,
 				18F282902177351C00DEB13F /* aescrypt.c in Sources */,
 				34C8194F233B4C0D0090AD79 /* SideMenuOpenMode.m in Sources */,
 				3452263C22E03F69009913DF /* test_binding.cpp in Sources */,
 				341A99DA23432AA0002E1EC8 /* AppDelegate.swift in Sources */,
 				34C81978233B4C0D0090AD79 /* RNNBottomTabsOptions.m in Sources */,
 				18F282822177351C00DEB13F /* groestl.c in Sources */,
-				341A9A0B23442420002E1EC8 /* ProfileViewManager.swift in Sources */,
 				34C8198A233B4C0D0090AD79 /* SPStorkArrowMode.swift in Sources */,
 				34C81969233B4C0D0090AD79 /* ReactNativeNavigation.m in Sources */,
+				348215192345EC8E003E1916 /* ChainXValidatorDetail.swift in Sources */,
 				34C819A6233B4C0D0090AD79 /* RNNExternalComponentStore.m in Sources */,
 				18F282A12177351D00DEB13F /* DJIError.mm in Sources */,
+				348214E62345EC8D003E1916 /* DappListManager.swift in Sources */,
 				34FAC49423268F880084A60F /* NavBarManager.swift in Sources */,
 				18F2826E2177351C00DEB13F /* rfc6979.c in Sources */,
+				348215462345EC8E003E1916 /* SelectBridgeWalletManager.swift in Sources */,
 				34C81991233B4C0D0090AD79 /* SPStorkDismissingAnimationController.swift in Sources */,
 				34C819A1233B4C0D0090AD79 /* RCTHelpers.m in Sources */,
+				348214EB2345EC8D003E1916 /* SelectChainTypeManager.m in Sources */,
 				34C81984233B4C0D0090AD79 /* RNNSideMenuController.m in Sources */,
 				3483B0E3231430D700444855 /* SnappingCollectionViewLayout.m in Sources */,
+				348214F42345EC8E003E1916 /* ExportETHPrivateKeyManager.swift in Sources */,
+				348215482345EC8E003E1916 /* SelectEOSAccountManager.swift in Sources */,
 				34C81960233B4C0D0090AD79 /* SidebarFacebookAnimation.m in Sources */,
 				34C819AC233B4C0D0090AD79 /* IntNumber.m in Sources */,
+				348215272345EC8E003E1916 /* TransactionDetailManager.m in Sources */,
 				34C8195F233B4C0D0090AD79 /* SidebarLuvocracyAnimation.m in Sources */,
+				348215452345EC8E003E1916 /* SelectBridgeWallet.swift in Sources */,
 				34C81945233B4C0D0090AD79 /* RNNSplitViewControllerPresenter.m in Sources */,
 				34C8196F233B4C0D0090AD79 /* RNNBackButtonOptions.m in Sources */,
+				348215252345EC8E003E1916 /* TransactionDetailManager.swift in Sources */,
 				34C8197A233B4C0D0090AD79 /* RNNDefaultOptionsHelper.m in Sources */,
 				34C8199D233B4C0D0090AD79 /* RNNPreviewOptions.m in Sources */,
+				348215412345EC8E003E1916 /* LanguageViewManager.m in Sources */,
 				18F282922177351C00DEB13F /* aestab.c in Sources */,
 				34C81951233B4C0D0090AD79 /* NullDouble.m in Sources */,
+				348215592345EC8E003E1916 /* ExportEOSPrivateKey.swift in Sources */,
 				34C8191D233B4C0C0090AD79 /* BoolParser.m in Sources */,
 				34C8199A233B4C0D0090AD79 /* HMSegmentedControl.m in Sources */,
 				344C9DB823181B9C004E26AD /* SPAlertViewManager.swift in Sources */,
@@ -3871,8 +4637,10 @@
 				34C81948233B4C0D0090AD79 /* UIViewController+RNNOptions.m in Sources */,
 				344C9D1A2317B7ED004E26AD /* SPAlertIconDoneView.swift in Sources */,
 				3483B0D9231430D700444855 /* JSONDataSource.m in Sources */,
+				348215062345EC8E003E1916 /* Browser.swift in Sources */,
 				34C81950233B4C0D0090AD79 /* RNNViewControllerPresenter.m in Sources */,
 				34C81923233B4C0C0090AD79 /* Constants.m in Sources */,
+				348215532345EC8E003E1916 /* AddAssets.swift in Sources */,
 				18F2828F2177351C00DEB13F /* aeskey.c in Sources */,
 				34C819A7233B4C0D0090AD79 /* RNNLargeTitleOptions.m in Sources */,
 				34C81941233B4C0C0090AD79 /* RNNPushAnimation.m in Sources */,
@@ -3881,13 +4649,19 @@
 				34C81971233B4C0D0090AD79 /* RNNTransitionStateHolder.m in Sources */,
 				34C81973233B4C0D0090AD79 /* RNNEventEmitter.m in Sources */,
 				34C81954233B4C0D0090AD79 /* RNNAnimator.m in Sources */,
+				3482150B2345EC8E003E1916 /* CreateIdentityManager.m in Sources */,
 				3483B0DD231430D700444855 /* RNTableHeaderViewManager.m in Sources */,
 				34C81937233B4C0C0090AD79 /* RNNBridgeManager.mm in Sources */,
+				348214F72345EC8E003E1916 /* EditContactManager.swift in Sources */,
 				34C8197F233B4C0D0090AD79 /* RNNOverlayOptions.m in Sources */,
+				348214FB2345EC8E003E1916 /* AuthorizeEOSAccountManager.swift in Sources */,
+				348214E32345EC8D003E1916 /* ContactsManager.m in Sources */,
 				34C81998233B4C0D0090AD79 /* RNNBasePresenter.m in Sources */,
 				18F282912177351C00DEB13F /* aes_modes.c in Sources */,
 				34C81975233B4C0D0090AD79 /* RNNNavigationController.m in Sources */,
 				18F2828A2177351C00DEB13F /* blake2s.c in Sources */,
+				348214D72345EC8D003E1916 /* ProfileView.swift in Sources */,
+				348214E72345EC8D003E1916 /* DappList.swift in Sources */,
 				34FAC44523268ED10084A60F /* NavBar.swift in Sources */,
 				34C81974233B4C0D0090AD79 /* RNNOverlayManager.m in Sources */,
 				18F282792177351C00DEB13F /* ed25519-donna-impl-base.c in Sources */,
@@ -3899,8 +4673,11 @@
 				34C8191B233B4C0C0090AD79 /* Dictionary.m in Sources */,
 				34C81961233B4C0D0090AD79 /* SidebarFeedlyAnimation.m in Sources */,
 				34C81943233B4C0D0090AD79 /* RNNSubtitleOptions.m in Sources */,
+				348215052345EC8E003E1916 /* BrowserManager.swift in Sources */,
 				18F2828B2177351C00DEB13F /* sha3.c in Sources */,
+				3482153D2345EC8E003E1916 /* ImportETHWalletManager.m in Sources */,
 				34C819A5233B4C0D0090AD79 /* VICMAImageView.m in Sources */,
+				348214E22345EC8D003E1916 /* WalletListManager.m in Sources */,
 				34C81932233B4C0C0090AD79 /* Double.m in Sources */,
 				34C81996233B4C0D0090AD79 /* SPStorkControllerConfirmDelegate.swift in Sources */,
 				18F282772177351C00DEB13F /* modm-donna-32bit.c in Sources */,
@@ -3908,61 +4685,107 @@
 				34C8194D233B4C0D0090AD79 /* RNNSideMenuChildVC.m in Sources */,
 				34C8199F233B4C0D0090AD79 /* NumberParser.m in Sources */,
 				18F282652177351C00DEB13F /* base32.c in Sources */,
+				348215392345EC8E003E1916 /* ManageWallet.swift in Sources */,
 				18F282782177351C00DEB13F /* curve25519-donna-32bit.c in Sources */,
+				348215342345EC8E003E1916 /* ImportChainxWalletManager.swift in Sources */,
 				34C8193C233B4C0C0090AD79 /* RNNCommandsHandler.m in Sources */,
 				34C8197C233B4C0D0090AD79 /* RNNOptions.m in Sources */,
+				3482152A2345EC8E003E1916 /* ImportEOSWallet.swift in Sources */,
 				34C819A2233B4C0D0090AD79 /* NullImage.m in Sources */,
+				3482153F2345EC8E003E1916 /* RecoverIdentityManager.swift in Sources */,
+				348214EF2345EC8E003E1916 /* AuthorizeCreateEOSAccount.swift in Sources */,
 				34C8192A233B4C0C0090AD79 /* TextParser.m in Sources */,
 				34C8198B233B4C0D0090AD79 /* SPStorkSeque.swift in Sources */,
 				34C81981233B4C0D0090AD79 /* DictionaryParser.m in Sources */,
+				3482150D2345EC8E003E1916 /* TransferAsset.swift in Sources */,
+				348214E42345EC8D003E1916 /* Contacts.swift in Sources */,
 				18F282832177351C00DEB13F /* nist256p1.c in Sources */,
 				34C81942233B4C0C0090AD79 /* RNNElement.m in Sources */,
+				348214D82345EC8D003E1916 /* ProfileViewManager.swift in Sources */,
+				348214ED2345EC8D003E1916 /* SwitchBTCAddressManager.swift in Sources */,
 				34C81946233B4C0D0090AD79 /* Number.m in Sources */,
+				348214FA2345EC8E003E1916 /* ProducerDetail.swift in Sources */,
+				3482152F2345EC8E003E1916 /* AddIdentityManager.swift in Sources */,
 				34C8199E233B4C0D0090AD79 /* UIViewController+SideMenuController.m in Sources */,
+				3482153C2345EC8E003E1916 /* ImportETHWalletManager.swift in Sources */,
 				18F2828D2177351C00DEB13F /* ecdsa.c in Sources */,
+				348215102345EC8E003E1916 /* ImportBTCWalletManager.m in Sources */,
 				34FAC26E232142FF0084A60F /* SPFakeBarView.swift in Sources */,
 				18F282A02177351D00DEB13F /* DJIProxyCaches.mm in Sources */,
+				3482151D2345EC8E003E1916 /* ExportETHKeystoreManager.m in Sources */,
+				3482151F2345EC8E003E1916 /* ExportPCXPrivateKey.swift in Sources */,
 				18F282632177351C00DEB13F /* sha2.c in Sources */,
 				34C81958233B4C0D0090AD79 /* MMDrawerController.m in Sources */,
 				34C819AB233B4C0D0090AD79 /* RNNTitleViewHelper.m in Sources */,
 				34C819AF233B4C0D0090AD79 /* Color.m in Sources */,
+				348215402345EC8E003E1916 /* RecoverIdentityManager.m in Sources */,
+				348215202345EC8E003E1916 /* ExportPCXPrivateKeyManager.m in Sources */,
+				3482151A2345EC8E003E1916 /* ChainXValidatorDetailManager.swift in Sources */,
+				348215092345EC8E003E1916 /* ReceiveAssetManager.m in Sources */,
 				18F282732177351C00DEB13F /* ed25519-keccak.c in Sources */,
+				348215552345EC8E003E1916 /* AddAssetsManager.swift in Sources */,
 				34C81988233B4C0D0090AD79 /* RNNElementFinder.m in Sources */,
+				348214D62345EC8D003E1916 /* ManageEOSResource.swift in Sources */,
+				3482154E2345EC8E003E1916 /* ContactManager.m in Sources */,
 				34C81922233B4C0C0090AD79 /* NullIntNumber.m in Sources */,
 				34C81986233B4C0D0090AD79 /* RNNUIBarButtonItem.m in Sources */,
+				3482155A2345EC8E003E1916 /* ExportEOSPrivateKeyManager.swift in Sources */,
 				341A9A15234477EB002E1EC8 /* ProfileTableViewCell.swift in Sources */,
 				34C81982233B4C0D0090AD79 /* Text.m in Sources */,
 				34C81983233B4C0D0090AD79 /* RNNComponentOptions.m in Sources */,
+				348214E52345EC8D003E1916 /* ContactsManager.swift in Sources */,
+				348215502345EC8E003E1916 /* MyIdentity.swift in Sources */,
+				3482151E2345EC8E003E1916 /* ExportETHKeystoreManager.swift in Sources */,
 				18F282692177351C00DEB13F /* rc4.c in Sources */,
+				348214FF2345EC8E003E1916 /* ExportBTCPrivateKeyManager.m in Sources */,
 				34C81919233B4C0C0090AD79 /* NullBool.m in Sources */,
 				3483B0DC231430D700444855 /* RNTableFooterViewManager.m in Sources */,
 				34C8193F233B4C0C0090AD79 /* RNNBottomTabOptions.m in Sources */,
 				34C81925233B4C0C0090AD79 /* NullNumber.m in Sources */,
+				348215072345EC8E003E1916 /* ReceiveAsset.swift in Sources */,
 				34C8194C233B4C0D0090AD79 /* RNNNavigationOptions.m in Sources */,
 				34C8198E233B4C0D0090AD79 /* SPStorkTransitioningDelegate.swift in Sources */,
+				3482154A2345EC8E003E1916 /* BackupIdentityManager.m in Sources */,
+				348214F22345EC8E003E1916 /* ExportETHPrivateKey.swift in Sources */,
 				34C81995233B4C0D0090AD79 /* SPStorkCloseView.swift in Sources */,
 				18F282622177351C00DEB13F /* hmac.c in Sources */,
+				348215232345EC8E003E1916 /* CurrencyView.swift in Sources */,
+				3482152E2345EC8E003E1916 /* AddIdentity.swift in Sources */,
 				34C81927233B4C0C0090AD79 /* RNNBackgroundOptions.m in Sources */,
+				348214FD2345EC8E003E1916 /* AuthorizeEOSAccount.swift in Sources */,
 				3483B0E4231430D700444855 /* RNTableHeaderView.m in Sources */,
 				34C81924233B4C0C0090AD79 /* RNNCustomViewController.m in Sources */,
 				34C8197E233B4C0D0090AD79 /* RNNTabBarItemCreator.m in Sources */,
+				3482154D2345EC8E003E1916 /* ContactManager.swift in Sources */,
 				34C8191F233B4C0C0090AD79 /* RNNSideMenuSideOptions.m in Sources */,
+				3482154B2345EC8E003E1916 /* BackupIdentityManager.swift in Sources */,
 				34C8198F233B4C0D0090AD79 /* SPStorkPresentingAnimationController.swift in Sources */,
 				3483B0D7231430D700444855 /* RNTableViewCell.m in Sources */,
+				348215242345EC8E003E1916 /* CurrencyViewManager.swift in Sources */,
 				18F282932177351C00DEB13F /* chacha_merged.c in Sources */,
+				348214DA2345EC8D003E1916 /* SwitchEOSAccount.swift in Sources */,
 				34C8198D233B4C0D0090AD79 /* SPStorkController.swift in Sources */,
 				18F2825F2177351C00DEB13F /* SSKeychain.m in Sources */,
 				34C8192C233B4C0C0090AD79 /* RNNAnimatedView.m in Sources */,
 				34C81921233B4C0C0090AD79 /* RNNNavigationControllerPresenter.m in Sources */,
+				348215042345EC8E003E1916 /* BrowserManager.m in Sources */,
+				348214EA2345EC8D003E1916 /* SelectChainType.swift in Sources */,
+				348215432345EC8E003E1916 /* LanguageView.swift in Sources */,
+				348215422345EC8E003E1916 /* LanguageViewManager.swift in Sources */,
+				348214DF2345EC8D003E1916 /* VotingManager.m in Sources */,
 				34C81964233B4C0D0090AD79 /* SidebarWunderlistAnimation.m in Sources */,
 				344C9D182317B7ED004E26AD /* SPAlertPreset.swift in Sources */,
 				18F2826F2177351C00DEB13F /* curve25519-donna-scalarmult-base.c in Sources */,
 				344C9D1C2317B7ED004E26AD /* SPAlert.swift in Sources */,
+				348215302345EC8E003E1916 /* AddIdentityManager.m in Sources */,
+				348214D42345EC8D003E1916 /* ManageEOSResourceManager.swift in Sources */,
 				34C81959233B4C0D0090AD79 /* MMDrawerVisualState.m in Sources */,
 				34C8196E233B4C0D0090AD79 /* RNNLayoutNode.m in Sources */,
 				18F282612177351C00DEB13F /* bip39.c in Sources */,
+				348215112345EC8E003E1916 /* ImportBTCWalletManager.swift in Sources */,
 				3482126B2345A9F5003E1916 /* ReactNativeViewController.m in Sources */,
 				34C81997233B4C0D0090AD79 /* SPStorkControllerDelegate.swift in Sources */,
+				348215582345EC8E003E1916 /* ChainXDepositClaim.swift in Sources */,
 				34C81989233B4C0D0090AD79 /* SPStorkHaptic.swift in Sources */,
 				34C8193E233B4C0C0090AD79 /* RNNErrorHandler.m in Sources */,
 				34C8195D233B4C0D0090AD79 /* TheSidebarController.m in Sources */,
@@ -3973,50 +4796,69 @@
 				34C8196C233B4C0D0090AD79 /* RNNRootViewController.m in Sources */,
 				34C81985233B4C0D0090AD79 /* RNNSideMenuPresenter.m in Sources */,
 				34C81962233B4C0D0090AD79 /* SidebarFlipboardAnimation.m in Sources */,
+				348215262345EC8E003E1916 /* TransactionDetail.swift in Sources */,
 				34C819B0233B4C0D0090AD79 /* UISplitViewController+RNNOptions.m in Sources */,
+				348214D92345EC8D003E1916 /* ProfileViewManager.m in Sources */,
 				34C819A4233B4C0D0090AD79 /* RNNTopBarOptions.m in Sources */,
+				348214E02345EC8D003E1916 /* WalletList.swift in Sources */,
 				34C81987233B4C0D0090AD79 /* RNNReactView.m in Sources */,
 				3483B0D8231430D700444855 /* RNAppGlobals.m in Sources */,
+				3482152D2345EC8E003E1916 /* ChainXVotingManager.m in Sources */,
 				34C81940233B4C0C0090AD79 /* RNNBridgeModule.m in Sources */,
 				3483B0E5231430D700444855 /* RNCellViewManager.m in Sources */,
 				34C8195C233B4C0D0090AD79 /* RCCTheSideBarManagerViewController.m in Sources */,
 				18F282872177351C00DEB13F /* script.c in Sources */,
-				341A9A1E2344A89E002E1EC8 /* LanguageView.swift in Sources */,
 				34C819AE233B4C0D0090AD79 /* RNNScreenTransition.m in Sources */,
 				34C8192E233B4C0C0090AD79 /* RNNLayoutOptions.m in Sources */,
 				34C819A3233B4C0D0090AD79 /* Bool.m in Sources */,
+				348215312345EC8E003E1916 /* CameraManager.m in Sources */,
 				18F2829E2177351D00DEB13F /* BPCore+Private.mm in Sources */,
 				18F282852177351C00DEB13F /* memzero.c in Sources */,
 				3483B0DF231430D700444855 /* RNTableFooterView.m in Sources */,
 				34C81968233B4C0D0090AD79 /* RNNReactComponentRegistry.m in Sources */,
+				348214F62345EC8E003E1916 /* EditContactManager.m in Sources */,
 				34C81956233B4C0D0090AD79 /* MMDrawerBarButtonItem.m in Sources */,
-				341A9A252344B0D9002E1EC8 /* HomeViewController.swift in Sources */,
 				18F282722177351C00DEB13F /* curve25519-donna-helpers.c in Sources */,
 				34FAC49623268F9A0084A60F /* NavBarManager.m in Sources */,
 				344C9D1B2317B7ED004E26AD /* SPAlertHaptic.swift in Sources */,
+				348215002345EC8E003E1916 /* ExportBTCPrivateKey.swift in Sources */,
 				34C8196D233B4C0D0090AD79 /* RNNSplitViewController.m in Sources */,
+				348214EC2345EC8D003E1916 /* SwitchBTCAddress.swift in Sources */,
 				34C81930233B4C0C0090AD79 /* RNNSharedElementAnimationOptions.m in Sources */,
 				18F282942177351C00DEB13F /* rfc7539.c in Sources */,
+				348215522345EC8E003E1916 /* MyIdentityManager.m in Sources */,
 				34C8195E233B4C0D0090AD79 /* SidebarAirbnbAnimation.m in Sources */,
-				341A9A222344A8F8002E1EC8 /* LanguageViewManager.m in Sources */,
+				348215152345EC8E003E1916 /* CreateEOSAccountManager.swift in Sources */,
 				18F2828E2177351C00DEB13F /* pbkdf2.c in Sources */,
-				341A9A09234423BE002E1EC8 /* ProfileView.swift in Sources */,
 				18F2828C2177351C00DEB13F /* base58.c in Sources */,
 				34C819AD233B4C0D0090AD79 /* RNNControllerFactory.m in Sources */,
+				3482153B2345EC8E003E1916 /* ImportETHWallet.swift in Sources */,
 				18F282662177351C00DEB13F /* hasher.c in Sources */,
+				348215022345EC8E003E1916 /* ChainXDeposit.swift in Sources */,
 				34C81939233B4C0C0090AD79 /* UITabBarController+RNNOptions.m in Sources */,
+				348215132345EC8E003E1916 /* CreateEOSAccountManager.m in Sources */,
+				3482150E2345EC8E003E1916 /* TransferAssetManager.swift in Sources */,
 				18F2829F2177351D00DEB13F /* BPCoreModule.mm in Sources */,
+				348215282345EC8E003E1916 /* ImportEOSWalletManager.swift in Sources */,
+				348214F02345EC8E003E1916 /* AuthorizeCreateEOSAccountManager.m in Sources */,
+				348214F92345EC8E003E1916 /* ProducerDetailManager.swift in Sources */,
+				348214F52345EC8E003E1916 /* EditContact.swift in Sources */,
+				348215122345EC8E003E1916 /* ImportBTCWallet.swift in Sources */,
+				348214E92345EC8D003E1916 /* SelectChainTypeManager.swift in Sources */,
 				3483B0E1231430D700444855 /* RNTableView.m in Sources */,
 				18F282962177351C00DEB13F /* chacha20poly1305.c in Sources */,
 				34C8197B233B4C0D0090AD79 /* RNNInteractivePopAnimator.m in Sources */,
 				34C81990233B4C0D0090AD79 /* SPStorkPresentationController.swift in Sources */,
 				34C81970233B4C0D0090AD79 /* RNNSwizzles.m in Sources */,
 				34FAC31B2322B4FB0084A60F /* TGAddressBarManager.swift in Sources */,
+				348215442345EC8E003E1916 /* SelectBridgeWalletManager.m in Sources */,
 				18F282672177351C00DEB13F /* rand.c in Sources */,
+				348214DD2345EC8D003E1916 /* Voting.swift in Sources */,
 				34C8195A233B4C0D0090AD79 /* MMExampleDrawerVisualStateManager.m in Sources */,
 				34C8194A233B4C0D0090AD79 /* RNNTitleOptions.m in Sources */,
-				341A9A202344A8E6002E1EC8 /* LanguageViewManager.swift in Sources */,
 				34C81926233B4C0C0090AD79 /* RNNStatusBarOptions.m in Sources */,
+				3482154F2345EC8E003E1916 /* Contact.swift in Sources */,
+				348215082345EC8E003E1916 /* ReceiveAssetManager.swift in Sources */,
 				34C81963233B4C0D0090AD79 /* SidebarAnimation.m in Sources */,
 				34C819AA233B4C0D0090AD79 /* RNNNavigationButtons.m in Sources */,
 				34FAC26A232142ED0084A60F /* AddressBar.swift in Sources */,
@@ -4027,34 +4869,52 @@
 				34C8191C233B4C0C0090AD79 /* Param.m in Sources */,
 				34FAC26C232142F60084A60F /* SPFakeBarNavigationStyle.swift in Sources */,
 				34C8195B233B4C0D0090AD79 /* RCCDrawerHelper.m in Sources */,
+				3482153E2345EC8E003E1916 /* RecoverIdentity.swift in Sources */,
+				348214FE2345EC8E003E1916 /* ExportBTCPrivateKeyManager.swift in Sources */,
 				34C81938233B4C0C0090AD79 /* RNNAnimationsTransitionDelegate.m in Sources */,
+				348215182345EC8E003E1916 /* Asset.swift in Sources */,
+				348214F82345EC8E003E1916 /* ProducerDetailManager.m in Sources */,
 				3452263922E03D43009913DF /* test.cpp in Sources */,
 				3483B0DE231430D700444855 /* RNTableViewCellWithCollectionViewInside.m in Sources */,
+				3482153A2345EC8E003E1916 /* HomeViewController.swift in Sources */,
+				348215292345EC8E003E1916 /* ImportEOSWalletManager.m in Sources */,
+				348214E12345EC8D003E1916 /* WalletListManager.swift in Sources */,
 				34C8193A233B4C0C0090AD79 /* RNNLayoutInfo.m in Sources */,
+				348215172345EC8E003E1916 /* AssetManager.m in Sources */,
 				34C8191A233B4C0C0090AD79 /* RNNElementTransitionOptions.m in Sources */,
 				341A9A192344906F002E1EC8 /* SettingTableViewCell.swift in Sources */,
 				344C9D192317B7ED004E26AD /* SPAlertIconHeartView.swift in Sources */,
+				348215542345EC8E003E1916 /* AddAssetsManager.m in Sources */,
+				348215382345EC8E003E1916 /* ManageWalletManager.m in Sources */,
+				3482155B2345EC8E003E1916 /* ExportEOSPrivateKeyManager.m in Sources */,
 				34C81955233B4C0D0090AD79 /* RCCDrawerController.m in Sources */,
 				34C8191E233B4C0C0090AD79 /* RNNSplashScreen.m in Sources */,
 				34C81992233B4C0D0090AD79 /* SPStorkViewControllerExtenshion.swift in Sources */,
 				34C8198C233B4C0D0090AD79 /* SPStorkCodeDraw.swift in Sources */,
 				18F282982177351C00DEB13F /* UMPushModule.m in Sources */,
+				3482152B2345EC8E003E1916 /* ChainXVotingManager.swift in Sources */,
 				34C81957233B4C0D0090AD79 /* UIViewController+MMDrawerController.m in Sources */,
 				3483B0E0231430D700444855 /* RNCellView.m in Sources */,
 				34C81980233B4C0D0090AD79 /* RNNTopTabsViewController.m in Sources */,
 				34C81976233B4C0D0090AD79 /* RNNAnimationConfigurationOptions.m in Sources */,
+				348214DC2345EC8D003E1916 /* SwitchEOSAccountManager.m in Sources */,
+				348215162345EC8E003E1916 /* AssetManager.swift in Sources */,
 				34C81993233B4C0D0090AD79 /* SPStorkCloseButton.swift in Sources */,
 				34C81952233B4C0D0090AD79 /* RNNUtils.m in Sources */,
 				18F282762177351C00DEB13F /* ed25519-donna-basepoint-table.c in Sources */,
 				34C81934233B4C0C0090AD79 /* RNNNavigationStackManager.m in Sources */,
+				348215012345EC8E003E1916 /* ChainXDepositManager.m in Sources */,
 				18F2826D2177351C00DEB13F /* curves.c in Sources */,
 				34C8192F233B4C0C0090AD79 /* SideMenuOpenGestureModeParser.m in Sources */,
 				34C819A0233B4C0D0090AD79 /* RNNCustomTitleView.m in Sources */,
 				34C81918233B4C0C0090AD79 /* RNNTopTabsOptions.m in Sources */,
+				3482151B2345EC8E003E1916 /* ChainXValidatorDetailManager.m in Sources */,
+				348214D52345EC8D003E1916 /* ManageEOSResourceManager.m in Sources */,
 				18F282862177351C00DEB13F /* blake2b.c in Sources */,
 				34C81979233B4C0D0090AD79 /* UINavigationController+RNNOptions.m in Sources */,
 				18F2827C2177351C00DEB13F /* bignum.c in Sources */,
 				34C81949233B4C0D0090AD79 /* RNNModalManager.m in Sources */,
+				348215562345EC8E003E1916 /* ChainXDepositClaimManager.swift in Sources */,
 				18F2827E2177351C00DEB13F /* segwit_addr.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
