@@ -1,3 +1,4 @@
+#import "BitPortal-Swift.h"
 #import "RNNRootViewController.h"
 #import <React/RCTConvert.h>
 #import "RNNAnimator.h"

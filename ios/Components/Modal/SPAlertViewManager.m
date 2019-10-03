@@ -9,6 +9,11 @@
 
 @interface RCT_EXTERN_REMAP_MODULE(SPAlert, SPAlertViewManager, NSObject)
 
++ (BOOL)requiresMainQueueSetup
+{
+  return YES;
+}
+
 RCT_EXTERN_METHOD(presentDone:(nonnull NSString *)title)
 RCT_EXTERN_METHOD(presentHeart:(nonnull NSString *)title)
 RCT_EXTERN_METHOD(presentTitle:(nonnull NSString *)title)

@@ -172,6 +172,9 @@ const warn = (values) => {
 export default class RecoverIdentity extends Component {
   static get options() {
     return {
+      statusBar: {
+        visible: false
+      },
       topBar: {
         rightButtons: [
           {
@@ -182,7 +185,7 @@ export default class RecoverIdentity extends Component {
           }
         ],
         largeTitle: {
-          visible: false
+          displayMode: 'never'
         },
         noBorder: true,
         background: {
@@ -267,8 +270,7 @@ export default class RecoverIdentity extends Component {
           return
         }
       }
-
-      Keyboard.dismiss()
+      
       this.props.handleSubmit(this.submit)()
     }
   }
@@ -317,75 +319,71 @@ export default class RecoverIdentity extends Component {
     const passwordHint = formValues && formValues.passwordHint
 
     return (
-      <SafeAreaView style={styles.container}>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
-        >
-          <View style={{ flex: 1, alignItems: 'center' }}>
-            <View style={{ marginBottom: 14 }}>
-              <Text style={{ fontSize: 26, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'identity_recovery_title' })}</Text>
-              {loading
-              && (
-                <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 0, right: -25 }}>
-                  <ActivityIndicator size="small" color="#000000" />
-                </View>
-              )
-              }
-            </View>
-            <View style={{ marginBottom: 16, height: 22 }}>
-              {!loading && <Text style={{ fontSize: 17, paddingLeft: 32, paddingRight: 32, lineHeight: 22, textAlign: 'center' }}>
-                {intl.formatMessage({ id: 'identity_recovery_sub_title' })}
-              </Text>}
-            </View>
-            <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
-              <Field
-                placeholder={intl.formatMessage({ id: 'identity_input_placeholder_mnemonics' })}
-                name="mnemonics"
-                fieldName="mnemonics"
-                component={TextAreaField}
-                showClearButton={!!mnemonics && mnemonics.length > 0}
-                change={change}
-              />
-              <TouchableHighlight underlayColor="rgba(0,0,0,0)" onPress={this.scan.bind(this, 'mnemonics')} style={{ width: 30, height: 30, position: 'absolute', right: 16, top: 4 }} activeOpacity={0.42}>
-                <FastImage
-                  source={require('resources/images/scan2_right.png')}
-                  style={{ width: 30, height: 30 }}
-                />
-              </TouchableHighlight>
-            </View>
-            <View style={{ width: '100%', height: 56, paddingLeft: 16, paddingRight: 16, paddingTop: 8, paddingBottom: 8, justifyContent: 'flex-end' }}>
-              <Text style={{ fontSize: 13, color: '#666666' }}>{intl.formatMessage({ id: 'identity_recovery_sub_title_setting_passwd' })}</Text>
-            </View>
-            <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
-              <Field
-                label={intl.formatMessage({ id: 'identity_input_label_wallet_passwd' })}
-                placeholder={intl.formatMessage({ id: 'identity_input_placeholder_wallet_passwd' })}
-                name="password"
-                fieldName="password"
-                component={TextField}
-                showClearButton={!!password && password.length > 0}
-                change={change}
-                secureTextEntry
-                separator={true}
-              />
-              <Field
-                label={intl.formatMessage({ id: 'identity_input_label_passwd_hint' })}
-                placeholder={intl.formatMessage({ id: 'identity_input_placeholder_label_passwd_hint' })}
-                name="passwordHint"
-                fieldName="passwordHint"
-                component={TextField}
-                showClearButton={!!passwordHint && passwordHint.length > 0}
-                change={change}
-                separator={false}
-              />
-            </View>
-            <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
-              <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>{intl.formatMessage({ id: 'identity_recovery_hint_passwd_recovery_passwd' })}</Text>
-            </View>
+      <ScrollView
+        style={{ flex: 1, backgroundColor: 'white' }}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={{ flex: 1, alignItems: 'center' }}>
+          <View style={{ marginBottom: 14 }}>
+            <Text style={{ fontSize: 26, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'identity_recovery_title' })}</Text>
+            {loading && (
+              <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 0, right: -25 }}>
+                <ActivityIndicator size="small" color="#000000" />
+              </View>
+            )}
           </View>
-        </ScrollView>
-      </SafeAreaView>
+          <View style={{ marginBottom: 16, height: 22 }}>
+            {!loading && <Text style={{ fontSize: 17, paddingLeft: 32, paddingRight: 32, lineHeight: 22, textAlign: 'center' }}>
+              {intl.formatMessage({ id: 'identity_recovery_sub_title' })}
+            </Text>}
+          </View>
+          <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
+            <Field
+              placeholder={intl.formatMessage({ id: 'identity_input_placeholder_mnemonics' })}
+              name="mnemonics"
+              fieldName="mnemonics"
+              component={TextAreaField}
+              showClearButton={!!mnemonics && mnemonics.length > 0}
+              change={change}
+            />
+            <TouchableHighlight underlayColor="rgba(0,0,0,0)" onPress={this.scan.bind(this, 'mnemonics')} style={{ width: 30, height: 30, position: 'absolute', right: 16, top: 4 }} activeOpacity={0.42}>
+              <FastImage
+                source={require('resources/images/scan2_right.png')}
+                style={{ width: 30, height: 30 }}
+              />
+            </TouchableHighlight>
+          </View>
+          <View style={{ width: '100%', height: 56, paddingLeft: 16, paddingRight: 16, paddingTop: 8, paddingBottom: 8, justifyContent: 'flex-end' }}>
+            <Text style={{ fontSize: 13, color: '#666666' }}>{intl.formatMessage({ id: 'identity_recovery_sub_title_setting_passwd' })}</Text>
+          </View>
+          <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
+            <Field
+              label={intl.formatMessage({ id: 'identity_input_label_wallet_passwd' })}
+              placeholder={intl.formatMessage({ id: 'identity_input_placeholder_wallet_passwd' })}
+              name="password"
+              fieldName="password"
+              component={TextField}
+              showClearButton={!!password && password.length > 0}
+              change={change}
+              secureTextEntry
+              separator={true}
+            />
+            <Field
+              label={intl.formatMessage({ id: 'identity_input_label_passwd_hint' })}
+              placeholder={intl.formatMessage({ id: 'identity_input_placeholder_label_passwd_hint' })}
+              name="passwordHint"
+              fieldName="passwordHint"
+              component={TextField}
+              showClearButton={!!passwordHint && passwordHint.length > 0}
+              change={change}
+              separator={false}
+            />
+          </View>
+          <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
+            <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>{intl.formatMessage({ id: 'identity_recovery_hint_passwd_recovery_passwd' })}</Text>
+          </View>
+        </View>
+      </ScrollView>
     )
   }
 }

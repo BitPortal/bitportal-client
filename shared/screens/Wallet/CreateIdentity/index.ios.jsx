@@ -138,7 +138,7 @@ export default class CreateIdentity extends Component {
           }
         ],
         largeTitle: {
-          visible: false
+          displayMode: 'never'
         },
         noBorder: true,
         background: {

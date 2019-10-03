@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
-import { View, LayoutAnimation, TouchableOpacity, Text } from 'react-native'
+import { View, LayoutAnimation, TouchableOpacity, Text, ScrollView } from 'react-native'
 import { Navigation } from 'components/Navigation'
 import { connect } from 'react-redux'
 import TableView from 'components/TableView'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { currencySymbolSelector } from 'selectors/currency'
 import styles from './styles'
-
-const { Section, Item } = TableView
+import ProfileView from './ProfileView'
 
 @injectIntl
 
@@ -20,247 +19,51 @@ const { Section, Item } = TableView
 )
 
 export default class Profile extends Component {
-  static get options() {
-    return {
-      topBar: {
-        title: {
-          text: '我的'
-        },
-        largeTitle: {
-          displayMode: 'always'
-        },
-        noBorder: true
-      }
-    }
-  }
-
-  subscription = Navigation.events().bindComponent(this)
-
-  toLanguageSetting = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.LanguageSetting',
-        options: {
-          topBar: {
-            title: {
-              text: this.props.intl.formatMessage({ id: 'top_bar_title_language_setting' })
-            }
-          }
-        }
-      }
-    })
-  }
-
-  toCurrencySetting = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.CurrencySetting',
-        options: {
-          topBar: {
-            title: {
-              text: this.props.intl.formatMessage({ id: 'top_bar_title_currency_setting' })
-            }
-          }
-        }
-      }
-    })
-  }
-
-  /* toNodeSetting = () => {
-   *   Navigation.push(this.props.componentId, {
-   *     component: {
-   *       name: 'BitPortal.NodeSetting'
-   *     }
-   *   })
-   * }*/
-
-  toContacts = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.Contacts',
-        options: {
-          topBar: {
-            title: {
-              text: this.props.intl.formatMessage({ id: 'top_bar_title_contacts' })
-            }
-          }
-        }
-      }
-    })
-  }
-
-  toMyIdentity = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.MyIdentity',
-        options: {
-          topBar: {
-            title: {
-              text: this.props.intl.formatMessage({ id: 'top_bar_title_my_identity' })
-            }
-          }
-        }
-      }
-    })
-  }
-
-  toAddIdentity = () => {
-    Navigation.showModal({
-      stack: {
-        children: [{
-          component: {
-            name: 'BitPortal.AddIdentity'
-          }
-        }]
-      }
-    })
-  }
-
-  toAboutUs = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.WebView',
-        passProps: {
-          url: 'https://www.bitportal.io/',
-          id: 99999
-        }
-      },
-      options: {
-        topBar: {
-          title: {
-            text: 'BitPortal 官网'
-          },
-          leftButtons: [
-            {
-              id: 'cancel',
-              text: '返回'
-            }
-          ]
-        }
-      }
-    })
-  }
-
-  toHelpCenter = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.WebView',
-        passProps: {
-          url: 'https://www.bitportal.io/help/',
-          id: 99999
-        }
-      },
-      options: {
-        topBar: {
-          title: {
-            text: 'BitPortal 帮助中心'
-          },
-          leftButtons: [
-            {
-              id: 'cancel',
-              text: '返回'
-            }
-          ]
-        }
-      }
-    })
-  }
-
-  componentDidMount() {
-
-  }
-
-  componentDidAppear() {
-    Navigation.mergeOptions(this.props.componentId, {
-      topBar: {
-        largeTitle: {
-          displayMode: 'always'
-        }
-      }
-    })
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    LayoutAnimation.easeInEaseOut()
-  }
-
   render() {
     const { identity, locale, currencySymbol, intl } = this.props
     const hasIdentity = !!identity.id
 
     return (
-      <TableView
+      <ProfileView
         style={{ flex: 1 }}
-        tableViewStyle={TableView.Consts.Style.Grouped}
-        tableViewCellStyle={TableView.Consts.CellStyle.Value1}
-        cellSeparatorInset={{ left: 61 }}
-        onSwitchAccessoryChanged={() => {}}
-      >
-        <Section>
-          <Item
-            height={78}
-            reactModuleForCell="IdentityTableViewCell"
-            hasIdentity={hasIdentity}
-            name={hasIdentity ? identity.name : intl.formatMessage({ id: 'identity_tableviewcell_identity' })}
-            identifier={hasIdentity ? identity.identifier : intl.formatMessage({ id: 'identity_tableviewcell_add_identity' })}
-            onPress={hasIdentity ? this.toMyIdentity : this.toAddIdentity}
-            image="Userpic.png"
-            arrow
-          />
-        </Section>
-        <Section>
-          <Item
-            height={44}
-            key="addressBook"
-            type="addressBook"
-            arrow
-            onPress={this.toContacts}
-            label={intl.formatMessage({ id: 'identity_tableviewcell_contacts' })}
-            isSetting
-            image="addressBookSetting.png"
-          />
-          <Item
-            key="language"
-            type="language"
-            detail={locale === 'zh' ? '中文' : 'English'}
-            arrow
-            onPress={this.toLanguageSetting}
-            isSetting
-            label={intl.formatMessage({ id: 'identity_tableviewcell_language_setting' })}
-            image="languageSetting.png"
-          />
-          <Item
-            key="currency"
-            type="currency"
-            detail={currencySymbol}
-            arrow
-            onPress={this.toCurrencySetting}
-            isSetting
-            label={intl.formatMessage({ id: 'identity_tableviewcell_currency_setting' })}
-            image="currencySetting.png"
-          />
-        </Section>
-        <Section arrow>
-          <Item
-            key="helpCenter"
-            type="helpCenter"
-            arrow
-            onPress={this.toHelpCenter}
-            isSetting
-            label={intl.formatMessage({ id: 'identity_tableviewcell_help_center' })}
-            image="helpCenterSetting.png"
-          />
-          <Item
-            key="aboutUs"
-            type="aboutUs"
-            arrow
-            onPress={this.toAboutUs}
-            isSetting
-            label={intl.formatMessage({ id: 'identity_tableviewcell_about_us' })}
-            image="abountUsSetting.png"
-          />
-        </Section>
-      </TableView>
+        data={[
+          [
+            {
+              title: hasIdentity ? identity.name : intl.formatMessage({ id: 'identity_tableviewcell_identity' }),
+              detail: hasIdentity ? identity.identifier : intl.formatMessage({ id: 'identity_tableviewcell_add_identity' }),
+              cellReuseIdentifier: 'bitportal.ProfileTableViewCell'
+            },
+          ],
+          [
+            {
+              title: '联系人',
+              image: 'bookRound.png'
+            },
+            {
+              title: '语言设置',
+              image: 'earthRound.png',
+              detail: locale === 'zh' ? '中文' : 'English'
+            },
+            {
+              title: '货币单位',
+              image: 'currencyRound.png',
+              detail: currencySymbol
+            }
+          ],
+          [
+            {
+              title: '帮助中心',
+              image: 'infoRound.png',
+              webLink: 'https://www.bitportal.io/help'
+            },
+            {
+              title: '关于我们',
+              image: 'homeRound.png',
+              webLink: 'https://www.bitportal.io'
+            }
+          ]
+        ]}
+      />
     )
   }
 }

@@ -22,9 +22,7 @@
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
-		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		13B07FC11A68108700A75B9A /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.mm */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		16E64946D5354C92BAF56AD2 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E378031D0A07409DB9E63E29 /* libRNSVG.a */; };
 		1808822A2135447300321418 /* NativeUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 180882292135447300321418 /* NativeUtils.m */; };
@@ -100,6 +98,16 @@
 		1CFF3B8F2A394826A002951C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8FAC78A2D9E457AA6A5C151 /* SystemConfiguration.framework */; };
 		279ACDBA87444D5D9230BA0D /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3693ECD00D2451D9DFE9083 /* Zocial.ttf */; };
 		3410CA9722854EEE005FAF2A /* injectScatter.js in Resources */ = {isa = PBXBuildFile; fileRef = 3410CA9622854EEE005FAF2A /* injectScatter.js */; };
+		341A99DA23432AA0002E1EC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341A99D923432AA0002E1EC8 /* AppDelegate.swift */; };
+		341A9A09234423BE002E1EC8 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341A9A08234423BE002E1EC8 /* ProfileView.swift */; };
+		341A9A0B23442420002E1EC8 /* ProfileViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341A9A0A23442420002E1EC8 /* ProfileViewManager.swift */; };
+		341A9A0D23442515002E1EC8 /* ProfileViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 341A9A0C23442515002E1EC8 /* ProfileViewManager.m */; };
+		341A9A15234477EB002E1EC8 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341A9A14234477EB002E1EC8 /* ProfileTableViewCell.swift */; };
+		341A9A192344906F002E1EC8 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341A9A182344906F002E1EC8 /* SettingTableViewCell.swift */; };
+		341A9A1E2344A89E002E1EC8 /* LanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341A9A1D2344A89E002E1EC8 /* LanguageView.swift */; };
+		341A9A202344A8E6002E1EC8 /* LanguageViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341A9A1F2344A8E6002E1EC8 /* LanguageViewManager.swift */; };
+		341A9A222344A8F8002E1EC8 /* LanguageViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 341A9A212344A8F8002E1EC8 /* LanguageViewManager.m */; };
+		341A9A252344B0D9002E1EC8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341A9A242344B0D9002E1EC8 /* HomeViewController.swift */; };
 		343A5D452285673E00DC76D6 /* injectMetaMask.js in Resources */ = {isa = PBXBuildFile; fileRef = 343A5CF92285673E00DC76D6 /* injectMetaMask.js */; };
 		3449499A2274C1BB00D8AB38 /* libRNCSlider.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 344949872274C19E00D8AB38 /* libRNCSlider.a */; };
 		344C9D172317B7ED004E26AD /* SPAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344C9CC32317B7ED004E26AD /* SPAlertView.swift */; };
@@ -123,6 +131,8 @@
 		346C2CE821E738A00030003C /* libReactNativeHaptic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 346C2CCF21E738780030003C /* libReactNativeHaptic.a */; };
 		346C2D1521E74B170030003C /* libRNReactNativeHapticFeedback.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 346C2D1421E74AFF0030003C /* libRNReactNativeHapticFeedback.a */; };
 		34763E1A229438B7002AEA19 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34763DCC22943899002AEA19 /* libART.a */; };
+		3482126B2345A9F5003E1916 /* ReactNativeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3482126A2345A9F5003E1916 /* ReactNativeViewController.m */; };
+		3482126E2345AB43003E1916 /* ReactNativeModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 3482126D2345AB43003E1916 /* ReactNativeModule.m */; };
 		3483B0D7231430D700444855 /* RNTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3483B068231430D600444855 /* RNTableViewCell.m */; };
 		3483B0D8231430D700444855 /* RNAppGlobals.m in Sources */ = {isa = PBXBuildFile; fileRef = 3483B069231430D600444855 /* RNAppGlobals.m */; };
 		3483B0D9231430D700444855 /* JSONDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 3483B06A231430D600444855 /* JSONDataSource.m */; };
@@ -140,8 +150,6 @@
 		3483B0E6231430D700444855 /* RNReactModuleCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3483B084231430D600444855 /* RNReactModuleCollectionViewCell.m */; };
 		3483B0E7231430D700444855 /* RNReactModuleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3483B086231430D600444855 /* RNReactModuleCell.m */; };
 		348C50C621A4375500F99792 /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 348C507F21A4375500F99792 /* IQKeyboardManager.bundle */; };
-		34A66A97233F1307003C2C2B /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A66A4A233F1306003C2C2B /* TableViewController.swift */; };
-		34A66A98233F1307003C2C2B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A66A96233F1306003C2C2B /* ViewController.swift */; };
 		34A680DA22C4E76E00BBE21E /* libRNReanimated.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34A680D722C4E75C00BBE21E /* libRNReanimated.a */; };
 		34A680E422C4E7A900BBE21E /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34A680E122C4E79A00BBE21E /* libRNGestureHandler.a */; };
 		34AEC4FA230BDDCB002B9C99 /* libRNCWebView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34AEC4E3230BDD9B002B9C99 /* libRNCWebView.a */; };
@@ -904,11 +912,8 @@
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* bitportal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bitportal.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = bitportal/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = bitportal/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = bitportal/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = bitportal/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = main.mm; path = bitportal/main.mm; sourceTree = "<group>"; };
 		13D51715EF5C4A4B9ED3B4FB /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/ios/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		15F6731AE30C4EA99A2EFF54 /* libFastImage.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libFastImage.a; sourceTree = "<group>"; };
@@ -1073,6 +1078,16 @@
 		2AE2F539AB864A40ACF81B7E /* libresolv.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		2DCE5CE8E4DC4D17BDEAF27C /* libRNRandomBytes.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNRandomBytes.a; sourceTree = "<group>"; };
 		3410CA9622854EEE005FAF2A /* injectScatter.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = injectScatter.js; path = bitportal/injectScatter.js; sourceTree = "<group>"; };
+		341A99D923432AA0002E1EC8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		341A9A08234423BE002E1EC8 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		341A9A0A23442420002E1EC8 /* ProfileViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewManager.swift; sourceTree = "<group>"; };
+		341A9A0C23442515002E1EC8 /* ProfileViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileViewManager.m; sourceTree = "<group>"; };
+		341A9A14234477EB002E1EC8 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
+		341A9A182344906F002E1EC8 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
+		341A9A1D2344A89E002E1EC8 /* LanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageView.swift; sourceTree = "<group>"; };
+		341A9A1F2344A8E6002E1EC8 /* LanguageViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewManager.swift; sourceTree = "<group>"; };
+		341A9A212344A8F8002E1EC8 /* LanguageViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LanguageViewManager.m; sourceTree = "<group>"; };
+		341A9A242344B0D9002E1EC8 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		343A5CF92285673E00DC76D6 /* injectMetaMask.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = injectMetaMask.js; path = bitportal/injectMetaMask.js; sourceTree = "<group>"; };
 		3449494A2274C19E00D8AB38 /* RNCSlider.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCSlider.xcodeproj; path = "../node_modules/@react-native-community/slider/ios/RNCSlider.xcodeproj"; sourceTree = "<group>"; };
 		344C9CC32317B7ED004E26AD /* SPAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPAlertView.swift; sourceTree = "<group>"; };
@@ -1094,6 +1109,11 @@
 		346C2C9A21E738770030003C /* ReactNativeHaptic.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeHaptic.xcodeproj; path = "../node_modules/react-native-haptic/ios/ReactNativeHaptic.xcodeproj"; sourceTree = "<group>"; };
 		346C2D0F21E74AFE0030003C /* RNReactNativeHapticFeedback.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNReactNativeHapticFeedback.xcodeproj; path = "../node_modules/react-native-haptic-feedback/ios/RNReactNativeHapticFeedback.xcodeproj"; sourceTree = "<group>"; };
 		34763DC622943899002AEA19 /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
+		348212692345A9F5003E1916 /* ReactNativeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReactNativeViewController.h; sourceTree = "<group>"; };
+		3482126A2345A9F5003E1916 /* ReactNativeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReactNativeViewController.m; sourceTree = "<group>"; };
+		3482126C2345AB43003E1916 /* ReactNativeModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReactNativeModule.h; sourceTree = "<group>"; };
+		3482126D2345AB43003E1916 /* ReactNativeModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReactNativeModule.m; sourceTree = "<group>"; };
+		348212E92345B37C003E1916 /* bitportal-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "bitportal-Bridging-Header.h"; sourceTree = "<group>"; };
 		3483B068231430D600444855 /* RNTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNTableViewCell.m; sourceTree = "<group>"; };
 		3483B069231430D600444855 /* RNAppGlobals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNAppGlobals.m; sourceTree = "<group>"; };
 		3483B06A231430D600444855 /* JSONDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONDataSource.m; sourceTree = "<group>"; };
@@ -1127,8 +1147,6 @@
 		3483B087231430D600444855 /* RNTableViewCellWithCollectionViewInside.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTableViewCellWithCollectionViewInside.h; sourceTree = "<group>"; };
 		3483B088231430D600444855 /* RNTableHeaderViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNTableHeaderViewManager.h; sourceTree = "<group>"; };
 		348C507F21A4375500F99792 /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = IQKeyboardManager.bundle; path = "../node_modules/react-native-keyboard-manager/ios/IQKeyboardManager/Resources/IQKeyboardManager.bundle"; sourceTree = "<group>"; };
-		34A66A4A233F1306003C2C2B /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
-		34A66A96233F1306003C2C2B /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		34A680D122C4E75C00BBE21E /* RNReanimated.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNReanimated.xcodeproj; path = "../node_modules/react-native-reanimated/ios/RNReanimated.xcodeproj"; sourceTree = "<group>"; };
 		34A680DB22C4E79900BBE21E /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
 		34AEC4A6230BDD9B002B9C99 /* RNCWebView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCWebView.xcodeproj; path = "../node_modules/react-native-webview/ios/RNCWebView.xcodeproj"; sourceTree = "<group>"; };
@@ -1641,33 +1659,25 @@
 		13B07FAE1A68108700A75B9A /* bitportal */ = {
 			isa = PBXGroup;
 			children = (
-				34A66A4A233F1306003C2C2B /* TableViewController.swift */,
-				34A66A96233F1306003C2C2B /* ViewController.swift */,
-				34C81873233B4C0A0090AD79 /* SPStorkController */,
+				348212E92345B37C003E1916 /* bitportal-Bridging-Header.h */,
+				348212F02345D6B4003E1916 /* Controllers */,
+				341A9A112344318C002E1EC8 /* Components */,
+				341A9A0423442309002E1EC8 /* Screens */,
+				341A99B423426A92002E1EC8 /* ReactNative */,
 				34C81789233B4C080090AD79 /* Navigation */,
-				34FAC21B232142C30084A60F /* NavigationBar */,
-				344C9CC22317B7ED004E26AD /* SPAlert */,
 				3483B067231430D600444855 /* TableView */,
 				3452263622E03D31009913DF /* test */,
 				343A5CF92285673E00DC76D6 /* injectMetaMask.js */,
 				3410CA9622854EEE005FAF2A /* injectScatter.js */,
 				34D1CC3021A70F3F001E6A5F /* copy.wav */,
 				18B18427213672030037A46D /* bitportal.entitlements */,
-				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
-				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
+				341A99D923432AA0002E1EC8 /* AppDelegate.swift */,
 				180882282135447300321418 /* NativeUtils.h */,
 				180882292135447300321418 /* NativeUtils.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				1865A8C421758AD000CE1997 /* InfoPlist.strings */,
-				13B07FB71A68108700A75B9A /* main.mm */,
 				18F2817F2177351C00DEB13F /* third-party-modules */,
-				344C9DB723181B9C004E26AD /* SPAlertViewManager.swift */,
-				344C9DB923181CA4004E26AD /* SPAlertViewManager.m */,
-				34FAC26F232145000084A60F /* TGAddressBarManager.m */,
-				34FAC31A2322B4FA0084A60F /* TGAddressBarManager.swift */,
-				34FAC49323268F880084A60F /* NavBarManager.swift */,
-				34FAC49523268F9A0084A60F /* NavBarManager.m */,
 			);
 			name = bitportal;
 			sourceTree = "<group>";
@@ -2084,6 +2094,84 @@
 			path = Djinni;
 			sourceTree = "<group>";
 		};
+		341A99B423426A92002E1EC8 /* ReactNative */ = {
+			isa = PBXGroup;
+			children = (
+				348212692345A9F5003E1916 /* ReactNativeViewController.h */,
+				3482126A2345A9F5003E1916 /* ReactNativeViewController.m */,
+				3482126C2345AB43003E1916 /* ReactNativeModule.h */,
+				3482126D2345AB43003E1916 /* ReactNativeModule.m */,
+			);
+			path = ReactNative;
+			sourceTree = "<group>";
+		};
+		341A9A0423442309002E1EC8 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				341A9A232344AFAE002E1EC8 /* Home */,
+				341A9A1A2344A84E002E1EC8 /* Language */,
+				341A9A0523442333002E1EC8 /* Profile */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		341A9A0523442333002E1EC8 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				341A9A08234423BE002E1EC8 /* ProfileView.swift */,
+				341A9A0A23442420002E1EC8 /* ProfileViewManager.swift */,
+				341A9A0C23442515002E1EC8 /* ProfileViewManager.m */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		341A9A112344318C002E1EC8 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				34FAC21B232142C30084A60F /* NavigationBar */,
+				344C9CC22317B7ED004E26AD /* SPAlert */,
+				341A9A132344327B002E1EC8 /* Modal */,
+				341A9A122344319E002E1EC8 /* TableViewCells */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		341A9A122344319E002E1EC8 /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				341A9A14234477EB002E1EC8 /* ProfileTableViewCell.swift */,
+				341A9A182344906F002E1EC8 /* SettingTableViewCell.swift */,
+			);
+			path = TableViewCells;
+			sourceTree = "<group>";
+		};
+		341A9A132344327B002E1EC8 /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				344C9DB723181B9C004E26AD /* SPAlertViewManager.swift */,
+				344C9DB923181CA4004E26AD /* SPAlertViewManager.m */,
+			);
+			path = Modal;
+			sourceTree = "<group>";
+		};
+		341A9A1A2344A84E002E1EC8 /* Language */ = {
+			isa = PBXGroup;
+			children = (
+				341A9A1D2344A89E002E1EC8 /* LanguageView.swift */,
+				341A9A1F2344A8E6002E1EC8 /* LanguageViewManager.swift */,
+				341A9A212344A8F8002E1EC8 /* LanguageViewManager.m */,
+			);
+			path = Language;
+			sourceTree = "<group>";
+		};
+		341A9A232344AFAE002E1EC8 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				341A9A242344B0D9002E1EC8 /* HomeViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		341B2DF2209B34E400FA6067 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -2135,8 +2223,7 @@
 				344C9CC82317B7ED004E26AD /* SPAlertHaptic.swift */,
 				344C9CC92317B7ED004E26AD /* SPAlert.swift */,
 			);
-			name = SPAlert;
-			path = bitportal/SPAlert;
+			path = SPAlert;
 			sourceTree = "<group>";
 		};
 		344C9CC52317B7ED004E26AD /* Icons */ = {
@@ -2199,6 +2286,14 @@
 				347F0339215F4750007B7431 /* libRNFS.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		348212F02345D6B4003E1916 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				34C81873233B4C0A0090AD79 /* SPStorkController */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		3483B067231430D600444855 /* TableView */ = {
@@ -2704,6 +2799,10 @@
 				34FAC26B232142F50084A60F /* SPFakeBarNavigationStyle.swift */,
 				34FAC269232142ED0084A60F /* AddressBar.swift */,
 				34FAC44423268ED10084A60F /* NavBar.swift */,
+				34FAC26F232145000084A60F /* TGAddressBarManager.m */,
+				34FAC31A2322B4FA0084A60F /* TGAddressBarManager.swift */,
+				34FAC49323268F880084A60F /* NavBarManager.swift */,
+				34FAC49523268F9A0084A60F /* NavBarManager.m */,
 			);
 			path = NavigationBar;
 			sourceTree = "<group>";
@@ -3701,7 +3800,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				341A9A0D23442515002E1EC8 /* ProfileViewManager.m in Sources */,
 				18F2826C2177351C00DEB13F /* cash_addr.c in Sources */,
+				3482126E2345AB43003E1916 /* ReactNativeModule.m in Sources */,
 				34C8193B233B4C0C0090AD79 /* RNNTopTabOptions.m in Sources */,
 				18F282702177351C00DEB13F /* ed25519-donna-32bit-tables.c in Sources */,
 				18F282802177351C00DEB13F /* ripemd160.c in Sources */,
@@ -3739,8 +3840,10 @@
 				18F282902177351C00DEB13F /* aescrypt.c in Sources */,
 				34C8194F233B4C0D0090AD79 /* SideMenuOpenMode.m in Sources */,
 				3452263C22E03F69009913DF /* test_binding.cpp in Sources */,
+				341A99DA23432AA0002E1EC8 /* AppDelegate.swift in Sources */,
 				34C81978233B4C0D0090AD79 /* RNNBottomTabsOptions.m in Sources */,
 				18F282822177351C00DEB13F /* groestl.c in Sources */,
+				341A9A0B23442420002E1EC8 /* ProfileViewManager.swift in Sources */,
 				34C8198A233B4C0D0090AD79 /* SPStorkArrowMode.swift in Sources */,
 				34C81969233B4C0D0090AD79 /* ReactNativeNavigation.m in Sources */,
 				34C819A6233B4C0D0090AD79 /* RNNExternalComponentStore.m in Sources */,
@@ -3803,7 +3906,6 @@
 				18F282772177351C00DEB13F /* modm-donna-32bit.c in Sources */,
 				18F282952177351C00DEB13F /* poly1305-donna.c in Sources */,
 				34C8194D233B4C0D0090AD79 /* RNNSideMenuChildVC.m in Sources */,
-				34A66A98233F1307003C2C2B /* ViewController.swift in Sources */,
 				34C8199F233B4C0D0090AD79 /* NumberParser.m in Sources */,
 				18F282652177351C00DEB13F /* base32.c in Sources */,
 				18F282782177351C00DEB13F /* curve25519-donna-32bit.c in Sources */,
@@ -3821,15 +3923,14 @@
 				34FAC26E232142FF0084A60F /* SPFakeBarView.swift in Sources */,
 				18F282A02177351D00DEB13F /* DJIProxyCaches.mm in Sources */,
 				18F282632177351C00DEB13F /* sha2.c in Sources */,
-				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				34C81958233B4C0D0090AD79 /* MMDrawerController.m in Sources */,
 				34C819AB233B4C0D0090AD79 /* RNNTitleViewHelper.m in Sources */,
 				34C819AF233B4C0D0090AD79 /* Color.m in Sources */,
 				18F282732177351C00DEB13F /* ed25519-keccak.c in Sources */,
 				34C81988233B4C0D0090AD79 /* RNNElementFinder.m in Sources */,
-				13B07FC11A68108700A75B9A /* main.mm in Sources */,
 				34C81922233B4C0C0090AD79 /* NullIntNumber.m in Sources */,
 				34C81986233B4C0D0090AD79 /* RNNUIBarButtonItem.m in Sources */,
+				341A9A15234477EB002E1EC8 /* ProfileTableViewCell.swift in Sources */,
 				34C81982233B4C0D0090AD79 /* Text.m in Sources */,
 				34C81983233B4C0D0090AD79 /* RNNComponentOptions.m in Sources */,
 				18F282692177351C00DEB13F /* rc4.c in Sources */,
@@ -3860,6 +3961,7 @@
 				34C81959233B4C0D0090AD79 /* MMDrawerVisualState.m in Sources */,
 				34C8196E233B4C0D0090AD79 /* RNNLayoutNode.m in Sources */,
 				18F282612177351C00DEB13F /* bip39.c in Sources */,
+				3482126B2345A9F5003E1916 /* ReactNativeViewController.m in Sources */,
 				34C81997233B4C0D0090AD79 /* SPStorkControllerDelegate.swift in Sources */,
 				34C81989233B4C0D0090AD79 /* SPStorkHaptic.swift in Sources */,
 				34C8193E233B4C0C0090AD79 /* RNNErrorHandler.m in Sources */,
@@ -3879,6 +3981,7 @@
 				3483B0E5231430D700444855 /* RNCellViewManager.m in Sources */,
 				34C8195C233B4C0D0090AD79 /* RCCTheSideBarManagerViewController.m in Sources */,
 				18F282872177351C00DEB13F /* script.c in Sources */,
+				341A9A1E2344A89E002E1EC8 /* LanguageView.swift in Sources */,
 				34C819AE233B4C0D0090AD79 /* RNNScreenTransition.m in Sources */,
 				34C8192E233B4C0C0090AD79 /* RNNLayoutOptions.m in Sources */,
 				34C819A3233B4C0D0090AD79 /* Bool.m in Sources */,
@@ -3886,8 +3989,8 @@
 				18F282852177351C00DEB13F /* memzero.c in Sources */,
 				3483B0DF231430D700444855 /* RNTableFooterView.m in Sources */,
 				34C81968233B4C0D0090AD79 /* RNNReactComponentRegistry.m in Sources */,
-				34A66A97233F1307003C2C2B /* TableViewController.swift in Sources */,
 				34C81956233B4C0D0090AD79 /* MMDrawerBarButtonItem.m in Sources */,
+				341A9A252344B0D9002E1EC8 /* HomeViewController.swift in Sources */,
 				18F282722177351C00DEB13F /* curve25519-donna-helpers.c in Sources */,
 				34FAC49623268F9A0084A60F /* NavBarManager.m in Sources */,
 				344C9D1B2317B7ED004E26AD /* SPAlertHaptic.swift in Sources */,
@@ -3895,7 +3998,9 @@
 				34C81930233B4C0C0090AD79 /* RNNSharedElementAnimationOptions.m in Sources */,
 				18F282942177351C00DEB13F /* rfc7539.c in Sources */,
 				34C8195E233B4C0D0090AD79 /* SidebarAirbnbAnimation.m in Sources */,
+				341A9A222344A8F8002E1EC8 /* LanguageViewManager.m in Sources */,
 				18F2828E2177351C00DEB13F /* pbkdf2.c in Sources */,
+				341A9A09234423BE002E1EC8 /* ProfileView.swift in Sources */,
 				18F2828C2177351C00DEB13F /* base58.c in Sources */,
 				34C819AD233B4C0D0090AD79 /* RNNControllerFactory.m in Sources */,
 				18F282662177351C00DEB13F /* hasher.c in Sources */,
@@ -3910,6 +4015,7 @@
 				18F282672177351C00DEB13F /* rand.c in Sources */,
 				34C8195A233B4C0D0090AD79 /* MMExampleDrawerVisualStateManager.m in Sources */,
 				34C8194A233B4C0D0090AD79 /* RNNTitleOptions.m in Sources */,
+				341A9A202344A8E6002E1EC8 /* LanguageViewManager.swift in Sources */,
 				34C81926233B4C0C0090AD79 /* RNNStatusBarOptions.m in Sources */,
 				34C81963233B4C0D0090AD79 /* SidebarAnimation.m in Sources */,
 				34C819AA233B4C0D0090AD79 /* RNNNavigationButtons.m in Sources */,
@@ -3926,6 +4032,7 @@
 				3483B0DE231430D700444855 /* RNTableViewCellWithCollectionViewInside.m in Sources */,
 				34C8193A233B4C0C0090AD79 /* RNNLayoutInfo.m in Sources */,
 				34C8191A233B4C0C0090AD79 /* RNNElementTransitionOptions.m in Sources */,
+				341A9A192344906F002E1EC8 /* SettingTableViewCell.swift in Sources */,
 				344C9D192317B7ED004E26AD /* SPAlertIconHeartView.swift in Sources */,
 				34C81955233B4C0D0090AD79 /* RCCDrawerController.m in Sources */,
 				34C8191E233B4C0C0090AD79 /* RNNSplashScreen.m in Sources */,
@@ -4045,6 +4152,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.dexlize.bitportal;
 				PRODUCT_NAME = bitportal;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4132,6 +4240,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = org.dexlize.bitportal;
 				PRODUCT_NAME = bitportal;
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -10,8 +10,7 @@ import Foundation
 
 @objc(SPAlertViewManager)
 class SPAlertViewManager: NSObject {
-  @objc
-  static func requiresMainQueueSetup() -> Bool {
+  @objc static func requiresMainQueueSetup() -> Bool {
     return true
   }
   

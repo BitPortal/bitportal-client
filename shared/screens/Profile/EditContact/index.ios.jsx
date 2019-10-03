@@ -159,7 +159,7 @@ export default class MyIdentity extends Component {
     return {
       topBar: {
         largeTitle: {
-          visible: false
+          displayMode: 'never'
         },
         title: {
           text: ''
@@ -474,12 +474,9 @@ export default class MyIdentity extends Component {
     const description = formValues && formValues.description
 
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
         <ScrollView
-          style={{ flex: 1, backgroundColor: 'white' }}
+          style={{ flex: 1 }}
           showsVerticalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
         >
           <View style={{ width: '100%', paddingLeft: 16, flexDirection: 'row', paddingBottom: 30 }}>
             <View style={{ width: 41, height: 41, marginRight: 16 }}>
@@ -651,7 +648,6 @@ export default class MyIdentity extends Component {
             </TouchableHighlight>
           </View>
         </ScrollView>
-      </SafeAreaView>
     )
   }
 }

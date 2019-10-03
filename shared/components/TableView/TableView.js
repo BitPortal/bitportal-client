@@ -506,7 +506,6 @@ class TableView extends React.Component {
 
   render() {
     return (
-      <View style={[{ flex: 1 }, this.props.style]}>
         <RNTableView
           ref={(ref) => {
             this.tableView = ref
@@ -540,7 +539,6 @@ class TableView extends React.Component {
         >
           {this.state.children}
         </RNTableView>
-      </View>
     )
   }
 }

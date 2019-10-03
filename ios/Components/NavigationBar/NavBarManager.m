@@ -9,8 +9,15 @@
 #import "React/RCTViewManager.h"
 
 @interface RCT_EXTERN_REMAP_MODULE(NavBar, NavBarManager, RCTViewManager)
+
++ (BOOL)requiresMainQueueSetup
+{
+  return YES;
+}
+
 RCT_EXPORT_VIEW_PROPERTY(title, NSString)
 RCT_EXPORT_VIEW_PROPERTY(subTitle, NSString)
 RCT_EXPORT_VIEW_PROPERTY(leftButtonTitle, NSString)
 RCT_EXPORT_VIEW_PROPERTY(onLeftButtonClicked, RCTBubblingEventBlock)
+
 @end

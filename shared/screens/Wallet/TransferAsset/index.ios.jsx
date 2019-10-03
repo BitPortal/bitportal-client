@@ -862,7 +862,6 @@ export default class TransferAsset extends Component {
     const useGasPrice = this.state.useGasPrice || this.state.initialGwei || this.state.ethGasPrice || 4.00
 
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <ScrollView
         style={[styles.container, { backgroundColor: 'white' }]}
         showsVerticalScrollIndicator={false}
@@ -1140,7 +1139,6 @@ export default class TransferAsset extends Component {
           </View>}
         </Modal>
       </ScrollView>
-      </SafeAreaView>
     )
   }
 }

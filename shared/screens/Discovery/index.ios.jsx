@@ -60,8 +60,6 @@ export default class Discovery extends Component {
     }
   }
 
-  subscription = Navigation.events().bindComponent(this)
-
   searchBarUpdated({ text, isFocused, isSubmitting }) {
     if (isSubmitting) {
       Navigation.mergeOptions(this.props.componentId, {

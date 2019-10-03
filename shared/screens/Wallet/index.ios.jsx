@@ -104,7 +104,7 @@ export default class Wallet extends Component {
     }
   }
 
-  subscription = Navigation.events().bindComponent(this)
+  // subscription = Navigation.events().bindComponent(this)
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.activeWalletId !== prevState.activeWalletId) {
@@ -152,6 +152,7 @@ export default class Wallet extends Component {
     SplashScreen.hide()
     KeyboardManager.setEnable(true)
     KeyboardManager.setPreventShowingBottomBlankSpace(true)
+    KeyboardManager.setShouldResignOnTouchOutside(true)
     KeyboardManager.setToolbarDoneBarButtonItemText('完成')
     KeyboardManager.setToolbarPreviousNextButtonEnable(true)
     this.props.actions.setSelectedContact(null)

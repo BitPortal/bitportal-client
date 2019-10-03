@@ -11,6 +11,11 @@
 
 @interface RCT_EXTERN_REMAP_MODULE(TGAddressBar, TGAddressBarManager, RCTViewManager)
 
++ (BOOL)requiresMainQueueSetup
+{
+  return YES;
+}
+
 RCT_EXPORT_VIEW_PROPERTY(title, NSString)
 RCT_EXPORT_VIEW_PROPERTY(placeholder, NSString)
 RCT_EXPORT_VIEW_PROPERTY(value, NSString)

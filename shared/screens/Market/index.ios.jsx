@@ -40,8 +40,6 @@ export default class Market extends Component {
     }
   }
 
-  subscription = Navigation.events().bindComponent(this)
-
   state = {
     getTickerLoading: false,
     getTickerLoaded: false,

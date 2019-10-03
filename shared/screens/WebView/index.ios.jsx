@@ -125,7 +125,7 @@ export default class WebView extends Component {
     return {
       topBar: {
         largeTitle: {
-          visible: false
+          displayMode: 'never'
         }
       },
       bottomTabs: {

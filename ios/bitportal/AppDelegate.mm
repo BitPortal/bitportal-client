@@ -17,7 +17,6 @@
 #import <React/RCTBridge+Private.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
-#import "ReactNativeNavigation.h"
 #import "SplashScreen.h"
 #import "RNUMConfigure.h"
 #import "UMAnalyticsModule.h"
@@ -78,6 +77,31 @@
   completionHandler();
 }
 
+//- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+//{
+//  // JPush
+//  JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
+//  entity.types = JPAuthorizationOptionAlert|JPAuthorizationOptionBadge|JPAuthorizationOptionSound;
+//  if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+//    // 可以添加自定义categories
+//    // NSSet<UNNotificationCategory *> *categories for iOS10 or later
+//    // NSSet<UIUserNotificationCategory *> *categories for iOS8 and iOS9
+//  }
+//  [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
+//  [JPUSHService setupWithOption:launchOptions appKey:@"05e8b10824ab700bae78e9eb"
+//                        channel:@"app store" apsForProduction:false];
+//
+//  NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+//  [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
+//  // Umeng sdk:
+//  [UMConfigure setLogEnabled:NO];
+//  [RNUMConfigure initWithAppkey:@"5b46cc71f43e481b4f0000e7" channel:@"App Store"];
+//  [MobClick setScenarioType:E_UM_NORMAL];
+//
+//  // splash:
+//  [SplashScreen show];
+//  return YES;
+//}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -93,34 +117,49 @@
   [JPUSHService setupWithOption:launchOptions appKey:@"05e8b10824ab700bae78e9eb"
                         channel:@"app store" apsForProduction:false];
 
-  NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
-  [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
   // Umeng sdk:
   [UMConfigure setLogEnabled:NO];
   [RNUMConfigure initWithAppkey:@"5b46cc71f43e481b4f0000e7" channel:@"App Store"];
   [MobClick setScenarioType:E_UM_NORMAL];
-
+  
   // splash:
-  [SplashScreen show];
+  // [SplashScreen show];
+  
+  RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
+  RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
+                                                   moduleName:@"BitPortal.Wallet"
+                                            initialProperties:nil];
+  if (@available(iOS 13.0, *)) {
+    rootView.backgroundColor = [UIColor systemBackgroundColor];
+  }
+  
+  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  UIViewController *rootViewController = [HomeViewController new];
+  rootViewController.title = @"Wallet";
+  UIBarButtonItem *add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addAction)];
+  UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:rootViewController];
+  nvc.navigationItem.rightBarButtonItem = add;
+  if (@available(iOS 11.0, *)) {
+    nvc.navigationBar.prefersLargeTitles = YES;
+  }
+  self.window.rootViewController = nvc;
+  [self.window makeKeyAndVisible];
+  
   return YES;
 }
 
-//- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-//{
-//  self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
-//  UIViewController *vc = [TableViewController new];
-//  UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
-//  if (@available(iOS 11.0, *)) {
-//    nvc.navigationBar.prefersLargeTitles = YES;
-//  }
-//
-//  self.window.rootViewController = nvc;
-//  [self.window makeKeyAndVisible];
-//
-//  return YES;
-//}
-
-- (void)application:(UIApplication *)application didChangeStatusBarFrame:(CGRect)oldStatusBarFrame {
-
+- (void)addAction {
+  UIViewController *vc = [ViewController new];
+  
 }
+
+- (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
+{
+#if DEBUG
+  return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+#else
+  return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+#endif
+}
+
 @end
