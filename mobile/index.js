@@ -18,49 +18,49 @@ import Wallet from 'screens/Wallet'
 import Profile from 'screens/Profile'
 import Market from 'screens/Market'
 import Discovery from 'screens/Discovery'
-import Language from 'screens/Profile/LanguageSetting'
-import AddAssets from 'screens/Wallet/AddAssets'
-import Asset from 'screens/Wallet/Asset'
-import TransferAsset from 'screens/Wallet/TransferAsset'
-import ReceiveAsset from 'screens/Wallet/ReceiveAsset'
-import WalletList from 'screens/Wallet/WalletList'
-import SelectBridgeWallet from 'screens/Wallet/SelectBridgeWallet'
-import ManageWallet from 'screens/Wallet/ManageWallet'
-import Voting from 'screens/Wallet/Voting'
-import AddIdentity from 'screens/Wallet/AddIdentity'
-import AuthorizeEOSAccount from 'screens/Wallet/AuthorizeEOSAccount'
-import AuthorizeCreateEOSAccount from 'screens/Wallet/AuthorizeCreateEOSAccount'
-import MyIdentity from 'screens/Wallet/MyIdentity'
-import CreateIdentity from 'screens/Wallet/CreateIdentity'
-import RecoverIdentity from 'screens/Wallet/RecoverIdentity'
-import BackupIdentity from 'screens/Wallet/BackupIdentity'
-import SelectChainType from 'screens/Wallet/SelectChainType'
-import ImportBTCWallet from 'screens/Wallet/ImportBTCWallet'
-import CreateEOSAccount from 'screens/Wallet/CreateEOSAccount'
-import ManageEOSResource from 'screens/Wallet/ManageEOSResource'
-import ImportETHWallet from 'screens/Wallet/ImportETHWallet'
-import ImportEOSWallet from 'screens/Wallet/ImportEOSWallet'
-import ImportChainxWallet from 'screens/Wallet/ImportChainxWallet'
-import ExportETHKeystore from 'screens/Wallet/ExportETHKeystore'
-import ExportETHPrivateKey from 'screens/Wallet/ExportETHPrivateKey'
-import ExportEOSPrivateKey from 'screens/Wallet/ExportEOSPrivateKey'
-import ExportBTCPrivateKey from 'screens/Wallet/ExportBTCPrivateKey'
-import ExportPCXPrivateKey from 'screens/Wallet/ExportPCXPrivateKey'
-import SelectEOSAccount from 'screens/Wallet/SelectEOSAccount'
-import SwitchEOSAccount from 'screens/Wallet/SwitchEOSAccount'
-import SwitchBTCAddress from 'screens/Wallet/SwitchBTCAddress'
-import TransactionDetail from 'screens/Wallet/TransactionDetail'
-import ProducerDetail from 'screens/Wallet/ProducerDetail'
-import ChainXDeposit from 'screens/Wallet/ChainX/Deposit'
-import ChainXDepositClaim from 'screens/Wallet/ChainX/Deposit/Claim'
-import ChainXVoting from 'screens/Wallet/ChainX/Voting'
-import ChainXValidatorDetail from 'screens/Wallet/ChainX/Voting/ValidatorDetail'
+import Language from 'screens/Language'
+import AddAssets from 'screens/AddAssets'
+import Asset from 'screens/Asset'
+import TransferAsset from 'screens/TransferAsset'
+import ReceiveAsset from 'screens/ReceiveAsset'
+import WalletList from 'screens/WalletList'
+import SelectBridgeWallet from 'screens/SelectBridgeWallet'
+import ManageWallet from 'screens/ManageWallet'
+import Voting from 'screens/Voting'
+import AddIdentity from 'screens/AddIdentity'
+import AuthorizeEOSAccount from 'screens/AuthorizeEOSAccount'
+import AuthorizeCreateEOSAccount from 'screens/AuthorizeCreateEOSAccount'
+import MyIdentity from 'screens/MyIdentity'
+import CreateIdentity from 'screens/CreateIdentity'
+import RecoverIdentity from 'screens/RecoverIdentity'
+import BackupIdentity from 'screens/BackupIdentity'
+import SelectChainType from 'screens/SelectChainType'
+import ImportBTCWallet from 'screens/ImportBTCWallet'
+import CreateEOSAccount from 'screens/CreateEOSAccount'
+import ManageEOSResource from 'screens/ManageEOSResource'
+import ImportETHWallet from 'screens/ImportETHWallet'
+import ImportEOSWallet from 'screens/ImportEOSWallet'
+import ImportChainxWallet from 'screens/ImportChainxWallet'
+import ExportETHKeystore from 'screens/ExportETHKeystore'
+import ExportETHPrivateKey from 'screens/ExportETHPrivateKey'
+import ExportEOSPrivateKey from 'screens/ExportEOSPrivateKey'
+import ExportBTCPrivateKey from 'screens/ExportBTCPrivateKey'
+import ExportPCXPrivateKey from 'screens/ExportPCXPrivateKey'
+import SelectEOSAccount from 'screens/SelectEOSAccount'
+import SwitchEOSAccount from 'screens/SwitchEOSAccount'
+import SwitchBTCAddress from 'screens/SwitchBTCAddress'
+import TransactionDetail from 'screens/TransactionDetail'
+import ProducerDetail from 'screens/ProducerDetail'
+import ChainXDeposit from 'screens/ChainX/Deposit'
+import ChainXDepositClaim from 'screens/ChainX/Deposit/Claim'
+import ChainXVoting from 'screens/ChainX/Voting'
+import ChainXValidatorDetail from 'screens/ChainX/Voting/ValidatorDetail'
 import DappList from 'screens/Discovery/DappList'
-import Contacts from 'screens/Profile/Contacts'
-import Contact from 'screens/Profile/Contact'
-import EditContact from 'screens/Profile/EditContact'
-import CurrencySetting from 'screens/Profile/CurrencySetting'
-import WebView from 'screens/WebView'
+import Contacts from 'screens/Contacts'
+import Contact from 'screens/Contact'
+import EditContact from 'screens/EditContact'
+import Currency from 'screens/Currency'
+import Browser from 'screens/Browser'
 import Camera from 'screens/Camera'
 
 EStyleSheet.build({})
@@ -114,8 +114,8 @@ const DappListScreen = () => (<Provider store={store}><DappList /></Provider>)
 const ContactsScreen = () => (<Provider store={store}><Contacts /></Provider>)
 const ContactScreen = () => (<Provider store={store}><Contact /></Provider>)
 const EditContactScreen = () => (<Provider store={store}><EditContact /></Provider>)
-const CurrencySettingScreen = () => (<Provider store={store}><CurrencySetting /></Provider>)
-const WebViewScreen = () => (<Provider store={store}><WebView /></Provider>)
+const CurrencyScreen = () => (<Provider store={store}><Currency /></Provider>)
+const BrowserScreen = () => (<Provider store={store}><Browser /></Provider>)
 const CameraScreen = () => (<Provider store={store}><Camera /></Provider>)
 
 registerCells()
@@ -165,6 +165,6 @@ AppRegistry.registerComponent('DappList', () => DappListScreen)
 AppRegistry.registerComponent('Contacts', () => ContactsScreen)
 AppRegistry.registerComponent('Contact', () => ContactScreen)
 AppRegistry.registerComponent('EditContact', () => EditContactScreen)
-AppRegistry.registerComponent('CurrencySetting', () => CurrencySettingScreen)
-AppRegistry.registerComponent('WebView', () => WebViewScreen)
+AppRegistry.registerComponent('Currency', () => CurrencyScreen)
+AppRegistry.registerComponent('Browser', () => BrowserScreen)
 AppRegistry.registerComponent('Camera', () => CameraScreen)

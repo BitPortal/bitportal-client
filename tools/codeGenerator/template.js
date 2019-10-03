@@ -58,9 +58,14 @@ const objcViewManagerTemplate = (name) => `//
 
 @end
 `
+const jsViewTemplate = (name) => `import { requireNativeComponent } from 'react-native'
+const ${name}View = requireNativeComponent('${name}View')
+export default ${name}View
+`
 
 module.exports = {
   swiftViewTemplate,
   swiftViewManagerTemplate,
-  objcViewManagerTemplate
+  objcViewManagerTemplate,
+  jsViewTemplate
 }
