@@ -55,7 +55,6 @@ import ChainXDeposit from 'screens/ChainX/Deposit'
 import ChainXDepositClaim from 'screens/ChainX/Deposit/Claim'
 import ChainXVoting from 'screens/ChainX/Voting'
 import ChainXValidatorDetail from 'screens/ChainX/Voting/ValidatorDetail'
-import DappList from 'screens/Discovery/DappList'
 import Contacts from 'screens/Contacts'
 import Contact from 'screens/Contact'
 import EditContact from 'screens/EditContact'
@@ -110,7 +109,6 @@ const ChainXDepositScreen = () => (<Provider store={store}><ChainXDeposit /></Pr
 const ChainXDepositClaimScreen = () => (<Provider store={store}><ChainXDepositClaim /></Provider>)
 const ChainXVotingScreen = () => (<Provider store={store}><ChainXVoting /></Provider>)
 const ChainXValidatorDetailScreen = () => (<Provider store={store}><ChainXValidatorDetail /></Provider>)
-const DappListScreen = () => (<Provider store={store}><DappList /></Provider>)
 const ContactsScreen = () => (<Provider store={store}><Contacts /></Provider>)
 const ContactScreen = () => (<Provider store={store}><Contact /></Provider>)
 const EditContactScreen = () => (<Provider store={store}><EditContact /></Provider>)
@@ -120,51 +118,59 @@ const CameraScreen = () => (<Provider store={store}><Camera /></Provider>)
 
 registerCells()
 
-AppRegistry.registerComponent('Wallet', () => WalletScreen)
-AppRegistry.registerComponent('Market', () => MarketScreen)
-AppRegistry.registerComponent('Discovery', () => DiscoveryScreen)
 AppRegistry.registerComponent('Profile', () => ProfileScreen)
 AppRegistry.registerComponent('Language', () => LanguageScreen)
-AppRegistry.registerComponent('AddAssets', () => AddAssetsScreen)
-AppRegistry.registerComponent('Asset', () => AssetScreen)
-AppRegistry.registerComponent('TransferAsset', () => TransferAssetScreen)
-AppRegistry.registerComponent('ReceiveAsset', () => ReceiveAssetScreen)
-AppRegistry.registerComponent('WalletList', () => WalletListScreen)
-AppRegistry.registerComponent('SelectBridgeWallet', () => SelectBridgeWalletScreen)
-AppRegistry.registerComponent('ManageWallet', () => ManageWalletScreen)
-AppRegistry.registerComponent('Voting', () => VotingScreen)
+AppRegistry.registerComponent('Currency', () => CurrencyScreen)
 AppRegistry.registerComponent('AddIdentity', () => AddIdentityScreen)
-AppRegistry.registerComponent('AuthorizeEOSAccount', () => AuthorizeEOSAccountScreen)
-AppRegistry.registerComponent('AuthorizeCreateEOSAccount', () => AuthorizeCreateEOSAccountScreen)
-AppRegistry.registerComponent('MyIdentity', () => MyIdentityScreen)
+AppRegistry.registerComponent('Market', () => MarketScreen)
+AppRegistry.registerComponent('Discovery', () => DiscoveryScreen)
 AppRegistry.registerComponent('CreateIdentity', () => CreateIdentityScreen)
 AppRegistry.registerComponent('RecoverIdentity', () => RecoverIdentityScreen)
 AppRegistry.registerComponent('BackupIdentity', () => BackupIdentityScreen)
+
+AppRegistry.registerComponent('Contact', () => ContactScreen)
+AppRegistry.registerComponent('Contacts', () => ContactsScreen)
+AppRegistry.registerComponent('EditContact', () => EditContactScreen)
+AppRegistry.registerComponent('Camera', () => CameraScreen)
+AppRegistry.registerComponent('SelectBridgeWallet', () => SelectBridgeWalletScreen)
+AppRegistry.registerComponent('Browser', () => BrowserScreen)
+
+AppRegistry.registerComponent('MyIdentity', () => MyIdentityScreen)
+
 AppRegistry.registerComponent('SelectChainType', () => SelectChainTypeScreen)
 AppRegistry.registerComponent('ImportBTCWallet', () => ImportBTCWalletScreen)
-AppRegistry.registerComponent('CreateEOSAccount', () => CreateEOSAccountScreen)
-AppRegistry.registerComponent('ManageEOSResource', () => ManageEOSResourceScreen)
 AppRegistry.registerComponent('ImportETHWallet', () => ImportETHWalletScreen)
 AppRegistry.registerComponent('ImportEOSWallet', () => ImportEOSWalletScreen)
 AppRegistry.registerComponent('ImportChainxWallet', () => ImportChainxWalletScreen)
+
 AppRegistry.registerComponent('ExportETHKeystore', () => ExportETHKeystoreScreen)
 AppRegistry.registerComponent('ExportETHPrivateKey', () => ExportETHPrivateKeyScreen)
 AppRegistry.registerComponent('ExportEOSPrivateKey', () => ExportEOSPrivateKeyScreen)
 AppRegistry.registerComponent('ExportBTCPrivateKey', () => ExportBTCPrivateKeyScreen)
 AppRegistry.registerComponent('ExportPCXPrivateKey', () => ExportPCXPrivateKeyScreen)
+
+AppRegistry.registerComponent('CreateEOSAccount', () => CreateEOSAccountScreen)
+AppRegistry.registerComponent('Voting', () => VotingScreen)
+AppRegistry.registerComponent('AuthorizeEOSAccount', () => AuthorizeEOSAccountScreen)
+AppRegistry.registerComponent('AuthorizeCreateEOSAccount', () => AuthorizeCreateEOSAccountScreen)
+AppRegistry.registerComponent('ManageEOSResource', () => ManageEOSResourceScreen)
+
+AppRegistry.registerComponent('TransferAsset', () => TransferAssetScreen)
+AppRegistry.registerComponent('Wallet', () => WalletScreen)
+AppRegistry.registerComponent('AddAssets', () => AddAssetsScreen)
+AppRegistry.registerComponent('Asset', () => AssetScreen)
+AppRegistry.registerComponent('TransactionDetail', () => TransactionDetailScreen)
+
+AppRegistry.registerComponent('ReceiveAsset', () => ReceiveAssetScreen)
+AppRegistry.registerComponent('WalletList', () => WalletListScreen)
+AppRegistry.registerComponent('ManageWallet', () => ManageWalletScreen)
+
 AppRegistry.registerComponent('SelectEOSAccount', () => SelectEOSAccountScreen)
 AppRegistry.registerComponent('SwitchEOSAccount', () => SwitchEOSAccountScreen)
 AppRegistry.registerComponent('SwitchBTCAddress', () => SwitchBTCAddressScreen)
-AppRegistry.registerComponent('TransactionDetail', () => TransactionDetailScreen)
 AppRegistry.registerComponent('ProducerDetail', () => ProducerDetailScreen)
+
 AppRegistry.registerComponent('ChainXDeposit', () => ChainXDepositScreen)
 AppRegistry.registerComponent('ChainXDepositClaim', () => ChainXDepositClaimScreen)
 AppRegistry.registerComponent('ChainXVoting', () => ChainXVotingScreen)
 AppRegistry.registerComponent('ChainXValidatorDetail', () => ChainXValidatorDetailScreen)
-AppRegistry.registerComponent('DappList', () => DappListScreen)
-AppRegistry.registerComponent('Contacts', () => ContactsScreen)
-AppRegistry.registerComponent('Contact', () => ContactScreen)
-AppRegistry.registerComponent('EditContact', () => EditContactScreen)
-AppRegistry.registerComponent('Currency', () => CurrencyScreen)
-AppRegistry.registerComponent('Browser', () => BrowserScreen)
-AppRegistry.registerComponent('Camera', () => CameraScreen)

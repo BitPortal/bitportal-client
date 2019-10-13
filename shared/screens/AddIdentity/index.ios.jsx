@@ -6,6 +6,7 @@ import { View, Text, TouchableOpacity, Image, SafeAreaView } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Navigation } from 'components/Navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import AddIdentityView from './AddIdentityView'
 
 const styles = EStyleSheet.create({
   container: {
@@ -66,8 +67,6 @@ export default class AddIdentity extends Component {
     }
   }
 
-  subscription = Navigation.events().bindComponent(this)
-
   navigationButtonPressed({ buttonId }) {
     if (buttonId === 'skip') {
       Navigation.dismissModal(this.props.componentId)
@@ -100,6 +99,12 @@ export default class AddIdentity extends Component {
 
   render() {
     const { intl } = this.props
+
+    return (
+      <AddIdentityView
+        style={{ flex: 1 }}
+      />
+    )
     return (
       <SafeAreaView style={styles.container}>
         <View

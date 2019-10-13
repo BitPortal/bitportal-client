@@ -3,13 +3,10 @@ import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
 import { bindActionCreators } from 'utils/redux'
 import { View, Text, ActivityIndicator } from 'react-native'
-import { Navigation } from 'components/Navigation'
-import TableView from 'components/TableView'
 import { tickerWidthSearchSelector } from 'selectors/ticker'
 import { currencySelector } from 'selectors/currency'
 import * as tickerActions from 'actions/ticker'
-
-const { Section, Item } = TableView
+import MarketView from './MarketView'
 
 @injectIntl
 
@@ -27,19 +24,6 @@ const { Section, Item } = TableView
 )
 
 export default class Market extends Component {
-  static get options() {
-    return {
-      topBar: {
-        title: {
-          text: '行情'
-        },
-        /* searchBar: true,
-         * searchBarHiddenWhenScrolling: true,
-         * searchBarPlaceholder: 'Search'*/
-      }
-    }
-  }
-
   state = {
     getTickerLoading: false,
     getTickerLoaded: false,
@@ -48,8 +32,6 @@ export default class Market extends Component {
     searchBarFocused: false,
     firstAppeared: false
   }
-
-  tableViewRef = React.createRef()
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
@@ -69,64 +51,12 @@ export default class Market extends Component {
     }
   }
 
-  searchBarUpdated({ text, isFocused }) {
-    this.setState({ searchBarFocused: isFocused })
-
-    if (this.tableViewRef) {
-      this.tableViewRef.scrollToIndex({ index: 0, section: 0, animated: true })
-    }
-
-    if (isFocused) {
-      this.props.actions.handleTickerSearchTextChange(text)
-    } else {
-      this.props.actions.handleTickerSearchTextChange('')
-    }
-  }
-
-  onSelect = () => {
-    console.log('onSelect')
-  }
-
   onRefresh = () => {
-    this.props.actions.getTicker.refresh()
+    // this.props.actions.getTicker.refresh()
   }
 
   componentDidAppear() {
     this.props.actions.getTicker.requested()
-    // const { ticker } = this.props
-
-    /* if (ticker && ticker.length) {
-     *   setTimeout(() => {
-     *     Navigation.mergeOptions(this.props.componentId, {
-     *       topBar: {
-     *         searchBar: true,
-     *         searchBarHiddenWhenScrolling: true,
-     *         searchBarPlaceholder: 'Search'
-     *       }
-     *     })
-     *   })
-     * }*/
-
-    this.setState({ firstAppeared: true })
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (
-      prevState.getTickerLoaded !== this.state.getTickerLoaded
-      || prevState.firstAppeared !== this.state.firstAppeared
-    ) {
-      if (this.state.getTickerLoaded) {
-        setTimeout(() => {
-          Navigation.mergeOptions(this.props.componentId, {
-            topBar: {
-              searchBar: true,
-              searchBarHiddenWhenScrolling: true,
-              searchBarPlaceholder: 'Search'
-            }
-          })
-        })
-      }
-    }
   }
 
   render() {
@@ -134,42 +64,19 @@ export default class Market extends Component {
     const refreshing = getTicker.refreshing
     const loading = getTicker.loading
 
-    if (loading && !ticker.length) {
-      return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <View style={{ marginTop: 80 }}>
-            <ActivityIndicator size="small" color="#666666" />
-            <Text style={{ marginTop: 10, color: '#666666' }}>加载行情</Text>
-          </View>
-        </View>
-      )
-    }
-
     return (
-      <TableView
-        ref={(ref) => { this.tableViewRef = ref }}
-        style={{ flex: 1 }}
-        canRefresh={this.state.firstAppeared}
-        refreshing={refreshing && !this.state.searchBarFocused && this.state.getTickerLoaded}
-        onRefresh={this.state.searchBarFocused ? () => {} : this.onRefresh}
-        reactModuleForCell="MarketTableViewCell"
-      >
-        <Section>
-          {ticker.map(item =>
-            <Item
-              key={`${item.name}/${item.symbol}`}
-              height={60}
-              price={intl.formatNumber(item.price_usd * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-              symbol={item.symbol}
-              name={item.name}
-              currency={currency.sign}
-              change={intl.formatNumber(item.percent_change_24h, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-              componentId={this.props.componentId}
-              selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            />
-          )}
-        </Section>
-      </TableView>
+      <MarketView
+        style={{ flex: 1}}
+        onRefresh={this.onRefresh}
+        data={ticker.map(item => ({
+          price: currency.sign + intl.formatNumber(item.price_usd * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+          symbol: item.symbol,
+          name: item.name,
+          change: (item.percent_change_24h > 0 ? '+' : '') + intl.formatNumber(item.percent_change_24h, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%',
+          trend: item.percent_change_24h == 0 ? '0' : (item.percent_change_24h > 0 ? '1' : '-1'),
+          imageUrl: `https://cdn.bitportal.io/tokenicon/128/color/${item.symbol.toLowerCase()}.png`
+        }))}
+      />
     )
   }
 }

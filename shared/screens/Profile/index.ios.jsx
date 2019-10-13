@@ -31,8 +31,9 @@ export default class Profile extends Component {
             {
               title: hasIdentity ? identity.name : intl.formatMessage({ id: 'identity_tableviewcell_identity' }),
               detail: hasIdentity ? identity.identifier : intl.formatMessage({ id: 'identity_tableviewcell_add_identity' }),
-              cellReuseIdentifier: 'bitportal.ProfileTableViewCell'
-            },
+              cellReuseIdentifier: 'bitportal.ProfileTableViewCell',
+              modalLink: 'AddIdentity'
+            }
           ],
           [
             {
@@ -42,12 +43,14 @@ export default class Profile extends Component {
             {
               title: '语言设置',
               image: 'earthRound.png',
-              detail: locale === 'zh' ? '中文' : 'English'
+              detail: locale === 'zh' ? '中文' : 'English',
+              navigationLink: 'Language'
             },
             {
               title: '货币单位',
               image: 'currencyRound.png',
-              detail: currencySymbol
+              detail: currencySymbol,
+              navigationLink: 'Currency'
             }
           ],
           [

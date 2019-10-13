@@ -1,20 +1,33 @@
 PODS:
+  - Alamofire (4.9.0)
+  - AlamofireImage (3.5.2):
+    - Alamofire (~> 4.8)
   - IGListKit (3.4.0):
     - IGListKit/Default (= 3.4.0)
   - IGListKit/Default (3.4.0):
     - IGListKit/Diffing
   - IGListKit/Diffing (3.4.0)
+  - IQKeyboardManagerSwift (6.3.0)
 
 DEPENDENCIES:
+  - AlamofireImage (~> 3.5)
   - IGListKit (~> 3.0)
+  - IQKeyboardManagerSwift (= 6.3.0)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - IGListKit
+  trunk:
+    - Alamofire
+    - AlamofireImage
+    - IQKeyboardManagerSwift
 
 SPEC CHECKSUMS:
+  Alamofire: afc3e7c6db61476cb45cdd23fed06bad03bbc321
+  AlamofireImage: 63cfe3baf1370be6c498149687cf6db3e3b00999
   IGListKit: 7a5d788e9fb746bcd402baa8e8b24bc3bd2a5a07
+  IQKeyboardManagerSwift: a8228c257614af98743b4cd8584637025f36358f
 
-PODFILE CHECKSUM: 88344247ac8a8e0a5b6fb20f6787d2719a4c1777
+PODFILE CHECKSUM: 6d15b0a2779099c79c16d77ad230f0ff723963d8
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.8.1

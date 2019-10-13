@@ -6,34 +6,35 @@ const objcViewManagerTemplate = template.objcViewManagerTemplate
 const jsViewTemplate = template.jsViewTemplate
 
 const generateIOSViews = (name) => {
-  fs.ensureFile(`./output/${name}/${name}.swift`, (error) => {
+  fs.ensureFile(`./output/${name}/${name}View.swift`, (error) => {
     if (error) throw error
-    fs.writeFile(`./output/${name}/${name}.swift`, swiftViewTemplate(name), (error) => {
+    fs.writeFile(`./output/${name}/${name}View.swift`, swiftViewTemplate(name), (error) => {
       if (error) throw error
-      console.log(`./output/${name}/${name}.swift created!`)
+      console.log(`./output/${name}/${name}View.swift created!`)
     })
   })
 
   
-  fs.ensureFile(`./output/${name}/${name}Manager.swift`, (error) => {
+  fs.ensureFile(`./output/${name}/${name}ViewManager.swift`, (error) => {
     if (error) throw error
-    fs.writeFile(`./output/${name}/${name}Manager.swift`, swiftViewManagerTemplate(name), (error) => {
+    fs.writeFile(`./output/${name}/${name}ViewManager.swift`, swiftViewManagerTemplate(name), (error) => {
       if (error) throw error
-      console.log(`./output/${name}/${name}Manager.swift created!`)
+      console.log(`./output/${name}/${name}ViewManager.swift created!`)
     })
   })
 
   
-  fs.ensureFile(`./output/${name}/${name}Manager.m`, (error) => {
+  fs.ensureFile(`./output/${name}/${name}ViewManager.m`, (error) => {
     if (error) throw error
-    fs.writeFile(`./output/${name}/${name}Manager.m`, objcViewManagerTemplate(name), (error) => {
+    fs.writeFile(`./output/${name}/${name}ViewManager.m`, objcViewManagerTemplate(name), (error) => {
       if (error) throw error
-      console.log(`./output/${name}/${name}Manager.m created!`)
+      console.log(`./output/${name}/${name}ViewManager.m created!`)
     })
   })
 }
 
 const viewNames = [
+  'Discovery',
   'AddAssets',
   'Asset',
   'TransferAsset',
@@ -130,16 +131,20 @@ const pathMap = {
 }
 
 const generateJSViews = (name) => {
-  fs.ensureFile(`shared/${pathMap(name)}/${name}View.js`, (error) => {
+  fs.ensureFile(`shared/${pathMap[name]}/${name}View.js`, (error) => {
     if (error) throw error
-    fs.writeFile(`shared/${pathMap(name)}/${name}View.js`, jsViewTemplate(name), (error) => {
+    fs.writeFile(`shared/${pathMap[name]}/${name}View.js`, jsViewTemplate(name), (error) => {
       if (error) throw error
-      console.log(`shared/${pathMap(name)}/${name}View.js created!`)
+      console.log(`shared/${pathMap[name]}/${name}View.js created!`)
     })
   })
 }
 
 viewNames.forEach((name) => {
-  generateJSViews(name)
+  // generateJSViews(name)
+  
+  generateIOSViews(name)
 })
+
+
 

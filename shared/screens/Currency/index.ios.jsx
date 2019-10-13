@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
-// import { View } from 'react-native'
 import { connect } from 'react-redux'
-import TableView from 'components/TableView'
 import * as currencyActions from 'actions/currency'
 import { currencySymbolSelector, currencyListSelector } from 'selectors/currency'
-
-const { Section, Item } = TableView
+import CurrencyView from './CurrencyView'
 
 @connect(
   state => ({
@@ -22,51 +19,33 @@ const { Section, Item } = TableView
 )
 
 export default class CurrencySetting extends Component {
-  static get options() {
-    return {
-      topBar: {
-        title: {
-          text: '货币单位'
-        },
-        largeTitle: {
-          visible: false
-        }
-      },
-      bottomTabs: {
-        visible: false
-      }
-    }
-  }
-
-  setCurrency = (symbol) => {
-    this.props.actions.setCurrency(symbol)
-  }
-
   componentDidMount() {
     this.props.actions.getCurrencyRates.requested()
+  }
+
+  onCurrencySelected = (event) => {
+    const currency = event.nativeEvent.currency
+    if (currency && currency !== this.props.currency) {
+      this.props.actions.setCurrency(currency)
+    }
+    event.persist()
   }
 
   render() {
     const { currencySymbol, currencyList } = this.props
 
     return (
-      <TableView
+      <CurrencyView
         style={{ flex: 1 }}
-        tableViewStyle={TableView.Consts.Style.Grouped}
-      >
-        <Section />
-        <Section>
-          {Object.keys(currencyList).map(item =>
-            <Item
-              key={item}
-              accessoryType={currencySymbol === item ? TableView.Consts.AccessoryType.Checkmark : TableView.Consts.AccessoryType.None}
-              onPress={this.setCurrency.bind(this, item)}
-            >
-              {`${item} (${currencyList[item].sign})`}
-            </Item>
-           )}
-        </Section>
-      </TableView>
+        onCurrencySelected={this.onCurrencySelected}
+        data={Object.keys(currencyList).map(item =>
+          ({
+            title: `${item} (${currencyList[item].sign})`,
+            accessoryType: currencySymbol === item ? '3' : '0',
+            currency: item
+          })
+        )}
+      />
     )
   }
 }

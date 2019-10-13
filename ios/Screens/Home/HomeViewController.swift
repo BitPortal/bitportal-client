@@ -14,6 +14,9 @@ class HomeViewController: UITabBarController {
     super.viewDidLoad()
     
     // Do any additional setup after loading the view.
+    if #available(iOS 13.0, *) {
+      self.view.backgroundColor = .systemBackground
+    }
     ReactNativeModule.shared().entryFile = "index"
     ReactNativeModule.shared().startReactNative {
       let bridge = ReactNativeModule.shared().bridge
@@ -41,6 +44,10 @@ class HomeViewController: UITabBarController {
     marketViewController.tabBarItem = MarketTabItem
     if #available(iOS 11.0, *) {
       marketNavigationController.navigationBar.prefersLargeTitles = true
+      let searchController = UISearchController()
+      searchController.searchBar.placeholder = "搜索"
+      searchController.searchBar.autocapitalizationType = .none
+      marketViewController.navigationItem.searchController = searchController
     }
     if #available(iOS 13.0, *) {
       marketViewController.view.backgroundColor = .systemBackground
@@ -53,6 +60,11 @@ class HomeViewController: UITabBarController {
     discoveryViewController.tabBarItem = DiscoveryTabItem
     if #available(iOS 11.0, *) {
       discoveryNavigationController.navigationBar.prefersLargeTitles = true
+      let searchController = UISearchController()
+      searchController.searchBar.placeholder = "搜索或输入网址"
+      searchController.searchBar.autocapitalizationType = .none
+      discoveryViewController.navigationItem.searchController = searchController
+      discoveryViewController.navigationItem.hidesSearchBarWhenScrolling = false
     }
     if #available(iOS 13.0, *) {
       discoveryViewController.view.backgroundColor = .systemBackground

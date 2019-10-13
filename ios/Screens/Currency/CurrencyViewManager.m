@@ -15,4 +15,6 @@
   return YES;
 }
 
+RCT_EXPORT_VIEW_PROPERTY(data, NSArray)
+RCT_EXPORT_VIEW_PROPERTY(onCurrencySelected, RCTBubblingEventBlock)
 @end

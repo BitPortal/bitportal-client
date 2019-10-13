@@ -81,14 +81,8 @@ export default class Camera extends Component {
     }
   }
 
-  subscription = Navigation.events().bindComponent(this)
-
   state = {
-    showScanner: false, torchOn: false
-  }
-
-  componentDidAppear() {
-    this.setState({ showScanner: true })
+    showScanner: true, torchOn: false
   }
 
   componentDidMount() {
@@ -461,31 +455,6 @@ export default class Camera extends Component {
             />
           </View>
         </TouchableHighlight>
-        {/* <View style={{ position: 'absolute', bottom: toolBarMargin, left: 16, right: 16, backgroundColor: 'rgba(255,255,255,0.5)', borderRadius: 14, height: 60, padding: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-            <View style={{ height: 44, width: '50%', paddingRight: 4 }}>
-            <View
-            style={{
-            backgroundColor: 'white',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: 44,
-            width: '100%',
-            borderRadius: 8,
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.2,
-            shadowRadius: 2,
-            shadowColor: '#666'
-            }}
-            >
-            <Text style={{ fontSize: 17, color: 'rgba(0,0,0,0.7)' }}>转账</Text>
-            </View>
-            </View>
-            <View style={{ height: 44, width: '50%', paddingLeft: 4 }}>
-            <View style={{ backgroundColor: 'rgba(0,0,0,0)', alignItems: 'center', justifyContent: 'center', height: 44, width: '100%', borderRadius: 8 }}>
-            <Text style={{ fontSize: 17, color: 'rgba(0,0,0,0.7)' }}>导入</Text>
-            </View>
-            </View>
-            </View> */}
       </View>
     )
   }

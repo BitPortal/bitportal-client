@@ -8,7 +8,6 @@ import TableView from 'components/TableView'
 // import FastImage from 'react-native-fast-image'
 import SplashScreen from 'react-native-splash-screen'
 import Modal from 'react-native-modal'
-import KeyboardManager from 'react-native-keyboard-manager'
 import * as walletActions from 'actions/wallet'
 import * as identityActions from 'actions/identity'
 import * as balanceActions from 'actions/balance'
@@ -150,11 +149,6 @@ export default class Wallet extends Component {
     this.props.actions.scanIdentity.requested()
     this.props.actions.getTicker.requested()
     SplashScreen.hide()
-    KeyboardManager.setEnable(true)
-    KeyboardManager.setPreventShowingBottomBlankSpace(true)
-    KeyboardManager.setShouldResignOnTouchOutside(true)
-    KeyboardManager.setToolbarDoneBarButtonItemText('完成')
-    KeyboardManager.setToolbarPreviousNextButtonEnable(true)
     this.props.actions.setSelectedContact(null)
 
     /* for (let i = 0; i < 200; i++) {

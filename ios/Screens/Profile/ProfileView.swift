@@ -77,27 +77,53 @@ class ProfileView: UITableView, UITableViewDelegate, UITableViewDataSource {
     tableView.deselectRow(at: indexPath, animated: true)
     
     let webLink = data[indexPath.section][indexPath.row]["webLink"]
+    let navigationLink = data[indexPath.section][indexPath.row]["navigationLink"]
+    let modalLink = data[indexPath.section][indexPath.row]["modalLink"]
+    let title = data[indexPath.section][indexPath.row]["title"]
     
     if (webLink != nil) {
       toWebLink(url: webLink!)
-    } else {
-      toScreen()
+    } else if (navigationLink != nil) {
+      toScreen(moduleName: navigationLink!, title: title!)
+    } else if (modalLink != nil) {
+      toModal(moduleName: modalLink!)
     }
   }
   
-  func toScreen() {
-    let languageViewController = ReactNativeViewController.init(moduleName: "Language")
-    languageViewController.title = "语言设置"
+  func toScreen(moduleName: String, title: String) {
+    let toVC = ReactNativeViewController.init(moduleName: moduleName)
+    toVC.title = title
     if #available(iOS 13.0, *) {
-      languageViewController.view.backgroundColor = .systemGroupedBackground
+      toVC.view.backgroundColor = .systemGroupedBackground
     }
     if #available(iOS 11.0, *) {
-      languageViewController.navigationItem.largeTitleDisplayMode = .never
+      toVC.navigationItem.largeTitleDisplayMode = .never
     }
-    languageViewController.hidesBottomBarWhenPushed = true
+    toVC.hidesBottomBarWhenPushed = true
     
     let vc = controller(for: self)
-    vc?.navigationController?.pushViewController(languageViewController, animated: true)
+    vc?.navigationController?.pushViewController(toVC, animated: true)
+  }
+  
+  func toModal(moduleName: String) {
+    let toVC = ReactNativeViewController.init(moduleName: moduleName)
+    let nvc = UINavigationController.init(rootViewController: toVC)
+    if #available(iOS 13.0, *) {
+      toVC.view.backgroundColor = .systemBackground
+      let appearance = UINavigationBarAppearance()
+      appearance.configureWithTransparentBackground()
+      nvc.navigationBar.standardAppearance = appearance
+    }
+    if #available(iOS 11.0, *) {
+      toVC.navigationItem.largeTitleDisplayMode = .never
+    }
+    let skip = UIBarButtonItem()
+    skip.title = "跳过"
+    skip.style = .plain
+    toVC.navigationItem.rightBarButtonItems = [skip]
+    
+    let vc = controller(for: self)
+    vc?.present(nvc, animated: true)
   }
   
   func toWebLink(url: String) {

@@ -37,7 +37,7 @@ export const createAsyncActionReducers = (actions: any) => {
     [actions.failed] (state: any, action: any) {
       state.loading = false
       state.refreshing = false
-      state.error = action.payload
+      state.error = typeof action.payload === 'object' ? action.payload.message : action.payload
     },
     [actions.clearError] (state: any) {
       state.error = null

@@ -18,6 +18,7 @@ import {
 import { loadScatter, loadScatterSync, loadMetaMask, loadMetaMaskSync } from 'utils/inject'
 import { activeWalletSelector, bridgeWalletSelector, identityWalletSelector, importedWalletSelector } from 'selectors/wallet'
 import { transfromUrlText } from 'utils'
+import DiscoveryView from './DiscoveryView'
 const { Section, Item, CollectionView, CollectionViewItem } = TableView
 
 @connect(
@@ -233,6 +234,22 @@ export default class Discovery extends Component {
     const { dapp, newDapp, hotDapp, gameDapp, toolDapp, featured, bookmarked } = this.props
 
     return (
+      <DiscoveryView
+        style={{ flex: 1 }}
+        data={[
+          { title: 'MakerDAO' },
+          { title: '0x Protocol' },
+          { title: 'KyberSwap' },
+          { title: 'Crypto Kitties' },
+          { title: 'PRA Candy Box' },
+          { title: 'Newdex' },
+          { title: 'WhaleEx' },
+          { title: 'EOSX' }
+        ]}
+      />
+    )
+    
+    return (
       <TableView
         style={{ flex: 1 }}
         headerBackgroundColor="white"
@@ -335,7 +352,7 @@ export default class Discovery extends Component {
                   key={item.id}
                   uid={item.id}
                 />
-               )}
+              )}
             </CollectionView>
           </Item>
         </Section>
@@ -372,7 +389,7 @@ export default class Discovery extends Component {
                   url={item.url}
                   showSeparator={index % (bookmarked.length >= 3 ? 3 : bookmarked.length) !== ((bookmarked.length >= 3 ? 3 : bookmarked.length) - 1)}
                 />
-               )}
+              )}
             </CollectionView>
           </Item>
         </Section>}
@@ -416,7 +433,7 @@ export default class Discovery extends Component {
                   url={item.url}
                   showSeparator={index % 3 !== 2}
                 />
-               )}
+              )}
             </CollectionView>
           </Item>
         </Section>
@@ -460,7 +477,7 @@ export default class Discovery extends Component {
                   url={item.url}
                   showSeparator={index % 2 !== 1}
                 />
-               )}
+              )}
             </CollectionView>
           </Item>
         </Section>
@@ -504,7 +521,7 @@ export default class Discovery extends Component {
                   url={item.url}
                   showSeparator={index % 3 !== 2}
                 />
-               )}
+              )}
             </CollectionView>
           </Item>
         </Section>
@@ -548,7 +565,7 @@ export default class Discovery extends Component {
                   url={item.url}
                   showSeparator={index % 3 !== 2}
                 />
-               )}
+              )}
             </CollectionView>
           </Item>
         </Section>

@@ -16,7 +16,7 @@ const actions = { ...identityActions, ...walletActions }
 
 function* scanIdentity(action: Action<ScanIdentityParams>) {
   try {
-    // yield call(secureStorage.removeAllItems)
+    yield call(secureStorage.removeAllItems)
     const allItems = yield call(secureStorage.getAllItems)
     assert(!(Object.keys(allItems).length === 0 && allItems.constructor === Object), 'No keystores')
 
@@ -77,9 +77,7 @@ function* createIdentity(action: Action<CreateIdentityParams>) {
     const mnemonics = yield call(walletCore.exportMnemonic, password, identity.keystore)
     yield call(memoryStorage.setItem, 'identity', identity, true)
     yield put(reset('createIdentityForm'))
-    yield put(actions.createIdentity.succeeded())
-
-    if (action.payload.componentId) push('BitPortal.BackupIdentity', action.payload.componentId, { mnemonics })
+    yield put(actions.createIdentity.succeeded(mnemonics))
   } catch (e) {
     yield put(actions.createIdentity.failed(getErrorMessage(e)))
   }
@@ -87,12 +85,9 @@ function* createIdentity(action: Action<CreateIdentityParams>) {
 
 function* validateMnemonics(action: Action<ValidateMnemonicsResult>) {
   try {
-    const backup = action.payload.backup
-    const delayInterval = action.payload.delay
-    const componentId = action.payload.componentId
-
-    if (!backup) {
-      const identity = yield call(memoryStorage.getItem, 'identity', true)
+    const identity = yield call(memoryStorage.getItem, 'identity', true)
+    
+    if (identity && identity.keystore) {      
       const identityKeystore = identity.keystore
       yield call(secureStorage.setItem, `IDENTITY_KEYSTORE_${identityKeystore.id}`, identityKeystore, true)
       const identityWallets = identity.wallets
@@ -101,7 +96,6 @@ function* validateMnemonics(action: Action<ValidateMnemonicsResult>) {
       }
 
       const identityInfo = walletCore.getIdentityMetaData(identityKeystore)
-
       const walletsInfo = identityWallets.map(walletCore.getWalletMetaData)
 
       yield put(actions.addIdentity(identityInfo))
@@ -110,8 +104,6 @@ function* validateMnemonics(action: Action<ValidateMnemonicsResult>) {
       yield call(memoryStorage.removeItem, 'identity')
     }
 
-    if (delayInterval) yield delay(delayInterval)
-    if (componentId) dismissAllModals()
     yield put(actions.validateMnemonics.succeeded())
   } catch (e) {
     yield put(actions.validateMnemonics.failed(getErrorMessage(e)))
@@ -120,7 +112,6 @@ function* validateMnemonics(action: Action<ValidateMnemonicsResult>) {
 
 function* recoverIdentity(action: Action<RecoverIdentityParams>) {
   if (!action.payload) return
-  if (action.payload.delay) yield delay(action.payload.delay)
 
   try {
     const name = 'my_identity'
@@ -142,10 +133,7 @@ function* recoverIdentity(action: Action<RecoverIdentityParams>) {
     yield put(actions.addIdentity(identityInfo))
     yield put(actions.addIdentityWallets(walletsInfo))
     yield put(actions.setActiveWallet(walletsInfo[0].id))
-
-    if (action.payload.componentId) dismissAllModals()
     yield put(actions.recoverIdentity.succeeded())
-    // yield put(reset('recoverIdentityForm'))
   } catch (e) {
     yield put(actions.recoverIdentity.failed(getErrorMessage(e)))
   }
