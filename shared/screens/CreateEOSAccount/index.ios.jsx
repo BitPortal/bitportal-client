@@ -23,18 +23,8 @@ import { Field, reduxForm, getFormValues, getFormSyncWarnings } from 'redux-form
 import Modal from 'react-native-modal'
 import QRCode from 'react-native-qrcode-svg'
 import { identityEOSWalletSelector } from 'selectors/wallet'
-import Sound from 'react-native-sound'
 import * as walletActions from 'actions/wallet'
 import * as accountActions from 'actions/account'
-
-const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
-  if (error) {
-    console.log('failed to load the sound', error)
-    return
-  }
-
-  console.log(`duration in seconds: ${copySound.getDuration()}number of channels: ${copySound.getNumberOfChannels()}`)
-})
 
 const styles = EStyleSheet.create({
   container: {
@@ -352,15 +342,7 @@ export default class CreateEOSAccount extends Component {
   copy = (text) => {
     this.setState({ showModal: true, showModalContent: true }, () => {
       Clipboard.setString(text)
-      copySound.play((success) => {
-        if (success) {
-          console.log('successfully finished playing')
-        } else {
-          console.log('playback failed due to audio decoding errors')
-          copySound.reset()
-        }
-      })
-
+      
       setTimeout(() => {
         this.setState({ showModal: false }, () => {
           this.setState({ showModalContent: false })

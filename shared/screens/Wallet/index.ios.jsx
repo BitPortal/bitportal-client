@@ -29,7 +29,6 @@ import { currencySelector } from 'selectors/currency'
 import { managingWalletChildAddressSelector } from 'selectors/address'
 import { getNameBySymbol } from 'utils'
 import { formatCycleTime, formatMemorySize } from 'utils/format'
-import Sound from 'react-native-sound'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 import * as api from 'utils/api'
 import Profile from 'screens/Profile'
@@ -38,16 +37,6 @@ import styles from './styles'
 const { Section, Item, CollectionView, CollectionViewItem } = TableView
 
 const SPAlert = NativeModules.SPAlert
-
-Sound.setCategory('Playback')
-const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
-  if (error) {
-    console.log('failed to load the sound', error)
-    return
-  }
-
-  console.log(`duration in seconds: ${copySound.getDuration()}number of channels: ${copySound.getNumberOfChannels()}`)
-})
 
 @injectIntl
 
@@ -308,13 +297,6 @@ export default class Wallet extends Component {
       })
     } else if (action === 'copy') {
       Clipboard.setString(data.text)
-      copySound.play((success) => {
-        if (success) {
-          console.log('successfully finished playing')
-        } else {
-          copySound.reset()
-        }
-      })
 
       SPAlert.presentMessage('已复制')
     }

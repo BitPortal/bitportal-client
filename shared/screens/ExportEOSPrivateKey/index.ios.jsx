@@ -2,20 +2,9 @@ import React, { Component, Fragment } from 'react'
 import { ScrollView, View, TextInput, Text, TouchableOpacity, Clipboard } from 'react-native'
 import { connect } from 'react-redux'
 import { Navigation } from 'components/Navigation'
-import Sound from 'react-native-sound'
 import Modal from 'react-native-modal'
 import TableView from 'components/TableView'
 const { Section, Item } = TableView
-
-Sound.setCategory('Playback')
-const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
-  if (error) {
-    console.log('failed to load the sound', error)
-    return
-  }
-
-  console.log(`duration in seconds: ${copySound.getDuration()}number of channels: ${copySound.getNumberOfChannels()}`)
-})
 
 @connect(
   state => ({
@@ -49,14 +38,6 @@ export default class ExportETHKeystore extends Component {
   copy = (text) => {
     this.setState({ showModal: true, showModalContent: true }, () => {
       Clipboard.setString(text)
-      copySound.play((success) => {
-        if (success) {
-          console.log('successfully finished playing')
-        } else {
-          console.log('playback failed due to audio decoding errors')
-          copySound.reset()
-        }
-      })
 
       setTimeout(() => {
         this.setState({ showModal: false }, () => {

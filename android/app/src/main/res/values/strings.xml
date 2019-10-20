@@ -2,4 +2,7 @@
   <string name="app_name">BitPortal</string>
   <string name="drawer_close">Drawer Close</string>
   <string name="drawer_open">Drawer Open</string>
+  <string name="tab_text_1">钱包</string>
+  <string name="tab_text_2">市场</string>
+  <string name="tab_text_3">发现</string>
 </resources>

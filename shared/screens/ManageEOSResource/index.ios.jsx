@@ -32,20 +32,10 @@ import {
   managingAccountSelfDelegatedBandwidthSelector,
   managingAccountOthersDelegatedBandwidthSelector
 } from 'selectors/account'
-import Sound from 'react-native-sound'
 import * as walletActions from 'actions/wallet'
 import * as accountActions from 'actions/account'
 import * as tickerActions from 'actions/ticker'
 import * as transactionActions from 'actions/transaction'
-
-const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
-  if (error) {
-    console.log('failed to load the sound', error)
-    return
-  }
-
-  console.log(`duration in seconds: ${copySound.getDuration()}number of channels: ${copySound.getNumberOfChannels()}`)
-})
 
 const styles = EStyleSheet.create({
   container: {
@@ -514,14 +504,6 @@ export default class ManageEOSResource extends Component {
   copy = (text) => {
     this.setState({ showModal: true, showModalContent: true }, () => {
       Clipboard.setString(text)
-      copySound.play((success) => {
-        if (success) {
-          console.log('successfully finished playing')
-        } else {
-          console.log('playback failed due to audio decoding errors')
-          copySound.reset()
-        }
-      })
 
       setTimeout(() => {
         this.setState({ showModal: false }, () => {

@@ -199,11 +199,6 @@ declare module 'routes/async' {
   export = bundles
 }
 
-declare module 'react-native-vector-icons/Ionicons' {
-  const file: any
-  export = file
-}
-
 declare module 'react-native-svg' {
   interface Svg extends React.ComponentClass<any> {
     Path: any

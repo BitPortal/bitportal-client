@@ -6,7 +6,6 @@ import { Navigation } from 'components/Navigation'
 import TableView from 'components/TableView'
 import * as identityActions from 'actions/identity'
 import Modal from 'react-native-modal'
-import Sound from 'react-native-sound'
 import FastImage from 'react-native-fast-image'
 import { activeContactSelector } from 'selectors/contact'
 import { identityWalletSelector, importedWalletSelector } from 'selectors/wallet'
@@ -14,16 +13,6 @@ import { balanceByIdSelector } from 'selectors/balance'
 import * as contactActions from 'actions/contact'
 import * as walletActions from 'actions/wallet'
 import styles from './styles'
-
-Sound.setCategory('Playback')
-const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
-  if (error) {
-    console.log('failed to load the sound', error)
-    return
-  }
-
-  console.log(`duration in seconds: ${copySound.getDuration()}number of channels: ${copySound.getNumberOfChannels()}`)
-})
 
 const { Section, Item } = TableView
 
@@ -128,15 +117,7 @@ export default class Contact extends Component {
     if (action === 'copy') {
       this.setState({ showModal: true, showModalContent: true }, () => {
         Clipboard.setString(data.text)
-        copySound.play((success) => {
-          if (success) {
-            console.log('successfully finished playing')
-          } else {
-            console.log('playback failed due to audio decoding errors')
-            copySound.reset()
-          }
-        })
-
+        
         setTimeout(() => {
           this.setState({ showModal: false }, () => {
             this.setState({ showModalContent: false })
