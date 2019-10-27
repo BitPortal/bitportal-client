@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
 import { bindActionCreators } from 'utils/redux'
-import { View, Text, ActivityIndicator, RefreshControl, ScrollView, Dimensions } from 'react-native'
+import { View, Text, ActivityIndicator, RefreshControl, ScrollView, Dimensions, NativeModules } from 'react-native'
 import { tickerSelector, tickerSearchSelector } from 'selectors/ticker'
 import { currencySelector } from 'selectors/currency'
 import * as tickerActions from 'actions/ticker'
@@ -13,6 +13,7 @@ import FastImage from 'react-native-fast-image'
 import Loading from 'components/Loading'
 import Modal from 'react-native-modal'
 import SearchBar from 'components/Form/SearchBar'
+import MarketView from './MarketView'
 
 const dataProvider = new DataProvider((r1, r2) => r1.name !== r2.name || r1.price_usd !== r2.price_usd || r1.percent_change_24h !== r2.percent_change_24h)
 const searchDataProvider = new DataProvider((r1, r2) => r1.name !== r2.name || r1.price_usd !== r2.price_usd || r1.percent_change_24h !== r2.percent_change_24h)
@@ -101,6 +102,7 @@ export default class Market extends Component {
   }
 
   componentDidMount() {
+    console.log('NativeModules', NativeModules)
     this.props.actions.getTicker.requested()
   }
 
@@ -159,6 +161,10 @@ export default class Market extends Component {
     }
 
     return (
+      <MarketView style={{ flex: 1 }} />
+    )
+
+    return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <Modal
           isVisible={ui.searchBarEnabled}
@@ -182,7 +188,7 @@ export default class Market extends Component {
                                                      layoutProvider={this.layoutProvider}
                                                      dataProvider={this.state.searchDataProvider}
                                                      rowRenderer={this.rowRenderer}
-                                                   />}
+                />}
               </View>
             </View>
           </View>

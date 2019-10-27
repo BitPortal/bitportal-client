@@ -56,8 +56,7 @@ class ReactNativeFragment : Fragment(), PermissionAwareActivity {
     super.onResume()
     if (ReactNativeModule.shared.reactNativeHost.hasInstance()) {
       ReactNativeModule.shared.reactNativeHost.reactInstanceManager?.onHostResume(
-        activity,
-        activity as DefaultHardwareBackBtnHandler
+        activity
       )
     }
   }

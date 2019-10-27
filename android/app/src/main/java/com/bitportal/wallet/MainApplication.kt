@@ -34,9 +34,58 @@ import org.devio.rn.splashscreen.SplashScreenReactPackage
 import com.horcrux.svg.SvgPackage
 import com.bitportal.core.BPCorePackage
 import java.util.Arrays
+import com.facebook.soloader.SoLoader
+import com.facebook.react.shell.MainReactPackage
+import com.bitportal.wallet.MarketViewPackage
 
-class MainApplication : Application() {
+class MainApplication : Application(), ReactApplication {
+  private val reactNativeHost = object : ReactNativeHost(this) {
+    override fun getJSMainModuleName(): String {
+      return "index"
+    }
+
+    override fun getUseDeveloperSupport(): Boolean = BuildConfig.DEBUG
+    override fun getPackages(): List<ReactPackage> =
+      Arrays.asList(
+        MainReactPackage(),
+        BPCorePackage (),
+        SvgPackage (),
+        SplashScreenReactPackage (),
+        VectorIconsPackage (),
+        LinearGradientPackage (),
+        ReactNativeConfigPackage (),
+        RandomBytesPackage (),
+        RNSensitiveInfoPackage (),
+        RNCameraPackage (),
+        RNVersionNumberPackage (),
+        RNDeviceInfo (),
+        PickerPackage (),
+        RCTQRCodeLocalImagePackage (),
+        DplusReactPackage (),
+        NativeUtilsPackage (),
+        QRScanReaderPackage (),
+        FastImageViewPackage (),
+        RNFSPackage (),
+        AsyncStoragePackage (),
+        ReanimatedPackage (),
+        RNGestureHandlerPackage (),
+        RNCViewPagerPackage (),
+        ReactSliderPackage (),
+        RNCWebViewPackage (),
+        MaterialDialogPackage (),
+        MarketViewPackage()
+      )
+  }
+
+  // override fun getReactNativeHost(): ReactNativeHost = mReactNativeHost
+  override fun getReactNativeHost(): ReactNativeHost {
+    return ReactNativeModule.shared.reactNativeHost
+  }
+
   override fun onCreate() {
     super.onCreate()
+    // SoLoader.init(this, false)
+    ReactNativeModule.initialize(this, reactNativeHost)
+    ReactNativeModule.shared.startReactNative { init -> Log.d("test", "test") }
   }
 }

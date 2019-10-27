@@ -118,11 +118,15 @@ android {
         versionCode 1
         versionName "1.0"
         manifestPlaceholders = [
+                JPUSH_APPKEY: "",
+                APP_CHANNEL : "default"
+        ]
+
+        manifestPlaceholders = [
                 JPUSH_APPKEY: "05e8b10824ab700bae78e9eb",
                 APP_CHANNEL : "default"
         ]
 
-        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative57_5"
         missingDimensionStrategy "react-native-camera", "general"
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -189,7 +193,6 @@ android {
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
-            // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
             def versionCodes = ["armeabi-v7a":1, "x86":2]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
@@ -201,6 +204,9 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-haptic-feedback')
+    compile project(':jcore-react-native')
+    compile project(':jpush-react-native')
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation "android.arch.lifecycle:extensions:1.1.1"
     implementation "com.android.support:design:${supportLibVersion}"
@@ -242,7 +248,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "androidx.core:core:1.0.2"
     implementation "androidx.annotation:annotation:1.1.0"
-    implementation "com.facebook.react:react-native:0.20.1+"  // From node_modules
+    implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation "androidx.annotation:annotation:1.1.0"
 }
 
