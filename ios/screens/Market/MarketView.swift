@@ -9,9 +9,40 @@
 import UIKit
 import Alamofire
 import AlamofireImage
+import IGListKit
+
+class Ticker: ListDiffable {
+  let key: String
+  let name: String
+  let symbol: String
+  let price: String
+  let change: String
+  let trend: String
+  let imageUrl: String
+  
+  init(key: String, name: String, symbol: String, price: String, change: String, trend: String, imageUrl: String) {
+    self.key = key
+    self.name = name
+    self.symbol = symbol
+    self.price = price
+    self.change = change
+    self.trend = trend
+    self.imageUrl = imageUrl
+  }
+  
+  func diffIdentifier() -> NSObjectProtocol {
+    return key as NSObjectProtocol
+  }
+  
+  func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
+    guard let object = object as? Ticker else { return false }
+    return self.name == object.name && self.symbol == object.symbol && self.price == object.price && self.change == object.change && self.trend == object.trend && self.imageUrl == object.imageUrl
+  }
+}
 
 class MarketView: UITableView, UITableViewDelegate, UITableViewDataSource {
-  private var data: [[String : String]] = []
+  private var oldData: [Ticker] = []
+  private var data: [Ticker] = []
   var onRefresh: RCTDirectEventBlock?
   
   @objc(setOnRefresh:)
@@ -20,9 +51,20 @@ class MarketView: UITableView, UITableViewDelegate, UITableViewDataSource {
   }
   
   @objc(setData:)
-  public func setData(data: NSArray) {
-    self.data = data as! [[String : String]]
-    self.reloadData()
+  public func setData(data: [[String: String]]) {
+    // SPAlert.present(message: "reload")
+    self.oldData = self.data
+    self.data = data.map { (item) -> Ticker in
+      return Ticker(key: item["key"] ?? "", name: item["name"] ?? "", symbol: item["symbol"] ?? "", price: item["price"] ?? "-", change: item["change"] ?? "-", trend: item["trend"] ?? "0", imageUrl: item["imageUrl"] ?? "")
+    }
+    let result = ListDiffPaths(fromSection: 0, toSection: 0, oldArray: self.oldData, newArray: self.data, option: .equality).forBatchUpdates()
+
+    // self.reloadData()
+    self.beginUpdates()
+    self.deleteRows(at: result.deletes, with: .fade)
+    self.insertRows(at: result.inserts, with: .fade)
+    result.moves.forEach { self.moveRow(at: $0.from, to: $0.to) }
+    self.endUpdates()
   }
   
   func setupView() {
@@ -53,22 +95,19 @@ class MarketView: UITableView, UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    var cell: TickerTableViewCell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(TickerTableViewCell.self), for: indexPath) as! TickerTableViewCell
+    let cell: TickerTableViewCell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(TickerTableViewCell.self), for: indexPath) as! TickerTableViewCell
     cell.selectionStyle = .none
-    cell.symbol = data[indexPath.row]["symbol"] ?? ""
-    cell.name = data[indexPath.row]["name"] ?? ""
-    cell.price = data[indexPath.row]["price"] ?? "-"
-    cell.change = data[indexPath.row]["change"] ?? "-"
-    cell.trend = data[indexPath.row]["trend"] ?? "0"
+    cell.symbol = data[indexPath.row].symbol
+    cell.name = data[indexPath.row].name
+    cell.price = data[indexPath.row].price
+    cell.change = data[indexPath.row].change
+    cell.trend = data[indexPath.row].trend
     cell.tokenImage.image = nil
     
-    if (data[indexPath.row]["imageUrl"] != nil) {      Alamofire.request(data[indexPath.row]["imageUrl"]!).responseData { (response) in
-        if response.error == nil {
-          print(response.result)
-          
-          if let data = response.data {
-            cell.tokenImage.image = UIImage(data: data)
-          }
+    Alamofire.request(data[indexPath.row].imageUrl).responseData { (response) in
+      if response.error == nil {
+        if let data = response.data {
+          cell.tokenImage.image = UIImage(data: data)
         }
       }
     }

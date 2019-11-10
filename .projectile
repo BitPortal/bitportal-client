@@ -11,7 +11,6 @@
 -*.log
 -.DS_Store
 
-
 -/ios/build/
 -*.pbxuser
 -!default.pbxuser
@@ -32,8 +31,6 @@
 -*jsbundle*
 -/ios/assets
 -/ios/Pods
-
-
 
 -/android/app/build/
 -.idea

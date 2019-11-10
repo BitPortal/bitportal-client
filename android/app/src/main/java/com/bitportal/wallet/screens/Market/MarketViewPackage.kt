@@ -1,11 +1,8 @@
-package com.bitportal.wallet
+package com.bitportal.wallet.screens.Market
 
-import android.view.View
-import com.bitportal.wallet.MarketViewManager
 import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.NativeModule
 import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.uimanager.ReactShadowNode
 import com.facebook.react.uimanager.ViewManager
 import java.util.*
 

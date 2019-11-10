@@ -36,7 +36,8 @@ import com.bitportal.core.BPCorePackage
 import java.util.Arrays
 import com.facebook.soloader.SoLoader
 import com.facebook.react.shell.MainReactPackage
-import com.bitportal.wallet.MarketViewPackage
+
+import com.bitportal.wallet.screens.Market.MarketViewPackage
 
 class MainApplication : Application(), ReactApplication {
   private val reactNativeHost = object : ReactNativeHost(this) {

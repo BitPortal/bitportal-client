@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		0051641BD21F403D8E50DB42 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63C330A6E7DB472694F6CC51 /* Ionicons.ttf */; };
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
@@ -97,6 +98,7 @@
 		1CFF3B8F2A394826A002951C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8FAC78A2D9E457AA6A5C151 /* SystemConfiguration.framework */; };
 		279ACDBA87444D5D9230BA0D /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3693ECD00D2451D9DFE9083 /* Zocial.ttf */; };
 		3410CA9722854EEE005FAF2A /* injectScatter.js in Resources */ = {isa = PBXBuildFile; fileRef = 3410CA9622854EEE005FAF2A /* injectScatter.js */; };
+		3419BB86236FE21D000C8041 /* Ticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3419BB85236FE21D000C8041 /* Ticker.swift */; };
 		341A99DA23432AA0002E1EC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341A99D923432AA0002E1EC8 /* AppDelegate.swift */; };
 		341A9A15234477EB002E1EC8 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341A9A14234477EB002E1EC8 /* ProfileTableViewCell.swift */; };
 		341A9A192344906F002E1EC8 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341A9A182344906F002E1EC8 /* SettingTableViewCell.swift */; };
@@ -1202,6 +1204,7 @@
 		2DCE5CE8E4DC4D17BDEAF27C /* libRNRandomBytes.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNRandomBytes.a; sourceTree = "<group>"; };
 		340B324F2350E74700F344F7 /* yoga.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = yoga.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3410CA9622854EEE005FAF2A /* injectScatter.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = injectScatter.js; path = bitportal/injectScatter.js; sourceTree = "<group>"; };
+		3419BB85236FE21D000C8041 /* Ticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ticker.swift; sourceTree = "<group>"; };
 		341A99D923432AA0002E1EC8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		341A9A14234477EB002E1EC8 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		341A9A182344906F002E1EC8 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
@@ -1920,6 +1923,7 @@
 		13B07FAE1A68108700A75B9A /* bitportal */ = {
 			isa = PBXGroup;
 			children = (
+				3419BB3B236FE1E4000C8041 /* modals */,
 				3482155C234611A0003E1916 /* localization */,
 				348212E92345B37C003E1916 /* bitportal-Bridging-Header.h */,
 				348212F02345D6B4003E1916 /* controllers */,
@@ -2085,7 +2089,6 @@
 				B654B14DCA52404D992982CD /* libRCTJPushModule.a */,
 				030AAA2E52B849E8BCC4782E /* libRNFS.a */,
 				15F6731AE30C4EA99A2EFF54 /* libFastImage.a */,
-				C7A85155C62D499CA8CD38A9 /* libRNSound.a */,
 				2959798F19F74958BA6F1982 /* libRCTRestart.a */,
 			);
 			name = "Recovered References";
@@ -2346,6 +2349,14 @@
 				18F282192177351C00DEB13F /* DJIMarshal+Private.h */,
 			);
 			path = Djinni;
+			sourceTree = "<group>";
+		};
+		3419BB3B236FE1E4000C8041 /* modals */ = {
+			isa = PBXGroup;
+			children = (
+				3419BB85236FE21D000C8041 /* Ticker.swift */,
+			);
+			path = modals;
 			sourceTree = "<group>";
 		};
 		341A99B423426A92002E1EC8 /* reactnative */ = {
@@ -4613,6 +4624,7 @@
 				18F282A12177351D00DEB13F /* DJIError.mm in Sources */,
 				34FAC49423268F880084A60F /* NavBarManager.swift in Sources */,
 				34D109822347776B003103FA /* WalletListViewManager.swift in Sources */,
+				3419BB86236FE21D000C8041 /* Ticker.swift in Sources */,
 				18F2826E2177351C00DEB13F /* rfc6979.c in Sources */,
 				34D1099C2347776B003103FA /* ReceiveAssetViewManager.swift in Sources */,
 				34C81991233B4C0D0090AD79 /* SPStorkDismissingAnimationController.swift in Sources */,

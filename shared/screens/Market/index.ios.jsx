@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
 import { bindActionCreators } from 'utils/redux'
@@ -24,39 +24,8 @@ import MarketView from './MarketView'
 )
 
 export default class Market extends Component {
-  state = {
-    getTickerLoading: false,
-    getTickerLoaded: false,
-    getTickerError: false,
-    tickerCount: 0,
-    searchBarFocused: false,
-    firstAppeared: false
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (
-      nextProps.getTicker.loading !== prevState.getTickerLoading
-      || nextProps.getTicker.loaded !== prevState.getTickerLoaded
-      || nextProps.getTicker.error !== prevState.getTickerError
-      || (nextProps.ticker && nextProps.ticker.length) !== prevState.tickerCount
-    ) {
-      return {
-        getTickerLoading: nextProps.getTicker.loading,
-        getTickerLoaded: nextProps.getTicker.loaded,
-        getTickerError: nextProps.getTicker.error,
-        tickerCount: (nextProps.ticker && nextProps.ticker.length)
-      }
-    } else {
-      return null
-    }
-  }
-
   onRefresh = () => {
     // this.props.actions.getTicker.refresh()
-  }
-
-  componentDidAppear() {
-    this.props.actions.getTicker.requested()
   }
 
   render() {
@@ -69,6 +38,7 @@ export default class Market extends Component {
         style={{ flex: 1}}
         onRefresh={this.onRefresh}
         data={ticker.map(item => ({
+          key: item.name,
           price: currency.sign + intl.formatNumber(item.price_usd * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
           symbol: item.symbol,
           name: item.name,
