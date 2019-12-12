@@ -5,4 +5,8 @@ workspace 'bitportal.xcworkspace'
 
 target 'bitportal' do
   pod 'IGListKit', '~> 3.0'
+  pod 'RNCViewpager', :path => '../node_modules/@react-native-community/viewpager'
+
+  pod 'ReactNativeNavigation', :path => '../node_modules/react-native-navigation'
+
 end

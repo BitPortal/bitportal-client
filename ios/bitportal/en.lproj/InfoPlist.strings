@@ -12,3 +12,4 @@
 "NSMotionUsageDescription" = "Enable fitness access";
 "NSSpeechRecognitionUsageDescription" = "Enable microphone access";
 "NSCalendarsUsageDescription" = "Enable calendars access";
+"NSFaceIDUsageDescription" = "Enable faceID access";

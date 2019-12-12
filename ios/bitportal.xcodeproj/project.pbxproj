@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		0051641BD21F403D8E50DB42 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63C330A6E7DB472694F6CC51 /* Ionicons.ttf */; };
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
@@ -320,6 +319,7 @@
 		6F904384365D405DBC3513B4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E898A8F89E428EB8826709 /* Foundation.framework */; };
 		72652B92899FFD553E8770B5 /* Pods_bitportal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6F1ADD189273ABF3554BD86 /* Pods_bitportal.framework */; };
 		75196F384CA649EDB16DBE43 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CC58BACB3324565AE29AD83 /* libRNDeviceInfo.a */; };
+		75FE8BB7239E3A690047D0CF /* libTouchID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 75FE8BB6239E34920047D0CF /* libTouchID.a */; };
 		82C2036C3E1F4ADE9623B175 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC1383CF5E64414B0EE9A5D /* UIKit.framework */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		8742690AC5034BEA97098A14 /* libRNVersionNumber.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 076FB8ACFE2F417EBF4087E8 /* libRNVersionNumber.a */; };
@@ -846,6 +846,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = 2D2A28201D9B03D100D4039D;
 			remoteInfo = "RCTAnimation-tvOS";
+		};
+		75FE8B1A239A2D150047D0CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C02B79A5AF294526A859B506 /* ReactNativeConfig.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3DF7F6AC203AA09B00D0EAB7;
+			remoteInfo = "ReactNativeConfig-tvOS";
+		};
+		75FE8BB5239E34920047D0CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 75FE8BB1239E34920047D0CF /* TouchID.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = TouchID;
 		};
 		78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1466,6 +1480,7 @@
 		7184FBE6AADE4586BFF3C665 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		721257168F454099810D6D12 /* ReactNativeKeyboardManager.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeKeyboardManager.xcodeproj; path = "../node_modules/react-native-keyboard-manager/ios/ReactNativeKeyboardManager.xcodeproj"; sourceTree = "<group>"; };
 		754647FCC10D42E79662A42B /* FastImage.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = FastImage.xcodeproj; path = "../node_modules/react-native-fast-image/ios/FastImage.xcodeproj"; sourceTree = "<group>"; };
+		75FE8BB1239E34920047D0CF /* TouchID.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TouchID.xcodeproj; path = "../node_modules/react-native-touch-id/TouchID.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7E266F30BB5544C48714E51F /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -1549,6 +1564,7 @@
 				65B9E23F4D9E4DB68F5A768C /* libReactNativePermissions.a in Frameworks */,
 				3C4507934177471B93375682 /* libRNRandomBytes.a in Frameworks */,
 				AD83B47857424C849778388D /* libRNCamera.a in Frameworks */,
+				75FE8BB7239E3A690047D0CF /* libTouchID.a in Frameworks */,
 				8742690AC5034BEA97098A14 /* libRNVersionNumber.a in Frameworks */,
 				75196F384CA649EDB16DBE43 /* libRNDeviceInfo.a in Frameworks */,
 				C53482AFA582482480C3FBA7 /* libimageCropPicker.a in Frameworks */,
@@ -2097,6 +2113,7 @@
 			isa = PBXGroup;
 			children = (
 				3423A00D20977E3600E7EB8A /* libReactNativeConfig.a */,
+				75FE8B1B239A2D150047D0CF /* libReactNativeConfig-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2717,6 +2734,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		75FE8BB2239E34920047D0CF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				75FE8BB6239E34920047D0CF /* libTouchID.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -2729,6 +2754,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				75FE8BB1239E34920047D0CF /* TouchID.xcodeproj */,
 				34AEC4A6230BDD9B002B9C99 /* RNCWebView.xcodeproj */,
 				34A680DB22C4E79900BBE21E /* RNGestureHandler.xcodeproj */,
 				34A680D122C4E75C00BBE21E /* RNReanimated.xcodeproj */,
@@ -2878,7 +2904,7 @@
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 7AL695AUTL;
+						DevelopmentTeam = RW288S5D76;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -3065,6 +3091,10 @@
 				{
 					ProductGroup = 1836E3E1208F022700C81AED /* Products */;
 					ProjectRef = BB3B885DAB124587870B4E7A /* SplashScreen.xcodeproj */;
+				},
+				{
+					ProductGroup = 75FE8BB2239E34920047D0CF /* Products */;
+					ProjectRef = 75FE8BB1239E34920047D0CF /* TouchID.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -3579,6 +3609,20 @@
 			remoteRef = 5E9157341DD0AC6500FF2AA8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		75FE8B1B239A2D150047D0CF /* libReactNativeConfig-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libReactNativeConfig-tvOS.a";
+			remoteRef = 75FE8B1A239A2D150047D0CF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		75FE8BB6239E34920047D0CF /* libTouchID.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libTouchID.a;
+			remoteRef = 75FE8BB5239E34920047D0CF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		78C398B91ACF4ADC00677621 /* libRCTLinking.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -3977,13 +4021,13 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CODE_SIGN_ENTITLEMENTS = bitportal/bitportal.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = NO;
-				DEVELOPMENT_TEAM = 7AL695AUTL;
+				DEVELOPMENT_TEAM = RW288S5D76;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4045,7 +4089,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.dexlize.bitportal;
+				PRODUCT_BUNDLE_IDENTIFIER = org.dexlize.bitportal.aaa;
 				PRODUCT_NAME = bitportal;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
@@ -4064,12 +4108,12 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CODE_SIGN_ENTITLEMENTS = bitportal/bitportal.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = NO;
-				DEVELOPMENT_TEAM = 7AL695AUTL;
+				DEVELOPMENT_TEAM = RW288S5D76;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4132,7 +4176,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.dexlize.bitportal;
+				PRODUCT_BUNDLE_IDENTIFIER = org.dexlize.bitportal.aaa;
 				PRODUCT_NAME = bitportal;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_INSTALL_OBJC_HEADER = YES;

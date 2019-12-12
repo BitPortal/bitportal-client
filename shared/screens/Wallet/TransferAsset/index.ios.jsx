@@ -19,7 +19,8 @@ import {
   Animated,
   Easing,
   SafeAreaView,
-  Platform
+  Platform,
+  TouchableOpacity
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import TableView from 'components/TableView'
@@ -39,6 +40,9 @@ import * as walletActions from 'actions/wallet'
 import Modal from 'react-native-modal'
 import Slider from '@react-native-community/slider'
 import { assetIcons, walletIcons } from 'resources/images'
+import TouchID from 'react-native-touch-id';
+import memoryStorage from "core/storage/memoryStorage";
+
 
 const { Section, Item } = TableView
 
@@ -313,6 +317,38 @@ const AmountField = ({
   </View>
 )
 
+const passwordField = ({
+                       input: { onChange, ...restInput },
+                       meta: { touched, error, active },
+                       placeholder,
+                       separator,
+                       isShowPassword,
+                       showPasswordChange
+                     }) => (
+  <View style={{ width: '100%' }}>
+    <View style={{ width: '100%', alignItems: 'center', height: 42, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
+      <TextInput
+        style={[styles.smTextFiled]}
+        autoCorrect={false}
+        autoCapitalize="none"
+        placeholder={placeholder}
+        onChangeText={onChange}
+        secureTextEntry={isShowPassword}
+        {...restInput}
+      />
+      {active && <View style={{ height: '100%', position: 'absolute', right: 16, top: 0, width: 20, alignItems: 'center', justifyContent: 'center' }}>
+        <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={showPasswordChange}>
+          <FastImage
+            source={isShowPassword ? require('resources/images/view.png') :require('resources/images/view_off.png')}
+            style={{ width: 14, height: 14 }}
+          />
+        </TouchableHighlight>
+      </View>}
+      {separator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 16, left: 16, backgroundColor: '#C8C7CC' }} />}
+    </View>
+  </View>
+)
+
 const TextField = ({
   input: { onChange, ...restInput },
   meta: { touched, error, active },
@@ -481,7 +517,10 @@ export default class TransferAsset extends Component {
     ethGasPrice: 0,
     useGasPrice: 0,
     initialGwei: 0,
-    initialFeeRate: 0
+    initialFeeRate: 0,
+    passwordModalState: false, // 输密码弹窗状态
+    isOpenFaceID: false, // 是否开启faceid
+    isShowPassword: false, // 是否显示密码
   }
 
   navigationButtonPressed({ buttonId }) {
@@ -538,8 +577,29 @@ export default class TransferAsset extends Component {
   componentWillUnmount() {
     this.props.reset()
   }
+  // 输入密码确认
+  surePassword = (data) => {
+    const {transferWallet, transferAsset } = this.props
+    this.props.actions.transfer.requested({
+      ...data,
+      isOpenFaceID: this.state.isOpenFaceID ? '1':'0',
+      password: data.password,
+      fromAddress: transferWallet.address,
+      chain: transferWallet.chain,
+      id: transferWallet.id,
+      feeRate: +this.state.feeRate || +this.state.initialFeeRate || this.state.fastestBTCFee || 45,
+      symbol: transferAsset.symbol,
+      precision: transferAsset.precision,
+      decimals: transferAsset.decimals,
+      contract: transferAsset.contract,
+      componentId: this.props.componentId,
+      memo: data.memo || (this.props.selectedContact && this.props.selectedContact.memo),
+      gasLimit: this.state.ethGasLimit,
+      gasPrice: +this.state.useGasPrice || +this.state.initialGwei || this.state.ethGasPrice || 4.00
+    })
+  };
 
-  submit = (data) => {
+   submit = (data) => {
     const { intl, transferWallet, formSyncWarnings, transferAsset, assetBalance, walletBalance } = this.props
     const balance = (transferAsset && transferAsset.contract) ? assetBalance : walletBalance
 
@@ -557,38 +617,82 @@ export default class TransferAsset extends Component {
       }
     }
     // Keyboard.dismiss()
+    // 判断是否开启过faceID 没开就调输入密码弹窗
+     memoryStorage.getItem(`openFaceIdID${transferWallet.id}`, true).then((password)=>{
+       if (password){
+         TouchID.isSupported()
+           .then(success => {
+             TouchID.authenticate().then(succes => {
+               this.setState({
+                 passwordModalState: false
+               });
+               this.props.actions.transfer.requested({
+                 ...data,
+                 password:password,
+                 fromAddress: transferWallet.address,
+                 chain: transferWallet.chain,
+                 id: transferWallet.id,
+                 feeRate: +this.state.feeRate || +this.state.initialFeeRate || this.state.fastestBTCFee || 45,
+                 symbol: transferAsset.symbol,
+                 precision: transferAsset.precision,
+                 decimals: transferAsset.decimals,
+                 contract: transferAsset.contract,
+                 componentId: this.props.componentId,
+                 memo: data.memo || (this.props.selectedContact && this.props.selectedContact.memo),
+                 gasLimit: this.state.ethGasLimit,
+                 gasPrice: +this.state.useGasPrice || +this.state.initialGwei || this.state.ethGasPrice || 4.00
+               })
+             }).catch(error => {
+               this.setState({
+                 passwordModalState: true,
+                 isOpenFaceID: true
+               })
+             });
+           }).catch(error => {
+           //设备不支持TouchID验证后进行的操作
+           this.setState({
+             passwordModalState: true
+           })
+           // Alert.prompt(
+           //   intl.formatMessage({ id: 'alert_input_wallet_password' }),
+           //   null,
+           //   [
+           //     {
+           //       text: intl.formatMessage({ id: 'alert_button_cancel' }),
+           //       onPress: () => console.log('Cancel Pressed'),
+           //       style: 'cancel'
+           //     },
+           //     {
+           //       text: intl.formatMessage({ id: 'alert_button_confirm' }),
+           //       onPress: password => this.props.actions.transfer.requested({
+           //         ...data,
+           //         password,
+           //         fromAddress: transferWallet.address,
+           //         chain: transferWallet.chain,
+           //         id: transferWallet.id,
+           //         feeRate: +this.state.feeRate || +this.state.initialFeeRate || this.state.fastestBTCFee || 45,
+           //         symbol: transferAsset.symbol,
+           //         precision: transferAsset.precision,
+           //         decimals: transferAsset.decimals,
+           //         contract: transferAsset.contract,
+           //         componentId: this.props.componentId,
+           //         memo: data.memo || (this.props.selectedContact && this.props.selectedContact.memo),
+           //         gasLimit: this.state.ethGasLimit,
+           //         gasPrice: +this.state.useGasPrice || +this.state.initialGwei || this.state.ethGasPrice || 4.00
+           //       })
+           //     }
+           //   ],
+           //   'secure-text'
+           // )
+         });
+       }else {
+         this.setState({
+           passwordModalState: true
+         })
+       }
+     });
 
-    Alert.prompt(
-      intl.formatMessage({ id: 'alert_input_wallet_password' }),
-      null,
-      [
-        {
-          text: intl.formatMessage({ id: 'alert_button_cancel' }),
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel'
-        },
-        {
-          text: intl.formatMessage({ id: 'alert_button_confirm' }),
-          onPress: password => this.props.actions.transfer.requested({
-            ...data,
-            password,
-            fromAddress: transferWallet.address,
-            chain: transferWallet.chain,
-            id: transferWallet.id,
-            feeRate: +this.state.feeRate || +this.state.initialFeeRate || this.state.fastestBTCFee || 45,
-            symbol: transferAsset.symbol,
-            precision: transferAsset.precision,
-            decimals: transferAsset.decimals,
-            contract: transferAsset.contract,
-            componentId: this.props.componentId,
-            memo: data.memo || (this.props.selectedContact && this.props.selectedContact.memo),
-            gasLimit: this.state.ethGasLimit,
-            gasPrice: +this.state.useGasPrice || +this.state.initialGwei || this.state.ethGasPrice || 4.00
-          })
-        }
-      ],
-      'secure-text'
-    )
+
   }
 
   componentDidAppear() {
@@ -843,6 +947,7 @@ export default class TransferAsset extends Component {
     const toAddress = formValues && formValues.toAddress
     const memo = formValues && formValues.memo
     const amount = formValues && formValues.amount
+    const password = formValues && formValues.password
     const opreturn = formValues && formValues.opreturn
     const symbol = balance.symbol
     const iconUrl = transferAsset.icon_url
@@ -1138,6 +1243,91 @@ export default class TransferAsset extends Component {
               <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'transfer_alert_sending_transaction' })}</Text>
             </View>
           </View>}
+        </Modal>
+        <Modal
+          isVisible={this.state.passwordModalState}
+          backdropOpacity={0.4}
+          useNativeDriver
+          animationIn="fadeIn"
+          animationInTiming={200}
+          backdropTransitionInTiming={200}
+          animationOut="fadeOut"
+          animationOutTiming={200}
+          backdropTransitionOutTiming={200}
+          onModalHide={this.onModalHide}
+        >
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ backgroundColor: 'white', padding: 20, alignItem: 'center', justifyContent: 'center',
+              width: 300
+            }}>
+              <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10, width: '100%', textAlign: 'center'}}>请输入密码</Text>
+              <Field
+                name="password"
+                fieldName="password"
+                component={passwordField}
+                showClearButton={!!password && password.length > 0}
+                change={change}
+                valueLength={!!password && password.length}
+                separator
+                isShowPassword={this.state.isShowPassword}
+                showPasswordChange={() => {
+                  this.setState({
+                    isShowPassword: !this.state.isShowPassword
+                  });
+                }}
+              />
+              <TouchableOpacity onPress={() => {
+                this.setState({
+                  isOpenFaceID: !this.state.isOpenFaceID
+                })
+              }}>
+                <View style={{marginTop: 10, flexDirection: 'row'}}>
+                  <View style={{
+                    borderWidth: 1,
+                    borderColor: '#666666',
+                    marginRight: 10, width: 15, height: 15,
+                    justifyContent:'center',
+                    alignItems: 'center'
+                  }}>
+                    {this.state.isOpenFaceID &&
+                    <FastImage source={require('resources/images/check.png')}
+                               style={{width: 15, height: 15}}
+                    />
+                    }
+                  </View>
+                  <Text>开启指纹/面容解锁</Text>
+                </View>
+              </TouchableOpacity>
+              <View style={{marginTop: 10, flexDirection: 'row', width: '100%',
+                justifyContent: 'space-between', alignItems: 'center'}}>
+                <TouchableOpacity onPress={() => {
+                  this.setState({
+                    passwordModalState: false
+                  })
+                }}>
+                  <View style={{width: 70, height:30, justifyContent: 'center', alignItems: 'center',
+                    backgroundColor: '#007AFF',
+                    borderRadius: 4
+                  }}>
+                    <Text style={{color: '#FFFFFF'}}>{intl.formatMessage({ id: 'alert_button_cancel' })}</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                  this.setState({
+                    passwordModalState: false
+                  })
+                  this.props.handleSubmit(this.surePassword)()
+                }}>
+                  <View style={{width: 70, height:30, justifyContent: 'center', alignItems: 'center',
+                    backgroundColor: '#007AFF',
+                    borderRadius: 4
+                  }}>
+                    <Text style={{color: '#FFFFFF'}}>{intl.formatMessage({ id: 'alert_button_confirm' })}</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
         </Modal>
       </ScrollView>
       </SafeAreaView>

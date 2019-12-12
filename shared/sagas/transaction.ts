@@ -4,6 +4,7 @@ import { takeLatest, put, call, select, race } from 'redux-saga/effects'
 import { getErrorMessage, getEOSErrorMessage } from 'utils'
 import { reset } from 'redux-form'
 import secureStorage from 'core/storage/secureStorage'
+import memoryStorage from 'core/storage/memoryStorage'
 import * as actions from 'actions/transaction'
 import { getAccount } from 'actions/account'
 import { getBalance } from 'actions/balance'
@@ -22,7 +23,7 @@ function* transfer(action: Action) {
 
   try {
     const { chain, source, id, password, amount, symbol, precision, decimals, memo, contract, toAddress, fromAddress, feeRate, gasLimit, gasPrice, opreturn } = action.payload
-
+    const {isOpenFaceID} = action.payload;
     const assetId = contract ? `${contract}/${symbol}` : 'syscoin'
     const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
     const identityKeystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
@@ -192,6 +193,10 @@ function* transfer(action: Action) {
     }
 
     yield put(actions.transfer.succeeded())
+    if (isOpenFaceID === '1'){ // 开启faceID
+      //  将id跟密码存起来
+      yield call(memoryStorage.setItem, `openFaceIdID${action.payload.id}`, password, true)
+    }
     yield put(reset('transferAssetForm'))
     yield delay(500)
 

@@ -53,13 +53,15 @@
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>This is used for security resesons </string>
 	<key>NSCalendarsUsageDescription</key>
-	<string>This is only used under user&apos;s request</string>
+	<string>This is only used under user's request</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This is used to scan QR code to transfer or redirect to another address</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>启用faceID权限</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This is only used to protect the safety of the user&apos;s info</string>
+	<string>This is only used to protect the safety of the user's info</string>
 	<key>NSMotionUsageDescription</key>
-	<string>This is only used to protect the safety of the user&apos;s info</string>
+	<string>This is only used to protect the safety of the user's info</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This is used to scan QR Code from albums</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
