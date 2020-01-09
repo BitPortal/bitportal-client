@@ -8,7 +8,7 @@
 
 - (instancetype)initWithKey:(id <NSCopying>)key value:(id)value;
 
-@property (nonatomic, strong, readonly) id key;
-@property (nonatomic, strong) id value;
+@property(nonatomic, strong, readonly) id key;
+@property(nonatomic, strong) id value;
 
 @end

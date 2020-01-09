@@ -10,16 +10,16 @@ import java.util.Collections
 import java.util.Collections.emptyList
 
 class CustomToastPackage : ReactPackage {
-        override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
-                return emptyList<ViewManager<*, *>>()
-        }
+  override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
+    return emptyList<ViewManager<*, *>>()
+  }
 
-        override fun createNativeModules(
-                reactContext: ReactApplicationContext): List<NativeModule> {
-                val modules = ArrayList<NativeModule>()
+  override fun createNativeModules(
+    reactContext: ReactApplicationContext): List<NativeModule> {
+    val modules = ArrayList<NativeModule>()
 
-                modules.add(ToastModule(reactContext))
+    modules.add(ToastModule(reactContext))
 
-                return modules
-        }
+    return modules
+  }
 }

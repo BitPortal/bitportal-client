@@ -38,18 +38,18 @@ RCT_EXPORT_METHOD(getRegistrationID:(NSString *)jsString callback:(RCTResponseSe
 //    callback(@[appDelegate.registrationID]);
 //  }
 }
-  
+
 // 获取deviceID
 RCT_EXPORT_METHOD(getDeviceID:(NSString *)jsString callback:(RCTResponseSenderBlock)callback) {
   NSString* deviceID = [self getDeviceId];
   callback(@[deviceID]);
 }
-  
+
 // 获取设备唯一标识符
 -(NSString *)getDeviceId {
   // 读取设备号
   NSString *localDeviceId = [SSKeychain passwordForService:KeyChainService account:KeyChainDeviceId];
-  
+
   if (!localDeviceId) {
     // 保存设备号
     CFUUIDRef deviceId = CFUUIDCreate(NULL);

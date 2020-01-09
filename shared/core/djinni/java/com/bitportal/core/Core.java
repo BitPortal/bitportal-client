@@ -24,8 +24,7 @@ public abstract class Core {
         private final long nativeRef;
         private final AtomicBoolean destroyed = new AtomicBoolean(false);
 
-        private CppProxy(long nativeRef)
-        {
+        private CppProxy(long nativeRef) {
             if (nativeRef == 0) throw new RuntimeException("nativeRef is zero");
             this.nativeRef = nativeRef;
         }

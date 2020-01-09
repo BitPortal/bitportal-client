@@ -15,9 +15,7 @@ import com.facebook.react.bridge.Promise;
 
 import cn.jpush.android.api.JPushInterface;
 
-
 public class NativeUtils extends ReactContextBaseJavaModule {
-
     private Context context;
 
     public static final String REACT_CLASS = "NativeUtils";
@@ -47,11 +45,12 @@ public class NativeUtils extends ReactContextBaseJavaModule {
             localIntent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
             localIntent.putExtra("com.android.settings.ApplicationPkgName", mActivity.getPackageName());
         }
+
         mActivity.startActivity(localIntent);
     }
 
     @ReactMethod
-    public void getRegistrationID(Promise promise){
+    public void getRegistrationID(Promise promise) {
         try {
             WritableMap map = Arguments.createMap();
             map.putString("registrationID", JPushInterface.getRegistrationID(context));
@@ -59,7 +58,5 @@ public class NativeUtils extends ReactContextBaseJavaModule {
         } catch (Exception e) {
             promise.reject(e);
         }
-
     }
-
 }

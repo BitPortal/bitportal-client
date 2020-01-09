@@ -16,6 +16,6 @@ class AssetView: UIView {
     override func draw(_ rect: CGRect) {
         // Drawing code
     }
-    */
+     */
 
 }

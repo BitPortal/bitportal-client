@@ -22,19 +22,18 @@
 import UIKit
 
 public enum SPAlertHaptic {
+  case success
+  case none
 
-    case success
-    case none
-  
-    func impact() {
-        switch self {
-        case .success:
-          if #available(iOS 10.0, *) {
-            let generator = UINotificationFeedbackGenerator()
-            generator.notificationOccurred(UINotificationFeedbackGenerator.FeedbackType.success)
-          }
-        default:
-            break
-        }
+  func impact() {
+    switch self {
+    case .success:
+      if #available(iOS 10.0, *) {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(UINotificationFeedbackGenerator.FeedbackType.success)
+      }
+    default:
+      break
     }
+  }
 }

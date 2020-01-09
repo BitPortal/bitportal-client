@@ -13,20 +13,19 @@ import com.bitportal.wallet.ui.main.SectionsPagerAdapter
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler
 
 class MainActivity : AppCompatActivity() {
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_main)
+    val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
+    val viewPager: ViewPager = findViewById(R.id.view_pager)
+    viewPager.adapter = sectionsPagerAdapter
+    val tabs: TabLayout = findViewById(R.id.tabs)
+    tabs.setupWithViewPager(viewPager)
+    val fab: FloatingActionButton = findViewById(R.id.fab)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
-        val viewPager: ViewPager = findViewById(R.id.view_pager)
-        viewPager.adapter = sectionsPagerAdapter
-        val tabs: TabLayout = findViewById(R.id.tabs)
-        tabs.setupWithViewPager(viewPager)
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
+    fab.setOnClickListener {
+      view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+        .setAction("Action", null).show()
     }
+  }
 }

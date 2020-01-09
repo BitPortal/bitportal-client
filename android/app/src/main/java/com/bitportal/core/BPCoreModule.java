@@ -35,13 +35,7 @@ public class BPCoreModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void pbkdf2(
-            String password,
-            String salt,
-            int iterations,
-            int keylen,
-            String digest,
-            Promise promise) {
+    public void pbkdf2(String password, String salt, int iterations, int keylen, String digest, Promise promise) {
         try {
             String result = cppApi.pbkdf2(password, salt, iterations, (byte) keylen, digest);
             promise.resolve(result);
@@ -51,14 +45,7 @@ public class BPCoreModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void scrypt(
-        String password,
-        String salt,
-        int N,
-        int r,
-        int p,
-        int dkLen,
-        Promise promise) {
+    public void scrypt(String password, String salt, int N, int r, int p, int dkLen, Promise promise) {
         try {
             String result = cppApi.scrypt(password, salt, N, (byte) r, (byte) p, (byte) dkLen);
             promise.resolve(result);
@@ -68,12 +55,7 @@ public class BPCoreModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void scanHDBTCAddresses(
-        String xpub,
-        int startIndex,
-        int endIndex,
-        boolean isSegWit,
-        Promise promise) {
+    public void scanHDBTCAddresses(String xpub, int startIndex, int endIndex, boolean isSegWit, Promise promise) {
         try {
             ArrayList<HashMap<String, String>> result = cppApi.scanHDBTCAddresses(xpub, startIndex, endIndex, isSegWit);
 

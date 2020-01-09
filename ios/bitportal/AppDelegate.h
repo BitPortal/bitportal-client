@@ -11,7 +11,7 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, RCTBridgeDelegate>
 
-@property (nonatomic, strong) UIWindow *window;
-@property (nonatomic, strong) NSString *registrationID;
+@property(nonatomic, strong) UIWindow *window;
+@property(nonatomic, strong) NSString *registrationID;
 
 @end
