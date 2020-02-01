@@ -55,7 +55,7 @@ const AssetBalanceTableViewCell = props => {
           />
         </View>}
         <View style={{flex: 1, justifyContent: 'center'}}>
-          <Text ellipsizeMode="tail" numberOfLines={2} style={{ fontSize: 17 }}>{`${props.data.name} (${props.data.symbol})`}</Text>
+          <Text ellipsizeMode="tail" numberOfLines={2} style={{ fontSize: 17 }}>{`${props.data.symbol}`}</Text>
         </View>
       </View>
       <View style={{width: '50%', justifyContent: 'center', alignItems: 'flex-end', paddingRight: 16}}>
