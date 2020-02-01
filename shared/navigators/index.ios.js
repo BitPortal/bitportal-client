@@ -314,7 +314,7 @@ export const startTabBasedApp = (locale) => {
               ],
               options: {
                 bottomTab: {
-                  text: '浏览器',
+                  text: messages[locale].tab_bar_title_dapps,
                   textColor: '#9D9D9D',
                   iconColor: '#9D9D9D',
                   selectedTextColor: '#007AFF',
