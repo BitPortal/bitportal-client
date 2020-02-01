@@ -476,7 +476,7 @@ export default class Wallet extends Component {
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <View style={{ marginTop: 80 }}>
             <ActivityIndicator size="small" color="#666666" />
-            <Text style={{ marginTop: 10, color: '#666666' }}>{intl.formatMessage({ id: 'wallet_text_loading_wallet'})}</Text>
+            <Text style={{ marginTop: 10, color: '#666666' }}>{intl.formatMessage({ id: 'wallet_text_loading_wallet' })}</Text>
           </View>
         </View>
       )

@@ -118,8 +118,9 @@ function* scanETHAsset(action: Action) {
       symbol: item.tokenInfo.symbol,
       name: item.tokenInfo.name,
       chain: 'ETHEREUM',
-      icon_url: ''
+      icon_url: item.tokenInfo.image ? item.tokenInfo.image : ''
     }))
+    console.log('[scanETHAsset] eth assets', assets)
     yield put(actions.updateAsset({ assets, chain: 'ETHEREUM' }))
 
     const selectedAssets = assets.map(item => ({ walletId: `${activeWallet.id}`, assetId: `ETHEREUM/${item.contract}/${item.symbol}` }))
