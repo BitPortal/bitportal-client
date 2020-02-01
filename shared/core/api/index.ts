@@ -138,7 +138,7 @@ export const etherscanApi = async (
   params: object = {},
   options: FetchOptions = {}
 ) => {
-  const baseUrl = 'http://api.etherscan.io' + '/api'
+  const baseUrl = 'http://etherscan.bitportal.io' + '/api'
   const headers = options.headers || {}
   const paramsWithApiKey = { ...params, apikey: etherscanApiKey }
 

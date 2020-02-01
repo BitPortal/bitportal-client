@@ -47,6 +47,7 @@ export const getTransactions = async (address: string, startblock: number = 0, e
       page,
       offset
     })
+    console.log('eth token getTransactions', result)
 
     return result.result
   } else {
@@ -60,6 +61,7 @@ export const getTransactions = async (address: string, startblock: number = 0, e
       page,
       offset
     })
+    console.log('eth getTransactions', result)
 
     return result.result
   }

@@ -80,17 +80,27 @@ export const chainxRpcNodes = [
 
 export const eosNodes = [
   'https://eos-mainnet.bitportal.io',
-  'https://geo.eosasia.one',
-  'https://eos.greymass.com',
-  'https://api.hkeos.com'
+  'https://eos.greymass.com'
+]
+
+export const eosTestNodes = [
+  
 ]
 
 export const ethNodes = [
-  'https://mainnet.infura.io/v3/86e777894dec49388d35b56d914732a2'
+  'https://mainnet.infura.io/v3/41d3db874b584770865cb0c194f39c47',
+]
+
+export const ethTestNodes = [
+  'https://ropsten.infura.io/v3/41d3db874b584770865cb0c194f39c47'
 ]
 
 export const btcNodes = [
   'https://insight.bitpay.com'
+]
+
+export const btcTestNodes = [
+  'https://test-insight.bitpay.com'
 ]
 
 export const eosMainnetChainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
