@@ -19,7 +19,7 @@ import chainxAccount from '@chainx/account'
 import styles from './style'
 
 
-const { Section, Item } = TableView
+const { Section, Item, Cell } = TableView
 
 const TextField = ({
   input: { onChange, ...restInput },
@@ -420,30 +420,34 @@ export default class ChainXValidatorDetail extends Component {
           <Section>
             {items}
           </Section>
+          <Section>
+            <Cell>
+              <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
+                <View style={{ width: '100%', alignItems: 'center', height: 56, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
+                  <Text style={{ fontSize: 17, fontWeight: 'bold', marginRight: 16, width: 70 }}>可用余额</Text>
+                  <Text style={{ fontSize: 17 }}>{balance && balance.balance && balance.balance.toFixed(balance.precision)} {balance.symbol}</Text>
+                  <Text style={{ fontSize: 17 }}>{!balance && '暂时无法显示'}</Text>
+                </View>
+                <Field
+                  label="投票数量"
+                  placeholder="输入PCX数量"
+                  name="votingAmount"
+                  fieldName="votingAmount"
+                  component={TextField}
+                  showClearButton={!!votingAmount && votingAmount.length > 0}
+                  change={change}
+                  separator={false}
+                />
+                <TouchableOpacity style={styles.button} onPress={this.toVote.bind(this)}>
+                  <Text style={styles.buttonText}>投票</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.button, { backgroundColor: '#EFEFF4' }]} onPress={this.toClaim.bind(this)}>
+                  <Text style={[styles.buttonText, { color: '#007AFF' }]}>提息</Text>
+                </TouchableOpacity>
+              </View>
+            </Cell>
+          </Section>
         </TableView>
-        <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
-          <View style={{ width: '100%', alignItems: 'center', height: 56, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-            <Text style={{ fontSize: 17, fontWeight: 'bold', marginRight: 16, width: 70 }}>可用余额</Text>
-            <Text style={{ fontSize: 17 }}>{balance && balance.balance && balance.balance.toFixed(balance.precision)} {balance.symbol}</Text>
-            <Text style={{ fontSize: 17 }}>{!balance && '暂时无法显示'}</Text>
-          </View>
-          <Field
-            label="投票数量"
-            placeholder="输入PCX数量"
-            name="votingAmount"
-            fieldName="votingAmount"
-            component={TextField}
-            showClearButton={!!votingAmount && votingAmount.length > 0}
-            change={change}
-            separator={false}
-          />
-          <TouchableOpacity style={styles.button} onPress={this.toVote.bind(this)}>
-            <Text style={styles.buttonText}>投票</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, { backgroundColor: '#EFEFF4' }]} onPress={this.toClaim.bind(this)}>
-            <Text style={[styles.buttonText, { color: '#007AFF' }]}>提息</Text>
-          </TouchableOpacity>
-        </View>
         <Modal
           isVisible={this.state.txLoading}
           backdropOpacity={0.4}

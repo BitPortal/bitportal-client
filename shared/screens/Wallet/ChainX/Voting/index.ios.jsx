@@ -217,8 +217,8 @@ export default class ChainXVoting extends Component {
           headerBackgroundColor="#F7F7F7"
           ref={(ref) => { this.tableViewRef = ref; return null }}
         >
-          <TableView.Section label="特别推荐 / 总票数">
-            {validator.filter(vali => vali.name === 'BitPortal').map(item => {
+          <TableView.Section label="特别推荐">
+            {validator.filter(vali => vali.name === 'BitPortal').map((item) => {
               let pendingInterest = 0
               if (item && item.userNomination) {
                 // 最新总票龄 = 总票龄 + 总投票金额 *（当前高度 - 总票龄更新高度）
@@ -271,7 +271,7 @@ export default class ChainXVoting extends Component {
             })}
           </TableView.Section>
           <TableView.Section label="验证节点 / 总票数">
-            {validator.filter(vali => vali.isActive && vali.isValidator).sort((a, b) => b.totalNomination - a.totalNomination).map(item => {
+            {validator.filter(vali => vali.isActive && vali.isValidator).sort((a, b) => b.totalNomination - a.totalNomination).map((item) => {
 
               let pendingInterest = 0
               if (item && item.userNomination) {
@@ -326,7 +326,7 @@ export default class ChainXVoting extends Component {
             })}
           </TableView.Section>
           <TableView.Section label="备选节点 / 总票数">
-            {validator.filter(vali => !vali.isValidator).sort((a, b) => b.totalNomination - a.totalNomination).map(item => {
+            {validator.filter(vali => !vali.isValidator).sort((a, b) => b.totalNomination - a.totalNomination).map((item) => {
 
               let pendingInterest = 0
               if (item && item.userNomination) {
@@ -348,36 +348,36 @@ export default class ChainXVoting extends Component {
               const totalNominationStr = this.formatBalance(item.totalNomination)
 
               return (
-                  <TableView.Item
-                    key={item.name}
-                    height={60}
-                    cellHeight={60}
-                    selectionStyle={TableView.Consts.CellSelectionStyle.None}
-                    name={item.name}
-                    account={item.account}
-                    isActive={item.isActive}
-                    isTrustee={item.isTrustee}
-                    isValidator={item.isValidator}
-                    about={item.about}
-                    jackpot={item.jackpot}
-                    jackpotAccount={item.jackpotAccount}
-                    sessionKey={item.sessionKey}
-                    url={item.url}
-                    blockHeight={this.state.blockHeight}
-                    lastTotalVoteWeight={item.lastTotalVoteWeight}
-                    lastTotalVoteWeightUpdate={item.lastTotalVoteWeightUpdate}
-                    totalNomination={item.totalNomination}
-                    userLastVoteWeight={item.userLastVoteWeight}
-                    userLastVoteWeightUpdate={item.userLastVoteWeightUpdate}
-                    userNomination={(item && item.userNomination) || '-'}
-                    userNominationStr={userNominationStr}
-                    pendingInterestStr={pendingInterestStr}
-                    totalNominationStr={totalNominationStr}
-                    onPress={this.onAccessoryPress.bind(this, item, pendingInterestStr)}
-                    accessoryType={TableView.Consts.AccessoryType.DetailButton}
-                    onAccessoryPress={this.onAccessoryPress.bind(this, item, pendingInterestStr)}
-                  />
-                )
+                <TableView.Item
+                  key={item.name}
+                  height={60}
+                  cellHeight={60}
+                  selectionStyle={TableView.Consts.CellSelectionStyle.None}
+                  name={item.name}
+                  account={item.account}
+                  isActive={item.isActive}
+                  isTrustee={item.isTrustee}
+                  isValidator={item.isValidator}
+                  about={item.about}
+                  jackpot={item.jackpot}
+                  jackpotAccount={item.jackpotAccount}
+                  sessionKey={item.sessionKey}
+                  url={item.url}
+                  blockHeight={this.state.blockHeight}
+                  lastTotalVoteWeight={item.lastTotalVoteWeight}
+                  lastTotalVoteWeightUpdate={item.lastTotalVoteWeightUpdate}
+                  totalNomination={item.totalNomination}
+                  userLastVoteWeight={item.userLastVoteWeight}
+                  userLastVoteWeightUpdate={item.userLastVoteWeightUpdate}
+                  userNomination={(item && item.userNomination) || '-'}
+                  userNominationStr={userNominationStr}
+                  pendingInterestStr={pendingInterestStr}
+                  totalNominationStr={totalNominationStr}
+                  onPress={this.onAccessoryPress.bind(this, item, pendingInterestStr)}
+                  accessoryType={TableView.Consts.AccessoryType.DetailButton}
+                  onAccessoryPress={this.onAccessoryPress.bind(this, item, pendingInterestStr)}
+                />
+              )
             })}
           </TableView.Section>
         </TableView>

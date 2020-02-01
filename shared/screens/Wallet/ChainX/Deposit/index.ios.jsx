@@ -226,7 +226,7 @@ export default class ChainXDeposit extends Component {
       component: {
         name: 'BitPortal.WebView',
         passProps: {
-          url: 'http://s.bitportal.io/7yk58',
+          url: 'https://chainx.org/help?title=%E5%85%85%E5%80%BC%E5%A5%96%E5%8A%B1%E8%A7%84%E5%88%99',
           id: 0
         },
         largeTitle: {
