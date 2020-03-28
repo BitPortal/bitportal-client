@@ -253,8 +253,43 @@ export default class Discovery extends Component {
           <Item
             reactModuleForCell="DappTrendingTableViewCell"
             height={44}
-            title="MakerDAO"
-            onPress={this.openDapp.bind(this, 'https://cdp.makerdao.com', 'ETHEREUM')}
+            title="Oasis Apps(MakerDAO)"
+            onPress={this.openDapp.bind(this, 'https://oasis.app/', 'ETHEREUM')}
+            showSeparator
+          />
+          <Item
+            reactModuleForCell="DappTrendingTableViewCell"
+            height={44}
+            title="Compound"
+            onPress={this.openDapp.bind(this, 'https://app.compound.finance/', 'ETHEREUM')}
+            showSeparator
+          />
+          <Item
+            reactModuleForCell="DappTrendingTableViewCell"
+            height={44}
+            title="DDEX Margin"
+            onPress={this.openDapp.bind(this, 'https://ddex.io/margin/', 'ETHEREUM')}
+            showSeparator
+          />
+          <Item
+            reactModuleForCell="DappTrendingTableViewCell"
+            height={44}
+            title="Uniswap"
+            onPress={this.openDapp.bind(this, 'https://uniswap.exchange/', 'ETHEREUM')}
+            showSeparator
+          />
+          <Item
+            reactModuleForCell="DappTrendingTableViewCell"
+            height={44}
+            title="DYDX"
+            onPress={this.openDapp.bind(this, 'https://trade.dydx.exchange/', 'ETHEREUM')}
+            showSeparator
+          />
+          <Item
+            reactModuleForCell="DappTrendingTableViewCell"
+            height={44}
+            title="DeBank"
+            onPress={this.openDapp.bind(this, 'https://debank.com/?atm=bitportal', 'ETHEREUM')}
             showSeparator
           />
           <Item
