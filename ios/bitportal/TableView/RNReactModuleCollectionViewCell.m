@@ -29,6 +29,7 @@
         [self.contentView addSubview:_rootView];
         _rootView.frame = self.contentView.frame;
         _rootView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+      _rootView.backgroundColor = [UIColor clearColor];
       
       if (data[@"moreButtonImage"] && [data[@"accessoryType"] intValue] == 1) {
         UIImage *moreButtonImage;

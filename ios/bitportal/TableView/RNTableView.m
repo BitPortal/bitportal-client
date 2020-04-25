@@ -423,7 +423,7 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
         {
             [cell setBackgroundColor:[UIColor clearColor]];
         } else {
-            [cell setBackgroundColor:[UIColor whiteColor]];
+            // [cell setBackgroundColor:[UIColor whiteColor]];
         }
     }
     
