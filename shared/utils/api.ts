@@ -53,6 +53,7 @@ export const fetchBase = async (
     }
   }
 
+  console.log("transaction url", url)
   return fetch(url, fetchOptions).then((res: any) => {
     if (!res.ok) {
       return res.json().then((e: any) => Promise.reject({ message: e }))
@@ -149,6 +150,36 @@ const blockdogFetchBase = (
   baseUrl: 'https://open-api.eos.blockdog.com/v1'
 })
 
+let dfuseJWT = ''
+const dfuseApiKey = 'mobile_41b32cb415ec79e17856e53a71027ff0'
+
+const dfuseJWTFetchBase = (
+  method: FetchMethod = 'GET',
+  endPoint: string = '/hello',
+  params: object = {},
+  options: object = {}
+) => fetchBase(method, endPoint, { api_key: dfuseApiKey }, {
+  ...options,
+  baseUrl: 'https://auth.dfuse.io/v1'
+})
+
+export const refreshDfuseJWT = async () => {
+  const result = await dfuseJWTFetchBase('POST', '/auth/issue', {})
+  console.log('refreshDfuseJWT', result)
+  dfuseJWT = result.token
+}
+
+const dfuseFetchBase = (
+  method: FetchMethod = 'GET',
+  endPoint: string = '/hello',
+  params: object = {},
+  options: object = {}
+) => fetchBase(method, endPoint, { ...params}, {
+  ...options,
+  headers: { Authorization: `Bearer ${dfuseJWT}` },
+  baseUrl: 'https://mainnet.eos.dfuse.io/v0'
+})
+
 const exchangerateFetchBase = (
   method: FetchMethod = 'GET',
   endPoint: string = '/hello',
@@ -194,6 +225,11 @@ export const simpleWalletAuth = (params: any, baseUrl: string) => fetchBase('POS
 export const simpleWalletCallback = (baseUrl: string) => fetchBase('GET', '', undefined, { baseUrl })
 export const getBTCFees = (params: any) => bitcoinFeesBase('GET', '/fees/recommended')
 export const simpleWalletAuthorize = ({ loginUrl, ...params }) => fetchBase('POST', '', params, { baseUrl: loginUrl })
-export const getEOSTransactions = (params: any) => blockdogFetchBase('POST', '/third/get_account_transfer', params)
-export const getEOSTransaction = (params: any) => blockdogFetchBase('POST', '/third/get_transaction', params)
+export const getEOSTransactions = async (params: any) => {
+  await refreshDfuseJWT()
+  console.log('getEOSTransactions', params)
+  return dfuseFetchBase('GET', '/search/transactions', params)
+}
+  // export const getEOSTransaction = (params: any) => blockdogFetchBase('POST', '/third/get_transaction', params)
+  export const getEOSTransaction = (params: any) => blockdogFetchBase('POST', '/search/transactions', params)
 export const getCurrencyRates = (params: any) => exchangerateFetchBase('GET', '/USD', params)

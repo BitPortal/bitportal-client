@@ -1,0 +1,99 @@
+{
+  "TxHash": "H256",
+  "Deposit": {
+    "account_id": "AccountId",
+    "tx_hash": "Option<TxHash>",
+    "amount": "Balance"
+  },
+  "Auth": {
+    "_enum": [
+      "All",
+      "Deposit",
+      "Withdraw",
+      "Refund",
+      "Mark"
+    ]
+  },
+  "BlackOrWhite": {
+    "_enum": [
+      "Black",
+      "White"
+    ]
+  },
+  "ExtrinsicIndex": "u32",
+  "LineNumber": "u32",
+  "AuctionBalance": "Balance",
+  "TotalLoanBalance": "Balance",
+  "CollateralBalanceAvailable": "Balance",
+  "CollateralBalanceOriginal": "Balance",
+  "Price": "u128",
+  "PriceReport": {
+    "reporter": "AccountId",
+    "price": "Price"
+  },
+  "LoanHealth": {
+    "_enum": {
+      "Well": null,
+      "Warning": "LTV",
+      "Liquidating": "LTV",
+      "Extended": null,
+      "Expired": null
+    }
+  },
+  "LoanPackageStatus": {
+    "_enum": [
+      "Active",
+      "Inactive"
+    ]
+  },
+  "Loan": {
+    "id": "LoanId",
+    "package_id": "LoanPackageId",
+    "who": "AccountId",
+    "due": "Moment",
+    "due_extend": "Moment",
+    "collateral_balance_original": "Balance",
+    "collateral_balance_available": "Balance",
+    "loan_balance_total": "Balance",
+    "status": "LoanHealth"
+  },
+  "LoanPackage": {
+    "id": "LoanPackageId",
+    "status": "LoanPackageStatus",
+    "terms": "u32",
+    "min": "Balance",
+    "interest_rate_hourly": "u32",
+    "collateral_asset_id": "AssetId",
+    "loan_asset_id": "AssetId"
+  },
+  "SharePackage": {
+    "terms_total": "u32",
+    "terms_left": "u32",
+    "per_term": "Balance"
+  },
+  "ReleaseTrigger": {
+    "_enum": {
+      "PhaseChange": null,
+      "BlockNumber": "BlockNumber"
+    }
+  },
+  "ShareReleasePack": {
+    "asset_id": "AssetId",
+    "phase_id": "PhaseId",
+    "owner": "AccountId",
+    "empty": "bool",
+    "major": "SharePackage",
+    "minor": "Option<SharePackage>",
+    "release_trigger": "ReleaseTrigger"
+  },
+  "PhaseInfo": {
+    "id": "PhaseId",
+    "quota": "u128",
+    "exchange": "u128",
+    "iou_asset_id": "Option<u32>"
+  },
+  "LTV": "u64",
+  "LoanId": "u64",
+  "LoanPackageId": "u64",
+  "PhaseId": "u32"
+}

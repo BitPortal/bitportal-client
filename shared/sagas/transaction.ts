@@ -488,6 +488,7 @@ function* getTransactions(action: Action) {
         yield put(actions.addTransactions({ id, items, pagination, assetId, canLoadMore, loadingMore: false }))
       }
     } else if (chain === 'ETHEREUM') {
+      console.log('getTransactions ethereum')
       const startblock = 0
       const endblock = 99999999
 
@@ -539,8 +540,9 @@ function* getTransactions(action: Action) {
         yield put(actions.addTransactions({ id, items, pagination, assetId, canLoadMore, loadingMore: false }))
       }
     } else if (chain === 'EOS') {
+      let totalItems = 0
       let page = 1
-      const pageSize = 20
+      const pageSize = 100
 
       if (loadMore) {
         const pagination = yield select(state => activeWalletTransactionsPaginationSelector(state))
@@ -548,13 +550,42 @@ function* getTransactions(action: Action) {
         if (pagination && pagination.page) {
           page = pagination.page + 1
         }
+
+        if (pagination && pagination.totalItems) {
+          totalItems = pagination.totalItems
+        }
+      } else {
+        const transactions = yield call(eosChain.getTransactions, address, -1, -1)
+        if (transactions.actions) {
+          totalItems = transactions.actions[0].account_action_seq + 1
+        }
       }
 
+      // console.log('transaction totalitems', totalItems)
+      const position = totalItems - (page - 1) * pageSize
       const tokenAccount = contract || 'eosio.token'
       const symbol = symbol || assetSymbol
-      const transactions = yield call(api.getEOSTransactions, { account_name: address, code: tokenAccount, symbol, type: 3, sort: 1, page, size: pageSize })
+      // const transactions = yield call(api.getEOSTransactions, { account_name: address, code: tokenAccount, symbol, type: 3, sort: 1, page, size: pageSize })
+      // ?start_block=0&block_count=10000&limit=10&sort=desc&q=receiver:eosio.token+action:transfer+data.to:someaccount1
+      const transactions = yield call(eosChain.getTransactions, address, position, -pageSize)
+      // console.log('eos transactions', transactions)
+      let transactionResult
+      if (transactions.actions) {
+        transactionResult = transactions.actions
+          .filter(action => action && action.action_trace && action.action_trace.act && action.action_trace.act.name === 'transfer' && action.action_trace.act.account === tokenAccount)
+          .map(action => {
+            const blockNum = action.block_num
+            const blockTime = action.block_time
+            const id = action.action_trace.trx_id
+            const data = action.action_trace.act.data
+            const account = action.action_trace.act.account
+            return { blockNum, data, account, id, blockTime }
+          })
+      } else {
+        transactionResult = []
+      }
 
-      const items = transactions.list.map((item: any) => {
+      const items = transactionResult.map((item: any) => {
         const sender = item.data.from
         const receiver = item.data.to
         const memo = item.data.memo
@@ -585,8 +616,9 @@ function* getTransactions(action: Action) {
           transactionType
         }
       })
+      console.log('eos transactions items', items)
 
-      const totalItems = transactions.total
+      // const totalItems = transactions.total
       const pagination = {
         page,
         pageSize,

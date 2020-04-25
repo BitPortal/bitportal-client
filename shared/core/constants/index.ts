@@ -107,7 +107,7 @@ export const eosMainnetChainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119f
 
 export const eosTestnetChainId = '5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191'
 
-const etherscanApiKey = 'J69V6CD69KQ72123TF6BA1ZTWKY13A197X'
+export const etherscanApiKey = 'EF5MCHMQKH7QEYHEDGY8HNG1NVG5T79BY4'
 
 export const erc20ABI = [
   {

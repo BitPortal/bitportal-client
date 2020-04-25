@@ -183,7 +183,7 @@ export const selectKeysForPermission = async (keyPairs: any, account: string, pe
   }
 }
 
-export const getTransactions = async (accountName: string, position: number = 0, offset: number = 1000) => {
+export const getTransactions = async (accountName: string, position: number = 0, offset: number = 100) => {
   const result = await eos.getActions({ offset, account_name: accountName, pos: position })
   return result
 }

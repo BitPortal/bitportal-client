@@ -160,7 +160,9 @@ export const etherscanApi = async (
 
   return fetch(url, fetchOptions).then((res: any) => {
     if (!res.ok) {
-      return res.json().then((e: any) => Promise.reject({ message: e.data.tx_hex }))
+      return res.json().then((e: any) => {
+        return Promise.reject({ message: e.data.tx_hex })
+      })
     }
 
     const contentType = res.headers.get('content-type')

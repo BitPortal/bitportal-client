@@ -75,18 +75,18 @@ export default class Voting extends Component {
           text: 'EOS节点投票',
           fontWeight: '400'
         },
+        largeTitle: {
+          visible: false
+        },
         subtitle: {
           text: '0 / 30 已选',
           fontSize: 11
         },
         drawBehind: false,
-        searchBar: true,
+        searchBar: false,
         searchBarHiddenWhenScrolling: true,
         searchBarPlaceholder: 'Search',
         hideNavBarOnFocusSearchBar: false,
-        largeTitle: {
-          visible: false
-        },
         leftButtons: [
           {
             id: 'cancel',

@@ -142,6 +142,15 @@ export default class Profile extends Component {
   }
 
   toHelpCenter = () => {
+    /* Navigation.showModal({
+     *   stack: {
+     *     children: [{
+     *       component: {
+     *         name: 'BitPortal.AddIdentity'
+     *       }
+     *     }]
+     *   }
+     * }) */
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.WebView',
@@ -190,7 +199,7 @@ export default class Profile extends Component {
 
     return (
       <TableView
-        style={{ flex: 1 }}
+        style={{ flex: 1, backgroundColor: '#F7F7F7' }}
         tableViewStyle={TableView.Consts.Style.Grouped}
         tableViewCellStyle={TableView.Consts.CellStyle.Value1}
         cellSeparatorInset={{ left: 61 }}

@@ -299,6 +299,8 @@
 		34C819B0233B4C0D0090AD79 /* UISplitViewController+RNNOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C818CB233B4C0C0090AD79 /* UISplitViewController+RNNOptions.m */; };
 		34C819B1233B4C0D0090AD79 /* IntNumberParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C818CC233B4C0C0090AD79 /* IntNumberParser.m */; };
 		34D1CC3121A70F40001E6A5F /* copy.wav in Resources */ = {isa = PBXBuildFile; fileRef = 34D1CC3021A70F3F001E6A5F /* copy.wav */; };
+		34E9C2562452D25C0087E780 /* UIScreen+RNDarkModeTraitChangeListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E9C2072452D25B0087E780 /* UIScreen+RNDarkModeTraitChangeListener.m */; };
+		34E9C2572452D25C0087E780 /* RNDarkMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E9C2542452D25B0087E780 /* RNDarkMode.m */; };
 		34FAC26A232142ED0084A60F /* AddressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC269232142ED0084A60F /* AddressBar.swift */; };
 		34FAC26C232142F60084A60F /* SPFakeBarNavigationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC26B232142F50084A60F /* SPFakeBarNavigationStyle.swift */; };
 		34FAC26E232142FF0084A60F /* SPFakeBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC26D232142FF0084A60F /* SPFakeBarView.swift */; };
@@ -1444,6 +1446,10 @@
 		34C818CC233B4C0C0090AD79 /* IntNumberParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntNumberParser.m; sourceTree = "<group>"; };
 		34D1CC3021A70F3F001E6A5F /* copy.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = copy.wav; path = ../shared/resources/sounds/copy.wav; sourceTree = "<group>"; };
 		34DAEC4967524A5CAF94D0B9 /* imageCropPicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = imageCropPicker.xcodeproj; path = "../node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj"; sourceTree = "<group>"; };
+		34E9C2072452D25B0087E780 /* UIScreen+RNDarkModeTraitChangeListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScreen+RNDarkModeTraitChangeListener.m"; path = "bitportal/UIScreen+RNDarkModeTraitChangeListener.m"; sourceTree = "<group>"; };
+		34E9C2532452D25B0087E780 /* RNDarkMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RNDarkMode.h; path = bitportal/RNDarkMode.h; sourceTree = "<group>"; };
+		34E9C2542452D25B0087E780 /* RNDarkMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNDarkMode.m; path = bitportal/RNDarkMode.m; sourceTree = "<group>"; };
+		34E9C2552452D25C0087E780 /* UIScreen+RNDarkModeTraitChangeListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScreen+RNDarkModeTraitChangeListener.h"; path = "bitportal/UIScreen+RNDarkModeTraitChangeListener.h"; sourceTree = "<group>"; };
 		34FAC269232142ED0084A60F /* AddressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressBar.swift; sourceTree = "<group>"; };
 		34FAC26B232142F50084A60F /* SPFakeBarNavigationStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPFakeBarNavigationStyle.swift; sourceTree = "<group>"; };
 		34FAC26D232142FF0084A60F /* SPFakeBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPFakeBarView.swift; sourceTree = "<group>"; };
@@ -1641,6 +1647,10 @@
 		13B07FAE1A68108700A75B9A /* bitportal */ = {
 			isa = PBXGroup;
 			children = (
+				34E9C2532452D25B0087E780 /* RNDarkMode.h */,
+				34E9C2542452D25B0087E780 /* RNDarkMode.m */,
+				34E9C2552452D25C0087E780 /* UIScreen+RNDarkModeTraitChangeListener.h */,
+				34E9C2072452D25B0087E780 /* UIScreen+RNDarkModeTraitChangeListener.m */,
 				34A66A4A233F1306003C2C2B /* TableViewController.swift */,
 				34A66A96233F1306003C2C2B /* ViewController.swift */,
 				34C81873233B4C0A0090AD79 /* SPStorkController */,
@@ -3729,6 +3739,7 @@
 				18F2827A2177351C00DEB13F /* nem.c in Sources */,
 				34C8196B233B4C0D0090AD79 /* InteractivePopGestureDelegate.m in Sources */,
 				34C81999233B4C0D0090AD79 /* RNNButtonOptions.m in Sources */,
+				34E9C2572452D25C0087E780 /* RNDarkMode.m in Sources */,
 				34C8199C233B4C0D0090AD79 /* RNNViewLocation.m in Sources */,
 				34C8192B233B4C0C0090AD79 /* ColorParser.m in Sources */,
 				34C81935233B4C0C0090AD79 /* RCTConvert+UIBarButtonSystemItem.m in Sources */,
@@ -3798,6 +3809,7 @@
 				34C81943233B4C0D0090AD79 /* RNNSubtitleOptions.m in Sources */,
 				18F2828B2177351C00DEB13F /* sha3.c in Sources */,
 				34C819A5233B4C0D0090AD79 /* VICMAImageView.m in Sources */,
+				34E9C2562452D25C0087E780 /* UIScreen+RNDarkModeTraitChangeListener.m in Sources */,
 				34C81932233B4C0C0090AD79 /* Double.m in Sources */,
 				34C81996233B4C0D0090AD79 /* SPStorkControllerConfirmDelegate.swift in Sources */,
 				18F282772177351C00DEB13F /* modm-donna-32bit.c in Sources */,
@@ -4031,7 +4043,7 @@
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
 					"$(PROJECT_DIR)/bitportal/Navigation",
 				);
-				MARKETING_VERSION = 0.9.8;
+				MARKETING_VERSION = 0.9.11;
 				OTHER_CFLAGS = (
 					"$(inherited)",
 					"-iquote",
@@ -4117,7 +4129,7 @@
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
 					"$(PROJECT_DIR)/bitportal/Navigation",
 				);
-				MARKETING_VERSION = 0.9.8;
+				MARKETING_VERSION = 0.9.11;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"$(inherited)",

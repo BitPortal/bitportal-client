@@ -34,6 +34,7 @@ import Sound from 'react-native-sound'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 import * as api from 'utils/api'
 import Profile from 'screens/Profile'
+import { DarkModeContext } from 'utils/darkMode'
 
 import styles from './styles'
 const { Section, Item, CollectionView, CollectionViewItem } = TableView
@@ -114,6 +115,8 @@ export default class Wallet extends Component {
     }
   }
 
+  static contextType = DarkModeContext
+
   state = {
     showModal: false,
     showModalContent: false,
@@ -155,15 +158,6 @@ export default class Wallet extends Component {
     KeyboardManager.setToolbarDoneBarButtonItemText('完成')
     KeyboardManager.setToolbarPreviousNextButtonEnable(true)
     this.props.actions.setSelectedContact(null)
-
-    /* for (let i = 0; i < 200; i++) {
-     *   // Replace me with a link to a large file
-     *   // http://ipv4.download.thinkbroadband.com/5MB.zip
-     *   const res = await fetch('https://market.bitportal.io/api/v2/t
-       ickers', { mode: 'no-cors' })
-     *   const result = await api.getTicker()
-     *   console.log('fetched', result.length)
-     * }*/
   }
 
   componentWillUnmount() {
@@ -210,20 +204,20 @@ export default class Wallet extends Component {
   }
 
   toManage = () => {
-    /* Navigation.showModal({
-     *   stack: {
-     *     children: [{
-     *       component: {
-     *         name: 'BitPortal.WalletList'
-     *       }
-     *     }]
-     *   }
-     * }) */
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.WalletList'
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.WalletList'
+          }
+        }]
       }
     })
+    /* Navigation.push(this.props.componentId, {
+     *   component: {
+     *     name: 'BitPortal.WalletList'
+     *   }
+     * }) */
   }
 
   addAssets = () => {
@@ -470,6 +464,9 @@ export default class Wallet extends Component {
     const identityWalletsCount = identityWallets.length
     const importedWalletsCount = importedWallets.length
     const chain = activeWallet ? activeWallet.chain : ''
+
+    const isDarkMode = this.context === 'dark';
+    console.log('isDarkMode', isDarkMode)
 
     if (loading && !identityWalletsCount && !importedWalletsCount) {
       return (

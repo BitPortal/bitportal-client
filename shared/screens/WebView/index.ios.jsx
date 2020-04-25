@@ -1239,7 +1239,7 @@ export default class WebView extends Component {
             <Animated.View style={{ height: '100%', width: this.state.progress, backgroundColor: '#007AFF' }} />
           </Animated.View>
         </View>
-        <View style={{ width: '100%', height: 49, backgroundColor: '#F7F7F7', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
+        <View style={{ width: '100%', height: 49, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
           <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <TouchableOpacity onPress={this.goBack}>
               <FastImage

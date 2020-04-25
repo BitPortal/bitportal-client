@@ -9,6 +9,7 @@ import en from 'react-intl/locale-data/en'
 import zh from 'react-intl/locale-data/zh'
 import ko from 'react-intl/locale-data/ko'
 import messages from 'resources/messages'
+import { DarkModeProvider } from 'utils/darkMode'
 
 addLocaleData(en)
 addLocaleData(zh)
@@ -28,7 +29,9 @@ const Provider = ({ store, children }) => {
   return (
     <ReduxProvider store={pureStore}>
       <ConnectedIntlProvider>
-        {children}
+        <DarkModeProvider>
+          {children}
+        </DarkModeProvider>
       </ConnectedIntlProvider>
     </ReduxProvider>
   )
@@ -41,7 +44,9 @@ export const PersistProvider = ({ store, children }) => {
     <ReduxProvider store={pureStore}>
       <PersistGate loading={<Loading />} persistor={persistor}>
         <ConnectedIntlProvider>
-          {children}
+          <DarkModeProvider>
+            {children}
+          </DarkModeProvider>
         </ConnectedIntlProvider>
       </PersistGate>
     </ReduxProvider>

@@ -1,0 +1,18 @@
+[19:51:24.803] Global cache location '/Users/terencege/Library/Caches/typescript/2.9', safe file path '/users/terencege/developer/bitportal/bitportal-client/node_modules/typescript/lib/typingsafelist.json', types map path /users/terencege/developer/bitportal/bitportal-client/node_modules/typescript/lib/typesmap.json
+[19:51:24.804] Processing cache location '/Users/terencege/Library/Caches/typescript/2.9'
+[19:51:24.805] Trying to find '/Users/terencege/Library/Caches/typescript/2.9/package.json'...
+[19:51:24.806] Loaded content of '/Users/terencege/Library/Caches/typescript/2.9/package.json': {"private":true,"dependencies":{"types-registry":"^0.1.470"}}
+[19:51:24.806] Loaded content of '/Users/terencege/Library/Caches/typescript/2.9/package-lock.json'
+[19:51:24.806] Finished processing cache location '/Users/terencege/Library/Caches/typescript/2.9'
+[19:51:24.807] Process id: 4966
+[19:51:24.807] NPM location: "/usr/local/bin/npm" (explicit '--npmLocation' not  provided)
+[19:51:24.807] Npm config file: /Users/terencege/Library/Caches/typescript/2.9/package.json
+[19:51:24.808] Updating types-registry npm package...
+[19:51:24.808] Exec: "/usr/local/bin/npm" install --ignore-scripts types-registry@latest
+[19:51:27.379]     Succeeded. stdout:
+    + types-registry@0.1.470
+    updated 1 package and audited 1 package in 1.477s
+found 0 vulnerabilities
+
+
+[19:51:27.379] Updated types-registry npm package

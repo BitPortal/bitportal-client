@@ -198,7 +198,7 @@ export default class TransactionDetail extends Component {
 
     if (transaction && chain === 'EOS') {
       return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F7F7' }}>
           <ScrollView
             style={{ flex: 1, backgroundColor: 'white' }}
             contentContainerStyle={{ backgroundColor: 'white' }}
@@ -280,10 +280,10 @@ export default class TransactionDetail extends Component {
       )
     } else if (transaction && chain === 'ETHEREUM') {
       return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F7F7' }}>
           <ScrollView
-          style={{ flex: 1, backgroundColor: 'white' }}
-          contentContainerStyle={{ backgroundColor: 'white' }}
+            style={{ flex: 1, backgroundColor: 'white' }}
+            contentContainerStyle={{ backgroundColor: 'white' }}
           >
             <View style={{ flex: 1, backgroundColor: '#F7F7F7', padding: 16, paddingTop: 0 }}>
               {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
@@ -298,8 +298,8 @@ export default class TransactionDetail extends Component {
                     <Text style={{ fontSize: 15 }}>
                       {`${transaction.to} `}
                       <Image
-                      source={require('resources/images/copy_black.png')}
-                      style={{ width: 18, height: 18 }}
+                        source={require('resources/images/copy_black.png')}
+                        style={{ width: 18, height: 18 }}
                       />
                     </Text>
                   </TouchableHighlight>
@@ -313,8 +313,8 @@ export default class TransactionDetail extends Component {
                     <Text style={{ fontSize: 15 }}>
                       {`${transaction.from} `}
                       <Image
-                      source={require('resources/images/copy_black.png')}
-                      style={{ width: 18, height: 18 }}
+                        source={require('resources/images/copy_black.png')}
+                        style={{ width: 18, height: 18 }}
                       />
                     </Text>
                   </TouchableHighlight>
@@ -348,15 +348,15 @@ export default class TransactionDetail extends Component {
               {this.toExplorerUI(chain, transaction.id)}
             </View>
             <Modal
-            isVisible={this.state.showModal}
-            backdropOpacity={0}
-            useNativeDriver
-            animationIn="fadeIn"
-            animationInTiming={200}
-            backdropTransitionInTiming={200}
-            animationOut="fadeOut"
-            animationOutTiming={200}
-            backdropTransitionOutTiming={200}
+              isVisible={this.state.showModal}
+              backdropOpacity={0}
+              useNativeDriver
+              animationIn="fadeIn"
+              animationInTiming={200}
+              backdropTransitionInTiming={200}
+              animationOut="fadeOut"
+              animationOutTiming={200}
+              backdropTransitionOutTiming={200}
             >
               {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
@@ -369,10 +369,10 @@ export default class TransactionDetail extends Component {
       )
     } else if (transaction && chain === 'BITCOIN') {
       return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F7F7' }}>
           <ScrollView
-          style={{ flex: 1, backgroundColor: 'white' }}
-          contentContainerStyle={{ backgroundColor: 'white' }}
+            style={{ flex: 1, backgroundColor: 'white' }}
+            contentContainerStyle={{ backgroundColor: 'white' }}
           >
             <View style={{ flex: 1, backgroundColor: '#F7F7F7', padding: 16, paddingTop: 0 }}>
               {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
@@ -387,8 +387,8 @@ export default class TransactionDetail extends Component {
                     <Text style={{ fontSize: 15 }}>
                       {`${transaction.vout[0].scriptPubKey && transaction.vout[0].scriptPubKey.addresses && transaction.vout[0].scriptPubKey.addresses[0]} `}
                       <Image
-                      source={require('resources/images/copy_black.png')}
-                      style={{ width: 18, height: 18 }}
+                        source={require('resources/images/copy_black.png')}
+                        style={{ width: 18, height: 18 }}
                       />
                     </Text>
                   </TouchableHighlight>
@@ -402,8 +402,8 @@ export default class TransactionDetail extends Component {
                     <Text style={{ fontSize: 15 }}>
                       {`${transaction.vin[0].addr} `}
                       <Image
-                      source={require('resources/images/copy_black.png')}
-                      style={{ width: 18, height: 18 }}
+                        source={require('resources/images/copy_black.png')}
+                        style={{ width: 18, height: 18 }}
                       />
                     </Text>
                   </TouchableHighlight>
@@ -432,15 +432,15 @@ export default class TransactionDetail extends Component {
               {this.toExplorerUI(chain, transaction.id)}
             </View>
             <Modal
-            isVisible={this.state.showModal}
-            backdropOpacity={0}
-            useNativeDriver
-            animationIn="fadeIn"
-            animationInTiming={200}
-            backdropTransitionInTiming={200}
-            animationOut="fadeOut"
-            animationOutTiming={200}
-            backdropTransitionOutTiming={200}
+              isVisible={this.state.showModal}
+              backdropOpacity={0}
+              useNativeDriver
+              animationIn="fadeIn"
+              animationInTiming={200}
+              backdropTransitionInTiming={200}
+              animationOut="fadeOut"
+              animationOutTiming={200}
+              backdropTransitionOutTiming={200}
             >
               {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
@@ -453,10 +453,10 @@ export default class TransactionDetail extends Component {
       )
     } else if (transaction && chain === 'CHAINX') {
       return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F7F7' }}>
           <ScrollView
-          style={{ flex: 1, backgroundColor: 'white' }}
-          contentContainerStyle={{ backgroundColor: 'white' }}
+            style={{ flex: 1, backgroundColor: 'white' }}
+            contentContainerStyle={{ backgroundColor: 'white' }}
           >
             <View style={{ flex: 1, backgroundColor: '#F7F7F7', padding: 16, paddingTop: 0 }}>
               {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
@@ -471,8 +471,8 @@ export default class TransactionDetail extends Component {
                     <Text style={{ fontSize: 15 }}>
                       {`${transaction.to} `}
                       <Image
-                      source={require('resources/images/copy_black.png')}
-                      style={{ width: 18, height: 18 }}
+                        source={require('resources/images/copy_black.png')}
+                        style={{ width: 18, height: 18 }}
                       />
                     </Text>
                   </TouchableHighlight>
@@ -486,8 +486,8 @@ export default class TransactionDetail extends Component {
                     <Text style={{ fontSize: 15 }}>
                       {`${transaction.from} `}
                       <Image
-                      source={require('resources/images/copy_black.png')}
-                      style={{ width: 18, height: 18 }}
+                        source={require('resources/images/copy_black.png')}
+                        style={{ width: 18, height: 18 }}
                       />
                     </Text>
                   </TouchableHighlight>
@@ -500,31 +500,31 @@ export default class TransactionDetail extends Component {
                   <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.confirmations}</Text>
                 </View>
                 {/*<View style={{ width: '50%' }}>*/}
-                {/*<Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>矿工费用</Text>*/}
-                {/*<Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.fees}</Text>*/}
-                {/*</View>*/}
+                  {/*<Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>矿工费用</Text>*/}
+                  {/*<Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.fees}</Text>*/}
+                  {/*</View>*/}
                 <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
               </View>
               {/*<View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>*/}
-              {/*<View style={{ width: '50%' }}>*/}
-              {/*<Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>区块高度</Text>*/}
-              {/*<Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.blockheight}</Text>*/}
-              {/*</View>*/}
-              {/*<View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />*/}
-              {/*</View>*/}
+                {/*<View style={{ width: '50%' }}>*/}
+                {/*<Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>区块高度</Text>*/}
+                {/*<Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.blockheight}</Text>*/}
+                {/*</View>*/}
+                {/*<View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />*/}
+                {/*</View>*/}
               {this.toTransactionIdUI(transaction.id)}
               {this.toExplorerUI(chain, transaction.id)}
             </View>
             <Modal
-            isVisible={this.state.showModal}
-            backdropOpacity={0}
-            useNativeDriver
-            animationIn="fadeIn"
-            animationInTiming={200}
-            backdropTransitionInTiming={200}
-            animationOut="fadeOut"
-            animationOutTiming={200}
-            backdropTransitionOutTiming={200}
+              isVisible={this.state.showModal}
+              backdropOpacity={0}
+              useNativeDriver
+              animationIn="fadeIn"
+              animationInTiming={200}
+              backdropTransitionInTiming={200}
+              animationOut="fadeOut"
+              animationOutTiming={200}
+              backdropTransitionOutTiming={200}
             >
               {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>

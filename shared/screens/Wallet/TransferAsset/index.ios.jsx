@@ -174,39 +174,39 @@ const AddressField = ({
 }) => (
   <View style={{ width: '100%', alignItems: 'center', height: showContact ? 64 : 42, paddingLeft: 16, paddingRight: 16, flexDirection: 'row', backgroundColor: '#F7F7F7' }}>
     {!showContact && <TextInput
-      style={styles.textFiled}
-      autoCorrect={false}
-      autoFocus={autoFocus}
-      autoCapitalize="none"
-      placeholder={placeholder}
-      onChangeText={onChange}
-      keyboardType="default"
-      secureTextEntry={secureTextEntry}
-      {...restInput}
+                       style={styles.textFiled}
+                       autoCorrect={false}
+                       autoFocus={autoFocus}
+                       autoCapitalize="none"
+                       placeholder={placeholder}
+                       onChangeText={onChange}
+                       keyboardType="default"
+                       secureTextEntry={secureTextEntry}
+                       {...restInput}
     />}
     {!!showContact && (
-    <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-      <View style={{ width: 40, height: 40, marginRight: 16 }}>
-        <FastImage
-             source={require('resources/images/Userpic2.png')}
-             style={{ width: 40, height: 40, borderRadius: 10, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
-        />
-        <View style={{ height: 34, width: 34, borderRadius: 17, position: 'absolute', right: -15, top: -15, alignItems: 'center', justifyContent: 'center' }}>
-          <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'flex-start', justifyContent: 'flex-end', padding: 5 }} activeOpacity={0.8} onPress={clearContact}>
-            <View style={{ width: 18, height: 18, borderRadius: 9, backgroundColor: 'white' }}>
-              <FastImage
-                   source={require('resources/images/remove_red.png')}
-                   style={{ width: 18, height: 18 }}
-              />
-            </View>
-          </TouchableHighlight>
+      <View style={{ alignItems: 'center', flexDirection: 'row' }}>
+        <View style={{ width: 40, height: 40, marginRight: 16 }}>
+          <FastImage
+            source={require('resources/images/Userpic2.png')}
+            style={{ width: 40, height: 40, borderRadius: 10, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
+          />
+          <View style={{ height: 34, width: 34, borderRadius: 17, position: 'absolute', right: -15, top: -15, alignItems: 'center', justifyContent: 'center' }}>
+            <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'flex-start', justifyContent: 'flex-end', padding: 5 }} activeOpacity={0.8} onPress={clearContact}>
+              <View style={{ width: 18, height: 18, borderRadius: 9, backgroundColor: 'white' }}>
+                <FastImage
+                  source={require('resources/images/remove_red.png')}
+                  style={{ width: 18, height: 18 }}
+                />
+              </View>
+            </TouchableHighlight>
+          </View>
+        </View>
+        <View>
+          <Text style={{ fontSize: 17 }} lineOfNumebrs={1}>{contact.name}</Text>
+          <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginTop: 2 }} lineOfNumebrs={1}>{formatAddress(contact.address)}</Text>
         </View>
       </View>
-      <View>
-        <Text style={{ fontSize: 17 }} lineOfNumebrs={1}>{contact.name}</Text>
-        <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginTop: 2 }} lineOfNumebrs={1}>{formatAddress(contact.address)}</Text>
-      </View>
-    </View>
     )
     }
     <View style={{ height: '100%', position: 'absolute', right: 16, top: 0, width: 30, alignItems: 'center', justifyContent: 'center' }}>
@@ -244,15 +244,15 @@ const MessageField = ({
 }) => (
   <View style={{ width: '100%', alignItems: 'flex-start', height: showMemo ? 104 : 10, paddingLeft: 16, paddingRight: 16, paddingTop: showMemo ? 16 : 0, flexDirection: 'row', backgroundColor: '#F7F7F7', borderBottomWidth: 0.5, borderBottomColor: '#C8C7CC' }}>
     {showMemo && <TextInput
-      style={styles.messageFiled}
-      autoCorrect={false}
-      autoCapitalize="none"
-      placeholder={placeholder}
-      onChangeText={onChange}
-      keyboardType="default"
-      multiline={true}
-      secureTextEntry={secureTextEntry}
-      {...restInput}
+                   style={styles.messageFiled}
+                   autoCorrect={false}
+                   autoCapitalize="none"
+                   placeholder={placeholder}
+                   onChangeText={onChange}
+                   keyboardType="default"
+                   multiline={true}
+                   secureTextEntry={secureTextEntry}
+                   {...restInput}
     />}
     {showMemo && showClearButton && active && <View style={{ height: 30, position: 'absolute', right: 22, bottom: 14, width: 20, alignItems: 'center', justifyContent: 'center' }}>
       <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
@@ -862,285 +862,285 @@ export default class TransferAsset extends Component {
     const useGasPrice = this.state.useGasPrice || this.state.initialGwei || this.state.ethGasPrice || 4.00
 
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-      <ScrollView
-        style={[styles.container, { backgroundColor: 'white' }]}
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{ backgroundColor: 'white' }}
-      >
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F7F7' }}>
+        <ScrollView
+          style={[styles.container, { backgroundColor: 'white' }]}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{ backgroundColor: 'white' }}
+        >
           <View style={{ flex: 1, width: '100%', alignItems: 'center', borderTopWidth: 0, borderBottomWidth: 0, borderColor: '#C8C7CC', justifyContent: "flex-end" }}>
-          <Field
-            label={intl.formatMessage({ id: 'send_input_label_to_address' })}
-            placeholder={`请输入${symbol}${chain === 'EOS' ? '账户名' : '地址'}`}
-            name="toAddress"
-            fieldName="toAddress"
-            component={AddressField}
-            showClearButton={!!toAddress && toAddress.length > 0}
-            change={change}
-            separator
-            showContact={selectedContact}
-            selectContact={this.selectContact}
-            clearContact={this.clearContact}
-            contact={this.props.selectedContact}
-            autoFocus={this.state.autoFocusToAddress}
-            onBlur={this.onToAddressBlur}
-            showMemo={showMemo}
-          />
-          <Field
-            label={intl.formatMessage({ id: 'send_input_label_send_memo' })}
-            placeholder={(selectedContact && !!selectedContact.memo) ? `选填，默认为: ${selectedContact.memo}` : '添加备注 (选填)'}
-            name="memo"
-            fieldName="memo"
-            component={MessageField}
-            showClearButton={!!memo && memo.length > 0}
-            change={change}
-            showMemo={showMemo}
-            separator
-          />
-          <Field
-            label={intl.formatMessage({ id: 'send_input_label_payer_account' })}
-            placeholder=""
-            name="card"
-            fieldName="card"
-            component={CardField}
-            address={transferWallet.address}
-            available={available}
-            symbol={symbol}
-            chain={chain}
-            iconUrl={iconUrl}
-            contract={contract}
-            separator
-          />
-          <Field
-            label={intl.formatMessage({ id: 'send_input_label_send_amount' })}
-            placeholder="00.00"
-            name="amount"
-            fieldName="amount"
-            component={AmountField}
-            showClearButton={!!amount && amount.length > 0}
-            change={change}
-            valueLength={!!amount && amount.length}
-            separator
-          />
-          {showMinnerFee && chain === 'BITCOIN' && <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16 }}>
-            <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
-              <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
-                <Text style={{ fontSize: 15 }}>{intl.formatMessage({ id: 'send_input_label_mining_fee' })}</Text>
-                <TouchableHighlight
-                  underlayColor="white"
-                  activeOpacity={0.42}
-                  onPress={this.showFeesTip}
-                  style={{ width: 28, height: 28 }}
-                >
-                  <FastImage
-                    source={require('resources/images/Info.png')}
-                    style={{ width: 28, height: 28, marginLeft: 4 }}
-                  />
-                </TouchableHighlight>
-              </View>
-              <TouchableHighlight
-                underlayColor="white"
-                activeOpacity={0.42}
-                onPress={this.switchFeesType}
-                style={{ height: 50, alignItems: 'center' }}
-              >
-                <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
-                  <View style={{ alignItems: 'flex-end', marginRight: 4, width: 180 }}>
-                    <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
-                      {`≈ ${intl.formatNumber(feeRate * 226 * Math.pow(10, -8), { minimumFractionDigits: 0, maximumFractionDigits: balance.precision })} btc`}
-                    </Text>
-                    {this.state.customFee && <Text style={{ fontSize: 13, color: 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
-                      {`${(feeRate)} sat/b ${this.getSpeedText(feeRate)}`}
-                    </Text>}
-                  </View>
-                  <Animated.Image
-                    source={require('resources/images/arrow_right_grey.png')}
-                    style={{ width: 14, height: 14, transform: [{ rotate: spin }] }}
-                  />
-                </View>
-              </TouchableHighlight>
-            </View>
-            {this.state.customFee && <View style={{ width: '100%', height: 50 }}>
-              <Slider
-                value={this.state.initialFeeRate || this.state.fastestBTCFee || 45}
-                minimumValue={this.state.hourBTCFee ? ((this.state.hourBTCFee - 5) > 0 ? (this.state.hourBTCFee - 5) : 1) : 1}
-                maximumValue={this.state.fastestBTCFee ? (this.state.fastestBTCFee + 50) : 100}
-                onValueChange={this.onFeeRateValueChange}
-                minimumTrackTintColor="#007AFF"
-                maximumTrackTintColor="#E5E5EA"
-              />
-            </View>}
-          </View>}
-          {showMinnerFee && chain === 'ETHEREUM' && <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16 }}>
-            <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
-              <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
-                <Text style={{ fontSize: 15 }}>{intl.formatMessage({ id: 'send_input_label_mining_fee' })}</Text>
-                <TouchableHighlight
-                  underlayColor="white"
-                  activeOpacity={0.42}
-                  onPress={this.showFeesTip}
-                  style={{ width: 28, height: 28 }}
-                >
-                  <FastImage
-                    source={require('resources/images/Info.png')}
-                    style={{ width: 28, height: 28, marginLeft: 4 }}
-                  />
-                </TouchableHighlight>
-              </View>
-              <TouchableHighlight
-                underlayColor="white"
-                activeOpacity={0.42}
-                onPress={this.switchFeesType}
-                style={{ height: 50, alignItems: 'center' }}
-              >
-                <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
-                  <View style={{ alignItems: 'flex-end', marginRight: 4, width: 180 }}>
-                    <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
-                      {`${intl.formatNumber(useGasPrice * this.state.ethGasLimit * Math.pow(10, -9), { minimumFractionDigits: 0, maximumFractionDigits: balance.precision })} ether`}
-                    </Text>
-                    {this.state.customFee && <Text style={{ fontSize: 13, color: 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
-                      {`${intl.formatNumber(useGasPrice, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} gwei x ${this.state.ethGasLimit}`}
-                    </Text>}
-                  </View>
-                  <Animated.Image
-                    source={require('resources/images/arrow_right_grey.png')}
-                    style={{ width: 14, height: 14, transform: [{ rotate: spin }] }}
-                  />
-                </View>
-              </TouchableHighlight>
-            </View>
-            {this.state.customFee && <View style={{ width: '100%', height: 50 }}>
-              <Slider
-                value={this.state.initialGwei || this.state.ethGasPrice || 4.00}
-                minimumValue={1}
-                maximumValue={50}
-                onValueChange={this.onSliderValueChange}
-                minimumTrackTintColor="#007AFF"
-                maximumTrackTintColor="#E5E5EA"
-              />
-            </View>}
-          </View>}
-          {chain === 'BITCOIN' && <View style={{ width: '100%', marginBottom: this.state.showOPReturn ? 16 : 0 }}>
-            <View style={{ position: 'absolute', height: 0.5, top: 0, right: 16, left: 16, backgroundColor: '#C8C7CC' }} />
-            <View style={{ width: '100%', height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: 16, paddingRight: 16 }}>
-              <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <Text style={{ fontSize: 15 }}>{intl.formatMessage({ id: 'send_toggle_advanced_setting' })}</Text>
-              </View>
-              <View>
-                {!this.state.showOPReturn && <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ width: 40, height: 50, justifyContent: 'center', alignItems: 'flex-end' }} onPress={this.addOPReturn}>
-                  <FastImage
-                    source={require('resources/images/add_green.png')}
-                    style={{ width: 28 * 0.8, height: 30 * 0.8 }}
-                  />
-                </TouchableHighlight>}
-                {this.state.showOPReturn && <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ width: 40, height: 50, justifyContent: 'center', alignItems: 'flex-end' }} onPress={this.removeOPReturn}>
-                  <FastImage
-                    source={require('resources/images/remove_red.png')}
-                    style={{ width: 28 * 0.8, height: 30 * 0.8 }}
-                  />
-                </TouchableHighlight>}
-              </View>
-            </View>
-            {this.state.showOPReturn && <Field
-              label="opreturn"
-              placeholder={intl.formatMessage({ id: 'send_input_placeholder_opreturn_hex' })}
-              name="opreturn"
-              fieldName="opreturn"
-              component={TextField}
-              showClearButton={!!opreturn && opreturn.length > 0}
+            <Field
+              label={intl.formatMessage({ id: 'send_input_label_to_address' })}
+              placeholder={`请输入${symbol}${chain === 'EOS' ? '账户名' : '地址'}`}
+              name="toAddress"
+              fieldName="toAddress"
+              component={AddressField}
+              showClearButton={!!toAddress && toAddress.length > 0}
               change={change}
               separator
-            />}
-            {this.state.showOPReturn && <View style={{ width: '100%', height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: 16, paddingRight: 16 }}>
-              <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <Text style={{ fontSize: 13, color: 'rgba(0,0,0,0.4)' }}>{opreturn && new Buffer.from(opreturn, 'hex').toString()}</Text>
+              showContact={selectedContact}
+              selectContact={this.selectContact}
+              clearContact={this.clearContact}
+              contact={this.props.selectedContact}
+              autoFocus={this.state.autoFocusToAddress}
+              onBlur={this.onToAddressBlur}
+              showMemo={showMemo}
+            />
+            <Field
+              label={intl.formatMessage({ id: 'send_input_label_send_memo' })}
+              placeholder={(selectedContact && !!selectedContact.memo) ? `选填，默认为: ${selectedContact.memo}` : '添加备注 (选填)'}
+              name="memo"
+              fieldName="memo"
+              component={MessageField}
+              showClearButton={!!memo && memo.length > 0}
+              change={change}
+              showMemo={showMemo}
+              separator
+            />
+            <Field
+              label={intl.formatMessage({ id: 'send_input_label_payer_account' })}
+              placeholder=""
+              name="card"
+              fieldName="card"
+              component={CardField}
+              address={transferWallet.address}
+              available={available}
+              symbol={symbol}
+              chain={chain}
+              iconUrl={iconUrl}
+              contract={contract}
+              separator
+            />
+            <Field
+              label={intl.formatMessage({ id: 'send_input_label_send_amount' })}
+              placeholder="00.00"
+              name="amount"
+              fieldName="amount"
+              component={AmountField}
+              showClearButton={!!amount && amount.length > 0}
+              change={change}
+              valueLength={!!amount && amount.length}
+              separator
+            />
+            {showMinnerFee && chain === 'BITCOIN' && <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16 }}>
+              <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
+                  <Text style={{ fontSize: 15 }}>{intl.formatMessage({ id: 'send_input_label_mining_fee' })}</Text>
+                  <TouchableHighlight
+                    underlayColor="white"
+                    activeOpacity={0.42}
+                    onPress={this.showFeesTip}
+                    style={{ width: 28, height: 28 }}
+                  >
+                    <FastImage
+                      source={require('resources/images/Info.png')}
+                      style={{ width: 28, height: 28, marginLeft: 4 }}
+                    />
+                  </TouchableHighlight>
+                </View>
+                <TouchableHighlight
+                  underlayColor="white"
+                  activeOpacity={0.42}
+                  onPress={this.switchFeesType}
+                  style={{ height: 50, alignItems: 'center' }}
+                >
+                  <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
+                    <View style={{ alignItems: 'flex-end', marginRight: 4, width: 180 }}>
+                      <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
+                        {`≈ ${intl.formatNumber(feeRate * 226 * Math.pow(10, -8), { minimumFractionDigits: 0, maximumFractionDigits: balance.precision })} btc`}
+                      </Text>
+                      {this.state.customFee && <Text style={{ fontSize: 13, color: 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
+                        {`${(feeRate)} sat/b ${this.getSpeedText(feeRate)}`}
+                      </Text>}
+                    </View>
+                    <Animated.Image
+                      source={require('resources/images/arrow_right_grey.png')}
+                      style={{ width: 14, height: 14, transform: [{ rotate: spin }] }}
+                    />
+                  </View>
+                </TouchableHighlight>
+              </View>
+              {this.state.customFee && <View style={{ width: '100%', height: 50 }}>
+                <Slider
+                  value={this.state.initialFeeRate || this.state.fastestBTCFee || 45}
+                  minimumValue={this.state.hourBTCFee ? ((this.state.hourBTCFee - 5) > 0 ? (this.state.hourBTCFee - 5) : 1) : 1}
+                  maximumValue={this.state.fastestBTCFee ? (this.state.fastestBTCFee + 50) : 100}
+                  onValueChange={this.onFeeRateValueChange}
+                  minimumTrackTintColor="#007AFF"
+                  maximumTrackTintColor="#E5E5EA"
+                />
+              </View>}
+            </View>}
+            {showMinnerFee && chain === 'ETHEREUM' && <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16 }}>
+              <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
+                  <Text style={{ fontSize: 15 }}>{intl.formatMessage({ id: 'send_input_label_mining_fee' })}</Text>
+                  <TouchableHighlight
+                    underlayColor="white"
+                    activeOpacity={0.42}
+                    onPress={this.showFeesTip}
+                    style={{ width: 28, height: 28 }}
+                  >
+                    <FastImage
+                      source={require('resources/images/Info.png')}
+                      style={{ width: 28, height: 28, marginLeft: 4 }}
+                    />
+                  </TouchableHighlight>
+                </View>
+                <TouchableHighlight
+                  underlayColor="white"
+                  activeOpacity={0.42}
+                  onPress={this.switchFeesType}
+                  style={{ height: 50, alignItems: 'center' }}
+                >
+                  <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
+                    <View style={{ alignItems: 'flex-end', marginRight: 4, width: 180 }}>
+                      <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
+                        {`${intl.formatNumber(useGasPrice * this.state.ethGasLimit * Math.pow(10, -9), { minimumFractionDigits: 0, maximumFractionDigits: balance.precision })} ether`}
+                      </Text>
+                      {this.state.customFee && <Text style={{ fontSize: 13, color: 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
+                        {`${intl.formatNumber(useGasPrice, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} gwei x ${this.state.ethGasLimit}`}
+                      </Text>}
+                    </View>
+                    <Animated.Image
+                      source={require('resources/images/arrow_right_grey.png')}
+                      style={{ width: 14, height: 14, transform: [{ rotate: spin }] }}
+                    />
+                  </View>
+                </TouchableHighlight>
+              </View>
+              {this.state.customFee && <View style={{ width: '100%', height: 50 }}>
+                <Slider
+                  value={this.state.initialGwei || this.state.ethGasPrice || 4.00}
+                  minimumValue={1}
+                  maximumValue={50}
+                  onValueChange={this.onSliderValueChange}
+                  minimumTrackTintColor="#007AFF"
+                  maximumTrackTintColor="#E5E5EA"
+                />
+              </View>}
+            </View>}
+            {chain === 'BITCOIN' && <View style={{ width: '100%', marginBottom: this.state.showOPReturn ? 16 : 0 }}>
+              <View style={{ position: 'absolute', height: 0.5, top: 0, right: 16, left: 16, backgroundColor: '#C8C7CC' }} />
+              <View style={{ width: '100%', height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: 16, paddingRight: 16 }}>
+                <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                  <Text style={{ fontSize: 15 }}>{intl.formatMessage({ id: 'send_toggle_advanced_setting' })}</Text>
+                </View>
+                <View>
+                  {!this.state.showOPReturn && <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ width: 40, height: 50, justifyContent: 'center', alignItems: 'flex-end' }} onPress={this.addOPReturn}>
+                    <FastImage
+                      source={require('resources/images/add_green.png')}
+                      style={{ width: 28 * 0.8, height: 30 * 0.8 }}
+                    />
+                  </TouchableHighlight>}
+                  {this.state.showOPReturn && <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ width: 40, height: 50, justifyContent: 'center', alignItems: 'flex-end' }} onPress={this.removeOPReturn}>
+                    <FastImage
+                      source={require('resources/images/remove_red.png')}
+                      style={{ width: 28 * 0.8, height: 30 * 0.8 }}
+                    />
+                  </TouchableHighlight>}
+                </View>
+              </View>
+              {this.state.showOPReturn && <Field
+                                            label="opreturn"
+                                            placeholder={intl.formatMessage({ id: 'send_input_placeholder_opreturn_hex' })}
+                                            name="opreturn"
+                                            fieldName="opreturn"
+                                            component={TextField}
+                                            showClearButton={!!opreturn && opreturn.length > 0}
+                                            change={change}
+                                            separator
+              />}
+              {this.state.showOPReturn && <View style={{ width: '100%', height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: 16, paddingRight: 16 }}>
+                <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                  <Text style={{ fontSize: 13, color: 'rgba(0,0,0,0.4)' }}>{opreturn && new Buffer.from(opreturn, 'hex').toString()}</Text>
+                </View>
+              </View>}
+            </View>
+            }
+            <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, marginTop: showMinnerFee ? 4 : 16, marginBottom: 20 }}>
+              <TouchableHighlight
+                underlayColor="#007AFF"
+                activeOpacity={0.9}
+                onPress={this.props.handleSubmit(this.submit)}
+                style={{ backgroundColor: '#007AFF', borderRadius: 10, height: 50, alignItems: 'center', justifyContent: 'center' }}
+              >
+                <Text style={{ textAlign: 'center', color: 'white', fontSize: 17 }}>{intl.formatMessage({ id: 'send_button_send' })}</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+          <Modal
+            isVisible={this.state.selectContact}
+            onBackdropPress={this.cancelSelectContact}
+            backdropOpacity={0.4}
+            useNativeDriver
+            animationIn="slideInUp"
+            animationOut="slideOutDown"
+            style={{ margin: 16, justifyContent: 'flex-end', marginBottom: tabHeight }}
+          >
+            {this.state.showSelectContact && <View>
+              <View style={{ width: '100%', height: 64 * 5, borderWidth: 0.5, borderColor: '#C8C7CC', borderRadius: 12, overflow: 'hidden' }}>
+                <View style={{ height: 64, width: '100%', backgroundColor: '#F7F7F7', borderTopLeftRadius: 12, borderTopRightRadius: 12, borderBottomWidth: 0.5, borderColor: '#C8C7CC', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
+                  <View style={{ height: '100%', alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
+                    <FastImage
+                      source={walletIcons[chain.toLowerCase()]}
+                      style={{ width: 40, height: 40, marginRight: 16, borderRadius: 10, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }}
+                    />
+                    <View style={{ height: '100%', justifyContent: 'center' }}>
+                      <Text style={{ fontSize: 17 }}>选择联系人</Text>
+                      <Text style={{ fontSize: 14, color: '#666666', marginTop: 2 }}>{`${symbol} ${chain === 'EOS' ? '账户名' : '地址'}`}</Text>
+                    </View>
+                  </View>
+                  {/* <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ padding: 4 }} activeOpacity={0.8} onPress={this.cancelSelectContact}>
+                      <Text style={{ fontSize: 17, color: '#007AFF' }}>取消</Text>
+                      </TouchableHighlight> */}
+                </View>
+                <View style={{ height: 64 * 4, width: '100%' }}>
+                  <TableView
+                    style={{ flex: 1, backgroundColor: 'white' }}
+                    tableViewCellStyle={TableView.Consts.CellStyle.Default}
+                    showsVerticalScrollIndicator={false}
+                    cellSeparatorInset={{ left: 16 }}
+                  >
+                    <Section>
+                      {contacts.map(contact => <Item
+                                                 key={contact.id}
+                                                 height={64}
+                                                 reactModuleForCell="SelectContactTableViewCell"
+                                                 name={contact.name}
+                                                 address={contact.address || contact.accountName}
+                                                 onPress={this.selectContactAddress.bind(this, chain, contact.id, contact.name, contact.address || contact.accountName)}
+                                                 accessoryType={(selectedContact && chain === selectedContact.chain && contact.name === selectedContact.name && (contact.address === selectedContact.address || contact.accountName === selectedContact.address)) ? TableView.Consts.AccessoryType.Checkmark : TableView.Consts.AccessoryType.None}
+                      />
+                      )}
+                    </Section>
+                  </TableView>
+                </View>
               </View>
             </View>}
-          </View>
-          }
-          <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, marginTop: showMinnerFee ? 4 : 16, marginBottom: 20 }}>
-            <TouchableHighlight
-              underlayColor="#007AFF"
-              activeOpacity={0.9}
-              onPress={this.props.handleSubmit(this.submit)}
-              style={{ backgroundColor: '#007AFF', borderRadius: 10, height: 50, alignItems: 'center', justifyContent: 'center' }}
-            >
-              <Text style={{ textAlign: 'center', color: 'white', fontSize: 17 }}>{intl.formatMessage({ id: 'send_button_send' })}</Text>
-            </TouchableHighlight>
-          </View>
-        </View>
-        <Modal
-          isVisible={this.state.selectContact}
-          onBackdropPress={this.cancelSelectContact}
-          backdropOpacity={0.4}
-          useNativeDriver
-          animationIn="slideInUp"
-          animationOut="slideOutDown"
-          style={{ margin: 16, justifyContent: 'flex-end', marginBottom: tabHeight }}
-        >
-          {this.state.showSelectContact && <View>
-            <View style={{ width: '100%', height: 64 * 5, borderWidth: 0.5, borderColor: '#C8C7CC', borderRadius: 12, overflow: 'hidden' }}>
-              <View style={{ height: 64, width: '100%', backgroundColor: '#F7F7F7', borderTopLeftRadius: 12, borderTopRightRadius: 12, borderBottomWidth: 0.5, borderColor: '#C8C7CC', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
-                <View style={{ height: '100%', alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
-                  <FastImage
-                    source={walletIcons[chain.toLowerCase()]}
-                    style={{ width: 40, height: 40, marginRight: 16, borderRadius: 10, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }}
-                  />
-                  <View style={{ height: '100%', justifyContent: 'center' }}>
-                    <Text style={{ fontSize: 17 }}>选择联系人</Text>
-                    <Text style={{ fontSize: 14, color: '#666666', marginTop: 2 }}>{`${symbol} ${chain === 'EOS' ? '账户名' : '地址'}`}</Text>
-                  </View>
-                </View>
-                {/* <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ padding: 4 }} activeOpacity={0.8} onPress={this.cancelSelectContact}>
-                    <Text style={{ fontSize: 17, color: '#007AFF' }}>取消</Text>
-                    </TouchableHighlight> */}
+          </Modal>
+          <Modal
+            isVisible={loading}
+            backdropOpacity={0.4}
+            useNativeDriver
+            animationIn="fadeIn"
+            animationInTiming={200}
+            backdropTransitionInTiming={200}
+            animationOut="fadeOut"
+            animationOutTiming={200}
+            backdropTransitionOutTiming={200}
+            onModalHide={this.onModalHide}
+          >
+            {loading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
+                <ActivityIndicator size="small" color="#000000" />
+                <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'transfer_alert_sending_transaction' })}</Text>
               </View>
-              <View style={{ height: 64 * 4, width: '100%' }}>
-                <TableView
-                  style={{ flex: 1, backgroundColor: 'white' }}
-                  tableViewCellStyle={TableView.Consts.CellStyle.Default}
-                  showsVerticalScrollIndicator={false}
-                  cellSeparatorInset={{ left: 16 }}
-                >
-                  <Section>
-                    {contacts.map(contact => <Item
-                        key={contact.id}
-                        height={64}
-                        reactModuleForCell="SelectContactTableViewCell"
-                        name={contact.name}
-                        address={contact.address || contact.accountName}
-                        onPress={this.selectContactAddress.bind(this, chain, contact.id, contact.name, contact.address || contact.accountName)}
-                        accessoryType={(selectedContact && chain === selectedContact.chain && contact.name === selectedContact.name && (contact.address === selectedContact.address || contact.accountName === selectedContact.address)) ? TableView.Consts.AccessoryType.Checkmark : TableView.Consts.AccessoryType.None}
-                    />
-                    )}
-                  </Section>
-                </TableView>
-              </View>
-            </View>
-          </View>}
-        </Modal>
-        <Modal
-          isVisible={loading}
-          backdropOpacity={0.4}
-          useNativeDriver
-          animationIn="fadeIn"
-          animationInTiming={200}
-          backdropTransitionInTiming={200}
-          animationOut="fadeOut"
-          animationOutTiming={200}
-          backdropTransitionOutTiming={200}
-          onModalHide={this.onModalHide}
-        >
-          {loading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
-              <ActivityIndicator size="small" color="#000000" />
-              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'transfer_alert_sending_transaction' })}</Text>
-            </View>
-          </View>}
-        </Modal>
-      </ScrollView>
+            </View>}
+          </Modal>
+        </ScrollView>
       </SafeAreaView>
     )
-  }
+}
 }

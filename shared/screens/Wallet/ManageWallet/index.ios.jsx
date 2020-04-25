@@ -776,7 +776,7 @@ export default class ManageWallet extends Component {
     }
 
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F7F7' }}>
         <TableView
           style={{ flex: 1 }}
           tableViewStyle={TableView.Consts.Style.Grouped}

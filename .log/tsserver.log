@@ -1,0 +1,243 @@
+Info 0    [13:28:27.119] Starting TS Server
+Info 1    [13:28:27.125] Version: 2.9.2
+Info 2    [13:28:27.127] Arguments: /usr/local/bin/node /Users/terencege/Developer/bitportal/bitportal-client/node_modules/.bin/tsserver --logFile /Users/terencege/Developer/bitportal/bitportal-client/.log/tsserver.log --logVerbosity info --cancellationPipeName /private/var/folders/3t/qngybzt15w54s8wbcwhp9x540000gn/T/062c936bed024aff72af5b4eed1474dd/tscancellation*
+Info 3    [13:28:27.127] Platform: darwin NodeVersion: 13 CaseSensitive: false
+Info 4    [13:28:27.130] Provided types map file "/Users/terencege/Developer/bitportal/bitportal-client/node_modules/typescript/lib/tsserver.js/../typesMap.json" doesn't exist
+Info 5    [13:28:27.144] Search path: /Users/terencege/Developer/bitportal/bitportal-client/shared/core/chain/bitcoin
+Info 6    [13:28:27.146] For info: /Users/terencege/Developer/bitportal/bitportal-client/shared/core/chain/bitcoin/index.native.ts :: Config file name: /Users/terencege/Developer/bitportal/bitportal-client/tsconfig.json
+Info 7    [13:28:27.368] Opened configuration file /Users/terencege/Developer/bitportal/bitportal-client/tsconfig.json
+Info 8    [13:28:27.599] Starting updateGraphWorker: Project: /Users/terencege/Developer/bitportal/bitportal-client/tsconfig.json
+Info 9    [13:28:36.172] Finishing updateGraphWorker: Project: /Users/terencege/Developer/bitportal/bitportal-client/tsconfig.json Version: 1 structureChanged: true Elapsed: 8573ms
+Info 10   [13:28:36.179] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 11   [13:28:40.486] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: true Elapsed: 4307ms
+Info 12   [13:28:40.488] remove project: /Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/Blockchains.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/EncryptedStream.ts,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/Error.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/ErrorTypes.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/GenericTools.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/IdGenerator.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/Network.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/NetworkMessage.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/NetworkMessageTypes.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/ObjectHelpers.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/PairingTags.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/Plugin.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/PluginRepository.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/PluginTypes.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/aes-oop.ts,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/bridge.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/eos-rc-parser.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/eos.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/inject.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/scatterdapp.js
+Info 13   [13:28:40.498] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 14   [13:28:40.499] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 15   [13:28:40.509] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 16   [13:28:40.509] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 17   [13:28:40.509] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 18   [13:28:40.510] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 19   [13:28:40.510] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 20   [13:28:40.510] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 21   [13:28:40.511] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 22   [13:28:40.511] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 23   [13:28:40.513] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 24   [13:28:40.513] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 25   [13:28:40.518] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 26   [13:28:40.518] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 27   [13:28:40.519] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 28   [13:28:40.519] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 29   [13:28:40.524] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 30   [13:28:40.524] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 31   [13:28:40.525] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 32   [13:28:40.525] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 33   [13:28:40.872] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 34   [13:28:40.872] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 35   [13:28:42.50] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 36   [13:28:42.50] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 37   [13:28:43.561] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 38   [13:28:43.562] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 39   [13:28:44.170] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 40   [13:28:44.171] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 41   [13:28:44.177] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 42   [13:28:44.177] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 43   [13:28:44.184] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 44   [13:28:44.184] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 45   [13:28:44.468] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 46   [13:28:44.469] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 47   [13:28:44.476] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 48   [13:28:44.476] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 49   [13:28:46.199] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 50   [13:28:46.200] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 51   [13:28:46.205] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 52   [13:28:46.205] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 53   [13:28:46.208] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 54   [13:28:46.208] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 55   [13:28:47.632] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 56   [13:28:47.632] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 57   [13:28:47.635] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 58   [13:28:47.635] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 59   [13:28:47.640] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 60   [13:28:47.640] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 61   [13:28:47.642] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 62   [13:28:47.642] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 63   [13:28:47.644] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 64   [13:28:47.644] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 65   [13:28:47.646] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 66   [13:28:47.647] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 67   [13:29:53.597] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 68   [13:29:53.597] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 69   [13:30:32.34] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 70   [13:30:32.34] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 71   [13:32:28.700] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 72   [13:32:28.701] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 73   [13:32:42.152] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 74   [13:32:42.152] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 75   [13:32:42.154] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 76   [13:32:42.155] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 77   [13:32:42.156] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 78   [13:32:42.156] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 79   [13:32:42.157] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 80   [13:32:42.157] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 81   [13:32:42.158] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 82   [13:32:42.158] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 83   [13:32:42.159] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 84   [13:32:42.159] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 85   [13:32:48.186] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 86   [13:32:48.186] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 87   [13:32:48.187] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 88   [13:32:48.187] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 89   [13:32:48.188] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 90   [13:32:48.189] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 1ms
+Info 91   [13:32:48.190] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 92   [13:32:48.190] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 93   [13:32:48.190] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 94   [13:32:48.190] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 95   [13:32:48.192] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 96   [13:32:48.192] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 97   [13:32:48.192] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 98   [13:32:48.192] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 99   [13:32:48.193] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 100  [13:32:48.193] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 101  [13:32:48.194] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 102  [13:32:48.194] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 103  [13:32:53.744] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 104  [13:32:53.744] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 105  [13:38:14.800] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 106  [13:38:14.800] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 107  [13:38:15.710] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 108  [13:38:15.710] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 109  [13:41:27.534] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 110  [13:41:27.534] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 111  [13:41:27.536] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 112  [13:41:27.536] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 113  [13:41:27.538] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 114  [13:41:27.538] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 115  [13:41:27.539] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 116  [13:41:27.539] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 117  [13:41:27.870] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 118  [13:41:27.870] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 119  [14:13:14.222] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 120  [14:13:14.222] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 121  [14:13:14.574] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 122  [14:13:14.575] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 123  [14:13:14.575] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 124  [14:13:14.575] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 125  [14:13:18.717] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 126  [14:13:18.717] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 127  [14:13:22.618] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 128  [14:13:22.618] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 129  [16:23:54.726] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 130  [16:23:54.728] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 131  [16:23:58.681] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 132  [16:23:58.681] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 133  [16:23:59.21] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 134  [16:23:59.21] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 135  [16:23:59.21] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 136  [16:23:59.22] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 137  [16:24:38.772] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 138  [16:24:38.772] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 139  [16:24:40.611] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 140  [16:24:40.612] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 141  [16:24:40.613] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 142  [16:24:40.613] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 143  [16:24:41.112] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 144  [16:24:41.112] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 145  [16:25:33.803] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 146  [16:25:33.803] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 147  [16:25:33.807] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 148  [16:25:33.807] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 149  [16:25:34.103] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 150  [16:25:34.104] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 151  [16:25:34.114] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 152  [16:25:34.114] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 153  [16:30:54.81] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 154  [16:30:54.84] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 155  [15:12:43.52] Search path: /Users/terencege/Developer/bitportal/bitportal-client/shared/store
+Info 156  [15:12:43.61] For info: /Users/terencege/Developer/bitportal/bitportal-client/shared/store/index.ts :: Config file name: /Users/terencege/Developer/bitportal/bitportal-client/tsconfig.json
+Info 157  [15:12:43.113] Opened configuration file /Users/terencege/Developer/bitportal/bitportal-client/tsconfig.json
+Info 158  [15:12:43.228] Starting updateGraphWorker: Project: /Users/terencege/Developer/bitportal/bitportal-client/tsconfig.json
+Info 159  [15:12:49.80] Finishing updateGraphWorker: Project: /Users/terencege/Developer/bitportal/bitportal-client/tsconfig.json Version: 1 structureChanged: true Elapsed: 5852ms
+Info 160  [15:12:49.86] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 161  [15:12:50.532] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: true Elapsed: 1446ms
+Info 162  [15:12:50.536] remove project: /Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/Blockchains.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/EncryptedStream.ts,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/Error.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/ErrorTypes.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/GenericTools.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/IdGenerator.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/Network.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/NetworkMessage.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/NetworkMessageTypes.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/ObjectHelpers.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/PairingTags.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/Plugin.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/PluginRepository.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/PluginTypes.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/aes-oop.ts,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/bridge.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/eos-rc-parser.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/eos.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/inject.js,/Users/terencege/Developer/bitportal/bitportal-client/shared/core/bridge/scatter/scatterdapp.js
+Info 163  [15:12:50.552] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 164  [15:12:50.552] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 165  [15:12:50.557] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 166  [15:12:50.557] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 167  [15:12:50.557] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 168  [15:12:50.557] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 169  [15:12:50.559] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 170  [15:12:50.559] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 171  [15:12:50.559] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 172  [15:12:50.559] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 173  [15:12:50.560] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 174  [15:12:50.560] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 175  [15:12:50.563] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 176  [15:12:50.563] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 177  [15:12:50.563] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 178  [15:12:50.563] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 179  [15:12:50.567] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 180  [15:12:50.567] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 181  [15:12:50.567] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 182  [15:12:50.567] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 183  [15:12:50.842] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 184  [15:12:50.842] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 185  [15:12:50.850] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 186  [15:12:50.851] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 187  [15:12:50.851] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 188  [15:12:50.851] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 189  [15:12:50.851] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 190  [15:12:50.851] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 191  [15:12:50.852] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 192  [15:12:50.852] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 193  [15:12:50.853] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 194  [15:12:50.853] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: false Elapsed: 0ms
+Info 195  [15:13:4.823] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 196  [15:13:4.824] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 197  [15:13:5.213] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 198  [15:13:5.213] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 199  [15:13:5.222] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 200  [15:13:5.222] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 201  [15:13:9.841] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 202  [15:13:9.841] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 203  [15:13:9.844] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 204  [15:13:9.845] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 205  [15:13:9.851] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 206  [15:13:9.851] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 207  [15:13:9.854] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 208  [15:13:9.855] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 209  [15:13:9.857] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 210  [15:13:9.857] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 211  [15:13:9.859] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 212  [15:13:9.859] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 213  [15:13:9.860] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 214  [15:13:9.860] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 215  [15:13:18.780] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 216  [15:13:18.782] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 217  [15:13:37.526] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 218  [15:13:37.527] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 219  [15:13:44.693] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 220  [15:13:44.693] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 221  [15:13:47.7] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 222  [15:13:47.7] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 223  [15:13:47.9] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 224  [15:13:47.9] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 225  [15:13:47.305] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 226  [15:13:47.306] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 1ms
+Info 227  [15:13:47.327] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 228  [15:13:47.327] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 229  [15:13:51.246] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 230  [15:13:51.246] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 231  [15:14:52.472] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 232  [15:14:52.474] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 233  [15:15:2.724] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 234  [15:15:2.724] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 235  [15:15:5.284] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 236  [15:15:5.284] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 237  [15:15:12.760] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 238  [15:15:12.760] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 239  [15:15:23.313] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 240  [15:15:23.313] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
+Info 241  [15:16:52.485] Starting updateGraphWorker: Project: /dev/null/inferredProject2*
+Info 242  [15:16:52.486] Finishing updateGraphWorker: Project: /dev/null/inferredProject2* Version: 1 structureChanged: false Elapsed: 0ms
