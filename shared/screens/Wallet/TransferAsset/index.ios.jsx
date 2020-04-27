@@ -39,6 +39,7 @@ import * as walletActions from 'actions/wallet'
 import Modal from 'react-native-modal'
 import Slider from '@react-native-community/slider'
 import { assetIcons, walletIcons } from 'resources/images'
+import { DarkModeContext } from 'utils/darkMode'
 
 const { Section, Item } = TableView
 
@@ -92,7 +93,6 @@ const styles = EStyleSheet.create({
     width: '100% - 80'
   },
   messageFiled: {
-    backgroundColor: 'white',
     borderRadius: 17,
     borderWidth: 0.5,
     fontSize: 17,
@@ -170,11 +170,12 @@ const AddressField = ({
   clearContact,
   contact,
   autoFocus,
-  showMemo
+  showMemo,
+  isDarkMode
 }) => (
-  <View style={{ width: '100%', alignItems: 'center', height: showContact ? 64 : 42, paddingLeft: 16, paddingRight: 16, flexDirection: 'row', backgroundColor: '#F7F7F7' }}>
+  <View style={{ width: '100%', alignItems: 'center', height: showContact ? 64 : 42, paddingLeft: 16, paddingRight: 16, flexDirection: 'row', backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
     {!showContact && <TextInput
-                       style={styles.textFiled}
+                       style={[styles.textFiled, { color: isDarkMode ? 'white' : 'black'}]}
                        autoCorrect={false}
                        autoFocus={autoFocus}
                        autoCapitalize="none"
@@ -192,8 +193,8 @@ const AddressField = ({
             style={{ width: 40, height: 40, borderRadius: 10, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
           />
           <View style={{ height: 34, width: 34, borderRadius: 17, position: 'absolute', right: -15, top: -15, alignItems: 'center', justifyContent: 'center' }}>
-            <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'flex-start', justifyContent: 'flex-end', padding: 5 }} activeOpacity={0.8} onPress={clearContact}>
-              <View style={{ width: 18, height: 18, borderRadius: 9, backgroundColor: 'white' }}>
+            <TouchableHighlight underlayColor={isDarkMode ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0)'} style={{ width: '100%', height: '100%', alignItems: 'flex-start', justifyContent: 'flex-end', padding: 5 }} activeOpacity={0.8} onPress={clearContact}>
+              <View style={{ width: 18, height: 18, borderRadius: 9, backgroundColor: isDarkMode ? 'black' : 'white' }}>
                 <FastImage
                   source={require('resources/images/remove_red.png')}
                   style={{ width: 18, height: 18 }}
@@ -203,14 +204,14 @@ const AddressField = ({
           </View>
         </View>
         <View>
-          <Text style={{ fontSize: 17 }} lineOfNumebrs={1}>{contact.name}</Text>
-          <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginTop: 2 }} lineOfNumebrs={1}>{formatAddress(contact.address)}</Text>
+          <Text style={{ fontSize: 17, color: isDarkMode ? 'white' : 'black' }} lineOfNumebrs={1}>{contact.name}</Text>
+          <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)', marginTop: 2 }} lineOfNumebrs={1}>{formatAddress(contact.address)}</Text>
         </View>
       </View>
     )
     }
     <View style={{ height: '100%', position: 'absolute', right: 16, top: 0, width: 30, alignItems: 'center', justifyContent: 'center' }}>
-      <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={selectContact}>
+      <TouchableHighlight underlayColor={isDarkMode ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0)'} style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={selectContact}>
         <FastImage
           source={require('resources/images/select_address.png')}
           style={{ width: 24, height: 24 }}
@@ -218,7 +219,7 @@ const AddressField = ({
       </TouchableHighlight>
     </View>
     {!showContact && showClearButton && active && <View style={{ height: '100%', position: 'absolute', right: 50, top: 0, width: 20, alignItems: 'center', justifyContent: 'center' }}>
-      <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
+      <TouchableHighlight underlayColor={isDarkMode ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0)'} style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
         <FastImage
           source={require('resources/images/clear.png')}
           style={{ width: 14, height: 14 }}
@@ -240,22 +241,24 @@ const MessageField = ({
   showClearButton,
   showDeleteButton,
   showMemo,
-  removeOPReturn
+  removeOPReturn,
+  isDarkMode
 }) => (
-  <View style={{ width: '100%', alignItems: 'flex-start', height: showMemo ? 104 : 10, paddingLeft: 16, paddingRight: 16, paddingTop: showMemo ? 16 : 0, flexDirection: 'row', backgroundColor: '#F7F7F7', borderBottomWidth: 0.5, borderBottomColor: '#C8C7CC' }}>
+  <View style={{ width: '100%', alignItems: 'flex-start', height: showMemo ? 104 : 10, paddingLeft: 16, paddingRight: 16, paddingTop: showMemo ? 16 : 0, flexDirection: 'row', backgroundColor: isDarkMode ? 'black' : '#F7F7F7', borderBottomWidth: 0.5, borderBottomColor: '#C8C7CC' }}>
     {showMemo && <TextInput
-                   style={styles.messageFiled}
+                   style={[styles.messageFiled, { color: isDarkMode ? 'white' : 'black', backgroundColor: isDarkMode ? 'black' : 'white' }]}
                    autoCorrect={false}
                    autoCapitalize="none"
                    placeholder={placeholder}
                    onChangeText={onChange}
                    keyboardType="default"
                    multiline={true}
+                   placeholderTextColor={isDarkMode ? 'white' : 'black'}
                    secureTextEntry={secureTextEntry}
                    {...restInput}
     />}
     {showMemo && showClearButton && active && <View style={{ height: 30, position: 'absolute', right: 22, bottom: 14, width: 20, alignItems: 'center', justifyContent: 'center' }}>
-      <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
+      <TouchableHighlight underlayColor={isDarkMode ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0)'} style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
         <FastImage
           source={require('resources/images/clear.png')}
           style={{ width: 14, height: 14 }}
@@ -283,15 +286,16 @@ const AmountField = ({
   separator,
   change,
   valueLength,
-  showClearButton
+  showClearButton,
+  isDarkMode
 }) => (
   <View style={{ width: '100%' }}>
     <View style={{ width: '100%', alignItems: 'flex-start', height: 44, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-      <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.4)', marginTop: 20 }}>{label}</Text>
+      <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', marginTop: 20 }}>{label}</Text>
     </View>
     <View style={{ width: '100%', alignItems: 'center', height: 72, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
       <TextInput
-        style={[styles.amountFiled, (!!valueLength && valueLength > 10) ? { fontSize: 40 } : {}]}
+        style={[styles.amountFiled, (!!valueLength && valueLength > 10) ? { fontSize: 40, color: isDarkMode ? 'white' : 'black' } : { color: isDarkMode ? 'white' : 'black' }]}
         autoCorrect={false}
         autoCapitalize="none"
         placeholder={placeholder}
@@ -301,7 +305,7 @@ const AmountField = ({
         {...restInput}
       />
       {showClearButton && active && <View style={{ height: '100%', position: 'absolute', right: 16, top: 0, width: 20, alignItems: 'center', justifyContent: 'center' }}>
-        <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
+        <TouchableHighlight underlayColor={isDarkMode ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0)'} style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
           <FastImage
             source={require('resources/images/clear.png')}
             style={{ width: 14, height: 14 }}
@@ -323,12 +327,13 @@ const TextField = ({
   separator,
   change,
   valueLength,
-  showClearButton
+  showClearButton,
+  isDarkMode
 }) => (
   <View style={{ width: '100%' }}>
     <View style={{ width: '100%', alignItems: 'center', height: 40, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
       <TextInput
-        style={[styles.smTextFiled]}
+        style={[styles.smTextFiled, { color: isDarkMode ? 'white' : 'black'}]}
         autoCorrect={false}
         autoCapitalize="none"
         placeholder={placeholder}
@@ -337,7 +342,7 @@ const TextField = ({
         {...restInput}
       />
       {showClearButton && active && <View style={{ height: '100%', position: 'absolute', right: 16, top: 0, width: 20, alignItems: 'center', justifyContent: 'center' }}>
-        <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
+        <TouchableHighlight underlayColor={isDarkMode ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0)'} style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
           <FastImage
             source={require('resources/images/clear.png')}
             style={{ width: 14, height: 14 }}
@@ -360,18 +365,19 @@ const CardField = ({
   chain,
   iconUrl,
   contract,
-  separator
+  separator,
+  isDarkMode
 }) => (
   <View style={{ width: '100%' }}>
     <View style={{ width: '100%', alignItems: 'flex-start', height: 44, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-      <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.4)', marginTop: 20 }}>{label}</Text>
+      <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', marginTop: 20 }}>{label}</Text>
     </View>
     <View style={{ width: '100%', alignItems: 'center', height: 72, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-      {!!chain && !contract &&  <FastImage source={assetIcons[chain.toLowerCase()]} style={{ width: 40, height: 40, marginRight: 16, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }} />}
+      {!!chain && !contract &&  <FastImage source={assetIcons[chain.toLowerCase()]} style={{ width: 40, height: 40, marginRight: 16, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }} />}
       {!!contract && <View style={{ width: 41, height: 41, marginRight: 16 }}>
         <View style={{ width: 40, height: 40, borderWidth: 0, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white', borderRadius: 20 }}>
           <View style={{ position: 'absolute', top: 0, left: 0, width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center', backgroundColor: '#B9C1CF' }}>
-            <Text style={{ fontWeight: '500', fontSize: 20, color: 'white', paddingLeft: 1.6 }}>{symbol.slice(0, 1)}</Text>
+            <Text style={{ fontWeight: '500', fontSize: 20, color: isDarkMode ? 'black' : 'white', paddingLeft: 1.6 }}>{symbol.slice(0, 1)}</Text>
           </View>
           <FastImage
             source={{ uri: iconUrl }}
@@ -381,8 +387,8 @@ const CardField = ({
         <FastImage source={assetIcons[chain.toLowerCase()]} style={{ position: 'absolute', right: -4, bottom: 0, width: 16, height: 16, borderRadius: 8, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }} />
       </View>}
       <View>
-        <Text style={{ fontSize: 17 }}>{formatAddress(address)}</Text>
-        <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginTop: 4 }}>{available} {symbol}</Text>
+        <Text style={{ fontSize: 17, color: isDarkMode ? 'white' : 'black' }}>{formatAddress(address)}</Text>
+        <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)', marginTop: 4 }}>{available} {symbol}</Text>
       </View>
     </View>
     {separator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 16, left: 72, backgroundColor: '#C8C7CC' }} />}
@@ -391,9 +397,9 @@ const CardField = ({
 
 const warn = (values, props) => {
   const warnings = {}
-  const { transferAsset, assetBalance, walletBalance } = props
-  const balance = (transferAsset && transferAsset.contract) ? assetBalance : walletBalance
-  const available = balance && balance.balance
+  /* const { transferAsset, assetBalance, walletBalance } = props
+   * const balance = (transferAsset && transferAsset.contract) ? assetBalance : walletBalance
+   * const available = balance && balance.balance */
 
   if (!values.toAddress) {
     warnings.toAddress = '请输入转账地址'
@@ -403,9 +409,9 @@ const warn = (values, props) => {
     warnings.amount = '请输入金额'
   } else if (isNaN(values.amount) || +values.amount <= 0) {
     warnings.amount = '请输入正确的金额'
-  } else if (!available || +values.amount > +available) {
-    warnings.amount = '余额不足'
-  }
+  } /* else if (!available || +values.amount > +available) {
+     * warnings.amount = '余额不足'
+       } */
 
   return warnings
 }
@@ -413,6 +419,8 @@ const warn = (values, props) => {
 const shouldError = () => true
 
 @injectIntl
+
+@reduxForm({ form: 'transferAssetForm', shouldError, warn })
 
 @connect(
   state => ({
@@ -438,9 +446,9 @@ const shouldError = () => true
   })
 )
 
-@reduxForm({ form: 'transferAssetForm', shouldError, warn })
-
 export default class TransferAsset extends Component {
+  static contextType = DarkModeContext
+  
   static get options() {
     return {
       topBar: {
@@ -460,7 +468,6 @@ export default class TransferAsset extends Component {
       }
     }
   }
-
   subscription = Navigation.events().bindComponent(this)
 
   state = {
@@ -860,14 +867,16 @@ export default class TransferAsset extends Component {
 
     const feeRate = this.state.feeRate || this.state.initialFeeRate || this.state.fastestBTCFee || 45
     const useGasPrice = this.state.useGasPrice || this.state.initialGwei || this.state.ethGasPrice || 4.00
-
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
+    
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F7F7' }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
         <ScrollView
-          style={[styles.container, { backgroundColor: 'white' }]}
+          style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : 'white' }}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
-          contentContainerStyle={{ backgroundColor: 'white' }}
+          contentContainerStyle={{ backgroundColor: isDarkMode ? 'black' : 'white' }}
         >
           <View style={{ flex: 1, width: '100%', alignItems: 'center', borderTopWidth: 0, borderBottomWidth: 0, borderColor: '#C8C7CC', justifyContent: "flex-end" }}>
             <Field
@@ -886,6 +895,7 @@ export default class TransferAsset extends Component {
               autoFocus={this.state.autoFocusToAddress}
               onBlur={this.onToAddressBlur}
               showMemo={showMemo}
+              isDarkMode={isDarkMode}
             />
             <Field
               label={intl.formatMessage({ id: 'send_input_label_send_memo' })}
@@ -896,6 +906,7 @@ export default class TransferAsset extends Component {
               showClearButton={!!memo && memo.length > 0}
               change={change}
               showMemo={showMemo}
+              isDarkMode={isDarkMode}
               separator
             />
             <Field
@@ -910,6 +921,7 @@ export default class TransferAsset extends Component {
               chain={chain}
               iconUrl={iconUrl}
               contract={contract}
+              isDarkMode={isDarkMode}
               separator
             />
             <Field
@@ -921,14 +933,15 @@ export default class TransferAsset extends Component {
               showClearButton={!!amount && amount.length > 0}
               change={change}
               valueLength={!!amount && amount.length}
+              isDarkMode={isDarkMode}
               separator
             />
             {showMinnerFee && chain === 'BITCOIN' && <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16 }}>
               <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
-                  <Text style={{ fontSize: 15 }}>{intl.formatMessage({ id: 'send_input_label_mining_fee' })}</Text>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>{intl.formatMessage({ id: 'send_input_label_mining_fee' })}</Text>
                   <TouchableHighlight
-                    underlayColor="white"
+                    underlayColor={isDarkMode ? 'black' : 'white'}
                     activeOpacity={0.42}
                     onPress={this.showFeesTip}
                     style={{ width: 28, height: 28 }}
@@ -940,17 +953,17 @@ export default class TransferAsset extends Component {
                   </TouchableHighlight>
                 </View>
                 <TouchableHighlight
-                  underlayColor="white"
+                  underlayColor={isDarkMode ? 'black' : 'white'}
                   activeOpacity={0.42}
                   onPress={this.switchFeesType}
                   style={{ height: 50, alignItems: 'center' }}
                 >
                   <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
                     <View style={{ alignItems: 'flex-end', marginRight: 4, width: 180 }}>
-                      <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
+                      <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
                         {`≈ ${intl.formatNumber(feeRate * 226 * Math.pow(10, -8), { minimumFractionDigits: 0, maximumFractionDigits: balance.precision })} btc`}
                       </Text>
-                      {this.state.customFee && <Text style={{ fontSize: 13, color: 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
+                      {this.state.customFee && <Text style={{ fontSize: 13, color: isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
                         {`${(feeRate)} sat/b ${this.getSpeedText(feeRate)}`}
                       </Text>}
                     </View>
@@ -975,9 +988,9 @@ export default class TransferAsset extends Component {
             {showMinnerFee && chain === 'ETHEREUM' && <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16 }}>
               <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
-                  <Text style={{ fontSize: 15 }}>{intl.formatMessage({ id: 'send_input_label_mining_fee' })}</Text>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>{intl.formatMessage({ id: 'send_input_label_mining_fee' })}</Text>
                   <TouchableHighlight
-                    underlayColor="white"
+                    underlayColor={isDarkMode ? 'black' : 'white'}
                     activeOpacity={0.42}
                     onPress={this.showFeesTip}
                     style={{ width: 28, height: 28 }}
@@ -989,17 +1002,17 @@ export default class TransferAsset extends Component {
                   </TouchableHighlight>
                 </View>
                 <TouchableHighlight
-                  underlayColor="white"
+                  underlayColor={isDarkMode ? 'black' : 'white'}
                   activeOpacity={0.42}
                   onPress={this.switchFeesType}
                   style={{ height: 50, alignItems: 'center' }}
                 >
                   <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
                     <View style={{ alignItems: 'flex-end', marginRight: 4, width: 180 }}>
-                      <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
+                      <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
                         {`${intl.formatNumber(useGasPrice * this.state.ethGasLimit * Math.pow(10, -9), { minimumFractionDigits: 0, maximumFractionDigits: balance.precision })} ether`}
                       </Text>
-                      {this.state.customFee && <Text style={{ fontSize: 13, color: 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
+                      {this.state.customFee && <Text style={{ fontSize: 13, color: isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
                         {`${intl.formatNumber(useGasPrice, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} gwei x ${this.state.ethGasLimit}`}
                       </Text>}
                     </View>
@@ -1025,7 +1038,7 @@ export default class TransferAsset extends Component {
               <View style={{ position: 'absolute', height: 0.5, top: 0, right: 16, left: 16, backgroundColor: '#C8C7CC' }} />
               <View style={{ width: '100%', height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: 16, paddingRight: 16 }}>
                 <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                  <Text style={{ fontSize: 15 }}>{intl.formatMessage({ id: 'send_toggle_advanced_setting' })}</Text>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>{intl.formatMessage({ id: 'send_toggle_advanced_setting' })}</Text>
                 </View>
                 <View>
                   {!this.state.showOPReturn && <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ width: 40, height: 50, justifyContent: 'center', alignItems: 'flex-end' }} onPress={this.addOPReturn}>
@@ -1050,11 +1063,12 @@ export default class TransferAsset extends Component {
                                             component={TextField}
                                             showClearButton={!!opreturn && opreturn.length > 0}
                                             change={change}
+                                            isDarkMode={isDarkMode}
                                             separator
               />}
               {this.state.showOPReturn && <View style={{ width: '100%', height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: 16, paddingRight: 16 }}>
                 <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                  <Text style={{ fontSize: 13, color: 'rgba(0,0,0,0.4)' }}>{opreturn && new Buffer.from(opreturn, 'hex').toString()}</Text>
+                  <Text style={{ fontSize: 13, color: isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)' }}>{opreturn && new Buffer.from(opreturn, 'hex').toString()}</Text>
                 </View>
               </View>}
             </View>
@@ -1081,24 +1095,24 @@ export default class TransferAsset extends Component {
           >
             {this.state.showSelectContact && <View>
               <View style={{ width: '100%', height: 64 * 5, borderWidth: 0.5, borderColor: '#C8C7CC', borderRadius: 12, overflow: 'hidden' }}>
-                <View style={{ height: 64, width: '100%', backgroundColor: '#F7F7F7', borderTopLeftRadius: 12, borderTopRightRadius: 12, borderBottomWidth: 0.5, borderColor: '#C8C7CC', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
+                <View style={{ height: 64, width: '100%', backgroundColor: isDarkMode ? 'black' : '#F7F7F7', borderTopLeftRadius: 12, borderTopRightRadius: 12, borderBottomWidth: 0.5, borderColor: '#C8C7CC', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
                   <View style={{ height: '100%', alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
                     <FastImage
                       source={walletIcons[chain.toLowerCase()]}
                       style={{ width: 40, height: 40, marginRight: 16, borderRadius: 10, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }}
                     />
                     <View style={{ height: '100%', justifyContent: 'center' }}>
-                      <Text style={{ fontSize: 17 }}>选择联系人</Text>
+                      <Text style={{ fontSize: 17, color: isDarkMode ? 'white' : 'black' }}>选择联系人</Text>
                       <Text style={{ fontSize: 14, color: '#666666', marginTop: 2 }}>{`${symbol} ${chain === 'EOS' ? '账户名' : '地址'}`}</Text>
                     </View>
                   </View>
-                  {/* <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ padding: 4 }} activeOpacity={0.8} onPress={this.cancelSelectContact}>
+                  {/* <TouchableHighlight underlayColor={isDarkMode ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0)'} style={{ padding: 4 }} activeOpacity={0.8} onPress={this.cancelSelectContact}>
                       <Text style={{ fontSize: 17, color: '#007AFF' }}>取消</Text>
                       </TouchableHighlight> */}
                 </View>
                 <View style={{ height: 64 * 4, width: '100%' }}>
                   <TableView
-                    style={{ flex: 1, backgroundColor: 'white' }}
+                    style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : 'white' }}
                     tableViewCellStyle={TableView.Consts.CellStyle.Default}
                     showsVerticalScrollIndicator={false}
                     cellSeparatorInset={{ left: 16 }}
@@ -1107,6 +1121,7 @@ export default class TransferAsset extends Component {
                       {contacts.map(contact => <Item
                                                  key={contact.id}
                                                  height={64}
+                                                 isDarkMode={isDarkMode}
                                                  reactModuleForCell="SelectContactTableViewCell"
                                                  name={contact.name}
                                                  address={contact.address || contact.accountName}
@@ -1135,7 +1150,7 @@ export default class TransferAsset extends Component {
             {loading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
               <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
                 <ActivityIndicator size="small" color="#000000" />
-                <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'transfer_alert_sending_transaction' })}</Text>
+                <Text style={{ fontSize: 17, color: isDarkMode ? 'white' : 'black', marginLeft: 10, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'transfer_alert_sending_transaction' })}</Text>
               </View>
             </View>}
           </Modal>

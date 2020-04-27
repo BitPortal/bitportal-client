@@ -37,17 +37,17 @@ const WalletTableViewCell = (props) => {
               backgroundColor: 'white',
               marginRight: 10
             }}
-          />
-          <View style={{ flex: 1, height: 44, borderWidth: 0, borderColor: 'red', justifyContent: 'space-between' }}>
-            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={{ fontSize: 17, color: 'black' }}>{props.data.name}</Text>
-            </View>
-            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-              {!props.data.syncingEOSAccount && <Text style={{ fontSize: 14, color: '#666666' }}>创建EOS帐户</Text>}
-              {!!props.data.syncingEOSAccount && <Text style={{ fontSize: 14, color: '#666666' }}>检测EOS帐户中...</Text>}
-            </View>
-          </View>
+      />
+      <View style={{ flex: 1, height: 44, borderWidth: 0, borderColor: 'red', justifyContent: 'space-between' }}>
+        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={{ fontSize: 17, color: props.data.isDarkMode ? 'white' : 'black' }}>{props.data.name}</Text>
         </View>
+        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+          {!props.data.syncingEOSAccount && <Text style={{ fontSize: 14, color: '#666666' }}>创建EOS帐户</Text>}
+          {!!props.data.syncingEOSAccount && <Text style={{ fontSize: 14, color: '#666666' }}>检测EOS帐户中...</Text>}
+        </View>
+      </View>
+      </View>
       </View>
     )
   }
@@ -71,7 +71,7 @@ const WalletTableViewCell = (props) => {
         </View>
         <View style={{ flex: 1, height: 44, borderWidth: 0, borderColor: 'red', justifyContent: 'space-between' }}>
           <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ fontSize: 17, color: 'black' }}>{props.data.name}</Text>
+            <Text style={{ fontSize: 17, color: props.data.isDarkMode ? 'white' : 'black' }}>{props.data.name}</Text>
           </View>
           <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
             {!!props.data.symbol && <View style={{ marginRight: 5, paddingHorizontal: 4, borderRadius: 4, borderWidth: 1, borderColor: '#666666', aligtnItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>

@@ -11,6 +11,7 @@ import * as assetActions from 'actions/asset'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { getDepositOpReturn, getAddressByAccount, getTrusteeSessionInfo } from 'core/chain/chainx'
 import Dialog from 'components/Dialog'
+import { DarkModeContext } from 'utils/darkMode'
 
 const styles = EStyleSheet.create({
   container: {
@@ -92,7 +93,7 @@ export default class ChainXDeposit extends Component {
       }
     }
   }
-
+  static contextType = DarkModeContext
   subscription = Navigation.events().bindComponent(this)
 
   state = {
@@ -277,6 +278,8 @@ export default class ChainXDeposit extends Component {
     const isIdentityWallet = true
     const currentChainXAddress = activeWallet.chain === 'CHAINX' && activeWallet.address
     const bindedBTCAddress = this.state.bindedBTCAddress
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
 
     // if (!currentChainXAddress) {
     //   return (

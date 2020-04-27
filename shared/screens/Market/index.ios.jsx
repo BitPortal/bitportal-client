@@ -8,6 +8,7 @@ import TableView from 'components/TableView'
 import { tickerWidthSearchSelector } from 'selectors/ticker'
 import { currencySelector } from 'selectors/currency'
 import * as tickerActions from 'actions/ticker'
+import { DarkModeContext } from 'utils/darkMode'
 
 const { Section, Item } = TableView
 
@@ -39,7 +40,7 @@ export default class Market extends Component {
       }
     }
   }
-
+  static contextType = DarkModeContext
   subscription = Navigation.events().bindComponent(this)
 
   state = {
@@ -136,6 +137,9 @@ export default class Market extends Component {
     const refreshing = getTicker.refreshing
     const loading = getTicker.loading
 
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
+
     if (loading && !ticker.length) {
       return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -155,6 +159,7 @@ export default class Market extends Component {
         refreshing={refreshing && !this.state.searchBarFocused && this.state.getTickerLoaded}
         onRefresh={this.state.searchBarFocused ? () => {} : this.onRefresh}
         reactModuleForCell="MarketTableViewCell"
+        headerTextColor={isDarkMode ? 'white' : 'black'}
       >
         <Section>
           {ticker.map(item =>
@@ -168,6 +173,7 @@ export default class Market extends Component {
               change={intl.formatNumber(item.percent_change_24h, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               componentId={this.props.componentId}
               selectionStyle={TableView.Consts.CellSelectionStyle.None}
+              isDarkMode={isDarkMode}
             />
           )}
         </Section>

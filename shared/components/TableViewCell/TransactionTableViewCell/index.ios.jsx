@@ -19,7 +19,7 @@ const TransactionTableViewCell = (props) => {
             style={{ width: 40, height: 40, marginRight: 10 }}
             /> */}
         <View style={{ flex: 1, height: 44, borderWidth: 0, borderColor: 'red', justifyContent: 'space-between' }}>
-          <Text style={{ fontSize: 17, marginBottom: 4 }}>{this.formatAddress(props.data.targetAddress)}</Text>
+          <Text style={{ fontSize: 17, marginBottom: 4, color: props.data.isDarkMode ? 'white' : 'black' }}>{this.formatAddress(props.data.targetAddress)}</Text>
           <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
             {props.data.transactionType === 'send' && !props.data.failed && <FastImage source={require('resources/images/sent.png')} style={{ width: 20, height: 20 }} />}
             {props.data.transactionType === 'receive' && !props.data.failed && <FastImage source={require('resources/images/received.png')} style={{ width: 20, height: 20 }} />}
@@ -33,7 +33,7 @@ const TransactionTableViewCell = (props) => {
         </View>
       </View>
       <View style={{ justifyContent: 'center', alignItems: 'flex-end', height: 44 }}>
-        {props.data.transactionType === 'send' && <Text style={{ fontSize: 17, color: '#000000' }}>{props.data.change}</Text>}
+        {props.data.transactionType === 'send' && <Text style={{ fontSize: 17, color: props.data.isDarkMode ? 'white' : 'black' }}>{props.data.change}</Text>}
         {props.data.transactionType === 'receive' && <Text style={{ fontSize: 17, color: '#4CD964' }}>+{props.data.change}</Text>}
       </View>
       {props.data.showSeparator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: '#C8C7CC' }} />}

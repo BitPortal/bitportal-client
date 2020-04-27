@@ -8,7 +8,7 @@ const SelectEOSAccountTableViewCell = props => (
       {props.data.isSelected && !props.data.exist && <Image source={require('resources/images/circle_selected.png')} style={{ width: 20, height: 20, marginRight: 10 }} />}
       {!!props.data.exist && <Image source={require('resources/images/circle_selected_grey.png')} style={{ width: 20, height: 20, marginRight: 10 }} />}
       <View style={{ flex: 1 }}>
-        <Text style={{ fontSize: 17 }}>{props.data.accountName}</Text>
+        <Text style={{ fontSize: 17, color: props.data.isDarkMode ? 'white' : 'black' }}>{props.data.accountName}</Text>
         <Text style={{ fontSize: 15, color: '#888888' }}>{props.data.permissions}</Text>
       </View>
     </View>

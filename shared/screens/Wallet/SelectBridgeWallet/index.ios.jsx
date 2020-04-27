@@ -10,6 +10,7 @@ import { identityWalletSelector, importedWalletSelector, hasIdentityEOSWalletSel
 import * as walletActions from 'actions/wallet'
 import * as accountActions from 'actions/account'
 import * as keyAccountActions from 'actions/keyAccount'
+import { DarkModeContext } from 'utils/darkMode'
 import styles from './styles'
 const { Section, Item } = TableView
 const NavBar = requireNativeComponent('NavBar')
@@ -61,7 +62,7 @@ export default class WalletList extends Component {
       }
     }
   }
-
+  static contextType = DarkModeContext
   subscription = Navigation.events().bindComponent(this)
 
   tableViewRef = React.createRef()
@@ -96,6 +97,8 @@ export default class WalletList extends Component {
   render() {
     const { identityWallets, importedWallets, activeWalletId, intl, syncingEOSAccount, eosWallets, ethWallets, bridgeWalletList } = this.props
     const bridgeWalletListCount = bridgeWalletList.length
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
 
     if (!bridgeWalletListCount) {
       return (
@@ -123,22 +126,23 @@ export default class WalletList extends Component {
           scrollToDismissEnabled={this.state.scrollToDismissEnabled}
         >
           {bridgeWalletList && <Section>{bridgeWalletList.map(wallet => (
-              <Item
-                height={60}
-                key={wallet.id}
-                uid={wallet.id}
-                name={wallet.name}
-                symbol={wallet.symbol}
-                chain={wallet.chain}
-                address={wallet.address}
-                source={wallet.source}
-                componentId={this.props.componentId}
-                onPress={this.switchWallet.bind(this, wallet.id, wallet.chain)}
-                accessoryType={wallet.id === activeWalletId ? TableView.Consts.AccessoryType.Checkmark : TableView.Consts.AccessoryType.None}
-              />
-            )
-        )}
-      </Section>}
+            <Item
+              height={60}
+              key={wallet.id}
+              uid={wallet.id}
+              name={wallet.name}
+              symbol={wallet.symbol}
+              chain={wallet.chain}
+              address={wallet.address}
+              source={wallet.source}
+              componentId={this.props.componentId}
+              isDarkMode={isDarkMode}
+              onPress={this.switchWallet.bind(this, wallet.id, wallet.chain)}
+              accessoryType={wallet.id === activeWalletId ? TableView.Consts.AccessoryType.Checkmark : TableView.Consts.AccessoryType.None}
+            />
+          )
+          )}
+          </Section>}
         </TableView>
         <NavBar title="选择钱包" leftButtonTitle="取消" onLeftButtonClicked={this.onLeftButtonClicked} />
       </View>

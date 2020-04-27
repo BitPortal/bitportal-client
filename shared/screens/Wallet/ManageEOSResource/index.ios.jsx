@@ -37,6 +37,7 @@ import * as walletActions from 'actions/wallet'
 import * as accountActions from 'actions/account'
 import * as tickerActions from 'actions/ticker'
 import * as transactionActions from 'actions/transaction'
+import { DarkModeContext } from 'utils/darkMode'
 
 const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
   if (error) {
@@ -102,12 +103,13 @@ const TextField = ({
   fieldName,
   change,
   showClearButton,
-  keyboardType
+  keyboardType,
+  isDarkMode
 }) => (
   <View style={{ width: '100%', alignItems: 'center', height: 44, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-    <Text style={{ fontSize: 17, marginRight: 16, width: 70 }}>{label}</Text>
+    <Text style={{ fontSize: 17, marginRight: 16, width: 70, color: isDarkMode ? 'white' : 'black' }}>{label}</Text>
     <TextInput
-      style={styles.textFiled}
+      style={[styles.textFiled, { color: isDarkMode ? 'white' : 'black' }]}
       autoCorrect={false}
       keyboardType={keyboardType || 'default'}
       autoCapitalize="none"
@@ -211,27 +213,27 @@ const validate = (values) => {
 
 const warn = (values, props) => {
   const warnings = {}
-  const { selfDelegatedBandwidth, othersDelegatedBandwidth, balance, account } = props
-  const eosBalance = balance ? +balance.balance : 0
-  const ramBytes = account ? account.ram_quota - account.ram_usage : 0
+  /* const { selfDelegatedBandwidth, othersDelegatedBandwidth, balance, account } = props
+   * const eosBalance = balance ? +balance.balance : 0
+   * const ramBytes = account ? account.ram_quota - account.ram_usage : 0 */
 
   if (isNaN(values.buyRAMAmount)) {
     warnings.buyRAMAmount = '无效的RAM数量'
-  } else if (+eosBalance < +values.buyRAMAmount) {
-    warnings.buyRAMAmount = 'EOS余额不足'
-  }
+  } /* else if (+eosBalance < +values.buyRAMAmount) {
+     * warnings.buyRAMAmount = 'EOS余额不足'
+       } */
 
   if (isNaN(values.sellRAMAmount)) {
     warnings.sellRAMAmount = '无效的RAM数量'
-  } else if (+ramBytes < +values.sellRAMAmount) {
-    warnings.sellRAMAmount = 'RAM余额不足'
-  }
+  } /* else if (+ramBytes < +values.sellRAMAmount) {
+     * warnings.sellRAMAmount = 'RAM余额不足'
+       } */
 
   if (isNaN(values.delegateCPUAmount)) {
     warnings.delegateCPUAmount = '无效的CPU数量'
-  } else if (+eosBalance < +values.delegateCPUAmount + +values.delegateNETAmount) {
-    warnings.delegateCPUAmount = 'EOS余额不足'
-  }
+  } /* else if (+eosBalance < +values.delegateCPUAmount + +values.delegateNETAmount) {
+     * warnings.delegateCPUAmount = 'EOS余额不足'
+       } */
 
   if (isNaN(values.delegateNETAmount)) {
     warnings.delegateNETAmount = '无效的CPU数量'
@@ -255,6 +257,8 @@ const warn = (values, props) => {
 const shouldError = () => true
 
 @injectIntl
+
+@reduxForm({ form: 'manageEOSResourcesForm', validate, shouldError, warn })
 
 @connect(
   state => ({
@@ -281,8 +285,6 @@ const shouldError = () => true
     }, dispatch)
   })
 )
-
-@reduxForm({ form: 'manageEOSResourcesForm', validate, shouldError, warn })
 
 export default class ManageEOSResource extends Component {
   static get options() {
@@ -313,7 +315,7 @@ export default class ManageEOSResource extends Component {
       }
     }
   }
-
+  static contextType = DarkModeContext
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
       nextProps.invalid !== prevState.invalid
@@ -585,6 +587,8 @@ export default class ManageEOSResource extends Component {
     const undelegateCPUAmount = formValues && formValues.undelegateCPUAmount
     const delegateNETAmount = formValues && formValues.delegateNETAmount
     const undelegateNETAmount = formValues && formValues.undelegateNETAmount
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
 
     if ((!getAccount.loaded && getAccount.loading) || !account) {
       return (
@@ -599,285 +603,292 @@ export default class ManageEOSResource extends Component {
 
     return (
       <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <View style={{ height: 52, width: '100%', justifyContent: 'center', paddingTop: 5, paddingBottom: 13, paddingLeft: 16, paddingRight: 16, backgroundColor: '#F7F7F7', borderColor: '#C8C7CC', borderBottomWidth: 0.5 }}>
-          <SegmentedControlIOS
-            values={['RAM', 'CPU/NET']}
-            selectedIndex={this.state.selectedIndex}
-            onChange={this.changeSelectedIndex}
-            style={{ width: '100%' }}
-          />
-        </View>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
-        >
-          <View style={{ flex: 1, alignItems: 'center' }}>
-            {this.state.selectedIndex === 0 && <Fragment>
-              <View style={{ width: '100%', height: 30 }} />
-              <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
-                <View style={{ width: '100%', alignItems: 'flex-start', paddingTop: 12, paddingBottom: 10 , paddingLeft: 16, paddingRight: 16 }}>
-                  <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 17 }}>RAM</Text>
-                    <Text style={{ fontSize: 17, color: '#666666' }}>已使用{formatMemorySize(account.ram_quota)}中的{formatMemorySize(account.ram_usage)}</Text>
-                  </View>
-                  <View style={{ width: '100%', backgroundColor: '#E5E5EA', height: 18, marginTop: 8, borderRadius: 4, flexDirection: 'row' }}>
-                    <View style={{ width: !!account.ram_quota ? ((1 - account.ram_usage/account.ram_quota) * (Dimensions.get('window').width - 32) - +(account.ram_quota !== account.ram_usage)) : 0, height: '100%', backgroundColor: 'rgb(255,59,48)', borderTopLeftRadius: 4, borderBottomLeftRadius: 4 }} />
-                    {account.ram_quota !== account.ram_usage && <View style={{ height: '100%', width: 1, backgroundColor: 'white' }} />}
-                  </View>
-                  <View style={{ marginTop: 10 }}>
-                    <Text>
-                      当前价格: {typeof ramPrice === 'number' ? <FormattedNumber
-                        value={ramPrice}
-                        maximumFractionDigits={5}
-                        minimumFractionDigits={5}
-                      /> : '--'} EOS/KB
-                    </Text>
-                  </View>
-                </View>
-              </View>
-            </Fragment>}
-            {this.state.selectedIndex === 1 && <Fragment>
-              <View style={{ width: '100%', height: 30 }} />
-              <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
-                <View style={{ width: '100%', alignItems: 'flex-start', paddingTop: 12, paddingBottom: 10 , paddingLeft: 16, paddingRight: 16 }}>
-                  <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 17 }}>CPU</Text>
-                    <Text style={{ fontSize: 17, color: '#666666' }}>已使用{formatCycleTime(account.cpu_limit.max)}中的{formatCycleTime(account.cpu_limit.used)}</Text>
-                  </View>
-                  <View style={{ width: '100%', backgroundColor: '#E5E5EA', height: 18, marginTop: 8, borderRadius: 4, flexDirection: 'row' }}>
-                    <View style={{ width: !!account.cpu_limit.max ? ((account.cpu_limit.available/account.cpu_limit.max) * (Dimensions.get('window').width - 32) - +(account.cpu_limit.available !== account.cpu_limit.max)) : 0, height: '100%', backgroundColor: 'rgb(255,204,0)', borderTopLeftRadius: 4, borderBottomLeftRadius: 4, borderTopRightRadius: account.cpu_limit.available === account.cpu_limit.max ? 4 : 0, borderBottomRightRadius: account.cpu_limit.available === account.cpu_limit.max ? 4 : 0 }} />
-                    {account.cpu_limit.available !== account.cpu_limit.max && <View style={{ height: '100%', width: 1, backgroundColor: 'white' }} />}
-                  </View>
-                  <View style={{ marginTop: 10, flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
-                    <Text>自己抵押: {selfDelegatedBandwidth ? <FormattedNumber value={selfDelegatedBandwidth.cpu_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS </Text>
-                    <Text>他人抵押: {othersDelegatedBandwidth ? <FormattedNumber value={othersDelegatedBandwidth.cpu_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS</Text>
-                  </View>
-                </View>
-                <View style={{ position: 'absolute', left: 16, right: 0, bottom: 0, height: 0.5, backgroundColor: '#C8C7CC' }} />
-              </View>
-              <View style={{ width: '100%', alignItems: 'center', borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
-                <View style={{ width: '100%', alignItems: 'flex-start', paddingTop: 12, paddingBottom: 10 , paddingLeft: 16, paddingRight: 16 }}>
-                  <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 17 }}>NET</Text>
-                    <Text style={{ fontSize: 17, color: '#666666' }}>已使用{formatMemorySize(account.net_limit.max)}中的{formatMemorySize(account.net_limit.used)}</Text>
-                  </View>
-                  <View style={{ width: '100%', backgroundColor: '#E5E5EA', height: 18, marginTop: 8, borderRadius: 4, flexDirection: 'row' }}>
-                    <View style={{ width: !!account.net_limit.max ? ((account.net_limit.available/account.net_limit.max) * (Dimensions.get('window').width - 32) - +(account.net_limit.available !== account.net_limit.max)) : 0, height: '100%', backgroundColor: 'rgb(76,217,100)', borderTopLeftRadius: 4, borderBottomLeftRadius: 4, borderTopRightRadius: account.net_limit.available === account.net_limit.max ? 4 : 0, borderBottomRightRadius: account.net_limit.available === account.net_limit.max ? 4 : 0 }} />
-                    {account.net_limit.available !== account.net_limit.max && <View style={{ height: '100%', width: 1, backgroundColor: 'white' }} />}
-                  </View>
-                  <View style={{ marginTop: 10, flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
-                    <Text>自己抵押: {selfDelegatedBandwidth ? <FormattedNumber value={selfDelegatedBandwidth.net_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS </Text>
-                    <Text>他人抵押: {othersDelegatedBandwidth ? <FormattedNumber value={othersDelegatedBandwidth.net_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS</Text>
-                  </View>
-                </View>
-              </View>
-            </Fragment>}
-            <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-              <Text style={{ fontSize: 13, color: '#666666' }}>选择操作</Text>
-            </View>
-            <View style={{ width: '100%', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
+        <View style={styles.container}>
+          <View style={{ height: 52, width: '100%', justifyContent: 'center', paddingTop: 5, paddingBottom: 13, paddingLeft: 16, paddingRight: 16, backgroundColor: isDarkMode ? 'black' : '#F7F7F7', borderColor: '#C8C7CC', borderBottomWidth: 0.5 }}>
+            <SegmentedControlIOS
+              values={['RAM', 'CPU/NET']}
+              selectedIndex={this.state.selectedIndex}
+              onChange={this.changeSelectedIndex}
+              style={{ width: '100%' }}
+            />
+          </View>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled"
+          >
+            <View style={{ flex: 1, alignItems: 'center' }}>
               {this.state.selectedIndex === 0 && <Fragment>
-                <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%' }} onPress={this.toggleRAM.bind(this, true)}>
-                  <View style={{ paddingTop: 8, paddingBottom: 8, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
-                    <View>
-                      <Text style={{ fontSize: 17, marginBottom: 2 }}>买入 RAM</Text>
-                      <Text style={{ fontSize: 15, color: '#666666' }}>
-                        最多可买入 {balance ? <FormattedNumber value={balance.balance} maximumFractionDigits={4} minimumFractionDigits={4} /> : '--'} EOS
+                <View style={{ width: '100%', height: 30 }} />
+                <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : 'white' }}>
+                  <View style={{ width: '100%', alignItems: 'flex-start', paddingTop: 12, paddingBottom: 10 , paddingLeft: 16, paddingRight: 16 }}>
+                    <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Text style={{ fontSize: 17, color: isDarkMode ? 'white' : 'black' }}>RAM</Text>
+                      <Text style={{ fontSize: 17, color: '#666666' }}>已使用{formatMemorySize(account.ram_quota)}中的{formatMemorySize(account.ram_usage)}</Text>
+                    </View>
+                    <View style={{ width: '100%', backgroundColor: '#E5E5EA', height: 18, marginTop: 8, borderRadius: 4, flexDirection: 'row' }}>
+                      <View style={{ width: !!account.ram_quota ? ((1 - account.ram_usage/account.ram_quota) * (Dimensions.get('window').width - 32) - +(account.ram_quota !== account.ram_usage)) : 0, height: '100%', backgroundColor: 'rgb(255,59,48)', borderTopLeftRadius: 4, borderBottomLeftRadius: 4 }} />
+                      {account.ram_quota !== account.ram_usage && <View style={{ height: '100%', width: 1, backgroundColor: isDarkMode ? 'black' : 'white' }} />}
+                    </View>
+                    <View style={{ marginTop: 10 }}>
+                      <Text style={{ color: isDarkMode ? 'white' : 'black' }}>
+                        当前价格: {typeof ramPrice === 'number' ? <FormattedNumber
+                                                                    value={ramPrice}
+                                                                    maximumFractionDigits={5}
+                                                                    minimumFractionDigits={5}
+                        /> : '--'} EOS/KB
                       </Text>
                     </View>
-                    {this.state.buy && <FastImage source={require('resources/images/radio_checked.png')} style={{ width: 24, height: 24 }} />}
-                    {!this.state.buy && <FastImage source={require('resources/images/radio_unchecked.png')} style={{ width: 24, height: 24 }} />}
-                    <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: '#C8C7CC' }} />
                   </View>
-                </TouchableHighlight>
-                <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%' }} onPress={this.toggleRAM.bind(this, false)}>
-                  <View style={{ paddingTop: 8, paddingBottom: 8, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
-                    <View>
-                      <Text style={{ fontSize: 17, marginBottom: 2 }}>卖出 RAM</Text>
-                      <Text style={{ fontSize: 15, color: '#666666' }}>
-                        最多可卖出 {account ? `${account.ram_quota - account.ram_usage} bytes` : '-- byte' }
-                      </Text>
-                    </View>
-                    {this.state.buy && <FastImage source={require('resources/images/radio_unchecked.png')} style={{ width: 24, height: 24 }} />}
-                    {!this.state.buy && <FastImage source={require('resources/images/radio_checked.png')} style={{ width: 24, height: 24 }} />}
-                  </View>
-                </TouchableHighlight>
+                </View>
               </Fragment>}
               {this.state.selectedIndex === 1 && <Fragment>
-                <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%' }} onPress={this.toggleBandWidth.bind(this, true)}>
-                  <View style={{ paddingTop: 8, paddingBottom: 8, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
-                    <View>
-                      <Text style={{ fontSize: 17, marginBottom: 2 }}>抵押 CPU/NET</Text>
-                      <Text style={{ fontSize: 15, color: '#666666' }}>
-                        最多可抵押 {balance ? <FormattedNumber value={balance.balance} maximumFractionDigits={4} minimumFractionDigits={4} /> : '--'} EOS
-                      </Text>
+                <View style={{ width: '100%', height: 30 }} />
+                <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : 'white' }}>
+                  <View style={{ width: '100%', alignItems: 'flex-start', paddingTop: 12, paddingBottom: 10 , paddingLeft: 16, paddingRight: 16 }}>
+                    <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Text style={{ fontSize: 17, color: isDarkMode ? 'white' : 'black' }}>CPU</Text>
+                      <Text style={{ fontSize: 17, color: '#666666' }}>已使用{formatCycleTime(account.cpu_limit.max)}中的{formatCycleTime(account.cpu_limit.used)}</Text>
                     </View>
-                    {this.state.delegate && <FastImage source={require('resources/images/radio_checked.png')} style={{ width: 24, height: 24 }} />}
-                    {!this.state.delegate && <FastImage source={require('resources/images/radio_unchecked.png')} style={{ width: 24, height: 24 }} />}
+                    <View style={{ width: '100%', backgroundColor: '#E5E5EA', height: 18, marginTop: 8, borderRadius: 4, flexDirection: 'row' }}>
+                      <View style={{ width: !!account.cpu_limit.max ? ((account.cpu_limit.available/account.cpu_limit.max) * (Dimensions.get('window').width - 32) - +(account.cpu_limit.available !== account.cpu_limit.max)) : 0, height: '100%', backgroundColor: 'rgb(255,204,0)', borderTopLeftRadius: 4, borderBottomLeftRadius: 4, borderTopRightRadius: account.cpu_limit.available === account.cpu_limit.max ? 4 : 0, borderBottomRightRadius: account.cpu_limit.available === account.cpu_limit.max ? 4 : 0 }} />
+                      {account.cpu_limit.available !== account.cpu_limit.max && <View style={{ height: '100%', width: 1, backgroundColor: isDarkMode ? 'black' : 'white' }} />}
+                    </View>
+                    <View style={{ marginTop: 10, flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                      <Text style={{ color: isDarkMode ? 'white' : 'black' }}>自己抵押: {selfDelegatedBandwidth ? <FormattedNumber value={selfDelegatedBandwidth.cpu_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS </Text>
+                      <Text style={{ color: isDarkMode ? 'white' : 'black' }}>他人抵押: {othersDelegatedBandwidth ? <FormattedNumber value={othersDelegatedBandwidth.cpu_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS</Text>
+                    </View>
+                  </View>
+                  <View style={{ position: 'absolute', left: 16, right: 0, bottom: 0, height: 0.5, backgroundColor: '#C8C7CC' }} />
+                </View>
+                <View style={{ width: '100%', alignItems: 'center', borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : 'white' }}>
+                  <View style={{ width: '100%', alignItems: 'flex-start', paddingTop: 12, paddingBottom: 10 , paddingLeft: 16, paddingRight: 16 }}>
+                    <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Text style={{ fontSize: 17, color: isDarkMode ? 'white' : 'black' }}>NET</Text>
+                      <Text style={{ fontSize: 17, color: '#666666' }}>已使用{formatMemorySize(account.net_limit.max)}中的{formatMemorySize(account.net_limit.used)}</Text>
+                    </View>
+                    <View style={{ width: '100%', backgroundColor: '#E5E5EA', height: 18, marginTop: 8, borderRadius: 4, flexDirection: 'row' }}>
+                      <View style={{ width: !!account.net_limit.max ? ((account.net_limit.available/account.net_limit.max) * (Dimensions.get('window').width - 32) - +(account.net_limit.available !== account.net_limit.max)) : 0, height: '100%', backgroundColor: 'rgb(76,217,100)', borderTopLeftRadius: 4, borderBottomLeftRadius: 4, borderTopRightRadius: account.net_limit.available === account.net_limit.max ? 4 : 0, borderBottomRightRadius: account.net_limit.available === account.net_limit.max ? 4 : 0 }} />
+                      {account.net_limit.available !== account.net_limit.max && <View style={{ height: '100%', width: 1, backgroundColor: isDarkMode ? 'black' : 'white' }} />}
+                    </View>
+                    <View style={{ marginTop: 10, flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                      <Text style={{ color: isDarkMode ? 'white' : 'black' }}>自己抵押: {selfDelegatedBandwidth ? <FormattedNumber value={selfDelegatedBandwidth.net_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS </Text>
+                      <Text style={{ color: isDarkMode ? 'white' : 'black' }}>他人抵押: {othersDelegatedBandwidth ? <FormattedNumber value={othersDelegatedBandwidth.net_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS</Text>
+                    </View>
+                  </View>
+                </View>
+              </Fragment>}
+              <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
+                <Text style={{ fontSize: 13, color: '#666666' }}>选择操作</Text>
+              </View>
+              <View style={{ width: '100%', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : 'white' }}>
+                {this.state.selectedIndex === 0 && <Fragment>
+                  <TouchableHighlight underlayColor={isDarkMode ? 'black' : '#D9D9D9'} style={{ width: '100%' }} onPress={this.toggleRAM.bind(this, true)}>
+                    <View style={{ paddingTop: 8, paddingBottom: 8, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
+                      <View>
+                        <Text style={{ fontSize: 17, marginBottom: 2, color: isDarkMode ? 'white' : 'black' }}>买入 RAM</Text>
+                        <Text style={{ fontSize: 15, color: '#666666' }}>
+                          最多可买入 {balance ? <FormattedNumber value={balance.balance} maximumFractionDigits={4} minimumFractionDigits={4} /> : '--'} EOS
+                        </Text>
+                      </View>
+                      {this.state.buy && <FastImage source={require('resources/images/radio_checked.png')} style={{ width: 24, height: 24 }} />}
+                      {!this.state.buy && <FastImage source={require('resources/images/radio_unchecked.png')} style={{ width: 24, height: 24 }} />}
+                      <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: '#C8C7CC' }} />
+                    </View>
+                  </TouchableHighlight>
+                  <TouchableHighlight underlayColor={isDarkMode ? 'black' : '#D9D9D9'} style={{ width: '100%' }} onPress={this.toggleRAM.bind(this, false)}>
+                    <View style={{ paddingTop: 8, paddingBottom: 8, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
+                      <View>
+                        <Text style={{ fontSize: 17, marginBottom: 2, color: isDarkMode ? 'white' : 'black' }}>卖出 RAM</Text>
+                        <Text style={{ fontSize: 15, color: '#666666' }}>
+                          最多可卖出 {account ? `${account.ram_quota - account.ram_usage} bytes` : '-- byte' }
+                        </Text>
+                      </View>
+                      {this.state.buy && <FastImage source={require('resources/images/radio_unchecked.png')} style={{ width: 24, height: 24 }} />}
+                      {!this.state.buy && <FastImage source={require('resources/images/radio_checked.png')} style={{ width: 24, height: 24 }} />}
+                    </View>
+                  </TouchableHighlight>
+                </Fragment>}
+                {this.state.selectedIndex === 1 && <Fragment>
+                  <TouchableHighlight underlayColor={isDarkMode ? 'black' : '#D9D9D9'} style={{ width: '100%' }} onPress={this.toggleBandWidth.bind(this, true)}>
+                    <View style={{ paddingTop: 8, paddingBottom: 8, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
+                      <View>
+                        <Text style={{ fontSize: 17, marginBottom: 2, color: isDarkMode ? 'white' : 'black' }}>抵押 CPU/NET</Text>
+                        <Text style={{ fontSize: 15, color: '#666666' }}>
+                          最多可抵押 {balance ? <FormattedNumber value={balance.balance} maximumFractionDigits={4} minimumFractionDigits={4} /> : '--'} EOS
+                        </Text>
+                      </View>
+                      {this.state.delegate && <FastImage source={require('resources/images/radio_checked.png')} style={{ width: 24, height: 24 }} />}
+                      {!this.state.delegate && <FastImage source={require('resources/images/radio_unchecked.png')} style={{ width: 24, height: 24 }} />}
+                      <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: '#C8C7CC' }} />
+                    </View>
+                  </TouchableHighlight>
+                  <TouchableHighlight underlayColor={isDarkMode ? 'black' : '#D9D9D9'} style={{ width: '100%' }} onPress={this.toggleBandWidth.bind(this, false)}>
+                    <View style={{ paddingTop: 8, paddingBottom: 8, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
+                      <View style={{ width: Dimensions.get('window').width - 32 - 24 }}>
+                        <Text style={{ fontSize: 17, marginBottom: 2, color: isDarkMode ? 'white' : 'black' }}>赎回 CPU/NET</Text>
+                        <Text style={{ fontSize: 15, color: '#666666' }}>
+                          最多可赎回 CPU {selfDelegatedBandwidth ? <FormattedNumber value={selfDelegatedBandwidth.cpu_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS, NET {selfDelegatedBandwidth ? <FormattedNumber value={selfDelegatedBandwidth.net_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS
+                        </Text>
+                      </View>
+                      {this.state.delegate && <FastImage source={require('resources/images/radio_unchecked.png')} style={{ width: 24, height: 24 }} />}
+                      {!this.state.delegate && <FastImage source={require('resources/images/radio_checked.png')} style={{ width: 24, height: 24 }} />}
+                    </View>
+                  </TouchableHighlight>
+                </Fragment>}
+              </View>
+              <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
+                {this.state.selectedIndex === 0 && !!this.state.buy && <Text style={{ fontSize: 13, color: '#666666' }}>买入信息</Text>}
+                {this.state.selectedIndex === 0 && !this.state.buy && <Text style={{ fontSize: 13, color: '#666666' }}>卖出信息</Text>}
+                {this.state.selectedIndex === 1 && !!this.state.delegate && <Text style={{ fontSize: 13, color: '#666666' }}>抵押信息</Text>}
+                {this.state.selectedIndex === 1 && !this.state.delegate && <Text style={{ fontSize: 13, color: '#666666' }}>赎回信息</Text>}
+              </View>
+              <Fragment>
+                <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : 'white', marginBottom: 35 }}>
+                  <View style={{ width: '100%', alignItems: 'center', height: 44, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
+                    {this.state.selectedIndex === 0 && !!this.state.buy && <Text style={{ fontSize: 17, marginRight: 16, width: 70, color: isDarkMode ? 'white' : 'black' }}>支付账户</Text>}
+                    {this.state.selectedIndex === 0 && !this.state.buy && <Text style={{ fontSize: 17, marginRight: 16, width: 70, color: isDarkMode ? 'white' : 'black' }}>出售账户</Text>}
+                    {this.state.selectedIndex === 1 && <Text style={{ fontSize: 17, marginRight: 16, width: 70, color: isDarkMode ? 'white' : 'black' }}>发起账户</Text>}
+                    <Text style={{ fontSize: 17, marginRight: 16, color: isDarkMode ? 'white' : 'black' }}>{account.account_name}</Text>
                     <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: '#C8C7CC' }} />
                   </View>
-                </TouchableHighlight>
-                <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%' }} onPress={this.toggleBandWidth.bind(this, false)}>
-                  <View style={{ paddingTop: 8, paddingBottom: 8, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
-                    <View style={{ width: Dimensions.get('window').width - 32 - 24 }}>
-                      <Text style={{ fontSize: 17, marginBottom: 2 }}>赎回 CPU/NET</Text>
-                      <Text style={{ fontSize: 15, color: '#666666' }}>
-                        最多可赎回 CPU {selfDelegatedBandwidth ? <FormattedNumber value={selfDelegatedBandwidth.cpu_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS, NET {selfDelegatedBandwidth ? <FormattedNumber value={selfDelegatedBandwidth.net_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS
-                      </Text>
-                    </View>
-                    {this.state.delegate && <FastImage source={require('resources/images/radio_unchecked.png')} style={{ width: 24, height: 24 }} />}
-                    {!this.state.delegate && <FastImage source={require('resources/images/radio_checked.png')} style={{ width: 24, height: 24 }} />}
-                  </View>
-                </TouchableHighlight>
-              </Fragment>}
-            </View>
-            <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-              {this.state.selectedIndex === 0 && !!this.state.buy && <Text style={{ fontSize: 13, color: '#666666' }}>买入信息</Text>}
-              {this.state.selectedIndex === 0 && !this.state.buy && <Text style={{ fontSize: 13, color: '#666666' }}>卖出信息</Text>}
-              {this.state.selectedIndex === 1 && !!this.state.delegate && <Text style={{ fontSize: 13, color: '#666666' }}>抵押信息</Text>}
-              {this.state.selectedIndex === 1 && !this.state.delegate && <Text style={{ fontSize: 13, color: '#666666' }}>赎回信息</Text>}
-            </View>
-            <Fragment>
-              <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white', marginBottom: 35 }}>
-                <View style={{ width: '100%', alignItems: 'center', height: 44, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-                  {this.state.selectedIndex === 0 && !!this.state.buy && <Text style={{ fontSize: 17, marginRight: 16, width: 70 }}>支付账户</Text>}
-                  {this.state.selectedIndex === 0 && !this.state.buy && <Text style={{ fontSize: 17, marginRight: 16, width: 70 }}>出售账户</Text>}
-                  {this.state.selectedIndex === 1 && <Text style={{ fontSize: 17, marginRight: 16, width: 70 }}>发起账户</Text>}
-                  <Text style={{ fontSize: 17, marginRight: 16 }}>{account.account_name}</Text>
-                  <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: '#C8C7CC' }} />
+                  {((this.state.selectedIndex === 0 && !!this.state.buy) || this.state.selectedIndex === 1) && (
+                    <Field
+                      label="接收账户"
+                      placeholder="选填，默认为发起者自己"
+                      name="receiver"
+                      fieldName="receiver"
+                      component={TextField}
+                      change={change}
+                      showClearButton={!!receiver && receiver.length > 0}
+                      separator={true}
+                      isDarkMode={isDarkMode}
+                    />
+                  )}
+                  {this.state.selectedIndex === 0 && this.state.buy && (
+                    <Field
+                      label="买入数量"
+                      placeholder="以 EOS 为单位"
+                      name="buyRAMAmount"
+                      fieldName="buyRAMAmount"
+                      component={TextField}
+                      change={change}
+                      showClearButton={!!buyRAMAmount && buyRAMAmount.length > 0}
+                      keyboardType="numeric"
+                      isDarkMode={isDarkMode}
+                    />
+                  )}
+                  {this.state.selectedIndex === 0 && !this.state.buy && (
+                    <Field
+                      label="卖出数量"
+                      placeholder="以 Byte 为单位"
+                      name="sellRAMAmount"
+                      fieldName="sellRAMAmount"
+                      component={TextField}
+                      change={change}
+                      showClearButton={!!sellRAMAmount && sellRAMAmount.length > 0}
+                      keyboardType="numeric"
+                      isDarkMode={isDarkMode}
+                    />
+                  )}
+                  {this.state.selectedIndex === 1 && this.state.delegate && (
+                    <Field
+                      label="CPU数量"
+                      placeholder="以 EOS 为单位"
+                      name="delegateCPUAmount"
+                      fieldName="delegateCPUAmount"
+                      component={TextField}
+                      change={change}
+                      showClearButton={!!delegateCPUAmount && delegateCPUAmount.length > 0}
+                      separator={true}
+                      keyboardType="numeric"
+                      isDarkMode={isDarkMode}
+                    />
+                  )}
+                  {this.state.selectedIndex === 1 && !this.state.delegate && (
+                    <Field
+                      label="CPU数量"
+                      placeholder="以 EOS 为单位"
+                      name="undelegateCPUAmount"
+                      fieldName="undelegateCPUAmount"
+                      component={TextField}
+                      change={change}
+                      showClearButton={!!undelegateCPUAmount && undelegateCPUAmount.length > 0}
+                      separator={true}
+                      keyboardType="numeric"
+                      isDarkMode={isDarkMode}
+                    />
+                  )}
+                  {this.state.selectedIndex === 1 && this.state.delegate && (
+                    <Field
+                      label="NET数量"
+                      placeholder="以 EOS 为单位"
+                      name="delegateNETAmount"
+                      fieldName="delegateNETAmount"
+                      component={TextField}
+                      change={change}
+                      showClearButton={!!delegateNETAmount && delegateNETAmount.length > 0}
+                      keyboardType="numeric"
+                      isDarkMode={isDarkMode}
+                    />
+                  )}
+                  {this.state.selectedIndex === 1 && !this.state.delegate && (
+                    <Field
+                      label="NET数量"
+                      placeholder="以 EOS 为单位"
+                      name="undelegateNETAmount"
+                      fieldName="undelegateNETAmount"
+                      component={TextField}
+                      change={change}
+                      showClearButton={!!undelegateNETAmount && undelegateNETAmount.length > 0}
+                      keyboardType="numeric"
+                      isDarkMode={isDarkMode}
+                    />
+                  )}
                 </View>
-                {((this.state.selectedIndex === 0 && !!this.state.buy) || this.state.selectedIndex === 1) && (
-                   <Field
-                     label="接收账户"
-                     placeholder="选填，默认为发起者自己"
-                     name="receiver"
-                     fieldName="receiver"
-                     component={TextField}
-                     change={change}
-                     showClearButton={!!receiver && receiver.length > 0}
-                     separator={true}
-                   />
-                 )}
-                {this.state.selectedIndex === 0 && this.state.buy && (
-                   <Field
-                     label="买入数量"
-                     placeholder="以 EOS 为单位"
-                     name="buyRAMAmount"
-                     fieldName="buyRAMAmount"
-                     component={TextField}
-                     change={change}
-                     showClearButton={!!buyRAMAmount && buyRAMAmount.length > 0}
-                     keyboardType="numeric"
-                   />
-                 )}
-                {this.state.selectedIndex === 0 && !this.state.buy && (
-                   <Field
-                     label="卖出数量"
-                     placeholder="以 Byte 为单位"
-                     name="sellRAMAmount"
-                     fieldName="sellRAMAmount"
-                     component={TextField}
-                     change={change}
-                     showClearButton={!!sellRAMAmount && sellRAMAmount.length > 0}
-                     keyboardType="numeric"
-                   />
-                 )}
-                {this.state.selectedIndex === 1 && this.state.delegate && (
-                   <Field
-                     label="CPU数量"
-                     placeholder="以 EOS 为单位"
-                     name="delegateCPUAmount"
-                     fieldName="delegateCPUAmount"
-                     component={TextField}
-                     change={change}
-                     showClearButton={!!delegateCPUAmount && delegateCPUAmount.length > 0}
-                     separator={true}
-                     keyboardType="numeric"
-                   />
-                 )}
-                {this.state.selectedIndex === 1 && !this.state.delegate && (
-                   <Field
-                     label="CPU数量"
-                     placeholder="以 EOS 为单位"
-                     name="undelegateCPUAmount"
-                     fieldName="undelegateCPUAmount"
-                     component={TextField}
-                     change={change}
-                     showClearButton={!!undelegateCPUAmount && undelegateCPUAmount.length > 0}
-                     separator={true}
-                     keyboardType="numeric"
-                   />
-                 )}
-                {this.state.selectedIndex === 1 && this.state.delegate && (
-                   <Field
-                     label="NET数量"
-                     placeholder="以 EOS 为单位"
-                     name="delegateNETAmount"
-                     fieldName="delegateNETAmount"
-                     component={TextField}
-                     change={change}
-                     showClearButton={!!delegateNETAmount && delegateNETAmount.length > 0}
-                     keyboardType="numeric"
-                   />
-                 )}
-                {this.state.selectedIndex === 1 && !this.state.delegate && (
-                   <Field
-                     label="NET数量"
-                     placeholder="以 EOS 为单位"
-                     name="undelegateNETAmount"
-                     fieldName="undelegateNETAmount"
-                     component={TextField}
-                     change={change}
-                     showClearButton={!!undelegateNETAmount && undelegateNETAmount.length > 0}
-                     keyboardType="numeric"
-                   />
-                 )}
+              </Fragment>
+            </View>
+          </ScrollView>
+          <Modal
+            isVisible={this.state.buyRAMLoading || this.state.sellRAMLoading || this.state.delegateBWLoading || this.state.undelegateBWLoading}
+            backdropOpacity={0.4}
+            useNativeDriver
+            animationIn="fadeIn"
+            animationInTiming={200}
+            backdropTransitionInTiming={200}
+            animationOut="fadeOut"
+            animationOutTiming={200}
+            backdropTransitionOutTiming={200}
+            onModalHide={this.onModalHide}
+            onModalShow={this.onModalShow}
+          >
+            {(this.state.buyRAMLoading || this.state.sellRAMLoading || this.state.delegateBWLoading || this.state.undelegateBWLoading) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <View style={{ backgroundColor: isDarkMode ? 'black' : 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
+                <ActivityIndicator size="small" color="#000000" />
+                {this.state.buyRAMLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>买入中...</Text>}
+                {this.state.sellRAMLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>卖出中...</Text>}
+                {this.state.delegateBWLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>抵押中...</Text>}
+                {this.state.undelegateBWLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>赎回中...</Text>}
               </View>
-            </Fragment>
-          </View>
-        </ScrollView>
-        <Modal
-          isVisible={this.state.buyRAMLoading || this.state.sellRAMLoading || this.state.delegateBWLoading || this.state.undelegateBWLoading}
-          backdropOpacity={0.4}
-          useNativeDriver
-          animationIn="fadeIn"
-          animationInTiming={200}
-          backdropTransitionInTiming={200}
-          animationOut="fadeOut"
-          animationOutTiming={200}
-          backdropTransitionOutTiming={200}
-          onModalHide={this.onModalHide}
-          onModalShow={this.onModalShow}
-        >
-          {(this.state.buyRAMLoading || this.state.sellRAMLoading || this.state.delegateBWLoading || this.state.undelegateBWLoading) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
-              <ActivityIndicator size="small" color="#000000" />
-              {this.state.buyRAMLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>买入中...</Text>}
-              {this.state.sellRAMLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>卖出中...</Text>}
-              {this.state.delegateBWLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>抵押中...</Text>}
-              {this.state.undelegateBWLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>赎回中...</Text>}
-            </View>
-          </View>}
-        </Modal>
-        <Modal
-          isVisible={this.state.showModal}
-          backdropOpacity={0}
-          useNativeDriver
-          animationIn="fadeIn"
-          animationInTiming={200}
-          backdropTransitionInTiming={200}
-          animationOut="fadeOut"
-          animationOutTiming={200}
-          backdropTransitionOutTiming={200}
-        >
-          {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
-              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已复制</Text>
-            </View>
-          </View>}
-        </Modal>
-      </View>
+            </View>}
+          </Modal>
+          <Modal
+            isVisible={this.state.showModal}
+            backdropOpacity={0}
+            useNativeDriver
+            animationIn="fadeIn"
+            animationInTiming={200}
+            backdropTransitionInTiming={200}
+            animationOut="fadeOut"
+            animationOutTiming={200}
+            backdropTransitionOutTiming={200}
+          >
+            {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
+                <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已复制</Text>
+              </View>
+            </View>}
+          </Modal>
+        </View>
       </SafeAreaView>
     )
   }

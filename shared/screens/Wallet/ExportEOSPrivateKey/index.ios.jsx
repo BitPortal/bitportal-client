@@ -5,6 +5,7 @@ import { Navigation } from 'components/Navigation'
 import Sound from 'react-native-sound'
 import Modal from 'react-native-modal'
 import TableView from 'components/TableView'
+import { DarkModeContext } from 'utils/darkMode'
 const { Section, Item } = TableView
 
 Sound.setCategory('Playback')
@@ -43,7 +44,7 @@ export default class ExportETHKeystore extends Component {
       }
     }
   }
-
+  static contextType = DarkModeContext
   state = { showModal: false, showModalContent: false }
 
   copy = (text) => {
@@ -68,16 +69,18 @@ export default class ExportETHKeystore extends Component {
 
   render() {
     const { permissionKeyPairs } = this.props
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
 
     return (
-      <ScrollView style={{ flex: 1, paddingLeft: 16, paddingRight: 16, paddingTop: 16, backgroundColor: 'white' }}>
+      <ScrollView style={{ flex: 1, paddingLeft: 16, paddingRight: 16, paddingTop: 16, backgroundColor: isDarkMode ? 'black' : 'white' }}>
         <View style={{ width: '100%' }}>
           <View>
-            <Text style={{ color: '#007AFF', fontWeight: 'bold', marginBottom: 4 }}>离线保存</Text>
-            <Text style={{ color: '#8E8E93', marginBottom: 10, lineHeight: 18 }}>切勿保存到邮箱，记事本，网盘，聊天工具等，非常危险</Text>
+            <Text style={{ color: '#007AFF', fontWeight: 'bold', marginBottom: 4, color: isDarkMode ? 'white' : 'black' }}>离线保存</Text>
+            <Text style={{ color: '#8E8E93', marginBottom: 10, lineHeight: 18, color: isDarkMode ? 'white' : 'black' }}>切勿保存到邮箱，记事本，网盘，聊天工具等，非常危险</Text>
           </View>
           <View>
-            <Text style={{ color: '#007AFF', fontWeight: 'bold', marginBottom: 4 }}>切勿使用网络传输</Text>
+            <Text style={{ color: '#007AFF', fontWeight: 'bold', marginBottom: 4, color: isDarkMode ? 'white' : 'black' }}>切勿使用网络传输</Text>
             <Text style={{ color: '#8E8E93', marginBottom: 10, lineHeight: 18 }}>切勿通过网络工具传输，一旦被黑客获取将造成不可挽回的资产损失。建议离线设备通过扫二维码方式传输。</Text>
           </View>
           <View>
@@ -88,47 +91,47 @@ export default class ExportETHKeystore extends Component {
         {permissionKeyPairs.map(permissionKeyPair =>
           <Fragment key={permissionKeyPair.name}>
             <View style={{ width: '100%', paddingTop: 10, borderTopWidth: 0.5, borderTopColor: '#C8C7CC' }}>
-              <Text style={{ fontSize: 17 }}>{permissionKeyPair.name} 权限私钥：</Text>
+              <Text style={{ fontSize: 17, color: isDarkMode ? 'white' : 'black' }}>{permissionKeyPair.name} 权限私钥：</Text>
             </View>
             {permissionKeyPair.keys.map(key =>
-               <Fragment key={key.publicKey}>
-                 <View style={{ width: '100%', marginTop: 16 }}>
-                   <View style={{ width: '100%', borderColor: '#F3F3F3', borderWidth: 1, borderRadius: 17, padding: 15, backgroundColor: '#FAFAFA' }}>
-                     <Text>
-                       {key.privateKey}
-                     </Text>
-                   </View>
-                 </View>
-                 <View style={{ width: '100%', marginTop: 16 }}>
-                   <TouchableOpacity
-                     style={{
-                       width: '100%',
-                       height: 50,
-                       backgroundColor: '#007AFF',
-                       alignItems: 'center',
-                       justifyContent: 'center',
-                       marginBottom: 20,
-                       borderRadius: 10
-                     }}
-                     underlayColor="#007AFF"
-                     activeOpacity={0.8}
-                     onPress={this.copy.bind(this, key.privateKey)}
-                   >
-                     <Text
-                       style={{
-                         textAlign: 'center',
-                         color: 'white',
-                         fontSize: 17
-                       }}
-                     >
-                       复制私钥
-                     </Text>
-                   </TouchableOpacity>
-                 </View>
-               </Fragment>
-             )}
+              <Fragment key={key.publicKey}>
+                <View style={{ width: '100%', marginTop: 16 }}>
+                  <View style={{ width: '100%', borderColor: '#F3F3F3', borderWidth: 1, borderRadius: 17, padding: 15, backgroundColor: isDarkMode ? 'black' : '#FAFAFA' }}>
+                    <Text style={{ color: isDarkMode ? 'white' : 'black'}}>
+                      {key.privateKey}
+                    </Text>
+                  </View>
+                </View>
+                <View style={{ width: '100%', marginTop: 16 }}>
+                  <TouchableOpacity
+                    style={{
+                      width: '100%',
+                      height: 50,
+                      backgroundColor: '#007AFF',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginBottom: 20,
+                      borderRadius: 10
+                    }}
+                    underlayColor="#007AFF"
+                    activeOpacity={0.8}
+                    onPress={this.copy.bind(this, key.privateKey)}
+                  >
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        color: 'white',
+                        fontSize: 17
+                      }}
+                    >
+                      复制私钥
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </Fragment>
+            )}
           </Fragment>
-         )}
+        )}
         <Modal
           isVisible={this.state.showModal}
           backdropOpacity={0}

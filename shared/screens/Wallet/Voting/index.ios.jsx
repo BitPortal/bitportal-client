@@ -19,6 +19,7 @@ import {
   producerIdsSelector
 } from 'selectors/producer'
 import Modal from 'react-native-modal'
+import { DarkModeContext } from 'utils/darkMode'
 import styles from './styles'
 const SPAlert = NativeModules.SPAlert
 
@@ -107,7 +108,7 @@ export default class Voting extends Component {
       }
     }
   }
-
+  static contextType = DarkModeContext
   subscription = Navigation.events().bindComponent(this)
 
   state = { selected: 0, searching: false, searchBarFocused: false }
@@ -285,6 +286,8 @@ export default class Voting extends Component {
     const loading = vote.loading
     const refreshing = getProducer.refreshing
     console.log('selectedIds', selectedIds)
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
 
     if (!getProducer.loaded && getProducer.loading) {
       return (
@@ -299,7 +302,7 @@ export default class Voting extends Component {
 
     return (
       <SafeAreaView style={{ flex: 1 }}>
-        <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <View style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : 'white' }}>
           <View style={{ width: '100%', height: selectedIds.length ? 80 : 0 }}>
             <ScrollView
               style={{ height: selectedIds.length ? 80 : 0 }}
@@ -307,7 +310,7 @@ export default class Voting extends Component {
               showsHorizontalScrollIndicator={false}
               ref={(ref) => { this.scrollView = ref; return null }}
             >
-              {selected.map(item => <TouchableHighlight key={item.owner} underlayColor="rgba(0,0,0,0)" onPress={this.onSelectedPress.bind(this, item.owner)} style={{ height: 66, width: Dimensions.get('window').width / 4, backgroundColor: 'white', marginTop: 7, flex: 1, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column' }}>
+              {selected.map(item => <TouchableHighlight key={item.owner} underlayColor="rgba(0,0,0,0)" onPress={this.onSelectedPress.bind(this, item.owner)} style={{ height: 66, width: Dimensions.get('window').width / 4, backgroundColor: isDarkMode ? 'black' : 'white', marginTop: 7, flex: 1, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column' }}>
                 <View style={{ height: '100%', width: '100%', flex: 1, justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column' }}>
                   <View style={{ width: 40, height: 40 }}>
                     <FastImage
@@ -340,7 +343,7 @@ export default class Voting extends Component {
             showsVerticalScrollIndicator={false}
             cellSeparatorInset={{ left: 46 }}
             reactModuleForCell="ProducerTableViewCell"
-            headerBackgroundColor="#F7F7F7"
+            headerBackgroundColor={isDarkMode ? 'black' : '#F7F7F7'}
             ref={(ref) => { this.tableViewRef = ref; return null }}
           >
             <TableView.Section label="当前出块节点">
@@ -359,6 +362,7 @@ export default class Voting extends Component {
                   max_supply={item.max_supply}
                   rank_url={item.rank_url}
                   onPress={this.onPress.bind(this, item.owner)}
+                  isDarkMode={isDarkMode}
                   accessoryType={TableView.Consts.AccessoryType.DetailButton}
                   onAccessoryPress={this.onAccessoryPress.bind(this, item)}
                 />

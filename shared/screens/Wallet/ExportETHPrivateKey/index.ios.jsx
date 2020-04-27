@@ -5,6 +5,7 @@ import { Navigation } from 'components/Navigation'
 import Sound from 'react-native-sound'
 import Modal from 'react-native-modal'
 import TableView from 'components/TableView'
+import { DarkModeContext } from 'utils/darkMode'
 const { Section, Item } = TableView
 
 Sound.setCategory('Playback')
@@ -43,7 +44,7 @@ export default class ExportETHPrivateKey extends Component {
       }
     }
   }
-
+  static contextType = DarkModeContext
   state = { showModal: false, showModalContent: false }
 
   copy = (text) => {
@@ -68,26 +69,28 @@ export default class ExportETHPrivateKey extends Component {
 
   render() {
     const { privateKey } = this.props
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
 
     return (
-      <ScrollView style={{ flex: 1, paddingLeft: 16, paddingRight: 16, paddingTop: 16, backgroundColor: 'white' }}>
+      <ScrollView style={{ flex: 1, paddingLeft: 16, paddingRight: 16, paddingTop: 16, backgroundColor: isDarkMode ? 'black' : 'white' }}>
         <View style={{ width: '100%' }}>
           <View>
-            <Text style={{ color: '#007AFF', fontWeight: 'bold', marginBottom: 4 }}>离线保存</Text>
-            <Text style={{ color: '#8E8E93', marginBottom: 10, lineHeight: 18 }}>切勿保存到邮箱，记事本，网盘，聊天工具等，非常危险</Text>
+            <Text style={{ color: '#007AFF', fontWeight: 'bold', marginBottom: 4, color: isDarkMode ? 'white' : 'black' }}>离线保存</Text>
+            <Text style={{ color: '#8E8E93', marginBottom: 10, lineHeight: 18, color: isDarkMode ? 'white' : 'black' }}>切勿保存到邮箱，记事本，网盘，聊天工具等，非常危险</Text>
           </View>
           <View>
-            <Text style={{ color: '#007AFF', fontWeight: 'bold', marginBottom: 4 }}>切勿使用网络传输</Text>
-            <Text style={{ color: '#8E8E93', marginBottom: 10, lineHeight: 18 }}>切勿通过网络工具传输，一旦被黑客获取将造成不可挽回的资产损失。建议离线设备通过扫二维码方式传输。</Text>
+            <Text style={{ color: '#007AFF', fontWeight: 'bold', marginBottom: 4, color: isDarkMode ? 'white' : 'black' }}>切勿使用网络传输</Text>
+            <Text style={{ color: '#8E8E93', marginBottom: 10, lineHeight: 18, color: isDarkMode ? 'white' : 'black' }}>切勿通过网络工具传输，一旦被黑客获取将造成不可挽回的资产损失。建议离线设备通过扫二维码方式传输。</Text>
           </View>
           <View>
-            <Text style={{ color: '#007AFF', fontWeight: 'bold', marginBottom: 4 }}>密码管理工具保存</Text>
-            <Text style={{ color: '#8E8E93', marginBottom: 10, lineHeight: 18 }}>建议使用密码管理工具管理。</Text>
+            <Text style={{ color: '#007AFF', fontWeight: 'bold', marginBottom: 4, color: isDarkMode ? 'white' : 'black' }}>密码管理工具保存</Text>
+            <Text style={{ color: '#8E8E93', marginBottom: 10, lineHeight: 18, color: isDarkMode ? 'white' : 'black' }}>建议使用密码管理工具管理。</Text>
           </View>
         </View>
         <View style={{ width: '100%', marginTop: 16 }}>
-          <View style={{ width: '100%', borderColor: '#F3F3F3', borderWidth: 1, borderRadius: 17, padding: 15, backgroundColor: '#FAFAFA' }}>
-            <Text>
+          <View style={{ width: '100%', borderColor: '#F3F3F3', borderWidth: 1, borderRadius: 17, padding: 15, backgroundColor: isDarkMode ? 'black' : '#FAFAFA' }}>
+            <Text style={{ color: isDarkMode ? 'white' : 'black'}}>
               {privateKey}
             </Text>
           </View>

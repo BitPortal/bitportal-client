@@ -15,10 +15,10 @@ const IdentityDetailTableViewCell = (props) => {
   return (
     <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16 }}>
       <View>
-        <Text style={{ fontSize: 17 }}>{props.data.text}</Text>
+        <Text style={{ fontSize: 17, color: props.data.isDarkMode ? 'white' : 'black' }}>{props.data.text}</Text>
       </View>
       <View>
-        {props.data.type !== 'avatar' && <Text style={{ fontSize: props.data.type === 'identifier' ? 15 : 17, textAlign: 'right', maxWidth: 240 }}>{props.data.detail}</Text>}
+        {props.data.type !== 'avatar' && <Text style={{ fontSize: props.data.type === 'identifier' ? 15 : 17, textAlign: 'right', maxWidth: 240, color: props.data.isDarkMode ? 'white' : 'black' }}>{props.data.detail}</Text>}
         {props.data.type === 'avatar' &&
          <Image
            source={require('resources/images/Userpic.png')}

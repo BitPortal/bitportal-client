@@ -7,7 +7,7 @@ const HeaderTableViewCell = (props) => {
   return (
     <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 15, paddingRight: 15, alignItems: 'flex-end' }}>
       <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-        <Text style={{ fontSize: 15 }}>{props.data.title}</Text>
+        <Text style={{ fontSize: 15, color: props.data.isDarkMode ? 'white' : 'black' }}>{props.data.title}</Text>
       </View>
     </View>
   )

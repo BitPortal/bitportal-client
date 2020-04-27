@@ -10,6 +10,7 @@ import { identityWalletSelector, importedWalletSelector, hasIdentityEOSWalletSel
 import * as walletActions from 'actions/wallet'
 import * as accountActions from 'actions/account'
 import * as keyAccountActions from 'actions/keyAccount'
+import { DarkModeContext } from 'utils/darkMode'
 import styles from './styles'
 
 const { Section, Item } = TableView
@@ -53,6 +54,8 @@ export default class WalletList extends Component {
       }
     }
   }
+
+  static contextType = DarkModeContext
 
   subscription = Navigation.events().bindComponent(this)
 
@@ -192,6 +195,9 @@ export default class WalletList extends Component {
     const identityWalletsCount = identityWallets.length
     const importedWalletsCount = importedWallets.length
 
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
+
     return (
       <View style={styles.container}>
         <TableView
@@ -216,62 +222,64 @@ export default class WalletList extends Component {
           </Section>}
           {identityWalletsCount && <Section label={intl.formatMessage({ id: 'general_title_identity_wallet' })}>
             {identityWallets.map(wallet => <Item
-                height={60}
-                key={wallet.id}
-                uid={wallet.id}
-                name={wallet.name}
-                symbol={wallet.symbol}
-                chain={wallet.chain}
-                isSegwit={wallet.symbol === 'BTC' && wallet.segWit === 'P2WPKH'}
-                address={wallet.address}
-                segWit={wallet.segWit}
-                source={wallet.source}
-                componentId={this.props.componentId}
-                isSelected={wallet.id === activeWalletId}
-                syncingEOSAccount={syncingEOSAccount}
-                selectionStyle={(wallet.chain !== 'EOS' || !!wallet.address) ? TableView.Consts.CellSelectionStyle.Default : (syncingEOSAccount ? TableView.Consts.CellSelectionStyle.None : TableView.Consts.CellSelectionStyle.Default)}
-                accessoryType={(wallet.chain !== 'EOS' || !!wallet.address) ? TableView.Consts.AccessoryType.DetailButton : (syncingEOSAccount ? TableView.Consts.AccessoryType.None : TableView.Consts.AccessoryType.DisclosureIndicator)}
-                onPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.switchWallet.bind(this, wallet.id) : (syncingEOSAccount ? () => {} : this.createEOSAccount.bind(this, wallet.id))}
-                onAccessoryPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.toManageWallet.bind(this, {
-                  id: wallet.id,
-                  type: 'identity',
-                  name: wallet.name,
-                  address: wallet.address,
-                  chain: wallet.chain,
-                  symbol: wallet.symbol,
-                  segWit: wallet.segWit,
-                  source: wallet.source,
-                }) : () => {}}
+                                             height={60}
+                                             key={wallet.id}
+                                             uid={wallet.id}
+                                             name={wallet.name}
+                                             symbol={wallet.symbol}
+                                             chain={wallet.chain}
+                                             isDarkMode={isDarkMode}
+                                             isSegwit={wallet.symbol === 'BTC' && wallet.segWit === 'P2WPKH'}
+                                             address={wallet.address}
+                                             segWit={wallet.segWit}
+                                             source={wallet.source}
+                                             componentId={this.props.componentId}
+                                             isSelected={wallet.id === activeWalletId}
+                                             syncingEOSAccount={syncingEOSAccount}
+                                             selectionStyle={(wallet.chain !== 'EOS' || !!wallet.address) ? TableView.Consts.CellSelectionStyle.Default : (syncingEOSAccount ? TableView.Consts.CellSelectionStyle.None : TableView.Consts.CellSelectionStyle.Default)}
+                                             accessoryType={(wallet.chain !== 'EOS' || !!wallet.address) ? TableView.Consts.AccessoryType.DetailButton : (syncingEOSAccount ? TableView.Consts.AccessoryType.None : TableView.Consts.AccessoryType.DisclosureIndicator)}
+                                             onPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.switchWallet.bind(this, wallet.id) : (syncingEOSAccount ? () => {} : this.createEOSAccount.bind(this, wallet.id))}
+                                             onAccessoryPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.toManageWallet.bind(this, {
+                                               id: wallet.id,
+                                               type: 'identity',
+                                               name: wallet.name,
+                                               address: wallet.address,
+                                               chain: wallet.chain,
+                                               symbol: wallet.symbol,
+                                               segWit: wallet.segWit,
+                                               source: wallet.source,
+                                             }) : () => {}}
             />
             )}
           </Section>}
           <Section label={importedWalletsCount ? intl.formatMessage({ id: 'general_title_import_wallet' }) : ''}>
             {importedWallets.map(wallet => <Item
-                height={60}
-                key={wallet.id}
-                uid={wallet.id}
-                name={wallet.name}
-                symbol={wallet.symbol}
-                chain={wallet.chain}
-                isSegwit={wallet.symbol === 'BTC' && wallet.segWit === 'P2WPKH'}
-                address={wallet.address}
-                segWit={wallet.segWit}
-                source={wallet.source}
-                componentId={this.props.componentId}
-                isSelected={wallet.id === activeWalletId}
-                accessoryType={(wallet.chain !== 'EOS' || !!wallet.address) ? TableView.Consts.AccessoryType.DetailButton : TableView.Consts.AccessoryType.DisclosureIndicator}
-                onPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.switchWallet.bind(this, wallet.id) : this.createEOSAccount.bind(this, wallet.id)}
-                onAccessoryPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.toManageWallet.bind(this, {
-                  id: wallet.id,
-                  type: 'imported',
-                  name: wallet.name,
-                  address: wallet.address,
-                  chain: wallet.chain,
-                  symbol: wallet.symbol,
-                  segWit: wallet.segWit,
-                  source: wallet.source,
-                }) : () => {}}
-              />
+                                             height={60}
+                                             key={wallet.id}
+                                             uid={wallet.id}
+                                             name={wallet.name}
+                                             symbol={wallet.symbol}
+                                             chain={wallet.chain}
+                                             isSegwit={wallet.symbol === 'BTC' && wallet.segWit === 'P2WPKH'}
+                                             isDarkMode={isDarkMode}
+                                             address={wallet.address}
+                                             segWit={wallet.segWit}
+                                             source={wallet.source}
+                                             componentId={this.props.componentId}
+                                             isSelected={wallet.id === activeWalletId}
+                                             accessoryType={(wallet.chain !== 'EOS' || !!wallet.address) ? TableView.Consts.AccessoryType.DetailButton : TableView.Consts.AccessoryType.DisclosureIndicator}
+                                             onPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.switchWallet.bind(this, wallet.id) : this.createEOSAccount.bind(this, wallet.id)}
+                                             onAccessoryPress={(wallet.chain !== 'EOS' || !!wallet.address) ? this.toManageWallet.bind(this, {
+                                               id: wallet.id,
+                                               type: 'imported',
+                                               name: wallet.name,
+                                               address: wallet.address,
+                                               chain: wallet.chain,
+                                               symbol: wallet.symbol,
+                                               segWit: wallet.segWit,
+                                               source: wallet.source,
+                                             }) : () => {}}
+            />
             )}
             <Item
               height={44}

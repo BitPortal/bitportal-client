@@ -27,13 +27,13 @@ const Provider = ({ store, children }) => {
   const { persistor, ...pureStore } = store
 
   return (
-    <ReduxProvider store={pureStore}>
-      <ConnectedIntlProvider>
-        <DarkModeProvider>
+    <DarkModeProvider>
+      <ReduxProvider store={pureStore}>
+        <ConnectedIntlProvider>
           {children}
-        </DarkModeProvider>
-      </ConnectedIntlProvider>
-    </ReduxProvider>
+        </ConnectedIntlProvider>
+      </ReduxProvider>
+    </DarkModeProvider>
   )
 }
 
@@ -41,15 +41,15 @@ export const PersistProvider = ({ store, children }) => {
   const { persistor, ...pureStore } = store
 
   return (
-    <ReduxProvider store={pureStore}>
-      <PersistGate loading={<Loading />} persistor={persistor}>
-        <ConnectedIntlProvider>
-          <DarkModeProvider>
+    <DarkModeProvider>
+      <ReduxProvider store={pureStore}>
+        <PersistGate loading={<Loading />} persistor={persistor}>
+          <ConnectedIntlProvider>
             {children}
-          </DarkModeProvider>
-        </ConnectedIntlProvider>
-      </PersistGate>
-    </ReduxProvider>
+          </ConnectedIntlProvider>
+        </PersistGate>
+      </ReduxProvider>
+    </DarkModeProvider>
   )
 }
 

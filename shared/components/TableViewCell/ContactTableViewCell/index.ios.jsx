@@ -22,13 +22,13 @@ const ContactTableViewCell = (props) => {
         />
         <View style={{ flex: 1, borderWidth: 0, borderColor: 'red', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
           <View style={{ flex: 1, borderWidth: 0, borderColor: 'red', justifyContent: 'center', paddingRight: 16 }}>
-            <Text style={{ fontSize: 20, color: 'black', marginRight: 5 }} numberOfLines={1}>{props.data.name}</Text>
-            {props.data.description && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.5)', paddingTop: 2 }} numberOfLines={1}>{props.data.description}</Text>}
+            <Text style={{ fontSize: 20, color: props.data.isDarkMode ? 'white' : 'black', marginRight: 5 }} numberOfLines={1}>{props.data.name}</Text>
+            {props.data.description && <Text style={{ fontSize: 15, color: props.data.isDarkMode ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)', paddingTop: 2 }} numberOfLines={1}>{props.data.description}</Text>}
           </View>
           <View style={{ width: 60, height: 60 }}>
             {props.data.hasEOS && <View
                                     style={{ backgroundColor: 'white', width: 30, height: 30, borderRadius: 20, position: 'absolute', top: 15, right: (props.data.hasBTC && props.data.hasETH) ? 36 : ((!props.data.hasBTC && !props.data.hasETH) ? -8 : 14) }}
-            >
+                                  >
               <FastImage
                 source={walletIcons['eos']}
                 style={{ backgroundColor: 'white', width: '100%', height: '100%', borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
@@ -36,15 +36,15 @@ const ContactTableViewCell = (props) => {
             </View>}
             {props.data.hasETH && <View
                                     style={{ backgroundColor: 'white', width: 30, height: 30, borderRadius: 20, position: 'absolute', top: 15, right: props.data.hasBTC ? 14 : -8 }}
-            >
+                                  >
               <FastImage
                 source={walletIcons['ethereum']}
                 style={{ backgroundColor: 'white', width: '100%', height: '100%', borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
               />
             </View>}
             {props.data.hasBTC && <View
-              style={{ backgroundColor: 'white', width: 30, height: 30, borderRadius: 20, position: 'absolute', top: 15, right: -8 }}
-            >
+                                    style={{ backgroundColor: 'white', width: 30, height: 30, borderRadius: 20, position: 'absolute', top: 15, right: -8 }}
+                                  >
               <FastImage
                 source={walletIcons['bitcoin']}
                 style={{ backgroundColor: 'white', width: '100%', height: '100%', borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}

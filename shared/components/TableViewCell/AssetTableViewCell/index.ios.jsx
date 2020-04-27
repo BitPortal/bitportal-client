@@ -24,7 +24,7 @@ const AssetTableViewCell = props => {
           />
         </View>
         <View style={{ flex: 1 }}>
-          <Text style={{ fontSize: 17 }}>{props.data.symbol}</Text>
+          <Text style={{ fontSize: 17, color: props.data.isDarkMode ? 'white' : 'dark' }}>{props.data.symbol}</Text>
           <Text style={{ fontSize: 15, color: '#666666' }}>{`合约: ${formatAddress(props.data.contract)}`}</Text>
         </View>
       </View>

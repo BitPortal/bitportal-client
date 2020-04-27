@@ -8,6 +8,7 @@ import TableView from 'components/TableView'
 import Modal from 'react-native-modal'
 import { eosAccountSelector } from 'selectors/wallet'
 import * as walletActions from 'actions/wallet'
+import { DarkModeContext } from 'utils/darkMode'
 
 const { Section, Item } = TableView
 
@@ -63,7 +64,7 @@ export default class SelectEOSAccount extends Component {
       }
     }
   }
-
+  static contextType = DarkModeContext
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
       nextProps.importEOSPrivateKey.loading !== prevState.importEOSPrivateKeyLoading
@@ -144,6 +145,8 @@ export default class SelectEOSAccount extends Component {
 
   render() {
     const { intl, keyAccounts, eosAccount } = this.props
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
 
     return (
       <View style={{ flex: 1 }}>
@@ -164,6 +167,7 @@ export default class SelectEOSAccount extends Component {
                 permissions={account.permissions.join(' • ')}
                 isSelected={this.state.selected.indexOf(account.accountName) !== -1}
                 exist={!!eosAccount.find((accountName) => accountName === account.accountName)}
+                isDarkMode={isDarkMode}
               />
             )}
           </Section>

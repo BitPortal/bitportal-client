@@ -216,7 +216,17 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
 #pragma mark - Private APIs
 
 - (void)createTableView {
+  UIColor *tablewViewBackgroundColor = [UIColor clearColor];
+  if (@available(iOS 13, *)) {
+    if (_tableViewStyle == UITableViewStyleGrouped) {
+      tablewViewBackgroundColor = [UIColor systemGroupedBackgroundColor];
+    } else {
+      tablewViewBackgroundColor = [UIColor systemBackgroundColor];
+    }
+  }
+  
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:_tableViewStyle];
+    _tableView.backgroundColor = tablewViewBackgroundColor;
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -226,7 +236,7 @@ RCT_NOT_IMPLEMENTED(-initWithCoder:(NSCoder *)aDecoder)
     _tableView.scrollIndicatorInsets = self.scrollIndicatorInsets;
     _tableView.showsHorizontalScrollIndicator = self.showsHorizontalScrollIndicator;
     _tableView.showsVerticalScrollIndicator = self.showsVerticalScrollIndicator;
-    _tableView.backgroundColor = [UIColor clearColor];
+    // _tableView.backgroundColor = [UIColor clearColor];
     _tableView.alwaysBounceVertical = self.alwaysBounceVertical;
     UIView *view = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0.001, 0.001)];
     _tableView.tableHeaderView = view;

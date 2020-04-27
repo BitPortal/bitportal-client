@@ -13,6 +13,7 @@ import { identityWalletSelector, importedWalletSelector } from 'selectors/wallet
 import { balanceByIdSelector } from 'selectors/balance'
 import * as contactActions from 'actions/contact'
 import * as walletActions from 'actions/wallet'
+import { DarkModeContext } from 'utils/darkMode'
 import styles from './styles'
 
 Sound.setCategory('Playback')
@@ -78,7 +79,7 @@ export default class Contact extends Component {
       }
     }
   }
-
+  static contextType = DarkModeContext
   subscription = Navigation.events().bindComponent(this)
 
   state = {
@@ -213,10 +214,12 @@ export default class Contact extends Component {
 
   render() {
     const { statusBarHeight, contact } = this.props
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
 
     return (
-      <View style={{ flex: 1, backgroundColor: 'white' }}>
-        <View style={{ justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#F7F7F7', width: '100%', height: 180 + +statusBarHeight, paddingTop: +statusBarHeight + 44, paddingLeft: 16, paddingRight: 16, paddingBottom: 16 }}>
+      <View style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : 'white' }}>
+        <View style={{ justifyContent: 'flex-start', alignItems: 'center', backgroundColor: isDarkMode ? 'black' : '#F7F7F7', width: '100%', height: 180 + +statusBarHeight, paddingTop: +statusBarHeight + 44, paddingLeft: 16, paddingRight: 16, paddingBottom: 16 }}>
           <View style={{ height: 61 }}>
             <FastImage
               source={require('resources/images/Userpic2.png')}
@@ -224,8 +227,8 @@ export default class Contact extends Component {
             />
           </View>
           <View style={{ height: 61, alignItems: 'center', justifyContent: 'center' }}>
-            <Text style={{ fontSize: 24 }} numberOfLines={1}>{contact && contact.name}</Text>
-            {contact && contact.description && <Text style={{ fontSize: 17, color: 'rgba(0,0,0,0.5)', paddingTop: 3 }} numberOfLines={1}>{contact && contact.description}</Text>}
+            <Text style={{ fontSize: 24, color: isDarkMode ? 'white' : '#000' }} numberOfLines={1}>{contact && contact.name}</Text>
+            {contact && contact.description && <Text style={{ fontSize: 17, color: isDarkMode ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)', paddingTop: 3 }} numberOfLines={1}>{contact && contact.description}</Text>}
           </View>
           <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 0, backgroundColor: '#C8C7CC' }} />
         </View>
@@ -248,9 +251,10 @@ export default class Contact extends Component {
                 showSeparator
                 chain="BITCOIN"
                 symbol="BTC"
+                isDarkMode={isDarkMode}
                 name={contact.name}
               />
-             )}
+            )}
           </Section>}
           {(contact && contact.btc && contact.btc.length) && (contact && contact.eth && contact.eth.length) && <Section>
             <Item
@@ -273,9 +277,10 @@ export default class Contact extends Component {
                 showSeparator
                 chain="ETHEREUM"
                 symbol="ETH"
+                isDarkMode={isDarkMode}
                 name={contact.name}
               />
-             )}
+            )}
           </Section>}
           {((contact && contact.btc && contact.btc.length) || (contact && contact.eth && contact.eth.length)) && (contact && contact.eos && contact.eos.length) && <Section>
             <Item
@@ -297,21 +302,22 @@ export default class Contact extends Component {
                 height={60}
                 chain="EOS"
                 symbol="EOS"
+                isDarkMode={isDarkMode}
                 name={contact.name}
                 selectionStyle={TableView.Consts.CellSelectionStyle.None}
                 showSeparator
               />
-             )}
+            )}
           </Section>}
-        <Section>
-          <Item
-            reactModuleForCell="ContactHeaderTableViewCell"
-            title=""
-            height={44}
-            selectionStyle={TableView.Consts.CellSelectionStyle.None}
-            showSeparator
-          />
-        </Section>
+          <Section>
+            <Item
+              reactModuleForCell="ContactHeaderTableViewCell"
+              title=""
+              height={44}
+              selectionStyle={TableView.Consts.CellSelectionStyle.None}
+              showSeparator
+            />
+          </Section>
           {contact && <Section>
             <Item
               reactModuleForCell="ContactDeleteTableViewCell"

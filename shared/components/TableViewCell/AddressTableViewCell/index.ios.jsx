@@ -22,7 +22,7 @@ const AddressTableViewCell = (props) => {
   return (
     <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 11 }}>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'flex-start', width: '100%' }}>
-        <Text style={{ fontSize: 15 }}>{props.data.label}</Text>
+        <Text style={{ fontSize: 15, color: props.data.isDarkMode ? 'white' : '#000' }}>{props.data.label}</Text>
         <TouchableHighlight underlayColor="rgba(0,0,0,0)" onPress={this.copy.bind(this, props.data.address)} activeOpacity={0.7} style={{ width: '100%', paddingTop: 4, paddingBottom: 4 }}>
           <Text style={{ fontSize: 15, color: '#007AFF' }} numberOfLines={1}>
             {`${this.formatAddress(props.data.address)} `}

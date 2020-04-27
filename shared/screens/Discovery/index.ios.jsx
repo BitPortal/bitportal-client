@@ -18,6 +18,7 @@ import {
 import { loadScatter, loadScatterSync, loadMetaMask, loadMetaMaskSync } from 'utils/inject'
 import { activeWalletSelector, bridgeWalletSelector, identityWalletSelector, importedWalletSelector } from 'selectors/wallet'
 import { transfromUrlText } from 'utils'
+import { DarkModeContext } from 'utils/darkMode'
 const { Section, Item, CollectionView, CollectionViewItem } = TableView
 
 @connect(
@@ -59,7 +60,7 @@ export default class Discovery extends Component {
       }
     }
   }
-
+  static contextType = DarkModeContext
   subscription = Navigation.events().bindComponent(this)
 
   searchBarUpdated({ text, isFocused, isSubmitting }) {
@@ -234,6 +235,9 @@ export default class Discovery extends Component {
   render() {
     const { dapp, newDapp, hotDapp, gameDapp, toolDapp, featured, bookmarked } = this.props
 
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
+
     return (
       <TableView
         style={{ flex: 1 }}
@@ -249,6 +253,7 @@ export default class Discovery extends Component {
             height={44}
             title="热门推荐"
             selectionStyle={TableView.Consts.CellSelectionStyle.None}
+            isDarkMode={isDarkMode}
           />
           <Item
             reactModuleForCell="DappTrendingTableViewCell"

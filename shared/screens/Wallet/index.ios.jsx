@@ -518,6 +518,7 @@ export default class Wallet extends Component {
           chain={chain}
           showSeparator={selectedAsset && selectedAsset.length}
           swipeable={true}
+          isDarkMode={isDarkMode}
           trailingTitle={intl.formatMessage({ id: 'transfer_button_receive' })}
           leadingTitle={intl.formatMessage({ id: 'transfer_button_send' })}
         />
@@ -547,6 +548,7 @@ export default class Wallet extends Component {
               chain={chain}
               icon_url={selectedAsset[i].icon_url}
               swipeable={true}
+              isDarkMode={isDarkMode}
               showSeparator={selectedAsset.length - 1 !== i}
               trailingTitle={intl.formatMessage({ id: 'transfer_button_receive' })}
               leadingTitle={intl.formatMessage({ id: 'transfer_button_send' })}
@@ -563,8 +565,8 @@ export default class Wallet extends Component {
         canRefresh
         refreshing={getBalanceRefreshing}
         onRefresh={this.onRefresh}
-        headerBackgroundColor="white"
-        headerTextColor="black"
+        headerBackgroundColor={isDarkMode ? 'black' : 'white'}
+        headerTextColor={isDarkMode ? 'white' : 'black'}
         headerFontSize={22}
         cellSeparatorInset={{ left: 66, right: 16 }}
         separatorStyle={TableView.Consts.SeparatorStyle.None}
@@ -651,6 +653,7 @@ export default class Wallet extends Component {
             chain={chain}
             accessoryType={(chain === 'ETHEREUM' || chain === 'EOS' || chain === 'CHAINX') ? 7 : TableView.Consts.AccessoryType.None}
             onAddAccessoryPress={!this.state.switching ? this.onAddAssetsPress : () => {}}
+            isDarkMode={isDarkMode}
           />
         </Section>
         {!!balance && (<Section headerHeight={0} uid="AssetBalanceTableViewCell" canEdit={!this.state.switching}>{assetItems}</Section>)}

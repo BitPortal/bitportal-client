@@ -8,6 +8,7 @@ import TableView from 'components/TableView'
 import { contactSelector } from 'selectors/contact'
 // import FastImage from 'react-native-fast-image'
 import * as contactActions from 'actions/contact'
+import { DarkModeContext } from 'utils/darkMode'
 import styles from './styles'
 
 const { Section, Item } = TableView
@@ -45,7 +46,7 @@ export default class Contacts extends Component {
       }
     }
   }
-
+  static contextType = DarkModeContext
   subscription = Navigation.events().bindComponent(this)
 
   state = { editting: false }
@@ -106,10 +107,12 @@ export default class Contacts extends Component {
 
   render() {
     const { contact } = this.props
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
 
     if (!contact || !contact.length) {
       return (
-        <View style={{ flex: 1, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }}>
+        <View style={{ flex: 1, backgroundColor: isDarkMode ? 'dark' : 'white', alignItems: 'center', justifyContent: 'center' }}>
           <Text style={{ color: '#666666', fontSize: 17 }}>暂无联系人</Text>
         </View>
       )
@@ -117,7 +120,7 @@ export default class Contacts extends Component {
 
     return (
       <TableView
-        style={{ flex: 1, backgroundColor: 'white' }}
+        style={{ flex: 1 }}
         tableViewCellStyle={TableView.Consts.CellStyle.Default}
         detailTextColor="#666666"
         showsVerticalScrollIndicator={false}
@@ -141,10 +144,11 @@ export default class Contacts extends Component {
                 hasETH={!!item.eth && !!item.eth.length}
                 hasEOS={!!item.eos && !!item.eos.length}
                 onPress={this.onPress.bind(this, item.id)}
+                isDarkMode={isDarkMode}
               />
-             )}
+            )}
           </Section>
-         )}
+        )}
       </TableView>
     )
   }

@@ -30,6 +30,7 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import * as transactionActions from 'actions/transaction'
 import Sound from 'react-native-sound'
 import Modal from 'react-native-modal'
+import { DarkModeContext } from 'utils/darkMode'
 
 Sound.setCategory('Playback')
 const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
@@ -98,7 +99,7 @@ export default class ReceiveAsset extends Component {
       }
     }
   }
-
+  static contextType = DarkModeContext
   subscription = Navigation.events().bindComponent(this)
 
   state = {
@@ -213,76 +214,79 @@ export default class ReceiveAsset extends Component {
     const addressUri = this.getAddressUri(!this.state.selectedIndex ? address : childAddress, this.state.amount, chain, contract, symbol)
     const value1 = intl.formatMessage({ id: 'receive_btc_text_main_address' })
     const value2 = intl.formatMessage({ id: 'receive_btc_text_second_address' })
-
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-      <View style={[styles.container, { backgroundColor: 'white' }]}>
-        {hasChildAddress && chain === 'BITCOIN' && <View style={{ height: 52, width: '100%', justifyContent: 'center', paddingTop: 5, paddingBottom: 13, paddingLeft: 16, paddingRight: 16, backgroundColor: '#F7F7F7', borderColor: '#C8C7CC', borderBottomWidth: 0.5 }}>
-          <SegmentedControlIOS
-            values={[value1, value2]}
-            selectedIndex={this.state.selectedIndex}
-            onChange={this.changeSelectedIndex}
-            style={{ width: '100%' }}
-          />
-        </View>}
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
-        >
-          <View style={{ flex: 1, width: '100%', alignItems: 'center', padding: 16 }}>
-            <Text style={{ fontSize: 17, marginBottom: 16 }}>{intl.formatMessage({ id: 'receive_hint_above_qr_code' })}{+this.state.amount > 0 ? this.state.amount : ''} {symbol}</Text>
-            <QRCode
-              value={addressUri}
-              size={200}
+      <SafeAreaView style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : 'white' }}>
+        <View style={[styles.container, { backgroundColor: isDarkMode ? 'black' : 'white' }]}>
+          {hasChildAddress && chain === 'BITCOIN' && <View style={{ height: 52, width: '100%', justifyContent: 'center', paddingTop: 5, paddingBottom: 13, paddingLeft: 16, paddingRight: 16, backgroundColor: isDarkMode ? 'black' : '#F7F7F7', borderColor: '#C8C7CC', borderBottomWidth: 0.5 }}>
+            <SegmentedControlIOS
+              values={[value1, value2]}
+              selectedIndex={this.state.selectedIndex}
+              onChange={this.changeSelectedIndex}
+              style={{ width: '100%' }}
             />
-            <Text style={{ fontSize: this.getAddressFontSize(!this.state.selectedIndex ? address : childAddress), marginTop: 16, marginBottom: 16, textAlign: 'center' }}>
-              {!this.state.selectedIndex ? address : childAddress}
-            </Text>
-            <TouchableOpacity
-              underlayColor="#007AFF"
-              activeOpacity={0.8}
-              style={{
-                width: '100%',
-                height: 50,
-                backgroundColor: '#007AFF',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: 10
-              }}
-              onPress={this.copy.bind(this, !this.state.selectedIndex ? address : childAddress)}
-            >
-              <Text style={{ textAlign: 'center', color: 'white', fontSize: 17 }}>{intl.formatMessage({ id: 'receive_button_copy_address' })}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{ marginTop: 16, flexDirection: 'row', alignItems: 'center' }}
-              onPress={this.setAmount}
-            >
-              <FastImage
-                source={require('resources/images/amount.png')}
-                style={{ width: 28, height: 28, marginRight: 4 }}
-              />
-              <Text style={{ textAlign: 'center', color: '#007AFF', fontSize: 17 }}>{intl.formatMessage({ id: 'receive_button_setting_amount' })}</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-        <Modal
-          isVisible={this.state.showModal}
-          backdropOpacity={0}
-          useNativeDriver
-          animationIn="fadeIn"
-          animationInTiming={200}
-          backdropTransitionInTiming={200}
-          animationOut="fadeOut"
-          animationOutTiming={200}
-          backdropTransitionOutTiming={200}
-        >
-          {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
-              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'general_toast_text_copied' })}</Text>
-            </View>
           </View>}
-        </Modal>
-      </View>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled"
+          >
+            <View style={{ flex: 1, width: '100%', alignItems: 'center', padding: 16 }}>
+              <Text style={{ fontSize: 17, marginBottom: 16, color: isDarkMode ? 'white' : 'black' }}>{intl.formatMessage({ id: 'receive_hint_above_qr_code' })}{+this.state.amount > 0 ? this.state.amount : ''} {symbol}</Text>
+              <QRCode
+                value={addressUri}
+                size={200}
+                color={isDarkMode ? 'white' : 'black'}
+                backgroundColor={isDarkMode ? 'black' : 'white'}
+              />
+              <Text style={{ fontSize: this.getAddressFontSize(!this.state.selectedIndex ? address : childAddress), marginTop: 16, marginBottom: 16, textAlign: 'center', color: isDarkMode ? 'white' : 'black' }}>
+                {!this.state.selectedIndex ? address : childAddress}
+              </Text>
+              <TouchableOpacity
+                underlayColor="#007AFF"
+                activeOpacity={0.8}
+                style={{
+                  width: '100%',
+                  height: 50,
+                  backgroundColor: '#007AFF',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: 10
+                }}
+                onPress={this.copy.bind(this, !this.state.selectedIndex ? address : childAddress)}
+              >
+                <Text style={{ textAlign: 'center', color: 'white', fontSize: 17 }}>{intl.formatMessage({ id: 'receive_button_copy_address' })}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{ marginTop: 16, flexDirection: 'row', alignItems: 'center' }}
+                onPress={this.setAmount}
+              >
+                <FastImage
+                  source={require('resources/images/amount.png')}
+                  style={{ width: 28, height: 28, marginRight: 4 }}
+                />
+                <Text style={{ textAlign: 'center', color: '#007AFF', fontSize: 17 }}>{intl.formatMessage({ id: 'receive_button_setting_amount' })}</Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+          <Modal
+            isVisible={this.state.showModal}
+            backdropOpacity={0}
+            useNativeDriver
+            animationIn="fadeIn"
+            animationInTiming={200}
+            backdropTransitionInTiming={200}
+            animationOut="fadeOut"
+            animationOutTiming={200}
+            backdropTransitionOutTiming={200}
+          >
+            {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
+                <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'general_toast_text_copied' })}</Text>
+              </View>
+            </View>}
+          </Modal>
+        </View>
       </SafeAreaView>
     )
   }

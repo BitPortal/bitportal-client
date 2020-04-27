@@ -6,10 +6,10 @@ import { View, Text, TouchableOpacity, Image, SafeAreaView } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Navigation } from 'components/Navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
+import { DarkModeContext } from 'utils/darkMode'
 
 const styles = EStyleSheet.create({
   container: {
-    backgroundColor: 'white',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
@@ -57,15 +57,11 @@ export default class AddIdentity extends Component {
         largeTitle: {
           visible: false
         },
-        noBorder: true,
-        background: {
-          color: 'rgba(0,0,0,0)',
-          translucent: true
-        }
+        noBorder: true
       }
     }
   }
-
+  static contextType = DarkModeContext
   subscription = Navigation.events().bindComponent(this)
 
   navigationButtonPressed({ buttonId }) {
@@ -100,23 +96,26 @@ export default class AddIdentity extends Component {
 
   render() {
     const { intl } = this.props
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
+
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={[styles.container, { color: isDarkMode ? 'black' : 'white' }]}>
         <View
           style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
         >
-          <FastImage
-            source={require('resources/images/AddIdentityBackground.png')}
-            style={{ width: '100%', height: '100%' }}
-            resizeMode="cover"
-          />
+          {!isDarkMode && <FastImage
+                            source={require('resources/images/AddIdentityBackground.png')}
+                            style={{ width: '100%', height: '100%' }}
+                            resizeMode="cover"
+          />}
         </View>
         <View style={{ width: '100%', height: 420, paddingHorizontal: 16, paddingVertical: 30 }}>
-          <Text style={{ fontSize: 30, marginBottom: 10, marginTop: 40 }}>{intl.formatMessage({ id: 'identity_add_title_1' })}</Text>
-          <Text style={{ fontSize: 30, marginBottom: 20 }}>
+          <Text style={{ fontSize: 30, marginBottom: 10, marginTop: 40, color: isDarkMode ? 'white' : 'black' }}>{intl.formatMessage({ id: 'identity_add_title_1' })}</Text>
+          <Text style={{ fontSize: 30, marginBottom: 20, color: isDarkMode ? 'white' : 'black' }}>
             {intl.formatMessage({ id: 'identity_add_title_2' })} <Text style={{ color: '#007AFF' }}>{intl.formatMessage({ id: 'identity_add_title_3' })}</Text>
           </Text>
-          <Text style={{ fontSize: 17, marginBottom: 80 }}>
+          <Text style={{ fontSize: 17, marginBottom: 80, color: isDarkMode ? 'white' : 'black' }}>
             {intl.formatMessage({ id: 'identity_add_slogon' })}
           </Text>
           <TouchableOpacity style={styles.button} onPress={this.toCreateIdentity}>

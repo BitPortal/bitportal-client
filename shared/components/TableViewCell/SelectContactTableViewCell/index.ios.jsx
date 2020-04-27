@@ -21,7 +21,7 @@ const SelectContactTableViewCell = (props) => {
         />
         <View style={{ flex: 1, borderWidth: 0, borderColor: 'red', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
           <View style={{ flex: 1, borderWidth: 0, borderColor: 'red', justifyContent: 'center', paddingRight: 16 }}>
-            <Text style={{ fontSize: 17, color: 'black' }} numberOfLines={1}>{props.data.name}</Text>
+            <Text style={{ fontSize: 17, color: props.data.isDarkMode ? 'white' : 'black' }} numberOfLines={1}>{props.data.name}</Text>
             <Text style={{ fontSize: 14, color: '#666666', paddingTop: 2 }} numberOfLines={1}>{formatAddress(props.data.address)}</Text>
           </View>
         </View>

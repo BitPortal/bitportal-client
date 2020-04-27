@@ -22,6 +22,7 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import { Field, reduxForm, getFormValues, getFormSyncWarnings } from 'redux-form'
 import Modal from 'react-native-modal'
 import * as walletActions from 'actions/wallet'
+import { DarkModeContext } from 'utils/darkMode'
 
 const styles = EStyleSheet.create({
   container: {
@@ -83,14 +84,15 @@ const TextField = ({
   showClearButton,
   editable,
   switchable,
-  onSwitch
+  onSwitch,
+  isDarkMode
 }) => (
   <View style={{ width: '100%', alignItems: 'center', height: 44, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-    {!!label && !switchable && <Text style={{ fontSize: 17, marginRight: 16, width: 70 }}>{label}</Text>}
+    {!!label && !switchable && <Text style={{ fontSize: 17, marginRight: 16, width: 70, color: isDarkMode ? 'white' : 'black'  }}>{label}</Text>}
     {!!label && !!switchable &&
      <View style={{ borderRightWidth: 0.5, borderColor: '#C8C7CC', height: '100%', marginRight: 16, width: 70, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
        <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.7} onPress={onSwitch} style={{ width: 57, height: '100%', justifyContent: 'center' }}>
-         <Text style={{ fontSize: 15, color: '#007AFF' }}>{label}</Text>
+         <Text style={{ fontSize: 15, color: '#007AFF'}}>{label}</Text>
        </TouchableHighlight>
        <Image
          source={require('resources/images/arrowRight.png')}
@@ -99,7 +101,7 @@ const TextField = ({
      </View>
     }
     <TextInput
-      style={[styles.textFiled, !label ? styles.noLable : {}]}
+      style={[styles.textFiled, !label ? styles.noLable : {}, { color: isDarkMode ? 'white' : 'black' }]}
       autoCorrect={false}
       autoCapitalize="none"
       placeholder={placeholder}
@@ -127,11 +129,13 @@ const TextAreaField = ({
   fieldName,
   change,
   showClearButton,
-  separator
+  separator,
+  isDarkMode
 }) => (
   <View style={{ width: '100%', alignItems: 'center', height: 88, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
     <TextInput
-      style={styles.textAreaFiled}
+      style={[styles.textAreaFiled, { color: isDarkMode ? 'white' : 'dark' }]}
+      placeholderTextColor={isDarkMode ? 'white' : 'dark'}
       multiline={true}
       autoCorrect={false}
       autoCapitalize="none"
@@ -274,7 +278,7 @@ export default class ImportETHWallet extends Component {
       }
     }
   }
-
+  static contextType = DarkModeContext
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
       nextProps.invalid !== prevState.invalid
@@ -466,169 +470,178 @@ export default class ImportETHWallet extends Component {
     const password = formValues && formValues.password
     const passwordHint = formValues && formValues.passwordHint
     const path = formValues && formValues.path
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
 
     return (
       <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <View style={{ height: 52, width: '100%', justifyContent: 'center', paddingTop: 5, paddingBottom: 13, paddingLeft: 16, paddingRight: 16, backgroundColor: '#F7F7F7', borderColor: '#C8C7CC', borderBottomWidth: 0.5 }}>
-          <SegmentedControlIOS
-            values={['Keystore', '助记词', '私钥']}
-            selectedIndex={this.state.selectedIndex}
-            onChange={this.changeSelectedIndex}
-            style={{ width: '100%' }}
-          />
-        </View>
-        <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
-          <View style={{ flex: 1, alignItems: 'center' }}>
-            <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-              {this.state.selectedIndex === 0 && <Text style={{ fontSize: 13, color: '#666666' }}>Keystore 文件内容</Text>}
-              {this.state.selectedIndex === 1 && <Text style={{ fontSize: 13, color: '#666666' }}>输入助记词</Text>}
-              {this.state.selectedIndex === 2 && <Text style={{ fontSize: 13, color: '#666666' }}>输入私钥</Text>}
-            </View>
-            {this.state.selectedIndex === 0 && <Fragment>
-              <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
-                <Field
-                  placeholder="必填"
-                  name="keystore"
-                  fieldName="keystore"
-                  component={TextAreaField}
-                  change={change}
-                  showClearButton={!!keystore && keystore.length > 0}
-                />
-                <TouchableHighlight underlayColor="rgba(0,0,0,0)" onPress={this.scan.bind(this, 'keystore')} style={{ width: 30, height: 30, position: 'absolute', right: 16, top: 4 }} activeOpacity={0.42}>
-                  <FastImage
-                    source={require('resources/images/scan2_right.png')}
-                    style={{ width: 30, height: 30 }}
-                  />
-                </TouchableHighlight>
-              </View>
-              <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-                <Text style={{ fontSize: 13, color: '#666666' }}>Keystore 密码</Text>
-              </View>
-              <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
-                <Field
-                  placeholder="必填"
-                  name="keystorePassword"
-                  fieldName="keystorePassword"
-                  change={change}
-                  component={TextField}
-                  showClearButton={!!keystorePassword && keystorePassword.length > 0}
-                  secureTextEntry
-                />
-              </View>
-              {/* <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
-                  <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>以太坊官方Keystore文件内容和密码</Text>
-                  </View> */}
-            </Fragment>}
-            {this.state.selectedIndex === 1 && <Fragment>
-              <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
-                <Field
-                  placeholder="用空格分隔"
-                  name="mnemonic"
-                  fieldName="mnemonic"
-                  component={TextAreaField}
-                  change={change}
-                  showClearButton={!!mnemonic && mnemonic.length > 0}
-                />
-                <TouchableHighlight underlayColor="rgba(0,0,0,0)" onPress={this.scan.bind(this, 'mnemonic')} style={{ width: 30, height: 30, position: 'absolute', right: 16, top: 4 }} activeOpacity={0.42}>
-                  <FastImage
-                    source={require('resources/images/scan2_right.png')}
-                    style={{ width: 30, height: 30 }}
-                  />
-                </TouchableHighlight>
-              </View>
-            </Fragment>}
-            {this.state.selectedIndex === 2 && <Fragment>
-              <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
-                <Field
-                  placeholder="必填"
-                  name="privateKey"
-                  fieldName="privateKey"
-                  component={TextAreaField}
-                  change={change}
-                  showClearButton={!!privateKey && privateKey.length > 0}
-                />
-                <TouchableHighlight underlayColor="rgba(0,0,0,0)" onPress={this.scan.bind(this, 'privateKey')} style={{ width: 30, height: 30, position: 'absolute', right: 16, top: 4 }} activeOpacity={0.42}>
-                  <FastImage
-                    source={require('resources/images/scan2_right.png')}
-                    style={{ width: 30, height: 30 }}
-                  />
-                </TouchableHighlight>
-              </View>
-            </Fragment>}
-            {this.state.selectedIndex === 1 && <Fragment>
-              <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-                <Text style={{ fontSize: 13, color: '#666666' }}>选择路径</Text>
-              </View>
-              <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
-                <Field
-                  label={this.state.pathSwitchLabel}
-                  switchable={true}
-                  placeholder="必填"
-                  name="path"
-                  fieldName="path"
-                  editable={this.state.pathEditable}
-                  change={change}
-                  onSwitch={this.onSwitchPath}
-                  component={TextField}
-                  showClearButton={!!path && path.length > 0}
-                />
-              </View>
-            </Fragment>}
-            {this.state.selectedIndex !== 0 && <Fragment>
-              <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-                <Text style={{ fontSize: 13, color: '#666666' }}>设置密码</Text>
-              </View>
-              <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
-                <Field
-                  label="钱包密码"
-                  placeholder="不少于8位字符，建议混合大小写字母，数字，符号"
-                  name="password"
-                  fieldName="password"
-                  change={change}
-                  component={TextField}
-                  separator={true}
-                  showClearButton={!!password && password.length > 0}
-                  secureTextEntry
-                />
-                <Field
-                  label="密码提示"
-                  placeholder="选填"
-                  name="passwordHint"
-                  fieldName="passwordHint"
-                  change={change}
-                  component={TextField}
-                  showClearButton={!!passwordHint && passwordHint.length > 0}
-                  separator={false}
-                />
-              </View>
-              <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
-                <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。</Text>
-              </View>
-            </Fragment>}
+        <View style={styles.container}>
+          <View style={{ height: 52, width: '100%', justifyContent: 'center', paddingTop: 5, paddingBottom: 13, paddingLeft: 16, paddingRight: 16, backgroundColor: isDarkMode ? 'black' : '#F7F7F7', borderColor: '#C8C7CC', borderBottomWidth: 0.5 }}>
+            <SegmentedControlIOS
+              values={['Keystore', '助记词', '私钥']}
+              selectedIndex={this.state.selectedIndex}
+              onChange={this.changeSelectedIndex}
+              style={{ width: '100%' }}
+            />
           </View>
-        </ScrollView>
-        <Modal
-          isVisible={this.state.importETHPrivateKeyLoading || this.state.importETHMnemonicsLoading || this.state.importETHKeystoreLoading}
-          backdropOpacity={0.4}
-          useNativeDriver
-          animationIn="fadeIn"
-          animationInTiming={200}
-          backdropTransitionInTiming={200}
-          animationOut="fadeOut"
-          animationOutTiming={200}
-          backdropTransitionOutTiming={200}
-          onModalHide={this.onModalHide}
-          onModalShow={this.onModalShow}
-        >
-          {(this.state.importETHPrivateKeyLoading || this.state.importETHMnemonicsLoading || this.state.importETHKeystoreLoading) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
-              <ActivityIndicator size="small" color="#000000" />
-              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>导入中...</Text>
+          <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+            <View style={{ flex: 1, alignItems: 'center' }}>
+              <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
+                {this.state.selectedIndex === 0 && <Text style={{ fontSize: 13, color: '#666666' }}>Keystore 文件内容</Text>}
+                {this.state.selectedIndex === 1 && <Text style={{ fontSize: 13, color: '#666666' }}>输入助记词</Text>}
+                {this.state.selectedIndex === 2 && <Text style={{ fontSize: 13, color: '#666666' }}>输入私钥</Text>}
+              </View>
+              {this.state.selectedIndex === 0 && <Fragment>
+                <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
+                  <Field
+                    placeholder="必填"
+                    name="keystore"
+                    fieldName="keystore"
+                    component={TextAreaField}
+                    change={change}
+                    isDarkMode={isDarkMode}
+                    showClearButton={!!keystore && keystore.length > 0}
+                  />
+                  <TouchableHighlight underlayColor="rgba(0,0,0,0)" onPress={this.scan.bind(this, 'keystore')} style={{ width: 30, height: 30, position: 'absolute', right: 16, top: 4 }} activeOpacity={0.42}>
+                    <FastImage
+                      source={require('resources/images/scan2_right.png')}
+                      style={{ width: 30, height: 30 }}
+                    />
+                  </TouchableHighlight>
+                </View>
+                <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
+                  <Text style={{ fontSize: 13, color: '#666666' }}>Keystore 密码</Text>
+                </View>
+                <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
+                  <Field
+                    placeholder="必填"
+                    name="keystorePassword"
+                    fieldName="keystorePassword"
+                    change={change}
+                    component={TextField}
+                    showClearButton={!!keystorePassword && keystorePassword.length > 0}
+                    isDarkMode={isDarkMode}
+                    secureTextEntry
+                  />
+                </View>
+                {/* <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
+                    <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>以太坊官方Keystore文件内容和密码</Text>
+                    </View> */}
+              </Fragment>}
+              {this.state.selectedIndex === 1 && <Fragment>
+                <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
+                  <Field
+                    placeholder="用空格分隔"
+                    name="mnemonic"
+                    fieldName="mnemonic"
+                    component={TextAreaField}
+                    change={change}
+                    isDarkMode={isDarkMode}
+                    showClearButton={!!mnemonic && mnemonic.length > 0}
+                  />
+                  <TouchableHighlight underlayColor="rgba(0,0,0,0)" onPress={this.scan.bind(this, 'mnemonic')} style={{ width: 30, height: 30, position: 'absolute', right: 16, top: 4 }} activeOpacity={0.42}>
+                    <FastImage
+                      source={require('resources/images/scan2_right.png')}
+                      style={{ width: 30, height: 30 }}
+                    />
+                  </TouchableHighlight>
+                </View>
+              </Fragment>}
+              {this.state.selectedIndex === 2 && <Fragment>
+                <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
+                  <Field
+                    placeholder="必填"
+                    name="privateKey"
+                    fieldName="privateKey"
+                    component={TextAreaField}
+                    change={change}
+                    isDarkMode={isDarkMode}
+                    showClearButton={!!privateKey && privateKey.length > 0}
+                  />
+                  <TouchableHighlight underlayColor="rgba(0,0,0,0)" onPress={this.scan.bind(this, 'privateKey')} style={{ width: 30, height: 30, position: 'absolute', right: 16, top: 4 }} activeOpacity={0.42}>
+                    <FastImage
+                      source={require('resources/images/scan2_right.png')}
+                      style={{ width: 30, height: 30 }}
+                    />
+                  </TouchableHighlight>
+                </View>
+              </Fragment>}
+              {this.state.selectedIndex === 1 && <Fragment>
+                <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
+                  <Text style={{ fontSize: 13, color: '#666666' }}>选择路径</Text>
+                </View>
+                <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
+                  <Field
+                    label={this.state.pathSwitchLabel}
+                    switchable={true}
+                    placeholder="必填"
+                    name="path"
+                    fieldName="path"
+                    editable={this.state.pathEditable}
+                    change={change}
+                    onSwitch={this.onSwitchPath}
+                    component={TextField}
+                    isDarkMode={isDarkMode}
+                    showClearButton={!!path && path.length > 0}
+                  />
+                </View>
+              </Fragment>}
+              {this.state.selectedIndex !== 0 && <Fragment>
+                <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
+                  <Text style={{ fontSize: 13, color: '#666666' }}>设置密码</Text>
+                </View>
+                <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
+                  <Field
+                    label="钱包密码"
+                    placeholder="不少于8位字符，建议混合大小写字母，数字，符号"
+                    name="password"
+                    fieldName="password"
+                    change={change}
+                    component={TextField}
+                    separator={true}
+                    isDarkMode={isDarkMode}
+                    showClearButton={!!password && password.length > 0}
+                    secureTextEntry
+                  />
+                  <Field
+                    label="密码提示"
+                    placeholder="选填"
+                    name="passwordHint"
+                    fieldName="passwordHint"
+                    change={change}
+                    component={TextField}
+                    showClearButton={!!passwordHint && passwordHint.length > 0}
+                    isDarkMode={isDarkMode}
+                    separator={false}
+                  />
+                </View>
+                <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
+                  <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。</Text>
+                </View>
+              </Fragment>}
             </View>
-          </View>}
-        </Modal>
-      </View>
+          </ScrollView>
+          <Modal
+            isVisible={this.state.importETHPrivateKeyLoading || this.state.importETHMnemonicsLoading || this.state.importETHKeystoreLoading}
+            backdropOpacity={0.4}
+            useNativeDriver
+            animationIn="fadeIn"
+            animationInTiming={200}
+            backdropTransitionInTiming={200}
+            animationOut="fadeOut"
+            animationOutTiming={200}
+            backdropTransitionOutTiming={200}
+            onModalHide={this.onModalHide}
+            onModalShow={this.onModalShow}
+          >
+            {(this.state.importETHPrivateKeyLoading || this.state.importETHMnemonicsLoading || this.state.importETHKeystoreLoading) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
+                <ActivityIndicator size="small" color="#000000" />
+                <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>导入中...</Text>
+              </View>
+            </View>}
+          </Modal>
+        </View>
       </SafeAreaView>
     )
   }

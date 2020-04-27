@@ -43,7 +43,7 @@ const WalletManagementTableViewCell = (props) => {
             source={images[props.data.actionType]}
             style={{ width: 29, height: 29, marginRight: 16 }}
           />
-          <Text style={{ fontSize: 17, color: props.data.actionType === 'delete' ? '#FF2D55' : '#000000' }}>{props.data.text}</Text>
+          <Text style={{ fontSize: 17, color: props.data.actionType === 'delete' ? '#FF2D55' : (props.data.isDarkMode ? 'white' : 'dark') }}>{props.data.text}</Text>
         </View>
         <View>
           {props.data.detail && <Text style={{ fontSize: 17, color: '#8E8E93' }}>{props.data.detail}</Text>}
@@ -69,11 +69,11 @@ const WalletManagementTableViewCell = (props) => {
         />
         <View style={{ flex: 1, height: 44, borderWidth: 0, borderColor: 'red', justifyContent: 'space-between' }}>
           <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ fontSize: 17, color: 'black', marginRight: 5, fontWeight: '500' }}>{props.data.name}</Text>
+            <Text style={{ fontSize: 17, color: 'black', marginRight: 5, fontWeight: '500', color: props.data.isDarkMode ? 'white' : 'dark' }}>{props.data.name}</Text>
           </View>
           <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-            {props.data.address && <Text style={{ fontSize: 15 }}>{this.formatAddress(props.data.address)}</Text>}
-            {props.data.account && <Text style={{ fontSize: 15 }}>{props.data.account}</Text>}
+            {props.data.address && <Text style={{ fontSize: 15, color: props.data.isDarkMode ? 'white' : 'dark' }}>{this.formatAddress(props.data.address)}</Text>}
+            {props.data.account && <Text style={{ fontSize: 15, color: props.data.isDarkMode ? 'white' : 'dark' }}>{props.data.account}</Text>}
           </View>
         </View>
       </View>

@@ -13,6 +13,7 @@ import { transferAssetSelector } from 'selectors/asset'
 import { transferWalletTransactionSelector } from 'selectors/transaction'
 import Sound from 'react-native-sound'
 import * as transactionActions from 'actions/transaction'
+import { DarkModeContext } from 'utils/darkMode'
 import styles from './styles'
 
 const { Section, Item } = TableView
@@ -61,7 +62,7 @@ export default class TransactionDetail extends Component {
       }
     }
   }
-
+  static contextType = DarkModeContext
   subscription = Navigation.events().bindComponent(this)
 
   state = { showModal: false, showModalContent: false, pending: false }
@@ -153,12 +154,14 @@ export default class TransactionDetail extends Component {
 
   toTransactionIdUI = (transactionId) => {
     const { intl } = this.props
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
     return (
       <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
         <View>
-          <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>{intl.formatMessage({ id: 'txn_detail_label_txn_id' })}</Text>
+          <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)', marginBottom: 4 }}>{intl.formatMessage({ id: 'txn_detail_label_txn_id' })}</Text>
           <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transactionId)}>
-            <Text style={{ fontSize: 15 }}>
+            <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>
               {transactionId}
               <Image
                 source={require('resources/images/copy_black.png')}
@@ -173,10 +176,12 @@ export default class TransactionDetail extends Component {
 
   toExplorerUI = (chain, txId, explorer = null) => {
     const { intl } = this.props
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
     return (
       <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
         <View>
-          <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>{intl.formatMessage({ id: 'txn_detail_label_query_in_explorer' })}</Text>
+          <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)', marginBottom: 4 }}>{intl.formatMessage({ id: 'txn_detail_label_query_in_explorer' })}</Text>
           <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.toExplorer.bind(this, chain, txId)}>
             <Image
               source={require('resources/images/share.png')}
@@ -195,26 +200,27 @@ export default class TransactionDetail extends Component {
   render() {
     const { transaction, intl, chain, precision, symbol } = this.props
     if (!transaction) return null
-
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
     if (transaction && chain === 'EOS') {
       return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F7F7' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
           <ScrollView
-            style={{ flex: 1, backgroundColor: 'white' }}
-            contentContainerStyle={{ backgroundColor: 'white' }}
+            style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : 'white' }}
+            contentContainerStyle={{ backgroundColor: isDarkMode ? 'black' : 'white' }}
           >
-            <View style={{ flex: 1, backgroundColor: '#F7F7F7', padding: 16, paddingTop: 0 }}>
-              {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
-              {+transaction.change <= 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
-              <Text style={{ fontSize: 17, color: 'rgba(0,0,0,0.48)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
+            <View style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : '#F7F7F7', padding: 16, paddingTop: 0 }}>
+              {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500', color: isDarkMode ? 'white' : 'black' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
+              {+transaction.change <= 0 && <Text style={{ fontSize: 28, fontWeight: '500', color: isDarkMode ? 'white' : 'black' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
+              <Text style={{ fontSize: 17, marginTop: 6, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)' }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
             </View>
-            <View style={{ flex: 1, backgroundColor: 'white', borderTopWidth: 0.5, borderColor: 'rgba(0,0,0,0.18)' }}>
+            <View style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : 'white', borderTopWidth: 0.5, borderColor: isDarkMode ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.18)' }}>
               <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
                 <View style={{ width: '50%' }}>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>{intl.formatMessage({ id: 'txn_detail_to_account' })}</Text>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)' }}>{intl.formatMessage({ id: 'txn_detail_to_account' })}</Text>
                   <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.receiver)}>
                     <View style={{ flexDirection: 'row', minHeight: 26, alignItems: 'center' }}>
-                      <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.receiver} </Text>
+                      <Text style={{ fontSize: 20, lineHeight: 26, color: isDarkMode ? 'white' : 'black' }}>{transaction.receiver} </Text>
                       <Image
                         source={require('resources/images/copy_black.png')}
                         style={{ width: 18, height: 18, marginBottom: 2 }}
@@ -223,10 +229,10 @@ export default class TransactionDetail extends Component {
                   </TouchableHighlight>
                 </View>
                 <View style={{ width: '50%' }}>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>{intl.formatMessage({ id: 'txn_detail_from_account' })}</Text>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)' }}>{intl.formatMessage({ id: 'txn_detail_from_account' })}</Text>
                   <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.sender)}>
                     <View style={{ flexDirection: 'row', minHeight: 26, alignItems: 'center' }}>
-                      <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.sender} </Text>
+                      <Text style={{ fontSize: 20, lineHeight: 26, color: isDarkMode ? 'white' : 'black' }}>{transaction.sender} </Text>
                       <Image
                         source={require('resources/images/copy_black.png')}
                         style={{ width: 18, height: 18, marginBottom: 2 }}
@@ -234,26 +240,26 @@ export default class TransactionDetail extends Component {
                     </View>
                   </TouchableHighlight>
                 </View>
-                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
+                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: isDarkMode ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.18)' }} />
               </View>
               <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
                 <View>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>{intl.formatMessage({ id: 'txn_detail_memo' })}</Text>
-                  {!!transaction.memo && <Text style={{ fontSize: 15 }}>{transaction.memo}</Text>}
-                  {!transaction.memo && <Text style={{ fontSize: 15 }}>无</Text>}
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)', marginBottom: 4 }}>{intl.formatMessage({ id: 'txn_detail_memo' })}</Text>
+                  {!!transaction.memo && <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>{transaction.memo}</Text>}
+                  {!transaction.memo && <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>无</Text>}
                 </View>
-                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
+                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: isDarkMode ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.18)' }} />
               </View>
               <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
                 <View style={{ width: '50%' }}>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>{intl.formatMessage({ id: 'txn_detail_block_height' })}</Text>
-                  <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.block_num}</Text>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)' }}>{intl.formatMessage({ id: 'txn_detail_block_height' })}</Text>
+                  <Text style={{ fontSize: 20, lineHeight: 26, color: isDarkMode ? 'white' : 'black' }}>{transaction.block_num}</Text>
                 </View>
                 <View style={{ width: '50%' }}>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>{intl.formatMessage({ id: 'txn_detail_contract_account' })}</Text>
-                  <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.code}</Text>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)' }}>{intl.formatMessage({ id: 'txn_detail_contract_account' })}</Text>
+                  <Text style={{ fontSize: 20, lineHeight: 26, color: isDarkMode ? 'white' : 'black' }}>{transaction.code}</Text>
                 </View>
-                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
+                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: isDarkMode ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.18)' }} />
               </View>
               {this.toTransactionIdUI(transaction.id)}
               {this.toExplorerUI(chain, transaction.id)}
@@ -280,22 +286,22 @@ export default class TransactionDetail extends Component {
       )
     } else if (transaction && chain === 'ETHEREUM') {
       return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F7F7' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
           <ScrollView
-            style={{ flex: 1, backgroundColor: 'white' }}
-            contentContainerStyle={{ backgroundColor: 'white' }}
+            style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : 'white' }}
+            contentContainerStyle={{ backgroundColor: isDarkMode ? 'black' : 'white' }}
           >
-            <View style={{ flex: 1, backgroundColor: '#F7F7F7', padding: 16, paddingTop: 0 }}>
-              {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
-              {+transaction.change <= 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
-              <Text style={{ fontSize: 17, color: 'rgba(0,0,0,0.48)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
+            <View style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : '#F7F7F7', padding: 16, paddingTop: 0 }}>
+              {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500', color: isDarkMode ? 'white' : 'black' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
+              {+transaction.change <= 0 && <Text style={{ fontSize: 28, fontWeight: '500', color: isDarkMode ? 'white' : 'black' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
+              <Text style={{ fontSize: 17, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
             </View>
-            <View style={{ flex: 1, backgroundColor: 'white', borderTopWidth: 0.5, borderColor: 'rgba(0,0,0,0.18)' }}>
+            <View style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : 'white', borderTopWidth: 0.5, borderColor: isDarkMode ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.18)' }}>
               <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
                 <View>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>{intl.formatMessage({ id: 'txn_detail_to_address' })}</Text>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)', marginBottom: 4 }}>{intl.formatMessage({ id: 'txn_detail_to_address' })}</Text>
                   <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.to)}>
-                    <Text style={{ fontSize: 15 }}>
+                    <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>
                       {`${transaction.to} `}
                       <Image
                         source={require('resources/images/copy_black.png')}
@@ -304,13 +310,13 @@ export default class TransactionDetail extends Component {
                     </Text>
                   </TouchableHighlight>
                 </View>
-                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
+                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: isDarkMode ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.18)' }} />
               </View>
               <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
                 <View>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>{intl.formatMessage({ id: 'txn_detail_from_address' })}</Text>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)', marginBottom: 4 }}>{intl.formatMessage({ id: 'txn_detail_from_address' })}</Text>
                   <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.from)}>
-                    <Text style={{ fontSize: 15 }}>
+                    <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>
                       {`${transaction.from} `}
                       <Image
                         source={require('resources/images/copy_black.png')}
@@ -319,30 +325,30 @@ export default class TransactionDetail extends Component {
                     </Text>
                   </TouchableHighlight>
                 </View>
-                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
+                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: isDarkMode ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.18)' }} />
               </View>
               <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
                 <View style={{ width: '50%' }}>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>{intl.formatMessage({ id: 'txn_detail_gas_amount' })}</Text>
-                  <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.gasUsed}</Text>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)' }}>{intl.formatMessage({ id: 'txn_detail_gas_amount' })}</Text>
+                  <Text style={{ fontSize: 20, lineHeight: 26, color: isDarkMode ? 'white' : 'black' }}>{transaction.gasUsed}</Text>
                 </View>
                 <View style={{ width: '50%' }}>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>{intl.formatMessage({ id: 'txn_detail_gas_price' })}</Text>
-                  {transaction.gasPrice !== '--' && <Text style={{ fontSize: 20, lineHeight: 26 }}>{intl.formatNumber(+transaction.gasPrice * Math.pow(10, -9), { minimumFractionDigits: 2, maximumFractionDigits: 2 })} gwei</Text>}
-                  {transaction.gasPrice === '--' && <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.gasPrice}</Text>}
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)' }}>{intl.formatMessage({ id: 'txn_detail_gas_price' })}</Text>
+                  {transaction.gasPrice !== '--' && <Text style={{ fontSize: 20, lineHeight: 26, color: isDarkMode ? 'white' : 'black' }}>{intl.formatNumber(+transaction.gasPrice * Math.pow(10, -9), { minimumFractionDigits: 2, maximumFractionDigits: 2 })} gwei</Text>}
+                  {transaction.gasPrice === '--' && <Text style={{ fontSize: 20, lineHeight: 26, color: isDarkMode ? 'white' : 'black' }}>{transaction.gasPrice}</Text>}
                 </View>
-                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
+                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: isDarkMode ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.18)' }} />
               </View>
               <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
                 <View style={{ width: '50%' }}>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>{intl.formatMessage({ id: 'txn_detail_confirmations' })}</Text>
-                  <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.confirmations}</Text>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)' }}>{intl.formatMessage({ id: 'txn_detail_confirmations' })}</Text>
+                  <Text style={{ fontSize: 20, lineHeight: 26, color: isDarkMode ? 'white' : 'black' }}>{transaction.confirmations}</Text>
                 </View>
                 <View style={{ width: '50%' }}>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>{intl.formatMessage({ id: 'txn_detail_block_height' })}</Text>
-                  <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.blockNumber}</Text>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)' }}>{intl.formatMessage({ id: 'txn_detail_block_height' })}</Text>
+                  <Text style={{ fontSize: 20, lineHeight: 26, color: isDarkMode ? 'white' : 'black' }}>{transaction.blockNumber}</Text>
                 </View>
-                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
+                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: isDarkMode ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.18)' }} />
               </View>
               {this.toTransactionIdUI(transaction.id)}
               {this.toExplorerUI(chain, transaction.id)}
@@ -369,22 +375,22 @@ export default class TransactionDetail extends Component {
       )
     } else if (transaction && chain === 'BITCOIN') {
       return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F7F7' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
           <ScrollView
-            style={{ flex: 1, backgroundColor: 'white' }}
-            contentContainerStyle={{ backgroundColor: 'white' }}
+            style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : 'white' }}
+            contentContainerStyle={{ backgroundColor: isDarkMode ? 'black' : 'white' }}
           >
-            <View style={{ flex: 1, backgroundColor: '#F7F7F7', padding: 16, paddingTop: 0 }}>
-              {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
-              {+transaction.change <= 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
-              <Text style={{ fontSize: 17, color: 'rgba(0,0,0,0.48)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
+            <View style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : '#F7F7F7', padding: 16, paddingTop: 0 }}>
+              {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500', color: isDarkMode ? 'white' : 'black' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
+              {+transaction.change <= 0 && <Text style={{ fontSize: 28, fontWeight: '500', color: isDarkMode ? 'white' : 'black' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
+              <Text style={{ fontSize: 17, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
             </View>
-            <View style={{ flex: 1, backgroundColor: 'white', borderTopWidth: 0.5, borderColor: 'rgba(0,0,0,0.18)' }}>
+            <View style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : 'white', borderTopWidth: 0.5, borderColor: isDarkMode ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.18)' }}>
               <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
                 <View>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>收款地址</Text>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)', marginBottom: 4 }}>收款地址</Text>
                   <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.vout[0].scriptPubKey && transaction.vout[0].scriptPubKey.addresses && transaction.vout[0].scriptPubKey.addresses[0])}>
-                    <Text style={{ fontSize: 15 }}>
+                    <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>
                       {`${transaction.vout[0].scriptPubKey && transaction.vout[0].scriptPubKey.addresses && transaction.vout[0].scriptPubKey.addresses[0]} `}
                       <Image
                         source={require('resources/images/copy_black.png')}
@@ -393,13 +399,13 @@ export default class TransactionDetail extends Component {
                     </Text>
                   </TouchableHighlight>
                 </View>
-                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
+                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: isDarkMode ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.18)' }} />
               </View>
               <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
                 <View>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>付款地址</Text>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)', marginBottom: 4 }}>付款地址</Text>
                   <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.vin[0].addr)}>
-                    <Text style={{ fontSize: 15 }}>
+                    <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>
                       {`${transaction.vin[0].addr} `}
                       <Image
                         source={require('resources/images/copy_black.png')}
@@ -408,25 +414,25 @@ export default class TransactionDetail extends Component {
                     </Text>
                   </TouchableHighlight>
                 </View>
-                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
+                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: isDarkMode ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.18)' }} />
               </View>
               <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
                 <View style={{ width: '50%' }}>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>确认数</Text>
-                  <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.confirmations}</Text>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)' }}>确认数</Text>
+                  <Text style={{ fontSize: 20, lineHeight: 26, color: isDarkMode ? 'white' : 'black' }}>{transaction.confirmations}</Text>
                 </View>
                 <View style={{ width: '50%' }}>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>矿工费用</Text>
-                  <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.fees}</Text>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)' }}>矿工费用</Text>
+                  <Text style={{ fontSize: 20, lineHeight: 26, color: isDarkMode ? 'white' : 'black' }}>{transaction.fees}</Text>
                 </View>
-                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
+                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: isDarkMode ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.18)' }} />
               </View>
               <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
                 <View style={{ width: '50%' }}>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>区块高度</Text>
-                  <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.blockheight}</Text>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)' }}>区块高度</Text>
+                  <Text style={{ fontSize: 20, lineHeight: 26, color: isDarkMode ? 'white' : 'black' }}>{transaction.blockheight}</Text>
                 </View>
-                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
+                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: isDarkMode ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.18)' }} />
               </View>
               {this.toTransactionIdUI(transaction.id)}
               {this.toExplorerUI(chain, transaction.id)}
@@ -453,22 +459,22 @@ export default class TransactionDetail extends Component {
       )
     } else if (transaction && chain === 'CHAINX') {
       return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F7F7' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
           <ScrollView
-            style={{ flex: 1, backgroundColor: 'white' }}
-            contentContainerStyle={{ backgroundColor: 'white' }}
+            style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : 'white' }}
+            contentContainerStyle={{ backgroundColor: isDarkMode ? 'black' : 'white' }}
           >
-            <View style={{ flex: 1, backgroundColor: '#F7F7F7', padding: 16, paddingTop: 0 }}>
-              {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
-              {+transaction.change <= 0 && <Text style={{ fontSize: 28, fontWeight: '500' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
-              <Text style={{ fontSize: 17, color: 'rgba(0,0,0,0.48)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
+            <View style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : '#F7F7F7', padding: 16, paddingTop: 0 }}>
+              {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500', color: isDarkMode ? 'white' : 'black' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
+              {+transaction.change <= 0 && <Text style={{ fontSize: 28, fontWeight: '500', color: isDarkMode ? 'white' : 'black' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
+              <Text style={{ fontSize: 17, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
             </View>
-            <View style={{ flex: 1, backgroundColor: 'white', borderTopWidth: 0.5, borderColor: 'rgba(0,0,0,0.18)' }}>
+            <View style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : 'white', borderTopWidth: 0.5, borderColor: isDarkMode ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.18)' }}>
               <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
                 <View>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>收款地址</Text>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)', marginBottom: 4 }}>收款地址</Text>
                   <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.to)}>
-                    <Text style={{ fontSize: 15 }}>
+                    <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>
                       {`${transaction.to} `}
                       <Image
                         source={require('resources/images/copy_black.png')}
@@ -477,13 +483,13 @@ export default class TransactionDetail extends Component {
                     </Text>
                   </TouchableHighlight>
                 </View>
-                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
+                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: isDarkMode ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.18)' }} />
               </View>
               <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
                 <View>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>付款地址</Text>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)', marginBottom: 4 }}>付款地址</Text>
                   <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.from)}>
-                    <Text style={{ fontSize: 15 }}>
+                    <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>
                       {`${transaction.from} `}
                       <Image
                         source={require('resources/images/copy_black.png')}
@@ -492,25 +498,25 @@ export default class TransactionDetail extends Component {
                     </Text>
                   </TouchableHighlight>
                 </View>
-                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
+                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: isDarkMode ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.18)' }} />
               </View>
               <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
                 <View style={{ width: '50%' }}>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>确认数</Text>
-                  <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.confirmations}</Text>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)' }}>确认数</Text>
+                  <Text style={{ fontSize: 20, lineHeight: 26, color: isDarkMode ? 'white' : 'black' }}>{transaction.confirmations}</Text>
                 </View>
                 {/*<View style={{ width: '50%' }}>*/}
-                  {/*<Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>矿工费用</Text>*/}
+                  {/*<Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)' }}>矿工费用</Text>*/}
                   {/*<Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.fees}</Text>*/}
                   {/*</View>*/}
-                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
+                <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: isDarkMode ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.18)' }} />
               </View>
               {/*<View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>*/}
                 {/*<View style={{ width: '50%' }}>*/}
-                {/*<Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>区块高度</Text>*/}
+                {/*<Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)' }}>区块高度</Text>*/}
                 {/*<Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.blockheight}</Text>*/}
                 {/*</View>*/}
-                {/*<View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />*/}
+                {/*<View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: isDarkMode ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.18)' }} />*/}
                 {/*</View>*/}
               {this.toTransactionIdUI(transaction.id)}
               {this.toExplorerUI(chain, transaction.id)}

@@ -9,12 +9,12 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import Modal from 'react-native-modal'
 import { Field, reduxForm, formValueSelector } from 'redux-form'
 import * as identityActions from 'actions/identity'
+import { DarkModeContext } from 'utils/darkMode'
 const SPAlert = NativeModules.SPAlert
 
 const styles = EStyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: 'white'
+    flex: 1
   },
   button: {
     width: '100%',
@@ -81,15 +81,11 @@ export default class BackupIdentity extends Component {
         largeTitle: {
           visible: false
         },
-        noBorder: true,
-        background: {
-          color: 'white',
-          translucent: true
-        }
+        noBorder: true
       }
     }
   }
-
+  static contextType = DarkModeContext
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.validateMnemonics.loading !== prevState.loading) {
       return {
@@ -209,13 +205,15 @@ export default class BackupIdentity extends Component {
   render() {
     const { intl, mnemonics, validateMnemonics, backup } = this.props
     const loading = validateMnemonics.loading
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
 
     return (
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <ScrollView style={[styles.container, { color: isDarkMode ? 'black' : 'white' }]} showsVerticalScrollIndicator={false}>
         <View style={{ flex: 1, alignItems: 'center' }}>
           <View style={{ marginBottom: 14 }}>
-            {(this.props.backup && !this.props.fromIdentity) && <Text style={{ fontSize: 26, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'manage_wallet_title_backup_mnemonics' })}</Text>}
-            {(!this.props.backup || !!this.props.fromIdentity) && <Text style={{ fontSize: 26, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'manage_wallet_title_backup_identity' })}</Text>}
+            {(this.props.backup && !this.props.fromIdentity) && <Text style={{ fontSize: 26, fontWeight: 'bold', color: isDarkMode ? 'white' : 'black' }}>{intl.formatMessage({ id: 'manage_wallet_title_backup_mnemonics' })}</Text>}
+            {(!this.props.backup || !!this.props.fromIdentity) && <Text style={{ fontSize: 26, fontWeight: 'bold', color: isDarkMode ? 'white' : 'black' }}>{intl.formatMessage({ id: 'manage_wallet_title_backup_identity' })}</Text>}
             {/* {loading && !backup && (
                 <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 0, right: -25 }}>
                 <ActivityIndicator size="small" color="#000000" />
@@ -223,38 +221,38 @@ export default class BackupIdentity extends Component {
                 )
                 } */}
           </View>
-          {!this.state.validating && <Text style={{ fontSize: 17, marginBottom: 16, paddingLeft: 32, paddingRight: 32, lineHeight: 22, textAlign: 'center' }}>
+          {!this.state.validating && <Text style={{ fontSize: 17, marginBottom: 16, paddingLeft: 32, paddingRight: 32, lineHeight: 22, textAlign: 'center', color: isDarkMode ? 'white' : 'black' }}>
             {intl.formatMessage({ id: 'mnemonics_backup_hint_write_down' })}
           </Text>}
-          {this.state.validating && <Text style={{ fontSize: 17, marginBottom: 16, paddingLeft: 32, paddingRight: 32, lineHeight: 22, textAlign: 'center' }}>
+          {this.state.validating && <Text style={{ fontSize: 17, marginBottom: 16, paddingLeft: 32, paddingRight: 32, lineHeight: 22, textAlign: 'center', color: isDarkMode ? 'white' : 'black' }}>
             {intl.formatMessage({ id: 'mnemonics_backup_hint_verify_by_click' })}
           </Text>}
           <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, marginTop: 50, minHeight: 72 }}>
-            {!this.state.validating && <Text style={{ fontSize: 17, lineHeight: 28 }}>{mnemonics}</Text>}
+            {!this.state.validating && <Text style={{ fontSize: 17, lineHeight: 28, color: isDarkMode ? 'white' : 'black' }}>{mnemonics}</Text>}
             {this.state.validating && !!this.state.userEntry && <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap' }}>
-             {this.state.userEntry.split(' ').map((word, index) => (
+              {this.state.userEntry.split(' ').map((word, index) => (
                 <TouchableHighlight
                   key={`${word}-${index}`}
                   underlayColor="rgba(255,255,255,0)"
                   onPress={this.onPressWord.bind(this, word, 'userEntry', index)}
-                  style={{ borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.3)', paddingTop: 2, paddingBottom: 4, paddingHorizontal: 8, marginRight: 10, marginBottom: 10, borderRadius: 9, backgroundColor: '#F8F8F8' }}
+                  style={{ borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.3)', paddingTop: 2, paddingBottom: 4, paddingHorizontal: 8, marginRight: 10, marginBottom: 10, borderRadius: 9, backgroundColor: isDarkMode ? 'black' : '#F8F8F8' }}
                 >
-                  <Text style={{ fontSize: 17, color: 'rgba(0,0,0,1)' }}>{word}</Text>
+                  <Text style={{ fontSize: 17, color: isDarkMode ? 'white' : 'black' }}>{word}</Text>
                 </TouchableHighlight>
               ))}
             </View>}
           </View>
           {this.state.validating && !!this.state.shuffledMnemonics && <View style={{ width: '100%', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, marginTop: 2, flexDirection: 'row', flexWrap: 'wrap' }}>
-             {this.state.shuffledMnemonics.split(' ').map((word, index) => (
-                <TouchableHighlight
-                  key={`${word}-${index}`}
-                  underlayColor="rgba(255,255,255,0)"
-                  onPress={this.onPressWord.bind(this, word, 'shuffledMnemonics', index)}
-                  style={{ borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.3)', paddingTop: 2, paddingBottom: 4, paddingHorizontal: 8, marginRight: 10, marginBottom: 10, borderRadius: 9, backgroundColor: '#F8F8F8' }}
-                >
-                  <Text style={{ fontSize: 17, color: 'rgba(0,0,0,1)' }}>{word}</Text>
-                </TouchableHighlight>
-              ))}
+            {this.state.shuffledMnemonics.split(' ').map((word, index) => (
+              <TouchableHighlight
+                key={`${word}-${index}`}
+                underlayColor="rgba(255,255,255,0)"
+                onPress={this.onPressWord.bind(this, word, 'shuffledMnemonics', index)}
+                style={{ borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.3)', paddingTop: 2, paddingBottom: 4, paddingHorizontal: 8, marginRight: 10, marginBottom: 10, borderRadius: 9, backgroundColor: isDarkMode ? 'black' : '#F8F8F8' }}
+              >
+                <Text style={{ fontSize: 17, color: isDarkMode ? 'white' : 'black' }}>{word}</Text>
+              </TouchableHighlight>
+            ))}
           </View>}
         </View>
       </ScrollView>

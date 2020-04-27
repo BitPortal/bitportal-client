@@ -16,10 +16,10 @@ const IdentityTableViewCell = (props) => {
       <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
         <View style={{ flex: 1, borderWidth: 0, borderColor: 'red', justifyContent: 'center' }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ fontSize: 22, color: 'black', marginRight: 5, paddingBottom: 4 }}>{props.data.name}</Text>
+            <Text style={{ fontSize: 22, color: props.data.isDarkMode ? 'white' : 'black', marginRight: 5, paddingBottom: 4 }}>{props.data.name}</Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ fontSize: 15 }}>{props.data.hasIdentity ? formatAddress(props.data.identifier) : props.data.identifier}</Text>
+            <Text style={{ fontSize: 15, color: props.data.isDarkMode ? 'white' : 'black' }}>{props.data.hasIdentity ? formatAddress(props.data.identifier) : props.data.identifier}</Text>
           </View>
         </View>
       </View>

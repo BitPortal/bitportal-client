@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import TableView from 'components/TableView'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { currencySymbolSelector } from 'selectors/currency'
+import { DarkModeContext } from 'utils/darkMode'
 import styles from './styles'
 
 const { Section, Item } = TableView
@@ -33,6 +34,7 @@ export default class Profile extends Component {
       }
     }
   }
+  static contextType = DarkModeContext
 
   subscription = Navigation.events().bindComponent(this)
 
@@ -130,6 +132,9 @@ export default class Profile extends Component {
           title: {
             text: 'BitPortal 官网'
           },
+          largeTitle: {
+            text: 'BitPortal 官网'
+          },
           leftButtons: [
             {
               id: 'cancel',
@@ -164,6 +169,9 @@ export default class Profile extends Component {
           title: {
             text: 'BitPortal 帮助中心'
           },
+          largeTitle: {
+            text: 'BitPortal 帮助中心'
+          },
           leftButtons: [
             {
               id: 'cancel',
@@ -196,10 +204,12 @@ export default class Profile extends Component {
   render() {
     const { identity, locale, currencySymbol, intl } = this.props
     const hasIdentity = !!identity.id
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
 
     return (
       <TableView
-        style={{ flex: 1, backgroundColor: '#F7F7F7' }}
+        style={{ flex: 1 }}
         tableViewStyle={TableView.Consts.Style.Grouped}
         tableViewCellStyle={TableView.Consts.CellStyle.Value1}
         cellSeparatorInset={{ left: 61 }}
@@ -214,6 +224,7 @@ export default class Profile extends Component {
             identifier={hasIdentity ? identity.identifier : intl.formatMessage({ id: 'identity_tableviewcell_add_identity' })}
             onPress={hasIdentity ? this.toMyIdentity : this.toAddIdentity}
             image="Userpic.png"
+            isDarkMode={isDarkMode}
             arrow
           />
         </Section>

@@ -8,6 +8,7 @@ import TableView from 'components/TableView'
 import * as identityActions from 'actions/identity'
 import Modal from 'react-native-modal'
 import FastImage from 'react-native-fast-image'
+import { DarkModeContext } from 'utils/darkMode'
 import styles from './styles'
 
 const { Section, Item } = TableView
@@ -56,7 +57,7 @@ export default class MyIdentity extends Component {
       }
     }
   }
-
+  static contextType = DarkModeContext
   subscription = Navigation.events().bindComponent(this)
 
   deleteIdentity = (id) => {
@@ -135,6 +136,9 @@ export default class MyIdentity extends Component {
     const deleteIdentityLoading = deleteIdentity.loading
     const loading = backupIdentityLoading || deleteIdentityLoading
 
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
+
     return (
       <View style={{ flex: 1 }}>
         <TableView
@@ -148,6 +152,7 @@ export default class MyIdentity extends Component {
               text={intl.formatMessage({ id: 'identity_text_avatar' })}
               type="avatar"
               height={60}
+              isDarkMode={isDarkMode}
               selectionStyle={TableView.Consts.CellSelectionStyle.None}
             />
             <Item
@@ -156,6 +161,7 @@ export default class MyIdentity extends Component {
               type="name"
               detail={identity.name}
               height={60}
+              isDarkMode={isDarkMode}
               selectionStyle={TableView.Consts.CellSelectionStyle.None}
             />
             <Item
@@ -164,6 +170,7 @@ export default class MyIdentity extends Component {
               type="identifier"
               detail={identity.identifier}
               height={60}
+              isDarkMode={isDarkMode}
               selectionStyle={TableView.Consts.CellSelectionStyle.None}
             />
           </Section>
@@ -172,6 +179,7 @@ export default class MyIdentity extends Component {
               reactModuleForCell="IdentityDetailTableViewCell"
               key="mnemonic"
               actionType="mnemonic"
+              isDarkMode={isDarkMode}
               text={intl.formatMessage({ id: 'identity_button_backup_identity' })}
               onPress={this.backupIdentity.bind(this, id)}
             />
@@ -179,6 +187,7 @@ export default class MyIdentity extends Component {
               reactModuleForCell="IdentityDetailTableViewCell"
               key="delete"
               actionType="delete"
+              isDarkMode={isDarkMode}
               text={intl.formatMessage({ id: 'identity_button_delete_identity' })}
               onPress={this.deleteIdentity.bind(this, id)}
             />

@@ -11,7 +11,7 @@ const ProducerTableViewCell = props => (
         {props.data.logo && <FastImage source={{ uri: `https://storage.googleapis.com/bitportal-cms/bp/${props.data.logo}` }} style={{ width: 40, height: 40, marginRight: 10, borderRadius: 40, position: 'absolute', top: 0, left: 0, borderWidth: 1, borderColor: '#C8C7CE' }} />}
       </View>
       <View style={{ flex: 1 }}>
-        <Text style={{ fontSize: 17 }}>{props.data.teamName || props.data.owner}</Text>
+        <Text style={{ fontSize: 17, color: props.data.isDarkMode ? 'white' : 'black' }}>{props.data.teamName || props.data.owner}</Text>
         <Text style={{ fontSize: 15, color: '#888888' }}>@{props.data.owner}</Text>
       </View>
     </View>

@@ -9,6 +9,7 @@ import * as assetActions from 'actions/asset'
 // import FastImage from 'react-native-fast-image'
 import { selectedAssetIdsSelector, assetsWithSearchSelector } from 'selectors/asset'
 import { activeWalletSelector, activeChainSelector } from 'selectors/wallet'
+import { DarkModeContext } from 'utils/darkMode'
 import styles from './styles'
 
 @connect(
@@ -38,7 +39,7 @@ export default class AddAssets extends Component {
       }
     }
   }
-
+  static contextType = DarkModeContext
   subscription = Navigation.events().bindComponent(this)
 
   state = {
@@ -190,6 +191,8 @@ export default class AddAssets extends Component {
 
   render() {
     const { assets, selectedAssetId, getETHAsset, getEOSAsset, getChainXAsset, chain } = this.props
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
 
     if ((getEOSAsset.loading || getETHAsset.loading || getChainXAsset.loading) && !assets.length) {
       return (
@@ -218,17 +221,18 @@ export default class AddAssets extends Component {
         >
           <TableView.Section>
             {assets.map(item => (
-               <TableView.Item
-                 key={item.id}
-                 height={60}
-                 selectionStyle={TableView.Consts.CellSelectionStyle.None}
-                 icon_url={item.icon_url}
-                 symbol={item.symbol}
-                 contract={item.contract}
-                 accessoryType={5}
-                 switchOn={selectedAssetId && selectedAssetId.indexOf(`${chain}/${item.contract}/${item.symbol}`) !== -1}
-               />
-             ))}
+              <TableView.Item
+                key={item.id}
+                height={60}
+                selectionStyle={TableView.Consts.CellSelectionStyle.None}
+                icon_url={item.icon_url}
+                symbol={item.symbol}
+                contract={item.contract}
+                accessoryType={5}
+                switchOn={selectedAssetId && selectedAssetId.indexOf(`${chain}/${item.contract}/${item.symbol}`) !== -1}
+                isDarkMode={isDarkMode}
+              />
+            ))}
           </TableView.Section>
         </TableView>
         <Modal

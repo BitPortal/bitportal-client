@@ -616,7 +616,6 @@ function* getTransactions(action: Action) {
           transactionType
         }
       })
-      console.log('eos transactions items', items)
 
       // const totalItems = transactions.total
       const pagination = {
@@ -629,6 +628,10 @@ function* getTransactions(action: Action) {
         yield put(actions.updateTransactions({ id, items, pagination, assetId, canLoadMore: totalItems > (+page) * (+pageSize), loadingMore: false }))
       } else {
         yield put(actions.addTransactions({ id, items, pagination, assetId, canLoadMore: totalItems > (+page) * (+pageSize), loadingMore: false }))
+      }
+
+      if (!items.length && page * pageSize < totalItems) {
+        yield put(actions.getTransactions.requested({ ...action.payload, loadMore: true }))
       }
     } else if (chain === 'CHAINX') {
       const page = 0

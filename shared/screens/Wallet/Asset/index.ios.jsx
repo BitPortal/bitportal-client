@@ -18,6 +18,7 @@ import * as walletActions from 'actions/wallet'
 import * as balanceActions from 'actions/balance'
 import { assetIcons } from 'resources/images'
 import chainxAccount from '@chainx/account'
+import { DarkModeContext } from 'utils/darkMode'
 import styles from './styles'
 const { StatusBarManager } = NativeModules
 const { Section, Item } = TableView
@@ -59,6 +60,7 @@ export default class Asset extends Component {
       }
     }
   }
+  static contextType = DarkModeContext
 
   subscription = Navigation.events().bindComponent(this)
 
@@ -261,6 +263,9 @@ export default class Asset extends Component {
     const emptyTransactions = !!transactions && transactions.length === 0
     const chain = activeWallet ? activeWallet.chain : ''
 
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
+
     let transactionCells = []
 
     if (transactionCount) {
@@ -280,6 +285,7 @@ export default class Asset extends Component {
           symbol={symbol}
           componentId={this.props.componentId}
           showSeparator={true}
+          isDarkMode={isDarkMode}
           onPress={this.toTransactionDetail.bind(this, transaction.id, transaction.pending, transaction.isError === '1')}
         />
       ))
@@ -287,16 +293,16 @@ export default class Asset extends Component {
 
     if (canLoadMore) {
       transactionCells.push(
-        <Item key="loadMore" reactModuleForCell="LoadMoreTableViewCell" selectionStyle={TableView.Consts.CellSelectionStyle.None} onPress={!loadingMore ? this.loadMore : () => {}} loadingMore={loadingMore} height={60} />
+        <Item key="loadMore" reactModuleForCell="LoadMoreTableViewCell" selectionStyle={TableView.Consts.CellSelectionStyle.None} onPress={!loadingMore ? this.loadMore : () => {}} loadingMore={loadingMore} height={60} isDarkMode={isDarkMode} />
       )
     }
 
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F7F7' }}>
-        <View style={{ justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#F7F7F7', height: 136 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
+        <View style={{ justifyContent: 'flex-start', alignItems: 'center', backgroundColor: isDarkMode ? 'black' : '#F7F7F7', height: 136 }}>
           <View style={{ width: '100%', justifyContent: 'space-between', alignItems: 'flex-start', flexDirection: 'row', paddingRight: 16, paddingLeft: 16 }}>
             <View style={{ justifyContent: 'center', alignItems: 'flex-start', width: '60%' }}>
-              <Text style={{ fontSize: 26, fontWeight: '500' }}>{balance && intl.formatNumber(balance.balance, { minimumFractionDigits: 0, maximumFractionDigits: balance.precision })}</Text>
+              <Text style={{ fontSize: 26, fontWeight: '500', color: isDarkMode ? 'white' : 'black' }}>{balance && intl.formatNumber(balance.balance, { minimumFractionDigits: 0, maximumFractionDigits: balance.precision })}</Text>
               {!assetBalance && <Text style={{ fontSize: 20, color: '#007AFF', marginTop: 4 }}>≈ {currency.sign}{(ticker && ticker[`${activeWallet.chain}/${activeWallet.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${activeWallet.symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</Text>}
               {!!assetBalance && <Text style={{ fontSize: 20, color: '#007AFF', marginTop: 4 }}>≈ {currency.sign}{(ticker && ticker[`${activeWallet.chain}/${assetBalance.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${assetBalance.symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</Text>}
             </View>
@@ -345,11 +351,11 @@ export default class Asset extends Component {
         </View>)}
         {chain !== 'CHAINX' && (
           <TableView
-            style={{ flex: 1, backgroundColor: 'white' }}
+            style={{ flex: 1 }}
             tableViewCellStyle={TableView.Consts.CellStyle.Default}
             detailTextColor="#666666"
             headerBackgroundColor="white"
-            headerTextColor="black"
+            headerTextColor={isDarkMode ? 'white' : 'black'}
             headerFontSize={17}
             onItemNotification={this.onItemNotification}
             separatorStyle={TableView.Consts.SeparatorStyle.None}
@@ -366,6 +372,7 @@ export default class Asset extends Component {
                 loadingTitle="获取交易记录..."
                 height={48}
                 componentId={this.props.componentId}
+                isDarkMode={isDarkMode}
                 selectionStyle={TableView.Consts.CellSelectionStyle.None}
               />
             </Section>

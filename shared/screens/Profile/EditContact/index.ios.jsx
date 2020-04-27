@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { View, ScrollView, ActionSheetIOS, Alert, Text, ActivityIndicator, Animated, TextInput, TouchableHighlight, Image, Keyboard, LayoutAnimation,
-  SafeAreaView } from 'react-native'
+         SafeAreaView } from 'react-native'
 import { Field, reduxForm, getFormValues, getFormSyncWarnings } from 'redux-form'
 import { Navigation } from 'components/Navigation'
 import TableView from 'components/TableView'
@@ -12,6 +12,7 @@ import FastImage from 'react-native-fast-image'
 import uuidv4 from 'uuid/v4'
 import { validateBTCAddress, validateETHAddress, validateEOSAccountName } from 'utils/validate'
 import { findDuplicate } from 'utils'
+import { DarkModeContext } from 'utils/darkMode'
 import styles from './styles'
 
 const { Section, Item } = TableView
@@ -30,16 +31,17 @@ const TextField = ({
   onSwitch,
   clearButtonRight,
   autoFocus,
-  autoCapitalize
+  autoCapitalize,
+  isDarkMode
 }) => (
   <View style={{ width: '100%', alignItems: 'center', height: 40, paddingRight: 16, flexDirection: 'row' }}>
     {!!label && !!switchable &&
      <View style={{ borderRightWidth: 0.5, borderColor: '#C8C7CC', height: '100%', width: 42, justifyContent: 'center', alignItems: 'center', paddingRight: 10 }}>
-       <Text style={{ width: 30, height: '100%', justifyContent: 'center', alignItems: 'center', fontSize: 15, lineHeight: 40 }} numberOfLines={1}>{label}</Text>
+       <Text style={{ width: 30, height: '100%', justifyContent: 'center', alignItems: 'center', fontSize: 15, lineHeight: 40, color: isDarkMode ? 'white' : 'dark' }} numberOfLines={1}>{label}</Text>
      </View>
     }
     <TextInput
-      style={{ width: '100%', height: '100%', fontSize: 17, paddingLeft: 16, paddingRight: clearButtonRight || 78 }}
+      style={{ width: '100%', height: '100%', fontSize: 17, paddingLeft: 16, paddingRight: clearButtonRight || 78, color: isDarkMode ? 'white' : 'dark' }}
       autoCorrect={false}
       autoCapitalize={autoCapitalize}
       placeholder={placeholder}
@@ -75,11 +77,12 @@ const MiniTextField = ({
   clearButtonRight,
   autoFocus,
   autoCapitalize,
+  isDarkMode,
   rightBorder
 }) => (
   <View style={{ flex: 1, alignItems: 'center', height: 40, paddingRight: 16, flexDirection: 'row', borderRightWidth: rightBorder ? 0.5 : 0, borderColor: '#C8C7CC' }}>
     <TextInput
-      style={{ width: '100%', height: '100%', fontSize: 17, paddingLeft: 16, paddingRight: clearButtonRight || 78 }}
+      style={{ width: '100%', height: '100%', fontSize: 17, paddingLeft: 16, paddingRight: clearButtonRight || 78, color: isDarkMode ? 'white' : 'dark' }}
       autoCorrect={false}
       autoCapitalize={autoCapitalize}
       placeholder={placeholder}
@@ -185,7 +188,7 @@ export default class MyIdentity extends Component {
       }
     }
   }
-
+  static contextType = DarkModeContext
   subscription = Navigation.events().bindComponent(this)
 
   state = {
@@ -472,11 +475,13 @@ export default class MyIdentity extends Component {
     const { formValues, change, contact, editMode } = this.props
     const name = formValues && formValues.name
     const description = formValues && formValues.description
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
 
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: isDarkMode ? 'dark' : 'white' }}>
         <ScrollView
-          style={{ flex: 1, backgroundColor: 'white' }}
+          style={{ flex: 1, backgroundColor: isDarkMode ? 'dark' : 'white' }}
           showsVerticalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
@@ -501,6 +506,7 @@ export default class MyIdentity extends Component {
                 clearButtonRight={64}
                 autoFocus={!editMode}
                 autoCapitalize="sentences"
+                isDarkMode={isDarkMode}
               />
               <Field
                 label="描述"
@@ -513,6 +519,7 @@ export default class MyIdentity extends Component {
                 clearButtonRight={64}
                 showClearButton={!!description && description.length > 0}
                 autoCapitalize="sentences"
+                isDarkMode={isDarkMode}
               />
             </View>
           </View>
@@ -537,17 +544,18 @@ export default class MyIdentity extends Component {
                   showClearButton={!!formValues && formValues[`btc_address_${id}`] && formValues[`btc_address_${id}`].length > 0}
                   autoFocus={!editMode || id > contact.btc.length - 1}
                   autoCapitalize="none"
+                  isDarkMode={isDarkMode}
                 />
                 {(index !== this.state.btcIds.length - 1) && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />}
               </View>
             )}
-            <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%', height: 40 }} onPress={this.addBTCAddress}>
+            <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: 40 }} onPress={this.addBTCAddress}>
               <View style={{ width: '100%', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 16 }}>
                 <FastImage
                   source={require('resources/images/add_green.png')}
                   style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }}
                 />
-                <Text style={{ fontSize: 15 }}>添加BTC地址</Text>
+                <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>添加BTC地址</Text>
                 <View style={{ position: 'absolute', height: 0.5, top: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
                 <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
               </View>
@@ -574,17 +582,18 @@ export default class MyIdentity extends Component {
                   showClearButton={!!formValues && formValues[`eth_address_${id}`] && formValues[`eth_address_${id}`].length > 0}
                   autoFocus={!editMode || id > contact.eth.length - 1}
                   autoCapitalize="none"
+                  isDarkMode={isDarkMode}
                 />
                 {(index !== this.state.ethIds.length - 1) && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />}
               </View>
             )}
-            <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%', height: 40 }} onPress={this.addETHAddress}>
+            <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: 40 }} onPress={this.addETHAddress}>
               <View style={{ width: '100%', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 16 }}>
                 <FastImage
                   source={require('resources/images/add_green.png')}
                   style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }}
                 />
-                <Text style={{ fontSize: 15 }}>添加ETH地址</Text>
+                <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>添加ETH地址</Text>
                 <View style={{ position: 'absolute', height: 0.5, top: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
                 <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
               </View>
@@ -618,6 +627,7 @@ export default class MyIdentity extends Component {
                       autoCapitalize="none"
                       rightBorder
                       clearButtonRight={6}
+                      isDarkMode={isDarkMode}
                     />
                     <Field
                       label="EOS"
@@ -631,6 +641,7 @@ export default class MyIdentity extends Component {
                       showClearButton={!!formValues && formValues[`eos_memo_${id}`] && formValues[`eos_memo_${id}`].length > 0}
                       autoFocus={false}
                       autoCapitalize="none"
+                      isDarkMode={isDarkMode}
                       clearButtonRight={16}
                     />
                   </View>
@@ -638,13 +649,13 @@ export default class MyIdentity extends Component {
                 {(index !== this.state.eosIds.length - 1) && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />}
               </View>
             )}
-            <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%', height: 40 }} onPress={this.addEOSAccountName}>
+            <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: 40 }} onPress={this.addEOSAccountName}>
               <View style={{ width: '100%', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 16 }}>
                 <FastImage
                   source={require('resources/images/add_green.png')}
                   style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }}
                 />
-                <Text style={{ fontSize: 15 }}>添加EOS账户</Text>
+                <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>添加EOS账户</Text>
                 <View style={{ position: 'absolute', height: 0.5, top: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
                 <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
               </View>

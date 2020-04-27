@@ -13,6 +13,7 @@ import { accountByIdSelector, managingAccountVotedProducersSelector } from 'sele
 import { managingWalletSelector } from 'selectors/wallet'
 import Modal from 'react-native-modal'
 import Dialog from 'components/Dialog'
+import { DarkModeContext } from 'utils/darkMode'
 import styles from './styles'
 
 const { Section, Item } = TableView
@@ -74,6 +75,8 @@ export default class ManageWallet extends Component {
       }
     }
   }
+
+  static contextType = DarkModeContext
 
   constructor(props) {
     super(props);
@@ -596,6 +599,8 @@ export default class ManageWallet extends Component {
     const editActions = []
     const accountActions = []
     const exportActions = []
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
 
     if (chain === 'EOS') {
       editActions.push(
@@ -605,6 +610,7 @@ export default class ManageWallet extends Component {
           actionType="vote"
           text={intl.formatMessage({ id: 'manage_wallet_title_eos_voting' })}
           onPress={this.vote}
+          isDarkMode={isDarkMode}
           arrow
         />
       )
@@ -616,6 +622,7 @@ export default class ManageWallet extends Component {
           actionType="resources"
           text={intl.formatMessage({ id: 'manage_wallet_title_eos_resource' })}
           onPress={this.manageResource}
+          isDarkMode={isDarkMode}
           arrow
         />
       )
@@ -629,6 +636,7 @@ export default class ManageWallet extends Component {
             actionType="switchAccount"
             text={intl.formatMessage({ id: 'manage_wallet_title_eos_switch_account' })}
             onPress={this.switchEOSAccount}
+            isDarkMode={isDarkMode}
             arrow
           />
         )
@@ -640,6 +648,7 @@ export default class ManageWallet extends Component {
             actionType="createAccount"
             onPress={this.createNewAccount}
             text={intl.formatMessage({ id: 'manage_wallet_title_eos_create_account' })}
+            isDarkMode={isDarkMode}
             arrow
           />
         )
@@ -655,6 +664,7 @@ export default class ManageWallet extends Component {
             actionType="address"
             text={intl.formatMessage({ id: 'manage_wallet_title_wallet_address' })}
             onPress={this.switchBTCAddress}
+            isDarkMode={isDarkMode}
             arrow
           />
         )
@@ -668,6 +678,7 @@ export default class ManageWallet extends Component {
           text={intl.formatMessage({ id: 'manage_wallet_title_switch_address_type' })}
           detail={segWit === 'P2WPKH' ? intl.formatMessage({ id: 'manage_wallet_type_btc_address_segwit' }) : intl.formatMessage({ id: 'manage_wallet_type_btc_address_common' })}
           onPress={this.switchBTCAddressType.bind(this, id)}
+          isDarkMode={isDarkMode}
           arrow
         />
       )
@@ -681,6 +692,7 @@ export default class ManageWallet extends Component {
           actionType="mnemonic"
           text={intl.formatMessage({ id: 'manage_wallet_title_backup_mnemonics' })}
           onPress={this.exportMnemonics.bind(this, id)}
+          isDarkMode={isDarkMode}
           arrow
         />
       )
@@ -694,6 +706,7 @@ export default class ManageWallet extends Component {
           actionType="privateKey"
           text={intl.formatMessage({ id: 'manage_wallet_title_export_private_key' })}
           onPress={this.exportPrivateKey.bind(this, id, symbol)}
+          isDarkMode={isDarkMode}
           arrow
         />
       )
@@ -707,42 +720,46 @@ export default class ManageWallet extends Component {
           actionType="keystore"
           text={intl.formatMessage({ id: 'manage_wallet_title_export_keysotre' })}
           onPress={this.exportETHKeystore.bind(this, id)}
+          isDarkMode={isDarkMode}
           arrow
         />
       )
     }
 
     if (chain === 'CHAINX') {
-      editActions.push(
-        <Item
-          reactModuleForCell="WalletManagementTableViewCell"
-          key="chainxDeposit"
-          actionType="chainxDeposit"
-          text={intl.formatMessage({ id: 'manage_wallet_title_chainx_deposit_mine' })}
-          onPress={this.chainxDeposit.bind(this, id)}
-          arrow
-        />
-      )
-      editActions.push(
-        <Item
-          reactModuleForCell="WalletManagementTableViewCell"
-          key="chainxVoting"
-          actionType="chainxVoting"
-          text={intl.formatMessage({ id: 'manage_wallet_title_chainx_voting' })}
-          onPress={this.chainxVoting.bind(this, id)}
-          arrow
-        />
-      )
-      editActions.push(
-        <Item
-          reactModuleForCell="WalletManagementTableViewCell"
-          key="chainxWithdrawal"
-          actionType="chainxWithdrawal"
-          text={intl.formatMessage({ id: 'manage_wallet_title_chainx_withdraw' })}
-          onPress={this.chainxWithdrawal.bind(this, id)}
-          arrow
-        />
-      )
+      /* editActions.push(
+       *   <Item
+       *     reactModuleForCell="WalletManagementTableViewCell"
+       *     key="chainxDeposit"
+       *     actionType="chainxDeposit"
+       *     text={intl.formatMessage({ id: 'manage_wallet_title_chainx_deposit_mine' })}
+       *     onPress={this.chainxDeposit.bind(this, id)}
+       *     isDarkMode={isDarkMode}
+       *     arrow
+       *   />
+       * )
+       * editActions.push(
+       *   <Item
+       *     reactModuleForCell="WalletManagementTableViewCell"
+       *     key="chainxVoting"
+       *     actionType="chainxVoting"
+       *     text={intl.formatMessage({ id: 'manage_wallet_title_chainx_voting' })}
+       *     onPress={this.chainxVoting.bind(this, id)}
+       *     isDarkMode={isDarkMode}
+       *     arrow
+       *   />
+       * )
+       * editActions.push(
+       *   <Item
+       *     reactModuleForCell="WalletManagementTableViewCell"
+       *     key="chainxWithdrawal"
+       *     actionType="chainxWithdrawal"
+       *     text={intl.formatMessage({ id: 'manage_wallet_title_chainx_withdraw' })}
+       *     onPress={this.chainxWithdrawal.bind(this, id)}
+       *     isDarkMode={isDarkMode}
+       *     arrow
+       *   />
+       * ) */
       accountActions.push(
         <Item
           reactModuleForCell="WalletManagementTableViewCell"
@@ -750,6 +767,7 @@ export default class ManageWallet extends Component {
           actionType="chainxScan"
           text={intl.formatMessage({ id: 'manage_wallet_title_chainx_explorer' })}
           onPress={this.chainxToScan.bind(this, id)}
+          isDarkMode={isDarkMode}
           arrow
         />
       )
@@ -760,6 +778,7 @@ export default class ManageWallet extends Component {
           actionType="chainxStats"
           text={intl.formatMessage({ id: 'manage_wallet_title_chainx_stats' })}
           onPress={this.chainxToStats.bind(this, id)}
+          isDarkMode={isDarkMode}
           arrow
         />
       )
@@ -770,13 +789,14 @@ export default class ManageWallet extends Component {
           actionType="chainxTool"
           text="ChainXTool"
           onPress={this.chainxToChainXTool.bind(this, id)}
+          isDarkMode={isDarkMode}
           arrow
         />
       )
     }
 
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#F7F7F7' }}>
+      <SafeAreaView style={{ flex: 1 }}>
         <TableView
           style={{ flex: 1 }}
           tableViewStyle={TableView.Consts.Style.Grouped}
@@ -796,6 +816,7 @@ export default class ManageWallet extends Component {
               address={address}
               chain={chain}
               reactModuleForCell="WalletManagementTableViewCell"
+              isDarkMode={isDarkMode}
               componentId={this.props.componentId}
             />
           </Section>
@@ -814,6 +835,7 @@ export default class ManageWallet extends Component {
               key="delete"
               actionType="delete"
               text={intl.formatMessage({ id: 'manage_wallet_text_delete_wallet' })}
+              isDarkMode={isDarkMode}
               onPress={this.deleteWallet.bind(this, id, chain, address)}
               arrow
             />

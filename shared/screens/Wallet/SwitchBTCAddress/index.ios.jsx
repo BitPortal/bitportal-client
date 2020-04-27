@@ -10,6 +10,7 @@ import { managingWalletAddressSelector, managingWalletChildAddressSelector } fro
 import * as walletActions from 'actions/wallet'
 import * as accountActions from 'actions/account'
 import * as addressActions from 'actions/address'
+import { DarkModeContext } from 'utils/darkMode'
 
 const { Section, Item } = TableView
 
@@ -48,7 +49,7 @@ export default class SwitchBTCAddress extends Component {
       }
     }
   }
-
+  static contextType = DarkModeContext
   subscription = Navigation.events().bindComponent(this)
 
   selectBTCAddress = (address) => {
@@ -70,6 +71,8 @@ export default class SwitchBTCAddress extends Component {
   render() {
     const { wallet, addresses, statusBarHeight, childAddress } = this.props
     const address = childAddress || (wallet && wallet.address)
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
 
     if (!addresses) {
       return (
@@ -83,32 +86,33 @@ export default class SwitchBTCAddress extends Component {
     }
 
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-      <View style={{ flex: 1 }}>
-        <View style={{ width: '100%', padding: 16, borderColor: '#C8C7CC', borderBottomWidth: 0.5, backgroundColor: '#F0EFF5' }}>
-          <Text style={{ fontSize: 14, color: '#666666', lineHeight: 18 }}>你可以使用不同的子地址用于收款，以保护你的隐私。选中的子地址将会显示在收款界面。</Text>
+      <SafeAreaView style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : 'white' }}>
+        <View style={{ flex: 1 }}>
+          <View style={{ width: '100%', padding: 16, borderColor: '#C8C7CC', borderBottomWidth: 0.5, backgroundColor: isDarkMode ? 'black' : '#F0EFF5' }}>
+            <Text style={{ fontSize: 14, color: isDarkMode ? 'white': '#666666', lineHeight: 18 }}>你可以使用不同的子地址用于收款，以保护你的隐私。选中的子地址将会显示在收款界面。</Text>
+          </View>
+          <TableView
+            style={{ flex: 1, backgroundColor: 'white' }}
+            tableViewStyle={TableView.Consts.Style.Default}
+            reactModuleForCell="SwitchBTCAddressTableViewCell"
+          >
+            <Section>
+              {addresses.map(item =>
+                <Item
+                  height={60}
+                  key={item.address}
+                  onPress={this.selectBTCAddress.bind(this, item.address)}
+                  selectionStyle={item.address === address ? TableView.Consts.CellSelectionStyle.None : TableView.Consts.CellSelectionStyle.Default}
+                  accessoryType={item.address === address ? TableView.Consts.AccessoryType.Checkmark : TableView.Consts.AccessoryType.None}
+                  address={item.address}
+                  change={item.change}
+                  index={item.index}
+                  isDarkMode={isDarkMode}
+                />
+              )}
+            </Section>
+          </TableView>
         </View>
-        <TableView
-          style={{ flex: 1, backgroundColor: 'white' }}
-          tableViewStyle={TableView.Consts.Style.Default}
-          reactModuleForCell="SwitchBTCAddressTableViewCell"
-        >
-          <Section>
-            {addresses.map(item =>
-              <Item
-                height={60}
-                key={item.address}
-                onPress={this.selectBTCAddress.bind(this, item.address)}
-                selectionStyle={item.address === address ? TableView.Consts.CellSelectionStyle.None : TableView.Consts.CellSelectionStyle.Default}
-                accessoryType={item.address === address ? TableView.Consts.AccessoryType.Checkmark : TableView.Consts.AccessoryType.None}
-                address={item.address}
-                change={item.change}
-                index={item.index}
-              />
-             )}
-          </Section>
-        </TableView>
-      </View>
       </SafeAreaView>
     )
   }

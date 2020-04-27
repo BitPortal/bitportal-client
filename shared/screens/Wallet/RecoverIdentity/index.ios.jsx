@@ -19,11 +19,11 @@ import { Navigation } from 'components/Navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Field, reduxForm, getFormSyncWarnings, getFormValues } from 'redux-form'
 import * as identityActions from 'actions/identity'
+import { DarkModeContext } from 'utils/darkMode'
 
 const styles = EStyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: 'white'
+    flex: 1
   },
   button: {
     width: '100%',
@@ -60,12 +60,13 @@ const TextField = ({
   secureTextEntry,
   separator,
   change,
-  showClearButton
+  showClearButton,
+  isDarkMode
 }) => (
   <View style={{ width: '100%', alignItems: 'center', height: 56, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-    <Text style={{ fontSize: 17, fontWeight: 'bold', marginRight: 16, width: 70 }}>{label}</Text>
+    <Text style={{ fontSize: 17, fontWeight: 'bold', marginRight: 16, width: 70, color: isDarkMode ? 'white' : 'black' }}>{label}</Text>
     <TextInput
-      style={styles.textFiled}
+      style={[styles.textFiled, { color: isDarkMode ? 'white' : 'black' }]}
       autoCorrect={false}
       autoCapitalize="none"
       placeholder={placeholder}
@@ -92,11 +93,13 @@ const TextAreaField = ({
   placeholder,
   fieldName,
   change,
-  showClearButton
+  showClearButton,
+  isDarkMode
 }) => (
   <View style={{ width: '100%', alignItems: 'center', height: 100, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
     <TextInput
-      style={styles.textAreaFiled}
+      style={[styles.textAreaFiled, { color: isDarkMode ? 'white' : 'black' }]}
+      placeholderTextColor={isDarkMode ? 'white' : 'black'}
       multiline={true}
       autoCorrect={false}
       autoCapitalize="none"
@@ -184,15 +187,11 @@ export default class RecoverIdentity extends Component {
         largeTitle: {
           visible: false
         },
-        noBorder: true,
-        background: {
-          color: 'white',
-          translucent: true
-        }
+        noBorder: true
       }
     }
   }
-
+  static contextType = DarkModeContext
   constructor(props) {
     super(props);
     Navigation.events().bindComponent(this); // <== Will be automatically unregistered when unmounted
@@ -315,16 +314,18 @@ export default class RecoverIdentity extends Component {
     const mnemonics = formValues && formValues.mnemonics
     const password = formValues && formValues.password
     const passwordHint = formValues && formValues.passwordHint
+    const isDarkMode = this.context === 'dark'
+    console.log('isDarkMode', isDarkMode)
 
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={[styles.container, { color: isDarkMode ? 'black' : 'white' }]}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
           <View style={{ flex: 1, alignItems: 'center' }}>
             <View style={{ marginBottom: 14 }}>
-              <Text style={{ fontSize: 26, fontWeight: 'bold' }}>{intl.formatMessage({ id: 'identity_recovery_title' })}</Text>
+              <Text style={{ fontSize: 26, fontWeight: 'bold', color: isDarkMode ? 'white' : 'black' }}>{intl.formatMessage({ id: 'identity_recovery_title' })}</Text>
               {loading
               && (
                 <View style={{ height: '100%', alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 0, right: -25 }}>
@@ -334,7 +335,7 @@ export default class RecoverIdentity extends Component {
               }
             </View>
             <View style={{ marginBottom: 16, height: 22 }}>
-              {!loading && <Text style={{ fontSize: 17, paddingLeft: 32, paddingRight: 32, lineHeight: 22, textAlign: 'center' }}>
+              {!loading && <Text style={{ fontSize: 17, paddingLeft: 32, paddingRight: 32, lineHeight: 22, textAlign: 'center', color: isDarkMode ? 'white' : 'black' }}>
                 {intl.formatMessage({ id: 'identity_recovery_sub_title' })}
               </Text>}
             </View>
@@ -346,6 +347,7 @@ export default class RecoverIdentity extends Component {
                 component={TextAreaField}
                 showClearButton={!!mnemonics && mnemonics.length > 0}
                 change={change}
+                isDarkMode={isDarkMode}
               />
               <TouchableHighlight underlayColor="rgba(0,0,0,0)" onPress={this.scan.bind(this, 'mnemonics')} style={{ width: 30, height: 30, position: 'absolute', right: 16, top: 4 }} activeOpacity={0.42}>
                 <FastImage
@@ -367,6 +369,7 @@ export default class RecoverIdentity extends Component {
                 showClearButton={!!password && password.length > 0}
                 change={change}
                 secureTextEntry
+                isDarkMode={isDarkMode}
                 separator={true}
               />
               <Field
@@ -377,6 +380,7 @@ export default class RecoverIdentity extends Component {
                 component={TextField}
                 showClearButton={!!passwordHint && passwordHint.length > 0}
                 change={change}
+                isDarkMode={isDarkMode}
                 separator={false}
               />
             </View>
