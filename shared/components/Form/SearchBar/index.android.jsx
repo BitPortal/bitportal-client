@@ -36,7 +36,7 @@ export default class SearchBar extends Component {
   }
 
   render() {
-    const { hasSearchResult } = this.props
+    const { hasSearchResult, placeholder, onSubmit } = this.props
 
     return (
       <View style={{ width: Dimensions.get('window').width, height: hasSearchResult ? 56 : 64, padding: 8, paddingBottom: hasSearchResult ? 0 : 8 }}>
@@ -57,9 +57,10 @@ export default class SearchBar extends Component {
             autoFocus={true}
             autoCorrect={false}
             autoCapitalize="none"
-            placeholder="搜索"
+            placeholder={placeholder || '搜索'}
             onChangeText={this.searchBarUpdated}
             keyboardType="default"
+            onSubmitEditing={onSubmit ? onSubmit : () => {}}
           />
           {!!this.state.value && <TouchableNativeFeedback onPress={this.searchBarCleared} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', true)} useForeground={true}>
             <View style={{ width: 30, height: 30, borderRadius: 15, position: 'absolute', right: 13, top: 9, alignItems: 'center', justifyContent: 'center' }}>

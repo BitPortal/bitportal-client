@@ -177,7 +177,7 @@ export default class Root extends Component {
 
   componentDidMount() {
     SplashScreen.hide()
-    MaterialDialog.show('Awesome', MaterialDialog.SHORT)
+    /* MaterialDialog.show('Awesome', MaterialDialog.SHORT) */
   }
 
   componentDidAppear() {
@@ -225,6 +225,12 @@ export default class Root extends Component {
           icon: require('resources/images/list_android.png')
         }
       ]
+      /* rightButtons = [
+       *   {
+       *     id: 'search',
+       *     icon: require('resources/images/search_android.png')
+       *   }
+       * ] */
     } else if (index == 1) {
       rightButtons = [
         {
@@ -233,7 +239,12 @@ export default class Root extends Component {
         }
       ]
     } else if (index == 2) {
-
+      rightButtons = [
+        {
+          id: 'search',
+          icon: require('resources/images/search_android.png')
+        }
+      ]
     }
 
     Navigation.mergeOptions(this.props.componentId, {

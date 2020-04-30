@@ -84,6 +84,9 @@ export default class SelectChainType extends Component {
       case 'eos':
         this.toImportEOSWallet()
         return
+      case 'chainx':
+        this.toImportChainxWallet()
+        return
       default:
     }
   }

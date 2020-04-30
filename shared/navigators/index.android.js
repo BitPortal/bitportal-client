@@ -22,7 +22,9 @@ import CreateIdentity from 'screens/Wallet/CreateIdentity'
 import ImportBTCWallet from 'screens/Wallet/ImportBTCWallet'
 import ImportETHWallet from 'screens/Wallet/ImportETHWallet'
 import ImportEOSWallet from 'screens/Wallet/ImportEOSWallet'
+import ImportChainxWallet from 'screens/Wallet/ImportChainxWallet'
 import WalletList from 'screens/Wallet/WalletList'
+import SelectBridgeWallet from 'screens/Wallet/SelectBridgeWallet'
 import SelectChainType from 'screens/Wallet/SelectChainType'
 import ManageWallet from 'screens/Wallet/ManageWallet'
 import SwitchBTCAddress from 'screens/Wallet/SwitchBTCAddress'
@@ -31,6 +33,7 @@ import MyIdentity from 'screens/Wallet/MyIdentity'
 import ExportBTCPrivateKey from 'screens/Wallet/ExportBTCPrivateKey'
 import ExportETHPrivateKey from 'screens/Wallet/ExportETHPrivateKey'
 import ExportETHKeystore from 'screens/Wallet/ExportETHKeystore'
+import ExportPCXPrivateKey from 'screens/Wallet/ExportPCXPrivateKey'
 import ExportEOSPrivateKey from 'screens/Wallet/ExportEOSPrivateKey'
 import SelectEOSAccount from 'screens/Wallet/SelectEOSAccount'
 import ManageEOSResource from 'screens/Wallet/ManageEOSResource'
@@ -44,6 +47,7 @@ import AddAssets from 'screens/Wallet/AddAssets'
 import TransferAsset from 'screens/Wallet/TransferAsset'
 import Camera from 'screens/Camera'
 import WebView from 'screens/WebView'
+import WebViewBridge from 'screens/WebViewBridge'
 
 import messages from 'resources/messages'
 
@@ -57,6 +61,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.ImportBTCWallet', () => ImportBTCWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ImportETHWallet', () => ImportETHWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ImportEOSWallet', () => ImportEOSWallet, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ImportChainxWallet', () => ImportChainxWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Profile', () => Profile, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Settings', () => Settings, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.LanguageSetting', () => LanguageSetting, Provider, store)
@@ -68,6 +73,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.RecoverIdentity', () => RecoverIdentity, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.CreateIdentity', () => CreateIdentity, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.WalletList', () => WalletList, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.SelectBridgeWallet', () => SelectBridgeWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.SelectChainType', () => SelectChainType, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.SwitchBTCAddress', () => SwitchBTCAddress, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.BackupIdentity', () => BackupIdentity, Provider, store)
@@ -76,6 +82,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.ExportETHPrivateKey', () => ExportETHPrivateKey, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ExportETHKeystore', () => ExportETHKeystore, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ExportEOSPrivateKey', () => ExportEOSPrivateKey, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ExportPCXPrivateKey', () => ExportPCXPrivateKey, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.SelectEOSAccount', () => SelectEOSAccount, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ManageEOSResource', () => ManageEOSResource, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.CreateEOSAccount', () => CreateEOSAccount, Provider, store)
@@ -88,6 +95,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.TransferAsset', () => TransferAsset, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Camera', () => Camera, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.WebView', () => WebView, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.WebViewBridge', () => WebViewBridge, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Discovery', () => Discovery, Provider, store)
 }
 

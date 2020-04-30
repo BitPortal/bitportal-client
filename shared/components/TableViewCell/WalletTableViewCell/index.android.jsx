@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TouchableHighlight, NativeModules, Image } from 'react-native'
+import { View, Text, TouchableHighlight, NativeModules, Image, TouchableNativeFeedback } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { walletIcons } from 'resources/images'
 
@@ -61,8 +61,13 @@ const WalletTableViewCell = (props) => {
   }
 
   return (
-    <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16 }}>
-      <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+    <TouchableNativeFeedback
+      style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16 }}
+      onPress={props.onPress}
+      background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.3)', false)}
+      useForeground={true}
+    >
+      <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 10 }}>
         <FastImage
           source={walletIcons[props.data.chain.toLowerCase()]}
           style={{
@@ -79,8 +84,8 @@ const WalletTableViewCell = (props) => {
           <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
             <Text style={{ fontSize: 17, color: 'black' }}>{props.data.name}</Text>
             {props.data.isSelected && <Image
-              source={require('resources/images/selected.png')}
-              style={{ width: 16, height: 16, marginLeft: 5 }}
+                                        source={require('resources/images/selected.png')}
+                                        style={{ width: 16, height: 16, marginLeft: 5 }}
             />}
           </View>
           <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
@@ -91,8 +96,9 @@ const WalletTableViewCell = (props) => {
             <Text style={{ fontSize: 14, color: '#666666' }}>{this.formatAddress(props.data.address)}</Text>
           </View>
         </View>
+        {props.data.isActive && <Image source={require('resources/images/circle_check_android.png')} style={{ width: 24, height: 24, position: 'absolute', right: 10 }} />}
       </View>
-    </View>
+    </TouchableNativeFeedback>
   )
 }
 

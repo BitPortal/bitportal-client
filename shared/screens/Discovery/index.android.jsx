@@ -4,6 +4,8 @@ import { bindActionCreators } from 'utils/redux'
 import { Navigation } from 'components/Navigation'
 import { Alert, View, Text, Dimensions, Image, FlatList, ScrollView, TouchableNativeFeedback } from 'react-native'
 import * as dappActions from 'actions/dapp'
+import * as walletActions from 'actions/wallet'
+import * as uiActions from 'actions/ui'
 import {
   dappSelector,
   newDappSelector,
@@ -16,8 +18,15 @@ import {
 import ViewPager from '@react-native-community/viewpager'
 import { loadScatter, loadScatterSync, loadMetaMask, loadMetaMaskSync } from 'utils/inject'
 import LinearGradient from 'react-native-linear-gradient'
-import { activeWalletSelector } from 'selectors/wallet'
+import { activeWalletSelector, bridgeWalletSelector, identityWalletSelector, importedWalletSelector } from 'selectors/wallet'
 import FastImage from 'react-native-fast-image'
+import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview'
+import { transfromUrlText } from 'utils'
+import SearchBar from 'components/Form/SearchBar'
+import Modal from 'react-native-modal'
+import urlParse from 'url-parse'
+
+const dataProvider = new DataProvider((r1, r2) => r1.name !== r2.name || r1.price_usd !== r2.price_usd || r1.percent_change_24h !== r2.percent_change_24h)
 
 @connect(
   state => ({
@@ -29,10 +38,16 @@ import FastImage from 'react-native-fast-image'
     featured: dappRecommendSelector(state),
     bookmarked: dappBookmarkSelector(state),
     wallet: activeWalletSelector(state),
+    bridgeWallet: bridgeWalletSelector(state),
+    identityWallet: identityWalletSelector(state),
+    importedWallet: importedWalletSelector(state),
+    ui: state.ui
   }),
   dispatch => ({
     actions: bindActionCreators({
-      ...dappActions
+      ...dappActions,
+      ...walletActions,
+      ...uiActions
     }, dispatch)
   })
 )
@@ -50,6 +65,31 @@ export default class Discovery extends Component {
         rightImage: require('resources/images/ETHWallet.png')
       }
     }
+  }
+
+  layoutProvider = new LayoutProvider(
+    index => {
+      return 0
+    },
+    (type, dim) => {
+      dim.width = Dimensions.get('window').width
+      dim.height = 48
+    }
+  )
+
+  state = {
+    dataProvider: dataProvider.cloneWithRows([
+      { title: 'MakerDAO', url: 'https://cdp.makerdao.com', chain: 'ETHEREUM' },
+      { title: '0x Protocol', url: 'https://0x.org/portal/account', chain: 'ETHEREUM' },
+      { title: 'KyberSwap', url: 'https://kyberswap.com/swap/eth_knc', chain: 'ETHEREUM' },
+      { title: 'KyberSwap', url: 'https://kyberswap.com/swap/eth_knc', chain: 'ETHEREUM' },
+      { title: 'Crypto Kitties', url: 'http://www.cryptokitties.co', chain: 'ETHEREUM' },
+      { title: 'PRA Candy Box', url: 'https://chain.pro/candybox', chain: 'EOS' },
+      { title: 'Newdex', url: 'https://newdex.340wan.com', chain: 'EOS' },
+      { title: 'WhaleEx', url: 'https://w.whaleex.com.cn/wallet', chain: 'EOS' },
+      { title: 'EOSX', url: 'https://www.myeoskit.com', chain: 'EOS' }
+    ]),
+    searchUrl: ''
   }
 
   onItemNotification = (data) => {
@@ -156,21 +196,94 @@ export default class Discovery extends Component {
     this.props.actions.getDappRecommend.requested()
   }
 
+  rowRenderer = (type, data) => {
+    return (
+      <TouchableNativeFeedback onPress={this.toDapp.bind(this, { title: data.title, id: data.title, url: data.url, chain: data.chain })} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
+        <View style={{ width: '100%', height: 48, paddingLeft: 16, paddingRight: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+            <Text style={{ color: '#673AB7' }}>{data.title}</Text>
+          </View>
+        </View>
+      </TouchableNativeFeedback>
+    )
+  }
+
+  selectWallet = (chain) => {
+    const selectedIdentityWallet = this.props.identityWallet.filter(wallet => wallet.address && wallet.chain === chain)
+    const selectedImportedWallet = this.props.importedWallet.filter(wallet => wallet.address && wallet.chain === chain)
+    return selectedIdentityWallet[0] || selectedImportedWallet[0]
+  }
+
   toDapp = (data) => {
-    const { url, id, display_name } = data
-    const inject = loadScatterSync()
-    // const inject = loadMetaMaskSync()
+    const { url, id, title, chain } = data
+
+    if (!this.props.bridgeWallet || this.props.bridgeWallet.chain !== chain) {
+      const selectedWallet = this.selectWallet(chain)
+
+      if (selectedWallet) {
+        this.props.actions.setBridgeWallet(selectedWallet.id)
+        this.props.actions.setBridgeChain(selectedWallet.chain)
+      }
+    }
 
     Navigation.showModal({
       stack: {
         children: [{
           component: {
-            name: 'BitPortal.WebView',
-            passProps: { url, inject, id },
+            name: 'BitPortal.WebViewBridge',
+            passProps: { url, id, chain },
             options: {
               topBar: {
                 title: {
-                  text: display_name.zh
+                  text: title
+                },
+                leftButtons: [
+                  {
+                    id: 'cancel',
+                    icon: require('resources/images/cancel_android.png')
+                  }
+                ]
+              }
+            }
+          }
+        }]
+      }
+    })
+  }
+
+  parseUrlTitle = (data) => {
+    try {
+      if (data) {
+        const url = urlParse(data)
+        console.log('onSubmit url', url)
+        const hostname = url.hostname
+        return hostname.indexOf('www.') === 0 ? hostname.slice(4) : hostname
+      }
+    } catch(error) {
+      return null
+    }
+
+    return null
+  }
+
+  onSubmit = (event) => {
+    event.persist()
+    const text = event.nativeEvent.text
+    const url = transfromUrlText(text)
+    const title = this.parseUrlTitle(url)
+
+    this.onBackPress()
+
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.WebViewBridge',
+            passProps: { url, title },
+            options: {
+              topBar: {
+                title: {
+                  text: title
                 },
                 leftButtons: [
                   {
@@ -206,10 +319,56 @@ export default class Discovery extends Component {
     )
   }
 
+  onBackPress = () => {
+    this.setState({ searchUrl: '' })
+    this.props.actions.hideSearchBar()
+  }
+
+  searchBarUpdated = ({ text }) => {
+    this.setState({ searchUrl: text })
+  }
+
+  searchBarCleared = () => {
+    this.setState({ searchUrl: '' })
+  }
+
   render() {
+    const { ui } = this.props
+
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
-	<Text>Hello</Text>
+        <Modal
+          isVisible={ui.searchBarEnabled}
+          backdropOpacity={0.4}
+          useNativeDriver
+          animationIn="fadeIn"
+          animationInTiming={100}
+          backdropTransitionInTiming={100}
+          animationOut="fadeOut"
+          animationOutTiming={100}
+          backdropTransitionOutTiming={100}
+          style={{ margin: 0 }}
+          onBackdropPress={this.onBackPress}
+        >
+          <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
+            <SearchBar
+              onBackPress={this.onBackPress}
+              searchBarUpdated={this.searchBarUpdated}
+              searchBarCleared={this.searchBarCleared}
+              placeholder="输入Dapp Url"
+              onSubmit={this.onSubmit}
+            />
+          </View>
+        </Modal>
+        <View style={{ paddingLeft: 16, width: '100%', height: 48, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Text style={{ fontSize: 15, fontWeight: '500' }}>热门应用</Text>
+        </View>
+        <RecyclerListView
+          style={{ flex: 1, backgroundColor: 'white' }}
+          layoutProvider={this.layoutProvider}
+          dataProvider={this.state.dataProvider}
+          rowRenderer={this.rowRenderer}
+        />
       </View>
     )
   }

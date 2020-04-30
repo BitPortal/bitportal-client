@@ -7,9 +7,11 @@ const setupDappAutoReload = require('./auto-reload.js')
 const MetamaskInpageProvider = require('./metamask-inpage-provider')
 const createStandardProvider = require('./createStandardProvider').default
 
-window.ReactNativeWebView = {
-  postMessage: function(data) {
-    window.webkit.messageHandlers.ReactNativeWebView.postMessage(String(data))
+if (!window.ReactNativeWebView || !window.ReactNativeWebView.postMessage) {
+  window.ReactNativeWebView = {
+    postMessage: function(data) {
+      window.webkit.messageHandlers.ReactNativeWebView.postMessage(String(data))
+    }
   }
 }
 

@@ -703,17 +703,17 @@ export default class ManageWallet extends Component {
     }
 
     if (chain === 'CHAINX') {
-      editActions.push({
-        key: 'chainxDeposit',
-        actionType: 'chainxDeposit',
-        text: this.props.intl.formatMessage({ id: 'manage_wallet_title_chainx_deposit_mine' })
-      })
+      /* editActions.push({
+       *   key: 'chainxDeposit',
+       *   actionType: 'chainxDeposit',
+       *   text: this.props.intl.formatMessage({ id: 'manage_wallet_title_chainx_deposit_mine' })
+       * })
 
-      editActions.push({
-        key: 'chainxVoting',
-        actionType: 'chainxVoting',
-        text: this.props.intl.formatMessage({ id: 'manage_wallet_title_chainx_voting' })
-      })
+       * editActions.push({
+       *   key: 'chainxVoting',
+       *   actionType: 'chainxVoting',
+       *   text: this.props.intl.formatMessage({ id: 'manage_wallet_title_chainx_voting' })
+       * }) */
 
       /* editActions.push({
        *   key: 'chainxWithdrawal',
