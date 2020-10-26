@@ -1222,10 +1222,10 @@ export default class WebView extends Component {
     console.log('isDarkMode', isDarkMode)
 
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1}}>
         {hasAddressBar && (
           <TGAddressBar
-            style={{ height: 50, width: '100%' }}
+            style={{ height: 50, width: '100%'}}
             value={this.state.url}
             title={this.parseUrlTitle(this.state.url)}
             isSecure={this.isHttps(this.state.url)}

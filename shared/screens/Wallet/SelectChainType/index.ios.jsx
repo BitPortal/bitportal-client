@@ -49,21 +49,21 @@ export default class SelectChainType extends Component {
     })
   }
 
-  toImportEOSWallet = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.ImportEOSWallet'
-      }
-    })
-  }
-
-  toImportChainxWallet = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.ImportChainxWallet'
-      }
-    })
-  }
+  // toImportEOSWallet = () => {
+  //   Navigation.push(this.props.componentId, {
+  //     component: {
+  //       name: 'BitPortal.ImportEOSWallet'
+  //     }
+  //   })
+  // }
+  //
+  // toImportChainxWallet = () => {
+  //   Navigation.push(this.props.componentId, {
+  //     component: {
+  //       name: 'BitPortal.ImportChainxWallet'
+  //     }
+  //   })
+  // }
 
 
   render() {
@@ -87,18 +87,18 @@ export default class SelectChainType extends Component {
             reactModuleForCell="ChainTypeTableViewCell"
             onPress={this.toImportETHWallet}
           />
-          <Item
-            height={66}
-            chain="eos"
-            reactModuleForCell="ChainTypeTableViewCell"
-            onPress={this.toImportEOSWallet}
-          />
-          <Item
-            height={66}
-            chain="chainx"
-            reactModuleForCell="ChainTypeTableViewCell"
-            onPress={this.toImportChainxWallet}
-          />
+          {/*<Item*/}
+          {/*  height={66}*/}
+          {/*  chain="eos"*/}
+          {/*  reactModuleForCell="ChainTypeTableViewCell"*/}
+          {/*  onPress={this.toImportEOSWallet}*/}
+          {/*/>*/}
+          {/*<Item*/}
+          {/*  height={66}*/}
+          {/*  chain="chainx"*/}
+          {/*  reactModuleForCell="ChainTypeTableViewCell"*/}
+          {/*  onPress={this.toImportChainxWallet}*/}
+          {/*/>*/}
         </Section>
       </TableView>
     )

@@ -168,7 +168,10 @@ export default class Root extends Component {
       stack: {
         children: [{
           component: {
-            name: 'BitPortal.WalletList'
+            name: 'BitPortal.WalletList',
+            passProps: {
+              showType:'modal',
+            }
           }
         }]
       }
