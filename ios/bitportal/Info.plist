@@ -50,12 +50,16 @@
 	</dict>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>This is used to scan QR Code from albums</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>bluetooth</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>This is used for security resesons </string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>This is only used under user's request</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This is used to scan QR code to transfer or redirect to another address</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This is only used to protect the safety of the user's info</string>
 	<key>NSMotionUsageDescription</key>

@@ -21,7 +21,7 @@ import java.util.List;
  * Default implementation of {@link ReactNativeHost} that includes {@link NavigationPackage}
  * and user-defined additional packages.
  */
-public class NavigationReactNativeHost extends ReactNativeHost implements BundleDownloadListenerProvider {
+public class NavigationReactNativeHost extends ReactNativeHost {
 
     private final boolean isDebug;
     private final List<ReactPackage> additionalReactPackages;
@@ -46,10 +46,10 @@ public class NavigationReactNativeHost extends ReactNativeHost implements Bundle
         this.additionalReactPackages = additionalReactPackages;
     }
 
-    @Override
-    public void setBundleLoaderListener(NavigationDevBundleDownloadListener listener) {
-        bundleListener = listener;
-    }
+//    @Override
+//    public void setBundleLoaderListener(NavigationDevBundleDownloadListener listener) {
+//        bundleListener = listener;
+//    }
 
     @Override
     public boolean getUseDeveloperSupport() {

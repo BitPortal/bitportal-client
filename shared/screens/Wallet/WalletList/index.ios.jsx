@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { injectIntl } from 'react-intl'
+import { injectIntl} from 'react-intl'
 import { View, ActionSheetIOS } from 'react-native'
 import { Navigation } from 'components/Navigation'
 import TableView from 'components/TableView'
@@ -285,7 +285,9 @@ export default class WalletList extends Component {
               height={44}
               onPress={this.toSelectChainType}
               type="add"
-              text={intl.formatMessage({ id: 'wallet_list_text_import_wallet' })}
+              text={
+                t(this,"wallet_list_text_import_wallet")
+              }
             />
           </Section>
         </TableView>
