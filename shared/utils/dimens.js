@@ -9,7 +9,7 @@ export const isIphoneX = () => {
   if (Platform.OS === 'ios') {
     return !Platform.isPad && !Platform.isTVOS && (dimen.height === 812 || dimen.width === 812)
   } else {
-    return _.findIndex(androidX, o => (DeviceInfo.getUserAgent().indexOf(o) !== -1)) !== -1
+    return _.findIndex(androidX, o => (DeviceInfo.getUserAgentSync().indexOf(o) !== -1)) !== -1
   }
 }
 

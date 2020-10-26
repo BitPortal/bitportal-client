@@ -35,6 +35,7 @@ import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.reactnativecommunity.viewpager.RNCViewPagerPackage;
 import com.reactnativecommunity.slider.ReactSliderPackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
+import com.bitportal.locales.LocalesPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -92,7 +93,8 @@ public class MainApplication extends NavigationApplication {
 	     new RNCViewPagerPackage(),
 	     new ReactSliderPackage(),
 	     new RNCWebViewPackage(),
-             new MaterialDialogPackage()
+        new MaterialDialogPackage(),
+        new LocalesPackage()
 	     );
     }
 

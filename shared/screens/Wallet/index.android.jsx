@@ -5,7 +5,7 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 import { View, Text, Clipboard, ActivityIndicator, TouchableHighlight, Dimensions, Image, ScrollView, RefreshControl, TouchableNativeFeedback, TouchableWithoutFeedback } from 'react-native'
 import { Navigation } from 'components/Navigation'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
-import SplashScreen from 'react-native-splash-  '
+import SplashScreen from 'react-native-splash-screen'
 import Modal from 'react-native-modal'
 import KeyboardManager from 'react-native-keyboard-manager'
 import * as walletActions from 'actions/wallet'
@@ -606,7 +606,7 @@ export default class Wallet extends Component {
                         </View>
                       </View>}
                      {wallet.chain !== 'EOS' && <View style={{ position: 'absolute', right: 44, left: 12, bottom: 12, flex: 1, alignItems: 'flex-end', justifyContent: 'center', flexDirection: 'row' }}>
-                        <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                       <View style={{ flex: 1, alignItems: 'flex-end' }}>
                           <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                             <Text style={{ color: 'white', fontSize: 20, marginRight: 2, marginBottom: 1, marginTop: 2 }}>{currency.sign}</Text>
                             <Text style={{ color: 'white', fontSize: 26 }}>{`${totalAsset.split('.')[0]}.`}</Text>
@@ -617,7 +617,7 @@ export default class Wallet extends Component {
                      </View>}
                    </View>
                  </View>
-               )
+              )
              })}
           </ViewPager>
         </View>

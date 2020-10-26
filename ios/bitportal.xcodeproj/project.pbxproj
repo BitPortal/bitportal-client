@@ -310,6 +310,7 @@
 		3C4507934177471B93375682 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE5CE8E4DC4D17BDEAF27C /* libRNRandomBytes.a */; };
 		4077FA79AD0344B59132A336 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEC2D3945DC40A5BA3B3E50 /* CoreTelephony.framework */; };
 		4D3E192C76DB455FB2A83058 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F6FFFE3A1A14B14B05FDE01 /* libz.tbd */; };
+		537BD78125466E3600C20953 /* LocalesInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 537BD78025466E3600C20953 /* LocalesInterface.m */; };
 		5B7D2F305FC14BB6A544A703 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 073CDA8615FB450896768BDD /* Security.framework */; };
 		5DEEC10184F44D1693BAABC2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CAF6A9DF72B40DF845AC359 /* CoreGraphics.framework */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
@@ -832,6 +833,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 3D3CD9321DE5FBEE00167DC4;
 			remoteInfo = "cxxreact-tvOS";
+		};
+		537BD67C2542D8D600C20953 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C02B79A5AF294526A859B506 /* ReactNativeConfig.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3DF7F6AC203AA09B00D0EAB7;
+			remoteInfo = "ReactNativeConfig-tvOS";
 		};
 		5E9157321DD0AC6500FF2AA8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1458,6 +1466,8 @@
 		459B006740E5446CA1BEC977 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		47CDB62F8CE244FFAF5141FB /* libRNCamera.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCamera.a; sourceTree = "<group>"; };
 		4CEC2D3945DC40A5BA3B3E50 /* CoreTelephony.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		537BD77F25466E3600C20953 /* LocalesInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalesInterface.h; sourceTree = "<group>"; };
+		537BD78025466E3600C20953 /* LocalesInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalesInterface.m; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		5F6EC61CB1F246A29B1C589D /* libSplashScreen.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSplashScreen.a; sourceTree = "<group>"; };
 		63C330A6E7DB472694F6CC51 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
@@ -1641,6 +1651,7 @@
 		13B07FAE1A68108700A75B9A /* bitportal */ = {
 			isa = PBXGroup;
 			children = (
+				537BD77E25466E3600C20953 /* locales */,
 				34A66A4A233F1306003C2C2B /* TableViewController.swift */,
 				34A66A96233F1306003C2C2B /* ViewController.swift */,
 				34C81873233B4C0A0090AD79 /* SPStorkController */,
@@ -2097,6 +2108,7 @@
 			isa = PBXGroup;
 			children = (
 				3423A00D20977E3600E7EB8A /* libReactNativeConfig.a */,
+				537BD67D2542D8D600C20953 /* libReactNativeConfig-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2708,6 +2720,15 @@
 			path = NavigationBar;
 			sourceTree = "<group>";
 		};
+		537BD77E25466E3600C20953 /* locales */ = {
+			isa = PBXGroup;
+			children = (
+				537BD77F25466E3600C20953 /* LocalesInterface.h */,
+				537BD78025466E3600C20953 /* LocalesInterface.m */,
+			);
+			path = locales;
+			sourceTree = "<group>";
+		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -2878,7 +2899,7 @@
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 7AL695AUTL;
+						DevelopmentTeam = 2522XSFN76;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -3565,6 +3586,13 @@
 			remoteRef = 3DAD3EAA1DF850E9000B6D8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		537BD67D2542D8D600C20953 /* libReactNativeConfig-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libReactNativeConfig-tvOS.a";
+			remoteRef = 537BD67C2542D8D600C20953 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -3655,21 +3683,17 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-bitportal/Pods-bitportal-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-bitportal/Pods-bitportal-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/IGListKit/IGListKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGListKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-bitportal/Pods-bitportal-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-bitportal/Pods-bitportal-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9172E47CCE7C8110CD34BCEF /* [CP] Check Pods Manifest.lock */ = {
@@ -3834,6 +3858,7 @@
 				34C81983233B4C0D0090AD79 /* RNNComponentOptions.m in Sources */,
 				18F282692177351C00DEB13F /* rc4.c in Sources */,
 				34C81919233B4C0C0090AD79 /* NullBool.m in Sources */,
+				537BD78125466E3600C20953 /* LocalesInterface.m in Sources */,
 				3483B0DC231430D700444855 /* RNTableFooterViewManager.m in Sources */,
 				34C8193F233B4C0C0090AD79 /* RNNBottomTabOptions.m in Sources */,
 				34C81925233B4C0C0090AD79 /* NullNumber.m in Sources */,
@@ -3977,13 +4002,13 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CODE_SIGN_ENTITLEMENTS = bitportal/bitportal.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = NO;
-				DEVELOPMENT_TEAM = 7AL695AUTL;
+				DEVELOPMENT_TEAM = 2522XSFN76;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4045,7 +4070,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.dexlize.bitportal;
+				PRODUCT_BUNDLE_IDENTIFIER = com.binker.appStore;
 				PRODUCT_NAME = bitportal;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
@@ -4064,12 +4089,12 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CODE_SIGN_ENTITLEMENTS = bitportal/bitportal.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = NO;
-				DEVELOPMENT_TEAM = 7AL695AUTL;
+				DEVELOPMENT_TEAM = 2522XSFN76;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4132,7 +4157,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.dexlize.bitportal;
+				PRODUCT_BUNDLE_IDENTIFIER = com.binker.appStore;
 				PRODUCT_NAME = bitportal;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_INSTALL_OBJC_HEADER = YES;

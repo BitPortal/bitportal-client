@@ -27,9 +27,9 @@ public class ReactGateway {
 		this.host = host;
 		initializer = new NavigationReactInitializer(host.getReactInstanceManager(), isDebug);
 		jsDevReloadHandler = new JsDevReloadHandler(host.getReactInstanceManager().getDevSupportManager());
-        if (host instanceof BundleDownloadListenerProvider) {
-            ((BundleDownloadListenerProvider) host).setBundleLoaderListener(jsDevReloadHandler);
-        }
+//        if (host instanceof BundleDownloadListenerProvider) {
+//            ((BundleDownloadListenerProvider) host).setBundleLoaderListener(jsDevReloadHandler);
+//        }
 	}
 
 	public ReactNativeHost getReactNativeHost() {

@@ -209,7 +209,7 @@ export default class Discovery extends Component {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
-	<Text>Hello</Text>
+	<Text>Hello BitPortal-client</Text>
       </View>
     )
   }
