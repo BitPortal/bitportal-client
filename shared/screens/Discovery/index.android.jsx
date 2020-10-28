@@ -44,7 +44,7 @@ export default class Discovery extends Component {
     return {
       topBar: {
         title: {
-          text: '应用'
+          text: gt('应用')
         },
         searchBar: true,
         searchBarHiddenWhenScrolling: true,
@@ -66,10 +66,10 @@ export default class Discovery extends Component {
       const { wallet } = this.props
       if (!wallet) {
         Alert.alert(
-          '暂无EOS钱包',
+          t(this,'暂无EOS钱包'),
           '',
           [
-            { text: '确定', onPress: () => {} }
+            { text: t(this,'确定'), onPress: () => {} }
           ]
         )
       }

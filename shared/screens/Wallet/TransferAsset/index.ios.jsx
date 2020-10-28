@@ -446,7 +446,7 @@ export default class TransferAsset extends Component {
       topBar: {
         noBorder: true,
         backButton: {
-          title: '返回'
+          title: gt('返回')
         },
         rightButtons: [
           {

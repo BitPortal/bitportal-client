@@ -925,7 +925,7 @@ export default class WebView extends Component {
               <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
             </View>
             <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
-              <Text style={{ fontSize: 13, color: 'rgba(255,59,48,1)', width: 95 }}>注意</Text>
+              <Text style={{ fontSize: 13, color: 'rgba(255,59,48,1)', width: 95 }}>{t(this,'注意')}</Text>
               <Text style={{ fontSize: 13, color: 'rgba(255,59,48,1)', width: Dimensions.get('window').width - 36 - 95 }}>{t(this,'本操作具有极大的安全风险，请确保当前网站是您信任的站点。')}</Text>
               <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
             </View>

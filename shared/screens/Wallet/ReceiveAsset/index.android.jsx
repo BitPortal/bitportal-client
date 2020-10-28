@@ -316,7 +316,7 @@ export default class ReceiveAsset extends Component {
         {(this.state.showAmountPrompt) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 6 }}>
           <View style={{ backgroundColor: 'white', paddingTop: 14, paddingBottom: 11, paddingHorizontal: 24, borderRadius: 2, alignItem: 'center', justifyContent: 'space-between', elevation: 14, width: '100%' }}>
             <View style={{ marginBottom: 30 }}>
-              <Text style={{ fontSize: 20, color: 'black', marginBottom: 12 }}>设置金额</Text>
+              <Text style={{ fontSize: 20, color: 'black', marginBottom: 12 }}>{t(this,'设置金额')}</Text>
               <TextInput
                 style={{
                   fontSize: 16,

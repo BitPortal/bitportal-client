@@ -122,7 +122,7 @@ export default class ImportETHMnemonicsForm extends Component {
     importETHMnemonicsError: null,
     activeIndex: null,
     pathEditable: false,
-    pathSwitchLabel: '默认',
+    pathSwitchLabel: gt('默认'),
     showSimpleModal: false,
     pathIndex: 1
   }

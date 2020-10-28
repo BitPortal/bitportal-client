@@ -40,11 +40,11 @@ export const errorMessages = (error) => {
 
   switch (String(message)) {
     case 'SegWit requires compressed private key':
-      return '隔离见证需要压缩的公钥格式'
+      return gt('隔离见证需要压缩的公钥格式')
     case 'Invalid password':
-      return '密码错误'
+      return gt('密码错误')
     default:
-      return '操作失败'
+      return gt('操作失败')
   }
 }
 
@@ -370,7 +370,7 @@ export default class ManageWallet extends Component {
             options: {
               topBar: {
                 title: {
-                  text: 'ChainX 节点状态'
+                  text: t(this,'ChainX 节点状态')
                 },
                 leftButtons: [
                   {
@@ -780,7 +780,7 @@ export default class ManageWallet extends Component {
           sections={sections}
           keyExtractor={(item, index) => item.key}
         />
-        <IndicatorModal onModalHide={this.onModalHide} isVisible={loading} message="验证密码..." />
+        <IndicatorModal onModalHide={this.onModalHide} isVisible={loading} message={t(this,'验证密码...')} />
         <Modal
           isVisible={this.state.showSimpleModal}
           backdropOpacity={0.6}

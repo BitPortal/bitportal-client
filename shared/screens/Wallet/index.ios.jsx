@@ -155,7 +155,7 @@ export default class Wallet extends Component {
     SplashScreen.hide()
     KeyboardManager.setEnable(true)
     KeyboardManager.setPreventShowingBottomBlankSpace(true)
-    KeyboardManager.setToolbarDoneBarButtonItemText('完成')
+    KeyboardManager.setToolbarDoneBarButtonItemText(gt('完成'))
     KeyboardManager.setToolbarPreviousNextButtonEnable(true)
     this.props.actions.setSelectedContact(null)
 

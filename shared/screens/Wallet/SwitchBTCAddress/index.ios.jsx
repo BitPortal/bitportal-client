@@ -34,10 +34,10 @@ export default class SwitchBTCAddress extends Component {
     return {
       topBar: {
         title: {
-          text: 'BTC钱包地址'
+          text: gt('BTC钱包地址')
         },
         backButton: {
-          title: '返回'
+          title: gt('返回')
         },
         largeTitle: {
           visible: false
@@ -76,7 +76,7 @@ export default class SwitchBTCAddress extends Component {
         <View style={{ flex: 1 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
             <ActivityIndicator size="small" color="#000000" />
-            <Text style={{ fontSize: 17, marginLeft: 5 }}>扫描地址中...</Text>
+            <Text style={{ fontSize: 17, marginLeft: 5 }}>{t(this,'扫描地址中...')}</Text>
           </View>
         </View>
       )
@@ -86,7 +86,7 @@ export default class SwitchBTCAddress extends Component {
       <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <View style={{ flex: 1 }}>
         <View style={{ width: '100%', padding: 16, borderColor: '#C8C7CC', borderBottomWidth: 0.5, backgroundColor: '#F0EFF5' }}>
-          <Text style={{ fontSize: 14, color: '#666666', lineHeight: 18 }}>你可以使用不同的子地址用于收款，以保护你的隐私。选中的子地址将会显示在收款界面。</Text>
+          <Text style={{ fontSize: 14, color: '#666666', lineHeight: 18 }}>{t(this,'你可以使用不同的子地址用于收款，以保护你的隐私。选中的子地址将会显示在收款界面。')}</Text>
         </View>
         <TableView
           style={{ flex: 1, backgroundColor: 'white' }}

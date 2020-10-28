@@ -33,7 +33,7 @@ export default class Contact extends Component {
     return {
       topBar: {
         title: {
-          text: t(null,'联系人详情'),
+          text: gt('联系人详情')
         },
         rightButtons: [
           {

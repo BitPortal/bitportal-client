@@ -326,8 +326,8 @@ export default class TradeEOSBandWidthForm extends Component {
 
             <View style={{ borderTopWidth: 1, borderColor: 'rgba(0,0,0,0.12)' }}>
               <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48 }}>
-                {!!this.props.delegate && <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>抵押信息</Text>}
-                {!this.props.delegate && <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>赎回信息</Text>}
+                {!!this.props.delegate && <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'抵押信息')}</Text>}
+                {!this.props.delegate && <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'赎回信息')}</Text>}
               </View>
             </View>
             <Field
