@@ -5,9 +5,11 @@ import { connect } from 'react-redux'
 import TableView from 'components/TableView'
 import * as currencyActions from 'actions/currency'
 import { currencySymbolSelector, currencyListSelector } from 'selectors/currency'
+import { injectIntl } from "react-intl";
 
 const { Section, Item } = TableView
 
+@injectIntl
 @connect(
   state => ({
     currencySymbol: currencySymbolSelector(state),
@@ -26,7 +28,7 @@ export default class CurrencySetting extends Component {
     return {
       topBar: {
         title: {
-          text: '货币单位'
+          text: gt('货币单位')
         },
         largeTitle: {
           visible: false

@@ -18,8 +18,10 @@ import {
 import { loadScatter, loadScatterSync, loadMetaMask, loadMetaMaskSync } from 'utils/inject'
 import { activeWalletSelector, bridgeWalletSelector, identityWalletSelector, importedWalletSelector } from 'selectors/wallet'
 import { transfromUrlText } from 'utils'
+import { injectIntl } from "react-intl";
 const { Section, Item, CollectionView, CollectionViewItem } = TableView
 
+@injectIntl
 @connect(
   state => ({
     dapp: dappSelector(state),
@@ -47,7 +49,7 @@ export default class Discovery extends Component {
     return {
       topBar: {
         title: {
-          text: '浏览器',
+          // text: '浏览器',
           height: 0
         },
         largeTitle: {
@@ -55,7 +57,7 @@ export default class Discovery extends Component {
         },
         searchBar: true,
         searchBarHiddenWhenScrolling: false,
-        searchBarPlaceholder: '搜索或输入url'
+        // searchBarPlaceholder: '搜索或输入url'
       }
     }
   }
@@ -67,14 +69,14 @@ export default class Discovery extends Component {
       Navigation.mergeOptions(this.props.componentId, {
         topBar: {
           title: {
-            text: '浏览器'
+            text: t(this,'浏览器')
           },
           largeTitle: {
             visible: true
           },
           searchBar: true,
           searchBarHiddenWhenScrolling: false,
-          searchBarPlaceholder: '搜索或输入url'
+          searchBarPlaceholder: t(this,'搜索或输入url')
         }
       })
 
@@ -118,10 +120,10 @@ export default class Discovery extends Component {
       const { wallet } = this.props
       if (!wallet) {
         Alert.alert(
-          '暂无EOS钱包',
+          t(this,'暂无EOS钱包'),
           '',
           [
-            { text: '确定', onPress: () => {} }
+            { text: t(this,'确定'), onPress: () => {} }
           ]
         )
       } else {
@@ -188,6 +190,14 @@ export default class Discovery extends Component {
   componentDidAppear() {
     // this.props.actions.getDapp.requested()
     // this.props.actions.getDappRecommend.requested()
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        title: {
+          text: t(this,'浏览器'),
+        },
+      },
+      searchBarPlaceholder: t(this,'搜索或输入url'),
+    })
   }
 
   openDapp = (url, chain) => {
@@ -247,7 +257,7 @@ export default class Discovery extends Component {
           <Item
             reactModuleForCell="DappHeaderTableViewCell"
             height={44}
-            title="热门推荐"
+            title={t(this,'热门推荐')}
             selectionStyle={TableView.Consts.CellSelectionStyle.None}
           />
           <Item
@@ -380,8 +390,8 @@ export default class Discovery extends Component {
           <Item
             reactModuleForCell="DappHeaderTableViewCell"
             height={44}
-            title="我的收藏"
-            buttonText="更多"
+            title={t(this,'我的收藏')}
+            buttonText={t(this,'更多')}
             category="bookmarked"
             componentId={this.props.componentId}
             selectionStyle={TableView.Consts.CellSelectionStyle.None}
@@ -424,8 +434,8 @@ export default class Discovery extends Component {
           <Item
             reactModuleForCell="DappHeaderTableViewCell"
             height={44}
-            title="最新上架"
-            buttonText="更多"
+            title={t(this,'最新上架')}
+            buttonText={t(this,'更多')}
             category="new"
             componentId={this.props.componentId}
             selectionStyle={TableView.Consts.CellSelectionStyle.None}
@@ -468,8 +478,8 @@ export default class Discovery extends Component {
           <Item
             reactModuleForCell="DappHeaderTableViewCell"
             height={44}
-            title="热门应用"
-            buttonText="更多"
+            title={t(this,'热门应用')}
+            buttonText={t(this,'更多')}
             category="hot"
             componentId={this.props.componentId}
             selectionStyle={TableView.Consts.CellSelectionStyle.None}
@@ -512,8 +522,8 @@ export default class Discovery extends Component {
           <Item
             reactModuleForCell="DappHeaderTableViewCell"
             height={44}
-            title="游戏"
-            buttonText="更多"
+            title={t(this,'游戏')}
+            buttonText={t(this,'更多')}
             category="game"
             componentId={this.props.componentId}
             selectionStyle={TableView.Consts.CellSelectionStyle.None}
@@ -556,8 +566,8 @@ export default class Discovery extends Component {
           <Item
             reactModuleForCell="DappHeaderTableViewCell"
             height={44}
-            title="工具"
-            buttonText="更多"
+            title={t(this,'工具')}
+            buttonText={t(this,'更多')}
             category="tool"
             componentId={this.props.componentId}
             selectionStyle={TableView.Consts.CellSelectionStyle.None}
@@ -600,8 +610,8 @@ export default class Discovery extends Component {
           <Item
             reactModuleForCell="DappHeaderTableViewCell"
             height={44}
-            title="所有分类"
-            buttonText="更多"
+            title={t(this,'所有分类')}
+            buttonText={t(this,'更多')}
             componentId={this.props.componentId}
             selectionStyle={TableView.Consts.CellSelectionStyle.None}
             showSeparator
@@ -612,56 +622,56 @@ export default class Discovery extends Component {
             reactModuleForCell="DappCategoryTableViewCell"
             height={44}
             category="system"
-            name="系统"
-            onPress={this.toDappList.bind(this, '系统', 'system')}
+            name={t(this,'系统')}
+            onPress={this.toDappList.bind(this, t(this,'系统'), 'system')}
             showSeparator
           />
           <Item
             reactModuleForCell="DappCategoryTableViewCell"
             height={44}
             category="game"
-            name="游戏"
-            onPress={this.toDappList.bind(this, '游戏', 'game')}
+            name={t(this,'游戏')}
+            onPress={this.toDappList.bind(this, t(this,'游戏'), 'game')}
             showSeparator
           />
           <Item
             reactModuleForCell="DappCategoryTableViewCell"
             height={44}
             category="exchange"
-            name="去中心交易平台"
-            onPress={this.toDappList.bind(this, '去中心交易平台', 'exchange')}
+            name={t(this,'去中心交易平台')}
+            onPress={this.toDappList.bind(this, t(this,'去中心交易平台'), 'exchange')}
             showSeparator
           />
           <Item
             reactModuleForCell="DappCategoryTableViewCell"
             height={44}
             category="marketplace"
-            name="市场"
-            onPress={this.toDappList.bind(this, '市场', 'marketplace')}
+            name={t(this,'市场')}
+            onPress={this.toDappList.bind(this, t(this,'市场'), 'marketplace')}
             showSeparator
           />
           <Item
             reactModuleForCell="DappCategoryTableViewCell"
             height={44}
             category="tool"
-            name="工具"
-            onPress={this.toDappList.bind(this, '工具', 'tool')}
+            name={t(this,'工具')}
+            onPress={this.toDappList.bind(this, t(this,'工具'), 'tool')}
             showSeparator
           />
           <Item
             reactModuleForCell="DappCategoryTableViewCell"
             height={44}
             category="explorer"
-            name="区块链浏览器"
-            onPress={this.toDappList.bind(this, '区块链浏览器', 'explorer')}
+            name={t(this,'区块链浏览器')}
+            onPress={this.toDappList.bind(this, t(this,'区块链浏览器'), 'explorer')}
             showSeparator
           />
           <Item
             reactModuleForCell="DappCategoryTableViewCell"
             height={44}
             category="news"
-            name="资讯"
-            onPress={this.toDappList.bind(this, '资讯', 'news')}
+            name={t(this,'资讯')}
+            onPress={this.toDappList.bind(this, t(this,'资讯'), 'news')}
           />
         </Section>
         <Section>

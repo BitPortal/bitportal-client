@@ -84,11 +84,11 @@ const validate = (values) => {
   const errors = {}
 
   if (!values.name) {
-    errors.name = '请输入身份名称'
+    errors.name = gt('请输入身份名称')
   }
 
   if (!values.password) {
-    errors.password = '请输入密码'
+    errors.password = gt('请输入密码')
   }
 
   return errors
@@ -98,11 +98,11 @@ const warn = (values) => {
   const warnings = {}
 
   if (values.name && values.name.length > 12) {
-    warnings.name = '身份名不超过12位'
+    warnings.name = gt('身份名不超过12位')
   }
 
   if (values.password && values.password.length < 8) {
-    warnings.password = '密码不少于8位字符'
+    warnings.password = gt('密码不少于8位字符')
   }
 
   return warnings
@@ -132,7 +132,7 @@ export default class CreateIdentity extends Component {
         rightButtons: [
           {
             id: 'next',
-            text: '下一步',
+            text: gt('下一步'),
             fontWeight: '400',
             enabled: false
           }
@@ -180,7 +180,7 @@ export default class CreateIdentity extends Component {
           rightButtons: [
             {
               id: 'next',
-              text: '下一步',
+              text: t(this,'下一步'),
               fontWeight: '400',
               enabled: !this.state.invalid && !this.state.pristine && !this.state.loading
             }
@@ -200,7 +200,7 @@ export default class CreateIdentity extends Component {
             warning,
             '',
             [
-              { text: '确定', onPress: () => console.log('OK Pressed') }
+              { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
             ]
           )
           return

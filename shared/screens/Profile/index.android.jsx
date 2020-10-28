@@ -69,7 +69,7 @@ export default class Profile extends Component {
             options: {
               topBar: {
                 title: {
-                  text: 'BitPortal 官网'
+                  text: gt('BitPortal 官网')
                 },
                 leftButtons: [
                   {
@@ -98,7 +98,7 @@ export default class Profile extends Component {
             options: {
               topBar: {
                 title: {
-                  text: 'BitPortal 帮助中心'
+                  text: gt('BitPortal 帮助中心')
                 },
                 leftButtons: [
                   {
@@ -204,7 +204,7 @@ export default class Profile extends Component {
           />
         </View>
         <View style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', padding: 16, borderTopWidth: 0.5, borderColor: 'rgba(0,0,0,0.54)' }}>
-          <Text style={{ fontSize: 12, color: 'rgba(0,0,0,0.54)' }}>© 2019 BitPortal</Text>
+          <Text style={{ fontSize: 12, color: 'rgba(0,0,0,0.54)' }}>© 2020 BitPortal</Text>
         </View>
       </View>
     )

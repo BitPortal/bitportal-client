@@ -37,10 +37,10 @@ export default class ChainXDepositClaim extends Component {
           visible: false
         },
         title: {
-          text: '充值提息'
+          text: gt('充值提息')
         },
         backButton: {
-          title: '返回'
+          title: gt('返回')
         }
       },
       bottomTabs: {
@@ -135,11 +135,11 @@ export default class ChainXDepositClaim extends Component {
   toDepositClaim = (asset) => {
     const { intl } = this.props
     if (['BTC', 'SDOT'].indexOf(asset) === -1) {
-      Dialog.alert('提示', '请指定资产')
+      Dialog.alert(t(this,'提示'), t(this,'请指定资产'))
       return
     }
 
-    const hint = `本次操作将提取${asset}的充值利息`
+    const hint = t(this,'本次操作将提取{asset}的充值利息',{asset})
     Alert.prompt(
       intl.formatMessage({ id: 'alert_input_wallet_password' }),
       hint,
@@ -174,14 +174,14 @@ export default class ChainXDepositClaim extends Component {
       if (this.state.txLoading === true) {
         this.setState({
           txLoading: false,
-          txError: '交易超时，请检查区块链结果'
+          txError: t(this,'交易超时，请检查区块链结果')
         })
       }
     }, 20000)
 
     if (!activeWallet || activeWallet.chain !== 'CHAINX' || !activeWallet.id) {
-      Dialog.alert('Error', '当前钱包并非有效的ChainX钱包')
-      console.error('当前钱包并非有效的ChainX钱包', activeWallet)
+      Dialog.alert('Error', t(this,'当前钱包并非有效的ChainX钱包'))
+      console.error(t(this,'当前钱包并非有效的ChainX钱包'), activeWallet)
       return
     }
 
@@ -195,8 +195,8 @@ export default class ChainXDepositClaim extends Component {
       if (tx) {
         console.log('提取充值利息交易已发送, txId: ', tx.toString())
         Alert.alert(
-          '提取成功',
-          `提取充值交易发送成功，请检查区块链信息!交易id:${tx.toString()}`,
+          t(this,'提取成功'),
+          t(this, "提取充值交易发送成功，请检查区块链信息!交易id:{txString}",{txString:tx.toString()}),
           [
             { text: 'OK', onPress: () => this.setState({ txLoading: false }) }
           ],
@@ -205,8 +205,8 @@ export default class ChainXDepositClaim extends Component {
       } else {
         console.error('提息失败', tx.toString())
         Alert.alert(
-          '错误',
-          '提息失败',
+          t(this,'错误'),
+          t(this,'提息失败'),
           [
             { text: 'OK', onPress: () => this.setState({ txLoading: false }) }
           ]
@@ -220,8 +220,8 @@ export default class ChainXDepositClaim extends Component {
     } catch (e) {
       this.setState({ txLoading: false })
       Alert.alert(
-        '错误',
-        '提息失败',
+        t(this,'错误'),
+        t(this,'提息失败'),
         [
           { text: 'OK', onPress: () => this.setState({ txLoading: false }) }
         ],
@@ -255,7 +255,7 @@ export default class ChainXDepositClaim extends Component {
           'Error',
           this.state.txError.toString(),
           [
-            { text: '确定', onPress: () => this.setState( { txError: '' }) }
+            { text: t(this,'确定'), onPress: () => this.setState( { txError: '' }) }
           ]
         )
       }, 20)
@@ -289,7 +289,7 @@ export default class ChainXDepositClaim extends Component {
     userItems.push(
       <Item
         reactModuleForCell="ChainXValidatorDetailTableViewCell"
-        text="挖矿BTC余额"
+        text={t(this,"挖矿{symbol}余额",{symbol:'BTC'})}
         type="btcBalance"
         key="btcBalance"
         detail={btcBalanceStr}
@@ -301,7 +301,7 @@ export default class ChainXDepositClaim extends Component {
     userItems.push(
       <Item
         reactModuleForCell="ChainXValidatorDetailTableViewCell"
-        text="挖矿SDOT余额"
+        text={t(this,"挖矿{symbol}余额",{symbol:'SDOT'})}
         type="sdotBalance"
         key="sdotBalance"
         detail={sdotBalanceStr}
@@ -313,7 +313,7 @@ export default class ChainXDepositClaim extends Component {
     globalItems.push(
       <Item
         reactModuleForCell="ChainXValidatorDetailTableViewCell"
-        text="BTC全链总余额"
+        text={t(this,"{symbol}全链总余额",{symbol:'BTC'})}
         type="btcCirculationStr"
         key="btcCirculationStr"
         detail={btcCirculationStr}
@@ -325,7 +325,7 @@ export default class ChainXDepositClaim extends Component {
     globalItems.push(
       <Item
         reactModuleForCell="ChainXValidatorDetailTableViewCell"
-        text="SDOT全链总余额"
+        text={t(this,"{symbol}全链总余额",{symbol:'SDOT'})}
         type="sdotCirculationStr"
         key="sdotCirculationStr"
         detail={sdotCirculationStr}
@@ -337,7 +337,7 @@ export default class ChainXDepositClaim extends Component {
     globalItems.push(
       <Item
         reactModuleForCell="ChainXValidatorDetailTableViewCell"
-        text="BTC资产奖池"
+        text={t(this,'{symbol}资产奖池',{symbol:'BTC'})}
         type="btcJackpotBalanceStr"
         key="btcJackpotBalanceStr"
         detail={btcJackpotBalanceStr}
@@ -349,7 +349,7 @@ export default class ChainXDepositClaim extends Component {
     globalItems.push(
       <Item
         reactModuleForCell="ChainXValidatorDetailTableViewCell"
-        text="SDOT资产奖池"
+        text={t(this,'{symbol}资产奖池',{symbol:'SDOT'})}
         type="sdotJackpotBalanceStr"
         key="sdotJackpotBalanceStr"
         detail={sdotJackpotBalanceStr}
@@ -361,7 +361,7 @@ export default class ChainXDepositClaim extends Component {
     userItems.push(
       <Item
         reactModuleForCell="ChainXValidatorDetailTableViewCell"
-        text="BTC充值待领利息"
+        text={t(this, "{symbol}充值待领利息",{symbol:'BTC'})}
         type="asset"
         key="asset"
         detail={btcPendingInterestStr}
@@ -373,7 +373,7 @@ export default class ChainXDepositClaim extends Component {
     userItems.push(
       <Item
         reactModuleForCell="ChainXValidatorDetailTableViewCell"
-        text="SDOT映射待领利息"
+        text={t(this, "{symbol}充值待领利息",{symbol:'SDOT'})}
         type="asset"
         key="asset"
         detail={sdotPendingInterestStr}
@@ -398,10 +398,10 @@ export default class ChainXDepositClaim extends Component {
         </TableView>
         <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
           <TouchableOpacity style={styles.button} onPress={this.toDepositClaim.bind(this, 'BTC')}>
-            <Text style={styles.buttonText}>BTC充值提息</Text>
+            <Text style={styles.buttonText}>{t(this,'BTC充值提息')}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.button, { backgroundColor: '#EFEFF4' }]} onPress={this.toDepositClaim.bind(this, 'SDOT')}>
-            <Text style={[styles.buttonText, { color: '#007AFF' }]}>SDOT映射提息</Text>
+            <Text style={[styles.buttonText, { color: '#007AFF' }]}>{t(this,'SDOT映射提息')}</Text>
           </TouchableOpacity>
         </View>
         <Modal
@@ -419,7 +419,7 @@ export default class ChainXDepositClaim extends Component {
           {this.state.txLoading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
               <ActivityIndicator size="small" color="#000000" />
-              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>交易发送中...</Text>
+              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{t(this,'交易发送中...')}</Text>
             </View>
           </View>}
         </Modal>

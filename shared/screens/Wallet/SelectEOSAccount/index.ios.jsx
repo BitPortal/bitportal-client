@@ -18,7 +18,7 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     default:
-      return '导入失败'
+      return gt('导入失败')
   }
 }
 
@@ -43,16 +43,16 @@ export default class SelectEOSAccount extends Component {
         rightButtons: [
           {
             id: 'submit',
-            text: '导入',
+            text:gt('导入'),
             fontWeight: '400',
             enabled: false
           }
         ],
         title: {
-          text: '选择EOS帐户'
+          text: gt('选择EOS帐户')
         },
         backButton: {
-          title: '返回'
+          title: gt('返回')
         },
         largeTitle: {
           visible: false
@@ -112,7 +112,7 @@ export default class SelectEOSAccount extends Component {
           rightButtons: [
             {
               id: 'submit',
-              text: '导入',
+              text: t(this,'导入'),
               fontWeight: '400',
               enabled: this.state.selected.length > 0 && !this.state.importEOSPrivateKeyLoading
             }
@@ -131,7 +131,7 @@ export default class SelectEOSAccount extends Component {
           errorMessages(error),
           '',
           [
-            { text: '确定', onPress: () => this.clearError() }
+            { text: t(this,'确定'), onPress: () => this.clearError() }
           ]
         )
       }, 20)

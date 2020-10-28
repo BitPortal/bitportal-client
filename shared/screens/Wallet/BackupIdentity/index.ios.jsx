@@ -74,7 +74,7 @@ export default class BackupIdentity extends Component {
         rightButtons: [
           {
             id: 'next',
-            text: '下一步',
+            text: gt('下一步'),
             fontWeight: '400'
           }
         ],
@@ -116,7 +116,7 @@ export default class BackupIdentity extends Component {
             rightButtons: [
               {
                 id: 'verify',
-                text: '验证',
+                text: t(this,'验证'),
                 fontWeight: '400',
                 enabled: this.props.mnemonics.split(' ').length === this.state.userEntry.split(' ').length
               }
@@ -127,14 +127,14 @@ export default class BackupIdentity extends Component {
     } else if (buttonId === 'verify') {
       if (this.state.userEntry !== this.props.mnemonics) {
         Alert.alert(
-          '助记词顺序不正确，请校对',
+          t(this,'助记词顺序不正确，请校对'),
           '',
           [
-            { text: '确定', onPress: () => console.log('OK Pressed') }
+            { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
           ]
         )
       } else {
-        SPAlert.presentDone('助记词顺序正确!')
+        SPAlert.presentDone(t(this,'助记词顺序正确!'))
         this.props.actions.validateMnemonics.requested({ componentId: this.props.componentId, delay: 2000, backup: this.props.backup })
       }
     } else if (buttonId === 'cancel') {
@@ -149,7 +149,7 @@ export default class BackupIdentity extends Component {
           rightButtons: [
             {
               id: 'verify',
-              text: '验证',
+              text: t(this,'验证'),
               fontWeight: '400',
               enabled: this.props.mnemonics.split(' ').length === this.state.userEntry.split(' ').length && !this.state.loading
             }

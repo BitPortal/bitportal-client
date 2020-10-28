@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { FormattedNumber } from 'react-intl'
+import { FormattedNumber, injectIntl } from 'react-intl'
 import {
   View,
   ScrollView,
@@ -39,7 +39,7 @@ import Loading from 'components/Loading'
 import TradeEOSBandWidthForm from 'containers/Form/TradeEOSBandWidthForm'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
 import TradeEOSRAMForm from 'containers/Form/TradeEOSRAMForm'
-
+@injectIntl
 @connect(
   state => ({
     getAccount: state.getAccount,
@@ -68,7 +68,7 @@ export default class ManageEOSResource extends Component {
           }
         ],
         title: {
-          text: 'EOS资源管理'
+          text: gt('EOS资源管理')
         },
         elevation: 0,
         drawBehind: false
@@ -235,7 +235,7 @@ export default class ManageEOSResource extends Component {
 
     if ((!getAccount.loaded && getAccount.loading) || !account) {
       return (
-        <Loading text="获取账户信息中..." />
+        <Loading text={t(this,"获取账户信息中...")} />
       )
     }
 
@@ -262,7 +262,7 @@ export default class ManageEOSResource extends Component {
           {(this.state.showPrompt) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 6 }}>
             <View style={{ backgroundColor: 'white', paddingTop: 14, paddingBottom: 11, paddingHorizontal: 24, borderRadius: 2, alignItem: 'center', justifyContent: 'space-between', elevation: 14, width: '100%' }}>
               <View style={{ marginBottom: 30 }}>
-                <Text style={{ fontSize: 20, color: 'black', marginBottom: 12 }}>请输入密码</Text>
+                <Text style={{ fontSize: 20, color: 'black', marginBottom: 12 }}>{t(this,'请输入密码')}</Text>
                 {/* <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.54)', marginBottom: 12 }}>This is a prompt</Text> */}
                 <TextInput
                   style={{
@@ -285,12 +285,12 @@ export default class ManageEOSResource extends Component {
               <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
                 <TouchableNativeFeedback onPress={this.clearPassword} background={TouchableNativeFeedback.SelectableBackground()}>
                   <View style={{ padding: 10, borderRadius: 2, marginRight: 8 }}>
-                    <Text style={{ color: '#169689', fontSize: 14 }}>取消</Text>
+                    <Text style={{ color: '#169689', fontSize: 14 }}>{t(this,'取消')}</Text>
                   </View>
                 </TouchableNativeFeedback>
                 <TouchableNativeFeedback onPress={this.submitPassword} background={TouchableNativeFeedback.SelectableBackground()}>
                   <View style={{ padding: 10, borderRadius: 2 }}>
-                    <Text style={{ color: '#169689', fontSize: 14 }}>确定</Text>
+                    <Text style={{ color: '#169689', fontSize: 14 }}>{t(this,'确定')}</Text>
                   </View>
                 </TouchableNativeFeedback>
               </View>

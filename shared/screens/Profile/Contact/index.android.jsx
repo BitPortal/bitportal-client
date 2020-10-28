@@ -10,7 +10,9 @@ import { identityWalletSelector, importedWalletSelector } from 'selectors/wallet
 import { balanceByIdSelector } from 'selectors/balance'
 import * as contactActions from 'actions/contact'
 import * as walletActions from 'actions/wallet'
+import { injectIntl } from "react-intl";
 
+@injectIntl
 @connect(
   state => ({
     contact: activeContactSelector(state),
@@ -31,7 +33,7 @@ export default class Contact extends Component {
     return {
       topBar: {
         title: {
-          text: '联系人详情'
+          text: t(null,'联系人详情'),
         },
         rightButtons: [
           {
@@ -44,6 +46,16 @@ export default class Contact extends Component {
     }
   }
 
+  componentDidMount() {
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        title: {
+          text: t(this,'联系人详情'),
+        },
+      },
+    })
+  }
+
   subscription = Navigation.events().bindComponent(this)
 
   state = {
@@ -52,16 +64,16 @@ export default class Contact extends Component {
 
   deleteContact = () => {
     Alert.alert(
-      '确认删除',
+      t(this,'确认删除'),
       null,
       [
         {
-          text: '取消',
+          text: t(this,"取消"),
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel'
         },
         {
-          text: '确认',
+          text: t(this,"确认"),
           onPress: () => {
             this.props.actions.deleteContact(this.props.contact.id)
             Navigation.pop(this.props.componentId)
@@ -97,7 +109,7 @@ export default class Contact extends Component {
         options: {
           topBar: {
             title: {
-              text: '编辑联系人'
+              text: t(this,'编辑联系人')
             }
           }
         }
@@ -121,11 +133,11 @@ export default class Contact extends Component {
 
       if (!wallet) {
         Alert.alert(
-          `未检测到${symbol}钱包`,
+          t(this,'未检测到{symbol}钱包',{symbol}),
           null,
           [
             {
-              text: '确认',
+              text: t(this,'确认'),
               onPress: () => {}
             }
           ]
@@ -142,7 +154,7 @@ export default class Contact extends Component {
                 options: {
                   topBar: {
                     title: {
-                      text: `发送${symbol}到`
+                      text: t(this,'发送{symbol}到'),
                     },
                     leftButtons: [
                       {
@@ -225,7 +237,7 @@ export default class Contact extends Component {
       const btcAddresses = contact.btc.map((item, index) => ({
         key: index,
         address: item.address,
-        label: 'BTC 地址',
+        label: t(this,'{symbol} 地址',{symbol:'BTC'}),
         chain: 'BITCOIN',
         symbol: 'BTC',
         name: contact.name
@@ -238,7 +250,7 @@ export default class Contact extends Component {
       const ethAddresses = contact.eth.map((item, index) => ({
         key: index,
         address: item.address,
-        label: 'ETH 地址',
+        label: t(this,'{symbol} 地址',{symbol:'ETH'}),
         chain: 'ETHEREUM',
         symbol: 'ETH',
         name: contact.name
@@ -252,7 +264,7 @@ export default class Contact extends Component {
         key: index,
         address: item.accountName,
         note: item.memo,
-        label: 'EOS 账户名',
+        label: t(this,'{symbol} 账户名',{symbol:'EOS'}),
         chain: 'EOS',
         symbol: 'EOS',
         name: contact.name
@@ -306,7 +318,7 @@ export default class Contact extends Component {
         >
           {this.state.showModal && <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'rgba(0,0,0,0.87)', padding: 16, borderRadius: 4, height: 48, elevation: 1, justifyContent: 'center', width: '100%', marginBottom: 72 }}>
-              <Text style={{ fontSize: 14, color: 'white' }}>已复制</Text>
+              <Text style={{ fontSize: 14, color: 'white' }}>{t(this,'已复制')}</Text>
             </View>
           </View>}
         </Modal>

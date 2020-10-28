@@ -78,7 +78,7 @@ export default class ManageWallet extends Component {
     return {
       topBar: {
         title: {
-          text: '管理钱包'
+          text: gt('管理钱包')
         },
         largeTitle: {
           visible: false
@@ -209,7 +209,7 @@ export default class ManageWallet extends Component {
         options: {
           topBar: {
             backButton: {
-              title: '返回'
+              title: t(this,'返回')
             }
           }
         }
@@ -243,7 +243,7 @@ export default class ManageWallet extends Component {
         errorMessages(error),
         '',
         [
-          { text: '确定', onPress: () => this.clearError() }
+          { text: t(this,'确定'), onPress: () => this.clearError() }
         ],
         { cancelable: false }
       )
@@ -268,7 +268,7 @@ export default class ManageWallet extends Component {
       const oldName = name
 
       Alert.prompt(
-        '设置钱包名称',
+        t(this,'设置钱包名称'),
         null,
         [
           {
@@ -282,10 +282,10 @@ export default class ManageWallet extends Component {
               if (name) {
                 if (name.length > 30) {
                   Alert.alert(
-                    '钱包名称不能超过30个字符',
+                    t(this,'钱包名称不能超过30个字符'),
                     '',
                     [
-                      { text: '确定', onPress: () => console.log('ok') }
+                      { text: t(this,'确定'), onPress: () => console.log('ok') }
                     ]
                   )
                 } else {
@@ -398,7 +398,7 @@ export default class ManageWallet extends Component {
             options: {
               topBar: {
                 title: {
-                  text: 'ChainX 区块链浏览器'
+                  text: t(this,'ChainX 区块链浏览器')
                 },
                 leftButtons: [
                   {
@@ -589,8 +589,8 @@ export default class ManageWallet extends Component {
               <Text style={{ fontSize: 14, color: item.actionType === 'delete' ? '#FF5722' : 'rgba(0,0,0,0.87)', fontWeight: '500' }}>{item.text}</Text>
             </View>
             {item.actionType === 'addressType' && <View style={{ position: 'absolute', right: 16 }}>
-              {segWit === 'P2WPKH' && <Text style={{ fontSize: 12, color: 'rgba(0,0,0,0.6)' }}>隔离见证</Text>}
-              {segWit !== 'P2WPKH' && <Text style={{ fontSize: 12, color: 'rgba(0,0,0,0.6)' }}>普通</Text>}
+              {segWit === 'P2WPKH' && <Text style={{ fontSize: 12, color: 'rgba(0,0,0,0.6)' }}>{t(this,'隔离见证')}</Text>}
+              {segWit !== 'P2WPKH' && <Text style={{ fontSize: 12, color: 'rgba(0,0,0,0.6)' }}>{t(this,'普通')}</Text>}
             </View>}
           </View>
         </View>
@@ -797,19 +797,19 @@ export default class ManageWallet extends Component {
           {(this.state.showSimpleModal) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 6 }}>
             <View style={{ backgroundColor: 'white', borderRadius: 4, alignItem: 'center', elevation: 14, minWidth: 240 }}>
               <View style={{ paddingHorizontal: 24, paddingBottom: 9, paddingTop: 20 }}>
-                <Text style={{ fontSize: 20, color: 'rgba(0,0,0,0.87)', fontWeight: '500' }}>切换地址类型</Text>
+                <Text style={{ fontSize: 20, color: 'rgba(0,0,0,0.87)', fontWeight: '500' }}>{t(this,'切换地址类型')}</Text>
               </View>
               <View style={{ paddingBottom: 12, paddingTop: 6, paddingHorizontal: 16 }}>
                 <TouchableNativeFeedback onPress={this.selectAddressType.bind(this, 'P2WPKH')} background={TouchableNativeFeedback.SelectableBackground()}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', height: 48 }}>
                     {segWit === 'P2WPKH' ? <Image source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, margin: 8 }} /> : <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, margin: 8 }} />}
-                    <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>隔离见证</Text>
+                    <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'隔离见证')}</Text>
                   </View>
                 </TouchableNativeFeedback>
                 <TouchableNativeFeedback onPress={this.selectAddressType.bind(this, 'NONE')} background={TouchableNativeFeedback.SelectableBackground()}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', height: 48 }}>
                     {segWit === 'P2WPKH' ? <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, margin: 8 }} /> : <Image source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, margin: 8 }} />}
-                    <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>普通</Text>
+                    <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'普通')}</Text>
                   </View>
                 </TouchableNativeFeedback>
               </View>
@@ -830,7 +830,7 @@ export default class ManageWallet extends Component {
           {(this.state.showPrompt) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 6 }}>
             <View style={{ backgroundColor: 'white', paddingTop: 14, paddingBottom: 11, paddingHorizontal: 24, borderRadius: 2, alignItem: 'center', justifyContent: 'space-between', elevation: 14, width: '100%' }}>
               <View style={{ marginBottom: 30 }}>
-                <Text style={{ fontSize: 20, color: 'black', marginBottom: 12 }}>请输入密码</Text>
+                <Text style={{ fontSize: 20, color: 'black', marginBottom: 12 }}>{t(this,'请输入密码')}</Text>
                 {/* <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.54)', marginBottom: 12 }}>This is a prompt</Text> */}
                 <TextInput
                   style={{
@@ -853,12 +853,12 @@ export default class ManageWallet extends Component {
               <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
                 <TouchableNativeFeedback onPress={this.clearPassword} background={TouchableNativeFeedback.SelectableBackground()}>
                   <View style={{ padding: 10, borderRadius: 2, marginRight: 8 }}>
-                    <Text style={{ color: '#169689', fontSize: 14 }}>取消</Text>
+                    <Text style={{ color: '#169689', fontSize: 14 }}>{t(this,'取消')}</Text>
                   </View>
                 </TouchableNativeFeedback>
                 <TouchableNativeFeedback onPress={this.submitPassword} background={TouchableNativeFeedback.SelectableBackground()}>
                   <View style={{ padding: 10, borderRadius: 2 }}>
-                    <Text style={{ color: '#169689', fontSize: 14 }}>确定</Text>
+                    <Text style={{ color: '#169689', fontSize: 14 }}>{t(this,'确定')}</Text>
                   </View>
                 </TouchableNativeFeedback>
               </View>
@@ -879,7 +879,7 @@ export default class ManageWallet extends Component {
           {(this.state.showWalletNamePrompt) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 6 }}>
             <View style={{ backgroundColor: 'white', paddingTop: 14, paddingBottom: 11, paddingHorizontal: 24, borderRadius: 2, alignItem: 'center', justifyContent: 'space-between', elevation: 14, width: '100%' }}>
               <View style={{ marginBottom: 30 }}>
-                <Text style={{ fontSize: 20, color: 'black', marginBottom: 12 }}>设置钱包名称</Text>
+                <Text style={{ fontSize: 20, color: 'black', marginBottom: 12 }}>{t(this,'设置钱包名称')}</Text>
                 {/* <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.54)', marginBottom: 12 }}>This is a prompt</Text> */}
                 <TextInput
                   style={{
@@ -901,12 +901,12 @@ export default class ManageWallet extends Component {
               <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
                 <TouchableNativeFeedback onPress={this.cancelChangeWalletName} background={TouchableNativeFeedback.SelectableBackground()}>
                   <View style={{ padding: 10, borderRadius: 2, marginRight: 8 }}>
-                    <Text style={{ color: '#169689', fontSize: 14 }}>取消</Text>
+                    <Text style={{ color: '#169689', fontSize: 14 }}>{t(this,'取消')}</Text>
                   </View>
                 </TouchableNativeFeedback>
                 <TouchableNativeFeedback onPress={this.submitWalletName} background={TouchableNativeFeedback.SelectableBackground()}>
                   <View style={{ padding: 10, borderRadius: 2 }}>
-                    <Text style={{ color: '#169689', fontSize: 14 }}>确定</Text>
+                    <Text style={{ color: '#169689', fontSize: 14 }}>{t(this,'确定')}</Text>
                   </View>
                 </TouchableNativeFeedback>
               </View>

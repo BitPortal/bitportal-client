@@ -4,6 +4,7 @@ import storage from 'utils/storage'
 import * as actions from 'actions/intl'
 import { startTabBasedApp, setDefaultOptions } from 'navigators'
 import { setExtraLocale } from 'utils/location'
+import {setGlobalLoacale} from '../resources/messages'
 
 function* setLocale(action: Action<object>) {
   const locale = action.payload
@@ -12,7 +13,7 @@ function* setLocale(action: Action<object>) {
     domain: 'bitportal.io',
     expires: new Date(Date.now() + (3600 * 1000 * 24 * 365))
   })
-
+  setGlobalLoacale(locale)
   setExtraLocale(locale)
 }
 

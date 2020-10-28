@@ -24,7 +24,7 @@ export default class Profile extends Component {
     return {
       topBar: {
         title: {
-          text: '我的'
+          text: gt('我的')
         },
         largeTitle: {
           displayMode: 'always'
@@ -129,12 +129,12 @@ export default class Profile extends Component {
             options: {
               topBar: {
                 title: {
-                  text: 'BitPortal 官网'
+                  text: t(this,'BitPortal 官网')
                 },
                 leftButtons: [
                   {
                     id: 'cancel',
-                    text: '返回'
+                    text: t(this,'返回')
                   }
                 ]
               }
@@ -158,12 +158,12 @@ export default class Profile extends Component {
             options: {
               topBar: {
                 title: {
-                  text: 'BitPortal 帮助中心'
+                  text: t(this,'BitPortal 帮助中心')
                 },
                 leftButtons: [
                   {
                     id: 'cancel',
-                    text: '返回'
+                    text: t(this,'返回')
                   }
                 ]
               }

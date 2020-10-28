@@ -228,7 +228,7 @@ export default class Wallet extends Component {
           options: {
             topBar: {
               title: {
-                text: `添加${symbol}资产`
+                text: t(this,'添加${symbol}资产',{symbol})
               }
             }
           }
@@ -471,7 +471,7 @@ export default class Wallet extends Component {
               </Text>
               <TouchableNativeFeedback onPress={this.onAddPress} background={TouchableNativeFeedback.SelectableBackground()}>
                 <View style={{ padding: 4, paddingRight: 8, paddingLeft: 8, borderRadius: 4, backgroundColor: '#673AB7', elevation: 3 }}>
-                  <Text style={{ color: 'white', fontSize: 14 }}>开始添加</Text>
+                  <Text style={{ color: 'white', fontSize: 14 }}>{t(this,'开始添加')}</Text>
                 </View>
               </TouchableNativeFeedback>
             </View>
@@ -491,17 +491,17 @@ export default class Wallet extends Component {
             {(this.state.showSimpleModal) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 6 }}>
               <View style={{ backgroundColor: 'white', borderRadius: 4, alignItem: 'center', elevation: 14, minWidth: 240 }}>
                 <View style={{ paddingHorizontal: 24, paddingBottom: 9, paddingTop: 20 }}>
-                  <Text style={{ fontSize: 20, color: 'rgba(0,0,0,0.87)', fontWeight: '500' }}>选择操作</Text>
+                  <Text style={{ fontSize: 20, color: 'rgba(0,0,0,0.87)', fontWeight: '500' }}>{t(this,'选择操作')}</Text>
                 </View>
                 <View style={{ paddingBottom: 12, paddingTop: 6, paddingHorizontal: 16 }}>
                   <TouchableNativeFeedback onPress={this.toAddIdentity} background={TouchableNativeFeedback.SelectableBackground()}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', height: 48, paddingHorizontal: 8 }}>
-                      <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>添加数字身份</Text>
+                      <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'添加数字身份')}</Text>
                     </View>
                   </TouchableNativeFeedback>
                   <TouchableNativeFeedback onPress={this.toSelectChainType} background={TouchableNativeFeedback.SelectableBackground()}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', height: 48, paddingHorizontal: 8 }}>
-                      <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>导入新钱包</Text>
+                      <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'导入新钱包')}</Text>
                     </View>
                   </TouchableNativeFeedback>
                 </View>
@@ -590,7 +590,7 @@ export default class Wallet extends Component {
                             <Text style={{ color: 'white', fontSize: 24 }}>{`${totalAsset.split('.')[0]}.`}</Text>
                             <Text style={{ color: 'white', fontSize: 20, marginBottom: 1, marginTop: 1 }}>{totalAsset.split('.')[1]}</Text>
                           </View>
-                          <Text style={{ color: 'white', fontSize: 15, marginTop: 8 }}>总资产</Text>
+                          <Text style={{ color: 'white', fontSize: 15, marginTop: 8 }}>{t(this,'总资产')}</Text>
                         </View>
                         <View style={{ alignItems: 'flex-end', height: 74, width: 110, justifyContent: 'space-between' }}>
                           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'space-between', width: '100%' }}>
@@ -615,7 +615,7 @@ export default class Wallet extends Component {
                             <Text style={{ color: 'white', fontSize: 26 }}>{`${totalAsset.split('.')[0]}.`}</Text>
                             <Text style={{ color: 'white', fontSize: 22, marginBottom: 1, marginTop: 1 }}>{totalAsset.split('.')[1]}</Text>
                           </View>
-                          <Text style={{ color: 'white', fontSize: 15, marginTop: 4 }}>总资产</Text>
+                          <Text style={{ color: 'white', fontSize: 15, marginTop: 4 }}>{t(this,'总资产')}</Text>
                         </View>
                      </View>}
                    </View>
@@ -656,7 +656,7 @@ export default class Wallet extends Component {
         >
           {this.state.showModal && <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'rgba(0,0,0,0.87)', padding: 16, borderRadius: 4, height: 48, elevation: 1, justifyContent: 'center', width: '100%' }}>
-              <Text style={{ fontSize: 14, color: 'white' }}>已复制</Text>
+              <Text style={{ fontSize: 14, color: 'white' }}>{t(this,'已复制')}</Text>
             </View>
           </View>}
         </Modal>

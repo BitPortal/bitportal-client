@@ -69,13 +69,13 @@ export default class ChainXDeposit extends Component {
         leftButtons: [
           {
             id: 'cancel',
-            text: '取消'
+            text: gt('取消')
           }
         ],
         rightButtons: [
           {
             id: 'chainxDepositHistory',
-            text: '充值记录'
+            text: gt('充值记录')
           }
         ],
         largeTitle: {
@@ -110,7 +110,7 @@ export default class ChainXDeposit extends Component {
 
   navigationButtonPressed({buttonId}) {
     if (buttonId === 'chainxDepositHistory') {
-      Dialog.alert('提示', '功能正在开发中...')
+      Dialog.alert(t(this,'提示'), t(this,'功能正在开发中...'))
     } else if (buttonId === 'cancel') {
       Navigation.dismissModal(this.props.componentId)
     }
@@ -140,11 +140,11 @@ export default class ChainXDeposit extends Component {
   toDepositBTC = () => {
     const { identityBTCWallet, importedBTCWallet } = this.props
     if (!this.state.loaded || !this.state.depositBTCAddress) {
-      Dialog.alert('提示', '正在加载充值数据，请稍后')
+      Dialog.alert(t(this,'提示'), t(this,'正在加载充值数据，请稍后'))
       return false
     }
     if (!this.props.activeWallet.address) {
-      Dialog.alert('提示', '当前并非ChainX地址，请切换到ChainX钱包！')
+      Dialog.alert(t(this,'提示'), t(this,'当前并非ChainX地址，请切换到ChainX钱包！'))
       return false
     }
     const opReturn = getDepositOpReturn(this.props.activeWallet.address)
@@ -152,7 +152,7 @@ export default class ChainXDeposit extends Component {
     const presetWallet = identityBTCWallet || importedBTCWallet
 
     if (!(presetWallet && presetWallet.id)) {
-      Dialog.alert('提示', '没有发现已经创建或导入的Bitcoin钱包')
+      Dialog.alert(t(this,'提示'), t(this,'没有发现已经创建或导入的Bitcoin钱包'))
       return false
     }
     this.props.actions.setTransferWallet(presetWallet.id)
@@ -170,12 +170,12 @@ export default class ChainXDeposit extends Component {
             options: {
               topBar: {
                 title: {
-                  text: 'ChainX 跨链资产充值'
+                  text: t(this,'ChainX 跨链资产充值')
                 },
                 leftButtons: [
                   {
                     id: 'cancel',
-                    text: '取消'
+                    text: t(this,'取消')
                   }
                 ]
               }
@@ -187,7 +187,7 @@ export default class ChainXDeposit extends Component {
   }
 
   toMappingSDOT = () => {
-    Dialog.alert('提示', '正在开发中')
+    Dialog.alert(t(this,'取消'), t(this,'功能正在开发中...'))
     return false
 
     const presetWallet = identityETHWallet || importedETHWallet
@@ -205,12 +205,12 @@ export default class ChainXDeposit extends Component {
             options: {
               topBar: {
                 title: {
-                  text: '映射 SDOT 到ChainX'
+                  text: t(this,'映射 SDOT 到ChainX')
                 },
                 leftButtons: [
                   {
                     id: 'cancel',
-                    text: '取消'
+                    text: t(this,'取消')
                   }
                 ]
               }
@@ -235,7 +235,7 @@ export default class ChainXDeposit extends Component {
         options: {
           topBar: {
             title: {
-              text: 'ChainX充值规则'
+              text: t(this,'ChainX充值规则')
             }
           }
         }
@@ -255,12 +255,12 @@ export default class ChainXDeposit extends Component {
             options: {
               topBar: {
                 title: {
-                  text: '充值提息'
+                  text: t(this,'充值提息')
                 },
                 leftButtons: [
                   {
                     id: 'cancel',
-                    text: '取消'
+                    text: t(this,'取消')
                   }
                 ]
               }
@@ -303,22 +303,22 @@ export default class ChainXDeposit extends Component {
           ref={(ref) => { this.scrollView = ref; return null }}
         >
         <View style={{width: '100%', height: 420, paddingHorizontal: 16, paddingVertical: 20 }}>
-          <Text style={{fontSize: 30, marginBottom: 10}}>参与</Text>
+          <Text style={{fontSize: 30, marginBottom: 10}}>{t(this,'参与')}</Text>
           <Text style={{fontSize: 30, marginBottom: 20}}>
-            ChainX <Text style={{color: '#007AFF'}}>充值挖矿</Text>
+            ChainX <Text style={{color: '#007AFF'}}>{t(this,'充值挖矿')}</Text>
           </Text>
           <Text style={{fontSize: 17, marginBottom: 20}}>
-            BitPortal将会自动帮您生成绑定的信息，您只需输入充值的BTC金额或映射的SDOT，便可以一键充值BTC到ChainX，参与ChainX充值挖矿。
+            {t(this,'BitPortal将会自动帮您生成绑定的信息，您只需输入充值的BTC金额或映射的SDOT，便可以一键充值BTC到ChainX，参与ChainX充值挖矿。')}
           </Text>
           <Text style={{fontSize: 17, marginBottom: 5}}>
-            当前ChainX地址：
+            {t(this,'当前ChainX地址：')}
           </Text>
           <Text style={{fontSize: 17, paddingLeft: 20, marginBottom: 5}}>
             {this.props.activeWallet.address}
           </Text>
 
             <Text style={{fontSize: 17, marginBottom: 3}}>
-              当前已绑定BTC地址：
+              {t(this,'当前已绑定BTC地址：')}
             </Text>
           <View>
           <ScrollView
@@ -327,17 +327,17 @@ export default class ChainXDeposit extends Component {
             ref={(ref) => { this.scrollView = ref; return null }}
           >
             <Text style={{fontSize: 17, paddingLeft: 20, marginBottom: 40}}>
-              {this.state.loaded ? this.state.bindedBTCAddress: '正在加载'}
+              {this.state.loaded ? this.state.bindedBTCAddress: t(this,'正在加载')}
             </Text>
           </ScrollView>
           </View>
 
-          <Text style={{fontSize: 17, marginBottom: 30, color: '#007AFF'}} onPress={this.toDepositRule}>阅读奖励规则...</Text>
+          <Text style={{fontSize: 17, marginBottom: 30, color: '#007AFF'}} onPress={this.toDepositRule}>{t(this,'阅读奖励规则...')}</Text>
           <TouchableOpacity style={styles.button} onPress={this.toDepositBTC}>
-            <Text style={styles.buttonText}>绑定并充值BTC</Text>
+            <Text style={styles.buttonText}>{t(this,'绑定并充值BTC')}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.button, {backgroundColor: '#EFEFF4'}]} onPress={this.toClaimDeposit.bind(this)}>
-            <Text style={[styles.buttonText, {color: '#007AFF'}]}>充值提息</Text>
+            <Text style={[styles.buttonText, {color: '#007AFF'}]}>{t(this,'充值提息')}</Text>
           </TouchableOpacity>
         </View>
         </ScrollView>

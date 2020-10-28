@@ -11,7 +11,7 @@ import * as contactActions from 'actions/contact'
 import styles from './styles'
 
 const { Section, Item } = TableView
-
+@injectIntl
 @connect(
   state => ({
     contact: contactSelector(state)
@@ -28,7 +28,7 @@ export default class Contacts extends Component {
     return {
       topBar: {
         title: {
-          text: '联系人'
+          text: gt('联系人')
         },
         rightButtons: [
           {
@@ -110,7 +110,7 @@ export default class Contacts extends Component {
     if (!contact || !contact.length) {
       return (
         <View style={{ flex: 1, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={{ color: '#666666', fontSize: 17 }}>暂无联系人</Text>
+          <Text style={{ color: '#666666', fontSize: 17 }}>{t(this,'暂无联系人')}</Text>
         </View>
       )
     }

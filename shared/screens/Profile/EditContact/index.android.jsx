@@ -11,6 +11,7 @@ import uuidv4 from 'uuid/v4'
 import { validateBTCAddress, validateETHAddress, validateEOSAccountName } from 'utils/validate'
 import { findDuplicate } from 'utils'
 import { OutlinedTextField } from 'components/Form'
+import { injectIntl } from "react-intl";
 
 export const errorMessages = (error, messages) => {
   if (!error) { return null }
@@ -19,9 +20,9 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid password':
-      return '密码错误'
+      return gt('密码错误')
     default:
-      return '操作失败'
+      return gt('操作失败')
   }
 }
 
@@ -29,11 +30,11 @@ const validate = (values) => {
   const errors = {}
 
   if (!values.name) {
-    errors.name = '请输入姓名'
+    errors.name = gt('请输入姓名')
   } else if (!values.name.trim().length) {
-    errors.name = '请输入姓名'
+    errors.name = gt('请输入姓名')
   } else if (values.name.trim().length > 50) {
-    errors.name = '姓名不超过50个字符'
+    errors.name = gt('姓名不超过50个字符')
   }
 
   return errors
@@ -57,7 +58,7 @@ const warn = (values) => {
 const shouldError = () => true
 
 @reduxForm({ form: 'editContactForm', validate, shouldError, warn })
-
+@injectIntl
 @connect(
   state => ({
     formSyncWarnings: getFormSyncWarnings('editContactForm')(state),
@@ -119,10 +120,10 @@ export default class EditContact extends Component {
 
       if (!formValues || !formValues.name || !formValues.name.trim().length) {
         Alert.alert(
-          '请输入姓名',
+          t(this,'请输入姓名'),
           '',
           [
-            { text: '确定', onPress: () => console.log('OK Pressed') }
+            { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
           ]
         )
         return
@@ -152,10 +153,10 @@ export default class EditContact extends Component {
 
       if (!btc.length && !eth.length && !eos.length) {
         Alert.alert(
-          '请添加地址或账户名',
+          t(this,'请添加地址或账户名'),
           '',
           [
-            { text: '确定', onPress: () => console.log('OK Pressed') }
+            { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
           ]
         )
         return
@@ -164,10 +165,10 @@ export default class EditContact extends Component {
       for (let i = 0; i < btc.length; i++) {
         if (!validateBTCAddress(btc[i].address)) {
           Alert.alert(
-            '无效的BTC地址',
+            t(this,'无效的{symbol}地址',{symbol:'BTC'}),
             btc[i].address,
             [
-              { text: '确定', onPress: () => console.log('OK Pressed') }
+              { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
             ]
           )
           return
@@ -177,10 +178,10 @@ export default class EditContact extends Component {
       for (let i = 0; i < eth.length; i++) {
         if (!validateETHAddress(eth[i].address)) {
           Alert.alert(
-            '无效的ETH地址',
+            t(this,'无效的{symbol}地址',{symbol:'ETH'}),
             eth[i].address,
             [
-              { text: '确定', onPress: () => console.log('OK Pressed') }
+              { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
             ]
           )
           return
@@ -190,10 +191,10 @@ export default class EditContact extends Component {
       for (let i = 0; i < eos.length; i++) {
         if (!validateEOSAccountName(eos[i].accountName)) {
           Alert.alert(
-            '无效的EOS账户名',
+            t(this,'无效的{symbol}账户名',{symbol:'EOS'}),
             eos[i].accountName,
             [
-              { text: '确定', onPress: () => console.log('OK Pressed') }
+              { text: t(this,'取消'), onPress: () => console.log('OK Pressed') }
             ]
           )
           return
@@ -204,10 +205,10 @@ export default class EditContact extends Component {
       const btcDuplicate = findDuplicate(btcAddresses)
       if (btcDuplicate) {
         Alert.alert(
-          '重复添加的BTC地址',
+          t(this,'重复添加的{symbol}地址',{symbol:'BTC'}),
           btcDuplicate,
           [
-            { text: '确定', onPress: () => console.log('OK Pressed') }
+            { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
           ]
         )
         return
@@ -217,10 +218,10 @@ export default class EditContact extends Component {
       const ethDuplicate = findDuplicate(ethAddresses)
       if (ethDuplicate) {
         Alert.alert(
-          '重复添加的ETHC地址',
+          t(this,'重复添加的{symbol}地址',{symbol:'ETH'}),
           ethDuplicate,
           [
-            { text: '确定', onPress: () => console.log('OK Pressed') }
+            { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
           ]
         )
         return
@@ -230,10 +231,10 @@ export default class EditContact extends Component {
       const eosDuplicate = findDuplicate(eosAddresses)
       if (eosDuplicate) {
         Alert.alert(
-          '重复添加的EOS账户名',
+          t(this,'重复添加的{symbol}账户名',{symbol:'EOS'}),
           eosDuplicate,
           [
-            { text: '确定', onPress: () => console.log('OK Pressed') }
+            { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
           ]
         )
         return
@@ -401,8 +402,8 @@ export default class EditContact extends Component {
               </View>
               <View style={{ width: Dimensions.get('window').width - 40 }}>
                 <Field
-                  label="姓名"
-                  placeholder="必填"
+                  label={t(this,'姓名')}
+                  placeholder={t(this,'必填')}
                   name="name"
                   fieldName="name"
                   change={change}
@@ -417,8 +418,8 @@ export default class EditContact extends Component {
               <View style={{ width: 40, height: 56, alignItems: 'flex-end', justifyContent: 'center' }} />
               <View style={{ width: Dimensions.get('window').width - 40 }}>
                 <Field
-                  label="描述"
-                  placeholder="选填"
+                  label={t(this,'描述')}
+                  placeholder={t(this,'选填')}
                   name="description"
                   fieldName="description"
                   change={change}
@@ -442,8 +443,8 @@ export default class EditContact extends Component {
                 </View>
                 <View style={{ width: Dimensions.get('window').width - 40 }}>
                   <Field
-                    label="BTC地址"
-                    placeholder="必填"
+                    label={t(this,'{symbol} 地址',{symbol:'BTC'}).replace(/\s+/g,"")}
+                    placeholder={t(this,'必填')}
                     name={`btc_address_${id}`}
                     fieldName={`btc_address_${id}`}
                     change={change}
@@ -463,7 +464,7 @@ export default class EditContact extends Component {
                 style={{ width: 24, height: 24 }}
               />
             </View>
-            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>添加BTC地址</Text>
+            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,"添加{symbol}地址",{symbol:'BTC'})}</Text>
           </View>
         </TouchableNativeFeedback>
           </View>
@@ -480,8 +481,8 @@ export default class EditContact extends Component {
                 </View>
                 <View style={{ width: Dimensions.get('window').width - 40 }}>
                   <Field
-                    label="ETH地址"
-                    placeholder="必填"
+                    label={t(this,'{symbol} 地址',{symbol:'ETH'}).replace(/\s+/g,"")}
+                    placeholder={t(this,'必填')}
                     name={`eth_address_${id}`}
                     fieldName={`eth_address_${id}`}
                     change={change}
@@ -501,7 +502,7 @@ export default class EditContact extends Component {
                 style={{ width: 24, height: 24 }}
               />
             </View>
-            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>添加ETH地址</Text>
+            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,"添加{symbol}地址",{symbol:'ETH'})}</Text>
           </View>
         </TouchableNativeFeedback>
           </View>
@@ -518,8 +519,8 @@ export default class EditContact extends Component {
                 </View>
                 <View style={{ width: (Dimensions.get('window').width - 40) / 2 }}>
                   <Field
-                    label="EOS账户名"
-                    placeholder="必填"
+                    label={t(this,'{symbol} 账户名',{symbol:'EOS'}).replace(/\s+/g,"")}
+                    placeholder={t(this,'必填')}
                     name={`eos_accountName_${id}`}
                     fieldName={`eos_accountName_${id}`}
                     change={change}
@@ -532,8 +533,8 @@ export default class EditContact extends Component {
                 </View>
                 <View style={{ width: (Dimensions.get('window').width - 40) / 2 }}>
                   <Field
-                    label="默认备注"
-                    placeholder="选填"
+                    label={t(this,'默认备注')}
+                    placeholder={t(this,'选填')}
                     name={`eos_memo_${id}`}
                     fieldName={`eos_memo_${id}`}
                     change={change}
@@ -555,7 +556,7 @@ export default class EditContact extends Component {
                 style={{ width: 24, height: 24 }}
               />
             </View>
-            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>添加EOS地址</Text>
+            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,"添加{symbol}账户",{symbol:'EOS'})}</Text>
           </View>
         </TouchableNativeFeedback>
           </View>

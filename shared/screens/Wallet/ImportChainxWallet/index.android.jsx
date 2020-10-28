@@ -21,6 +21,7 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import { Field, reduxForm, getFormValues, getFormSyncWarnings } from 'redux-form'
 import Modal from 'react-native-modal'
 import * as walletActions from 'actions/wallet'
+import { injectIntl } from "react-intl";
 
 const styles = EStyleSheet.create({
   container: {
@@ -157,49 +158,49 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid mnemonics':
-      return '无效的助记词'
+      return gt('无效的助记词')
     case 'Invalid keystore':
     case 'No keystore crypto':
     case 'No keystore crypto cipherparams':
     case 'No keystore crypto ciphertext':
     case 'No keystore crypto cipher':
     case 'No keystore crypto cipherparams iv':
-      return '无效的 Keystore'
+      return gt('无效的 Keystore')
     case 'Invalid mnemonic path':
     case 'Invalid mnemonic path elements length':
     case 'Invalid mnemonic path 3th element':
     case 'Invalid mnemonic path 4th element':
     case 'Invalid mnemonic path 5th element':
     case 'Invalid index':
-      return '无效的路径'
+      return gt('无效的路径')
     case 'Invalid password':
-      return 'Keystore 密码错误'
+      return gt('Keystore 密码错误')
     case 'Keystore already exist in imported wallets':
     case 'Keystore already exist in identity wallets':
     case 'Wallet already exist':
-      return '该钱包已存在'
+      return gt('该钱包已存在')
     case 'Invalid WIF length':
     case 'Invalid compression flag':
     case 'private key length is invalid':
     case 'Invalid checksum':
-      return '无效的私钥'
+      return gt('无效的私钥')
     default:
-      return '导入失败'
+      return gt('导入失败')
   }
 }
 
 const validate = (values) => {
   const errors = {}
   if (!values.mnemonic) {
-    errors.mnemonic = '请输入助记词'
+    errors.mnemonic = gt('请输入助记词')
   }
 
   if (!values.privateKey) {
-    errors.privateKey = '请输入私钥'
+    errors.privateKey = gt('请输入私钥')
   }
 
   if (!values.password) {
-    errors.password = '请输入密码'
+    errors.password = gt('请输入密码')
   }
 
   return errors
@@ -209,7 +210,7 @@ const warn = (values) => {
   const warnings = {}
 
   if (values.password && values.password.length < 8) {
-    warnings.password = '密码不少于8位字符'
+    warnings.password = gt('密码不少于8位字符')
   }
 
   return warnings
@@ -218,7 +219,7 @@ const warn = (values) => {
 const shouldError = () => true
 
 @reduxForm({ form: 'importChainxWalletForm', validate, shouldError, warn })
-
+@injectIntl
 @connect(
   state => ({
     importChainxMnemonics: state.importChainxMnemonics,
@@ -240,7 +241,7 @@ export default class importChainxWallet extends Component {
         rightButtons: [
           {
             id: 'submit',
-            text: '确认',
+            text: gt('确认'),
             fontWeight: '400',
             enabled: false
           }
@@ -249,10 +250,10 @@ export default class importChainxWallet extends Component {
           visible: false
         },
         backButton: {
-          title: '返回'
+          title: gt('返回')
         },
         title: {
-          text: '导入ChainX钱包'
+          text: gt('导入ChainX钱包')
         },
         noBorder: true,
         drawBehind: false
@@ -305,7 +306,7 @@ export default class importChainxWallet extends Component {
             warning,
             '',
             [
-              { text: '确定', onPress: () => console.log('OK Pressed') }
+              { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
             ]
           )
           return
@@ -341,7 +342,7 @@ export default class importChainxWallet extends Component {
           rightButtons: [
             {
               id: 'submit',
-              text: '确认',
+              text: t(this,'确认'),
               fontWeight: '400',
               enabled: !this.state.invalid && !this.state.pristine && !((prevState.selectedIndex === 0 && this.state.importChainxMnemonicsLoading) || (prevState.selectedIndex === 1 && this.state.importChainxPrivateKeyLoading))
             }
@@ -368,7 +369,7 @@ export default class importChainxWallet extends Component {
           errorMessages(error),
           '',
           [
-            { text: '确定', onPress: () => this.clearError() }
+            { text: t(this,'确认'), onPress: () => this.clearError() }
           ]
         )
       }, 20)
@@ -409,7 +410,7 @@ export default class importChainxWallet extends Component {
       <View style={styles.container}>
         <View style={{ height: 52, width: '100%', justifyContent: 'center', paddingTop: 5, paddingBottom: 13, paddingLeft: 16, paddingRight: 16, backgroundColor: '#F7F7F7', borderColor: '#C8C7CC', borderBottomWidth: 0.5 }}>
           <SegmentedControlIOS
-            values={['助记词', '私钥']}
+            values={[t(this,'助记词'), t(this,'私钥')]}
             selectedIndex={this.state.selectedIndex}
             onChange={this.changeSelectedIndex}
             style={{ width: '100%' }}
@@ -418,13 +419,13 @@ export default class importChainxWallet extends Component {
         <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
           <View style={{ flex: 1, alignItems: 'center' }}>
             <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-              {this.state.selectedIndex === 0 && <Text style={{ fontSize: 13, color: '#666666' }}>输入助记词</Text>}
-              {this.state.selectedIndex === 1 && <Text style={{ fontSize: 13, color: '#666666' }}>输入私钥</Text>}
+              {this.state.selectedIndex === 0 && <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'输入助记词')}</Text>}
+              {this.state.selectedIndex === 1 && <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'输入私钥')}</Text>}
             </View>
             {this.state.selectedIndex === 0 && <Fragment>
               <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
                 <Field
-                  placeholder="用空格分隔"
+                  placeholder={t(this,'用空格分隔')}
                   name="mnemonic"
                   fieldName="mnemonic"
                   component={TextAreaField}
@@ -442,7 +443,7 @@ export default class importChainxWallet extends Component {
             {this.state.selectedIndex === 1 && <Fragment>
               <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
                 <Field
-                  placeholder="必填"
+                  placeholder={t(this,'必填')}
                   name="privateKey"
                   fieldName="privateKey"
                   component={TextAreaField}
@@ -459,12 +460,12 @@ export default class importChainxWallet extends Component {
             </Fragment>}
             {<Fragment>
               <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-                <Text style={{ fontSize: 13, color: '#666666' }}>设置密码</Text>
+                <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'设置密码')}</Text>
               </View>
               <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
                 <Field
-                  label="钱包密码"
-                  placeholder="不少于8位字符，建议混合大小写字母，数字，符号"
+                  label={t(this,"钱包密码")}
+                  placeholder={t(this,"不少于8位字符，建议混合大小写字母，数字，符号")}
                   name="password"
                   fieldName="password"
                   change={change}
@@ -474,8 +475,8 @@ export default class importChainxWallet extends Component {
                   secureTextEntry
                 />
                 <Field
-                  label="密码提示"
-                  placeholder="选填"
+                  label={t(this,"密码提示")}
+                  placeholder={t(this,'选填')}
                   name="passwordHint"
                   fieldName="passwordHint"
                   change={change}
@@ -485,7 +486,7 @@ export default class importChainxWallet extends Component {
                 />
               </View>
               <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
-                <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。</Text>
+                <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>{t(this,'如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。')}</Text>
               </View>
             </Fragment>}
           </View>
@@ -506,7 +507,7 @@ export default class importChainxWallet extends Component {
           {(this.state.importChainxPrivateKeyLoading || this.state.importChainxMnemonicsLoading) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
               <ActivityIndicator size="small" color="#000000" />
-              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>导入中...</Text>
+              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{t(this,'导入中...')}</Text>
             </View>
           </View>}
         </Modal>

@@ -125,16 +125,16 @@ export default class Asset extends Component {
     if (loadingMore) {
       transactionCells.push({
         key: 'loadingMore',
-        title: '加载中...'
+        title: t(this,'加载中...')
       })
     } else if (canLoadMore) {
       transactionCells.push({
         key: 'loadMore',
-        title: '加载更多'
+        title: t(this,'加载更多')
       })
     }
 
-    return { dataProvider: dataProvider.cloneWithRows([{ title: loading ? '获取交易记录...' : (transactionCount ? '交易记录' : '暂无交易记录') }, ...transactionCells]) }
+    return { dataProvider: dataProvider.cloneWithRows([{ title: loading ? t(this,'获取交易记录...') : (transactionCount ? t(this,'交易记录') : t(this,'暂无交易记录')) }, ...transactionCells]) }
   }
 
   navigationButtonPressed({ buttonId }) {
@@ -178,7 +178,7 @@ export default class Asset extends Component {
         options: {
           topBar: {
             title: {
-              text: `接收 ${this.props.activeAsset.symbol}`
+              text: `${t(this,'接收')} ${this.props.activeAsset.symbol}`
             }
           }
         }
@@ -229,9 +229,9 @@ export default class Asset extends Component {
   toTransactionDetail = (id, pending, failed) => {
     this.props.actions.setActiveTransactionId(id)
 
-    let statusText = '转账成功'
-    if (pending) statusText = '转账中...'
-    if (failed) statusText = '转账失败'
+    let statusText = t(this,'转账成功')
+    if (pending) statusText = t(this,'转账中...')
+    if (failed) statusText = t(this,'转账失败')
 
     Navigation.push(this.props.componentId, {
       component: {
@@ -290,7 +290,7 @@ export default class Asset extends Component {
             options: {
               topBar: {
                 title: {
-                  text: 'ChainX历史记录'
+                  text: t(this,'ChainX历史记录')
                 },
                 leftButtons: [
                   {
@@ -341,10 +341,10 @@ export default class Asset extends Component {
                 {data.transactionType === 'send' && !data.failed && <Image source={require('resources/images/sent.png')} style={{ width: 20, height: 20 }} />}
                 {data.transactionType === 'receive' && !data.failed && <Image source={require('resources/images/received.png')} style={{ width: 20, height: 20 }} />}
                 {!!data.failed && <Image source={require('resources/images/error_android.png')} style={{ width: 20, height: 20, marginRight: 2 }} />}
-                {data.transactionType === 'send' && !data.failed && !data.pending && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}>发送</Text>}
-                {data.transactionType === 'receive' && !data.failed && !data.pending && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}>接收</Text>}
-                {!!data.failed && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}>转账失败</Text>}
-                {!!data.pending && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}>转账中...</Text>}
+                {data.transactionType === 'send' && !data.failed && !data.pending && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}>{t(this,'发送')}</Text>}
+                {data.transactionType === 'receive' && !data.failed && !data.pending && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}>{t(this,'接收')}</Text>}
+                {!!data.failed && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}>{t(this,'转账失败')}</Text>}
+                {!!data.pending && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}>{t(this,'转账中...')}</Text>}
                 {!data.pending && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}> {data.date} {data.time}</Text>}
               </View>
             </View>
@@ -413,7 +413,7 @@ export default class Asset extends Component {
                                />}
 
         {chain === 'CHAINX' && (<View style={{ marginTop: 50, alignItems: 'center' }}>
-          <Text style={{fontSize: 18, color: '#673AB7' }} onPress={this.toChainXHistory}>ChainX的更多记录请点击这里...</Text>
+          <Text style={{fontSize: 18, color: '#673AB7' }} onPress={this.toChainXHistory}>{t(this,'ChainX的更多记录请点击这里...')}</Text>
         </View>)}
       </View>
     )

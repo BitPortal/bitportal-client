@@ -6,6 +6,9 @@ import { Navigation } from 'components/Navigation'
 import * as identityActions from 'actions/identity'
 import Modal from 'react-native-modal'
 import styles from './styles'
+import { injectIntl } from "react-intl";
+
+@injectIntl
 
 export default class ProducerDetail extends Component {
   static get options() {
@@ -15,10 +18,10 @@ export default class ProducerDetail extends Component {
           visible: false
         },
         title: {
-          text: '节点详情'
+          text: gt('节点详情')
         },
         backButton: {
-          title: '返回'
+          title: gt('返回')
         }
       },
       bottomTabs: {
@@ -60,7 +63,7 @@ export default class ProducerDetail extends Component {
 
     if (title) {
       items.push({
-        text: '节点名称',
+        text: t(this,'节点名称'),
         type: 'title',
         key: 'title',
         detail: title
@@ -68,7 +71,7 @@ export default class ProducerDetail extends Component {
     }
 
     items.push({
-      text: '合约帐号',
+      text: t(this,'合约帐号'),
       key: 'owner',
       type: 'owner',
       detail: owner
@@ -76,7 +79,7 @@ export default class ProducerDetail extends Component {
 
     if (location) {
       items.push({
-        text: '节点位置',
+        text: t(this,'节点位置'),
         key: 'location',
         type: 'location',
         detail: location
@@ -84,7 +87,7 @@ export default class ProducerDetail extends Component {
     }
 
     items.push({
-      text: '节点公钥',
+      text: t(this,'节点公钥'),
       type: 'identifier',
       key: 'identifier',
       detail: producer_key

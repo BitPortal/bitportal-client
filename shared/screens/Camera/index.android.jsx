@@ -18,12 +18,13 @@ import { checkPhoto } from 'utils/permissions'
 import { isJsonString } from 'utils'
 import urlParse from 'url-parse'
 import { validateBTCAddress, validateETHAddress, validateEOSAccountName } from 'utils/validate'
+import { injectIntl } from "react-intl";
 
 const QRreader = (fileUrl) => {
   var QRScanReader = NativeModules.QRScanReader
   return QRScanReader.readerQR(fileUrl)
 }
-
+@injectIntl
 @connect(
   state => ({
     identityWallet: identityWalletSelector(state),
@@ -92,10 +93,10 @@ export default class Camera extends Component {
           this.parseQrCode(result)
         }).catch((error) => {
           Alert.alert(
-            '二维码识别失败，请重新尝试或更换晰度更高的图片',
+            t(this,'二维码识别失败，请重新尝试或更换晰度更高的图片'),
             '',
             [
-              { text: '确定', onPress: () => {} }
+              { text: t(this,'确定'), onPress: () => {} }
             ]
           )
         })
@@ -108,7 +109,7 @@ export default class Camera extends Component {
             error.message,
             '',
             [
-              { text: '确定', onPress: () => {} }
+              { text: t(this,'确定'), onPress: () => {} }
             ]
           )
         }
@@ -116,10 +117,10 @@ export default class Camera extends Component {
     } else {
       console.error('unauthorized photo permission', authorized)
       Alert.alert(
-        '未授权访问本地照片',
+        t(this,'未授权访问本地照片'),
         '',
         [
-          { text: '确定', onPress: () => {} }
+          { text: t(this,'确定'), onPress: () => {} }
         ]
       )
     }
@@ -135,10 +136,10 @@ export default class Camera extends Component {
       const isJson = isJsonString(code)
       if (isJson) {
         Alert.alert(
-          `无效的${chain}地址`,
+           t(this,'无效的${chain}地址',{chain}),
           '',
           [
-            { text: '确定', onPress: () => {} }
+            { text: t(this,'确定'), onPress: () => {} }
           ]
         )
       } else {
@@ -158,10 +159,10 @@ export default class Camera extends Component {
 
         if (!isValid) {
           Alert.alert(
-            `无效的${chain}地址`,
+            t(this,'无效的${chain}地址',{chain}),
             '',
             [
-              { text: '确定', onPress: () => {} }
+              { text: t(this,'确定'), onPress: () => {} }
             ]
           )
         } else {
@@ -182,10 +183,10 @@ export default class Camera extends Component {
 
           if (!wallet) {
             Alert.alert(
-              '未检测到可授权的EOS账户',
+              t(this,'未检测到可授权的EOS账户'),
               '',
               [
-                { text: '确定', onPress: () => {} }
+                { text: t(this,'确定'), onPress: () => {} }
               ]
             )
           } else {
@@ -201,7 +202,7 @@ export default class Camera extends Component {
             code,
             '',
             [
-              { text: '确定', onPress: () => {} }
+              { text: t(this,'确定'), onPress: () => {} }
             ]
           )
         }
@@ -229,11 +230,11 @@ export default class Camera extends Component {
 
             if (!validateEOSAccountName(name)) {
               Alert.alert(
-                `无效的EOS账户名`,
+                t(this,'无效的EOS账户名'),
                 null,
                 [
                   {
-                    text: '确认',
+                    text: t(this,'确认'),
                     onPress: () => {}
                   }
                 ]
@@ -243,10 +244,10 @@ export default class Camera extends Component {
 
               if (!wallet) {
                 Alert.alert(
-                  '未检测到可授权的EOS账户',
+                  t(this,'未检测到可授权的EOS账户'),
                   '',
                   [
-                    { text: '确定', onPress: () => {} }
+                    { text: t(this,'确认'), onPress: () => {} }
                   ]
                 )
               } else {
@@ -265,7 +266,7 @@ export default class Camera extends Component {
               code,
               '',
               [
-                { text: '确定', onPress: () => {} }
+                { text: t(this,'确认'), onPress: () => {} }
               ]
             )
           }
@@ -289,11 +290,11 @@ export default class Camera extends Component {
 
           if (contract && !symbol) {
             Alert.alert(
-              `未检测到代币symbol`,
+              t(this,'未检测到代币symbol'),
               null,
               [
                 {
-                  text: '确认',
+                  text: t(this,'确认'),
                   onPress: () => {}
                 }
               ]
@@ -304,11 +305,11 @@ export default class Camera extends Component {
 
           if (!wallet) {
             Alert.alert(
-              `未检测到${chain}钱包`,
+              t(this,'未检测到${chain}钱包',{chain}),
               null,
               [
                 {
-                  text: '确认',
+                  text: t(this,'确认'),
                   onPress: () => {}
                 }
               ]
@@ -317,11 +318,11 @@ export default class Camera extends Component {
             const assetId = contract ? `${chain}/${contract}/${symbol}` : `${chain}/${symbol}`
             if (!!contract && this.props.assetAllIds.indexOf(assetId) === -1) {
               Alert.alert(
-                `尚未添加代币${symbol}`,
+                t(this,'尚未添加代币${symbol}'),
                 null,
                 [
                   {
-                    text: '确认',
+                    text: t(this,'确认'),
                     onPress: () => {}
                   }
                 ]
@@ -337,7 +338,7 @@ export default class Camera extends Component {
                   options: {
                     topBar: {
                       title: {
-                        text: `发送${symbol}到`
+                        text: t(this,'发送${symbol}到'),
                       },
                       leftButtons: [
                         {

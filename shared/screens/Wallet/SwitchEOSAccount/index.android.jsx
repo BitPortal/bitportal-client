@@ -32,10 +32,10 @@ export default class SwitchEOSAccount extends Component {
     return {
       topBar: {
         title: {
-          text: '切换EOS帐户'
+          text: gt('切换EOS帐户')
         },
         backButton: {
-          title: '返回'
+          title: gt('返回')
         },
         largeTitle: {
           visible: false

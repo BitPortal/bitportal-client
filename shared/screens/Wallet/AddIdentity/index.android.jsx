@@ -49,7 +49,7 @@ export default class AddIdentity extends Component {
         rightButtons: [
           {
             id: 'skip',
-            text: '跳过',
+            text: gt('跳过'),
             color: 'white'
           }
         ],

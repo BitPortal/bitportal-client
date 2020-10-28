@@ -48,9 +48,9 @@ export default class TransactionDetail extends Component {
     return {
       topBar: {
         backButton: {
-          title: '返回'
+          title: gt('返回')
         },
-        noBorder: true,        
+        noBorder: true,
         background: {
           translucent: false,
           color: '#F7F7F7'
@@ -81,7 +81,7 @@ export default class TransactionDetail extends Component {
       Navigation.mergeOptions(this.props.componentId, {
         topBar: {
           title: {
-            text: `${this.props.symbol} 转账成功`
+            text: `${this.props.symbol} ${t(this,'转账成功')}`
           }
         }
       })
@@ -240,7 +240,7 @@ export default class TransactionDetail extends Component {
                 <View>
                   <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>{intl.formatMessage({ id: 'txn_detail_memo' })}</Text>
                   {!!transaction.memo && <Text style={{ fontSize: 15 }}>{transaction.memo}</Text>}
-                  {!transaction.memo && <Text style={{ fontSize: 15 }}>无</Text>}
+                  {!transaction.memo && <Text style={{ fontSize: 15 }}>{t(this,'无')}</Text>}
                 </View>
                 <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
               </View>
@@ -271,7 +271,7 @@ export default class TransactionDetail extends Component {
             >
               {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
-                  <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已复制</Text>
+                  <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{t(this,'已复制')}</Text>
                 </View>
               </View>}
             </Modal>
@@ -360,7 +360,7 @@ export default class TransactionDetail extends Component {
             >
               {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
-                  <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已复制</Text>
+                  <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{t(this,'已复制')}</Text>
                 </View>
               </View>}
             </Modal>
@@ -382,7 +382,7 @@ export default class TransactionDetail extends Component {
             <View style={{ flex: 1, backgroundColor: 'white', borderTopWidth: 0.5, borderColor: 'rgba(0,0,0,0.18)' }}>
               <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
                 <View>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>收款地址</Text>
+                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>{t(this,'收款地址')}</Text>
                   <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.vout[0].scriptPubKey && transaction.vout[0].scriptPubKey.addresses && transaction.vout[0].scriptPubKey.addresses[0])}>
                     <Text style={{ fontSize: 15 }}>
                       {`${transaction.vout[0].scriptPubKey && transaction.vout[0].scriptPubKey.addresses && transaction.vout[0].scriptPubKey.addresses[0]} `}
@@ -397,7 +397,7 @@ export default class TransactionDetail extends Component {
               </View>
               <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
                 <View>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>付款地址</Text>
+                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>{t(this,'付款地址')}</Text>
                   <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.vin[0].addr)}>
                     <Text style={{ fontSize: 15 }}>
                       {`${transaction.vin[0].addr} `}
@@ -412,18 +412,18 @@ export default class TransactionDetail extends Component {
               </View>
               <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
                 <View style={{ width: '50%' }}>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>确认数</Text>
+                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>{t(this,'确认数')}</Text>
                   <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.confirmations}</Text>
                 </View>
                 <View style={{ width: '50%' }}>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>矿工费用</Text>
+                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>{t(this,'矿工费用')}</Text>
                   <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.fees}</Text>
                 </View>
                 <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
               </View>
               <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
                 <View style={{ width: '50%' }}>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>区块高度</Text>
+                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>{t(this,'区块高度')}</Text>
                   <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.blockheight}</Text>
                 </View>
                 <View style={{ position: 'absolute', height: 0.5, left: 16, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.18)' }} />
@@ -444,7 +444,7 @@ export default class TransactionDetail extends Component {
             >
               {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
-                  <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已复制</Text>
+                  <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{t(this,'已复制')}</Text>
                 </View>
               </View>}
             </Modal>
@@ -466,7 +466,7 @@ export default class TransactionDetail extends Component {
             <View style={{ flex: 1, backgroundColor: 'white', borderTopWidth: 0.5, borderColor: 'rgba(0,0,0,0.18)' }}>
               <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
                 <View>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>收款地址</Text>
+                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>{t(this,'收款地址')}</Text>
                   <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.to)}>
                     <Text style={{ fontSize: 15 }}>
                       {`${transaction.to} `}
@@ -481,7 +481,7 @@ export default class TransactionDetail extends Component {
               </View>
               <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
                 <View>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>付款地址</Text>
+                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)', marginBottom: 4 }}>{t(this,'付款地址')}</Text>
                   <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.from)}>
                     <Text style={{ fontSize: 15 }}>
                       {`${transaction.from} `}
@@ -496,7 +496,7 @@ export default class TransactionDetail extends Component {
               </View>
               <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
                 <View style={{ width: '50%' }}>
-                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>确认数</Text>
+                  <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>{t(this,'确认数')}</Text>
                   <Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.confirmations}</Text>
                 </View>
                 {/*<View style={{ width: '50%' }}>*/}
@@ -528,7 +528,7 @@ export default class TransactionDetail extends Component {
             >
               {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
-                  <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已复制</Text>
+                  <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{t(this,'已复制')}</Text>
                 </View>
               </View>}
             </Modal>

@@ -226,13 +226,13 @@ export default class ReceiveAsset extends Component {
         {hasChildAddress && chain === 'BITCOIN' && <View style={{ height: 48, width: '100%', flexDirection: 'row', justifyContent: 'center', backgroundColor: '#673AB7', elevation: 4 }}>
           <TouchableNativeFeedback onPress={this.changeSelectedIndex.bind(this, 0)} background={TouchableNativeFeedback.Ripple('rgba(255,255,255,0.3)', true)}>
             <View style={{ width: '50%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
-              <Text style={{ fontSize: 16, color: 'white' }}>主地址</Text>
+              <Text style={{ fontSize: 16, color: 'white' }}>{t(this,'主地址')}</Text>
               {!this.state.selectedIndex && <View style={{ width: '100%', height: 2, backgroundColor: 'white', position: 'absolute', bottom: 0, left: 0 }} />}
             </View>
           </TouchableNativeFeedback>
           <TouchableNativeFeedback onPress={this.changeSelectedIndex.bind(this, 1)} background={TouchableNativeFeedback.Ripple('rgba(255,255,255,0.3)', true)}>
             <View style={{ width: '50%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
-              <Text style={{ fontSize: 16, color: 'white' }}>子地址</Text>
+              <Text style={{ fontSize: 16, color: 'white' }}>{t(this,'子地址')}</Text>
               {this.state.selectedIndex === 1 && <View style={{ width: '100%', height: 2, backgroundColor: 'white', position: 'absolute', bottom: 0, left: 0 }} />}
             </View>
           </TouchableNativeFeedback>
@@ -298,7 +298,7 @@ export default class ReceiveAsset extends Component {
       >
         {this.state.showModal && <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
           <View style={{ backgroundColor: 'rgba(0,0,0,0.87)', padding: 16, borderRadius: 4, height: 48, elevation: 1, justifyContent: 'center', width: '100%' }}>
-            <Text style={{ fontSize: 14, color: 'white' }}>已复制</Text>
+            <Text style={{ fontSize: 14, color: 'white' }}>{t(this,'已复制')}</Text>
           </View>
         </View>}
       </Modal>
@@ -336,12 +336,12 @@ export default class ReceiveAsset extends Component {
             <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
               <TouchableNativeFeedback onPress={this.cancelChangeAmount} background={TouchableNativeFeedback.SelectableBackground()}>
                 <View style={{ padding: 10, borderRadius: 2, marginRight: 8 }}>
-                  <Text style={{ color: '#169689', fontSize: 14 }}>取消</Text>
+                  <Text style={{ color: '#169689', fontSize: 14 }}>{t(this,'取消')}</Text>
                 </View>
               </TouchableNativeFeedback>
               <TouchableNativeFeedback onPress={this.submitAmount} background={TouchableNativeFeedback.SelectableBackground()}>
                 <View style={{ padding: 10, borderRadius: 2 }}>
-                  <Text style={{ color: '#169689', fontSize: 14 }}>确定</Text>
+                  <Text style={{ color: '#169689', fontSize: 14 }}>{t(this,'确定')}</Text>
                 </View>
               </TouchableNativeFeedback>
             </View>

@@ -4,7 +4,9 @@ import { View, Text, TouchableNativeFeedback, FlatList, Image } from 'react-nati
 import { connect } from 'react-redux'
 import * as currencyActions from 'actions/currency'
 import { currencySymbolSelector, currencyListSelector } from 'selectors/currency'
+import { injectIntl } from "react-intl";
 
+@injectIntl
 @connect(
   state => ({
     currencySymbol: currencySymbolSelector(state),
@@ -23,7 +25,7 @@ export default class CurrencySetting extends Component {
     return {
       topBar: {
         title: {
-          text: '货币单位'
+          text: gt('货币单位')
         },
       }
     }

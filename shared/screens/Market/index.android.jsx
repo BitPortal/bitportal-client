@@ -37,15 +37,15 @@ const searchDataProvider = new DataProvider((r1, r2) => r1.name !== r2.name || r
 )
 
 export default class Market extends Component {
-  static get options() {
-    return {
-      topBar: {
-        title: {
-          text: '行情'
-        }
-      }
-    }
-  }
+  // static get options() {
+  //   return {
+  //     topBar: {
+  //       title: {
+  //         text: '行情'
+  //       }
+  //     }
+  //   }
+  // }
 
   // subscription = Navigation.events().bindComponent(this)
 
@@ -69,6 +69,16 @@ export default class Market extends Component {
     searchBarEnabled: false,
     searchTickerCount: 0,
     searchDataProvider: this.props.searchTicker.length ? searchDataProvider.cloneWithRows(this.props.searchTicker) : searchDataProvider,
+  }
+
+  componentDidAppear() {
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        title: {
+          text: t(this,'行情'),
+        },
+      },
+    })
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -155,7 +165,7 @@ export default class Market extends Component {
 
     if (loading && !ticker.length) {
       return (
-        <Loading text="加载行情..." />
+        <Loading text={t(this,'加载行情...')} />
       )
     }
 

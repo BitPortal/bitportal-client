@@ -13,10 +13,12 @@ import IndicatorModal from 'components/Modal/IndicatorModal'
 import Loading from 'components/Loading'
 import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview'
 import SearchBar from 'components/Form/SearchBar'
+import { injectIntl } from "react-intl";
 
 const dataProvider = new DataProvider((r1, r2) => r1.key !== r2.key)
 const searchDataProvider = new DataProvider((r1, r2) => r1.key !== r2.key)
 
+@injectIntl
 @connect(
   state => ({
     ui: state.ui,
@@ -285,7 +287,7 @@ export default class AddAssets extends Component {
           </View>
           <View style={{ flex: 1 }}>
             <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)' }}>{data.symbol}</Text>
-            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)' }}>{`合约: ${this.formatAddress(data.contract)}`}</Text>
+            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)' }}>{t(this,'合约: {name}',{name:this.formatAddress(data.contract)})}</Text>
           </View>
         </View>
         <View style={{ position: 'absolute', right: 16 }}>
@@ -320,7 +322,7 @@ export default class AddAssets extends Component {
     const { assets, selectedAssetId, getETHAsset, getEOSAsset, getChainXAsset, chain, ui } = this.props
 
     if ((getEOSAsset.loading || getETHAsset.loading || getChainXAsset.loading) && !assets.length) {
-      return (<Loading text="加载资产" />)
+      return (<Loading text={t(this,'加载资产')} />)
     }
 
     return (

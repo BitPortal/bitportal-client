@@ -49,6 +49,7 @@ const toolBarMargin = (() => {
   }
 })()
 
+@injectIntl
 @connect(
   state => ({
     identityWallet: identityWalletSelector(state),
@@ -114,10 +115,10 @@ export default class Camera extends Component {
         return QRDecode.decode(image.path, (error, result) => {
           if (error) {
             Alert.alert(
-              '二维码识别失败，请重新尝试或更换晰度更高的图片',
+              t(this,'二维码识别失败，请重新尝试或更换晰度更高的图片'),
               '',
               [
-                { text: '确定', onPress: () => {} }
+                { text: t(this,'确定'), onPress: () => {} }
               ]
             )
           } else {
@@ -133,7 +134,7 @@ export default class Camera extends Component {
             error.message,
             '',
             [
-              { text: '确定', onPress: () => {} }
+              { text: t(this,'确定'), onPress: () => {} }
             ]
           )
         }
@@ -141,10 +142,10 @@ export default class Camera extends Component {
     } else {
       console.error('unauthorized photo permission', authorized)
       Alert.alert(
-        '未授权访问本地照片',
+        t(this,'未授权访问本地照片'),
         '',
         [
-          { text: '确定', onPress: () => {} }
+          { text: t(this,'确定'), onPress: () => {} }
         ]
       )
     }
@@ -160,10 +161,10 @@ export default class Camera extends Component {
       const isJson = isJsonString(code)
       if (isJson) {
         Alert.alert(
-          `无效的${chain}地址`,
+          t(this,'无效的${chain}地址',{chain}),
           '',
           [
-            { text: '确定', onPress: () => {} }
+            { text: t(this,'确定'), onPress: () => {} }
           ]
         )
       } else {
@@ -183,10 +184,10 @@ export default class Camera extends Component {
 
         if (!isValid) {
           Alert.alert(
-            `无效的${chain}地址`,
+            t(this,'无效的${chain}地址',{chain}),
             '',
             [
-              { text: '确定', onPress: () => {} }
+              { text: t(this,'确定'), onPress: () => {} }
             ]
           )
         } else {
@@ -207,10 +208,10 @@ export default class Camera extends Component {
 
           if (!wallet) {
             Alert.alert(
-              '未检测到可授权的EOS账户',
+              t(this,'未检测到可授权的EOS账户'),
               '',
               [
-                { text: '确定', onPress: () => {} }
+                { text: t(this,'确定'), onPress: () => {} }
               ]
             )
           } else {
@@ -226,7 +227,7 @@ export default class Camera extends Component {
             code,
             '',
             [
-              { text: '确定', onPress: () => {} }
+              { text: t(this,'确定'), onPress: () => {} }
             ]
           )
         }
@@ -254,11 +255,11 @@ export default class Camera extends Component {
 
             if (!validateEOSAccountName(name)) {
               Alert.alert(
-                `无效的EOS账户名`,
+                t(this,'无效的EOS账户名'),
                 null,
                 [
                   {
-                    text: '确认',
+                    text: t(this,'确定'),
                     onPress: () => {}
                   }
                 ]
@@ -268,10 +269,10 @@ export default class Camera extends Component {
 
               if (!wallet) {
                 Alert.alert(
-                  '未检测到可授权的EOS账户',
+                  t(this,'未检测到可授权的EOS账户'),
                   '',
                   [
-                    { text: '确定', onPress: () => {} }
+                    { text: t(this,'确定'), onPress: () => {} }
                   ]
                 )
               } else {
@@ -290,7 +291,7 @@ export default class Camera extends Component {
               code,
               '',
               [
-                { text: '确定', onPress: () => {} }
+                { text: t(this,'确定'), onPress: () => {} }
               ]
             )
           }
@@ -314,11 +315,11 @@ export default class Camera extends Component {
 
           if (contract && !symbol) {
             Alert.alert(
-              `未检测到代币symbol`,
+              t(this,'未检测到代币symbol'),
               null,
               [
                 {
-                  text: '确认',
+                  text: t(this,'确定'),
                   onPress: () => {}
                 }
               ]
@@ -329,11 +330,11 @@ export default class Camera extends Component {
 
           if (!wallet) {
             Alert.alert(
-              `未检测到${chain}钱包`,
+              t(this,'未检测到${chain}钱包',{chain}),
               null,
               [
                 {
-                  text: '确认',
+                  text: t(this,'确定'),
                   onPress: () => {}
                 }
               ]
@@ -342,11 +343,11 @@ export default class Camera extends Component {
             const assetId = contract ? `${chain}/${contract}/${symbol}` : `${chain}/${symbol}`
             if (!!contract && this.props.assetAllIds.indexOf(assetId) === -1) {
               Alert.alert(
-                `尚未添加代币${symbol}`,
+                t(this,'尚未添加代币${symbol}',{symbol}),
                 null,
                 [
                   {
-                    text: '确认',
+                    text: t(this,'确定'),
                     onPress: () => {}
                   }
                 ]
@@ -362,12 +363,12 @@ export default class Camera extends Component {
                   options: {
                     topBar: {
                       title: {
-                        text: `发送${symbol}到`
+                        text: t(this,'发送${symbol}到',{symbol}),
                       },
                       leftButtons: [
                         {
                           id: 'cancel',
-                          text: '取消'
+                          text: t(this,'取消'),
                         }
                       ]
                     },
@@ -450,8 +451,8 @@ export default class Camera extends Component {
           </View>
         </TouchableHighlight>
         <View style={{ width: Dimensions.get('window').width, position: 'absolute', left: 0, top: (Dimensions.get('window').height / 2) - 240, height: 120, alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'white' }}>扫描二维码</Text>
-          <Text style={{ fontSize: 17, color: 'white', marginTop: 16 }}>将镜头对准二维码进行扫描</Text>
+          <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'white' }}>{t(this,'扫描二维码')}</Text>
+          <Text style={{ fontSize: 17, color: 'white', marginTop: 16 }}>{t(this,'将镜头对准二维码进行扫描')}</Text>
         </View>
         <TouchableHighlight underlayColor="rgba(0,0,0,0)" activeOpacity={0.42} style={{ position: 'absolute', right: (Dimensions.get('window').width / 2) - 14, top: (Dimensions.get('window').height / 2) + 120 + 20, width: 28, height: 28 }} onPress={this.switchFlashMode}>
           <View style={{ width: 28, height: 28 }}>

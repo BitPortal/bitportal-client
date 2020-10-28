@@ -27,18 +27,18 @@ const { Section, Item } = TableView
 )
 
 export default class Market extends Component {
-  static get options() {
-    return {
-      topBar: {
-        title: {
-          text: '行情'
-        },
-        /* searchBar: true,
-         * searchBarHiddenWhenScrolling: true,
-         * searchBarPlaceholder: 'Search'*/
-      }
-    }
-  }
+  // static get options() {
+  //   return {
+  //     topBar: {
+  //       title: {
+  //         text: '行情'
+  //       },
+  //       /* searchBar: true,
+  //        * searchBarHiddenWhenScrolling: true,
+  //        * searchBarPlaceholder: 'Search'*/
+  //     }
+  //   }
+  // }
 
   subscription = Navigation.events().bindComponent(this)
 
@@ -95,6 +95,13 @@ export default class Market extends Component {
 
   componentDidAppear() {
     this.props.actions.getTicker.requested()
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        title: {
+          text: t(this,'行情'),
+        },
+      },
+    })
     // const { ticker } = this.props
 
     /* if (ticker && ticker.length) {

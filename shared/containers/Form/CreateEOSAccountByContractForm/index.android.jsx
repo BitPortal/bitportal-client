@@ -31,11 +31,11 @@ const validate = (values) => {
   const errors = {}
 
   if (!values.accountName) {
-    errors.accountName = '请输入账户名'
+    errors.accountName = gt('请输入账户名')
   } else if (values.accountName.length !== 12) {
-    errors.accountName = '账户名长度为12位'
+    errors.accountName = gt*'账户名长度为12位')
   } else if (!/^[a-z1-5\s]+$/.test(values.accountName)) {
-    errors.accountName = '账户名由a-z与1-5字符组成'
+    errors.accountName = gt('账户名由a-z与1-5字符组成')
   }
 
   return errors
@@ -50,7 +50,7 @@ const warn = (values) => {
 const shouldError = () => true
 
 @reduxForm({ form: 'createEOSAccountByContractForm', validate, shouldError, warn })
-
+@injectIntl
 @connect(
   state => ({
     createEOSAccount: state.createEOSAccount,
@@ -114,7 +114,7 @@ export default class CreateEOSAccountByContractForm extends Component {
           <View style={{ paddingTop: 0 }}>
             {wallet && wallet.publicKeys && wallet.publicKeys.length && <Fragment>
               <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48 }}>
-                <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>公钥</Text>
+                <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{gt('公钥')}</Text>
               </View>
               <View style={{ width: '100%', alignItems: 'center' }}>
                 <View style={{ width: '100%', alignItems: 'flex-start', height: 60, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
@@ -146,12 +146,12 @@ export default class CreateEOSAccountByContractForm extends Component {
               </View>
             </Fragment>}
         <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48, borderTopWidth: 1, borderColor: 'rgba(0,0,0,0.12)' }}>
-          <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>注册信息</Text>
+          <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{gt('注册信息')}</Text>
         </View>
         <View style={{ width: '100%', alignItems: 'center' }}>
           <Field
-            label="账户名"
-            placeholder="a-z 与 1-5 组合的12位字符"
+            label={gt("账户名")}
+            placeholder={gt("a-z 与 1-5 组合的12位字符")}
             name="accountName"
             fieldName="accountName"
             component={FilledTextField}
@@ -161,11 +161,11 @@ export default class CreateEOSAccountByContractForm extends Component {
         </View>
         {wallet && wallet.publicKeys && wallet.publicKeys.length && <Fragment>
           <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48, borderTopWidth: 1, borderColor: 'rgba(0,0,0,0.12)' }}>
-            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>合约信息</Text>
+            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{gt('合约信息')}</Text>
           </View>
           <View style={{ width: '100%', alignItems: 'center', backgroundColor: 'white' }}>
             <View style={{ width: '100%', alignItems: 'center', height: 44, paddingLeft: 16, paddingRight: 16, flexDirection: 'row', marginBottom: 12 }}>
-              <Text style={{ fontSize: 16, marginRight: 16, width: 60, color: 'rgba(0,0,0,0.87)' }}>名称</Text>
+              <Text style={{ fontSize: 16, marginRight: 16, width: 60, color: 'rgba(0,0,0,0.87)' }}>{gt('名称')}</Text>
               <View style={{ marginRight: 16, width: Dimensions.get('window').width - 50 - 32 - 46 }}>
                 <TouchableHighlight underlayColor="rgba(255,255,255,0)" onPress={this.copy.bind(this, 'signupeoseos')}>
                   <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.54)' }}>
@@ -176,7 +176,7 @@ export default class CreateEOSAccountByContractForm extends Component {
               </View>
             </View>
             <View style={{ width: '100%', alignItems: 'flex-start', height: 60, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-              <Text style={{ fontSize: 16, marginRight: 16, width: 60, color: 'rgba(0,0,0,0.87)' }}>备注</Text>
+              <Text style={{ fontSize: 16, marginRight: 16, width: 60, color: 'rgba(0,0,0,0.87)' }}>{gt('备注')}</Text>
               <View style={{ marginRight: 16, width: Dimensions.get('window').width - 50 - 32 - 46 }}>
                 <TouchableHighlight underlayColor="rgba(255,255,255,0)" onPress={this.copy.bind(this, `${accountName || ''}-${wallet.publicKeys[0]}`)}>
                   <View style={{ flexDirection: 'row', alignSelf: 'flex-start' }}>
@@ -206,7 +206,7 @@ export default class CreateEOSAccountByContractForm extends Component {
         >
           {this.state.showModal && <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'rgba(0,0,0,0.87)', padding: 16, borderRadius: 4, height: 48, elevation: 1, justifyContent: 'center', width: '100%' }}>
-              <Text style={{ fontSize: 14, color: 'white' }}>已复制</Text>
+              <Text style={{ fontSize: 14, color: 'white' }}>{gt('已复制')}</Text>
             </View>
           </View>}
         </Modal>

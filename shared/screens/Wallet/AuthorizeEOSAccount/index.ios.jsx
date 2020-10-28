@@ -69,7 +69,7 @@ export default class AuthorizeEOSAccount extends Component {
         rightButtons: [
           {
             id: 'skip',
-            text: '取消'
+            text: gt('取消')
           }
         ],
         backButton: {
@@ -134,7 +134,7 @@ export default class AuthorizeEOSAccount extends Component {
           errorMessages(error),
           '',
           [
-            { text: '确定', onPress: () => this.clearError() }
+            { text: gt('确定'), onPress: () => this.clearError() }
           ]
         )
       }, 20)
@@ -172,25 +172,25 @@ export default class AuthorizeEOSAccount extends Component {
           </View>
           <View style={{ marginTop: 40, width: '100%' }}>
             <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.5)' }}>
-              授权后该应用将获得一下权限：
+              {t(this,'授权后该应用将获得一下权限:')}
             </Text>
             <Text style={{ fontSize: 17, marginTop: 12, marginBottom: 4 }}>
-              获取您的eos帐号信息
+              {t(this,'获取您的eos帐号信息')}
             </Text>
             <Text style={{ fontSize: 15 }}>
-              注意：帐号授权不会向DAPP提供您的私钥
+              {t(this,'注意：帐号授权不会向DAPP提供您的私钥')}
             </Text>
           </View>
           <View style={{ marginBottom: 40, marginTop: 40, width: '100%' }}>
             <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.5)' }}>
-              授权帐号：
+              {t(this,'授权帐号：')}
             </Text>
             <Text style={{ fontSize: 15, marginTop: 12 }}>
               {authorizeWallet.address}
             </Text>
           </View>
           <TouchableOpacity style={styles.button} onPress={this.authorize}>
-            <Text style={styles.buttonText}>确认授权</Text>
+            <Text style={styles.buttonText}>{t(this,'确认授权')}</Text>
           </TouchableOpacity>
         </View>
         <Modal
@@ -208,7 +208,7 @@ export default class AuthorizeEOSAccount extends Component {
           {loading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
               <ActivityIndicator size="small" color="#000000" />
-              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>授权中...</Text>
+              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{t(this,'授权中...')}</Text>
             </View>
           </View>}
         </Modal>

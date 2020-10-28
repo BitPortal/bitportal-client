@@ -19,9 +19,9 @@ export const errorMessages = (error) => {
 
   switch (String(message)) {
     case 'Invalid password':
-      return '密码错误'
+      return gt('密码错误')
     default:
-      return '操作失败'
+      return gt('操作失败')
   }
 }
 
@@ -48,7 +48,7 @@ export default class MyIdentity extends Component {
           visible: false
         },
         title: {
-          text: '我的身份'
+          text: gt('我的身份')
         }
       },
       bottomTabs: {

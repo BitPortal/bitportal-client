@@ -163,11 +163,11 @@ export const errorMessages = (error) => {
 
   switch (String(message)) {
     case 'Invalid password':
-      return '密码错误'
+      return gt('密码错误')
     case 'EOS System Error':
-      return 'EOS系统错误'
+      return gt('EOS系统错误')
     default:
-      return '操作失败'
+      return gt('操作失败')
   }
 }
 
@@ -183,27 +183,27 @@ const validate = (values) => {
   const errors = {}
 
   if (!values.buyRAMAmount) {
-    errors.buyRAMAmount = '请输入RAM数量'
+    errors.buyRAMAmount = gt('请输入RAM数量')
   }
 
   if (!values.sellRAMAmount) {
-    errors.sellRAMAmount = '请输入RAM数量'
+    errors.sellRAMAmount = gt('请输入RAM数量')
   }
 
   if (!values.delegateCPUAmount) {
-    errors.delegateCPUAmount = '请输入CPU数量'
+    errors.delegateCPUAmount = gt('请输入CPU数量')
   }
 
   if (!values.undelegateCPUAmount) {
-    errors.undelegateCPUAmount = '请输入CPU数量'
+    errors.undelegateCPUAmount = gt('请输入CPU数量')
   }
 
   if (!values.delegateNETAmount) {
-    errors.delegateNETAmount = '请输入NET数量'
+    errors.delegateNETAmount = gt('请输入NET数量')
   }
 
   if (!values.undelegateNETAmount) {
-    errors.undelegateNETAmount = '请输入NET数量'
+    errors.undelegateNETAmount = gt('请输入NET数量')
   }
 
   return errors
@@ -216,37 +216,37 @@ const warn = (values, props) => {
   const ramBytes = account ? account.ram_quota - account.ram_usage : 0
 
   if (isNaN(values.buyRAMAmount)) {
-    warnings.buyRAMAmount = '无效的RAM数量'
+    warnings.buyRAMAmount = gt('无效的RAM数量')
   } else if (+eosBalance < +values.buyRAMAmount) {
-    warnings.buyRAMAmount = 'EOS余额不足'
+    warnings.buyRAMAmount = gt('EOS余额不足')
   }
 
   if (isNaN(values.sellRAMAmount)) {
-    warnings.sellRAMAmount = '无效的RAM数量'
+    warnings.sellRAMAmount = gt('无效的RAM数量')
   } else if (+ramBytes < +values.sellRAMAmount) {
-    warnings.sellRAMAmount = 'RAM余额不足'
+    warnings.sellRAMAmount = gt('RAM余额不足')
   }
 
   if (isNaN(values.delegateCPUAmount)) {
-    warnings.delegateCPUAmount = '无效的CPU数量'
+    warnings.delegateCPUAmount = gt('无效的CPU数量')
   } else if (+eosBalance < +values.delegateCPUAmount + +values.delegateNETAmount) {
-    warnings.delegateCPUAmount = 'EOS余额不足'
+    warnings.delegateCPUAmount = gt('EOS余额不足')
   }
 
   if (isNaN(values.delegateNETAmount)) {
-    warnings.delegateNETAmount = '无效的CPU数量'
+    warnings.delegateNETAmount = gt('无效的CPU数量')
   }
 
   if (isNaN(values.undelegateCPUAmount)) {
-    warnings.undelegateCPUAmount = '无效的CPU数量'
+    warnings.undelegateCPUAmount = gt('无效的CPU数量')
   }  else if (!selfDelegatedBandwidth || +selfDelegatedBandwidth.cpu_weight.split(' ')[0] < +values.undelegateCPUAmount) {
-    warnings.undelegateCPUAmount = '可赎回CPU数量不足'
+    warnings.undelegateCPUAmount = gt('可赎回CPU数量不足')
   }
 
   if (isNaN(values.undelegateNETAmount)) {
-    warnings.undelegateNETAmount = '无效的NET数量'
+    warnings.undelegateNETAmount = gt('无效的NET数量')
   }  else if (!selfDelegatedBandwidth || +selfDelegatedBandwidth.net_weight.split(' ')[0] < +values.undelegateNETAmount) {
-    warnings.undelegateNETAmount = '可赎回NET数量不足'
+    warnings.undelegateNETAmount = gt('可赎回NET数量不足')
   }
 
   return warnings
@@ -291,7 +291,7 @@ export default class ManageEOSResource extends Component {
         rightButtons: [
           {
             id: 'submit',
-            text: '确认',
+            text:gt('确认'),
             fontWeight: '400',
             enabled: false
           }
@@ -300,10 +300,10 @@ export default class ManageEOSResource extends Component {
           visible: false
         },
         backButton: {
-          title: '返回'
+          title: gt('返回')
         },
         title: {
-          text: 'EOS资源管理'
+          text: gt('EOS资源管理')
         },
         noBorder: false,
         drawBehind: false
@@ -398,7 +398,7 @@ export default class ManageEOSResource extends Component {
             warning,
             '',
             [
-              { text: '确定', onPress: () => console.log('OK Pressed') }
+              { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
             ]
           )
           return
@@ -492,7 +492,7 @@ export default class ManageEOSResource extends Component {
           rightButtons: [
             {
               id: 'submit',
-              text: '确认',
+              text: t(this,'确认'),
               fontWeight: '400',
               enabled: !this.state.invalid && !this.state.pristine && !this.state.buyRAMLoading && !this.state.sellRAMLoading && !this.state.delegateBWLoading && !this.state.undelegateBWLoading
             }
@@ -547,17 +547,17 @@ export default class ManageEOSResource extends Component {
           errorMessages(error),
           errorDetail(error),
           [
-            { text: '确定', onPress: () => this.clearError() }
+            { text: t(this,'确定'), onPress: () => this.clearError() }
           ]
         )
       }, 20)
     } else {
       setTimeout(() => {
         Alert.alert(
-          '操作成功',
+          t(this,'操作成功'),
           '',
           [
-            { text: '确定', onPress: () => {} }
+            { text: t(this,'确定'), onPress: () => {} }
           ]
         )
       }, 20)
@@ -591,7 +591,7 @@ export default class ManageEOSResource extends Component {
         <View style={styles.container}>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
             <ActivityIndicator size="small" color="#000000" />
-            <Text style={{ fontSize: 17, marginLeft: 5 }}>获取账户信息中...</Text>
+            <Text style={{ fontSize: 17, marginLeft: 5 }}>{t(this,'获取账户信息中...')}</Text>
           </View>
         </View>
       )
@@ -619,7 +619,12 @@ export default class ManageEOSResource extends Component {
                 <View style={{ width: '100%', alignItems: 'flex-start', paddingTop: 12, paddingBottom: 10 , paddingLeft: 16, paddingRight: 16 }}>
                   <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Text style={{ fontSize: 17 }}>RAM</Text>
-                    <Text style={{ fontSize: 17, color: '#666666' }}>已使用{formatMemorySize(account.ram_quota)}中的{formatMemorySize(account.ram_usage)}</Text>
+                    <Text style={{ fontSize: 17, color: '#666666' }}>
+                      {t(this,"已使用{value1}中的{value2}", {
+                        value1:formatMemorySize(account.ram_quota),
+                        value2:formatMemorySize(account.ram_usage)
+                      })}
+                    </Text>
                   </View>
                   <View style={{ width: '100%', backgroundColor: '#E5E5EA', height: 18, marginTop: 8, borderRadius: 4, flexDirection: 'row' }}>
                     <View style={{ width: !!account.ram_quota ? ((1 - account.ram_usage/account.ram_quota) * (Dimensions.get('window').width - 32) - +(account.ram_quota !== account.ram_usage)) : 0, height: '100%', backgroundColor: 'rgb(255,59,48)', borderTopLeftRadius: 4, borderBottomLeftRadius: 4 }} />
@@ -627,7 +632,7 @@ export default class ManageEOSResource extends Component {
                   </View>
                   <View style={{ marginTop: 10 }}>
                     <Text>
-                      当前价格: {typeof ramPrice === 'number' ? <FormattedNumber
+                      {t(this,'当前价格')}: {typeof ramPrice === 'number' ? <FormattedNumber
                         value={ramPrice}
                         maximumFractionDigits={5}
                         minimumFractionDigits={5}
@@ -643,15 +648,20 @@ export default class ManageEOSResource extends Component {
                 <View style={{ width: '100%', alignItems: 'flex-start', paddingTop: 12, paddingBottom: 10 , paddingLeft: 16, paddingRight: 16 }}>
                   <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Text style={{ fontSize: 17 }}>CPU</Text>
-                    <Text style={{ fontSize: 17, color: '#666666' }}>已使用{formatCycleTime(account.cpu_limit.max)}中的{formatCycleTime(account.cpu_limit.used)}</Text>
+                    <Text style={{ fontSize: 17, color: '#666666' }}>
+                      {t(this,'已使用{value1}中的{value2}',{
+                        value1:formatCycleTime(account.cpu_limit.max),
+                        value2:formatCycleTime(account.cpu_limit.used)
+                      })}
+                    </Text>
                   </View>
                   <View style={{ width: '100%', backgroundColor: '#E5E5EA', height: 18, marginTop: 8, borderRadius: 4, flexDirection: 'row' }}>
                     <View style={{ width: !!account.cpu_limit.max ? ((account.cpu_limit.available/account.cpu_limit.max) * (Dimensions.get('window').width - 32) - +(account.cpu_limit.available !== account.cpu_limit.max)) : 0, height: '100%', backgroundColor: 'rgb(255,204,0)', borderTopLeftRadius: 4, borderBottomLeftRadius: 4, borderTopRightRadius: account.cpu_limit.available === account.cpu_limit.max ? 4 : 0, borderBottomRightRadius: account.cpu_limit.available === account.cpu_limit.max ? 4 : 0 }} />
                     {account.cpu_limit.available !== account.cpu_limit.max && <View style={{ height: '100%', width: 1, backgroundColor: 'white' }} />}
                   </View>
                   <View style={{ marginTop: 10, flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
-                    <Text>自己抵押: {selfDelegatedBandwidth ? <FormattedNumber value={selfDelegatedBandwidth.cpu_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS </Text>
-                    <Text>他人抵押: {othersDelegatedBandwidth ? <FormattedNumber value={othersDelegatedBandwidth.cpu_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS</Text>
+                    <Text>{t(this,'自己抵押')}: {selfDelegatedBandwidth ? <FormattedNumber value={selfDelegatedBandwidth.cpu_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS </Text>
+                    <Text>{t(this,'他人抵押')}: {othersDelegatedBandwidth ? <FormattedNumber value={othersDelegatedBandwidth.cpu_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS</Text>
                   </View>
                 </View>
                 <View style={{ position: 'absolute', left: 16, right: 0, bottom: 0, height: 0.5, backgroundColor: '#C8C7CC' }} />
@@ -660,30 +670,37 @@ export default class ManageEOSResource extends Component {
                 <View style={{ width: '100%', alignItems: 'flex-start', paddingTop: 12, paddingBottom: 10 , paddingLeft: 16, paddingRight: 16 }}>
                   <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Text style={{ fontSize: 17 }}>NET</Text>
-                    <Text style={{ fontSize: 17, color: '#666666' }}>已使用{formatMemorySize(account.net_limit.max)}中的{formatMemorySize(account.net_limit.used)}</Text>
+                    <Text style={{ fontSize: 17, color: '#666666' }}>
+                    {
+                        t(this,'已使用{value1}中的{value2}',{
+                        value1:formatMemorySize(account.net_limit.max),
+                        value2:formatMemorySize(account.net_limit.used)
+                      }
+                    )}
+                    </Text>
                   </View>
                   <View style={{ width: '100%', backgroundColor: '#E5E5EA', height: 18, marginTop: 8, borderRadius: 4, flexDirection: 'row' }}>
                     <View style={{ width: !!account.net_limit.max ? ((account.net_limit.available/account.net_limit.max) * (Dimensions.get('window').width - 32) - +(account.net_limit.available !== account.net_limit.max)) : 0, height: '100%', backgroundColor: 'rgb(76,217,100)', borderTopLeftRadius: 4, borderBottomLeftRadius: 4, borderTopRightRadius: account.net_limit.available === account.net_limit.max ? 4 : 0, borderBottomRightRadius: account.net_limit.available === account.net_limit.max ? 4 : 0 }} />
                     {account.net_limit.available !== account.net_limit.max && <View style={{ height: '100%', width: 1, backgroundColor: 'white' }} />}
                   </View>
                   <View style={{ marginTop: 10, flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
-                    <Text>自己抵押: {selfDelegatedBandwidth ? <FormattedNumber value={selfDelegatedBandwidth.net_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS </Text>
-                    <Text>他人抵押: {othersDelegatedBandwidth ? <FormattedNumber value={othersDelegatedBandwidth.net_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS</Text>
+                    <Text>{t(this,'自己抵押')}: {selfDelegatedBandwidth ? <FormattedNumber value={selfDelegatedBandwidth.net_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS </Text>
+                    <Text>{t(this,'他人抵押')}: {othersDelegatedBandwidth ? <FormattedNumber value={othersDelegatedBandwidth.net_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS</Text>
                   </View>
                 </View>
               </View>
             </Fragment>}
             <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-              <Text style={{ fontSize: 13, color: '#666666' }}>选择操作</Text>
+              <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'选择操作')}</Text>
             </View>
             <View style={{ width: '100%', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
               {this.state.selectedIndex === 0 && <Fragment>
                 <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%' }} onPress={this.toggleRAM.bind(this, true)}>
                   <View style={{ paddingTop: 8, paddingBottom: 8, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
                     <View>
-                      <Text style={{ fontSize: 17, marginBottom: 2 }}>买入 RAM</Text>
+                      <Text style={{ fontSize: 17, marginBottom: 2 }}>{t(this,'买入 RAM')}</Text>
                       <Text style={{ fontSize: 15, color: '#666666' }}>
-                        最多可买入 {balance ? <FormattedNumber value={balance.balance} maximumFractionDigits={4} minimumFractionDigits={4} /> : '--'} EOS
+                        {t(this,'最多可买入')} {balance ? <FormattedNumber value={balance.balance} maximumFractionDigits={4} minimumFractionDigits={4} /> : '--'} EOS
                       </Text>
                     </View>
                     {this.state.buy && <FastImage source={require('resources/images/radio_checked.png')} style={{ width: 24, height: 24 }} />}
@@ -694,9 +711,9 @@ export default class ManageEOSResource extends Component {
                 <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%' }} onPress={this.toggleRAM.bind(this, false)}>
                   <View style={{ paddingTop: 8, paddingBottom: 8, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
                     <View>
-                      <Text style={{ fontSize: 17, marginBottom: 2 }}>卖出 RAM</Text>
+                      <Text style={{ fontSize: 17, marginBottom: 2 }}>{t(this,'卖出 RAM')}</Text>
                       <Text style={{ fontSize: 15, color: '#666666' }}>
-                        最多可卖出 {account ? `${account.ram_quota - account.ram_usage} bytes` : '-- byte' }
+                        {t(this,'最多可卖出')} {account ? `${account.ram_quota - account.ram_usage} bytes` : '-- byte' }
                       </Text>
                     </View>
                     {this.state.buy && <FastImage source={require('resources/images/radio_unchecked.png')} style={{ width: 24, height: 24 }} />}
@@ -708,9 +725,9 @@ export default class ManageEOSResource extends Component {
                 <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%' }} onPress={this.toggleBandWidth.bind(this, true)}>
                   <View style={{ paddingTop: 8, paddingBottom: 8, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
                     <View>
-                      <Text style={{ fontSize: 17, marginBottom: 2 }}>抵押 CPU/NET</Text>
+                      <Text style={{ fontSize: 17, marginBottom: 2 }}>{t(this,'抵押 CPU/NET')}</Text>
                       <Text style={{ fontSize: 15, color: '#666666' }}>
-                        最多可抵押 {balance ? <FormattedNumber value={balance.balance} maximumFractionDigits={4} minimumFractionDigits={4} /> : '--'} EOS
+                        {t(this,'最多可抵押')} {balance ? <FormattedNumber value={balance.balance} maximumFractionDigits={4} minimumFractionDigits={4} /> : '--'} EOS
                       </Text>
                     </View>
                     {this.state.delegate && <FastImage source={require('resources/images/radio_checked.png')} style={{ width: 24, height: 24 }} />}
@@ -721,9 +738,9 @@ export default class ManageEOSResource extends Component {
                 <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%' }} onPress={this.toggleBandWidth.bind(this, false)}>
                   <View style={{ paddingTop: 8, paddingBottom: 8, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
                     <View style={{ width: Dimensions.get('window').width - 32 - 24 }}>
-                      <Text style={{ fontSize: 17, marginBottom: 2 }}>赎回 CPU/NET</Text>
+                      <Text style={{ fontSize: 17, marginBottom: 2 }}>{t(this,'赎回 CPU/NET')}</Text>
                       <Text style={{ fontSize: 15, color: '#666666' }}>
-                        最多可赎回 CPU {selfDelegatedBandwidth ? <FormattedNumber value={selfDelegatedBandwidth.cpu_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS, NET {selfDelegatedBandwidth ? <FormattedNumber value={selfDelegatedBandwidth.net_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS
+                        {t(this,'最多可赎回')} CPU {selfDelegatedBandwidth ? <FormattedNumber value={selfDelegatedBandwidth.cpu_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS, NET {selfDelegatedBandwidth ? <FormattedNumber value={selfDelegatedBandwidth.net_weight.split(' ')[0]} maximumFractionDigits={4} minimumFractionDigits={4} /> : '0.0000'} EOS
                       </Text>
                     </View>
                     {this.state.delegate && <FastImage source={require('resources/images/radio_unchecked.png')} style={{ width: 24, height: 24 }} />}
@@ -733,24 +750,24 @@ export default class ManageEOSResource extends Component {
               </Fragment>}
             </View>
             <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-              {this.state.selectedIndex === 0 && !!this.state.buy && <Text style={{ fontSize: 13, color: '#666666' }}>买入信息</Text>}
-              {this.state.selectedIndex === 0 && !this.state.buy && <Text style={{ fontSize: 13, color: '#666666' }}>卖出信息</Text>}
-              {this.state.selectedIndex === 1 && !!this.state.delegate && <Text style={{ fontSize: 13, color: '#666666' }}>抵押信息</Text>}
-              {this.state.selectedIndex === 1 && !this.state.delegate && <Text style={{ fontSize: 13, color: '#666666' }}>赎回信息</Text>}
+              {this.state.selectedIndex === 0 && !!this.state.buy && <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'买入信息')}</Text>}
+              {this.state.selectedIndex === 0 && !this.state.buy && <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'卖出信息')}</Text>}
+              {this.state.selectedIndex === 1 && !!this.state.delegate && <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'抵押信息')}</Text>}
+              {this.state.selectedIndex === 1 && !this.state.delegate && <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'赎回信息')}</Text>}
             </View>
             <Fragment>
               <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white', marginBottom: 35 }}>
                 <View style={{ width: '100%', alignItems: 'center', height: 44, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-                  {this.state.selectedIndex === 0 && !!this.state.buy && <Text style={{ fontSize: 17, marginRight: 16, width: 70 }}>支付账户</Text>}
-                  {this.state.selectedIndex === 0 && !this.state.buy && <Text style={{ fontSize: 17, marginRight: 16, width: 70 }}>出售账户</Text>}
-                  {this.state.selectedIndex === 1 && <Text style={{ fontSize: 17, marginRight: 16, width: 70 }}>发起账户</Text>}
+                  {this.state.selectedIndex === 0 && !!this.state.buy && <Text style={{ fontSize: 17, marginRight: 16, width: 70 }}>{t(this,'支付账户')}</Text>}
+                  {this.state.selectedIndex === 0 && !this.state.buy && <Text style={{ fontSize: 17, marginRight: 16, width: 70 }}>{t(this,'出售账户')}</Text>}
+                  {this.state.selectedIndex === 1 && <Text style={{ fontSize: 17, marginRight: 16, width: 70 }}>{t(this,'发起账户')}</Text>}
                   <Text style={{ fontSize: 17, marginRight: 16 }}>{account.account_name}</Text>
                   <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: '#C8C7CC' }} />
                 </View>
                 {((this.state.selectedIndex === 0 && !!this.state.buy) || this.state.selectedIndex === 1) && (
                    <Field
-                     label="接收账户"
-                     placeholder="选填，默认为发起者自己"
+                     label={t(this,'接收账户')}
+                     placeholder={t(this,'选填，默认为发起者自己')}
                      name="receiver"
                      fieldName="receiver"
                      component={TextField}
@@ -761,8 +778,8 @@ export default class ManageEOSResource extends Component {
                  )}
                 {this.state.selectedIndex === 0 && this.state.buy && (
                    <Field
-                     label="买入数量"
-                     placeholder="以 EOS 为单位"
+                     label={t(this,'买入数量')}
+                     placeholder={t(this,'以 {value} 为单位',{value:'EOS'})}
                      name="buyRAMAmount"
                      fieldName="buyRAMAmount"
                      component={TextField}
@@ -773,8 +790,8 @@ export default class ManageEOSResource extends Component {
                  )}
                 {this.state.selectedIndex === 0 && !this.state.buy && (
                    <Field
-                     label="卖出数量"
-                     placeholder="以 Byte 为单位"
+                     label={t(this,'卖出数量')}
+                     placeholder={t(this,'以 {value} 为单位',{value:'Byte'})}
                      name="sellRAMAmount"
                      fieldName="sellRAMAmount"
                      component={TextField}
@@ -785,8 +802,8 @@ export default class ManageEOSResource extends Component {
                  )}
                 {this.state.selectedIndex === 1 && this.state.delegate && (
                    <Field
-                     label="CPU数量"
-                     placeholder="以 EOS 为单位"
+                     label={t(this,'CPU数量')}
+                     placeholder={t(this,'以 {value} 为单位',{value:'EOS'})}
                      name="delegateCPUAmount"
                      fieldName="delegateCPUAmount"
                      component={TextField}
@@ -798,8 +815,8 @@ export default class ManageEOSResource extends Component {
                  )}
                 {this.state.selectedIndex === 1 && !this.state.delegate && (
                    <Field
-                     label="CPU数量"
-                     placeholder="以 EOS 为单位"
+                     label={t(this,'CPU数量')}
+                     placeholder={t(this,'以 {value} 为单位',{value:'EOS'})}
                      name="undelegateCPUAmount"
                      fieldName="undelegateCPUAmount"
                      component={TextField}
@@ -811,8 +828,8 @@ export default class ManageEOSResource extends Component {
                  )}
                 {this.state.selectedIndex === 1 && this.state.delegate && (
                    <Field
-                     label="NET数量"
-                     placeholder="以 EOS 为单位"
+                     label={t(this,'NET数量')}
+                     placeholder={t(this,'以 {value} 为单位',{value:'EOS'})}
                      name="delegateNETAmount"
                      fieldName="delegateNETAmount"
                      component={TextField}
@@ -823,8 +840,8 @@ export default class ManageEOSResource extends Component {
                  )}
                 {this.state.selectedIndex === 1 && !this.state.delegate && (
                    <Field
-                     label="NET数量"
-                     placeholder="以 EOS 为单位"
+                     label={t(this,'NET数量')}
+                     placeholder={t(this,'以 {value} 为单位',{value:'EOS'})}
                      name="undelegateNETAmount"
                      fieldName="undelegateNETAmount"
                      component={TextField}
@@ -853,10 +870,10 @@ export default class ManageEOSResource extends Component {
           {(this.state.buyRAMLoading || this.state.sellRAMLoading || this.state.delegateBWLoading || this.state.undelegateBWLoading) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
               <ActivityIndicator size="small" color="#000000" />
-              {this.state.buyRAMLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>买入中...</Text>}
-              {this.state.sellRAMLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>卖出中...</Text>}
-              {this.state.delegateBWLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>抵押中...</Text>}
-              {this.state.undelegateBWLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>赎回中...</Text>}
+              {this.state.buyRAMLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{t(this,'买入中...')}</Text>}
+              {this.state.sellRAMLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{t(this,'卖出中...')}</Text>}
+              {this.state.delegateBWLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{t(this,'抵押中...')}</Text>}
+              {this.state.undelegateBWLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{t(this,'赎回中...')}</Text>}
             </View>
           </View>}
         </Modal>
@@ -873,7 +890,7 @@ export default class ManageEOSResource extends Component {
         >
           {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
-              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已复制</Text>
+              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{t(this,'已复制')}</Text>
             </View>
           </View>}
         </Modal>

@@ -122,20 +122,20 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid password':
-      return '密码错误'
+      return gt('密码错误')
     case 'Amount less than minimum':
-      return '金额小于最低转账额度'
+      return gt('金额小于最低转账额度')
     case 'Select utxo failed':
     case 'You don\'t have enough balance':
-      return '余额不足'
+      return gt('余额不足')
     case 'Returned error: insufficient funds for gas * price + value':
-      return '余额不足以支付手续费'
+      return gt('余额不足以支付手续费')
     case 'EOS System Error':
-      return 'EOS系统错误'
+      return gt('EOS系统错误')
     case 'request timeout':
-      return '请求超时，请检查区块链浏览器以确定交易是否发出！'
+      return gt('请求超时，请检查区块链浏览器以确定交易是否发出')
     default:
-      return `转账失败 ${message.toString()}`
+      return `${gt('转账失败')} ${message.toString()}`
   }
 }
 
@@ -147,7 +147,7 @@ export const errorDetail = (error) => {
   return detail
 }
 
-formatAddress = (address) => {
+const formatAddress = (address) => {
   if (address && address.length > 20) {
     return `${address.slice(0, 10)}....${address.slice(-10)}`
   } else {
@@ -396,15 +396,15 @@ const warn = (values, props) => {
   const available = balance && balance.balance
 
   if (!values.toAddress) {
-    warnings.toAddress = '请输入转账地址'
+    warnings.toAddress = gt('请输入转账地址')
   }
 
   if (!values.amount) {
-    warnings.amount = '请输入金额'
+    warnings.amount = gt('请输入金额')
   } else if (isNaN(values.amount) || +values.amount <= 0) {
-    warnings.amount = '请输入正确的金额'
+    warnings.amount = gt('请输入正确的金额')
   } else if (!available || +values.amount > +available) {
-    warnings.amount = '余额不足'
+    warnings.amount = gt('余额不足')
   }
 
   return warnings
@@ -662,7 +662,7 @@ export default class TransferAsset extends Component {
           errorMessages(error),
           errorDetail(error),
           [
-            { text: '确定', onPress: () => this.clearError() }
+            { text: t(this,'确定'), onPress: () => this.clearError() }
           ]
         )
       }, 20)
@@ -691,15 +691,15 @@ export default class TransferAsset extends Component {
       }
 
       Alert.alert(
-        `暂无${chainSymbol}联系人地址`,
+        t(this,'暂无{symbol}联系人地址',{symbol:chainSymbol}),
         null,
         [
           {
-            text: '取消',
+            text: t(this,'取消'),
             onPress: () => console.log('cancel Pressed'),
             style: 'cancel'
           },
-          { text: '添加',
+          { text: t(this,'添加'),
             onPress: () => {
               Navigation.showModal({
                 stack: {
@@ -784,10 +784,10 @@ export default class TransferAsset extends Component {
 
   showFeesTip = () => {
     Alert.alert(
-      '矿工费',
-      '在加密货币中，矿工费是用来支付给矿工，让矿工把你的交易加到区块链中。费用的多少会影响交易的确认时间。',
+      t(this,'矿工费'),
+      t(this,'在加密货币中，矿工费是用来支付给矿工，让矿工把你的交易加到区块链中。费用的多少会影响交易的确认时间。'),
       [
-        { text: '确定', onPress: () => console.log('OK Pressed') }
+        { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
       ]
     )
     // In cryptocurrencies, a minner fee (or shortly fee) is a payment to the miners for adding a transaction into the blockchain. When a transaction has been included in the blockchain, it is considered confirmed. The size of the fee sent with the transaction determines the confirmation time.
@@ -795,10 +795,10 @@ export default class TransferAsset extends Component {
 
   showOPReturnTip = () => {
     Alert.alert(
-      'OP_RETURN 数据',
-      'OP_RETURN是一种脚本代码，可以添加任意数据到区块链中，并且带有OP_RETURN的交易output无法再被使用，因此OP_RETURN也可以用于销毁比特币。',
+      t(this,'OP_RETURN 数据'),
+      t(this,'OP_RETURN是一种脚本代码，可以添加任意数据到区块链中，并且带有OP_RETURN的交易output无法再被使用，因此OP_RETURN也可以用于销毁比特币。'),
       [
-        { text: '确定', onPress: () => console.log('OK Pressed') }
+        { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
       ]
     )
     // OP_RETURN is a script opcode which can be used to write arbitrary data on blockchain and also to mark a transaction output as invalid. Since any outputs with OP_RETURN are provably unspendable, OP_RETURN outputs can be used to burn bitcoins.
@@ -820,16 +820,16 @@ export default class TransferAsset extends Component {
     if (this.state.fastestBTCFee && this.state.halfHourBTCFee && this.state.hourBTCFee) {
       if (feeRate < this.state.hourBTCFee) {
         // return 'more than 1h'
-        return '(约一小时以上)'
+        return t(this,'(约一小时以上)')
       } else if (feeRate >= this.state.hourBTCFee && feeRate < this.state.halfHourBTCFee) {
         // return 'within 1h'
-        return '(约一小时内)'
+        return t(this,'(约一小时内)')
       } else if (feeRate >= this.state.halfHourBTCFee && feeRate < this.state.fastestBTCFee) {
         // return 'within 0.5h'
-        return '(约半小时内)'
+        return t(this,'(约半小时内)')
       } else {
         // return 'fastest'
-        return '(最快)'
+        return t(this,'(最快)')
       }
     }
 
@@ -861,6 +861,10 @@ export default class TransferAsset extends Component {
     const feeRate = this.state.feeRate || this.state.initialFeeRate || this.state.fastestBTCFee || 45
     const useGasPrice = this.state.useGasPrice || this.state.initialGwei || this.state.ethGasPrice || 4.00
 
+    let toAddressPlaceholder = chain === 'EOS'?
+      t(this,'请输入{symbol}账户名',{symbol})
+      : t(this,'请输入{symbol}地址',{symbol})
+
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <ScrollView
@@ -872,7 +876,8 @@ export default class TransferAsset extends Component {
           <View style={{ flex: 1, width: '100%', alignItems: 'center', borderTopWidth: 0, borderBottomWidth: 0, borderColor: '#C8C7CC', justifyContent: "flex-end" }}>
           <Field
             label={intl.formatMessage({ id: 'send_input_label_to_address' })}
-            placeholder={`请输入${symbol}${chain === 'EOS' ? '账户名' : '地址'}`}
+            // placeholder={`请输入${symbol}${chain === 'EOS' ? '账户名' : '地址'}`}
+            placeholder={toAddressPlaceholder}
             name="toAddress"
             fieldName="toAddress"
             component={AddressField}
@@ -889,7 +894,7 @@ export default class TransferAsset extends Component {
           />
           <Field
             label={intl.formatMessage({ id: 'send_input_label_send_memo' })}
-            placeholder={(selectedContact && !!selectedContact.memo) ? `选填，默认为: ${selectedContact.memo}` : '添加备注 (选填)'}
+            placeholder={(selectedContact && !!selectedContact.memo) ? t(this,'选填，默认为: {value}',{value:selectedContact.memo}): t(this,'添加备注 (选填)')}
             name="memo"
             fieldName="memo"
             component={MessageField}
@@ -1088,8 +1093,8 @@ export default class TransferAsset extends Component {
                     style={{ width: 40, height: 40, marginRight: 16, borderRadius: 10, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }}
                   />
                   <View style={{ height: '100%', justifyContent: 'center' }}>
-                    <Text style={{ fontSize: 17 }}>选择联系人</Text>
-                    <Text style={{ fontSize: 14, color: '#666666', marginTop: 2 }}>{`${symbol} ${chain === 'EOS' ? '账户名' : '地址'}`}</Text>
+                    <Text style={{ fontSize: 17 }}>{t(this,'选择联系人')}</Text>
+                    <Text style={{ fontSize: 14, color: '#666666', marginTop: 2 }}>{`${symbol} ${chain === 'EOS' ? t(this,'账户名') : t(this,'地址')}`}</Text>
                   </View>
                 </View>
                 {/* <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ padding: 4 }} activeOpacity={0.8} onPress={this.cancelSelectContact}>

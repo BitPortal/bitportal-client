@@ -10,7 +10,9 @@ import * as assetActions from 'actions/asset'
 import { selectedAssetIdsSelector, assetsWithSearchSelector } from 'selectors/asset'
 import { activeWalletSelector, activeChainSelector } from 'selectors/wallet'
 import styles from './styles'
+import { injectIntl } from "react-intl";
 
+@injectIntl
 @connect(
   state => ({
     getETHAsset: state.getETHAsset,
@@ -196,7 +198,7 @@ export default class AddAssets extends Component {
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <View style={{ marginTop: 80 }}>
             <ActivityIndicator size="small" color="#666666" />
-            <Text style={{ marginTop: 10, color: '#666666' }}>加载资产</Text>
+            <Text style={{ marginTop: 10, color: '#666666' }}>text={t(this,'加载资产')}</Text>
           </View>
         </View>
       )
@@ -244,8 +246,8 @@ export default class AddAssets extends Component {
         >
           {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14 }}>
-              {this.state.selecting && <Text style={{ fontSize: 17, fontWeight: 'bold' }}>添加中...</Text>}
-              {this.state.unselecting && <Text style={{ fontSize: 17, fontWeight: 'bold' }}>取消添加中...</Text>}
+              {this.state.selecting && <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{t(this,'添加中...')}</Text>}
+              {this.state.unselecting && <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{t(this,'取消添加中...')}</Text>}
             </View>
           </View>}
         </Modal>

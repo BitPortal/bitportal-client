@@ -18,7 +18,9 @@ import { loadScatter, loadScatterSync, loadMetaMask, loadMetaMaskSync } from 'ut
 import LinearGradient from 'react-native-linear-gradient'
 import { activeWalletSelector } from 'selectors/wallet'
 import FastImage from 'react-native-fast-image'
+import { injectIntl } from "react-intl";
 
+@injectIntl
 @connect(
   state => ({
     dapp: dappSelector(state),

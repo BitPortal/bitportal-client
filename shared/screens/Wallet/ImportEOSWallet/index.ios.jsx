@@ -21,6 +21,7 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import { Field, reduxForm, getFormValues, getFormSyncWarnings } from 'redux-form'
 import Modal from 'react-native-modal'
 import * as walletActions from 'actions/wallet'
+import { injectIntl } from "react-intl";
 
 const styles = EStyleSheet.create({
   container: {
@@ -160,11 +161,11 @@ export const errorMessages = (error, messages) => {
     case 'Invalid compression flag':
     case 'private key length is invalid':
     case 'No getKeyAccounts function':
-      return '当前EOS节点无法获取帐户，请切换节点后再试'
+      return gt('当前EOS节点无法获取帐户，请切换节点后再试')
     case 'Invalid private key':
-      return '无效的私钥'
+      return gt('无效的私钥')
     default:
-      return '请求失败'
+      return gt('请求失败')
   }
 }
 
@@ -172,11 +173,11 @@ const validate = (values) => {
   const errors = {}
 
   if (!values.privateKey) {
-    errors.privateKey = '请输入私钥'
+    errors.privateKey = gt('请输入私钥')
   }
 
   if (!values.password) {
-    errors.password = '请输入密码'
+    errors.password = gt('请输入密码')
   }
 
   return errors
@@ -186,7 +187,7 @@ const warn = (values) => {
   const warnings = {}
 
   if (values.password && values.password.length < 8) {
-    warnings.password = '密码不少于8位字符'
+    warnings.password = gt('密码不少于8位字符')
   }
 
   return warnings
@@ -195,7 +196,7 @@ const warn = (values) => {
 const shouldError = () => true
 
 @reduxForm({ form: 'importEOSWalletForm', validate, shouldError, warn })
-
+@injectIntl
 @connect(
   state => ({
     getKeyAccounts: state.getEOSKeyAccounts,
@@ -216,7 +217,7 @@ export default class ImportEOSWallet extends Component {
         rightButtons: [
           {
             id: 'next',
-            text: '下一步',
+            text: gt('下一步'),
             fontWeight: '400',
             enabled: false
           }
@@ -225,10 +226,10 @@ export default class ImportEOSWallet extends Component {
           visible: false
         },
         backButton: {
-          title: '返回'
+          title: gt('返回')
         },
         title: {
-          text: '导入EOS钱包'
+          text: gt('导入EOS钱包')
         },
         drawBehind: false
       }
@@ -273,7 +274,7 @@ export default class ImportEOSWallet extends Component {
             warning,
             '',
             [
-              { text: '确定', onPress: () => console.log('OK Pressed') }
+              { text: gt('确定'), onPress: () => console.log('OK Pressed') }
             ]
           )
           return
@@ -301,7 +302,7 @@ export default class ImportEOSWallet extends Component {
           rightButtons: [
             {
               id: 'next',
-              text: '下一步',
+              text: t(this,'下一步'),
               fontWeight: '400',
               enabled: !this.state.invalid && !this.state.pristine && !this.state.getKeyAccountsLoading
             }
@@ -328,7 +329,7 @@ export default class ImportEOSWallet extends Component {
           errorMessages(error),
           '',
           [
-            { text: '确定', onPress: () => this.clearError() }
+            { text: t(this,'确定'), onPress: () => this.clearError() }
           ]
         )
       }, 20)
@@ -360,11 +361,11 @@ export default class ImportEOSWallet extends Component {
         <ScrollView showsVerticalScrollIndicator={false} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
           <View style={{ flex: 1, alignItems: 'center' }}>
             <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-              <Text style={{ fontSize: 13, color: '#666666' }}>输入私钥</Text>
+              <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'输入私钥')}</Text>
             </View>
             <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
               <Field
-                placeholder="必填"
+                placeholder={t(this,'必填')}
                 name="privateKey"
                 fieldName="privateKey"
                 component={TextAreaField}
@@ -379,12 +380,12 @@ export default class ImportEOSWallet extends Component {
               </TouchableHighlight>
             </View>
             <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-              <Text style={{ fontSize: 13, color: '#666666' }}>设置密码</Text>
+              <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'设置密码')}</Text>
             </View>
             <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
               <Field
-                label="钱包密码"
-                placeholder="不少于8位字符，建议混合大小写字母，数字，符号"
+                label={t(this,'钱包密码')}
+                placeholder={t(this,'不少于8位字符，建议混合大小写字母，数字，符号')}
                 name="password"
                 fieldName="password"
                 change={change}
@@ -394,8 +395,8 @@ export default class ImportEOSWallet extends Component {
                 secureTextEntry
               />
               <Field
-                label="密码提示"
-                placeholder="选填"
+                label={t(this,'密码提示')}
+                placeholder={t(this,'选填')}
                 name="passwordHint"
                 fieldName="passwordHint"
                 change={change}
@@ -405,7 +406,7 @@ export default class ImportEOSWallet extends Component {
               />
             </View>
             <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
-              <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。</Text>
+              <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>{t(this,'如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。')}</Text>
             </View>
           </View>
         </ScrollView>
@@ -425,7 +426,7 @@ export default class ImportEOSWallet extends Component {
           {(this.state.getKeyAccountsLoading) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
               <ActivityIndicator size="small" color="#000000" />
-              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>获取帐户中...</Text>
+              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{t(this,'获取帐户中...')}</Text>
             </View>
           </View>}
         </Modal>

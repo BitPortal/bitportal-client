@@ -13,6 +13,7 @@ import uuidv4 from 'uuid/v4'
 import { validateBTCAddress, validateETHAddress, validateEOSAccountName } from 'utils/validate'
 import { findDuplicate } from 'utils'
 import styles from './styles'
+import { injectIntl } from "react-intl";
 
 const { Section, Item } = TableView
 
@@ -107,9 +108,9 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid password':
-      return '密码错误'
+      return gt('密码错误')
     default:
-      return '操作失败'
+      return gt('操作失败')
   }
 }
 
@@ -128,11 +129,11 @@ const warn = (values) => {
   const warnings = {}
 
   if (!values.name) {
-    warnings.name = '请输入姓名'
+    warnings.name = gt('请输入姓名')
   } else if (!values.name.trim().length) {
-    warnings.name = '请输入姓名'
+    warnings.name = gt('请输入姓名')
   } else if (values.name.trim().length > 50) {
-    warnings.name = '姓名不超过50个字符'
+    warnings.name = gt('姓名不超过50个字符')
   }
 
   return warnings
@@ -141,7 +142,7 @@ const warn = (values) => {
 const shouldError = () => true
 
 @reduxForm({ form: 'editContactForm', validate, shouldError, warn })
-
+@injectIntl
 @connect(
   state => ({
     formSyncWarnings: getFormSyncWarnings('editContactForm')(state),
@@ -167,14 +168,14 @@ export default class MyIdentity extends Component {
         leftButtons: [
           {
             id: 'cancel',
-            text: '取消'
+            text: gt('取消')
           }
         ],
         rightButtons: [
           {
             id: 'done',
             fontWeight: '400',
-            text: '完成'
+            text: gt('完成')
           }
         ],
         noBorder: true,
@@ -206,10 +207,10 @@ export default class MyIdentity extends Component {
 
       if (!formValues || !formValues.name || !formValues.name.trim().length) {
         Alert.alert(
-          '请输入姓名',
+          t(this,'请输入姓名'),
           '',
           [
-            { text: '确定', onPress: () => console.log('OK Pressed') }
+            { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
           ]
         )
         return
@@ -239,10 +240,10 @@ export default class MyIdentity extends Component {
 
       if (!btc.length && !eth.length && !eos.length) {
         Alert.alert(
-          '请添加地址或账户名',
+          t(this,'请添加地址或账户名'),
           '',
           [
-            { text: '确定', onPress: () => console.log('OK Pressed') }
+            { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
           ]
         )
         return
@@ -251,10 +252,10 @@ export default class MyIdentity extends Component {
       for (let i = 0; i < btc.length; i++) {
         if (!validateBTCAddress(btc[i].address)) {
           Alert.alert(
-            '无效的BTC地址',
+            t(this,'无效的{symbol}地址',{symbol:'BTC'}),
             btc[i].address,
             [
-              { text: '确定', onPress: () => console.log('OK Pressed') }
+              { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
             ]
           )
           return
@@ -264,10 +265,10 @@ export default class MyIdentity extends Component {
       for (let i = 0; i < eth.length; i++) {
         if (!validateETHAddress(eth[i].address)) {
           Alert.alert(
-            '无效的ETH地址',
+            t(this,'无效的{symbol}地址',{symbol:'ETH'}),
             eth[i].address,
             [
-              { text: '确定', onPress: () => console.log('OK Pressed') }
+              { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
             ]
           )
           return
@@ -277,10 +278,10 @@ export default class MyIdentity extends Component {
       for (let i = 0; i < eos.length; i++) {
         if (!validateEOSAccountName(eos[i].accountName)) {
           Alert.alert(
-            '无效的EOS账户名',
+            t(this,'无效的{symbol}账户名',{symbol:'EOS'}),
             eos[i].accountName,
             [
-              { text: '确定', onPress: () => console.log('OK Pressed') }
+              { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
             ]
           )
           return
@@ -291,10 +292,10 @@ export default class MyIdentity extends Component {
       const btcDuplicate = findDuplicate(btcAddresses)
       if (btcDuplicate) {
         Alert.alert(
-          '重复添加的BTC地址',
+          t(this,'重复添加的{symbol}地址',{symbol:'BTC'}),
           btcDuplicate,
           [
-            { text: '确定', onPress: () => console.log('OK Pressed') }
+            { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
           ]
         )
         return
@@ -304,10 +305,10 @@ export default class MyIdentity extends Component {
       const ethDuplicate = findDuplicate(ethAddresses)
       if (ethDuplicate) {
         Alert.alert(
-          '重复添加的ETHC地址',
+          t(this,'重复添加的{symbol}地址',{symbol:'ETH'}),
           ethDuplicate,
           [
-            { text: '确定', onPress: () => console.log('OK Pressed') }
+            { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
           ]
         )
         return
@@ -317,10 +318,10 @@ export default class MyIdentity extends Component {
       const eosDuplicate = findDuplicate(eosAddresses)
       if (eosDuplicate) {
         Alert.alert(
-          '重复添加的EOS账户名',
+          t(this,'重复添加的{symbol}账户名',{symbol:'EOS'}),
           eosDuplicate,
           [
-            { text: '确定', onPress: () => console.log('OK Pressed') }
+            { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
           ]
         )
         return
@@ -490,8 +491,8 @@ export default class MyIdentity extends Component {
             </View>
             <View>
               <Field
-                label="姓名"
-                placeholder="姓名"
+                label={t(this,'姓名')}
+                placeholder={t(this,'姓名')}
                 name="name"
                 fieldName="name"
                 change={change}
@@ -503,8 +504,8 @@ export default class MyIdentity extends Component {
                 autoCapitalize="sentences"
               />
               <Field
-                label="描述"
-                placeholder="描述"
+                label={t(this,'描述')}
+                placeholder={t(this,'描述')}
                 name="description"
                 fieldName="description"
                 change={change}
@@ -527,7 +528,7 @@ export default class MyIdentity extends Component {
                 </TouchableHighlight>
                 <Field
                   label="BTC"
-                  placeholder="地址"
+                  placeholder={t(this,'地址')}
                   name={`btc_address_${id}`}
                   fieldName={`btc_address_${id}`}
                   change={change}
@@ -547,7 +548,7 @@ export default class MyIdentity extends Component {
                   source={require('resources/images/add_green.png')}
                   style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }}
                 />
-                <Text style={{ fontSize: 15 }}>添加BTC地址</Text>
+                <Text style={{ fontSize: 15 }}>{t(this,'添加{symbol}地址',{symbol:'BTC'})}</Text>
                 <View style={{ position: 'absolute', height: 0.5, top: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
                 <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
               </View>
@@ -564,7 +565,7 @@ export default class MyIdentity extends Component {
                 </TouchableHighlight>
                 <Field
                   label="ETH"
-                  placeholder="地址"
+                  placeholder={t(this,'地址')}
                   name={`eth_address_${id}`}
                   fieldName={`eth_address_${id}`}
                   change={change}
@@ -584,7 +585,7 @@ export default class MyIdentity extends Component {
                   source={require('resources/images/add_green.png')}
                   style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }}
                 />
-                <Text style={{ fontSize: 15 }}>添加ETH地址</Text>
+                <Text style={{ fontSize: 15 }}>{t(this,'添加{symbol}地址',{symbol:'ETH'})}</Text>
                 <View style={{ position: 'absolute', height: 0.5, top: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
                 <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
               </View>
@@ -606,7 +607,7 @@ export default class MyIdentity extends Component {
                   <View style={{ flex: 1, height: 40, flexDirection: 'row' }}>
                     <Field
                       label="EOS"
-                      placeholder="账户名"
+                      placeholder={t(this,'账户名')}
                       name={`eos_accountName_${id}`}
                       fieldName={`eos_accountName_${id}`}
                       change={change}
@@ -621,7 +622,7 @@ export default class MyIdentity extends Component {
                     />
                     <Field
                       label="EOS"
-                      placeholder="默认备注"
+                      placeholder={t(this,'默认备注')}
                       name={`eos_memo_${id}`}
                       fieldName={`eos_memo_${id}`}
                       change={change}
@@ -644,7 +645,7 @@ export default class MyIdentity extends Component {
                   source={require('resources/images/add_green.png')}
                   style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }}
                 />
-                <Text style={{ fontSize: 15 }}>添加EOS账户</Text>
+                <Text style={{ fontSize: 15 }}>{t(this,"添加{symbol}账户",{symbol:'EOS'})}</Text>
                 <View style={{ position: 'absolute', height: 0.5, top: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
                 <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
               </View>

@@ -41,12 +41,12 @@ export default class WalletList extends Component {
       topBar: {
         visible: false,
         title: {
-          text: '切换钱包'
+          text: gt('切换钱包')
         },
         leftButtons: [
           {
             id: 'cancel',
-            text: '取消'
+            text: gt('取消')
           }
         ],
         /* rightButtons: [
@@ -102,10 +102,10 @@ export default class WalletList extends Component {
         <View style={{ flex: 1, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }}>
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Text style={{ color: '#666666', fontSize: 17 }}>
-                暂无钱包
+                {t(this,'暂无钱包')}
               </Text>
           </View>
-          <NavBar title="选择钱包" leftButtonTitle="取消" onLeftButtonClicked={this.onLeftButtonClicked} />
+          <NavBar title={t(this,'选择钱包')} leftButtonTitle={t(this,'取消')} onLeftButtonClicked={this.onLeftButtonClicked} />
         </View>
       )
     }
@@ -140,7 +140,7 @@ export default class WalletList extends Component {
         )}
       </Section>}
         </TableView>
-        <NavBar title="选择钱包" leftButtonTitle="取消" onLeftButtonClicked={this.onLeftButtonClicked} />
+        <NavBar title={t(this,'选择钱包')} leftButtonTitle={t(this,'取消')} onLeftButtonClicked={this.onLeftButtonClicked} />
       </View>
     )
   }
