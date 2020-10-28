@@ -33,21 +33,21 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Account name already exists':
-      return '账户名已存在'
+      return gt('账户名已存在')
     case 'Invalid private key!':
-      return '私钥无效，请导入有效的私钥'
+      return gt('私钥无效，请导入有效的私钥')
     case 'Campaign is for invitation only':
-      return '该活动仅向受邀用户开放'
+      return gt('该活动仅向受邀用户开放')
     case 'Campaign is for eos only':
-      return '该活动仅适用于EOS'
+      return gt('该活动仅适用于EOS')
     case 'Unknown invitation Code':
-      return '无效的注册码'
+      return gt('无效的注册码')
     case 'Coupon code is used':
-      return '注册码已使用'
+      return gt('注册码已使用')
     case 'Error retrieving data':
-      return '数据提取错误，请重新创建'
+      return gt('数据提取错误，请重新创建')
     default:
-      return '创建失败'
+      return gt('创建失败')
   }
 }
 
@@ -78,7 +78,7 @@ const warn = (values) => {
 }
 
 const shouldError = () => true
-
+@injectIntl
 @reduxForm({ form: 'createEOSAccountForm', validate, shouldError, warn })
 
 @connect(
@@ -170,7 +170,7 @@ export default class CreateEOSAccountByVcodeForm extends Component {
           errorMessages(error),
           '',
           [
-            { text: '确定', onPress: () => this.clearError() }
+            { text: t(this,'确定'), onPress: () => this.clearError() }
           ]
         )
       }, 20)

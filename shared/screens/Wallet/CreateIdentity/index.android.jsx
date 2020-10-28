@@ -26,15 +26,15 @@ const validate = (values) => {
   const errors = {}
 
   if (!values.name) {
-    errors.name = '请输入身份名称'
+    errors.name = gt('请输入身份名称')
   } else if (values.name.length > 12) {
-    errors.name = '身份名不超过12位'
+    errors.name = gt('身份名不超过12位')
   }
 
   if (!values.password) {
-    errors.password = '请输入密码'
+    errors.password = gt('请输入密码')
   } else if (values.password.length < 8) {
-    errors.password = '密码不少于8位字符'
+    errors.password = gt('密码不少于8位字符')
   }
 
   return errors
@@ -78,7 +78,7 @@ export default class CreateIdentity extends Component {
         rightButtons: [
           {
             id: 'next',
-            text: '下一步',
+            text: gt('下一步'),
             fontWeight: '400',
             color: 'white',
             enabled: false
@@ -88,7 +88,7 @@ export default class CreateIdentity extends Component {
           visible: false
         },
         title: {
-          text: '创建身份'
+          text: gt('创建身份')
         }
       }
     }
@@ -125,7 +125,7 @@ export default class CreateIdentity extends Component {
           rightButtons: [
             {
               id: 'next',
-              text: '下一步',
+              text: t(this,'下一步'),
               fontWeight: '400',
               color: 'white',
               enabled: !this.state.invalid && !this.state.pristine && !this.state.loading
@@ -198,7 +198,7 @@ export default class CreateIdentity extends Component {
             </View>
           </View>
         </ScrollView>
-        <IndicatorModal isVisible={loading} message="创建中..." onModalHide={this.onModalHide} />
+        <IndicatorModal isVisible={loading} message={t(this,'创建中...')} onModalHide={this.onModalHide} />
       </SafeAreaView>
     )
   }

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { FormattedNumber } from 'react-intl'
+import { FormattedNumber, injectIntl } from 'react-intl'
 import {
   View,
   ScrollView,
@@ -45,11 +45,11 @@ export const errorMessages = (error) => {
 
   switch (String(message)) {
     case 'Invalid password':
-      return '密码错误'
+      return gt('密码错误')
     case 'EOS System Error':
-      return 'EOS系统错误'
+      return gt('EOS系统错误')
     default:
-      return '操作失败'
+      return gt('操作失败')
   }
 }
 
@@ -68,19 +68,19 @@ const validate = (values, props) => {
   const ramBytes = account ? account.ram_quota - account.ram_usage : 0
 
   if (!values.buyRAMAmount) {
-    errors.buyRAMAmount = '请输入RAM数量'
+    errors.buyRAMAmount = gt('请输入RAM数量')
   } else if (!+values.buyRAMAmount) {
-    errors.buyRAMAmount = '无效的RAM数量'
+    errors.buyRAMAmount = gt('无效的RAM数量')
   } else if (+eosBalance < +values.buyRAMAmount) {
-    errors.buyRAMAmount = 'EOS余额不足'
+    errors.buyRAMAmount = gt('EOS余额不足')
   }
 
   if (!values.sellRAMAmount) {
-    errors.sellRAMAmount = '请输入RAM数量'
+    errors.sellRAMAmount = gt('请输入RAM数量')
   } else if (!+values.sellRAMAmount) {
-    errors.sellRAMAmount = '无效的RAM数量'
+    errors.sellRAMAmount = gt('无效的RAM数量')
   } else if (+ramBytes < +values.sellRAMAmount) {
-    errors.sellRAMAmount = 'RAM余额不足'
+    errors.sellRAMAmount = gt('RAM余额不足')
   }
 
   return errors
@@ -93,7 +93,7 @@ const warn = (values, props) => {
 }
 
 const shouldError = () => true
-
+@injectIntl
 @connect(
   state => ({
     buyRAM: state.buyRAM,
@@ -193,17 +193,17 @@ export default class TradeEOSRAMForm extends Component {
           errorMessages(error),
           errorDetail(error),
           [
-            { text: '确定', onPress: () => this.clearError() }
+            { text: t(this,'确定'), onPress: () => this.clearError() }
           ]
         )
       }, 20)
     } else {
       setTimeout(() => {
         Alert.alert(
-          '操作成功',
+          t(this,'操作成功'),
           '',
           [
-            { text: '确定', onPress: () => {} }
+            { text: t(this,'确定'), onPress: () => {} }
           ]
         )
       }, 20)
@@ -240,29 +240,35 @@ export default class TradeEOSRAMForm extends Component {
               <View style={{ width: '100%', alignItems: 'flex-start', paddingTop: 12, paddingBottom: 10 , paddingLeft: 16, paddingRight: 16 }}>
                 <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                   <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)' }}>RAM</Text>
-                  <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)' }}>已使用{formatMemorySize(account.ram_quota)}中的{formatMemorySize(account.ram_usage)}</Text>
+                  <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)' }}>
+                    {/*已使用{formatMemorySize(account.ram_quota)}中的{formatMemorySize(account.ram_usage)}*/}
+                    {t(this,'已使用{value1}中的{value2}',{
+                      value1:formatMemorySize(account.ram_quota),
+                      value2:formatMemorySize(account.ram_usage)
+                    })}
+                  </Text>
                 </View>
                 <View style={{ width: '100%', backgroundColor: '#E5E5EA', height: 4, marginTop: 8, flexDirection: 'row' }}>
                   <View style={{ width: !!account.ram_quota ? ((1 - account.ram_usage/account.ram_quota) * (Dimensions.get('window').width - 32) - +(account.ram_quota !== account.ram_usage)) : 0, height: '100%', backgroundColor: 'rgb(255,59,48)' }} />
                   {account.ram_quota !== account.ram_usage && <View style={{ height: '100%', width: 1, backgroundColor: 'white' }} />}
                 </View>
                 <View style={{ marginTop: 10 }}>
-                  <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)' }}>当前价格: {typeof ramPrice === 'number' ? <FormattedNumber value={ramPrice} maximumFractionDigits={5} minimumFractionDigits={5} /> : '--'} EOS/KB</Text>
+                  <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)' }}>{t(this,'当前价格')}: {typeof ramPrice === 'number' ? <FormattedNumber value={ramPrice} maximumFractionDigits={5} minimumFractionDigits={5} /> : '--'} EOS/KB</Text>
                 </View>
               </View>
             </View>
             <View style={{ borderTopWidth: 1, borderColor: 'rgba(0,0,0,0.12)', paddingBottom: 16 }}>
               <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48 }}>
-                <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>选择操作</Text>
+                <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'选择操作')}</Text>
               </View>
               <TouchableNativeFeedback onPress={this.toggleRAM.bind(this, true)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 60 }}>
                   {this.props.buy && <Image source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
                   {!this.props.buy && <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
                   <View>
-                    <Text style={{ fontSize: 16, marginBottom: 2, color: 'rgba(0,0,0,0.87)' }}>买入 RAM</Text>
+                    <Text style={{ fontSize: 16, marginBottom: 2, color: 'rgba(0,0,0,0.87)' }}>{t(this,'买入 RAM')}</Text>
                     <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)' }}>
-                      最多可买入 {balance ? <FormattedNumber value={balance.balance} maximumFractionDigits={4} minimumFractionDigits={4} /> : '--'} EOS
+                      {t(this,'最多可买入')} {balance ? <FormattedNumber value={balance.balance} maximumFractionDigits={4} minimumFractionDigits={4} /> : '--'} EOS
                     </Text>
                   </View>
                 </View>
@@ -272,9 +278,9 @@ export default class TradeEOSRAMForm extends Component {
                   {!this.props.buy && <Image source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
                   {this.props.buy && <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
                   <View>
-                    <Text style={{ fontSize: 16, marginBottom: 2, color: 'rgba(0,0,0,0.87)' }}>卖出 RAM</Text>
+                    <Text style={{ fontSize: 16, marginBottom: 2, color: 'rgba(0,0,0,0.87)' }}>{t(this,'卖出 RAM')}</Text>
                     <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)' }}>
-                      最多可卖出 {account ? `${account.ram_quota - account.ram_usage} bytes` : '-- byte' }
+                      {t(this,'最多可卖出')} {account ? `${account.ram_quota - account.ram_usage} bytes` : '-- byte' }
                     </Text>
                   </View>
                 </View>
@@ -282,13 +288,13 @@ export default class TradeEOSRAMForm extends Component {
             </View>
             <View style={{ borderTopWidth: 1, borderColor: 'rgba(0,0,0,0.12)' }}>
               <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48 }}>
-                {!!this.props.buy && <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>买入信息</Text>}
-                {!this.props.buy && <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>卖出信息</Text>}
+                {!!this.props.buy && <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'买入信息')}</Text>}
+                {!this.props.buy && <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'卖出信息')}</Text>}
               </View>
             </View>
             <Field
-              label="当前账户"
-              placeholder={!!this.props.buy ? '买入发起者' : '卖出发起者'}
+              label={t(this,'当前账户')}
+              placeholder={!!this.props.buy ? t(this,'买入发起者') : t(this,'卖出发起者')}
               name="currentAccount"
               fieldName="currentAccount"
               component={FilledTextField}
@@ -297,8 +303,8 @@ export default class TradeEOSRAMForm extends Component {
               editable={false}
             />
             {this.props.buy && <Field
-              label="接收账户"
-              placeholder="选填，默认为发起者自己"
+              label={t(this,'接收账户')}
+              placeholder={t(this,'"选填，默认为发起者自己"')}
               name="receiver"
               fieldName="receiver"
               component={FilledTextField}
@@ -307,8 +313,8 @@ export default class TradeEOSRAMForm extends Component {
             />}
             {this.props.buy && (
                <Field
-                 label="买入数量"
-                 placeholder="以 EOS 为单位"
+                 label={t(this,'买入数量')}
+                 placeholder={t(this,'以 {value} 为单位',{value:'EOS'})}
                  name="buyRAMAmount"
                  fieldName="buyRAMAmount"
                  component={FilledTextField}
@@ -319,8 +325,8 @@ export default class TradeEOSRAMForm extends Component {
              )}
                 {!this.props.buy && (
                    <Field
-                     label="卖出数量"
-                     placeholder="以 Byte 为单位"
+                     label={t(this,'卖出数量')}
+                     placeholder={t(this,'以 {value} 为单位',{value:'Byte'})}
                      name="sellRAMAmount"
                      fieldName="sellRAMAmount"
                      component={FilledTextField}
@@ -331,7 +337,7 @@ export default class TradeEOSRAMForm extends Component {
                  )}
           </View>
         </ScrollView>
-        <IndicatorModal isVisible={this.state.buyRAMLoading || this.state.sellRAMLoading} message={(this.state.buyRAMLoading && '买入中...') || (this.state.sellRAMLoading && '卖出中...')} onModalHide={this.onModalHide} onModalShow={this.onModalShow} />
+        <IndicatorModal isVisible={this.state.buyRAMLoading || this.state.sellRAMLoading} message={(this.state.buyRAMLoading && t(this,'买入中...')) || (this.state.sellRAMLoading && t(this,'卖出中...'))} onModalHide={this.onModalHide} onModalShow={this.onModalShow} />
       </View>
     )
   }

@@ -24,7 +24,6 @@ const { StatusBarManager } = NativeModules
 const { Section, Item } = TableView
 
 @injectIntl
-
 @connect(
   state => ({
     getTransactions: state.getTransactions,
@@ -40,6 +39,7 @@ const { Section, Item } = TableView
     canLoadMore: activeWalletTransactionsCanLoadMoreSelector(state),
     currency: currencySelector(state)
   }),
+
   dispatch => ({
     actions: bindActionCreators({
       ...transactionActions,
@@ -77,12 +77,12 @@ export default class Asset extends Component {
             options: {
               topBar: {
                 title: {
-                  text: `发送${this.props.activeAsset.symbol}到`
+                  text: t(this,'发送{symbol}到',{symbol:this.props.activeAsset.symbol})
                 },
                 leftButtons: [
                   {
                     id: 'cancel',
-                    text: '取消'
+                    text: t(this,'取消')
                   }
                 ]
               }
@@ -118,7 +118,7 @@ export default class Asset extends Component {
         options: {
           topBar: {
             title: {
-              text: `接收 ${this.props.activeAsset.symbol}`
+              text: `${t(this,'接收')} ${this.props.activeAsset.symbol}`
             },
             noBorder: this.props.activeWallet.chain === 'BITCOIN' && this.props.childAddress && this.props.activeWallet.address !== this.props.childAddress
           }
@@ -175,9 +175,9 @@ export default class Asset extends Component {
   toTransactionDetail = (id, pending, failed) => {
     this.props.actions.setActiveTransactionId(id)
 
-    let statusText = '转账成功'
-    if (pending) statusText = '转账中...'
-    if (failed) statusText = '转账失败'
+    let statusText = t(this,'转账成功')
+    if (pending) statusText = t(this,'转账中...')
+    if (failed) statusText = t(this,'转账失败')
 
     Navigation.push(this.props.componentId, {
       component: {
@@ -243,7 +243,7 @@ export default class Asset extends Component {
         options: {
           topBar: {
             title: {
-              text: 'ChainX历史记录'
+              text: t(this,'ChainX历史记录')
             }
           }
         }
@@ -347,7 +347,7 @@ export default class Asset extends Component {
           <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 0, backgroundColor: '#C8C7CC' }} />
         </View>
         {chain === 'CHAINX' && (<View style={{ marginTop: 50, alignItems: 'center' }}>
-          <Text style={{fontSize: 18, color: '#007AFF' }} onPress={this.toChainXHistory}>ChainX的更多记录请点击这里...</Text>
+          <Text style={{fontSize: 18, color: '#007AFF' }} onPress={this.toChainXHistory}>{t(this,'ChainX的更多记录请点击这里...')}</Text>
         </View>)}
         {chain !== 'CHAINX' && (
           <TableView
@@ -367,9 +367,9 @@ export default class Asset extends Component {
             <Section uid="HeaderTableViewCell">
               <Item
                 reactModuleForCell="HeaderTableViewCell"
-                title={emptyTransactions ? '暂无交易记录' : '交易记录'}
+                title={emptyTransactions ? t(this,'暂无交易记录') : t(this,'交易记录')}
                 loading={(!refreshing && loading) && (!hasTransactions || emptyTransactions)}
-                loadingTitle="获取交易记录..."
+                loadingTitle={t(this,'获取交易记录...')}
                 height={48}
                 componentId={this.props.componentId}
                 isDarkMode={isDarkMode}

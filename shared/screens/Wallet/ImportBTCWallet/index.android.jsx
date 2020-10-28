@@ -34,7 +34,7 @@ export default class ImportBTCWallet extends Component {
           }
         ],
         title: {
-          text: '导入BTC钱包'
+          text: gt('导入BTC钱包')
         },
         noBorder: true,
         elevation: 0
@@ -48,8 +48,8 @@ export default class ImportBTCWallet extends Component {
     isSegWit: true,
     index: 0,
     routes: [
-      { key: 'mnemonics', title: '助记词' },
-      { key: 'privateKey', title: '私钥' },
+      { key: 'mnemonics', title: gt('助记词') },
+      { key: 'privateKey', title: gt('私钥') },
     ],
   }
 

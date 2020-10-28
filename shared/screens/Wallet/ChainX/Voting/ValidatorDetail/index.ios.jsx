@@ -60,7 +60,7 @@ const validate = (values) => {
   const errors = {}
 
   if (!values.votingAmount) {
-    errors.votingAmount = '请输入投票数额'
+    errors.votingAmount = gt('请输入投票数额')
   }
 
   return errors
@@ -91,23 +91,23 @@ export default class ChainXValidatorDetail extends Component {
         leftButtons: [
           {
             id: 'cancel',
-            text: '返回'
+            text: gt('返回')
           }
         ],
         rightButtons: [
           {
             id: 'help',
-            text: '详情'
+            text: gt('详情')
           }
         ],
         largeTitle: {
           visible: false
         },
         title: {
-          text: '节点详情'
+          text: gt('节点详情')
         },
         backButton: {
-          title: '返回'
+          title: gt('返回')
         }
       },
       bottomTabs: {
@@ -140,7 +140,7 @@ export default class ChainXValidatorDetail extends Component {
           options: {
             topBar: {
               title: {
-                text: '节点详情 - 更多'
+                text: t(this,'节点详情 - 更多')
               }
             }
           }
@@ -160,10 +160,10 @@ export default class ChainXValidatorDetail extends Component {
     const { intl } = this.props
     const votingAmount = this.props.formValues && this.props.formValues.votingAmount
     if (!votingAmount) {
-      Dialog.alert('提示', '请输入投票数量')
+      Dialog.alert(t(this,'提示'), t(this,'请输入投票数量'))
       return
     }
-    const hint = `本次操作将为该节点投票${parseFloat(votingAmount).toFixed(8)} PCX`
+    const hint = t(this,'本次操作将为该节点投票{message} PCX',{message:parseFloat(votingAmount).toFixed(8)})
     Alert.prompt(
       intl.formatMessage({ id: 'alert_input_wallet_password' }),
       hint,
@@ -190,7 +190,7 @@ export default class ChainXValidatorDetail extends Component {
     const { intl } = this.props
     Alert.prompt(
       intl.formatMessage({ id: 'alert_input_wallet_password' }),
-      '本次操作将提取该节点的利息',
+     t(this,'本次操作将提取该节点的利息'),
       [
         {
           text: intl.formatMessage({ id: 'alert_button_cancel' }),
@@ -218,14 +218,14 @@ export default class ChainXValidatorDetail extends Component {
       if (this.state.txLoading === true) {
         this.setState({
           txLoading: false,
-          txError: '交易超时，请检查区块链浏览器以确认交易是否完成'
+          txError: t(this,'交易超时，请检查区块链浏览器以确认交易是否完成')
         })
       }
     }, 30000)
 
     if (!activeWallet || activeWallet.chain !== 'CHAINX' || !activeWallet.id) {
-      Dialog.alert('Error', '当前钱包并非有效的ChainX钱包')
-      console.error('当前钱包并非有效的ChainX钱包', activeWallet)
+      Dialog.alert('Error', t(this,'当前钱包并非有效的ChainX钱包'))
+      console.error( t(this,'当前钱包并非有效的ChainX钱包'), activeWallet)
       return
     }
 
@@ -239,8 +239,8 @@ export default class ChainXValidatorDetail extends Component {
       if (tx) {
         console.log('投票交易已发送, txId: ', tx.toString())
         Alert.alert(
-          '发送交易成功',
-          `投票交易发送成功，请检查区块链信息!交易id:${tx.toString()}`,
+          t(this,'发送交易成功'),
+          t(this,"投票交易发送成功，请检查区块链信息!交易id:{message}",{message:tx.toString()}),
           {
             text: 'OK',
             onPress: () => {
@@ -265,8 +265,8 @@ export default class ChainXValidatorDetail extends Component {
       } else {
         console.error('投票失败', tx.toString())
         Alert.alert(
-          '错误',
-          `错误：${tx.toString()}`,
+          t(this,'错误'),
+          `${t(this,'错误')}：${tx.toString()}`,
           [
             { text: 'OK', onPress: () => this.setState({ txLoading: false }) }
           ]
@@ -275,8 +275,8 @@ export default class ChainXValidatorDetail extends Component {
       this.props.actions.getBalance.refresh(this.props.activeWallet)
     } catch (e) {
       Alert.alert(
-        '错误',
-        `错误：${e.toString()}`,
+        t(this,'错误'),
+        `${t(this,'错误')}：${e.toString()}`,
         [
           { text: 'OK', onPress: () => this.setState({ txLoading: false }) }
         ]
@@ -289,8 +289,8 @@ export default class ChainXValidatorDetail extends Component {
     const id = activeWallet.id
 
     if (!activeWallet || activeWallet.chain !== 'CHAINX' || !activeWallet.id) {
-      Dialog.alert('Error', '当前钱包并非有效的ChainX钱包')
-      console.error('当前钱包并非有效的ChainX钱包', activeWallet)
+      Dialog.alert('Error', t(this,'当前钱包并非有效的ChainX钱包'))
+      console.error( t(this,'当前钱包并非有效的ChainX钱包'), activeWallet)
       return
     }
 
@@ -302,14 +302,14 @@ export default class ChainXValidatorDetail extends Component {
     try {
       const tx = await voteClaim(password, keystore, activeWallet.address, targetAddress)
       if (tx) {
-        Dialog.alert('发送交易成功', `提息交易发送成功，请检查区块链信息!交易id:${tx.toString()}`)
+        Dialog.alert(t(this,'发送交易成功'), t(this,'提息交易发送成功，请检查区块链信息!交易id:{message}',{message:tx.toString()}))
       } else {
-        console.error('提息失败', tx.toString())
-        Dialog.alert('错误', '提息失败')
+        console.error(t(this,'提息失败'), tx.toString())
+        Dialog.alert(t(this,'错误'), t(this,'提息失败'))
       }
       this.props.actions.getBalance.refresh(this.props.activeWallet)
     } catch (e) {
-      Dialog.alert('提息失败', `错误：${e.toString()}`)
+      Dialog.alert(t(this,'提息失败'), `${t(this,'错误')}：${e.toString()}`)
     }
   }
 
@@ -322,7 +322,7 @@ export default class ChainXValidatorDetail extends Component {
           'Error',
           this.state.txError.toString(),
           [
-            { text: '确定', onPress: () => this.setState({ txError: '' }) }
+            { text: t(this,'确定'), onPress: () => this.setState({ txError: '' }) }
           ]
         )
       }, 20)
@@ -401,7 +401,7 @@ export default class ChainXValidatorDetail extends Component {
     items.push(
       <Item
         reactModuleForCell="ChainXValidatorDetailTableViewCell"
-        text="待领利息"
+        text={t(this,'待领利息')}
         key="pendingInterest"
         type="pendingInterest"
         detail={pendingInterestStr}
@@ -424,13 +424,13 @@ export default class ChainXValidatorDetail extends Component {
             <Cell>
               <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
                 <View style={{ width: '100%', alignItems: 'center', height: 56, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-                  <Text style={{ fontSize: 17, fontWeight: 'bold', marginRight: 16, width: 70 }}>可用余额</Text>
+                  <Text style={{ fontSize: 17, fontWeight: 'bold', marginRight: 16, width: 70 }}>{t(this,'可用余额')}</Text>
                   <Text style={{ fontSize: 17 }}>{balance && balance.balance && balance.balance.toFixed(balance.precision)} {balance.symbol}</Text>
-                  <Text style={{ fontSize: 17 }}>{!balance && '暂时无法显示'}</Text>
+                  <Text style={{ fontSize: 17 }}>{!balance && t(this,'暂时无法显示')}</Text>
                 </View>
                 <Field
-                  label="投票数量"
-                  placeholder="输入PCX数量"
+                  label={t(this,'投票数量')}
+                  placeholder={t(this,'输入PCX数量')}
                   name="votingAmount"
                   fieldName="votingAmount"
                   component={TextField}
@@ -439,10 +439,10 @@ export default class ChainXValidatorDetail extends Component {
                   separator={false}
                 />
                 <TouchableOpacity style={styles.button} onPress={this.toVote.bind(this)}>
-                  <Text style={styles.buttonText}>投票</Text>
+                  <Text style={styles.buttonText}>{t(this,'投票')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.button, { backgroundColor: '#EFEFF4' }]} onPress={this.toClaim.bind(this)}>
-                  <Text style={[styles.buttonText, { color: '#007AFF' }]}>提息</Text>
+                  <Text style={[styles.buttonText, { color: '#007AFF' }]}>{t(this,'提息')}</Text>
                 </TouchableOpacity>
               </View>
             </Cell>
@@ -463,7 +463,7 @@ export default class ChainXValidatorDetail extends Component {
           {this.state.txLoading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
               <ActivityIndicator size="small" color="#000000" />
-              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>交易发送中...</Text>
+              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{t(this,'交易发送中...')}</Text>
             </View>
           </View>}
         </Modal>

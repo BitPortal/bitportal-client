@@ -18,34 +18,34 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid mnemonics':
-      return '无效的助记词'
+      return gt('无效的助记词')
     case 'Invalid keystore':
     case 'No keystore crypto':
     case 'No keystore crypto cipherparams':
     case 'No keystore crypto ciphertext':
     case 'No keystore crypto cipher':
     case 'No keystore crypto cipherparams iv':
-      return '无效的 Keystore'
+      return gt('无效的 Keystore')
     case 'Invalid mnemonic path':
     case 'Invalid mnemonic path elements length':
     case 'Invalid mnemonic path 3th element':
     case 'Invalid mnemonic path 4th element':
     case 'Invalid mnemonic path 5th element':
     case 'Invalid index':
-      return '无效的路径'
+      return gt('无效的路径')
     case 'Invalid password':
-      return 'Keystore 密码错误'
+      return gt('Keystore 密码错误')
     case 'Keystore already exist in imported wallets':
     case 'Keystore already exist in identity wallets':
     case 'Wallet already exist':
-      return '该钱包已存在'
+      return gt('该钱包已存在')
     case 'Invalid WIF length':
     case 'Invalid compression flag':
     case 'private key length is invalid':
     case 'Invalid checksum':
-      return '无效的私钥'
+      return gt('无效的私钥')
     default:
-      return '导入失败'
+      return gt('导入失败')
   }
 }
 
@@ -53,17 +53,17 @@ const validate = (values, props) => {
   const errors = {}
 
   if (!values.mnemonic) {
-    errors.mnemonic = '请输入助记词'
+    errors.mnemonic = gt('请输入助记词')
   }
 
   if (!values.path) {
-    errors.path = '请输入路径'
+    errors.path = gt('请输入路径')
   }
 
   if (!values.password) {
-    errors.password = '请输入密码'
+    errors.password = gt('请输入密码')
   } else if (values.password && values.password.length < 8) {
-    errors.password = '密码不少于8位字符'
+    errors.password = gt('密码不少于8位字符')
   }
 
   return errors
@@ -163,7 +163,7 @@ export default class ImportETHMnemonicsForm extends Component {
           errorMessages(error),
           '',
           [
-            { text: '确定', onPress: () => this.clearError() }
+            { text: t(this,'确定'), onPress: () => this.clearError() }
           ]
         )
       }, 20)
@@ -195,13 +195,13 @@ export default class ImportETHMnemonicsForm extends Component {
 
     if (buttonIndex === 1) {
       this.props.change('path', `m/44'/60'/0'/0/0`)
-      this.setState({ pathEditable: false, pathSwitchLabel: '默认', pathIndex: 1 })
+      this.setState({ pathEditable: false, pathSwitchLabel: t(this,'默认'), pathIndex: 1 })
     } else if (buttonIndex === 2) {
       this.props.change('path', `m/44'/60'/0'/0`)
       this.setState({ pathEditable: false, pathSwitchLabel: 'Ledger', pathIndex: 2 })
     } else if (buttonIndex === 3) {
       this.props.change('path', `m/44'/60'/1'/0/0`)
-      this.setState({ pathEditable: true, pathSwitchLabel: '自定义', pathIndex: 3 })
+      this.setState({ pathEditable: true, pathSwitchLabel: t(this,'自定义'), pathIndex: 3 })
     } else {
       this.setState({ pathEditable: editable })
     }
@@ -233,7 +233,7 @@ export default class ImportETHMnemonicsForm extends Component {
           <View style={{ paddingTop: 16 }}>
             <View style={{ width: '100%' }}>
               <Field
-                label="助记词"
+                label={t(this,'助记词')}
                 placeholder={intl.formatMessage({ id: 'identity_input_placeholder_mnemonics' })}
                 name="mnemonic"
                 fieldName="mnemonic"
@@ -250,10 +250,10 @@ export default class ImportETHMnemonicsForm extends Component {
             </View>
             <View style={{ borderTopWidth: 1, borderColor: 'rgba(0,0,0,0.12)' }}>
               <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48 }}>
-                <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>选择路径</Text>
+                <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'选择路径')}</Text>
               </View>
               <Field
-                label="当前路径"
+                label={t(this,'当前路径')}
                 switchLabel={this.state.pathSwitchLabel}
                 name="path"
                 fieldName="path"
@@ -266,7 +266,7 @@ export default class ImportETHMnemonicsForm extends Component {
               />
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48, borderTopWidth: 1, borderColor: 'rgba(0,0,0,0.12)' }}>
-              <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>设置密码</Text>
+              <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'设置密码')}</Text>
             </View>
             <Field
               label={intl.formatMessage({ id: 'identity_input_label_wallet_passwd' })}
@@ -291,10 +291,10 @@ export default class ImportETHMnemonicsForm extends Component {
             />
           </View>
           <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 16, justifyContent: 'flex-start' }}>
-            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)', lineHeight: 18 }}>如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。</Text>
+            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)', lineHeight: 18 }}>{t(this,'如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。<')}/Text>
           </View>
         </ScrollView>
-        <IndicatorModal isVisible={this.state.importETHMnemonicsLoading} message="导入中..." onModalHide={this.onModalHide} onModalShow={this.onModalShow} />
+        <IndicatorModal isVisible={this.state.importETHMnemonicsLoading} message={t(this,'导入中...')} onModalHide={this.onModalHide} onModalShow={this.onModalShow} />
         <Modal
           isVisible={this.state.showSimpleModal}
           backdropOpacity={0.6}
@@ -310,13 +310,13 @@ export default class ImportETHMnemonicsForm extends Component {
           {(this.state.showSimpleModal) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 6 }}>
             <View style={{ backgroundColor: 'white', borderRadius: 4, alignItem: 'center', elevation: 14, minWidth: 240 }}>
               <View style={{ paddingHorizontal: 24, paddingBottom: 9, paddingTop: 20 }}>
-                <Text style={{ fontSize: 20, color: 'rgba(0,0,0,0.87)', fontWeight: '500' }}>选择路径</Text>
+                <Text style={{ fontSize: 20, color: 'rgba(0,0,0,0.87)', fontWeight: '500' }}>{t(this,'选择路径')}</Text>
               </View>
               <View style={{ paddingBottom: 12, paddingTop: 6, paddingHorizontal: 16 }}>
                 <TouchableNativeFeedback onPress={this.onSwitchPath.bind(this, 1)} background={TouchableNativeFeedback.SelectableBackground()}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', height: 48, paddingRight: 8 }}>
                     {this.state.pathIndex === 1 ? <Image source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, margin: 8 }} /> : <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, margin: 8 }} />}
-                    <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>m/44'/60'/0'/0/0 默认</Text>
+                    <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>m/44'/60'/0'/0/0 {t(this,'默认')}</Text>
                   </View>
                 </TouchableNativeFeedback>
                 <TouchableNativeFeedback onPress={this.onSwitchPath.bind(this, 2)} background={TouchableNativeFeedback.SelectableBackground()}>
@@ -328,7 +328,7 @@ export default class ImportETHMnemonicsForm extends Component {
                 <TouchableNativeFeedback onPress={this.onSwitchPath.bind(this, 3)} background={TouchableNativeFeedback.SelectableBackground()}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', height: 48, paddingRight: 8 }}>
                     {this.state.pathIndex === 3 ? <Image source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, margin: 8 }} /> : <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, margin: 8 }} />}
-                    <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>m/44'/60'/1'/0/0 自定义路径</Text>
+                    <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>m/44'/60'/1'/0/0 {t(this,'自定义路径')}</Text>
                   </View>
                 </TouchableNativeFeedback>
               </View>

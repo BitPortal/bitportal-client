@@ -448,7 +448,7 @@ const shouldError = () => true
 
 export default class TransferAsset extends Component {
   static contextType = DarkModeContext
-  
+
   static get options() {
     return {
       topBar: {
@@ -869,7 +869,7 @@ export default class TransferAsset extends Component {
     const useGasPrice = this.state.useGasPrice || this.state.initialGwei || this.state.ethGasPrice || 4.00
     const isDarkMode = this.context === 'dark'
     console.log('isDarkMode', isDarkMode)
-    
+
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
         <ScrollView

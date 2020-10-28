@@ -57,7 +57,7 @@ export default class CreateEOSAccount extends Component {
           }
         ],
         title: {
-          text: '创建EOS帐户'
+          text: gt('创建EOS帐户')
         },
         elevation: 0,
         drawBehind: false
@@ -71,9 +71,9 @@ export default class CreateEOSAccount extends Component {
   state = {
     index: 0,
     routes: [
-      { key: 'vcode', title: '邀请码' },
-      { key: 'friend', title: '好友协助' },
-      { key: 'contract', title: '智能合约' },
+      { key: 'vcode', title: gt('邀请码') },
+      { key: 'friend', title: gt('好友协助') },
+      { key: 'contract', title: gt('智能合约') },
     ],
     showModal: false
   }

@@ -10,6 +10,7 @@ import Modal from 'react-native-modal'
 import Chainx from 'chainx.js'
 import Dialog from 'components/Dialog'
 import styles from './styles'
+import { injectIntl } from "react-intl";
 
 
 export const errorMessages = (error, messages) => {
@@ -19,9 +20,9 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid password':
-      return '密码错误'
+      return gt('密码错误')
     default:
-      return '投票失败'
+      return gt('投票失败')
   }
 }
 
@@ -32,6 +33,8 @@ export const errorDetail = (error) => {
 
   return detail
 }
+
+@injectIntl
 
 @connect(
   state => ({
@@ -45,7 +48,7 @@ export default class ChainXVoting extends Component {
     return {
       topBar: {
         title: {
-          text: 'ChainX 节点投票'
+          text: gt('ChainX 节点投票')
         },
         drawBehind: true,
         searchBar: false,
@@ -57,7 +60,7 @@ export default class ChainXVoting extends Component {
         leftButtons: [
           {
             id: 'cancel',
-            text: '取消'
+            text: gt('取消')
           }
         ]
       },
@@ -217,7 +220,7 @@ export default class ChainXVoting extends Component {
           headerBackgroundColor="#F7F7F7"
           ref={(ref) => { this.tableViewRef = ref; return null }}
         >
-          <TableView.Section label="特别推荐">
+          <TableView.Section label={t(this,'特别推荐')}>
             {validator.filter(vali => vali.name === 'BitPortal').map((item) => {
               let pendingInterest = 0
               if (item && item.userNomination) {
@@ -270,7 +273,7 @@ export default class ChainXVoting extends Component {
               )
             })}
           </TableView.Section>
-          <TableView.Section label="验证节点 / 总票数">
+          <TableView.Section label={t(this,'验证节点 / 总票数')}>
             {validator.filter(vali => vali.isActive && vali.isValidator).sort((a, b) => b.totalNomination - a.totalNomination).map((item) => {
 
               let pendingInterest = 0
@@ -325,7 +328,7 @@ export default class ChainXVoting extends Component {
               )
             })}
           </TableView.Section>
-          <TableView.Section label="备选节点 / 总票数">
+          <TableView.Section label={t(this,'备选节点 / 总票数')}>
             {validator.filter(vali => !vali.isValidator).sort((a, b) => b.totalNomination - a.totalNomination).map((item) => {
 
               let pendingInterest = 0

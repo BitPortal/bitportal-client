@@ -125,9 +125,9 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid mnemonics':
-      return '无效的助记词'
+      return gt('无效的助记词')
     default:
-      return '恢复失败'
+      return gt('恢复失败')
   }
 }
 
@@ -135,11 +135,11 @@ const validate = (values) => {
   const errors = {}
 
   if (!values.mnemonics) {
-    errors.mnemonics = '请输入助记词'
+    errors.mnemonics = gt('请输入助记词')
   }
 
   if (!values.password) {
-    errors.password = '请输入密码'
+    errors.password = gt('请输入密码')
   }
 
   return errors
@@ -149,7 +149,7 @@ const warn = (values) => {
   const warnings = {}
 
   if (values.password && values.password.length < 8) {
-    warnings.password = '密码不少于8位字符'
+    warnings.password = gt('密码不少于8位字符')
   }
 
   return warnings
@@ -179,7 +179,7 @@ export default class RecoverIdentity extends Component {
         rightButtons: [
           {
             id: 'submit',
-            text: '确认',
+            text: gt('确认'),
             fontWeight: '400',
             enabled: false
           }
@@ -228,7 +228,7 @@ export default class RecoverIdentity extends Component {
           rightButtons: [
             {
               id: 'submit',
-              text: '确认',
+              text: t(this,'确认'),
               fontWeight: '400',
               enabled: !this.state.invalid && !this.state.pristine && !this.state.loading
             }
@@ -243,7 +243,7 @@ export default class RecoverIdentity extends Component {
           errorMessages(this.state.error),
           '',
           [
-            { text: '确定', onPress: () => this.clearError() }
+            { text: t(this,'确认'), onPress: () => this.clearError() }
           ]
         )
       }, 20)
@@ -260,7 +260,7 @@ export default class RecoverIdentity extends Component {
             warning,
             '',
             [
-              { text: '确定', onPress: () => console.log('OK Pressed') }
+              { text: t(this,'确认'), onPress: () => console.log('OK Pressed') }
             ]
           )
           return

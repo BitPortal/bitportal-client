@@ -26,6 +26,7 @@ import { identityEOSWalletSelector } from 'selectors/wallet'
 import Sound from 'react-native-sound'
 import * as walletActions from 'actions/wallet'
 import * as accountActions from 'actions/account'
+import { injectIntl } from "react-intl";
 
 const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
   if (error) {
@@ -150,21 +151,21 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Account name already exists':
-      return '账户名已存在'
+      return gt('账户名已存在')
     case 'Invalid private key!':
-      return '私钥无效，请导入有效的私钥'
+      return gt('私钥无效，请导入有效的私钥')
     case 'Campaign is for invitation only':
-      return '该活动仅向受邀用户开放'
+      return gt('该活动仅向受邀用户开放')
     case 'Campaign is for eos only':
-      return '该活动仅适用于EOS'
+      return gt('该活动仅适用于EOS')
     case 'Unknown invitation Code':
-      return '无效的注册码'
+      return gt('无效的注册码')
     case 'Coupon code is used':
-      return '注册码已使用'
+      return gt('注册码已使用')
     case 'Error retrieving data':
-      return '数据提取错误，请重新创建'
+      return gt('数据提取错误，请重新创建')
     default:
-      return '创建失败'
+      return gt('创建失败')
   }
 }
 
@@ -172,11 +173,11 @@ const validate = (values) => {
   const errors = {}
 
   if (!values.accountName) {
-    errors.accountName = '请输入账户名'
+    errors.accountName = gt('请输入账户名')
   }
 
   if (!values.inviteCode) {
-    errors.inviteCode = '请输入邀请码'
+    errors.inviteCode = gt('请输入邀请码')
   }
 
   return errors
@@ -186,15 +187,15 @@ const warn = (values) => {
   const warnings = {}
 
   if (!values.accountName) {
-    warnings.accountName = '账户名不能为空'
+    warnings.accountName = gt('账户名不能为空')
   } else if (values.accountName.length !== 12) {
-    warnings.accountName = '账户名长度为12位'
+    warnings.accountName = gt('账户名长度为12位')
   } else if (!/^[a-z1-5\s]+$/.test(values.accountName)) {
-    warnings.accountName = '账户名由a-z与1-5字符组成'
+    warnings.accountName = gt('账户名由a-z与1-5字符组成')
   } else if (!values.inviteCode) {
-    warnings.inviteCode = '邀请码不能为空'
+    warnings.inviteCode = gt('邀请码不能为空')
   } else if (values.inviteCode.trim().length !== 5) {
-    warnings.inviteCode = '邀请码长度为5位'
+    warnings.inviteCode = gt('邀请码长度为5位')
   }
 
   return warnings
@@ -203,7 +204,7 @@ const warn = (values) => {
 const shouldError = () => true
 
 @reduxForm({ form: 'createEOSAccountForm', validate, shouldError, warn })
-
+@injectIntl
 @connect(
   state => ({
     createEOSAccount: state.createEOSAccount,
@@ -226,7 +227,7 @@ export default class CreateEOSAccount extends Component {
         rightButtons: [
           {
             id: 'submit',
-            text: '确认',
+            text: gt('确认'),
             fontWeight: '400',
             enabled: false
           }
@@ -235,10 +236,10 @@ export default class CreateEOSAccount extends Component {
           visible: false
         },
         backButton: {
-          title: '返回'
+          title: gt('返回')
         },
         title: {
-          text: '创建EOS帐户'
+          text: gt('创建EOS帐户')
         },
         noBorder: true,
         drawBehind: false
@@ -289,7 +290,7 @@ export default class CreateEOSAccount extends Component {
             warning,
             '',
             [
-              { text: '确定', onPress: () => console.log('OK Pressed') }
+              { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
             ]
           )
           return
@@ -328,7 +329,7 @@ export default class CreateEOSAccount extends Component {
           rightButtons: this.state.selectedIndex === 0 ? [
             {
               id: 'submit',
-              text: '确认',
+              text: t(this,'确认'),
               fontWeight: '400',
               enabled: !this.state.invalid && !this.state.pristine && !this.state.createEOSAccountLoading
             }
@@ -384,7 +385,7 @@ export default class CreateEOSAccount extends Component {
           errorMessages(error),
           '',
           [
-            { text: '确定', onPress: () => this.clearError() }
+            { text: t(this,'确定'), onPress: () => this.clearError() }
           ]
         )
       }, 20)
@@ -406,7 +407,7 @@ export default class CreateEOSAccount extends Component {
       <View style={styles.container}>
         <View style={{ height: 52, width: '100%', justifyContent: 'center', paddingTop: 5, paddingBottom: 13, paddingLeft: 16, paddingRight: 16, backgroundColor: '#F7F7F7', borderColor: '#C8C7CC', borderBottomWidth: 0.5 }}>
           <SegmentedControlIOS
-            values={['邀请码', '好友协助', '智能合约']}
+            values={[t(this,'邀请码'), t(this,'好友协助'), t(this,'智能合约')]}
             selectedIndex={this.state.selectedIndex}
             onChange={this.changeSelectedIndex}
             style={{ width: '100%' }}
@@ -420,7 +421,7 @@ export default class CreateEOSAccount extends Component {
           <View style={{ flex: 1, alignItems: 'center' }}>
             {wallet && wallet.publicKeys && wallet.publicKeys.length && <Fragment>
               <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-                <Text style={{ fontSize: 13, color: '#666666' }}>公钥</Text>
+                <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'公钥')}</Text>
               </View>
               <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
                 <View style={{ width: '100%', alignItems: 'flex-start', paddingTop: 12, paddingBottom: 12 , paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
@@ -455,13 +456,13 @@ export default class CreateEOSAccount extends Component {
               </View>
             </Fragment>}
         <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-          <Text style={{ fontSize: 13, color: '#666666' }}>注册信息</Text>
+          <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'注册信息')}</Text>
         </View>
         <Fragment>
           <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
             <Field
-              label="账户名"
-              placeholder="a-z 与 1-5 组合的12位字符"
+              label={t(this,'账户名')}
+              placeholder={t(this,'a-z 与 1-5 组合的12位字符')}
               name="accountName"
               fieldName="accountName"
               component={TextField}
@@ -470,8 +471,8 @@ export default class CreateEOSAccount extends Component {
               separator={this.state.selectedIndex === 0}
             />
             {this.state.selectedIndex === 0 && <Field
-              label="邀请码"
-              placeholder="必填"
+              label={t(this,'邀请码')}
+              placeholder={t(this,'必填')}
               name="inviteCode"
               fieldName="inviteCode"
               component={TextField}
@@ -482,7 +483,7 @@ export default class CreateEOSAccount extends Component {
         </Fragment>
         {wallet && wallet.publicKeys && wallet.publicKeys.length && this.state.selectedIndex === 1 && <Fragment>
           <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-            <Text style={{ fontSize: 13, color: '#666666' }}>扫码信息</Text>
+            <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'扫码信息')}</Text>
           </View>
           <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
             <View style={{ width: '100%', alignItems: 'flex-start', justifyContent: 'space-between', paddingTop: 16, paddingBottom: 16 , paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
@@ -494,20 +495,20 @@ export default class CreateEOSAccount extends Component {
                 />
               </View>
               <View style={{ marginLeft: 16, width: Dimensions.get('window').width - 120 - 32 - 16, height: 120 }}>
-                <Text style={{ fontSize: 17, marginBottom: 12 }}>如何协助注册？</Text>
-                <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.42)', marginBottom: 6, lineHeight: 17 }}>1. 填写EOS账户名，分享二维码给好友</Text>
-                <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.42)', lineHeight: 17 }}>2. 好友扫码支付EOS，完成EOS账户注册</Text>
+                <Text style={{ fontSize: 17, marginBottom: 12 }}>{t(this,'如何协助注册？')}</Text>
+                <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.42)', marginBottom: 6, lineHeight: 17 }}>{t(this,'1. 填写EOS账户名，分享二维码给好友')}</Text>
+                <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.42)', lineHeight: 17 }}>{t(this,'2. 好友扫码支付EOS，完成EOS账户注册')}</Text>
               </View>
             </View>
           </View>
         </Fragment>}
         {wallet && wallet.publicKeys && wallet.publicKeys.length && this.state.selectedIndex === 2 && <Fragment>
           <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-            <Text style={{ fontSize: 13, color: '#666666' }}>合约信息</Text>
+            <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'合约信息')}</Text>
           </View>
           <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: 'white' }}>
             <View style={{ width: '100%', alignItems: 'flex-start', paddingTop: 12, paddingBottom: 12 , paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-              <Text style={{ fontSize: 17, marginRight: 16, width: 70 }}>名称</Text>
+              <Text style={{ fontSize: 17, marginRight: 16, width: 70 }}>{t(this,'名称')}</Text>
               <View style={{ marginRight: 16, width: Dimensions.get('window').width - 50 - 32 - 36 }}>
                 <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, 'signupeoseos')}>
                   <Text style={{ fontSize: 15 }}>
@@ -522,7 +523,7 @@ export default class CreateEOSAccount extends Component {
               <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: '#C8C7CC' }} />
             </View>
             <View style={{ width: '100%', alignItems: 'flex-start', paddingTop: 12, paddingBottom: 12 , paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-              <Text style={{ fontSize: 17, marginRight: 16, width: 70 }}>备注</Text>
+              <Text style={{ fontSize: 17, marginRight: 16, width: 70 }}>{t(this,'备注')}</Text>
               <View style={{ marginRight: 16, width: Dimensions.get('window').width - 50 - 32 - 36 }}>
                 <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, `${accountName}-${wallet.publicKeys[0]}`)}>
                   <Text style={{ fontSize: 15 }}>
@@ -555,7 +556,7 @@ export default class CreateEOSAccount extends Component {
           {this.state.createEOSAccountLoading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
               <ActivityIndicator size="small" color="#000000" />
-              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>创建中...</Text>
+              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{t(this,'创建中...')}</Text>
             </View>
           </View>}
         </Modal>
@@ -572,7 +573,7 @@ export default class CreateEOSAccount extends Component {
         >
           {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
-              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已复制</Text>
+              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{t(this,'已复制')}</Text>
             </View>
           </View>}
         </Modal>

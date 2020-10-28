@@ -3,7 +3,9 @@ import { ScrollView, View, TextInput, Text, TouchableNativeFeedback, Clipboard }
 import { connect } from 'react-redux'
 import { Navigation } from 'components/Navigation'
 import Modal from 'react-native-modal'
+import { injectIntl } from "react-intl";
 
+@injectIntl
 @connect(
   state => ({
     wallet: state.wallet
@@ -15,10 +17,10 @@ export default class ExportBTCPrivateKey extends Component {
     return {
       topBar: {
         title: {
-          text: '导出BTC私钥'
+          text: gt('导出BTC私钥')
         },
         backButton: {
-          title: '返回'
+          title: gt('返回')
         },
         largeTitle: {
           visible: false
@@ -48,16 +50,16 @@ export default class ExportBTCPrivateKey extends Component {
       <ScrollView style={{ flex: 1, paddingLeft: 16, paddingRight: 16, paddingTop: 16, backgroundColor: 'white' }}>
         <View style={{ width: '100%' }}>
           <View>
-            <Text style={{ color: '#673AB7', fontWeight: 'bold', marginBottom: 4 }}>离线保存</Text>
-            <Text style={{ color: 'rgba(0,0,0,0.54)', marginBottom: 10, lineHeight: 18 }}>切勿保存到邮箱，记事本，网盘，聊天工具等，非常危险</Text>
+            <Text style={{ color: '#673AB7', fontWeight: 'bold', marginBottom: 4 }}>{t(this,'离线保存')}</Text>
+            <Text style={{ color: 'rgba(0,0,0,0.54)', marginBottom: 10, lineHeight: 18 }}>{t(this,'切勿保存到邮箱，记事本，网盘，聊天工具等，非常危险')}</Text>
           </View>
           <View>
-            <Text style={{ color: '#673AB7', fontWeight: 'bold', marginBottom: 4 }}>切勿使用网络传输</Text>
-            <Text style={{ color: 'rgba(0,0,0,0.54)', marginBottom: 10, lineHeight: 18 }}>切勿通过网络工具传输，一旦被黑客获取将造成不可挽回的资产损失。建议离线设备通过扫二维码方式传输。</Text>
+            <Text style={{ color: '#673AB7', fontWeight: 'bold', marginBottom: 4 }}>{t(this,'切勿使用网络传输')}</Text>
+            <Text style={{ color: 'rgba(0,0,0,0.54)', marginBottom: 10, lineHeight: 18 }}>{t(this,'切勿通过网络工具传输，一旦被黑客获取将造成不可挽回的资产损失。建议离线设备通过扫二维码方式传输。')}</Text>
           </View>
           <View>
-            <Text style={{ color: '#673AB7', fontWeight: 'bold', marginBottom: 4}}>密码管理工具保存</Text>
-            <Text style={{ color: 'rgba(0,0,0,0.54)', marginBottom: 10, lineHeight: 18 }}>建议使用密码管理工具管理。</Text>
+            <Text style={{ color: '#673AB7', fontWeight: 'bold', marginBottom: 4}}>{t(this,'密码管理工具保存')}</Text>
+            <Text style={{ color: 'rgba(0,0,0,0.54)', marginBottom: 10, lineHeight: 18 }}>{t(this,'建议使用密码管理工具管理。')}</Text>
           </View>
         </View>
         <View style={{ width: '100%', marginTop: 16 }}>
@@ -86,7 +88,7 @@ export default class ExportBTCPrivateKey extends Component {
                   fontSize: 17
                 }}
               >
-                复制BTC私钥
+                {t(this,'复制BTC私钥')}
               </Text>
             </View>
           </TouchableNativeFeedback>
@@ -105,7 +107,7 @@ export default class ExportBTCPrivateKey extends Component {
         >
           {this.state.showModal && <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'rgba(0,0,0,0.87)', padding: 16, borderRadius: 4, height: 48, elevation: 1, justifyContent: 'center', width: '100%' }}>
-              <Text style={{ fontSize: 14, color: 'white' }}>已复制</Text>
+              <Text style={{ fontSize: 14, color: 'white' }}>{t(this,'已复制')}</Text>
             </View>
           </View>}
         </Modal>

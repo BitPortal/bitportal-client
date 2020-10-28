@@ -315,7 +315,7 @@ export default class Wallet extends Component {
         }
       })
 
-      SPAlert.presentMessage('已复制')
+      SPAlert.presentMessage(t(this,'已复制'))
     }
   }
 
@@ -359,12 +359,12 @@ export default class Wallet extends Component {
             options: {
               topBar: {
                 title: {
-                  text: `发送${data.symbol}到`
+                  text: t(this,'发送{symbol}到',{symbol:data.symbol})
                 },
                 leftButtons: [
                   {
                     id: 'cancel',
-                    text: '取消'
+                    text: t(this,'取消')
                   }
                 ]
               }
@@ -397,12 +397,12 @@ export default class Wallet extends Component {
             options: {
               topBar: {
                 title: {
-                  text: `接收 ${data.symbol}`
+                  text: `${t(this,'接收')} ${data.symbol}`
                 },
                 leftButtons: [
                   {
                     id: 'cancel',
-                    text: '取消'
+                    text: t(this,'取消')
                   }
                 ],
                 noBorder: data.chain === 'BITCOIN' && this.props.childAddress && this.props.activeWallet.address !== this.props.childAddress
@@ -434,7 +434,7 @@ export default class Wallet extends Component {
           options: {
             topBar: {
               title: {
-                text: `添加${symbol}资产`
+                text: t(this,'添加{symbol}资产',{symbol})
               }
             }
           }
@@ -488,7 +488,7 @@ export default class Wallet extends Component {
                 <Text style={{ color: '#666666', fontSize: 17 }}>
                   <FormattedMessage id="no_wallet_yet" />
                 </Text>
-                <Text style={{ marginTop: 10, color: '#666666', borderWidth: 1, borderColor: '#666666', padding: 4, paddingRight: 8, paddingLeft: 8, borderRadius: 4 }}>开始添加</Text>
+                <Text style={{ marginTop: 10, color: '#666666', borderWidth: 1, borderColor: '#666666', padding: 4, paddingRight: 8, paddingLeft: 8, borderRadius: 4 }}>{t(this,'开始添加')}</Text>
               </View>
             </TouchableHighlight>
           </View>

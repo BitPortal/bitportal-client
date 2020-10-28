@@ -32,21 +32,21 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Account name already exists':
-      return '账户名已存在'
+      return gt('账户名已存在')
     case 'Invalid private key!':
-      return '私钥无效，请导入有效的私钥'
+      return gt('私钥无效，请导入有效的私钥')
     case 'Campaign is for invitation only':
-      return '该活动仅向受邀用户开放'
+      return gt('该活动仅向受邀用户开放')
     case 'Campaign is for eos only':
-      return '该活动仅适用于EOS'
+      return gt('该活动仅适用于EOS')
     case 'Unknown invitation Code':
-      return '无效的注册码'
+      return gt('无效的注册码')
     case 'Coupon code is used':
-      return '注册码已使用'
+      return gt('注册码已使用')
     case 'Error retrieving data':
-      return '数据提取错误，请重新创建'
+      return gt('数据提取错误，请重新创建')
     default:
-      return '创建失败'
+      return gt('创建失败')
   }
 }
 
@@ -54,11 +54,11 @@ const validate = (values) => {
   const errors = {}
 
   if (!values.accountName) {
-    errors.accountName = '请输入账户名'
+    errors.accountName = gt('请输入账户名')
   } else if (values.accountName.length !== 12) {
-    errors.accountName = '账户名长度为12位'
+    errors.accountName = gt('账户名长度为12位')
   } else if (!/^[a-z1-5\s]+$/.test(values.accountName)) {
-    errors.accountName = '账户名由a-z与1-5字符组成'
+    errors.accountName = gt('账户名由a-z与1-5字符组成')
   }
 
   return errors
@@ -73,7 +73,7 @@ const warn = (values) => {
 const shouldError = () => true
 
 @reduxForm({ form: 'createEOSAccountByFriendForm', validate, shouldError, warn })
-
+@injectIntl
 @connect(
   state => ({
     createEOSAccount: state.createEOSAccount,
@@ -140,7 +140,7 @@ export default class CreateEOSAccountByFriendForm extends Component {
           <View style={{ paddingTop: 0 }}>
             {wallet && wallet.publicKeys && wallet.publicKeys.length && <Fragment>
               <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48 }}>
-                <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>公钥</Text>
+                <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{gt('公钥')}</Text>
               </View>
               <View style={{ width: '100%', alignItems: 'center' }}>
                 <View style={{ width: '100%', alignItems: 'flex-start', height: 60, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
@@ -172,12 +172,12 @@ export default class CreateEOSAccountByFriendForm extends Component {
               </View>
             </Fragment>}
         <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48, borderTopWidth: 1, borderColor: 'rgba(0,0,0,0.12)' }}>
-          <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>注册信息</Text>
+          <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{gt('注册信息')}</Text>
         </View>
         <View style={{ width: '100%', alignItems: 'center' }}>
           <Field
-            label="账户名"
-            placeholder="a-z 与 1-5 组合的12位字符"
+            label={gt('账户名')}
+            placeholder={gt("a-z 与 1-5 组合的12位字符")}
             name="accountName"
             fieldName="accountName"
             component={FilledTextField}
@@ -187,7 +187,7 @@ export default class CreateEOSAccountByFriendForm extends Component {
         </View>
         {wallet && wallet.publicKeys && wallet.publicKeys.length && <Fragment>
           <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48, borderTopWidth: 1, borderColor: 'rgba(0,0,0,0.12)' }}>
-            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>扫码信息</Text>
+            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{gt('扫码信息')}</Text>
           </View>
           <View style={{ width: '100%', alignItems: 'center' }}>
             <View style={{ width: '100%', alignItems: 'flex-start', justifyContent: 'space-between', paddingBottom: 16 , paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
@@ -199,9 +199,9 @@ export default class CreateEOSAccountByFriendForm extends Component {
                 />
               </View>
               <View style={{ marginLeft: 16, width: Dimensions.get('window').width - 120 - 32 - 16, height: 120 }}>
-                <Text style={{ fontSize: 16, marginBottom: 12, color: 'rgba(0,0,0,0.87)' }}>如何协助注册？</Text>
-                <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)', marginBottom: 6, lineHeight: 17 }}>1. 填写EOS账户名，分享二维码给好友</Text>
-                <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)', lineHeight: 17 }}>2. 好友扫码支付EOS，完成EOS账户注册</Text>
+                <Text style={{ fontSize: 16, marginBottom: 12, color: 'rgba(0,0,0,0.87)' }}>{gt('如何协助注册？')}</Text>
+                <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)', marginBottom: 6, lineHeight: 17 }}>{gt('1. 填写EOS账户名，分享二维码给好友')}</Text>
+                <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)', lineHeight: 17 }}>{gt('2. 好友扫码支付EOS，完成EOS账户注册')}</Text>
               </View>
             </View>
           </View>
@@ -222,7 +222,7 @@ export default class CreateEOSAccountByFriendForm extends Component {
         >
           {this.state.showModal && <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'rgba(0,0,0,0.87)', padding: 16, borderRadius: 4, height: 48, elevation: 1, justifyContent: 'center', width: '100%' }}>
-              <Text style={{ fontSize: 14, color: 'white' }}>已复制</Text>
+              <Text style={{ fontSize: 14, color: 'white' }}>{gt('已复制')}</Text>
             </View>
           </View>}
         </Modal>

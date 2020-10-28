@@ -18,18 +18,18 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid mnemonics':
-      return '无效的助记词'
+      return gt('无效的助记词')
     case 'Invalid WIF length':
     case 'Invalid compression flag':
     case 'private key length is invalid':
     case 'Invalid checksum':
-      return '无效的私钥'
+      return gt('无效的私钥')
     case 'SegWit requires compressed private key':
-      return '隔离见证需要压缩的公钥格式'
+      return gt('隔离见证需要压缩的公钥格式')
     case 'Wallet already exist':
-      return '该钱包已存在'
+      return gt('该钱包已存在')
     default:
-      return '导入失败'
+      return gt('导入失败')
   }
 }
 
@@ -37,13 +37,13 @@ const validate = (values, props) => {
   const errors = {}
 
   if (!values.mnemonic) {
-    errors.mnemonic = '请输入助记词'
+    errors.mnemonic = gt('请输入助记词')
   }
 
   if (!values.password) {
-    errors.password = '请输入密码'
+    errors.password = gt('请输入密码')
   } else if (values.password && values.password.length < 8) {
-    errors.password = '密码不少于8位字符'
+    errors.password = gt('密码不少于8位字符')
   }
 
   return errors
@@ -139,7 +139,7 @@ export default class ImportBTCPrivateKeyForm extends Component {
           errorMessages(error),
           '',
           [
-            { text: '确定', onPress: () => this.clearError() }
+            { text: t(this,'确定'), onPress: () => this.clearError() }
           ]
         )
       }, 20)
@@ -179,7 +179,7 @@ export default class ImportBTCPrivateKeyForm extends Component {
           <View style={{ paddingTop: 16 }}>
             <View style={{ width: '100%' }}>
               <Field
-                label="私钥"
+                label={t(this,'私钥')}
                 name="privateKey"
                 fieldName="privateKey"
                 component={FilledTextArea}
@@ -195,25 +195,25 @@ export default class ImportBTCPrivateKeyForm extends Component {
             </View>
             <View style={{ borderTopWidth: 1, borderColor: 'rgba(0,0,0,0.12)' }}>
               <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48 }}>
-                <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>选择地址类型</Text>
+                <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'选择地址类型')}</Text>
               </View>
               <TouchableNativeFeedback onPress={this.changeAddressType.bind(this, true)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48 }}>
                   {isSegWit && <Image source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
                   {!isSegWit && <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
-                  <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)' }}>隔离见证</Text>
+                  <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)' }}>{t(this,'隔离见证')}</Text>
                 </View>
               </TouchableNativeFeedback>
               <TouchableNativeFeedback onPress={this.changeAddressType.bind(this, false)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48 }}>
                   {!isSegWit && <Image source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
                   {isSegWit && <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
-                  <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)' }}>普通</Text>
+                  <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)' }}>{t(this,'普通')}</Text>
                 </View>
               </TouchableNativeFeedback>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48, borderTopWidth: 1, borderColor: 'rgba(0,0,0,0.12)' }}>
-              <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>设置密码</Text>
+              <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'设置密码')}</Text>
             </View>
             <Field
               label={intl.formatMessage({ id: 'identity_input_label_wallet_passwd' })}
@@ -238,10 +238,10 @@ export default class ImportBTCPrivateKeyForm extends Component {
             />
           </View>
           <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 16, justifyContent: 'flex-start' }}>
-            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)', lineHeight: 18 }}>如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。</Text>
+            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)', lineHeight: 18 }}>{t(this,'如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。')}</Text>
           </View>
         </ScrollView>
-        <IndicatorModal isVisible={this.state.importBTCPrivateKeyLoading} message="导入中..." onModalHide={this.onModalHide} onModalShow={this.onModalShow} />
+        <IndicatorModal isVisible={this.state.importBTCPrivateKeyLoading} message={t(this,'导入中...')} onModalHide={this.onModalHide} onModalShow={this.onModalShow} />
       </View>
     )
   }

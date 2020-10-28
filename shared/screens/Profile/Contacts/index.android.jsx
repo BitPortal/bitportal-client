@@ -10,7 +10,7 @@ import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview
 import { walletIcons } from 'resources/images'
 
 const dataProvider = new DataProvider((r1, r2) => r1.key !== r2.key)
-
+@injectIntl
 @connect(
   state => ({
     contact: contactSelector(state)
@@ -27,7 +27,7 @@ export default class Contacts extends Component {
     return {
       topBar: {
         title: {
-          text: '联系人'
+          text: gt('联系人')
         },
         leftButtons: [
           {
@@ -162,7 +162,7 @@ export default class Contacts extends Component {
         options: {
           topBar: {
             title: {
-              text: '创建联系人'
+              text: t(this,'创建联系人')
             }
           }
         }
@@ -176,7 +176,7 @@ export default class Contacts extends Component {
     if (!contact || !contact.length) {
       return (
         <View style={{ flex: 1, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={{ color: 'rgba(0,0,0,0.54)', fontSize: 17 }}>暂无联系人</Text>
+          <Text style={{ color: 'rgba(0,0,0,0.54)', fontSize: 17 }}>{t(this,'暂无联系人')}</Text>
           <TouchableNativeFeedback onPress={this.onAddContact} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', true)} useForeground={true}>
             <View style={{ width: 56, height: 56, borderRadius: 28, alignItems: 'center', justifyContent: 'center', position: 'absolute', bottom: 16, right: 16, backgroundColor: '#FF5722', elevation: 10, zIndex: 2 }}>
               <Image

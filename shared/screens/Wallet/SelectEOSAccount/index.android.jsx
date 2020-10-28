@@ -19,7 +19,7 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     default:
-      return '导入失败'
+      return gt('导入失败')
   }
 }
 
@@ -49,10 +49,10 @@ export default class SelectEOSAccount extends Component {
           }
         ],
         title: {
-          text: '选择EOS帐户'
+          text: gt('选择EOS帐户')
         },
         backButton: {
-          title: '返回'
+          title: gt('返回')
         },
         largeTitle: {
           visible: false
@@ -151,7 +151,7 @@ export default class SelectEOSAccount extends Component {
           errorMessages(error),
           '',
           [
-            { text: '确定', onPress: () => this.clearError() }
+            { text: t(this,'确定'), onPress: () => this.clearError() }
           ]
         )
       }, 20)
@@ -175,7 +175,7 @@ export default class SelectEOSAccount extends Component {
               <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)' }}>{data.permissions}</Text>
             </View>
           </View>
-          {data.exist && <View><Text style={{ color: 'rgba(0,0,0,0.6)' }}>已导入</Text></View>}
+          {data.exist && <View><Text style={{ color: 'rgba(0,0,0,0.6)' }}>{t(this,'已导入')}</Text></View>}
         </View>
       </TouchableNativeFeedback>
     )

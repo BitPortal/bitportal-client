@@ -73,7 +73,7 @@ export default class AuthorizeCreateEOSAccount extends Component {
         rightButtons: [
           {
             id: 'skip',
-            text: '取消'
+            text: gt('取消')
           }
         ],
         backButton: {
@@ -141,7 +141,7 @@ export default class AuthorizeCreateEOSAccount extends Component {
           errorMessages(error),
           '',
           [
-            { text: '确定', onPress: () => this.clearError() }
+            { text: t(this,'确定'), onPress: () => this.clearError() }
           ]
         )
       }, 20)
@@ -155,7 +155,7 @@ export default class AuthorizeCreateEOSAccount extends Component {
   render() {
     const { name, active, owner, authorizeWallet, authorizeCreateEOSAccount, ramPrice, intl } = this.props
     const loading = authorizeCreateEOSAccount.loading
-
+      const ram = typeof ramPrice === 'number' ? ` ≈ ${intl.formatNumber(ramPrice * (8192 / 1024), { minimumFractionDigits: 0, maximumFractionDigits: 4 })} EOS` : '';
     return (
       <View style={styles.container}>
         <View
@@ -170,10 +170,10 @@ export default class AuthorizeCreateEOSAccount extends Component {
         <View style={{ width: '100%', height: 500, paddingHorizontal: 16, paddingVertical: 30 }}>
           <View style={{ marginTop: 40, width: '100%' }}>
             <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.5)' }}>
-              授权创建EOS账户：
+              {t(this,'授权创建EOS账户:')}
             </Text>
             <Text style={{ fontSize: 17, marginTop: 12, marginBottom: 4 }}>
-              新建账户名: {name}
+              {t(this,'新建账户名: ')+name}
             </Text>
             <Text style={{ fontSize: 17, marginTop: 6, marginBottom: 4 }}>
               Active Key: {active}
@@ -182,19 +182,19 @@ export default class AuthorizeCreateEOSAccount extends Component {
               Owner Key: {owner}
             </Text>
             <Text style={{ fontSize: 15, color: '#007AFF', marginTop: 12 }}>
-              {`注意：授权帐号将消耗一些EOS为新帐号购买内存(8192 bytes${typeof ramPrice === 'number' ? ` ≈ ${intl.formatNumber(ramPrice * (8192 / 1024), { minimumFractionDigits: 0, maximumFractionDigits: 4 })} EOS` : ''})和代理资源(0.1 EOS)`}
+              {t(this,'注意：授权帐号将消耗一些EOS为新帐号购买内存(8192 bytes {message})和代理资源(0.1 EOS)',{message:ram})}
             </Text>
           </View>
           <View style={{ marginBottom: 40, marginTop: 40, width: '100%' }}>
             <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.5)' }}>
-              授权帐号：
+              {t(this,'授权帐号：')}
             </Text>
             <Text style={{ fontSize: 15, marginTop: 12 }}>
               {authorizeWallet.address}
             </Text>
           </View>
           <TouchableOpacity style={styles.button} onPress={this.authorize}>
-            <Text style={styles.buttonText}>确认创建</Text>
+            <Text style={styles.buttonText}>{t(this,'确认创建')}</Text>
           </TouchableOpacity>
         </View>
         <Modal
@@ -212,7 +212,7 @@ export default class AuthorizeCreateEOSAccount extends Component {
           {loading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
               <ActivityIndicator size="small" color="#000000" />
-              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>创建中...</Text>
+              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{t(this,'创建中...')}</Text>
             </View>
           </View>}
         </Modal>

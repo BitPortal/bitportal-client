@@ -5,9 +5,11 @@ import { walletIcons } from 'resources/images'
 import { transferWalletSelector } from 'selectors/wallet'
 import { transferWalletsContactsSelector, selectedContactSelector } from 'selectors/contact'
 import TableView from 'components/TableView'
+import { injectIntl } from "react-intl";
 
 const { Section, Item } = TableView
 
+@injectIntl
 @connect(
   state => ({
     contacts: transferWalletsContactsSelector(state),
@@ -28,13 +30,14 @@ export default class SelectContactList extends Component {
   render() {
     const { transferWallet, contacts, selectedContact } = this.props
     const chain = transferWallet.chain
+    const message =
 
     return (
         <View style={{ width: '100%', height: 64 * 5, borderWidth: 0.5, borderColor: '#C8C7CC', borderRadius: 12, overflow: 'hidden' }}>
           <View style={{ height: 64, width: '100%', backgroundColor: '#F7F7F7', borderTopLeftRadius: 12, borderTopRightRadius: 12, borderBottomWidth: 0.5, borderColor: '#C8C7CC', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
             <View style={{ height: '100%', alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
               <View style={{ height: '100%', justifyContent: 'center' }}>
-                <Text style={{ fontSize: 17 }}>{`选择联系人${chain === 'EOS' ? '账户名' : '地址'}`}</Text>
+                <Text style={{ fontSize: 17 }}>{`${t(this,'选择联系人')}${chain === 'EOS' ? t(this,'账户名') : t(this,'地址')}`}</Text>
               </View>
             </View>
           </View>

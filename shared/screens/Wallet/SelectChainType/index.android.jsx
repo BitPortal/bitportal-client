@@ -16,7 +16,7 @@ export default class SelectChainType extends Component {
     return {
       topBar: {
         title: {
-          text: '选择钱包体系'
+          text: gt('选择钱包体系')
         },
         largeTitle: {
           visible: false

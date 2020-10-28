@@ -18,34 +18,34 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid mnemonics':
-      return '无效的助记词'
+      return gt('无效的助记词')
     case 'Invalid keystore':
     case 'No keystore crypto':
     case 'No keystore crypto cipherparams':
     case 'No keystore crypto ciphertext':
     case 'No keystore crypto cipher':
     case 'No keystore crypto cipherparams iv':
-      return '无效的 Keystore'
+      return gt('无效的 Keystore')
     case 'Invalid mnemonic path':
     case 'Invalid mnemonic path elements length':
     case 'Invalid mnemonic path 3th element':
     case 'Invalid mnemonic path 4th element':
     case 'Invalid mnemonic path 5th element':
     case 'Invalid index':
-      return '无效的路径'
+      return gt('无效的路径')
     case 'Invalid password':
       return 'Keystore 密码错误'
     case 'Keystore already exist in imported wallets':
     case 'Keystore already exist in identity wallets':
     case 'Wallet already exist':
-      return '该钱包已存在'
+      return gt('该钱包已存在')
     case 'Invalid WIF length':
     case 'Invalid compression flag':
     case 'private key length is invalid':
     case 'Invalid checksum':
-      return '无效的私钥'
+      return gt('无效的私钥')
     default:
-      return '导入失败'
+      return gt('导入失败')
   }
 }
 
@@ -53,11 +53,11 @@ const validate = (values, props) => {
   const errors = {}
 
   if (!values.keystore) {
-    errors.keystore = '请输入keystore'
+    errors.keystore = gt('请输入keystore')
   }
 
   if (!values.keystorePassword) {
-    errors.keystorePassword = '请输入密码'
+    errors.keystorePassword = gt('请输入密码')
   }
 
   return errors
@@ -153,7 +153,7 @@ export default class ImportETHKeystoreForm extends Component {
           errorMessages(error),
           '',
           [
-            { text: '确定', onPress: () => this.clearError() }
+            { text: t(this,'确定'), onPress: () => this.clearError() }
           ]
         )
       }, 20)
@@ -188,7 +188,7 @@ export default class ImportETHKeystoreForm extends Component {
           <View style={{ paddingTop: 16 }}>
             <View style={{ width: '100%' }}>
               <Field
-                label="Keystore 文件内容"
+                label={t(this,'Keystore 文件内容')}
                 name="keystore"
                 fieldName="keystore"
                 component={FilledTextArea}
@@ -203,7 +203,7 @@ export default class ImportETHKeystoreForm extends Component {
               />
             </View>
             <Field
-              label="Keystore 密码"
+              label={t(this,'Keystore 密码')}
               placeholder={intl.formatMessage({ id: 'identity_input_placeholder_wallet_passwd' })}
               name="keystorePassword"
               fieldName="keystorePassword"
@@ -215,10 +215,10 @@ export default class ImportETHKeystoreForm extends Component {
             />
           </View>
           <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 16, justifyContent: 'flex-start' }}>
-            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)', lineHeight: 18 }}>如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。</Text>
+            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)', lineHeight: 18 }}>{t(this,'如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。')}</Text>
           </View>
         </ScrollView>
-        <IndicatorModal isVisible={this.state.importETHKeystoreLoading} message="导入中..." onModalHide={this.onModalHide} onModalShow={this.onModalShow} />
+        <IndicatorModal isVisible={this.state.importETHKeystoreLoading} message={t(this,'导入中...')} onModalHide={this.onModalHide} onModalShow={this.onModalShow} />
       </View>
     )
   }

@@ -30,11 +30,11 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid password':
-      return '密码错误'
+      return gt('密码错误')
     case 'EOS System Error':
-      return 'EOS系统错误'
+      return gt('EOS系统错误')
     default:
-      return '投票失败'
+      return gt('投票失败')
   }
 }
 
@@ -73,14 +73,14 @@ export default class Voting extends Component {
     return {
       topBar: {
         title: {
-          text: 'EOS节点投票',
+          text: gt('EOS节点投票'),
           fontWeight: '400'
         },
         largeTitle: {
           visible: false
         },
         subtitle: {
-          text: '0 / 30 已选',
+          text: gt('0 / 30 已选'),
           fontSize: 11
         },
         drawBehind: false,
@@ -91,13 +91,13 @@ export default class Voting extends Component {
         leftButtons: [
           {
             id: 'cancel',
-            text: '取消'
+            text: gt('取消')
           }
         ],
         rightButtons: [
           {
             id: 'vote',
-            text: '投票',
+            text: gt('投票'),
             fontWeight: '400',
             enabled: false
           }
@@ -168,10 +168,10 @@ export default class Voting extends Component {
       const index = this.props.selectedIds.findIndex(item => item === owner)
       if (index === -1) {
         Alert.alert(
-          '最多可选30个节点',
+          t(this,'最多可选30个节点'),
           '',
           [
-            { text: '确定', onPress: () => {} }
+            { text: t(this,'确定'), onPress: () => {} }
           ]
         )
       } else {
@@ -199,13 +199,13 @@ export default class Voting extends Component {
       Navigation.mergeOptions(this.props.componentId, {
         topBar: {
           subtitle: {
-            text: `${this.props.selectedIds.length} / 30 已选`,
+            text: t(this,'{value} 已选',{value:`${this.props.selectedIds.length} / 30`}),
             fontSize: 11
           },
           rightButtons: [
             {
               id: 'vote',
-              text: '投票',
+              text: gt('投票'),
               fontWeight: '400',
               enabled: !!this.props.selectedIds.length
             }
@@ -226,13 +226,13 @@ export default class Voting extends Component {
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
         subtitle: {
-          text: `${this.props.selectedIds.length} / 30 已选`,
+          text: t(this,'{value} 已选',{value:`${this.props.selectedIds.length} / 30`}),
           fontSize: 11
         },
         rightButtons: [
           {
             id: 'vote',
-            text: '投票',
+            text: gt('投票'),
             fontWeight: '400',
             enabled: !!this.props.selectedIds.length
           }
@@ -263,12 +263,12 @@ export default class Voting extends Component {
           errorMessages(error),
           errorDetail(error),
           [
-            { text: '确定', onPress: () =>this.props.actions.vote.clearError() }
+            { text: t(this,'确定'), onPress: () =>this.props.actions.vote.clearError() }
           ]
         )
       }, 20)
     } else {
-      SPAlert.presentDone('投票成功!')
+      SPAlert.presentDone(t(this,'投票成功'))
     }
   }
 
@@ -294,7 +294,7 @@ export default class Voting extends Component {
         <View style={styles.container}>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
             <ActivityIndicator size="small" color="#000000" />
-            <Text style={{ fontSize: 17, marginLeft: 5 }}>获取节点中...</Text>
+            <Text style={{ fontSize: 17, marginLeft: 5 }}>{t(this,'获取节点中...')}</Text>
           </View>
         </View>
       )
@@ -346,7 +346,7 @@ export default class Voting extends Component {
             headerBackgroundColor={isDarkMode ? 'black' : '#F7F7F7'}
             ref={(ref) => { this.tableViewRef = ref; return null }}
           >
-            <TableView.Section label="当前出块节点">
+            <TableView.Section label={t(this,'当前出块节点')}>
               {producer.slice(0, 21).map(item => (
                 <TableView.Item
                   key={item.owner}
@@ -368,7 +368,7 @@ export default class Voting extends Component {
                 />
               ))}
             </TableView.Section>
-            <TableView.Section label="备选节点">
+            <TableView.Section label={t(this,'备选节点')}>
               {producer.slice(21, -1).map(item => (
                 <TableView.Item
                   key={item.owner}
@@ -405,7 +405,7 @@ export default class Voting extends Component {
             {loading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
               <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
                 <ActivityIndicator size="small" color="#000000" />
-                <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>投票中...</Text>
+                <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{t(this,'投票中...')}</Text>
               </View>
             </View>}
           </Modal>

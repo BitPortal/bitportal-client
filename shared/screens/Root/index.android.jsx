@@ -79,7 +79,7 @@ export default class Root extends Component {
       topBar: {
         elevation: 0,
         title: {
-          text: '钱包'
+          text: gt('钱包')
         },
         leftButtons: [
           {
@@ -213,7 +213,7 @@ export default class Root extends Component {
 
   setNavBar = (index) => {
     const { intl } = this.props
-    const titles = [intl.formatMessage({ id: 'top_bar_title_wallet' }), intl.formatMessage({ id: 'top_bar_title_market' }), '应用']
+    const titles = [intl.formatMessage({ id: 'top_bar_title_wallet' }), intl.formatMessage({ id: 'top_bar_title_market' }), t(this,'应用')]
 
     let rightButtons = []
 

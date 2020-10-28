@@ -40,12 +40,12 @@ export default class WalletList extends Component {
     return {
       topBar: {
         title: {
-          text: '管理钱包列表'
+          text: gt('管理钱包列表')
         },
         leftButtons: [
           {
             id: 'cancel',
-            text: '取消'
+            text: gt('取消')
           }
         ],
         largeTitle: {
@@ -78,7 +78,7 @@ export default class WalletList extends Component {
           rightButtons: [
             {
               id: 'done',
-              text: '完成'
+              text: gt('完成')
             }
           ]
         }
@@ -90,7 +90,7 @@ export default class WalletList extends Component {
           rightButtons: [
             {
               id: 'edit',
-              text: '编辑'
+              text: gt('编辑')
             }
           ]
         }
@@ -137,7 +137,7 @@ export default class WalletList extends Component {
         options: {
           topBar: {
             backButton: {
-              title: '返回'
+              title: gt('返回')
             }
           }
         }
@@ -155,7 +155,7 @@ export default class WalletList extends Component {
           options: {
             topBar: {
               backButton: {
-                title: '返回'
+                title: gt('返回')
               }
             }
           }
@@ -178,7 +178,7 @@ export default class WalletList extends Component {
         options: {
           topBar: {
             backButton: {
-              title: '返回'
+              title: gt('返回')
             }
           }
         }

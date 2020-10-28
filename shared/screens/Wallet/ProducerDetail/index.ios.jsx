@@ -8,10 +8,11 @@ import * as identityActions from 'actions/identity'
 import Modal from 'react-native-modal'
 import FastImage from 'react-native-fast-image'
 import styles from './styles'
+import { injectIntl } from "react-intl";
 
 const { Section, Item } = TableView
 
-
+@injectIntl
 export default class MyIdentity extends Component {
   static get options() {
     return {
@@ -20,10 +21,10 @@ export default class MyIdentity extends Component {
           visible: false
         },
         title: {
-          text: '节点详情'
+          text: gt('节点详情')
         },
         backButton: {
-          title: '返回'
+          title: gt('返回')
         }
       },
       bottomTabs: {
@@ -57,7 +58,7 @@ export default class MyIdentity extends Component {
       items.push(
         <Item
           reactModuleForCell="ProducerDetailTableViewCell"
-          text="节点名称"
+          text={t(this,"节点名称")}
           type="title"
           key="title"
           detail={title}
@@ -70,7 +71,7 @@ export default class MyIdentity extends Component {
     items.push(
       <Item
         reactModuleForCell="ProducerDetailTableViewCell"
-        text="合约帐号"
+        text={t(this,'合约帐号')}
         key="owner"
         type="owner"
         detail={owner}
@@ -83,7 +84,7 @@ export default class MyIdentity extends Component {
       items.push(
         <Item
           reactModuleForCell="ProducerDetailTableViewCell"
-          text="节点位置"
+          text={t(this,'节点位置')}
           key="location"
           type="location"
           detail={location}
@@ -96,7 +97,7 @@ export default class MyIdentity extends Component {
     items.push(
       <Item
         reactModuleForCell="ProducerDetailTableViewCell"
-        text="节点公钥"
+        text={t(this,'节点公钥')}
         type="identifier"
         key="identifier"
         detail={producer_key}

@@ -71,7 +71,7 @@ export default class BackupIdentity extends Component {
     return {
       topBar: {
         title: {
-          text: '备份助记词'
+          text: gt('备份助记词')
         },
         leftButtons: [
           {
@@ -83,7 +83,7 @@ export default class BackupIdentity extends Component {
         rightButtons: [
           {
             id: 'next',
-            text: '下一步',
+            text: gt('下一步'),
             fontWeight: '400',
             color: 'white'
           }
@@ -118,7 +118,7 @@ export default class BackupIdentity extends Component {
             rightButtons: [
               {
                 id: 'verify',
-                text: '验证',
+                text: t(this,'验证'),
                 fontWeight: '400',
                 color: 'white',
                 enabled: this.props.mnemonics.split(' ').length === this.state.userEntry.split(' ').length
@@ -130,10 +130,10 @@ export default class BackupIdentity extends Component {
     } else if (buttonId === 'verify') {
       if (this.state.userEntry !== this.props.mnemonics) {
         Alert.alert(
-          '助记词顺序不正确，请校对',
+          t(this,'助记词顺序不正确，请校对'),
           '',
           [
-            { text: '确定', onPress: () => console.log('OK Pressed') }
+            { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
           ],
           { cancelable: false }
         )
@@ -160,7 +160,7 @@ export default class BackupIdentity extends Component {
           rightButtons: [
             {
               id: 'verify',
-              text: '验证',
+              text: t(this,'验证'),
               fontWeight: '400',
               color: 'white',
               enabled: this.props.mnemonics.split(' ').length === this.state.userEntry.split(' ').length && !this.state.loading
@@ -283,7 +283,7 @@ export default class BackupIdentity extends Component {
         >
           {this.state.showModal && <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'rgba(0,0,0,0.87)', padding: 16, borderRadius: 4, height: 48, elevation: 1, justifyContent: 'center', width: '100%' }}>
-              <Text style={{ fontSize: 14, color: 'white' }}>助记词顺序正确!</Text>
+              <Text style={{ fontSize: 14, color: 'white' }}>{t(this,'助记词顺序正确!')}</Text>
             </View>
           </View>}
         </Modal>

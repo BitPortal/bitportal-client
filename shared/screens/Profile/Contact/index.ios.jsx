@@ -15,6 +15,7 @@ import * as contactActions from 'actions/contact'
 import * as walletActions from 'actions/wallet'
 import { DarkModeContext } from 'utils/darkMode'
 import styles from './styles'
+import { injectIntl } from "react-intl";
 
 Sound.setCategory('Playback')
 const copySound = new Sound('copy.wav', Sound.MAIN_BUNDLE, (error) => {
@@ -35,12 +36,12 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid password':
-      return '密码错误'
+      return gt('密码错误')
     default:
-      return '操作失败'
+      return gt('操作失败')
   }
 }
-
+@injectIntl
 @connect(
   state => ({
     contact: activeContactSelector(state),
@@ -69,7 +70,7 @@ export default class Contact extends Component {
         rightButtons: [
           {
             id: 'edit',
-            text: '编辑'
+            text: gt('编辑')
           }
         ],
         noBorder: true
@@ -89,16 +90,16 @@ export default class Contact extends Component {
 
   deleteContact = (id) => {
     Alert.alert(
-      '确认删除',
+      t(this,'确认删除'),
       null,
       [
         {
-          text: '取消',
+          text: t(this,'取消'),
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel'
         },
         {
-          text: '确认',
+          text: t(this,'确认'),
           onPress: () => {
             this.props.actions.deleteContact(this.props.contact.id)
             Navigation.pop(this.props.componentId)
@@ -150,11 +151,11 @@ export default class Contact extends Component {
 
       if (!wallet) {
         Alert.alert(
-          `未检测到${symbol}钱包`,
+          t(this,'未检测到{symbol}钱包',{symbol}),
           null,
           [
             {
-              text: '确认',
+              text: t(this,'确认'),
               onPress: () => {}
             }
           ]
@@ -171,12 +172,12 @@ export default class Contact extends Component {
                 options: {
                   topBar: {
                     title: {
-                      text: `发送${symbol}到`
+                      text: t(this,'发送{symbol}到',{symbol})
                     },
                     leftButtons: [
                       {
                         id: 'cancel',
-                        text: '取消'
+                        text: t(this,'取消')
                       }
                     ]
                   }
@@ -245,7 +246,7 @@ export default class Contact extends Component {
                 key={index}
                 reactModuleForCell="AddressTableViewCell"
                 address={item.address}
-                label="BTC 地址"
+                label={t(this,'{symbol} 地址',{symbol: 'BTC'})}
                 height={60}
                 selectionStyle={TableView.Consts.CellSelectionStyle.None}
                 showSeparator
@@ -271,7 +272,7 @@ export default class Contact extends Component {
                 key={index}
                 reactModuleForCell="AddressTableViewCell"
                 address={item.address}
-                label="ETH 地址"
+                label={t(this,'{symbol} 地址',{symbol: 'ETH'})}
                 height={60}
                 selectionStyle={TableView.Consts.CellSelectionStyle.None}
                 showSeparator
@@ -298,7 +299,7 @@ export default class Contact extends Component {
                 reactModuleForCell="AddressTableViewCell"
                 address={item.accountName}
                 note={item.memo}
-                label="EOS 账户名"
+                label={t(this,'{symbol} 账户名',{symbol:'EOS'})}
                 height={60}
                 chain="EOS"
                 symbol="EOS"
@@ -323,7 +324,7 @@ export default class Contact extends Component {
               reactModuleForCell="ContactDeleteTableViewCell"
               key="delete"
               actionType="delete"
-              text="删除联系人"
+              text={t(this,'删除联系人')}
               height={44}
               onPress={this.deleteContact.bind(this, contact.id)}
             />
@@ -351,7 +352,7 @@ export default class Contact extends Component {
         >
           {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
-              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已复制</Text>
+              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{t(this,'已复制')}</Text>
             </View>
           </View>}
         </Modal>

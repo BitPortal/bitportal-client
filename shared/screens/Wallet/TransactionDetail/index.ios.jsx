@@ -51,7 +51,7 @@ export default class TransactionDetail extends Component {
         backButton: {
           title: '返回'
         },
-        noBorder: true,        
+        noBorder: true,
         background: {
           translucent: false,
           color: '#F7F7F7'

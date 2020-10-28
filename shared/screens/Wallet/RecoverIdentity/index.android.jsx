@@ -60,9 +60,9 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid mnemonics':
-      return '无效的助记词'
+      return gt('无效的助记词')
     default:
-      return '恢复失败'
+      return gt('恢复失败')
   }
 }
 
@@ -70,13 +70,13 @@ const validate = (values) => {
   const errors = {}
 
   if (!values.mnemonics) {
-    errors.mnemonics = '请输入助记词'
+    errors.mnemonics = gt('请输入助记词')
   }
 
   if (!values.password) {
-    errors.password = '请输入密码'
+    errors.password = gt('请输入密码')
   } else if (values.password && values.password.length < 8) {
-    errors.password = '密码不少于8位字符'
+    errors.password = gt('密码不少于8位字符')
   }
 
   return errors
@@ -120,7 +120,7 @@ export default class RecoverIdentity extends Component {
           visible: false
         },
         title: {
-          text: '恢复身份'
+          text: gt('恢复身份')
         }
       }
     }
@@ -216,7 +216,7 @@ export default class RecoverIdentity extends Component {
           errorMessages(this.state.error),
           '',
           [
-            { text: '确定', onPress: () => this.clearError() }
+            { text: t(this,'确定'), onPress: () => this.clearError() }
           ]
         )
       }, 20)
@@ -242,7 +242,7 @@ export default class RecoverIdentity extends Component {
             <View style={{ width: '100%', alignItems: 'center' }}>
               <View style={{ width: '100%' }}>
                 <Field
-                  label="助记词"
+                  label={t(this,'助记词')}
                   placeholder={intl.formatMessage({ id: 'identity_input_placeholder_mnemonics' })}
                   name="mnemonics"
                   fieldName="mnemonics"
@@ -283,7 +283,7 @@ export default class RecoverIdentity extends Component {
               <Text style={{ fontSize: 13, color: 'rgba(0,0,0,0.54)', lineHeight: 18 }}>{intl.formatMessage({ id: 'identity_recovery_hint_passwd_recovery_passwd' })}</Text>
             </View>
           </View>
-          <IndicatorModal isVisible={loading} message="恢复身份中..." onModalHide={this.onModalHide} />
+          <IndicatorModal isVisible={loading} message={t(this,'恢复身份中...')} onModalHide={this.onModalHide} />
         </ScrollView>
       </SafeAreaView>
     )

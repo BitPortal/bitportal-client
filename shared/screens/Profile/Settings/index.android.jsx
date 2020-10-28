@@ -27,7 +27,7 @@ export default class Settings extends Component {
     return {
       topBar: {
         title: {
-          text: '设置'
+          text: gt('设置')
         },
         leftButtons: [
           {
@@ -131,8 +131,8 @@ export default class Settings extends Component {
         <View style={{ paddingTop: 8 }}>
           <FlatList
             data={[
-              { key: 'language', text: '语言设置', type: 'language', detail: localeName },
-              { key: 'currency', text: '货币单位', type: 'currency', detail: currencySymbol }
+              { key: 'language', text: t(this,'语言设置'), type: 'language', detail: localeName },
+              { key: 'currency', text: t(this,'货币单位'), type: 'currency', detail: currencySymbol }
             ]}
             renderItem={this.renderItem}
           />
