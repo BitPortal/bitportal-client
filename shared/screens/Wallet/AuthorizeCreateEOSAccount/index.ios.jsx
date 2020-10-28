@@ -43,9 +43,9 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid password':
-      return '密码错误'
+      return gt('密码错误')
     default:
-      return '创建失败'
+      return gt('创建失败')
   }
 }
 

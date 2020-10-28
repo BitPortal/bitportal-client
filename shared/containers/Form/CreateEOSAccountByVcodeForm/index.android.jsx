@@ -55,17 +55,17 @@ const validate = (values) => {
   const errors = {}
 
   if (!values.accountName) {
-    errors.accountName = '请输入账户名'
+    errors.accountName = gt('请输入账户名')
   } else if (values.accountName.length !== 12) {
-    errors.accountName = '账户名长度为12位'
+    errors.accountName = gt('账户名长度为12位')
   } else if (!/^[a-z1-5\s]+$/.test(values.accountName)) {
-    errors.accountName = '账户名由a-z与1-5字符组成'
+    errors.accountName = gt('账户名由a-z与1-5字符组成')
   }
 
   if (!values.inviteCode) {
-    errors.inviteCode = '请输入邀请码'
+    errors.inviteCode = gt('请输入邀请码')
   } else if (values.inviteCode.trim().length !== 5) {
-    errors.inviteCode = '邀请码长度为5位'
+    errors.inviteCode = gt('邀请码长度为5位')
   }
 
   return errors
@@ -192,7 +192,7 @@ export default class CreateEOSAccountByVcodeForm extends Component {
           <View style={{ paddingTop: 0 }}>
             {wallet && wallet.publicKeys && wallet.publicKeys.length && <Fragment>
               <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48 }}>
-                <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>公钥</Text>
+                <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'公钥')}</Text>
               </View>
               <View style={{ width: '100%', alignItems: 'center' }}>
                 <View style={{ width: '100%', alignItems: 'flex-start', height: 60, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
@@ -224,12 +224,12 @@ export default class CreateEOSAccountByVcodeForm extends Component {
               </View>
             </Fragment>}
         <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48, borderTopWidth: 1, borderColor: 'rgba(0,0,0,0.12)' }}>
-          <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>注册信息</Text>
+          <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'注册信息')}</Text>
         </View>
         <View style={{ width: '100%', alignItems: 'center' }}>
           <Field
-            label="账户名"
-            placeholder="a-z 与 1-5 组合的12位字符"
+            label={t(this,'账户名')}
+            placeholder={t(this,'a-z 与 1-5 组合的12位字符')}
             name="accountName"
             fieldName="accountName"
             component={FilledTextField}
@@ -237,8 +237,8 @@ export default class CreateEOSAccountByVcodeForm extends Component {
             nonEmpty={!!accountName && accountName.length > 0}
           />
           <Field
-            label="邀请码"
-            placeholder="必填"
+            label={t(this,'邀请码')}
+            placeholder={t(this,'必填')}
             name="inviteCode"
             fieldName="inviteCode"
             component={FilledTextField}
@@ -248,7 +248,7 @@ export default class CreateEOSAccountByVcodeForm extends Component {
         </View>
           </View>
         </ScrollView>
-        <IndicatorModal isVisible={this.state.createEOSAccountLoading} message="创建中..." onModalHide={this.onModalHide} onModalShow={this.onModalShow} />
+        <IndicatorModal isVisible={this.state.createEOSAccountLoading} message={t(this,'创建中...')} onModalHide={this.onModalHide} onModalShow={this.onModalShow} />
         <Modal
           isVisible={this.state.showModal}
           backdropOpacity={0}
@@ -263,7 +263,7 @@ export default class CreateEOSAccountByVcodeForm extends Component {
         >
           {this.state.showModal && <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'rgba(0,0,0,0.87)', padding: 16, borderRadius: 4, height: 48, elevation: 1, justifyContent: 'center', width: '100%' }}>
-              <Text style={{ fontSize: 14, color: 'white' }}>已复制</Text>
+              <Text style={{ fontSize: 14, color: 'white' }}>{t(this,'已复制')}</Text>
             </View>
           </View>}
         </Modal>

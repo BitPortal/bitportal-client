@@ -178,7 +178,7 @@ export const errorMessages = (error, messages) => {
     case 'Invalid index':
       return '无效的路径'
     case 'Invalid password':
-      return 'Keystore 密码错误'
+      return gt('Keystore 密码错误')
     case 'Keystore already exist in imported wallets':
     case 'Keystore already exist in identity wallets':
     case 'Wallet already exist':
@@ -317,7 +317,7 @@ export default class ImportETHWallet extends Component {
     importETHMnemonicsError: null,
     importETHKeystoreError: null,
     pathEditable: false,
-    pathSwitchLabel: '默认'
+    pathSwitchLabel: gt('默认')
   }
 
   subscription = Navigation.events().bindComponent(this)

@@ -706,7 +706,7 @@ export default class TransferAsset extends Component {
           errorMessages(error),
           errorDetail(error),
           [
-            { text: '确定', onPress: () => this.clearError() }
+            { text: t(this,'确定'), onPress: () => this.clearError() }
           ]
         )
       }, 20)

@@ -195,7 +195,7 @@ export default class Profile extends Component {
         </View>
         <View style={{ paddingTop: 8 }}>
           <FlatList
-            data={[{ key: 'contact', text: '联系人', type: 'contact', active: this.state.activeTab === 'contact' }, { key: 'settings', text: '设置', type: 'settings', active: this.state.activeTab === 'settings' }, { key: 'help', text: '帮助中心', type: 'help', active: this.state.activeTab === 'help' }, { key: 'aboutUs', text: '关于我们', type: 'aboutUs', active: this.state.activeTab === 'aboutUs' }]}
+            data={[{ key: 'contact', text: t(this,'联系人'), type: 'contact', active: this.state.activeTab === 'contact' }, { key: 'settings', text: t(this,'设置'), type: 'settings', active: this.state.activeTab === 'settings' }, { key: 'help', text: t(this,'帮助中心'), type: 'help', active: this.state.activeTab === 'help' }, { key: 'aboutUs', text: t(this,'关于我们'), type: 'aboutUs', active: this.state.activeTab === 'aboutUs' }]}
             renderItem={({ item }) => <IdentityTableViewCell key={item.key} data={item} onPress={this.switchTab.bind(this, item.type)} />}
           />
         </View>

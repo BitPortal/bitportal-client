@@ -34,7 +34,7 @@ export const errorMessages = (error, messages) => {
     case 'Invalid index':
       return gt('无效的路径')
     case 'Invalid password':
-      return 'Keystore 密码错误'
+      return gt('Keystore 密码错误')
     case 'Keystore already exist in imported wallets':
     case 'Keystore already exist in identity wallets':
     case 'Wallet already exist':

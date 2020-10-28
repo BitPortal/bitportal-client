@@ -422,8 +422,8 @@ export default class Camera extends Component {
           </View>
         </TouchableHighlight>
         <View style={{ width: Dimensions.get('window').width, position: 'absolute', left: 0, top: ((Dimensions.get('window').height + 56) / 2) - 240, height: 120, alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'white' }}>扫描二维码</Text>
-          <Text style={{ fontSize: 17, color: 'white', marginTop: 16 }}>将镜头对准二维码进行扫描</Text>
+          <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'white' }}>{t(this,'扫描二维码')}</Text>
+          <Text style={{ fontSize: 17, color: 'white', marginTop: 16 }}>{t(this,'将镜头对准二维码进行扫描')}</Text>
         </View>
         <TouchableHighlight underlayColor="rgba(0,0,0,0)" activeOpacity={0.42} style={{ position: 'absolute', right: (Dimensions.get('window').width / 2) - 14, top: ((Dimensions.get('window').height + 56) / 2) + 120 + 20, width: 28, height: 28 }} onPress={this.switchFlashMode}>
           <View style={{ width: 28, height: 28, borderRadius: 14, alignItems: 'center', justifyContent: 'center' }}>

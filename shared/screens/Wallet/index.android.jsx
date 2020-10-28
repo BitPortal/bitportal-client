@@ -626,7 +626,7 @@ export default class Wallet extends Component {
         </View>
         <View style={{ flex: 1, backgroundColor: 'white' }}>
           <View style={{ paddingLeft: 16, width: '100%', height: 48, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Text style={{ fontSize: 15, fontWeight: '500' }}>资产</Text>
+            <Text style={{ fontSize: 15, fontWeight: '500' }}>{t(this,'资产')}</Text>
             {chain !== 'BITCOIN' && <TouchableNativeFeedback onPress={this.addAssets} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.3)', true)}>
               <View style={{ height: 48, width: 48, borderTadius: 24, alignItems: 'center', justifyContent: 'center', paddingRight: 16, paddingLeft: 16 }}>
                 <Image source={require('resources/images/add_android.png')} style={{ width: 24, height: 24 }} />
