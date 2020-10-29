@@ -12,7 +12,8 @@ export const accountResourcesByIdSelector = createSelector(
 
     let resources = {}
 
-    for (var key in byId) {
+    // tslint:disable-next-line:forin
+    for (const key in byId) {
       resources[key] = {
         CPU: byId[key].cpu_limit.available,
         NET: byId[key].net_limit.available,

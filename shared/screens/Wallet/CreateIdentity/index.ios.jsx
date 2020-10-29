@@ -91,6 +91,9 @@ const validate = (values) => {
   if (!values.password) {
     errors.password = gt('请输入密码')
   }
+  if (!values.passwordConfirm) {
+    errors.passwordConfirm = gt('请输入确认密码')
+  }
 
   return errors
 }
@@ -104,6 +107,11 @@ const warn = (values) => {
 
   if (values.password && values.password.length < 8) {
     warnings.password = gt('密码不少于8位字符')
+  }
+
+  const {password,passwordConfirm} = values || {};
+  if (password && password !== passwordConfirm) {
+    warnings.passwordConfirm = gt('两次密码输入不一致');
   }
 
   return warnings
@@ -191,7 +199,7 @@ export default class CreateIdentity extends Component {
     if (buttonId === 'next') {
       const { formSyncWarnings } = this.props
       if (typeof formSyncWarnings === 'object') {
-        const warning = formSyncWarnings.name || formSyncWarnings.password
+        const warning = formSyncWarnings.name || formSyncWarnings.password || formSyncWarnings.passwordConfirm
         if (warning) {
           Alert.alert(
             warning,
@@ -230,6 +238,7 @@ export default class CreateIdentity extends Component {
     const loading = createIdentity.loading
     const name = formValues && formValues.name
     const password = formValues && formValues.password
+    const passwordConfirm = formValues && formValues.passwordConfirm
     const passwordHint = formValues && formValues.passwordHint
     const isDarkMode = this.context === 'dark'
     console.log('isDarkMode', isDarkMode)
@@ -274,6 +283,17 @@ export default class CreateIdentity extends Component {
                 showClearButton={!!password && password.length > 0}
                 change={change}
                 isDarkMode={isDarkMode}
+                secureTextEntry
+                separator
+              />
+              <Field
+                label={intl.formatMessage({ id: 'identity_input_label_wallet_passwd_confirm' })}
+                placeholder={intl.formatMessage({ id: 'identity_input_placeholder_wallet_passwd' })}
+                name="passwordConfirm"
+                fieldName="passwordConfirm"
+                component={TextField}
+                showClearButton={!!passwordConfirm && passwordConfirm.length > 0}
+                change={change}
                 secureTextEntry
                 separator
               />

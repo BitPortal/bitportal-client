@@ -57,21 +57,21 @@ export default class SelectChainType extends Component {
     })
   }
 
-  toImportEOSWallet = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.ImportEOSWallet'
-      }
-    })
-  }
-
-  toImportChainxWallet = () => {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'BitPortal.ImportChainxWallet'
-      }
-    })
-  }
+  // toImportEOSWallet = () => {
+  //   Navigation.push(this.props.componentId, {
+  //     component: {
+  //       name: 'BitPortal.ImportEOSWallet'
+  //     }
+  //   })
+  // }
+  //
+  // toImportChainxWallet = () => {
+  //   Navigation.push(this.props.componentId, {
+  //     component: {
+  //       name: 'BitPortal.ImportChainxWallet'
+  //     }
+  //   })
+  // }
 
   onPress = (chain) => {
     switch (chain) {
@@ -107,10 +107,11 @@ export default class SelectChainType extends Component {
   }
 
   render() {
+  // , { key: 'eos', chain: 'eos' }, { key: 'chainx', chain: 'chainx', isLast: true }
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <FlatList
-          data={[{ key: 'bitcoin', chain: 'bitcoin' }, { key: 'ethereum', chain: 'ethereum' }, { key: 'eos', chain: 'eos' }, { key: 'chainx', chain: 'chainx', isLast: true }]}
+          data={[{ key: 'bitcoin', chain: 'bitcoin' }, { key: 'ethereum', chain: 'ethereum' ,isLast: true}]}
           renderItem={this.renderItem}
         />
       </View>

@@ -62,6 +62,8 @@
 	<string>location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This is only used to protect the safety of the user's info</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>micophone</string>
 	<key>NSMotionUsageDescription</key>
 	<string>This is only used to protect the safety of the user's info</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -96,7 +98,11 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string></string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>User Interface Style</key>
+	<string>Light</string>
 </dict>
 </plist>

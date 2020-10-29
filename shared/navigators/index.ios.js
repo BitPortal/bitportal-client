@@ -238,7 +238,7 @@ export const startApp = (callback) => {
 
 export const startTabBasedApp = (locale) => {
   locale = locale || 'zh'
-  
+
   Navigation.setRoot({
     root: {
       bottomTabs: {
@@ -401,7 +401,7 @@ export const setBottomTabsLocale = (locale) => {
 
   Navigation.mergeOptions('BitPortal.Discovery', {
     bottomTab: {
-      text: messages[locale].general_nav_discovery,
+      text: messages[locale].tab_bar_title_dapps,
       textColor: '#9D9D9D',
       selectedTextColor: '#007AFF',
       icon: require('resources/images/browser.png'),

@@ -37,6 +37,12 @@ const validate = (values) => {
     errors.password = gt('密码不少于8位字符')
   }
 
+  if (!values.passwordConfirm) {
+    errors.passwordConfirm = gt('请输入确认密码')
+  }else if (values.password !== values.passwordConfirm) {
+    errors.passwordConfirm = gt('两次密码输入不一致');
+  }
+
   return errors
 }
 
@@ -152,13 +158,14 @@ export default class CreateIdentity extends Component {
     const loading = createIdentity.loading
     const name = formValues && formValues.name
     const password = formValues && formValues.password
+    const passwordConfirm = formValues && formValues.passwordConfirm
     const passwordHint = formValues && formValues.passwordHint
 
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
         <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
           <View style={{ flex: 1 }}>
-            <View style={{ marginBottom: 16, height: 22, marginTop: 30, marginBottom: 30 }}>
+            <View style={{ height: 22, marginTop: 30, marginBottom: 30 }}>
               <Text style={{ fontSize: 20, color: 'black', paddingLeft: 16, paddingRight: 16, fontWeight: 'bold' }}>
                 {intl.formatMessage({ id: 'identity_create_sub_title' })}
               </Text>
@@ -180,6 +187,16 @@ export default class CreateIdentity extends Component {
                 fieldName="password"
                 component={OutlinedTextField}
                 nonEmpty={!!password && password.length > 0}
+                change={change}
+                secureTextEntry
+              />
+              <Field
+                label={intl.formatMessage({ id: 'identity_input_label_wallet_passwd_confirm' })}
+                placeholder={intl.formatMessage({ id: 'identity_input_placeholder_wallet_passwd' })}
+                name="passwordConfirm"
+                fieldName="passwordConfirm"
+                component={OutlinedTextField}
+                nonEmpty={!!passwordConfirm && passwordConfirm.length > 0}
                 change={change}
                 secureTextEntry
               />

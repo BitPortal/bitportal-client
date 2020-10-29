@@ -75,7 +75,7 @@ const TextField = ({
       secureTextEntry={secureTextEntry}
       {...restInput}
     />
-    {showClearButton && active && <View style={{ height: '100%', position: 'absolute', right: 16, top: 0, width: 20, height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+    {showClearButton && active && <View style={{ height: '100%', position: 'absolute', right: 16, top: 0, width: 20, alignItems: 'center', justifyContent: 'center' }}>
       <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
         <FastImage
           source={require('resources/images/clear.png')}
@@ -141,6 +141,9 @@ const validate = (values) => {
   if (!values.password) {
     errors.password = gt('请输入密码')
   }
+  if (!values.passwordConfirm) {
+    errors.password = gt('请输入确认密码');
+  }
 
   return errors
 }
@@ -150,6 +153,11 @@ const warn = (values) => {
 
   if (values.password && values.password.length < 8) {
     warnings.password = gt('密码不少于8位字符')
+  }
+
+  const {password,passwordConfirm} = values || {};
+  if (password !== passwordConfirm) {
+    warnings.passwordConfirm = gt('两次密码输入不一致');
   }
 
   return warnings
@@ -254,7 +262,7 @@ export default class RecoverIdentity extends Component {
     if (buttonId === 'submit') {
       const { formSyncWarnings } = this.props
       if (typeof formSyncWarnings === 'object') {
-        const warning = formSyncWarnings.name || formSyncWarnings.password
+        const warning = formSyncWarnings.name || formSyncWarnings.password || formSyncWarnings.passwordConfirm
         if (warning) {
           Alert.alert(
             warning,
@@ -370,6 +378,17 @@ export default class RecoverIdentity extends Component {
                 change={change}
                 secureTextEntry
                 isDarkMode={isDarkMode}
+                separator={true}
+              />
+              <Field
+                label={intl.formatMessage({ id: 'identity_input_label_wallet_passwd_confirm' })}
+                placeholder={intl.formatMessage({ id: 'identity_input_placeholder_wallet_passwd' })}
+                name="passwordConfirm"
+                fieldName="passwordConfirm"
+                component={TextField}
+                showClearButton={!!password && password.length > 0}
+                change={change}
+                secureTextEntry
                 separator={true}
               />
               <Field
