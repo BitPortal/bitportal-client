@@ -1,9 +1,15 @@
 import zh from './zh'
+import zh_other from './zh_other'
 import en from './en'
+import en_other from './en_other'
 import ko from './ko'
+
+const zh_all = {...zh, ...zh_other};
+const en_all = {...en, ...en_other};
+
 export default {
-  zh,
-  en,
+  zh:zh_all,
+  en:en_all,
   ko,
 }
 
@@ -33,9 +39,9 @@ const setGlobalLoacale = (locale: Locale) => {
 
 global.gt = (message) => {
   if (localeData === 'zh') {
-    return  zh[message] ? zh[message] : message;
+    return  zh_all[message] ? zh_all[message] : message;
   }
-  return en[message] ? en[message] : message;
+  return en_all[message] ? en_all[message] : message;
 }
 
 export {setGlobalLoacale};

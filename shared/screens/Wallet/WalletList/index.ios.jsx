@@ -50,6 +50,9 @@ export default class WalletList extends Component {
         largeTitle: {
           displayMode: 'never'
         }
+      },
+      bottomTabs: {
+        visible: false
       }
     }
   }

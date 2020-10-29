@@ -29,20 +29,6 @@ const styles = EStyleSheet.create({
     flex: 1,
     // backgroundColor: 'white'
   },
-  button: {
-    width: '100%',
-    height: 50,
-    backgroundColor: '#007AFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 20,
-    borderRadius: 10
-  },
-  buttonText: {
-    textAlign: 'center',
-    color: 'white',
-    fontSize: 17
-  },
   textFiled: {
     height: '100%',
     fontSize: 17,
@@ -109,7 +95,7 @@ const TextField = ({
       editable={typeof editable === 'boolean' ? editable : true}
       {...restInput}
     />
-    {showClearButton && active && <View style={{ height: '100%', position: 'absolute', right: 16, top: 0, width: 20, height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+    {showClearButton && active && <View style={{ height: '100%', position: 'absolute', right: 16, top: 0, width: 20, alignItems: 'center', justifyContent: 'center' }}>
       <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
         <FastImage
           source={require('resources/images/clear.png')}
@@ -217,6 +203,10 @@ const validate = (values) => {
     errors.password = gt('请输入密码')
   }
 
+  if (!values.passwordConfirm) {
+    errors.passwordConfirm = gt('请输入确认密码')
+  }
+
   return errors
 }
 
@@ -225,6 +215,9 @@ const warn = (values) => {
 
   if (values.password && values.password.length < 8) {
     warnings.password = gt('密码不少于8位字符')
+  }
+  if (values.password !== values.passwordConfirm) {
+    warnings.passwordConfirm = gt('两次密码输入不一致');
   }
 
   return warnings
@@ -272,6 +265,9 @@ export default class ImportETHWallet extends Component {
         },
         noBorder: true,
         drawBehind: false
+      },
+      bottomTabs: {
+        visible: false
       }
     }
   }
@@ -323,7 +319,7 @@ export default class ImportETHWallet extends Component {
     if (buttonId === 'submit') {
       const { formSyncWarnings } = this.props
       if (typeof formSyncWarnings === 'object') {
-        const warning = formSyncWarnings.password
+        const warning = formSyncWarnings.password || formSyncWarnings.passwordConfirm
         if (warning) {
           Alert.alert(
             warning,
@@ -465,6 +461,7 @@ export default class ImportETHWallet extends Component {
     const keystore = formValues && formValues.keystore
     const keystorePassword = formValues && formValues.keystorePassword
     const password = formValues && formValues.password
+    const passwordConfirm = formValues && formValues.passwordConfirm
     const passwordHint = formValues && formValues.passwordHint
     const path = formValues && formValues.path
 
@@ -590,6 +587,17 @@ export default class ImportETHWallet extends Component {
                   component={TextField}
                   separator={true}
                   showClearButton={!!password && password.length > 0}
+                  secureTextEntry
+                />
+                <Field
+                  label={t(this,'确认密码')}
+                  placeholder={t(this,'不少于8位字符，建议混合大小写字母，数字，符号')}
+                  name="passwordConfirm"
+                  fieldName="passwordConfirm"
+                  change={change}
+                  component={TextField}
+                  separator={true}
+                  showClearButton={!!passwordConfirm && passwordConfirm.length > 0}
                   secureTextEntry
                 />
                 <Field

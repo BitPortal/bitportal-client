@@ -17,6 +17,8 @@ function* setLocale(action: Action<object>) {
   setExtraLocale(locale)
 }
 
+
+
 export default function* intlSaga() {
   yield takeEvery(String(actions.setLocale), setLocale)
 }

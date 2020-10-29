@@ -17,5 +17,6 @@ export default function configure(initialState: RootState = {}, history?: any) {
   const store = createStore(rootReducer, initialState, applyMiddleware(...middlewares)) as any
   store.runSaga = sagaMiddleware.run
   store.close = () => store.dispatch(END)
+
   return store
 }

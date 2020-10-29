@@ -10,7 +10,11 @@ import * as contactActions from 'actions/contact'
 import Modal from 'react-native-modal'
 import FastImage from 'react-native-fast-image'
 import uuidv4 from 'uuid/v4'
-import { validateBTCAddress, validateETHAddress, validateEOSAccountName } from 'utils/validate'
+import {
+  validateBTCAddress,
+  validateETHAddress,
+  // validateEOSAccountName
+} from 'utils/validate'
 import { findDuplicate } from 'utils'
 import styles from './styles'
 import { injectIntl } from "react-intl";
@@ -192,10 +196,10 @@ export default class MyIdentity extends Component {
   state = {
     btcIds: [],
     ethIds: [],
-    eosIds: [],
+    // eosIds: [],
     lastBTCId: 0,
     lastETHId: 0,
-    lastEOSId: 0
+    // lastEOSId: 0
   }
 
   navigationButtonPressed({ buttonId }) {
@@ -218,7 +222,7 @@ export default class MyIdentity extends Component {
 
       const btc = []
       const eth = []
-      const eos = []
+      // const eos = []
 
       this.state.btcIds.forEach((value) => {
         if (formValues[`btc_address_${value}`]) {
@@ -232,13 +236,13 @@ export default class MyIdentity extends Component {
         }
       })
 
-      this.state.eosIds.forEach((value) => {
-        if (formValues[`eos_accountName_${value}`]) {
-          eos.push({ accountName: formValues[`eos_accountName_${value}`] })
-        }
-      })
+      // this.state.eosIds.forEach((value) => {
+      //   if (formValues[`eos_accountName_${value}`]) {
+      //     eos.push({ accountName: formValues[`eos_accountName_${value}`] })
+      //   }
+      // })
 
-      if (!btc.length && !eth.length && !eos.length) {
+      if (!btc.length && !eth.length) {
         Alert.alert(
           t(this,'请添加地址或账户名'),
           '',
@@ -275,18 +279,18 @@ export default class MyIdentity extends Component {
         }
       }
 
-      for (let i = 0; i < eos.length; i++) {
-        if (!validateEOSAccountName(eos[i].accountName)) {
-          Alert.alert(
-            t(this,'无效的{symbol}账户名',{symbol:'EOS'}),
-            eos[i].accountName,
-            [
-              { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
-            ]
-          )
-          return
-        }
-      }
+      // for (let i = 0; i < eos.length; i++) {
+      //   if (!validateEOSAccountName(eos[i].accountName)) {
+      //     Alert.alert(
+      //       t(this,'无效的{symbol}账户名',{symbol:'EOS'}),
+      //       eos[i].accountName,
+      //       [
+      //         { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
+      //       ]
+      //     )
+      //     return
+      //   }
+      // }
 
       const btcAddresses = btc.map(item => item.address)
       const btcDuplicate = findDuplicate(btcAddresses)
@@ -314,18 +318,18 @@ export default class MyIdentity extends Component {
         return
       }
 
-      const eosAddresses = eos.map(item => item.accountName)
-      const eosDuplicate = findDuplicate(eosAddresses)
-      if (eosDuplicate) {
-        Alert.alert(
-          t(this,'重复添加的{symbol}账户名',{symbol:'EOS'}),
-          eosDuplicate,
-          [
-            { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
-          ]
-        )
-        return
-      }
+      // const eosAddresses = eos.map(item => item.accountName)
+      // const eosDuplicate = findDuplicate(eosAddresses)
+      // if (eosDuplicate) {
+      //   Alert.alert(
+      //     t(this,'重复添加的{symbol}账户名',{symbol:'EOS'}),
+      //     eosDuplicate,
+      //     [
+      //       { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
+      //     ]
+      //   )
+      //   return
+      // }
 
       this.props.handleSubmit(this.submit)()
     }
@@ -334,7 +338,7 @@ export default class MyIdentity extends Component {
   submit = (data) => {
     const btc = []
     const eth = []
-    const eos = []
+    // const eos = []
 
     this.state.btcIds.forEach((value) => {
       if (data[`btc_address_${value}`]) {
@@ -348,11 +352,11 @@ export default class MyIdentity extends Component {
       }
     })
 
-    this.state.eosIds.forEach((value) => {
-      if (data[`eos_accountName_${value}`]) {
-        eos.push({ accountName: data[`eos_accountName_${value}`], memo: data[`eos_memo_${value}`] && data[`eos_memo_${value}`].trim() })
-      }
-    })
+    // this.state.eosIds.forEach((value) => {
+    //   if (data[`eos_accountName_${value}`]) {
+    //     eos.push({ accountName: data[`eos_accountName_${value}`], memo: data[`eos_memo_${value}`] && data[`eos_memo_${value}`].trim() })
+    //   }
+    // })
 
     if (this.props.editMode && this.props.contact) {
       this.props.actions.addContact({
@@ -361,7 +365,7 @@ export default class MyIdentity extends Component {
         description: data.description && data.description.trim(),
         btc,
         eth,
-        eos
+        // eos
       })
     } else {
       this.props.actions.addContact({
@@ -370,7 +374,7 @@ export default class MyIdentity extends Component {
         description: data.description && data.description.trim(),
         btc,
         eth,
-        eos
+        // eos
       })
     }
 
@@ -385,9 +389,9 @@ export default class MyIdentity extends Component {
 
   }
 
-  addEOSAccountName = () => {
-    this.setState({ eosIds: [...this.state.eosIds, this.state.lastEOSId + 1], lastEOSId: this.state.lastEOSId + 1 })
-  }
+  // addEOSAccountName = () => {
+  //   this.setState({ eosIds: [...this.state.eosIds, this.state.lastEOSId + 1], lastEOSId: this.state.lastEOSId + 1 })
+  // }
 
   addBTCAddress = () => {
     this.setState({ btcIds: [...this.state.btcIds, this.state.lastBTCId + 1], lastBTCId: this.state.lastBTCId + 1 })
@@ -397,10 +401,10 @@ export default class MyIdentity extends Component {
     this.setState({ ethIds: [...this.state.ethIds, this.state.lastETHId + 1], lastETHId: this.state.lastETHId + 1 })
   }
 
-  removeEOSAccountName = (id) => {
-    this.setState({ eosIds: this.state.eosIds.filter(item => item !== id) })
-    this.props.change(`eos_accountName_${id}`, null)
-  }
+  // removeEOSAccountName = (id) => {
+  //   this.setState({ eosIds: this.state.eosIds.filter(item => item !== id) })
+  //   this.props.change(`eos_accountName_${id}`, null)
+  // }
 
   removeBTCAddress = (id) => {
     this.setState({ btcIds: this.state.btcIds.filter(item => item !== id) })
@@ -416,7 +420,7 @@ export default class MyIdentity extends Component {
     if (
       prevState.btcIds.length !== this.state.btcIds.length
       || prevState.ethIds.length !== this.state.ethIds.length
-      || prevState.eosIds.length !== this.state.eosIds.length
+      // || prevState.eosIds.length !== this.state.eosIds.length
     ) {
       LayoutAnimation.easeInEaseOut()
     }
@@ -452,20 +456,20 @@ export default class MyIdentity extends Component {
         this.setState({ ethIds })
       }
 
-      if (this.props.contact.eos.length) {
-        const eosIds = []
-
-        for (let i = 0; i < this.props.contact.eos.length; i++) {
-          this.props.change(`eos_accountName_${i}`, this.props.contact.eos[i].accountName)
-          if (this.props.contact.eos[i].memo) {
-            this.props.change(`eos_memo_${i}`, this.props.contact.eos[i].memo)
-          }
-
-          eosIds.push(i)
-        }
-
-        this.setState({ eosIds })
-      }
+      // if (this.props.contact.eos.length) {
+      //   const eosIds = []
+      //
+      //   for (let i = 0; i < this.props.contact.eos.length; i++) {
+      //     this.props.change(`eos_accountName_${i}`, this.props.contact.eos[i].accountName)
+      //     if (this.props.contact.eos[i].memo) {
+      //       this.props.change(`eos_memo_${i}`, this.props.contact.eos[i].memo)
+      //     }
+      //
+      //     eosIds.push(i)
+      //   }
+      //
+      //   this.setState({ eosIds })
+      // }
     }
   }
 
@@ -591,66 +595,66 @@ export default class MyIdentity extends Component {
               </View>
             </TouchableHighlight>
           </View>
-          <View style={{ width: '100%', marginTop: 40 }}>
-            {this.state.eosIds.map((id, index) =>
-              <View key={id} style={{ width: '100%', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 16 }}>
-                <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }} onPress={this.removeEOSAccountName.bind(this, id)}>
-                  <FastImage
-                    source={require('resources/images/remove_red.png')}
-                    style={{ width: 28 * 0.8, height: 30 * 0.8 }}
-                  />
-                </TouchableHighlight>
-                <View style={{ width: '100%', alignItems: 'center', height: 40, paddingRight: 16, flexDirection: 'row' }}>
-                  <View style={{ borderRightWidth: 0.5, borderColor: '#C8C7CC', height: '100%', width: 42, justifyContent: 'center', alignItems: 'center', paddingRight: 10 }}>
-                    <Text style={{ width: 30, height: '100%', justifyContent: 'center', alignItems: 'center', fontSize: 15, lineHeight: 40 }} numberOfLines={1}>EOS</Text>
-                  </View>
-                  <View style={{ flex: 1, height: 40, flexDirection: 'row' }}>
-                    <Field
-                      label="EOS"
-                      placeholder={t(this,'账户名')}
-                      name={`eos_accountName_${id}`}
-                      fieldName={`eos_accountName_${id}`}
-                      change={change}
-                      component={MiniTextField}
-                      switchable
-                      onSwitch={() => {}}
-                      showClearButton={!!formValues && formValues[`eos_accountName_${id}`] && formValues[`eos_accountName_${id}`].length > 0}
-                      autoFocus={!editMode || id > contact.eos.length - 1}
-                      autoCapitalize="none"
-                      rightBorder
-                      clearButtonRight={6}
-                    />
-                    <Field
-                      label="EOS"
-                      placeholder={t(this,'默认备注')}
-                      name={`eos_memo_${id}`}
-                      fieldName={`eos_memo_${id}`}
-                      change={change}
-                      component={MiniTextField}
-                      switchable
-                      onSwitch={() => {}}
-                      showClearButton={!!formValues && formValues[`eos_memo_${id}`] && formValues[`eos_memo_${id}`].length > 0}
-                      autoFocus={false}
-                      autoCapitalize="none"
-                      clearButtonRight={16}
-                    />
-                  </View>
-                </View>
-                {(index !== this.state.eosIds.length - 1) && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />}
-              </View>
-            )}
-            <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%', height: 40 }} onPress={this.addEOSAccountName}>
-              <View style={{ width: '100%', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 16 }}>
-                <FastImage
-                  source={require('resources/images/add_green.png')}
-                  style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }}
-                />
-                <Text style={{ fontSize: 15 }}>{t(this,"添加{symbol}账户",{symbol:'EOS'})}</Text>
-                <View style={{ position: 'absolute', height: 0.5, top: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
-                <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
-              </View>
-            </TouchableHighlight>
-          </View>
+          {/*<View style={{ width: '100%', marginTop: 40 }}>*/}
+          {/*  {this.state.eosIds.map((id, index) =>*/}
+          {/*    <View key={id} style={{ width: '100%', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 16 }}>*/}
+          {/*      <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }} onPress={this.removeEOSAccountName.bind(this, id)}>*/}
+          {/*        <FastImage*/}
+          {/*          source={require('resources/images/remove_red.png')}*/}
+          {/*          style={{ width: 28 * 0.8, height: 30 * 0.8 }}*/}
+          {/*        />*/}
+          {/*      </TouchableHighlight>*/}
+          {/*      <View style={{ width: '100%', alignItems: 'center', height: 40, paddingRight: 16, flexDirection: 'row' }}>*/}
+          {/*        <View style={{ borderRightWidth: 0.5, borderColor: '#C8C7CC', height: '100%', width: 42, justifyContent: 'center', alignItems: 'center', paddingRight: 10 }}>*/}
+          {/*          <Text style={{ width: 30, height: '100%', justifyContent: 'center', alignItems: 'center', fontSize: 15, lineHeight: 40 }} numberOfLines={1}>EOS</Text>*/}
+          {/*        </View>*/}
+          {/*        <View style={{ flex: 1, height: 40, flexDirection: 'row' }}>*/}
+          {/*          <Field*/}
+          {/*            label="EOS"*/}
+          {/*            placeholder={t(this,'账户名')}*/}
+          {/*            name={`eos_accountName_${id}`}*/}
+          {/*            fieldName={`eos_accountName_${id}`}*/}
+          {/*            change={change}*/}
+          {/*            component={MiniTextField}*/}
+          {/*            switchable*/}
+          {/*            onSwitch={() => {}}*/}
+          {/*            showClearButton={!!formValues && formValues[`eos_accountName_${id}`] && formValues[`eos_accountName_${id}`].length > 0}*/}
+          {/*            autoFocus={!editMode || id > contact.eos.length - 1}*/}
+          {/*            autoCapitalize="none"*/}
+          {/*            rightBorder*/}
+          {/*            clearButtonRight={6}*/}
+          {/*          />*/}
+          {/*          <Field*/}
+          {/*            label="EOS"*/}
+          {/*            placeholder={t(this,'默认备注')}*/}
+          {/*            name={`eos_memo_${id}`}*/}
+          {/*            fieldName={`eos_memo_${id}`}*/}
+          {/*            change={change}*/}
+          {/*            component={MiniTextField}*/}
+          {/*            switchable*/}
+          {/*            onSwitch={() => {}}*/}
+          {/*            showClearButton={!!formValues && formValues[`eos_memo_${id}`] && formValues[`eos_memo_${id}`].length > 0}*/}
+          {/*            autoFocus={false}*/}
+          {/*            autoCapitalize="none"*/}
+          {/*            clearButtonRight={16}*/}
+          {/*          />*/}
+          {/*        </View>*/}
+          {/*      </View>*/}
+          {/*      {(index !== this.state.eosIds.length - 1) && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />}*/}
+          {/*    </View>*/}
+          {/*  )}*/}
+          {/*  <TouchableHighlight underlayColor="#D9D9D9" style={{ width: '100%', height: 40 }} onPress={this.addEOSAccountName}>*/}
+          {/*    <View style={{ width: '100%', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 16 }}>*/}
+          {/*      <FastImage*/}
+          {/*        source={require('resources/images/add_green.png')}*/}
+          {/*        style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }}*/}
+          {/*      />*/}
+          {/*      <Text style={{ fontSize: 15 }}>{t(this,"添加{symbol}账户",{symbol:'EOS'})}</Text>*/}
+          {/*      <View style={{ position: 'absolute', height: 0.5, top: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />*/}
+          {/*      <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />*/}
+          {/*    </View>*/}
+          {/*  </TouchableHighlight>*/}
+          {/*</View>*/}
         </ScrollView>
       </SafeAreaView>
     )

@@ -13,7 +13,7 @@ import { persistStore } from 'redux-persist'
 // import DeviceInfo from 'react-native-device-info'
 import configure from 'store'
 import sagas from 'sagas'
-// import storage from 'utils/storage'
+import storage from 'utils/storage'
 // import VersionNumber from 'react-native-version-number'
 
 EStyleSheet.build({})
@@ -23,6 +23,7 @@ startApp(async () => {
   // const deviceLocale = DeviceInfo.getDeviceLocale()
   const locale = 'zh'
   const store = configure({ intl: { locale }})
+  console.warn('-----start app callback store: ',store);
   registerScreens(store)
   store.runSaga(sagas)
   startTabBasedApp(locale)

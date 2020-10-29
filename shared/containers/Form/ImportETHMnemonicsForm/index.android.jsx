@@ -66,6 +66,12 @@ const validate = (values, props) => {
     errors.password = gt('密码不少于8位字符')
   }
 
+  if (!values.passwordConfirm) {
+    errors.passwordConfirm = gt('请输入确认密码')
+  }else if (values.password !== values.passwordConfirm) {
+    errors.passwordConfirm = gt('两次密码输入不一致');
+  }
+
   return errors
 }
 
@@ -225,6 +231,7 @@ export default class ImportETHMnemonicsForm extends Component {
     const mnemonic = formValues && formValues.mnemonic
     const path = formValues && formValues.path
     const password = formValues && formValues.password
+    const passwordConfirm = formValues && formValues.passwordConfirm
     const passwordHint = formValues && formValues.passwordHint
 
     return (
@@ -280,6 +287,17 @@ export default class ImportETHMnemonicsForm extends Component {
               separator={true}
             />
             <Field
+              label={intl.formatMessage({ id: 'identity_input_label_wallet_passwd_confirm' })}
+              placeholder={intl.formatMessage({ id: 'identity_input_placeholder_wallet_passwd' })}
+              name="passwordConfirm"
+              fieldName="passwordConfirm"
+              component={FilledTextField}
+              nonEmpty={!!passwordConfirm && passwordConfirm.length > 0}
+              change={change}
+              secureTextEntry
+              separator={true}
+            />
+            <Field
               label={intl.formatMessage({ id: 'identity_input_label_passwd_hint' })}
               placeholder={intl.formatMessage({ id: 'identity_input_placeholder_label_passwd_hint' })}
               name="passwordHint"
@@ -291,7 +309,7 @@ export default class ImportETHMnemonicsForm extends Component {
             />
           </View>
           <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 16, justifyContent: 'flex-start' }}>
-            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)', lineHeight: 18 }}>{t(this,'如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。<')}/Text>
+            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)', lineHeight: 18 }}>{t(this,'如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。')}</Text>
           </View>
         </ScrollView>
         <IndicatorModal isVisible={this.state.importETHMnemonicsLoading} message={t(this,'导入中...')} onModalHide={this.onModalHide} onModalShow={this.onModalShow} />

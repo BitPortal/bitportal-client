@@ -46,6 +46,12 @@ const validate = (values, props) => {
     errors.password = gt('密码不少于8位字符')
   }
 
+  if (!values.passwordConfirm) {
+    errors.passwordConfirm = gt('请输入确认密码')
+  }else if (values.password !== values.passwordConfirm) {
+    errors.passwordConfirm = gt('两次密码输入不一致');
+  }
+
   return errors
 }
 
@@ -171,6 +177,7 @@ export default class ImportBTCPrivateKeyForm extends Component {
     const { intl, formValues, change, isSegWit } = this.props
     const privateKey = formValues && formValues.privateKey
     const password = formValues && formValues.password
+    const passwordConfirm = formValues && formValues.passwordConfirm
     const passwordHint = formValues && formValues.passwordHint
 
     return (
@@ -222,6 +229,17 @@ export default class ImportBTCPrivateKeyForm extends Component {
               fieldName="password"
               component={FilledTextField}
               nonEmpty={!!password && password.length > 0}
+              change={change}
+              secureTextEntry
+              separator={true}
+            />
+            <Field
+              label={intl.formatMessage({ id: 'identity_input_label_wallet_passwd_confirm' })}
+              placeholder={intl.formatMessage({ id: 'identity_input_placeholder_wallet_passwd' })}
+              name="passwordConfirm"
+              fieldName="passwordConfirm"
+              component={FilledTextField}
+              nonEmpty={!!passwordConfirm && passwordConfirm.length > 0}
               change={change}
               secureTextEntry
               separator={true}

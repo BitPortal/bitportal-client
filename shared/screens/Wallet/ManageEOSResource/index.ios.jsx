@@ -52,20 +52,6 @@ const styles = EStyleSheet.create({
     flex: 1,
     // backgroundColor: 'white'
   },
-  button: {
-    width: '100%',
-    height: 50,
-    backgroundColor: '#007AFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 20,
-    borderRadius: 10
-  },
-  buttonText: {
-    textAlign: 'center',
-    color: 'white',
-    fontSize: 17
-  },
   textFiled: {
     height: '100%',
     fontSize: 17,
@@ -116,7 +102,7 @@ const TextField = ({
       secureTextEntry={secureTextEntry}
       {...restInput}
     />
-    {showClearButton && active && <View style={{ height: '100%', position: 'absolute', right: 16, top: 0, width: 20, height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+    {showClearButton && active && <View style={{ height: '100%', position: 'absolute', right: 16, top: 0, width: 20, alignItems: 'center', justifyContent: 'center' }}>
       <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
         <FastImage
           source={require('resources/images/clear.png')}

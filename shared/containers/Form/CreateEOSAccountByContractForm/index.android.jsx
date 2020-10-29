@@ -33,7 +33,7 @@ const validate = (values) => {
   if (!values.accountName) {
     errors.accountName = gt('请输入账户名')
   } else if (values.accountName.length !== 12) {
-    errors.accountName = gt*'账户名长度为12位')
+    errors.accountName = gt('账户名长度为12位')
   } else if (!/^[a-z1-5\s]+$/.test(values.accountName)) {
     errors.accountName = gt('账户名由a-z与1-5字符组成')
   }
