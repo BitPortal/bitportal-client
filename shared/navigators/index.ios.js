@@ -84,6 +84,7 @@ import DappList from 'screens/Discovery/DappList'
 import Profile from 'screens/Profile'
 import Contacts from 'screens/Profile/Contacts'
 import Contact from 'screens/Profile/Contact'
+import AboutUs from 'screens/Profile/AboutUs'
 import EditContact from 'screens/Profile/EditContact'
 import LanguageSetting from 'screens/Profile/LanguageSetting'
 import CurrencySetting from 'screens/Profile/CurrencySetting'
@@ -180,6 +181,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.Profile', () => Profile, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Contacts', () => Contacts, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Contact', () => Contact, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.AboutUs', () => AboutUs, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.EditContact', () => EditContact, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.LanguageSetting', () => LanguageSetting, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.CurrencySetting', () => CurrencySetting, Provider, store)

@@ -27,12 +27,9 @@ export const getBalance = async (address: string, contractAddress: string = null
       tag: 'latest'
     })
 
-    console.log("api balance: ", result)
-
     return (+result.result) * Math.pow(10, -decimals)
   } else {
     const balance = await web3.eth.getBalance(address)
-    console.log("api balance web3: ", result)
     return (+balance) * Math.pow(10, -decimals)
   }
 }

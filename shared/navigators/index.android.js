@@ -48,6 +48,7 @@ import TransferAsset from 'screens/Wallet/TransferAsset'
 import Camera from 'screens/Camera'
 import WebView from 'screens/WebView'
 import WebViewBridge from 'screens/WebViewBridge'
+import AboutUs from 'screens/Profile/AboutUs'
 
 import messages from 'resources/messages'
 
@@ -97,6 +98,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.WebView', () => WebView, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.WebViewBridge', () => WebViewBridge, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Discovery', () => Discovery, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.AboutUs', () => AboutUs, Provider, store)
 }
 
 export const setDefaultOptions = () => {

@@ -61,15 +61,11 @@ export default class Profile extends Component {
       stack: {
         children: [{
           component: {
-            name: 'BitPortal.WebView',
-            passProps: {
-              url: 'https://www.bitportal.io/',
-              id: 99999
-            },
+            name: 'BitPortal.AboutUs',
             options: {
               topBar: {
                 title: {
-                  text: 'BitPortal 官网'
+                  text: '关于我们'
                 },
                 leftButtons: [
                   {

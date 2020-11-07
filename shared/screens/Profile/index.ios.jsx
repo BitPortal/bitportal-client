@@ -121,27 +121,7 @@ export default class Profile extends Component {
   toAboutUs = () => {
     Navigation.push(this.props.componentId, {
       component: {
-        name: 'BitPortal.WebView',
-        passProps: {
-          url: 'https://www.bitportal.io/',
-          id: 99999
-        }
-      },
-      options: {
-        topBar: {
-          title: {
-            text: 'BitPortal 官网'
-          },
-          largeTitle: {
-            text: 'BitPortal 官网'
-          },
-          leftButtons: [
-            {
-              id: 'cancel',
-              text: '返回'
-            }
-          ]
-        }
+        name: 'BitPortal.AboutUs'
       }
     })
   }
@@ -170,7 +150,7 @@ export default class Profile extends Component {
             text: 'BitPortal 帮助中心'
           },
           largeTitle: {
-            text: 'BitPortal 帮助中心'
+            visible: false
           },
           leftButtons: [
             {
