@@ -5,6 +5,9 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 import { View, Text, Clipboard, ActivityIndicator, TouchableHighlight, Image, Alert, NativeModules, ScrollView } from 'react-native'
 import { Navigation } from 'components/Navigation'
 import TableView from 'components/TableView'
+import { setExtraLocale } from '../../utils/location/index.native';
+import { setGlobalLoacale } from "../../resources/messages";
+import { nullCheck } from '../../utils/checkUtils';
 // import FastImage from 'react-native-fast-image'
 import SplashScreen from 'react-native-splash-screen'
 import Modal from 'react-native-modal'
@@ -158,6 +161,11 @@ export default class Wallet extends Component {
     KeyboardManager.setToolbarDoneBarButtonItemText(gt('完成'))
     KeyboardManager.setToolbarPreviousNextButtonEnable(true)
     this.props.actions.setSelectedContact(null)
+
+    // fix ios 14 no show BarBottom bug ～xbc
+    const {intl = {}} = this.props;
+    setExtraLocale(intl.locale);
+    setGlobalLoacale(intl.locale)
   }
 
   componentWillUnmount() {
@@ -537,7 +545,7 @@ export default class Wallet extends Component {
               onPress={!this.state.switching ? this.toAsset.bind(this, balance.symbol, selectedAsset[i]) : () => {}}
               reactModuleForCell="AssetBalanceTableViewCell"
               height={60}
-              balance={intl.formatNumber(assetBalance ? assetBalance.balance : 0, { minimumFractionDigits: 0, maximumFractionDigits: assetBalance ? assetBalance.precision : balance.precision })}
+              balance={intl.formatNumber(!nullCheck(assetBalance) ? assetBalance.balance : 0, { minimumFractionDigits: 0, maximumFractionDigits: assetBalance ? assetBalance.precision : balance.precision }) || '0'}
               amount={(ticker && ticker[`${activeWallet.chain}/${selectedAsset[i].symbol}`]) ? intl.formatNumber(0 * +ticker[`${activeWallet.chain}/${selectedAsset[i].symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
               currency={currency.sign}
               symbol={selectedAsset[i].symbol}

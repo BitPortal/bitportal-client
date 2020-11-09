@@ -69,11 +69,12 @@ export default class WalletList extends Component {
   navigationButtonPressed({ buttonId }) {
     const {showType,componentId} = this.props;
     if (buttonId === 'cancel') {
-        if(showType === 'modal') {
-          Navigation.dismissModal(this.props.componentId)
-        }else {
-          Navigation.pop(componentId);
-        }
+        Navigation.dismissModal(this.props.componentId)
+        // if(showType === 'modal') {
+        //
+        // }else {
+        //   Navigation.pop(componentId);
+        // }
     } else if (buttonId === 'edit') {
       // this.setState({ editting: true })
       Navigation.mergeOptions(this.props.componentId, {

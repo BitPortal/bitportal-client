@@ -310,6 +310,8 @@
 		3C4507934177471B93375682 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE5CE8E4DC4D17BDEAF27C /* libRNRandomBytes.a */; };
 		4077FA79AD0344B59132A336 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEC2D3945DC40A5BA3B3E50 /* CoreTelephony.framework */; };
 		4D3E192C76DB455FB2A83058 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F6FFFE3A1A14B14B05FDE01 /* libz.tbd */; };
+		537535C325593F3E0021CC27 /* UIScreen+RNDarkModeTraitChangeListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 537535C025593F3D0021CC27 /* UIScreen+RNDarkModeTraitChangeListener.m */; };
+		537535C425593F3E0021CC27 /* RNDarkMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 537535C125593F3E0021CC27 /* RNDarkMode.m */; };
 		537BD78125466E3600C20953 /* LocalesInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 537BD78025466E3600C20953 /* LocalesInterface.m */; };
 		5B7D2F305FC14BB6A544A703 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 073CDA8615FB450896768BDD /* Security.framework */; };
 		5DEEC10184F44D1693BAABC2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CAF6A9DF72B40DF845AC359 /* CoreGraphics.framework */; };
@@ -833,13 +835,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 3D3CD9321DE5FBEE00167DC4;
 			remoteInfo = "cxxreact-tvOS";
-		};
-		537BD67C2542D8D600C20953 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C02B79A5AF294526A859B506 /* ReactNativeConfig.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3DF7F6AC203AA09B00D0EAB7;
-			remoteInfo = "ReactNativeConfig-tvOS";
 		};
 		5E9157321DD0AC6500FF2AA8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1466,6 +1461,10 @@
 		459B006740E5446CA1BEC977 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		47CDB62F8CE244FFAF5141FB /* libRNCamera.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCamera.a; sourceTree = "<group>"; };
 		4CEC2D3945DC40A5BA3B3E50 /* CoreTelephony.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		5375357425593F3D0021CC27 /* RNDarkMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RNDarkMode.h; path = bitportal/RNDarkMode.h; sourceTree = "<group>"; };
+		537535C025593F3D0021CC27 /* UIScreen+RNDarkModeTraitChangeListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScreen+RNDarkModeTraitChangeListener.m"; path = "bitportal/UIScreen+RNDarkModeTraitChangeListener.m"; sourceTree = "<group>"; };
+		537535C125593F3E0021CC27 /* RNDarkMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNDarkMode.m; path = bitportal/RNDarkMode.m; sourceTree = "<group>"; };
+		537535C225593F3E0021CC27 /* UIScreen+RNDarkModeTraitChangeListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScreen+RNDarkModeTraitChangeListener.h"; path = "bitportal/UIScreen+RNDarkModeTraitChangeListener.h"; sourceTree = "<group>"; };
 		537BD77F25466E3600C20953 /* LocalesInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalesInterface.h; sourceTree = "<group>"; };
 		537BD78025466E3600C20953 /* LocalesInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalesInterface.m; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
@@ -1651,6 +1650,10 @@
 		13B07FAE1A68108700A75B9A /* bitportal */ = {
 			isa = PBXGroup;
 			children = (
+				5375357425593F3D0021CC27 /* RNDarkMode.h */,
+				537535C125593F3E0021CC27 /* RNDarkMode.m */,
+				537535C225593F3E0021CC27 /* UIScreen+RNDarkModeTraitChangeListener.h */,
+				537535C025593F3D0021CC27 /* UIScreen+RNDarkModeTraitChangeListener.m */,
 				537BD77E25466E3600C20953 /* locales */,
 				34A66A4A233F1306003C2C2B /* TableViewController.swift */,
 				34A66A96233F1306003C2C2B /* ViewController.swift */,
@@ -2108,7 +2111,6 @@
 			isa = PBXGroup;
 			children = (
 				3423A00D20977E3600E7EB8A /* libReactNativeConfig.a */,
-				537BD67D2542D8D600C20953 /* libReactNativeConfig-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3586,13 +3588,6 @@
 			remoteRef = 3DAD3EAA1DF850E9000B6D8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		537BD67D2542D8D600C20953 /* libReactNativeConfig-tvOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libReactNativeConfig-tvOS.a";
-			remoteRef = 537BD67C2542D8D600C20953 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -3764,6 +3759,7 @@
 				34C8194F233B4C0D0090AD79 /* SideMenuOpenMode.m in Sources */,
 				3452263C22E03F69009913DF /* test_binding.cpp in Sources */,
 				34C81978233B4C0D0090AD79 /* RNNBottomTabsOptions.m in Sources */,
+				537535C325593F3E0021CC27 /* UIScreen+RNDarkModeTraitChangeListener.m in Sources */,
 				18F282822177351C00DEB13F /* groestl.c in Sources */,
 				34C8198A233B4C0D0090AD79 /* SPStorkArrowMode.swift in Sources */,
 				34C81969233B4C0D0090AD79 /* ReactNativeNavigation.m in Sources */,
@@ -3845,6 +3841,7 @@
 				34FAC26E232142FF0084A60F /* SPFakeBarView.swift in Sources */,
 				18F282A02177351D00DEB13F /* DJIProxyCaches.mm in Sources */,
 				18F282632177351C00DEB13F /* sha2.c in Sources */,
+				537535C425593F3E0021CC27 /* RNDarkMode.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				34C81958233B4C0D0090AD79 /* MMDrawerController.m in Sources */,
 				34C819AB233B4C0D0090AD79 /* RNNTitleViewHelper.m in Sources */,
