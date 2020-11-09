@@ -90,7 +90,10 @@ import CurrencySetting from 'screens/Profile/CurrencySetting'
 import WebView from 'screens/WebView'
 import Camera from 'screens/Camera'
 
-import messages from 'resources/messages'
+import messages, { setGlobalLoacale } from 'resources/messages'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { injectIntl } from "react-intl";
 
 export const registerScreens = (store) => {
   AppRegistry.registerComponent('AssetTableViewCell', () => AssetTableViewCell)
@@ -191,7 +194,7 @@ export const registerScreens = (store) => {
 export const setDefaultOptions = () => {
   Navigation.setDefaultOptions({
     statusBar: {
-      visible: true
+      visible: true,
     },
     topBar: {
       background: {

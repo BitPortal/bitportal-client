@@ -49,25 +49,25 @@ import { loadScatterSync, loadMetaMaskSync } from 'utils/inject'
 const TGAddressBar = requireNativeComponent('TGAddressBar')
 const messages = { ...globalMessages, ...localMessages }
 
-const tabHeight = (() => {
-  const isIphoneX = () => {
-    let dimensions
-    if (Platform.OS !== 'ios') {
-      return false
-    }
-    if (Platform.isPad || Platform.isTVOS) {
-      return false
-    }
-    dimensions = Dimensions.get('window')
-    if (dimensions.height === 812 || dimensions.width === 812) { // Checks for iPhone X in portrait or landscape
-      return true
-    }
-    if (dimensions.height === 896 || dimensions.width === 896) {
-      return true
-    }
+const isIphoneX = () => {
+  let dimensions
+  if (Platform.OS !== 'ios') {
     return false
   }
+  if (Platform.isPad || Platform.isTVOS) {
+    return false
+  }
+  dimensions = Dimensions.get('window')
+  if (dimensions.height === 812 || dimensions.width === 812) { // Checks for iPhone X in portrait or landscape
+    return true
+  }
+  if (dimensions.height === 896 || dimensions.width === 896) {
+    return true
+  }
+  return false
+}
 
+const tabHeight = (() => {
   if (isIphoneX()) {
     return 84 // iPhone X
   } else if (Platform.OS == 'ios') {
@@ -1197,12 +1197,12 @@ export default class WebView extends Component {
     } = this.props
     // const isBookmarked = id ? (bookmarkedIds.indexOf(id) !== -1) : false
     const inject = this.loadBridgeByChain(chain)
-
+    const deviceVersion = Platform.Version;
     return (
-      <SafeAreaView style={{ flex: 1}}>
+      <SafeAreaView style={{ flex: 1,marginTop:deviceVersion < 13 ? -20:0}}>
         {hasAddressBar && (
           <TGAddressBar
-            style={{ height: 50, width: '100%'}}
+            style={{ height: deviceVersion <13 ? 70: 50, width: '100%'}}
             value={this.state.url}
             title={this.parseUrlTitle(this.state.url)}
             isSecure={this.isHttps(this.state.url)}
@@ -1239,47 +1239,50 @@ export default class WebView extends Component {
             <Animated.View style={{ height: '100%', width: this.state.progress, backgroundColor: '#007AFF' }} />
           </Animated.View>
         </View>
-        <View style={{ width: '100%', height: 49, backgroundColor: '#F7F7F7', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
-          <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <TouchableOpacity onPress={this.goBack}>
-              <FastImage
-                source={require('resources/images/arrow_left_tab.png')}
-                style={{ width: 30, height: 30 }}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <TouchableOpacity onPress={this.goForward}>
-              <FastImage
-                source={require('resources/images/arrow_right_tab.png')}
-                style={{ width: 30, height: 30 }}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <TouchableOpacity onPress={this.shareDapp}>
-              <FastImage
-                source={require('resources/images/share.png')}
-                style={{ width: 32, height: 32 }}
-              />
-            </TouchableOpacity>
-          </View>
-          {/* <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={{marginBottom:-30,width: '100%', height: 79, backgroundColor: '#F7F7F7' }}>
+          <View style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'row',flex:1}}>
+            <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+              <TouchableOpacity onPress={this.goBack}>
+                <FastImage
+                  source={require('resources/images/arrow_left_tab.png')}
+                  style={{ width: 30, height: 30 }}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+              <TouchableOpacity onPress={this.goForward}>
+                <FastImage
+                  source={require('resources/images/arrow_right_tab.png')}
+                  style={{ width: 30, height: 30 }}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+              <TouchableOpacity onPress={this.shareDapp}>
+                <FastImage
+                  source={require('resources/images/share.png')}
+                  style={{ width: 32, height: 32 }}
+                />
+              </TouchableOpacity>
+            </View>
+            {/* <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
               <TouchableOpacity onPress={this.bookmark}>
               {isBookmarked && <FastImage source={require('resources/images/bookmarked_tab.png')} style={{ width: 30, height: 30 }} />}
               {!isBookmarked && <FastImage source={require('resources/images/bookmark_tab.png')} style={{ width: 30, height: 30 }} />}
               </TouchableOpacity>
               </View> */}
 
-          <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <TouchableOpacity onPress={this.refresh}>
-              <FastImage
-                source={require('resources/images/refresh.png')}
-                style={{ width: 30, height: 30 }}
-              />
-            </TouchableOpacity>
+            <View style={{ width: '25%', height: 44, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+              <TouchableOpacity onPress={this.refresh}>
+                <FastImage
+                  source={require('resources/images/refresh.png')}
+                  style={{ width: 30, height: 30 }}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: 0.5, backgroundColor: 'rgba(0,0,0,0.2)' }} />
           </View>
-          <View style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: 0.5, backgroundColor: 'rgba(0,0,0,0.2)' }} />
+          <View style={{width:'100%', height:30}}/>
         </View>
         {this.props.loadingContract && <View style={{ position: 'absolute', right: 0, left: 0, top: 0, bottom: 0 }}>
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

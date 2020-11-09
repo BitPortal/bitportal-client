@@ -4,8 +4,12 @@ import en from './en'
 import en_other from './en_other'
 import ko from './ko'
 
-const zh_all = {...zh, ...zh_other};
-const en_all = {...en, ...en_other};
+import en_enk from './en_enk.json'
+import zh_enk from './zh_enk.json'
+
+
+const zh_all = {...zh, ...zh_other,...zh_enk};
+const en_all = {...en, ...en_other,...en_enk};
 
 export default {
   zh:zh_all,
@@ -13,7 +17,7 @@ export default {
   ko,
 }
 
-global.t = (that = [], message: string, values?: { [key: string]: string }) => {
+global.t = (that = [], message, values) => {
   const { intl } = that.props || {};
   if (intl) {
    return intl.formatMessage({ id: message }, values || {});
@@ -33,7 +37,7 @@ let localeData = 'en';
 global.gCurrentLocale = () => {
   return localeData;
 }
-const setGlobalLoacale = (locale: Locale) => {
+const setGlobalLoacale = (locale) => {
   localeData = locale;
 }
 

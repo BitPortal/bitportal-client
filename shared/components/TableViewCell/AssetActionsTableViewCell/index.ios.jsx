@@ -20,7 +20,7 @@ const AssetActionsTableViewCell = (props) => {
               source={require('resources/images/transfer_white.png')}
               style={{ width: 26, height: 26, marginRight: 8 }}
             />
-            <Text style={{ color: 'white', fontSize: 17 }}>转账</Text>
+            <Text style={{ color: 'white', fontSize: 17 }}>{gt('转账')}</Text>
           </View>
         </TouchableHighlight>
       </View>

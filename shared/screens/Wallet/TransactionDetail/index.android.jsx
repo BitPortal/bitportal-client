@@ -85,7 +85,7 @@ export default class TransactionDetail extends Component {
     if (chain === 'BITCOIN') {
       url = `https://btc.com/${txId.toString()}`
     } else if (chain === 'ETHEREUM') {
-      url = `https://etherscan.io/tx/${txId.toString()}`
+      url = `https://cn.etherscan.com/tx/${txId.toString()}`
     } else if (chain === 'EOS') {
       url = `https://eospark.com/tx/${txId.toString()}`
     } else if (chain === 'CHAINX') {
@@ -146,19 +146,35 @@ export default class TransactionDetail extends Component {
 
   toExplorerUI = (chain, txId, explorer = null) => {
     const { intl } = this.props
+    const {title,icon} = this.getExplorerIcon();
     return (
       <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
         <View>
           <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', marginBottom: 4 }}>{intl.formatMessage({ id: 'txn_detail_label_query_in_explorer' })}</Text>
           <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.toExplorer.bind(this, chain, txId)}>
-            <Image
-              source={require('resources/images/share.png')}
-              style={{ width: 18, height: 18 }}
-            />
+            <View style={{width:50,alignItems:'center'}}>
+              <Image
+                source={icon}
+                style={{ width: 40, height: 40 ,marginVertical:5}}
+              />
+              <Text style={{fontSize:10,color:'#7d7d7d'}} children={title}/>
+            </View>
           </TouchableHighlight>
         </View>
       </View>
     )
+  }
+
+  getExplorerIcon = () => {
+    const {transferAsset = {}} = this.props
+    const symbol = transferAsset.symbol;
+    //todo: check here ～xbc
+    if (symbol === 'BTC') {
+      return {title:'BTC.com',icon:require('resources/images/btccom.jpg')}
+    }else if (symbol === 'ETH') {
+      return {title:'Etherscan',icon:require('resources/images/etherscan.jpg')}
+    }
+
   }
 
   componentDidMount() {
