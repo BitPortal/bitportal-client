@@ -55,7 +55,7 @@ export const assetsWithSearchSelector = createSelector(
            return selectIds.indexOf(id) === -1
         }).map((id:string) => byId[id])) || []
         const selectTokens = sortSymbol(selectIds.map((id: string) => byId[id])) || []
-        const unionTokens = [...selectTokens,...unionProiorityTokens]
+        const unionTokens = [...selectTokens,...unionProiorityTokens];
         return  unionTokens
         // const unionTokens = Array.from(new Set([...selectIds, ...proiorityIds])).map((id: string) => byId[id])
 
