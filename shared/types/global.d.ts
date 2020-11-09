@@ -114,6 +114,11 @@ declare module '*.css' {
   export = styles
 }
 
+declare module 'utils/*' {
+  const file: any
+  export = file
+}
+
 declare module '*.png' {
   const file: any
   export = file
@@ -219,11 +224,6 @@ declare module 'react-native-extended-stylesheet' {
 }
 
 declare module 'components/*' {
-  const file: any
-  export = file
-}
-
-declare module 'utils/*' {
   const file: any
   export = file
 }
@@ -414,3 +414,5 @@ declare module 'bech32' {
   const file: any
   export = file
 }
+
+declare module '*'

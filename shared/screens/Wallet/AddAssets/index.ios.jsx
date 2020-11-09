@@ -34,6 +34,12 @@ import { injectIntl } from "react-intl";
 export default class AddAssets extends Component {
   static get options() {
     return {
+      topBar: {
+        searchBar: true,
+        searchBarHiddenWhenScrolling: false,
+        searchBarPlaceholder: 'Search',
+        hideOnScroll:true
+      },
       bottomTabs: {
         visible: false,
         drawBehind: true,
@@ -95,26 +101,26 @@ export default class AddAssets extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (
-      prevState.getEOSAssetLoaded !== this.state.getEOSAssetLoaded
-      || prevState.getETHAssetLoaded !== this.state.getETHAssetLoaded
-      || prevState.getChainXAssetLoaded !== this.state.getChainXAssetLoaded
-      || prevState.firstAppeared !== this.state.firstAppeared
-    ) {
-      if ((this.state.getEOSAssetLoaded && this.props.chain === 'EOS') || (this.state.getETHAssetLoaded && this.props.chain === 'ETHEREUM') || (this.state.getChainXAssetLoaded && this.props.chain === 'CHAINX')) {
-        setTimeout(() => {
-          Navigation.mergeOptions(this.props.componentId, {
-            topBar: {
-              searchBar: true,
-              searchBarHiddenWhenScrolling: true,
-              searchBarPlaceholder: 'Search'
-            }
-          })
-        })
-      }
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (
+  //     prevState.getEOSAssetLoaded !== this.state.getEOSAssetLoaded
+  //     || prevState.getETHAssetLoaded !== this.state.getETHAssetLoaded
+  //     || prevState.getChainXAssetLoaded !== this.state.getChainXAssetLoaded
+  //     || prevState.firstAppeared !== this.state.firstAppeared
+  //   ) {
+  //     if ((this.state.getEOSAssetLoaded && this.props.chain === 'EOS') || (this.state.getETHAssetLoaded && this.props.chain === 'ETHEREUM') || (this.state.getChainXAssetLoaded && this.props.chain === 'CHAINX')) {
+  //       setTimeout(() => {
+  //         Navigation.mergeOptions(this.props.componentId, {
+  //           topBar: {
+  //             searchBar: true,
+  //             searchBarHiddenWhenScrolling: true,
+  //             searchBarPlaceholder: 'Search'
+  //           }
+  //         })
+  //       })
+  //     }
+  //   }
+  // }
 
   searchBarUpdated({ text, isFocused }) {
     if (isFocused) {
@@ -150,10 +156,10 @@ export default class AddAssets extends Component {
   }
 
   componentDidMount() {
-    const { chain, assets } = this.props
+    const { chain, assets} = this.props
 
     if (chain === 'ETHEREUM') {
-      this.props.actions.getETHAsset.requested({ display_priority_gt: 0 })
+      this.props.actions.getETHAsset.requested({ display_priority_gt: 0})
     } else if (chain === 'EOS') {
       this.props.actions.getEOSAsset.requested()
     } else if (chain === 'CHAINX') {

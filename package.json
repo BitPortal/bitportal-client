@@ -13,7 +13,6 @@
     "manifest": "sketch/manifest.json"
   },
   "scripts": {
-    "web": "cross-env NODE_ENV=development APP_ENV=development TARGET=web webpack-dev-server -d --history-api-fallback --inline --progress --port 3009 --host dev.bitportal.io",
     "mobile": "watchman watch-del-all && rm -fr $TMPDIR/react-* && cross-env NODE_ENV=production node node_modules/react-native/local-cli/cli.js start -- --reset-cache",
     "ios": "react-native run-ios --scheme bitportal-development --port 8080 --simulator='iPhone 11 Pro Max'",
     "ios:staging": "react-native run-ios --scheme bitportal-staging --port 8080",
@@ -21,29 +20,18 @@
     "android": "ENVFILE=.env.development react-native run-android --port 8081",
     "android:staging": "ENVFILE=.env.staging react-native run-android --port 8081",
     "android:production": "ENVFILE=.env.production react-native run-android --port 8081",
-    "build:web": "rimraf static/web && npm run build:server && npm run build:browser",
-    "build:web:staging": "rimraf static/web && npm run build:server:staging && npm run build:browser:staging",
-    "build:browser": "cross-env NODE_ENV=production APP_ENV=production TARGET=web webpack --progress --colors",
-    "build:browser:staging": "cross-env NODE_ENV=production APP_ENV=staging TARGET=web webpack --progress --colors",
-    "build:server": "cross-env NODE_ENV=production APP_ENV=production TARGET=node webpack --progress --colors",
-    "build:server:staging": "cross-env NODE_ENV=production APP_ENV=staging TARGET=node webpack --progress --colors",
     "build:android": "cd android && ./gradlew assembleRelease",
     "build:ios": "react-native bundle --entry-file mobile/index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios",
-    "build:desktop": "rimraf static/desktop && cross-env NODE_ENV=production APP_ENV=production TARGET=\"electron-renderer\" webpack --progress --colors",
     "build:extension": "rimraf static/extension && cross-env NODE_ENV=production APP_ENV=production TARGET=extension webpack --progress --colors",
     "build:inject:scatter": "cross-env NODE_ENV=production APP_ENV=production TARGET=injectScatter webpack --progress --colors && node tools/injectScatter.js",
     "build:inject:metamask": "cross-env NODE_ENV=production APP_ENV=production TARGET=injectMetaMask webpack --progress --colors && node tools/injectMetaMask.js",
-    "browser": "cross-env NODE_ENV=production http-server static/web",
-    "server": "cross-env NODE_ENV=production nodemon --icu-data-dir=/usr/local/lib/node_modules/full-icu static/web/app.js",
-    "desktop": "electron static/desktop/index.html",
     "test": "cross-env NODE_ENV=test APP_ENV=development TARGET=node mocha-webpack --include ./test/helpers/setup.js --recursive --timeout 10000",
     "test:watch": "cross-env NODE_ENV=test APP_ENV=development TARGET=node mocha-webpack --include ./test/helpers/setup.js --recursive --timeout 10000 --watch",
     "cover": "cross-env NODE_ENV=test APP_ENV=development TARGET=node nyc --reporter=lcov --reporter=text mocha-webpack --include ./test/helpers/setup.js --recursive",
     "lint": "npm run lint:js && npm run lint:ts",
     "lint:js": "eslint --ext .js --ext .jsx server shared test --fix",
     "lint:ts": "tslint --project . --fix",
-    "tsc": "tsc",
-    "sketch": "skpm-build --watch --run"
+    "tsc": "tsc"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.4.2",

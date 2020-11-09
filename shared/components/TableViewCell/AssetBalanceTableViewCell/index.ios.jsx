@@ -4,6 +4,11 @@ import FastImage from 'react-native-fast-image'
 import { assetIcons } from 'resources/images'
 
 const AssetBalanceTableViewCell = props => {
+
+  const {data} = props;
+  const {symbol = ''} = data || {}
+  const defalutIcon = symbol.length > 0 ? props.data.symbol.slice(0, 1) : '';
+
   return (
     <View style={{
       flex: 1,
@@ -40,7 +45,7 @@ const AssetBalanceTableViewCell = props => {
               fontSize: 20,
               color: 'white',
               paddingLeft: 1.6
-            }}>{props.data.symbol.slice(0, 1)}</Text>
+            }}>{defalutIcon}</Text>
           </View>
           <FastImage
             source={{ uri: props.data.icon_url }}

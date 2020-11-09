@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 import { activeWalletSelector, managingWalletSelector, bridgeWalletSelector } from './wallet'
 import { initialState } from 'reducers/wallet'
-
+import RootState from '../types/global'
 export const accountByIdSelector = (state: RootState) => state.account.byId || initialState.byId
 export const accountAllIdsSelector = (state: RootState) => state.account.allIds || initialState.allIds
 
@@ -10,7 +10,7 @@ export const accountResourcesByIdSelector = createSelector(
   (byId: any) => {
     if (!byId) return null
 
-    let resources = {}
+    const resources = {}
 
     // tslint:disable-next-line:forin
     for (const key in byId) {

@@ -9,9 +9,9 @@ import * as api from 'utils/api'
 
 function* getETHAsset(action: Action) {
   try {
-    const result = yield call(api.getETHAsset, action.payload)
-    console.log('getETHAsset', result)
-    yield put(actions.updateAsset({ assets: result, chain: 'ETHEREUM' }))
+    const { display_priority_gt } = action.payload
+    const defaultAssets = yield call(api.getETHAsset, {display_priority_gt})
+    yield put(actions.updateAsset({ assets: defaultAssets, chain: 'ETHEREUM' }))
     yield put(actions.getETHAsset.succeeded())
   } catch (e) {
     yield put(actions.getETHAsset.failed(getErrorMessage(e)))
@@ -108,6 +108,8 @@ function* scanETHAsset(action: Action) {
   try {
     const activeWallet = action.payload
     const result = yield call(api.scanETHAsset, activeWallet)
+    // const result = yield call(api.scanETHAsset, {address: '0x47F7EA0dd4418AA1cec00786F5C47623aC37bA42'})
+
 
     assert(result && result.tokens && typeof result.tokens === 'object', 'no tokens')
 

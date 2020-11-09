@@ -10,13 +10,16 @@ const AssetTableViewCell = props => {
       return address
     }
   }
+  const {data} = props || {};
+  const {symbol = ''} = data || {};
+  const defaultIcon = symbol.length > 0 ? props.data.symbol.slice(0, 1) : '';
 
   return (
     <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16 }}>
       <View style={{ flex: 1, flexDirection: 'row' }}>
         <View style={{ width: 40, height: 40, marginRight: 10, borderWidth: 0, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white', borderRadius: 20 }}>
           <View style={{ position: 'absolute', top: 0, left: 0, width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center', backgroundColor: '#B9C1CF' }}>
-            <Text style={{ fontWeight: '500', fontSize: 20, color: 'white', paddingLeft: 1.6 }}>{props.data.symbol.slice(0, 1)}</Text>
+            <Text style={{ fontWeight: '500', fontSize: 20, color: 'white', paddingLeft: 1.6 }}>{defaultIcon}</Text>
           </View>
           <FastImage
             source={{ uri: props.data.icon_url }}

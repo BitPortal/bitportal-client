@@ -24,6 +24,7 @@ import {
   getEOSPermissionKeyPairs
 } from 'core/chain/eos'
 import memoryStorage from 'core/storage/memoryStorage'
+// @ts-ignore
 import secureStorage from 'core/storage/secureStorage'
 import { chain } from 'core/constants'
 import { push, dismissAllModals, popToRoot, showModal } from 'utils/location'
