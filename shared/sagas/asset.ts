@@ -63,6 +63,52 @@ function* getChainXAsset(action: Action) {
   }
 }
 
+function* getRioChainAsset(action: Action) {
+  try {
+    const riochainAssets = [{
+      id: 'RIOCHAIN/RFuel',
+      name: 'RFuel',
+      chain: 'RIOCHAIN',
+      symbol: 'RFuel',
+      contract: 'currencies',
+      currency_id: 0,
+      precision: 12,
+      icon_url: ''
+    }, {
+      id: 'RIOCHAIN/rBTC',
+      name: 'rBTC',
+      chain: 'RIOCHAIN',
+      symbol: 'rBTC',
+      contract: 'currencies',
+      currency_id: 100,
+      precision: 8,
+      icon_url: ''
+    }, {
+      id: 'RIOCHAIN/rETH',
+      name: 'rETH',
+      chain: 'RIOCHAIN',
+      symbol: 'rETH',
+      contract: 'currencies',
+      currency_id: 103,
+      precision: 18,
+      icon_url: ''
+    }, {
+      id: 'RIOCHAIN/rUSDT',
+      name: 'rUSDT',
+      chain: 'RIOCHAIN',
+      symbol: 'rUSDT',
+      contract: 'currencies',
+      currency_id: 102,
+      precision: 6,
+      icon_url: ''
+    }]
+    yield put(actions.updateAsset({ assets: riochainAssets, chain: 'RIOCHAIN' }))
+    yield put(actions.getRioChainAsset.succeeded())
+  } catch (e) {
+    yield put(actions.getRioChainAsset.failed(getErrorMessage(e)))
+  }
+}
+
 function* scanEOSAsset(action: Action) {
   try {
     const eosAssetsAllIds = yield select(state => eosAssetAllIdsSelector(state))

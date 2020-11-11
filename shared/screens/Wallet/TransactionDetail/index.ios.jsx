@@ -51,11 +51,11 @@ export default class TransactionDetail extends Component {
         backButton: {
           title: '返回'
         },
-        noBorder: true,
-        background: {
-          translucent: false,
-          color: '#F7F7F7'
-        },
+        // noBorder: true,
+        // background: {
+        //   translucent: false,
+        //   color: '#FFFFFF'
+        // },
       },
       bottomTabs: {
         visible: false
@@ -204,12 +204,12 @@ export default class TransactionDetail extends Component {
     console.log('isDarkMode', isDarkMode)
     if (transaction && chain === 'EOS') {
       return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : '#FFFFFF' }}>
           <ScrollView
             style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : 'white' }}
             contentContainerStyle={{ backgroundColor: isDarkMode ? 'black' : 'white' }}
           >
-            <View style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : '#F7F7F7', padding: 16, paddingTop: 0 }}>
+            <View style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : '#FFFFFF', padding: 16, paddingTop: 0 }}>
               {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500', color: isDarkMode ? 'white' : 'black' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
               {+transaction.change <= 0 && <Text style={{ fontSize: 28, fontWeight: '500', color: isDarkMode ? 'white' : 'black' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
               <Text style={{ fontSize: 17, marginTop: 6, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)' }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
@@ -291,7 +291,7 @@ export default class TransactionDetail extends Component {
             style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : 'white' }}
             contentContainerStyle={{ backgroundColor: isDarkMode ? 'black' : 'white' }}
           >
-            <View style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : '#F7F7F7', padding: 16, paddingTop: 0 }}>
+            <View style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : '#FFFFFF', padding: 16, paddingTop: 0 }}>
               {+transaction.change > 0 && <Text style={{ fontSize: 28, fontWeight: '500', color: isDarkMode ? 'white' : 'black' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
               {+transaction.change <= 0 && <Text style={{ fontSize: 28, fontWeight: '500', color: isDarkMode ? 'white' : 'black' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
               <Text style={{ fontSize: 17, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>

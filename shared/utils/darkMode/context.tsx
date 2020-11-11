@@ -24,11 +24,10 @@ function useCurrentMode(forcedMode?: Mode) {
     function handler(mode: Mode) {
       setCurrentMode(mode)
     }
-
-    if (eventEmitter && eventEmitter.on) eventEmitter.on('currentModeChanged', handler)
-    return () => {
-      if (eventEmitter && eventEmitter.off) eventEmitter.off('currentModeChanged', handler)
-    }
+    // if (eventEmitter && eventEmitter.on) eventEmitter.on('currentModeChanged', handler)
+    // return () => {
+    //   if (eventEmitter && eventEmitter.off) eventEmitter.off('currentModeChanged', handler)
+    // }
   }, [currentMode, forcedMode])
 
   return currentMode

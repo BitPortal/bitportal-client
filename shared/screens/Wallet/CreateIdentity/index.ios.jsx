@@ -294,6 +294,7 @@ export default class CreateIdentity extends Component {
                 component={TextField}
                 showClearButton={!!passwordConfirm && passwordConfirm.length > 0}
                 change={change}
+                isDarkMode={isDarkMode}
                 secureTextEntry
                 separator
               />

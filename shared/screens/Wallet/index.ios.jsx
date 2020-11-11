@@ -536,7 +536,6 @@ export default class Wallet extends Component {
       if (selectedAsset && selectedAsset.length) {
         for (let i = 0; i < selectedAsset.length; i++) {
           const assetBalance = assetsBalance && assetsBalance[`${selectedAsset[i].contract}/${selectedAsset[i].symbol}`]
-
           assetItems.push(
             <Item
               key={selectedAsset[i].contract}
@@ -545,7 +544,7 @@ export default class Wallet extends Component {
               onPress={!this.state.switching ? this.toAsset.bind(this, balance.symbol, selectedAsset[i]) : () => {}}
               reactModuleForCell="AssetBalanceTableViewCell"
               height={60}
-              balance={intl.formatNumber(!nullCheck(assetBalance) ? assetBalance.balance : 0, { minimumFractionDigits: 0, maximumFractionDigits: assetBalance ? assetBalance.precision : balance.precision }) || '0'}
+              balance={intl.formatNumber(assetBalance && !nullCheck(assetBalance.balance) ? assetBalance.balance : 0, { minimumFractionDigits: 0, maximumFractionDigits: assetBalance ? assetBalance.precision : balance.precision }) || '0'}
               amount={(ticker && ticker[`${activeWallet.chain}/${selectedAsset[i].symbol}`]) ? intl.formatNumber(0 * +ticker[`${activeWallet.chain}/${selectedAsset[i].symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}
               currency={currency.sign}
               symbol={selectedAsset[i].symbol}

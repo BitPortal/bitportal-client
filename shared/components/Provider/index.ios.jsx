@@ -23,6 +23,8 @@ const mapStateToProps = state => ({
 
 const ConnectedIntlProvider = connect(mapStateToProps)(IntlProvider)
 
+
+
 const Provider = ({ store, children }) => {
   const { persistor, ...pureStore } = store
 

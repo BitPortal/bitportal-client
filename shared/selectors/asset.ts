@@ -25,7 +25,17 @@ export const assetsSelector = createSelector(
 export const selectedAssetIdsSelector = createSelector(
   activeWalletIdSelector,
   selectedAssetSelector,
-  (activeWalletId: string, selectedAsset: any) => selectedAsset && selectedAsset[activeWalletId]
+  (activeWalletId: string, selectedAsset: any) => {
+    const wSelectd = selectedAsset && selectedAsset[activeWalletId]
+    const result:any = [];
+     (wSelectd || []).forEach(value => {
+       if (value.select) {
+         result.push(value.assetId)
+       }
+
+    })
+    return result
+  }
 )
 
 export const assetsWithSearchSelector = createSelector(

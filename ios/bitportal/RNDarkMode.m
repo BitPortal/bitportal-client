@@ -42,6 +42,7 @@ RCT_EXPORT_MODULE();
 {
     if (hasListeners) {
         [self sendEventWithName:@"currentModeChanged" body:newMode];
+        exit(0);
     }
 }
 

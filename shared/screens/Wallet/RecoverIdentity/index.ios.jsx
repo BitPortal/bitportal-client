@@ -388,6 +388,7 @@ export default class RecoverIdentity extends Component {
                 component={TextField}
                 showClearButton={!!password && password.length > 0}
                 change={change}
+                isDarkMode={isDarkMode}
                 secureTextEntry
                 separator={true}
               />

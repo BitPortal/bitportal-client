@@ -53,10 +53,16 @@ export default handleActions({
     const walletId = action.payload.walletId
     const assetId = action.payload.assetId
 
+
     if (!state.selected[walletId]) {
-      state.selected[walletId] = [assetId]
-    } else if (state.selected[walletId].indexOf(assetId) === -1) {
-      state.selected[walletId].unshift(assetId)
+      state.selected[walletId] = [{assetId,select:true}]
+    } else {
+      const index = (state.selected[walletId]||[]).findIndex((id:any) => id.assetId === assetId)
+      if (index !== -1) {
+        state.selected[walletId][index].select = true
+      }else {
+        state.selected[walletId].unshift({assetId,select:true})
+      }
     }
   },
   [actions.selectAssetList] (state, action) {
@@ -68,9 +74,12 @@ export default handleActions({
       const assetId = asset.assetId
 
       if (!state.selected[walletId]) {
-        state.selected[walletId] = [assetId]
-      } else if (state.selected[walletId].indexOf(assetId) === -1) {
-        state.selected[walletId].push(assetId)
+        state.selected[walletId] = [{assetId,select:true}]
+      }else {
+        const obj = (state.selected[walletId]||[]).find((id:any) => id.assetId === assetId) || []
+        if (!obj || obj.length <= 0 ) {
+          state.selected[walletId].push({assetId,select:true})
+        }
       }
     })
   },
@@ -78,9 +87,11 @@ export default handleActions({
     const walletId = action.payload.walletId
     const assetId = action.payload.assetId
 
-    if (state.selected && state.selected[walletId] && state.selected[walletId].indexOf(assetId) !== -1) {
-      const index = state.selected[walletId].findIndex(id => id === assetId)
-      state.selected[walletId].splice(index, 1)
+    if (state.selected && state.selected[walletId]) {
+      const index = (state.selected[walletId]||[]).findIndex((id:any) => id.assetId === assetId)
+      if (index !== -1) {
+        state.selected[walletId][index].select = false
+      }
     }
   },
   [actions.setAssetSearchText] (state, action) {

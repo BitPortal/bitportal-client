@@ -310,7 +310,7 @@
 		3C4507934177471B93375682 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DCE5CE8E4DC4D17BDEAF27C /* libRNRandomBytes.a */; };
 		4077FA79AD0344B59132A336 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEC2D3945DC40A5BA3B3E50 /* CoreTelephony.framework */; };
 		4D3E192C76DB455FB2A83058 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F6FFFE3A1A14B14B05FDE01 /* libz.tbd */; };
-		537535C325593F3E0021CC27 /* UIScreen+RNDarkModeTraitChangeListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 537535C025593F3D0021CC27 /* UIScreen+RNDarkModeTraitChangeListener.m */; };
+		53586B62255A99B8002B2F70 /* UIScreen+RNDarkModeTraitChangeListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 537535C025593F3D0021CC27 /* UIScreen+RNDarkModeTraitChangeListener.m */; };
 		537535C425593F3E0021CC27 /* RNDarkMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 537535C125593F3E0021CC27 /* RNDarkMode.m */; };
 		537BD78125466E3600C20953 /* LocalesInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 537BD78025466E3600C20953 /* LocalesInterface.m */; };
 		5B7D2F305FC14BB6A544A703 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 073CDA8615FB450896768BDD /* Security.framework */; };
@@ -3721,6 +3721,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18F2826C2177351C00DEB13F /* cash_addr.c in Sources */,
+				53586B62255A99B8002B2F70 /* UIScreen+RNDarkModeTraitChangeListener.m in Sources */,
 				34C8193B233B4C0C0090AD79 /* RNNTopTabOptions.m in Sources */,
 				18F282702177351C00DEB13F /* ed25519-donna-32bit-tables.c in Sources */,
 				18F282802177351C00DEB13F /* ripemd160.c in Sources */,
@@ -3759,7 +3760,6 @@
 				34C8194F233B4C0D0090AD79 /* SideMenuOpenMode.m in Sources */,
 				3452263C22E03F69009913DF /* test_binding.cpp in Sources */,
 				34C81978233B4C0D0090AD79 /* RNNBottomTabsOptions.m in Sources */,
-				537535C325593F3E0021CC27 /* UIScreen+RNDarkModeTraitChangeListener.m in Sources */,
 				18F282822177351C00DEB13F /* groestl.c in Sources */,
 				34C8198A233B4C0D0090AD79 /* SPStorkArrowMode.swift in Sources */,
 				34C81969233B4C0D0090AD79 /* ReactNativeNavigation.m in Sources */,

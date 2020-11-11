@@ -1,11 +1,13 @@
 /*空值验证*/
 const nullCheck = obj => {
+
+  const str = `${obj}`
   return (
-    obj == null ||
-    undefined == obj ||
-    obj.length <= 0 ||
-    typeof obj === 'undefined' ||
-    isNaN(obj)
+    str == null ||
+    undefined == str ||
+    str.length <= 0 ||
+    typeof str === 'undefined' ||
+    str == 'NaN'
   );
 };
 
