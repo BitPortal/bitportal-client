@@ -84,7 +84,7 @@ export const eosNodes = [
 ]
 
 export const eosTestNodes = [
-  
+
 ]
 
 export const ethNodes = [

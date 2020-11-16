@@ -22,3 +22,21 @@ export const CHAIN_ORDER = {
 }
 
 export const timeoutInterval = 20000
+
+export const assetMap = {
+  0: 'RFUEL',
+  1: 'LOCKED_RFUEL',
+  2: 'OM',
+  100: 'rBTC',
+  102: 'rUSDT',
+  101: 'rLTC',
+  103: 'rETH'
+}
+
+export const withdrawFees = {
+  0: '10',
+  2: '10',
+  100: '0.001',
+  103: '0.005',
+  102: '5',
+}

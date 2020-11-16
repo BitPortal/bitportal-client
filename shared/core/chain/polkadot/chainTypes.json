@@ -1,99 +1,150 @@
 {
+  "Amount": "i128",
+  "AmountOf": "Amount",
+  "CurrencyId": "u32",
+  "CurrencyIdOf": "CurrencyId",
+  "Price": "FixedU128",
+  "OracleKey": "CurrencyId",
+  "Chain": {
+    "_enum": [
+      "Rio",
+      "Bitcoin",
+      "Litecoin",
+      "Ethereum",
+      "EOS",
+      "Polkadot",
+      "Kusama",
+      "ChainX"
+    ]
+  },
+  "AssetInfo": {
+    "chain": "Chain",
+    "symbol": "Text",
+    "name": "Text",
+    "decimals": "u8",
+    "desc": "Text"
+  },
+  "FeeExchangeV1": {
+    "max_payment": "Compact<Balance>"
+  },
+  "FeeExchange": {
+    "_enum": {
+      "V1": "Compact<FeeExchangeV1>"
+    }
+  },
+  "Restriction": {
+    "_enum": [
+      "Transferable",
+      "Depositable",
+      "Withdrawable",
+      "Slashable",
+      "Reservable",
+      "Unreservable"
+    ]
+  },
   "TxHash": "H256",
   "Deposit": {
     "account_id": "AccountId",
-    "tx_hash": "Option<TxHash>",
     "amount": "Balance"
+  },
+  "Auths": {
+    "mask": "u8"
   },
   "Auth": {
     "_enum": [
-      "All",
+      "Register",
       "Deposit",
       "Withdraw",
-      "Refund",
-      "Mark"
+      "Sudo"
     ]
   },
-  "BlackOrWhite": {
-    "_enum": [
-      "Black",
-      "White"
-    ]
-  },
-  "ExtrinsicIndex": "u32",
-  "LineNumber": "u32",
-  "AuctionBalance": "Balance",
-  "TotalLoanBalance": "Balance",
-  "CollateralBalanceAvailable": "Balance",
-  "CollateralBalanceOriginal": "Balance",
-  "Price": "u128",
-  "PriceReport": {
-    "reporter": "AccountId",
-    "price": "Price"
-  },
-  "LoanHealth": {
+  "WithdrawState": {
     "_enum": {
-      "Well": null,
-      "Warning": "LTV",
-      "Liquidating": "LTV",
-      "Extended": null,
-      "Expired": null
+      "Pending":  null,
+      "Cancelled": null,
+      "Rejected": null,
+      "Approved": null,
+      "Success": "TxHash",
+      "ReBroadcasted": "TxHash"
     }
   },
-  "LoanPackageStatus": {
-    "_enum": [
-      "Active",
-      "Inactive"
-    ]
-  },
-  "Loan": {
-    "id": "LoanId",
-    "package_id": "LoanPackageId",
+  "ChainAddress": "Bytes",
+  "Memo": "Text",
+  "WithdrawInfo": {
+    "currency_id": "CurrencyId",
     "who": "AccountId",
-    "due": "Moment",
-    "due_extend": "Moment",
-    "collateral_balance_original": "Balance",
-    "collateral_balance_available": "Balance",
-    "loan_balance_total": "Balance",
-    "status": "LoanHealth"
+    "value": "Balance",
+    "addr": "ChainAddress",
+    "memo": "Text"
   },
-  "LoanPackage": {
-    "id": "LoanPackageId",
-    "status": "LoanPackageStatus",
-    "terms": "u32",
-    "min": "Balance",
-    "interest_rate_hourly": "u32",
-    "collateral_asset_id": "AssetId",
-    "loan_asset_id": "AssetId"
+  "WithdrawItem": {
+    "currency_id": "CurrencyId",
+    "applicant": "AccountId",
+    "value": "Balance",
+    "addr": "ChainAddress",
+    "memo": "Text",
+    "state": "WithdrawState"
   },
-  "SharePackage": {
-    "terms_total": "u32",
-    "terms_left": "u32",
-    "per_term": "Balance"
-  },
-  "ReleaseTrigger": {
+  "DepositAddrInfo": {
     "_enum": {
-      "PhaseChange": null,
-      "BlockNumber": "BlockNumber"
+      "Bip32": "Bip32",
+      "Create2": "Create2"
     }
   },
-  "ShareReleasePack": {
-    "asset_id": "AssetId",
-    "phase_id": "PhaseId",
-    "owner": "AccountId",
-    "empty": "bool",
-    "major": "SharePackage",
-    "minor": "Option<SharePackage>",
-    "release_trigger": "ReleaseTrigger"
+  "Bip32": {
+    "x_pub": "Text",
+    "path": "Text"
   },
-  "PhaseInfo": {
-    "id": "PhaseId",
-    "quota": "u128",
-    "exchange": "u128",
-    "iou_asset_id": "Option<u32>"
+  "Create2": {
+    "creator_address": "Vec<u8>",
+    "implementation_address": "Vec<u8>",
+    "vault_address": "Vec<u8>"
   },
-  "LTV": "u64",
-  "LoanId": "u64",
-  "LoanPackageId": "u64",
-  "PhaseId": "u32"
+  "String": "Text",
+  "WithdrawItemForRpc": {
+    "currencyId": "CurrencyId",
+    "applicant": "AccountId",
+    "value": "String",
+    "addr": "String",
+    "memo": "String",
+    "state": "WithdrawState"
+  },
+  "AccountDepositAddr": {
+    "deposit_addr_info": "DepositAddrInfo",
+    "index": "Option<u64>"
+  },
+  "riogateway": {
+    "withdrawList": {
+      "description": "get current withdraw list(include pending and approve)",
+      "params": [
+        {
+          "name": "at",
+          "isOptional": true
+        }
+      ],
+      "type": "BTreeMap<u64, WithdrawItemForRpc>"
+    },
+    "pendingWithdrawList": {
+      "description": "get current pending withdraw list",
+      "params": [
+        {
+          "name": "at",
+          "isOptional": true
+        }
+      ],
+      "type": "BTreeMap<u64, WithdrawItemForRpc>"
+    },
+    "depositAddress": {
+      "description": "get deposit address info for an account and asset, if this account have not apply, in bip32 path would return `nil`",
+      "params": [
+        {
+          "name": "at",
+          "who": "AccountId",
+          "currency_id": "CurrencyId",
+          "isOptional": true
+        }
+      ],
+      "type": "DepositAddrForRpc"
+    }
+  }
 }
