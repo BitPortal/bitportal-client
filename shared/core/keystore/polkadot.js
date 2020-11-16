@@ -58,6 +58,7 @@ export const createPolkadotKeystoreBySuri = async (input, password, options = {}
   let crypto = await createCrypto(password, secret, 'scrypt', true)
   const encSuri = await deriveEncPair(password, Buffer.from(value, 'utf8').toString('hex'), crypto)
   crypto = clearCachedDerivedKey(crypto)
+
   const keystore = {
     version: keystoreVersion.polkadot,
     ...json,

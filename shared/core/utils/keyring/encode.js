@@ -18,9 +18,9 @@ export const encodePair = async ({ publicKey, secretKey }, passphrase) => {
     return encoded;
   }
 
-  const { params, password, salt } = scryptEncode(passphrase, await randomBytes(24));
+  const { params, password, salt } = scryptEncode(passphrase, new Uint8Array(await randomBytes(32)));
 
-  const { encrypted, nonce } = naclEncrypt(encoded, password.subarray(0, 32), await randomBytes(24));
+  const { encrypted, nonce } = naclEncrypt(encoded, password.subarray(0, 32), new Uint8Array(await randomBytes(24)));
 
   return u8aConcat(scryptToU8a(salt, params), nonce, encrypted);
 }

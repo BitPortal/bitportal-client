@@ -1,5 +1,5 @@
 import assert from 'assert'
-import { stringToU8a, u8aFixLength } from '@polkadot/util';
+import { stringToU8a, u8aFixLength, u8aToBn } from '@polkadot/util';
 import { naclDecrypt, scryptEncode, scryptFromU8a } from '@polkadot/util-crypto';
 
 import { ENCODING, NONCE_LENGTH, PKCS8_DIVIDER, PKCS8_HEADER, PUB_LENGTH, SEC_LENGTH, SEED_LENGTH, SCRYPT_LENGTH } from './defaults';
@@ -37,14 +37,13 @@ export function decodePair (passphrase, encrypted, encType = ENCODING) {
   assert(encrypted, 'No encrypted data available to decode');
   assert(passphrase || !encType.includes('xsalsa20-poly1305'), 'Password required to decode encypted data');
 
-  let encoded: Uint8Array | null = encrypted;
+  let encoded = encrypted;
 
   if (passphrase) {
-    let password: Uint8Array;
+    let password
 
     if (encType.includes('scrypt')) {
       const { params, salt } = scryptFromU8a(encrypted);
-
       password = scryptEncode(passphrase, salt, params).password;
       encrypted = encrypted.subarray(SCRYPT_LENGTH);
     } else {
