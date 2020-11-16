@@ -19,6 +19,10 @@ import {
 import {source, network as networkType} from 'core/constants'
 import uuidv4 from 'uuid/v4'
 import bs58check from 'bs58check'
+import {
+  createPolkadotKeystoreBySuri,
+  createPolkadotKeystoreByKeystore
+} from 'core/keystore/polkadot'
 
 export const createIdentity = async (password: string, name: string, passwordHint: string, network: string, isSegWit: boolean) => {
   assert(network === networkType.mainnet || network === networkType.testnet, 'Invalid network')
@@ -36,6 +40,7 @@ export const createIdentity = async (password: string, name: string, passwordHin
 
   const btcWalletKeystore = await createHDBTCKeystore(metadata, mnemonicCodes, password, isSegWit)
   const ethWalletKeystore = await createHDETHKeystore(metadata, mnemonicCodes, password)
+  const polkadotWalletKeystore = await createPolkadotKeystoreBySuri(mnemonicCodes, password, metadata)
   // TODO 屏蔽 EOS ～xbc
   // const eosWalletKeystore = await createHDEOSKeystore(metadata, mnemonicCodes, password)
   // TODO 屏蔽 chainx ～xbc
@@ -67,6 +72,7 @@ export const recoverIdentity = async (mnemonic: string, password: string, name: 
 
   const btcWalletKeystore = await createHDBTCKeystore(metadata, mnemonicCodes, password, isSegWit)
   const ethWalletKeystore = await createHDETHKeystore(metadata, mnemonicCodes, password)
+  const polkadotWalletKeystore = await createPolkadotKeystoreBySuri(mnemonicCodes, password, metadata)
   // TODO 屏蔽EOS chainX ～xbc
   // const eosWalletKeystore = await createHDEOSKeystore(metadata, mnemonicCodes, password)
   // const chainxWalletKeyStore = await createHDChainxKeystore(metadata, mnemonicCodes, password)
@@ -254,4 +260,34 @@ export const importChainxWalletByPrivateKey = async (wif: string, password: stri
   const chainxWalletKeystore = await createChainxKeystore(metadata, wif, password)
 
   return chainxWalletKeystore
+}
+
+export const importPolkadotWalletByKeystore = async (keystore, password, name, passwordHint, network, polkadotNetwork, keyPairType) => {
+  assert(network === networkType.mainnet || network === networkType.testnet, 'Invalid network')
+
+  const metadata = {
+    name,
+    passwordHint,
+    network,
+    source: source.keystore,
+    polkadotNetwork: polkadotNetwork || 'rio',
+    keyPairType: keyPairType || 'sr25519'
+  }
+
+  return createPolkadotKeystoreByKeystore(keystore, password, metadata)
+}
+
+export const importPolkadotWalletBySuri = async (suri, password, name, passwordHint, network, polkadotNetwork, keyPairType) => {
+  assert(network === networkType.mainnet || network === networkType.testnet, 'Invalid network')
+
+  const metadata = {
+    name,
+    passwordHint,
+    network,
+    source: source.suri,
+    polkadotNetwork: polkadotNetwork || 'rio',
+    keyPairType: keyPairType || 'sr25519'
+  }
+
+  return createPolkadotKeystoreBySuri(suri, password, metadata)
 }

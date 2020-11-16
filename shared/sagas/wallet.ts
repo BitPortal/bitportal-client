@@ -350,9 +350,7 @@ function* importETHKeystore(action: Action<ImportETHKeystoreParams>) {
     const id = keystoreObject.id
 
     const importedWallets = yield select((state: RootState) => importedWalletSelector(state))
-    // assert(importedWallets.findIndex((wallet: any) => wallet.id === id) === -1, 'Keystore already exist in imported wallets')
     const identityWallets = yield select((state: RootState) => identityWalletSelector(state))
-    // assert(identityWallets.findIndex((wallet: any) => wallet.id === id) === -1, 'Keystore already exist in identity wallets')
 
     if (keystoreObject.address) {
       const walletAddresses = yield select((state: RootState) => walletAddressesSelector(state))
@@ -735,6 +733,98 @@ function* exportPCXPrivateKey(action: Action<ExportPCXPrivateKeyParams>) {
   }
 }
 
+function* importPolkadotKeystore(action) {
+  if (!action.payload) return
+  if (action.payload.delay) yield delay(action.payload.delay)
+
+  try {
+    const keystoreText = action.payload.keystore
+    const keystorePassword = action.payload.keystorePassword
+    const passwordHint = ''
+    const name = 'RIO-Wallet'
+
+    let keystoreObject
+
+    try {
+      keystoreObject = JSON.parse(keystoreText)
+    } catch (e) {
+      throw new Error('Invalid keystore')
+    }
+
+    assert(keystoreObject.id, 'No keystore id')
+    const id = keystoreObject.id
+
+    const importedWallets = yield select((state: RootState) => importedWalletSelector(state))
+    const identityWallets = yield select((state: RootState) => identityWalletSelector(state))
+
+    if (keystoreObject.address) {
+      const walletAddresses = yield select((state: RootState) => walletAddressesSelector(state))
+      assert(!walletAddresses.find((address: string) => address === keystoreObject.address), 'Wallet already exist')
+    }
+
+    const keystore = yield call(walletCore.importPolkadotWalletByKeystore, keystoreObject, keystorePassword, name, passwordHint, 'rio', 'sr25519')
+    yield call(secureStorage.setItem, `IMPORTED_WALLET_KEYSTORE_${keystore.id}`, keystore, true)
+
+    const wallet = walletCore.getWalletMetaData(keystore)
+    yield put(actions.addImportedWallet(wallet))
+    yield put(actions.setActiveWallet(wallet.id))
+
+    yield put(actions.importPolkadotKeystore.succeeded())
+    if (action.payload.componentId) dismissAllModals()
+  } catch (e) {
+    yield put(actions.importPolkadotKeystore.failed(getErrorMessage(e)))
+  }
+}
+
+function* importPolkadotSuri(action) {
+  if (!action.payload) return
+  if (action.payload.delay) yield delay(action.payload.delay)
+
+  try {
+    const suri = action.payload.suri
+    const password = action.payload.password
+    const passwordHint = action.payload.passwordHint || ''
+    const name = 'RIO-Wallet'
+
+    const keystore = yield call(walletCore.importPolkadotWalletBySuri, suri, password, name, passwordHint, 'rio', 'sr25519')
+
+    const walletAddresses = yield select((state: RootState) => walletAddressesSelector(state))
+    assert(!walletAddresses.find((address: string) => address === keystore.address), 'Wallet already exist')
+
+    yield call(secureStorage.setItem, `IMPORTED_WALLET_KEYSTORE_${keystore.id}`, keystore, true)
+
+    const wallet = walletCore.getWalletMetaData(keystore)
+    yield put(actions.addImportedWallet(wallet))
+    yield put(actions.setActiveWallet(wallet.id))
+
+    yield put(actions.importPolkadotSuri.succeeded())
+    if (action.payload.componentId) dismissAllModals()
+  } catch (e) {
+    yield put(actions.importPolkadotSuri.failed(getErrorMessage(e)))
+  }
+}
+
+// function* exportPolkadotKeystore(action) {
+//   if (!action.payload) return
+//   if (action.payload.delay) yield delay(action.payload.delay)
+
+//   try {
+
+//   } catch (e) {
+//     yield put(actions.exportPolkadotKeystore.failed(getErrorMessage(e)))
+//   }
+// }
+
+// function* exportPolkadotSuri(action) {
+//   if (!action.payload) return
+//   if (action.payload.delay) yield delay(action.payload.delay)
+
+//   try {
+
+//   } catch (e) {
+//     yield put(actions.exportPolkadotSuri.failed(getErrorMessage(e)))
+//   }
+// }
 
 export default function* walletSaga() {
   yield takeLatest(String(actions.setActiveWallet), setActiveWallet)
@@ -759,4 +849,8 @@ export default function* walletSaga() {
   yield takeLatest(String(actions.importChainxPrivateKey.requested), importChainxPrivateKey)
   yield takeLatest(String(actions.exportPCXPrivateKey.requested), exportPCXPrivateKey)
   yield takeLatest(String(actions.updateBridgeWalletInfo), updateBridgeWalletInfo)
+  yield takeLatest(String(actions.importPolkadotKeystore), importPolkadotKeystore)
+  yield takeLatest(String(actions.importPolkadotSuri), importPolkadotSuri)
+  // yield takeLatest(String(actions.exportPolkadotKeystore), exportPolkadotKeystore)
+  // yield takeLatest(String(actions.exportPolkadotSuri), exportPolkadotSuri)
 }
