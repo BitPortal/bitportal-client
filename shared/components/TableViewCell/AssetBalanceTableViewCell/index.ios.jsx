@@ -6,7 +6,6 @@ import { assetIcons } from 'resources/images'
 const AssetBalanceTableViewCell = props => {
 
   const {data} = props;
-  console.log('props:',props);
   const {symbol = ''} = data || {}
   const defalutIcon = symbol.length > 0 ? props.data.symbol.slice(0, 1) : '';
 

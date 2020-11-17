@@ -309,7 +309,7 @@ export default class Asset extends Component {
             {(!activeAsset || !activeAsset.contract) && !!chain && <FastImage source={assetIcons[chain.toLowerCase()]} style={{ width: 60, height: 60, borderRadius: 30, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }} />}
             {(!!activeAsset && !!activeAsset.contract) && <View style={{ width: 60, height: 60, borderWidth: 0, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white', borderRadius: 30 }}>
               <View style={{ position: 'absolute', top: 0, left: 0, width: 60, height: 60, borderRadius: 30, alignItems: 'center', justifyContent: 'center', backgroundColor: '#B9C1CF' }}>
-                <Text style={{ fontWeight: '500', fontSize: 28, color: 'white', paddingLeft: 1.6 }}>{activeAsset.symbol.slice(0, 1)}</Text>
+                <Text style={{ fontWeight: '500', fontSize: 28, color: 'white', paddingLeft: 1.6 }}>{activeAsset.symbol && activeAsset.symbol.length ? activeAsset.symbol.slice(0, 1): ''}</Text>
               </View>
               <FastImage
                 source={{ uri: activeAsset.icon_url }}

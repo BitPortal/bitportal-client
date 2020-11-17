@@ -13,14 +13,16 @@ export const chain = {
   eth: 'ETHEREUM',
   btc: 'BITCOIN',
   eos: 'EOS',
-  chainx: 'CHAINX'
+  chainx: 'CHAINX',
+  rioChain:'RIOCHAIN'
 }
 
 export const symbol = {
   eth: 'ETH',
   btc: 'BTC',
   eos: 'EOS',
-  pcx: 'PCX'
+  pcx: 'PCX',
+  rioChain:'RIOCHAIN'
 }
 
 export const walletType = {
@@ -69,6 +71,7 @@ export const keystoreVersion = {
   eth: 3,
   eos: 0,
   chainx: 0,
+  rioChain: 3,
 }
 
 export const magicHex = '0d387e'
@@ -84,7 +87,7 @@ export const eosNodes = [
 ]
 
 export const eosTestNodes = [
-  
+
 ]
 
 export const ethNodes = [

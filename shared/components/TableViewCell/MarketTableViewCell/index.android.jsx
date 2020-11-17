@@ -9,13 +9,15 @@ export default class MarketTableViewCell extends Component {
 
   render() {
     const { intl, currency, data } = this.props
+    const {symbol = ''} = data || {}
+    const sliceSymbol = symbol.length > 0 ? symbol.slice(0, 1) : '';
 
     return (
       <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, height: 60 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View style={{ width: 36, height: 36, marginRight: 16, borderRadius: 18 }}>
             <View style={{ position: 'absolute', top: 0, left: 0, width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center', backgroundColor: '#B9C1CF' }}>
-              <Text style={{ fontWeight: '500', fontSize: 20, color: 'white' }}>{data.symbol.slice(0, 1)}</Text>
+              <Text style={{ fontWeight: '500', fontSize: 20, color: 'white' }}>{sliceSymbol}</Text>
             </View>
             <FastImage source={{ uri: `https://cdn.bitportal.io/tokenicon/128/color/${data.symbol.toLowerCase()}.png` }} style={{ width: 36, height: 36, borderRadius: 18 }} />
           </View>

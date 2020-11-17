@@ -304,7 +304,7 @@ export default class Wallet extends Component {
                   fontSize: 20,
                   color: 'white',
                   paddingLeft: 1.6
-                }}>{data.symbol.slice(0, 1)}</Text>
+                }}>{data.symbol && data.symbol.length > 0 ? data.symbol.slice(0, 1) : ''}</Text>
               </View>
               <FastImage
                 source={{ uri: data.icon_url }}

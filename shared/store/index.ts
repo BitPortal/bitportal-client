@@ -41,6 +41,5 @@ export default function configure(initialState: RootState = {}, history?: any): 
   }
 
   store.persistor = persistStore(store)
-  console.log('store:',store.getState());
   return store
 }

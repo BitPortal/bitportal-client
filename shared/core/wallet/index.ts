@@ -5,6 +5,9 @@ import {
   createHDBTCKeystore,
   createBTCKeystore,
   createHDETHKeystore,
+  createHDRioChainKeystore,
+  createRioChainKeystore,
+  importRioChainKeystore,
   createHDEOSKeystore,
   createHDChainxKeystore,
   importETHKeystore,
@@ -14,7 +17,7 @@ import {
   decryptMnemonic,
   decryptPrivateKey,
   decryptPrivateKeys,
-  verifyPassword as verifyPasswordKeystore
+  verifyPassword as verifyPasswordKeystore,
 } from 'core/keystore'
 import {source, network as networkType} from 'core/constants'
 import uuidv4 from 'uuid/v4'
@@ -36,6 +39,7 @@ export const createIdentity = async (password: string, name: string, passwordHin
 
   const btcWalletKeystore = await createHDBTCKeystore(metadata, mnemonicCodes, password, isSegWit)
   const ethWalletKeystore = await createHDETHKeystore(metadata, mnemonicCodes, password)
+  // const rioChainWalletKeystore = await createHDRioChainKeystore()
   // TODO 屏蔽 EOS ～xbc
   // const eosWalletKeystore = await createHDEOSKeystore(metadata, mnemonicCodes, password)
   // TODO 屏蔽 chainx ～xbc
@@ -45,6 +49,7 @@ export const createIdentity = async (password: string, name: string, passwordHin
   const wallets = [btcWalletKeystore, ethWalletKeystore]
   keystore.walletIDs.push(btcWalletKeystore.id)
   keystore.walletIDs.push(ethWalletKeystore.id)
+  // keystore.walletIDs.push(rioChainWalletKeystore.id)
   // keystore.walletIDs.push(eosWalletKeystore.id)
   // keystore.walletIDs.push(chainxWalletKeyStore.id)
 
@@ -67,14 +72,16 @@ export const recoverIdentity = async (mnemonic: string, password: string, name: 
 
   const btcWalletKeystore = await createHDBTCKeystore(metadata, mnemonicCodes, password, isSegWit)
   const ethWalletKeystore = await createHDETHKeystore(metadata, mnemonicCodes, password)
+  const rioChainWalletKeystore = await createHDRioChainKeystore()
   // TODO 屏蔽EOS chainX ～xbc
   // const eosWalletKeystore = await createHDEOSKeystore(metadata, mnemonicCodes, password)
   // const chainxWalletKeyStore = await createHDChainxKeystore(metadata, mnemonicCodes, password)
 
   // const wallets = [btcWalletKeystore, ethWalletKeystore, eosWalletKeystore, chainxWalletKeyStore]
-  const wallets = [btcWalletKeystore, ethWalletKeystore]
+  const wallets = [btcWalletKeystore, ethWalletKeystore, rioChainWalletKeystore]
   keystore.walletIDs.push(btcWalletKeystore.id)
   keystore.walletIDs.push(ethWalletKeystore.id)
+  keystore.walletIDs.push(rioChainWalletKeystore.id)
   // keystore.walletIDs.push(eosWalletKeystore.id)
   // keystore.walletIDs.push(chainxWalletKeyStore.id)
 
@@ -168,6 +175,33 @@ export const importETHWalletByMnemonics = async (mnemonic: string, password: str
   const ethWalletKeystore = await createHDETHKeystore(metadata, mnemonicCodes, password, mnemonicPath)
 
   return ethWalletKeystore
+}
+
+export const importRioChainWalletByMnemonics = async (mnemonic: string, password: string, name: string, passwordHint: string, mnemonicPath?: string) => {
+  const mnemonicText = mnemonic
+  const mnemonicCodes = mnemonicText.trim().split(' ')
+  const metadata = {
+    name,
+    passwordHint,
+    source: source.mnemonic
+  }
+
+  const rioChainWalletKeystore = await createHDRioChainKeystore()
+
+  return rioChainWalletKeystore
+}
+
+export const importRioChainWalletByKeystore = async (keystore: string, password: string, name: string, passwordHint: string) => {
+
+  // todo coding for keystore params
+  const metadata = {
+    name,
+    passwordHint,
+  }
+
+  const rioChainWalletKeystore = await importRioChainKeystore(metadata,password,name)
+
+  return rioChainWalletKeystore
 }
 
 export const importEOSWalletByPrivateKeys = async (wifs: any, password: string, name: string, passwordHint: string, accountName: string) => {

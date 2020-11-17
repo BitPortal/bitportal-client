@@ -38,6 +38,10 @@ export const importETHPrivateKey = createAsyncAction('wallet/IMPORT_ETH_PRIVATEK
 export const exportETHPrivateKey = createAsyncAction('wallet/EXPORT_ETH_PRIVATEKEY')
 export const exportETHKeystore = createAsyncAction('wallet/EXPORT_ETH_KEYSTORE')
 
+export const importRioChainKeystore = createAsyncAction('wallet/IMPORT_RIOCHAIN_KEYSTORE')
+export const importRioChainMnemonics = createAsyncAction('wallet/IMPORT_RIOCHAIN_MNEMONICS')
+export const exportRioChainKeystore = createAsyncAction('wallet/EXPORT_RIOCHAIN_KEYSTORE')
+
 export const getEOSKeyAccounts = createAsyncAction('wallet/GET_EOS_KEY_ACCOUNTS')
 export const importEOSPrivateKey = createAsyncAction('wallet/IMPORT_EOS_PRIVATEKEY')
 export const exportEOSPrivateKey = createAsyncAction('wallet/EXPORT_EOS_PRIVATEKEY')

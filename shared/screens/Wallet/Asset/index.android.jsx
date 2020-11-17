@@ -381,7 +381,7 @@ export default class Asset extends Component {
             }
             {(!!activeAsset && !!activeAsset.contract) && <View style={{ width: 56, height: 56, backgroundColor: 'white', borderRadius: 28 }}>
               <View style={{ position: 'absolute', top: 0, left: 0, width: 56, height: 56, borderRadius: 28, alignItems: 'center', justifyContent: 'center', backgroundColor: '#B9C1CF' }}>
-                <Text style={{ fontWeight: '500', fontSize: 28, color: 'white', paddingLeft: 1.6 }}>{activeAsset.symbol.slice(0, 1)}</Text>
+                <Text style={{ fontWeight: '500', fontSize: 28, color: 'white', paddingLeft: 1.6 }}>{activeAsset.symbol && activeAsset.symbol.length ? activeAsset.symbol.slice(0, 1): ''}</Text>
               </View>
               <FastImage
                 source={{ uri: activeAsset.icon_url }}

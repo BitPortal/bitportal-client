@@ -48,6 +48,13 @@ export default class SelectChainType extends Component {
       }
     })
   }
+  toImportRioChainWallet = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.ImportRioChainWallet'
+      }
+    })
+  }
 
   // toImportEOSWallet = () => {
   //   Navigation.push(this.props.componentId, {
@@ -87,6 +94,12 @@ export default class SelectChainType extends Component {
             reactModuleForCell="ChainTypeTableViewCell"
             onPress={this.toImportETHWallet}
           />
+          <Item
+            height={66}
+            chain="riochain"
+            reactModuleForCell="ChainTypeTableViewCell"
+            onPress={this.toImportRioChainWallet}
+          />
           {/*<Item*/}
           {/*  height={66}*/}
           {/*  chain="eos"*/}
@@ -104,3 +117,4 @@ export default class SelectChainType extends Component {
     )
   }
 }
+

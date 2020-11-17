@@ -377,7 +377,7 @@ const CardField = ({
       {!!contract && <View style={{ width: 41, height: 41, marginRight: 16 }}>
         <View style={{ width: 40, height: 40, borderWidth: 0, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white', borderRadius: 20 }}>
           <View style={{ position: 'absolute', top: 0, left: 0, width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center', backgroundColor: '#B9C1CF' }}>
-            <Text style={{ fontWeight: '500', fontSize: 20, color: isDarkMode ? 'black' : 'white', paddingLeft: 1.6 }}>{symbol.slice(0, 1)}</Text>
+            <Text style={{ fontWeight: '500', fontSize: 20, color: isDarkMode ? 'black' : 'white', paddingLeft: 1.6 }}>{symbol && symbol.length? symbol.slice(0, 1):''}</Text>
           </View>
           <FastImage
             source={{ uri: iconUrl }}

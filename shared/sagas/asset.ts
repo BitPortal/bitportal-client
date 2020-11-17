@@ -156,25 +156,28 @@ function* scanETHAsset(action: Action) {
     const result = yield call(api.scanETHAsset, activeWallet)
     // const result = yield call(api.scanETHAsset, {address: '0x47F7EA0dd4418AA1cec00786F5C47623aC37bA42'})
 
-
     assert(result && result.tokens && typeof result.tokens === 'object', 'no tokens')
 
-    const assets = result.tokens.map(item => ({
+    // todo remove symbol is undefine
+    const newTokens = result.tokens.filter((item:any) => item.tokenInfo && item.tokenInfo.symbol && item.tokenInfo.symbol.length)
+
+    const handleUrl = (url='') => (url || '').replace('https://etherscan.io/','https://cn.etherscan.com/')
+    const assets = newTokens.map(item => ({
       address: item.tokenInfo.address,
       contract: item.tokenInfo.address,
       decimals: +item.tokenInfo.decimals,
       symbol: item.tokenInfo.symbol,
       name: item.tokenInfo.name,
       chain: 'ETHEREUM',
-      icon_url: item.tokenInfo.image ? item.tokenInfo.image : ''
+      icon_url: handleUrl(item.tokenInfo.image ? item.tokenInfo.image : '')
     }))
-    console.log('[scanETHAsset] eth assets', assets)
+
     yield put(actions.updateAsset({ assets, chain: 'ETHEREUM' }))
 
     const selectedAssets = assets.map(item => ({ walletId: `${activeWallet.id}`, assetId: `ETHEREUM/${item.contract}/${item.symbol}` }))
     yield put(actions.selectAssetList(selectedAssets))
 
-    const balances = result.tokens.map(item => ({
+    const balances = newTokens.map(item => ({
       contract: item.tokenInfo.address,
       decimals: +item.tokenInfo.decimals,
       precision: 8,

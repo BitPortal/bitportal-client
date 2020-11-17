@@ -28,6 +28,7 @@ import memoryStorage from 'core/storage/memoryStorage'
 import secureStorage from 'core/storage/secureStorage'
 import { chain } from 'core/constants'
 import { push, dismissAllModals, popToRoot, showModal } from 'utils/location'
+import {createAsyncAction} from '../utils/redux'
 
 function* setActiveWallet(action: Action<SetActiveWalletParams>) {
   if (!action.payload) return
@@ -350,9 +351,9 @@ function* importETHKeystore(action: Action<ImportETHKeystoreParams>) {
     const id = keystoreObject.id
 
     const importedWallets = yield select((state: RootState) => importedWalletSelector(state))
-    // assert(importedWallets.findIndex((wallet: any) => wallet.id === id) === -1, 'Keystore already exist in imported wallets')
+    assert(importedWallets.findIndex((wallet: any) => wallet.id === id) === -1, 'Keystore already exist in imported wallets')
     const identityWallets = yield select((state: RootState) => identityWalletSelector(state))
-    // assert(identityWallets.findIndex((wallet: any) => wallet.id === id) === -1, 'Keystore already exist in identity wallets')
+    assert(identityWallets.findIndex((wallet: any) => wallet.id === id) === -1, 'Keystore already exist in identity wallets')
 
     if (keystoreObject.address) {
       const walletAddresses = yield select((state: RootState) => walletAddressesSelector(state))
@@ -498,6 +499,58 @@ function* exportETHKeystore(action: Action<ExportETHKeystoreParams>) {
     yield put(actions.exportETHKeystore.failed(getErrorMessage(e)))
   }
 }
+
+function* importRioChainKeystore(action: Action) {
+  if (!action.payload) return
+  if (action.payload.delay) yield delay(action.payload.delay)
+
+  try {
+
+  }catch (e) {
+    yield put(actions.importRioChainKeystore.failed(getErrorMessage(e)))
+  }
+}
+
+function * importRioChainMnemonics(action: Action) {
+  if (!action.payload) return
+  if (action.payload.delay) yield delay(action.payload.delay)
+
+  try {
+    const mnemonic = action.payload.mnemonic
+    const password = action.payload.password
+    const name = 'RioChain-Wallet'
+    const network = 'MAINNET'
+
+    // todo get keystore obj in walletCore
+    // const keystore = yield call(importRioChainW)
+
+    const walletAddresses = yield select((state: RootState) => walletAddressesSelector(state))
+    assert(!walletAddresses.find((address: string) => address === keystore.address), 'Wallet already exist')
+
+    yield call(secureStorage.setItem, `IMPORTED_WALLET_KEYSTORE_${keystore.address}`, keystore, true)
+
+    const wallet = walletCore.getWalletMetaData(keystore)
+    yield put(actions.addImportedWallet(wallet))
+    yield put(actions.setActiveWallet(wallet.id))
+
+    yield put(actions.importETHMnemonics.succeeded())
+    if (action.payload.componentId) dismissAllModals()
+  }catch (e) {
+    yield put(actions.importRioChainMnemonics.failed(getErrorMessage(e)))
+  }
+}
+
+function * exportRioChainKeystore(action: Action) {
+  if (!action.payload) return
+  if (action.payload.delay) yield delay(action.payload.delay)
+
+  try {
+
+  }catch (e) {
+    yield put(actions.exportRioChainKeystore.failed(getErrorMessage(e)))
+  }
+}
+
 
 function* getEOSKeyAccounts(action: Action<GetEOSKeyAccountsParams>) {
   if (!action.payload) return
@@ -750,6 +803,10 @@ export default function* walletSaga() {
   yield takeLatest(String(actions.importETHPrivateKey.requested), importETHPrivateKey)
   yield takeLatest(String(actions.exportETHPrivateKey.requested), exportETHPrivateKey)
   yield takeLatest(String(actions.exportETHKeystore.requested), exportETHKeystore)
+  yield takeLatest(String(actions.importRioChainKeystore.requested), importRioChainKeystore)
+  yield takeLatest(String(actions.importRioChainMnemonics.requested), importRioChainMnemonics)
+  yield takeLatest(String(actions.exportRioChainKeystore.requested), exportRioChainKeystore)
+
   yield takeLatest(String(actions.importEOSPrivateKey.requested), importEOSPrivateKey)
   yield takeLatest(String(actions.getEOSKeyAccounts.requested), getEOSKeyAccounts)
   yield takeLatest(String(actions.exportEOSPrivateKey.requested), exportEOSPrivateKey)

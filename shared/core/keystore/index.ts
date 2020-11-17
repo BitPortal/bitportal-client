@@ -457,6 +457,65 @@ export const createETHKeystore = async (metadata: any, privateKey: any, password
   return keystore
 }
 
+export const createHDRioChainKeystore = async (metadata: any, mnemonicCodes: any, password: string,passwordHint: string, id?: string) => {
+
+  const mnemonics = mnemonicCodes.join(' ')
+  assert(bip39.validateMnemonic(mnemonics), 'Invalid mnemonics')
+
+  const privateKey = 'L1Ch8fqBWQA5dqsVVNpJxiByYxVft618gBSgc4E16QUVMFKdCfYC'
+  const address = 'R7MY7yH8HuRZFdyirFYMGymtfGmFQfsX7quTAoXbFeKzdrFi'
+
+  let crypto = await createCrypto(password, Buffer.from(privateKey).toString('hex'), 'pbkdf2', true)
+  const encMnemonic = await deriveEncPair(password, Buffer.from(mnemonicCodes.join(' '), 'utf8').toString('hex'), crypto)
+  crypto = clearCachedDerivedKey(crypto)
+  const random = await randomBytes(16)
+
+  const keystore = {
+    encMnemonic,
+    crypto,
+    address,
+    version: keystoreVersion.rioChain,
+    id: id || uuidv4({ random }),
+    bitportalMeta: {
+      ...metadata,
+      timestamp: +Date.now(),
+      walletType: walletType.hd,
+      chain: chain.rioChain,
+      name: 'RioChain-Wallet',
+      symbol: symbol.rioChain
+    }
+  }
+
+  return keystore
+
+
+  // const random = await randomBytes(16)
+  // const keystore = {
+  //   id: uuidv4({ random }),
+  //   'address': 'R7MY7yH8HuRZFdyirFYMGymtfGmFQfsX7quTAoXbFeKzdrFi',
+  //   'encoded': '1dhjf4QEYEjQ0OtgN1XjnvQmfXki1ta42nVrgeAbHX4AgAAAAQAAAAgAAAAsrCPhBYSHv3Sy5TQL4E/wPzPK5/+Twf3CwkkcA0Gar54iMn2OqBC1M66cdpjo67uuWAhUP8mNtHiERJ0TNGwsKO2lZcd3Ex2GC0opvrXDRlxsbHQsMOYzEVenbTvcOQkJL6guRwNHFP3bRLQGwWcNylrUVxm2DG9hP7aZWEllP5ooeA+pRHbW4j/XwHEX6gh8H83a1079ZNnne45A',
+  //   'encoding': {
+  //     'content': ['pkcs8', 'sr25519'],
+  //     'type': ['scrypt', 'xsalsa20-poly1305'],
+  //     'version': '3'
+  //   },
+  //   'meta': {
+  //     'name': 'binker'
+  //   }
+  // }
+  // return keystore
+}
+
+export const importRioChainKeystore = async (metadata: any, keystore: any, password: string, id?: string) => {
+
+  // todo check input params
+
+  // todo and coding for create my keystore content for metadata {name , passwordHint ....}
+
+  return createRioChainKeystore({},'','','')
+
+}
+
 export const importETHKeystore = async (metadata: any, keystore: any, password: string, id?: string) => {
   assert(keystore.version === 3, 'Invalid keystore version')
   assert(keystore.crypto, 'No keystore crypto')

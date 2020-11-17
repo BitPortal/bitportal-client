@@ -63,6 +63,7 @@ import ImportBTCWallet from 'screens/Wallet/ImportBTCWallet'
 import CreateEOSAccount from 'screens/Wallet/CreateEOSAccount'
 import ManageEOSResource from 'screens/Wallet/ManageEOSResource'
 import ImportETHWallet from 'screens/Wallet/ImportETHWallet'
+import ImportRioChainWallet from 'screens/Wallet/ImportRioChainWallet'
 import ImportEOSWallet from 'screens/Wallet/ImportEOSWallet'
 import ImportChainxWallet from 'screens/Wallet/ImportChainxWallet'
 import ExportETHKeystore from 'screens/Wallet/ExportETHKeystore'
@@ -161,6 +162,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.CreateEOSAccount', () => CreateEOSAccount, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ManageEOSResource', () => ManageEOSResource, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ImportETHWallet', () => ImportETHWallet, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ImportRioChainWallet', () => ImportRioChainWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ImportEOSWallet', () => ImportEOSWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ImportChainxWallet', () => ImportChainxWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.SelectEOSAccount', () => SelectEOSAccount, Provider, store)
