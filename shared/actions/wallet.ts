@@ -49,3 +49,8 @@ export const importChainxPrivateKey = createAsyncAction('wallet/IMPORT_CHAINX_PR
 export const exportPCXPrivateKey = createAsyncAction('wallet/EXPORT_PCX_PRIVATEKEY')
 
 export const updateBridgeWalletInfo = createAction<UpdateBridgeWalletInfoParams>('wallet/UPDATE_BRIDGE_WALLET_INFO')
+
+export const importPolkadotKeystore = createAsyncAction('wallet/IMPORT_POLKADOT_KEYSTORE')
+export const importPolkadotSuri = createAsyncAction('wallet/IMPORT_POLKADOT_SURI')
+export const exportPolkadotKeystore = createAsyncAction('wallet/EXPORT_POLKADOT_KEYSTORE')
+export const exportPolkadotSuri = createAsyncAction('wallet/EXPORT_POLKADOT_SURI')

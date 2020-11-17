@@ -350,9 +350,7 @@ function* importETHKeystore(action: Action<ImportETHKeystoreParams>) {
     const id = keystoreObject.id
 
     const importedWallets = yield select((state: RootState) => importedWalletSelector(state))
-    // assert(importedWallets.findIndex((wallet: any) => wallet.id === id) === -1, 'Keystore already exist in imported wallets')
     const identityWallets = yield select((state: RootState) => identityWalletSelector(state))
-    // assert(identityWallets.findIndex((wallet: any) => wallet.id === id) === -1, 'Keystore already exist in identity wallets')
 
     if (keystoreObject.address) {
       const walletAddresses = yield select((state: RootState) => walletAddressesSelector(state))
@@ -735,6 +733,43 @@ function* exportPCXPrivateKey(action: Action<ExportPCXPrivateKeyParams>) {
   }
 }
 
+function* importPolkadotKeystore() {
+  try {
+    const keystore = yield call(walletCore.importPolkadotWalletByKeystore, {"address":"P62Dag3Ybhg2K75jZkiHJ4eYhdCsHRfwAXPNYBLw3Yt2XkQr","encoded":"5Ym5sCJVyZIvsLGvTj7n5/fWo0ZPZslBmGuisSftFtAAgAAAAQAAAAgAAABA1vVonhfF0tYKBymlm9U/DAqVYd0NczJor7Z2SLqXO32w4wzVIxfwGz5KDlPXwHzW0lJbbHcHaQ5eUW9PuaKSgG7WYRotlo8w2tdsmy7qZjPoqEZV6DULlYqB5X98X9Raax+jD4dcOkGR+qjRfJ1FsuKOtbIBpPmIsN1ofXMF/rIau0oSNyNwDZXWO7kP2GZQuZnC29nzLtP3PEZO","encoding":{"content":["pkcs8","sr25519"],"type":["scrypt","xsalsa20-poly1305"],"version":"3"},"meta":{"name":"RIO-Wallet"}}, '12345678', 'RIO-Wallet', '', 'MAINNET')
+    console.log('test123 importPolkadotKeystore', JSON.stringify(keystore))
+  } catch (error) {
+    console.log('test123', error.message)
+  }
+}
+
+function* importPolkadotSuri() {
+  try {
+    const keystore = yield call(walletCore.importPolkadotWalletBySuri, 'result left donkey giggle dolphin rule have tag client squeeze ready scatter', '12345678', 'RIO-Wallet', '', 'MAINNET')
+    console.log('test123 importPolkadotSuri', JSON.stringify(keystore))
+  } catch (error) {
+    console.log('test123', error.message)
+  }
+}
+
+function* exportPolkadotKeystore(action) {
+  try {
+    const keystore = yield call(walletCore.importPolkadotWalletBySuri, 'result left donkey giggle dolphin rule have tag client squeeze ready scatter', '12345678', 'RIO-Wallet', '', 'MAINNET')
+    const officialKeystore = yield call(walletCore.exportOfficialKeystore, '12345678', keystore)
+    console.log('test123 exportPolkadotKeystore', JSON.stringify(officialKeystore))
+  } catch (error) {
+    console.log('test123', error.message)
+  }
+}
+
+function* exportPolkadotSuri(action) {
+  try {
+    const keystore = yield call(walletCore.importPolkadotWalletBySuri, 'result left donkey giggle dolphin rule have tag client squeeze ready scatter', '12345678', 'RIO-Wallet', '', 'MAINNET')
+    const suri = yield call(exportSuri, '12345678', keystore)
+    console.log('test123 exportPolkadotSuri', suri)
+  } catch (error) {
+    console.log('test123', error.message)
+  }
+}
 
 export default function* walletSaga() {
   yield takeLatest(String(actions.setActiveWallet), setActiveWallet)
@@ -759,4 +794,8 @@ export default function* walletSaga() {
   yield takeLatest(String(actions.importChainxPrivateKey.requested), importChainxPrivateKey)
   yield takeLatest(String(actions.exportPCXPrivateKey.requested), exportPCXPrivateKey)
   yield takeLatest(String(actions.updateBridgeWalletInfo), updateBridgeWalletInfo)
+  yield takeLatest(String(actions.importPolkadotKeystore), importPolkadotKeystore)
+  yield takeLatest(String(actions.importPolkadotSuri), importPolkadotSuri)
+  yield takeLatest(String(actions.exportPolkadotKeystore), exportPolkadotKeystore)
+  yield takeLatest(String(actions.exportPolkadotSuri), exportPolkadotSuri)
 }

@@ -13,7 +13,8 @@ export const chain = {
   eth: 'ETHEREUM',
   btc: 'BITCOIN',
   eos: 'EOS',
-  chainx: 'CHAINX'
+  chainx: 'CHAINX',
+  polkadot: 'POLKADOT'
 }
 
 export const symbol = {
@@ -54,7 +55,8 @@ export const source = {
   privateKey: 'PRIVATE',
   wif: 'WIF',
   keystore: 'KEYSTORE',
-  mnemonic: 'MNEMONIC'
+  mnemonic: 'MNEMONIC',
+  suri: 'SURI'
 }
 
 export const mode = {
@@ -69,6 +71,7 @@ export const keystoreVersion = {
   eth: 3,
   eos: 0,
   chainx: 0,
+  polkadot: 0,
 }
 
 export const magicHex = '0d387e'
@@ -84,7 +87,7 @@ export const eosNodes = [
 ]
 
 export const eosTestNodes = [
-  
+
 ]
 
 export const ethNodes = [

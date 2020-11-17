@@ -1,0 +1,24 @@
+{
+  "riogateway": {
+    "withdrawList": {
+      "description": "get current withdraw list(include pending and approve)",
+      "params": [
+        {
+          "name": "at",
+          "isOptional": true
+        }
+      ],
+      "type": "BTreeMap<u64, WithdrawItemForRpc>"
+    },
+    "pendingWithdrawList": {
+      "description": "get current pending withdraw list",
+      "params": [
+        {
+          "name": "at",
+          "isOptional": true
+        }
+      ],
+      "type": "BTreeMap<u64, WithdrawItemForRpc>"
+    }
+  }
+}

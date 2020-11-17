@@ -1,8 +1,16 @@
-import { cryptoWaitReady } from '@polkadot/util-crypto'
-import Keyring from '@polkadot/keyring'
-import createPair from '@polkadot/keyring/pair'
-import { hexToU8a } from '@polkadot/util'
-import { randomUUID, validateBip39Mnemonics, validatePolkadotKeystore } from '../utils'
+import { cryptoWaitReady, base64Decode, decodeAddress, encodeAddress } from '@polkadot/util-crypto'
+import { Keyring } from 'core/utils/keyring/keyring'
+import { createPair } from 'core/utils/keyring/pair'
+import { hexToU8a, isHex } from 'utils/type'
+import { SS58FORMAT_PREFIX, IS_MAINNET } from 'constants/env'
+import { randomUUID, validatePolkadotKeystore, createCrypto, deriveEncPair, clearCachedDerivedKey } from '../utils'
+import { randomBytes } from '../crypto'
+import {
+  walletType,
+  keystoreVersion,
+  chain,
+  source
+} from 'core/constants'
 
 export const substrateNetwork = {
   substrate: 'substrate',
@@ -11,16 +19,19 @@ export const substrateNetwork = {
   edgeware: 'edgeware',
   rio: 'rio'
 }
-
+console.log('SS58FORMAT_PREFIX', SS58FORMAT_PREFIX)
+console.log('isTestNet', !IS_MAINNET)
 export const substrateSS58Format = {
   [substrateNetwork.substrate]: 42,
   [substrateNetwork.polkadot]: 0,
-  [substrateNetwork.kusama]: 2
+  [substrateNetwork.kusama]: 2,
+  [substrateNetwork.rio]: SS58FORMAT_PREFIX
 }
 
 let keyring
 
 const getKeyring = async (network) => {
+  console.log('network', network)
   await cryptoWaitReady()
 
   if (!keyring) {
@@ -33,27 +44,33 @@ const getKeyring = async (network) => {
   return keyring
 }
 
-export const createPolkadotKeystoreBySuri = async (value, password, options = {}) => {
-  validateBip39Mnemonics(value)
+export const createPolkadotKeystoreBySuri = async (input, password, options = {}) => {
+  // validateBip39Mnemonics(value)
+  const value = typeof input === 'string' ? input : input.trim().join(' ')
 
-  const { derivePath, network, keyPairType, ...meta } = options
+  const { derivePath, polkadotNetwork, keyPairType, ...meta } = options
 
   const path = value + (derivePath || '')
-
-  const keyring = await getKeyring(network)
-  const pair = keyring.createFromUri(path, meta, keyPairType)
-  const json = pair.toJson(password)
+  const keyring = await getKeyring(polkadotNetwork)
+  const pair = await keyring.createFromUri(path, meta, keyPairType)
+  const json = await pair.toJson(password)
+  const secret = Buffer.from(await randomBytes(16)).toString('hex')
+  let crypto = await createCrypto(password, secret, 'scrypt', true)
+  const encSuri = await deriveEncPair(password, Buffer.from(value, 'utf8').toString('hex'), crypto)
+  crypto = clearCachedDerivedKey(crypto)
 
   const keystore = {
-    version: 1,
+    version: keystoreVersion.polkadot,
     ...json,
     id: await randomUUID(),
+    encSuri,
+    crypto,
     meta: {
       timestamp: +Date.now(),
-      chain: 'polkadot',
+      chain: chain.polkadot,
       name: 'Polka-Wallet',
-      network,
-      source: 'suri',
+      polkadotNetwork,
+      source: source.suri,
       ...meta
     }
   }
@@ -64,24 +81,25 @@ export const createPolkadotKeystoreBySuri = async (value, password, options = {}
 export const createPolkadotKeystoreByKeystore = async (value, password, options = {}) => {
   validatePolkadotKeystore(value)
 
-  const { network, keyPairType, ...meta } = options
-  const keyring = await getKeyring(network)
-  const type = Array.isArray(value.encoding.content) ? value.encoding.content[1] : 'ed25519'
-  const pair = createPair(type, { publicKey: keyring.decodeAddress(value.address, true) }, value.meta, hexToU8a(value.encoded))
+  const { polkadotNetwork, keyPairType, ...meta } = options
+  const keyring = await getKeyring(polkadotNetwork)
+  const cryptoType = value.encoding.version === '0' || !Array.isArray(value.encoding.content) ? 'ed25519' : value.encoding.content[1];
+  const encType = !Array.isArray(value.encoding.type) ? [value.encoding.type] : value.encoding.type;
+  const pair = await createPair({ type: cryptoType, toSS58: keyring.encodeAddress }, { publicKey: keyring.decodeAddress(value.address, true) }, value.meta, isHex(value.encoded) ? hexToU8a(value.encoded) : base64Decode(value.encoded), encType)
   pair.decodePkcs8(password)
-  const json = pair.toJson(password)
+  const json = await pair.toJson(password)
 
   const keystore = {
-    version: 1,
+    version: keystoreVersion.polkadot,
     ...json,
     id: await randomUUID(),
     meta: {
       ...meta,
       timestamp: +Date.now(),
-      chain: 'polkadot',
+      chain: chain.polkadot,
       name: 'Polka-Wallet',
-      source: 'keystore',
-      network,
+      source: source.keystore,
+      polkadotNetwork,
       ...value.meta
     }
   }
@@ -92,10 +110,11 @@ export const createPolkadotKeystoreByKeystore = async (value, password, options 
 export const verifyPolkadotPassword = async (keystore, password) => {
   validatePolkadotKeystore(keystore)
 
-  const network = keystore.meta.network
+  const network = keystore.meta.polkadotNetwork
   const keyring = await getKeyring(network)
-  const type = Array.isArray(keystore.encoding.content) ? keystore.encoding.content[1] : 'ed25519'
-  const pair = createPair(type, { publicKey: keyring.decodeAddress(keystore.address, true) }, keystore.meta, hexToU8a(keystore.encoded))
+  const cryptoType = keystore.encoding.version === '0' || !Array.isArray(keystore.encoding.content) ? 'ed25519' : keystore.encoding.content[1];
+  const encType = !Array.isArray(keystore.encoding.type) ? [keystore.encoding.type] : keystore.encoding.type;
+  const pair = await createPair({ type: cryptoType, toSS58: keyring.encodeAddress }, { publicKey: keyring.decodeAddress(keystore.address, true) }, keystore.meta, isHex(keystore.encoded) ? hexToU8a(keystore.encoded) : base64Decode(keystore.encoded), encType)
   pair.decodePkcs8(password)
 
   return true
@@ -121,19 +140,29 @@ export const exportPolkadotKeystore = async (keystore, password) => {
 export const exportPolkadotKeyPair = async (keystore, password) => {
   validatePolkadotKeystore(keystore)
 
-  const network = keystore.meta.network
+  const network = keystore.meta.polkadotNetwork
   const keyring = await getKeyring(network)
-  const type = Array.isArray(keystore.encoding.content) ? keystore.encoding.content[1] : 'ed25519'
-  const pair = createPair(type, { publicKey: keyring.decodeAddress(keystore.address, true) }, keystore.meta, hexToU8a(keystore.encoded))
+  const cryptoType = keystore.encoding.version === '0' || !Array.isArray(keystore.encoding.content) ? 'ed25519' : keystore.encoding.content[1];
+  const encType = !Array.isArray(keystore.encoding.type) ? [keystore.encoding.type] : keystore.encoding.type;
+  const pair = await createPair({ type: cryptoType, toSS58: keyring.encodeAddress }, { publicKey: keyring.decodeAddress(keystore.address, true) }, keystore.meta, isHex(keystore.encoded) ? hexToU8a(keystore.encoded) : base64Decode(keystore.encoded), encType)
   pair.decodePkcs8(password)
 
   return pair
 }
 
+export const changePolkadotAddressFormat = async (address, network) => {
+  let keyring = await getKeyring()
+  const publicKey = keyring.decodeAddress(address, true)
+  keyring = await getKeyring(network)
+  const newAddress = keyring.encodeAddress(publicKey)
+
+  return newAddress
+}
+
 export const changePolkadotNetwork = async (keystore, network) => {
   validatePolkadotKeystore(keystore)
 
-  const oldNetwork = keystore.meta.network
+  const oldNetwork = keystore.meta.polkadotNetwork
   let keyring = await getKeyring(oldNetwork)
   const publicKey = keyring.decodeAddress(keystore.address, true)
   keyring = await getKeyring(network)
@@ -144,7 +173,16 @@ export const changePolkadotNetwork = async (keystore, network) => {
     address: newAddress,
     meta: {
       ...keystore.meta,
-      network
+      polkadotNetwork: network
     }
+  }
+}
+
+export const validatePolkadotAddress = (address) => {
+  try {
+    encodeAddress(isHex(address) ? hexToU8a(address) : decodeAddress(address))
+    return true
+  } catch (error) {
+    return false
   }
 }

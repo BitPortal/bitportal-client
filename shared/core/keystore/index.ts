@@ -597,6 +597,18 @@ export const decryptMnemonic = async (password: string, keystore: any) => {
   return mnemonics
 }
 
+export const decryptSuri = async (password: string, keystore: any) => {
+  assert(keystore && typeof keystore === 'object', 'Invalid keystore')
+  assert(keystore.encSuri && typeof keystore.encSuri === 'object', 'Keystore dose not contain mnemonic')
+  assert(keystore.crypto && typeof keystore.crypto === 'object', 'Keystore dose not contain crypto')
+
+  const encSuri = keystore.encSuri
+  const crypto = keystore.crypto
+  const mnemonicHex = await decryptEncPair(password, encSuri, crypto)
+  const mnemonics = Buffer.from(mnemonicHex, 'hex').toString()
+  return mnemonics
+}
+
 export const decryptPrivateKey = async (password: string, keystore: any) => {
   assert(keystore && typeof keystore === 'object', 'Invalid keystore')
   assert(keystore.crypto && typeof keystore.crypto === 'object', 'Keystore dose not contain crypto')
