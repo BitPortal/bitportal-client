@@ -14,7 +14,7 @@ export const chain = {
   btc: 'BITCOIN',
   eos: 'EOS',
   chainx: 'CHAINX',
-  rioChain:'RIOCHAIN'
+  polkadot: 'POLKADOT'
 }
 
 export const symbol = {
@@ -22,7 +22,6 @@ export const symbol = {
   btc: 'BTC',
   eos: 'EOS',
   pcx: 'PCX',
-  rioChain:'RIOCHAIN'
 }
 
 export const walletType = {
@@ -56,7 +55,8 @@ export const source = {
   privateKey: 'PRIVATE',
   wif: 'WIF',
   keystore: 'KEYSTORE',
-  mnemonic: 'MNEMONIC'
+  mnemonic: 'MNEMONIC',
+  suri: 'SURI'
 }
 
 export const mode = {
@@ -71,7 +71,7 @@ export const keystoreVersion = {
   eth: 3,
   eos: 0,
   chainx: 0,
-  rioChain: 3,
+  polkadot: 0,
 }
 
 export const magicHex = '0d387e'
