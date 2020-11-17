@@ -733,98 +733,43 @@ function* exportPCXPrivateKey(action: Action<ExportPCXPrivateKeyParams>) {
   }
 }
 
-function* importPolkadotKeystore(action) {
-  if (!action.payload) return
-  if (action.payload.delay) yield delay(action.payload.delay)
-
+function* importPolkadotKeystore() {
   try {
-    const keystoreText = action.payload.keystore
-    const keystorePassword = action.payload.keystorePassword
-    const passwordHint = ''
-    const name = 'RIO-Wallet'
-
-    let keystoreObject
-
-    try {
-      keystoreObject = JSON.parse(keystoreText)
-    } catch (e) {
-      throw new Error('Invalid keystore')
-    }
-
-    assert(keystoreObject.id, 'No keystore id')
-    const id = keystoreObject.id
-
-    const importedWallets = yield select((state: RootState) => importedWalletSelector(state))
-    const identityWallets = yield select((state: RootState) => identityWalletSelector(state))
-
-    if (keystoreObject.address) {
-      const walletAddresses = yield select((state: RootState) => walletAddressesSelector(state))
-      assert(!walletAddresses.find((address: string) => address === keystoreObject.address), 'Wallet already exist')
-    }
-
-    const keystore = yield call(walletCore.importPolkadotWalletByKeystore, keystoreObject, keystorePassword, name, passwordHint, 'rio', 'sr25519')
-    yield call(secureStorage.setItem, `IMPORTED_WALLET_KEYSTORE_${keystore.id}`, keystore, true)
-
-    const wallet = walletCore.getWalletMetaData(keystore)
-    yield put(actions.addImportedWallet(wallet))
-    yield put(actions.setActiveWallet(wallet.id))
-
-    yield put(actions.importPolkadotKeystore.succeeded())
-    if (action.payload.componentId) dismissAllModals()
-  } catch (e) {
-    yield put(actions.importPolkadotKeystore.failed(getErrorMessage(e)))
+    const keystore = yield call(walletCore.importPolkadotWalletByKeystore, {"address":"P62Dag3Ybhg2K75jZkiHJ4eYhdCsHRfwAXPNYBLw3Yt2XkQr","encoded":"5Ym5sCJVyZIvsLGvTj7n5/fWo0ZPZslBmGuisSftFtAAgAAAAQAAAAgAAABA1vVonhfF0tYKBymlm9U/DAqVYd0NczJor7Z2SLqXO32w4wzVIxfwGz5KDlPXwHzW0lJbbHcHaQ5eUW9PuaKSgG7WYRotlo8w2tdsmy7qZjPoqEZV6DULlYqB5X98X9Raax+jD4dcOkGR+qjRfJ1FsuKOtbIBpPmIsN1ofXMF/rIau0oSNyNwDZXWO7kP2GZQuZnC29nzLtP3PEZO","encoding":{"content":["pkcs8","sr25519"],"type":["scrypt","xsalsa20-poly1305"],"version":"3"},"meta":{"name":"RIO-Wallet"}}, '12345678', 'RIO-Wallet', '', 'MAINNET')
+    console.log('test123 importPolkadotKeystore', JSON.stringify(keystore))
+  } catch (error) {
+    console.log('test123', error.message)
   }
 }
 
-function* importPolkadotSuri(action) {
-  if (!action.payload) return
-  if (action.payload.delay) yield delay(action.payload.delay)
-
+function* importPolkadotSuri() {
   try {
-    const suri = action.payload.suri
-    const password = action.payload.password
-    const passwordHint = action.payload.passwordHint || ''
-    const name = 'RIO-Wallet'
-
-    const keystore = yield call(walletCore.importPolkadotWalletBySuri, suri, password, name, passwordHint, 'rio', 'sr25519')
-
-    const walletAddresses = yield select((state: RootState) => walletAddressesSelector(state))
-    assert(!walletAddresses.find((address: string) => address === keystore.address), 'Wallet already exist')
-
-    yield call(secureStorage.setItem, `IMPORTED_WALLET_KEYSTORE_${keystore.id}`, keystore, true)
-
-    const wallet = walletCore.getWalletMetaData(keystore)
-    yield put(actions.addImportedWallet(wallet))
-    yield put(actions.setActiveWallet(wallet.id))
-
-    yield put(actions.importPolkadotSuri.succeeded())
-    if (action.payload.componentId) dismissAllModals()
-  } catch (e) {
-    yield put(actions.importPolkadotSuri.failed(getErrorMessage(e)))
+    const keystore = yield call(walletCore.importPolkadotWalletBySuri, 'result left donkey giggle dolphin rule have tag client squeeze ready scatter', '12345678', 'RIO-Wallet', '', 'MAINNET')
+    console.log('test123 importPolkadotSuri', JSON.stringify(keystore))
+  } catch (error) {
+    console.log('test123', error.message)
   }
 }
 
-// function* exportPolkadotKeystore(action) {
-//   if (!action.payload) return
-//   if (action.payload.delay) yield delay(action.payload.delay)
+function* exportPolkadotKeystore(action) {
+  try {
+    const keystore = yield call(walletCore.importPolkadotWalletBySuri, 'result left donkey giggle dolphin rule have tag client squeeze ready scatter', '12345678', 'RIO-Wallet', '', 'MAINNET')
+    const officialKeystore = yield call(walletCore.exportOfficialKeystore, '12345678', keystore)
+    console.log('test123 exportPolkadotKeystore', JSON.stringify(officialKeystore))
+  } catch (error) {
+    console.log('test123', error.message)
+  }
+}
 
-//   try {
-
-//   } catch (e) {
-//     yield put(actions.exportPolkadotKeystore.failed(getErrorMessage(e)))
-//   }
-// }
-
-// function* exportPolkadotSuri(action) {
-//   if (!action.payload) return
-//   if (action.payload.delay) yield delay(action.payload.delay)
-
-//   try {
-
-//   } catch (e) {
-//     yield put(actions.exportPolkadotSuri.failed(getErrorMessage(e)))
-//   }
-// }
+function* exportPolkadotSuri(action) {
+  try {
+    const keystore = yield call(walletCore.importPolkadotWalletBySuri, 'result left donkey giggle dolphin rule have tag client squeeze ready scatter', '12345678', 'RIO-Wallet', '', 'MAINNET')
+    const suri = yield call(exportSuri, '12345678', keystore)
+    console.log('test123 exportPolkadotSuri', suri)
+  } catch (error) {
+    console.log('test123', error.message)
+  }
+}
 
 export default function* walletSaga() {
   yield takeLatest(String(actions.setActiveWallet), setActiveWallet)
@@ -851,6 +796,6 @@ export default function* walletSaga() {
   yield takeLatest(String(actions.updateBridgeWalletInfo), updateBridgeWalletInfo)
   yield takeLatest(String(actions.importPolkadotKeystore), importPolkadotKeystore)
   yield takeLatest(String(actions.importPolkadotSuri), importPolkadotSuri)
-  // yield takeLatest(String(actions.exportPolkadotKeystore), exportPolkadotKeystore)
-  // yield takeLatest(String(actions.exportPolkadotSuri), exportPolkadotSuri)
+  yield takeLatest(String(actions.exportPolkadotKeystore), exportPolkadotKeystore)
+  yield takeLatest(String(actions.exportPolkadotSuri), exportPolkadotSuri)
 }

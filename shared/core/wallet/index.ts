@@ -14,14 +14,16 @@ import {
   decryptMnemonic,
   decryptPrivateKey,
   decryptPrivateKeys,
+  decryptSuri,
   verifyPassword as verifyPasswordKeystore
 } from 'core/keystore'
-import {source, network as networkType} from 'core/constants'
+import { source, network as networkType, chain } from 'core/constants'
 import uuidv4 from 'uuid/v4'
 import bs58check from 'bs58check'
 import {
   createPolkadotKeystoreBySuri,
-  createPolkadotKeystoreByKeystore
+  createPolkadotKeystoreByKeystore,
+  exportPolkadotKeystore
 } from 'core/keystore/polkadot'
 
 export const createIdentity = async (password: string, name: string, passwordHint: string, network: string, isSegWit: boolean) => {
@@ -89,6 +91,11 @@ export const recoverIdentity = async (mnemonic: string, password: string, name: 
 
 export const exportMnemonic = async (password: string, keystore: any) => {
   const mnemonics = await decryptMnemonic(password, keystore)
+  return mnemonics
+}
+
+export const exportSuri = async (password: string, keystore: any) => {
+  const mnemonics = await decryptSuri(password, keystore)
   return mnemonics
 }
 
@@ -290,4 +297,10 @@ export const importPolkadotWalletBySuri = async (suri, password, name, passwordH
   }
 
   return createPolkadotKeystoreBySuri(suri, password, metadata)
+}
+
+export const exportOfficialKeystore = async (password, keystore) => {
+  assert(keystore.meta.chain === chain.polkadot, `Unsupported chain ${keystore.meta.chain}`)
+
+  return await exportPolkadotKeystore(keystore, password)
 }
