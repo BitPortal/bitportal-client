@@ -77,8 +77,8 @@ function isLocked (secretKey) {
  * property that indicates whether the public key value of the `encoded` property is encoded or not.
  */
 export const createPair = async ({ toSS58, type }, { publicKey, secretKey }, meta = {}, encoded = null, encTypes) => {
-  const decodePkcs8 = (passphrase, userEncoded) => {
-    const decoded = decodePair(passphrase, userEncoded || encoded, encTypes)
+  const decodePkcs8 = async (passphrase, userEncoded) => {
+    const decoded = await decodePair(passphrase, userEncoded || encoded, encTypes)
 
     if (decoded.secretKey.length === 64) {
       publicKey = decoded.publicKey;
@@ -92,7 +92,7 @@ export const createPair = async ({ toSS58, type }, { publicKey, secretKey }, met
   };
 
   const recode = async (passphrase) => {
-    isLocked(secretKey) && encoded && decodePkcs8(passphrase, encoded);
+    isLocked(secretKey) && encoded && await decodePkcs8(passphrase, encoded);
     encoded = await encodePair({ publicKey, secretKey }, passphrase); // re-encode, latest version
     encTypes = undefined; // swap to defaults, latest version follows
 
