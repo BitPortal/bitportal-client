@@ -86,7 +86,7 @@ export const createPolkadotKeystoreByKeystore = async (value, password, options 
   const cryptoType = value.encoding.version === '0' || !Array.isArray(value.encoding.content) ? 'ed25519' : value.encoding.content[1];
   const encType = !Array.isArray(value.encoding.type) ? [value.encoding.type] : value.encoding.type;
   const pair = await createPair({ type: cryptoType, toSS58: keyring.encodeAddress }, { publicKey: keyring.decodeAddress(value.address, true) }, value.meta, isHex(value.encoded) ? hexToU8a(value.encoded) : base64Decode(value.encoded), encType)
-  pair.decodePkcs8(password)
+  await pair.decodePkcs8(password)
   const json = await pair.toJson(password)
 
   const keystore = {
@@ -115,7 +115,7 @@ export const verifyPolkadotPassword = async (keystore, password) => {
   const cryptoType = keystore.encoding.version === '0' || !Array.isArray(keystore.encoding.content) ? 'ed25519' : keystore.encoding.content[1];
   const encType = !Array.isArray(keystore.encoding.type) ? [keystore.encoding.type] : keystore.encoding.type;
   const pair = await createPair({ type: cryptoType, toSS58: keyring.encodeAddress }, { publicKey: keyring.decodeAddress(keystore.address, true) }, keystore.meta, isHex(keystore.encoded) ? hexToU8a(keystore.encoded) : base64Decode(keystore.encoded), encType)
-  pair.decodePkcs8(password)
+  await pair.decodePkcs8(password)
 
   return true
 }
@@ -145,7 +145,7 @@ export const exportPolkadotKeyPair = async (keystore, password) => {
   const cryptoType = keystore.encoding.version === '0' || !Array.isArray(keystore.encoding.content) ? 'ed25519' : keystore.encoding.content[1];
   const encType = !Array.isArray(keystore.encoding.type) ? [keystore.encoding.type] : keystore.encoding.type;
   const pair = await createPair({ type: cryptoType, toSS58: keyring.encodeAddress }, { publicKey: keyring.decodeAddress(keystore.address, true) }, keystore.meta, isHex(keystore.encoded) ? hexToU8a(keystore.encoded) : base64Decode(keystore.encoded), encType)
-  pair.decodePkcs8(password)
+  await pair.decodePkcs8(password)
 
   return pair
 }
