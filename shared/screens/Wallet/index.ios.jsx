@@ -190,6 +190,9 @@ export default class Wallet extends Component {
           this.props.actions.getETHTokenBalanceList.requested(activeWallet)
         } else if (activeWallet.chain === 'CHAINX') {
           this.props.actions.getChainXTokenBalanceList.requested(activeWallet)
+        }else if (activeWallet.chain === 'POLKADOT') {
+          this.props.actions.getRioChainAsset.requested(activeWallet)
+          this.props.actions.getRioChainTokenBalanceList.requested(activeWallet)
         }
       }
     }
@@ -554,6 +557,7 @@ export default class Wallet extends Component {
               selectionStyle={this.state.switching ? TableView.Consts.CellSelectionStyle.None : TableView.Consts.CellSelectionStyle.Default}
               chain={chain}
               icon_url={selectedAsset[i].icon_url}
+              icon={selectedAsset[i]}
               swipeable={true}
               isDarkMode={isDarkMode}
               showSeparator={selectedAsset.length - 1 !== i}

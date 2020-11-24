@@ -23,7 +23,6 @@ startApp(async () => {
   // const deviceLocale = DeviceInfo.getDeviceLocale()
   const locale = 'zh'
   const store = configure({ intl: { locale }})
-  console.warn('-----start app callback store: ',store);
   registerScreens(store)
   store.runSaga(sagas)
   startTabBasedApp(locale)

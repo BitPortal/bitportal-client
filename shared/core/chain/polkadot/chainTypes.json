@@ -5,6 +5,11 @@
   "CurrencyIdOf": "CurrencyId",
   "Price": "FixedU128",
   "OracleKey": "CurrencyId",
+  "OracleValue": "FixedU128",
+  "OrderedSet": [],
+  "Restrictions": "u32",
+  "TimestampedValueOf": "",
+  "VestingScheduleOf": "",
   "Chain": {
     "_enum": [
       "Rio",

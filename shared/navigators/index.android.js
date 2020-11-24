@@ -21,6 +21,7 @@ import RecoverIdentity from 'screens/Wallet/RecoverIdentity'
 import CreateIdentity from 'screens/Wallet/CreateIdentity'
 import ImportBTCWallet from 'screens/Wallet/ImportBTCWallet'
 import ImportETHWallet from 'screens/Wallet/ImportETHWallet'
+import ImportRioChainWallet from 'screens/Wallet/ImportRioChainWallet'
 import ImportEOSWallet from 'screens/Wallet/ImportEOSWallet'
 import ImportChainxWallet from 'screens/Wallet/ImportChainxWallet'
 import WalletList from 'screens/Wallet/WalletList'
@@ -33,6 +34,7 @@ import MyIdentity from 'screens/Wallet/MyIdentity'
 import ExportBTCPrivateKey from 'screens/Wallet/ExportBTCPrivateKey'
 import ExportETHPrivateKey from 'screens/Wallet/ExportETHPrivateKey'
 import ExportETHKeystore from 'screens/Wallet/ExportETHKeystore'
+import ExportRioChainKeystore from 'screen/Wallet/ExportRioChainKeystore'
 import ExportPCXPrivateKey from 'screens/Wallet/ExportPCXPrivateKey'
 import ExportEOSPrivateKey from 'screens/Wallet/ExportEOSPrivateKey'
 import SelectEOSAccount from 'screens/Wallet/SelectEOSAccount'
@@ -61,6 +63,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.ManageWallet', () => ManageWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ImportBTCWallet', () => ImportBTCWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ImportETHWallet', () => ImportETHWallet, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ImportRioChainWallet', () => ImportRioChainWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ImportEOSWallet', () => ImportEOSWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ImportChainxWallet', () => ImportChainxWallet, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Profile', () => Profile, Provider, store)
@@ -82,6 +85,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.ExportBTCPrivateKey', () => ExportBTCPrivateKey, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ExportETHPrivateKey', () => ExportETHPrivateKey, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ExportETHKeystore', () => ExportETHKeystore, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ExportRioChainKeystore', () => ExportRioChainKeystore, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ExportEOSPrivateKey', () => ExportEOSPrivateKey, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ExportPCXPrivateKey', () => ExportPCXPrivateKey, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.SelectEOSAccount', () => SelectEOSAccount, Provider, store)

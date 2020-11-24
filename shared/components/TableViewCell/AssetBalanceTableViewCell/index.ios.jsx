@@ -1,13 +1,19 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import FastImage from 'react-native-fast-image'
-import { assetIcons } from 'resources/images'
+import { assetIcons,rioTokenIcons } from 'resources/images'
+import { chain } from '../../../core/constants'
 
 const AssetBalanceTableViewCell = props => {
 
   const {data} = props;
   const {symbol = ''} = data || {}
   const defalutIcon = symbol.length > 0 ? props.data.symbol.slice(0, 1) : '';
+  let icon
+  if (props.data.chain === chain.polkadot) {
+    icon = rioTokenIcons[symbol.toLowerCase()]
+  }
+  const iconStyle = props.data.chain === chain.polkadot ? {borderWidth:0} : { borderWidth: 0.5}
 
   return (
     <View style={{
@@ -19,7 +25,7 @@ const AssetBalanceTableViewCell = props => {
       opacity: props.data.switching ? 0.4 : 1
     }}>
       <View style={{width: '50%', flexDirection: 'row'}}>
-        {!!props.data.chain && !props.data.isToken && <FastImage source={assetIcons[props.data.chain.toLowerCase()]} style={{ width: 40, height: 40, marginRight: 10, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: props.data.isDarkMode ? 'white' : 'rgba(0,0,0,0)' }}/>}
+        {!!props.data.chain && !props.data.isToken && <FastImage source={assetIcons[props.data.chain.toLowerCase()]} style={{ width: 40, height: 40, marginRight: 10, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: props.data.isDarkMode ? 'white' : 'rgba(0,0,0,0)' ,...iconStyle}}/>}
         {!!props.data.isToken && <View style={{
           width: 40,
           height: 40,
@@ -48,14 +54,14 @@ const AssetBalanceTableViewCell = props => {
             }}>{defalutIcon}</Text>
           </View>
           <FastImage
-            source={{ uri: props.data.icon_url }}
+            source={ icon ? icon : { uri: props.data.icon_url }}
             style={{
               width: 40,
               height: 40,
               borderRadius: 20,
-              backgroundColor: props.data.icon_url ? 'white' : 'rgba(0,0,0,0)',
-              borderWidth: 0.5,
-              borderColor: 'rgba(0,0,0,0.2)'
+              backgroundColor: props.data.icon_url || icon ? 'white' : 'rgba(0,0,0,0)',
+              borderColor: 'rgba(0,0,0,0.2)',
+              ...iconStyle
             }}
           />
         </View>}

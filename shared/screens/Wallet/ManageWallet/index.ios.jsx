@@ -42,6 +42,7 @@ export const errorMessages = (error) => {
     exportMnemonics: state.exportMnemonics,
     exportBTCPrivateKey: state.exportBTCPrivateKey,
     exportETHKeystore: state.exportETHKeystore,
+    exportRioChainKeystore: state.exportRioChainKeystore,
     exportETHPrivateKey: state.exportETHPrivateKey,
     exportEOSPrivateKey: state.exportEOSPrivateKey,
     switchBTCAddressType: state.switchBTCAddressType,
@@ -90,6 +91,7 @@ export default class ManageWallet extends Component {
   }
 
   componentDidMount() {
+
     const { chain, address } = this.props.wallet
 
     if (chain === 'EOS') {
@@ -117,7 +119,7 @@ export default class ManageWallet extends Component {
         {
           text: intl.formatMessage({ id: 'alert_button_delete' }),
           style: 'destructive',
-          onPress: password => this.props.actions.deleteWallet.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, fromCard: this.props.fromCard, chain: wallet.chain, address: wallet.address })
+          onPress: password => this.props.actions.deleteWallet.requested({id: walletId, password, delay: 500, componentId: this.props.componentId, fromCard: this.props.fromCard, chain: wallet.chain, address: wallet.address })
         }
       ],
       'secure-text'
@@ -137,7 +139,7 @@ export default class ManageWallet extends Component {
         },
         {
           text: intl.formatMessage({ id: 'alert_button_confirm' }),
-          onPress: password => this.props.actions.exportMnemonics.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, source: wallet.source })
+          onPress: password => this.props.actions.exportMnemonics.requested({chain: wallet.chain, id: walletId, password, delay: 500, componentId: this.props.componentId, source: wallet.source })
         }
       ],
       'secure-text'
@@ -162,8 +164,27 @@ export default class ManageWallet extends Component {
       ],
       'secure-text'
     )
-  }
-
+  }  
+  exportRioChainKeystore = (walletId) => {
+    const { intl, wallet } = this.props
+    Alert.prompt(
+      intl.formatMessage({ id: 'alert_input_wallet_password' }),
+      null,
+      [
+        {
+          text: t(this,'取消'),
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel'
+        },
+        {
+          text: intl.formatMessage({ id: 'alert_button_confirm' }),
+          onPress: password => this.props.actions.exportRioChainKeystore.requested({ id: walletId,address: wallet.address, password, delay: 500, componentId: this.props.componentId, source: wallet.source })
+        }
+      ],
+      'secure-text'
+    )
+  }  
+  
   exportPrivateKey = (walletId, symbol) => {
     const { chain, address, source } = this.props.wallet
     const { intl } = this.props
@@ -302,6 +323,7 @@ export default class ManageWallet extends Component {
     this.props.actions.exportBTCPrivateKey.clearError()
     this.props.actions.exportETHKeystore.clearError()
     this.props.actions.exportETHPrivateKey.clearError()
+    this.props.actions.exportRioChainKeystore.clearError()
     this.props.actions.exportEOSPrivateKey.clearError()
     this.props.actions.switchBTCAddressType.clearError()
   }
@@ -312,9 +334,10 @@ export default class ManageWallet extends Component {
     const exportBTCPrivateKeyError = this.props.exportBTCPrivateKey.error
     const exportETHKeystoreError = this.props.exportETHKeystore.error
     const exportETHPrivateKeyError = this.props.exportETHPrivateKey.error
+    const exportRioChainKeystoreError = this.props.exportRioChainKeystore.error
     const exportEOSPrivateKeyError = this.props.exportEOSPrivateKey.error
     const switchBTCAddressTypeError = this.props.switchBTCAddressType.error
-    const error = deleteWalletError || exportMnemonicsError || exportBTCPrivateKeyError || exportETHKeystoreError || exportETHPrivateKeyError || exportEOSPrivateKeyError || switchBTCAddressTypeError
+    const error = deleteWalletError || exportMnemonicsError || exportBTCPrivateKeyError || exportETHKeystoreError || exportETHPrivateKeyError || exportEOSPrivateKeyError || switchBTCAddressTypeError || exportRioChainKeystoreError
 
     if (error) {
       setTimeout(() => {
@@ -577,8 +600,11 @@ export default class ManageWallet extends Component {
     })
   }
 
+  componentDidMount() {
+    this.props.actions.exportRioChainKeystore.succeeded()
+  }
   render() {
-    const { intl, type, deleteWallet, exportMnemonics, exportBTCPrivateKey, exportETHKeystore, exportETHPrivateKey, exportEOSPrivateKey, switchBTCAddressType, wallet } = this.props
+    const { intl, type, deleteWallet, exportMnemonics, exportBTCPrivateKey, exportETHKeystore, exportETHPrivateKey, exportRioChainKeystore,exportEOSPrivateKey, switchBTCAddressType, wallet } = this.props
     const name = wallet && wallet.name
     const address = wallet && wallet.address
     const chain = wallet && wallet.chain
@@ -592,9 +618,10 @@ export default class ManageWallet extends Component {
     const exportBTCPrivateKeyLoading = exportBTCPrivateKey.loading
     const exportETHKeystoreLoading = exportETHKeystore.loading
     const exportETHPrivateKeyLoading = exportETHPrivateKey.loading
+    const exportRioChainKeystoreLoading = exportRioChainKeystore.loading 
     const exportEOSPrivateKeyLoading = exportEOSPrivateKey.loading
     const switchBTCAddressTypeLoading = switchBTCAddressType.loading
-    const loading = deleteWalletLoading || exportMnemonicsLoading || exportBTCPrivateKeyLoading || exportETHKeystoreLoading || exportETHPrivateKeyLoading || exportEOSPrivateKeyLoading || switchBTCAddressTypeLoading
+    const loading = deleteWalletLoading || exportMnemonicsLoading || exportBTCPrivateKeyLoading || exportETHKeystoreLoading || exportETHPrivateKeyLoading || exportEOSPrivateKeyLoading || switchBTCAddressTypeLoading || exportRioChainKeystoreLoading
 
     const editActions = []
     const accountActions = []
@@ -698,7 +725,7 @@ export default class ManageWallet extends Component {
       )
     }
 
-    if (source === 'PRIVATE' || source === 'WIF' || source === 'KEYSTORE' || chain === 'ETHEREUM' || chain === 'EOS') {
+    if (source === 'PRIVATE' || source === 'WIF' || (source === 'KEYSTORE' && chain !== 'POLKADOT') || chain === 'ETHEREUM' || chain === 'EOS') {
       exportActions.push(
         <Item
           reactModuleForCell="WalletManagementTableViewCell"
@@ -724,6 +751,21 @@ export default class ManageWallet extends Component {
           arrow
         />
       )
+    }
+
+    if (chain === 'POLKADOT') {
+      exportActions.push(
+        <Item
+          reactModuleForCell="WalletManagementTableViewCell"
+          key="keystore"
+          actionType="keystore"
+          text={intl.formatMessage({ id: 'manage_wallet_title_export_keysotre' })}
+          onPress={this.exportRioChainKeystore.bind(this, id)}
+          isDarkMode={isDarkMode}
+          arrow
+        />
+      )
+  
     }
 
     if (chain === 'CHAINX') {

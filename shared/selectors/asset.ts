@@ -1,6 +1,7 @@
 import {createSelector} from 'reselect'
 import {activeWalletIdSelector, activeChainSelector} from 'selectors/wallet'
 import {initialState} from 'reducers/asset'
+import { chain } from '../core/constants'
 
 const activeAssetIdSelector = (state: RootState) => state.asset.activeAssetId || initialState.activeAssetId
 const transferAssetIdSelector = (state: RootState) => state.asset.transferAssetId || initialState.transferAssetId
@@ -112,7 +113,10 @@ export const activeAssetSelector = createSelector(
       return {chain: 'EOS', symbol: 'EOS', precision: 4}
     } else if (activeAssetId === 'CHAINX/PCX') {
       return {chain: 'CHAINX', symbol: 'PCX', precision: 8}
-    } else if (byId) {
+    } else if (activeAssetId === chain.polkadot + '/RFUEL') {
+      return {chain: chain.polkadot, symbol: 'RFUEL', precision: 12}
+    }
+     else if (byId) {
       return byId[activeAssetId]
     }
 
@@ -132,7 +136,10 @@ export const transferAssetSelector = createSelector(
       return {chain: 'EOS', symbol: 'EOS', precision: 4}
     } else if (transferAssetId === 'CHAINX/PCX') {
       return {chain: 'CHAINX', symbol: 'PCX', precision: 8}
-    } else if (byId) {
+    } else if (transferAssetId === chain.polkadot + '/RFUEL') {
+      return {chain: chain.polkadot, symbol: 'RFUEL', precision: 12, decimals: 12,contract: 0}
+    }
+     else if (byId) {
       return byId[transferAssetId]
     }
 

@@ -1,6 +1,7 @@
 import { ASSET_FRACTION } from 'constants/market'
 import bitcoin from 'core/library/bitcoin'
 import { web3 } from 'core/api'
+import{ validatePolkadotAddress } from 'core/keystore/polkadot'
 
 export const validateText = (value: any) => !!value && !!value.trim()
 
@@ -27,3 +28,5 @@ export const validateBTCAddress = (value: string) => {
 export const validateETHAddress = (value: string) => web3.utils.isAddress(value)
 
 export const validateEOSAccountName = (value: any) => !!value && /^([1-5]|[a-z.])*$/.test(value) && value.length <= 12
+
+export const validateRioAddress = (value: any) => validatePolkadotAddress(value)

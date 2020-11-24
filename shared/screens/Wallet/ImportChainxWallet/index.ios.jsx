@@ -101,7 +101,7 @@ const TextField = ({
      </View>
     }
     <TextInput
-      style={[styles.textFiled, !label ? styles.noLable : {}, { color: isDarkMode ? 'white' : 'dark' }]}
+      style={[styles.textFiled, !label ? styles.noLable : {}, { color: isDarkMode ? 'white' : 'black' }]}
       autoCorrect={false}
       autoCapitalize="none"
       placeholder={placeholder}
@@ -134,8 +134,8 @@ const TextAreaField = ({
 }) => (
   <View style={{ width: '100%', alignItems: 'center', height: 88, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
     <TextInput
-      style={[styles.textAreaFiled, { color: isDarkMode ? 'white' : 'dark' }]}
-      placeholderTextColor={isDarkMode ? 'white' : 'dark'}
+      style={[styles.textAreaFiled, { color: isDarkMode ? 'white' : 'black' }]}
+      placeholderTextColor={isDarkMode ? 'white' : 'black'}
       multiline={true}
       autoCorrect={false}
       autoCapitalize="none"

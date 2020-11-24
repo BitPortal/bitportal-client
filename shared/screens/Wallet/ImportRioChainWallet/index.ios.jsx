@@ -120,8 +120,8 @@ const TextAreaField = ({
 }) => (
   <View style={{ width: '100%', alignItems: 'center', height: 88, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
     <TextInput
-      style={[styles.textAreaFiled, { color: isDarkMode ? 'white' : 'dark' }]}
-      placeholderTextColor={isDarkMode ? 'white' : 'dark'}
+      style={[styles.textAreaFiled, { color: isDarkMode ? 'white' : 'black' }]}
+      placeholderTextColor={isDarkMode ? 'white' : 'black'}
       multiline={true}
       autoCorrect={false}
       autoCapitalize="none"
@@ -255,22 +255,23 @@ export default class ImportRioChainWallet extends Component {
   }
   static contextType = DarkModeContext
   static getDerivedStateFromProps(nextProps, prevState) {
+    
     if (
       nextProps.invalid !== prevState.invalid
       || nextProps.pristine !== prevState.pristine
-      // || nextProps.importRioChainKeystore.loading !== prevState.importRioChainKeystoreLoading
-      // || nextProps.importRioChainMnemonics.loading !== prevState.importRioChainMnemonicsLoading
-      // || nextProps.importRioChainMnemonics.error !== prevState.importRioChainMnemonicsError
-      // || nextProps.importRioChainKeystore.error !== prevState.importRioChainKeystoreError
+      || nextProps.importRioChainKeystore.loading !== prevState.importRioChainKeystoreLoading
+      || nextProps.importRioChainMnemonics.loading !== prevState.importRioChainMnemonicsLoading
+      || nextProps.importRioChainMnemonics.error !== prevState.importRioChainMnemonicsError
+      || nextProps.importRioChainKeystore.error !== prevState.importRioChainKeystoreError
     ) {
 
       return {
         invalid: nextProps.invalid,
         pristine: nextProps.pristine,
-        // importRioChainKeystoreLoading: nextProps.importRioChainKeystore.loading,
-        // importRioChainMnemonicsLoading: nextProps.importRioChainMnemonics.loading,
-        // importRioChainMnemonicsError: nextProps.importRioChainMnemonics.error,
-        // importRioChainKeystoreError: nextProps.importRioChainKeystore.error
+        importRioChainKeystoreLoading: nextProps.importRioChainKeystore.loading,
+        importRioChainMnemonicsLoading: nextProps.importRioChainMnemonics.loading,
+        importRioChainMnemonicsError: nextProps.importRioChainMnemonics.error,
+        importRioChainKeystoreError: nextProps.importRioChainKeystore.error
       }
     } else {
       return null

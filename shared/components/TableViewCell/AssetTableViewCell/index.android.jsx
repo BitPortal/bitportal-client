@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Text, TouchableHighlight, NativeModules } from 'react-native'
 import FastImage from 'react-native-fast-image'
+import { rioTokenIcons } from 'resources/images'
 
 const AssetTableViewCell = props => {
   const formatAddress = (address) => {
@@ -13,6 +14,10 @@ const AssetTableViewCell = props => {
   const {data} = props || {};
   const {symbol = ''} = data || {};
   const defaultIcon = symbol.length > 0 ? props.data.symbol.slice(0, 1) : '';
+  let icon 
+  if (props.data.chain === 'POLKADOT') {
+    icon = rioTokenIcons[symbol.toLowerCase()]
+  }
   return (
     <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16 }}>
       <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -21,8 +26,8 @@ const AssetTableViewCell = props => {
             <Text style={{ fontWeight: '500', fontSize: 20, color: 'white', paddingLeft: 1.6 }}>{defaultIcon}</Text>
           </View>
           <FastImage
-            source={{ uri: props.data.icon_url }}
-            style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: props.data.icon_url ? 'white' : 'rgba(0,0,0,0)', borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
+            source={icon? icon : { uri: props.data.icon_url }}
+            style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: props.data.icon_url || icon ? 'white' : 'rgba(0,0,0,0)', borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
           />
         </View>
         <View style={{ flex: 1 }}>

@@ -20,6 +20,8 @@ import { assetIcons } from 'resources/images'
 import chainxAccount from '@chainx/account'
 import { DarkModeContext } from 'utils/darkMode'
 import styles from './styles'
+import { rioTokenIcons } from '../../../resources/images'
+import {RioChainURL} from 'core/chain/polkadot'
 const { StatusBarManager } = NativeModules
 const { Section, Item } = TableView
 
@@ -251,17 +253,42 @@ export default class Asset extends Component {
     })
   }
 
+  toRioChainHistory = () => {
+    const address = this.props.activeWallet.address
+    const url = RioChainURL.rio_scan_url +`/rio/account/${address}`
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.WebView',
+        passProps: {
+          url: url
+        },
+        options: {
+          topBar: {
+            title: {
+              text: 'RioChain历史记录'
+            }
+          }
+        }
+      }
+    })
+  }
+
   render() {
     const { ticker, walletBalance, activeWallet, activeAsset, intl, transactions, getTransactions, statusBarHeight, assetBalance, loadingMore, canLoadMore, currency } = this.props
     const balance = activeAsset.contract ? assetBalance : walletBalance
     const transactionCount = transactions && transactions.length
     const precision = balance.precision
-    const symbol = balance.symbol
+    const symbol = balance.symbol || ''
     const hasTransactions = !!transactions
     const loading = getTransactions.loading
     const refreshing = getTransactions.refreshing
     const emptyTransactions = !!transactions && transactions.length === 0
     const chain = activeWallet ? activeWallet.chain : ''
+
+    let icon 
+    if (chain === 'POLKADOT') {
+      icon = rioTokenIcons[symbol.toLowerCase()]
+    }
 
     const isDarkMode = this.context === 'dark'
     console.log('isDarkMode', isDarkMode)
@@ -312,8 +339,8 @@ export default class Asset extends Component {
                 <Text style={{ fontWeight: '500', fontSize: 28, color: 'white', paddingLeft: 1.6 }}>{activeAsset.symbol && activeAsset.symbol.length ? activeAsset.symbol.slice(0, 1): ''}</Text>
               </View>
               <FastImage
-                source={{ uri: activeAsset.icon_url }}
-                style={{ width: 60, height: 60, borderRadius: 30, backgroundColor: activeAsset.icon_url ? 'white' : 'rgba(0,0,0,0)', borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
+                source={icon ? icon : { uri: activeAsset.icon_url }}
+                style={{ width: 60, height: 60, borderRadius: 30, backgroundColor: activeAsset.icon_url || icon ? 'white' : 'rgba(0,0,0,0)', borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
               />
             </View>}
           </View>
@@ -349,7 +376,10 @@ export default class Asset extends Component {
         {chain === 'CHAINX' && (<View style={{ marginTop: 50, alignItems: 'center' }}>
           <Text style={{fontSize: 18, color: '#007AFF' }} onPress={this.toChainXHistory}>{t(this,'ChainX的更多记录请点击这里...')}</Text>
         </View>)}
-        {chain !== 'CHAINX' && (
+        {chain === 'POLKADOT' && (<View style={{ marginTop: 50, alignItems: 'center' }}>
+          <Text style={{fontSize: 18, color: '#007AFF' }} onPress={this.toRioChainHistory}>{'RioChain的更多记录请点击这里...'}</Text>
+        </View>)}
+        {chain !== 'CHAINX' && chain !== 'POLKADOT' && (
           <TableView
             style={{ flex: 1 }}
             tableViewCellStyle={TableView.Consts.CellStyle.Default}

@@ -19,7 +19,8 @@ import { change } from 'redux-form'
 import { checkPhoto } from 'utils/permissions'
 import { isJsonString } from 'utils'
 import urlParse from 'url-parse'
-import { validateBTCAddress, validateETHAddress, validateEOSAccountName } from 'utils/validate'
+import { validateBTCAddress, validateETHAddress, validateEOSAccountName,validateRioAddress } from 'utils/validate'
+import { add } from 'react-native-reanimated'
 
 const toolBarMargin = (() => {
   const isIphoneX = () => {
@@ -161,8 +162,7 @@ export default class Camera extends Component {
       const isJson = isJsonString(code)
       if (isJson) {
         Alert.alert(
-          t(this,'无效的${chain}地址',{chain}),
-          '',
+        `无效的${chain}地址`, //t(this,'无效的${chain}地址',{chain}),
           [
             { text: t(this,'确定'), onPress: () => {} }
           ]
@@ -178,14 +178,17 @@ export default class Camera extends Component {
           isValid = validateBTCAddress(address)
         } else if (chain === 'ETHEREUM') {
           isValid = validateETHAddress(address)
-        } else if (chain === 'EOS') {
+        } else if (chain === 'POLKADOT')  {
+          isValid = validateRioAddress(address)
+        }
+         else if (chain === 'EOS') {
           isValid = validateEOSAccountName(address)
         }
 
         if (!isValid) {
           Alert.alert(
-            t(this,'无效的${chain}地址',{chain}),
-            '',
+           //t(this,'无效的${chain}地址',{chain}),
+           `无效的${chain}地址`,
             [
               { text: t(this,'确定'), onPress: () => {} }
             ]
@@ -243,7 +246,10 @@ export default class Camera extends Component {
           chain = 'BITCOIN'
         } else if (validateETHAddress(address)) {
           chain = 'ETHEREUM'
-        } else if (validateEOSAccountName(address)) {
+        }else if (validateRioAddress(address)) {
+          chain = 'POLKADOT'
+        }
+         else if (validateEOSAccountName(address)) {
           chain = 'EOS'
         }
 
@@ -310,6 +316,8 @@ export default class Camera extends Component {
               symbol = 'EOS'
             } else if (chain === 'CHIANX') {
               symbol = 'PCX'
+            }else if (chain === 'POLKADOT') {
+              symbol = 'RFUEL'
             }
           }
 
@@ -330,7 +338,7 @@ export default class Camera extends Component {
 
           if (!wallet) {
             Alert.alert(
-              t(this,'未检测到${chain}钱包',{chain}),
+              this,`未检测到${chain}钱包`,//t('未检测到${chain}钱包',{chain}),
               null,
               [
                 {
@@ -363,7 +371,7 @@ export default class Camera extends Component {
                   options: {
                     topBar: {
                       title: {
-                        text: t(this,'发送${symbol}到',{symbol}),
+                        text:  `发送${symbol}到`//t(this,'发送${symbol}到',{symbol}),
                       },
                       leftButtons: [
                         {

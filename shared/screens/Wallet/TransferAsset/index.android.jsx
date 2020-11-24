@@ -838,6 +838,16 @@ export default class TransferAsset extends Component {
     // In cryptocurrencies, a minner fee (or shortly fee) is a payment to the miners for adding a transaction into the blockchain. When a transaction has been included in the blockchain, it is considered confirmed. The size of the fee sent with the transaction determines the confirmation time.
   }
 
+  showRioChainTip = () => {
+    Alert.alert(
+      '交易费用',
+      '转账将在RioChain上进行，交易在经过一定的区块确认后完成。',
+      [
+        { text: '确定', onPress: () => console.log('OK Pressed') }
+      ]
+    )
+  }
+
   showOPReturnTip = () => {
     Alert.alert(
       t(this,'OP_RETURN 数据'),
@@ -922,10 +932,10 @@ export default class TransferAsset extends Component {
     const amount = formValues && formValues.amount
     const opreturn = formValues && formValues.opreturn
     const symbol = balance.symbol
-    const iconUrl = transferAsset.icon_url
     const contract = transferAsset.contract
     const available = balance && intl.formatNumber(balance.balance, { minimumFractionDigits: 0, maximumFractionDigits: balance.precision })
     const chain = transferWallet.chain
+    let iconUrl = chain === 'POLKADOT' ? rioTokenIcons[(symbol || '').toLowerCase()] : transferAsset.icon_url
 
     // fees and display related
     const showMinnerFee = chain === 'BITCOIN' || chain === 'ETHEREUM'
@@ -1103,6 +1113,29 @@ export default class TransferAsset extends Component {
               />
             </View>}
           </View>}
+          {
+             chain === 'POLKADOT' &&
+              <View style={{width:'100%',paddingHorizontal:16}}>
+                <View style={{width:'100%',justifyContent:'space-between',flexDirection:'row',alignItems:'center',marginTop:15,}}>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>{'交易费用'}</Text>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', textAlign: 'right' }}>{'0.1 RFUEL'}</Text>
+                </View>
+                <View style={{flexDirection:'row',marginTop:5,marginBottom:10,alignItems:'center'}}>
+                 <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', textAlign: 'right'}}>{'该转账将通过RioChain进行'}</Text>
+                 <TouchableHighlight
+                    underlayColor={isDarkMode ? 'black' : 'white'}
+                    activeOpacity={0.42}
+                    onPress={this.showRioChainTip}
+                    style={{ width: 28, height: 28 }}
+                  >
+                    <FastImage
+                      source={require('resources/images/Info.png')}
+                      style={{ width: 28, height: 28, marginLeft: 4 }}
+                    />
+                  </TouchableHighlight>
+                </View>
+              </View>
+            }
           {chain === 'BITCOIN' && <View style={{ width: '100%', marginBottom: this.state.showOPReturn ? 16 : 0 }}>
             <View style={{ position: 'absolute', height: 0.5, top: 0, right: 16, left: 16, backgroundColor: '#C8C7CC' }} />
             <View style={{ width: '100%', height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: 16, paddingRight: 16 }}>

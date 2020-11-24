@@ -306,6 +306,37 @@ export default class Asset extends Component {
     })
   }
 
+
+  toRioChainHistory = () => {
+    const address = this.props.activeWallet.address
+    const url = RioChainURL.rio_scan_url +`/rio/account/${address}`
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitPortal.WebView',
+            passProps: {
+              url: url
+            },
+            options: {
+              topBar: {
+                title: {
+                  text: 'RioChain历史记录'
+                },
+                leftButtons: [
+                  {
+                    id: 'cancel',
+                    icon: require('resources/images/cancel_android.png')
+                  }
+                ]
+              }
+            }
+          }
+        }]
+      }
+    })
+  }
+
   renderItem = (type, data) => {
     if (!type) {
       return (
@@ -404,7 +435,7 @@ export default class Asset extends Component {
             />
           </View>
         </TouchableNativeFeedback>
-        {chain !== 'CHAINX' && <RecyclerListView
+        {chain !== 'CHAINX' && chain !== 'POLKADOT' && <RecyclerListView
           layoutProvider={this.layoutProvider}
           dataProvider={this.state.dataProvider}
           rowRenderer={this.renderItem}
@@ -414,6 +445,9 @@ export default class Asset extends Component {
 
         {chain === 'CHAINX' && (<View style={{ marginTop: 50, alignItems: 'center' }}>
           <Text style={{fontSize: 18, color: '#673AB7' }} onPress={this.toChainXHistory}>{t(this,'ChainX的更多记录请点击这里...')}</Text>
+        </View>)}
+        {chain === 'POLKADOT' && (<View style={{ marginTop: 50, alignItems: 'center' }}>
+          <Text style={{fontSize: 18, color: '#673AB7' }} onPress={this.toRioChainHistory}>{'RioChain的更多记录请点击这里...'}</Text>
         </View>)}
       </View>
     )

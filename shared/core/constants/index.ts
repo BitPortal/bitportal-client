@@ -22,6 +22,7 @@ export const symbol = {
   btc: 'BTC',
   eos: 'EOS',
   pcx: 'PCX',
+  riochain: 'RFUEL'
 }
 
 export const walletType = {

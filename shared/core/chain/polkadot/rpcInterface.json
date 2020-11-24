@@ -1,24 +1,36 @@
 {
   "riogateway": {
-    "withdrawList": {
-      "description": "get current withdraw list(include pending and approve)",
-      "params": [
-        {
-          "name": "at",
-          "isOptional": true
-        }
-      ],
-      "type": "BTreeMap<u64, WithdrawItemForRpc>"
-    },
-    "pendingWithdrawList": {
-      "description": "get current pending withdraw list",
-      "params": [
-        {
-          "name": "at",
-          "isOptional": true
-        }
-      ],
-      "type": "BTreeMap<u64, WithdrawItemForRpc>"
-    }
+      "withdrawList": {
+          "description": "get current withdraw list(include pending and approve)",
+          "params": [
+              {
+                  "name": "at",
+                  "isOptional": true
+              }
+          ],
+          "type": "BTreeMap<u64, WithdrawItemForRpc>"
+      },
+      "pendingWithdrawList": {
+          "description": "get current pending withdraw list",
+          "params": [
+              {
+                  "name": "at",
+                  "isOptional": true
+              }
+          ],
+          "type": "BTreeMap<u64, WithdrawItemForRpc>"
+      },
+      "depositAddress": {
+          "description": "get deposit address info for an account and asset, if this account have not apply, in bip32 path would return `nil`",
+          "params": [
+              {
+                  "name": "at",
+                  "who": "AccountId",
+                  "currency_id": "CurrencyId",
+                  "isOptional": true
+              }
+          ],
+          "type": "DepositAddrForRpc"
+      }
   }
 }

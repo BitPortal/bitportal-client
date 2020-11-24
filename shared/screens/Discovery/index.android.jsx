@@ -300,6 +300,7 @@ export default class Discovery extends Component {
   }
 
   renderItem = ({ item, index }) => {
+    
     return (
       <TouchableNativeFeedback onPress={this.toDapp.bind(this, item)} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.3)', false)}>
         <View style={{ marginRight: 8, marginLeft: !index ? 16 : 0, width: (Dimensions.get('window').width - 48) / 3, marginVertical: 4, elevation: 2, backgroundColor: 'white', overflow: 'hidden', borderRadius: 4 }}>

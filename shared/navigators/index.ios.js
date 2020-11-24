@@ -67,6 +67,7 @@ import ImportRioChainWallet from 'screens/Wallet/ImportRioChainWallet'
 import ImportEOSWallet from 'screens/Wallet/ImportEOSWallet'
 import ImportChainxWallet from 'screens/Wallet/ImportChainxWallet'
 import ExportETHKeystore from 'screens/Wallet/ExportETHKeystore'
+import ExportRioChainKeystore from 'screens/Wallet/ExportRioChainKeystore'
 import ExportETHPrivateKey from 'screens/Wallet/ExportETHPrivateKey'
 import ExportEOSPrivateKey from 'screens/Wallet/ExportEOSPrivateKey'
 import ExportBTCPrivateKey from 'screens/Wallet/ExportBTCPrivateKey'
@@ -170,6 +171,7 @@ export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.SwitchBTCAddress', () => SwitchBTCAddress, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ExportETHKeystore', () => ExportETHKeystore, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ExportETHPrivateKey', () => ExportETHPrivateKey, Provider, store)
+  Navigation.registerComponentWithRedux('BitPortal.ExportRioChainKeystore', () => ExportRioChainKeystore, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ExportEOSPrivateKey', () => ExportEOSPrivateKey, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ExportBTCPrivateKey', () => ExportBTCPrivateKey, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.ExportPCXPrivateKey', () => ExportPCXPrivateKey, Provider, store)

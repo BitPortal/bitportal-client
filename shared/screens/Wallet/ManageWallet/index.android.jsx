@@ -120,7 +120,7 @@ export default class ManageWallet extends Component {
     const address = (wallet && wallet.address) || this.props.address
     const chain = (wallet && wallet.chain) || this.props.chain
 
-    this.props.actions.deleteWallet.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, fromCard: this.props.fromCard, chain, address })
+    this.props.actions.deleteWallet.requested({chain: wallet.chain, id: walletId, password, delay: 500, componentId: this.props.componentId, fromCard: this.props.fromCard, chain, address })
   }
 
   exportMnemonics = () => {
@@ -129,7 +129,7 @@ export default class ManageWallet extends Component {
     const walletId = (wallet && wallet.id) || this.props.id
     const source = (wallet && wallet.source) || this.props.source
 
-    this.props.actions.exportMnemonics.requested({ id: walletId, password, delay: 500, componentId: this.props.componentId, source })
+    this.props.actions.exportMnemonics.requested({chain: wallet.chain, id: walletId, password, delay: 500, componentId: this.props.componentId, source })
   }
 
   exportETHKeystore = () => {

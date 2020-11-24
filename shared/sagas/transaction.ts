@@ -11,6 +11,9 @@ import * as btcChain from 'core/chain/bitcoin'
 import * as ethChain from 'core/chain/etheruem'
 import * as eosChain from 'core/chain/eos'
 import * as chainxChain from 'core/chain/chainx'
+import * as rioChain from 'core/chain/polkadot'
+import * as walletCore from 'core/wallet'
+
 import * as api from 'utils/api'
 import { managingWalletSelector } from 'selectors/wallet'
 import { activeWalletTransactionsPaginationSelector } from 'selectors/transaction'
@@ -180,6 +183,43 @@ function* transfer(action: Action) {
         from: fromAddress,
         to: toAddress,
         memo,
+        transactionType: 'send',
+        confirmations: '--',
+        gasUsed: '--',
+        gasPrice: '--',
+        pending: true
+      }
+
+      yield put(actions.addTransaction({ id: `${chain}/${fromAddress}`, item: transaction, assetId }))
+      yield put(actions.setActiveTransactionId(hash))
+    }else if (chain === 'POLKADOT') {
+
+      let hash = ''  
+
+      const sender = yield call(walletCore.exportRioChainKeyPair, password, keystore)
+
+      const { result, timeout } = yield race({
+        result: call(rioChain.rioTransfer, {
+          sender,
+          receiver: toAddress,
+          amount,
+          decimals,
+          assetId:contract,
+         }),
+        timeout: delay(timeoutInterval)
+      })
+
+      assert(!timeout, 'request timeout')
+      hash = result || ''
+
+      const transaction = {
+        id: hash,
+        timestamp: +Date.now(),
+        change: -+amount,
+        blockNumber: '--',
+        targetAddress: toAddress,
+        from: fromAddress,
+        to: toAddress,
         transactionType: 'send',
         confirmations: '--',
         gasUsed: '--',

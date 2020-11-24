@@ -115,7 +115,7 @@ export const createCrypto = async (password, origin, kdfType, isCached) => {
     kdfparams.prf = 'hmac-sha256'
     derivedKey = await pbkdf2(Buffer.from(password).toString('hex'), kdfparams.salt, kdfparams.c, kdfparams.dklen, 'sha256')
   } else if (kdf === 'scrypt') {
-    kdfparams.n = 262144 // 8192
+    kdfparams.n = 1024//262144 // 8192
     kdfparams.r = 8
     kdfparams.p = 1
     derivedKey = await scrypt(Buffer.from(password).toString('hex'), kdfparams.salt, kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen)

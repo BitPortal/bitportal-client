@@ -1,7 +1,7 @@
 // import assert from 'assert'
 import { ApiPromise, WsProvider } from '@polkadot/api'
 import Decimal from 'decimal.js'
-import { RIO_CHAIN_API } from 'constants/env'
+import { RIO_CHAIN_API,SCAN_API } from 'constants/env'
 import { u8aToHex } from 'utils/u8a'
 import { stringToU8a } from 'utils/string'
 import * as bip32 from 'bip32'
@@ -15,8 +15,15 @@ const defaultUrl = RIO_CHAIN_API
 const createdApi = {}
 const createdWsProvider = {}
 
+export let RioChainURL = {
+  rio_url: RIO_CHAIN_API,
+  rio_scan_url: SCAN_API
+}
+
 export const polkaApi = async (baseUrl) => {
+
   const url = baseUrl || defaultUrl
+  RioChainURL.url = url
 
   if (createdApi[url]) {
     return createdApi[url]
@@ -73,17 +80,17 @@ export const getChainStatus = async (url) => {
   }
 }
 
-export const getPolkaApiForAccount = async (sender, url) => {
-  const api = await polkaApi(url)
+// export const getPolkaApiForAccount = async (sender, url) => {
+//   const api = await polkaApi(url)
 
-  if (typeof sender === 'string') {
-    const { web3FromAddress } = await import('@polkadot/extension-dapp'/* webpackChunkName: 'extension-dapp' */)
-    const injector = await web3FromAddress(sender)
-    api.setSigner(injector.signer)
-  }
+//   if (typeof sender === 'string') {
+//     const { web3FromAddress } = await import('@polkadot/extension-dapp'/* webpackChunkName: 'extension-dapp' */)
+//     const injector = await web3FromAddress(sender)
+//     api.setSigner(injector.signer)
+//   }
 
-  return api
-}
+//   return api
+// }
 
 export const signData = async (signer, data) => {
   const api = await getPolkaApiForAccount(signer)
@@ -283,4 +290,67 @@ export const deriveHdAddress = async (xpub, path, index, isTestNet) => {
 
 export const deriveCreate2Address = async (creatorAddress, implementationAddress, vaultAddress, salt) => {
   return precalculate(creatorAddress, implementationAddress, vaultAddress, salt)
+}
+
+// todo  xbc ~
+
+
+export const getBalance = async (address,decimals,contract) => {
+
+  if (address && decimals) {
+
+    const api = await polkaApi()
+    let balanceData, lockBalanceData;
+    const hanleBalance = (data) => {
+      if (data) {
+        const dataObj = JSON.parse(String(data));
+        const {free} = dataObj || {}
+
+        let balance = 0
+        if (free) {
+          balance = Number(free) / Math.pow(10, decimals)
+        }
+        if ((dataObj || {}).data) {
+          const {free : rFefulFree} = dataObj.data
+          balance = Number(rFefulFree) / Math.pow(10, decimals)
+        }
+        return balance
+      }
+    }
+    if (!isNaN(contract) && contract) {
+      balanceData = await api.query.rioAssets.accounts(address, contract)
+      const hanleBalance = (data) => data ? Number(JSON.parse(String(data)).free) / Math.pow(10, decimals) : ''
+    } else {
+      balanceData = await api.query.system.account(address)
+      // todo lock balance remove
+      // lockBalanceData = await api.query.rioAssets.accounts(address, 1)
+    }
+
+    const freeBalance = hanleBalance(balanceData)
+    console.log('freeBalance:',freeBalance)
+      // todo lock balance remove
+    // const lockBalance = hanleBalance(lockBalanceData)
+
+    return freeBalance
+    // return {freeBalance,lockBalance}
+  }
+  return freeBalance
+  // return {freeBalance:0,lockBalance:0}
+}
+
+export const rioTransfer = async ({sender,receiver,assetId,amount,decimals},onUpdate,onSuccess, onError) => {
+  const api = await polkaApi()
+  const result = await api.tx.currencies.transfer(receiver, assetId, String((new Decimal(amount)).times(Math.pow(10, decimals)))).signAndSend(sender)
+  return String(result)
+  // , (result) => {
+  //   if (result.status.isInBlock) {
+  //     onUpdate(String(result.status.asInBlock))
+  //   } else if (result.status.isFinalized) {
+  //     onSuccess()
+  //   }
+  // }).then(cancel => {
+
+  //   }).catch( error => {
+  //       onError(error)
+  //   })
 }

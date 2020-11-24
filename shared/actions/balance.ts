@@ -10,3 +10,4 @@ export const getETHTokenBalanceList = createAsyncAction('balance/GET_ETH_TOKEN_L
 export const getChainXTokenBalanceList = createAsyncAction('balance/GET_CHAINX_TOKEN_LIST')
 export const getEOSTokenBalance = createAsyncAction('balance/GET_EOS_TOKEN')
 export const getEOSTokenBalanceList = createAsyncAction('balance/GET_EOS_TOKEN_LIST')
+export const getRioChainTokenBalanceList = createAsyncAction('balance/GET_RIOCHAIN_TOKEN_LIST')

@@ -10,7 +10,7 @@ import * as contactActions from 'actions/contact'
 import Modal from 'react-native-modal'
 import FastImage from 'react-native-fast-image'
 import uuidv4 from 'uuid/v4'
-import { validateBTCAddress, validateETHAddress, validateEOSAccountName } from 'utils/validate'
+import { validateBTCAddress, validateETHAddress,validateRioAddress } from 'utils/validate'
 import { findDuplicate } from 'utils'
 import { DarkModeContext } from 'utils/darkMode'
 import styles from './styles'
@@ -37,11 +37,11 @@ const TextField = ({
   <View style={{ width: '100%', alignItems: 'center', height: 40, paddingRight: 16, flexDirection: 'row' }}>
     {!!label && !!switchable &&
      <View style={{ borderRightWidth: 0.5, borderColor: '#C8C7CC', height: '100%', width: 42, justifyContent: 'center', alignItems: 'center', paddingRight: 10 }}>
-       <Text style={{ width: 30, height: '100%', justifyContent: 'center', alignItems: 'center', fontSize: 15, lineHeight: 40, color: isDarkMode ? 'white' : 'dark' }} numberOfLines={1}>{label}</Text>
+       <Text style={{ width: 30, height: '100%', justifyContent: 'center', alignItems: 'center', fontSize: 15, lineHeight: 40, color: isDarkMode ? 'white' : 'black' }} numberOfLines={1}>{label}</Text>
      </View>
     }
     <TextInput
-      style={{ width: '100%', height: '100%', fontSize: 17, paddingLeft: 16, paddingRight: clearButtonRight || 78, color: isDarkMode ? 'white' : 'dark' }}
+      style={{ width: '100%', height: '100%', fontSize: 17, paddingLeft: 16, paddingRight: clearButtonRight || 78, color: isDarkMode ? 'white' : 'black' }}
       autoCorrect={false}
       autoCapitalize={autoCapitalize}
       placeholder={placeholder}
@@ -82,7 +82,7 @@ const MiniTextField = ({
 }) => (
   <View style={{ flex: 1, alignItems: 'center', height: 40, paddingRight: 16, flexDirection: 'row', borderRightWidth: rightBorder ? 0.5 : 0, borderColor: '#C8C7CC' }}>
     <TextInput
-      style={{ width: '100%', height: '100%', fontSize: 17, paddingLeft: 16, paddingRight: clearButtonRight || 78, color: isDarkMode ? 'white' : 'dark' }}
+      style={{ width: '100%', height: '100%', fontSize: 17, paddingLeft: 16, paddingRight: clearButtonRight || 78, color: isDarkMode ? 'white' : 'black' }}
       autoCorrect={false}
       autoCapitalize={autoCapitalize}
       placeholder={placeholder}
@@ -194,10 +194,10 @@ export default class MyIdentity extends Component {
   state = {
     btcIds: [],
     ethIds: [],
-    eosIds: [],
+    rioIds: [],
     lastBTCId: 0,
     lastETHId: 0,
-    lastEOSId: 0
+    lastRIOId: 0,
   }
 
   navigationButtonPressed({ buttonId }) {
@@ -220,7 +220,7 @@ export default class MyIdentity extends Component {
 
       const btc = []
       const eth = []
-      const eos = []
+      const rio = []
 
       this.state.btcIds.forEach((value) => {
         if (formValues[`btc_address_${value}`]) {
@@ -233,14 +233,13 @@ export default class MyIdentity extends Component {
           eth.push({ address: formValues[`eth_address_${value}`] })
         }
       })
-
-      this.state.eosIds.forEach((value) => {
-        if (formValues[`eos_accountName_${value}`]) {
-          eos.push({ accountName: formValues[`eos_accountName_${value}`] })
+      this.state.rioIds.forEach(value => {
+        if (formValues[`rio_address_${value}`]) {
+          rio.push({ address: formValues[`rio_address_${value}`] })
         }
       })
 
-      if (!btc.length && !eth.length && !eos.length) {
+      if (!btc.length && !eth.length && !rio.length) {
         Alert.alert(
           '请添加地址或账户名',
           '',
@@ -277,11 +276,11 @@ export default class MyIdentity extends Component {
         }
       }
 
-      for (let i = 0; i < eos.length; i++) {
-        if (!validateEOSAccountName(eos[i].accountName)) {
+      for (let i = 0; i < rio.length; i++) {
+        if (!validateRioAddress(rio[i].address)) {
           Alert.alert(
-            '无效的EOS账户名',
-            eos[i].accountName,
+            '无效的RioChain地址',
+            rio[i].address,
             [
               { text: '确定', onPress: () => console.log('OK Pressed') }
             ]
@@ -316,12 +315,12 @@ export default class MyIdentity extends Component {
         return
       }
 
-      const eosAddresses = eos.map(item => item.accountName)
-      const eosDuplicate = findDuplicate(eosAddresses)
-      if (eosDuplicate) {
+      const rioAddress = rio.map(item => item.address)
+      const rioDuplicate = findDuplicate(rioAddress)
+      if (rioDuplicate) {
         Alert.alert(
-          '重复添加的EOS账户名',
-          eosDuplicate,
+          '重复添加的RioChain地址',
+          ethDuplicate,
           [
             { text: '确定', onPress: () => console.log('OK Pressed') }
           ]
@@ -336,7 +335,7 @@ export default class MyIdentity extends Component {
   submit = (data) => {
     const btc = []
     const eth = []
-    const eos = []
+    const rio = []
 
     this.state.btcIds.forEach((value) => {
       if (data[`btc_address_${value}`]) {
@@ -350,9 +349,9 @@ export default class MyIdentity extends Component {
       }
     })
 
-    this.state.eosIds.forEach((value) => {
-      if (data[`eos_accountName_${value}`]) {
-        eos.push({ accountName: data[`eos_accountName_${value}`], memo: data[`eos_memo_${value}`] && data[`eos_memo_${value}`].trim() })
+    this.state.rioIds.forEach((value) => {
+      if (data[`rio_address_${value}`]) {
+        rio.push({ address: data[`rio_address_${value}`] })
       }
     })
 
@@ -363,7 +362,7 @@ export default class MyIdentity extends Component {
         description: data.description && data.description.trim(),
         btc,
         eth,
-        eos
+        rio
       })
     } else {
       this.props.actions.addContact({
@@ -372,7 +371,7 @@ export default class MyIdentity extends Component {
         description: data.description && data.description.trim(),
         btc,
         eth,
-        eos
+        rio
       })
     }
 
@@ -387,10 +386,6 @@ export default class MyIdentity extends Component {
 
   }
 
-  addEOSAccountName = () => {
-    this.setState({ eosIds: [...this.state.eosIds, this.state.lastEOSId + 1], lastEOSId: this.state.lastEOSId + 1 })
-  }
-
   addBTCAddress = () => {
     this.setState({ btcIds: [...this.state.btcIds, this.state.lastBTCId + 1], lastBTCId: this.state.lastBTCId + 1 })
   }
@@ -399,9 +394,8 @@ export default class MyIdentity extends Component {
     this.setState({ ethIds: [...this.state.ethIds, this.state.lastETHId + 1], lastETHId: this.state.lastETHId + 1 })
   }
 
-  removeEOSAccountName = (id) => {
-    this.setState({ eosIds: this.state.eosIds.filter(item => item !== id) })
-    this.props.change(`eos_accountName_${id}`, null)
+  addRIOAddress = () => {
+    this.setState({ rioIds: [...this.state.rioIds, this.state.lastRIOId + 1], lastRIOId: this.state.lastRIOId + 1 })
   }
 
   removeBTCAddress = (id) => {
@@ -414,11 +408,16 @@ export default class MyIdentity extends Component {
     this.props.change(`eth_address_${id}`, null)
   }
 
+  removeRIOAddress = (id) => {
+    this.setState({ rioIds: this.state.rioIds.filter(item => item !== id) })
+    this.props.change(`rio_address_${id}`, null)
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (
       prevState.btcIds.length !== this.state.btcIds.length
       || prevState.ethIds.length !== this.state.ethIds.length
-      || prevState.eosIds.length !== this.state.eosIds.length
+      || prevState.rioIds.length !== this.state.rioIds.length
     ) {
       LayoutAnimation.easeInEaseOut()
     }
@@ -454,19 +453,15 @@ export default class MyIdentity extends Component {
         this.setState({ ethIds })
       }
 
-      if (this.props.contact.eos.length) {
-        const eosIds = []
+      if (this.props.contact.rio.length) {
+        const rioIds = []
 
-        for (let i = 0; i < this.props.contact.eos.length; i++) {
-          this.props.change(`eos_accountName_${i}`, this.props.contact.eos[i].accountName)
-          if (this.props.contact.eos[i].memo) {
-            this.props.change(`eos_memo_${i}`, this.props.contact.eos[i].memo)
-          }
-
-          eosIds.push(i)
+        for (let i = 0; i < this.props.contact.rio.length; i++) {
+          this.props.change(`rio_address_${i}`, this.props.contact.rio[i].address)
+          rioIds.push(i)
         }
 
-        this.setState({ eosIds })
+        this.setState({ rioIds })
       }
     }
   }
@@ -479,9 +474,9 @@ export default class MyIdentity extends Component {
     console.log('isDarkMode', isDarkMode)
 
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: isDarkMode ? 'dark' : 'white' }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : 'white' }}>
         <ScrollView
-          style={{ flex: 1, backgroundColor: isDarkMode ? 'dark' : 'white' }}
+          style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : 'white' }}
           showsVerticalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
@@ -600,9 +595,9 @@ export default class MyIdentity extends Component {
             </TouchableHighlight>
           </View>
           <View style={{ width: '100%', marginTop: 40 }}>
-            {this.state.eosIds.map((id, index) =>
+            {this.state.rioIds.map((id, index) =>
               <View key={id} style={{ width: '100%', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 16 }}>
-                <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }} onPress={this.removeEOSAccountName.bind(this, id)}>
+                <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }} onPress={this.removeRIOAddress.bind(this, id)}>
                   <FastImage
                     source={require('resources/images/remove_red.png')}
                     style={{ width: 28 * 0.8, height: 30 * 0.8 }}
@@ -610,52 +605,37 @@ export default class MyIdentity extends Component {
                 </TouchableHighlight>
                 <View style={{ width: '100%', alignItems: 'center', height: 40, paddingRight: 16, flexDirection: 'row' }}>
                   <View style={{ borderRightWidth: 0.5, borderColor: '#C8C7CC', height: '100%', width: 42, justifyContent: 'center', alignItems: 'center', paddingRight: 10 }}>
-                    <Text style={{ width: 30, height: '100%', justifyContent: 'center', alignItems: 'center', fontSize: 15, lineHeight: 40 }} numberOfLines={1}>EOS</Text>
+                    <Text style={{ width: 30, height: '100%', justifyContent: 'center', alignItems: 'center', fontSize: 15, lineHeight: 40 }} numberOfLines={1}>RioChain</Text>
                   </View>
                   <View style={{ flex: 1, height: 40, flexDirection: 'row' }}>
                     <Field
-                      label="EOS"
-                      placeholder="账户名"
-                      name={`eos_accountName_${id}`}
-                      fieldName={`eos_accountName_${id}`}
+                      label="RioChain"
+                      placeholder="地址"
+                      name={`rio_address_${id}`}
+                      fieldName={`rio_address_${id}`}
                       change={change}
                       component={MiniTextField}
                       switchable
                       onSwitch={() => {}}
-                      showClearButton={!!formValues && formValues[`eos_accountName_${id}`] && formValues[`eos_accountName_${id}`].length > 0}
-                      autoFocus={!editMode || id > contact.eos.length - 1}
+                      showClearButton={!!formValues && formValues[`rio_address_${id}`] && formValues[`rio_address_${id}`].length > 0}
+                      autoFocus={!editMode || id > contact.rio.length - 1}
                       autoCapitalize="none"
                       rightBorder
                       clearButtonRight={6}
                       isDarkMode={isDarkMode}
                     />
-                    <Field
-                      label="EOS"
-                      placeholder="默认备注"
-                      name={`eos_memo_${id}`}
-                      fieldName={`eos_memo_${id}`}
-                      change={change}
-                      component={MiniTextField}
-                      switchable
-                      onSwitch={() => {}}
-                      showClearButton={!!formValues && formValues[`eos_memo_${id}`] && formValues[`eos_memo_${id}`].length > 0}
-                      autoFocus={false}
-                      autoCapitalize="none"
-                      isDarkMode={isDarkMode}
-                      clearButtonRight={16}
-                    />
                   </View>
                 </View>
-                {(index !== this.state.eosIds.length - 1) && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />}
+                {(index !== this.state.rioIds.length - 1) && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />}
               </View>
             )}
-            <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: 40 }} onPress={this.addEOSAccountName}>
+            <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: 40 }} onPress={this.addRIOAddress}>
               <View style={{ width: '100%', height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 16 }}>
                 <FastImage
                   source={require('resources/images/add_green.png')}
                   style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }}
                 />
-                <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>添加EOS账户</Text>
+                <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>添加RioChain地址</Text>
                 <View style={{ position: 'absolute', height: 0.5, top: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
                 <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
               </View>

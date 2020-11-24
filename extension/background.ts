@@ -22,7 +22,6 @@ store.runSaga(sagas)
 chrome.runtime.onMessage.addListener(
   (request: any, sender: any) => {
 	if(sender.id !== chrome.runtime.id || request.type === 'chromex.dispatch') return
-    console.log(request)
 	return true
   }
 )

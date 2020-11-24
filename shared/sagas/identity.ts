@@ -33,6 +33,7 @@ function* scanIdentity(action: Action<ScanIdentityParams>) {
       const walletIDs = identityInfo.walletIDs
       const identityWallets = Object.keys(allItems).filter(item => !item.indexOf('IDENTITY_WALLET_KEYSTORE')).map((item) => {
         const info = allItems[item]
+        console.log('scan idf :',item,'   info:',info)
         return JSON.parse(info)
       }).filter(wallet => walletIDs.indexOf(wallet.id) !== -1).sort((a, b) => {
         if (a.bitportalMeta.chain && b.bitportalMeta.chain) {

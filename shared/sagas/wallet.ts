@@ -7,7 +7,7 @@ import * as actions from 'actions/wallet'
 import * as transactionActions from 'actions/transaction'
 import { getBalance, getETHTokenBalanceList } from 'actions/balance'
 import { getAccount } from 'actions/account'
-import { scanEOSAsset, scanETHAsset } from 'actions/asset'
+import { scanEOSAsset, scanETHAsset, getRioChainAsset } from 'actions/asset'
 import {
   walletAddressesSelector,
   identityWalletSelector,
@@ -34,6 +34,7 @@ function* setActiveWallet(action: Action<SetActiveWalletParams>) {
   if (!action.payload) return
 
   const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+
   yield put(actions.setActiveChain(activeWallet.chain))
   yield put(getBalance.requested(activeWallet))
 
@@ -44,6 +45,8 @@ function* setActiveWallet(action: Action<SetActiveWalletParams>) {
     } else if (activeWallet.chain === 'ETHEREUM') {
       yield put(scanETHAsset.requested(activeWallet))
       yield put(getETHTokenBalanceList.requested(activeWallet))
+    }else if (activeWallet.chain === chain.polkadot) {
+        yield put(getRioChainAsset.requested(activeWallet))
     }
   }
 }
@@ -77,9 +80,9 @@ function* deleteWallet(action: Action<DeleteWalletParams>) {
     const isValidPassword = yield call(walletCore.verifyPassword, password, keystore.crypto)
     assert(isValidPassword, 'Invalid password')
     yield call(secureStorage.removeItem, `IMPORTED_WALLET_KEYSTORE_${id}`)
-    const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
 
-    if (activeWallet.id === id) {
+    const activeWallet = yield select((state: RootState) => activeWalletSelector(state))
+    if (activeWallet && activeWallet.id === id) {
       const walletAllIds = yield select((state: RootState) => walletAllIdsSelector(state))
       const walletAllIdsAfterAction = walletAllIds.filter((walletId: string) => walletId !== id)
       if (walletAllIdsAfterAction.length > 0) yield put(actions.setActiveWallet(walletAllIdsAfterAction[0]))
@@ -87,11 +90,10 @@ function* deleteWallet(action: Action<DeleteWalletParams>) {
 
     const bridgeWallet = yield select((state: RootState) => bridgeWalletSelector(state))
 
-    if (bridgeWallet.id === id) {
+    if (bridgeWallet && bridgeWallet.id === id) {
       yield put(actions.setBridgeWallet(null))
       yield put(actions.setBridgeChain(null))
     }
-
     const fromCard = action.payload.fromCard
 
     if (!fromCard) {
@@ -120,6 +122,7 @@ function* exportMnemonics(action: Action<ExportMnemonicsParams>) {
     const id = action.payload.id
     const password = action.payload.password
     const source = action.payload.source
+    const chainID = action.payload.chain
 
     let keystore
     if (source === 'NEW_IDENTITY' || source === 'RECOVERED_IDENTITY') {
@@ -129,7 +132,15 @@ function* exportMnemonics(action: Action<ExportMnemonicsParams>) {
     }
 
     assert(keystore && keystore.crypto, 'No keystore')
-    const mnemonics = yield call(walletCore.exportMnemonic, password, keystore)
+
+    let mnemonics;
+    if (chainID === chain.polkadot) {
+      mnemonics = yield call(walletCore.exportSuri, password, keystore)
+    }else{
+      mnemonics = yield call(walletCore.exportMnemonic, password, keystore)
+    }
+    console.log('export mnemonics:',mnemonics)
+
     yield put(actions.exportMnemonics.succeeded())
 
     yield delay(500)
@@ -503,35 +514,62 @@ function* importRioChainKeystore(action: Action) {
   if (action.payload.delay) yield delay(action.payload.delay)
 
   try {
+    const keystoreText = action.payload.keystore
+    const keystorePassword = action.payload.keystorePassword
+    const passwordHint = ''
+    const name = 'RioChain-Wallet'
+    const network = 'MAINNET'
 
-  }catch (e) {
+    let keystoreObject
+    try {
+      keystoreObject = JSON.parse(keystoreText)
+    } catch (e) {
+      throw new Error('Invalid keystore')
+    }
+
+    if (keystoreObject.address) {
+      const walletAddresses = yield select((state: RootState) => walletAddressesSelector(state))
+      assert(!walletAddresses.find((address: string) => address === keystoreObject.address), 'Wallet already exist')
+    }
+
+    const keystore = yield call(walletCore.importPolkadotWalletByKeystore, keystoreObject, keystorePassword, name, passwordHint, network)
+    yield call(secureStorage.setItem, `IMPORTED_WALLET_KEYSTORE_${keystore.id}`, keystore, true)
+
+    const wallet = walletCore.getWalletMetaData(keystore)
+    yield put(actions.addImportedWallet(wallet))
+    yield put(actions.setActiveWallet(wallet.id))
+
+    yield put(actions.importRioChainKeystore.succeeded())
+    if (action.payload.componentId) dismissAllModals()
+  } catch (e) {
     yield put(actions.importRioChainKeystore.failed(getErrorMessage(e)))
   }
 }
 
 function * importRioChainMnemonics(action: Action) {
+
   if (!action.payload) return
   if (action.payload.delay) yield delay(action.payload.delay)
 
   try {
     const mnemonic = action.payload.mnemonic
     const password = action.payload.password
+    const passwordHint = action.payload.passwordHint
     const name = 'RioChain-Wallet'
     const network = 'MAINNET'
 
-    // todo get keystore obj in walletCore
-    // const keystore = yield call(importRioChainW)
+    const keystore = yield call(walletCore.importPolkadotWalletBySuri, mnemonic, password, name, passwordHint, network)
 
     const walletAddresses = yield select((state: RootState) => walletAddressesSelector(state))
     assert(!walletAddresses.find((address: string) => address === keystore.address), 'Wallet already exist')
 
-    yield call(secureStorage.setItem, `IMPORTED_WALLET_KEYSTORE_${keystore.address}`, keystore, true)
+    yield call(secureStorage.setItem, `IMPORTED_WALLET_KEYSTORE_${keystore.id}`, keystore, true)
 
     const wallet = walletCore.getWalletMetaData(keystore)
     yield put(actions.addImportedWallet(wallet))
     yield put(actions.setActiveWallet(wallet.id))
 
-    yield put(actions.importETHMnemonics.succeeded())
+    yield put(actions.importRioChainMnemonics.succeeded())
     if (action.payload.componentId) dismissAllModals()
   }catch (e) {
     yield put(actions.importRioChainMnemonics.failed(getErrorMessage(e)))
@@ -543,8 +581,34 @@ function * exportRioChainKeystore(action: Action) {
   if (action.payload.delay) yield delay(action.payload.delay)
 
   try {
+    const id = action.payload.id
+    const address = action.payload.address
+    const password = action.payload.password
+    const source = action.payload.source
 
-  }catch (e) {
+    console.warn(' start export secureStorage')
+    let keystore
+    if (source === 'NEW_IDENTITY' || source === 'RECOVERED_IDENTITY') {
+      keystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    } else {
+      keystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    }
+    console.warn(' start export keystore secureStorage :',keystore)
+    assert(keystore , 'No keystore')
+    console.warn(' start export keystore')
+    const officialKeystore = yield call(walletCore.exportOfficialKeystore, password, keystore)
+    console.warn(' start export keystore officialKeystore:',officialKeystore)
+    assert(officialKeystore , 'No officialKeystore')
+    console.warn(' start export keystore exportRioChainKeystore.succeeded:')
+    yield put(actions.exportRioChainKeystore.succeeded())
+    yield delay(500)
+    console.warn(' start export keystore delay:')
+    if (action.payload.componentId) {
+      push('BitPortal.ExportRioChainKeystore', action.payload.componentId, {
+        keystore: officialKeystore
+      })
+    }
+  } catch (e) {
     yield put(actions.exportRioChainKeystore.failed(getErrorMessage(e)))
   }
 }
@@ -785,6 +849,9 @@ function* exportPCXPrivateKey(action: Action<ExportPCXPrivateKeyParams>) {
     yield put(actions.exportPCXPrivateKey.failed(getErrorMessage(e)))
   }
 }
+
+/////////   todo  polkadota tesing 
+
 
 function* importPolkadotKeystore() {
   try {

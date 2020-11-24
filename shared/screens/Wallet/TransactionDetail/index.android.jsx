@@ -90,7 +90,10 @@ export default class TransactionDetail extends Component {
       url = `https://eospark.com/tx/${txId.toString()}`
     } else if (chain === 'CHAINX') {
       url = `https://scan.chainx.org/txs/${txId.toString()}`
-    } else {
+    }  else if (chain === 'POLKADOT') {
+      url = RioChainURL.rio_scan_url + `/rio/transaction/${txId.toString()}`
+    }
+    else {
       console.error('Invalid Chain', chain)
       throw new Error('Invalid Chain')
     }
@@ -451,7 +454,98 @@ export default class TransactionDetail extends Component {
         </ScrollView>
         </SafeAreaView>
       )
-    } else if (transaction && chain === 'CHAINX') {
+    }
+    else if (transaction && chain === 'CHAINX') {
+      return (
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+          <View style={{ backgroundColor: '#673AB7', padding: 16, paddingTop: 0, elevation: 4 }}>
+            {+transaction.change > 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
+            {+transaction.change <= 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
+            <Text style={{ fontSize: 16, color: 'rgba(255,255,255,0.7)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
+          </View>
+        <ScrollView
+          style={{ flex: 1, backgroundColor: 'white' }}
+          contentContainerStyle={{ backgroundColor: 'white' }}
+        >
+          <View style={{ flex: 1, backgroundColor: 'white', borderTopWidth: 0.5, borderColor: 'rgba(0,0,0,0.18)' }}>
+            <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
+              <View>
+                <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', marginBottom: 4 }}>{t(this,'收款地址')}</Text>
+                <TouchableHighlight underlayColor="rgba(255,255,255,0)" onPress={this.copy.bind(this, transaction.to)}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.87)' }}>
+                      {`${transaction.to} `}
+                    </Text>
+                    <Image
+                      source={require('resources/images/copy_grey_android.png')}
+                      style={{ width: 16, height: 16, marginTop: 4 }}
+                    />
+                  </View>
+                </TouchableHighlight>
+              </View>
+              <View style={{ position: 'absolute', height: 1, left: 0, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.12)' }} />
+            </View>
+            <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
+              <View>
+                <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', marginBottom: 4 }}>{t(this,'付款地址')}</Text>
+                <TouchableHighlight underlayColor="rgba(255,255,255,0)" onPress={this.copy.bind(this, transaction.from)}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.87)' }}>
+                      {`${transaction.from} `}
+                    </Text>
+                    <Image
+                      source={require('resources/images/copy_grey_android.png')}
+                      style={{ width: 16, height: 16, marginTop: 4 }}
+                    />
+                  </View>
+                </TouchableHighlight>
+              </View>
+              <View style={{ position: 'absolute', height: 1, left: 0, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.12)' }} />
+            </View>
+            <View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>
+              <View style={{ width: '50%' }}>
+                <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)' }}>{t(this,'确认数')}</Text>
+                <Text style={{ fontSize: 20, lineHeight: 26, color: 'rgba(0,0,0,0.87)' }}>{transaction.confirmations}</Text>
+              </View>
+              {/*<View style={{ width: '50%' }}>*/}
+                {/*<Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>矿工费用</Text>*/}
+                {/*<Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.fees}</Text>*/}
+                {/*</View>*/}
+              <View style={{ position: 'absolute', height: 1, left: 0, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.12)' }} />
+            </View>
+            {/*<View style={{ flex: 1, justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, paddingTop: 10, paddingBottom: 10, minHeight: 60 }}>*/}
+              {/*<View style={{ width: '50%' }}>*/}
+              {/*<Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.48)' }}>区块高度</Text>*/}
+              {/*<Text style={{ fontSize: 20, lineHeight: 26 }}>{transaction.blockheight}</Text>*/}
+              {/*</View>*/}
+              {/*<View style={{ position: 'absolute', height: 1, left: 0, bottom: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.12)' }} />*/}
+              {/*</View>*/}
+            {this.toTransactionIdUI(transaction.id)}
+            {this.toExplorerUI(chain, transaction.id)}
+          </View>
+          <Modal
+            isVisible={this.state.showModal}
+            backdropOpacity={0}
+            useNativeDriver
+            animationIn="fadeIn"
+            animationInTiming={200}
+            backdropTransitionInTiming={200}
+            animationOut="fadeOut"
+            animationOutTiming={200}
+            backdropTransitionOutTiming={200}
+            onModalHide={this.onModalHide}
+          >
+            {this.state.showModal && <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
+              <View style={{ backgroundColor: 'rgba(0,0,0,0.87)', padding: 16, borderRadius: 4, height: 48, elevation: 1, justifyContent: 'center', width: '100%' }}>
+                <Text style={{ fontSize: 14, color: 'white' }}>{t(this,'已复制')}</Text>
+              </View>
+            </View>}
+          </Modal>
+        </ScrollView>
+        </SafeAreaView>
+      )
+    }
+     else if (transaction && chain === 'BOLKADOT') {
       return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
           <View style={{ backgroundColor: '#673AB7', padding: 16, paddingTop: 0, elevation: 4 }}>

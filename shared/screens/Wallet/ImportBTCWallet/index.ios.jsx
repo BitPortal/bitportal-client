@@ -66,7 +66,7 @@ const TextField = ({
   isDarkMode
 }) => (
   <View style={{ width: '100%', alignItems: 'center', height: 44, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-    <Text style={{ fontSize: 17, marginRight: 16, width: 70, color: isDarkMode ? 'white' : 'dark' }}>{label}</Text>
+    <Text style={{ fontSize: 17, marginRight: 16, width: 70, color: isDarkMode ? 'white' : 'black' }}>{label}</Text>
     <TextInput
       style={[styles.textFiled, { color: isDarkMode ? 'white' : 'black'}]}
       autoCorrect={false}
@@ -439,7 +439,7 @@ export default class ImportBTCWallet extends Component {
               <View style={{ width: '100%', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : 'white' }}>
                 <TouchableHighlight underlayColor={isDarkMode ? 'black' : '#D9D9D9'} style={{ width: '100%', height: 44 }} onPress={this.changeAddressType.bind(this, true)}>
                   <View style={{ height: 44, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
-                    <Text style={{ fontSize: 17, color: isDarkMode ? 'white' : 'dark' }}>隔离见证</Text>
+                    <Text style={{ fontSize: 17, color: isDarkMode ? 'white' : 'black' }}>隔离见证</Text>
                     {this.state.isSegWit && <FastImage source={require('resources/images/radio_checked.png')} style={{ width: 24, height: 24 }} />}
                     {!this.state.isSegWit && <FastImage source={require('resources/images/radio_unchecked.png')} style={{ width: 24, height: 24 }} />}
                     <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: '#C8C7CC' }} />
@@ -447,7 +447,7 @@ export default class ImportBTCWallet extends Component {
                 </TouchableHighlight>
                 <TouchableHighlight underlayColor={isDarkMode ? 'black' : '#D9D9D9'} style={{ width: '100%', height: 44 }} onPress={this.changeAddressType.bind(this, false)}>
                   <View style={{ height: 44, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
-                    <Text style={{ fontSize: 17, color: isDarkMode ? 'white' : 'dark' }}>普通</Text>
+                    <Text style={{ fontSize: 17, color: isDarkMode ? 'white' : 'black' }}>普通</Text>
                     {this.state.isSegWit && <FastImage source={require('resources/images/radio_unchecked.png')} style={{ width: 24, height: 24 }} />}
                     {!this.state.isSegWit && <FastImage source={require('resources/images/radio_checked.png')} style={{ width: 24, height: 24 }} />}
                   </View>

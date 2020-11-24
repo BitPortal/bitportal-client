@@ -3,18 +3,46 @@ import { delay } from 'redux-saga'
 import { takeLatest, put, call, select, all } from 'redux-saga/effects'
 import { getErrorMessage } from 'utils'
 import { eosAssetAllIdsSelector, assetByIdSelector, selectedAssetIdsSelector } from 'selectors/asset'
+import {activeWalletSelector} from 'selectors/wallet'
 import * as actions from 'actions/asset'
 import { updateBalanceList } from 'actions/balance'
 import * as api from 'utils/api'
+import{ chain} from 'core/constants'
+import {polkaApi} from 'core/chain/polkadot'
+import { getAssetUniqueInfo } from 'utils/riochain'
+import { assetIcons, rioTokenIcons } from '../resources/images'
 
 function* getETHAsset(action: Action) {
   try {
     const { display_priority_gt } = action.payload
     const defaultAssets = yield call(api.getETHAsset, {display_priority_gt})
-    yield put(actions.updateAsset({ assets: defaultAssets, chain: 'ETHEREUM' }))
+    const handleUrl = (url='') => (url || '').replace('etherscan.io','cn.etherscan.com')
+    const assets = defaultAssets.map(item => ({...item,icon_url: handleUrl(item.icon_url)}))
+    yield put(actions.updateAsset({ assets, chain: 'ETHEREUM' }))
     yield put(actions.getETHAsset.succeeded())
   } catch (e) {
     yield put(actions.getETHAsset.failed(getErrorMessage(e)))
+  }
+}
+
+function* getRioChainAsset_TEST(action: Action) {
+   
+  try {
+    const rioWallet = yield select(state => activeWalletSelector(state))
+   const defaultAssets = {
+      id: 0,
+      symbol:'RFUEL',
+      chain: 'Rio',
+      name: 'RIO token',
+      decimals: 12,
+      contract: 0,
+      desc: 'RIO chain token',
+      address: rioWallet && rioWallet.address || ''
+    }
+    yield put(actions.updateAsset({ assets: defaultAssets, chain: chain.polkadot }))
+    yield put(actions.getRioChainAsset.succeeded())
+  }catch (e) {
+    yield put(actions.getRioChainAsset.failed(getErrorMessage(e)))
   }
 }
 
@@ -65,44 +93,101 @@ function* getChainXAsset(action: Action) {
 
 function* getRioChainAsset(action: Action) {
   try {
-    const riochainAssets = [{
-      id: 'RIOCHAIN/RFuel',
-      name: 'RFuel',
-      chain: 'RIOCHAIN',
-      symbol: 'RFuel',
-      contract: 'currencies',
-      currency_id: 0,
-      precision: 12,
-      icon_url: ''
-    }, {
-      id: 'RIOCHAIN/rBTC',
-      name: 'rBTC',
-      chain: 'RIOCHAIN',
-      symbol: 'rBTC',
-      contract: 'currencies',
-      currency_id: 100,
-      precision: 8,
-      icon_url: ''
-    }, {
-      id: 'RIOCHAIN/rETH',
-      name: 'rETH',
-      chain: 'RIOCHAIN',
-      symbol: 'rETH',
-      contract: 'currencies',
-      currency_id: 103,
-      precision: 18,
-      icon_url: ''
-    }, {
-      id: 'RIOCHAIN/rUSDT',
-      name: 'rUSDT',
-      chain: 'RIOCHAIN',
-      symbol: 'rUSDT',
-      contract: 'currencies',
-      currency_id: 102,
-      precision: 6,
-      icon_url: ''
-    }]
-    yield put(actions.updateAsset({ assets: riochainAssets, chain: 'RIOCHAIN' }))
+    // const riochainAssets = [{
+    //   id: 'RIOCHAIN/RFuel',
+    //   name: 'RFuel',
+    //   chain:  chain.polkadot,
+    //   symbol: 'RFuel',
+    //   contract: 'currencies',
+    //   currency_id: 0,
+    //   precision: 12,
+    //   icon_url: ''
+    // }, {
+    //   id: 'RIOCHAIN/rBTC',
+    //   name: 'rBTC',
+    //   chain:  chain.polkadot,
+    //   symbol: 'rBTC',
+    //   contract: 'currencies',
+    //   currency_id: 100,
+    //   precision: 8,
+    //   icon_url: ''
+    // }, {
+    //   id: 'RIOCHAIN/rETH',
+    //   name: 'rETH',
+    //   chain:  chain.polkadot,
+    //   symbol: 'rETH',
+    //   contract: 'currencies',
+    //   currency_id: 103,
+    //   precision: 18,
+    //   icon_url: ''
+    // }, {
+    //   id: 'RIOCHAIN/rUSDT',
+    //   name: 'rUSDT',
+    //   chain:  chain.polkadot,
+    //   symbol: 'rUSDT',
+    //   contract: 'currencies',
+    //   currency_id: 102,
+    //   precision: 6,
+    //   icon_url: ''
+    // }]
+
+    // const riochainTokens = [
+    //   { symbol: 'RFUEL', assetId: 0 },
+    //   { symbol: 'OM', assetId: 2 },
+    //   { symbol: 'rBTC', assetId: 100 },
+    //   { symbol: 'rUSDT', assetId: 102 },
+    //   { symbol: 'rETH', assetId: 103 }
+    // ];
+    
+    const rioWallet = action.payload
+    const handleAssetInfo = (assetInfo,contract) => {
+      assert(String(assetInfo.value), 'no asset info')
+      const info = JSON.parse(String(assetInfo.value))
+      info.address = rioWallet && rioWallet.address || ''
+      if (contract) {
+        info.contract =  contract
+      }
+      return info
+    }
+
+    const api = yield call(polkaApi)
+    const rOMAssetInfo = yield api.query.rioAssets.assetInfos(2)
+    const rBTCAssetInfo = yield api.query.rioAssets.assetInfos(100)
+    const rUSDTAssetInfo = yield api.query.rioAssets.assetInfos(102)
+    const rETHAssetInfo = yield api.query.rioAssets.assetInfos(103)
+    const rOMInfo = handleAssetInfo(rOMAssetInfo,2)
+    const rBTCInfo = handleAssetInfo(rBTCAssetInfo,100)
+    const rUSDTInfo = handleAssetInfo(rUSDTAssetInfo,102)
+    const rETHInfo = handleAssetInfo(rETHAssetInfo,103)
+
+    const riochainAssets = []
+    // riochainAssets.push({
+    //   id: 0,
+    //   symbol:'RFUEL',
+    //   chain: 'Rio',
+    //   name: 'RIO token',
+    //   decimals: 12,
+    //   desc: 'RIO chain token',
+    //   address: rioWallet && rioWallet.address || ''
+    // })
+    rOMInfo && riochainAssets.push(rOMInfo)
+    rBTCInfo && riochainAssets.push(rBTCInfo)
+    rUSDTInfo && riochainAssets.push(rUSDTInfo)
+    rETHInfo && riochainAssets.push(rETHInfo)
+       
+    const newAssets = []
+    const selectedAssets = riochainAssets.map(item => {
+      const assetInfo = getAssetUniqueInfo(rioWallet, item)
+      newAssets.push(assetInfo)
+      const contract = assetInfo.contract || assetInfo.address
+      return { 
+        walletId: `${rioWallet.id}`, 
+        assetId:  `${chain.polkadot}/${contract}/${assetInfo.symbol}` 
+      }
+    })
+
+    yield put(actions.updateAsset({ assets: newAssets, chain: chain.polkadot }))
+    yield put(actions.selectAssetList(selectedAssets))
     yield put(actions.getRioChainAsset.succeeded())
   } catch (e) {
     yield put(actions.getRioChainAsset.failed(getErrorMessage(e)))
@@ -161,7 +246,7 @@ function* scanETHAsset(action: Action) {
     // todo remove symbol is undefine
     const newTokens = result.tokens.filter((item:any) => item.tokenInfo && item.tokenInfo.symbol && item.tokenInfo.symbol.length)
 
-    const handleUrl = (url='') => (url || '').replace('https://etherscan.io/','https://cn.etherscan.com/')
+    const handleUrl = (url='') => (url || '').replace('etherscan.io','cn.etherscan.com')
     const assets = newTokens.map(item => ({
       address: item.tokenInfo.address,
       contract: item.tokenInfo.address,
@@ -207,6 +292,7 @@ function* handleAssetSearchTextChange(action: Action) {
 
 export default function* assetSaga() {
   yield takeLatest(String(actions.getETHAsset.requested), getETHAsset)
+  yield takeLatest(String(actions.getRioChainAsset.requested), getRioChainAsset)
   yield takeLatest(String(actions.getEOSAsset.requested), getEOSAsset)
   yield takeLatest(String(actions.getChainXAsset.requested), getChainXAsset)
   yield takeLatest(String(actions.scanEOSAsset.requested), scanEOSAsset)

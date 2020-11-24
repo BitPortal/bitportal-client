@@ -177,7 +177,8 @@ export default class Wallet extends Component {
             symbol: selectedAsset[i].symbol,
             name: selectedAsset[i].name || selectedAsset[i].symbol,
             chain: chain,
-            icon_url: selectedAsset[i].icon_url
+            icon_url: selectedAsset[i].icon_url,
+            icon:selectedAsset[i].icon
           })
         }
       }

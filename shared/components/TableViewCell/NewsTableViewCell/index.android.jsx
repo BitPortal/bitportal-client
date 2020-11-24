@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, View, Text, Image, SafeAreaView } from 'react-native'
 
 const NewsTableViewCell = (props) => {
-  console.log('NewsTableViewCell props', props)
+  // console.log('NewsTableViewCell props', props)
   let numberOfLines = 3
 
 

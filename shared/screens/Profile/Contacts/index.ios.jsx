@@ -112,7 +112,7 @@ export default class Contacts extends Component {
 
     if (!contact || !contact.length) {
       return (
-        <View style={{ flex: 1, backgroundColor: isDarkMode ? 'dark' : 'white', alignItems: 'center', justifyContent: 'center' }}>
+        <View style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : 'white', alignItems: 'center', justifyContent: 'center' }}>
           <Text style={{ color: '#666666', fontSize: 17 }}>暂无联系人</Text>
         </View>
       )

@@ -40,6 +40,7 @@ import Modal from 'react-native-modal'
 import Slider from '@react-native-community/slider'
 import { assetIcons, walletIcons } from 'resources/images'
 import { DarkModeContext } from 'utils/darkMode'
+import { rioTokenIcons } from '../../../resources/images'
 
 const { Section, Item } = TableView
 
@@ -361,7 +362,7 @@ const CardField = ({
   address,
   placeholder,
   available,
-  symbol,
+  // symbol,
   chain,
   iconUrl,
   contract,
@@ -377,7 +378,7 @@ const CardField = ({
       {!!contract && <View style={{ width: 41, height: 41, marginRight: 16 }}>
         <View style={{ width: 40, height: 40, borderWidth: 0, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white', borderRadius: 20 }}>
           <View style={{ position: 'absolute', top: 0, left: 0, width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center', backgroundColor: '#B9C1CF' }}>
-            <Text style={{ fontWeight: '500', fontSize: 20, color: isDarkMode ? 'black' : 'white', paddingLeft: 1.6 }}>{symbol && symbol.length? symbol.slice(0, 1):''}</Text>
+            {/* <Text style={{ fontWeight: '500', fontSize: 20, color: isDarkMode ? 'black' : 'white', paddingLeft: 1.6 }}>{symbol && symbol.length? symbol.slice(0, 1):''}</Text> */}
           </View>
           <FastImage
             source={{ uri: iconUrl }}
@@ -388,7 +389,7 @@ const CardField = ({
       </View>}
       <View>
         <Text style={{ fontSize: 17, color: isDarkMode ? 'white' : 'black' }}>{formatAddress(address)}</Text>
-        <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)', marginTop: 4 }}>{available} {symbol}</Text>
+        {/* <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)', marginTop: 4 }}>{available} {symbol}</Text> */}
       </View>
     </View>
     {separator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 16, left: 72, backgroundColor: '#C8C7CC' }} />}
@@ -800,6 +801,16 @@ export default class TransferAsset extends Component {
     // In cryptocurrencies, a minner fee (or shortly fee) is a payment to the miners for adding a transaction into the blockchain. When a transaction has been included in the blockchain, it is considered confirmed. The size of the fee sent with the transaction determines the confirmation time.
   }
 
+  showRioChainTip = () => {
+    Alert.alert(
+      '交易费用',
+      '转账将在RioChain上进行，交易在经过一定的区块确认后完成。',
+      [
+        { text: '确定', onPress: () => console.log('OK Pressed') }
+      ]
+    )
+  }
+
   showOPReturnTip = () => {
     Alert.alert(
       'OP_RETURN 数据',
@@ -851,11 +862,11 @@ export default class TransferAsset extends Component {
     const memo = formValues && formValues.memo
     const amount = formValues && formValues.amount
     const opreturn = formValues && formValues.opreturn
-    const symbol = balance.symbol
-    const iconUrl = transferAsset.icon_url
-    const contract = transferAsset.contract
+    const symbol = transferAsset && balance.symbol || ''
+    const contract = transferAsset && transferAsset.contract || ''
     const available = balance && intl.formatNumber(balance.balance, { minimumFractionDigits: 0, maximumFractionDigits: balance.precision })
     const chain = transferWallet.chain
+    let iconUrl = chain === 'POLKADOT' ? rioTokenIcons[(symbol || '').toLowerCase()] : transferAsset.icon_url
 
     // fees and display related
     const showMinnerFee = chain === 'BITCOIN' || chain === 'ETHEREUM'
@@ -936,6 +947,29 @@ export default class TransferAsset extends Component {
               isDarkMode={isDarkMode}
               separator
             />
+            {
+             chain === 'POLKADOT' &&
+              <View style={{width:'100%',paddingHorizontal:16}}>
+                <View style={{width:'100%',justifyContent:'space-between',flexDirection:'row',alignItems:'center',marginTop:15,}}>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>{'交易费用'}</Text>
+                  <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', textAlign: 'right' }}>{'0.1 RFUEL'}</Text>
+                </View>
+                <View style={{flexDirection:'row',marginTop:5,marginBottom:10,alignItems:'center'}}>
+                 <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', textAlign: 'right'}}>{'该转账将通过RioChain进行'}</Text>
+                 <TouchableHighlight
+                    underlayColor={isDarkMode ? 'black' : 'white'}
+                    activeOpacity={0.42}
+                    onPress={this.showRioChainTip}
+                    style={{ width: 28, height: 28 }}
+                  >
+                    <FastImage
+                      source={require('resources/images/Info.png')}
+                      style={{ width: 28, height: 28, marginLeft: 4 }}
+                    />
+                  </TouchableHighlight>
+                </View>
+              </View>
+            }
             {showMinnerFee && chain === 'BITCOIN' && <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16 }}>
               <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>

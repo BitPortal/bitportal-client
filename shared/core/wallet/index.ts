@@ -5,9 +5,6 @@ import {
   createHDBTCKeystore,
   createBTCKeystore,
   createHDETHKeystore,
-  createHDRioChainKeystore,
-  createRioChainKeystore,
-  importRioChainKeystore,
   createHDEOSKeystore,
   createHDChainxKeystore,
   importETHKeystore,
@@ -26,7 +23,8 @@ import bs58check from 'bs58check'
 import {
   createPolkadotKeystoreBySuri,
   createPolkadotKeystoreByKeystore,
-  exportPolkadotKeystore
+  exportPolkadotKeystore,
+  exportPolkadotKeyPair
 } from 'core/keystore/polkadot'
 
 export const createIdentity = async (password: string, name: string, passwordHint: string, network: string, isSegWit: boolean) => {
@@ -46,15 +44,17 @@ export const createIdentity = async (password: string, name: string, passwordHin
   const btcWalletKeystore = await createHDBTCKeystore(metadata, mnemonicCodes, password, isSegWit)
   const ethWalletKeystore = await createHDETHKeystore(metadata, mnemonicCodes, password)
   const polkadotWalletKeystore = await createPolkadotKeystoreBySuri(mnemonicCodes, password, metadata)
+
   // TODO 屏蔽 EOS ～xbc
   // const eosWalletKeystore = await createHDEOSKeystore(metadata, mnemonicCodes, password)
   // TODO 屏蔽 chainx ～xbc
   // const chainxWalletKeyStore = await createHDChainxKeystore(metadata, mnemonicCodes, password)
 
   // const wallets = [btcWalletKeystore, ethWalletKeystore, eosWalletKeystore, chainxWalletKeyStore]
-  const wallets = [btcWalletKeystore, ethWalletKeystore]
+  const wallets = [btcWalletKeystore, ethWalletKeystore,polkadotWalletKeystore]
   keystore.walletIDs.push(btcWalletKeystore.id)
   keystore.walletIDs.push(ethWalletKeystore.id)
+  keystore.walletIDs.push(polkadotWalletKeystore.id)
   // keystore.walletIDs.push(rioChainWalletKeystore.id)
   // keystore.walletIDs.push(eosWalletKeystore.id)
   // keystore.walletIDs.push(chainxWalletKeyStore.id)
@@ -84,9 +84,10 @@ export const recoverIdentity = async (mnemonic: string, password: string, name: 
   // const chainxWalletKeyStore = await createHDChainxKeystore(metadata, mnemonicCodes, password)
 
   // const wallets = [btcWalletKeystore, ethWalletKeystore, eosWalletKeystore, chainxWalletKeyStore]
-  const wallets = [btcWalletKeystore, ethWalletKeystore]
+  const wallets = [btcWalletKeystore, ethWalletKeystore,polkadotWalletKeystore]
   keystore.walletIDs.push(btcWalletKeystore.id)
   keystore.walletIDs.push(ethWalletKeystore.id)
+  keystore.walletIDs.push(polkadotWalletKeystore.id)
   // keystore.walletIDs.push(eosWalletKeystore.id)
   // keystore.walletIDs.push(chainxWalletKeyStore.id)
 
@@ -295,7 +296,7 @@ export const importPolkadotWalletBySuri = async (suri, password, name, passwordH
     name,
     passwordHint,
     network,
-    source: source.suri,
+    source: source.mnemonic,
     polkadotNetwork: polkadotNetwork || 'rio',
     keyPairType: keyPairType || 'sr25519'
   }
@@ -304,7 +305,13 @@ export const importPolkadotWalletBySuri = async (suri, password, name, passwordH
 }
 
 export const exportOfficialKeystore = async (password, keystore) => {
-  assert(keystore.meta.chain === chain.polkadot, `Unsupported chain ${keystore.meta.chain}`)
-
+  assert(keystore.bitportalMeta.chain === chain.polkadot, `Unsupported chain ${keystore.bitportalMeta.chain}`)
+  console.warn(' start export keystore exportOfficialKeystore keyStore:',JSON.stringify(keystore))
   return await exportPolkadotKeystore(keystore, password)
+}
+
+export const exportRioChainKeyPair = async (password,keystore) => {
+ assert(keystore, 'Invalid keystore')
+
+  return await exportPolkadotKeyPair(keystore, password)
 }
