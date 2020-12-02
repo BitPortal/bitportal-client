@@ -3,6 +3,7 @@ import { View, Text, TouchableHighlight, NativeModules } from 'react-native'
 import { walletIcons } from 'resources/images'
 import FastImage from 'react-native-fast-image'
 
+
 const ratio = 0.221
 
 const backgroundColors = {
@@ -65,7 +66,7 @@ const MiniWalletCardCollectionViewCell = (props) => {
                <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                  <Text style={{ color: 'white', fontSize: 24 * ratio }}>{props.data.currency}{props.data.totalAsset}</Text>
                </View>
-               <Text style={{ color: 'white', fontSize: 15 * ratio, marginTop: 8 * ratio }}>总资产</Text>
+            <Text style={{ color: 'white', fontSize: 15 * ratio, marginTop: 8 * ratio }}>{gt('asset_total')}</Text>
              </View>
              <View style={{ alignItems: 'flex-end', height: 74 * ratio, width: 80 * ratio, justifyContent: 'space-between' }}>
                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'space-between', width: '100%' }}>
@@ -89,7 +90,7 @@ const MiniWalletCardCollectionViewCell = (props) => {
                <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                  <Text style={{ color: 'white', fontSize: 28 * ratio }}>{props.data.currency}{props.data.totalAsset}</Text>
                </View>
-               <Text style={{ color: 'white', fontSize: 17 * ratio, marginTop: 8 * ratio }}>总资产</Text>
+            <Text style={{ color: 'white', fontSize: 17 * ratio, marginTop: 8 * ratio }}>{gt('asset_total')}</Text>
              </View>
            </View>}
       </View>

@@ -17,8 +17,12 @@ import * as walletActions from 'actions/wallet'
 import * as balanceActions from 'actions/balance'
 import { assetIcons } from 'resources/images'
 import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview'
-import chainxAccount from '@chainx/account'
+// import chainxAccount from '@chainx/account'
 import styles from './styles'
+import {RioChainURL} from 'core/chain/polkadot'
+import { rioTokenIcons } from '../../../resources/images';
+
+const chainxAccount = {}
 
 const dataProvider = new DataProvider((r1, r2) => r1.key !== r2.key || r1.pending !== r2.pending || r1.title !== r2.title)
 
@@ -125,16 +129,16 @@ export default class Asset extends Component {
     if (loadingMore) {
       transactionCells.push({
         key: 'loadingMore',
-        title: t(this,'加载中...')
+        title: t(this,'loading')
       })
     } else if (canLoadMore) {
       transactionCells.push({
         key: 'loadMore',
-        title: t(this,'加载更多')
+        title: t(this,'loading_more')
       })
     }
 
-    return { dataProvider: dataProvider.cloneWithRows([{ title: loading ? t(this,'获取交易记录...') : (transactionCount ? t(this,'交易记录') : t(this,'暂无交易记录')) }, ...transactionCells]) }
+    return { dataProvider: dataProvider.cloneWithRows([{ title: loading ? t(this,'tx_fetch_history') : (transactionCount ? t(this,'tx_history') : t(this,'tx_no_history')) }, ...transactionCells]) }
   }
 
   navigationButtonPressed({ buttonId }) {
@@ -154,9 +158,6 @@ export default class Asset extends Component {
             name: 'BitPortal.TransferAsset',
             options: {
               topBar: {
-                /* title: {
-                 *   text: `发送${this.props.activeAsset.symbol}到`
-                 * },*/
                 leftButtons: [
                   {
                     id: 'cancel',
@@ -178,7 +179,7 @@ export default class Asset extends Component {
         options: {
           topBar: {
             title: {
-              text: `${t(this,'接收')} ${this.props.activeAsset.symbol}`
+              text: `${t(this,'receive')} ${this.props.activeAsset.symbol}`
             }
           }
         }
@@ -229,9 +230,9 @@ export default class Asset extends Component {
   toTransactionDetail = (id, pending, failed) => {
     this.props.actions.setActiveTransactionId(id)
 
-    let statusText = t(this,'转账成功')
-    if (pending) statusText = t(this,'转账中...')
-    if (failed) statusText = t(this,'转账失败')
+    let statusText = t(this,'tx_suscess')
+    if (pending) statusText = t(this,'tx_transfering')
+    if (failed) statusText = t(this,'tx_failed')
 
     Navigation.push(this.props.componentId, {
       component: {
@@ -290,7 +291,7 @@ export default class Asset extends Component {
             options: {
               topBar: {
                 title: {
-                  text: t(this,'ChainX历史记录')
+                  text: t(this,'tx_history_symbol',{symbol:'ChainX'})
                 },
                 leftButtons: [
                   {
@@ -321,7 +322,7 @@ export default class Asset extends Component {
             options: {
               topBar: {
                 title: {
-                  text: 'RioChain历史记录'
+                  text: t(this,'tx_history_symbol',{symbol:'RioChain'})
                 },
                 leftButtons: [
                   {
@@ -372,10 +373,10 @@ export default class Asset extends Component {
                 {data.transactionType === 'send' && !data.failed && <Image source={require('resources/images/sent.png')} style={{ width: 20, height: 20 }} />}
                 {data.transactionType === 'receive' && !data.failed && <Image source={require('resources/images/received.png')} style={{ width: 20, height: 20 }} />}
                 {!!data.failed && <Image source={require('resources/images/error_android.png')} style={{ width: 20, height: 20, marginRight: 2 }} />}
-                {data.transactionType === 'send' && !data.failed && !data.pending && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}>{t(this,'发送')}</Text>}
-                {data.transactionType === 'receive' && !data.failed && !data.pending && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}>{t(this,'接收')}</Text>}
-                {!!data.failed && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}>{t(this,'转账失败')}</Text>}
-                {!!data.pending && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}>{t(this,'转账中...')}</Text>}
+                {data.transactionType === 'send' && !data.failed && !data.pending && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}>{t(this,'send')}</Text>}
+                {data.transactionType === 'receive' && !data.failed && !data.pending && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}>{t(this,'receive')}</Text>}
+                {!!data.failed && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}>{t(this,'tx_failed')}</Text>}
+                {!!data.pending && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}>{t(this,'tx_transfering')}</Text>}
                 {!data.pending && <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', lineHeight: 20 }}> {data.date} {data.time}</Text>}
               </View>
             </View>
@@ -401,6 +402,11 @@ export default class Asset extends Component {
     const emptyTransactions = !!transactions && transactions.length === 0
     const chain = activeWallet ? activeWallet.chain : ''
 
+    let icon
+    if (chain === 'POLKADOT') {
+      icon = rioTokenIcons[symbol.toLowerCase()]
+    }
+
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <View style={{ justifyContent: 'flex-start', alignItems: 'center', backgroundColor: '#673AB7', paddingTop: 0, paddingBottom: 20, elevation: 4 }}>
@@ -415,8 +421,8 @@ export default class Asset extends Component {
                 <Text style={{ fontWeight: '500', fontSize: 28, color: 'white', paddingLeft: 1.6 }}>{activeAsset.symbol && activeAsset.symbol.length ? activeAsset.symbol.slice(0, 1): ''}</Text>
               </View>
               <FastImage
-                source={{ uri: activeAsset.icon_url }}
-                style={{ width: 56, height: 56, borderRadius: 28, backgroundColor: activeAsset.icon_url ? 'white' : 'rgba(0,0,0,0)' }}
+                source={icon? icon : { uri: activeAsset.icon_url }}
+                style={{ width: 56, height: 56, borderRadius: 28, backgroundColor: activeAsset.icon_url || icon ? 'white' : 'rgba(0,0,0,0)' }}
               />
             </View>}
         <View style={{ justifyContent: 'center', alignItems: 'flex-start', marginLeft: 16 }}>
@@ -444,10 +450,10 @@ export default class Asset extends Component {
                                />}
 
         {chain === 'CHAINX' && (<View style={{ marginTop: 50, alignItems: 'center' }}>
-          <Text style={{fontSize: 18, color: '#673AB7' }} onPress={this.toChainXHistory}>{t(this,'ChainX的更多记录请点击这里...')}</Text>
+          <Text style={{fontSize: 18, color: '#673AB7' }} onPress={this.toChainXHistory}>{t(this,'tx_history_more_symbol',{symbol:'ChainX'})}</Text>
         </View>)}
         {chain === 'POLKADOT' && (<View style={{ marginTop: 50, alignItems: 'center' }}>
-          <Text style={{fontSize: 18, color: '#673AB7' }} onPress={this.toRioChainHistory}>{'RioChain的更多记录请点击这里...'}</Text>
+          <Text style={{fontSize: 18, color: '#673AB7' }} onPress={this.toRioChainHistory}>{t(this,'tx_history_more_symbol',{symbol:'RioChain'})}</Text>
         </View>)}
       </View>
     )

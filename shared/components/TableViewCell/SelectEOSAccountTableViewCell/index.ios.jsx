@@ -13,7 +13,7 @@ const SelectEOSAccountTableViewCell = props => (
       </View>
     </View>
     {props.data.exist && <View>
-      <Text style={{ color: '#888888' }}>已导入</Text>
+      <Text style={{ color: '#888888' }}>{gt('import_imported')}</Text>
     </View>}
   </View>
 )

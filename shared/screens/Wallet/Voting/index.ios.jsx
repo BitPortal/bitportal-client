@@ -91,7 +91,7 @@ export default class Voting extends Component {
         leftButtons: [
           {
             id: 'cancel',
-            text: gt('取消')
+            text: gt('cancel')
           }
         ],
         rightButtons: [

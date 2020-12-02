@@ -235,7 +235,7 @@ export default class ManageEOSResource extends Component {
 
     if ((!getAccount.loaded && getAccount.loading) || !account) {
       return (
-        <Loading text={t(this,"获取账户信息中...")} />
+        <Loading text={t(this,'获取账户信息中...')} />
       )
     }
 

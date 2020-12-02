@@ -13,7 +13,6 @@ import { activeWalletBalanceSelector } from 'selectors/balance'
 import { depositClaim, getAsset, getPseduIntentions, getPseduNominationRecords, getBlockHeight } from 'core/chain/chainx'
 import secureStorage from 'core/storage/secureStorage'
 import Dialog from 'components/Dialog'
-import chainxAccount from '@chainx/account'
 import styles from './style'
 
 
@@ -289,7 +288,7 @@ export default class ChainXDepositClaim extends Component {
     userItems.push(
       <Item
         reactModuleForCell="ChainXValidatorDetailTableViewCell"
-        text={t(this,"挖矿{symbol}余额",{symbol:'BTC'})}
+        text={t(this,'挖矿{symbol}余额',{symbol:'BTC'})}
         type="btcBalance"
         key="btcBalance"
         detail={btcBalanceStr}
@@ -301,7 +300,7 @@ export default class ChainXDepositClaim extends Component {
     userItems.push(
       <Item
         reactModuleForCell="ChainXValidatorDetailTableViewCell"
-        text={t(this,"挖矿{symbol}余额",{symbol:'SDOT'})}
+        text={t(this,'挖矿{symbol}余额',{symbol:'SDOT'})}
         type="sdotBalance"
         key="sdotBalance"
         detail={sdotBalanceStr}
@@ -313,7 +312,7 @@ export default class ChainXDepositClaim extends Component {
     globalItems.push(
       <Item
         reactModuleForCell="ChainXValidatorDetailTableViewCell"
-        text={t(this,"{symbol}全链总余额",{symbol:'BTC'})}
+        text={t(this,'{symbol}全链总余额',{symbol:'BTC'})}
         type="btcCirculationStr"
         key="btcCirculationStr"
         detail={btcCirculationStr}
@@ -325,7 +324,7 @@ export default class ChainXDepositClaim extends Component {
     globalItems.push(
       <Item
         reactModuleForCell="ChainXValidatorDetailTableViewCell"
-        text={t(this,"{symbol}全链总余额",{symbol:'SDOT'})}
+        text={t(this,'{symbol}全链总余额',{symbol:'SDOT'})}
         type="sdotCirculationStr"
         key="sdotCirculationStr"
         detail={sdotCirculationStr}

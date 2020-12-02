@@ -8,8 +8,7 @@ import { PKCS8_DIVIDER, PKCS8_HEADER } from './defaults';
 
 export const encodePair = async ({ publicKey, secretKey }, passphrase) => {
   assert(secretKey, 'Expected a valid secretKey to be passed to encode');
-
-  await cryptoWaitReady()
+  // await cryptoWaitReady()
   const encoded = u8aConcat(
     PKCS8_HEADER,
     secretKey,
@@ -31,10 +30,6 @@ export const encodePair = async ({ publicKey, secretKey }, passphrase) => {
   const passwordHex = await scrypt(Buffer.from(passphrase).toString('hex'), Buffer.from(salt).toString('hex'), params.N, params.r, params.p, 64)
   const password = new Uint8Array(Buffer.from(passwordHex, 'hex'))
 
-
   const { encrypted, nonce } = naclEncrypt(encoded, password.subarray(0, 32), new Uint8Array(await randomBytes(24)));
-  console.log('----> encodePair naclEncrypt result ',encrypted, nonce)
-   const r = u8aConcat(scryptToU8a(salt, params), nonce, encrypted); 
-  console.log('----> encodePair u8aConcat result ',r)
-  return r
+  return u8aConcat(scryptToU8a(salt, params), nonce, encrypted); 
 }

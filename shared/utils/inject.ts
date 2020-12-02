@@ -20,6 +20,8 @@ const loadScatterFile = (path: string) => {
 }
 
 export const loadScatter = async () => {
+
+  return '';
   if (scatter) return scatter
 
   return await loadScatterFile(`${rootPath}/injectScatter.js`)

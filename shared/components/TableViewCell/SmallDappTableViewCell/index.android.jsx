@@ -33,7 +33,7 @@ const SmallDappTableViewCell = props => {
       </View>
       <View>
         <TouchableHighlight underlayColor="#EFEFF4" style={{ backgroundColor: '#EFEFF4', borderRadius: 28, height: 28, width: 70, padding: 0, alignItems: 'center', justifyContent: 'center' }} onPress={this.toDapp}>
-          <Text style={{ color: '#007AFF', margin: 0, padding: 0, fontSize: 13, fontWeight: '500' }}>打开</Text>
+          <Text style={{ color: '#007AFF', margin: 0, padding: 0, fontSize: 13, fontWeight: '500' }}>{gt('open')}</Text>
         </TouchableHighlight>
       </View>
       {props.data.showSeparator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 88, backgroundColor: '#C8C7CC' }} />}

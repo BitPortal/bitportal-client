@@ -50,6 +50,7 @@ import { loadScatterSync, loadMetaMaskSync } from 'utils/inject'
 import SearchBar from 'components/Form/SearchBar'
 import IndicatorModal from 'components/Modal/IndicatorModal'
 
+
 const messages = { ...globalMessages, ...localMessages }
 
 const tabHeight = (() => {
@@ -92,7 +93,7 @@ export const errorMessages = (error, messages) => {
       return messages.webview_invalid_password
     default:
       if (message.indexOf('transaction underpriced') !== -1) {
-        return 'Gas定价过低'
+        return gt('gas_price_low')
       }
       return messages.webview_signing_failed
   }
@@ -134,29 +135,29 @@ export default class WebView extends Component {
           {
             id: 'next',
             icon: require('resources/images/next_android.png'),
-            text: '下一页'
+            text: gt('button_next_page')
           },
           {
             id: 'previous',
             icon: require('resources/images/previous_android.png'),
-            text: '上一页'
+            text: gt('button_pre_page')
           },
           {
             id: 'share',
             icon: require('resources/images/share_android.png'),
-            text: '分享',
+            text: gt('share'),
             color: 'white'
           },
           {
             id: 'refresh',
             icon: require('resources/images/refresh_android.png'),
-            text: '刷新',
+            text: gt('refresh'),
             color: 'white'
           },
           {
             id: 'search',
             icon: require('resources/images/search_android.png'),
-            text: '搜索'
+            text: gt('search')
           }
         ]
       },
@@ -239,34 +240,34 @@ export default class WebView extends Component {
           {
             id: 'next',
             icon: require('resources/images/next_android.png'),
-            text: '下一页'
+            text: gt('button_next_page')
           },
           {
             id: 'previous',
             icon: require('resources/images/previous_android.png'),
-            text: '上一页'
+            text: gt('button_pre_page')
           },
           {
             id: 'share',
             icon: require('resources/images/share_android.png'),
-            text: '分享',
+            text: gt('share'),
             color: 'white'
           },
           {
             id: 'refresh',
             icon: require('resources/images/refresh_android.png'),
-            text: '刷新',
+            text: gt('share'),
             color: 'white'
           },
           {
             id: 'wallet',
             icon: chain === 'EOS' ? require('resources/images/eos_icon.png') : require('resources/images/eth_icon.png'),
-            text: '钱包'
+            text: gt('wallet')
           },
           {
             id: 'search',
             icon: require('resources/images/search_android.png'),
-            text: '搜索'
+            text: gt('search')
           }
         ]
       }
@@ -283,7 +284,7 @@ export default class WebView extends Component {
         errorMessages(this.props.error),
         '',
         [
-          { text: '确定', onPress: () => this.props.actions.clearPasswordError() }
+          { text: t(this,'button_ok'), onPress: () => this.props.actions.clearPasswordError() }
         ]
       )
     } else if (prevState.bridgeWalletId !== this.state.bridgeWalletId) {
@@ -293,34 +294,34 @@ export default class WebView extends Component {
             {
               id: 'next',
               icon: require('resources/images/next_android.png'),
-              text: '下一页'
+              text: gt('button_next_page')
             },
             {
               id: 'previous',
               icon: require('resources/images/previous_android.png'),
-              text: '上一页'
+              text: gt('button_pre_page')
             },
             {
               id: 'share',
               icon: require('resources/images/share_android.png'),
-              text: '分享',
+              text: gt('share'),
               color: 'white'
             },
             {
               id: 'refresh',
               icon: require('resources/images/refresh_android.png'),
-              text: '刷新',
+              text: gt('share'),
               color: 'white'
             },
             {
               id: 'wallet',
               icon: this.state.chain === 'EOS' ? require('resources/images/eos_icon.png') : require('resources/images/eth_icon.png'),
-              text: '钱包'
+              text: gt('wallet')
             },
             {
               id: 'search',
               icon: require('resources/images/search_android.png'),
-              text: '搜索'
+              text: gt('search')
             }
           ]
         }
@@ -434,7 +435,7 @@ export default class WebView extends Component {
     return (
       <View style={[styles.center, styles.content]}>
         <Text style={styles.text18}>
-          加载失败
+          {t(this,'failed_load')}
         </Text>
       </View>
     )
@@ -769,11 +770,11 @@ export default class WebView extends Component {
         {this.renderActiveWallet()}
         <TouchableHighlight underlayColor="white" style={{ width: '100%' }} onPress={this.toNext}>
           <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
-            <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>合约详情</Text>
+    <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>{t(this,'contract_detail')}</Text>
             <View style={{ width: Dimensions.get('window').width - 36 - 95, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
               <View>
-                <Text style={{ fontSize: 13, color: isDarkMode ? 'white' : 'black' }}>{action.account} (合约名)</Text>
-                <Text style={{ fontSize: 13, color: isDarkMode ? 'white' : 'black' }}>{action.authorization.map((auth => `${auth.actor}@${auth.permission}`)).join(' ')} (权限)</Text>
+    <Text style={{ fontSize: 13, color: isDarkMode ? 'white' : 'black' }}>{action.account} {t(this,'contract_name_bracket')}</Text>
+    <Text style={{ fontSize: 13, color: isDarkMode ? 'white' : 'black' }}>{action.authorization.map((auth => `${auth.actor}@${auth.permission}`)).join(' ')} {t(this,'permission_bracket')}</Text>
               </View>
               <Image source={require('resources/images/arrow_right_android.png')} />
             </View>
@@ -791,7 +792,7 @@ export default class WebView extends Component {
 
     return (
       <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
-        <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>当前钱包</Text>
+        <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>{t(this,'wallet_current')}</Text>
         <View style={{ width: Dimensions.get('window').width - 36 - 95, justifyContent: 'space-between', flexDirection: 'row' }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Image
@@ -841,7 +842,7 @@ export default class WebView extends Component {
             </Text>
           </View>
           <Animated.Text style={{ fontSize: 13, color: '#A2A2A6', width: 95, position: 'absolute', left: 18, top: 15, opacity: this.state.amountLabelOpacity, color: isDarkMode ? 'white' : 'black' }}>
-            支付金额
+            {t(this,'amount_payment')}
           </Animated.Text>
           <Animated.View style={{ flexDirection: 'row', marginLeft: this.state.amountMarginLeft }}>
             <Animated.Text style={{ fontSize: this.state.amountFontSize, color: isDarkMode ? 'white' : 'black' }}>
@@ -856,7 +857,7 @@ export default class WebView extends Component {
         {this.renderActiveWallet()}
         <TouchableHighlight underlayColor="white" style={{ width: '100%' }} onPress={this.toNext}>
           <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
-            <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>合约详情</Text>
+          <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>{t(this,'contract_detail')}</Text>
             <View style={{ width: Dimensions.get('window').width - 36 - 95, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
               <View>
                 <Text style={{ fontSize: 13, color: isDarkMode ? 'white' : 'black' }}>{`${action.account}->${action.name}`}</Text>
@@ -877,7 +878,7 @@ export default class WebView extends Component {
 
     return (
       <Animated.View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, opacity: this.state.passwordTextInputOpacity, paddingHorizontal: 18 }}>
-        <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95, color: isDarkMode ? 'white' : 'black' }}>输入密码</Text>
+        <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95, color: isDarkMode ? 'white' : 'black' }}>{t(this,'pwd_enter1')}</Text>
         <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row' }}>
           <TextInput
             style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, width: '100%', color: isDarkMode ? 'white' : 'black' }}
@@ -906,10 +907,10 @@ export default class WebView extends Component {
       <View style={{ paddingTop: 10, paddingBottom: 10, position: 'absolute', bottom: 0, left: 0, width: '100%', paddingHorizontal: 18 }}>
         <TouchableNativeFeedback onPress={this.state.largeAmount ? this.changeAmountSize : this.submit} disabled={!!this.props.resolving} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.3)', false)}>
           <View style={{ backgroundColor: '#673AB7', borderRadius: 4, width: '100%', height: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 2 }}>
-            {(!!this.state.largeAmount || !this.state.passwordValue) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>确认交易</Text>}
-            {(!this.state.largeAmount && !!this.state.passwordValue && !this.props.resolving) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>验证密码</Text>}
+    {(!!this.state.largeAmount || !this.state.passwordValue) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>{t(this,'tx_confirmation')}</Text>}
+    {(!this.state.largeAmount && !!this.state.passwordValue && !this.props.resolving) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>{t(this,'pwd_verify')}</Text>}
             {(!this.state.largeAmount && !!this.state.passwordValue && !!this.props.resolving) && <ActivityIndicator size="small" color="#ffffff" style={{ marginRight: 5 }} />}
-            {(!this.state.largeAmount && !!this.state.passwordValue && !!this.props.resolving) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>验证密码中...</Text>}
+    {(!this.state.largeAmount && !!this.state.passwordValue && !!this.props.resolving) && <Text style={{ alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 17, textAlign: 'center', lineHeight: 44 }}>{t(this,'pwd_verify_verifying')}</Text>}
           </View>
         </TouchableNativeFeedback>
       </View>
@@ -927,28 +928,28 @@ export default class WebView extends Component {
           <ScrollView style={{ height: 340, width: '100%' }}>
             {actions.map((action, index) => <Fragment key={action.name}>
               <View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, paddingHorizontal: 18 }}>
-                <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>合约操作</Text>
+        <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>{t(this,'contract_operation')}</Text>
                 <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', height: '100%', alignItems: 'center' }}>
                   <Text style={{ fontSize: 13, color: isDarkMode ? 'white' : 'black' }}>{action.name}</Text>
                 </View>
                 <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
               </View>
               <View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, paddingHorizontal: 18 }}>
-                <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>合约名称</Text>
+        <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>{t(this,'contract_name')}</Text>
                 <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', height: '100%', alignItems: 'center' }}>
                   <Text style={{ fontSize: 13, color: isDarkMode ? 'white' : 'black' }}>{action.account}</Text>
                 </View>
                 <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
               </View>
               <View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', height: 44, paddingHorizontal: 18 }}>
-                <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>使用权限</Text>
+        <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>{t(this,'auth_using')}</Text>
                 <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', height: '100%', alignItems: 'center' }}>
                   <Text style={{ fontSize: 13, color: isDarkMode ? 'white' : 'black' }}>{action.authorization.map((auth => `${auth.actor}@${auth.permission}`)).join(' ')}</Text>
                 </View>
                 <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
               </View>
               <View style={{ alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
-                <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>合约参数</Text>
+        <Text style={{ paddingTop: 15, paddingBottom: 15, fontSize: 13, color: '#A2A2A6', width: 95 }}>{t(this,'contract_parameter')}</Text>
                 <View style={{ width: Dimensions.get('window').width - 36 - 95, paddingTop: 15, paddingBottom: 15 }}>
                   {Object.keys(action.data).map(key => <View key={key} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
                     <Text style={{ fontSize: 13, color: '#A2A2A6', height: 20, color: isDarkMode ? 'white' : 'black' }}>{key}</Text>
@@ -981,14 +982,14 @@ export default class WebView extends Component {
       return (
         <View style={{ height: 240 }}>
           <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
-            <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>签名内容</Text>
+      <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>{t(this,'pwd_signature')}</Text>
             <View style={{ width: Dimensions.get('window').width - 36 - 95, justifyContent: 'space-between', flexDirection: 'row' }}>
               <Text style={{ fontSize: 13, color: isDarkMode ? 'white' : 'black' }}>{message.payload.data}</Text>
             </View>
             <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
           </View>
           <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
-            <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>签名公钥</Text>
+      <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>{t(this,'pwd_signature_publickey')}</Text>
             <View style={{ width: Dimensions.get('window').width - 36 - 95, justifyContent: 'space-between', flexDirection: 'row' }}>
               <Text style={{ fontSize: 13, color: isDarkMode ? 'white' : 'black' }}>{message.payload.publicKey}</Text>
             </View>
@@ -1014,24 +1015,24 @@ export default class WebView extends Component {
                 }}
               >
                 <Text style={{ fontSize: 24, color: isDarkMode ? 'white' : 'black' }}>
-                  个人签名
+                  {t(this,'pwd_signature_personal')}
                 </Text>
               </View>
               <Animated.Text style={{ fontSize: 13, color: '#A2A2A6', width: 95, position: 'absolute', left: 18, top: 15, opacity: this.state.amountLabelOpacity, color: isDarkMode ? 'white' : 'black' }}>
-                当前操作
+                {t(this,'operation_current')}
               </Animated.Text>
               <Animated.View
                 style={{ flexDirection: 'row', marginLeft: this.state.amountMarginLeft }}
               >
                 <Animated.Text style={{ fontSize: this.state.actionFontSize, color: isDarkMode ? 'white' : 'black' }}>
-                  个人签名
+                  {t(this,'pwd_signature_personal')}
                 </Animated.Text>
               </Animated.View>
               <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
             </Animated.View>
             {this.renderActiveWallet()}
             <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
-              <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>签名内容</Text>
+              <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>{t(this,'pwd_signature')}</Text>
               <ScrollView contentContainerStyle={{ width: Dimensions.get('window').width - 36 - 95, justifyContent: 'space-between', flexDirection: 'row' }} style={{ maxHeight: 32 }}>
                 <Text style={{ fontSize: 13, color: isDarkMode ? 'white' : 'black' }} ellipsizeMode="tail" numberOfLines={200}>{message.info.data}</Text>
               </ScrollView>
@@ -1056,32 +1057,32 @@ export default class WebView extends Component {
                 }}
               >
                 <Text style={{ fontSize: 24, color: isDarkMode ? 'white' : 'black' }}>
-                  ETH 签名
+                  {t(this,'signature_eth')}
                 </Text>
               </View>
               <Animated.Text style={{ fontSize: 13, color: '#A2A2A6', width: 95, position: 'absolute', left: 18, top: 15, opacity: this.state.amountLabelOpacity }}>
-                当前操作
+                {t(this,'operation_current')}
               </Animated.Text>
               <Animated.View
                 style={{ flexDirection: 'row', marginLeft: this.state.amountMarginLeft }}
               >
                 <Animated.Text style={{ fontSize: this.state.actionFontSize, color: isDarkMode ? 'white' : 'black' }}>
-                  ETH 签名
+                {t(this,'signature_eth')}
                 </Animated.Text>
               </Animated.View>
               <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
             </Animated.View>
             {this.renderActiveWallet()}
             <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
-              <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>签名内容</Text>
+              <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>{t(this,'pwd_signature')}</Text>
               <ScrollView contentContainerStyle={{ width: Dimensions.get('window').width - 36 - 95, justifyContent: 'space-between', flexDirection: 'row' }} style={{ maxHeight: 32 }}>
                 <Text style={{ fontSize: 13 }} ellipsizeMode="tail" numberOfLines={200}>{message.info.data}</Text>
               </ScrollView>
               <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
             </View>
             <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
-              <Text style={{ fontSize: 13, color: 'rgba(255,59,48,1)', width: 95 }}>注意</Text>
-              <Text style={{ fontSize: 13, color: 'rgba(255,59,48,1)', width: Dimensions.get('window').width - 36 - 95 }}>本操作具有极大的安全风险，请确保当前网站是您信任的站点。</Text>
+              <Text style={{ fontSize: 13, color: 'rgba(255,59,48,1)', width: 95 }}>{t(this,'caution')}</Text>
+              <Text style={{ fontSize: 13, color: 'rgba(255,59,48,1)', width: Dimensions.get('window').width - 36 - 95 }}>{t(this,'operation_hint')}</Text>
               <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
             </View>
             {this.renderPasswordInput()}
@@ -1103,24 +1104,24 @@ export default class WebView extends Component {
                 }}
               >
                 <Text style={{ fontSize: 24, color: isDarkMode ? 'white' : 'black' }}>
-                  申请签名
+                  {t(this,'signature_apply')}
                 </Text>
               </View>
               <Animated.Text style={{ fontSize: 13, color: '#A2A2A6', width: 95, position: 'absolute', left: 18, top: 15, opacity: this.state.amountLabelOpacity }}>
-                当前操作
+                {t(this,'operation_current')}
               </Animated.Text>
               <Animated.View
                 style={{ flexDirection: 'row', marginLeft: this.state.amountMarginLeft }}
               >
                 <Animated.Text style={{ fontSize: this.state.actionFontSize, color: isDarkMode ? 'white' : 'black' }}>
-                  申请签名
+                  {t(this,'signature_apply')}
                 </Animated.Text>
               </Animated.View>
               <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
             </Animated.View>
             {this.renderActiveWallet()}
             <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
-              <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>签名内容</Text>
+              <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>{t(this,'pwd_signature')}</Text>
               <ScrollView contentContainerStyle={{ width: Dimensions.get('window').width - 36 - 95 }} style={{ maxHeight: 52 }}>
                 {message.info.data.map(data =>
                   <Text key={data.name} style={{ fontSize: 13, color: isDarkMode ? 'white' : 'black' }}>{`${data.name}: ${data.value}`}</Text>
@@ -1147,24 +1148,24 @@ export default class WebView extends Component {
                 }}
               >
                 <Text style={{ fontSize: 24, color: isDarkMode ? 'white' : 'black' }}>
-                  申请签名
+                  {t(this,'signature_apply')}
                 </Text>
               </View>
               <Animated.Text style={{ fontSize: 13, color: '#A2A2A6', width: 95, position: 'absolute', left: 18, top: 15, opacity: this.state.amountLabelOpacity }}>
-                当前操作
+                {t(this,'operation_current')}
               </Animated.Text>
               <Animated.View
                 style={{ flexDirection: 'row', marginLeft: this.state.amountMarginLeft }}
               >
                 <Animated.Text style={{ fontSize: this.state.actionFontSize, color: isDarkMode ? 'white' : 'black' }}>
-                  申请签名
+                  {t(this,'signature_apply')}
                 </Animated.Text>
               </Animated.View>
               <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
             </Animated.View>
             {this.renderActiveWallet()}
             <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
-              <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>签名内容</Text>
+              <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>{t(this,'pwd_signature')}</Text>
               <ScrollView contentContainerStyle={{ width: Dimensions.get('window').width - 36 - 95 }} style={{ maxHeight: 52 }}>
                 <Text style={{ fontSize: 13, color: isDarkMode ? 'white' : 'black' }}>{typeof message.info.data === 'object' ? JSON.stringify(message.info.data, null, 2) : message.info.data}</Text>
               </ScrollView>
@@ -1203,7 +1204,7 @@ export default class WebView extends Component {
                 </Text>
               </View>
               <Animated.Text style={{ fontSize: 13, color: '#A2A2A6', width: 95, position: 'absolute', left: 18, top: 15, opacity: this.state.amountLabelOpacity }}>
-                支付金额
+                {t(this,'amount_payment')}
               </Animated.Text>
               <Animated.View
                 style={{ flexDirection: 'row', marginLeft: this.state.amountMarginLeft }}
@@ -1219,23 +1220,15 @@ export default class WebView extends Component {
             </Animated.View>
             {this.renderActiveWallet()}
             <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
-              <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>发送到</Text>
+              <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>{t(this,'send_to')}</Text>
               <View style={{ width: Dimensions.get('window').width - 36 - 95, justifyContent: 'space-between', flexDirection: 'row', maxHeight: 32 }}>
                 <Text style={{ fontSize: 13, color: isDarkMode ? 'white' : 'black' }}>{this.formatAddress(info.toAddress)}</Text>
               </View>
               <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
             </View>
-            {/* <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
-                <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>金额</Text>
-                <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', maxHeight: 32 }}>
-                <View>
-                <Text style={{ fontSize: 13 }}>{amount} ETH</Text>
-                </View>
-                </View>
-                <View style={{ position: 'absolute', left: 18, right: 0, bottom: 0, height: 0.5, backgroundColor: '#E3E3E4' }} />
-                </View> */}
+  
             <View style={{ paddingTop: 15, paddingBottom: 15, alignItems: 'flex-start', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
-              <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>矿工费</Text>
+              <Text style={{ fontSize: 13, color: '#A2A2A6', width: 95 }}>{t(this,'gas_fee')}</Text>
               <View style={{ width: Dimensions.get('window').width - 36 - 95, flexDirection: 'row', maxHeight: 32 }}>
                 <View>
                   <Text style={{ fontSize: 13, color: isDarkMode ? 'white' : 'black' }}>{gasFee} ether</Text>
@@ -1400,7 +1393,7 @@ export default class WebView extends Component {
                 searchBarUpdated={this.searchBarUpdated}
                 searchBarCleared={this.searchBarCleared}
                 hasSearchResult={false}
-                placeholder="输入url"
+                placeholder={t(this,'search')}
                 onSubmit={this.onSubmit}
               />
             </View>
@@ -1431,7 +1424,7 @@ export default class WebView extends Component {
             <Animated.View style={{ height: '100%', width: this.state.progress, backgroundColor: isDarkMode ? 'black' : '#673AB7' }} />
           </Animated.View>
         </View>
-        {this.props.loadingContract && <IndicatorModal isVisible={this.props.loadingContract} message="合约加载中..." />}
+        {this.props.loadingContract && <IndicatorModal isVisible={this.props.loadingContract} message={t(this,'contract_loading')} />}
         <Modal
           animationIn="slideInUp"
           animationOut="slideOutDown"
@@ -1442,7 +1435,7 @@ export default class WebView extends Component {
         >
           <View style={{ backgroundColor: isDarkMode ? 'black' : '#F7F7F8', position: 'absolute', bottom: 0, left: 0, right: 0, paddingBottom: tabHeight - 44 }}>
             <View style={{ height: 44, borderBottomWidth: 0.5, borderColor: '#E3E3E4', flex: 1, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingHorizontal: 18 }}>
-              {!this.state.showSideCard && <Text style={{ fontSize: 17, fontWeight: 'bold', color: isDarkMode ? 'white' : 'black' }}>交易详情</Text>}
+    {!this.state.showSideCard && <Text style={{ fontSize: 17, fontWeight: 'bold', color: isDarkMode ? 'white' : 'black' }}>{t(this,'tx_detail')}</Text>}
       {!!this.state.showSideCard &&
        <TouchableNativeFeedback onPress={this.toPrev} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', true)} useForeground={true}>
          <View style={{ width: 30, height: 30, borderRadius: 12, alignItems: 'center', justifyContent: 'center' }}>
@@ -1450,7 +1443,7 @@ export default class WebView extends Component {
          </View>
       </TouchableNativeFeedback>}
       <TouchableOpacity onPress={!this.props.resolving ? this.closePrompt : () => {}} style={{ height: 44 }} disabled={this.props.resolving}>
-        <Text style={{ fontSize: 17, color: '#673AB7', lineHeight: 44 }}>取消</Text>
+      <Text style={{ fontSize: 17, color: '#673AB7', lineHeight: 44 }}>{t(this,'button_cancel')}</Text>
       </TouchableOpacity>
       </View>
       {!!this.props.pendingMessage && this.renderTransactionDetail(this.props.pendingMessage)}

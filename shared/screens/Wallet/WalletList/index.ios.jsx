@@ -40,12 +40,12 @@ export default class WalletList extends Component {
     return {
       topBar: {
         title: {
-          text: gt('管理钱包列表')
+          text: gt('wallet_management_list')
         },
         leftButtons: [
           {
             id: 'cancel',
-            text: gt('取消')
+            text: gt('button_cancel')
           }
         ],
         largeTitle: {
@@ -75,7 +75,7 @@ export default class WalletList extends Component {
           rightButtons: [
             {
               id: 'done',
-              text: gt('完成')
+              text: gt('complete')
             }
           ]
         }
@@ -86,7 +86,7 @@ export default class WalletList extends Component {
           rightButtons: [
             {
               id: 'edit',
-              text: gt('编辑')
+              text: gt('edit')
             }
           ]
         }
@@ -132,7 +132,7 @@ export default class WalletList extends Component {
         options: {
           topBar: {
             backButton: {
-              title: gt('返回')
+              title: gt('button_back')
             }
           }
         }
@@ -150,7 +150,7 @@ export default class WalletList extends Component {
           options: {
             topBar: {
               backButton: {
-                title: gt('返回')
+                title: gt('button_back')
               }
             }
           }
@@ -173,7 +173,7 @@ export default class WalletList extends Component {
         options: {
           topBar: {
             backButton: {
-              title: gt('返回')
+              title: gt('button_back')
             }
           }
         }
@@ -286,7 +286,7 @@ export default class WalletList extends Component {
               onPress={this.toSelectChainType}
               type="add"
               text={
-                t(this,"wallet_list_text_import_wallet")
+                t(this,'wallet_list_text_import_wallet')
               }
             />
           </Section>

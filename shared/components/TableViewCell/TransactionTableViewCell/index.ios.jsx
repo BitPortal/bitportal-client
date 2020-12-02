@@ -1,3 +1,4 @@
+
 import React from 'react'
 import { View, Text, TouchableHighlight, NativeModules } from 'react-native'
 import FastImage from 'react-native-fast-image'
@@ -24,10 +25,10 @@ const TransactionTableViewCell = (props) => {
             {props.data.transactionType === 'send' && !props.data.failed && <FastImage source={require('resources/images/sent.png')} style={{ width: 20, height: 20 }} />}
             {props.data.transactionType === 'receive' && !props.data.failed && <FastImage source={require('resources/images/received.png')} style={{ width: 20, height: 20 }} />}
             {!!props.data.failed && <FastImage source={require('resources/images/Error.png')} style={{ width: 20, height: 20, marginRight: 2 }} />}
-            {props.data.transactionType === 'send' && !props.data.failed && !props.data.pending && <Text style={{ fontSize: 15, color: '#888888', lineHeight: 20 }}>发送</Text>}
-            {props.data.transactionType === 'receive' && !props.data.failed && !props.data.pending && <Text style={{ fontSize: 15, color: '#888888', lineHeight: 20 }}>接收</Text>}
-            {!!props.data.failed && <Text style={{ fontSize: 15, color: '#888888', lineHeight: 20 }}>{gt('转账失败')}</Text>}
-            {!!props.data.pending && <Text style={{ fontSize: 15, color: '#888888', lineHeight: 20 }}>{gt('转账中...')}</Text>}
+          {props.data.transactionType === 'send' && !props.data.failed && !props.data.pending && <Text style={{ fontSize: 15, color: '#888888', lineHeight: 20 }}>{gt('send')}</Text>}
+          {props.data.transactionType === 'receive' && !props.data.failed && !props.data.pending && <Text style={{ fontSize: 15, color: '#888888', lineHeight: 20 }}>{gt('receive')}</Text>}
+            {!!props.data.failed && <Text style={{ fontSize: 15, color: '#888888', lineHeight: 20 }}>{gt('tx_failed')}</Text>}
+            {!!props.data.pending && <Text style={{ fontSize: 15, color: '#888888', lineHeight: 20 }}>{gt('tx_transfering')}</Text>}
             {!props.data.pending && <Text style={{ fontSize: 15, color: '#888888', lineHeight: 20 }}> {props.data.date} {props.data.time}</Text>}
           </View>
         </View>

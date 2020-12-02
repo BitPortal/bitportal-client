@@ -57,7 +57,7 @@ export default class Discovery extends Component {
     return {
       topBar: {
         title: {
-          text: gt('应用')
+          text: gt('apps')
         },
         searchBar: true,
         searchBarHiddenWhenScrolling: true,
@@ -79,15 +79,19 @@ export default class Discovery extends Component {
 
   state = {
     dataProvider: dataProvider.cloneWithRows([
-      { title: 'MakerDAO', url: 'https://cdp.makerdao.com', chain: 'ETHEREUM' },
+      { title: 'Oasis Apps(MakerDAO)', url: 'https://oasis.app/', chain: 'ETHEREUM' },
+      { title: 'Compound', url: 'https://app.compound.finance/', chain: 'ETHEREUM' },
+      { title: 'DDEX Margin', url: 'https://ddex.io/margin/', chain: 'ETHEREUM' },
+      { title: 'Uniswap', url: 'https://uniswap.exchange/', chain: 'ETHEREUM' },
+      { title: 'DYDX', url: 'https://trade.dydx.exchange/', chain: 'ETHEREUM' },
+      { title: 'DeBank', url: 'https://debank.com/?atm=bitportal', chain: 'ETHEREUM' },
       { title: '0x Protocol', url: 'https://0x.org/portal/account', chain: 'ETHEREUM' },
       { title: 'KyberSwap', url: 'https://kyberswap.com/swap/eth_knc', chain: 'ETHEREUM' },
-      { title: 'KyberSwap', url: 'https://kyberswap.com/swap/eth_knc', chain: 'ETHEREUM' },
       { title: 'Crypto Kitties', url: 'http://www.cryptokitties.co', chain: 'ETHEREUM' },
-      { title: 'PRA Candy Box', url: 'https://chain.pro/candybox', chain: 'EOS' },
-      { title: 'Newdex', url: 'https://newdex.340wan.com', chain: 'EOS' },
-      { title: 'WhaleEx', url: 'https://w.whaleex.com.cn/wallet', chain: 'EOS' },
-      { title: 'EOSX', url: 'https://www.myeoskit.com', chain: 'EOS' }
+      // { title: 'PRA Candy Box', url: 'https://chain.pro/candybox', chain: 'EOS' },
+      // { title: 'Newdex', url: 'https://newdex.340wan.com', chain: 'EOS' },
+      // { title: 'WhaleEx', url: 'https://w.whaleex.com.cn/wallet', chain: 'EOS' },
+      // { title: 'EOSX', url: 'https://www.myeoskit.com', chain: 'EOS' }
     ]),
     searchUrl: ''
   }
@@ -104,10 +108,10 @@ export default class Discovery extends Component {
       const { wallet } = this.props
       if (!wallet) {
         Alert.alert(
-          t(this,'暂无EOS钱包'),
+         `暂无EOS钱包`,
           '',
           [
-            { text: t(this,'确定'), onPress: () => {} }
+            { text: t(this,'button_ok'), onPress: () => {} }
           ]
         )
       }
@@ -300,7 +304,7 @@ export default class Discovery extends Component {
   }
 
   renderItem = ({ item, index }) => {
-    
+
     return (
       <TouchableNativeFeedback onPress={this.toDapp.bind(this, item)} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.3)', false)}>
         <View style={{ marginRight: 8, marginLeft: !index ? 16 : 0, width: (Dimensions.get('window').width - 48) / 3, marginVertical: 4, elevation: 2, backgroundColor: 'white', overflow: 'hidden', borderRadius: 4 }}>
@@ -356,13 +360,13 @@ export default class Discovery extends Component {
               onBackPress={this.onBackPress}
               searchBarUpdated={this.searchBarUpdated}
               searchBarCleared={this.searchBarCleared}
-              placeholder="输入Dapp Url"
+              placeholder={t(this,'input_dapp_url')}
               onSubmit={this.onSubmit}
             />
           </View>
         </Modal>
         <View style={{ paddingLeft: 16, width: '100%', height: 48, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Text style={{ fontSize: 15, fontWeight: '500' }}>热门应用</Text>
+    <Text style={{ fontSize: 15, fontWeight: '500' }}>{t(this,'menu_hots')}</Text>
         </View>
         <RecyclerListView
           style={{ flex: 1, backgroundColor: 'white' }}

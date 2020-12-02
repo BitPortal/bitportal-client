@@ -43,6 +43,7 @@ export const transferWalletsContactsSelector = createSelector(
   contactByIdSelector,
   contactAllIdsSelector,
   (wallet: any, byId: any, allIds: any) => {
+
     if (!wallet || !wallet.chain) return []
 
     let chainSymbol
@@ -53,6 +54,8 @@ export const transferWalletsContactsSelector = createSelector(
       chainSymbol = 'eth'
     } else if (wallet.chain === 'EOS') {
       chainSymbol = 'eos'
+    } else if (wallet.chain === 'POLKADOT') {
+      chainSymbol = 'rio'
     } else {
       return []
     }
@@ -73,6 +76,7 @@ export const transferWalletsContactsSelector = createSelector(
         return [...a, ...addresses]
       }, [])
 
+      console.warn('contacts:',contacts)
     return contacts
   }
 )
@@ -97,6 +101,8 @@ export const selectedContactSelector = createSelector(
         chainSymbol = 'eth'
       } else if (info.chain === 'EOS') {
         chainSymbol = 'eos'
+      }  else if (info.chain === 'POLKADOT') {
+        chainSymbol = 'rio'
       } else {
         return null
       }

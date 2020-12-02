@@ -37,7 +37,7 @@ export default class SelectContactList extends Component {
           <View style={{ height: 64, width: '100%', backgroundColor: '#F7F7F7', borderTopLeftRadius: 12, borderTopRightRadius: 12, borderBottomWidth: 0.5, borderColor: '#C8C7CC', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
             <View style={{ height: '100%', alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
               <View style={{ height: '100%', justifyContent: 'center' }}>
-                <Text style={{ fontSize: 17 }}>{`${t(this,'选择联系人')}${chain === 'EOS' ? t(this,'账户名') : t(this,'地址')}`}</Text>
+                <Text style={{ fontSize: 17 }}>{`${t(this,'contact_select')}${chain === 'EOS' ? t(this,'account_name') : t(this,'addr')}`}</Text>
               </View>
             </View>
           </View>

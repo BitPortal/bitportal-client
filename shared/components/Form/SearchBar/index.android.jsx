@@ -57,7 +57,7 @@ export default class SearchBar extends Component {
             autoFocus={true}
             autoCorrect={false}
             autoCapitalize="none"
-            placeholder={placeholder || '搜索'}
+            placeholder={placeholder || gt('search')}
             onChangeText={this.searchBarUpdated}
             keyboardType="default"
             onSubmitEditing={onSubmit ? onSubmit : () => {}}

@@ -247,7 +247,7 @@ function* transfer(action: Action) {
         {
           topBar: {
             title: {
-              text: `${symbol} 转账中...`
+              text: `${symbol} ${gt('tx_transfering')}`
             }
           }
         })

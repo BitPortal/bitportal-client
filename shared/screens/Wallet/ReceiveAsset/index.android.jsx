@@ -226,13 +226,13 @@ export default class ReceiveAsset extends Component {
         {hasChildAddress && chain === 'BITCOIN' && <View style={{ height: 48, width: '100%', flexDirection: 'row', justifyContent: 'center', backgroundColor: '#673AB7', elevation: 4 }}>
           <TouchableNativeFeedback onPress={this.changeSelectedIndex.bind(this, 0)} background={TouchableNativeFeedback.Ripple('rgba(255,255,255,0.3)', true)}>
             <View style={{ width: '50%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
-              <Text style={{ fontSize: 16, color: 'white' }}>{t(this,'主地址')}</Text>
+              <Text style={{ fontSize: 16, color: 'white' }}>{t(this,'addr_primary')}</Text>
               {!this.state.selectedIndex && <View style={{ width: '100%', height: 2, backgroundColor: 'white', position: 'absolute', bottom: 0, left: 0 }} />}
             </View>
           </TouchableNativeFeedback>
           <TouchableNativeFeedback onPress={this.changeSelectedIndex.bind(this, 1)} background={TouchableNativeFeedback.Ripple('rgba(255,255,255,0.3)', true)}>
             <View style={{ width: '50%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
-              <Text style={{ fontSize: 16, color: 'white' }}>{t(this,'子地址')}</Text>
+              <Text style={{ fontSize: 16, color: 'white' }}>{t(this,'addr_sub')}</Text>
               {this.state.selectedIndex === 1 && <View style={{ width: '100%', height: 2, backgroundColor: 'white', position: 'absolute', bottom: 0, left: 0 }} />}
             </View>
           </TouchableNativeFeedback>
@@ -298,7 +298,7 @@ export default class ReceiveAsset extends Component {
       >
         {this.state.showModal && <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
           <View style={{ backgroundColor: 'rgba(0,0,0,0.87)', padding: 16, borderRadius: 4, height: 48, elevation: 1, justifyContent: 'center', width: '100%' }}>
-            <Text style={{ fontSize: 14, color: 'white' }}>{t(this,'已复制')}</Text>
+            <Text style={{ fontSize: 14, color: 'white' }}>{t(this,'copied')}</Text>
           </View>
         </View>}
       </Modal>
@@ -316,7 +316,7 @@ export default class ReceiveAsset extends Component {
         {(this.state.showAmountPrompt) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 6 }}>
           <View style={{ backgroundColor: 'white', paddingTop: 14, paddingBottom: 11, paddingHorizontal: 24, borderRadius: 2, alignItem: 'center', justifyContent: 'space-between', elevation: 14, width: '100%' }}>
             <View style={{ marginBottom: 30 }}>
-              <Text style={{ fontSize: 20, color: 'black', marginBottom: 12 }}>{t(this,'设置金额')}</Text>
+              <Text style={{ fontSize: 20, color: 'black', marginBottom: 12 }}>{t(this,'amount_set')}</Text>
               <TextInput
                 style={{
                   fontSize: 16,
@@ -336,12 +336,12 @@ export default class ReceiveAsset extends Component {
             <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
               <TouchableNativeFeedback onPress={this.cancelChangeAmount} background={TouchableNativeFeedback.SelectableBackground()}>
                 <View style={{ padding: 10, borderRadius: 2, marginRight: 8 }}>
-                  <Text style={{ color: '#169689', fontSize: 14 }}>{t(this,'取消')}</Text>
+                  <Text style={{ color: '#169689', fontSize: 14 }}>{t(this,'button_cancel')}</Text>
                 </View>
               </TouchableNativeFeedback>
               <TouchableNativeFeedback onPress={this.submitAmount} background={TouchableNativeFeedback.SelectableBackground()}>
                 <View style={{ padding: 10, borderRadius: 2 }}>
-                  <Text style={{ color: '#169689', fontSize: 14 }}>{t(this,'确定')}</Text>
+                  <Text style={{ color: '#169689', fontSize: 14 }}>{t(this,'button_ok')}</Text>
                 </View>
               </TouchableNativeFeedback>
             </View>

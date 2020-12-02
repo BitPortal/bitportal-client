@@ -11,6 +11,7 @@ import secureStorage from 'core/storage/secureStorage'
 import { importedWalletSelector, activeWalletIdSelector, bridgeWalletIdSelector } from 'selectors/wallet'
 import { push, dismissAllModals, showModal, popToRoot } from 'utils/location'
 import { CHAIN_ORDER } from 'constants/chain'
+import { getTags } from 'react-native-device-info'
 
 const actions = { ...identityActions, ...walletActions }
 
@@ -33,7 +34,6 @@ function* scanIdentity(action: Action<ScanIdentityParams>) {
       const walletIDs = identityInfo.walletIDs
       const identityWallets = Object.keys(allItems).filter(item => !item.indexOf('IDENTITY_WALLET_KEYSTORE')).map((item) => {
         const info = allItems[item]
-        console.log('scan idf :',item,'   info:',info)
         return JSON.parse(info)
       }).filter(wallet => walletIDs.indexOf(wallet.id) !== -1).sort((a, b) => {
         if (a.bitportalMeta.chain && b.bitportalMeta.chain) {
@@ -179,7 +179,7 @@ function* backupIdentity(action: Action<BackupIdentityParams>) {
                   leftButtons: [
                     {
                       id: 'cancel',
-                      text: '取消'
+                      text: gt('button_cancel')
                     }
                   ]
                 }

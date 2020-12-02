@@ -114,7 +114,7 @@ const WalletCardCollectionViewCell = (props) => {
                  <Text style={{ color: 'white', fontSize: 24 }}>{props.data.totalAsset.split('.')[0]}.</Text>
                  <Text style={{ color: 'white', fontSize: 20, marginBottom: 1, marginTop: 1 }}>{props.data.totalAsset.split('.')[1]}</Text>
                </View>
-               <Text style={{ color: 'white', fontSize: 15, marginTop: 8 }}>总资产</Text>
+            <Text style={{ color: 'white', fontSize: 15, marginTop: 8 }}>{props.data.title}</Text>
              </View>
              <View style={{ alignItems: 'flex-end', height: 74, width: 110, justifyContent: 'space-between' }}>
                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'space-between', width: '100%' }}>
@@ -140,7 +140,7 @@ const WalletCardCollectionViewCell = (props) => {
                  <Text style={{ color: 'white', fontSize: 28 }}>{props.data.totalAsset.split('.')[0]}.</Text>
                  <Text style={{ color: 'white', fontSize: 24, marginBottom: 1, marginTop: 1 }}>{props.data.totalAsset.split('.')[1]}</Text>
                </View>
-               <Text style={{ color: 'white', fontSize: 17, marginTop: 8 }}>总资产</Text>
+            <Text style={{ color: 'white', fontSize: 17, marginTop: 8 }}>{props.data.title}</Text>
              </View>
            </View>}
       </View>

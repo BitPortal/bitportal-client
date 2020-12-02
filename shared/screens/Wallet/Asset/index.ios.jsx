@@ -17,13 +17,15 @@ import * as transactionActions from 'actions/transaction'
 import * as walletActions from 'actions/wallet'
 import * as balanceActions from 'actions/balance'
 import { assetIcons } from 'resources/images'
-import chainxAccount from '@chainx/account'
+// import chainxAccount from '@chainx/account'
 import { DarkModeContext } from 'utils/darkMode'
 import styles from './styles'
 import { rioTokenIcons } from '../../../resources/images'
 import {RioChainURL} from 'core/chain/polkadot'
 const { StatusBarManager } = NativeModules
 const { Section, Item } = TableView
+
+const chainxAccount = {}
 
 @injectIntl
 @connect(
@@ -79,12 +81,12 @@ export default class Asset extends Component {
             options: {
               topBar: {
                 title: {
-                  text: t(this,'发送{symbol}到',{symbol:this.props.activeAsset.symbol})
+                  text: t(this,'send_token_symbol',{symbol:this.props.activeAsset.symbol})
                 },
                 leftButtons: [
                   {
                     id: 'cancel',
-                    text: t(this,'取消')
+                    text: t(this,'button_cancel')
                   }
                 ]
               }
@@ -93,19 +95,6 @@ export default class Asset extends Component {
         }]
       }
     })
-
-    /* Navigation.push(this.props.componentId, {
-     *   component: {
-     *     name: 'BitPortal.TransferAsset',
-     *     options: {
-     *       topBar: {
-     *         title: {
-     *           text: `发送${this.props.activeWallet.symbol}到`
-     *         }
-     *       }
-     *     }
-     *   }
-     * })*/
   }
 
   toReceiveAsset = async () => {
@@ -120,7 +109,7 @@ export default class Asset extends Component {
         options: {
           topBar: {
             title: {
-              text: `${t(this,'接收')} ${this.props.activeAsset.symbol}`
+              text: `${t(this,'receive')} ${this.props.activeAsset.symbol}`
             },
             noBorder: this.props.activeWallet.chain === 'BITCOIN' && this.props.childAddress && this.props.activeWallet.address !== this.props.childAddress
           }
@@ -177,9 +166,9 @@ export default class Asset extends Component {
   toTransactionDetail = (id, pending, failed) => {
     this.props.actions.setActiveTransactionId(id)
 
-    let statusText = t(this,'转账成功')
-    if (pending) statusText = t(this,'转账中...')
-    if (failed) statusText = t(this,'转账失败')
+    let statusText = t(this,'tx_suscess')
+    if (pending) statusText = t(this,'tx_transfering')
+    if (failed) statusText = t(this,'tx_failed')
 
     Navigation.push(this.props.componentId, {
       component: {
@@ -245,7 +234,7 @@ export default class Asset extends Component {
         options: {
           topBar: {
             title: {
-              text: t(this,'ChainX历史记录')
+              text: t(this,'tx_history_symbol',{symbol:'ChainX'})
             }
           }
         }
@@ -265,7 +254,7 @@ export default class Asset extends Component {
         options: {
           topBar: {
             title: {
-              text: 'RioChain历史记录'
+              text: t(this,'tx_history_symbol',{symbol:'RioChain'})
             }
           }
         }
@@ -324,14 +313,19 @@ export default class Asset extends Component {
       )
     }
 
+    const symbolBalance = (ticker && ticker[`${activeWallet.chain}/${activeWallet.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${activeWallet.symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'
+    const cuySymbolBalance = (ticker && ticker[`${activeWallet.chain}/${assetBalance.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${assetBalance.symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'
+    const syFontSzie = symbolBalance.toString().length > 10 ? 20 : 26
+    const cyFontSzie = cuySymbolBalance.toString().length > 10 ? 16 : 20
+
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : '#FFFFFF' }}>
         <View style={{ justifyContent: 'flex-start', alignItems: 'center', backgroundColor: isDarkMode ? 'black' : '#FFFFFF', height: 136 }}>
-          <View style={{ width: '100%', justifyContent: 'space-between', alignItems: 'flex-start', flexDirection: 'row', paddingRight: 16, paddingLeft: 16 }}>
-            <View style={{ justifyContent: 'center', alignItems: 'flex-start', width: '60%' }}>
-              <Text style={{ fontSize: 26, fontWeight: '500', color: isDarkMode ? 'white' : 'black' }}>{balance && intl.formatNumber(balance.balance, { minimumFractionDigits: 0, maximumFractionDigits: balance.precision })}</Text>
-              {!assetBalance && <Text style={{ fontSize: 20, color: '#007AFF', marginTop: 4 }}>≈ {currency.sign}{(ticker && ticker[`${activeWallet.chain}/${activeWallet.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${activeWallet.symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</Text>}
-              {!!assetBalance && <Text style={{ fontSize: 20, color: '#007AFF', marginTop: 4 }}>≈ {currency.sign}{(ticker && ticker[`${activeWallet.chain}/${assetBalance.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${assetBalance.symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</Text>}
+          <View style={{ width: '100%', justifyContent: 'space-between', alignItems: 'flex-start', flexDirection: 'row', paddingRight: 16, paddingLeft: 16 ,}}>
+            <View style={{ justifyContent: 'center', alignItems: 'flex-start', width: '80%'}}>
+              <Text style={{ fontSize: syFontSzie, fontWeight: '500', color: isDarkMode ? 'white' : 'black' }}>{balance && intl.formatNumber(balance.balance, { minimumFractionDigits: 0, maximumFractionDigits: balance.precision })}</Text>
+              {!assetBalance && <Text style={{ color: '#007AFF', marginTop: 4 }}>≈ {currency.sign}{symbolBalance}</Text>}
+              {!!assetBalance && <Text style={{ fontSize: cyFontSzie, color: '#007AFF', marginTop: 4 }}>≈ {currency.sign}{cuySymbolBalance}</Text>}
             </View>
             {(!activeAsset || !activeAsset.contract) && !!chain && <FastImage source={assetIcons[chain.toLowerCase()]} style={{ width: 60, height: 60, borderRadius: 30, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }} />}
             {(!!activeAsset && !!activeAsset.contract) && <View style={{ width: 60, height: 60, borderWidth: 0, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white', borderRadius: 30 }}>
@@ -374,10 +368,10 @@ export default class Asset extends Component {
           <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 0, backgroundColor: '#C8C7CC' }} />
         </View>
         {chain === 'CHAINX' && (<View style={{ marginTop: 50, alignItems: 'center' }}>
-          <Text style={{fontSize: 18, color: '#007AFF' }} onPress={this.toChainXHistory}>{t(this,'ChainX的更多记录请点击这里...')}</Text>
+          <Text style={{fontSize: 18, color: '#007AFF' }} onPress={this.toChainXHistory}>{t(this,'tx_history_more_symbol',{symbol:'ChainX'})}</Text>
         </View>)}
         {chain === 'POLKADOT' && (<View style={{ marginTop: 50, alignItems: 'center' }}>
-          <Text style={{fontSize: 18, color: '#007AFF' }} onPress={this.toRioChainHistory}>{'RioChain的更多记录请点击这里...'}</Text>
+          <Text style={{fontSize: 18, color: '#007AFF' }} onPress={this.toRioChainHistory}>{t(this,'tx_history_more_symbol',{symbol:'RioChain'})}</Text>
         </View>)}
         {chain !== 'CHAINX' && chain !== 'POLKADOT' && (
           <TableView
@@ -397,9 +391,9 @@ export default class Asset extends Component {
             <Section uid="HeaderTableViewCell">
               <Item
                 reactModuleForCell="HeaderTableViewCell"
-                title={emptyTransactions ? t(this,'暂无交易记录') : t(this,'交易记录')}
+                title={emptyTransactions ? t(this,'tx_no_history') : t(this,'tx_history')}
                 loading={(!refreshing && loading) && (!hasTransactions || emptyTransactions)}
-                loadingTitle={t(this,'获取交易记录...')}
+                loadingTitle={t(this,'tx_fetch_history')}
                 height={48}
                 componentId={this.props.componentId}
                 isDarkMode={isDarkMode}

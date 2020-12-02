@@ -16,9 +16,9 @@ export const errorMessages = (error) => {
 
   switch (String(message)) {
     case 'Invalid password':
-      return gt('密码错误')
+      return gt('pwd_wrong')
     default:
-      return gt('操作失败')
+      return gt('operation_failed')
   }
 }
 
@@ -49,7 +49,7 @@ export default class MyIdentity extends Component {
           }
         ],
         title: {
-          text: t(this,'我的身份')
+          text: t(this,'identity_id_user')
         }
       }
     }
@@ -216,7 +216,7 @@ export default class MyIdentity extends Component {
           sections={sections}
           keyExtractor={(item, index) => item.key}
         />
-        <IndicatorModal onModalHide={this.onModalHide} isVisible={loading} message={t(this,'验证密码...')} />
+        <IndicatorModal onModalHide={this.onModalHide} isVisible={loading} message={t(this,'pwd_verify')} />
         <Modal
           isVisible={this.state.showPrompt}
           backdropOpacity={0.6}
@@ -231,7 +231,7 @@ export default class MyIdentity extends Component {
           {(this.state.showPrompt) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 6 }}>
             <View style={{ backgroundColor: 'white', paddingTop: 14, paddingBottom: 11, paddingHorizontal: 24, borderRadius: 2, alignItem: 'center', justifyContent: 'space-between', elevation: 14, width: '100%' }}>
               <View style={{ marginBottom: 30 }}>
-                <Text style={{ fontSize: 20, color: 'black', marginBottom: 12 }}>{t(this,'请输入密码')}</Text>
+                <Text style={{ fontSize: 20, color: 'black', marginBottom: 12 }}>{t(this,'pwd_enter')}</Text>
                 {/* <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.54)', marginBottom: 12 }}>This is a prompt</Text> */}
                 <TextInput
                   style={{
@@ -254,12 +254,12 @@ export default class MyIdentity extends Component {
               <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
                 <TouchableNativeFeedback onPress={this.clearPassword} background={TouchableNativeFeedback.SelectableBackground()}>
                   <View style={{ padding: 10, borderRadius: 2, marginRight: 8 }}>
-                    <Text style={{ color: '#169689', fontSize: 14 }}>{t(this,'取消')}</Text>
+                    <Text style={{ color: '#169689', fontSize: 14 }}>{t(this,'button_cancel')}</Text>
                   </View>
                 </TouchableNativeFeedback>
                 <TouchableNativeFeedback onPress={this.submitPassword} background={TouchableNativeFeedback.SelectableBackground()}>
                   <View style={{ padding: 10, borderRadius: 2 }}>
-                    <Text style={{ color: '#169689', fontSize: 14 }}>{t(this,'确定')}</Text>
+                    <Text style={{ color: '#169689', fontSize: 14 }}>{t(this,'button_ok')}</Text>
                   </View>
                 </TouchableNativeFeedback>
               </View>

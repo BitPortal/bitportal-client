@@ -48,7 +48,7 @@ export default class AddIdentity extends Component {
         rightButtons: [
           {
             id: 'skip',
-            text: gt('跳过')
+            text: gt('skip')
           }
         ],
         backButton: {

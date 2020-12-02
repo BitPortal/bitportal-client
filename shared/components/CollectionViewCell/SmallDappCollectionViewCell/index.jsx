@@ -36,7 +36,7 @@ const SmallDappCollectionViewCell = props => {
           style={{ backgroundColor: '#EFEFF4', borderRadius: 28, height: 28, width: 70, padding: 0, alignItems: 'center', justifyContent: 'center' }}
           onPress={this.toDapp}
         >
-          <Text style={{ color: '#007AFF', margin: 0, padding: 0, fontSize: 13, fontWeight: '500' }}>打开</Text>
+          <Text style={{ color: '#007AFF', margin: 0, padding: 0, fontSize: 13, fontWeight: '500' }}>{gt('open')}</Text>
         </TouchableHighlight>
         {/* <Text style={{ color: '#8E8E93', fontSize: 8, position: 'absolute', bottom: -14, left: 0, width: '100%', textAlign: 'center' }}>EOS Dapp</Text> */}
       </View>

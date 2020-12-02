@@ -100,11 +100,8 @@ export const createPair = async ({ toSS58, type }, { publicKey, secretKey }, met
   };
 
   const encodeAddress = () => {
-    console.log('pair encodeAddress publicKey:',publicKey)
-    console.log('pair encodeAddress type:',type)
     const raw = TYPE_ADDRESS[type](publicKey);
     console.log('pair encodeAddress raw:',raw)
-    console.warn('pair toss58:',toSS58)
 
     return type === 'ethereum'
       ? ethereumEncode(raw)

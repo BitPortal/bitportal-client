@@ -664,7 +664,7 @@ export default class ManageEOSResource extends Component {
                 </View>
               </Fragment>}
               <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-                <Text style={{ fontSize: 13, color: '#666666' }}>选择操作</Text>
+              <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'operation_select')}</Text>
               </View>
               <View style={{ width: '100%', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : 'white' }}>
                 {this.state.selectedIndex === 0 && <Fragment>

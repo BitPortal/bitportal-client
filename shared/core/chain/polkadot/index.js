@@ -22,23 +22,28 @@ export let RioChainURL = {
 
 export const polkaApi = async (baseUrl) => {
 
-  const url = baseUrl || defaultUrl
-  RioChainURL.url = url
+  try{
+    const url = baseUrl || defaultUrl
+    RioChainURL.url = url
+      
+    if (createdApi[url]) {
+      return createdApi[url]
+    }
+   
+    const wsProvider = await polkaWsProvider(url)
+  
+    const api = await ApiPromise.create({
+      rpc: rpcInterface,
+      provider: wsProvider,
+      types: chainTypes
+    })
+    await api.isReady
+    createdApi[url] = api
+    console.log('api created: ', url)
+    return api
+  }catch (error) {
 
-  if (createdApi[url]) {
-    return createdApi[url]
   }
-
-  const wsProvider = new WsProvider(url)
-  const api = await ApiPromise.create({
-    rpc: rpcInterface,
-    provider: wsProvider,
-    types: chainTypes
-  })
-  await api.isReady
-  createdApi[url] = api
-  console.log('api created: ', url)
-  return api
 }
 
 export const polkaWsProvider = async (baseUrl) => {

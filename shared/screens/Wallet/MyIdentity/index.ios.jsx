@@ -20,9 +20,9 @@ export const errorMessages = (error) => {
 
   switch (String(message)) {
     case 'Invalid password':
-      return gt('密码错误')
+      return gt('pwd_wrong')
     default:
-      return gt('操作失败')
+      return gt('operation_failed')
   }
 }
 
@@ -49,7 +49,7 @@ export default class MyIdentity extends Component {
           visible: false
         },
         title: {
-          text: gt('我的身份')
+          text: gt('identity_id_user')
         }
       },
       bottomTabs: {
@@ -101,7 +101,7 @@ export default class MyIdentity extends Component {
           onPress: password => this.props.actions.backupIdentity.requested({ id, password, delay: 500, componentId: this.props.componentId })
         }
       ],
-      'secure-text'
+      'secure-text',
     )
   }
 

@@ -7,7 +7,6 @@ import TableView from 'components/TableView'
 import { managingWalletSelector, activeWalletSelector } from 'selectors/wallet'
 import { getIntentions, getAsset, getNominationRecords, getBlockHeight } from 'core/chain/chainx'
 import Modal from 'react-native-modal'
-import Chainx from 'chainx.js'
 import Dialog from 'components/Dialog'
 import styles from './styles'
 import { injectIntl } from "react-intl";
@@ -220,7 +219,7 @@ export default class ChainXVoting extends Component {
           headerBackgroundColor="#F7F7F7"
           ref={(ref) => { this.tableViewRef = ref; return null }}
         >
-          <TableView.Section label={t(this,'特别推荐')}>
+          <TableView.Section label={t(this,'recommend')}>
             {validator.filter(vali => vali.name === 'BitPortal').map((item) => {
               let pendingInterest = 0
               if (item && item.userNomination) {

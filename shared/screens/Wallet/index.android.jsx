@@ -31,7 +31,7 @@ import FastImage from 'react-native-fast-image'
 import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview'
 import ViewPager from '@react-native-community/viewpager'
 import Loading from 'components/Loading'
-import { walletIcons } from 'resources/images'
+import { walletIcons,rioTokenIcons } from 'resources/images'
 import styles from './styles'
 
 const PreloadedImages = () => (
@@ -153,20 +153,27 @@ export default class Wallet extends Component {
     const assetItems = []
 
     if (balance) {
+      let name = balance.symbol === chain ? chain : (!!chain && chain.charAt(0) + chain.slice(1).toLowerCase())
+      if (chain === 'POLKADOT') {
+            name = balance.symbol
+      }
       assetItems.push({
         key: activeWallet.address,
         balance: intl.formatNumber(balance.balance, { minimumFractionDigits: 0, maximumFractionDigits: balance.precision }),
         amount: (ticker && ticker[`${activeWallet.chain}/${activeWallet.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${activeWallet.symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00',
         currency: currency.sign,
         symbol: balance.symbol,
-        name: balance.symbol === chain ? chain : (!!chain && chain.charAt(0) + chain.slice(1).toLowerCase()),
+        name,
         chain: chain
       })
 
       if (selectedAsset && selectedAsset.length) {
         for (let i = 0; i < selectedAsset.length; i++) {
           const assetBalance = assetsBalance && assetsBalance[`${selectedAsset[i].contract}/${selectedAsset[i].symbol}`]
-
+          let icon;
+          if (chain === 'POLKADOT') {
+            icon = rioTokenIcons[selectedAsset[i].symbol.toLowerCase()]
+          }
           assetItems.push({
             key: selectedAsset[i].contract,
             isToken: true,
@@ -178,7 +185,7 @@ export default class Wallet extends Component {
             name: selectedAsset[i].name || selectedAsset[i].symbol,
             chain: chain,
             icon_url: selectedAsset[i].icon_url,
-            icon:selectedAsset[i].icon
+            icon
           })
         }
       }
@@ -212,7 +219,7 @@ export default class Wallet extends Component {
     const { activeWallet } = this.props
     const chain = activeWallet ? activeWallet.chain : ''
 
-    if (chain === 'ETHEREUM' || chain === 'EOS' || chain === 'CHAINX') {
+    if (chain === 'ETHEREUM' || chain === 'EOS' || chain === 'CHAINX' || chain === 'POLKADOT') {
       let symbol
 
       if (chain === 'ETHEREUM') {
@@ -221,6 +228,8 @@ export default class Wallet extends Component {
         symbol = 'EOS'
       } else if (chain === 'CHAINX') {
         symbol = 'PCX'
+      }else if (chain === 'POLKADOT') {
+        symbol = 'RFUEL'
       }
 
       Navigation.push('BitPortal.Root', {
@@ -229,7 +238,7 @@ export default class Wallet extends Component {
           options: {
             topBar: {
               title: {
-                text: t(this,'添加${symbol}资产',{symbol})
+                text: t(this,'add_asset_symbol',{symbol})
               }
             }
           }
@@ -308,12 +317,12 @@ export default class Wallet extends Component {
                 }}>{data.symbol && data.symbol.length > 0 ? data.symbol.slice(0, 1) : ''}</Text>
               </View>
               <FastImage
-                source={{ uri: data.icon_url }}
+                source={data.icon ? data.icon : { uri: data.icon_url }}
                 style={{
                   width: 40,
                   height: 40,
                   borderRadius: 20,
-                  backgroundColor: data.icon_url ? 'white' : 'rgba(0,0,0,0)',
+                  backgroundColor: data.icon_url ||data.icon ? 'white' : 'rgba(0,0,0,0)',
                   borderWidth: 0.5,
                   borderColor: 'rgba(0,0,0,0.2)'
                 }}
@@ -472,7 +481,7 @@ export default class Wallet extends Component {
               </Text>
               <TouchableNativeFeedback onPress={this.onAddPress} background={TouchableNativeFeedback.SelectableBackground()}>
                 <View style={{ padding: 4, paddingRight: 8, paddingLeft: 8, borderRadius: 4, backgroundColor: '#673AB7', elevation: 3 }}>
-                  <Text style={{ color: 'white', fontSize: 14 }}>{t(this,'开始添加')}</Text>
+                  <Text style={{ color: 'white', fontSize: 14 }}>{t(this,'add_start')}</Text>
                 </View>
               </TouchableNativeFeedback>
             </View>
@@ -492,17 +501,17 @@ export default class Wallet extends Component {
             {(this.state.showSimpleModal) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 6 }}>
               <View style={{ backgroundColor: 'white', borderRadius: 4, alignItem: 'center', elevation: 14, minWidth: 240 }}>
                 <View style={{ paddingHorizontal: 24, paddingBottom: 9, paddingTop: 20 }}>
-                  <Text style={{ fontSize: 20, color: 'rgba(0,0,0,0.87)', fontWeight: '500' }}>{t(this,'选择操作')}</Text>
+                  <Text style={{ fontSize: 20, color: 'rgba(0,0,0,0.87)', fontWeight: '500' }}>{t(this,'operation_select')}</Text>
                 </View>
                 <View style={{ paddingBottom: 12, paddingTop: 6, paddingHorizontal: 16 }}>
                   <TouchableNativeFeedback onPress={this.toAddIdentity} background={TouchableNativeFeedback.SelectableBackground()}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', height: 48, paddingHorizontal: 8 }}>
-                      <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'添加数字身份')}</Text>
+                      <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'add_id')}</Text>
                     </View>
                   </TouchableNativeFeedback>
                   <TouchableNativeFeedback onPress={this.toSelectChainType} background={TouchableNativeFeedback.SelectableBackground()}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', height: 48, paddingHorizontal: 8 }}>
-                      <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'导入新钱包')}</Text>
+                      <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'import_wallet_new')}</Text>
                     </View>
                   </TouchableNativeFeedback>
                 </View>
@@ -591,7 +600,7 @@ export default class Wallet extends Component {
                             <Text style={{ color: 'white', fontSize: 24 }}>{`${totalAsset.split('.')[0]}.`}</Text>
                             <Text style={{ color: 'white', fontSize: 20, marginBottom: 1, marginTop: 1 }}>{totalAsset.split('.')[1]}</Text>
                           </View>
-                          <Text style={{ color: 'white', fontSize: 15, marginTop: 8 }}>{t(this,'总资产')}</Text>
+                          <Text style={{ color: 'white', fontSize: 15, marginTop: 8 }}>{t(this,'asset_total')}</Text>
                         </View>
                         <View style={{ alignItems: 'flex-end', height: 74, width: 110, justifyContent: 'space-between' }}>
                           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'space-between', width: '100%' }}>
@@ -616,7 +625,7 @@ export default class Wallet extends Component {
                             <Text style={{ color: 'white', fontSize: 26 }}>{`${totalAsset.split('.')[0]}.`}</Text>
                             <Text style={{ color: 'white', fontSize: 22, marginBottom: 1, marginTop: 1 }}>{totalAsset.split('.')[1]}</Text>
                           </View>
-                          <Text style={{ color: 'white', fontSize: 15, marginTop: 4 }}>{t(this,'总资产')}</Text>
+                          <Text style={{ color: 'white', fontSize: 15, marginTop: 4 }}>{t(this,'asset_total')}</Text>
                         </View>
                      </View>}
                    </View>
@@ -627,7 +636,7 @@ export default class Wallet extends Component {
         </View>
         <View style={{ flex: 1, backgroundColor: 'white' }}>
           <View style={{ paddingLeft: 16, width: '100%', height: 48, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Text style={{ fontSize: 15, fontWeight: '500' }}>{t(this,'资产')}</Text>
+            <Text style={{ fontSize: 15, fontWeight: '500' }}>{t(this,'asset_asset')}</Text>
             {chain !== 'BITCOIN' && <TouchableNativeFeedback onPress={this.addAssets} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.3)', true)}>
               <View style={{ height: 48, width: 48, borderTadius: 24, alignItems: 'center', justifyContent: 'center', paddingRight: 16, paddingLeft: 16 }}>
                 <Image source={require('resources/images/add_android.png')} style={{ width: 24, height: 24 }} />
@@ -657,7 +666,7 @@ export default class Wallet extends Component {
         >
           {this.state.showModal && <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'rgba(0,0,0,0.87)', padding: 16, borderRadius: 4, height: 48, elevation: 1, justifyContent: 'center', width: '100%' }}>
-              <Text style={{ fontSize: 14, color: 'white' }}>{t(this,'已复制')}</Text>
+              <Text style={{ fontSize: 14, color: 'white' }}>{t(this,'copied')}</Text>
             </View>
           </View>}
         </Modal>

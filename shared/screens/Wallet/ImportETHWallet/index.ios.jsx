@@ -24,6 +24,7 @@ import Modal from 'react-native-modal'
 import * as walletActions from 'actions/wallet'
 import { DarkModeContext } from 'utils/darkMode'
 
+
 const styles = EStyleSheet.create({
   container: {
     flex: 1,
@@ -74,7 +75,7 @@ const TextField = ({
   isDarkMode
 }) => (
   <View style={{ width: '100%', alignItems: 'center', height: 44, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-    {!!label && !switchable && <Text style={{ fontSize: 17, marginRight: 16, width: 70, color: isDarkMode ? 'white' : 'black'  }}>{label}</Text>}
+    {!!label && !switchable && <Text style={{ fontSize: 17, marginRight: 16, width: 80, color: isDarkMode ? 'white' : 'black'  }}>{label}</Text>}
     {!!label && !!switchable &&
      <View style={{ borderRightWidth: 0.5, borderColor: '#C8C7CC', height: '100%', marginRight: 16, width: 70, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
        <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.7} onPress={onSwitch} style={{ width: 57, height: '100%', justifyContent: 'center' }}>
@@ -100,6 +101,7 @@ const TextField = ({
       <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
         <FastImage
           source={require('resources/images/clear.png')}
+          
           style={{ width: 14, height: 14 }}
         />
       </TouchableHighlight>
@@ -148,34 +150,34 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid mnemonics':
-      return '无效的助记词'
+      return gt('invalid_mnemonic')
     case 'Invalid keystore':
     case 'No keystore crypto':
     case 'No keystore crypto cipherparams':
     case 'No keystore crypto ciphertext':
     case 'No keystore crypto cipher':
     case 'No keystore crypto cipherparams iv':
-      return '无效的 Keystore'
+      return gt('invalid_keystore')
     case 'Invalid mnemonic path':
     case 'Invalid mnemonic path elements length':
     case 'Invalid mnemonic path 3th element':
     case 'Invalid mnemonic path 4th element':
     case 'Invalid mnemonic path 5th element':
     case 'Invalid index':
-      return '无效的路径'
+      return gt('invalid_path')
     case 'Invalid password':
-      return gt('Keystore 密码错误')
+      return gt('keystore_error_pwd')
     case 'Keystore already exist in imported wallets':
     case 'Keystore already exist in identity wallets':
     case 'Wallet already exist':
-      return '该钱包已存在'
+      return gt('wallet_exsited')
     case 'Invalid WIF length':
     case 'Invalid compression flag':
     case 'private key length is invalid':
     case 'Invalid checksum':
-      return '无效的私钥'
+      return gt('invalid_pk')
     default:
-      return '导入失败'
+      return gt('import_failed')
   }
 }
 
@@ -183,31 +185,31 @@ const validate = (values) => {
   const errors = {}
 
   if (!values.keystore) {
-    errors.keystore = '请输入Keystore'
+    errors.keystore = gt('keystore_enter')
   }
 
   if (!values.keystorePassword) {
-    errors.keystorePassword = '请输入Keystore密码'
+    errors.keystorePassword = gt('keystore_pwd_enter')
   }
 
   if (!values.mnemonic) {
-    errors.mnemonic = '请输入助记词'
+    errors.mnemonic = gt('mnemonic_caution_enter')
   }
 
   if (!values.path) {
-    errors.path = '请输入路径'
+    errors.path = gt('path_enter')
   }
 
   if (!values.privateKey) {
-    errors.privateKey = '请输入私钥'
+    errors.privateKey = gt('pk_caution_enter')
   }
 
   if (!values.password) {
-    errors.password = '请输入密码'
+    errors.password = gt('pwd_enter')
   }
 
   if (!values.passwordConfirm) {
-    errors.passwordConfirm = gt('请输入确认密码')
+    errors.passwordConfirm = gt('pwd_confirm')
   }
 
   return errors
@@ -217,10 +219,10 @@ const warn = (values) => {
   const warnings = {}
 
   if (values.password && values.password.length < 8) {
-    warnings.password = '密码不少于8位字符'
+    warnings.password = gt('pwd_error_tooshort')
   }
   if (values.password !== values.passwordConfirm) {
-    warnings.passwordConfirm = gt('两次密码输入不一致');
+    warnings.passwordConfirm = gt('pwd_confirm_matcherror');
   }
 
   return warnings
@@ -252,7 +254,7 @@ export default class ImportETHWallet extends Component {
         rightButtons: [
           {
             id: 'submit',
-            text: '确认',
+            text: gt('button_ok'),
             fontWeight: '400',
             enabled: false
           }
@@ -261,10 +263,10 @@ export default class ImportETHWallet extends Component {
           visible: false
         },
         backButton: {
-          title: '返回'
+          title: gt('button_back')
         },
         title: {
-          text: '导入ETH钱包'
+          text: gt('import_wallet_eth')
         },
         noBorder: true,
         drawBehind: false
@@ -313,7 +315,7 @@ export default class ImportETHWallet extends Component {
     importETHMnemonicsError: null,
     importETHKeystoreError: null,
     pathEditable: false,
-    pathSwitchLabel: gt('默认')
+    pathSwitchLabel: gt('default')
   }
 
   subscription = Navigation.events().bindComponent(this)
@@ -328,7 +330,7 @@ export default class ImportETHWallet extends Component {
             warning,
             '',
             [
-              { text: '确定', onPress: () => console.log('OK Pressed') }
+              { text: t(this,'button_ok'), onPress: () => console.log('OK Pressed') }
             ]
           )
           return
@@ -374,7 +376,7 @@ export default class ImportETHWallet extends Component {
           rightButtons: [
             {
               id: 'submit',
-              text: '确认',
+              text: t(this,'button_confirm'),
               fontWeight: '400',
               enabled: !this.state.invalid && !this.state.pristine && !((prevState.selectedIndex === 0 && this.state.importETHKeystoreLoading) || (prevState.selectedIndex === 1 && this.state.importETHMnemonicsLoading) || (prevState.selectedIndex === 2 && this.state.importETHPrivateKeyLoading))
             }
@@ -403,7 +405,7 @@ export default class ImportETHWallet extends Component {
           errorMessages(error),
           '',
           [
-            { text: '确定', onPress: () => this.clearError() }
+            { text: t(this,'button_ok'), onPress: () => this.clearError() }
           ]
         )
       }, 20)
@@ -419,19 +421,19 @@ export default class ImportETHWallet extends Component {
     this.setState({ pathEditable: false })
 
     ActionSheetIOS.showActionSheetWithOptions({
-      title: '选择路径',
-      options: ['取消', `m/44'/60'/0'/0/0 默认`, `m/44'/60'/0'/0 Ledger`, `m/44'/60'/1'/0/0 自定义路径`],
+      title:  t(this,'path_select'),
+      options: [ t(this,'button_cancel'), `m/44'/60'/0'/0/0 ${t(this,'default')}`, `m/44'/60'/0'/0 Ledger`, `m/44'/60'/1'/0/0 ${t(this,'path_custom')}`],
       cancelButtonIndex: 0,
     }, (buttonIndex) => {
       if (buttonIndex === 1) {
         this.props.change('path', `m/44'/60'/0'/0/0`)
-        this.setState({ pathEditable: false, pathSwitchLabel: '默认' })
+        this.setState({ pathEditable: false, pathSwitchLabel: t(this,'default') })
       } else if (buttonIndex === 2) {
         this.props.change('path', `m/44'/60'/0'/0`)
         this.setState({ pathEditable: false, pathSwitchLabel: 'Ledger' })
       } else if (buttonIndex === 3) {
         this.props.change('path', `m/44'/60'/1'/0/0`)
-        this.setState({ pathEditable: true, pathSwitchLabel: '自定义' })
+        this.setState({ pathEditable: true, pathSwitchLabel: t(this,'path_custom') })
       } else {
         this.setState({ pathEditable: editable })
       }
@@ -475,7 +477,7 @@ export default class ImportETHWallet extends Component {
         <View style={styles.container}>
           <View style={{ height: 52, width: '100%', justifyContent: 'center', paddingTop: 5, paddingBottom: 13, paddingLeft: 16, paddingRight: 16, backgroundColor: isDarkMode ? 'black' : '#F7F7F7', borderColor: '#C8C7CC', borderBottomWidth: 0.5 }}>
             <SegmentedControlIOS
-              values={['Keystore', '助记词', '私钥']}
+              values={['Keystore', t(this,'mnemonic'), t(this,'pk_privatekey')]}
               selectedIndex={this.state.selectedIndex}
               onChange={this.changeSelectedIndex}
               style={{ width: '100%' }}
@@ -484,14 +486,14 @@ export default class ImportETHWallet extends Component {
           <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
             <View style={{ flex: 1, alignItems: 'center' }}>
               <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-                {this.state.selectedIndex === 0 && <Text style={{ fontSize: 13, color: '#666666' }}>Keystore 文件内容</Text>}
-                {this.state.selectedIndex === 1 && <Text style={{ fontSize: 13, color: '#666666' }}>输入助记词</Text>}
-                {this.state.selectedIndex === 2 && <Text style={{ fontSize: 13, color: '#666666' }}>输入私钥</Text>}
+    {this.state.selectedIndex === 0 && <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'keystore_content')}</Text>}
+    {this.state.selectedIndex === 1 && <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'mnemonic_enter')}</Text>}
+    {this.state.selectedIndex === 2 && <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'pk_enter')}</Text>}
               </View>
               {this.state.selectedIndex === 0 && <Fragment>
                 <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
                   <Field
-                    placeholder="必填"
+                    placeholder={t(this,'required')}
                     name="keystore"
                     fieldName="keystore"
                     component={TextAreaField}
@@ -507,11 +509,11 @@ export default class ImportETHWallet extends Component {
                   </TouchableHighlight>
                 </View>
                 <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-                  <Text style={{ fontSize: 13, color: '#666666' }}>Keystore 密码</Text>
+              <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'keystore_pwd')}</Text>
                 </View>
                 <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
                   <Field
-                    placeholder="必填"
+                    placeholder={t(this,'required')}
                     name="keystorePassword"
                     fieldName="keystorePassword"
                     change={change}
@@ -521,14 +523,11 @@ export default class ImportETHWallet extends Component {
                     secureTextEntry
                   />
                 </View>
-                {/* <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
-                    <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>以太坊官方Keystore文件内容和密码</Text>
-                    </View> */}
               </Fragment>}
               {this.state.selectedIndex === 1 && <Fragment>
                 <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
                   <Field
-                    placeholder="用空格分隔"
+                    placeholder={t(this,'mnemonic_caution_separate')}
                     name="mnemonic"
                     fieldName="mnemonic"
                     component={TextAreaField}
@@ -547,7 +546,7 @@ export default class ImportETHWallet extends Component {
               {this.state.selectedIndex === 2 && <Fragment>
                 <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
                   <Field
-                    placeholder="必填"
+                    placeholder={t(this,'required')}
                     name="privateKey"
                     fieldName="privateKey"
                     component={TextAreaField}
@@ -565,13 +564,13 @@ export default class ImportETHWallet extends Component {
               </Fragment>}
               {this.state.selectedIndex === 1 && <Fragment>
                 <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-                  <Text style={{ fontSize: 13, color: '#666666' }}>选择路径</Text>
+              <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'path_select')}</Text>
                 </View>
                 <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
                   <Field
                     label={this.state.pathSwitchLabel}
                     switchable={true}
-                    placeholder="必填"
+                    placeholder={t(this,'required')}
                     name="path"
                     fieldName="path"
                     editable={this.state.pathEditable}
@@ -585,12 +584,12 @@ export default class ImportETHWallet extends Component {
               </Fragment>}
               {this.state.selectedIndex !== 0 && <Fragment>
                 <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-                  <Text style={{ fontSize: 13, color: '#666666' }}>设置密码</Text>
+              <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'pwd_set')}</Text>
                 </View>
                 <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
                   <Field
-                    label="钱包密码"
-                    placeholder="不少于8位字符，建议混合大小写字母，数字，符号"
+                    label={t(this,'pwd_wallet')}
+                    placeholder={t(this,'pwd_set_caution')}
                     name="password"
                     fieldName="password"
                     change={change}
@@ -601,8 +600,8 @@ export default class ImportETHWallet extends Component {
                     secureTextEntry
                   />
                   <Field
-                    label={t(this,'确认密码')}
-                    placeholder={t(this,'不少于8位字符，建议混合大小写字母，数字，符号')}
+                    label={t(this,'pwd_confirm_confirm')}
+                    placeholder={t(this,'pwd_set_caution')}
                     name="passwordConfirm"
                     fieldName="passwordConfirm"
                     change={change}
@@ -613,8 +612,8 @@ export default class ImportETHWallet extends Component {
                     secureTextEntry
                   />
                   <Field
-                    label="密码提示"
-                    placeholder="选填"
+                    label={t(this,'pwd_set_hint')}
+                    placeholder={t(this,'optional')}
                     name="passwordHint"
                     fieldName="passwordHint"
                     change={change}
@@ -625,7 +624,7 @@ export default class ImportETHWallet extends Component {
                   />
                 </View>
                 <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
-                  <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。</Text>
+              <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>{t(this,'import_pwd_reset_hint')}</Text>
                 </View>
               </Fragment>}
             </View>
@@ -646,7 +645,7 @@ export default class ImportETHWallet extends Component {
             {(this.state.importETHPrivateKeyLoading || this.state.importETHMnemonicsLoading || this.state.importETHKeystoreLoading) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
               <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
                 <ActivityIndicator size="small" color="#000000" />
-                <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>导入中...</Text>
+              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{t(this,'import_importing')}</Text>
               </View>
             </View>}
           </Modal>

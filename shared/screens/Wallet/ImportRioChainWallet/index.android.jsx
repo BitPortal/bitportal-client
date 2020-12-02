@@ -7,7 +7,7 @@ import { Navigation } from 'components/Navigation'
 import * as walletActions from 'actions/wallet'
 import { submit } from 'redux-form'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
-import ImportRioChainKeystoreForm from 'containers/Form/importRioChainKeystoreForm'
+import ImportRioChainKeystoreForm from 'containers/Form/ImportRioChainKeystoreForm'
 import ImportRioChainMnemonicsForm from 'containers/Form/ImportRioChainMnemonicsForm'
 
 @injectIntl
@@ -34,7 +34,7 @@ export default class ImportRioChainWallet extends Component {
           }
         ],
         title: {
-          text: gt('导入RioChain钱包')
+          text: gt('import_wallet_rio')
         },
         noBorder: true,
         elevation: 0
@@ -49,7 +49,7 @@ export default class ImportRioChainWallet extends Component {
     index: 0,
     routes: [
       { key: 'keystore', title: 'Keystore' },
-      { key: 'mnemonics', title: gt('助记词') },
+      { key: 'mnemonics', title: gt('mnemonic') },
     ],
   }
 
@@ -67,10 +67,10 @@ export default class ImportRioChainWallet extends Component {
 
   submit = (data) => {
     if (!this.state.index) {
-      this.props.actions.importRioChianKeystore.requested({ ...data, componentId: this.props.componentId, isSegWit: this.state.isSegWit, delay: 500 })
+      this.props.actions.importRioChainKeystore.requested({ ...data, componentId: this.props.componentId, delay: 500 })
     } else if (this.state.index === 1) {
-      this.props.actions.importRioChainMnemonics.requested({ ...data, componentId: this.props.componentId, isSegWit: this.state.isSegWit, delay: 500 })
-    } 
+      this.props.actions.importRioChainMnemonics.requested({ ...data, componentId: this.props.componentId, delay: 500 })
+    }
   }
 
   renderScene = ({ route }) => {

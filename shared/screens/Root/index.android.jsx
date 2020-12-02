@@ -79,7 +79,7 @@ export default class Root extends Component {
       topBar: {
         elevation: 0,
         title: {
-          text: gt('钱包')
+          text: gt('wallet')
         },
         leftButtons: [
           {
@@ -201,6 +201,9 @@ export default class Root extends Component {
             this.props.actions.getETHTokenBalanceList.requested(activeWallet)
           } else if (activeWallet.chain === 'CHAINX') {
             this.props.actions.getChainXTokenBalanceList.requested(activeWallet)
+          }else if (activeWallet.chain === 'POLKADOT') {
+            this.props.actions.getRioChainAsset.requested(activeWallet)
+            this.props.actions.getRioChainTokenBalanceList.requested(activeWallet)
           }
         }
       }
@@ -213,7 +216,7 @@ export default class Root extends Component {
 
   setNavBar = (index) => {
     const { intl } = this.props
-    const titles = [intl.formatMessage({ id: 'top_bar_title_wallet' }), intl.formatMessage({ id: 'top_bar_title_market' }), t(this,'应用')]
+    const titles = [intl.formatMessage({ id: 'top_bar_title_wallet' }), intl.formatMessage({ id: 'top_bar_title_market' }), t(this,'apps')]
 
     let rightButtons = []
 

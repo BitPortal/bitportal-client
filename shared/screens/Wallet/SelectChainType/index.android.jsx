@@ -3,6 +3,7 @@ import { View, Text, FlatList, TouchableNativeFeedback, Image } from 'react-nati
 import { connect } from 'react-redux'
 import { Navigation } from 'components/Navigation'
 import { chainIcons } from 'resources/images'
+import FastImage from 'react-native-fast-image';
 
 @connect(
   state => ({
@@ -16,7 +17,7 @@ export default class SelectChainType extends Component {
     return {
       topBar: {
         title: {
-          text: gt('选择钱包体系')
+          text: gt('select_wallet_type')
         },
         largeTitle: {
           visible: false
@@ -56,6 +57,13 @@ export default class SelectChainType extends Component {
       }
     })
   }
+  toImportRioChainWallet = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitPortal.ImportRioChainWallet'
+      }
+    })
+  }
 
   // toImportEOSWallet = () => {
   //   Navigation.push(this.props.componentId, {
@@ -81,12 +89,17 @@ export default class SelectChainType extends Component {
       case 'ethereum':
         this.toImportETHWallet()
         return
-      case 'eos':
-        this.toImportEOSWallet()
-        return
-      case 'chainx':
-        this.toImportChainxWallet()
-        return
+      case 'riochain': {
+        this.toImportRioChainWallet()
+      }
+
+      // case 'eos':
+      //   this.toImportEOSWallet()
+      //   return
+      // case 'chainx':
+      //   this.toImportChainxWallet()
+      //   return
+
       default:
     }
   }
@@ -99,6 +112,7 @@ export default class SelectChainType extends Component {
             <Image
               source={chainIcons[item.chain]}
               style={{ width: 200, height: 60 }}
+              resizeMode={'contain'}
             />
           </View>
         </TouchableNativeFeedback>
@@ -111,7 +125,7 @@ export default class SelectChainType extends Component {
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <FlatList
-          data={[{ key: 'bitcoin', chain: 'bitcoin' }, { key: 'ethereum', chain: 'ethereum' ,isLast: true}]}
+          data={[{ key: 'bitcoin', chain: 'bitcoin' }, { key: 'ethereum', chain: 'ethereum' },{key:'riochain', chain:'riochain',isLast:true}]}
           renderItem={this.renderItem}
         />
       </View>

@@ -288,7 +288,7 @@ export default class AddAssets extends Component {
           </View>
           <View style={{ flex: 1 }}>
             <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)' }}>{data.symbol}</Text>
-            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)' }}>{t(this,'合约: {name}',{name:this.formatAddress(data.contract)})}</Text>
+            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)' }}>{t(this,'contract_name_brace',{name:this.formatAddress(data.contract)})}</Text>
           </View>
         </View>
         <View style={{ position: 'absolute', right: 16 }}>
@@ -323,7 +323,7 @@ export default class AddAssets extends Component {
     const { assets, selectedAssetId, getETHAsset, getEOSAsset, getChainXAsset, chain, ui } = this.props
 
     if ((getEOSAsset.loading || getETHAsset.loading || getChainXAsset.loading) && !assets.length) {
-      return (<Loading text={t(this,'加载资产')} />)
+      return (<Loading text={t(this,'loading_asset')} />)
     }
 
     return (

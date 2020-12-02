@@ -19,7 +19,14 @@ export default class AboutUs extends Component {
       topBar: {
         largeTitle: {
           visible: false
-        }
+        },
+        leftButtons: [
+          {
+            id: 'cancel',
+            icon: require('resources/images/cancel_android.png'),
+            color: 'white'
+          }
+        ],
       },
       bottomTabs: {
         visible: false
@@ -32,6 +39,15 @@ export default class AboutUs extends Component {
   state = {
     showModal: false,
     showModalContent: false
+  }
+
+  navigationButtonPressed({ buttonId }) {
+    switch (buttonId) {
+      case 'cancel':
+        Navigation.dismissModal(this.props.componentId)
+        break
+      default:
+    }
   }
 
   toWebsite = (url) => {
@@ -107,7 +123,7 @@ export default class AboutUs extends Component {
         >
           {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
-              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已复制</Text>
+                <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{t(this,'copied')}</Text>
             </View>
           </View>}
         </Modal>

@@ -36,10 +36,10 @@ export default class SwitchBTCAddress extends Component {
     return {
       topBar: {
         title: {
-          text: gt('BTC钱包地址')
+          text: gt('wallet_btc_addr')
         },
         backButton: {
-          title: gt('返回')
+          title: gt('button_back')
         },
         largeTitle: {
           visible: false
@@ -127,7 +127,7 @@ export default class SwitchBTCAddress extends Component {
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <View style={{ width: '100%', padding: 16, backgroundColor: '#EEEEEE', height: 72, borderBottomWidth: 0, borderColor: 'rgba(0,0,0,0.12)' }}>
-          <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.54)' }}>{t(this,'你可以使用不同的子地址用于收款，以保护你的隐私。选中的子地址将会显示在收款界面。')}</Text>
+          <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.54)' }}>{t(this,'addr_subaddr_hint')}</Text>
         </View>
         <RecyclerListView
           layoutProvider={this.layoutProvider}

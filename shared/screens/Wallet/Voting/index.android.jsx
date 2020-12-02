@@ -180,7 +180,7 @@ export default class Voting extends Component {
           t(this,'最多可选30个节点'),
           '',
           [
-            { text: t(this,''), onPress: () => {} }
+            { text: t(this,'button_cancel'), onPress: () => {} }
           ]
         )
       } else {

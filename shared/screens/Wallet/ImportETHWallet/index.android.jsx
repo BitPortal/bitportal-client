@@ -35,7 +35,7 @@ export default class ImportETHWallet extends Component {
           }
         ],
         title: {
-          text: gt('导入ETH钱包')
+          text: gt('import_wallet_eth')
         },
         noBorder: true,
         elevation: 0
@@ -50,8 +50,8 @@ export default class ImportETHWallet extends Component {
     index: 0,
     routes: [
       { key: 'keystore', title: 'Keystore' },
-      { key: 'mnemonics', title: gt('助记词') },
-      { key: 'privateKey', title: gt('私钥') },
+      { key: 'mnemonics', title: gt('mnemonic') },
+      { key: 'privateKey', title: gt('pk_privatekey') },
     ],
   }
 

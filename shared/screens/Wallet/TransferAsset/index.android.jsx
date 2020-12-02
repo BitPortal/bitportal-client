@@ -37,7 +37,7 @@ import * as feeActions from 'actions/fee'
 import * as walletActions from 'actions/wallet'
 import Modal from 'react-native-modal'
 import Slider from '@react-native-community/slider'
-import { assetIcons, walletIcons } from 'resources/images'
+import { assetIcons, walletIcons,rioTokenIcons } from 'resources/images'
 import IndicatorModal from 'components/Modal/IndicatorModal'
 import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview'
 
@@ -101,18 +101,18 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid password':
-      return gt('密码错误')
+      return gt('pwd_wrong')
     case 'Amount less than minimum':
-      return gt('金额小于最低转账额度')
+      return gt('tx_error_belowlimit')
     case 'Select utxo failed':
     case 'You don\'t have enough balance':
-      return gt('余额不足')
+      return gt('error_balance_insufficient')
     case 'Returned error: insufficient funds for gas * price + value':
-      return gt('余额不足以支付手续费')
+      return gt('error_balance_insuffi_fee')
     case 'EOS System Error':
-      return gt('EOS系统错误')
+      return 'EOS系统错误'
     default:
-      return `${gt('转账失败')} ${message.toString()}`
+      return `${gt('tx_failed')} ${message.toString()}`
   }
 }
 
@@ -344,7 +344,7 @@ const CardField = ({
             <Text style={{ fontWeight: '500', fontSize: 20, color: 'white', paddingLeft: 1.6 }}>{symbol && symbol.length? symbol.slice(0, 1):''}</Text>
           </View>
           <FastImage
-            source={{ uri: iconUrl }}
+            source={iconUrl}
             style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: iconUrl ? 'white' : 'rgba(0,0,0,0)', borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
           />
         </View>
@@ -366,15 +366,15 @@ const warn = (values, props) => {
   const available = balance && balance.balance
 
   if (!values.toAddress) {
-    warnings.toAddress = gt('请输入转账地址')
+    warnings.toAddress = gt('tx_enter_addr')
   }
 
   if (!values.amount) {
-    warnings.amount = gt('请输入金额')
+    warnings.amount = gt('tx_enter_amount')
   } else if (isNaN(values.amount) || +values.amount <= 0) {
-    warnings.amount = gt('请输入正确的金额')
+    warnings.amount = gt('tx_enter_amount_error')
   } else if (!available || +values.amount > +available) {
-    warnings.amount = gt('余额不足')
+    warnings.amount = gt('error_balance_insufficient')
   }
 
   return warnings
@@ -706,7 +706,7 @@ export default class TransferAsset extends Component {
           errorMessages(error),
           errorDetail(error),
           [
-            { text: t(this,'确定'), onPress: () => this.clearError() }
+            { text: t(this,'button_ok'), onPress: () => this.clearError() }
           ]
         )
       }, 20)
@@ -730,21 +730,23 @@ export default class TransferAsset extends Component {
         chainSymbol = 'EOS'
       } else if (chain === 'CHAINX') {
         chainSymbol = 'PCX'
+      } else if (chain === 'POLKADOT') {
+        chainSymbol = 'RioChain'
       } else {
         return null
       }
 
       Alert.alert(
-        t(this,'暂无{symbol}联系人地址',{symbol:chainSymbol}),
+        t(this,'contact_nocontact_symbol',{symbol:chainSymbol}),
         null,
         [
           {
-            text: t(this,'取消'),
+            text: t(this,'button_cancel'),
             onPress: () => console.log('cancel Pressed'),
             style: 'cancel'
           },
           {
-            text: t(this,'添加'),
+            text: t(this,'add'),
             onPress: () => {
               Navigation.push(this.props.componentId, {
                 component: {
@@ -752,7 +754,7 @@ export default class TransferAsset extends Component {
                   options: {
                     topBar: {
                       title: {
-                        text: t(this,'创建联系人')
+                        text: t(this,'contact_create')
                       }
                     }
                   }
@@ -829,10 +831,10 @@ export default class TransferAsset extends Component {
 
   showFeesTip = () => {
     Alert.alert(
-      t(this,'矿工费'),
-      t(this,'在加密货币中，矿工费是用来支付给矿工，让矿工把你的交易加到区块链中。费用的多少会影响交易的确认时间。'),
+      t(this,'gas_fee'),
+      t(this,'tx_hint_miner_fee'),
       [
-        { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
+        { text: t(this,'button_ok'), onPress: () => console.log('OK Pressed') }
       ]
     )
     // In cryptocurrencies, a minner fee (or shortly fee) is a payment to the miners for adding a transaction into the blockchain. When a transaction has been included in the blockchain, it is considered confirmed. The size of the fee sent with the transaction determines the confirmation time.
@@ -840,20 +842,20 @@ export default class TransferAsset extends Component {
 
   showRioChainTip = () => {
     Alert.alert(
-      '交易费用',
-      '转账将在RioChain上进行，交易在经过一定的区块确认后完成。',
+      t(this,'gas_fee'),
+      t(this,'tx_caution_riochain_confirmation'),
       [
-        { text: '确定', onPress: () => console.log('OK Pressed') }
+        { text: t(this,'button_ok'), onPress: () => console.log('OK Pressed') }
       ]
     )
   }
 
   showOPReturnTip = () => {
     Alert.alert(
-      t(this,'OP_RETURN 数据'),
-      t(this,'OP_RETURN是一种脚本代码，可以添加任意数据到区块链中，并且带有OP_RETURN的交易output无法再被使用，因此OP_RETURN也可以用于销毁比特币。'),
+      t(this,'opreturn_data'),
+      t(this,'caution_opreturn'),
       [
-        { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
+        { text: t(this,'button_ok'), onPress: () => console.log('OK Pressed') }
       ]
     )
     // OP_RETURN is a script opcode which can be used to write arbitrary data on blockchain and also to mark a transaction output as invalid. Since any outputs with OP_RETURN are provably unspendable, OP_RETURN outputs can be used to burn bitcoins.
@@ -875,16 +877,16 @@ export default class TransferAsset extends Component {
     if (this.state.fastestBTCFee && this.state.halfHourBTCFee && this.state.hourBTCFee) {
       if (feeRate < this.state.hourBTCFee) {
         // return 'more than 1h'
-        return t(this,'(约一小时以上)')
+        return t(this,'tx_confirmation_slow')
       } else if (feeRate >= this.state.hourBTCFee && feeRate < this.state.halfHourBTCFee) {
         // return 'within 1h'
-        return t(this,'(约一小时内)')
+        return t(this,'tx_confirmation_medium')
       } else if (feeRate >= this.state.halfHourBTCFee && feeRate < this.state.fastestBTCFee) {
         // return 'within 0.5h'
-        return t(this,'(约半小时内)')
+        return t(this,'tx_confirmation_high')
       } else {
         // return 'fastest'
-        return t(this,'(最快)')
+        return t(this,'tx_confirmation_fatest')
       }
     }
 
@@ -935,7 +937,8 @@ export default class TransferAsset extends Component {
     const contract = transferAsset.contract
     const available = balance && intl.formatNumber(balance.balance, { minimumFractionDigits: 0, maximumFractionDigits: balance.precision })
     const chain = transferWallet.chain
-    let iconUrl = chain === 'POLKADOT' ? rioTokenIcons[(symbol || '').toLowerCase()] : transferAsset.icon_url
+    let iconUrl = transferAsset.icon_url
+    let rio_icon = chain === 'POLKADOT' ? rioTokenIcons[(symbol || '').toLowerCase()] : null
 
     // fees and display related
     const showMinnerFee = chain === 'BITCOIN' || chain === 'ETHEREUM'
@@ -949,8 +952,8 @@ export default class TransferAsset extends Component {
     const useGasPrice = this.state.useGasPrice || this.state.initialGwei || this.state.ethGasPrice || 4.00
 
     let toAddressPlaceholder = chain === 'EOS'?
-      t(this,'请输入{symbol}账户名',{symbol})
-      : t(this,'请输入{symbol}地址',{symbol})
+      t(this,'account_enter_symbol',{symbol})
+      : t(this,'addr_enter_symbol',{symbol})
 
     return (
       <ScrollView
@@ -962,11 +965,10 @@ export default class TransferAsset extends Component {
         <View style={{ flex: 1, width: '100%', alignItems: 'center' }}>
           <View style={{ backgroundColor: '#673AB7', width: '100%', elevation: 4, paddingBottom: 32 }}>
             <View style={{ width: '100%', paddingLeft: 72, paddingBottom: 6 }}>
-              <Text style={{ color: 'white', fontSize: 24 }}>{t(this,'发送{symbol}到',{symbol})}</Text>
+              <Text style={{ color: 'white', fontSize: 24 }}>{t(this,'send_token_symbol',{symbol})}</Text>
             </View>
             <Field
               label={intl.formatMessage({ id: 'send_input_label_to_address' })}
-              // placeholder={`请输入${symbol}${chain === 'EOS' ? '账户名' : '地址'}`}
               placeholder={toAddressPlaceholder}
               name="toAddress"
               fieldName="toAddress"
@@ -984,7 +986,7 @@ export default class TransferAsset extends Component {
             />
             {chain === 'EOS' && <Field
               label={intl.formatMessage({ id: 'send_input_label_send_memo' })}
-              placeholder={(selectedContact && !!selectedContact.memo) ? t(this,'选填，默认为: {value}',{value:selectedContact.memo}): t(this,'添加备注 (选填)')}
+              placeholder={(selectedContact && !!selectedContact.memo) ? t(this,'optional_default_value',{value:selectedContact.memo}): t(this,'optional_add_note')}
               name="memo"
               fieldName="memo"
               component={MessageField}
@@ -1004,7 +1006,7 @@ export default class TransferAsset extends Component {
             available={available}
             symbol={symbol}
             chain={chain}
-            iconUrl={iconUrl}
+            iconUrl={ rio_icon? rio_icon : {uri: iconUrl}}
             contract={contract}
             separator
           />
@@ -1117,13 +1119,13 @@ export default class TransferAsset extends Component {
              chain === 'POLKADOT' &&
               <View style={{width:'100%',paddingHorizontal:16}}>
                 <View style={{width:'100%',justifyContent:'space-between',flexDirection:'row',alignItems:'center',marginTop:15,}}>
-                  <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>{'交易费用'}</Text>
-                  <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', textAlign: 'right' }}>{'0.1 RFUEL'}</Text>
+                  <Text style={{ fontSize: 15, color:'black'}}>{t(this,'gas_fee')}</Text>
+                  <Text style={{ fontSize: 15, color:'rgba(0,0,0,0.4)', textAlign: 'right' }}>{'0.1 RFUEL'}</Text>
                 </View>
                 <View style={{flexDirection:'row',marginTop:5,marginBottom:10,alignItems:'center'}}>
-                 <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', textAlign: 'right'}}>{'该转账将通过RioChain进行'}</Text>
+                 <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.4)', textAlign: 'right'}}>{t(this,'tx_caution_riochain')}</Text>
                  <TouchableHighlight
-                    underlayColor={isDarkMode ? 'black' : 'white'}
+                    underlayColor={ 'white'}
                     activeOpacity={0.42}
                     onPress={this.showRioChainTip}
                     style={{ width: 28, height: 28 }}
@@ -1223,7 +1225,7 @@ export default class TransferAsset extends Component {
           {(this.state.selectContact) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 6 }}>
             <View style={{ backgroundColor: 'white', borderRadius: 4, alignItem: 'center', elevation: 14, width: '100%' }}>
               <View style={{ paddingHorizontal: 24, paddingBottom: 9, paddingTop: 20 }}>
-                <Text style={{ fontSize: 20, color: 'rgba(0,0,0,0.87)', fontWeight: '500' }}>{t(this,'选择联系人')}</Text>
+                <Text style={{ fontSize: 20, color: 'rgba(0,0,0,0.87)', fontWeight: '500' }}>{t(this,'contact_select')}</Text>
               </View>
               <View style={{ paddingBottom: 12, paddingTop: 6, paddingHorizontal: 16 }}>
                 <View style={{ height: 64 * 4, width: '100%' }}>
@@ -1254,7 +1256,7 @@ export default class TransferAsset extends Component {
           {(this.state.showPrompt) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 6 }}>
             <View style={{ backgroundColor: 'white', paddingTop: 14, paddingBottom: 11, paddingHorizontal: 24, borderRadius: 2, alignItem: 'center', justifyContent: 'space-between', elevation: 14, width: '100%' }}>
               <View style={{ marginBottom: 30 }}>
-                <Text style={{ fontSize: 20, color: 'black', marginBottom: 12 }}>{t(this,'请输入密码')}</Text>
+                <Text style={{ fontSize: 20, color: 'black', marginBottom: 12 }}>{t(this,'pwd_enter')}</Text>
                 {/* <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.54)', marginBottom: 12 }}>This is a prompt</Text> */}
                 <TextInput
                   style={{
@@ -1277,12 +1279,12 @@ export default class TransferAsset extends Component {
               <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
                 <TouchableNativeFeedback onPress={this.clearPassword} background={TouchableNativeFeedback.SelectableBackground()}>
                   <View style={{ padding: 10, borderRadius: 2, marginRight: 8 }}>
-                    <Text style={{ color: '#169689', fontSize: 14 }}>{t(this,'取消')}</Text>
+                    <Text style={{ color: '#169689', fontSize: 14 }}>{t(this,'button_cancel')}</Text>
                   </View>
                 </TouchableNativeFeedback>
                 <TouchableNativeFeedback onPress={this.submitPassword} background={TouchableNativeFeedback.SelectableBackground()}>
                   <View style={{ padding: 10, borderRadius: 2 }}>
-                    <Text style={{ color: '#169689', fontSize: 14 }}>{t(this,'确定')}</Text>
+                    <Text style={{ color: '#169689', fontSize: 14 }}>{t(this,'button_ok')}</Text>
                   </View>
                 </TouchableNativeFeedback>
               </View>

@@ -19,8 +19,9 @@ import {
 } from 'core/constants'
 import EthereumTx from 'ethereumjs-tx'
 
-import Chainx from 'chainx.js'
-import chainxAccount from '@chainx/account'
+// import chainxAccount from '@chainx/account'
+
+const chainxAccount = {}
 
 // import bech32 from 'bech32'
 

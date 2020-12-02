@@ -37,17 +37,6 @@ const searchDataProvider = new DataProvider((r1, r2) => r1.name !== r2.name || r
 )
 
 export default class Market extends Component {
-  // static get options() {
-  //   return {
-  //     topBar: {
-  //       title: {
-  //         text: '行情'
-  //       }
-  //     }
-  //   }
-  // }
-
-  // subscription = Navigation.events().bindComponent(this)
 
   layoutProvider = new LayoutProvider(
     index => {
@@ -75,7 +64,7 @@ export default class Market extends Component {
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
         title: {
-          text: t(this,'行情'),
+          text: t(this,'quota'),
         },
       },
     })
@@ -115,22 +104,6 @@ export default class Market extends Component {
     this.props.actions.getTicker.requested()
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    /* if (
-     *   prevState.getTickerLoading !== this.state.getTickerLoading
-     *   || prevState.getTickerError !== this.state.getTickerError
-     *   || prevState.tickerCount !== this.state.tickerCount
-     * ) {
-     *   Navigation.mergeOptions(this.props.componentId, {
-     *     topBar: {
-     *       searchBar: !(this.state.getTickerLoading && !this.state.tickerCount),
-     *       searchBarHiddenWhenScrolling: true,
-     *       searchBarPlaceholder: 'Search'
-     *     }
-     *   })
-     * }*/
-  }
-
   onRefresh = () => {
     this.setState({ refreshing: true })
   }
@@ -165,7 +138,7 @@ export default class Market extends Component {
 
     if (loading && !ticker.length) {
       return (
-        <Loading text={t(this,'加载行情...')} />
+        <Loading text={t(this,'loading_quota')} />
       )
     }
 

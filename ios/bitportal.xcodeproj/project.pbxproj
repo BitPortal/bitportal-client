@@ -836,20 +836,6 @@
 			remoteGlobalIDString = 3D3CD9321DE5FBEE00167DC4;
 			remoteInfo = "cxxreact-tvOS";
 		};
-		53FA6D4C256CAFDE008005F1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 754647FCC10D42E79662A42B /* FastImage.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FD751C4D229EB44C002BE1F4;
-			remoteInfo = "FastImage-tvOS";
-		};
-		53FA6D79256CAFDE008005F1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C02B79A5AF294526A859B506 /* ReactNativeConfig.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3DF7F6AC203AA09B00D0EAB7;
-			remoteInfo = "ReactNativeConfig-tvOS";
-		};
 		5E9157321DD0AC6500FF2AA8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */;
@@ -1823,7 +1809,6 @@
 			isa = PBXGroup;
 			children = (
 				1865A73E21745DFE00CE1997 /* libFastImage.a */,
-				53FA6D4D256CAFDE008005F1 /* libFastImage-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2126,7 +2111,6 @@
 			isa = PBXGroup;
 			children = (
 				3423A00D20977E3600E7EB8A /* libReactNativeConfig.a */,
-				53FA6D7A256CAFDE008005F1 /* libReactNativeConfig-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3604,20 +3588,6 @@
 			remoteRef = 3DAD3EAA1DF850E9000B6D8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		53FA6D4D256CAFDE008005F1 /* libFastImage-tvOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libFastImage-tvOS.a";
-			remoteRef = 53FA6D4C256CAFDE008005F1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		53FA6D7A256CAFDE008005F1 /* libReactNativeConfig-tvOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libReactNativeConfig-tvOS.a";
-			remoteRef = 53FA6D79256CAFDE008005F1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -4032,7 +4002,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 4;
 				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = 2522XSFN76;
@@ -4083,7 +4053,7 @@
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
 					"$(PROJECT_DIR)/bitportal/Navigation",
 				);
-				MARKETING_VERSION = 0.10.3;
+				MARKETING_VERSION = 0.11.1;
 				OTHER_CFLAGS = (
 					"$(inherited)",
 					"-iquote",
@@ -4119,7 +4089,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 4;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = 7AL695AUTL;
 				ENABLE_BITCODE = YES;
@@ -4169,7 +4139,7 @@
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
 					"$(PROJECT_DIR)/bitportal/Navigation",
 				);
-				MARKETING_VERSION = 0.10.3;
+				MARKETING_VERSION = 0.11.1;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"$(inherited)",

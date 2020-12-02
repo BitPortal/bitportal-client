@@ -7,6 +7,7 @@ import TableView from 'components/TableView'
 import * as intlActions from 'actions/intl'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import messages from 'resources/messages'
+import KeyboardManager from 'react-native-keyboard-manager'
 
 const { Section, Item } = TableView
 
@@ -39,6 +40,7 @@ export default class LanguageSetting extends Component {
 
   setLocale = (locale) => {
     this.props.actions.setLocale(locale)
+    KeyboardManager.setToolbarDoneBarButtonItemText(locale == 'en' ? 'complete' : '完成')
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
         title: {

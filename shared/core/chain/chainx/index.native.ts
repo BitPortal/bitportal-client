@@ -1,8 +1,11 @@
 import { chainxScanApi } from 'core/api'
 import { decryptPrivateKey, decryptMnemonic } from 'core/keystore'
-import { ApiBase, HttpProvider } from 'chainx.js'
-import chainxAccount from '@chainx/account'
-import { walletType } from 'core/constants'
+// import { ApiBase, HttpProvider } from 'chainx.js'
+// import chainxAccount from '@chainx/account'
+// import { walletType } from 'core/constants'
+import { ApiBase, HttpProvider } from './chainxTest'
+import chainxAccount from './chainxTest'
+import { walletType } from './chainxTest'
 
 export const initRpc = () => {
   return new HttpProvider('http://chainx.bitportal.io:8080/rpc')

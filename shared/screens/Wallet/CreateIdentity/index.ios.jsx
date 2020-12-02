@@ -58,7 +58,7 @@ const TextField = ({
   isDarkMode
 }) => (
   <View style={{ width: '100%', alignItems: 'center', height: 56, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-    <Text style={{ fontSize: 17, fontWeight: 'bold', marginRight: 16, width: 70, color: isDarkMode ? 'white' : 'black' }}>{label}</Text>
+    <Text style={{ fontSize: 17, fontWeight: 'bold', marginRight: 16, width: 80, color: isDarkMode ? 'white' : 'black' }}>{label}</Text>
     <TextInput
       style={[styles.textFiled, { color: isDarkMode ? 'white' : 'black' }]}
       autoCorrect={false}
@@ -85,14 +85,14 @@ const validate = (values) => {
   const errors = {}
 
   if (!values.name) {
-    errors.name = gt('请输入身份名称')
+    errors.name = gt('identity_id_enter')
   }
 
   if (!values.password) {
-    errors.password = gt('请输入密码')
+    errors.password = gt('pwd_enter')
   }
   if (!values.passwordConfirm) {
-    errors.passwordConfirm = gt('请输入确认密码')
+    errors.passwordConfirm = gt('pwd_confirm')
   }
 
   return errors
@@ -102,16 +102,16 @@ const warn = (values) => {
   const warnings = {}
 
   if (values.name && values.name.length > 12) {
-    warnings.name = gt('身份名不超过12位')
+    warnings.name = gt('identity_id_caution')
   }
 
   if (values.password && values.password.length < 8) {
-    warnings.password = gt('密码不少于8位字符')
+    warnings.password = gt('pwd_error_tooshort')
   }
 
   const {password,passwordConfirm} = values || {};
   if (password && password !== passwordConfirm) {
-    warnings.passwordConfirm = gt('两次密码输入不一致');
+    warnings.passwordConfirm = gt('pwd_confirm_matcherror');
   }
 
   return warnings
@@ -141,7 +141,7 @@ export default class CreateIdentity extends Component {
         rightButtons: [
           {
             id: 'next',
-            text: gt('下一步'),
+            text: gt('button_next'),
             fontWeight: '400',
             enabled: false
           }
@@ -185,7 +185,7 @@ export default class CreateIdentity extends Component {
           rightButtons: [
             {
               id: 'next',
-              text: t(this,'下一步'),
+              text: t(this,'button_next'),
               fontWeight: '400',
               enabled: !this.state.invalid && !this.state.pristine && !this.state.loading
             }
@@ -205,7 +205,7 @@ export default class CreateIdentity extends Component {
             warning,
             '',
             [
-              { text: t(this,'确定'), onPress: () => console.log('OK Pressed') }
+              { text: t(this,'button_ok'), onPress: () => console.log('OK Pressed') }
             ]
           )
           return

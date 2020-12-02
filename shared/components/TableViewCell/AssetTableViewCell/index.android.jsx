@@ -32,7 +32,7 @@ const AssetTableViewCell = props => {
         </View>
         <View style={{ flex: 1 }}>
           <Text style={{ fontSize: 17 }}>{props.data.symbol}</Text>
-          <Text style={{ fontSize: 15, color: '#666666' }}>{`${gt('合约')}: ${formatAddress(props.data.contract)}`}</Text>
+          <Text style={{ fontSize: 15, color: '#666666' }}>{`${gt('contract_addr')}: ${formatAddress(props.data.contract)}`}</Text>
         </View>
       </View>
     </View>

@@ -177,7 +177,7 @@ export default class CreateEOSAccountByFriendForm extends Component {
         <View style={{ width: '100%', alignItems: 'center' }}>
           <Field
             label={gt('账户名')}
-            placeholder={gt("a-z 与 1-5 组合的12位字符")}
+            placeholder={gt('a-z 与 1-5 组合的12位字符')}
             name="accountName"
             fieldName="accountName"
             component={FilledTextField}

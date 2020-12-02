@@ -14,6 +14,8 @@ import { validateBTCAddress, validateETHAddress,validateRioAddress } from 'utils
 import { findDuplicate } from 'utils'
 import { DarkModeContext } from 'utils/darkMode'
 import styles from './styles'
+import { injectIntl, FormattedMessage } from 'react-intl'
+
 
 const { Section, Item } = TableView
 
@@ -110,18 +112,14 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid password':
-      return '密码错误'
+      return 'pwd_wrong'
     default:
-      return '操作失败'
+      return 'operation_failed'
   }
 }
 
 const validate = (values) => {
   const errors = {}
-
-  /* if (!values.name) {
-   *   errors.name = '请输入姓名'
-   * }*/
 
   return errors
 }
@@ -131,11 +129,11 @@ const warn = (values) => {
   const warnings = {}
 
   if (!values.name) {
-    warnings.name = '请输入姓名'
+    warnings.name = gt('name_enter')
   } else if (!values.name.trim().length) {
-    warnings.name = '请输入姓名'
+    warnings.name = gt('name_enter')
   } else if (values.name.trim().length > 50) {
-    warnings.name = '姓名不超过50个字符'
+    warnings.name = gt('name_error_maximum')
   }
 
   return warnings
@@ -144,11 +142,12 @@ const warn = (values) => {
 const shouldError = () => true
 
 @reduxForm({ form: 'editContactForm', validate, shouldError, warn })
+@injectIntl
 
 @connect(
   state => ({
     formSyncWarnings: getFormSyncWarnings('editContactForm')(state),
-    formValues: getFormValues('editContactForm')(state)
+    formValues: getFormValues('editContactForm')(state),
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -157,7 +156,7 @@ const shouldError = () => true
   })
 )
 
-export default class MyIdentity extends Component {
+export default class EditContact extends Component {
   static get options() {
     return {
       topBar: {
@@ -170,14 +169,14 @@ export default class MyIdentity extends Component {
         leftButtons: [
           {
             id: 'cancel',
-            text: '取消'
+            text: gt('button_cancel')
           }
         ],
         rightButtons: [
           {
             id: 'done',
             fontWeight: '400',
-            text: '完成'
+            text: gt('complete')
           }
         ],
         noBorder: true,
@@ -209,10 +208,10 @@ export default class MyIdentity extends Component {
 
       if (!formValues || !formValues.name || !formValues.name.trim().length) {
         Alert.alert(
-          '请输入姓名',
+          t(this,'name_enter'),
           '',
           [
-            { text: '确定', onPress: () => console.log('OK Pressed') }
+            { text: t(this,'button_ok'), onPress: () => console.log('OK Pressed') }
           ]
         )
         return
@@ -241,10 +240,10 @@ export default class MyIdentity extends Component {
 
       if (!btc.length && !eth.length && !rio.length) {
         Alert.alert(
-          '请添加地址或账户名',
+          t(this,'add_addr_or_name'),
           '',
           [
-            { text: '确定', onPress: () => console.log('OK Pressed') }
+            { text: t(this,'button_ok'), onPress: () => console.log('OK Pressed') }
           ]
         )
         return
@@ -253,10 +252,10 @@ export default class MyIdentity extends Component {
       for (let i = 0; i < btc.length; i++) {
         if (!validateBTCAddress(btc[i].address)) {
           Alert.alert(
-            '无效的BTC地址',
+            t(this,'invalid_addr_symbol',{symbol:'BTC'}),
             btc[i].address,
             [
-              { text: '确定', onPress: () => console.log('OK Pressed') }
+              { text: t(this,'button_ok'), onPress: () => console.log('OK Pressed') }
             ]
           )
           return
@@ -266,10 +265,10 @@ export default class MyIdentity extends Component {
       for (let i = 0; i < eth.length; i++) {
         if (!validateETHAddress(eth[i].address)) {
           Alert.alert(
-            '无效的ETH地址',
+            t(this,'invalid_addr_symbol',{symbol:'ETH'}),
             eth[i].address,
             [
-              { text: '确定', onPress: () => console.log('OK Pressed') }
+              { text: t(this,'button_ok'), onPress: () => console.log('OK Pressed') }
             ]
           )
           return
@@ -279,10 +278,10 @@ export default class MyIdentity extends Component {
       for (let i = 0; i < rio.length; i++) {
         if (!validateRioAddress(rio[i].address)) {
           Alert.alert(
-            '无效的RioChain地址',
+            t(this,'invalid_addr_symbol',{symbol:'RioChain'}),
             rio[i].address,
             [
-              { text: '确定', onPress: () => console.log('OK Pressed') }
+              { text: t(this,'button_ok'), onPress: () => console.log('OK Pressed') }
             ]
           )
           return
@@ -293,10 +292,10 @@ export default class MyIdentity extends Component {
       const btcDuplicate = findDuplicate(btcAddresses)
       if (btcDuplicate) {
         Alert.alert(
-          '重复添加的BTC地址',
+          t(this,'duplicated_addr_symbol',{symbol:'BTC'}),
           btcDuplicate,
           [
-            { text: '确定', onPress: () => console.log('OK Pressed') }
+            { text: t(this,'button_ok'), onPress: () => console.log('OK Pressed') }
           ]
         )
         return
@@ -306,10 +305,10 @@ export default class MyIdentity extends Component {
       const ethDuplicate = findDuplicate(ethAddresses)
       if (ethDuplicate) {
         Alert.alert(
-          '重复添加的ETHC地址',
+          t(this,'duplicated_addr_symbol',{symbol:'ETH'}),
           ethDuplicate,
           [
-            { text: '确定', onPress: () => console.log('OK Pressed') }
+            { text: t(this,'button_ok'), onPress: () => console.log('OK Pressed') }
           ]
         )
         return
@@ -319,10 +318,10 @@ export default class MyIdentity extends Component {
       const rioDuplicate = findDuplicate(rioAddress)
       if (rioDuplicate) {
         Alert.alert(
-          '重复添加的RioChain地址',
+          t(this,'duplicated_addr_symbol',{symbol:'RioChain'}),
           ethDuplicate,
           [
-            { text: '确定', onPress: () => console.log('OK Pressed') }
+            { text: t(this,'button_ok'), onPress: () => console.log('OK Pressed') }
           ]
         )
         return
@@ -490,8 +489,8 @@ export default class MyIdentity extends Component {
             </View>
             <View>
               <Field
-                label="姓名"
-                placeholder="姓名"
+                label={t(this,'name')}
+                placeholder={t(this,'name')}
                 name="name"
                 fieldName="name"
                 change={change}
@@ -504,8 +503,8 @@ export default class MyIdentity extends Component {
                 isDarkMode={isDarkMode}
               />
               <Field
-                label="描述"
-                placeholder="描述"
+                label={t(this,'description')}
+                placeholder={t(this,'description')}
                 name="description"
                 fieldName="description"
                 change={change}
@@ -529,7 +528,7 @@ export default class MyIdentity extends Component {
                 </TouchableHighlight>
                 <Field
                   label="BTC"
-                  placeholder="地址"
+                  placeholder={t(this,'addr')}
                   name={`btc_address_${id}`}
                   fieldName={`btc_address_${id}`}
                   change={change}
@@ -550,7 +549,7 @@ export default class MyIdentity extends Component {
                   source={require('resources/images/add_green.png')}
                   style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }}
                 />
-                <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>添加BTC地址</Text>
+                <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>{t(this,'add_addr_symbol',{symbol:'BTC'})}</Text>
                 <View style={{ position: 'absolute', height: 0.5, top: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
                 <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
               </View>
@@ -567,7 +566,7 @@ export default class MyIdentity extends Component {
                 </TouchableHighlight>
                 <Field
                   label="ETH"
-                  placeholder="地址"
+                  placeholder={t(this,'addr')}
                   name={`eth_address_${id}`}
                   fieldName={`eth_address_${id}`}
                   change={change}
@@ -588,7 +587,7 @@ export default class MyIdentity extends Component {
                   source={require('resources/images/add_green.png')}
                   style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }}
                 />
-                <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>添加ETH地址</Text>
+                <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>{t(this,'add_addr_symbol',{symbol:'ETH'})}</Text>
                 <View style={{ position: 'absolute', height: 0.5, top: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
                 <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
               </View>
@@ -610,7 +609,7 @@ export default class MyIdentity extends Component {
                   <View style={{ flex: 1, height: 40, flexDirection: 'row' }}>
                     <Field
                       label="RioChain"
-                      placeholder="地址"
+                      placeholder={t(this,'addr')}
                       name={`rio_address_${id}`}
                       fieldName={`rio_address_${id}`}
                       change={change}
@@ -635,7 +634,7 @@ export default class MyIdentity extends Component {
                   source={require('resources/images/add_green.png')}
                   style={{ width: 28 * 0.8, height: 30 * 0.8, marginRight: 8 }}
                 />
-                <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>添加RioChain地址</Text>
+                <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>{t(this,'add_addr_symbol',{symbol:'RioChain'})}</Text>
                 <View style={{ position: 'absolute', height: 0.5, top: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
                 <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: 'rgba(0,0,0,0.36)' }} />
               </View>

@@ -15,9 +15,10 @@ import { activeWalletBalanceSelector } from 'selectors/balance'
 import { voteClaim, vote } from 'core/chain/chainx'
 import secureStorage from 'core/storage/secureStorage'
 import Dialog from 'components/Dialog'
-import chainxAccount from '@chainx/account'
+// import chainxAccount from '@chainx/account'
 import styles from './style'
 
+const chainxAccount = {}
 
 const { Section, Item, Cell } = TableView
 
@@ -240,7 +241,7 @@ export default class ChainXValidatorDetail extends Component {
         console.log('投票交易已发送, txId: ', tx.toString())
         Alert.alert(
           t(this,'发送交易成功'),
-          t(this,"投票交易发送成功，请检查区块链信息!交易id:{message}",{message:tx.toString()}),
+          t(this,'投票交易发送成功，请检查区块链信息!交易id:{message}',{message:tx.toString()}),
           {
             text: 'OK',
             onPress: () => {

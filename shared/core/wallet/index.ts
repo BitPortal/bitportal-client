@@ -306,7 +306,6 @@ export const importPolkadotWalletBySuri = async (suri, password, name, passwordH
 
 export const exportOfficialKeystore = async (password, keystore) => {
   assert(keystore.bitportalMeta.chain === chain.polkadot, `Unsupported chain ${keystore.bitportalMeta.chain}`)
-  console.warn(' start export keystore exportOfficialKeystore keyStore:',JSON.stringify(keystore))
   return await exportPolkadotKeystore(keystore, password)
 }
 

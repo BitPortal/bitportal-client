@@ -259,7 +259,7 @@ export default class TradeEOSRAMForm extends Component {
             </View>
             <View style={{ borderTopWidth: 1, borderColor: 'rgba(0,0,0,0.12)', paddingBottom: 16 }}>
               <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48 }}>
-                <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'选择操作')}</Text>
+                <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'operation_select')}</Text>
               </View>
               <TouchableNativeFeedback onPress={this.toggleRAM.bind(this, true)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 60 }}>

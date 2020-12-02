@@ -29,6 +29,7 @@ import secureStorage from 'core/storage/secureStorage'
 import { chain } from 'core/constants'
 import { push, dismissAllModals, popToRoot, showModal } from 'utils/location'
 import {createAsyncAction} from '../utils/redux'
+import { getTags } from 'react-native-device-info'
 
 function* setActiveWallet(action: Action<SetActiveWalletParams>) {
   if (!action.payload) return
@@ -156,7 +157,7 @@ function* exportMnemonics(action: Action<ExportMnemonicsParams>) {
                   leftButtons: [
                     {
                       id: 'cancel',
-                      text: '取消'
+                      text: gt('button_cancel')
                     }
                   ]
                 }
@@ -593,16 +594,11 @@ function * exportRioChainKeystore(action: Action) {
     } else {
       keystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
     }
-    console.warn(' start export keystore secureStorage :',keystore)
     assert(keystore , 'No keystore')
-    console.warn(' start export keystore')
     const officialKeystore = yield call(walletCore.exportOfficialKeystore, password, keystore)
-    console.warn(' start export keystore officialKeystore:',officialKeystore)
     assert(officialKeystore , 'No officialKeystore')
-    console.warn(' start export keystore exportRioChainKeystore.succeeded:')
     yield put(actions.exportRioChainKeystore.succeeded())
     yield delay(500)
-    console.warn(' start export keystore delay:')
     if (action.payload.componentId) {
       push('BitPortal.ExportRioChainKeystore', action.payload.componentId, {
         keystore: officialKeystore

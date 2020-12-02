@@ -58,7 +58,7 @@ export default class MyIdentity extends Component {
       items.push(
         <Item
           reactModuleForCell="ProducerDetailTableViewCell"
-          text={t(this,"节点名称")}
+          text={t(this,'节点名称')}
           type="title"
           key="title"
           detail={title}

@@ -12,6 +12,7 @@ const ChainTypeTableViewCell = (props) => {
           width: 200,
           height: 60
         }}
+        resizeMode={'contain'}
       />
     </View>
   )

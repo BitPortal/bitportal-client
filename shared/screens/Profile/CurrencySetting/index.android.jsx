@@ -25,7 +25,7 @@ export default class CurrencySetting extends Component {
     return {
       topBar: {
         title: {
-          text: gt('货币单位')
+          text: gt('currency')
         },
       }
     }

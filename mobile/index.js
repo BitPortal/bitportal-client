@@ -14,6 +14,8 @@ import { persistStore } from 'redux-persist'
 import configure from 'store'
 import sagas from 'sagas'
 import storage from 'utils/storage'
+import {polkaApi} from 'core/chain/polkadot'
+import {defaultLocale} from 'resources/messages'
 // import VersionNumber from 'react-native-version-number'
 
 EStyleSheet.build({})
@@ -21,7 +23,9 @@ EStyleSheet.build({})
 startApp(async () => {
   // const localLocale = await storage.getItem('bitportal_lang')
   // const deviceLocale = DeviceInfo.getDeviceLocale()
-  const locale = 'zh'
+  const locale = defaultLocale
+  // create polkadot ws
+  await polkaApi()
   const store = configure({ intl: { locale }})
   registerScreens(store)
   store.runSaga(sagas)

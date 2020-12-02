@@ -25,11 +25,11 @@ export const errorMessages = (error) => {
 
   switch (String(message)) {
     case 'SegWit requires compressed private key':
-      return gt('隔离见证需要压缩的公钥格式')
+      return gt('format_segwit_publickey')
     case 'Invalid password':
-      return gt('密码错误')
+      return gt('pwd_wrong')
     default:
-      return gt('操作失败')
+      return gt('operation_failed')
   }
 }
 
@@ -65,7 +65,7 @@ export default class ManageWallet extends Component {
     return {
       topBar: {
         title: {
-          text: gt('管理钱包')
+          text: gt('wallet_management')
         },
         largeTitle: {
           visible: false
@@ -109,10 +109,10 @@ export default class ManageWallet extends Component {
     const { intl, wallet } = this.props
     Alert.prompt(
       intl.formatMessage({ id: 'alert_input_wallet_password' }),
-      t(this,'将删除该钱包所有数据，请务必确保钱包已备份'),
+      t(this,'wallet_delete_caution'),
       [
         {
-          text: t(this,'取消'),
+          text: t(this,'button_cancel'),
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel'
         },
@@ -133,7 +133,7 @@ export default class ManageWallet extends Component {
       null,
       [
         {
-          text: t(this,'取消'),
+          text: t(this,'button_cancel'),
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel'
         },
@@ -153,7 +153,7 @@ export default class ManageWallet extends Component {
       null,
       [
         {
-          text: t(this,'取消'),
+          text: t(this,'button_cancel'),
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel'
         },
@@ -172,7 +172,7 @@ export default class ManageWallet extends Component {
       null,
       [
         {
-          text: t(this,'取消'),
+          text: t(this,'button_cancel'),
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel'
         },
@@ -216,7 +216,7 @@ export default class ManageWallet extends Component {
         options: {
           topBar: {
             backButton: {
-              title: t(this,'返回')
+              title: t(this,'button_back')
             }
           }
         }
@@ -236,7 +236,7 @@ export default class ManageWallet extends Component {
         options: {
           topBar: {
             backButton: {
-              title: t(this,'返回')
+              title: t(this,'button_back')
             }
           }
         }
@@ -245,29 +245,14 @@ export default class ManageWallet extends Component {
   }
 
   createNewAccount = () => {
-    /* Navigation.showModal({
-     *   stack: {
-     *     children: [{
-     *       component: {
-     *         name: 'BitPortal.CreateEOSAccount'
-     *       },
-     *       options: {
-     *         topBar: {
-     *           backButton: {
-     *             title: '返回'
-     *           }
-     *         }
-     *       }
-     *     }]
-     *   }
-     * })*/
+    
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.CreateEOSAccount',
         options: {
           topBar: {
             backButton: {
-              title: t(this,'返回')
+              title: t(this,'button_back')
             }
           }
         }
@@ -309,7 +294,7 @@ export default class ManageWallet extends Component {
         options: {
           topBar: {
             backButton: {
-              title: t(this,'返回')
+              title: t(this,'button_back')
             }
           }
         }
@@ -345,7 +330,7 @@ export default class ManageWallet extends Component {
           errorMessages(error),
           '',
           [
-            { text: t(this,'确定'), onPress: () => this.clearError() }
+            { text: t(this,'button_ok'), onPress: () => this.clearError() }
           ]
         )
       }, 20)
@@ -358,8 +343,8 @@ export default class ManageWallet extends Component {
     const source = wallet && wallet.source
 
     ActionSheetIOS.showActionSheetWithOptions({
-      title: t(this,'切换地址类型'),
-      options: [t(this,'取消'), t(this,'隔离见证'), t(this,'普通')],
+      title: t(this,'switch_addr_type'),
+      options: [t(this,'button_cancel'), t(this,'segwit'), t(this,'ordinary')],
       cancelButtonIndex: 0,
     }, (buttonIndex) => {
       if (buttonIndex === 1) {
@@ -413,7 +398,7 @@ export default class ManageWallet extends Component {
       const oldName = name
 
       Alert.prompt(
-        t(this,'设置钱包名称'),
+        t(this,'name_wallet_set'),
         null,
         [
           {
@@ -427,10 +412,10 @@ export default class ManageWallet extends Component {
               if (name) {
                 if (name.length > 30) {
                   Alert.alert(
-                    t(this,'钱包名称不能超过30个字符'),
+                    t(this,'name_wallet_hint'),
                     '',
                     [
-                      { text: t(this,'确定'), onPress: () => console.log('ok') }
+                      { text: t(this,'button_ok'), onPress: () => console.log('ok') }
                     ]
                   )
                 } else {
@@ -528,12 +513,12 @@ export default class ManageWallet extends Component {
             options: {
               topBar: {
                 title: {
-                  text: t(this,'ChainX 节点状态')
+                  text: 'ChainX 节点状态'
                 },
                 leftButtons: [
                   {
                     id: 'cancel',
-                    text: t(this,'取消')
+                    text: t(this,'button_cancel')
                   }
                 ]
               }
@@ -556,12 +541,12 @@ export default class ManageWallet extends Component {
             options: {
               topBar: {
                 title: {
-                  text: t(this,'ChainX 区块链浏览器')
+                  text: 'ChainX 区块链浏览器'
                 },
                 leftButtons: [
                   {
                     id: 'cancel',
-                    text: t(this,'取消')
+                    text: t(this,'button_cancel')
                   }
                 ]
               }
@@ -589,7 +574,7 @@ export default class ManageWallet extends Component {
                 leftButtons: [
                   {
                     id: 'cancel',
-                    text: t(this,'取消')
+                    text: t(this,'button_cancel')
                   }
                 ]
               }
@@ -898,9 +883,9 @@ export default class ManageWallet extends Component {
           {loading && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
               <ActivityIndicator size="small" color="#000000" />
-              {deleteWalletLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{t(this,'验证密码...')}</Text>}
-              {switchBTCAddressTypeLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{t(this,'切换中...')}</Text>}
-              {(!deleteWalletLoading && !switchBTCAddressTypeLoading) && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{t(this,'导出中...')}</Text>}
+              {deleteWalletLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{t(this,'pwd_verify')}</Text>}
+              {switchBTCAddressTypeLoading && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{t(this,'switch_switching')}</Text>}
+              {(!deleteWalletLoading && !switchBTCAddressTypeLoading) && <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{t(this,'export_exporting')}</Text>}
             </View>
           </View>}
         </Modal>

@@ -36,9 +36,9 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid password':
-      return gt('密码错误')
+      return gt('pwd_wrong')
     default:
-      return gt('操作失败')
+      return gt('operation_failed')
   }
 }
 @injectIntl
@@ -70,7 +70,7 @@ export default class Contact extends Component {
         rightButtons: [
           {
             id: 'edit',
-            text: gt('编辑')
+            text: gt('edit')
           }
         ],
         noBorder: true
@@ -90,16 +90,16 @@ export default class Contact extends Component {
 
   deleteContact = (id) => {
     Alert.alert(
-      t(this,'确认删除'),
+      t(this,'confirm_delete'),
       null,
       [
         {
-          text: t(this,'取消'),
+          text: t(this,'button_cancel'),
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel'
         },
         {
-          text: t(this,'确认'),
+          text: t(this,'button_confirm'),
           onPress: () => {
             this.props.actions.deleteContact(this.props.contact.id)
             Navigation.pop(this.props.componentId)
@@ -151,11 +151,11 @@ export default class Contact extends Component {
 
       if (!wallet) {
         Alert.alert(
-          t(this,'未检测到{symbol}钱包',{symbol}),
+          t(this,'undetect_wallet_symbol',{symbol}),
           null,
           [
             {
-              text: t(this,'确认'),
+              text: t(this,'button_confirm'),
               onPress: () => {}
             }
           ]
@@ -172,12 +172,12 @@ export default class Contact extends Component {
                 options: {
                   topBar: {
                     title: {
-                      text: t(this,'发送{symbol}到',{symbol})
+                      text: t(this,'send_token_symbol',{symbol})
                     },
                     leftButtons: [
                       {
                         id: 'cancel',
-                        text: t(this,'取消')
+                        text: t(this,'cencel')
                       }
                     ]
                   }
@@ -246,7 +246,7 @@ export default class Contact extends Component {
                 key={index}
                 reactModuleForCell="AddressTableViewCell"
                 address={item.address}
-                label={t(this,'{symbol} 地址',{symbol: 'BTC'})}
+                label={t(this,'addr_symbol',{symbol: 'BTC'})}
                 height={60}
                 selectionStyle={TableView.Consts.CellSelectionStyle.None}
                 showSeparator
@@ -272,7 +272,7 @@ export default class Contact extends Component {
                 key={index}
                 reactModuleForCell="AddressTableViewCell"
                 address={item.address}
-                label={t(this,'{symbol} 地址',{symbol: 'ETH'})}
+                label={t(this,'addr_symbol',{symbol: 'ETH'})}
                 height={60}
                 selectionStyle={TableView.Consts.CellSelectionStyle.None}
                 showSeparator
@@ -283,7 +283,24 @@ export default class Contact extends Component {
               />
             )}
           </Section>}
-          {((contact && contact.btc && contact.btc.length) || (contact && contact.eth && contact.eth.length)) && (contact && contact.eos && contact.eos.length) && <Section>
+          {contact && contact.rio && contact.rio.length && <Section>
+            {contact.rio.map((item, index) =>
+              <Item
+                key={index}
+                reactModuleForCell="AddressTableViewCell"
+                address={item.address}
+                label={t(this,'addr_symbol',{symbol: 'RFUEL'})}
+                height={60}
+                selectionStyle={TableView.Consts.CellSelectionStyle.None}
+                showSeparator
+                chain="POLKADOT"
+                symbol="RFUEF"
+                isDarkMode={isDarkMode}
+                name={contact.name}
+              />
+            )}
+          </Section>}
+          {((contact && contact.btc && contact.btc.length) || (contact && contact.eth && contact.eth.length) || (contact && contact.rio && contact.rio.length)) && (contact && contact.eos && contact.eos.length) && <Section>
             <Item
               reactModuleForCell="ContactHeaderTableViewCell"
               title=""
@@ -299,7 +316,7 @@ export default class Contact extends Component {
                 reactModuleForCell="AddressTableViewCell"
                 address={item.accountName}
                 note={item.memo}
-                label={t(this,'{symbol} 账户名',{symbol:'EOS'})}
+                label={'EOS 账户名'}
                 height={60}
                 chain="EOS"
                 symbol="EOS"
@@ -324,7 +341,7 @@ export default class Contact extends Component {
               reactModuleForCell="ContactDeleteTableViewCell"
               key="delete"
               actionType="delete"
-              text={t(this,'删除联系人')}
+              text={t(this,'contact_delete')}
               height={44}
               onPress={this.deleteContact.bind(this, contact.id)}
             />
@@ -352,7 +369,7 @@ export default class Contact extends Component {
         >
           {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
-              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{t(this,'已复制')}</Text>
+              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{t(this,'copied')}</Text>
             </View>
           </View>}
         </Modal>

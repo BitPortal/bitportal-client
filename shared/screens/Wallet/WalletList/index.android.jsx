@@ -38,7 +38,7 @@ export default class WalletList extends Component {
     return {
       topBar: {
         title: {
-          text: gt('管理钱包列表')
+          text: gt('wallet_management_list')
         },
         largeTitle: {
           visible: false
@@ -97,25 +97,6 @@ export default class WalletList extends Component {
     })
   }
 
-  /* toManageWallet = (walletInfo) => {
-   *   this.props.actions.setManagingWallet(walletInfo.id)
-
-   *   Navigation.push(this.props.componentId, {
-   *     component: {
-   *       name: 'BitPortal.ManageWallet',
-   *       passProps: { ...walletInfo },
-   *       options: {
-   *         topBar: {
-   *           backButton: {
-   *             title: '返回'
-   *           }
-   *         }
-   *       }
-   *     }
-   *   })
-   * }*/
-
-
   toManageWallet = (walletId) => {
     this.props.actions.setManagingWallet(walletId)
 
@@ -138,7 +119,7 @@ export default class WalletList extends Component {
         options: {
           topBar: {
             backButton: {
-              title: gt('返回')
+              title: gt('button_back')
             }
           }
         }
@@ -190,8 +171,8 @@ export default class WalletList extends Component {
               <View>
                 <Text style={{ fontSize: 15, color: 'black' }}>{item.name}</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  {!this.props.syncingEOSAccount && <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)' }}>{t(this,'创建EOS帐户')}</Text>}
-                  {!!this.props.syncingEOSAccount && <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)' }}>{t(this,'检测EOS帐户中...')}</Text>}
+                  {!this.props.syncingEOSAccount && <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)' }}>{'创建EOS帐户'}</Text>}
+                  {!!this.props.syncingEOSAccount && <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)' }}>{'检测EOS帐户中...'}</Text>}
                 </View>
               </View>
               {!this.props.syncingEOSAccount &&
@@ -301,8 +282,8 @@ export default class WalletList extends Component {
           ItemSeparatorComponent={this.renderSepatator}
           showsVerticalScrollIndicator={false}
           sections={[
-            { title: identityWalletsCount ? intl.formatMessage({ id: 'general_title_identity_wallet' }) : t(this,'暂无身份钱包'), data: identityWallets },
-            { title: importedWalletsCount ? intl.formatMessage({ id: 'general_title_import_wallet' }) : t(this,'暂无普通钱包'), data: [...importedWallets, { key: 'separator' }] },
+            { title: identityWalletsCount ? intl.formatMessage({ id: 'general_title_identity_wallet' }) : t(this,'wallet_id_null'), data: identityWallets },
+            { title: importedWalletsCount ? intl.formatMessage({ id: 'general_title_import_wallet' }) : t(this,'wallet_ordinary_null'), data: [...importedWallets, { key: 'separator' }] },
           ]}
           keyExtractor={(item, index) => item.id}
         />
@@ -330,17 +311,17 @@ export default class WalletList extends Component {
           {(this.state.showSimpleModal) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 6 }}>
             <View style={{ backgroundColor: 'white', borderRadius: 4, alignItem: 'center', elevation: 14, minWidth: 240 }}>
               <View style={{ paddingHorizontal: 24, paddingBottom: 9, paddingTop: 20 }}>
-                <Text style={{ fontSize: 20, color: 'rgba(0,0,0,0.87)', fontWeight: '500' }}>{t(this,'选择操作')}</Text>
+                <Text style={{ fontSize: 20, color: 'rgba(0,0,0,0.87)', fontWeight: '500' }}>{t(this,'operation_select')}</Text>
               </View>
               <View style={{ paddingBottom: 12, paddingTop: 6, paddingHorizontal: 16 }}>
                 <TouchableNativeFeedback onPress={this.toAddIdentity} background={TouchableNativeFeedback.SelectableBackground()}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', height: 48, paddingHorizontal: 8 }}>
-                    <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'添加数字身份')}</Text>
+                    <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'add_id')}</Text>
                   </View>
                 </TouchableNativeFeedback>
                 <TouchableNativeFeedback onPress={this.toSelectChainType} background={TouchableNativeFeedback.SelectableBackground()}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', height: 48, paddingHorizontal: 8 }}>
-                    <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'导入新钱包')}</Text>
+                    <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'import_wallet_new')}</Text>
                   </View>
                 </TouchableNativeFeedback>
               </View>

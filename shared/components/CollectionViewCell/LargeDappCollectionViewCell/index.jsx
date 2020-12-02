@@ -1,3 +1,4 @@
+
 import React from 'react'
 import { View, Text, TouchableHighlight, NativeModules } from 'react-native'
 import FastImage from 'react-native-fast-image'
@@ -36,7 +37,7 @@ const LargeDappCollectionViewCell = props => {
               style={{ backgroundColor: '#EFEFF4', borderRadius: 28, height: 28, width: 70, padding: 0, alignItems: 'center', justifyContent: 'center' }}
               onPress={this.toDapp}
             >
-              <Text style={{ color: '#007AFF', margin: 0, padding: 0, fontSize: 13, fontWeight: 'bold' }}>打开</Text>
+              <Text style={{ color: '#007AFF', margin: 0, padding: 0, fontSize: 13, fontWeight: 'bold' }}>{gt('open')}</Text>
             </TouchableHighlight>
           </View>
         </View>

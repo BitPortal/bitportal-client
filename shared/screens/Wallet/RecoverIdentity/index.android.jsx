@@ -60,9 +60,9 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid mnemonics':
-      return gt('无效的助记词')
+      return gt('invalid_mnemonic')
     default:
-      return gt('恢复失败')
+      return gt('recovery_failed')
   }
 }
 
@@ -70,18 +70,18 @@ const validate = (values) => {
   const errors = {}
 
   if (!values.mnemonics) {
-    errors.mnemonics = gt('请输入助记词')
+    errors.mnemonics = gt('mnemonic_caution_enter')
   }
 
   if (!values.password) {
-    errors.password = gt('请输入密码')
+    errors.password = gt('pwd_enter')
   } else if (values.password && values.password.length < 8) {
-    errors.password = gt('密码不少于8位字符')
+    errors.password = gt('pwd_error_tooshort')
   }
   if (!values.passwordConfirm) {
-    errors.passwordConfirm = gt('请输入确认密码')
+    errors.passwordConfirm = gt('pwd_confirm')
   }else if (values.password !== values.passwordConfirm) {
-    errors.passwordConfirm = gt('两次密码输入不一致');
+    errors.passwordConfirm = gt('pwd_confirm_matcherror');
   }
 
 
@@ -126,7 +126,7 @@ export default class RecoverIdentity extends Component {
           visible: false
         },
         title: {
-          text: gt('恢复身份')
+          text: gt('recovery_id')
         }
       }
     }
@@ -222,7 +222,7 @@ export default class RecoverIdentity extends Component {
           errorMessages(this.state.error),
           '',
           [
-            { text: t(this,'确定'), onPress: () => this.clearError() }
+            { text: t(this,'button_ok'), onPress: () => this.clearError() }
           ]
         )
       }, 20)
@@ -249,7 +249,7 @@ export default class RecoverIdentity extends Component {
             <View style={{ width: '100%', alignItems: 'center' }}>
               <View style={{ width: '100%' }}>
                 <Field
-                  label={t(this,'助记词')}
+                  label={t(this,'mnemonic')}
                   placeholder={intl.formatMessage({ id: 'identity_input_placeholder_mnemonics' })}
                   name="mnemonics"
                   fieldName="mnemonics"
@@ -301,7 +301,7 @@ export default class RecoverIdentity extends Component {
               <Text style={{ fontSize: 13, color: 'rgba(0,0,0,0.54)', lineHeight: 18 }}>{intl.formatMessage({ id: 'identity_recovery_hint_passwd_recovery_passwd' })}</Text>
             </View>
           </View>
-          <IndicatorModal isVisible={loading} message={t(this,'恢复身份中...')} onModalHide={this.onModalHide} />
+          <IndicatorModal isVisible={loading} message={t(this,'recovery_recovering')} onModalHide={this.onModalHide} />
         </ScrollView>
       </SafeAreaView>
     )

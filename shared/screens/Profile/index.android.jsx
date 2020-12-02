@@ -59,24 +59,38 @@ export default class Profile extends Component {
   toAboutUs = () => {
     Navigation.showModal({
       stack: {
-        children: [{
-          component: {
-            name: 'BitPortal.AboutUs',
-            options: {
-              topBar: {
-                title: {
-                  text: '关于我们'
-                },
-                leftButtons: [
-                  {
-                    id: 'cancel',
-                    icon: require('resources/images/cancel_android.png')
+        children:
+          [{
+            component: {
+              name: 'BitPortal.AboutUs',
+              options: {
+                topBar: {
+                  title: {
+                    text: this.props.intl.formatMessage({ id: 'about_us' })
                   }
-                ]
+                }
               }
             }
-          }
-        }]
+          }]
+
+        //   [{
+        //   component: {
+        //     name: 'BitPortal.AboutUs',
+        //     options: {
+        //       topBar: {
+        //         title: {
+        //           text: t(this,'about_us')
+        //         },
+        //         // leftButtons: [
+        //         //   {
+        //         //     id: 'cancel',
+        //         //     icon: require('resources/images/cancel_android.png')
+        //         //   }
+        //         // ]
+        //       }
+        //     }
+        //   }
+        // }]
       }
     })
   }
@@ -94,7 +108,7 @@ export default class Profile extends Component {
             options: {
               topBar: {
                 title: {
-                  text: 'BitPortal 帮助中心'
+                  text: t(this,'bitportal_helpcenter')
                 },
                 leftButtons: [
                   {
@@ -195,12 +209,12 @@ export default class Profile extends Component {
         </View>
         <View style={{ paddingTop: 8 }}>
           <FlatList
-            data={[{ key: 'contact', text: t(this,'联系人'), type: 'contact', active: this.state.activeTab === 'contact' }, { key: 'settings', text: t(this,'设置'), type: 'settings', active: this.state.activeTab === 'settings' }, { key: 'help', text: t(this,'帮助中心'), type: 'help', active: this.state.activeTab === 'help' }, { key: 'aboutUs', text: t(this,'关于我们'), type: 'aboutUs', active: this.state.activeTab === 'aboutUs' }]}
+            data={[{ key: 'contact', text: t(this,'contact'), type: 'contact', active: this.state.activeTab === 'contact' }, { key: 'settings', text: t(this,'settings'), type: 'settings', active: this.state.activeTab === 'settings' }, { key: 'help', text: t(this,'help_center'), type: 'help', active: this.state.activeTab === 'help' }, { key: 'aboutUs', text: t(this,'about_us'), type: 'aboutUs', active: this.state.activeTab === 'aboutUs' }]}
             renderItem={({ item }) => <IdentityTableViewCell key={item.key} data={item} onPress={this.switchTab.bind(this, item.type)} />}
           />
         </View>
         <View style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', padding: 16, borderTopWidth: 0.5, borderColor: 'rgba(0,0,0,0.54)' }}>
-          <Text style={{ fontSize: 12, color: 'rgba(0,0,0,0.54)' }}>© 2019 BitPortal</Text>
+          <Text style={{ fontSize: 12, color: 'rgba(0,0,0,0.54)' }}>© 2020 BitPortal</Text>
         </View>
       </View>
     )

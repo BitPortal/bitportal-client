@@ -69,7 +69,7 @@ export default class AuthorizeEOSAccount extends Component {
         rightButtons: [
           {
             id: 'skip',
-            text: gt('取消')
+            text: gt('button_cancel')
           }
         ],
         backButton: {

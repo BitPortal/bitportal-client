@@ -18,11 +18,17 @@ export default class SelectChainType extends Component {
     return {
       topBar: {
         title: {
-          text: gt('选择钱包体系')
+          text: gt('select_wallet_type')
         },
         backButton: {
-          title: gt('返回')
+          title: gt('button_back')
         },
+        // leftButtons: [
+        //   {
+        //     id: 'cancel',
+        //     text: gt('button_cancel')
+        //   }
+        // ],
         largeTitle: {
           visible: false
         }

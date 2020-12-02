@@ -16,10 +16,10 @@ export default class ExportETHPrivateKey extends Component {
     return {
       topBar: {
         title: {
-          text: gt('导出ETH私钥')
+          text: gt('pk_export_eth')
         },
         backButton: {
-          title: gt('返回')
+          title: gt('button_back')
         },
         largeTitle: {
           visible: false
@@ -49,16 +49,16 @@ export default class ExportETHPrivateKey extends Component {
       <ScrollView style={{ flex: 1, paddingLeft: 16, paddingRight: 16, paddingTop: 16, backgroundColor: 'white' }}>
         <View style={{ width: '100%' }}>
           <View>
-            <Text style={{ color: '#673AB7', fontWeight: 'bold', marginBottom: 4 }}>{t(this,'离线保存')}</Text>
-            <Text style={{ color: 'rgba(0,0,0,0.54)', marginBottom: 10, lineHeight: 18 }}>{t(this,'切勿保存到邮箱，记事本，网盘，聊天工具等，非常危险')}</Text>
+            <Text style={{ color: '#673AB7', fontWeight: 'bold', marginBottom: 4 }}>{t(this,'save_offline')}</Text>
+            <Text style={{ color: 'rgba(0,0,0,0.54)', marginBottom: 10, lineHeight: 18 }}>{t(this,'save_hint')}</Text>
           </View>
           <View>
-            <Text style={{ color: '#673AB7', fontWeight: 'bold', marginBottom: 4 }}>{t(this,'切勿使用网络传输')}</Text>
-            <Text style={{ color: 'rgba(0,0,0,0.54)', marginBottom: 10, lineHeight: 18 }}>{t(this,'切勿通过网络工具传输，一旦被黑客获取将造成不可挽回的资产损失。建议离线设备通过扫二维码方式传输')}</Text>
+            <Text style={{ color: '#673AB7', fontWeight: 'bold', marginBottom: 4 }}>{t(this,'save_hint2')}</Text>
+            <Text style={{ color: 'rgba(0,0,0,0.54)', marginBottom: 10, lineHeight: 18 }}>{t(this,'save_hint3')}</Text>
           </View>
           <View>
-            <Text style={{ color: '#673AB7', fontWeight: 'bold', marginBottom: 4 }}>{t(this,'密码管理工具保存')}</Text>
-            <Text style={{ color: 'rgba(0,0,0,0.54)', marginBottom: 10, lineHeight: 18 }}>{t(this,'建议使用密码管理工具管理。')}</Text>
+            <Text style={{ color: '#673AB7', fontWeight: 'bold', marginBottom: 4 }}>{t(this,'save_pwdtool')}</Text>
+            <Text style={{ color: 'rgba(0,0,0,0.54)', marginBottom: 10, lineHeight: 18 }}>{t(this,'save_pwdtool_recommend')}</Text>
           </View>
         </View>
         <View style={{ width: '100%', marginTop: 16 }}>
@@ -87,7 +87,7 @@ export default class ExportETHPrivateKey extends Component {
                   fontSize: 17
                 }}
               >
-                {t(this,'复制ETH私钥')}
+                {t(this,'pk_copy_eth')}
               </Text>
             </View>
           </TouchableNativeFeedback>
@@ -106,7 +106,7 @@ export default class ExportETHPrivateKey extends Component {
         >
           {this.state.showModal && <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'rgba(0,0,0,0.87)', padding: 16, borderRadius: 4, height: 48, elevation: 1, justifyContent: 'center', width: '100%' }}>
-              <Text style={{ fontSize: 14, color: 'white' }}>{t(this,'已复制')}</Text>
+              <Text style={{ fontSize: 14, color: 'white' }}>{t(this,'copied')}</Text>
             </View>
           </View>}
         </Modal>

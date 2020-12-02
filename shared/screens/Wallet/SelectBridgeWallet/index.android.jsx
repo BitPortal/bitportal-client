@@ -40,13 +40,13 @@ export default class SelectBridgeWallet extends Component {
     return {
       topBar: {
         title: {
-          text: '切换钱包'
+          text: gt('wallet_switch')
         },
         leftButtons: [
           {
             id: 'cancel',
             icon: require('resources/images/cancel_android.png'),
-            text: '取消'
+            text: gt('button_cancel')
           }
         ]
       }
@@ -129,10 +129,10 @@ export default class SelectBridgeWallet extends Component {
         <View style={{ flex: 1, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }}>
           <View style={{ alignItems: 'center', justifyContent: 'center' }}>
             <Text style={{ color: '#666666', fontSize: 17 }}>
-              暂无钱包
+              {t(this,'wallet_null')}
             </Text>
           </View>
-          <NavBar title="选择钱包" leftButtonTitle="取消" onLeftButtonClicked={this.onLeftButtonClicked} />
+          {/*<NavBar title={t(this,'wallet_select')} leftButtonTitle={t(this,'button_cancel')} onLeftButtonClicked={this.onLeftButtonClicked} />*/}
         </View>
       )
     }

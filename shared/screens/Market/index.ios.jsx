@@ -32,7 +32,7 @@ export default class Market extends Component {
     return {
       topBar: {
         title: {
-          text: '行情'
+          text: gt('quota')
         },
         /* searchBar: true,
          * searchBarHiddenWhenScrolling: true,
@@ -145,7 +145,7 @@ export default class Market extends Component {
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <View style={{ marginTop: 80 }}>
             <ActivityIndicator size="small" color="#666666" />
-            <Text style={{ marginTop: 10, color: '#666666' }}>加载行情</Text>
+      <Text style={{ marginTop: 10, color: '#666666' }}>{t(this,'loading_quota')}</Text>
           </View>
         </View>
       )

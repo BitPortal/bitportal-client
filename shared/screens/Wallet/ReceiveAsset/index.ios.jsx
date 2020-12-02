@@ -85,7 +85,7 @@ export default class ReceiveAsset extends Component {
           visible: false
         },
         backButton: {
-          title: gt('返回')
+          title: gt('button_back')
         },
         rightButtons: [
           {
@@ -160,12 +160,12 @@ export default class ReceiveAsset extends Component {
       null,
       [
         {
-          text: t(this,'取消'),
+          text: t(this,'button_cancel'),
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel'
         },
         {
-          text: t(this,'确认'),
+          text: t(this,'button_confirm'),
           onPress: amount => this.setState({ amount })
         }
       ],

@@ -11,6 +11,7 @@ import * as contactActions from 'actions/contact'
 import { DarkModeContext } from 'utils/darkMode'
 import styles from './styles'
 
+
 const { Section, Item } = TableView
 
 @connect(
@@ -29,7 +30,7 @@ export default class Contacts extends Component {
     return {
       topBar: {
         title: {
-          text: '联系人'
+          text: gt('contact')
         },
         rightButtons: [
           {
@@ -113,7 +114,7 @@ export default class Contacts extends Component {
     if (!contact || !contact.length) {
       return (
         <View style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : 'white', alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={{ color: '#666666', fontSize: 17 }}>暂无联系人</Text>
+          <Text style={{ color: '#666666', fontSize: 17 }}>{t(this,'contact_nocontact')}</Text>
         </View>
       )
     }
@@ -143,6 +144,7 @@ export default class Contacts extends Component {
                 hasBTC={!!item.btc && !!item.btc.length}
                 hasETH={!!item.eth && !!item.eth.length}
                 hasEOS={!!item.eos && !!item.eos.length}
+                hasRIO={!!item.rio && !!item.rio.length}
                 onPress={this.onPress.bind(this, item.id)}
                 isDarkMode={isDarkMode}
               />

@@ -42,20 +42,14 @@ export default class WalletList extends Component {
       topBar: {
         visible: false,
         title: {
-          text: gt('切换钱包')
+          text: gt('wallet_switch')
         },
         leftButtons: [
           {
             id: 'cancel',
-            text: gt('取消')
+            text: gt('button_cancel')
           }
         ],
-        /* rightButtons: [
-         *   {
-         *     id: 'edit',
-         *     text: '编辑'
-         *   }
-         * ],*/
         largeTitle: {
           visible: false
         }
@@ -105,10 +99,10 @@ export default class WalletList extends Component {
         <View style={{ flex: 1, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }}>
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Text style={{ color: '#666666', fontSize: 17 }}>
-                {t(this,'暂无钱包')}
+                {t(this,'wallet_null')}
               </Text>
           </View>
-          <NavBar title={t(this,'选择钱包')} leftButtonTitle={t(this,'取消')} onLeftButtonClicked={this.onLeftButtonClicked} />
+          <NavBar title={t(this,'wallet_select')} leftButtonTitle={t(this,'button_cancel')} onLeftButtonClicked={this.onLeftButtonClicked} />
         </View>
       )
     }
@@ -144,7 +138,7 @@ export default class WalletList extends Component {
           )}
           </Section>}
         </TableView>
-        <NavBar title={t(this,'选择钱包')} leftButtonTitle={t(this,'取消')} onLeftButtonClicked={this.onLeftButtonClicked} />
+        <NavBar title={t(this,'wallet_select')} leftButtonTitle={t(this,'button_cancel')} onLeftButtonClicked={this.onLeftButtonClicked} />
       </View>
     )
   }

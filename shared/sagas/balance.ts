@@ -108,9 +108,9 @@ function* getRioChainTokenBalanceList(action: Action) {
     const result = yield all(contractAddressList.map(item => call(rioChain.getBalance, address, item.decimals,item.contract)))
     const balanceList = result.map((balance, index) => ({ id, chain, precision: 8, symbol: selectedAsset[index].symbol, balance, contract: selectedAsset[index].contract }))
     yield put(actions.updateBalanceList({ id, chain, balanceList }))
-    yield put(actions.getETHTokenBalanceList.succeeded())
+    yield put(actions.getRioChainTokenBalanceList.succeeded())
   } catch (e) {
-    yield put(actions.getETHTokenBalanceList.failed(getErrorMessage(e)))
+    yield put(actions.getRioChainTokenBalanceList.failed(getErrorMessage(e)))
   }
 }
 

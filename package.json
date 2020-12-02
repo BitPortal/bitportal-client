@@ -53,7 +53,6 @@
     "bs58": "^4.0.1",
     "bs58check": "^2.1.2",
     "buffer-reverse": "^1.0.1",
-    "chainx.js": "^2.22.32",
     "classnames": "^2.2.5",
     "compression": "^1.6.2",
     "cookie-parser": "^1.4.3",

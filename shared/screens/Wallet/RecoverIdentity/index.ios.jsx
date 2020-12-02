@@ -64,7 +64,7 @@ const TextField = ({
   isDarkMode
 }) => (
   <View style={{ width: '100%', alignItems: 'center', height: 56, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-    <Text style={{ fontSize: 17, fontWeight: 'bold', marginRight: 16, width: 70, color: isDarkMode ? 'white' : 'black' }}>{label}</Text>
+    <Text style={{ fontSize: 17, fontWeight: 'bold', marginRight: 16, width: 80, color: isDarkMode ? 'white' : 'black' }}>{label}</Text>
     <TextInput
       style={[styles.textFiled, { color: isDarkMode ? 'white' : 'black' }]}
       autoCorrect={false}
@@ -125,9 +125,9 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid mnemonics':
-      return gt('无效的助记词')
+      return gt('invalid_mnemonic')
     default:
-      return gt('恢复失败')
+      return gt('recovery_failed')
   }
 }
 
@@ -135,14 +135,14 @@ const validate = (values) => {
   const errors = {}
 
   if (!values.mnemonics) {
-    errors.mnemonics = gt('请输入助记词')
+    errors.mnemonics = gt('mnemonic_caution_enter')
   }
 
   if (!values.password) {
-    errors.password = gt('请输入密码')
+    errors.password = gt('pwd_enter')
   }
   if (!values.passwordConfirm) {
-    errors.password = gt('请输入确认密码');
+    errors.password = gt('pwd_confirm');
   }
 
   return errors
@@ -152,12 +152,12 @@ const warn = (values) => {
   const warnings = {}
 
   if (values.password && values.password.length < 8) {
-    warnings.password = gt('密码不少于8位字符')
+    warnings.password = gt('pwd_error_tooshort')
   }
 
   const {password,passwordConfirm} = values || {};
   if (password !== passwordConfirm) {
-    warnings.passwordConfirm = gt('两次密码输入不一致');
+    warnings.passwordConfirm = gt('pwd_confirm_matcherror');
   }
 
   return warnings
@@ -187,7 +187,7 @@ export default class RecoverIdentity extends Component {
         rightButtons: [
           {
             id: 'submit',
-            text: gt('确认'),
+            text: gt('button_confirm'),
             fontWeight: '400',
             enabled: false
           }
@@ -236,7 +236,7 @@ export default class RecoverIdentity extends Component {
           rightButtons: [
             {
               id: 'submit',
-              text: t(this,'确认'),
+              text: t(this,'button_confirm'),
               fontWeight: '400',
               enabled: !this.state.invalid && !this.state.pristine && !this.state.loading
             }
@@ -251,7 +251,7 @@ export default class RecoverIdentity extends Component {
           errorMessages(this.state.error),
           '',
           [
-            { text: t(this,'确认'), onPress: () => this.clearError() }
+            { text: t(this,'button_confirm'), onPress: () => this.clearError() }
           ]
         )
       }, 20)
@@ -268,7 +268,7 @@ export default class RecoverIdentity extends Component {
             warning,
             '',
             [
-              { text: t(this,'确认'), onPress: () => console.log('OK Pressed') }
+              { text: t(this,'button_confirm'), onPress: () => console.log('OK Pressed') }
             ]
           )
           return
@@ -405,7 +405,7 @@ export default class RecoverIdentity extends Component {
               />
             </View>
             <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
-              <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>{intl.formatMessage({ id: 'identity_recovery_hint_passwd_recovery_passwd' })}</Text>
+              <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>{intl.formatMessage({ id: 'import_pwd_reset_hint' })}</Text>
             </View>
           </View>
         </ScrollView>

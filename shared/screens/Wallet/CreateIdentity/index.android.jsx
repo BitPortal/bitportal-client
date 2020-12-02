@@ -26,21 +26,21 @@ const validate = (values) => {
   const errors = {}
 
   if (!values.name) {
-    errors.name = gt('请输入身份名称')
+    errors.name = gt('identity_id_enter')
   } else if (values.name.length > 12) {
-    errors.name = gt('身份名不超过12位')
+    errors.name = gt('identity_id_caution')
   }
 
   if (!values.password) {
-    errors.password = gt('请输入密码')
+    errors.password = gt('pwd_enter')
   } else if (values.password.length < 8) {
-    errors.password = gt('密码不少于8位字符')
+    errors.password = gt('pwd_error_tooshort')
   }
 
   if (!values.passwordConfirm) {
-    errors.passwordConfirm = gt('请输入确认密码')
+    errors.passwordConfirm = gt('pwd_confirm')
   }else if (values.password !== values.passwordConfirm) {
-    errors.passwordConfirm = gt('两次密码输入不一致');
+    errors.passwordConfirm = gt('pwd_confirm_matcherror');
   }
 
   return errors
@@ -48,15 +48,6 @@ const validate = (values) => {
 
 const warn = (values) => {
   const warnings = {}
-
-  /* if (values.name && values.name.length > 12) {
-   *   warnings.name = '身份名不超过12位'
-   * }
-
-   * if (values.password && values.password.length < 8) {
-   *   warnings.password = '密码不少于8位字符'
-   * }*/
-
   return warnings
 }
 
@@ -84,7 +75,7 @@ export default class CreateIdentity extends Component {
         rightButtons: [
           {
             id: 'next',
-            text: gt('下一步'),
+            text: gt('button_next'),
             fontWeight: '400',
             color: 'white',
             enabled: false
@@ -94,7 +85,7 @@ export default class CreateIdentity extends Component {
           visible: false
         },
         title: {
-          text: gt('创建身份')
+          text: gt('identity_id_create')
         }
       }
     }
@@ -131,7 +122,7 @@ export default class CreateIdentity extends Component {
           rightButtons: [
             {
               id: 'next',
-              text: t(this,'下一步'),
+              text: t(this,'button_next'),
               fontWeight: '400',
               color: 'white',
               enabled: !this.state.invalid && !this.state.pristine && !this.state.loading
@@ -215,7 +206,7 @@ export default class CreateIdentity extends Component {
             </View>
           </View>
         </ScrollView>
-        <IndicatorModal isVisible={loading} message={t(this,'创建中...')} onModalHide={this.onModalHide} />
+        <IndicatorModal isVisible={loading} message={t(this,'create_creating')} onModalHide={this.onModalHide} />
       </SafeAreaView>
     )
   }

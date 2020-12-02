@@ -1,3 +1,4 @@
+
 import React from 'react'
 import { View, Text, TouchableHighlight, NativeModules } from 'react-native'
 import FastImage from 'react-native-fast-image'
@@ -20,7 +21,7 @@ const AssetActionsTableViewCell = (props) => {
               source={require('resources/images/transfer_white.png')}
               style={{ width: 26, height: 26, marginRight: 8 }}
             />
-            <Text style={{ color: 'white', fontSize: 17 }}>{gt('转账')}</Text>
+            <Text style={{ color: 'white', fontSize: 17 }}>{gt('tx_transfer')}</Text>
           </View>
         </TouchableHighlight>
       </View>
@@ -31,7 +32,7 @@ const AssetActionsTableViewCell = (props) => {
               source={require('resources/images/receive_white.png')}
               style={{ width: 26, height: 26, marginRight: 8, marginBottom: 3 }}
             />
-            <Text style={{ color: 'white', fontSize: 17 }}>收款</Text>
+            <Text style={{ color: 'white', fontSize: 17 }}>{gt('tx_receive')}</Text>
           </View>
         </TouchableHighlight>
       </View>

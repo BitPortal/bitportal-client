@@ -50,6 +50,14 @@ const ContactTableViewCell = (props) => {
                 style={{ backgroundColor: 'white', width: '100%', height: '100%', borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
               />
             </View>}
+            {props.data.hasRIO && <View
+                                      style={{ backgroundColor: 'white', width: 30, height: 30, borderRadius: 20, position: 'absolute', top: 15, right: -8 }}
+                                        >
+              <FastImage
+                source={walletIcons['polkadot']}
+                style={{ backgroundColor: 'white', width: '100%', height: '100%', borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
+              />
+            </View>}
           </View>
         </View>
       </View>

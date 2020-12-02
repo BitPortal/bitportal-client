@@ -24,7 +24,7 @@ const HeaderTableViewCell = (props) => {
           options: {
             topBar: {
               title: {
-                text: `添加${symbol}资产`
+                text: `${gt('add')} ${symbol} ${gt(asset)}`
               }
             }
           }

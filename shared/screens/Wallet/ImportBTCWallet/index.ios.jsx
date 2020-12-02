@@ -22,6 +22,7 @@ import Modal from 'react-native-modal'
 import * as walletActions from 'actions/wallet'
 import { DarkModeContext } from 'utils/darkMode'
 
+
 const styles = EStyleSheet.create({
   container: {
     flex: 1,
@@ -66,7 +67,7 @@ const TextField = ({
   isDarkMode
 }) => (
   <View style={{ width: '100%', alignItems: 'center', height: 44, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-    <Text style={{ fontSize: 17, marginRight: 16, width: 70, color: isDarkMode ? 'white' : 'black' }}>{label}</Text>
+    <Text style={{ fontSize: 17, marginRight: 16, width: 80, color: isDarkMode ? 'white' : 'black' }}>{label}</Text>
     <TextInput
       style={[styles.textFiled, { color: isDarkMode ? 'white' : 'black'}]}
       autoCorrect={false}
@@ -126,18 +127,18 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid mnemonics':
-      return '无效的助记词'
+      return gt('invalid_mnemonic')
     case 'Invalid WIF length':
     case 'Invalid compression flag':
     case 'private key length is invalid':
     case 'Invalid checksum':
-      return '无效的私钥'
+      return gt('invalid_pk')
     case 'SegWit requires compressed private key':
-      return '隔离见证需要压缩的公钥格式'
+      return gt('format_segwit_publickey')
     case 'Wallet already exist':
-      return '该钱包已存在'
+      return gt('wallet_exsited')
     default:
-      return '导入失败'
+      return gt('import_failed')
   }
 }
 
@@ -145,19 +146,19 @@ const validate = (values) => {
   const errors = {}
 
   if (!values.mnemonic) {
-    errors.mnemonic = '请输入助记词'
+    errors.mnemonic = gt('mnemonic_caution_enter')
   }
 
   if (!values.privateKey) {
-    errors.privateKey = '请输入私钥'
+    errors.privateKey = gt('pk_caution_enter')
   }
 
   if (!values.password) {
-    errors.password = '请输入密码'
+    errors.password = gt('pwd_enter')
   }
 
   if (!values.passwordConfirm) {
-    errors.password = gt('请输入确认密码');
+    errors.password = gt('pwd_confirm');
   }
 
   return errors
@@ -167,11 +168,11 @@ const warn = (values) => {
   const warnings = {}
 
   if (values.password && values.password.length < 8) {
-    warnings.password = '密码不少于8位字符'
+    warnings.password = gt('pwd_error_tooshort')
   }
   const {password,passwordConfirm} = values || {};
   if (password && password !== passwordConfirm) {
-    warnings.passwordConfirm = gt('两次密码输入不一致');
+    warnings.passwordConfirm = gt('pwd_confirm_matcherror');
   }
 
   return warnings
@@ -202,7 +203,7 @@ export default class ImportBTCWallet extends Component {
         rightButtons: [
           {
             id: 'submit',
-            text: '确认',
+            text: gt('button_confirm'),
             fontWeight: '400',
             enabled: false
           }
@@ -211,10 +212,10 @@ export default class ImportBTCWallet extends Component {
           visible: false
         },
         backButton: {
-          title: '返回'
+          title: gt('button_back')
         },
         title: {
-          text: '导入BTC钱包'
+          text: gt('import_wallet_btc')
         },
         noBorder: true,
         drawBehind: false
@@ -270,7 +271,7 @@ export default class ImportBTCWallet extends Component {
             warning,
             '',
             [
-              { text: '确定', onPress: () => console.log('OK Pressed') }
+              { text: t(this,'button_ok'), onPress: () => console.log('OK Pressed') }
             ]
           )
           return
@@ -305,7 +306,7 @@ export default class ImportBTCWallet extends Component {
           rightButtons: [
             {
               id: 'submit',
-              text: '确认',
+              text: t(this,'button_confirm'),
               fontWeight: '400',
               enabled: !this.state.invalid && !this.state.pristine && !(prevState.selectedIndex === 0 ? this.state.importBTCMnemonicsLoading : this.state.importBTCPrivateKeyLoading)
             }
@@ -332,7 +333,7 @@ export default class ImportBTCWallet extends Component {
           errorMessages(error),
           '',
           [
-            { text: '确定', onPress: () => this.clearError() }
+            { text: t(this,'button_ok'), onPress: () => this.clearError() }
           ]
         )
       }, 20)
@@ -379,7 +380,7 @@ export default class ImportBTCWallet extends Component {
         <View style={styles.container}>
           <View style={{ height: 52, width: '100%', justifyContent: 'center', paddingTop: 5, paddingBottom: 13, paddingLeft: 16, paddingRight: 16, backgroundColor: isDarkMode ? 'black' : '#F7F7F7', borderColor: '#C8C7CC', borderBottomWidth: 0.5 }}>
             <SegmentedControlIOS
-              values={['助记词', '私钥']}
+              values={[t(this,'mnemonic'),t(this,'pk_privatekey')]}
               selectedIndex={this.state.selectedIndex}
               onChange={this.changeSelectedIndex}
               style={{ width: '100%' }}
@@ -391,13 +392,13 @@ export default class ImportBTCWallet extends Component {
           >
             <View style={{ flex: 1, alignItems: 'center' }}>
               <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-                {this.state.selectedIndex === 0 && <Text style={{ fontSize: 13, color: '#666666' }}>输入助记词</Text>}
-                {this.state.selectedIndex === 1 && <Text style={{ fontSize: 13, color: '#666666' }}>输入私钥</Text>}
+    {this.state.selectedIndex === 0 && <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'mnemonic_enter')}</Text>}
+    {this.state.selectedIndex === 1 && <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'pk_enter')}</Text>}
               </View>
               {this.state.selectedIndex === 0 && <Fragment>
                 <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : 'white' }}>
                   <Field
-                    placeholder="用空格分隔"
+                    placeholder={t(this,'mnemonic_caution_separate')}
                     name="mnemonic"
                     fieldName="mnemonic"
                     component={TextAreaField}
@@ -417,7 +418,7 @@ export default class ImportBTCWallet extends Component {
               {this.state.selectedIndex === 1 && <Fragment>
                 <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : 'white' }}>
                   <Field
-                    placeholder="必填"
+                    placeholder={t(this,'required')}
                     name="privateKey"
                     fieldName="privateKey"
                     component={TextAreaField}
@@ -434,12 +435,12 @@ export default class ImportBTCWallet extends Component {
                 </View>
               </Fragment>}
               <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-                <Text style={{ fontSize: 13, color: '#666666' }}>选择地址类型</Text>
+              <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'select_addr_type')}</Text>
               </View>
               <View style={{ width: '100%', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : 'white' }}>
                 <TouchableHighlight underlayColor={isDarkMode ? 'black' : '#D9D9D9'} style={{ width: '100%', height: 44 }} onPress={this.changeAddressType.bind(this, true)}>
                   <View style={{ height: 44, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
-                    <Text style={{ fontSize: 17, color: isDarkMode ? 'white' : 'black' }}>隔离见证</Text>
+              <Text style={{ fontSize: 17, color: isDarkMode ? 'white' : 'black' }}>{t(this,'segwit')}</Text>
                     {this.state.isSegWit && <FastImage source={require('resources/images/radio_checked.png')} style={{ width: 24, height: 24 }} />}
                     {!this.state.isSegWit && <FastImage source={require('resources/images/radio_unchecked.png')} style={{ width: 24, height: 24 }} />}
                     <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: '#C8C7CC' }} />
@@ -447,19 +448,19 @@ export default class ImportBTCWallet extends Component {
                 </TouchableHighlight>
                 <TouchableHighlight underlayColor={isDarkMode ? 'black' : '#D9D9D9'} style={{ width: '100%', height: 44 }} onPress={this.changeAddressType.bind(this, false)}>
                   <View style={{ height: 44, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', paddingLeft: 16, paddingRight: 16 }}>
-                    <Text style={{ fontSize: 17, color: isDarkMode ? 'white' : 'black' }}>普通</Text>
+              <Text style={{ fontSize: 17, color: isDarkMode ? 'white' : 'black' }}>{t(this,'ordinary')}</Text>
                     {this.state.isSegWit && <FastImage source={require('resources/images/radio_unchecked.png')} style={{ width: 24, height: 24 }} />}
                     {!this.state.isSegWit && <FastImage source={require('resources/images/radio_checked.png')} style={{ width: 24, height: 24 }} />}
                   </View>
                 </TouchableHighlight>
               </View>
               <View style={{ width: '100%', height: 40, paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-end' }}>
-                <Text style={{ fontSize: 13, color: '#666666' }}>设置密码</Text>
+              <Text style={{ fontSize: 13, color: '#666666' }}>{t(this,'pwd_set')}</Text>
               </View>
               <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : 'white' }}>
                 <Field
-                  label="钱包密码"
-                  placeholder="不少于8位字符，建议混合大小写字母，数字，符号"
+                  label={t(this,'pwd_wallet')}
+                  placeholder={t(this,'pwd_set_caution')}
                   name="password"
                   fieldName="password"
                   change={change}
@@ -470,8 +471,8 @@ export default class ImportBTCWallet extends Component {
                   isDarkMode={isDarkMode}
                 />
                 <Field
-                  label={t(this,'确认密码')}
-                  placeholder={t(this,'不少于8位字符，建议混合大小写字母，数字，符号')}
+                  label={t(this,'pwd_confirm_confirm')}
+                  placeholder={t(this,'pwd_set_caution')}
                   name="passwordConfirm"
                   fieldName="passwordConfirm"
                   change={change}
@@ -482,8 +483,8 @@ export default class ImportBTCWallet extends Component {
                   isDarkMode={isDarkMode}
                 />
                 <Field
-                  label="密码提示"
-                  placeholder="选填"
+                  label={t(this,'pwd_set_hint')}
+                  placeholder={t(this,'optional')}  
                   name="passwordHint"
                   fieldName="passwordHint"
                   change={change}
@@ -494,7 +495,7 @@ export default class ImportBTCWallet extends Component {
                 />
               </View>
               <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
-                <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。</Text>
+              <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>{t(this,'import_pwd_reset_hint')}</Text>
               </View>
             </View>
           </ScrollView>
@@ -514,7 +515,7 @@ export default class ImportBTCWallet extends Component {
             {(this.state.importBTCPrivateKeyLoading || this.state.importBTCMnemonicsLoading) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
               <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 14, alignItem: 'center', justifyContent: 'center', flexDirection: 'row' }}>
                 <ActivityIndicator size="small" color="#000000" />
-                <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>导入中...</Text>
+              <Text style={{ fontSize: 17, marginLeft: 10, fontWeight: 'bold' }}>{t(this,'import_importing')}</Text>
               </View>
             </View>}
           </Modal>

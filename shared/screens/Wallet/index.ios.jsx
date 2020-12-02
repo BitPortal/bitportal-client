@@ -158,7 +158,7 @@ export default class Wallet extends Component {
     SplashScreen.hide()
     KeyboardManager.setEnable(true)
     KeyboardManager.setPreventShowingBottomBlankSpace(true)
-    KeyboardManager.setToolbarDoneBarButtonItemText('完成')
+    KeyboardManager.setToolbarDoneBarButtonItemText(gt('complete'))
     KeyboardManager.setToolbarPreviousNextButtonEnable(true)
     this.props.actions.setSelectedContact(null)
 
@@ -326,7 +326,7 @@ export default class Wallet extends Component {
         }
       })
 
-      SPAlert.presentMessage(t(this,'已复制'))
+      SPAlert.presentMessage(t(this,'copied'))
     }
   }
 
@@ -370,12 +370,12 @@ export default class Wallet extends Component {
             options: {
               topBar: {
                 title: {
-                  text: t(this,'发送{symbol}到',{symbol:data.symbol})
+                  text: t(this,'send_token_symbol',{symbol:data.symbol})
                 },
                 leftButtons: [
                   {
                     id: 'cancel',
-                    text: t(this,'取消')
+                    text: t(this,'button_cancel')
                   }
                 ]
               }
@@ -408,12 +408,12 @@ export default class Wallet extends Component {
             options: {
               topBar: {
                 title: {
-                  text: `${t(this,'接收')} ${data.symbol}`
+                  text: `${t(this,'receive')} ${data.symbol}`
                 },
                 leftButtons: [
                   {
                     id: 'cancel',
-                    text: t(this,'取消')
+                    text: t(this,'button_cancel')
                   }
                 ],
                 noBorder: data.chain === 'BITCOIN' && this.props.childAddress && this.props.activeWallet.address !== this.props.childAddress
@@ -428,7 +428,7 @@ export default class Wallet extends Component {
   onAddAssetsPress = (data) => {
     const { chain } = data
 
-    if (chain === 'ETHEREUM' || chain === 'EOS' || chain === 'CHAINX') {
+    if (chain === 'ETHEREUM' || chain === 'EOS' || chain === 'CHAINX' || chain === 'POLKADOT') {
       let symbol
 
       if (chain === 'ETHEREUM') {
@@ -437,6 +437,8 @@ export default class Wallet extends Component {
         symbol = 'EOS'
       } else if (chain === 'CHAINX') {
         symbol = 'PCX'
+      }else if (chain === 'POLKADOT') {
+        symbol = 'RFUEL'
       }
 
       Navigation.push(this.props.componentId, {
@@ -445,7 +447,7 @@ export default class Wallet extends Component {
           options: {
             topBar: {
               title: {
-                text: t(this,'添加{symbol}资产',{symbol})
+                text: t(this,'add_asset_symbol',{symbol})
               }
             }
           }
@@ -499,7 +501,7 @@ export default class Wallet extends Component {
                 <Text style={{ color: '#666666', fontSize: 17 }}>
                   <FormattedMessage id="no_wallet_yet" />
                 </Text>
-                <Text style={{ marginTop: 10, color: '#666666', borderWidth: 1, borderColor: '#666666', padding: 4, paddingRight: 8, paddingLeft: 8, borderRadius: 4 }}>{t(this,'开始添加')}</Text>
+                <Text style={{ marginTop: 10, color: '#666666', borderWidth: 1, borderColor: '#666666', padding: 4, paddingRight: 8, paddingLeft: 8, borderRadius: 4 }}>{t(this,'add_start')}</Text>
               </View>
             </TouchableHighlight>
           </View>
@@ -607,6 +609,7 @@ export default class Wallet extends Component {
                   uid={wallet.id}
                   type="identity"
                   height="190"
+                  title={gt('asset_total')}
                   reactModuleForCollectionViewCell="WalletCardCollectionViewCell"
                   reactModuleForCollectionViewCellKey="WalletCardCollectionViewCell"
                   address={wallet.address}
@@ -632,6 +635,7 @@ export default class Wallet extends Component {
                   uid={wallet.id}
                   type="imported"
                   height="190"
+                  title={gt('asset_total')}
                   reactModuleForCollectionViewCell="WalletCardCollectionViewCell"
                   reactModuleForCollectionViewCellKey="WalletCardCollectionViewCell"
                   address={wallet.address}
@@ -662,7 +666,7 @@ export default class Wallet extends Component {
             componentId={this.props.componentId}
             selectionStyle={TableView.Consts.CellSelectionStyle.None}
             chain={chain}
-            accessoryType={(chain === 'ETHEREUM' || chain === 'EOS' || chain === 'CHAINX') ? 7 : TableView.Consts.AccessoryType.None}
+            accessoryType={(chain === 'ETHEREUM' || chain === 'EOS' || chain === 'CHAINX' || chain === 'POLKADOT') ? 7 : TableView.Consts.AccessoryType.None}
             onAddAccessoryPress={!this.state.switching ? this.onAddAssetsPress : () => {}}
             isDarkMode={isDarkMode}
           />

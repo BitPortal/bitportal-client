@@ -33,7 +33,7 @@ export default class Contact extends Component {
     return {
       topBar: {
         title: {
-          text: gt('联系人详情')
+          text: gt('contact_detail')
         },
         rightButtons: [
           {
@@ -50,7 +50,7 @@ export default class Contact extends Component {
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
         title: {
-          text: t(this,'联系人详情'),
+          text: t(this,'contact_detail'),
         },
       },
     })
@@ -64,16 +64,16 @@ export default class Contact extends Component {
 
   deleteContact = () => {
     Alert.alert(
-      t(this,'确认删除'),
+      t(this,'confirm_delete'),
       null,
       [
         {
-          text: t(this,"取消"),
+          text: t(this,'button_cancel'),
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel'
         },
         {
-          text: t(this,"确认"),
+          text: t(this,'button_confirm'),
           onPress: () => {
             this.props.actions.deleteContact(this.props.contact.id)
             Navigation.pop(this.props.componentId)
@@ -109,7 +109,7 @@ export default class Contact extends Component {
         options: {
           topBar: {
             title: {
-              text: t(this,'编辑联系人')
+              text: t(this,'contact_edit')
             }
           }
         }
@@ -133,11 +133,11 @@ export default class Contact extends Component {
 
       if (!wallet) {
         Alert.alert(
-          t(this,'未检测到{symbol}钱包',{symbol}),
+          t(this,'undetect_wallet_symbol',{symbol}),
           null,
           [
             {
-              text: t(this,'确认'),
+              text: t(this,'button_confirm'),
               onPress: () => {}
             }
           ]
@@ -154,7 +154,7 @@ export default class Contact extends Component {
                 options: {
                   topBar: {
                     title: {
-                      text: t(this,'发送{symbol}到'),
+                      text: t(this,'send_token_symbol',{symbol}),
                     },
                     leftButtons: [
                       {
@@ -237,7 +237,7 @@ export default class Contact extends Component {
       const btcAddresses = contact.btc.map((item, index) => ({
         key: index,
         address: item.address,
-        label: t(this,'{symbol} 地址',{symbol:'BTC'}),
+        label: t(this,'addr_symbol',{symbol:'BTC'}),
         chain: 'BITCOIN',
         symbol: 'BTC',
         name: contact.name
@@ -250,7 +250,7 @@ export default class Contact extends Component {
       const ethAddresses = contact.eth.map((item, index) => ({
         key: index,
         address: item.address,
-        label: t(this,'{symbol} 地址',{symbol:'ETH'}),
+        label: t(this,'addr_symbol',{symbol:'ETH'}),
         chain: 'ETHEREUM',
         symbol: 'ETH',
         name: contact.name
@@ -259,12 +259,25 @@ export default class Contact extends Component {
       sections.push({ data: ethAddresses })
     }
 
+    if (contact && contact.rio && contact.rio.length) {
+      const roioAddresses = contact.rio.map((item, index) => ({
+        key: index,
+        address: item.address,
+        label: t(this,'addr_symbol',{symbol:'RFUEL'}),
+        chain: 'POLKADOT',
+        symbol: 'RFUEL',
+        name: contact.name
+      }))
+
+      sections.push({ data: roioAddresses })
+    }
+
     if (contact && contact.eos && contact.eos.length) {
       const eosAddresses = contact.eos.map((item, index) => ({
         key: index,
         address: item.accountName,
         note: item.memo,
-        label: t(this,'{symbol} 账户名',{symbol:'EOS'}),
+        label: 'EOS 账户名',
         chain: 'EOS',
         symbol: 'EOS',
         name: contact.name
@@ -318,7 +331,7 @@ export default class Contact extends Component {
         >
           {this.state.showModal && <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'rgba(0,0,0,0.87)', padding: 16, borderRadius: 4, height: 48, elevation: 1, justifyContent: 'center', width: '100%', marginBottom: 72 }}>
-              <Text style={{ fontSize: 14, color: 'white' }}>{t(this,'已复制')}</Text>
+              <Text style={{ fontSize: 14, color: 'white' }}>{t(this,'copied')}</Text>
             </View>
           </View>}
         </Modal>

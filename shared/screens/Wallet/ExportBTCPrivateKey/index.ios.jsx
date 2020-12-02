@@ -6,6 +6,7 @@ import Sound from 'react-native-sound'
 import Modal from 'react-native-modal'
 import TableView from 'components/TableView'
 import { DarkModeContext } from 'utils/darkMode'
+
 const { Section, Item } = TableView
 
 Sound.setCategory('Playback')
@@ -29,10 +30,10 @@ export default class ExportETHKeystore extends Component {
     return {
       topBar: {
         title: {
-          text: '导出BTC私钥'
+          text: gt('pk_export_btc')
         },
         backButton: {
-          title: '返回'
+          title: gt('button_back')
         },
         largeTitle: {
           visible: false
@@ -76,16 +77,16 @@ export default class ExportETHKeystore extends Component {
       <ScrollView style={{ flex: 1, paddingLeft: 16, paddingRight: 16, paddingTop: 16, backgroundColor: isDarkMode ? 'black' : 'white' }}>
         <View style={{ width: '100%' }}>
           <View>
-            <Text style={{ color: '#007AFF', fontWeight: 'bold', marginBottom: 4, color: isDarkMode ? 'white' : 'black' }}>离线保存</Text>
-            <Text style={{ color: '#8E8E93', marginBottom: 10, lineHeight: 18, color: isDarkMode ? 'white' : 'black' }}>切勿保存到邮箱，记事本，网盘，聊天工具等，非常危险</Text>
+    <Text style={{ color: '#007AFF', fontWeight: 'bold', marginBottom: 4, color: isDarkMode ? 'white' : 'black' }}>{t(this,'save_offline')}</Text>
+    <Text style={{ color: '#8E8E93', marginBottom: 10, lineHeight: 18, color: isDarkMode ? 'white' : 'black' }}>{t(this,'save_hint')}</Text>
           </View>
           <View>
-            <Text style={{ color: '#007AFF', fontWeight: 'bold', marginBottom: 4, color: isDarkMode ? 'white' : 'black' }}>切勿使用网络传输</Text>
-            <Text style={{ color: '#8E8E93', marginBottom: 10, lineHeight: 18, color: isDarkMode ? 'white' : 'black' }}>切勿通过网络工具传输，一旦被黑客获取将造成不可挽回的资产损失。建议离线设备通过扫二维码方式传输。</Text>
+    <Text style={{ color: '#007AFF', fontWeight: 'bold', marginBottom: 4, color: isDarkMode ? 'white' : 'black' }}>{t(this,'save_hint2')}</Text>
+    <Text style={{ color: '#8E8E93', marginBottom: 10, lineHeight: 18, color: isDarkMode ? 'white' : 'black' }}>{t(this,'save_hint3')}</Text>
           </View>
           <View>
-            <Text style={{ color: '#007AFF', fontWeight: 'bold', marginBottom: 4, color: isDarkMode ? 'white' : 'black' }}>密码管理工具保存</Text>
-            <Text style={{ color: '#8E8E93', marginBottom: 10, lineHeight: 18, color: isDarkMode ? 'white' : 'black' }}>建议使用密码管理工具管理。</Text>
+    <Text style={{ color: '#007AFF', fontWeight: 'bold', marginBottom: 4, color: isDarkMode ? 'white' : 'black' }}>{t(this,'save_pwdtool')}</Text>
+    <Text style={{ color: '#8E8E93', marginBottom: 10, lineHeight: 18, color: isDarkMode ? 'white' : 'black' }}>{t(this,'save_pwdtool_recommend')}</Text>
           </View>
         </View>
         <View style={{ width: '100%', marginTop: 16 }}>
@@ -117,7 +118,7 @@ export default class ExportETHKeystore extends Component {
                 fontSize: 17
               }}
             >
-              复制BTC私钥
+              {t(this,'pk_copy_btc')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -134,7 +135,7 @@ export default class ExportETHKeystore extends Component {
         >
           {this.state.showModalContent && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ backgroundColor: 'rgba(236,236,237,1)', padding: 20, borderRadius: 14 }}>
-              <Text style={{ fontSize: 17, fontWeight: 'bold' }}>已复制</Text>
+            <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{t(this,'copied')}</Text>
             </View>
           </View>}
         </Modal>

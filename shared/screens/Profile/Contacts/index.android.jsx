@@ -27,7 +27,7 @@ export default class Contacts extends Component {
     return {
       topBar: {
         title: {
-          text: gt('联系人')
+          text: gt('contact')
         },
         leftButtons: [
           {
@@ -71,7 +71,8 @@ export default class Contacts extends Component {
           description: item.description,
           hasBTC: !!item.btc && !!item.btc.length,
           hasETH: !!item.eth && !!item.eth.length,
-          hasEOS: !!item.eos && !!item.eos.length
+          hasEOS: !!item.eos && !!item.eos.length,
+          hasRIO: !!item.rio && !!item.rio.length
         })
       })
     })
@@ -147,6 +148,12 @@ export default class Contacts extends Component {
                 style={{ backgroundColor: 'white', width: '100%', height: '100%', borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
               />
             </View>}
+                {data.hasRIO && <View style={{ backgroundColor: 'white', width: 30, height: 30, borderRadius: 20, position: 'absolute', top: 15, right: -8 }}>
+                  <Image
+                    source={walletIcons['polkadot']}
+                    style={{ backgroundColor: 'white', width: '100%', height: '100%', borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)' }}
+                  />
+                </View>}
               </View>
             </View>
           </View>
@@ -162,7 +169,7 @@ export default class Contacts extends Component {
         options: {
           topBar: {
             title: {
-              text: t(this,'创建联系人')
+              text: t(this,'contact_create')
             }
           }
         }
@@ -176,7 +183,7 @@ export default class Contacts extends Component {
     if (!contact || !contact.length) {
       return (
         <View style={{ flex: 1, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={{ color: 'rgba(0,0,0,0.54)', fontSize: 17 }}>{t(this,'暂无联系人')}</Text>
+          <Text style={{ color: 'rgba(0,0,0,0.54)', fontSize: 17 }}>{t(this,'contact_nocontact')}</Text>
           <TouchableNativeFeedback onPress={this.onAddContact} background={TouchableNativeFeedback.Ripple('rgba(0,0,0,0.12)', true)} useForeground={true}>
             <View style={{ width: 56, height: 56, borderRadius: 28, alignItems: 'center', justifyContent: 'center', position: 'absolute', bottom: 16, right: 16, backgroundColor: '#FF5722', elevation: 10, zIndex: 2 }}>
               <Image

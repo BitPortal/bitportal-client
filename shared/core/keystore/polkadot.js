@@ -47,24 +47,17 @@ const getKeyring = async (network) => {
 }
 
 export const createPolkadotKeystoreBySuri = async (input, password, options = {}) => {
-  console.log('---> createPolkadotKeystoreBySuri start')
   const value = typeof input === 'string' ? input.trim() : input.join(' ')
   const { derivePath, polkadotNetwork = 'rio', keyPairType = 'sr25519', ...meta } = options
 
   const path = value + (derivePath || '')
   const keyring = await getKeyring(polkadotNetwork)
-  console.log('---> createPolkadotKeystoreBySuri keyring',keyring)
   const pair = await keyring.createFromUri(path, meta, keyPairType)
-  console.log('---> createPolkadotKeystoreBySuri pair',pair)
   const json = await pair.toJson(password)
-  console.log('---> createPolkadotKeystoreBySuri json',json)
   const secret = Buffer.from(await randomBytes(16)).toString('hex')
   let crypto = await createCrypto(password, secret, 'scrypt', true)
-  console.log('---> createPolkadotKeystoreBySuri crypto', crypto)
   const encSuri = await deriveEncPair(password, Buffer.from(value, 'utf8').toString('hex'), crypto)
-  console.log('---> createPolkadotKeystoreBySuri encSuri', encSuri)
   crypto = clearCachedDerivedKey(crypto)
-  console.log('---> createPolkadotKeystoreBySuri clearCachedDerivedKey', crypto)
   const keystore = {
     version: keystoreVersion.polkadot,
     ...json,
@@ -117,28 +110,20 @@ export const createPolkadotKeystoreByKeystore = async (value, password, options 
 
 export const verifyPolkadotPassword = async (keystore, password) => {
 
-  console.warn(' start export keystore verifyPolkadotPassword: ',JSON.stringify(keystore))
   validatePolkadotKeystore(keystore)
-  console.warn(' start export keystore validatePolkadotKeystore')
   const network = keystore.bitportalMeta.polkadotNetwork
   const keyring = await getKeyring(network)
-  console.warn(' start export keystore keyring')
   const cryptoType = keystore.encoding.version === '0' || !Array.isArray(keystore.encoding.content) ? 'ed25519' : keystore.encoding.content[1];
   const encType = !Array.isArray(keystore.encoding.type) ? [keystore.encoding.type] : keystore.encoding.type;
-  console.warn(' start export keystore createPair')
   const pair = await createPair({ type: cryptoType, toSS58: keyring.encodeAddress }, { publicKey: keyring.decodeAddress(keystore.address, true) }, keystore.meta, isHex(keystore.encoded) ? hexToU8a(keystore.encoded) : base64Decode(keystore.encoded), encType)
 
-  console.warn(' start export keystore pair:',password)
   await pair.decodePkcs8(password)
-  console.warn(' start export keystore pair.decodePkcs8 :')
 
   return true
 }
 
 export const exportPolkadotKeystore = async (keystore, password) => {
-  console.warn(' start export keystore exportPolkadotKeystore')
   await verifyPolkadotPassword(keystore, password)
-  console.warn(' start export keystore exportPolkadotKeystore ---> keyStore:',JSON.stringify(keystore))
 
   return {
     address: keystore.address,

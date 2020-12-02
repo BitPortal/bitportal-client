@@ -41,9 +41,9 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid password':
-      return gt('密码错误')
+      return gt('pwd_wrong')
     default:
-      return gt('授权失败')
+      return gt('operation_failed')
   }
 }
 @injectIntl
@@ -67,7 +67,7 @@ export default class AuthorizeEOSAccount extends Component {
         rightButtons: [
           {
             id: 'skip',
-            text: gt('取消')
+            text: gt('button_cancel')
           }
         ],
         backButton: {
@@ -132,7 +132,7 @@ export default class AuthorizeEOSAccount extends Component {
           errorMessages(error),
           '',
           [
-            { text: t(this,'确定'), onPress: () => this.clearError() }
+            { text: t(this,'button_ok'), onPress: () => this.clearError() }
           ]
         )
       }, 20)

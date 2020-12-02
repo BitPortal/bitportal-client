@@ -1,28 +1,35 @@
 import zh from './zh'
-import zh_other from './zh_other'
 import en from './en'
-import en_other from './en_other'
 import ko from './ko'
 
-import en_enk from './en_enk.json'
-import zh_enk from './zh_enk.json'
+import en_xbc from './en_xbc.json'
+import cn_xbc from './cn_xbc.json'
 
 
-const zh_all = {...zh, ...zh_other,...zh_enk};
-const en_all = {...en, ...en_other,...en_enk};
+const zh_all = {...zh, ...cn_xbc};
+const en_all = {...en, ...en_xbc};
 
-export default {
+export const defaultLocale = 'zh'
+
+const locales = {
   zh:zh_all,
   en:en_all,
   ko,
 }
 
+export default locales
+
 global.t = (that = [], message, values) => {
+
+  if (!(zh_all[message] || en_all[message])){
+    return message//`${message}_暂无翻译`
+  }
+
   const { intl } = that.props || {};
   if (intl) {
    return intl.formatMessage({ id: message }, values || {});
   }
-  return message;
+  return gt(message);
 }
 
 global.currentLocale = (that = {}) => {
@@ -33,7 +40,7 @@ global.currentLocale = (that = {}) => {
   }
 }
 
-let localeData = 'en';
+let localeData = defaultLocale;
 global.gCurrentLocale = () => {
   return localeData;
 }
@@ -42,6 +49,11 @@ const setGlobalLoacale = (locale) => {
 }
 
 global.gt = (message) => {
+
+  if (!(zh_all[message] || en_all[message])){
+    return message//`${message}_暂无翻译`
+  }
+
   if (localeData === 'zh') {
     return  zh_all[message] ? zh_all[message] : message;
   }

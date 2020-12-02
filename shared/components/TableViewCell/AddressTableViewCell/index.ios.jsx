@@ -30,7 +30,7 @@ const AddressTableViewCell = (props) => {
         </TouchableHighlight>
       </View>
       {props.data.note && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'flex-start', flexWrap: 'nowrap', width: '100%' }}>
-        <Text style={{ fontSize: 15 }}>默认备注</Text>
+        <Text style={{ fontSize: 15 }}>{gt('remark')}</Text>
         <TouchableHighlight underlayColor="rgba(0,0,0,0)" onPress={this.copy.bind(this, props.data.note)} activeOpacity={0.7} style={{ width: '100%', paddingTop: 4, paddingBottom: 4 }}>
           <Text style={{ fontSize: 15, color: '#007AFF', paddingRight: 6 }} numberOfLines={1}>
             {`${this.formatAddress(props.data.note)} `}

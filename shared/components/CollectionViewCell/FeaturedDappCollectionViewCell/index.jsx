@@ -10,7 +10,7 @@ const FeaturedDappCollectionViewCell = (props) => (
     paddingBottom: 24
   }}
   >
-    <Text style={{ color: '#007AFF', fontSize: 11, height: 13, marginTop: 12 }}>特别推荐</Text>
+    <Text style={{ color: '#007AFF', fontSize: 11, height: 13, marginTop: 12 }}>{t(this,'recommend')}</Text>
     <Text style={{ fontSize: 22, height: 26, marginTop: 2 }}>{props.data.title}</Text>
     <Text style={{ color: '#8E8E93', fontSize: 22, height: 26, marginBottom: 6 }}>{props.data.title}</Text>
     <View style={{ width: '100%', height: 214, borderRadius: 6, backgroundColor: '#E5E5EA' }}>

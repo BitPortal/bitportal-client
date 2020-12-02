@@ -18,18 +18,18 @@ export const errorMessages = (error, messages) => {
 
   switch (String(message)) {
     case 'Invalid mnemonics':
-      return gt('无效的助记词')
+      return gt('invalid_mnemonic')
     case 'Invalid WIF length':
     case 'Invalid compression flag':
     case 'private key length is invalid':
     case 'Invalid checksum':
-      return gt('无效的私钥')
+      return gt('invalid_pk')
     case 'SegWit requires compressed private key':
-      return gt('隔离见证需要压缩的公钥格式')
+      return gt('format_segwit_publickey')
     case 'Wallet already exist':
-      return gt('该钱包已存在')
+      return gt('wallet_exsited')
     default:
-      return gt('导入失败')
+      return gt('import_failed')
   }
 }
 
@@ -37,18 +37,18 @@ const validate = (values, props) => {
   const errors = {}
 
   if (!values.mnemonic) {
-    errors.mnemonic = gt('请输入助记词')
+    errors.mnemonic = gt('mnemonic_caution_enter')
   }
 
   if (!values.password) {
-    errors.password = gt('请输入密码')
+    errors.password = gt('pwd_enter')
   } else if (values.password && values.password.length < 8) {
-    errors.password = gt('密码不少于8位字符')
+    errors.password = gt('pwd_error_tooshort')
   }
   if (!values.passwordConfirm) {
-    errors.passwordConfirm = gt('请输入确认密码')
+    errors.passwordConfirm = gt('pwd_confirm')
   }else if (values.password !== values.passwordConfirm) {
-    errors.passwordConfirm = gt('两次密码输入不一致');
+    errors.passwordConfirm = gt('pwd_confirm_matcherror');
   }
 
   return errors
@@ -144,7 +144,7 @@ export default class ImportBTCMnemonicsForm extends Component {
           errorMessages(error),
           '',
           [
-            { text: t(this,'确定'), onPress: () => this.clearError() }
+            { text: t(this,'button_ok'), onPress: () => this.clearError() }
           ]
         )
       }, 20)
@@ -185,7 +185,7 @@ export default class ImportBTCMnemonicsForm extends Component {
           <View style={{ paddingTop: 16 }}>
             <View style={{ width: '100%' }}>
               <Field
-                label={t(this,'助记词')}
+                label={t(this,'mnemonic')}
                 placeholder={intl.formatMessage({ id: 'identity_input_placeholder_mnemonics' })}
                 name="mnemonic"
                 fieldName="mnemonic"
@@ -202,25 +202,25 @@ export default class ImportBTCMnemonicsForm extends Component {
             </View>
             <View style={{ borderTopWidth: 1, borderColor: 'rgba(0,0,0,0.12)' }}>
               <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48 }}>
-                <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'选择地址类型')}</Text>
+                <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'select_addr_type')}</Text>
               </View>
               <TouchableNativeFeedback onPress={this.changeAddressType.bind(this, true)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48 }}>
                   {isSegWit && <Image source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
                   {!isSegWit && <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
-                  <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)' }}>{t(this,'隔离见证')}</Text>
+                  <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)' }}>{t(this,'segwit')}</Text>
                 </View>
               </TouchableNativeFeedback>
               <TouchableNativeFeedback onPress={this.changeAddressType.bind(this, false)} background={TouchableNativeFeedback.SelectableBackground()} useForeground={true}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48 }}>
                   {!isSegWit && <Image source={require('resources/images/radio_filled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
                   {isSegWit && <Image source={require('resources/images/radio_unfilled_android.png')} style={{ width: 24, height: 24, marginRight: 32 }} />}
-                  <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)' }}>{t(this,'普通')}</Text>
+                  <Text style={{ fontSize: 16, color: 'rgba(0,0,0,0.87)' }}>{t(this,'ordinary')}</Text>
                 </View>
               </TouchableNativeFeedback>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 48, borderTopWidth: 1, borderColor: 'rgba(0,0,0,0.12)' }}>
-              <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'设置密码')}</Text>
+              <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'pwd_set')}</Text>
             </View>
             <Field
               label={intl.formatMessage({ id: 'identity_input_label_wallet_passwd' })}
@@ -256,10 +256,10 @@ export default class ImportBTCMnemonicsForm extends Component {
             />
           </View>
           <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 16, justifyContent: 'flex-start' }}>
-            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)', lineHeight: 18 }}>{t(this,'如果要在导入的同时修改密码，请在输入框内输入新密码，旧密码将在导入后失效。')}</Text>
+            <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)', lineHeight: 18 }}>{t(this,'import_pwd_reset_hint')}</Text>
           </View>
         </ScrollView>
-        <IndicatorModal isVisible={this.state.importBTCMnemonicsLoading} message={t(this,'导入中...')} onModalHide={this.onModalHide} onModalShow={this.onModalShow} />
+        <IndicatorModal isVisible={this.state.importBTCMnemonicsLoading} message={t(this,'import_importing')} onModalHide={this.onModalHide} onModalShow={this.onModalShow} />
       </View>
     )
   }
