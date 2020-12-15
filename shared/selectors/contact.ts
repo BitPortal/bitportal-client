@@ -1,6 +1,8 @@
 import { createSelector } from 'reselect'
 import { transferWalletSelector } from 'selectors/wallet'
+import { withdrawAssetSelector } from 'selectors/asset'
 import { initialState } from 'reducers/contact'
+import {getChain} from '../utils/riochain'
 
 export const contactByIdSelector = (state: RootState) => state.contact.byId || initialState.byId
 export const contactAllIdsSelector = (state: RootState) => state.contact.allIds || initialState.allIds
@@ -80,6 +82,33 @@ export const transferWalletsContactsSelector = createSelector(
     return contacts
   }
 )
+
+export const withdrawContactSelector = createSelector(
+  withdrawAssetSelector,
+  contactByIdSelector,
+  contactAllIdsSelector,
+  (withdrawAsset: any, byId: any, allIds: any) => {
+    const symbol = withdrawAsset.symbol || ''
+    const chainSymbol = (getChain(symbol.toUpperCase()) || '').toLowerCase()
+    const contacts = allIds.map(id => byId[id])
+      .filter(item => item[chainSymbol] && item[chainSymbol].length)
+      .map(item => ({ id: item.id, name: item.name, description: item.description, address: item[chainSymbol] }))
+      .sort((a, b) => {
+        if(a.name.toUpperCase() < b.name.toUpperCase()) {
+          return -1
+        } else if(a.name.toUpperCase() > b.name.toUpperCase()) {
+          return 1
+        }
+
+        return 0
+      }).reduce((a, b) => {
+        const addresses = b.address.map(item => ({ id: b.id, name: b.name, description: b.description, ...item }))
+        return [...a, ...addresses]
+      }, [])
+
+    console.warn('wd contacts:',contacts)
+    return contacts
+  })
 
 export const activeContactSelector = createSelector(
   activeContactIdSelector,

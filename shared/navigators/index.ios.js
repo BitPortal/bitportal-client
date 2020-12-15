@@ -92,6 +92,8 @@ import LanguageSetting from 'screens/Profile/LanguageSetting'
 import CurrencySetting from 'screens/Profile/CurrencySetting'
 import WebView from 'screens/WebView'
 import Camera from 'screens/Camera'
+import Deposit from  'screens/Wallet/RioChain/Deposit'
+import WithdrawAsset from 'screens/Wallet/RioChain/Withdraw'
 
 import messages, { setGlobalLoacale } from 'resources/messages'
 import React, { Component } from 'react';
@@ -195,6 +197,9 @@ export const registerScreens = (store) => {
 
   Navigation.registerComponentWithRedux('BitPortal.WebView', () => WebView, Provider, store)
   Navigation.registerComponentWithRedux('BitPortal.Camera', () => Camera, Provider, store)
+
+  Navigation.registerComponentWithRedux('BitProtal.Deposit', () => Deposit, Provider, store)
+  Navigation.registerComponentWithRedux('BitProtal.WithdrawAsset', () => WithdrawAsset, Provider, store)
 }
 
 export const setDefaultOptions = () => {

@@ -1,4 +1,3 @@
-import assert from 'assert'
 import { delay } from 'redux-saga'
 import { takeEvery, put, call, select, takeLatest } from 'redux-saga/effects'
 import { getErrorMessage } from 'utils'

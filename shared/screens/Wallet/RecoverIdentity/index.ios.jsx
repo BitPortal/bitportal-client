@@ -20,6 +20,7 @@ import EStyleSheet from 'react-native-extended-stylesheet'
 import { Field, reduxForm, getFormSyncWarnings, getFormValues } from 'redux-form'
 import * as identityActions from 'actions/identity'
 import { DarkModeContext } from 'utils/darkMode'
+import {PasswordStrong} from 'components/passwordExtension'
 
 const styles = EStyleSheet.create({
   container: {
@@ -42,7 +43,8 @@ const styles = EStyleSheet.create({
   textFiled: {
     height: '100%',
     fontSize: 17,
-    width: '100% - 138'
+    flex:1
+    // width: '100% - 138'
   },
   textAreaFiled: {
     height: '100%',
@@ -60,10 +62,13 @@ const TextField = ({
   secureTextEntry,
   separator,
   change,
+  showStrongLevel,
+  showEyes,
   showClearButton,
-  isDarkMode
+  isDarkMode,
+  onChangeEntry
 }) => (
-  <View style={{ width: '100%', alignItems: 'center', height: 56, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
+  <View style={{ flex:1, alignItems: 'center', height: 56, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
     <Text style={{ fontSize: 17, fontWeight: 'bold', marginRight: 16, width: 80, color: isDarkMode ? 'white' : 'black' }}>{label}</Text>
     <TextInput
       style={[styles.textFiled, { color: isDarkMode ? 'white' : 'black' }]}
@@ -75,7 +80,7 @@ const TextField = ({
       secureTextEntry={secureTextEntry}
       {...restInput}
     />
-    {showClearButton && active && <View style={{ height: '100%', position: 'absolute', right: 16, top: 0, width: 20, alignItems: 'center', justifyContent: 'center' }}>
+    {showClearButton && active && <View style={{ height: '100%', position: 'absolute', right: showStrongLevel || showEyes ? 55:16, top: 0, width: 20, alignItems: 'center', justifyContent: 'center' }}>
       <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
         <FastImage
           source={require('resources/images/clear.png')}
@@ -83,7 +88,16 @@ const TextField = ({
         />
       </TouchableHighlight>
     </View>}
-    {separator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: '#C8C7CC' }} />}
+    {showStrongLevel && <PasswordStrong password={restInput.value || ''} style={{marginHorizontal:5}}/>}
+    {showEyes && <View style={{ height: '100%',marginHorizontal:5, alignItems: 'center', justifyContent: 'center' }}>
+      <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={onChangeEntry}>
+        <FastImage
+          source={ secureTextEntry?require('resources/images/eyes_close.png') : require('resources/images/eyes_open.png')}
+          style={{ width: 24, height: 15 }}
+        />
+      </TouchableHighlight>
+    </View>}
+    {separator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 24, backgroundColor: '#C8C7CC' }} />}
   </View>
 )
 
@@ -99,7 +113,7 @@ const TextAreaField = ({
   <View style={{ width: '100%', alignItems: 'center', height: 100, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
     <TextInput
       style={[styles.textAreaFiled, { color: isDarkMode ? 'white' : 'black' }]}
-      placeholderTextColor={isDarkMode ? 'white' : 'black'}
+      placeholderTextColor={'#ADADAD'}
       multiline={true}
       autoCorrect={false}
       autoCapitalize="none"
@@ -223,7 +237,7 @@ export default class RecoverIdentity extends Component {
     }
   }
 
-  state = { invalid: true, pristine: true, loading: false, error: null }
+  state = { invalid: true, pristine: true, loading: false, error: null,secureTextEntry:true }
 
   componentDidUpdate(prevProps, prevState) {
     if (
@@ -315,6 +329,7 @@ export default class RecoverIdentity extends Component {
       }
     })
   }
+  resetEntry = () => this.setState({secureTextEntry:!this.state.secureTextEntry})
 
   render() {
     const { intl, recoverIdentity, formValues, change } = this.props
@@ -370,42 +385,53 @@ export default class RecoverIdentity extends Component {
             <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC' }}>
               <Field
                 label={intl.formatMessage({ id: 'identity_input_label_wallet_passwd' })}
-                placeholder={intl.formatMessage({ id: 'identity_input_placeholder_wallet_passwd' })}
+                placeholder={intl.formatMessage({ id: 'pwd_enter' })}
                 name="password"
                 fieldName="password"
                 component={TextField}
                 showClearButton={!!password && password.length > 0}
                 change={change}
-                secureTextEntry
                 isDarkMode={isDarkMode}
+                showStrongLevel
+                secureTextEntry={this.state.secureTextEntry}
                 separator={true}
               />
               <Field
                 label={intl.formatMessage({ id: 'identity_input_label_wallet_passwd_confirm' })}
-                placeholder={intl.formatMessage({ id: 'identity_input_placeholder_wallet_passwd' })}
+                placeholder={intl.formatMessage({ id: 'pwd_confirm' })}
                 name="passwordConfirm"
                 fieldName="passwordConfirm"
                 component={TextField}
                 showClearButton={!!password && password.length > 0}
                 change={change}
                 isDarkMode={isDarkMode}
-                secureTextEntry
-                separator={true}
-              />
-              <Field
-                label={intl.formatMessage({ id: 'identity_input_label_passwd_hint' })}
-                placeholder={intl.formatMessage({ id: 'identity_input_placeholder_label_passwd_hint' })}
-                name="passwordHint"
-                fieldName="passwordHint"
-                component={TextField}
-                showClearButton={!!passwordHint && passwordHint.length > 0}
-                change={change}
-                isDarkMode={isDarkMode}
+                secureTextEntry={this.state.secureTextEntry}
+                showEyes={true}
+                onChangeEntry={this.resetEntry}
                 separator={false}
               />
+              {/*<Field*/}
+              {/*  label={intl.formatMessage({ id: 'identity_input_label_passwd_hint' })}*/}
+              {/*  placeholder={intl.formatMessage({ id: 'identity_input_placeholder_label_passwd_hint' })}*/}
+              {/*  name="passwordHint"*/}
+              {/*  fieldName="passwordHint"*/}
+              {/*  component={TextField}*/}
+              {/*  showClearButton={!!passwordHint && passwordHint.length > 0}*/}
+              {/*  change={change}*/}
+              {/*  isDarkMode={isDarkMode}*/}
+              {/*  secureTextEntry={this.state.secureTextEntry}*/}
+              {/*  showEyes={true}*/}
+              {/*  onChangeEntry={this.resetEntry}*/}
+              {/*  separator={false}*/}
+              {/*/>*/}
             </View>
             <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
-              <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>{intl.formatMessage({ id: 'import_pwd_reset_hint' })}</Text>
+              <Text children={intl.formatMessage({ id: 'identity_input_placeholder_wallet_passwd' })} style={{
+                marginTop:5,
+                fontSize:13,
+                color:'#666666',
+              }}/>
+              <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18,marginTop:5, }}>{intl.formatMessage({ id: 'import_pwd_reset_hint' })}</Text>
             </View>
           </View>
         </ScrollView>

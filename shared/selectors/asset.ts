@@ -3,7 +3,7 @@ import {activeWalletIdSelector, activeChainSelector} from 'selectors/wallet'
 import {initialState} from 'reducers/asset'
 import { chain } from '../core/constants'
 
-const activeAssetIdSelector = (state: RootState) => state.asset.activeAssetId || initialState.activeAssetId
+export const activeAssetIdSelector = (state: RootState) => state.asset.activeAssetId || initialState.activeAssetId
 const transferAssetIdSelector = (state: RootState) => state.asset.transferAssetId || initialState.transferAssetId
 export const assetByIdSelector = (state: RootState) => state.asset.byId || initialState.byId
 const assetAllIdsSelector = (state: RootState) => state.asset.allIds || initialState.allIds
@@ -146,6 +146,23 @@ export const transferAssetSelector = createSelector(
     return null
   }
 )
+
+export const withdrawAssetSelector = createSelector(
+  activeAssetIdSelector,
+  assetByIdSelector,
+  (activeAssetId: any, byId: any) => {
+
+    if (activeAssetId === chain.polkadot + '/RFUEL') {
+      return {chain: chain.polkadot, symbol: 'RFUEL', precision: 12, decimals: 12,contract: 0}
+    }
+    else if (byId) {
+      return byId[activeAssetId]
+    }
+
+    return null
+  }
+)
+
 
 export const eosAssetAllIdsSelector = createSelector(
   assetAllIdsSelector,

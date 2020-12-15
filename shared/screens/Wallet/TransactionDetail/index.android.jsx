@@ -194,8 +194,8 @@ export default class TransactionDetail extends Component {
       return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
           <View style={{ backgroundColor: '#673AB7', padding: 16, paddingTop: 0, elevation: 4 }}>
-            {+transaction.change > 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
-            {+transaction.change <= 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
+            {+transaction.change > 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision }) +` ${symbol}`}</Text>}
+            {+transaction.change <= 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision }) +` ${symbol}`}</Text>}
             <Text style={{ fontSize: 16, color: 'rgba(255,255,255,0.7)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
           </View>
           <ScrollView
@@ -208,7 +208,7 @@ export default class TransactionDetail extends Component {
                   <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)' }}>{intl.formatMessage({ id: 'txn_detail_to_account' })}</Text>
                   <TouchableHighlight underlayColor="rgba(255,255,255,0)" activeOpacity={0.42} onPress={this.copy.bind(this, transaction.receiver)}>
                     <View style={{ flexDirection: 'row', minHeight: 26, alignItems: 'center' }}>
-                      <Text style={{ fontSize: 20, lineHeight: 26, color: 'rgba(0,0,0,0.87)' }}>{transaction.receiver} </Text>
+                      <Text style={{ fontSize: 20, lineHeight: 26, color: 'rgba(0,0,0,0.87)',marginRight:16 }}>{transaction.receiver} </Text>
                       <Image
                         source={require('resources/images/copy_grey_android.png')}
                         style={{ width: 16, height: 16, marginTop: 4 }}
@@ -220,7 +220,7 @@ export default class TransactionDetail extends Component {
                   <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)' }}>{intl.formatMessage({ id: 'txn_detail_from_account' })}</Text>
                   <TouchableHighlight underlayColor="rgba(255,255,255,0)" onPress={this.copy.bind(this, transaction.sender)}>
                     <View style={{ flexDirection: 'row', minHeight: 26, alignItems: 'center', color: 'rgba(0,0,0,0.87)' }}>
-                      <Text style={{ fontSize: 20, lineHeight: 26, color: 'rgba(0,0,0,0.87)' }}>{transaction.sender} </Text>
+                      <Text style={{ fontSize: 20, lineHeight: 26, color: 'rgba(0,0,0,0.87)',marginRight:16 }}>{transaction.sender} </Text>
                       <Image
                         source={require('resources/images/copy_grey_android.png')}
                         style={{ width: 16, height: 16, marginTop: 4 }}
@@ -277,8 +277,8 @@ export default class TransactionDetail extends Component {
       return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
           <View style={{ backgroundColor: '#673AB7', padding: 16, paddingTop: 0, elevation: 4 }}>
-            {+transaction.change > 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
-            {+transaction.change <= 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
+            {+transaction.change > 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision }) +` ${symbol}`}</Text>}
+            {+transaction.change <= 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision }) +` ${symbol}`}</Text>}
             <Text style={{ fontSize: 16, color: 'rgba(255,255,255,0.7)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
           </View>
         <ScrollView
@@ -291,7 +291,7 @@ export default class TransactionDetail extends Component {
                 <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', marginBottom: 4 }}>{t(this,'addr_recipient')}</Text>
                 <TouchableHighlight underlayColor="rgba(255,255,255,0)" onPress={this.copy.bind(this, transaction.to)}>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.87)' }}>
+                    <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.87)',marginRight:16 }}>
                       {`${transaction.to} `}
                     </Text>
                     <Image
@@ -308,7 +308,7 @@ export default class TransactionDetail extends Component {
                 <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', marginBottom: 4 }}>{t(this,'addr_payment')}</Text>
                 <TouchableHighlight underlayColor="rgba(255,255,255,0)" onPress={this.copy.bind(this, transaction.from)}>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.87)' }}>
+                    <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.87)',marginRight:16 }}>
                       {`${transaction.from} `}
                     </Text>
                     <Image
@@ -371,8 +371,8 @@ export default class TransactionDetail extends Component {
       return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
           <View style={{ backgroundColor: '#673AB7', padding: 16, paddingTop: 0, elevation: 4 }}>
-            {+transaction.change > 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
-            {+transaction.change <= 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
+            {+transaction.change > 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision }) +` ${symbol}`}</Text>}
+            {+transaction.change <= 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision }) +` ${symbol}`}</Text>}
             <Text style={{ fontSize: 16, color: 'rgba(255,255,255,0.7)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
           </View>
         <ScrollView
@@ -385,7 +385,7 @@ export default class TransactionDetail extends Component {
                 <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', marginBottom: 4 }}>{t(this,'addr_recipient')}</Text>
                 <TouchableHighlight underlayColor="rgba(255,255,255,0)" onPress={this.copy.bind(this, transaction.vout[0].scriptPubKey && transaction.vout[0].scriptPubKey.addresses && transaction.vout[0].scriptPubKey.addresses[0])}>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.87)' }}>
+                    <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.87)',marginRight:16 }}>
                       {`${transaction.vout[0].scriptPubKey && transaction.vout[0].scriptPubKey.addresses && transaction.vout[0].scriptPubKey.addresses[0]} `}
                     </Text>
                     <Image
@@ -402,7 +402,7 @@ export default class TransactionDetail extends Component {
                 <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', marginBottom: 4 }}>{t(this,'addr_payment')}</Text>
                 <TouchableHighlight underlayColor="rgba(255,255,255,0)" onPress={this.copy.bind(this, transaction.vin[0].addr)}>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.87)' }}>
+                    <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.87)',marginRight:16 }}>
                       {`${transaction.vin[0].addr} `}
                     </Text>
                     <Image
@@ -461,8 +461,8 @@ export default class TransactionDetail extends Component {
       return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
           <View style={{ backgroundColor: '#673AB7', padding: 16, paddingTop: 0, elevation: 4 }}>
-            {+transaction.change > 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
-            {+transaction.change <= 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
+            {+transaction.change > 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision }) +` ${symbol}`}</Text>}
+            {+transaction.change <= 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision }) +` ${symbol}`}</Text>}
             <Text style={{ fontSize: 16, color: 'rgba(255,255,255,0.7)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
           </View>
         <ScrollView
@@ -542,12 +542,12 @@ export default class TransactionDetail extends Component {
       return (
         <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
           <View style={{ backgroundColor: '#673AB7', padding: 16, paddingTop: 0, elevation: 4 }}>
-            {+transaction.change > 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
-            {+transaction.change <= 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision })}</Text>}
+            {+transaction.change > 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>+{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision }) +` ${symbol}`}</Text>}
+            {+transaction.change <= 0 && <Text style={{ fontSize: 24, fontWeight: '500', color: 'white' }}>{intl.formatNumber(transaction.change, { minimumFractionDigits: 0, maximumFractionDigits: precision }) +` ${symbol}`}</Text>}
             <Text style={{ fontSize: 16, color: 'rgba(255,255,255,0.7)', marginTop: 6 }}>{intl.formatTime(+transaction.timestamp, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</Text>
           </View>
         <ScrollView
-          style={{ flex: 1, backgroundColor: 'white' }}
+          style={{ flex: 1, backgroundColor: 'white'}}
           contentContainerStyle={{ backgroundColor: 'white' }}
         >
           <View style={{ flex: 1, backgroundColor: 'white', borderTopWidth: 0.5, borderColor: 'rgba(0,0,0,0.18)' }}>
@@ -556,8 +556,8 @@ export default class TransactionDetail extends Component {
                 <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', marginBottom: 4 }}>{t(this,'addr_recipient')}</Text>
                 <TouchableHighlight underlayColor="rgba(255,255,255,0)" onPress={this.copy.bind(this, transaction.to)}>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.87)' }}>
-                      {`${transaction.to} `}
+                    <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.87)' ,marginRight:16}}>
+                      {`${transaction.to}`}
                     </Text>
                     <Image
                       source={require('resources/images/copy_grey_android.png')}
@@ -573,7 +573,7 @@ export default class TransactionDetail extends Component {
                 <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.54)', marginBottom: 4 }}>{t(this,'addr_payment')}</Text>
                 <TouchableHighlight underlayColor="rgba(255,255,255,0)" onPress={this.copy.bind(this, transaction.from)}>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.87)' }}>
+                    <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.87)' ,marginRight:16}}>
                       {`${transaction.from} `}
                     </Text>
                     <Image

@@ -2,17 +2,13 @@ import assert from 'assert'
 import { delay } from 'redux-saga'
 import { takeLatest, race, put, call, select, all } from 'redux-saga/effects'
 import { getErrorMessage } from 'utils'
-import { getAssetUniqueInfo } from 'utils/riochain'
 import { updatePortfolio } from 'actions/portfolio'
 import * as actions from 'actions/balance'
 import { tickerByIdSelector } from 'selectors/ticker'
 import { walletByIdSelector } from 'selectors/wallet'
 import { activeWalletSelectedAssetsSelector, assetsSelector } from 'selectors/asset'
-import { activeWalletSelector } from 'selectors/wallet'
-import { getAccount } from 'actions/account'
 import { scanHDAddresses } from 'actions/address'
 import { getUTXO } from 'actions/utxo'
-import * as btcChain from 'core/chain/bitcoin'
 import * as ethChain from 'core/chain/etheruem'
 import * as eosChain from 'core/chain/eos'
 import * as chainxChain from 'core/chain/chainx'
@@ -61,7 +57,7 @@ function* getBalance(action: Action) {
       yield put(actions.updateBalance({ id, chain, balance, symbol, precision: 8 }))
       yield put(actions.getBalance.succeeded({ walletId, balance }))
     }else if (chain === chainID.polkadot) {
-      balance = yield call(rioChain.getBalance, address,12)
+      balance = yield call(rioChain.getBalance, address,12,0)
       yield put(actions.updateBalance({ id, chain, balance, symbol, precision: 12 ,contract:0}))
       yield put(actions.getBalance.succeeded({ walletId, balance }))
     }
@@ -72,21 +68,15 @@ function* getBalance(action: Action) {
 
 function* getRioChainTokenBalance(action: Action) {
   if (!action.payload) return
-
   try {
-    const activeWallet = yield select(state => activeWalletSelector(state))
-    assert(activeWallet, 'No wallet yet')
-    const assetInfo = getAssetUniqueInfo(activeWallet, action.payload)
-    const balance = call(rioChain.getBalance,assetInfo)
-    const {freeBalance, lockBalance} = balance || {}
-    actions.updateBalance(
-      {
-         ...assetInfo, 
-        freeBalance,
-        lockBalance,
-    })
-    yield put(actions.getRioChainTokenBalance.succeeded(activeWallet, assetInfo))
+    const {chain,address,symbol,contract,decimals,precision} = action.payload
+    let balance = 0
+    const id = `${chain}/${address}`
+    balance = call(rioChain.getBalance,address,decimals,contract)
+    actions.updateBalance({id,chain,balance,symbol,precision,contract})
+    yield put(actions.getRioChainTokenBalance.succeeded())
   } catch (e) {
+    // @ts-ignore
     yield put(actions.getRioChainTokenBalance.failed(getErrorMessage(e)))
   }
 }
@@ -257,6 +247,7 @@ export default function* balanceSaga() {
   yield takeLatest(String(actions.getBalance.succeeded), getBalanceSucceeded)
   yield takeLatest(String(actions.getETHTokenBalance.requested), getETHTokenBalance)
   yield takeLatest(String(actions.getEOSTokenBalance.requested), getEOSTokenBalance)
+  yield takeLatest(String(actions.getRioChainTokenBalance.requested), getRioChainTokenBalance)
   yield takeLatest(String(actions.getEOSTokenBalanceList.requested), getEOSTokenBalanceList)
   yield takeLatest(String(actions.getETHTokenBalanceList.requested), getETHTokenBalanceList)
   yield takeLatest(String(actions.getChainXTokenBalanceList.requested), getChainXTokenBalanceList)

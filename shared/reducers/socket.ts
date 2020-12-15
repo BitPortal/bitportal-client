@@ -22,6 +22,10 @@ export default handleActions({
     return state.set('connecting', false)
       .set('connected', false)
   },
+  [actions.disconnect] (state) {
+    return state.set('connecting',false)
+      .set('connected',false)
+  },
   [actions.addActionToQueue] (state, action) {
     return state.update('actionQueue', (v: any) => v.push(Immutable.fromJS(action.payload)))
   },

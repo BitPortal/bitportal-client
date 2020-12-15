@@ -17,6 +17,7 @@ import * as contactActions from './contact'
 import * as feeActions from './fee'
 import * as assetActions from './asset'
 import * as uiActions from './ui'
+import * as depositActions from './deposit'
 
 export const asyncActions = getAsyncActions({
   ...identityActions,
@@ -36,5 +37,6 @@ export const asyncActions = getAsyncActions({
   ...contactActions,
   ...feeActions,
   ...assetActions,
-  ...uiActions
+  ...uiActions,
+  ...depositActions
 })

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, Text, TouchableHighlight, NativeModules, StatusBarIOS, SafeAreaView } from 'react-native'
+import { View, Text, TouchableHighlight, NativeModules, StatusBarIOS, SafeAreaView, Alert } from 'react-native'
 import { injectIntl } from 'react-intl'
 import { Navigation } from 'components/Navigation'
 import TableView from 'components/TableView'
@@ -17,13 +17,13 @@ import * as transactionActions from 'actions/transaction'
 import * as walletActions from 'actions/wallet'
 import * as balanceActions from 'actions/balance'
 import { assetIcons } from 'resources/images'
-// import chainxAccount from '@chainx/account'
 import { DarkModeContext } from 'utils/darkMode'
 import styles from './styles'
 import { rioTokenIcons } from '../../../resources/images'
 import {RioChainURL} from 'core/chain/polkadot'
 const { StatusBarManager } = NativeModules
 const { Section, Item } = TableView
+import { getExternalChainSymbol,getChain } from 'utils/riochain'
 
 const chainxAccount = {}
 
@@ -48,7 +48,7 @@ const chainxAccount = {}
     actions: bindActionCreators({
       ...transactionActions,
       ...walletActions,
-      ...balanceActions
+      ...balanceActions,
     }, dispatch)
   })
 )
@@ -118,8 +118,69 @@ export default class Asset extends Component {
     })
   }
 
-  componentDidAppear() {
+  toDepositAsset = async () => {
 
+    const constants = await Navigation.constants()
+    const chainType = getChain(this.props.assetBalance.symbol)
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitProtal.Deposit',
+        passProps: {
+          statusBarHeight: constants.statusBarHeight
+        },
+        options: {
+          topBar: {
+            title: {
+              text: `${t(this,'asset_deposit')} ${chainType}`
+            },
+            noBorder: this.props.activeWallet.chain === 'BITCOIN' && this.props.childAddress && this.props.activeWallet.address !== this.props.childAddress
+          }
+        }
+      }
+    })
+  }
+
+  toWithdrawAsset = () => {
+    Navigation.showModal({
+      stack: {
+        children: [{
+          component: {
+            name: 'BitProtal.WithdrawAsset',
+            options: {
+              topBar: {
+                title: {
+                  text: t(this,'asset_withdraw_title',{symbol:this.props.activeAsset.symbol})
+                },
+                leftButtons: [
+                  {
+                    id: 'cancel',
+                    text: t(this,'button_cancel')
+                  }
+                ]
+              }
+            }
+          }
+        }]
+      }
+    })
+  }
+
+  componentDidAppear() {
+    console.warn('componentDidDisappear')
+    const { activeAsset, activeWallet, chain } = this.props
+
+    if (activeAsset && activeAsset.contract) {
+      if (activeWallet.chain === 'EOS') {
+        this.props.actions.getEOSTokenBalance.requested({ ...activeWallet, contract: activeAsset.contract, assetSymbol: activeAsset.symbol })
+      } else if (activeWallet.chain === 'ETHEREUM') {
+        this.props.actions.getETHTokenBalance.requested({ ...activeWallet, contract: activeAsset.contract, assetSymbol: activeAsset.symbol, decimals: activeAsset.decimals })
+      }else if (activeAsset.chain === 'POLKADOT') {
+        console.warn('actions.getRioChainTokenBalance.requested',activeAsset)
+        this.props.actions.getRioChainTokenBalance.requested({ ...activeWallet, contract: activeAsset.contract, assetSymbol: activeAsset.symbol, decimals: activeAsset.decimals })
+      }
+    } else {
+      this.props.actions.getBalance.requested(activeWallet)
+    }
   }
 
   componentDidDisappear() {
@@ -130,15 +191,17 @@ export default class Asset extends Component {
     this.props.actions.setActiveWallet(this.props.activeWallet.id)
     const { activeAsset, activeWallet, chain } = this.props
 
-    if (activeAsset && activeAsset.contract) {
-      if (activeWallet.chain === 'EOS') {
-        this.props.actions.getEOSTokenBalance.requested({ ...activeWallet, contract: activeAsset.contract, assetSymbol: activeAsset.symbol })
-      } else if (activeWallet.chain === 'ETHEREUM') {
-        this.props.actions.getETHTokenBalance.requested({ ...activeWallet, contract: activeAsset.contract, assetSymbol: activeAsset.symbol, decimals: activeAsset.decimals })
-      }
-    } else {
-      this.props.actions.getBalance.requested(activeWallet)
-    }
+    // if (activeAsset && activeAsset.contract) {
+    //   if (activeWallet.chain === 'EOS') {
+    //     this.props.actions.getEOSTokenBalance.requested({ ...activeWallet, contract: activeAsset.contract, assetSymbol: activeAsset.symbol })
+    //   } else if (activeWallet.chain === 'ETHEREUM') {
+    //     this.props.actions.getETHTokenBalance.requested({ ...activeWallet, contract: activeAsset.contract, assetSymbol: activeAsset.symbol, decimals: activeAsset.decimals })
+    //   }else if (activeAsset.chain === 'POLKADOT') {
+    //     this.props.actions.getRioChainTokenBalance.requested({ ...activeWallet, ...activeAsset})
+    //   }
+    // } else {
+    //   this.props.actions.getBalance.requested(activeWallet)
+    // }
 
     const contract = activeAsset.contract
     const assetSymbol = activeAsset.symbol
@@ -200,6 +263,8 @@ export default class Asset extends Component {
         this.props.actions.getEOSTokenBalance.requested({ ...activeWallet, contract: activeAsset.contract, assetSymbol: activeAsset.symbol })
       } else if (activeWallet.chain === 'ETHEREUM') {
         this.props.actions.getETHTokenBalance.requested({ ...activeWallet, contract: activeAsset.contract, assetSymbol: activeAsset.symbol, decimals: activeAsset.decimals })
+      }else if (activeAsset.chain === 'POLKADOT') {
+        this.props.actions.getRioChainTokenBalance.requested({ ...activeWallet, ...activeAsset})
       }
     } else {
       this.props.actions.getBalance.requested(activeWallet)
@@ -274,7 +339,7 @@ export default class Asset extends Component {
     const emptyTransactions = !!transactions && transactions.length === 0
     const chain = activeWallet ? activeWallet.chain : ''
 
-    let icon 
+    let icon
     if (chain === 'POLKADOT') {
       icon = rioTokenIcons[symbol.toLowerCase()]
     }
@@ -315,17 +380,17 @@ export default class Asset extends Component {
 
     const symbolBalance = (ticker && ticker[`${activeWallet.chain}/${activeWallet.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${activeWallet.symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'
     const cuySymbolBalance = (ticker && ticker[`${activeWallet.chain}/${assetBalance.symbol}`]) ? intl.formatNumber(+balance.balance * +ticker[`${activeWallet.chain}/${assetBalance.symbol}`] * currency.rate, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'
-    const syFontSzie = symbolBalance.toString().length > 10 ? 20 : 26
-    const cyFontSzie = cuySymbolBalance.toString().length > 10 ? 16 : 20
+    const newBalance = balance && intl.formatNumber(balance.balance, { minimumFractionDigits: 0, maximumFractionDigits: balance.precision }) || '0.00';
+    const txHistoryText = (func,value) => <Text style={{fontSize: 18, color: '#007AFF',marginTop:40, alignSelf:'center' }} onPress={func}>{t(this,'tx_history_more_symbol',{symbol:value})}</Text>
 
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : '#FFFFFF' }}>
-        <View style={{ justifyContent: 'flex-start', alignItems: 'center', backgroundColor: isDarkMode ? 'black' : '#FFFFFF', height: 136 }}>
+        <View style={{ justifyContent: 'flex-start', alignItems: 'center', backgroundColor: isDarkMode ? 'black' : '#FFFFFF',borderBottomWidth:0.5,borderBottomColor:'#C8C7CC',paddingBottom:10}}>
           <View style={{ width: '100%', justifyContent: 'space-between', alignItems: 'flex-start', flexDirection: 'row', paddingRight: 16, paddingLeft: 16 ,}}>
-            <View style={{ justifyContent: 'center', alignItems: 'flex-start', width: '80%'}}>
-              <Text style={{ fontSize: syFontSzie, fontWeight: '500', color: isDarkMode ? 'white' : 'black' }}>{balance && intl.formatNumber(balance.balance, { minimumFractionDigits: 0, maximumFractionDigits: balance.precision })}</Text>
+            <View style={{ justifyContent: 'center', alignItems: 'flex-start', width: '80%',marginVertical:5}}>
+              <Text style={{ fontSize: 22, fontWeight: '500', color: isDarkMode ? 'white' : 'black' }}>{newBalance}</Text>
               {!assetBalance && <Text style={{ color: '#007AFF', marginTop: 4 }}>≈ {currency.sign}{symbolBalance}</Text>}
-              {!!assetBalance && <Text style={{ fontSize: cyFontSzie, color: '#007AFF', marginTop: 4 }}>≈ {currency.sign}{cuySymbolBalance}</Text>}
+              {!!assetBalance && <Text style={{ fontSize: 21, color: '#007AFF', marginTop: 5 }}>≈ {currency.sign}{cuySymbolBalance}</Text>}
             </View>
             {(!activeAsset || !activeAsset.contract) && !!chain && <FastImage source={assetIcons[chain.toLowerCase()]} style={{ width: 60, height: 60, borderRadius: 30, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }} />}
             {(!!activeAsset && !!activeAsset.contract) && <View style={{ width: 60, height: 60, borderWidth: 0, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white', borderRadius: 30 }}>
@@ -341,38 +406,23 @@ export default class Asset extends Component {
           {/* <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16 }}>
               <Text style={{ fontSize: 17, color: 'rgba(0,0,0,0.48)' }}>{this.formatAddress(activeWallet.address)}</Text>
               </View> */}
-          <View style={{ justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, marginTop: 12 }}>
-            <View style={{ width: '50%', paddingRight: 8 }}>
-              <TouchableHighlight underlayColor="#007AFF" style={{ padding: 5 }} activeOpacity={0.7} style={{ backgroundColor: '#007AFF', borderRadius: 10, height: 48, alignItems: 'center', justifyContent: 'center' }} onPress={this.toTransferAsset}>
-                <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
-                  <FastImage
-                    source={require('resources/images/transfer_white.png')}
-                    style={{ width: 26, height: 26, marginRight: 8 }}
-                  />
-                  <Text style={{ color: 'white', fontSize: 17 }}>{intl.formatMessage({ id: 'transfer_button_send' })}</Text>
-                </View>
-              </TouchableHighlight>
-            </View>
-            <View style={{ width: '50%', paddingLeft: 8 }}>
-              <TouchableHighlight underlayColor="#007AFF" style={{ padding: 5 }} activeOpacity={0.7} style={{ backgroundColor: '#007AFF', borderRadius: 10, height: 48, alignItems: 'center', justifyContent: 'center' }} onPress={this.toReceiveAsset}>
-                <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
-                  <FastImage
-                    source={require('resources/images/receive_white.png')}
-                    style={{ width: 26, height: 26, marginRight: 8, marginBottom: 3 }}
-                  />
-                  <Text style={{ color: 'white', fontSize: 17 }}>{intl.formatMessage({ id: 'transfer_button_receive' })}</Text>
-                </View>
-              </TouchableHighlight>
-            </View>
-          </View>
-          <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 0, backgroundColor: '#C8C7CC' }} />
+          <ButtonRow onPress1={this.toTransferAsset}
+                     onPress2={this.toReceiveAsset}
+                     title1={intl.formatMessage({ id: 'transfer_button_send' })}
+                     title2={intl.formatMessage({ id: 'transfer_button_receive' })}/>
+          {
+            chain === 'POLKADOT' && <ButtonRow onPress1={this.toDepositAsset}
+                                               onPress2={this.toWithdrawAsset}
+                                               title1={intl.formatMessage({ id: 'tx_withdraw' })}
+                                               title2={intl.formatMessage({ id: 'tx_deposit' })}/>
+          }
         </View>
-        {chain === 'CHAINX' && (<View style={{ marginTop: 50, alignItems: 'center' }}>
-          <Text style={{fontSize: 18, color: '#007AFF' }} onPress={this.toChainXHistory}>{t(this,'tx_history_more_symbol',{symbol:'ChainX'})}</Text>
-        </View>)}
-        {chain === 'POLKADOT' && (<View style={{ marginTop: 50, alignItems: 'center' }}>
-          <Text style={{fontSize: 18, color: '#007AFF' }} onPress={this.toRioChainHistory}>{t(this,'tx_history_more_symbol',{symbol:'RioChain'})}</Text>
-        </View>)}
+        {
+          chain === 'CHAINX' ? txHistoryText(this.toChainXHistory,'ChainX') : null
+        }
+        {
+          chain === 'POLKADOT' ? txHistoryText(this.toRioChainHistory,'RioChain') : null
+        }
         {chain !== 'CHAINX' && chain !== 'POLKADOT' && (
           <TableView
             style={{ flex: 1 }}
@@ -406,4 +456,30 @@ export default class Asset extends Component {
       </SafeAreaView>
     )
   }
+}
+
+const ButtonRow = ({intl,onPress1,onPress2,title1,title2}) => {
+
+  return (
+    <View style={{ justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16, marginTop: 12 }}>
+      <ButtonItem intl={intl} onPress={onPress1} icon={require('resources/images/transfer_white.png')} title={title1}/>
+      <ButtonItem intl={intl} onPress={onPress2} icon={require('resources/images/receive_white.png')} title={title2}/>
+    </View>
+  );
+}
+
+const ButtonItem = ({onPress,icon,title}) => {
+  return (
+    <View style={{ flex:1, paddingRight: 8 }}>
+      <TouchableHighlight underlayColor="#007AFF" style={{ padding: 5 }} activeOpacity={0.7} style={{ backgroundColor: '#007AFF', borderRadius: 10, height: 48, alignItems: 'center', justifyContent: 'center' }} onPress={onPress}>
+        <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
+          <FastImage
+            source={icon}
+            style={{ width: 26, height: 26, marginRight: 8 }}
+          />
+          <Text style={{ color: 'white', fontSize: 17 }}>{title}</Text>
+        </View>
+      </TouchableHighlight>
+    </View>
+  );
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { bindActionCreators } from 'utils/redux'
+import { bindActionCreators, getChain } from 'utils/redux'
 import { connect } from 'react-redux'
-import { View, Text, TouchableNativeFeedback, RefreshControl, Dimensions, Image } from 'react-native'
+import { View, Text, TouchableNativeFeedback, RefreshControl, Dimensions, Image, Alert } from 'react-native'
 import { injectIntl } from 'react-intl'
 import { Navigation } from 'components/Navigation'
 import { activeWalletSelector, activeChainSelector } from 'selectors/wallet'
@@ -21,6 +21,7 @@ import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview
 import styles from './styles'
 import {RioChainURL} from 'core/chain/polkadot'
 import { rioTokenIcons } from '../../../resources/images';
+import Modal from 'react-native-modal';
 
 const chainxAccount = {}
 
@@ -98,7 +99,8 @@ export default class Asset extends Component {
 
   state = {
     dataProvider: dataProvider.cloneWithRows([]),
-    refreshing: false
+    refreshing: false,
+    showSimpleModal: false
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -146,6 +148,9 @@ export default class Asset extends Component {
       case 'qrcode':
         this.toReceiveAsset()
         break
+      case 'more' :
+        this.toMore()
+        break
       default:
     }
   }
@@ -173,6 +178,7 @@ export default class Asset extends Component {
   }
 
   toReceiveAsset = () => {
+    this.setState({showSimpleModal:false})
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitPortal.ReceiveAsset',
@@ -187,13 +193,58 @@ export default class Asset extends Component {
     })
   }
 
+  toDepositAsset = async () => {
+    this.setState({showSimpleModal:false})
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitProtal.Deposit',
+        options: {
+          topBar: {
+            title: {
+              text: `${t(this,'asset_deposit')} ${this.props.activeAsset.symbol}`
+            },
+          }
+        }
+      }
+    })
+  }
+
+  toWithdrawAsset = () => {
+    this.setState({showSimpleModal:false})
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'BitProtal.WithdrawAsset',
+        options: {
+          topBar: {
+            title: {
+              text: t(this,'asset_withdraw_title',{symbol:this.props.activeAsset.symbol})
+            },
+          }
+        }
+      }
+    })
+  }
+
+
+  toMore = () => {
+    this.setState({showSimpleModal:true})
+  }
+
   componentDidAppear() {
+    const { activeWallet } = this.props
+    const {chain} = activeWallet || {}
+    let id = 'qrcode'
+    let imageIcon = require('resources/images/qrcode_android.png')
+    if (chain === 'POLKADOT') {
+      id = 'more'
+      imageIcon = require('resources/images/more_white_android.png')
+    }
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
         rightButtons: [
           {
-            id: 'qrcode',
-            icon: require('resources/images/qrcode_android.png')
+            id,
+            icon: imageIcon
           }
         ]
       }
@@ -455,6 +506,44 @@ export default class Asset extends Component {
         {chain === 'POLKADOT' && (<View style={{ marginTop: 50, alignItems: 'center' }}>
           <Text style={{fontSize: 18, color: '#673AB7' }} onPress={this.toRioChainHistory}>{t(this,'tx_history_more_symbol',{symbol:'RioChain'})}</Text>
         </View>)}
+        <Modal
+          isVisible={this.state.showSimpleModal}
+          backdropOpacity={0.6}
+          useNativeDriver
+          animationIn="fadeIn"
+          animationInTiming={500}
+          backdropTransitionInTiming={500}
+          animationOut="fadeOut"
+          animationOutTiming={500}
+          backdropTransitionOutTiming={500}
+          onBackdropPress={this.onBackdropPress}
+          onModalHide={this.onSimpleModalHide}
+        >
+          {(this.state.showSimpleModal) && <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 6 }}>
+            <View style={{ backgroundColor: 'white', borderRadius: 4, alignItem: 'center', elevation: 14, minWidth: 240 }}>
+              <View style={{ paddingHorizontal: 24, paddingBottom: 9, paddingTop: 20 }}>
+                <Text style={{ fontSize: 20, color: 'rgba(0,0,0,0.87)', fontWeight: '500' }}>{t(this,'hint')}</Text>
+              </View>
+              <View style={{ paddingBottom: 12, paddingTop: 6, paddingHorizontal: 16 }}>
+                <TouchableNativeFeedback onPress={this.toDepositAsset} background={TouchableNativeFeedback.SelectableBackground()}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', height: 48 }}>
+                    <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'tx_deposit')}</Text>
+                  </View>
+                </TouchableNativeFeedback>
+                <TouchableNativeFeedback onPress={this.toWithdrawAsset} background={TouchableNativeFeedback.SelectableBackground()}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', height: 48 }}>
+                    <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'tx_withdraw')}</Text>
+                  </View>
+                </TouchableNativeFeedback>
+                <TouchableNativeFeedback onPress={this.toReceiveAsset} background={TouchableNativeFeedback.SelectableBackground()}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', height: 48 }}>
+                    <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'tx_receive')}</Text>
+                  </View>
+                </TouchableNativeFeedback>
+              </View>
+            </View>
+          </View>}
+        </Modal>
       </View>
     )
   }

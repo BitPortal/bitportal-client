@@ -7,41 +7,33 @@ import {
   ScrollView,
   Text,
   TouchableHighlight,
-  Image,
   TextInput,
   Alert,
   ActivityIndicator,
   Keyboard,
   Dimensions,
   LayoutAnimation,
-  ActionSheetIOS,
-  Switch,
-  Animated,
-  Easing,
   SafeAreaView,
   Platform
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import TableView from 'components/TableView'
-import { transferWalletSelector } from 'selectors/wallet'
-import { transferWalletFeeSelector } from 'selectors/fee'
-import { transferWalletsContactsSelector, selectedContactSelector } from 'selectors/contact'
+import { withdrawContactSelector, selectedContactSelector } from 'selectors/contact'
 import { transferWalletBalanceSelector, transferAssetBalanceSelector } from 'selectors/balance'
-import { transferAssetSelector } from 'selectors/asset'
+import { withdrawAssetSelector } from 'selectors/asset'
+import { activeWalletSelector } from 'selectors/wallet'
 import { Navigation } from 'components/Navigation'
 import EStyleSheet from 'react-native-extended-stylesheet'
 import { Field, reduxForm, getFormSyncWarnings, getFormValues } from 'redux-form'
 import * as transactionActions from 'actions/transaction'
 import * as balanceActions from 'actions/balance'
 import * as contactActions from 'actions/contact'
-import * as feeActions from 'actions/fee'
 import * as walletActions from 'actions/wallet'
 import Modal from 'react-native-modal'
-import Slider from '@react-native-community/slider'
 import { assetIcons, walletIcons } from 'resources/images'
 import { DarkModeContext } from 'utils/darkMode'
-import { rioTokenIcons } from '../../../resources/images'
-
+import { rioTokenIcons } from 'resources/images'
+import { getChain,getExternalChainSymbol,getExternalChainFee } from 'utils/riochain'
 
 const { Section, Item } = TableView
 
@@ -132,8 +124,6 @@ export const errorMessages = (error, messages) => {
       return gt('error_balance_insufficient')
     case 'Returned error: insufficient funds for gas * price + value':
       return gt('error_balance_insuffi_fee')
-    case 'EOS System Error':
-      return 'EOS系统错误'
     case 'request timeout':
       return '请求超时，请检查区块链浏览器以确定交易是否发出！'
     default:
@@ -177,15 +167,15 @@ const AddressField = ({
 }) => (
   <View style={{ width: '100%', alignItems: 'center', height: showContact ? 64 : 42, paddingLeft: 16, paddingRight: 16, flexDirection: 'row', backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
     {!showContact && <TextInput
-                       style={[styles.textFiled, { color: isDarkMode ? 'white' : 'black'}]}
-                       autoCorrect={false}
-                       autoFocus={autoFocus}
-                       autoCapitalize="none"
-                       placeholder={placeholder}
-                       onChangeText={onChange}
-                       keyboardType="default"
-                       secureTextEntry={secureTextEntry}
-                       {...restInput}
+      style={[styles.textFiled, { color: isDarkMode ? 'white' : 'black'}]}
+      autoCorrect={false}
+      autoFocus={autoFocus}
+      autoCapitalize="none"
+      placeholder={placeholder}
+      onChangeText={onChange}
+      keyboardType="default"
+      secureTextEntry={secureTextEntry}
+      {...restInput}
     />}
     {!!showContact && (
       <View style={{ alignItems: 'center', flexDirection: 'row' }}>
@@ -248,16 +238,16 @@ const MessageField = ({
 }) => (
   <View style={{ width: '100%', alignItems: 'flex-start', height: showMemo ? 104 : 10, paddingLeft: 16, paddingRight: 16, paddingTop: showMemo ? 16 : 0, flexDirection: 'row', backgroundColor: isDarkMode ? 'black' : '#F7F7F7', borderBottomWidth: 0.5, borderBottomColor: '#C8C7CC' }}>
     {showMemo && <TextInput
-                   style={[styles.messageFiled, { color: isDarkMode ? 'white' : 'black', backgroundColor: isDarkMode ? 'black' : 'white' }]}
-                   autoCorrect={false}
-                   autoCapitalize="none"
-                   placeholder={placeholder}
-                   onChangeText={onChange}
-                   keyboardType="default"
-                   multiline={true}
-                   placeholderTextColor={isDarkMode ? 'white' : 'black'}
-                   secureTextEntry={secureTextEntry}
-                   {...restInput}
+      style={[styles.messageFiled, { color: isDarkMode ? 'white' : 'black', backgroundColor: isDarkMode ? 'black' : 'white' }]}
+      autoCorrect={false}
+      autoCapitalize="none"
+      placeholder={placeholder}
+      onChangeText={onChange}
+      keyboardType="default"
+      multiline={true}
+      placeholderTextColor={isDarkMode ? 'white' : 'black'}
+      secureTextEntry={secureTextEntry}
+      {...restInput}
     />}
     {showMemo && showClearButton && active && <View style={{ height: 30, position: 'absolute', right: 22, bottom: 14, width: 20, alignItems: 'center', justifyContent: 'center' }}>
       <TouchableHighlight underlayColor={isDarkMode ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0)'} style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
@@ -319,43 +309,6 @@ const AmountField = ({
   </View>
 )
 
-const TextField = ({
-  input: { onChange, ...restInput },
-  meta: { touched, error, active },
-  label,
-  fieldName,
-  placeholder,
-  secureTextEntry,
-  separator,
-  change,
-  valueLength,
-  showClearButton,
-  isDarkMode
-}) => (
-  <View style={{ width: '100%' }}>
-    <View style={{ width: '100%', alignItems: 'center', height: 40, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
-      <TextInput
-        style={[styles.smTextFiled, { color: isDarkMode ? 'white' : 'black'}]}
-        autoCorrect={false}
-        autoCapitalize="none"
-        placeholder={placeholder}
-        onChangeText={onChange}
-        secureTextEntry={secureTextEntry}
-        {...restInput}
-      />
-      {showClearButton && active && <View style={{ height: '100%', position: 'absolute', right: 16, top: 0, width: 20, alignItems: 'center', justifyContent: 'center' }}>
-        <TouchableHighlight underlayColor={isDarkMode ? 'rgba(0,0,0,0)' : 'rgba(255,255,255,0)'} style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
-          <FastImage
-            source={require('resources/images/clear.png')}
-            style={{ width: 14, height: 14 }}
-          />
-        </TouchableHighlight>
-      </View>}
-      {separator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 16, left: 16, backgroundColor: '#C8C7CC' }} />}
-    </View>
-  </View>
-)
-
 const CardField = ({
   input: { onChange, ...restInput },
   meta: { touched, error, active },
@@ -389,8 +342,8 @@ const CardField = ({
         <FastImage source={assetIcons[chain.toLowerCase()]} style={{ position: 'absolute', right: -4, bottom: 0, width: 16, height: 16, borderRadius: 8, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }} />
       </View>}
       <View>
-        <Text style={{ fontSize: 17, color: isDarkMode ? 'white' : 'black' }}>{formatAddress(address)}</Text>
-         <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)', marginTop: 4 }}>{available} {symbol}</Text>
+        <Text style={{ fontSize: 17, color: isDarkMode ? 'white' : 'black' }}>{symbol}</Text>
+         <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.48)' : 'rgba(0,0,0,0.48)', marginTop: 4 }}>{available}</Text>
       </View>
     </View>
     {separator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 16, left: 72, backgroundColor: '#C8C7CC' }} />}
@@ -424,16 +377,15 @@ const shouldError = () => true
 
 @connect(
   state => ({
-    transfer: state.transfer,
     formSyncWarnings: getFormSyncWarnings('transferAssetForm')(state),
     formValues: getFormValues('transferAssetForm')(state),
-    transferAsset: transferAssetSelector(state),
-    transferWallet: transferWalletSelector(state),
     walletBalance: transferWalletBalanceSelector(state),
     assetBalance: transferAssetBalanceSelector(state),
-    contacts: transferWalletsContactsSelector(state),
+    contacts: withdrawContactSelector(state),
     selectedContact: selectedContactSelector(state),
-    fee: transferWalletFeeSelector(state)
+    withdrawAsset: state.withdrawAsset,
+    activeWallet: activeWalletSelector(state),
+    withdrawAssetInfo: withdrawAssetSelector(state)
   }),
   dispatch => ({
     actions: bindActionCreators({
@@ -441,12 +393,11 @@ const shouldError = () => true
       ...walletActions,
       ...balanceActions,
       ...contactActions,
-      ...feeActions
     }, dispatch)
   })
 )
 
-export default class TransferAsset extends Component {
+export default class WithdrawAsset extends Component {
   static contextType = DarkModeContext
 
   static get options() {
@@ -469,26 +420,17 @@ export default class TransferAsset extends Component {
     }
   }
   subscription = Navigation.events().bindComponent(this)
-
+  constructor(props) {
+    super(props);
+    this.updateTxid = ''
+    this.showTip = false
+  }
   state = {
     selectContact: false,
     showSelectContact: false,
     selectedContactName: null,
     selectedContactAddress: null,
-    selectedContactMemo: null,
     autoFocusToAddress: false,
-    showOPReturn: false,
-    customFee: false,
-    spinValue: new Animated.Value(0),
-    fastestBTCFee: 45,
-    halfHourBTCFee: 35,
-    hourBTCFee: 20,
-    feeRate: 0,
-    ethGasLimit: 60000,
-    ethGasPrice: 0,
-    useGasPrice: 0,
-    initialGwei: 0,
-    initialFeeRate: 0
   }
 
   navigationButtonPressed({ buttonId }) {
@@ -502,7 +444,7 @@ export default class TransferAsset extends Component {
           children: [{
             component: {
               name: 'BitPortal.Camera',
-              passProps: { from: 'transfer', form: 'transferAssetForm', field: 'toAddress', chain: this.props.transferWallet.chain, symbol: this.props.transferWallet.symbol }
+              passProps: { from: 'transfer', form: 'transferAssetForm', field: 'toAddress', chain: this.props.activeWallet.chain, symbol: this.props.activeWallet.symbol }
             }
           }]
         }
@@ -514,31 +456,15 @@ export default class TransferAsset extends Component {
     if (
       (nextProps.selectedContact && nextProps.selectedContact.name) !== prevState.selectedContactName
       || (nextProps.selectedContact && nextProps.selectedContact.address) !== prevState.selectedContactAddress
-      || (nextProps.selectedContact && nextProps.selectedContact.memo) !== prevState.selectedContactMemo
-      || (nextProps.fee && nextProps.fee.fastestFee) !== prevState.fastestBTCFee
-      || (nextProps.fee && nextProps.fee.halfHourFee) !== prevState.halfHourBTCFee
-      || (nextProps.fee && nextProps.fee.hourFee) !== prevState.hourBTCFee
-      || (nextProps.fee && nextProps.fee.gasPrice) !== prevState.ethGasPrice
     ) {
       LayoutAnimation.easeInEaseOut()
 
       return {
         selectedContactName: (nextProps.selectedContact && nextProps.selectedContact.name),
         selectedContactAddress: (nextProps.selectedContact && nextProps.selectedContact.address),
-        selectedContactMemo: (nextProps.selectedContact && nextProps.selectedContact.memo),
-        fastestBTCFee: (nextProps.fee && nextProps.fee.fastestFee),
-        halfHourBTCFee: (nextProps.fee && nextProps.fee.halfHourFee),
-        hourBTCFee: (nextProps.fee && nextProps.fee.hourFee),
-        ethGasPrice: (nextProps.fee && nextProps.fee.gasPrice)
       }
     } else {
       return null
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.showOPReturn !== this.state.showOPReturn || prevState.customFee !== this.state.customFee) {
-      LayoutAnimation.easeInEaseOut()
     }
   }
 
@@ -547,9 +473,8 @@ export default class TransferAsset extends Component {
   }
 
   submit = (data) => {
-    const { intl, transferWallet, formSyncWarnings, transferAsset, assetBalance, walletBalance } = this.props
-    const balance = (transferAsset && transferAsset.contract) ? assetBalance : walletBalance
-
+    Keyboard.dismiss()
+    const { intl, formSyncWarnings,withdrawAssetInfo,activeWallet } = this.props
     if (typeof formSyncWarnings === 'object') {
       const warning = formSyncWarnings.toAddress || formSyncWarnings.amount
       if (warning) {
@@ -563,7 +488,6 @@ export default class TransferAsset extends Component {
         return
       }
     }
-    // Keyboard.dismiss()
 
     Alert.prompt(
       intl.formatMessage({ id: 'alert_input_wallet_password' }),
@@ -576,21 +500,18 @@ export default class TransferAsset extends Component {
         },
         {
           text: intl.formatMessage({ id: 'alert_button_confirm' }),
-          onPress: password => this.props.actions.transfer.requested({
+          onPress: password => this.props.actions.withdrawAsset.requested({
             ...data,
             password,
-            fromAddress: transferWallet.address,
-            chain: transferWallet.chain,
-            id: transferWallet.id,
-            feeRate: +this.state.feeRate || +this.state.initialFeeRate || this.state.fastestBTCFee || 45,
-            symbol: transferAsset.symbol,
-            precision: transferAsset.precision,
-            decimals: transferAsset.decimals,
-            contract: transferAsset.contract,
+            chain: withdrawAssetInfo.chain,
+            id: activeWallet.id,
+            symbol: withdrawAssetInfo.symbol,
+            decimals: withdrawAssetInfo.decimals,
+            contract: withdrawAssetInfo.contract,
             componentId: this.props.componentId,
-            memo: data.memo || (this.props.selectedContact && this.props.selectedContact.memo),
-            gasLimit: this.state.ethGasLimit,
-            gasPrice: +this.state.useGasPrice || +this.state.initialGwei || this.state.ethGasPrice || 4.00
+            onError:this.onError,
+            onSuccess: this.onSuccess.bind(this),
+            onUpdate: this.onUpdate
           })
         }
       ],
@@ -612,17 +533,6 @@ export default class TransferAsset extends Component {
 
   componentDidMount() {
     this.setState({ autoFocusToAddress: true })
-    console.log('preset opreturn', this.props.presetOpReturn)
-
-    if (this.props.presetWalletId) {
-      this.props.actions.setTransferWallet(this.props.presetWalletId)
-    }
-
-    if (this.props.transferWallet.chain === 'BITCOIN') {
-      this.props.actions.getBTCFees.requested()
-    } else if (this.props.transferWallet.chain === 'ETHEREUM') {
-      this.props.actions.getETHGasPrice.requested()
-    }
 
     if (this.props.presetAddress) {
       this.props.change('toAddress', this.props.presetAddress)
@@ -631,37 +541,17 @@ export default class TransferAsset extends Component {
     if (this.props.presetAmount) {
       this.props.change('amount', this.props.presetAmount)
     }
-
-    if (this.props.presetMemo) {
-      this.props.change('memo', this.props.presetMemo)
-    }
-
-    if (this.props.presetOpReturn) {
-      if (this.props.transferWallet.chain === 'BITCOIN') {
-        this.props.change('opreturn', this.props.presetOpReturn)
-        this.addOPReturn()
-      }
-    }
-
-    if (this.props.transfer.loading) {
-      this.props.actions.transfer.failed()
+    if (this.props.withdrawAsset.loading) {
+      this.props.actions.withdrawAsset.failed()
     }
   }
 
   clearError = () => {
-    this.props.actions.transfer.clearError()
-  }
-
-  addOPReturn = () => {
-    if (this.state.showOPReturn === false) this.setState({ showOPReturn: true })
-  }
-
-  removeOPReturn = () => {
-    if (this.state.showOPReturn === true) this.setState({ showOPReturn: false })
+    this.props.actions.withdrawAsset.clearError()
   }
 
   onModalHide = () => {
-    const error = this.props.transfer.error
+    const error = this.props.withdrawAsset.error
 
     if (error) {
       setTimeout(() => {
@@ -678,27 +568,11 @@ export default class TransferAsset extends Component {
 
   selectContact = () => {
     Keyboard.dismiss()
-
     if (this.props.contacts && this.props.contacts.length) {
       this.setState({ selectContact: true, showSelectContact: true })
     } else {
-      const chain = this.props.transferWallet && this.props.transferWallet.chain
-      let chainSymbol
-
-      if (chain === 'BITCOIN') {
-        chainSymbol = 'BTC'
-      } else if (chain === 'ETHEREUM') {
-        chainSymbol = 'ETH'
-      } else if (chain === 'EOS') {
-        chainSymbol = 'EOS'
-      } else if (chain === 'CHAINX') {
-        chainSymbol = 'PCX'
-      } else if (chain === 'POLKADOT') {
-        chainSymbol = 'RioChain'
-      } else {
-        return null
-      }
-
+      const symbol = this.props.withdrawAssetInfo && this.props.withdrawAssetInfo.symbol
+      const chainSymbol = getChain(symbol.toUpperCase())
       Alert.alert(
         t(this,'contact_nocontact_symbol',{symbol:chainSymbol}),
         null,
@@ -724,6 +598,32 @@ export default class TransferAsset extends Component {
       )
     }
   }
+
+  onError = () =>{}
+
+  onSuccess = () => {
+    if (this.showTip === false) {
+      this.showTip = true
+      setTimeout(() => {
+        Alert.alert(
+          t(this,'asset_withdraw_success'),
+          null,
+          [
+            {
+              text: t(this,'button_cancel'),
+              onPress: () => this.showTip = false,
+              style: 'cancel'
+            }
+          ]
+        )
+      },500);
+    }
+  }
+
+  onUpdate = (txid) => {
+  this.updateTxid = txid
+}
+
 
   selectContactAddress = (chain, id, name, address) => {
     this.props.actions.setSelectedContact({ id, address, name, chain })
@@ -763,45 +663,6 @@ export default class TransferAsset extends Component {
     this.props.actions.setSelectedContact(null)
   }
 
-  switchFeesType = () => {
-    if (!this.state.customFee) {
-      Animated.timing(
-        this.state.spinValue,
-        {
-          toValue: 1,
-          duration: 200,
-          easing: Easing.inOut(Easing.quad)
-        }
-      ).start()
-    } else {
-      Animated.timing(
-        this.state.spinValue,
-        {
-          toValue: 0,
-          duration: 200,
-          easing: Easing.inOut(Easing.quad)
-        }
-      ).start()
-    }
-
-    this.setState({
-      customFee: !this.state.customFee,
-      initialFeeRate: this.state.feeRate,
-      initialGwei: +this.state.useGasPrice
-    })
-  }
-
-  showFeesTip = () => {
-    Alert.alert(
-      t(this,'gas_fee'),
-      t(this,'tx_hint_miner_fee'),
-      [
-        { text: t(this,'button_ok'), onPress: () => console.log('OK Pressed') }
-      ]
-    )
-    // In cryptocurrencies, a minner fee (or shortly fee) is a payment to the miners for adding a transaction into the blockchain. When a transaction has been included in the blockchain, it is considered confirmed. The size of the fee sent with the transaction determines the confirmation time.
-  }
-
   showRioChainTip = () => {
     Alert.alert(
       t(this,'gas_fee'),
@@ -812,74 +673,20 @@ export default class TransferAsset extends Component {
     )
   }
 
-  showOPReturnTip = () => {
-    Alert.alert(
-      t(this,'opreturn_data'),
-      t(this,'caution_opreturn'),
-      [
-        { text:  t(this,'button_ok'), onPress: () => console.log('OK Pressed') }
-      ]
-    )
-    // OP_RETURN is a script opcode which can be used to write arbitrary data on blockchain and also to mark a transaction output as invalid. Since any outputs with OP_RETURN are provably unspendable, OP_RETURN outputs can be used to burn bitcoins.
-  }
-
-  onSliderValueChange = (value) => {
-    this.setState({
-      useGasPrice: this.props.intl.formatNumber(value, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-    })
-  }
-
-  onFeeRateValueChange = (value) => {
-    this.setState({
-      feeRate: +parseInt(value)
-    })
-  }
-
-  getSpeedText = (feeRate) => {
-    if (this.state.fastestBTCFee && this.state.halfHourBTCFee && this.state.hourBTCFee) {
-      if (feeRate < this.state.hourBTCFee) {
-        // return 'more than 1h'
-        return t(this,'tx_confirmation_slow')
-      } else if (feeRate >= this.state.hourBTCFee && feeRate < this.state.halfHourBTCFee) {
-        // return 'within 1h'
-        return t(this,'tx_confirmation_medium')
-      } else if (feeRate >= this.state.halfHourBTCFee && feeRate < this.state.fastestBTCFee) {
-        // return 'within 0.5h'
-        return t(this,'tx_confirmation_high')
-      } else {
-        // return 'fastest'
-        return t(this,'tx_confirmation_fatest')
-      }
-    }
-
-    return ''
-  }
-
   render() {
-    const { transfer, formValues, change, transferWallet, transferAsset, assetBalance, walletBalance, intl, presetContact, contacts, selectedContact } = this.props
-    const balance = (transferAsset && transferAsset.contract) ? assetBalance : walletBalance
-    const loading = transfer.loading
+
+    const { withdrawAsset, formValues, change, assetBalance, walletBalance, intl, contacts, selectedContact } = this.props
+    const balance =  assetBalance.symbol === 'RFUEL' ? walletBalance : assetBalance
+    const loading = withdrawAsset.loading
     const toAddress = formValues && formValues.toAddress
     const memo = formValues && formValues.memo
     const amount = formValues && formValues.amount
-    const opreturn = formValues && formValues.opreturn
-    const symbol = transferAsset && balance.symbol || ''
-    const contract = transferAsset && transferAsset.contract || ''
+    const symbol =  balance.symbol || ''
+    const contract = balance.contract
     const available = balance && intl.formatNumber(balance.balance, { minimumFractionDigits: 0, maximumFractionDigits: balance.precision })
-    const chain = transferWallet.chain
-    let iconUrl = transferAsset.icon_url;
-     let rio_icon = chain === 'POLKADOT' ? rioTokenIcons[(symbol || '').toLowerCase()] : null
+    const chain = walletBalance.chain
+    let rio_icon = rioTokenIcons[(symbol || '').toLowerCase()]
 
-    // fees and display related
-    const showMinnerFee = chain === 'BITCOIN' || chain === 'ETHEREUM'
-    const showMemo = chain === 'EOS'
-    const spin = this.state.spinValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: ['0deg', '90deg']
-    })
-
-    const feeRate = this.state.feeRate || this.state.initialFeeRate || this.state.fastestBTCFee || 45
-    const useGasPrice = this.state.useGasPrice || this.state.initialGwei || this.state.ethGasPrice || 4.00
     const isDarkMode = this.context === 'dark'
     console.log('isDarkMode', isDarkMode)
 
@@ -894,7 +701,7 @@ export default class TransferAsset extends Component {
           <View style={{ flex: 1, width: '100%', alignItems: 'center', borderTopWidth: 0, borderBottomWidth: 0, borderColor: '#C8C7CC', justifyContent: "flex-end" }}>
             <Field
               label={intl.formatMessage({ id: 'send_input_label_to_address' })}
-              placeholder={ chain === 'EOS'  ? t(this,'account_enter_symbol',{symbol}) : t(this,'addr_enter_symbol',{symbol})}
+              placeholder={t(this,'addr_enter_symbol',{symbol:getChain(symbol.toUpperCase())})}
               name="toAddress"
               fieldName="toAddress"
               component={AddressField}
@@ -907,7 +714,6 @@ export default class TransferAsset extends Component {
               contact={this.props.selectedContact}
               autoFocus={this.state.autoFocusToAddress}
               onBlur={this.onToAddressBlur}
-              showMemo={showMemo}
               isDarkMode={isDarkMode}
             />
             <Field
@@ -918,7 +724,6 @@ export default class TransferAsset extends Component {
               component={MessageField}
               showClearButton={!!memo && memo.length > 0}
               change={change}
-              showMemo={showMemo}
               isDarkMode={isDarkMode}
               separator
             />
@@ -928,11 +733,10 @@ export default class TransferAsset extends Component {
               name="card"
               fieldName="card"
               component={CardField}
-              address={transferWallet.address}
               available={available}
-              symbol={symbol}
+              symbol={getExternalChainSymbol(symbol.toUpperCase())}
               chain={chain}
-              iconUrl={rio_icon? rio_icon :  {rui:iconUrl}}
+              iconUrl={rio_icon}
               contract={contract}
               isDarkMode={isDarkMode}
               separator
@@ -949,167 +753,33 @@ export default class TransferAsset extends Component {
               isDarkMode={isDarkMode}
               separator
             />
-            {
-             chain === 'POLKADOT' &&
-              <View style={{width:'100%',paddingHorizontal:16}}>
-                <View style={{width:'100%',justifyContent:'space-between',flexDirection:'row',alignItems:'center',marginTop:15,}}>
-                  <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>{t(this,'gas_fee')}</Text>
-                  <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', textAlign: 'right' }}>{'0.1 RFUEL'}</Text>
-                </View>
-                <View style={{flexDirection:'row',marginTop:5,marginBottom:10,alignItems:'center'}}>
-                 <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', textAlign: 'right'}}>{t(this,'tx_caution_riochain')}</Text>
-                 <TouchableHighlight
-                    underlayColor={isDarkMode ? 'black' : 'white'}
-                    activeOpacity={0.42}
-                    onPress={this.showRioChainTip}
-                    style={{ width: 28, height: 28 }}
-                  >
-                    <FastImage
-                      source={require('resources/images/Info.png')}
-                      style={{ width: 28, height: 28, marginLeft: 4 }}
-                    />
-                  </TouchableHighlight>
-                </View>
+            <View style={{width:'100%',paddingHorizontal:16}}>
+              <View style={{width:'100%',justifyContent:'space-between',flexDirection:'row',alignItems:'center',marginTop:15,}}>
+                <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>{t(this,'gas_fee')}</Text>
+                <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', textAlign: 'right' }}>{'0.1 RFUEL'}</Text>
               </View>
-            }
-            {showMinnerFee && chain === 'BITCOIN' && <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16 }}>
-              <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
-                <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
-                  <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>{intl.formatMessage({ id: 'send_input_label_mining_fee' })}</Text>
-                  <TouchableHighlight
-                    underlayColor={isDarkMode ? 'black' : 'white'}
-                    activeOpacity={0.42}
-                    onPress={this.showFeesTip}
-                    style={{ width: 28, height: 28 }}
-                  >
-                    <FastImage
-                      source={require('resources/images/Info.png')}
-                      style={{ width: 28, height: 28, marginLeft: 4 }}
-                    />
-                  </TouchableHighlight>
-                </View>
+              <View style={{width:'100%',justifyContent:'space-between',flexDirection:'row',alignItems:'center',marginTop:15,}}>
+                <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>{t(this,'asset_withdraw_network_fee')}</Text>
+                <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', textAlign: 'right' }}>{getExternalChainFee(symbol.toUpperCase())} {getExternalChainSymbol(symbol.toUpperCase())}</Text>
+              </View>
+              <View style={{flexDirection:'row',marginTop:15,marginBottom:10,marginRight:21}}>
+                <Text style={{ fontSize: 12, color: isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', textAlign: 'left'}}>
+                  {t(this,'asset_withdraw_tip')}
+                </Text>
                 <TouchableHighlight
                   underlayColor={isDarkMode ? 'black' : 'white'}
                   activeOpacity={0.42}
-                  onPress={this.switchFeesType}
-                  style={{ height: 50, alignItems: 'center' }}
+                  onPress={this.showRioChainTip}
+                  style={{ width: 28, height: 28 }}
                 >
-                  <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
-                    <View style={{ alignItems: 'flex-end', marginRight: 4, width: 180 }}>
-                      <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
-                        {`≈ ${intl.formatNumber(feeRate * 226 * Math.pow(10, -8), { minimumFractionDigits: 0, maximumFractionDigits: balance.precision })} btc`}
-                      </Text>
-                      {this.state.customFee && <Text style={{ fontSize: 13, color: isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
-                        {`${(feeRate)} sat/b ${this.getSpeedText(feeRate)}`}
-                      </Text>}
-                    </View>
-                    <Animated.Image
-                      source={require('resources/images/arrow_right_grey.png')}
-                      style={{ width: 14, height: 14, transform: [{ rotate: spin }] }}
-                    />
-                  </View>
+                  <FastImage
+                    source={require('resources/images/Info.png')}
+                    style={{ width: 28, height: 28, marginLeft: 4 }}
+                  />
                 </TouchableHighlight>
               </View>
-              {this.state.customFee && <View style={{ width: '100%', height: 50 }}>
-                <Slider
-                  value={this.state.initialFeeRate || this.state.fastestBTCFee || 45}
-                  minimumValue={this.state.hourBTCFee ? ((this.state.hourBTCFee - 5) > 0 ? (this.state.hourBTCFee - 5) : 1) : 1}
-                  maximumValue={this.state.fastestBTCFee ? (this.state.fastestBTCFee + 50) : 100}
-                  onValueChange={this.onFeeRateValueChange}
-                  minimumTrackTintColor="#007AFF"
-                  maximumTrackTintColor="#E5E5EA"
-                />
-              </View>}
-            </View>}
-            {showMinnerFee && chain === 'ETHEREUM' && <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16 }}>
-              <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>
-                <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
-                  <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>{intl.formatMessage({ id: 'send_input_label_mining_fee' })}</Text>
-                  <TouchableHighlight
-                    underlayColor={isDarkMode ? 'black' : 'white'}
-                    activeOpacity={0.42}
-                    onPress={this.showFeesTip}
-                    style={{ width: 28, height: 28 }}
-                  >
-                    <FastImage
-                      source={require('resources/images/Info.png')}
-                      style={{ width: 28, height: 28, marginLeft: 4 }}
-                    />
-                  </TouchableHighlight>
-                </View>
-                <TouchableHighlight
-                  underlayColor={isDarkMode ? 'black' : 'white'}
-                  activeOpacity={0.42}
-                  onPress={this.switchFeesType}
-                  style={{ height: 50, alignItems: 'center' }}
-                >
-                  <View style={{ flexDirection: 'row', height: 50, alignItems: 'center' }}>
-                    <View style={{ alignItems: 'flex-end', marginRight: 4, width: 180 }}>
-                      <Text style={{ fontSize: 15, color: isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
-                        {`${intl.formatNumber(useGasPrice * this.state.ethGasLimit * Math.pow(10, -9), { minimumFractionDigits: 0, maximumFractionDigits: balance.precision })} ether`}
-                      </Text>
-                      {this.state.customFee && <Text style={{ fontSize: 13, color: isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)', textAlign: 'right' }}>
-                        {`${intl.formatNumber(useGasPrice, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} gwei x ${this.state.ethGasLimit}`}
-                      </Text>}
-                    </View>
-                    <Animated.Image
-                      source={require('resources/images/arrow_right_grey.png')}
-                      style={{ width: 14, height: 14, transform: [{ rotate: spin }] }}
-                    />
-                  </View>
-                </TouchableHighlight>
-              </View>
-              {this.state.customFee && <View style={{ width: '100%', height: 50 }}>
-                <Slider
-                  value={this.state.initialGwei || this.state.ethGasPrice || 4.00}
-                  minimumValue={1}
-                  maximumValue={50}
-                  onValueChange={this.onSliderValueChange}
-                  minimumTrackTintColor="#007AFF"
-                  maximumTrackTintColor="#E5E5EA"
-                />
-              </View>}
-            </View>}
-            {chain === 'BITCOIN' && <View style={{ width: '100%', marginBottom: this.state.showOPReturn ? 16 : 0 }}>
-              <View style={{ position: 'absolute', height: 0.5, top: 0, right: 16, left: 16, backgroundColor: '#C8C7CC' }} />
-              <View style={{ width: '100%', height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: 16, paddingRight: 16 }}>
-                <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                  <Text style={{ fontSize: 15, color: isDarkMode ? 'white' : 'black' }}>{intl.formatMessage({ id: 'send_toggle_advanced_setting' })}</Text>
-                </View>
-                <View>
-                  {!this.state.showOPReturn && <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ width: 40, height: 50, justifyContent: 'center', alignItems: 'flex-end' }} onPress={this.addOPReturn}>
-                    <FastImage
-                      source={require('resources/images/add_green.png')}
-                      style={{ width: 28 * 0.8, height: 30 * 0.8 }}
-                    />
-                  </TouchableHighlight>}
-                  {this.state.showOPReturn && <TouchableHighlight underlayColor="rgba(0,0,0,0)" style={{ width: 40, height: 50, justifyContent: 'center', alignItems: 'flex-end' }} onPress={this.removeOPReturn}>
-                    <FastImage
-                      source={require('resources/images/remove_red.png')}
-                      style={{ width: 28 * 0.8, height: 30 * 0.8 }}
-                    />
-                  </TouchableHighlight>}
-                </View>
-              </View>
-              {this.state.showOPReturn && <Field
-                                            label="opreturn"
-                                            placeholder={intl.formatMessage({ id: 'send_input_placeholder_opreturn_hex' })}
-                                            name="opreturn"
-                                            fieldName="opreturn"
-                                            component={TextField}
-                                            showClearButton={!!opreturn && opreturn.length > 0}
-                                            change={change}
-                                            isDarkMode={isDarkMode}
-                                            separator
-              />}
-              {this.state.showOPReturn && <View style={{ width: '100%', height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: 16, paddingRight: 16 }}>
-                <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                  <Text style={{ fontSize: 13, color: isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)' }}>{opreturn && new Buffer.from(opreturn, 'hex').toString()}</Text>
-                </View>
-              </View>}
             </View>
-            }
-            <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, marginTop: showMinnerFee ? 4 : 16, marginBottom: 20 }}>
+            <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, marginTop: 16, marginBottom: 20 }}>
               <TouchableHighlight
                 underlayColor="#007AFF"
                 activeOpacity={0.9}
@@ -1138,8 +808,8 @@ export default class TransferAsset extends Component {
                       style={{ width: 40, height: 40, marginRight: 16, borderRadius: 10, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.2)', backgroundColor: 'white' }}
                     />
                     <View style={{ height: '100%', justifyContent: 'center' }}>
-            <Text style={{ fontSize: 17, color: isDarkMode ? 'white' : 'black' }}>{t(this,'contact_select')}</Text>
-                      <Text style={{ fontSize: 14, color: '#666666', marginTop: 2 }}>{`${symbol} ${chain === 'EOS' ? t(this,'account_name') : t(this,'addr')}`}</Text>
+                      <Text style={{ fontSize: 17, color: isDarkMode ? 'white' : 'black' }}>{t(this,'contact_select')}</Text>
+                      <Text style={{ fontSize: 14, color: '#666666', marginTop: 2 }}>{`${symbol} ${t(this,'addr')}`}</Text>
                     </View>
                   </View>
 
@@ -1153,15 +823,15 @@ export default class TransferAsset extends Component {
                   >
                     <Section>
                       {contacts.map(contact => <Item
-                                                 key={contact.id}
-                                                 height={64}
-                                                 isDarkMode={isDarkMode}
-                                                 reactModuleForCell="SelectContactTableViewCell"
-                                                 name={contact.name}
-                                                 address={contact.address || contact.accountName}
-                                                 onPress={this.selectContactAddress.bind(this, chain, contact.id, contact.name, contact.address || contact.accountName)}
-                                                 accessoryType={(selectedContact && chain === selectedContact.chain && contact.name === selectedContact.name && (contact.address === selectedContact.address || contact.accountName === selectedContact.address)) ? TableView.Consts.AccessoryType.Checkmark : TableView.Consts.AccessoryType.None}
-                      />
+                          key={contact.id}
+                          height={64}
+                          isDarkMode={isDarkMode}
+                          reactModuleForCell="SelectContactTableViewCell"
+                          name={contact.name}
+                          address={contact.address || contact.accountName}
+                          onPress={this.selectContactAddress.bind(this, chain, contact.id, contact.name, contact.address || contact.accountName)}
+                          accessoryType={(selectedContact && chain === selectedContact.chain && contact.name === selectedContact.name && (contact.address === selectedContact.address || contact.accountName === selectedContact.address)) ? TableView.Consts.AccessoryType.Checkmark : TableView.Consts.AccessoryType.None}
+                        />
                       )}
                     </Section>
                   </TableView>
@@ -1191,5 +861,5 @@ export default class TransferAsset extends Component {
         </ScrollView>
       </SafeAreaView>
     )
-}
+  }
 }

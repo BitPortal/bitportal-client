@@ -1,4 +1,7 @@
 import assert from 'assert'
+import {createSelector} from 'reselect'
+import {chain} from '../core/constants'
+import {activeAssetIdSelector, assetByIdSelector} from '../selectors/asset'
 export const getAssetUniqueInfo = (wallet, asset) => {
   assert(wallet.chain, 'can not found chain type for wallet')
   assert(wallet.address, 'can not found address type for wallet')
@@ -47,4 +50,70 @@ export const getDepositAddressAssetId = (assetId) => {
       default:
         return assetId
     }
+}
+
+export const getChain = (asset) => {
+  switch (asset) {
+    case 'RBTC':
+      return 'BTC'
+    case 'RETH':
+    case 'OM':
+    case 'RFUEL':
+    case 'RUSDT':
+      return 'ETH'
+    default:
+      return null
   }
+}
+
+export const getExternalChainFee = (asset) => {
+  switch (asset) {
+    case 'RFUEL':
+      return '10'
+    case 'OM':
+      return '10'
+    case 'rUSDT':
+      return '5'
+    case 'rBTC':
+      return '0.001'
+    case 'rETH':
+      return '0.005'
+    default:
+      return null
+  }
+}
+
+export const getRioWithdrawChain = (coinType) => {
+  if (coinType === 'ETH') {
+    return 'ETHEREUM'
+  }else if (coinType === 'BTC') {
+    return  'BITCOIN'
+  }
+}
+
+export const getDepositAssetId = (asset) => {
+  switch (asset) {
+    case 'BTC':
+      return 100
+    case 'ETH':
+      return 103
+    default:
+      return null
+  }
+}
+export const getExternalChainSymbol = (asset) => {
+  switch (asset) {
+    case 'RFUEL':
+      return 'RFUEL-ERC20'
+    case 'OM':
+      return 'OM-ERC20'
+    case 'RUSDT':
+      return 'USDT-ERC20'
+    case 'RBTC':
+      return 'BTC'
+    case 'RETH':
+      return 'ETH'
+    default:
+      return null
+  }
+}

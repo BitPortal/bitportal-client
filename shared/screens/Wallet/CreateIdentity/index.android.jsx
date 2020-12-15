@@ -191,15 +191,15 @@ export default class CreateIdentity extends Component {
                 change={change}
                 secureTextEntry
               />
-              <Field
-                label={intl.formatMessage({ id: 'identity_input_label_passwd_hint' })}
-                placeholder={intl.formatMessage({ id: 'identity_input_placeholder_label_passwd_hint' })}
-                name="passwordHint"
-                fieldName="passwordHint"
-                component={OutlinedTextField}
-                nonEmpty={!!passwordHint && passwordHint.length > 0}
-                change={change}
-              />
+              {/*<Field*/}
+              {/*  label={intl.formatMessage({ id: 'identity_input_label_passwd_hint' })}*/}
+              {/*  placeholder={intl.formatMessage({ id: 'identity_input_placeholder_label_passwd_hint' })}*/}
+              {/*  name="passwordHint"*/}
+              {/*  fieldName="passwordHint"*/}
+              {/*  component={OutlinedTextField}*/}
+              {/*  nonEmpty={!!passwordHint && passwordHint.length > 0}*/}
+              {/*  change={change}*/}
+              {/*/>*/}
               <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 16, justifyContent: 'flex-start' }}>
                 <Text style={{ fontSize: 13, color: 'rgba(0,0,0,0.54)', lineHeight: 18 }}>{intl.formatMessage({ id: 'identity_recovery_hint_passwd_recovery_passwd' })}</Text>
               </View>

@@ -262,6 +262,7 @@ export default class Discovery extends Component {
             title="Oasis Apps(MakerDAO)"
             onPress={this.openDapp.bind(this, 'https://oasis.app/', 'ETHEREUM')}
             showSeparator
+            isDarkMode={isDarkMode}
           />
           <Item
             reactModuleForCell="DappTrendingTableViewCell"
@@ -269,6 +270,7 @@ export default class Discovery extends Component {
             title="Compound"
             onPress={this.openDapp.bind(this, 'https://app.compound.finance/', 'ETHEREUM')}
             showSeparator
+            isDarkMode={isDarkMode}
           />
           <Item
             reactModuleForCell="DappTrendingTableViewCell"
@@ -276,6 +278,7 @@ export default class Discovery extends Component {
             title="DDEX Margin"
             onPress={this.openDapp.bind(this, 'https://ddex.io/margin/', 'ETHEREUM')}
             showSeparator
+            isDarkMode={isDarkMode}
           />
           <Item
             reactModuleForCell="DappTrendingTableViewCell"
@@ -283,6 +286,7 @@ export default class Discovery extends Component {
             title="Uniswap"
             onPress={this.openDapp.bind(this, 'https://uniswap.exchange/', 'ETHEREUM')}
             showSeparator
+            isDarkMode={isDarkMode}
           />
           <Item
             reactModuleForCell="DappTrendingTableViewCell"
@@ -290,6 +294,7 @@ export default class Discovery extends Component {
             title="DYDX"
             onPress={this.openDapp.bind(this, 'https://trade.dydx.exchange/', 'ETHEREUM')}
             showSeparator
+            isDarkMode={isDarkMode}
           />
           <Item
             reactModuleForCell="DappTrendingTableViewCell"
@@ -297,6 +302,7 @@ export default class Discovery extends Component {
             title="DeBank"
             onPress={this.openDapp.bind(this, 'https://debank.com/?atm=bitportal', 'ETHEREUM')}
             showSeparator
+            isDarkMode={isDarkMode}
           />
           <Item
             reactModuleForCell="DappTrendingTableViewCell"
@@ -304,6 +310,7 @@ export default class Discovery extends Component {
             title="0x Protocol"
             onPress={this.openDapp.bind(this, 'https://0x.org/portal/account', 'ETHEREUM')}
             showSeparator
+            isDarkMode={isDarkMode}
           />
           <Item
             reactModuleForCell="DappTrendingTableViewCell"
@@ -311,6 +318,7 @@ export default class Discovery extends Component {
             title="KyberSwap"
             onPress={this.openDapp.bind(this, 'https://kyberswap.com/swap/eth_knc', 'ETHEREUM')}
             showSeparator
+            isDarkMode={isDarkMode}
           />
           <Item
             reactModuleForCell="DappTrendingTableViewCell"
@@ -318,6 +326,7 @@ export default class Discovery extends Component {
             title="Crypto Kitties"
             onPress={this.openDapp.bind(this, 'http://www.cryptokitties.co', 'ETHEREUM')}
             showSeparator
+            isDarkMode={isDarkMode}
           />
           {/* <Item
             reactModuleForCell="DappTrendingTableViewCell"

@@ -187,7 +187,7 @@ export default class MyIdentity extends Component {
             </View>
             <View style={{ position: 'absolute', right: 16 }}>
               {item.type === 'avatar' && <Image source={require('resources/images/profile_placeholder_android.png')} style={{ width: 40, height: 40, borderRadius: 20, borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.12)' }} />}
-              {item.type !== 'avatar' && <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)', maxWidth: 300, textAlign: 'right' }}>{item.detail}</Text>}
+              {item.type !== 'avatar' && <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)', maxWidth: 250, textAlign: 'right' }}>{item.detail}</Text>}
             </View>
           </View>
         </View>

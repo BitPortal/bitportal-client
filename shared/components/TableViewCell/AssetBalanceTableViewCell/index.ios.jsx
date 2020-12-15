@@ -74,7 +74,7 @@ const AssetBalanceTableViewCell = props => {
         {!!+props.data.amount && (<Text style={{ fontSize: 15, color: props.data.isDarkMode ? 'white' : 'black' }}>≈ {props.data.currency}{props.data.amount}</Text>)}
       </View>
       {props.data.showSeparator &&
-       <View style={{position: 'absolute', height: 0.5, bottom: 0, right: 16, left: 66, backgroundColor: '#C8C7CC'}}/>}
+       <View style={{position: 'absolute', height: 0.5, bottom: 0, right: 16, left: 66, backgroundColor: props.data.isDarkMode ? '#2D2D30' : '#C8C7CC'}}/>}
     </View>
   )
 }

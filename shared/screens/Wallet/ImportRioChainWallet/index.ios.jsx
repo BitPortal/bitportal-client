@@ -23,6 +23,7 @@ import { Field, reduxForm, getFormValues, getFormSyncWarnings } from 'redux-form
 import Modal from 'react-native-modal'
 import * as walletActions from 'actions/wallet'
 import { DarkModeContext } from 'utils/darkMode'
+import {PasswordStrong} from 'components/passwordExtension'
 
 
 const styles = EStyleSheet.create({
@@ -33,7 +34,8 @@ const styles = EStyleSheet.create({
   textFiled: {
     height: '100%',
     fontSize: 17,
-    width: '100% - 138'
+    flex:1,
+    // width: '100% - 138'
   },
   noLable: {
     width: '100% - 52'
@@ -72,6 +74,9 @@ const TextField = ({
   editable,
   switchable,
   onSwitch,
+  showStrongLevel,
+  showEyes,
+  onChangeEntry,
   isDarkMode
 }) => (
   <View style={{ width: '100%', alignItems: 'center', height: 44, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
@@ -105,6 +110,15 @@ const TextField = ({
         />
       </TouchableHighlight>
     </View>}
+    {showStrongLevel && <PasswordStrong password={restInput.value || ''} style={{marginHorizontal:5}}/>}
+    {showEyes && <View style={{ height: '100%',marginHorizontal:5, alignItems: 'center', justifyContent: 'center' }}>
+      <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={onChangeEntry}>
+        <FastImage
+          source={ secureTextEntry?require('resources/images/eyes_close.png') : require('resources/images/eyes_open.png')}
+          style={{ width: 24, height: 15 }}
+        />
+      </TouchableHighlight>
+    </View>}
     {separator && <View style={{ position: 'absolute', height: 0.5, bottom: 0, right: 0, left: 16, backgroundColor: '#C8C7CC' }} />}
   </View>
 )
@@ -122,7 +136,7 @@ const TextAreaField = ({
   <View style={{ width: '100%', alignItems: 'center', height: 88, paddingLeft: 16, paddingRight: 16, flexDirection: 'row' }}>
     <TextInput
       style={[styles.textAreaFiled, { color: isDarkMode ? 'white' : 'black' }]}
-      placeholderTextColor={isDarkMode ? 'white' : 'black'}
+      placeholderTextColor={'#ADADAD'}
       multiline={true}
       autoCorrect={false}
       autoCapitalize="none"
@@ -288,7 +302,8 @@ export default class ImportRioChainWallet extends Component {
     importRioChainMnemonicsError: null,
     importRioChainKeystoreError: null,
     pathEditable: false,
-    pathSwitchLabel: gt('default')
+    pathSwitchLabel: gt('default'),
+    secureTextEntry:true,
   }
 
   subscription = Navigation.events().bindComponent(this)
@@ -393,6 +408,8 @@ export default class ImportRioChainWallet extends Component {
     })
   }
 
+  resetEntry = () => this.setState({secureTextEntry:!this.state.secureTextEntry})
+
   render() {
     const { formValues, change } = this.props
     const mnemonic = formValues && formValues.mnemonic
@@ -489,7 +506,8 @@ export default class ImportRioChainWallet extends Component {
                     separator={true}
                     isDarkMode={isDarkMode}
                     showClearButton={!!password && password.length > 0}
-                    secureTextEntry
+                    showStrongLevel
+                    secureTextEntry={this.state.secureTextEntry}
                   />
                   <Field
                     label={t(this,'pwd_confirm_confirm')}
@@ -498,25 +516,32 @@ export default class ImportRioChainWallet extends Component {
                     fieldName="passwordConfirm"
                     change={change}
                     component={TextField}
-                    separator={true}
+                    separator={false}
                     isDarkMode={isDarkMode}
                     showClearButton={!!passwordConfirm && passwordConfirm.length > 0}
-                    secureTextEntry
+                    secureTextEntry={this.state.secureTextEntry}
+                    showEyes={true}
+                    onChangeEntry={this.resetEntry}
                   />
-                  <Field
-                    label={t(this,'pwd_set_hint')}
-                    placeholder={t(this,'optional')}
-                    name="passwordHint"
-                    fieldName="passwordHint"
-                    change={change}
-                    component={TextField}
-                    showClearButton={!!passwordHint && passwordHint.length > 0}
-                    isDarkMode={isDarkMode}
-                    separator={false}
-                  />
+                  {/*<Field*/}
+                  {/*  label={t(this,'pwd_set_hint')}*/}
+                  {/*  placeholder={t(this,'optional')}*/}
+                  {/*  name="passwordHint"*/}
+                  {/*  fieldName="passwordHint"*/}
+                  {/*  change={change}*/}
+                  {/*  component={TextField}*/}
+                  {/*  showClearButton={!!passwordHint && passwordHint.length > 0}*/}
+                  {/*  isDarkMode={isDarkMode}*/}
+                  {/*  separator={false}*/}
+                  {/*/>*/}
                 </View>
                 <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 6, justifyContent: 'flex-start' }}>
-              <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>{t(this,'import_pwd_reset_hint')}</Text>
+                  <Text children={t(this,'identity_input_placeholder_wallet_passwd')} style={{
+                    marginVertical:5,
+                    fontSize:13,
+                    color:'#666666',
+                  }}/>
+                  <Text style={{ fontSize: 13, color: '#666666', lineHeight: 18 }}>{t(this,'import_pwd_reset_hint')}</Text>
                 </View>
               </Fragment>}
             </View>

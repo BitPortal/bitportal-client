@@ -12,3 +12,6 @@ export const subscribe = createAction<object>('socket/SUBSCRIBE')
 export const addActionToQueue = createAction<Action<object>>('socket/ADD_ACTION_TO_QUEUE')
 export const executeQueueActions = createAction('socket/EXECUTE_QUEUE_ACTIONS')
 export const clearQueueActions = createAction('socket/CLEAR_QUEUE_ACTIONS')
+
+export const connect = createAction('socket/CONNECT')
+export const disconnect = createAction('socket/DISCONNECT')

@@ -1,27 +1,27 @@
 import { createAction } from 'redux-actions'
 import { createAsyncAction } from 'utils/redux'
 
-export const setActiveWallet = createAction<SetActiveWalletParams>('wallet/SET_ACTIVE_WALLET')
-export const setActiveChain = createAction<SetActiveChainParams>('wallet/SET_ACTIVE_CHAIN')
-export const setManagingWallet = createAction<SetManagingWalletParams>('wallet/SET_MANAGING_WALLET')
-export const setTransferWallet = createAction<SetTransferWalletParams>('wallet/SET_TRANSFER_WALLET')
-export const setBridgeWallet = createAction<SetBridgeWalletParams>('wallet/SET_BRIDGE_WALLET')
-export const setBridgeChain = createAction<SetBridgeChainParams>('wallet/SET_BRIDGE_CHAIN')
+export const setActiveWallet = createAction('wallet/SET_ACTIVE_WALLET')
+export const setActiveChain = createAction('wallet/SET_ACTIVE_CHAIN')
+export const setManagingWallet = createAction('wallet/SET_MANAGING_WALLET')
+export const setTransferWallet = createAction('wallet/SET_TRANSFER_WALLET')
+export const setBridgeWallet = createAction('wallet/SET_BRIDGE_WALLET')
+export const setBridgeChain = createAction('wallet/SET_BRIDGE_CHAIN')
 
-export const addIdentityWallet = createAction<AddIdentityWalletParams>('wallet/ADD_IDENTITY_WALLET')
-export const addIdentityWallets = createAction<AddIdentityWalletsParams>('wallet/ADD_IDENTITY_WALLETS')
-export const mergeIdentityWallets = createAction<AddIdentityWalletsParams>('wallet/MERGE_IDENTITY_WALLETS')
+export const addIdentityWallet = createAction('wallet/ADD_IDENTITY_WALLET')
+export const addIdentityWallets = createAction('wallet/ADD_IDENTITY_WALLETS')
+export const mergeIdentityWallets = createAction('wallet/MERGE_IDENTITY_WALLETS')
 
-export const addImportedWallet = createAction<AddImportedWalletParams>('wallet/ADD_IMPORTED_WALLET')
-export const addImportedWallets = createAction<AddImportedWalletsParams>('wallet/ADD_IMPORTED_WALLETS')
-export const mergeImportedWallets = createAction<AddImportedWalletsParams>('wallet/MERGE_IMPORTED_WALLETS')
+export const addImportedWallet = createAction('wallet/ADD_IMPORTED_WALLET')
+export const addImportedWallets = createAction('wallet/ADD_IMPORTED_WALLETS')
+export const mergeImportedWallets = createAction('wallet/MERGE_IMPORTED_WALLETS')
 
-export const removeImportedWallet = createAction<RemoveImportedWalletParams>('wallet/REMOVE_IMPORTED_WALLET')
-export const removeIdentityWallet = createAction<RemoveImportedWalletParams>('wallet/REMOVE_IDENTITY_WALLET')
+export const removeImportedWallet = createAction('wallet/REMOVE_IMPORTED_WALLET')
+export const removeIdentityWallet = createAction('wallet/REMOVE_IDENTITY_WALLET')
 
-export const updateEOSWalletAddress = createAction<SetEOSWalletAddressParams>('wallet/UPDATE_EOS_ADDRESS')
-export const updateWalletName = createAction<UpdateWalletNameParams>('wallet/UPDATE_NAME')
-export const updateBTCWalletAddressType = createAction<UpdateBTCWalletAddressType>('wallet/UPDATE_BTC_WALLET_ADDRESS_TYPE')
+export const updateEOSWalletAddress = createAction('wallet/UPDATE_EOS_ADDRESS')
+export const updateWalletName = createAction('wallet/UPDATE_NAME')
+export const updateBTCWalletAddressType = createAction('wallet/UPDATE_BTC_WALLET_ADDRESS_TYPE')
 
 export const deleteWallet = createAsyncAction('wallet/DELETE_WALLET')
 export const exportMnemonics = createAsyncAction('wallet/EXPORT_MNEMONICS')
@@ -52,7 +52,7 @@ export const importChainxMnemonics = createAsyncAction('wallet/IMPORT_CHAINX_MNE
 export const importChainxPrivateKey = createAsyncAction('wallet/IMPORT_CHAINX_PRIVATEKEY')
 export const exportPCXPrivateKey = createAsyncAction('wallet/EXPORT_PCX_PRIVATEKEY')
 
-export const updateBridgeWalletInfo = createAction<UpdateBridgeWalletInfoParams>('wallet/UPDATE_BRIDGE_WALLET_INFO')
+export const updateBridgeWalletInfo = createAction('wallet/UPDATE_BRIDGE_WALLET_INFO')
 
 export const importPolkadotKeystore = createAsyncAction('wallet/IMPORT_POLKADOT_KEYSTORE')
 export const importPolkadotSuri = createAsyncAction('wallet/IMPORT_POLKADOT_SURI')

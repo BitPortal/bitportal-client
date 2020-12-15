@@ -3,7 +3,7 @@ import { delay } from 'redux-saga'
 import { takeLatest, put, call, select, race } from 'redux-saga/effects'
 import { getErrorMessage, getEOSErrorMessage } from 'utils'
 import { reset } from 'redux-form'
-import secureStorage from 'core/storage/secureStorage'
+import secureStorage, {polkaApi} from 'core/storage/secureStorage'
 import * as actions from 'actions/transaction'
 import { getAccount } from 'actions/account'
 import { getBalance } from 'actions/balance'
@@ -19,6 +19,7 @@ import { managingWalletSelector } from 'selectors/wallet'
 import { activeWalletTransactionsPaginationSelector } from 'selectors/transaction'
 import { push, dismissAllModals } from 'utils/location'
 import { timeoutInterval } from 'constants/chain'
+import * as wallet from '../core/wallet'
 
 function* transfer(action: Action) {
   if (!action.payload) return
@@ -194,7 +195,7 @@ function* transfer(action: Action) {
       yield put(actions.setActiveTransactionId(hash))
     }else if (chain === 'POLKADOT') {
 
-      let hash = ''  
+      let hash = ''
 
       const sender = yield call(walletCore.exportRioChainKeyPair, password, keystore)
 
@@ -913,6 +914,30 @@ function* authorizeCreateEOSAccount(action: Action) {
   }
 }
 
+function* withdrawAsset(action) {
+  if (!action.payload) return
+
+  const { onSuccess, onError, onUpdate, ...params } = action.payload
+
+  try {
+    const {contract,password,id,amount,decimals,toAddress : receiver} = params
+
+    const importedKeystore = yield call(secureStorage.getItem, `IMPORTED_WALLET_KEYSTORE_${id}`, true)
+    const identityKeystore = yield call(secureStorage.getItem, `IDENTITY_WALLET_KEYSTORE_${id}`, true)
+    const keystore = importedKeystore || identityKeystore
+    assert(keystore && keystore.crypto, 'No keystore')
+
+    const sender = yield call(wallet.exportRioChainKeyPair, password, keystore)
+    yield call(rioChain.withdraw, sender, amount, decimals, contract, receiver, '', onUpdate)
+    yield put(actions.withdrawAsset.succeeded())
+    onSuccess()
+  } catch (error) {
+    // @ts-ignore
+    yield put(actions.withdrawAsset.failed(error.message))
+    onError(error.message)
+  }
+}
+
 export default function* transactionSaga() {
   yield takeLatest(String(actions.buyRAM.requested), buyRAM)
   yield takeLatest(String(actions.sellRAM.requested), sellRAM)
@@ -926,4 +951,5 @@ export default function* transactionSaga() {
   yield takeLatest(String(actions.getTransaction.refresh), getTransaction)
   yield takeLatest(String(actions.authorizeEOSAccount.requested), authorizeEOSAccount)
   yield takeLatest(String(actions.authorizeCreateEOSAccount.requested), authorizeCreateEOSAccount)
+  yield takeLatest(String(actions.withdrawAsset.requested), withdrawAsset)
 }

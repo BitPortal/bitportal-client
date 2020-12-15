@@ -155,8 +155,8 @@ export default class Camera extends Component {
           isValid = validateETHAddress(address)
         } else if (chain === 'EOS') {
           isValid = validateEOSAccountName(address)
-        } else if (validateRioAddress(address)) {
-          chain = 'POLKADOT'
+        } else if (chain === 'POLKADOT') {
+           isValid = validateRioAddress(address)
         }
 
         if (!isValid) {

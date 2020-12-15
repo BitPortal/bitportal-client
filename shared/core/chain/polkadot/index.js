@@ -25,13 +25,13 @@ export const polkaApi = async (baseUrl) => {
   try{
     const url = baseUrl || defaultUrl
     RioChainURL.url = url
-      
+
     if (createdApi[url]) {
       return createdApi[url]
     }
-   
+
     const wsProvider = await polkaWsProvider(url)
-  
+
     const api = await ApiPromise.create({
       rpc: rpcInterface,
       provider: wsProvider,
@@ -85,17 +85,17 @@ export const getChainStatus = async (url) => {
   }
 }
 
-// export const getPolkaApiForAccount = async (sender, url) => {
-//   const api = await polkaApi(url)
+export const getPolkaApiForAccount = async (sender, url) => {
+  const api = await polkaApi()
 
-//   if (typeof sender === 'string') {
-//     const { web3FromAddress } = await import('@polkadot/extension-dapp'/* webpackChunkName: 'extension-dapp' */)
-//     const injector = await web3FromAddress(sender)
-//     api.setSigner(injector.signer)
-//   }
+  if (typeof sender === 'string') {
+    const { web3FromAddress } = await import('@polkadot/extension-dapp'/* webpackChunkName: 'extension-dapp' */)
+    const injector = await web3FromAddress(sender)
+    api.setSigner(injector.signer)
+  }
 
-//   return api
-// }
+  return api
+}
 
 export const signData = async (signer, data) => {
   const api = await getPolkaApiForAccount(signer)
@@ -115,8 +115,9 @@ export const transfer = async (url, sender, amount, decimals, receiver, assetId)
   })
 }
 
-export const withdraw = async (url, sender, amount, decimals, assetId, receiver, memo, onUpdate) => {
-  const api = await getPolkaApiForAccount(sender, url)
+export const withdraw = async (sender, amount, decimals, assetId, receiver, memo, onUpdate) => {
+
+  const api = await getPolkaApiForAccount(sender)
 
   const finalReceiver = receiver.startsWith('0x') ? receiver.substring(2) : receiver
 
@@ -324,7 +325,6 @@ export const getBalance = async (address,decimals,contract) => {
     }
     if (!isNaN(contract) && contract) {
       balanceData = await api.query.rioAssets.accounts(address, contract)
-      const hanleBalance = (data) => data ? Number(JSON.parse(String(data)).free) / Math.pow(10, decimals) : ''
     } else {
       balanceData = await api.query.system.account(address)
       // todo lock balance remove
@@ -332,7 +332,6 @@ export const getBalance = async (address,decimals,contract) => {
     }
 
     const freeBalance = hanleBalance(balanceData)
-    console.log('freeBalance:',freeBalance)
       // todo lock balance remove
     // const lockBalance = hanleBalance(lockBalanceData)
 
@@ -347,15 +346,5 @@ export const rioTransfer = async ({sender,receiver,assetId,amount,decimals},onUp
   const api = await polkaApi()
   const result = await api.tx.currencies.transfer(receiver, assetId, String((new Decimal(amount)).times(Math.pow(10, decimals)))).signAndSend(sender)
   return String(result)
-  // , (result) => {
-  //   if (result.status.isInBlock) {
-  //     onUpdate(String(result.status.asInBlock))
-  //   } else if (result.status.isFinalized) {
-  //     onSuccess()
-  //   }
-  // }).then(cancel => {
-
-  //   }).catch( error => {
-  //       onError(error)
-  //   })
 }
+

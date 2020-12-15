@@ -10,7 +10,6 @@ import * as api from 'utils/api'
 import{ chain} from 'core/constants'
 import {polkaApi} from 'core/chain/polkadot'
 import { getAssetUniqueInfo } from 'utils/riochain'
-import { assetIcons, rioTokenIcons } from '../resources/images'
 
 function* getETHAsset(action: Action) {
   try {
@@ -26,7 +25,7 @@ function* getETHAsset(action: Action) {
 }
 
 function* getRioChainAsset_TEST(action: Action) {
-   
+
   try {
     const rioWallet = yield select(state => activeWalletSelector(state))
    const defaultAssets = {
@@ -138,7 +137,7 @@ function* getRioChainAsset(action: Action) {
     //   { symbol: 'rUSDT', assetId: 102 },
     //   { symbol: 'rETH', assetId: 103 }
     // ];
-    
+
     const rioWallet = action.payload
     const handleAssetInfo = (assetInfo,contract) => {
       assert(String(assetInfo.value), 'no asset info')
@@ -174,15 +173,15 @@ function* getRioChainAsset(action: Action) {
     rBTCInfo && riochainAssets.push(rBTCInfo)
     rUSDTInfo && riochainAssets.push(rUSDTInfo)
     rETHInfo && riochainAssets.push(rETHInfo)
-       
+
     const newAssets = []
     const selectedAssets = riochainAssets.map(item => {
       const assetInfo = getAssetUniqueInfo(rioWallet, item)
       newAssets.push(assetInfo)
       const contract = assetInfo.contract || assetInfo.address
-      return { 
-        walletId: `${rioWallet.id}`, 
-        assetId:  `${chain.polkadot}/${contract}/${assetInfo.symbol}` 
+      return {
+        walletId: `${rioWallet.id}`,
+        assetId:  `${chain.polkadot}/${contract}/${assetInfo.symbol}`
       }
     })
 
@@ -254,9 +253,9 @@ function* scanETHAsset(action: Action) {
       symbol: item.tokenInfo.symbol,
       name: item.tokenInfo.name,
       chain: 'ETHEREUM',
-      icon_url: handleUrl(item.tokenInfo.image ? item.tokenInfo.image : '')
+      icon_url: item.tokenInfo.image ? `http://ethplorer.io${item.tokenInfo.image}` : ''
     }))
-
+  // handleUrl(item.tokenInfo.image ? item.tokenInfo.image : '')
     yield put(actions.updateAsset({ assets, chain: 'ETHEREUM' }))
 
     const selectedAssets = assets.map(item => ({ walletId: `${activeWallet.id}`, assetId: `ETHEREUM/${item.contract}/${item.symbol}` }))

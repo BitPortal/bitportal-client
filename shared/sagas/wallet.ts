@@ -16,7 +16,6 @@ import {
   walletAllIdsSelector,
   bridgeWalletSelector
 } from 'selectors/wallet'
-import { activeWalletSelectedAssetsSelector } from 'selectors/asset'
 import * as walletCore from 'core/wallet'
 import { createHDBTCKeystore, createBTCKeystore } from 'core/keystore'
 import {
@@ -28,8 +27,7 @@ import memoryStorage from 'core/storage/memoryStorage'
 import secureStorage from 'core/storage/secureStorage'
 import { chain } from 'core/constants'
 import { push, dismissAllModals, popToRoot, showModal } from 'utils/location'
-import {createAsyncAction} from '../utils/redux'
-import { getTags } from 'react-native-device-info'
+
 
 function* setActiveWallet(action: Action<SetActiveWalletParams>) {
   if (!action.payload) return
@@ -846,7 +844,7 @@ function* exportPCXPrivateKey(action: Action<ExportPCXPrivateKeyParams>) {
   }
 }
 
-/////////   todo  polkadota tesing 
+/////////   todo  polkadota tesing
 
 
 function* importPolkadotKeystore() {

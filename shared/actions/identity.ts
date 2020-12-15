@@ -1,9 +1,9 @@
 import { createAction } from 'redux-actions'
 import { createAsyncAction } from 'utils/redux'
 
-export const addIdentity = createAction<AddIdentityParams>('identity/ADD')
-export const mergeIdentity = createAction<AddIdentityParams>('identity/MERGE')
-export const removeIdentity = createAction<RemoveIdentityParams>('identity/REMOVE')
+export const addIdentity = createAction('identity/ADD')
+export const mergeIdentity = createAction('identity/MERGE')
+export const removeIdentity = createAction('identity/REMOVE')
 
 export const validateMnemonics = createAsyncAction('identity/VALIDATE_MNEMONICS')
 export const scanIdentity = createAsyncAction('identity/SCAN')

@@ -33,6 +33,8 @@ import ViewPager from '@react-native-community/viewpager'
 import Loading from 'components/Loading'
 import { walletIcons,rioTokenIcons } from 'resources/images'
 import styles from './styles'
+import { setExtraLocale } from '../../utils/location/index.native';
+import { setGlobalLoacale } from '../../resources/messages';
 
 const PreloadedImages = () => (
   <View style={{ position: 'absolute', left: -30, bottom: -30, width: 30, height: 30 }}>
@@ -199,6 +201,9 @@ export default class Wallet extends Component {
     this.props.actions.getTicker.requested()
     this.props.actions.setSelectedContact(null)
     // this.props.actions.handleAssetSearchTextChange({ text: '', chain: this.props.chain })
+
+    const {intl = {}} = this.props;
+    setGlobalLoacale(intl.locale)
   }
 
   componentDidUpdate(prevProps, prevState) {
