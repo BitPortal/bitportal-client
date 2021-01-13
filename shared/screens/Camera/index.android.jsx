@@ -136,7 +136,7 @@ export default class Camera extends Component {
       const isJson = isJsonString(code)
       if (isJson) {
         Alert.alert(
-           t(this,'invalid_chain_addr',{chain}),
+           t(this,'invalid_chain_addr',{chain:''}),
           '',
           [
             { text: t(this,'button_ok'), onPress: () => {} }
@@ -146,8 +146,12 @@ export default class Camera extends Component {
         const parsed = urlParse(code, true)
         const { protocol, pathname, query } = parsed
 
-        const address = protocol === `${chain.toLowerCase()}:` ? pathname : code
+        let address = protocol === `${chain.toLowerCase()}:` ? pathname : code
+        if (chain.toUpperCase() === 'POLKADOT' && protocol !== `${chain.toLowerCase()}`) {
+          address = pathname
+        }
         let isValid = false
+        let errChain = chain
 
         if (chain === 'BITCOIN') {
           isValid = validateBTCAddress(address)
@@ -155,13 +159,22 @@ export default class Camera extends Component {
           isValid = validateETHAddress(address)
         } else if (chain === 'EOS') {
           isValid = validateEOSAccountName(address)
-        } else if (chain === 'POLKADOT') {
-           isValid = validateRioAddress(address)
+        }else if (chain === 'POLKADOT')  {
+          if (symbol === 'ETH') {
+            errChain = 'ETHEREUM'
+            isValid = validateETHAddress(address)
+          }else if (symbol === 'BTC'){
+            errChain = 'BITCOIN'
+            isValid = validateBTCAddress(address)
+          }else {
+            errChain = 'RIO'
+            isValid = validateRioAddress(address)
+          }
         }
 
         if (!isValid) {
           Alert.alert(
-            t(this,'invalid_chain_addr',{chain}),
+            t(this,'invalid_chain_addr',{chain:errChain}),
             '',
             [
               { text: t(this,'button_ok'), onPress: () => {} }

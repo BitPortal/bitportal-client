@@ -250,7 +250,7 @@ export const startApp = (callback) => {
 
 export const startTabBasedApp = (locale) => {
   locale = locale || 'zh'
-
+  setGlobalLoacale(locale)
   Navigation.setRoot({
     root: {
       bottomTabs: {

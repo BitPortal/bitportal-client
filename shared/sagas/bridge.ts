@@ -722,6 +722,8 @@ function* resolveRequestArbitrarySignature(password: string, info: any, messageI
 function* receiveMessage(action: Action<string>) {
   if (!action.payload) return
 
+  console.warn('receiveMessage:',action.payload);
+
   const message = action.payload
   const messageId = parseMessageId(message)
   let messageAction

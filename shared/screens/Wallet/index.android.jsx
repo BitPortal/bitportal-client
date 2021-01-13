@@ -2,7 +2,20 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'utils/redux'
 import { connect } from 'react-redux'
 import { injectIntl, FormattedMessage } from 'react-intl'
-import { View, Text, Clipboard, ActivityIndicator, TouchableHighlight, Dimensions, Image, ScrollView, RefreshControl, TouchableNativeFeedback, TouchableWithoutFeedback } from 'react-native'
+import {
+  View,
+  Text,
+  Clipboard,
+  ActivityIndicator,
+  TouchableHighlight,
+  Dimensions,
+  Image,
+  ScrollView,
+  RefreshControl,
+  TouchableNativeFeedback,
+  TouchableWithoutFeedback,
+  BackHandler
+} from 'react-native'
 import { Navigation } from 'components/Navigation'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
 import SplashScreen from 'react-native-splash-screen'
@@ -204,6 +217,11 @@ export default class Wallet extends Component {
 
     const {intl = {}} = this.props;
     setGlobalLoacale(intl.locale)
+
+    BackHandler.addEventListener(
+      'hardwareBackPress',
+      this.onBackAndroid.bind(this),
+    );
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -251,6 +269,15 @@ export default class Wallet extends Component {
       })
     }
   }
+
+  onBackAndroid = () => {
+    if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+      //最近2秒内按过back键，可以退出应用。
+      return false;
+    }
+    this.lastBackPressed = Date.now();
+    return true;
+  };
 
   onPress = () => {
     console.log('onPress')

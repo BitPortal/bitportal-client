@@ -297,16 +297,16 @@ export default class ImportETHMnemonicsForm extends Component {
               secureTextEntry
               separator={true}
             />
-            <Field
-              label={intl.formatMessage({ id: 'identity_input_label_passwd_hint' })}
-              placeholder={intl.formatMessage({ id: 'identity_input_placeholder_label_passwd_hint' })}
-              name="passwordHint"
-              fieldName="passwordHint"
-              component={FilledTextField}
-              nonEmpty={!!passwordHint && passwordHint.length > 0}
-              change={change}
-              separator={false}
-            />
+            {/*<Field*/}
+            {/*  label={intl.formatMessage({ id: 'identity_input_label_passwd_hint' })}*/}
+            {/*  placeholder={intl.formatMessage({ id: 'identity_input_placeholder_label_passwd_hint' })}*/}
+            {/*  name="passwordHint"*/}
+            {/*  fieldName="passwordHint"*/}
+            {/*  component={FilledTextField}*/}
+            {/*  nonEmpty={!!passwordHint && passwordHint.length > 0}*/}
+            {/*  change={change}*/}
+            {/*  separator={false}*/}
+            {/*/>*/}
           </View>
           <View style={{ width: '100%', paddingLeft: 16, paddingRight: 16, paddingTop: 6, paddingBottom: 16, justifyContent: 'flex-start' }}>
             <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.54)', lineHeight: 18 }}>{t(this,'import_pwd_reset_hint')}</Text>

@@ -403,13 +403,40 @@ const injectMetaMaskConfig = {
   }
 }
 
+
+const injectPolkadotConfig = {
+  ...baseConfig,
+  context: resolve('shared'),
+  entry: 'core/bridge/polkadot/bridge.js',
+  output: {
+    ...baseConfig.output,
+    filename: 'injectPolkadot.js',
+    path: resolve('ios/bitportal')
+  },
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        uglifyOptions: {
+          mangle: true,
+          output: {
+            comments: false
+          }
+        }
+      })
+    ]
+  }
+}
+
 const configs = {
   web: browserConfig,
   node: serverConfig,
   "electron-renderer": desktopConfig,
   extension: extensionConfig,
   injectScatter: injectScatterConfig,
-  injectMetaMask: injectMetaMaskConfig
+  injectMetaMask: injectMetaMaskConfig,
+  injectPolkadot: injectPolkadotConfig
 }
 
 module.exports = configs[process.env.TARGET]

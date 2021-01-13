@@ -26,6 +26,10 @@ export const polkaApi = async (baseUrl) => {
     const url = baseUrl || defaultUrl
     RioChainURL.url = url
 
+    if (createdWsProvider.url) {
+      return;
+    }
+
     if (createdApi[url]) {
       return createdApi[url]
     }
@@ -88,11 +92,11 @@ export const getChainStatus = async (url) => {
 export const getPolkaApiForAccount = async (sender, url) => {
   const api = await polkaApi()
 
-  if (typeof sender === 'string') {
-    const { web3FromAddress } = await import('@polkadot/extension-dapp'/* webpackChunkName: 'extension-dapp' */)
-    const injector = await web3FromAddress(sender)
-    api.setSigner(injector.signer)
-  }
+  // if (typeof sender === 'string') {
+  //   const { web3FromAddress } = await import('@polkadot/extension-dapp'/* webpackChunkName: 'extension-dapp' */)
+  //   const injector = await web3FromAddress(sender)
+  //   api.setSigner(injector.signer)
+  // }
 
   return api
 }

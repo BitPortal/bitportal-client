@@ -33,8 +33,8 @@ function* transfer(action: Action) {
     const keystore = importedKeystore || identityKeystore
     assert(keystore && keystore.crypto, 'No keystore')
 
+    let hash
     if (chain === 'ETHEREUM') {
-      let hash
       if (contract) {
         const { result, timeout } = yield race({
           result: call(ethChain.transferToken, password, keystore, fromAddress, toAddress, contract, amount, decimals, gasPrice * Math.pow(10, 9), gasLimit),
@@ -75,7 +75,6 @@ function* transfer(action: Action) {
       const walletUTXO = utxo.byId[`${chain}/${fromAddress}`]
       assert(walletUTXO, 'No utxo')
 
-      let hash
       if (source === 'WIF') {
         const changeAddress = fromAddress
         const { inputs, outputs, fee } = yield call(btcChain.selectUTXO, walletUTXO, amount, toAddress, changeAddress, feeRate)
@@ -155,7 +154,6 @@ function* transfer(action: Action) {
       yield put(actions.addTransaction({ id: `${chain}/${fromAddress}`, item: transaction, assetId }))
       yield put(actions.setActiveTransactionId(hash))
     } else if (chain === 'CHAINX') {
-      let hash = ''
 
       if (memo) {
         const { result, timeout } = yield race({
@@ -194,8 +192,6 @@ function* transfer(action: Action) {
       yield put(actions.addTransaction({ id: `${chain}/${fromAddress}`, item: transaction, assetId }))
       yield put(actions.setActiveTransactionId(hash))
     }else if (chain === 'POLKADOT') {
-
-      let hash = ''
 
       const sender = yield call(walletCore.exportRioChainKeyPair, password, keystore)
 
@@ -243,12 +239,13 @@ function* transfer(action: Action) {
         {
           chain: chain,
           precision: precision || 8,
-          symbol: symbol
+          symbol: symbol,
+          hashId:hash,
         },
         {
           topBar: {
             title: {
-              text: `${symbol} ${gt('tx_transfering')}`
+              text: `${symbol} ${gt('tx_suscess')}`
             }
           }
         })

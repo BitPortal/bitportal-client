@@ -97,7 +97,7 @@ export default class AddAssets extends Component {
         key: item.id,
         icon_url: item.icon_url,
         symbol: item.symbol,
-        contract: item.contract,
+        contract: item.contract || '',
         chain: item.chain
       }))
     }
@@ -109,7 +109,7 @@ export default class AddAssets extends Component {
         key: item.id,
         icon_url: item.icon_url,
         symbol: item.symbol,
-        contract: item.contract,
+        contract: item.contract || '',
         chain: item.chain
       }))
     }
@@ -241,7 +241,7 @@ export default class AddAssets extends Component {
   onSwitchAccessoryChanged = (item, switchOn) => {
     const { activeWallet, chain } = this.props
     const walletId = activeWallet.id
-    const contract = item.contract
+    const contract = item.contract || ''
     const symbol = item.symbol
     const assetId = `${chain}/${contract}/${symbol}`
 

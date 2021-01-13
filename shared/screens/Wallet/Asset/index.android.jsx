@@ -34,7 +34,7 @@ const dataProvider = new DataProvider((r1, r2) => r1.key !== r2.key || r1.pendin
     getTransactions: state.getTransactions,
     chain: activeChainSelector(state),
     activeWallet: activeWalletSelector(state),
-    activeAsset: activeAssetSelector(state),
+    activeAsset: activeAssetSelector(state) || {},
     walletBalance: activeWalletBalanceSelector(state),
     assetBalance: activeAssetBalanceSelector(state),
     ticker: activeWalletTickerSelector(state),
@@ -268,6 +268,8 @@ export default class Asset extends Component {
         this.props.actions.getEOSTokenBalance.requested({ ...activeWallet, contract: activeAsset.contract, assetSymbol: activeAsset.symbol })
       } else if (activeWallet.chain === 'ETHEREUM') {
         this.props.actions.getETHTokenBalance.requested({ ...activeWallet, contract: activeAsset.contract, assetSymbol: activeAsset.symbol, decimals: activeAsset.decimals })
+      }else if (activeAsset.chain === 'POLKADOT') {
+        this.props.actions.getRioChainTokenBalance.requested({ ...activeWallet, contract: activeAsset.contract, assetSymbol: activeAsset.symbol, decimals: activeAsset.decimals })
       }
     } else {
       this.props.actions.getBalance.requested(activeWallet)
@@ -538,6 +540,11 @@ export default class Asset extends Component {
                 <TouchableNativeFeedback onPress={this.toReceiveAsset} background={TouchableNativeFeedback.SelectableBackground()}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', height: 48 }}>
                     <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'tx_receive')}</Text>
+                  </View>
+                </TouchableNativeFeedback>
+                <TouchableNativeFeedback onPress={() => this.setState({showSimpleModal:false})} background={TouchableNativeFeedback.SelectableBackground()}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', height: 48 }}>
+                    <Text style={{ fontSize: 14, color: 'rgba(0,0,0,0.87)' }}>{t(this,'button_cancel')}</Text>
                   </View>
                 </TouchableNativeFeedback>
               </View>

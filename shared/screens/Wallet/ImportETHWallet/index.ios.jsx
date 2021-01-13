@@ -605,7 +605,7 @@ export default class ImportETHWallet extends Component {
                 <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
                   <Field
                     label={t(this,'pwd_wallet')}
-                    placeholder={t(this,'pwd_set_caution')}
+                    placeholder={t(this,'pwd_enter')}
                     name="password"
                     fieldName="password"
                     change={change}
@@ -618,7 +618,7 @@ export default class ImportETHWallet extends Component {
                   />
                   <Field
                     label={t(this,'pwd_confirm_confirm')}
-                    placeholder={t(this,'pwd_set_caution')}
+                    placeholder={t(this,'pwd_confirm')}
                     name="passwordConfirm"
                     fieldName="passwordConfirm"
                     change={change}

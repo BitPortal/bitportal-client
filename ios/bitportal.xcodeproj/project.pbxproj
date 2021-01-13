@@ -311,6 +311,7 @@
 		4077FA79AD0344B59132A336 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEC2D3945DC40A5BA3B3E50 /* CoreTelephony.framework */; };
 		4D3E192C76DB455FB2A83058 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F6FFFE3A1A14B14B05FDE01 /* libz.tbd */; };
 		53586B62255A99B8002B2F70 /* UIScreen+RNDarkModeTraitChangeListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 537535C025593F3D0021CC27 /* UIScreen+RNDarkModeTraitChangeListener.m */; };
+		536F483825AD8E6E0073A5FF /* injectPolkadot.js in Resources */ = {isa = PBXBuildFile; fileRef = 536F47E925AD8E6D0073A5FF /* injectPolkadot.js */; };
 		537535C425593F3E0021CC27 /* RNDarkMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 537535C125593F3E0021CC27 /* RNDarkMode.m */; };
 		537BD78125466E3600C20953 /* LocalesInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 537BD78025466E3600C20953 /* LocalesInterface.m */; };
 		5B7D2F305FC14BB6A544A703 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 073CDA8615FB450896768BDD /* Security.framework */; };
@@ -835,6 +836,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 3D3CD9321DE5FBEE00167DC4;
 			remoteInfo = "cxxreact-tvOS";
+		};
+		536F481A25AD8E6D0073A5FF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C02B79A5AF294526A859B506 /* ReactNativeConfig.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3DF7F6AC203AA09B00D0EAB7;
+			remoteInfo = "ReactNativeConfig-tvOS";
 		};
 		5E9157321DD0AC6500FF2AA8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1461,6 +1469,7 @@
 		459B006740E5446CA1BEC977 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		47CDB62F8CE244FFAF5141FB /* libRNCamera.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCamera.a; sourceTree = "<group>"; };
 		4CEC2D3945DC40A5BA3B3E50 /* CoreTelephony.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		536F47E925AD8E6D0073A5FF /* injectPolkadot.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = injectPolkadot.js; path = bitportal/injectPolkadot.js; sourceTree = "<group>"; };
 		5375357425593F3D0021CC27 /* RNDarkMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RNDarkMode.h; path = bitportal/RNDarkMode.h; sourceTree = "<group>"; };
 		537535C025593F3D0021CC27 /* UIScreen+RNDarkModeTraitChangeListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScreen+RNDarkModeTraitChangeListener.m"; path = "bitportal/UIScreen+RNDarkModeTraitChangeListener.m"; sourceTree = "<group>"; };
 		537535C125593F3E0021CC27 /* RNDarkMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNDarkMode.m; path = bitportal/RNDarkMode.m; sourceTree = "<group>"; };
@@ -1650,6 +1659,7 @@
 		13B07FAE1A68108700A75B9A /* bitportal */ = {
 			isa = PBXGroup;
 			children = (
+				536F47E925AD8E6D0073A5FF /* injectPolkadot.js */,
 				5375357425593F3D0021CC27 /* RNDarkMode.h */,
 				537535C125593F3E0021CC27 /* RNDarkMode.m */,
 				537535C225593F3E0021CC27 /* UIScreen+RNDarkModeTraitChangeListener.h */,
@@ -2111,6 +2121,7 @@
 			isa = PBXGroup;
 			children = (
 				3423A00D20977E3600E7EB8A /* libReactNativeConfig.a */,
+				536F481B25AD8E6D0073A5FF /* libReactNativeConfig-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3588,6 +3599,13 @@
 			remoteRef = 3DAD3EAA1DF850E9000B6D8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		536F481B25AD8E6D0073A5FF /* libReactNativeConfig-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libReactNativeConfig-tvOS.a";
+			remoteRef = 536F481A25AD8E6D0073A5FF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -3653,6 +3671,7 @@
 				B12DF1ACABD04512AF9EE51A /* Octicons.ttf in Resources */,
 				115FECE84DEC4025872128D1 /* SimpleLineIcons.ttf in Resources */,
 				279ACDBA87444D5D9230BA0D /* Zocial.ttf in Resources */,
+				536F483825AD8E6E0073A5FF /* injectPolkadot.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4002,7 +4021,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 3;
 				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = 2522XSFN76;
@@ -4053,7 +4072,7 @@
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
 					"$(PROJECT_DIR)/bitportal/Navigation",
 				);
-				MARKETING_VERSION = 0.11.1;
+				MARKETING_VERSION = 1.11.2;
 				OTHER_CFLAGS = (
 					"$(inherited)",
 					"-iquote",
@@ -4089,9 +4108,9 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = NO;
-				DEVELOPMENT_TEAM = 7AL695AUTL;
+				DEVELOPMENT_TEAM = 2522XSFN76;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4139,7 +4158,7 @@
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
 					"$(PROJECT_DIR)/bitportal/Navigation",
 				);
-				MARKETING_VERSION = 0.11.1;
+				MARKETING_VERSION = 1.11.2;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"$(inherited)",
@@ -4154,7 +4173,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.dexlize.bitportal;
+				PRODUCT_BUNDLE_IDENTIFIER = com.binker.appStore;
 				PRODUCT_NAME = bitportal;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_INSTALL_OBJC_HEADER = YES;

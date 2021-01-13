@@ -44,9 +44,8 @@ import localMessages from './messages'
 import styles from './styles'
 import urlParse from 'url-parse'
 import { transfromUrlText } from 'utils'
-import { loadScatterSync, loadMetaMaskSync } from 'utils/inject'
+import { loadScatterSync, loadMetaMaskSync,loadPolkadotExtSync } from 'utils/inject'
 import { DarkModeContext } from 'utils/darkMode'
-
 
 const TGAddressBar = requireNativeComponent('TGAddressBar')
 const messages = { ...globalMessages, ...localMessages }
@@ -245,12 +244,17 @@ export default class WebView extends Component {
   }
 
   loadBridgeByChain = (chain) => {
+
+    console.warn('chain:',chain);
     if (chain === 'EOS') {
       return loadScatterSync()
     } else
      if (chain === 'ETHEREUM') {
       return loadMetaMaskSync()
-    }
+    }else if (chain === 'POLKADOT') {
+       console.warn('chain is POLKADOT');
+       return loadPolkadotExtSync();
+     }
 
     return ''
   }
@@ -320,6 +324,7 @@ export default class WebView extends Component {
   }
 
   onBridgeMessage = (event) => {
+    // console.warn('onBridgeMessage:',event);
     this.props.actions.receiveMessage(event.nativeEvent.data)
   }
 

@@ -170,7 +170,7 @@ export default class AddAssets extends Component {
   onSwitchAccessoryChanged = (item) => {
     const { activeWallet, chain } = this.props
     const walletId = activeWallet.id
-    const contract = item.contract
+    const contract = item.contract || ''
     const symbol = item.symbol
     const assetId = `${chain}/${contract}/${symbol}`
 
@@ -235,7 +235,7 @@ export default class AddAssets extends Component {
                 selectionStyle={TableView.Consts.CellSelectionStyle.None}
                 icon_url={item.icon_url}
                 symbol={item.symbol}
-                contract={item.contract}
+                contract={item.contract || ''}
                 accessoryType={5}
                 switchOn={selectedAssetId && selectedAssetId.indexOf(`${chain}/${item.contract}/${item.symbol}`) !== -1}
                 isDarkMode={isDarkMode}

@@ -21,6 +21,10 @@ import { transfromUrlText } from 'utils'
 import { DarkModeContext } from 'utils/darkMode'
 
 const { Section, Item, CollectionView, CollectionViewItem } = TableView
+import { injectIntl } from 'react-intl';
+import { loadPolkadotExt } from '../../utils/inject';
+
+@injectIntl
 
 @connect(
   state => ({
@@ -185,6 +189,7 @@ export default class Discovery extends Component {
     // this.props.actions.getDappRecommend.requested()
     await loadScatter()
     await loadMetaMask()
+    await loadPolkadotExt()
   }
 
   componentDidAppear() {
@@ -325,6 +330,14 @@ export default class Discovery extends Component {
             height={44}
             title="Crypto Kitties"
             onPress={this.openDapp.bind(this, 'http://www.cryptokitties.co', 'ETHEREUM')}
+            showSeparator
+            isDarkMode={isDarkMode}
+          />
+          <Item
+            reactModuleForCell="DappTrendingTableViewCell"
+            height={44}
+            title="POLKADOT_TEST"
+            onPress={this.openDapp.bind(this, 'https://polkadot.js.org/apps/', 'POLKADOT')}
             showSeparator
             isDarkMode={isDarkMode}
           />

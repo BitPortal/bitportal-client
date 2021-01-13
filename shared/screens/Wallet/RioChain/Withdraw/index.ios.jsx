@@ -439,12 +439,16 @@ export default class WithdrawAsset extends Component {
       // Navigation.dismissAllModals()
       Navigation.dismissModal(this.props.componentId)
     } else if (buttonId === 'scan') {
+      const {walletBalance,assetBalance} = this.props;
+      const balance =  assetBalance.symbol === 'REFUL' ? walletBalance : assetBalance
+      const symbol = balance.symbol
+      const resultSymbol = getChain(symbol.toUpperCase())
       Navigation.showModal({
         stack: {
           children: [{
             component: {
               name: 'BitPortal.Camera',
-              passProps: { from: 'transfer', form: 'transferAssetForm', field: 'toAddress', chain: this.props.activeWallet.chain, symbol: this.props.activeWallet.symbol }
+              passProps: { from: 'transfer', form: 'transferAssetForm', field: 'toAddress', chain: this.props.activeWallet.chain, symbol:resultSymbol }
             }
           }]
         }
@@ -611,12 +615,25 @@ export default class WithdrawAsset extends Component {
           [
             {
               text: t(this,'button_cancel'),
-              onPress: () => this.showTip = false,
+              onPress: () => {
+                this.reloadBalance();
+                this.showTip = false;
+
+              },
               style: 'cancel'
             }
           ]
         )
       },500);
+    }
+  }
+
+  reloadBalance = () => {
+    const { activeAsset, activeWallet } = this.props
+    if (activeAsset && activeAsset.contract) {
+      this.props.actions.getRioChainTokenBalance.requested({ ...activeWallet, contract: activeAsset.contract, assetSymbol: activeAsset.symbol, decimals: activeAsset.decimals })
+    } else {
+      this.props.actions.getBalance.requested(activeWallet)
     }
   }
 

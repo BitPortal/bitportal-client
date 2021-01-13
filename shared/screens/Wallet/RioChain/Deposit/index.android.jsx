@@ -363,7 +363,7 @@ export default class DepositAsset extends Component {
                 ]: undefined
             }
 
-            <Text style={{alignSelf:'flex-start', color:isDarkMode ? 'white':'black',marginTop:20}}>·{t(this,'asset_deposit_message_1',{symbol:chainType})}</Text>
+            <Text style={{alignSelf:'flex-start', color:isDarkMode ? 'white':'black',marginTop:20}}>·{t(this,'asset_deposit_message_1',{symbol:externalSymbel})}</Text>
             <View style={{flexGrow:1,alignSelf:'flex-start', flexDirection:'row',alignItems:'center',marginRight:16,marginBottom:10}}>
               <Text style={{color:isDarkMode ? 'white':'black'}}>·{t(this,'asset_deposit_message_2',{symbol:chainType})}</Text>
               <TouchableNativeFeedback onPress={this.showTip}>

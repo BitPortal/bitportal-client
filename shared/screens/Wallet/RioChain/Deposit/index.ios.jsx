@@ -315,7 +315,7 @@ export default class Deposit extends Component {
     const hasIdOnChain = this.hasIdOnChain()
     const isDarkMode = this.context === 'dark'
     console.log('isDarkMode', isDarkMode)
-    const externalSymbel = getExternalChainSymbol(symbol)
+    const externalSymbel = getExternalChainSymbol(symbol.toUpperCase())
     const chainType = getChain(symbol.toUpperCase())
     const chain = activeWallet.chain
     const addressUri = this.getAddressUri(chain, symbol)
@@ -359,7 +359,7 @@ export default class Deposit extends Component {
                   </TouchableOpacity>
                 ]
               }
-              <Text style={{alignSelf:'flex-start', color:isDarkMode ? 'white':'black',marginTop:20}}>·{t(this,'asset_deposit_message_1',{symbol:chainType})}</Text>
+              <Text style={{alignSelf:'flex-start', color:isDarkMode ? 'white':'black',marginTop:20}}>·{t(this,'asset_deposit_message_1',{symbol:externalSymbel})}</Text>
               <View style={{flexGrow:1,alignSelf:'flex-start', flexDirection:'row',alignItems:'center'}}>
                 <Text style={{color:isDarkMode ? 'white':'black'}}>·{t(this,'asset_deposit_message_2',{symbol:chainType})}</Text>
                 <TouchableHighlight
@@ -370,7 +370,7 @@ export default class Deposit extends Component {
                 >
                   <FastImage
                     source={require('resources/images/Info.png')}
-                    style={{ width: 28, height: 28, marginLeft: 4 }}
+                    style={{ width: 28, height: 28, marginLeft: 4,marginRight:16  }}
                   />
                 </TouchableHighlight>
               </View>

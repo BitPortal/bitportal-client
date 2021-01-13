@@ -102,7 +102,7 @@ const TextField = ({
       editable={typeof editable === 'boolean' ? editable : true}
       {...restInput}
     />
-    {showClearButton && active && <View style={{ height: '100%', position: 'absolute', right: 16, top: 0, width: 20, alignItems: 'center', justifyContent: 'center' }}>
+    {showClearButton && active && <View style={{ height: '100%', position: 'absolute', right: showStrongLevel || showEyes ? 55:16, top: 0, width: 20, alignItems: 'center', justifyContent: 'center' }}>
       <TouchableHighlight underlayColor="rgba(255,255,255,0)" style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }} activeOpacity={0.42} onPress={() => change(fieldName, null)}>
         <FastImage
           source={require('resources/images/clear.png')}
@@ -498,7 +498,7 @@ export default class ImportRioChainWallet extends Component {
                 <View style={{ width: '100%', alignItems: 'center', borderTopWidth: 0.5, borderBottomWidth: 0.5, borderColor: '#C8C7CC', backgroundColor: isDarkMode ? 'black' : '#F7F7F7' }}>
                   <Field
                     label={t(this,'pwd_wallet')}
-                    placeholder={t(this,'pwd_set_caution')}
+                    placeholder={t(this,'pwd_enter')}
                     name="password"
                     fieldName="password"
                     change={change}
@@ -511,7 +511,7 @@ export default class ImportRioChainWallet extends Component {
                   />
                   <Field
                     label={t(this,'pwd_confirm_confirm')}
-                    placeholder={t(this,'pwd_set_caution')}
+                    placeholder={t(this,'pwd_confirm')}
                     name="passwordConfirm"
                     fieldName="passwordConfirm"
                     change={change}

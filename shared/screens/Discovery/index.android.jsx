@@ -2,7 +2,17 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'utils/redux'
 import { Navigation } from 'components/Navigation'
-import { Alert, View, Text, Dimensions, Image, FlatList, ScrollView, TouchableNativeFeedback } from 'react-native'
+import {
+  Alert,
+  View,
+  Text,
+  Dimensions,
+  Image,
+  FlatList,
+  ScrollView,
+  TouchableNativeFeedback,
+  BackHandler
+} from 'react-native'
 import * as dappActions from 'actions/dapp'
 import * as walletActions from 'actions/wallet'
 import * as uiActions from 'actions/ui'
@@ -25,9 +35,12 @@ import { transfromUrlText } from 'utils'
 import SearchBar from 'components/Form/SearchBar'
 import Modal from 'react-native-modal'
 import urlParse from 'url-parse'
+import { injectIntl } from 'react-intl';
+
 
 const dataProvider = new DataProvider((r1, r2) => r1.name !== r2.name || r1.price_usd !== r2.price_usd || r1.percent_change_24h !== r2.percent_change_24h)
 
+@injectIntl
 @connect(
   state => ({
     dapp: dappSelector(state),
@@ -193,7 +206,22 @@ export default class Discovery extends Component {
     this.props.actions.getDappRecommend.requested()
     await loadScatter()
     await loadMetaMask()
+
+    BackHandler.addEventListener(
+      'hardwareBackPress',
+      this.onBackAndroid.bind(this),
+    );
   }
+
+  onBackAndroid = () => {
+
+    if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+      //最近2秒内按过back键，可以退出应用。
+      return false;
+    }
+    this.lastBackPressed = Date.now();
+    return true;
+  };
 
   componentDidAppear() {
     this.props.actions.getDapp.requested()

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { injectIntl } from 'react-intl'
 import { bindActionCreators } from 'utils/redux'
-import { View, Text, ActivityIndicator, RefreshControl, ScrollView, Dimensions } from 'react-native'
+import { View, Text, ActivityIndicator, RefreshControl, ScrollView, Dimensions, BackHandler } from 'react-native'
 import { Navigation } from 'components/Navigation'
 import { tickerSelector, tickerSearchSelector } from 'selectors/ticker'
 import { currencySelector } from 'selectors/currency'
@@ -102,7 +102,21 @@ export default class Market extends Component {
 
   componentDidMount() {
     this.props.actions.getTicker.requested()
+    BackHandler.addEventListener(
+      'hardwareBackPress',
+      this.onBackAndroid.bind(this),
+    );
   }
+
+  onBackAndroid = () => {
+
+    if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+      //最近2秒内按过back键，可以退出应用。
+      return false;
+    }
+    this.lastBackPressed = Date.now();
+    return true;
+  };
 
   onRefresh = () => {
     this.setState({ refreshing: true })

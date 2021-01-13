@@ -92,7 +92,7 @@ export default class TransactionDetail extends Component {
     } else if (chain === 'CHAINX') {
       url = `https://scan.chainx.org/txs/${txId.toString()}`
     }  else if (chain === 'POLKADOT') {
-      url = RioChainURL.rio_scan_url + `/rio/transaction/${txId.toString()}`
+      url = RioChainURL.rio_scan_url + `rio/transaction/${txId.toString()}`
     }
     else {
       console.error('Invalid Chain', chain)

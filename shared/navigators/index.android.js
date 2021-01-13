@@ -54,7 +54,7 @@ import AboutUs from 'screens/Profile/AboutUs'
 import Deposit from  'screens/Wallet/RioChain/Deposit'
 import WithdrawAsset from 'screens/Wallet/RioChain/Withdraw'
 
-import messages from 'resources/messages'
+import messages,{setGlobalLoacale} from 'resources/messages'
 
 export const registerScreens = (store) => {
   Navigation.registerComponentWithRedux('BitPortal.Root', () => Root, Provider, store)
@@ -160,7 +160,7 @@ export const startApp = (callback) => {
 
 export const startTabBasedApp = (locale) => {
   locale = locale || 'zh'
-
+ setGlobalLoacale(locale)
   Navigation.setRoot({
     root: {
       sideMenu: {

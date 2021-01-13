@@ -56,7 +56,7 @@ const WalletManagementTableViewCell = (props) => {
     <View style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingLeft: 16, paddingRight: 16 }}>
       <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
         <Image
-          source={walletIcons[props.data.chain.toLowerCase()]}
+          source={walletIcons[(props.data.chain || '').toLowerCase()]}
           style={{
             width: 40,
             height: 40,

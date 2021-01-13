@@ -7,11 +7,11 @@ export const PasswordStrong = ({ password ,style}) => {
   const level = handleLevel(password);
   let child = []
   if (level === 0) {
-     child = [<GrayLine/>,<GrayLine/>,<GrayLine/>];
+    child = [<GrayLine/>,<GrayLine/>,<GrayLine/>];
   }else if (level === 1) {
-    child = [<GrayLine/>,<GrayLine/>,<GreenLine/>];
+    child = [<GrayLine/>,<GrayLine/>,<RedLine/>];
   }else if (level === 2) {
-    child = [<GrayLine/>,<GreenLine/>,<GreenLine/>];
+    child = [<GrayLine/>,<OrangeLine/>,<OrangeLine/>];
   }else if (level === 3) {
     child = [<GreenLine/>,<GreenLine/>,<GreenLine/>];
   }
@@ -24,6 +24,8 @@ export const PasswordStrong = ({ password ,style}) => {
 };
 
 const GreenLine = () => <Line color={'#007AFF'}/>
+const RedLine = () => <Line color={'#A52A2A'}/>
+const OrangeLine = () => <Line color={'#FF8C00'}/>
 const GrayLine = () => <Line color={'#D0D0D0'}/>
 
 const Line = ({ color }) => {

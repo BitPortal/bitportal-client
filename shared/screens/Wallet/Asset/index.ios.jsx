@@ -121,7 +121,6 @@ export default class Asset extends Component {
   toDepositAsset = async () => {
 
     const constants = await Navigation.constants()
-    const chainType = getChain(this.props.assetBalance.symbol)
     Navigation.push(this.props.componentId, {
       component: {
         name: 'BitProtal.Deposit',
@@ -131,7 +130,7 @@ export default class Asset extends Component {
         options: {
           topBar: {
             title: {
-              text: `${t(this,'asset_deposit')} ${chainType}`
+              text: `${t(this,'asset_deposit')} ${this.props.assetBalance.symbol}`
             },
             noBorder: this.props.activeWallet.chain === 'BITCOIN' && this.props.childAddress && this.props.activeWallet.address !== this.props.childAddress
           }
@@ -166,7 +165,6 @@ export default class Asset extends Component {
   }
 
   componentDidAppear() {
-    console.warn('componentDidDisappear')
     const { activeAsset, activeWallet, chain } = this.props
 
     if (activeAsset && activeAsset.contract) {
@@ -175,7 +173,6 @@ export default class Asset extends Component {
       } else if (activeWallet.chain === 'ETHEREUM') {
         this.props.actions.getETHTokenBalance.requested({ ...activeWallet, contract: activeAsset.contract, assetSymbol: activeAsset.symbol, decimals: activeAsset.decimals })
       }else if (activeAsset.chain === 'POLKADOT') {
-        console.warn('actions.getRioChainTokenBalance.requested',activeAsset)
         this.props.actions.getRioChainTokenBalance.requested({ ...activeWallet, contract: activeAsset.contract, assetSymbol: activeAsset.symbol, decimals: activeAsset.decimals })
       }
     } else {
