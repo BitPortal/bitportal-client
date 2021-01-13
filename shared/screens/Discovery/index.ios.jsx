@@ -15,14 +15,13 @@ import {
   dappRecommendSelector,
   dappBookmarkSelector
 } from 'selectors/dapp'
-import { loadScatter, loadScatterSync, loadMetaMask, loadMetaMaskSync } from 'utils/inject'
+import { loadScatter, loadScatterSync, loadMetaMask, loadMetaMaskSync, loadPolkadotExt, loadPolkadotExtSync } from 'utils/inject'
 import { activeWalletSelector, bridgeWalletSelector, identityWalletSelector, importedWalletSelector } from 'selectors/wallet'
 import { transfromUrlText } from 'utils'
 import { DarkModeContext } from 'utils/darkMode'
 
 const { Section, Item, CollectionView, CollectionViewItem } = TableView
 import { injectIntl } from 'react-intl';
-import { loadPolkadotExt } from '../../utils/inject';
 
 @injectIntl
 
@@ -341,33 +340,41 @@ export default class Discovery extends Component {
             showSeparator
             isDarkMode={isDarkMode}
           />
+          <Item
+            reactModuleForCell="DappTrendingTableViewCell"
+            height={44}
+            title="RioWallet"
+            onPress={this.openDapp.bind(this, 'https://wallet.v1.riochain.io/', 'POLKADOT')}
+            showSeparator
+            isDarkMode={isDarkMode}
+          />
           {/* <Item
-            reactModuleForCell="DappTrendingTableViewCell"
-            height={44}
-            title="PRA Candy Box"
-            onPress={this.openDapp.bind(this, 'https://chain.pro/candybox', 'EOS')}
-            showSeparator
-          />
-          <Item
-            reactModuleForCell="DappTrendingTableViewCell"
-            height={44}
-            title="Newdex"
-            onPress={this.openDapp.bind(this, 'https://newdex.340wan.com', 'EOS')}
-            showSeparator
-          />
-          <Item
-            reactModuleForCell="DappTrendingTableViewCell"
-            height={44}
-            title="WhaleEx"
-            onPress={this.openDapp.bind(this, 'https://w.whaleex.com.cn/wallet', 'EOS')}
-            showSeparator
-          />
-          <Item
-            reactModuleForCell="DappTrendingTableViewCell"
-            height={44}
-            title="EOSX"
-            onPress={this.openDapp.bind(this, 'https://www.myeoskit.com', 'EOS')}
-          /> */}
+              reactModuleForCell="DappTrendingTableViewCell"
+              height={44}
+              title="PRA Candy Box"
+              onPress={this.openDapp.bind(this, 'https://chain.pro/candybox', 'EOS')}
+              showSeparator
+              />
+              <Item
+              reactModuleForCell="DappTrendingTableViewCell"
+              height={44}
+              title="Newdex"
+              onPress={this.openDapp.bind(this, 'https://newdex.340wan.com', 'EOS')}
+              showSeparator
+              />
+              <Item
+              reactModuleForCell="DappTrendingTableViewCell"
+              height={44}
+              title="WhaleEx"
+              onPress={this.openDapp.bind(this, 'https://w.whaleex.com.cn/wallet', 'EOS')}
+              showSeparator
+              />
+              <Item
+              reactModuleForCell="DappTrendingTableViewCell"
+              height={44}
+              title="EOSX"
+              onPress={this.openDapp.bind(this, 'https://www.myeoskit.com', 'EOS')}
+              /> */}
         </Section>
       </TableView>
     )

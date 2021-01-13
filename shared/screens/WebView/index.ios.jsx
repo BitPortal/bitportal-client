@@ -44,7 +44,7 @@ import localMessages from './messages'
 import styles from './styles'
 import urlParse from 'url-parse'
 import { transfromUrlText } from 'utils'
-import { loadScatterSync, loadMetaMaskSync,loadPolkadotExtSync } from 'utils/inject'
+import { loadScatterSync, loadMetaMaskSync, loadPolkadotExtSync } from 'utils/inject'
 import { DarkModeContext } from 'utils/darkMode'
 
 const TGAddressBar = requireNativeComponent('TGAddressBar')
@@ -251,10 +251,10 @@ export default class WebView extends Component {
     } else
      if (chain === 'ETHEREUM') {
       return loadMetaMaskSync()
-    }else if (chain === 'POLKADOT') {
-       console.warn('chain is POLKADOT');
-       return loadPolkadotExtSync();
-     }
+    } else if (chain === 'POLKADOT') {
+      console.warn('chain is POLKADOT');
+      return loadPolkadotExtSync();
+    }
 
     return ''
   }

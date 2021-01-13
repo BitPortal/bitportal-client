@@ -46,7 +46,7 @@ import localMessages from './messages'
 import styles from './styles'
 import urlParse from 'url-parse'
 import { transfromUrlText } from 'utils'
-import { loadScatterSync, loadMetaMaskSync } from 'utils/inject'
+import { loadScatterSync, loadMetaMaskSync, loadPolkadotExtSync } from 'utils/inject'
 import SearchBar from 'components/Form/SearchBar'
 import IndicatorModal from 'components/Modal/IndicatorModal'
 
@@ -383,6 +383,8 @@ export default class WebView extends Component {
       return loadScatterSync()
     } else if (chain === 'ETHEREUM') {
       return loadMetaMaskSync()
+    } else if (chain === 'POLKADOT') {
+      return loadPolkadotExtSync()
     }
 
     return ''

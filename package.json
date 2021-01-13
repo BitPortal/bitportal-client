@@ -25,7 +25,7 @@
     "build:extension": "rimraf static/extension && cross-env NODE_ENV=production APP_ENV=production TARGET=extension webpack --progress --colors",
     "build:inject:scatter": "cross-env NODE_ENV=production APP_ENV=production TARGET=injectScatter webpack --progress --colors && node tools/injectScatter.js",
     "build:inject:metamask": "cross-env NODE_ENV=production APP_ENV=production TARGET=injectMetaMask webpack --progress --colors && node tools/injectMetaMask.js",
-    "build:inject:polkadot": "cross-env NODE_ENV=production APP_ENV=production TARGET=injectPolkadot webpack --progress --colors && node tools/injectPolkadot.js",
+    "build:inject:polkadotExt": "cross-env NODE_ENV=production APP_ENV=production TARGET=injectPolkadotExt webpack --progress --colors && node tools/injectPolkadotExt.js",
     "test": "cross-env NODE_ENV=test APP_ENV=development TARGET=node mocha-webpack --include ./test/helpers/setup.js --recursive --timeout 10000",
     "test:watch": "cross-env NODE_ENV=test APP_ENV=development TARGET=node mocha-webpack --include ./test/helpers/setup.js --recursive --timeout 10000 --watch",
     "cover": "cross-env NODE_ENV=test APP_ENV=development TARGET=node nyc --reporter=lcov --reporter=text mocha-webpack --include ./test/helpers/setup.js --recursive",

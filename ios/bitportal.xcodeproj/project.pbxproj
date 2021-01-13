@@ -299,6 +299,7 @@
 		34C819B0233B4C0D0090AD79 /* UISplitViewController+RNNOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C818CB233B4C0C0090AD79 /* UISplitViewController+RNNOptions.m */; };
 		34C819B1233B4C0D0090AD79 /* IntNumberParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C818CC233B4C0C0090AD79 /* IntNumberParser.m */; };
 		34D1CC3121A70F40001E6A5F /* copy.wav in Resources */ = {isa = PBXBuildFile; fileRef = 34D1CC3021A70F3F001E6A5F /* copy.wav */; };
+		34F7D5A325AEAB0400352BC8 /* injectPolkadotExt.js in Resources */ = {isa = PBXBuildFile; fileRef = 34F7D5A225AEAB0400352BC8 /* injectPolkadotExt.js */; };
 		34FAC26A232142ED0084A60F /* AddressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC269232142ED0084A60F /* AddressBar.swift */; };
 		34FAC26C232142F60084A60F /* SPFakeBarNavigationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC26B232142F50084A60F /* SPFakeBarNavigationStyle.swift */; };
 		34FAC26E232142FF0084A60F /* SPFakeBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FAC26D232142FF0084A60F /* SPFakeBarView.swift */; };
@@ -311,7 +312,6 @@
 		4077FA79AD0344B59132A336 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEC2D3945DC40A5BA3B3E50 /* CoreTelephony.framework */; };
 		4D3E192C76DB455FB2A83058 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F6FFFE3A1A14B14B05FDE01 /* libz.tbd */; };
 		53586B62255A99B8002B2F70 /* UIScreen+RNDarkModeTraitChangeListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 537535C025593F3D0021CC27 /* UIScreen+RNDarkModeTraitChangeListener.m */; };
-		536F483825AD8E6E0073A5FF /* injectPolkadot.js in Resources */ = {isa = PBXBuildFile; fileRef = 536F47E925AD8E6D0073A5FF /* injectPolkadot.js */; };
 		537535C425593F3E0021CC27 /* RNDarkMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 537535C125593F3E0021CC27 /* RNDarkMode.m */; };
 		537BD78125466E3600C20953 /* LocalesInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 537BD78025466E3600C20953 /* LocalesInterface.m */; };
 		5B7D2F305FC14BB6A544A703 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 073CDA8615FB450896768BDD /* Security.framework */; };
@@ -836,13 +836,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 3D3CD9321DE5FBEE00167DC4;
 			remoteInfo = "cxxreact-tvOS";
-		};
-		536F481A25AD8E6D0073A5FF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C02B79A5AF294526A859B506 /* ReactNativeConfig.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3DF7F6AC203AA09B00D0EAB7;
-			remoteInfo = "ReactNativeConfig-tvOS";
 		};
 		5E9157321DD0AC6500FF2AA8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1455,6 +1448,7 @@
 		34C818CC233B4C0C0090AD79 /* IntNumberParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntNumberParser.m; sourceTree = "<group>"; };
 		34D1CC3021A70F3F001E6A5F /* copy.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = copy.wav; path = ../shared/resources/sounds/copy.wav; sourceTree = "<group>"; };
 		34DAEC4967524A5CAF94D0B9 /* imageCropPicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = imageCropPicker.xcodeproj; path = "../node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj"; sourceTree = "<group>"; };
+		34F7D5A225AEAB0400352BC8 /* injectPolkadotExt.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = injectPolkadotExt.js; path = bitportal/injectPolkadotExt.js; sourceTree = "<group>"; };
 		34FAC269232142ED0084A60F /* AddressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressBar.swift; sourceTree = "<group>"; };
 		34FAC26B232142F50084A60F /* SPFakeBarNavigationStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPFakeBarNavigationStyle.swift; sourceTree = "<group>"; };
 		34FAC26D232142FF0084A60F /* SPFakeBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPFakeBarView.swift; sourceTree = "<group>"; };
@@ -1469,7 +1463,6 @@
 		459B006740E5446CA1BEC977 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		47CDB62F8CE244FFAF5141FB /* libRNCamera.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCamera.a; sourceTree = "<group>"; };
 		4CEC2D3945DC40A5BA3B3E50 /* CoreTelephony.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		536F47E925AD8E6D0073A5FF /* injectPolkadot.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = injectPolkadot.js; path = bitportal/injectPolkadot.js; sourceTree = "<group>"; };
 		5375357425593F3D0021CC27 /* RNDarkMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RNDarkMode.h; path = bitportal/RNDarkMode.h; sourceTree = "<group>"; };
 		537535C025593F3D0021CC27 /* UIScreen+RNDarkModeTraitChangeListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScreen+RNDarkModeTraitChangeListener.m"; path = "bitportal/UIScreen+RNDarkModeTraitChangeListener.m"; sourceTree = "<group>"; };
 		537535C125593F3E0021CC27 /* RNDarkMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNDarkMode.m; path = bitportal/RNDarkMode.m; sourceTree = "<group>"; };
@@ -1659,8 +1652,8 @@
 		13B07FAE1A68108700A75B9A /* bitportal */ = {
 			isa = PBXGroup;
 			children = (
-				536F47E925AD8E6D0073A5FF /* injectPolkadot.js */,
 				5375357425593F3D0021CC27 /* RNDarkMode.h */,
+				34F7D5A225AEAB0400352BC8 /* injectPolkadotExt.js */,
 				537535C125593F3E0021CC27 /* RNDarkMode.m */,
 				537535C225593F3E0021CC27 /* UIScreen+RNDarkModeTraitChangeListener.h */,
 				537535C025593F3D0021CC27 /* UIScreen+RNDarkModeTraitChangeListener.m */,
@@ -2121,7 +2114,6 @@
 			isa = PBXGroup;
 			children = (
 				3423A00D20977E3600E7EB8A /* libReactNativeConfig.a */,
-				536F481B25AD8E6D0073A5FF /* libReactNativeConfig-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2912,7 +2904,6 @@
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 2522XSFN76;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -3599,13 +3590,6 @@
 			remoteRef = 3DAD3EAA1DF850E9000B6D8A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		536F481B25AD8E6D0073A5FF /* libReactNativeConfig-tvOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libReactNativeConfig-tvOS.a";
-			remoteRef = 536F481A25AD8E6D0073A5FF /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -3659,6 +3643,7 @@
 				C8705FDCE59943B1ADAC3B7A /* Feather.ttf in Resources */,
 				6E8227E55B0E48BD85F113D0 /* FontAwesome.ttf in Resources */,
 				DA5CA4C299F44AE8B524A69D /* Foundation.ttf in Resources */,
+				34F7D5A325AEAB0400352BC8 /* injectPolkadotExt.js in Resources */,
 				0051641BD21F403D8E50DB42 /* Ionicons.ttf in Resources */,
 				348C50C621A4375500F99792 /* IQKeyboardManager.bundle in Resources */,
 				3410CA9722854EEE005FAF2A /* injectScatter.js in Resources */,
@@ -3671,7 +3656,6 @@
 				B12DF1ACABD04512AF9EE51A /* Octicons.ttf in Resources */,
 				115FECE84DEC4025872128D1 /* SimpleLineIcons.ttf in Resources */,
 				279ACDBA87444D5D9230BA0D /* Zocial.ttf in Resources */,
-				536F483825AD8E6E0073A5FF /* injectPolkadot.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4024,7 +4008,7 @@
 				CURRENT_PROJECT_VERSION = 3;
 				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = NO;
-				DEVELOPMENT_TEAM = 2522XSFN76;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4110,7 +4094,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
 				DEFINES_MODULE = NO;
-				DEVELOPMENT_TEAM = 2522XSFN76;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

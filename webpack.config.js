@@ -404,13 +404,13 @@ const injectMetaMaskConfig = {
 }
 
 
-const injectPolkadotConfig = {
+const injectPolkadotExtConfig = {
   ...baseConfig,
   context: resolve('shared'),
   entry: 'core/bridge/polkadot/bridge.js',
   output: {
     ...baseConfig.output,
-    filename: 'injectPolkadot.js',
+    filename: 'injectPolkadotExt.js',
     path: resolve('ios/bitportal')
   },
   optimization: {
@@ -436,7 +436,7 @@ const configs = {
   extension: extensionConfig,
   injectScatter: injectScatterConfig,
   injectMetaMask: injectMetaMaskConfig,
-  injectPolkadot: injectPolkadotConfig
+  injectPolkadotExt: injectPolkadotExtConfig
 }
 
 module.exports = configs[process.env.TARGET]

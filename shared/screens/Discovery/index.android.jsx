@@ -26,7 +26,7 @@ import {
   dappBookmarkSelector
 } from 'selectors/dapp'
 import ViewPager from '@react-native-community/viewpager'
-import { loadScatter, loadScatterSync, loadMetaMask, loadMetaMaskSync } from 'utils/inject'
+import { loadScatter, loadScatterSync, loadMetaMask, loadMetaMaskSync, loadPolkadotExt, loadPolkadotExtSync } from 'utils/inject'
 import LinearGradient from 'react-native-linear-gradient'
 import { activeWalletSelector, bridgeWalletSelector, identityWalletSelector, importedWalletSelector } from 'selectors/wallet'
 import FastImage from 'react-native-fast-image'
@@ -206,6 +206,7 @@ export default class Discovery extends Component {
     this.props.actions.getDappRecommend.requested()
     await loadScatter()
     await loadMetaMask()
+    await loadPolkadotExt()
 
     BackHandler.addEventListener(
       'hardwareBackPress',

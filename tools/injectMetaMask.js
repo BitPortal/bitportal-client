@@ -1,7 +1,7 @@
 const fs = require('fs-extra')
 
-const iosFilePathMetaMask = 'ios/bitportal/injectPolkadot.js'
-const filePathMetaMask = 'android/app/src/main/assets/raw/injectPolkadot.js'
+const iosFilePathMetaMask = 'ios/bitportal/injectMetaMask.js'
+const filePathMetaMask = 'android/app/src/main/assets/raw/injectMetaMask.js'
 const fileTextMetaMask = fs.readFileSync(iosFilePathMetaMask,'utf8')
 const fileTextNewMetaMask = fileTextMetaMask.replace(/\%/g,`% `)
 
