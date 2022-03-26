@@ -7,7 +7,7 @@ BitPortal client for iOS, Android. More clients support are under development: w
 
 BitPortal is a mobile multi-chain crypto wallet based on Bip32 Identity. It supports BTC, ETH, EOS and ChainX V1 (Substrate v1 based).
 
-For ETH, it also supports dApp Browser. It performances like a metamask wallet when access to a web dApp.
+For ETH, it also provided support for ERC20 and dApp Browser. It performances like a metamask wallet when access to a web dApp.
 
 (Right now ChainX v1 has been upgraded to newer version.)
 
