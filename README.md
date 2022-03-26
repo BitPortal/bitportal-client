@@ -10,17 +10,17 @@ For ETH, it also provided support for ERC20 and dApp Browser. dApp Browser perfo
 
 (Right now ChainX v1 has been upgraded to newer version.)
 
-## get repo
+## Get repo
 ```sh
 $ git clone https://github.com/BitPortal/bitportal-client.git
 ```
 
-## install
+## Install
 ```sh
 $ yarn install
 ```
 
-## run website
+## Run Website
 ```sh
 $ npm install -g full-icu
 
@@ -38,7 +38,7 @@ $ yarn run server
 
 ```
 
-## run mobile
+## Run Mobile
 ```sh
 # build and run ios
 $ yarn run ios
@@ -47,7 +47,7 @@ $ yarn run ios
 $ yarn run android
 ```
 
-## run desktop
+## Run Desktop
 ```sh
 # build desktop, it's served in ./static/desktop folder
 $ yarn run build:desktop
@@ -56,12 +56,12 @@ $ yarn run build:desktop
 $ yarn run desktop
 ```
 
-## run test
+## Run Test
 ```sh
 $ yarn test
 ```
 
-## run lint
+## Run Lint
 ```sh
 # javascript lint
 $ yarn run lint:js
@@ -73,7 +73,7 @@ $ yarn run lint:ts
 $ yarn run lint
 ```
 
-## typescript compile
+## Typescript Compile
 ```sh
 yarn run tsc
 ```
