@@ -10,7 +10,7 @@ For ETH, it also provided support for ERC20 and dApp Browser. dApp Browser perfo
 
 (Right now ChainX v1 has been upgraded to newer version.)
 
-Official Website: https://www.bitportal.io/
+* Official Website: https://www.bitportal.io/
 
 ## Get repo
 ```sh
