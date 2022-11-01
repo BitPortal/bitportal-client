@@ -1,6 +1,6 @@
 # BitPortal Client
 
-*NOT IN MAINTAINCE*
+***NOT IN MAINTAINCE***
 
 BitPortal's React Native client for iOS, Android. 
 
@@ -85,3 +85,11 @@ $ yarn run lint
 ```sh
 yarn run tsc
 ```
+
+
+## Donation
+
+* BTC: `1Ff9LWQ3BScYRnX83ndEYeUjRqYdnwUA2i`
+* ETH: `0x7CD7A0790C173498495907C82B551BFE79067FD2`
+
+All kinds of tokens are supported. Thanks!
